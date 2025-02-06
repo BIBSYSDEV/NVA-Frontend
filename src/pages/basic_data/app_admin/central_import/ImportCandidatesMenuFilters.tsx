@@ -129,7 +129,6 @@ export const ImportCandidatesMenuFilters = () => {
             {typeAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.type === facet.key}
@@ -146,7 +145,6 @@ export const ImportCandidatesMenuFilters = () => {
             {topLevelOrgAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.topLevelOrganization === facet.key}
@@ -165,7 +163,6 @@ export const ImportCandidatesMenuFilters = () => {
             {collaborationTypeAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.collaborationType === facet.key}
@@ -182,7 +179,6 @@ export const ImportCandidatesMenuFilters = () => {
             {filesAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.files === facet.key}
