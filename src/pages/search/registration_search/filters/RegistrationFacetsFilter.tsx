@@ -10,6 +10,7 @@ import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPageProps } from '../../SearchPage';
+import { SearchForInstitutionFacetListItem } from './SearchForInstitutionFacetListItem';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
@@ -77,6 +78,10 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
 
       {topLevelOrganizationFacet.length > 0 && (
         <FacetItem title={t('common.institution')} dataTestId={dataTestId.aggregations.institutionFacets}>
+          <SearchForInstitutionFacetListItem
+            onSelectInstitution={(institutionId) => addFacetFilter(ResultParam.TopLevelOrganization, institutionId)}
+          />
+
           {topLevelOrganizationFacet.map((facet) => {
             const isSelected = !!registrationParams.topLevelOrganization?.includes(facet.key);
 
