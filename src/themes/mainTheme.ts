@@ -65,6 +65,9 @@ declare module '@mui/material/Button' {
   }
 }
 
+const dialogTitleId = 'dialog-title-id';
+export const dialogDescriptionId = 'dialog-description-id';
+
 export const mainTheme = createTheme(
   {
     breakpoints: {
@@ -217,6 +220,22 @@ export const mainTheme = createTheme(
         },
         defaultProps: {
           variant: 'outlined',
+        },
+      },
+      MuiDialog: {
+        defaultProps: {
+          'aria-labelledby': dialogTitleId,
+          'aria-describedby': dialogDescriptionId,
+        },
+      },
+      MuiDialogTitle: {
+        defaultProps: {
+          id: dialogTitleId,
+        },
+      },
+      MuiDialogContent: {
+        defaultProps: {
+          id: dialogDescriptionId,
         },
       },
       MuiLink: {

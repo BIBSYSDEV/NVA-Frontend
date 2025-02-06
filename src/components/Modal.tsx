@@ -1,6 +1,7 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { Backdrop, Box, Dialog, DialogProps, DialogTitle, IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { dialogDescriptionId } from '../themes/mainTheme';
 import { dataTestId as dataTestIdObject } from '../utils/dataTestIds';
 
 interface ModalProps extends Partial<DialogProps> {
@@ -26,11 +27,9 @@ export const Modal = ({ children, dataTestId, headingText, onClose, open, PaperP
       BackdropProps={{
         timeout: 500,
       }}
-      PaperProps={{ 'aria-labelledby': 'titleId', ...PaperProps }}>
+      PaperProps={{ ...PaperProps }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: '1rem', mx: '1rem' }}>
-        <DialogTitle id="titleId" sx={{ padding: 0 }}>
-          {headingText}
-        </DialogTitle>
+        <DialogTitle sx={{ padding: 0 }}>{headingText}</DialogTitle>
         <IconButton
           title={t('common.close')}
           onClick={handleClose}
@@ -39,7 +38,9 @@ export const Modal = ({ children, dataTestId, headingText, onClose, open, PaperP
         </IconButton>
       </Box>
 
-      <Box sx={{ m: '1rem' }}>{children}</Box>
+      <Box id={dialogDescriptionId} sx={{ m: '1rem' }}>
+        {children}
+      </Box>
     </Dialog>
   );
 };
