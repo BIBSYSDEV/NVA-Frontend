@@ -1,4 +1,5 @@
 import { Card, CircularProgress, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
 import { Helmet } from 'react-helmet-async';
@@ -35,8 +36,11 @@ export const VocabularyOverview = () => {
       <Helmet>
         <title id="vocabulary-label">{t('editor.vocabulary')}</title>
       </Helmet>
+      <Typography sx={visuallyHidden} component="h1">
+        {t('editor.vocabulary')}
+      </Typography>
 
-      <Typography gutterBottom fontWeight="600">
+      <Typography gutterBottom variant="h2">
         {t('editor.vocabulary_controlled')}
       </Typography>
       <Typography>{t('editor.vocabulary_description')}</Typography>

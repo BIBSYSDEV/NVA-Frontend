@@ -495,7 +495,8 @@
       "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
       "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
-    }
+    },
+    "vocabulary_settings": "Vokabularinnstillinger"
   },
   "feedback": {
     "error": {

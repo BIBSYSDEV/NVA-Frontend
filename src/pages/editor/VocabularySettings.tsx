@@ -1,4 +1,5 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -81,7 +82,11 @@ export const VocabularySettings = () => {
       <Helmet>
         <title id="vocabulary-label">{t('editor.vocabulary')}</title>
       </Helmet>
-      <Typography sx={{ mb: '1rem' }} color="primary" fontWeight="600">
+      <Typography sx={visuallyHidden} variant="h1">
+        {t('editor.vocabulary_settings')}
+      </Typography>
+
+      <Typography sx={{ mb: '1rem' }} variant="h2">
         {t('editor.select_vocabulary_description')}
       </Typography>
 

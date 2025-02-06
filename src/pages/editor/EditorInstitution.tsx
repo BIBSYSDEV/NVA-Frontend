@@ -65,7 +65,8 @@ export const EditorInstitution = () => {
       <Helmet>
         <title>{t('editor.institution.institution_profile')}</title>
       </Helmet>
-      <Typography variant="h2" gutterBottom>
+
+      <Typography variant="h1" gutterBottom>
         {t('editor.institution.institution_profile')}
       </Typography>
       {isLoadingCustomer || isLoadingInstitution ? (
@@ -171,7 +172,7 @@ export const EditorInstitution = () => {
               <Grid container item xs={12}>
                 {institutionAdmins && (
                   <Grid item xs={12} sm={4} md={6} lg={4}>
-                    <Typography variant="h3" gutterBottom>
+                    <Typography variant="h3" component="h2" gutterBottom>
                       {institutionAdmins.length > 0 &&
                         t('editor.institution.institution_admin', { count: institutionAdmins.length })}
                     </Typography>
@@ -185,7 +186,7 @@ export const EditorInstitution = () => {
 
                 {institutionEditors && (
                   <Grid item xs={12} sm={4} md={6} lg={4}>
-                    <Typography variant="h3" gutterBottom>
+                    <Typography variant="h3" component="h2" gutterBottom>
                       {institutionEditors.length > 0 &&
                         t('editor.institution.institution_editor', { count: institutionEditors.length })}
                     </Typography>
