@@ -13,7 +13,7 @@ export const EditorDoi = () => {
       <Helmet>
         <title>{t('common.doi_long')}</title>
       </Helmet>
-      <Typography id="doi-label" variant="h2" sx={{ mb: '2rem' }}>
+      <Typography id="doi-label" variant="h1" sx={{ mb: '2rem' }}>
         {t('common.doi_long')}
       </Typography>
       {!customer ? (
@@ -47,7 +47,9 @@ export const EditorDoi = () => {
                 rowGap: '0.3rem',
                 width: 'max(30%, 250px)',
               }}>
-              <Typography variant="h3">{t('basic_data.institutions.doi_repo_id')}:</Typography>
+              <Typography component="h2" variant="h3">
+                {t('basic_data.institutions.doi_repo_id')}:
+              </Typography>
               {customer.doiAgent?.username ? (
                 <Typography sx={{ color: 'primary.light', bgcolor: 'grey.400', p: '0.7rem' }}>
                   {customer.doiAgent.username}
@@ -64,7 +66,9 @@ export const EditorDoi = () => {
                 rowGap: '0.3rem',
                 width: 'max(30%, 250px)',
               }}>
-              <Typography variant="h3">{t('basic_data.institutions.institution_doi_prefix')}:</Typography>
+              <Typography component="h2" variant="h3">
+                {t('basic_data.institutions.institution_doi_prefix')}:
+              </Typography>
               {customer.doiAgent?.prefix ? (
                 <Typography sx={{ color: 'primary.light', bgcolor: 'grey.400', p: '0.7rem' }}>
                   {customer.doiAgent.prefix}

@@ -1,6 +1,7 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useMutation } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -58,6 +59,9 @@ export const PublishStrategySettings = () => {
       <Helmet>
         <title id="publish-strategy-label">{t('editor.publish_strategy.publish_strategy')}</title>
       </Helmet>
+      <Typography component="h1" sx={visuallyHidden}>
+        {t('editor.publish_strategy.publish_strategy')}
+      </Typography>
 
       {!customer ? (
         <PageSpinner />
