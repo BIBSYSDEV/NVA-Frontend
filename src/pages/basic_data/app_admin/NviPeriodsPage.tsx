@@ -1,4 +1,5 @@
 import { Box, List, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -29,6 +30,9 @@ export const NviPeriodsPage = () => {
       <Helmet>
         <title>{t('basic_data.nvi.reporting_periods')}</title>
       </Helmet>
+      <Typography component="h1" sx={visuallyHidden}>
+        {t('basic_data.nvi.reporting_periods')}
+      </Typography>
 
       {nviPeriodsQuery.isPending ? (
         <ListSkeleton height={100} minWidth={100} />

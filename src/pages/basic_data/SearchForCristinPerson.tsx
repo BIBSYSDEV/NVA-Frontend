@@ -142,7 +142,9 @@ export const SearchForCristinPerson = ({
           <div>
             {selectedPersonActiveAffiliations.length > 0 && (
               <>
-                <Typography variant="h3">{t('basic_data.person_register.current_employments')}</Typography>
+                <Typography component="h2" variant="h3">
+                  {t('basic_data.person_register.current_employments')}
+                </Typography>
                 <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
                   {selectedPersonActiveAffiliations.map((affiliation) => {
                     const roleString = getLanguageString(affiliation.role.labels);

@@ -21,7 +21,7 @@ export const RolesFormSection = ({ roles, personHasNin, updateRoles, disabled }:
 
   return (
     <section>
-      <Typography variant="h3" gutterBottom>
+      <Typography component="h2" variant="h3" gutterBottom>
         {t('my_page.my_profile.heading.roles')}
       </Typography>
 
