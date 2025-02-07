@@ -226,6 +226,7 @@ export const dataTestId = {
     searchButton: 'search-button',
     searchField: 'search-field',
     searchResultItem: 'result-list-item',
+    searchTypeField: 'search-type-field',
   },
   projectForm: {
     startDateField: 'project-start-date-field',
