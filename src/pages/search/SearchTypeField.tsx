@@ -4,6 +4,7 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
+import { dataTestId } from '../../utils/dataTestIds';
 import { SearchParam } from '../../utils/searchHelpers';
 
 export enum SearchTypeValue {
@@ -28,6 +29,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
       select
       value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
       size="small"
+      data-testid={dataTestId.startPage.searchTypeField}
       sx={{
         minWidth: '9rem',
         '.MuiSelect-select': {
