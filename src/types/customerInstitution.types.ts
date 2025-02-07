@@ -129,7 +129,6 @@ export enum CustomerInstitutionFieldNames {
   DoiPassword = 'doiAgent.password',
   DoiPrefix = 'doiAgent.prefix',
   FeideOrganizationDomain = 'customer.feideOrganizationDomain',
-  Identifier = 'customer.identifier',
   InactiveFrom = 'customer.inactiveFrom',
   Name = 'customer.name',
   RorId = 'customer.rorId',

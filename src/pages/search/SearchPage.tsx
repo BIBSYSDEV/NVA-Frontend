@@ -1,4 +1,5 @@
-import { Box, styled } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
@@ -50,12 +51,18 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
     <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
       {resultIsSelected && (
         <>
+          <Typography variant="h1" sx={visuallyHidden}>
+            {t('search.result_search')}
+          </Typography>
           <RegistrationSearchBar registrationQuery={registrationQuery} />
           <RegistrationSearch registrationQuery={registrationQuery} />
         </>
       )}
       {personIsSeleced && (
         <>
+          <Typography variant="h1" sx={visuallyHidden}>
+            {t('search.person_search')}
+          </Typography>
           <StyledSearchBarContainer>
             <SearchTypeField />
             <SearchForm paramName={PersonSearchParameter.Name} placeholder={t('search.person_search_placeholder')} />
@@ -65,6 +72,9 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
       )}
       {projectIsSelected && (
         <>
+          <Typography variant="h1" sx={visuallyHidden}>
+            {t('search.project_search')}
+          </Typography>
           <StyledSearchBarContainer>
             <SearchTypeField />
             <SearchForm paramName={ProjectSearchParameter.Query} placeholder={t('search.search_project_placeholder')} />

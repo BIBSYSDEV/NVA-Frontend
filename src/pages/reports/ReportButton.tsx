@@ -21,7 +21,7 @@ export const ReportButton = ({ title, description, imageSrc, path }: ReportButto
       textTransform: 'none',
     }}>
     <img src={imageSrc} alt="" style={{ height: '9rem', width: '12rem' }} />
-    <Typography variant="h3">{title}</Typography>
+    <Typography variant="h2">{title}</Typography>
     <Typography>{description}</Typography>
   </Button>
 );

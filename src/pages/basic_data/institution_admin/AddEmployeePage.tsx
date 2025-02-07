@@ -140,10 +140,6 @@ export const AddEmployeePage = () => {
                   personHasNin={!values.person.nvi?.verifiedAt.id}
                   roles={values.roles}
                   updateRoles={(newRoles) => {
-                    if (!newRoles.includes(RoleName.CuratorThesis)) {
-                      newRoles = newRoles.filter((role) => role !== RoleName.CuratorThesisEmbargo);
-                    }
-
                     setFieldValue('roles', newRoles);
                     const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
                     if (hasCuratorRole && values.viewingScopes.length === 0 && topOrgCristinId) {

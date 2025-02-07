@@ -195,7 +195,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               size="small"
               sx={{ mb: '1rem', bgcolor: 'white' }}
               loading={statusMutation.isPending && statusMutation.variables?.status === 'Approved'}
-              disabled={isMutating}
+              disabled={!canApproveCandidate || isMutating}
               endIcon={<CheckIcon />}
               onClick={() => statusMutation.mutate({ status: 'Approved' })}>
               {t('tasks.nvi.approve_nvi_candidate')}
@@ -214,7 +214,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               fullWidth
               size="small"
               sx={{ bgcolor: 'white' }}
-              disabled={isMutating || hasSelectedRejectCandidate}
+              disabled={!canRejectCandidate || isMutating || hasSelectedRejectCandidate}
               endIcon={<ClearIcon />}
               onClick={() => setHasSelectedRejectCandidate(true)}>
               {t('tasks.nvi.reject_nvi_candidate')}
