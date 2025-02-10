@@ -65,7 +65,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
@@ -89,7 +88,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
@@ -115,7 +113,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
@@ -139,7 +136,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
@@ -163,7 +159,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
@@ -187,7 +182,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
@@ -211,7 +205,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
@@ -235,7 +228,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
