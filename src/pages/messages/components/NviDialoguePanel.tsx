@@ -5,7 +5,7 @@ import { NviStatusChip } from '../../../components/StatusChip';
 import { RootState } from '../../../redux/store';
 import { NviCandidate } from '../../../types/nvi.types';
 import { NviApprovals } from './NviApprovals';
-import { NviCandidateActions } from './NviCandidateActions';
+import { hasUnidentifiedContributorProblem, NviCandidateActions } from './NviCandidateActions';
 
 interface NviDialoguePanelProps {
   nviCandidate: NviCandidate;
@@ -22,7 +22,7 @@ export const NviDialoguePanel = ({ nviCandidate, nviCandidateQueryKey }: NviDial
   const periodStatus = nviCandidate?.period.status;
 
   const isPendingCandidate = candidateStatus === 'New' || candidateStatus === 'Pending';
-  const hasProblem = nviCandidate.problems && nviCandidate.problems.length > 0;
+  const hasProblem = hasUnidentifiedContributorProblem(nviCandidate);
 
   return (
     <>

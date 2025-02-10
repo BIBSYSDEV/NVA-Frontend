@@ -33,6 +33,13 @@ import { MessageItem } from './MessageList';
 import { NviCandidateRejectionDialog } from './NviCandidateRejectionDialog';
 import { NviNoteMenu } from './NviNoteMenu';
 
+export const hasUnidentifiedContributorProblem = (nviCandidate: NviCandidate) =>
+  nviCandidate.problems &&
+  nviCandidate.problems.some(
+    (problem) =>
+      problem.type === 'UnverifiedCreatorExists' || problem.type === 'UnverifiedCreatorFromOrganizationProblem'
+  );
+
 interface NviNote {
   type: 'FinalizedNote' | 'GeneralNote';
   identifier?: string;
@@ -166,7 +173,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
         />
       </Box>
 
-      {nviCandidate.problems && nviCandidate.problems.length > 0 && (
+      {hasUnidentifiedContributorProblem(nviCandidate) && (
         <>
           <Divider sx={{ gridArea: 'divider0' }} />
           <Box sx={{ gridArea: 'problem' }}>
