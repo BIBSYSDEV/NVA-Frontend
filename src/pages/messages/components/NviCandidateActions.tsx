@@ -1,11 +1,13 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import EditIcon from '@mui/icons-material/Edit';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router';
 import {
   createNote,
   CreateNoteData,
@@ -20,10 +22,13 @@ import { MessageForm } from '../../../components/MessageForm';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
+import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { FinalizedApproval, NviCandidate, RejectedApproval } from '../../../types/nvi.types';
+import { RegistrationTab } from '../../../types/registration.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { MessageItem } from './MessageList';
 import { NviCandidateRejectionDialog } from './NviCandidateRejectionDialog';
 import { NviNoteMenu } from './NviNoteMenu';
@@ -160,6 +165,35 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           roleFilter={RoleName.NviCurator}
         />
       </Box>
+
+      {nviCandidate.problems && nviCandidate.problems.length > 0 && (
+        <Box sx={{ gridArea: 'problem' }}>
+          <Divider sx={{ mb: '1rem' }} />
+          <Trans
+            i18nKey="tasks.nvi.problem"
+            components={{
+              p: <Typography gutterBottom />,
+              ul: <Box component="ul" sx={{ mt: 0, mb: '0.5rem', pl: '2rem' }} />,
+              li: <li />,
+            }}
+          />
+
+          <Button
+            sx={{ bgcolor: 'primary.light' }}
+            variant="contained"
+            fullWidth
+            size="small"
+            data-testid={dataTestId.tasksPage.nvi.editResultButton}
+            endIcon={<EditIcon />}
+            component={RouterLink}
+            state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
+            to={getRegistrationWizardPath(getIdentifierFromId(nviCandidate.publicationId), {
+              tab: RegistrationTab.Contributors,
+            })}>
+            {t('registration.edit_registration')}
+          </Button>
+        </Box>
+      )}
 
       <Divider sx={{ gridArea: 'divider1' }} />
 

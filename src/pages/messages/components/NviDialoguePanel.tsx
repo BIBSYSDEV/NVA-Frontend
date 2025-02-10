@@ -38,8 +38,8 @@ export const NviDialoguePanel = ({ nviCandidate, nviCandidateQueryKey }: NviDial
           display: 'grid',
           gap: '1rem',
           gridTemplateAreas: isPendingCandidate
-            ? "'curator' 'approvals' 'divider1' 'actions' 'divider2' 'comment'"
-            : "'curator' 'approvals' 'divider1' 'comment' 'divider2' 'actions'",
+            ? "'curator' 'approvals' 'problem' 'divider1' 'actions' 'divider2' 'comment'"
+            : "'curator' 'approvals' 'problem' 'divider1' 'comment' 'divider2' 'actions'",
         }}>
         {periodStatus === 'OpenPeriod' && nviCandidate ? (
           <NviCandidateActions nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
