@@ -21,7 +21,7 @@ export const TasksFormSection = ({ roles = [], viewingScopes, updateViewingScope
 
   return (
     <section>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {t('editor.curators.area_of_responsibility')}
       </Typography>
       {!curatorRoleIsAdded ? (

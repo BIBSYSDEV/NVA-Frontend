@@ -231,6 +231,7 @@ export const mainTheme = createTheme(
       MuiDialogTitle: {
         defaultProps: {
           id: dialogTitleId,
+          component: 'h1',
         },
       },
       MuiDialogContent: {
