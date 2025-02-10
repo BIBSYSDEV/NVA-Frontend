@@ -167,12 +167,12 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
         />
       </Box>
 
-      {hasUnidentifiedContributorProblem(nviCandidate) && (
+      {hasUnidentifiedContributorProblem(nviCandidate.problems) && (
         <>
           <Divider sx={{ gridArea: 'divider0' }} />
           <Box sx={{ gridArea: 'problem' }}>
             <Trans
-              i18nKey="tasks.nvi.problem"
+              i18nKey="tasks.nvi.problem_description"
               components={{
                 p: <Typography gutterBottom />,
                 ul: <Box component="ul" sx={{ mt: 0, mb: '0.5rem', pl: '2rem' }} />,

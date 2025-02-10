@@ -1,6 +1,6 @@
 import { fetchOrganization } from '../api/cristinApi';
 import { Contributor } from '../types/contributor.types';
-import { NviCandidate } from '../types/nvi.types';
+import { NviCandidateProblem } from '../types/nvi.types';
 import { BookRegistration } from '../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../types/publication_types/chapterRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
@@ -135,9 +135,9 @@ export const willResetNviStatuses = async (persistedRegistration: Registration, 
   }
 };
 
-export const hasUnidentifiedContributorProblem = (nviCandidate: NviCandidate) =>
-  nviCandidate.problems &&
-  nviCandidate.problems.some(
+export const hasUnidentifiedContributorProblem = (nviCandidateProblems: NviCandidateProblem[]) =>
+  nviCandidateProblems &&
+  nviCandidateProblems.some(
     (problem) =>
       problem.type === 'UnverifiedCreatorExists' || problem.type === 'UnverifiedCreatorFromOrganizationProblem'
   );

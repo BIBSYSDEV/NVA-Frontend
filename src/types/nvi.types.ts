@@ -89,10 +89,8 @@ export interface RejectedApproval extends FinalizedApproval {
 
 type NviAllowedOperation = 'approval/reject-candidate' | 'approval/approve-candidate' | 'approval/reset-approval';
 
-export type NviCandidateProblemType = 'UnverifiedCreatorExists' | 'UnverifiedCreatorFromOrganizationProblem';
-
-interface NviCandidateProblem {
-  type: NviCandidateProblemType;
+export interface NviCandidateProblem {
+  type: 'UnverifiedCreatorExists' | 'UnverifiedCreatorFromOrganizationProblem';
 }
 
 export interface NviCandidate {

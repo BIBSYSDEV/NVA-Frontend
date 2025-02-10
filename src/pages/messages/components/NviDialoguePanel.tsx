@@ -23,7 +23,7 @@ export const NviDialoguePanel = ({ nviCandidate, nviCandidateQueryKey }: NviDial
   const periodStatus = nviCandidate?.period.status;
 
   const isPendingCandidate = candidateStatus === 'New' || candidateStatus === 'Pending';
-  const hasProblem = hasUnidentifiedContributorProblem(nviCandidate);
+  const hasProblem = hasUnidentifiedContributorProblem(nviCandidate.problems);
 
   return (
     <>
