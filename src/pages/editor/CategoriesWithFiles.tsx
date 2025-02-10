@@ -27,7 +27,7 @@ export const CategoriesWithFiles = () => {
         {t('editor.categories_with_files')}
       </Typography>
 
-      <Typography sx={{ my: '2rem' }}>{t('editor.categories_with_files_description')}</Typography>
+      <Typography gutterBottom>{t('editor.categories_with_files_description')}</Typography>
 
       {customer && <CategoriesWithFilesForCustomer customer={customer} />}
     </>

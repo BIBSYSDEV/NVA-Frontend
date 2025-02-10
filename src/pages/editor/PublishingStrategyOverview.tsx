@@ -94,9 +94,7 @@ export const PublishingStrategyOverview = () => {
 
             <Divider />
 
-            <Typography component="h2" variant="h3">
-              {t('editor.retention_strategy.rrs')}
-            </Typography>
+            <Typography variant="h2">{t('editor.retention_strategy.rrs')}</Typography>
             {isRrs || isOverridableRrs ? (
               <>
                 <Trans
@@ -104,17 +102,13 @@ export const PublishingStrategyOverview = () => {
                   components={[<Typography key="1" />]}
                 />
 
-                <Typography component="h2" variant="h3">
-                  {t('editor.retention_strategy.rrs_info_page')}
-                </Typography>
+                <Typography variant="h3">{t('editor.retention_strategy.rrs_info_page')}</Typography>
 
                 <Link href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer">
                   {customer.rightsRetentionStrategy.id}
                 </Link>
 
-                <Typography component="h2" variant="h3">
-                  {t('editor.retention_strategy.possible_not_to_follow_rrs')}
-                </Typography>
+                <Typography variant="h3">{t('editor.retention_strategy.possible_not_to_follow_rrs')}</Typography>
                 {isOverridableRrs ? (
                   <Trans
                     i18nKey="editor.retention_strategy.creator_can_override_rrs_text"

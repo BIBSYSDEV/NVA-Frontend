@@ -13,7 +13,7 @@ export const EditorDoi = () => {
       <Helmet>
         <title>{t('common.doi_long')}</title>
       </Helmet>
-      <Typography id="doi-label" variant="h1" sx={{ mb: '2rem' }}>
+      <Typography id="doi-label" variant="h1" gutterBottom>
         {t('common.doi_long')}
       </Typography>
       {!customer ? (
@@ -37,7 +37,6 @@ export const EditorDoi = () => {
               display: 'flex',
               columnGap: '1rem',
               width: '100%',
-              'h3, p': { fontWeight: '500' },
             }}>
             <Box
               sx={{
