@@ -1,3 +1,4 @@
+import { FileType } from '../types/associatedArtifact.types';
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import {
@@ -98,6 +99,67 @@ export const fetchRegistration = async (registrationIdentifier: string, doNotRed
     : await apiRequest2<Registration>({ url });
 
   return fetchRegistrationResponse.data;
+};
+
+interface LogEntryOnBehalfOf {
+  id: string;
+  topLevelOrgCristinId: string;
+  shortName: string;
+  displayName: string;
+}
+
+interface LogEntryPerformedBy {
+  userName: string;
+  givenName: string;
+  familyName: string;
+  cristinId: string;
+  organization: string;
+  onBehalfOf: LogEntryOnBehalfOf;
+}
+
+interface BaseLogEntry {
+  timestamp: string;
+  performedBy?: LogEntryPerformedBy;
+}
+
+interface PublicationLogEntry extends BaseLogEntry {
+  type: 'PublicationLogEntry';
+  topic:
+    | 'PublicationCreated'
+    | 'PublicationPublished'
+    | 'PublicationUnpublished'
+    | 'PublicationDeleted'
+    | 'PublicationRepublished';
+}
+
+interface PublicationImportedLogEntry extends Omit<PublicationLogEntry, 'topic'> {
+  topic: 'PublicationImported';
+  source: {
+    importSource: {
+      archive?: string;
+      source: string;
+    };
+  };
+}
+
+interface FileLogEntry extends BaseLogEntry {
+  type: 'FileLogEntry';
+  topic: 'FileUploaded' | 'FileApproved' | 'FileRejected' | 'FileDeleted';
+  filename: string;
+  fileType: FileType;
+}
+
+export type LogEntryType = PublicationLogEntry | FileLogEntry | PublicationImportedLogEntry;
+
+interface RegistrationLogResponse {
+  logEntries: LogEntryType[];
+}
+
+export const fetchRegistrationLog = async (registrationId: string) => {
+  const fetchRegistrationLogResponse = await authenticatedApiRequest2<RegistrationLogResponse>({
+    url: `${registrationId}/log`,
+  });
+  return fetchRegistrationLogResponse.data;
 };
 
 export const fetchRegistrationsByOwner = async () => {
