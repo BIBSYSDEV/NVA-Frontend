@@ -82,20 +82,19 @@ export const PublicRegistrationContributors = ({
       </Box>
 
       {problems && hasUnidentifiedContributorProblem(problems) && (
-        <Box
-          sx={{
-            width: 'max-content',
-            m: '1rem auto 0 auto',
-            py: '0.3rem',
-            px: '2rem',
-            bgcolor: 'primary.light',
-            color: 'primary.contrastText',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-          }}>
-          <WarningIcon fontSize="small" />
-          <Typography color="inherit">{t('tasks.nvi.unidentified_person_with_nvi_institution')}</Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem' }}>
+          <Box
+            sx={{
+              p: '0.3rem 2rem',
+              bgcolor: 'primary.light',
+              color: 'primary.contrastText',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem',
+            }}>
+            <WarningIcon fontSize="small" />
+            <Typography color="inherit">{t('tasks.nvi.unidentified_person_with_nvi_institution')}</Typography>
+          </Box>
         </Box>
       )}
     </Box>
