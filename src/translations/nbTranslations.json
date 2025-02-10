@@ -486,7 +486,6 @@
     "subunits_count_one": "{{count}} underenhet",
     "subunits_count_other": "{{count}} underenheter",
     "vocabulary": "Vokabular",
-    "vocabulary_controlled": "Kontrollerte emneord",
     "vocabulary_description": "Kontrollerte emneord (vokabular) som kan benyttes ved registrering av nytt resultat.",
     "vocabulary_status": {
       "Allowed": "Tillatt",
@@ -495,8 +494,7 @@
       "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
       "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
-    },
-    "vocabulary_settings": "Vokabularinnstillinger"
+    }
   },
   "feedback": {
     "error": {
