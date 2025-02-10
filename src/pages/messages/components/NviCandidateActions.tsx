@@ -167,32 +167,34 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
       </Box>
 
       {nviCandidate.problems && nviCandidate.problems.length > 0 && (
-        <Box sx={{ gridArea: 'problem' }}>
-          <Divider sx={{ mb: '1rem' }} />
-          <Trans
-            i18nKey="tasks.nvi.problem"
-            components={{
-              p: <Typography gutterBottom />,
-              ul: <Box component="ul" sx={{ mt: 0, mb: '0.5rem', pl: '2rem' }} />,
-              li: <li />,
-            }}
-          />
+        <>
+          <Divider sx={{ gridArea: 'divider0' }} />
+          <Box sx={{ gridArea: 'problem' }}>
+            <Trans
+              i18nKey="tasks.nvi.problem"
+              components={{
+                p: <Typography gutterBottom />,
+                ul: <Box component="ul" sx={{ mt: 0, mb: '0.5rem', pl: '2rem' }} />,
+                li: <li />,
+              }}
+            />
 
-          <Button
-            sx={{ bgcolor: 'primary.light' }}
-            variant="contained"
-            fullWidth
-            size="small"
-            data-testid={dataTestId.tasksPage.nvi.editResultButton}
-            endIcon={<EditIcon />}
-            component={RouterLink}
-            state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
-            to={getRegistrationWizardPath(getIdentifierFromId(nviCandidate.publicationId), {
-              tab: RegistrationTab.Contributors,
-            })}>
-            {t('registration.edit_registration')}
-          </Button>
-        </Box>
+            <Button
+              sx={{ bgcolor: 'primary.light' }}
+              variant="contained"
+              fullWidth
+              size="small"
+              data-testid={dataTestId.tasksPage.nvi.editResultButton}
+              endIcon={<EditIcon />}
+              component={RouterLink}
+              state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
+              to={getRegistrationWizardPath(getIdentifierFromId(nviCandidate.publicationId), {
+                tab: RegistrationTab.Contributors,
+              })}>
+              {t('registration.edit_registration')}
+            </Button>
+          </Box>
+        </>
       )}
 
       <Divider sx={{ gridArea: 'divider1' }} />

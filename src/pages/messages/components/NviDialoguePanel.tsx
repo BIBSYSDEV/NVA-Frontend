@@ -22,6 +22,7 @@ export const NviDialoguePanel = ({ nviCandidate, nviCandidateQueryKey }: NviDial
   const periodStatus = nviCandidate?.period.status;
 
   const isPendingCandidate = candidateStatus === 'New' || candidateStatus === 'Pending';
+  const hasProblem = nviCandidate.problems && nviCandidate.problems.length > 0;
 
   return (
     <>
@@ -38,8 +39,12 @@ export const NviDialoguePanel = ({ nviCandidate, nviCandidateQueryKey }: NviDial
           display: 'grid',
           gap: '1rem',
           gridTemplateAreas: isPendingCandidate
-            ? "'curator' 'approvals' 'problem' 'divider1' 'actions' 'divider2' 'comment'"
-            : "'curator' 'approvals' 'problem' 'divider1' 'comment' 'divider2' 'actions'",
+            ? hasProblem
+              ? "'curator' 'approvals' 'divider0' 'problem' 'divider1' 'actions' 'divider2' 'comment'"
+              : "'curator' 'approvals' 'divider1' 'actions' 'divider2' 'comment'"
+            : hasProblem
+              ? "'curator' 'approvals' 'divider0' 'problem' 'divider1' 'comment' 'divider2' 'actions'"
+              : "'curator' 'approvals' 'divider1' 'comment' 'divider2' 'actions'",
         }}>
         {periodStatus === 'OpenPeriod' && nviCandidate ? (
           <NviCandidateActions nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
