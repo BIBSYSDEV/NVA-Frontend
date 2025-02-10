@@ -50,7 +50,7 @@ export const FindPersonPanel = () => {
               </Button>
             ) : (
               <>
-                <Typography component="h2" variant="h3" sx={{ mt: '1rem' }}>
+                <Typography variant="h3" sx={{ mt: '1rem' }}>
                   {t('basic_data.add_employee.create_person')}
                 </Typography>
                 <Field name="person.firstName">
