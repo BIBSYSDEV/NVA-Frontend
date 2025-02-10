@@ -9,4 +9,5 @@ export const mockNviCandidate: NviCandidate = {
     status: 'OpenPeriod',
   },
   allowedOperations: ['approval/approve-candidate', 'approval/reject-candidate', 'approval/reset-approval'],
+  problems: [],
 };

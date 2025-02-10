@@ -8,6 +8,7 @@ import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
 import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
+import { NviCandidateProblemsContext } from '../../../context/NviCandidateProblemsContext';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
@@ -107,7 +108,9 @@ export const NviCandidatePage = () => {
       {registrationQuery.data && (
         <ErrorBoundary>
           <ErrorBoundary>
-            <PublicRegistrationContent registration={registrationQuery.data} />
+            <NviCandidateProblemsContext.Provider value={{ problems: nviCandidate?.problems }}>
+              <PublicRegistrationContent registration={registrationQuery.data} />
+            </NviCandidateProblemsContext.Provider>
 
             {previousCandidateIdentifier && (
               <NavigationIconButton
