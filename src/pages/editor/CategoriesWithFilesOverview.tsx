@@ -21,7 +21,7 @@ export const CategoriesWithFilesOverview = () => {
       <Helmet>
         <title>{t('editor.categories_with_files')}</title>
       </Helmet>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         {t('editor.categories_with_files')}
       </Typography>
       <CategorySelector selectedCategories={selectedCategories} categoriesWithoutFiles={categoriesWithoutFiles} />

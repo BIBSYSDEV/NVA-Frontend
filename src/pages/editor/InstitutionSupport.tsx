@@ -39,7 +39,7 @@ export const InstitutionSupport = () => {
         <Formik initialValues={customer} onSubmit={async (values) => customerMutation.mutateAsync(values)}>
           {({ isSubmitting }: FormikProps<CustomerInstitution>) => (
             <Form style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <Typography gutterBottom variant="h2">
+              <Typography gutterBottom variant="h1">
                 {t('editor.institution.institution_support')}
               </Typography>
               <Typography sx={{ mb: '1rem' }}>{t('editor.institution.institution_support_description')}</Typography>

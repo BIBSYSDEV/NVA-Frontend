@@ -81,9 +81,11 @@ export const VocabularySettings = () => {
       <Helmet>
         <title id="vocabulary-label">{t('editor.vocabulary')}</title>
       </Helmet>
-      <Typography sx={{ mb: '1rem' }} color="primary" fontWeight="600">
-        {t('editor.select_vocabulary_description')}
+      <Typography gutterBottom variant="h1">
+        {t('editor.vocabulary')}
       </Typography>
+
+      <Typography gutterBottom>{t('editor.select_vocabulary_description')}</Typography>
 
       {isLoadingVocabularyList ? (
         <CircularProgress aria-labelledby="vocabulary-label" />

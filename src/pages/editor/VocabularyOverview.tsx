@@ -35,10 +35,10 @@ export const VocabularyOverview = () => {
       <Helmet>
         <title id="vocabulary-label">{t('editor.vocabulary')}</title>
       </Helmet>
-
-      <Typography gutterBottom fontWeight="600">
-        {t('editor.vocabulary_controlled')}
+      <Typography gutterBottom variant="h1">
+        {t('editor.vocabulary')}
       </Typography>
+
       <Typography>{t('editor.vocabulary_description')}</Typography>
 
       {vocabularyQuery.isPending ? (
