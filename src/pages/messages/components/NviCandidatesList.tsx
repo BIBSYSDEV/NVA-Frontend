@@ -29,6 +29,7 @@ export const NviCandidatesList = () => {
   const searchParams = new URLSearchParams(location.search);
 
   const nviCandidatesQuery = useFetchNviCandidates({ params: nviParams });
+  const nviCandidatesQueryResults = nviCandidatesQuery.data?.hits ?? [];
 
   const page = Math.floor(nviParams.offset / nviParams.size) + 1;
 
@@ -113,11 +114,11 @@ export const NviCandidatesList = () => {
         sortingComponent={<NviSortSelector />}>
         {nviCandidatesQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-        ) : nviCandidatesQuery.data?.hits.length === 0 ? (
+        ) : nviCandidatesQueryResults.length === 0 ? (
           <Typography>{t('tasks.nvi.no_nvi_candidates')}</Typography>
         ) : (
           <List data-testid={dataTestId.tasksPage.nvi.candidatesList}>
-            {nviCandidatesQuery.data?.hits.map((nviCandidate, index) => {
+            {nviCandidatesQueryResults.map((nviCandidate, index) => {
               const currentOffset = (page - 1) * nviParams.size + index;
               return (
                 <ErrorBoundary key={nviCandidate.identifier}>
