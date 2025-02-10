@@ -7,11 +7,13 @@ import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, use
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
+import { fetchFundingSource, fetchPerson } from '../../../api/cristinApi';
+import { useFetchOrganizationByIdentifier } from '../../../api/hooks/useFetchOrganizationByIdentifier';
 import { fetchPublisher, fetchSerialPublication } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import {
   createSearchConfigFromSearchParams,
   dataSearchFieldAttributeName,
@@ -237,7 +239,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                   case ResultParam.TopLevelOrganization: {
                     fieldName = t('common.institution');
                     const institutionLabels = registrationQuery.data?.aggregations?.topLevelOrganization?.find(
-                      (bucket) => bucket.key === value
+                      (bucket) => getIdentifierFromId(bucket.key) === value
                     )?.labels;
 
                     const institutionName = institutionLabels ? getLanguageString(institutionLabels) : '';
@@ -245,7 +247,9 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                       fieldValueText = institutionName;
                     } else {
                       fieldValueText = (
-                        <SelectedInstitutionFacetButton institutionId={typeof value === 'string' ? value : value[0]} />
+                        <SelectedInstitutionFacetButton
+                          institutionIdentifier={typeof value === 'string' ? value : value[0]}
+                        />
                       );
                     }
                     break;
@@ -377,19 +381,13 @@ const SelectedContributorFacetButton = ({ personId }: SelectedContributorFacetBu
 };
 
 interface SelectedInstitutionFacetButtonProps {
-  institutionId: string;
+  institutionIdentifier: string;
 }
 
-const SelectedInstitutionFacetButton = ({ institutionId }: SelectedInstitutionFacetButtonProps) => {
+const SelectedInstitutionFacetButton = ({ institutionIdentifier }: SelectedInstitutionFacetButtonProps) => {
   const { t } = useTranslation();
 
-  const organizationQuery = useQuery({
-    queryKey: [institutionId],
-    queryFn: () => (institutionId ? fetchOrganization(institutionId) : undefined),
-    staleTime: Infinity,
-    gcTime: 1_800_000,
-    meta: { errorMessage: t('feedback.error.get_institution') },
-  });
+  const organizationQuery = useFetchOrganizationByIdentifier(institutionIdentifier);
 
   const institutionName = getLanguageString(organizationQuery.data?.labels) || t('common.unknown');
 

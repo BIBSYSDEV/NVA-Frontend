@@ -47,7 +47,6 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={personQuery.isPending}
                 isSelected={isSelected}
@@ -71,7 +70,6 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={personQuery.isPending}
                 isSelected={isSelected}
