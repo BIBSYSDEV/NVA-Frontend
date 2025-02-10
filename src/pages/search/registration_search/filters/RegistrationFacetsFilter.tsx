@@ -11,6 +11,7 @@ import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPageProps } from '../../SearchPage';
 import { SearchForInstitutionFacetItem } from './SearchForInstitutionFacetItem';
+import { SearchForPublisherFacetItem } from './SearchForPublisherFacetItem';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
@@ -160,7 +161,14 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       )}
 
       {publisherFacet.length > 0 && (
-        <FacetItem title={t('common.publisher')} dataTestId={dataTestId.aggregations.publisherFacets}>
+        <FacetItem
+          title={t('common.publisher')}
+          dataTestId={dataTestId.aggregations.publisherFacets}
+          renderCustomSelect={
+            <SearchForPublisherFacetItem
+              onSelectChannel={(identifier) => addFacetFilter(ResultParam.Publisher, identifier)}
+            />
+          }>
           {publisherFacet.map((facet) => {
             const isSelected = !!registrationParams.publisher?.includes(facet.key);
 
