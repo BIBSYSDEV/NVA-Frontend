@@ -28,17 +28,11 @@ import { RegistrationTab } from '../../../types/registration.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { hasUnidentifiedContributorProblem } from '../../../utils/nviHelpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { MessageItem } from './MessageList';
 import { NviCandidateRejectionDialog } from './NviCandidateRejectionDialog';
 import { NviNoteMenu } from './NviNoteMenu';
-
-export const hasUnidentifiedContributorProblem = (nviCandidate: NviCandidate) =>
-  nviCandidate.problems &&
-  nviCandidate.problems.some(
-    (problem) =>
-      problem.type === 'UnverifiedCreatorExists' || problem.type === 'UnverifiedCreatorFromOrganizationProblem'
-  );
 
 interface NviNote {
   type: 'FinalizedNote' | 'GeneralNote';

@@ -4,8 +4,9 @@ import { useSelector } from 'react-redux';
 import { NviStatusChip } from '../../../components/StatusChip';
 import { RootState } from '../../../redux/store';
 import { NviCandidate } from '../../../types/nvi.types';
+import { hasUnidentifiedContributorProblem } from '../../../utils/nviHelpers';
 import { NviApprovals } from './NviApprovals';
-import { hasUnidentifiedContributorProblem, NviCandidateActions } from './NviCandidateActions';
+import { NviCandidateActions } from './NviCandidateActions';
 
 interface NviDialoguePanelProps {
   nviCandidate: NviCandidate;
