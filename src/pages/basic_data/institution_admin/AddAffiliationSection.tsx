@@ -28,7 +28,7 @@ export const AddAffiliationSection = () => {
 
   return (
     <section>
-      <Typography component="h2" variant="h3" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {t('common.employment')}
       </Typography>
 
