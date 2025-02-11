@@ -3,7 +3,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Box, Collapse, List, ListItemButton, ListItemText, Theme, Typography, useMediaQuery } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FacetContentSkeleton } from './FacetItemContentSkeleton';
+import { FacetItemContentSkeleton } from './FacetItemContentSkeleton';
 
 interface FacetItemProps {
   dataTestId: string;
@@ -50,7 +50,7 @@ export const FacetItem = ({ title, children, dataTestId, renderCustomSelect, isP
         {renderCustomSelect}
         {childrenIsList ? (
           isPending ? (
-            <FacetContentSkeleton />
+            <FacetItemContentSkeleton />
           ) : (
             <List disablePadding>
               {showAll ? children : children.slice(0, itemsToShowByDefault)}
