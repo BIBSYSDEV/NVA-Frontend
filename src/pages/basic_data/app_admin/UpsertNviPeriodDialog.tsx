@@ -66,7 +66,7 @@ export const UpsertNviPeriodDialog = ({
       open={location.pathname === UrlPathTemplate.BasicDataNviNew || !!nviPeriod}
       onClose={closeDialog}
       data-testid={dataTestId.basicData.nviPeriod.nviPeriodDialog}>
-      <DialogTitle component="h1">
+      <DialogTitle>
         {nviPeriod ? t('basic_data.nvi.update_reporting_period') : t('basic_data.nvi.add_reporting_period')}
       </DialogTitle>
       <Formik
