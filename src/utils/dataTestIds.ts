@@ -20,6 +20,7 @@ export const dataTestId = {
     seriesFacets: 'series-facets',
     typeFacets: 'type-facets',
     institutionFacets: 'institution-facets',
+    institutionFacetsSearchField: 'institution-facets-search-field',
   },
   basicData: {
     addCustomerLink: 'add-customer-link',
