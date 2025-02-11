@@ -3,7 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { defaultChannelSearchSize, fetchPublisher, searchForPublishers } from '../../../api/publicationChannelApi';
+import { usePublisherSearch } from '../../../api/hooks/usePublisherSearch';
+import { defaultChannelSearchSize, fetchPublisher } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import {
   AutocompleteListboxWithExpansion,
@@ -14,7 +15,7 @@ import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { Publisher } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { keepSimilarPreviousData, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 export const PublisherFilter = () => {
@@ -30,13 +31,7 @@ export const PublisherFilter = () => {
   // Reset search size when query changes
   useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
-  const publisherOptionsQuery = useQuery({
-    queryKey: ['publisherSearch', debouncedQuery, searchSize],
-    enabled: debouncedQuery.length > 3 && debouncedQuery === publisherQuery,
-    queryFn: () => searchForPublishers(debouncedQuery, '2023', searchSize),
-    meta: { errorMessage: t('feedback.error.get_publishers') },
-    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
-  });
+  const publisherOptionsQuery = usePublisherSearch({ searchTerm: debouncedQuery, size: searchSize });
 
   const options = publisherOptionsQuery.data?.hits ?? [];
 

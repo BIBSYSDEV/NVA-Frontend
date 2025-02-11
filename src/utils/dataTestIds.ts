@@ -14,6 +14,7 @@ export const dataTestId = {
     participantFacets: 'participant-facets',
     participantOrgFacets: 'participant-org-facets',
     publisherFacets: 'publisher-facets',
+    publisherFacetsSearchField: 'publisher-facets-search-field',
     responsibleFacets: 'responsible-facets',
     scientificIndexFacet: 'scientific-index-facet',
     sectorFacets: 'sector-facets',
@@ -21,6 +22,7 @@ export const dataTestId = {
     seriesFacetsSearchField: 'series-facets-search-field',
     typeFacets: 'type-facets',
     institutionFacets: 'institution-facets',
+    institutionFacetsSearchField: 'institution-facets-search-field',
   },
   basicData: {
     addCustomerLink: 'add-customer-link',
