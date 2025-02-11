@@ -189,10 +189,12 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           title={t('registration.resource_type.series')}
           dataTestId={dataTestId.aggregations.seriesFacets}
           renderCustomSelect={
-            <SearchForSerialPublicationFacetItem
-              searchMode="series"
-              onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Series, identifier)}
-            />
+            !searchParams.has(ResultParam.Series) && (
+              <SearchForSerialPublicationFacetItem
+                searchMode="series"
+                onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Series, identifier)}
+              />
+            )
           }>
           {seriesFacet.map((facet) => {
             const isSelected = !!registrationParams.series?.includes(facet.key);
@@ -221,10 +223,12 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           title={t('registration.resource_type.journal')}
           dataTestId={dataTestId.aggregations.journalFacets}
           renderCustomSelect={
-            <SearchForSerialPublicationFacetItem
-              searchMode="journal"
-              onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Journal, identifier)}
-            />
+            !searchParams.has(ResultParam.Journal) && (
+              <SearchForSerialPublicationFacetItem
+                searchMode="journal"
+                onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Journal, identifier)}
+              />
+            )
           }>
           {journalFacet.map((facet) => {
             const isSelected = !!registrationParams.journal?.includes(facet.key);
