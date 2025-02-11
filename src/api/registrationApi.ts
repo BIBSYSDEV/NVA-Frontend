@@ -109,7 +109,6 @@ interface LogEntryOnBehalfOf {
 }
 
 interface LogEntryPerformedBy {
-  userName: string;
   givenName: string;
   familyName: string;
   cristinId: string;
