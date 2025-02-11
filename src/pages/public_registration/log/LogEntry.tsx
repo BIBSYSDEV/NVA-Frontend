@@ -7,9 +7,9 @@ import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import UnpublishedOutlinedIcon from '@mui/icons-material/UnpublishedOutlined';
 import { Avatar, Box, Divider, styled, SvgIconProps, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { LogEntryType } from '../../../api/registrationApi';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
 import { FileType } from '../../../types/associatedArtifact.types';
+import { LogEntryObject } from '../../../types/log.types';
 import { getInitials } from '../../../utils/general-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 
@@ -22,7 +22,7 @@ const StyledLogRow = styled(Box)({
 });
 
 interface LogEntryProps {
-  logEntry: LogEntryType;
+  logEntry: LogEntryObject;
 }
 
 export const LogEntry = ({ logEntry }: LogEntryProps) => {
@@ -94,7 +94,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
   );
 };
 
-const getLogEntryBackgroundColor = (topic: LogEntryType['topic']) => {
+const getLogEntryBackgroundColor = (topic: LogEntryObject['topic']) => {
   switch (topic) {
     case 'PublicationImported':
       return 'centralImport.light';
@@ -103,7 +103,7 @@ const getLogEntryBackgroundColor = (topic: LogEntryType['topic']) => {
   }
 };
 
-const LogHeaderIcon = ({ topic }: Pick<LogEntryType, 'topic'>) => {
+const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
   switch (topic) {
     case 'PublicationCreated':
       return <AddCircleOutlineIcon {...logIconProps} />;
