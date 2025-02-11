@@ -12,6 +12,7 @@ import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilt
 import { SearchPageProps } from '../../SearchPage';
 import { SearchForInstitutionFacetItem } from './SearchForInstitutionFacetItem';
 import { SearchForPublisherFacetItem } from './SearchForPublisherFacetItem';
+import { SearchForSerialPublicationFacetItem } from './SearchForSerialPublicationFacetItem';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
@@ -194,7 +195,17 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       )}
 
       {seriesFacet.length > 0 && (
-        <FacetItem title={t('registration.resource_type.series')} dataTestId={dataTestId.aggregations.seriesFacets}>
+        <FacetItem
+          title={t('registration.resource_type.series')}
+          dataTestId={dataTestId.aggregations.seriesFacets}
+          renderCustomSelect={
+            !searchParams.has(ResultParam.Series) && (
+              <SearchForSerialPublicationFacetItem
+                searchMode="series"
+                onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Series, identifier)}
+              />
+            )
+          }>
           {seriesFacet.map((facet) => {
             const isSelected = !!registrationParams.series?.includes(facet.key);
 
@@ -218,7 +229,17 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       )}
 
       {journalFacet.length > 0 && (
-        <FacetItem title={t('registration.resource_type.journal')} dataTestId={dataTestId.aggregations.journalFacets}>
+        <FacetItem
+          title={t('registration.resource_type.journal')}
+          dataTestId={dataTestId.aggregations.journalFacets}
+          renderCustomSelect={
+            !searchParams.has(ResultParam.Journal) && (
+              <SearchForSerialPublicationFacetItem
+                searchMode="journal"
+                onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Journal, identifier)}
+              />
+            )
+          }>
           {journalFacet.map((facet) => {
             const isSelected = !!registrationParams.journal?.includes(facet.key);
 
