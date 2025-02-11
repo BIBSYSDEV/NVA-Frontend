@@ -1,19 +1,9 @@
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import {
-  Box,
-  Collapse,
-  List,
-  ListItemButton,
-  ListItemText,
-  Skeleton,
-  styled,
-  Theme,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Collapse, List, ListItemButton, ListItemText, Theme, Typography, useMediaQuery } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FacetContentSkeleton } from './FacetItemContentSkeleton';
 
 interface FacetItemProps {
   dataTestId: string;
@@ -81,35 +71,6 @@ export const FacetItem = ({ title, children, dataTestId, renderCustomSelect, isP
           children
         )}
       </Collapse>
-    </Box>
-  );
-};
-
-const getRandomWidth = (min: number, maxOffset: number) => `${Math.random() * maxOffset + min}%`;
-
-const StyledFacetRowSkeletonContainer = styled(Box)({
-  display: 'flex',
-  justifyContent: 'space-between',
-  gap: '3rem',
-});
-
-const FacetContentSkeleton = () => {
-  return (
-    <Box sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <StyledFacetRowSkeletonContainer>
-        <Skeleton sx={{ width: getRandomWidth(30, 60) }} />
-        <Skeleton sx={{ width: '3rem' }} />
-      </StyledFacetRowSkeletonContainer>
-
-      <StyledFacetRowSkeletonContainer>
-        <Skeleton sx={{ width: getRandomWidth(30, 60) }} />
-        <Skeleton sx={{ width: '3rem' }} />
-      </StyledFacetRowSkeletonContainer>
-
-      <StyledFacetRowSkeletonContainer>
-        <Skeleton sx={{ width: getRandomWidth(30, 60) }} />
-        <Skeleton sx={{ width: '2rem' }} />
-      </StyledFacetRowSkeletonContainer>
     </Box>
   );
 };
