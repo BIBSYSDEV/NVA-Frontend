@@ -190,9 +190,8 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           dataTestId={dataTestId.aggregations.seriesFacets}
           renderCustomSelect={
             <SearchForSerialPublicationFacetItem
+              searchMode="series"
               onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Series, identifier)}
-              label={t('search.search_for_series')}
-              dataTestId={dataTestId.aggregations.seriesFacetsSearchField}
             />
           }>
           {seriesFacet.map((facet) => {
@@ -223,9 +222,8 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           dataTestId={dataTestId.aggregations.journalFacets}
           renderCustomSelect={
             <SearchForSerialPublicationFacetItem
+              searchMode="journal"
               onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Journal, identifier)}
-              label={t('search.search_for_journal')}
-              dataTestId={dataTestId.aggregations.journalFacetsSearchField}
             />
           }>
           {journalFacet.map((facet) => {

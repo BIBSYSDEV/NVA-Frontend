@@ -4,12 +4,14 @@ import { keepSimilarPreviousData } from '../../utils/searchHelpers';
 import { searchForSerialPublications } from '../publicationChannelApi';
 
 interface SerialPublicationSearchParams {
+  searchMode: 'journal' | 'series';
   searchTerm: string;
   size: number;
   year?: string;
 }
 
 export const useSerialPublicationSearch = ({
+  searchMode,
   searchTerm,
   year = new Date().getFullYear().toString(),
   size,
@@ -19,7 +21,7 @@ export const useSerialPublicationSearch = ({
     queryKey: ['serialPublicationSearch', searchTerm, year, size],
     enabled: searchTerm.length > 3,
     queryFn: () => searchForSerialPublications(searchTerm, year, size),
-    meta: { errorMessage: t('feedback.error.get_journals') },
+    meta: { errorMessage: searchMode === 'series' ? t('feedback.error.get_series') : t('feedback.error.get_journals') },
     placeholderData: (data, query) => keepSimilarPreviousData(data, query, searchTerm),
   });
 };

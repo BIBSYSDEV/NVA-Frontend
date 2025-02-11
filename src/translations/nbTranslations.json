@@ -323,6 +323,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -394,11 +398,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -716,18 +716,18 @@
       "doi_given": "DOI tildelt",
       "doi_rejected": "DOI avvist",
       "doi_requested": "Etterspurt DOI",
-      "file_archived_one": "Fil arkivert",
-      "file_archived_other": "Filer arkivert",
       "file_archived_count_one": "{{count}} fil arkivert",
       "file_archived_count_other": "{{count}} filer arkivert",
+      "file_archived_one": "Fil arkivert",
+      "file_archived_other": "Filer arkivert",
       "file_published_count_one": "{{count}} fil publisert",
       "file_published_count_other": "{{count}} filer publisert",
       "files_published_one": "Fil publisert",
       "files_published_other": "Filer publisert",
-      "files_rejected_one": "Fil avvist",
-      "files_rejected_other": "Filer avvist",
       "files_rejected_count_one": "{{count}} fil avvist",
       "files_rejected_count_other": "{{count}} filer avvist",
+      "files_rejected_one": "Fil avvist",
+      "files_rejected_other": "Filer avvist",
       "files_uploaded_one": "Fil lastet opp",
       "files_uploaded_other": "Filer lastet opp",
       "imported": "Importert",
@@ -2052,6 +2052,8 @@
     "search_for_course_code": "Søk etter emnekode",
     "search_for_funder": "Søk etter finansiør",
     "search_for_funding_identifier": "Søk på Tilskudds-ID",
+    "search_for_journal": "Søk etter tidsskrift",
+    "search_for_series": "Søk etter serie",
     "search_for_sub_unit": "Søk etter underenhet",
     "search_for_title": "Søk etter tittel",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv.",
@@ -2071,9 +2073,7 @@
     "sort_by_relevance": "Relevans",
     "sorted_by": "Sortert etter",
     "year_from": "Fra år",
-    "year_to": "Til år",
-    "search_for_series": "Søk etter serie",
-    "search_for_journal": "Søk etter tidsskrift"
+    "year_to": "Til år"
   },
   "tasks": {
     "correction_list": "Retteliste",

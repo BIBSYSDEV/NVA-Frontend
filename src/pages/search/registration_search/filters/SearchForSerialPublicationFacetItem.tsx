@@ -1,5 +1,6 @@
 import { Autocomplete } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSerialPublicationSearch } from '../../../../api/hooks/useSerialPublicationSearch';
 import { defaultChannelSearchSize } from '../../../../api/publicationChannelApi';
 import {
@@ -7,27 +8,31 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { PublicationChannelOption } from '../../../registration/resource_type_tab/components/PublicationChannelOption';
 
 interface SearchForSerialPublicationFacetItemProps {
-  label: string;
-  dataTestId: string;
+  searchMode: 'journal' | 'series';
   onSelectSerialPublication: (identifier: string) => void;
 }
 
 export const SearchForSerialPublicationFacetItem = ({
-  label,
-  dataTestId,
+  searchMode,
   onSelectSerialPublication,
 }: SearchForSerialPublicationFacetItemProps) => {
+  const { t } = useTranslation();
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedQuery = useDebounce(searchQuery);
 
   useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
-  const serialPublicationSearchQuery = useSerialPublicationSearch({ searchTerm: debouncedQuery, size: searchSize });
+  const serialPublicationSearchQuery = useSerialPublicationSearch({
+    searchMode,
+    searchTerm: debouncedQuery,
+    size: searchSize,
+  });
 
   const options = serialPublicationSearchQuery.data?.hits ?? [];
 
@@ -69,9 +74,13 @@ export const SearchForSerialPublicationFacetItem = ({
           {...params}
           variant="outlined"
           isLoading={serialPublicationSearchQuery.isLoading}
-          data-testid={dataTestId}
-          aria-label={label}
-          placeholder={label}
+          data-testid={
+            searchMode === 'series'
+              ? dataTestId.aggregations.seriesFacetsSearchField
+              : dataTestId.aggregations.journalFacetsSearchField
+          }
+          aria-label={searchMode === 'series' ? t('search.search_for_series') : t('search.search_for_journal')}
+          placeholder={searchMode === 'series' ? t('search.search_for_series') : t('search.search_for_journal')}
           showSearchIcon
         />
       )}
