@@ -237,7 +237,7 @@ const TasksPage = () => {
                 isAuthorized={isTicketCurator}
                 element={
                   <TicketListDefaultValuesWrapper>
-                    <TicketList ticketsQuery={ticketsQuery} title={t('common.tasks')} />
+                    <TicketList ticketsQuery={ticketsQuery} title={t('tasks.user_dialog')} />
                   </TicketListDefaultValuesWrapper>
                 }
               />

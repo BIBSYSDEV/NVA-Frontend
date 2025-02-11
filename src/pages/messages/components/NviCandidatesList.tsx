@@ -1,4 +1,5 @@
 import { Box, List, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
@@ -36,8 +37,11 @@ export const NviCandidatesList = () => {
   return (
     <section>
       <Helmet>
-        <title>{t('common.nvi')}</title>
+        <title>{t('tasks.nvi.nvi_control')}</title>
       </Helmet>
+      <Typography component="h1" sx={visuallyHidden}>
+        {t('tasks.nvi.nvi_control')}
+      </Typography>
 
       <Box
         sx={{
