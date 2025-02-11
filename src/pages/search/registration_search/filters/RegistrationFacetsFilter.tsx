@@ -166,7 +166,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           dataTestId={dataTestId.aggregations.publisherFacets}
           renderCustomSelect={
             <SearchForPublisherFacetItem
-              onSelectChannel={(identifier) => addFacetFilter(ResultParam.Publisher, identifier)}
+              onSelectPublisher={(identifier) => addFacetFilter(ResultParam.Publisher, identifier)}
             />
           }>
           {publisherFacet.map((facet) => {

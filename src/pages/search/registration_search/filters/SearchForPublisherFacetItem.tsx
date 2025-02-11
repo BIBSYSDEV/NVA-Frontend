@@ -11,26 +11,26 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { PublicationChannelOption } from '../../../registration/resource_type_tab/components/PublicationChannelOption';
 
-interface SearchForInstitutionFacetRowProps {
-  onSelectChannel: (institutionId: string) => void;
+interface SearchForFacetFacetItemProps {
+  onSelectPublisher: (publisherId: string) => void;
 }
 
-const defaultChannelSearchSize = 10;
+const defaultSearchSize = 10;
 const currentYearString = new Date().getFullYear().toString();
 
-export const SearchForPublisherFacetItem = ({ onSelectChannel }: SearchForInstitutionFacetRowProps) => {
+export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForFacetFacetItemProps) => {
   const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
+  const [searchSize, setSearchSize] = useState(defaultSearchSize);
   const debouncedQuery = useDebounce(searchQuery);
-  const channelSearchQuery = useSearchForPublisher({
+  const publisherSearchQuery = useSearchForPublisher({
     searchTerm: debouncedQuery,
     year: currentYearString,
     size: searchSize,
   });
 
-  const options = channelSearchQuery.data?.hits ?? [];
+  const options = publisherSearchQuery.data?.hits ?? [];
 
   return (
     <Autocomplete
@@ -51,11 +51,11 @@ export const SearchForPublisherFacetItem = ({ onSelectChannel }: SearchForInstit
       }}
       onChange={(_, selectedPublisher) => {
         if (selectedPublisher) {
-          onSelectChannel(selectedPublisher.identifier);
+          onSelectPublisher(selectedPublisher.identifier);
         }
         setSearchQuery('');
       }}
-      loading={channelSearchQuery.isFetching}
+      loading={publisherSearchQuery.isFetching}
       renderOption={({ key, ...props }, option, state) => (
         <PublicationChannelOption
           key={option.identifier}
@@ -69,8 +69,8 @@ export const SearchForPublisherFacetItem = ({ onSelectChannel }: SearchForInstit
         <AutocompleteTextField
           {...params}
           variant="outlined"
-          isLoading={channelSearchQuery.isLoading}
-          data-testid={dataTestId.organization.searchField}
+          isLoading={publisherSearchQuery.isLoading}
+          data-testid={dataTestId.aggregations.publisherFacetsSearchField}
           aria-label={t('registration.resource_type.search_for_publisher')}
           placeholder={t('registration.resource_type.search_for_publisher')}
           showSearchIcon
@@ -80,9 +80,9 @@ export const SearchForPublisherFacetItem = ({ onSelectChannel }: SearchForInstit
         listbox: {
           component: AutocompleteListboxWithExpansion,
           ...({
-            hasMoreHits: !!channelSearchQuery.data?.totalHits && channelSearchQuery.data.totalHits > searchSize,
-            onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-            isLoadingMoreHits: channelSearchQuery.isFetching && searchSize > options.length,
+            hasMoreHits: !!publisherSearchQuery.data?.totalHits && publisherSearchQuery.data.totalHits > searchSize,
+            onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+            isLoadingMoreHits: publisherSearchQuery.isFetching && searchSize > options.length,
           } satisfies AutocompleteListboxWithExpansionProps),
         },
       }}

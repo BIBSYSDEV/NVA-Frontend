@@ -13,6 +13,7 @@ export const dataTestId = {
     participantFacets: 'participant-facets',
     participantOrgFacets: 'participant-org-facets',
     publisherFacets: 'publisher-facets',
+    publisherFacetsSearchField: 'publisher-facets-search-field',
     responsibleFacets: 'responsible-facets',
     scientificIndexFacet: 'scientific-index-facet',
     sectorFacets: 'sector-facets',
