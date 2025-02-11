@@ -13,13 +13,13 @@ import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
-interface SearchForInstitutionFacetRowProps {
+interface SearchForInstitutionFacetItemProps {
   onSelectInstitution: (institutionId: string) => void;
 }
 
 const defaultOrganizationSearchSize = 10;
 
-export const SearchForInstitutionFacetItem = ({ onSelectInstitution }: SearchForInstitutionFacetRowProps) => {
+export const SearchForInstitutionFacetItem = ({ onSelectInstitution }: SearchForInstitutionFacetItemProps) => {
   const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -61,7 +61,7 @@ export const SearchForInstitutionFacetItem = ({ onSelectInstitution }: SearchFor
           {...params}
           variant="outlined"
           isLoading={institutionSearchQuery.isLoading}
-          data-testid={dataTestId.organization.searchField}
+          data-testid={dataTestId.aggregations.institutionFacetsSearchField}
           aria-label={t('project.search_for_institution')}
           placeholder={t('project.search_for_institution')}
           showSearchIcon
