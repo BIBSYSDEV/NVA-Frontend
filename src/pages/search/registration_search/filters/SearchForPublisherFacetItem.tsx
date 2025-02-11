@@ -1,7 +1,8 @@
 import { Autocomplete } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchForPublisher } from '../../../../api/hooks/useSearchForPublisher';
+import { defaultChannelSearchSize } from '../../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
@@ -15,20 +16,16 @@ interface SearchForFacetFacetItemProps {
   onSelectPublisher: (publisherId: string) => void;
 }
 
-const defaultSearchSize = 10;
-const currentYearString = new Date().getFullYear().toString();
-
 export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForFacetFacetItemProps) => {
   const { t } = useTranslation();
 
+  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchSize, setSearchSize] = useState(defaultSearchSize);
   const debouncedQuery = useDebounce(searchQuery);
-  const publisherSearchQuery = useSearchForPublisher({
-    searchTerm: debouncedQuery,
-    year: currentYearString,
-    size: searchSize,
-  });
+
+  useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
+
+  const publisherSearchQuery = useSearchForPublisher({ searchTerm: debouncedQuery, size: searchSize });
 
   const options = publisherSearchQuery.data?.hits ?? [];
 
@@ -81,7 +78,7 @@ export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForFace
           component: AutocompleteListboxWithExpansion,
           ...({
             hasMoreHits: !!publisherSearchQuery.data?.totalHits && publisherSearchQuery.data.totalHits > searchSize,
-            onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+            onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
             isLoadingMoreHits: publisherSearchQuery.isFetching && searchSize > options.length,
           } satisfies AutocompleteListboxWithExpansionProps),
         },

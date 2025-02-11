@@ -6,10 +6,14 @@ import { searchForPublishers } from '../publicationChannelApi';
 interface PublisherSearchParams {
   searchTerm: string;
   size: number;
-  year: string;
+  year?: string;
 }
 
-export const useSearchForPublisher = ({ searchTerm, year, size }: PublisherSearchParams) => {
+export const useSearchForPublisher = ({
+  searchTerm,
+  year = new Date().getFullYear().toString(),
+  size,
+}: PublisherSearchParams) => {
   const { t } = useTranslation();
   return useQuery({
     queryKey: ['publisherSearch', searchTerm, year, size],
