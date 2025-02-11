@@ -1,7 +1,7 @@
 import { Autocomplete } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchForPublisher } from '../../../../api/hooks/useSearchForPublisher';
+import { usePublisherSearch } from '../../../../api/hooks/usePublisherSearch';
 import { defaultChannelSearchSize } from '../../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
@@ -25,7 +25,7 @@ export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPubl
 
   useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
-  const publisherSearchQuery = useSearchForPublisher({ searchTerm: debouncedQuery, size: searchSize });
+  const publisherSearchQuery = usePublisherSearch({ searchTerm: debouncedQuery, size: searchSize });
 
   const options = publisherSearchQuery.data?.hits ?? [];
 

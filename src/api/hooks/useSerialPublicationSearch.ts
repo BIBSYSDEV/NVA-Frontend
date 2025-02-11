@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { keepSimilarPreviousData } from '../../utils/searchHelpers';
-import { searchForPublishers } from '../publicationChannelApi';
+import { searchForSerialPublications } from '../publicationChannelApi';
 
 interface PublisherSearchParams {
   searchTerm: string;
@@ -9,7 +9,7 @@ interface PublisherSearchParams {
   year?: string;
 }
 
-export const useSearchForPublisher = ({
+export const useSearchSerialPublicationSearch = ({
   searchTerm,
   year = new Date().getFullYear().toString(),
   size,
@@ -18,8 +18,8 @@ export const useSearchForPublisher = ({
   return useQuery({
     queryKey: ['publisherSearch', searchTerm, year, size],
     enabled: searchTerm.length > 3,
-    queryFn: () => searchForPublishers(searchTerm, year, size),
-    meta: { errorMessage: t('feedback.error.get_publishers') },
+    queryFn: () => searchForSerialPublications(searchTerm, year, size),
+    meta: { errorMessage: t('feedback.error.get_journals') },
     placeholderData: (data, query) => keepSimilarPreviousData(data, query, searchTerm),
   });
 };

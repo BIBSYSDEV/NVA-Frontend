@@ -4,7 +4,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { useSearchForPublisher } from '../../../../api/hooks/useSearchForPublisher';
+import { usePublisherSearch } from '../../../../api/hooks/usePublisherSearch';
 import { defaultChannelSearchSize } from '../../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
@@ -44,7 +44,7 @@ export const PublisherField = () => {
   // Reset search size when query changes
   useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
-  const publisherOptionsQuery = useSearchForPublisher({
+  const publisherOptionsQuery = usePublisherSearch({
     searchTerm: debouncedQuery,
     year: publicationDate?.year,
     size: searchSize,

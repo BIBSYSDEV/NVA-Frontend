@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { useSearchForPublisher } from '../../../api/hooks/useSearchForPublisher';
+import { usePublisherSearch } from '../../../api/hooks/usePublisherSearch';
 import { defaultChannelSearchSize, fetchPublisher } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import {
@@ -31,7 +31,7 @@ export const PublisherFilter = () => {
   // Reset search size when query changes
   useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
-  const publisherOptionsQuery = useSearchForPublisher({ searchTerm: debouncedQuery, size: searchSize });
+  const publisherOptionsQuery = usePublisherSearch({ searchTerm: debouncedQuery, size: searchSize });
 
   const options = publisherOptionsQuery.data?.hits ?? [];
 
