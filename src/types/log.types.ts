@@ -32,16 +32,12 @@ export interface LogActionItem {
 
 interface LogEntryOnBehalfOf {
   id: string;
-  topLevelOrgCristinId: string;
-  shortName: string;
   displayName: string;
 }
 
 interface LogEntryPerformedBy {
   givenName: string;
   familyName: string;
-  cristinId: string;
-  organization: string;
   onBehalfOf: LogEntryOnBehalfOf;
 }
 
