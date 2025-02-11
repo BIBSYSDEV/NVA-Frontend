@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
+import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useFetchRegistrationLog } from '../../../api/hooks/useFetchRegistrationLog';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
@@ -25,6 +26,10 @@ export const LogPanel = ({ registration }: LogPanelProps) => {
     <Box
       sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', bgcolor: 'secondary.main' }}
       aria-busy={logQuery.isPending}>
+      <Typography variant="h2" sx={visuallyHidden}>
+        {t('common.log')}
+      </Typography>
+
       <Box sx={{ p: '0.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography color="grey.700" sx={{ textAlign: 'center' }}>
           {t('log.metadata_last_updated')}

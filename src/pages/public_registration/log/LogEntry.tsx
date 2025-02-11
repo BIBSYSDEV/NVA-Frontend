@@ -43,7 +43,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
       }}>
       <StyledLogRow>
         <LogHeaderIcon topic={logEntry.topic} />
-        <Typography sx={{ fontWeight: 900, fontSize: '1rem' }}>
+        <Typography variant="h3">
           {logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.OpenFile
             ? t('log.file_published')
             : logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.InternalFile

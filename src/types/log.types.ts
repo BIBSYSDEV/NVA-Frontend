@@ -1,5 +1,4 @@
 import { FileType } from './associatedArtifact.types';
-import { LogEntryObject } from './log.types';
 import { Message, TicketType } from './publication_types/ticket.types';
 
 export interface Log {
