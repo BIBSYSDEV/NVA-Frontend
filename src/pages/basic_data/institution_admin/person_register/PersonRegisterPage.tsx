@@ -60,6 +60,9 @@ export const PersonRegisterPage = () => {
       <Helmet>
         <title>{t('basic_data.person_register.person_register')}</title>
       </Helmet>
+      <Typography component="h1" sx={visuallyHidden}>
+        {t('basic_data.person_register.person_register')}
+      </Typography>
 
       <TextField
         data-testid={dataTestId.basicData.personRegisterSearchBar}

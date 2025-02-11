@@ -486,7 +486,6 @@
     "subunits_count_one": "{{count}} underenhet",
     "subunits_count_other": "{{count}} underenheter",
     "vocabulary": "Vokabular",
-    "vocabulary_controlled": "Kontrollerte emneord",
     "vocabulary_description": "Kontrollerte emneord (vokabular) som kan benyttes ved registrering av nytt resultat.",
     "vocabulary_status": {
       "Allowed": "Tillatt",
@@ -2049,8 +2048,10 @@
     "hits_other": "{{count}} treff",
     "participant": "Deltaker",
     "participating_institution": "Deltakende institusjon",
+    "person_search": "Personsøk",
     "person_search_placeholder": "Søk etter navn",
     "persons": "Personer",
+    "project_search": "Prosjektsøk",
     "remove_filter": "Fjern filter",
     "reports": {
       "clinical_treatment_studies": "Kliniske behandlingsstudier",
@@ -2061,6 +2062,7 @@
     "reset_selection": "Nullstill valg",
     "responsible_institution": "Forskningsansvarlig institusjon",
     "result": "Resultat",
+    "result_search": "Resultatsøk",
     "search_for_contributor": "Søk etter bidragsyter",
     "search_for_course_code": "Søk etter emnekode",
     "search_for_funder": "Søk etter finansiør",
@@ -2114,6 +2116,7 @@
       "note": "Kommentar",
       "nvi_control": "NVI-kontroll (Norsk vitenskapsindeks)",
       "previous_candidate": "Gå til forrige kandidat",
+      "problem_description": "<p>NVI-kandidaten har følgende mangler:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatuser blir opphevet når en uidentifisert person blir identifisert.</p>",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
       "reject_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen ikke kan rapporteres. Du må begrunne avvisningen.",
@@ -2133,6 +2136,7 @@
         "Pending": "Kontrolleres",
         "Rejected": "Avvist"
       },
+      "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknytning til NVI-institusjon",
       "waiting_for_other_institutions": "Venter på andre institusjoner",
       "waiting_for_your_institution": "Venter på din institusjon"
     },

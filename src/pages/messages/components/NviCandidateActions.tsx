@@ -1,11 +1,13 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import EditIcon from '@mui/icons-material/Edit';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router';
 import {
   createNote,
   CreateNoteData,
@@ -20,10 +22,14 @@ import { MessageForm } from '../../../components/MessageForm';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
+import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { FinalizedApproval, NviCandidate, RejectedApproval } from '../../../types/nvi.types';
+import { RegistrationTab } from '../../../types/registration.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { hasUnidentifiedContributorProblem } from '../../../utils/nviHelpers';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { MessageItem } from './MessageList';
 import { NviCandidateRejectionDialog } from './NviCandidateRejectionDialog';
 import { NviNoteMenu } from './NviNoteMenu';
@@ -145,6 +151,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     return dateA.getTime() - dateB.getTime();
   });
 
+  const canApproveCandidate = nviCandidate.allowedOperations.includes('approval/approve-candidate');
+  const canRejectCandidate = nviCandidate.allowedOperations.includes('approval/reject-candidate');
+  const canResetApproval = nviCandidate.allowedOperations.includes('approval/reset-approval');
+
   return (
     <>
       <Box sx={{ gridArea: 'curator' }}>
@@ -156,6 +166,37 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           roleFilter={RoleName.NviCurator}
         />
       </Box>
+
+      {hasUnidentifiedContributorProblem(nviCandidate.problems) && (
+        <>
+          <Divider sx={{ gridArea: 'divider0' }} />
+          <Box sx={{ gridArea: 'problem' }}>
+            <Trans
+              i18nKey="tasks.nvi.problem_description"
+              components={{
+                p: <Typography gutterBottom />,
+                ul: <Box component="ul" sx={{ mt: 0, mb: '0.5rem', pl: '2rem' }} />,
+                li: <li />,
+              }}
+            />
+
+            <Button
+              sx={{ bgcolor: 'primary.light' }}
+              variant="contained"
+              fullWidth
+              size="small"
+              data-testid={dataTestId.tasksPage.nvi.editResultButton}
+              endIcon={<EditIcon />}
+              component={RouterLink}
+              state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
+              to={getRegistrationWizardPath(getIdentifierFromId(nviCandidate.publicationId), {
+                tab: RegistrationTab.Contributors,
+              })}>
+              {t('registration.edit_registration')}
+            </Button>
+          </Box>
+        </>
+      )}
 
       <Divider sx={{ gridArea: 'divider1' }} />
 
@@ -191,7 +232,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               size="small"
               sx={{ mb: '1rem', bgcolor: 'white' }}
               loading={statusMutation.isPending && statusMutation.variables?.status === 'Approved'}
-              disabled={isMutating}
+              disabled={!canApproveCandidate || isMutating}
               endIcon={<CheckIcon />}
               onClick={() => statusMutation.mutate({ status: 'Approved' })}>
               {t('tasks.nvi.approve_nvi_candidate')}
@@ -210,7 +251,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               fullWidth
               size="small"
               sx={{ bgcolor: 'white' }}
-              disabled={isMutating || hasSelectedRejectCandidate}
+              disabled={!canRejectCandidate || isMutating || hasSelectedRejectCandidate}
               endIcon={<ClearIcon />}
               onClick={() => setHasSelectedRejectCandidate(true)}>
               {t('tasks.nvi.reject_nvi_candidate')}
@@ -258,12 +299,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               let deleteFunction: (() => Promise<void>) | undefined = undefined;
               const noteIdentifier = note.identifier;
 
-              if (user?.nvaUsername && note.username === user.nvaUsername) {
-                if (note.type === 'FinalizedNote') {
-                  deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
-                } else if (note.type === 'GeneralNote' && noteIdentifier) {
-                  deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
-                }
+              if (note.type === 'FinalizedNote' && canResetApproval) {
+                deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
+              } else if (note.type === 'GeneralNote' && noteIdentifier && note.username === user?.nvaUsername) {
+                deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
               }
 
               const isDeleting =
@@ -278,12 +317,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     username={note.username}
                     backgroundColor="nvi.main"
                     showOrganization
-                    menuElement={
-                      !!user &&
-                      user.nvaUsername === note.username && (
-                        <NviNoteMenu onDelete={deleteFunction} isDeleting={isDeleting} />
-                      )
-                    }
+                    menuElement={!!deleteFunction && <NviNoteMenu onDelete={deleteFunction} isDeleting={isDeleting} />}
                   />
                 </ErrorBoundary>
               );

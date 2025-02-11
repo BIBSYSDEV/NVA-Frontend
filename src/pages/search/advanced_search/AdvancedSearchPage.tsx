@@ -10,6 +10,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { styled } from '@mui/system';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
@@ -74,151 +75,157 @@ export const AdvancedSearchPage = () => {
   };
 
   return (
-    <Grid container rowGap={2}>
-      <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
-        <Typography variant="h2">{t('search.advanced_search.advanced_search')}</Typography>
-        <Grid item xs={12}>
-          <StyledFilterHeading>{t('search.advanced_search.title_search')}</StyledFilterHeading>
-          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-            <SearchForm
-              sx={{ flex: '1 0 15rem' }}
-              paramName={ResultParam.Title}
-              placeholder={t('search.search_for_title')}
-            />
-            <ExportResultsButton searchParams={params} />
-          </Box>
-          <StyledDivider sx={{ mt: '1rem' }} />
-        </Grid>
+    <>
+      <Helmet>
+        <title>{t('search.advanced_search.advanced_search')}</title>
+      </Helmet>
 
-        <Grid item container direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-          <Grid item sx={{ width: 'fit-content' }}>
-            <StyledFilterHeading>{t('search.advanced_search.publishing_period')}</StyledFilterHeading>
-            <PublicationYearIntervalFilter />
-          </Grid>
-
-          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
-
-          <Grid item>
-            <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
-          </Grid>
-
-          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
-
-          <Grid item>
-            <StyledFilterHeading id="language-select-label">{t('common.language')}</StyledFilterHeading>
-            <LanguageFilter />
-          </Grid>
-
-          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
-
-          <Grid item>
-            <StyledFilterHeading>{t('common.nvi')}</StyledFilterHeading>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <FormControlLabel
-                data-testid={dataTestId.startPage.advancedSearch.scientificIndexStatusCheckbox}
-                control={<Checkbox name="scientificIndexStatus" />}
-                onChange={handleNviReportedCheckbox}
-                checked={registrationParams.scientificIndexStatus === ScientificIndexStatuses.Reported}
-                label={t('search.advanced_search.reported')}
+      <Grid container rowGap={2}>
+        <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
+          <Typography variant="h1">{t('search.advanced_search.advanced_search')}</Typography>
+          <Grid item xs={12}>
+            <StyledFilterHeading>{t('search.advanced_search.title_search')}</StyledFilterHeading>
+            <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+              <SearchForm
+                sx={{ flex: '1 0 15rem' }}
+                paramName={ResultParam.Title}
+                placeholder={t('search.search_for_title')}
               />
-              <NviReportedYearFilter />
+              <ExportResultsButton searchParams={params} />
             </Box>
+            <StyledDivider sx={{ mt: '1rem' }} />
           </Grid>
 
-          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
+          <Grid item container direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
+            <Grid item sx={{ width: 'fit-content' }}>
+              <StyledFilterHeading>{t('search.advanced_search.publishing_period')}</StyledFilterHeading>
+              <PublicationYearIntervalFilter />
+            </Grid>
 
-          <Grid item>
-            <StyledFilterHeading id="file-status-select-label">
-              {t('registration.files_and_license.files')}
-            </StyledFilterHeading>
-            <FileStatusSelect />
-          </Grid>
-        </Grid>
+            {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
-        {gridRowDivider}
-
-        <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-          <Grid item>
-            <StyledFilterHeading>{t('registration.contributors.contributor')}</StyledFilterHeading>
-            <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
-          </Grid>
-
-          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
-
-          <Grid item>
-            <OrganizationFilters
-              topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
-              unitId={registrationParams.unit ?? null}
-            />
-          </Grid>
-        </Grid>
-
-        {gridRowDivider}
-
-        <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-          <Grid container item direction={isLargeScreen ? 'row' : 'column'} gap={2}>
             <Grid item>
-              <PublisherFilter />
+              <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
+            </Grid>
+
+            {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
+
+            <Grid item>
+              <StyledFilterHeading id="language-select-label">{t('common.language')}</StyledFilterHeading>
+              <LanguageFilter />
+            </Grid>
+
+            {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
+
+            <Grid item>
+              <StyledFilterHeading>{t('common.nvi')}</StyledFilterHeading>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <FormControlLabel
+                  data-testid={dataTestId.startPage.advancedSearch.scientificIndexStatusCheckbox}
+                  control={<Checkbox name="scientificIndexStatus" />}
+                  onChange={handleNviReportedCheckbox}
+                  checked={registrationParams.scientificIndexStatus === ScientificIndexStatuses.Reported}
+                  label={t('search.advanced_search.reported')}
+                />
+                <NviReportedYearFilter />
+              </Box>
+            </Grid>
+
+            {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
+
+            <Grid item>
+              <StyledFilterHeading id="file-status-select-label">
+                {t('registration.files_and_license.files')}
+              </StyledFilterHeading>
+              <FileStatusSelect />
+            </Grid>
+          </Grid>
+
+          {gridRowDivider}
+
+          <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
+            <Grid item>
+              <StyledFilterHeading>{t('registration.contributors.contributor')}</StyledFilterHeading>
+              <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
+            </Grid>
+
+            {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
+
+            <Grid item>
+              <OrganizationFilters
+                topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
+                unitId={registrationParams.unit ?? null}
+              />
+            </Grid>
+          </Grid>
+
+          {gridRowDivider}
+
+          <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
+            <Grid container item direction={isLargeScreen ? 'row' : 'column'} gap={2}>
+              <Grid item>
+                <PublisherFilter />
+              </Grid>
+
+              <Grid item>
+                <JournalFilter />
+              </Grid>
+
+              <Grid item>
+                <SeriesFilter />
+              </Grid>
             </Grid>
 
             <Grid item>
-              <JournalFilter />
+              <ScientificValueFilter />
+            </Grid>
+          </Grid>
+
+          {gridRowDivider}
+
+          <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
+            <Grid item>
+              <StyledFilterHeading>{t('common.financier')}</StyledFilterHeading>
+              <FundingSourceFilter />
             </Grid>
 
             <Grid item>
-              <SeriesFilter />
+              <StyledFilterHeading>{t('project.grant_id')}</StyledFilterHeading>
+              <SearchForm
+                paramName={ResultParam.FundingIdentifier}
+                placeholder={t('search.search_for_funding_identifier')}
+              />
+            </Grid>
+
+            {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
+
+            <Grid item>
+              <StyledFilterHeading>{t('registration.resource_type.course_code')}</StyledFilterHeading>
+              <SearchForm
+                dataTestId={dataTestId.startPage.advancedSearch.courseField}
+                paramName={ResultParam.Course}
+                placeholder={t('search.search_for_course_code')}
+              />
+            </Grid>
+
+            {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
+
+            <Grid item>
+              <StyledFilterHeading>{t('editor.vocabulary')}</StyledFilterHeading>
+              <VocabularSearchField />
             </Grid>
           </Grid>
 
-          <Grid item>
-            <ScientificValueFilter />
+          <Grid container item xs={12} sx={{ justifyContent: isLargeScreen ? 'end' : 'center' }}>
+            <Button variant="outlined" onClick={() => navigate(location.pathname)}>
+              {t('search.reset_selection')}
+            </Button>
           </Grid>
         </Grid>
-
-        {gridRowDivider}
-
-        <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-          <Grid item>
-            <StyledFilterHeading>{t('common.financier')}</StyledFilterHeading>
-            <FundingSourceFilter />
-          </Grid>
-
-          <Grid item>
-            <StyledFilterHeading>{t('project.grant_id')}</StyledFilterHeading>
-            <SearchForm
-              paramName={ResultParam.FundingIdentifier}
-              placeholder={t('search.search_for_funding_identifier')}
-            />
-          </Grid>
-
-          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
-
-          <Grid item>
-            <StyledFilterHeading>{t('registration.resource_type.course_code')}</StyledFilterHeading>
-            <SearchForm
-              dataTestId={dataTestId.startPage.advancedSearch.courseField}
-              paramName={ResultParam.Course}
-              placeholder={t('search.search_for_course_code')}
-            />
-          </Grid>
-
-          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
-
-          <Grid item>
-            <StyledFilterHeading>{t('editor.vocabulary')}</StyledFilterHeading>
-            <VocabularSearchField />
-          </Grid>
-        </Grid>
-
-        <Grid container item xs={12} sx={{ justifyContent: isLargeScreen ? 'end' : 'center' }}>
-          <Button variant="outlined" onClick={() => navigate(location.pathname)}>
-            {t('search.reset_selection')}
-          </Button>
+        <Grid item xs={12}>
+          <RegistrationSearch registrationQuery={resultSearchQuery} />
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <RegistrationSearch registrationQuery={resultSearchQuery} />
-      </Grid>
-    </Grid>
+    </>
   );
 };

@@ -1,8 +1,8 @@
 import { Box, TextField, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { NationalIdNumberField } from '../../../../components/NationalIdNumberField';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
+import { NationalIdNumberField } from '../../../../components/NationalIdNumberField';
 import { Employment } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { convertToFlatCristinPerson, isActiveEmployment } from '../../../../utils/user-helpers';
@@ -24,7 +24,7 @@ export const PersonFormSection = ({ externalEmployments }: PersonFormSectionProp
 
   return (
     <section>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {t('common.person')}
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

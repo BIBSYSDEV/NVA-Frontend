@@ -22,6 +22,7 @@ enum TabValue {
 
 const StyledTabPanel = styled(TabPanel)({
   padding: 0,
+  paddingBottom: '1rem',
 });
 
 export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: NviCandidateActionPanelProps) => {
