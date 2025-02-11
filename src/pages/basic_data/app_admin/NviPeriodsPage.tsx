@@ -29,6 +29,9 @@ export const NviPeriodsPage = () => {
       <Helmet>
         <title>{t('basic_data.nvi.reporting_periods')}</title>
       </Helmet>
+      <Typography variant="h1" gutterBottom>
+        {t('basic_data.nvi.reporting_periods')}
+      </Typography>
 
       {nviPeriodsQuery.isPending ? (
         <ListSkeleton height={100} minWidth={100} />

@@ -127,17 +127,21 @@ export const CentralImportCandidateMerge = () => {
             alignItems: 'center',
           }}>
           <Helmet>
-            <title>{t('basic_data.central_import.central_import')}</title>
+            <title>{t('basic_data.central_import.merge_candidate.merge')}</title>
           </Helmet>
+          <Typography variant="h1" gutterBottom>
+            {t('basic_data.central_import.merge_candidate.merge')}
+          </Typography>
+
           <Typography sx={{ gridColumn: '1/-1' }}>
             {t('basic_data.central_import.merge_candidate.merge_details_1')}
           </Typography>
           <Typography sx={{ gridColumn: '1/-1' }}>
             {t('basic_data.central_import.merge_candidate.merge_details_2')}
           </Typography>
-          <Typography variant="h1">{t('basic_data.central_import.merge_candidate.metadata_to_import')}</Typography>
+          <Typography variant="h2">{t('basic_data.central_import.merge_candidate.metadata_to_import')}</Typography>
           <span />
-          <Typography variant="h1">{t('basic_data.central_import.merge_candidate.result_in_nva')}</Typography>
+          <Typography variant="h2">{t('basic_data.central_import.merge_candidate.result_in_nva')}</Typography>
 
           <CompareFields
             candidateLabel={t('basic_data.central_import.merge_candidate.result_id')}
