@@ -52,7 +52,7 @@ export const MyResults = () => {
       <Helmet>
         <title>{t('my_page.my_profile.my_research_results')}</title>
       </Helmet>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         {t('my_page.my_profile.my_research_results')}
       </Typography>
       <ListPagination

@@ -110,9 +110,9 @@ export const MyFieldAndBackground = () => {
         {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (
           <Form>
             <Box sx={{ display: 'flex', flexDirection: 'column', m: '1rem', maxWidth: '60rem', gap: '1rem' }}>
-              <Typography variant="h2">{t('my_page.my_profile.field_and_background.field_and_background')}</Typography>
+              <Typography variant="h1">{t('my_page.my_profile.field_and_background.field_and_background')}</Typography>
               <ProfileBox>
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h2" gutterBottom>
                   {t('my_page.my_profile.field_and_background.field')}
                 </Typography>
                 <Typography sx={{ mb: '1rem' }}>{t('my_page.my_profile.field_and_background.field_text')}</Typography>
@@ -181,7 +181,7 @@ export const MyFieldAndBackground = () => {
                 </Typography>
               </ProfileBox>
               <ProfileBox>
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h2" gutterBottom>
                   {t('my_page.my_profile.background')}
                 </Typography>
                 <Trans
