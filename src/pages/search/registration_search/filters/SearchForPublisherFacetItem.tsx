@@ -12,11 +12,11 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { PublicationChannelOption } from '../../../registration/resource_type_tab/components/PublicationChannelOption';
 
-interface SearchForFacetFacetItemProps {
+interface SearchForPublisherFacetItemProps {
   onSelectPublisher: (publisherId: string) => void;
 }
 
-export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForFacetFacetItemProps) => {
+export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPublisherFacetItemProps) => {
   const { t } = useTranslation();
 
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
