@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { NviStatusChip } from '../../../components/StatusChip';
 import { RootState } from '../../../redux/store';
 import { NviCandidate } from '../../../types/nvi.types';
+import { hasUnidentifiedContributorProblem } from '../../../utils/nviHelpers';
 import { NviApprovals } from './NviApprovals';
 import { NviCandidateActions } from './NviCandidateActions';
 
@@ -22,6 +23,7 @@ export const NviDialoguePanel = ({ nviCandidate, nviCandidateQueryKey }: NviDial
   const periodStatus = nviCandidate?.period.status;
 
   const isPendingCandidate = candidateStatus === 'New' || candidateStatus === 'Pending';
+  const hasProblem = hasUnidentifiedContributorProblem(nviCandidate.problems);
 
   return (
     <>
@@ -38,8 +40,12 @@ export const NviDialoguePanel = ({ nviCandidate, nviCandidateQueryKey }: NviDial
           display: 'grid',
           gap: '1rem',
           gridTemplateAreas: isPendingCandidate
-            ? "'curator' 'approvals' 'divider1' 'actions' 'divider2' 'comment'"
-            : "'curator' 'approvals' 'divider1' 'comment' 'divider2' 'actions'",
+            ? hasProblem
+              ? "'curator' 'approvals' 'divider0' 'problem' 'divider1' 'actions' 'divider2' 'comment'"
+              : "'curator' 'approvals' 'divider1' 'actions' 'divider2' 'comment'"
+            : hasProblem
+              ? "'curator' 'approvals' 'divider0' 'problem' 'divider1' 'comment' 'divider2' 'actions'"
+              : "'curator' 'approvals' 'divider1' 'comment' 'divider2' 'actions'",
         }}>
         {periodStatus === 'OpenPeriod' && nviCandidate ? (
           <NviCandidateActions nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />

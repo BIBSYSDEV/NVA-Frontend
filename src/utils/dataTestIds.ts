@@ -707,6 +707,7 @@ export const dataTestId = {
       candidatesList: 'nvi-candidates-list',
       deleteNoteButton: 'delete-note-button',
       dialogTabButton: 'dialog-tab-button',
+      editResultButton: 'edit-result-button',
       excludeSubunitsCheckbox: 'exclude-subunits-checkbox',
       logTabButton: 'log-tab-button',
       nextCandidateButton: 'next-candidate-button',
