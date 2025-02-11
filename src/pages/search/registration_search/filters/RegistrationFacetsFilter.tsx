@@ -11,6 +11,7 @@ import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPageProps } from '../../SearchPage';
 import { SearchForInstitutionFacetItem } from './SearchForInstitutionFacetItem';
+import { SearchForSerialPublicationFacetItem } from './SearchForSerialPublicationFacetItem';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
@@ -184,7 +185,16 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       )}
 
       {seriesFacet.length > 0 && (
-        <FacetItem title={t('registration.resource_type.series')} dataTestId={dataTestId.aggregations.seriesFacets}>
+        <FacetItem
+          title={t('registration.resource_type.series')}
+          dataTestId={dataTestId.aggregations.seriesFacets}
+          renderCustomSelect={
+            <SearchForSerialPublicationFacetItem
+              onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Series, identifier)}
+              label={t('search.search_for_series')}
+              dataTestId={dataTestId.aggregations.seriesFacetsSearchField}
+            />
+          }>
           {seriesFacet.map((facet) => {
             const isSelected = !!registrationParams.series?.includes(facet.key);
 

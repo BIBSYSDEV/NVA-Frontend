@@ -17,6 +17,7 @@ export const dataTestId = {
     scientificIndexFacet: 'scientific-index-facet',
     sectorFacets: 'sector-facets',
     seriesFacets: 'series-facets',
+    seriesFacetsSearchField: 'series-facets-search-field',
     typeFacets: 'type-facets',
     institutionFacets: 'institution-facets',
   },
