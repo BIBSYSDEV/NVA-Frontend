@@ -2072,7 +2072,8 @@
     "sorted_by": "Sortert etter",
     "year_from": "Fra år",
     "year_to": "Til år",
-    "search_for_series": "Søk etter serie"
+    "search_for_series": "Søk etter serie",
+    "search_for_journal": "Søk etter tidsskrift"
   },
   "tasks": {
     "correction_list": "Retteliste",

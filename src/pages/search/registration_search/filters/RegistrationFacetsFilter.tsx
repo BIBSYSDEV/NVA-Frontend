@@ -218,7 +218,16 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       )}
 
       {journalFacet.length > 0 && (
-        <FacetItem title={t('registration.resource_type.journal')} dataTestId={dataTestId.aggregations.journalFacets}>
+        <FacetItem
+          title={t('registration.resource_type.journal')}
+          dataTestId={dataTestId.aggregations.journalFacets}
+          renderCustomSelect={
+            <SearchForSerialPublicationFacetItem
+              onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Journal, identifier)}
+              label={t('search.search_for_journal')}
+              dataTestId={dataTestId.aggregations.journalFacetsSearchField}
+            />
+          }>
           {journalFacet.map((facet) => {
             const isSelected = !!registrationParams.journal?.includes(facet.key);
 

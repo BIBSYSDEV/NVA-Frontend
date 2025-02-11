@@ -10,6 +10,7 @@ export const dataTestId = {
     fundingSourceFacets: 'funding-source-facets',
     healthProjectFacets: 'health-project-facets',
     journalFacets: 'journal-facets',
+    journalFacetsSearchField: 'journal-facets-search-field',
     participantFacets: 'participant-facets',
     participantOrgFacets: 'participant-org-facets',
     publisherFacets: 'publisher-facets',
