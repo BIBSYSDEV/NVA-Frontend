@@ -1,6 +1,7 @@
 export const dataTestId = {
   aggregations: {
     categoryFacets: 'category-facets',
+    categoryFacetsSearchField: 'category-facets-search-field',
     collaboardationTypeFacets: 'collaboration-type-facets',
     contributorFacets: 'contributor-facets',
     coordinatingFacets: 'coordinating-facets',

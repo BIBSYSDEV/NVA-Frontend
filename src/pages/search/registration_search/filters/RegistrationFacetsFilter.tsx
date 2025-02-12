@@ -13,6 +13,7 @@ import { SearchPageProps } from '../../SearchPage';
 import { SearchForInstitutionFacetItem } from './SearchForInstitutionFacetItem';
 import { SearchForPublisherFacetItem } from './SearchForPublisherFacetItem';
 import { SearchForSerialPublicationFacetItem } from './SearchForSerialPublicationFacetItem';
+import { SelectCategoryFacetItem } from './SelectCategoryFacetItem';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
@@ -56,7 +57,16 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   return (
     <>
       {typeFacet.length > 0 && (
-        <FacetItem title={t('common.category')} dataTestId={dataTestId.aggregations.typeFacets}>
+        <FacetItem
+          title={t('common.category')}
+          dataTestId={dataTestId.aggregations.typeFacets}
+          renderCustomSelect={
+            !searchParams.has(ResultParam.Category) && (
+              <SelectCategoryFacetItem
+                onSelectCategory={(category) => addFacetFilter(ResultParam.Category, category)}
+              />
+            )
+          }>
           {typeFacet.map((facet) => {
             const isSelected = registrationParams.category === facet.key;
 
