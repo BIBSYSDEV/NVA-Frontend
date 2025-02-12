@@ -13,13 +13,13 @@ import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 
-interface SearchForInstitutionFacetItemProps {
+interface SearchForContributorFacetItemProps {
   onSelectContributor: (identifier: string) => void;
 }
 
 const defaultPersonSearchSize = 10;
 
-export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchForInstitutionFacetItemProps) => {
+export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchForContributorFacetItemProps) => {
   const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
