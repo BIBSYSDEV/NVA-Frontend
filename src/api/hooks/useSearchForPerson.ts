@@ -2,9 +2,16 @@ import { PlaceholderDataFunction, Query, useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next';
 import { PersonSearchParams, searchForPerson } from '../cristinApi';
 
+type SearchResponseType = Awaited<ReturnType<typeof searchForPerson>>;
+type PlaceholderDataFunctionType = PlaceholderDataFunction<
+  SearchResponseType,
+  Error,
+  SearchResponseType,
+  (string | PersonSearchParams)[]
+>;
+
 interface PersonSearchOptions extends PersonSearchParams {
-  keepPreviousData?: boolean;
-  placeholderData?: PlaceholderDataFunction<any, Error, any, (string | PersonSearchParams)[]>;
+  placeholderData?: PlaceholderDataFunctionType;
 }
 
 export const useSearchForPerson = ({ placeholderData, ...searchParams }: PersonSearchOptions) => {
@@ -20,9 +27,9 @@ export const useSearchForPerson = ({ placeholderData, ...searchParams }: PersonS
 };
 
 // Keep previous data if query has the same search term
-export const keepSimilarPreviousData = <T>(
-  previousData: T | undefined,
-  query: Query<T, Error, T, (string | PersonSearchParams)[]> | undefined,
+export const keepSimilarPreviousData = (
+  previousData: SearchResponseType | undefined,
+  query: Query<SearchResponseType, Error, SearchResponseType, (string | PersonSearchParams)[]> | undefined,
   searchTerm?: string | null
 ) => {
   if (searchTerm && query?.queryKey.some((key) => typeof key === 'object' && key.name === searchTerm)) {
