@@ -11,7 +11,7 @@ import { AffiliationHierarchy } from '../../../../components/institution/Affilia
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { getFullCristinName } from '../../../../utils/user-helpers';
+import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 
 interface SearchForInstitutionFacetItemProps {
   onSelectContributor: (identifier: string) => void;
@@ -58,7 +58,7 @@ export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchFor
       }}
       loading={personSearchQuery.isFetching}
       renderOption={({ key, ...props }, option) => {
-        const activeAffiliations = option.affiliations.filter((affiliation) => affiliation.active);
+        const activeAffiliations = filterActiveAffiliations(option.affiliations);
         return (
           <li {...props} key={option.id}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -67,7 +67,9 @@ export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchFor
                 <AffiliationHierarchy unitUri={activeAffiliations[0].organization} commaSeparated />
               )}
               {activeAffiliations.length > 1 && (
-                <Typography fontStyle="italic">+ {activeAffiliations.length - 1} andre ansettelser</Typography>
+                <Typography fontStyle="italic">
+                  {t('common.x_other_employments', { count: activeAffiliations.length - 1 })}
+                </Typography>
               )}
             </Box>
           </li>

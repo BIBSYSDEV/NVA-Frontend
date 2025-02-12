@@ -317,6 +317,8 @@
     "use": "Bruk",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
+    "x_other_employments_one": "+ {{count}} annen ansettelse",
+    "x_other_employments_other": "+ {{count}} andre ansettelser",
     "x_others_one": "+ {{count}} annen",
     "x_others_other": "+ {{count}} andre",
     "year": "År",
