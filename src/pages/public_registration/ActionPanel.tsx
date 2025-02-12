@@ -2,6 +2,7 @@ import { Paper, Tab, Tabs } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { RegistrationStatus } from '../../types/registration.types';
@@ -134,7 +135,9 @@ export const ActionPanel = ({
       </TabPanel>
       {isBeta && (
         <TabPanel tabValue={tabValue} index={2}>
-          <LogPanel2 registration={registration} />
+          <ErrorBoundary>
+            <LogPanel2 registration={registration} />
+          </ErrorBoundary>
         </TabPanel>
       )}
     </Paper>

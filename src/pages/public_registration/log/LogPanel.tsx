@@ -3,6 +3,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useFetchRegistrationLog } from '../../../api/hooks/useFetchRegistrationLog';
+import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
 import { ArchivedFilesEntry } from '../../../components/Log/RegistrationLog';
 import { FileType } from '../../../types/associatedArtifact.types';
@@ -45,7 +46,11 @@ export const LogPanel = ({ registration }: LogPanelProps) => {
           <Skeleton variant="rectangular" height={150} />
         </>
       ) : (
-        logQuery.data?.logEntries.toReversed().map((logEntry, index) => <LogEntry key={index} logEntry={logEntry} />)
+        logQuery.data?.logEntries.toReversed().map((logEntry, index) => (
+          <ErrorBoundary key={index}>
+            <LogEntry logEntry={logEntry} />
+          </ErrorBoundary>
+        ))
       )}
     </Box>
   );
