@@ -25,7 +25,7 @@ export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchFor
   const [searchQuery, setSearchQuery] = useState('');
   const [searchSize, setSearchSize] = useState(defaultPersonSearchSize);
   const debouncedQuery = useDebounce(searchQuery);
-  const personSearchQuery = useSearchForPerson(debouncedQuery, searchSize, 1, 'TODO');
+  const personSearchQuery = useSearchForPerson(debouncedQuery, searchSize, 1);
 
   const options = personSearchQuery.data?.hits ?? [];
 
