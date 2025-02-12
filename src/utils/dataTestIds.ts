@@ -8,6 +8,7 @@ export const dataTestId = {
     filesFacets: 'files-facets',
     fundingFacets: 'funding-facets',
     fundingSourceFacets: 'funding-source-facets',
+    fundingSourceFacetsSearchField: 'funding-source-facets-search-field',
     healthProjectFacets: 'health-project-facets',
     journalFacets: 'journal-facets',
     journalFacetsSearchField: 'journal-facets-search-field',

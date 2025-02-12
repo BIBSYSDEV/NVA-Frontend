@@ -10,6 +10,7 @@ import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPageProps } from '../../SearchPage';
+import { SearchForFundingSourceFacetItem } from './SearchForFundingSourceFacetItem';
 import { SearchForInstitutionFacetItem } from './SearchForInstitutionFacetItem';
 import { SearchForPublisherFacetItem } from './SearchForPublisherFacetItem';
 import { SearchForSerialPublicationFacetItem } from './SearchForSerialPublicationFacetItem';
@@ -138,7 +139,14 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       )}
 
       {fundingFacet.length > 0 && (
-        <FacetItem title={t('common.financier')} dataTestId={dataTestId.aggregations.fundingFacets}>
+        <FacetItem
+          title={t('common.financier')}
+          dataTestId={dataTestId.aggregations.fundingFacets}
+          renderCustomSelect={
+            <SearchForFundingSourceFacetItem
+              onSelectFunder={(identifier) => addFacetFilter(ResultParam.FundingSource, identifier)}
+            />
+          }>
           {fundingFacet.map((facet) => {
             const isSelected = !!registrationParams.fundingSource?.includes(facet.key);
 
