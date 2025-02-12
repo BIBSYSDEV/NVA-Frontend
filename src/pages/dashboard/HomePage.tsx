@@ -71,11 +71,13 @@ const HomePage = () => {
     organization: params.get(PersonSearchParameter.Organization),
     sector: params.get(PersonSearchParameter.Sector),
     sort: params.get(PersonSearchParameter.Sort),
+    results: rowsPerPage,
+    page,
   };
   const personQuery = useQuery({
     enabled: personIsSeleced,
-    queryKey: ['person', rowsPerPage, page, personQueryParams],
-    queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
+    queryKey: ['person', personQueryParams],
+    queryFn: () => searchForPerson(personQueryParams),
     meta: { errorMessage: t('feedback.error.search') },
     placeholderData: keepPreviousData,
   });
