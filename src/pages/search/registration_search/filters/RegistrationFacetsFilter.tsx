@@ -10,6 +10,7 @@ import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPageProps } from '../../SearchPage';
+import { SearchForContributorFacetItem } from './SearchForContributorFacetItem';
 import { SearchForInstitutionFacetItem } from './SearchForInstitutionFacetItem';
 import { SearchForPublisherFacetItem } from './SearchForPublisherFacetItem';
 import { SearchForSerialPublicationFacetItem } from './SearchForSerialPublicationFacetItem';
@@ -114,7 +115,12 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       {contributorFacet.length > 0 && (
         <FacetItem
           title={t('registration.contributors.contributor')}
-          dataTestId={dataTestId.aggregations.contributorFacets}>
+          dataTestId={dataTestId.aggregations.contributorFacets}
+          renderCustomSelect={
+            <SearchForContributorFacetItem
+              onSelectContributor={(identifier) => addFacetFilter(ResultParam.Contributor, identifier)}
+            />
+          }>
           {contributorFacet.map((facet) => {
             const isSelected = !!registrationParams.contributor?.includes(facet.key);
 
