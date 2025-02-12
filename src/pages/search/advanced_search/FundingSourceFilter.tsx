@@ -6,7 +6,7 @@ import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { FundingSource } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { fundingSourceAutocompleteFilterOptions, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 export const FundingSourceFilter = () => {
@@ -41,6 +41,7 @@ export const FundingSourceFilter = () => {
         handleChange(newValue);
       }}
       options={fundingSourcesList}
+      filterOptions={fundingSourceAutocompleteFilterOptions}
       getOptionLabel={(option) => getLanguageString(option.name)}
       renderOption={({ key, ...props }, option) => (
         <li {...props} key={option.identifier}>
