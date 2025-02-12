@@ -7,8 +7,9 @@ import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, use
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { fetchFundingSource, fetchPerson } from '../../../api/cristinApi';
+import { fetchFundingSource } from '../../../api/cristinApi';
 import { useFetchOrganizationByIdentifier } from '../../../api/hooks/useFetchOrganizationByIdentifier';
+import { useFetchPersonByIdentifier } from '../../../api/hooks/useFetchPerson';
 import { fetchPublisher, fetchSerialPublication } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
@@ -231,7 +232,9 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                       fieldValueText = getLanguageString(personName);
                     } else {
                       fieldValueText = (
-                        <SelectedContributorFacetButton personId={typeof value === 'string' ? value : value[0]} />
+                        <SelectedContributorFacetButton
+                          personIdentifier={typeof value === 'string' ? value : value[0]}
+                        />
                       );
                     }
                     break;
@@ -362,19 +365,13 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
 };
 
 interface SelectedContributorFacetButtonProps {
-  personId: string;
+  personIdentifier: string;
 }
 
-const SelectedContributorFacetButton = ({ personId }: SelectedContributorFacetButtonProps) => {
+const SelectedContributorFacetButton = ({ personIdentifier }: SelectedContributorFacetButtonProps) => {
   const { t } = useTranslation();
 
-  const personQuery = useQuery({
-    enabled: !!personId,
-    queryKey: ['person', personId],
-    queryFn: () => (personId ? fetchPerson(personId) : undefined),
-    meta: { errorMessage: t('feedback.error.get_person') },
-  });
-
+  const personQuery = useFetchPersonByIdentifier(personIdentifier);
   const personName = getFullCristinName(personQuery.data?.names) || t('common.unknown');
 
   return <>{personQuery.isPending ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : personName}</>;

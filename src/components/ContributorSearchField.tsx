@@ -44,7 +44,7 @@ export const ContributorSearchField = ({
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-  const personQuery = useSearchForPerson(debouncedSearchTerm, rowsPerPage, page);
+  const personQuery = useSearchForPerson({ name: debouncedSearchTerm, results: rowsPerPage, page });
   const userSearch = personQuery.data?.hits ?? [];
 
   return (
