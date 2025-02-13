@@ -56,8 +56,11 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
 
   return (
     <>
-      {typeFacet.length > 0 && (
-        <FacetItem title={t('common.category')} dataTestId={dataTestId.aggregations.typeFacets}>
+      {(registrationQuery.isPending || typeFacet.length > 0) && (
+        <FacetItem
+          title={t('common.category')}
+          dataTestId={dataTestId.aggregations.typeFacets}
+          isPending={registrationQuery.isPending}>
           {typeFacet.map((facet) => {
             const isSelected = registrationParams.category === facet.key;
 
@@ -80,10 +83,11 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {topLevelOrganizationFacet.length > 0 && (
+      {(registrationQuery.isPending || topLevelOrganizationFacet.length > 0) && (
         <FacetItem
           title={t('common.institution')}
           dataTestId={dataTestId.aggregations.institutionFacets}
+          isPending={registrationQuery.isPending}
           renderCustomSelect={
             <SearchForInstitutionFacetItem
               onSelectInstitution={(identifier) => addFacetFilter(ResultParam.TopLevelOrganization, identifier)}
@@ -112,10 +116,11 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {contributorFacet.length > 0 && (
+      {(registrationQuery.isPending || contributorFacet.length > 0) && (
         <FacetItem
           title={t('registration.contributors.contributor')}
-          dataTestId={dataTestId.aggregations.contributorFacets}>
+          dataTestId={dataTestId.aggregations.contributorFacets}
+          isPending={registrationQuery.isPending}>
           {contributorFacet.map((facet) => {
             const isSelected = !!registrationParams.contributor?.includes(facet.key);
 
@@ -138,38 +143,40 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {fundingFacet.length > 0 && (
-        <FacetItem
-          title={t('common.financier')}
-          dataTestId={dataTestId.aggregations.fundingFacets}
-          renderCustomSelect={
-            <SearchForFundingSourceFacetItem
-              onSelectFunder={(identifier) => addFacetFilter(ResultParam.FundingSource, identifier)}
-            />
-          }>
-          {fundingFacet.map((facet) => {
-            const isSelected = !!registrationParams.fundingSource?.includes(facet.key);
-
-            return (
-              <FacetListItem
-                key={facet.key}
-                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
-                isSelected={isSelected}
-                label={getLanguageString(facet.labels)}
-                count={facet.count}
-                onClickFacet={() =>
-                  isSelected
-                    ? removeFacetFilter(ResultParam.FundingSource, facet.key)
-                    : addFacetFilter(ResultParam.FundingSource, facet.key)
-                }
+      {registrationQuery.isPending ||
+        (fundingFacet.length > 0 && (
+          <FacetItem
+            title={t('common.financier')}
+            dataTestId={dataTestId.aggregations.fundingFacets}
+            isPending={registrationQuery.isPending}
+            renderCustomSelect={
+              <SearchForFundingSourceFacetItem
+                onSelectFunder={(identifier) => addFacetFilter(ResultParam.FundingSource, identifier)}
               />
-            );
-          })}
-        </FacetItem>
-      )}
+            }>
+            {fundingFacet.map((facet) => {
+              const isSelected = !!registrationParams.fundingSource?.includes(facet.key);
 
-      {publisherFacet.length > 0 && (
+              return (
+                <FacetListItem
+                  key={facet.key}
+                  dataTestId={dataTestId.aggregations.facetItem(facet.key)}
+                  isLoading={registrationQuery.isPending}
+                  isSelected={isSelected}
+                  label={getLanguageString(facet.labels)}
+                  count={facet.count}
+                  onClickFacet={() =>
+                    isSelected
+                      ? removeFacetFilter(ResultParam.FundingSource, facet.key)
+                      : addFacetFilter(ResultParam.FundingSource, facet.key)
+                  }
+                />
+              );
+            })}
+          </FacetItem>
+        ))}
+
+      {(registrationQuery.isPending || publisherFacet.length > 0) && (
         <FacetItem
           title={t('common.publisher')}
           dataTestId={dataTestId.aggregations.publisherFacets}
@@ -179,7 +186,8 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 onSelectPublisher={(identifier) => addFacetFilter(ResultParam.Publisher, identifier)}
               />
             )
-          }>
+          }
+          isPending={registrationQuery.isPending}>
           {publisherFacet.map((facet) => {
             const isSelected = !!registrationParams.publisher?.includes(facet.key);
 
@@ -202,7 +210,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {seriesFacet.length > 0 && (
+      {(registrationQuery.isPending || seriesFacet.length > 0) && (
         <FacetItem
           title={t('registration.resource_type.series')}
           dataTestId={dataTestId.aggregations.seriesFacets}
@@ -213,7 +221,8 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Series, identifier)}
               />
             )
-          }>
+          }
+          isPending={registrationQuery.isPending}>
           {seriesFacet.map((facet) => {
             const isSelected = !!registrationParams.series?.includes(facet.key);
 
@@ -236,7 +245,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {journalFacet.length > 0 && (
+      {(registrationQuery.isPending || journalFacet.length > 0) && (
         <FacetItem
           title={t('registration.resource_type.journal')}
           dataTestId={dataTestId.aggregations.journalFacets}
@@ -247,7 +256,8 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Journal, identifier)}
               />
             )
-          }>
+          }
+          isPending={registrationQuery.isPending}>
           {journalFacet.map((facet) => {
             const isSelected = !!registrationParams.journal?.includes(facet.key);
 
@@ -270,10 +280,11 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {scientificIndexFacet.length > 0 && (
+      {(registrationQuery.isPending || scientificIndexFacet.length > 0) && (
         <FacetItem
           title={t('basic_data.nvi.nvi_publication_year')}
-          dataTestId={dataTestId.aggregations.scientificIndexFacet}>
+          dataTestId={dataTestId.aggregations.scientificIndexFacet}
+          isPending={registrationQuery.isPending}>
           {scientificIndexFacet
             .sort((a, b) => +b.key - +a.key)
             .map((facet) => {
@@ -301,8 +312,11 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {filesFacet.length > 0 && (
-        <FacetItem title={t('registration.files_and_license.files')} dataTestId={dataTestId.aggregations.filesFacets}>
+      {(registrationQuery.isPending || filesFacet.length > 0) && (
+        <FacetItem
+          title={t('registration.files_and_license.files')}
+          dataTestId={dataTestId.aggregations.filesFacets}
+          isPending={registrationQuery.isPending}>
           {filesFacet
             .sort((one) => (one.key === 'hasPublicFiles' ? -1 : 1))
             .map((facet) => {
