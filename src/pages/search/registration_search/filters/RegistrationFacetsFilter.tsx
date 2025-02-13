@@ -11,6 +11,7 @@ import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPageProps } from '../../SearchPage';
 import { SearchForContributorFacetItem } from './SearchForContributorFacetItem';
+import { SearchForFundingSourceFacetItem } from './SearchForFundingSourceFacetItem';
 import { SearchForInstitutionFacetItem } from './SearchForInstitutionFacetItem';
 import { SearchForPublisherFacetItem } from './SearchForPublisherFacetItem';
 import { SearchForSerialPublicationFacetItem } from './SearchForSerialPublicationFacetItem';
@@ -157,32 +158,38 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {(registrationQuery.isPending || fundingFacet.length > 0) && (
-        <FacetItem
-          title={t('common.financier')}
-          dataTestId={dataTestId.aggregations.fundingFacets}
-          isPending={registrationQuery.isPending}>
-          {fundingFacet.map((facet) => {
-            const isSelected = !!registrationParams.fundingSource?.includes(facet.key);
-
-            return (
-              <FacetListItem
-                key={facet.key}
-                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
-                isSelected={isSelected}
-                label={getLanguageString(facet.labels)}
-                count={facet.count}
-                onClickFacet={() =>
-                  isSelected
-                    ? removeFacetFilter(ResultParam.FundingSource, facet.key)
-                    : addFacetFilter(ResultParam.FundingSource, facet.key)
-                }
+      {registrationQuery.isPending ||
+        (fundingFacet.length > 0 && (
+          <FacetItem
+            title={t('common.financier')}
+            dataTestId={dataTestId.aggregations.fundingFacets}
+            isPending={registrationQuery.isPending}
+            renderCustomSelect={
+              <SearchForFundingSourceFacetItem
+                onSelectFunder={(identifier) => addFacetFilter(ResultParam.FundingSource, identifier)}
               />
-            );
-          })}
-        </FacetItem>
-      )}
+            }>
+            {fundingFacet.map((facet) => {
+              const isSelected = !!registrationParams.fundingSource?.includes(facet.key);
+
+              return (
+                <FacetListItem
+                  key={facet.key}
+                  dataTestId={dataTestId.aggregations.facetItem(facet.key)}
+                  isLoading={registrationQuery.isPending}
+                  isSelected={isSelected}
+                  label={getLanguageString(facet.labels)}
+                  count={facet.count}
+                  onClickFacet={() =>
+                    isSelected
+                      ? removeFacetFilter(ResultParam.FundingSource, facet.key)
+                      : addFacetFilter(ResultParam.FundingSource, facet.key)
+                  }
+                />
+              );
+            })}
+          </FacetItem>
+        ))}
 
       {(registrationQuery.isPending || publisherFacet.length > 0) && (
         <FacetItem
