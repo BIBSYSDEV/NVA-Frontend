@@ -11,10 +11,10 @@ import {
   ProjectSearchOrder,
   ProjectSearchParameter,
   ProjectsSearchParams,
-  searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
+import { useSearchForPerson } from '../../api/hooks/useSearchForPerson';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -74,12 +74,10 @@ const HomePage = () => {
     results: rowsPerPage,
     page,
   };
-  const personQuery = useQuery({
+  const personQuery = useSearchForPerson({
     enabled: personIsSeleced,
-    queryKey: ['person', personQueryParams],
-    queryFn: () => searchForPerson(personQueryParams),
-    meta: { errorMessage: t('feedback.error.search') },
     placeholderData: keepPreviousData,
+    ...personQueryParams,
   });
 
   const projectSearchTerm = params.get(ProjectSearchParameter.Query);
