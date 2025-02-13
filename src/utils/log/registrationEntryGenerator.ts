@@ -110,7 +110,7 @@ function generateMetadataPublishedEntry(
     // Assumption: Regardless of ticket status, if there exists publishing ticket(s), the first will be metadata published
     return {
       type: 'MetadataPublished',
-      title: t('log.titles.metadata_published_in_nva'),
+      title: t('log.titles.metadata_published'),
       modifiedDate: firstPublishingTicket.createdDate,
       actions: [
         {
