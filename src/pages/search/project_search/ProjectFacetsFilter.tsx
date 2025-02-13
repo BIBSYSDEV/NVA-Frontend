@@ -44,13 +44,13 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
       searchParams.set(param, [...currentValues, key].join(','));
     }
     searchParams.set(SearchParam.Type, currentSearchType ?? '');
-    searchParams.set(SearchParam.Page, '1');
+    searchParams.delete(SearchParam.Page);
     navigate({ search: searchParams.toString() });
   };
 
   const removeFacetFilter = (parameter: ProjectSearchParameter, keyToRemove: string) => {
     const newSearchParams = removeSearchParamValue(searchParams, parameter, keyToRemove);
-    newSearchParams.set(SearchParam.Page, '1');
+    newSearchParams.delete(SearchParam.Page);
     navigate({ search: newSearchParams.toString() });
   };
 

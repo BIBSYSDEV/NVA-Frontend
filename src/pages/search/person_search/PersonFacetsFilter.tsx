@@ -28,13 +28,13 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
     const newSearchParams = new URLSearchParams(
       `${SearchParam.Type}=${currentSearchType}&${searchParameters.toString()}`
     );
-    newSearchParams.set(SearchParam.Page, '1');
+    newSearchParams.delete(SearchParam.Page);
     navigate({ search: newSearchParams.toString() });
   };
 
   const removeFacetFilter = (parameter: PersonSearchParameter, keyToRemove: string) => {
     const newSearchParams = removeSearchParamValue(searchParams, parameter, keyToRemove);
-    newSearchParams.set(SearchParam.Page, '1');
+    newSearchParams.delete(SearchParam.Page);
     navigate({ search: newSearchParams.toString() });
   };
 
