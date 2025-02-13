@@ -129,9 +129,7 @@ const HomePage = () => {
             ) : personIsSeleced ? (
               <PersonFacetsFilter personQuery={personQuery} />
             ) : projectIsSelected ? (
-              projectQuery.data?.aggregations ? (
-                <ProjectFacetsFilter projectQuery={projectQuery} />
-              ) : null
+              <ProjectFacetsFilter projectQuery={projectQuery} />
             ) : null}
           </Box>
         </NavigationListAccordion>
