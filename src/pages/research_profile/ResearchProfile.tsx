@@ -1,14 +1,15 @@
 import LinkIcon from '@mui/icons-material/Link';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
-import { Box, Chip, Divider, Grid, IconButton, Link as MuiLink, List, Typography } from '@mui/material';
+import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router';
-import { fetchPerson, ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from '../../api/cristinApi';
+import { Link, useLocation, useParams } from 'react-router';
+import { ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from '../../api/cristinApi';
+import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam } from '../../api/searchApi';
@@ -26,7 +27,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { SearchParam } from '../../utils/searchHelpers';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { IdentifierParams, UrlPathTemplate } from '../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 import { SearchTypeValue } from '../dashboard/HomePage';
 import NotFound from '../errorpages/NotFound';
@@ -38,6 +39,7 @@ import { registrationSortOptions } from '../search/registration_search/Registrat
 
 const ResearchProfile = () => {
   const { t } = useTranslation();
+  const { identifier } = useParams<IdentifierParams>();
   const location = useLocation();
   const [registrationsPage, setRegistrationsPage] = useState(1);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -56,24 +58,17 @@ const ResearchProfile = () => {
   const user = useSelector((store: RootState) => store.user);
 
   const currentCristinId = user?.cristinId ?? '';
-  const isPublicPage = location.pathname === UrlPathTemplate.ResearchProfile;
-  const personId = isPublicPage
-    ? (new URLSearchParams(location.search).get('id') ?? '') // Page for Research Profile of anyone
-    : currentCristinId; // Page for My Research Profile
+  const isPublicPage = location.pathname.startsWith(UrlPathTemplate.ResearchProfileRoot);
+  const personIdentifier = isPublicPage
+    ? (identifier ?? '') // Page for Research Profile of anyone
+    : getIdentifierFromId(currentCristinId); // Page for My Research Profile
 
-  const personIdNumber = getIdentifierFromId(personId);
-
-  const personQuery = useQuery({
-    enabled: !!personId,
-    queryKey: ['person', personId],
-    queryFn: () => fetchPerson(personId),
-    meta: { errorMessage: t('feedback.error.get_person') },
-  });
+  const personQuery = useFetchPersonByIdentifier(personIdentifier);
 
   const person = personQuery.data;
 
   const registrationsQueryConfig: FetchResultsParams = {
-    contributor: personId,
+    contributor: personIdentifier,
     from: (registrationsPage - 1) * registrationRowsPerPage,
     results: registrationRowsPerPage,
     order: registrationSort.orderBy,
@@ -81,13 +76,13 @@ const ResearchProfile = () => {
   };
 
   const registrationsQuery = useRegistrationSearch({
-    enabled: !!personId,
+    enabled: !!personIdentifier,
     params: registrationsQueryConfig,
     keepDataWhileLoading: true,
   });
 
   const projectsQueryConfig: ProjectsSearchParams = {
-    participant: personIdNumber,
+    participant: personIdentifier,
     orderBy: projectSort.orderBy,
     sort: projectSort.sortOrder,
   };
@@ -100,6 +95,8 @@ const ResearchProfile = () => {
   });
 
   const projects = projectsQuery.data?.hits ?? [];
+
+  const personId = person?.id ?? '';
 
   const promotedPublicationsQuery = useQuery({
     enabled: !!personId,

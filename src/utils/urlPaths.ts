@@ -60,6 +60,7 @@ export enum UrlPathTemplate {
   RegistrationNew = '/registration',
   RegistrationWizard = '/registration/:identifier/edit',
   ResearchProfile = '/research-profile/:identifier',
+  ResearchProfileRoot = '/research-profile',
   Reports = '/reports',
   ReportsClinicalTreatmentStudies = '/reports/clinical-treatment-studies',
   ReportsInternationalCooperation = '/reports/international-cooperation',

@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router';
 import { fetchResource } from '../../api/commonApi';
 import { fetchUsersByCustomer } from '../../api/roleApi';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -13,7 +14,7 @@ import { InstitutionUser, RoleName } from '../../types/user.types';
 import { getInitials } from '../../utils/general-helpers';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getResearchProfilePath } from '../../utils/urlPaths';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledBaseContributorIndicator } from '../registration/contributors_tab/ContributorIndicator';
 
@@ -211,7 +212,9 @@ const InstitutionUserLink = ({ user }: InstitutionUserItemProps) => {
         }}>
         {getInitials(fullName)}
       </StyledBaseContributorIndicator>
-      <Link href={`${UrlPathTemplate.ResearchProfile}?id=${encodeURIComponent(user.cristinId ?? '')}`}>{fullName}</Link>
+      <Link component={RouterLink} to={getResearchProfilePath(user.cristinId ?? '')}>
+        {fullName}
+      </Link>
     </Box>
   );
 };
