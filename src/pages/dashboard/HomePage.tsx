@@ -127,9 +127,7 @@ const HomePage = () => {
             {resultIsSelected ? (
               <RegistrationFacetsFilter registrationQuery={registrationQuery} />
             ) : personIsSeleced ? (
-              personQuery.data?.aggregations ? (
-                <PersonFacetsFilter personQuery={personQuery} />
-              ) : null
+              <PersonFacetsFilter personQuery={personQuery} />
             ) : projectIsSelected ? (
               projectQuery.data?.aggregations ? (
                 <ProjectFacetsFilter projectQuery={projectQuery} />

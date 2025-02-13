@@ -14,8 +14,8 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const organizationFacet = personQuery.data?.aggregations?.organizationFacet;
-  const sectorFacet = personQuery.data?.aggregations?.sectorFacet;
+  const organizationFacet = personQuery.data?.aggregations?.organizationFacet ?? [];
+  const sectorFacet = personQuery.data?.aggregations?.sectorFacet ?? [];
 
   const searchParams = new URLSearchParams(location.search);
   const currentSearchType = searchParams.get(SearchParam.Type);
@@ -40,8 +40,11 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
 
   return (
     <>
-      {organizationFacet && organizationFacet?.length > 0 && (
-        <FacetItem title={t('common.institution')} dataTestId={dataTestId.aggregations.institutionFacets}>
+      {(personQuery.isPending || organizationFacet.length > 0) && (
+        <FacetItem
+          title={t('common.institution')}
+          dataTestId={dataTestId.aggregations.institutionFacets}
+          isPending={personQuery.isPending}>
           {organizationFacet.map((facet) => {
             const isSelected = selectedOrganizations.includes(facet.key);
             return (
@@ -63,8 +66,11 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
         </FacetItem>
       )}
 
-      {sectorFacet && sectorFacet?.length > 0 && (
-        <FacetItem title={t('search.sector')} dataTestId={dataTestId.aggregations.sectorFacets}>
+      {(personQuery.isPending || sectorFacet.length > 0) && (
+        <FacetItem
+          title={t('search.sector')}
+          dataTestId={dataTestId.aggregations.sectorFacets}
+          isPending={personQuery.isPending}>
           {sectorFacet.map((facet) => {
             const isSelected = selectedSectors.includes(facet.key);
             return (
