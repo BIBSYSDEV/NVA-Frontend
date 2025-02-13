@@ -6,7 +6,7 @@ import { fetchProject } from '../cristinApi';
 export const useFetchProject = (projectId: string) => {
   const { t } = useTranslation();
 
-  const projectIdentifier = !isNaN(Number(projectId)) ? projectId : getIdentifierFromId(projectId);
+  const projectIdentifier = isNaN(Number(projectId)) ? getIdentifierFromId(projectId) : projectId;
 
   return useQuery({
     enabled: !!projectIdentifier,
