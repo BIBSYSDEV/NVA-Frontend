@@ -1,5 +1,6 @@
 import { To } from 'react-router';
 import { Registration, RegistrationStatus } from '../types/registration.types';
+import { getIdentifierFromId } from './general-helpers';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;
@@ -58,7 +59,7 @@ export enum UrlPathTemplate {
   RegistrationLandingPage = '/registration/:identifier',
   RegistrationNew = '/registration',
   RegistrationWizard = '/registration/:identifier/edit',
-  ResearchProfile = '/research-profile',
+  ResearchProfile = '/research-profile/:identifier',
   Reports = '/reports',
   ReportsClinicalTreatmentStudies = '/reports/clinical-treatment-studies',
   ReportsInternationalCooperation = '/reports/international-cooperation',
@@ -129,8 +130,8 @@ export const getImportCandidateMergePath = (candidateIdentifier: string, registr
     encodeURIComponent(candidateIdentifier)
   ).replace(':registrationIdentifier', encodeURIComponent(registrationIdentifier));
 
-export const getResearchProfilePath = (userId: string) =>
-  `${UrlPathTemplate.ResearchProfile}?id=${encodeURIComponent(userId)}`;
+export const getResearchProfilePath = (id: string) =>
+  UrlPathTemplate.ResearchProfile.replace(':identifier', encodeURIComponent(getIdentifierFromId(id)));
 
 export const getAdminInstitutionPath = (id: string) =>
   `${UrlPathTemplate.BasicDataInstitutions}?id=${encodeURIComponent(id)}`;
