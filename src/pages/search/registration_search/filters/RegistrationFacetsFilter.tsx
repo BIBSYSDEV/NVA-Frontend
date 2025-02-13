@@ -10,6 +10,7 @@ import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPageProps } from '../../SearchPage';
+import { SearchForContributorFacetItem } from './SearchForContributorFacetItem';
 import { SearchForInstitutionFacetItem } from './SearchForInstitutionFacetItem';
 import { SearchForPublisherFacetItem } from './SearchForPublisherFacetItem';
 import { SearchForSerialPublicationFacetItem } from './SearchForSerialPublicationFacetItem';
@@ -119,22 +120,28 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         <FacetItem
           title={t('registration.contributors.contributor')}
           dataTestId={dataTestId.aggregations.contributorFacets}
-          isPending={registrationQuery.isPending}>
+          isPending={registrationQuery.isPending}
+          renderCustomSelect={
+            <SearchForContributorFacetItem
+              onSelectContributor={(identifier) => addFacetFilter(ResultParam.Contributor, identifier)}
+            />
+          }>
           {contributorFacet.map((facet) => {
-            const isSelected = !!registrationParams.contributor?.includes(facet.key);
+            const contributorIdentifier = getIdentifierFromId(facet.key);
+            const isSelected = !!registrationParams.contributor?.includes(contributorIdentifier);
 
             return (
               <FacetListItem
                 key={facet.key}
-                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(contributorIdentifier)}
                 isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected
-                    ? removeFacetFilter(ResultParam.Contributor, facet.key)
-                    : addFacetFilter(ResultParam.Contributor, facet.key)
+                    ? removeFacetFilter(ResultParam.Contributor, contributorIdentifier)
+                    : addFacetFilter(ResultParam.Contributor, contributorIdentifier)
                 }
               />
             );
