@@ -53,7 +53,11 @@ interface PublicationLogEntry extends BaseLogEntry {
     | 'PublicationPublished'
     | 'PublicationUnpublished'
     | 'PublicationDeleted'
-    | 'PublicationRepublished';
+    | 'PublicationRepublished'
+    | 'DoiReserved' // TODO: new type?
+    | 'DoiRequested'
+    | 'DoiRejected'
+    | 'DoiAssigned';
 }
 
 interface PublicationImportedLogEntry extends Omit<PublicationLogEntry, 'topic'> {

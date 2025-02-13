@@ -708,6 +708,10 @@
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_afterwards": "Slettet i etterkant",
     "entry_topic": {
+      "DoiReserved": "DOI reservert",
+      "DoiRequested": "DOI etterspurt",
+      "DoiRejected": "DOI avvist",
+      "DoiAssigned": "DOI tildelt",
       "FileApproved": "Fil godkjent",
       "FileDeleted": "Fil slettet",
       "FileImported": "Fil importert",
