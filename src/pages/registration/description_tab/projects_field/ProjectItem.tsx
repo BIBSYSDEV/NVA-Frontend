@@ -20,7 +20,7 @@ const StyledListSkeleton = () => <ListSkeleton arrayLength={1} minWidth={20} hei
 
 export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
   const { t } = useTranslation();
-  const projectQuery = useFetchProject(projectId, { keepPreviousData: true }); // TODO: Why keepPreviousData?
+  const projectQuery = useFetchProject(projectId);
   const project = projectQuery.data;
   const isFetching = projectQuery.isFetching;
 
