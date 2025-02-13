@@ -14,6 +14,7 @@ import { SearchForContributorFacetItem } from './SearchForContributorFacetItem';
 import { SearchForInstitutionFacetItem } from './SearchForInstitutionFacetItem';
 import { SearchForPublisherFacetItem } from './SearchForPublisherFacetItem';
 import { SearchForSerialPublicationFacetItem } from './SearchForSerialPublicationFacetItem';
+import { SelectCategoryFacetItem } from './SelectCategoryFacetItem';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
@@ -60,7 +61,14 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         <FacetItem
           title={t('common.category')}
           dataTestId={dataTestId.aggregations.typeFacets}
-          isPending={registrationQuery.isPending}>
+          isPending={registrationQuery.isPending}
+          renderCustomSelect={
+            !searchParams.has(ResultParam.Category) && (
+              <SelectCategoryFacetItem
+                onSelectCategory={(category) => addFacetFilter(ResultParam.Category, category)}
+              />
+            )
+          }>
           {typeFacet.map((facet) => {
             const isSelected = registrationParams.category === facet.key;
 
