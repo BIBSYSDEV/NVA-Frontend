@@ -64,9 +64,8 @@ const HomePage = () => {
     keepDataWhileLoading: true,
   });
 
-  const personSearchTerm = params.get(PersonSearchParameter.Name) ?? '.';
   const personQueryParams: PersonSearchParams = {
-    name: personSearchTerm,
+    name: params.get(PersonSearchParameter.Name),
     orderBy: params.get(PersonSearchParameter.OrderBy),
     organization: params.get(PersonSearchParameter.Organization),
     sector: params.get(PersonSearchParameter.Sector),
