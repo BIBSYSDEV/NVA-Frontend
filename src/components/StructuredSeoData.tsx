@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Registration, RegistrationDate } from '../types/registration.types';
 import { useJournalSeoData } from '../utils/hooks/useJournalSeoData';
 
-const getPublicationDateSeoString = (publicationDate: RegistrationDate) => {
+const getPublicationDateCitationString = (publicationDate: RegistrationDate) => {
   if (publicationDate.year && publicationDate.month && publicationDate.day) {
     return `${publicationDate.year}/${publicationDate.month}/${publicationDate.day}`;
   }
@@ -11,6 +11,15 @@ const getPublicationDateSeoString = (publicationDate: RegistrationDate) => {
     return publicationDate.year;
   }
   return null;
+};
+
+const getDoiCitationString = (registration: Registration) => {
+  const doi = registration.doi ?? registration.entityDescription?.reference?.doi ?? '';
+  if (!doi) {
+    return '';
+  }
+  const match = doi.match(/10\.\d+\/.*/);
+  return match ? match[0] : '';
 };
 
 interface StructuredSeoDataProps {
@@ -42,7 +51,9 @@ export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
 
   const citationPublicationDate =
     registration.entityDescription?.publicationDate &&
-    getPublicationDateSeoString(registration.entityDescription.publicationDate);
+    getPublicationDateCitationString(registration.entityDescription.publicationDate);
+
+  const citationDoi = getDoiCitationString(registration);
 
   return (
     <Helmet>
@@ -55,6 +66,7 @@ export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
         <meta name="citation_author" content={contributor.identity.name} key={index} />
       ))}
       {citationPublicationDate && <meta name="citation_publication_date" content={citationPublicationDate} />}
+      {citationDoi && <meta name="citation_doi" content={citationDoi} />}
 
       {journalSeoData.journalName && <meta name="citation_journal_title" content={journalSeoData.journalName} />}
       {journalSeoData.printIssn && <meta name="citation_issn" content={journalSeoData.printIssn} />}
