@@ -6,7 +6,7 @@ import { StyledPageContent } from '../../components/styled/Wrappers';
 import { IdentifierParams } from '../../utils/urlPaths';
 import { ProjectLandingPage } from './ProjectLandingPage';
 
-const ProjectsPage = () => {
+const ProjectPage = () => {
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
 
@@ -23,4 +23,4 @@ const ProjectsPage = () => {
   );
 };
 
-export default ProjectsPage;
+export default ProjectPage;

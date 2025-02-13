@@ -20,7 +20,7 @@ const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
 const PublicResearchProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
 const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
 const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
-const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
+const ProjectPage = lazy(() => import('./pages/projects/ProjectPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
 
@@ -49,7 +49,7 @@ export const AppRoutes = () => {
         <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
         <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
         <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
-        <Route path={UrlPathTemplate.ProjectPage} element={<ProjectsPage />} />
+        <Route path={UrlPathTemplate.ProjectPage} element={<ProjectPage />} />
         <Route path={UrlPathTemplate.Login} element={<LoginPage />} />
         <Route path={UrlPathTemplate.Logout} element={<Logout />} />
         <Route path={UrlPathTemplate.SignedOut} element={<SignedOutPage />} />
