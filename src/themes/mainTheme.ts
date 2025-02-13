@@ -358,6 +358,11 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiSkeleton: {
+        defaultProps: {
+          animation: 'wave',
+        },
+      },
     },
   },
   coreLocale
