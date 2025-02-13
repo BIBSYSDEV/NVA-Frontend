@@ -113,6 +113,7 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
     case 'FileUploaded':
     case 'FileApproved':
     case 'FileRejected':
+    case 'FileImported':
       return <InsertDriveFileOutlinedIcon {...logIconProps} />;
     case 'PublicationUnpublished':
       return <UnpublishedOutlinedIcon {...logIconProps} />;

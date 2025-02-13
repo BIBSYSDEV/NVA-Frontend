@@ -707,6 +707,7 @@
     "entry_topic": {
       "FileApproved": "Fil godkjent",
       "FileDeleted": "Fil slettet",
+      "FileImported": "Fil importert",
       "FileRejected": "Fil avvist",
       "FileUploaded": "Fil lastet opp",
       "PublicationCreated": "Opprettet i NVA",
