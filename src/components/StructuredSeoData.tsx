@@ -13,12 +13,13 @@ const getPublicationDateCitationString = (publicationDate: RegistrationDate) => 
   return null;
 };
 
+const doiRegex = /10\.\d+\/.*/;
 const getDoiCitationString = (registration: Registration) => {
-  const doi = registration.doi ?? registration.entityDescription?.reference?.doi ?? '';
-  if (!doi) {
+  const doiUrl = registration.doi ?? registration.entityDescription?.reference?.doi ?? '';
+  if (!doiUrl) {
     return '';
   }
-  const match = doi.match(/10\.\d+\/.*/);
+  const match = doiUrl.match(doiRegex);
   return match ? match[0] : '';
 };
 
