@@ -58,9 +58,9 @@ const ResearchProfile = () => {
   const user = useSelector((store: RootState) => store.user);
 
   const currentCristinId = user?.cristinId ?? '';
-  const isPublicPage = location.pathname.startsWith(UrlPathTemplate.ResearchProfileRoot);
+  const isPublicPage = location.pathname.startsWith(UrlPathTemplate.ResearchProfileRoot) && identifier;
   const personIdentifier = isPublicPage
-    ? (identifier ?? '') // Page for Research Profile of anyone
+    ? identifier // Page for Research Profile of anyone
     : getIdentifierFromId(currentCristinId); // Page for My Research Profile
 
   const personQuery = useFetchPersonByIdentifier(personIdentifier);
