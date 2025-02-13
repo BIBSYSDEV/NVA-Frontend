@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { PersonSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { removeSearchParamValue, SearchParam } from '../../../utils/searchHelpers';
+import { removeSearchParamValue, SearchParam, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
@@ -18,22 +18,25 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
   const sectorFacet = personQuery.data?.aggregations?.sectorFacet ?? [];
 
   const searchParams = new URLSearchParams(location.search);
-  const currentSearchType = searchParams.get(SearchParam.Type);
 
   const selectedOrganizations = searchParams.get(PersonSearchParameter.Organization)?.split(',') ?? [];
   const selectedSectors = searchParams.get(PersonSearchParameter.Sector)?.split(',') ?? [];
 
-  const addFacetFilter = (id: string) => {
-    const searchParameters = new URL(id).searchParams;
-    const newSearchParams = new URLSearchParams(
-      `${SearchParam.Type}=${currentSearchType}&${searchParameters.toString()}`
-    );
-    newSearchParams.delete(SearchParam.Page);
-    navigate({ search: newSearchParams.toString() });
+  const addFacetFilter = (param: PersonSearchParameter, key: string) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
+    const currentValues = syncedParams.get(param)?.split(',') ?? [];
+    if (currentValues.length === 0) {
+      syncedParams.set(param, key);
+    } else {
+      syncedParams.set(param, [...currentValues, key].join(','));
+    }
+    syncedParams.delete(SearchParam.Page);
+    navigate({ search: syncedParams.toString() });
   };
 
   const removeFacetFilter = (parameter: PersonSearchParameter, keyToRemove: string) => {
-    const newSearchParams = removeSearchParamValue(searchParams, parameter, keyToRemove);
+    const syncedParams = syncParamsWithSearchFields(searchParams);
+    const newSearchParams = removeSearchParamValue(syncedParams, parameter, keyToRemove);
     newSearchParams.delete(SearchParam.Page);
     navigate({ search: newSearchParams.toString() });
   };
@@ -58,7 +61,7 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
                 onClickFacet={() =>
                   isSelected
                     ? removeFacetFilter(PersonSearchParameter.Organization, facet.key)
-                    : addFacetFilter(facet.id)
+                    : addFacetFilter(PersonSearchParameter.Organization, facet.key)
                 }
               />
             );
@@ -82,7 +85,9 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
                 onClickFacet={() =>
-                  isSelected ? removeFacetFilter(PersonSearchParameter.Sector, facet.key) : addFacetFilter(facet.id)
+                  isSelected
+                    ? removeFacetFilter(PersonSearchParameter.Sector, facet.key)
+                    : addFacetFilter(PersonSearchParameter.Sector, facet.key)
                 }
               />
             );
