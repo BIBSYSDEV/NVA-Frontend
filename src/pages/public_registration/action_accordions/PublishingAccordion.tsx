@@ -304,9 +304,11 @@ export const PublishingAccordion = ({
               {t('registration.public_page.tasks_panel.publish_registration')}
             </LoadingButton>
 
-            <Typography sx={{ my: '1rem' }}>
-              {t('registration.public_page.tasks_panel.delete_draft_description')}
-            </Typography>
+            {userHasAccessRight(registration, 'delete') && (
+              <Typography sx={{ my: '1rem' }}>
+                {t('registration.public_page.tasks_panel.delete_draft_description')}
+              </Typography>
+            )}
           </>
         )}
 
