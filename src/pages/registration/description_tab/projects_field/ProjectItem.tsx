@@ -3,9 +3,9 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Divider, IconButton, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
+import { useFetchProject } from '../../../../api/hooks/useFetchProject';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { useFetchProjectQuery } from '../../../../utils/hooks/useFetchProjectQuery';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getProjectPath } from '../../../../utils/urlPaths';
 import { fundingSourceIsNfr, getNfrProjectUrl } from './projectHelpers';
@@ -19,7 +19,7 @@ const StyledListSkeleton = () => <ListSkeleton arrayLength={1} minWidth={20} hei
 
 export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
   const { t } = useTranslation();
-  const projectQuery = useFetchProjectQuery(projectId);
+  const projectQuery = useFetchProject(projectId, { keepPreviousData: true }); // TODO: Why keepPreviousData?
   const project = projectQuery.data;
   const isFetching = projectQuery.isFetching;
 

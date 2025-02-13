@@ -49,7 +49,7 @@ export const AppRoutes = () => {
         <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
         <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
         <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
-        <Route path={UrlPathTemplate.Projects} element={<ProjectsPage />} />
+        <Route path={UrlPathTemplate.ProjectPage} element={<ProjectsPage />} />
         <Route path={UrlPathTemplate.Login} element={<LoginPage />} />
         <Route path={UrlPathTemplate.Logout} element={<Logout />} />
         <Route path={UrlPathTemplate.SignedOut} element={<SignedOutPage />} />
