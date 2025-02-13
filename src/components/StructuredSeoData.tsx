@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Registration, RegistrationDate } from '../types/registration.types';
+import { useJournalSeoData } from '../utils/hooks/useJournalSeoData';
 
 const getPublicationDateSeoString = (publicationDate: RegistrationDate) => {
   if (publicationDate.year && publicationDate.month && publicationDate.day) {
@@ -19,7 +20,7 @@ interface StructuredSeoDataProps {
 export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
   const [seoData, setSeoData] = useState('');
 
-  const registrationIsPublished = registration && registration.status === 'PUBLISHED';
+  const journalSeoData = useJournalSeoData(registration);
 
   useEffect(() => {
     const fetchSeoData = async () => {
@@ -34,14 +35,10 @@ export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
       }
     };
 
-    if (registrationIsPublished) {
+    if (registration.id) {
       fetchSeoData();
     }
-  }, [registration.id, registrationIsPublished]);
-
-  if (!registrationIsPublished) {
-    return null;
-  }
+  }, [registration.id]);
 
   const citationPublicationDate =
     registration.entityDescription?.publicationDate &&
@@ -58,6 +55,10 @@ export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
         <meta name="citation_author" content={contributor.identity.name} key={index} />
       ))}
       {citationPublicationDate && <meta name="citation_publication_date" content={citationPublicationDate} />}
+
+      {journalSeoData.journalName && <meta name="citation_journal_title" content={journalSeoData.journalName} />}
+      {journalSeoData.printIssn && <meta name="citation_issn" content={journalSeoData.printIssn} />}
+      {journalSeoData.onlineIssn && <meta name="citation_issn" content={journalSeoData.onlineIssn} />}
     </Helmet>
   );
 };
