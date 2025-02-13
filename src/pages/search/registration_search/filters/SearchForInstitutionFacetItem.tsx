@@ -1,5 +1,5 @@
 import { Autocomplete } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchForOrganizations } from '../../../../api/hooks/useSearchForOrganizations';
 import {
@@ -25,6 +25,9 @@ export const SearchForInstitutionFacetItem = ({ onSelectInstitution }: SearchFor
   const [searchQuery, setSearchQuery] = useState('');
   const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const debouncedQuery = useDebounce(searchQuery);
+
+  useEffect(() => setSearchSize(defaultOrganizationSearchSize), [debouncedQuery]);
+
   const institutionSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
 
   const options = institutionSearchQuery.data?.hits ?? [];

@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { keepSimilarPreviousData, useSearchForPerson } from '../../../../api/hooks/useSearchForPerson';
 import {
@@ -25,6 +25,9 @@ export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchFor
   const [searchQuery, setSearchQuery] = useState('');
   const [searchSize, setSearchSize] = useState(defaultPersonSearchSize);
   const debouncedQuery = useDebounce(searchQuery);
+
+  useEffect(() => setSearchSize(defaultPersonSearchSize), [debouncedQuery]);
+
   const personSearchQuery = useSearchForPerson({
     name: debouncedQuery,
     results: searchSize,
