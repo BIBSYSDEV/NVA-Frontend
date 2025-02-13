@@ -11,6 +11,7 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SortSelectorWithoutParams } from '../../../components/SortSelectorWithoutParams';
 import { RootState } from '../../../redux/store';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { RegistrationSearchResults } from '../../search/registration_search/RegistrationSearchResults';
 import { registrationSortOptions } from '../../search/registration_search/RegistrationSortSelector';
 
@@ -24,7 +25,7 @@ export const MyResults = () => {
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const registrationsQueryConfig: FetchResultsParams = {
-    contributor: personId,
+    contributor: getIdentifierFromId(personId),
     from: rowsPerPage * (page - 1),
     results: rowsPerPage,
     order: registrationSort.orderBy,
