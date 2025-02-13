@@ -3,6 +3,7 @@ export const dataTestId = {
     categoryFacets: 'category-facets',
     collaboardationTypeFacets: 'collaboration-type-facets',
     contributorFacets: 'contributor-facets',
+    contributorFacetsSearchField: 'contributor-facets-search-field',
     coordinatingFacets: 'coordinating-facets',
     facetItem: (value: string) => `facet-item-${value}`,
     filesFacets: 'files-facets',

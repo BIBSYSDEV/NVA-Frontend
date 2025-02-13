@@ -317,6 +317,8 @@
     "use": "Bruk",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
+    "x_other_employments_one": "+ {{count}} annen ansettelse",
+    "x_other_employments_other": "+ {{count}} andre ansettelser",
     "x_others_one": "+ {{count}} annen",
     "x_others_other": "+ {{count}} andre",
     "year": "År",
@@ -489,10 +491,10 @@
     "vocabulary_description": "Kontrollerte emneord (vokabular) som kan benyttes ved registrering av nytt resultat.",
     "vocabulary_status": {
       "Allowed": "Tillatt",
-      "Default": "Standard",
-      "Disabled": "Ikke tillatt",
       "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
+      "Default": "Standard",
       "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
+      "Disabled": "Ikke tillatt",
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
     }
   },
@@ -521,6 +523,7 @@
       "delete_registration": "Kunne ikke slette registrering",
       "download_file": "Kunne ikke laste ned fil",
       "fetch": "Kunne ikke hente {{resource}}",
+      "fetch_log": "Kunne ikke hente logg",
       "get_affiliation_name": "Kunne ikke hente navn på tilknytning for {{unitUri}}",
       "get_curators_for_institution": "Kunne ikke hente kuratorer",
       "get_customer": "Kunne ikke hente kundeinstitusjon",
@@ -558,6 +561,7 @@
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
       "orcid_login": "Kunne ikke logge inn på ORCID",
+      "person_search": "Søk etter person feilet",
       "project_search": "Søk på prosjekt feilet",
       "publish_registration": "Kunne ikke publisere registrering",
       "reject_doi_request": "Kunne ikke avvise DOI-forespørsel",
@@ -667,17 +671,16 @@
   },
   "licenses": {
     "description": {
-      "cc0": "Den person som har knyttet et verk til dette aktstykke (deed) har, i den utstrekning loven tillater, erklært dette verket er i det fri ved å si fra seg alle de opphavsrettigheter og nærstående rettigheter som vedkommende hadde til verket.",
       "cc_by": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort.",
       "cc_by_nc": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål.",
       "cc_by_nc_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
       "cc_by_nc_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
       "cc_by_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
       "cc_by_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
+      "cc0": "Den person som har knyttet et verk til dette aktstykke (deed) har, i den utstrekning loven tillater, erklært dette verket er i det fri ved å si fra seg alle de opphavsrettigheter og nærstående rettigheter som vedkommende hadde til verket.",
       "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner. \n\n\"Utgivers betingelser\" er ikke en lisens, men en erklæring om at noen rettigheter er forbeholdt utgiveren, forfatteren og muligens andre. Leseren må selv klargjøre hva loven tillater ham å gjøre med dette verket, utover å lese det."
     },
     "labels": {
-      "cc0": "CC0 ({{version}})",
       "cc_by": "CC BY ({{version}})",
       "cc_by_nc": "CC BY-NC ({{version}})",
       "cc_by_nc_nd": "CC BY-NC-ND ({{version}})",
@@ -685,10 +688,10 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
+      "cc0": "CC0 ({{version}})",
       "rights_reserved": "Utgivers betingelser"
     },
     "links": {
-      "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
       "cc_by": "https://creativecommons.org/licenses/by/{{version}}/deed.no",
       "cc_by_nc": "https://creativecommons.org/licenses/by-nc/{{version}}/deed.no",
       "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/{{version}}/deed.no",
@@ -696,6 +699,7 @@
       "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}/deed.no",
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no",
+      "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
       "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
     }
   },
@@ -703,6 +707,21 @@
     "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_afterwards": "Slettet i etterkant",
+    "entry_topic": {
+      "FileApproved": "Fil godkjent",
+      "FileDeleted": "Fil slettet",
+      "FileImported": "Fil importert",
+      "FileRejected": "Fil avvist",
+      "FileUploaded": "Fil lastet opp",
+      "PublicationCreated": "Opprettet i NVA",
+      "PublicationDeleted": "Resultat slettet",
+      "PublicationImported": "Importert",
+      "PublicationPublished": "Metadata publisert i NVA",
+      "PublicationRepublished": "Resultat republisert",
+      "PublicationUnpublished": "Resultat avpublisert"
+    },
+    "file_archived": "Fil arkivert",
+    "file_published": "Fil publisert",
     "hidden_afterwards": "Endret til skjult fil i etterkant",
     "hidden_files_on_registration_one": "Registreringen har {{count}} skjult fil",
     "hidden_files_on_registration_other": "Registreringen har {{count}} skjulte filer",
@@ -1779,8 +1798,8 @@
         },
         "music_media_type": {
           "CompactDisc": "CD",
-          "DVD": "DVD",
           "DigitalFile": "Nedlasting",
+          "DVD": "DVD",
           "MusicMediaOther": "Annet",
           "Streaming": "Strømming",
           "Vinyl": "LP/EP"
