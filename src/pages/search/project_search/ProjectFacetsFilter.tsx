@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { removeSearchParamValue, SearchParam, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { removeSearchParamValue, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
@@ -43,14 +43,14 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
     } else {
       syncedParams.set(param, [...currentValues, key].join(','));
     }
-    syncedParams.delete(SearchParam.Page);
+    syncedParams.delete(ProjectSearchParameter.Page);
     navigate({ search: syncedParams.toString() });
   };
 
   const removeFacetFilter = (parameter: ProjectSearchParameter, keyToRemove: string) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     const newSearchParams = removeSearchParamValue(syncedParams, parameter, keyToRemove);
-    newSearchParams.delete(SearchParam.Page);
+    newSearchParams.delete(ProjectSearchParameter.Page);
     navigate({ search: newSearchParams.toString() });
   };
 
