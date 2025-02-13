@@ -2,9 +2,10 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Divider, IconButton, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
+import { Link as RouterLink } from 'react-router';
 import { useFetchProject } from '../../../../api/hooks/useFetchProject';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
+import { OpenInNewLink } from '../../../../components/OpenInNewLink';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getProjectPath } from '../../../../utils/urlPaths';
@@ -41,16 +42,12 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
           {isFetching ? (
             <StyledListSkeleton />
           ) : project ? (
-            <MuiLink
-              sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}
-              component={Link}
-              data-testid={dataTestId.registrationWizard.description.projectLink(project.id)}
+            <OpenInNewLink
+              component={RouterLink}
               to={getProjectPath(project.id)}
-              target="_blank"
-              rel="noopener noreferrer">
+              data-testid={dataTestId.registrationWizard.description.projectLink(project.id)}>
               {project.title}
-              <OpenInNewIcon fontSize="small" />
-            </MuiLink>
+            </OpenInNewLink>
           ) : (
             <Typography>-</Typography>
           )}
