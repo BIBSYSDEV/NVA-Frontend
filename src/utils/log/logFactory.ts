@@ -1,7 +1,6 @@
 import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
-import { StandardCSSProperties } from '@mui/system';
 import { TFunction } from 'i18next';
 import { FileType } from '../../types/associatedArtifact.types';
 import { Log, LogEntry, LogEntryType } from '../../types/log.types';
@@ -58,7 +57,7 @@ const sortLogEntries = (a: LogEntry, b: LogEntry) => {
 interface SimpleLogItemEntry {
   text: string;
   date?: string;
-  bgcolor: StandardCSSProperties['backgroundColor'];
+  bgcolor: string;
   Icon: typeof CheckIcon;
 }
 

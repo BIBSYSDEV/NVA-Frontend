@@ -2,7 +2,6 @@ import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, Typography } from '@mui/material';
-import { StandardCSSProperties } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import { NviCandidateStatus } from '../types/nvi.types';
 import { Ticket } from '../types/publication_types/ticket.types';
@@ -52,7 +51,7 @@ export const NviStatusChip = ({ status }: NviStatusChip) => {
 interface StatusChipProps {
   text: string;
   icon: 'check' | 'block' | 'hourglass';
-  bgcolor?: StandardCSSProperties['backgroundColor'];
+  bgcolor?: string;
 }
 
 export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon }: StatusChipProps) => {
