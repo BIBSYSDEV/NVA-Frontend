@@ -50,7 +50,7 @@ const Dashboard = () => {
               gridTemplateColumns: { xs: '1fr', md: '1fr 2.5fr 1fr' },
             }}>
             <Typography
-              variant="h1"
+              fontWeight={600}
               sx={{
                 gridArea: 'text-tagline',
                 fontSize: { xs: '2rem', sm: '3rem' },
