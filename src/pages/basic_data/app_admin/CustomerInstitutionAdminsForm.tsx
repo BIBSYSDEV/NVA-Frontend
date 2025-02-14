@@ -1,12 +1,12 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { fetchUsersByCustomer } from '../../../api/roleApi';
 import { RoleName } from '../../../types/user.types';
 import { AddAdminDialog } from './AddAdminDialog';
 import { UserList } from './UserList';
-import { useQuery } from '@tanstack/react-query';
-import { fetchUsersByCustomer } from '../../../api/roleApi';
 
 interface CustomerInstitutionAdminsFormProps {
   cristinInstitutionId: string;
@@ -50,7 +50,7 @@ export const CustomerInstitutionAdminsForm = ({
         open={openAddAdminModal}
         toggleOpen={toggleOpenAddAdminModal}
         cristinInstitutionId={cristinInstitutionId}
-        refetchInstitutionUsers={adminsQuery.refetch}
+        refetchUsers={adminsQuery.refetch}
       />
     </>
   );
