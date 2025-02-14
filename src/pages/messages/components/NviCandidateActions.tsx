@@ -273,7 +273,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
       <Divider sx={{ gridArea: 'divider2' }} />
 
       <Box sx={{ gridArea: 'comment' }}>
-        <Typography variant="h3" gutterBottom component="h2">
+        <Typography variant="h3" gutterBottom>
           {t('tasks.nvi.note')}
         </Typography>
         <Typography sx={{ mb: '1rem' }}>{t('tasks.nvi.message_description')}</Typography>
