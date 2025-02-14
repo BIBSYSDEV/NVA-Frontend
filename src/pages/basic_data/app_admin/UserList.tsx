@@ -12,7 +12,7 @@ import { InstitutionUser, RoleName } from '../../../types/user.types';
 
 interface UserListProps {
   userList: InstitutionUser[];
-  refetchUsers: () => void;
+  refetchUsers: () => Promise<unknown>;
 }
 
 export const UserList = ({ userList, refetchUsers }: UserListProps) => {
@@ -27,8 +27,8 @@ export const UserList = ({ userList, refetchUsers }: UserListProps) => {
         ...existingUser,
         roles: existingUser.roles.filter((role) => role.rolename !== RoleName.InstitutionAdmin),
       };
-      const updateUserResponse = await updateUser(existingUser.username, updatedUser);
-      refetchUsers(); // TODO: await this
+      await updateUser(existingUser.username, updatedUser);
+      await refetchUsers();
       setUserToUpdate(null);
     },
     onSuccess: () => dispatch(setNotification({ message: t('feedback.success.removed_role'), variant: 'success' })),
