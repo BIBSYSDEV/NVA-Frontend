@@ -1,5 +1,4 @@
-import { Divider, Link as MuiLink, Skeleton, Typography } from '@mui/material';
-import { styled } from '@mui/system';
+import { Divider, Link as MuiLink, Skeleton, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { useFetchProject } from '../../api/hooks/useFetchProject';
