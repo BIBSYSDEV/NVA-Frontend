@@ -35,11 +35,11 @@ export const UserList = ({ userList, refetchUsers }: UserListProps) => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.remove_role'), variant: 'error' })),
   });
 
-  const isLastInstitutionAdmin = userList.length === 1;
-
-  const sortedList = userList.sort((a, b) =>
-    `${a.givenName} ${a.familyName}`.toLocaleLowerCase() < `${b.givenName} ${b.familyName}`.toLocaleLowerCase() ? -1 : 1
-  );
+  const sortedList = userList.sort((a, b) => {
+    const nameA = `${a.givenName} ${a.familyName}`.toLocaleLowerCase();
+    const nameB = `${b.givenName} ${b.familyName}`.toLocaleLowerCase();
+    return nameA.localeCompare(nameB);
+  });
 
   return (
     <>
@@ -57,9 +57,9 @@ export const UserList = ({ userList, refetchUsers }: UserListProps) => {
                 divider
                 secondaryAction={
                   <IconButton
-                    aria-label={t('common.remove')}
+                    title={t('common.remove')}
                     color="primary"
-                    disabled={isLastInstitutionAdmin}
+                    disabled={userList.length === 1}
                     data-testid={`button-remove-role-${user.username}`}
                     onClick={() => setUserToUpdate(user)}>
                     <CancelIcon />
