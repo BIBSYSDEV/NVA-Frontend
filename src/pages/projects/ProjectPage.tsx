@@ -1,15 +1,16 @@
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
+import { useParams } from 'react-router';
 import { useFetchProject } from '../../api/hooks/useFetchProject';
 import { PageSpinner } from '../../components/PageSpinner';
 import { StyledPageContent } from '../../components/styled/Wrappers';
+import { IdentifierParams } from '../../utils/urlPaths';
 import { ProjectLandingPage } from './ProjectLandingPage';
 
-const ProjectsPage = () => {
+const ProjectPage = () => {
   const { t } = useTranslation();
-  const location = useLocation();
-  const projectId = new URLSearchParams(location.search).get('id') ?? '';
-  const projectQuery = useFetchProject(projectId);
+  const { identifier } = useParams<IdentifierParams>();
+
+  const projectQuery = useFetchProject(identifier ?? '');
 
   return (
     <StyledPageContent>
@@ -22,4 +23,4 @@ const ProjectsPage = () => {
   );
 };
 
-export default ProjectsPage;
+export default ProjectPage;

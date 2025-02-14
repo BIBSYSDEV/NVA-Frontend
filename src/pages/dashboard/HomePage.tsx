@@ -64,9 +64,8 @@ const HomePage = () => {
     keepDataWhileLoading: true,
   });
 
-  const personSearchTerm = params.get(PersonSearchParameter.Name) ?? '.';
   const personQueryParams: PersonSearchParams = {
-    name: personSearchTerm,
+    name: params.get(PersonSearchParameter.Name),
     orderBy: params.get(PersonSearchParameter.OrderBy),
     organization: params.get(PersonSearchParameter.Organization),
     sector: params.get(PersonSearchParameter.Sector),
@@ -127,13 +126,9 @@ const HomePage = () => {
             {resultIsSelected ? (
               <RegistrationFacetsFilter registrationQuery={registrationQuery} />
             ) : personIsSeleced ? (
-              personQuery.data?.aggregations ? (
-                <PersonFacetsFilter personQuery={personQuery} />
-              ) : null
+              <PersonFacetsFilter personQuery={personQuery} />
             ) : projectIsSelected ? (
-              projectQuery.data?.aggregations ? (
-                <ProjectFacetsFilter projectQuery={projectQuery} />
-              ) : null
+              <ProjectFacetsFilter projectQuery={projectQuery} />
             ) : null}
           </Box>
         </NavigationListAccordion>

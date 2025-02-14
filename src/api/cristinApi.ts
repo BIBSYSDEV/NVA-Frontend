@@ -307,9 +307,9 @@ export const searchForProjects = async (results: number, page: number, params?: 
   return fetchProjectsResponse.data;
 };
 
-export const fetchProject = async (projectId: string) => {
+export const fetchProject = async (identifier: string) => {
   const fetchProjectResponse = await apiRequest2<CristinProject>({
-    url: projectId,
+    url: `${CristinApiPath.Project}/${identifier}`,
   });
   return fetchProjectResponse.data;
 };

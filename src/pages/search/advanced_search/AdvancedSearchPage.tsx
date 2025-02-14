@@ -5,11 +5,11 @@ import {
   Divider,
   FormControlLabel,
   Grid,
+  styled,
   Theme,
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { styled } from '@mui/system';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';

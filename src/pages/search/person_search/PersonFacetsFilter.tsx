@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { PersonSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { removeSearchParamValue, SearchParam } from '../../../utils/searchHelpers';
+import { removeSearchParamValue, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
@@ -14,34 +14,40 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const organizationFacet = personQuery.data?.aggregations?.organizationFacet;
-  const sectorFacet = personQuery.data?.aggregations?.sectorFacet;
+  const organizationFacet = personQuery.data?.aggregations?.organizationFacet ?? [];
+  const sectorFacet = personQuery.data?.aggregations?.sectorFacet ?? [];
 
   const searchParams = new URLSearchParams(location.search);
-  const currentSearchType = searchParams.get(SearchParam.Type);
 
   const selectedOrganizations = searchParams.get(PersonSearchParameter.Organization)?.split(',') ?? [];
   const selectedSectors = searchParams.get(PersonSearchParameter.Sector)?.split(',') ?? [];
 
-  const addFacetFilter = (id: string) => {
-    const searchParameters = new URL(id).searchParams;
-    const newSearchParams = new URLSearchParams(
-      `${SearchParam.Type}=${currentSearchType}&${searchParameters.toString()}`
-    );
-    newSearchParams.set(SearchParam.Page, '1');
-    navigate({ search: newSearchParams.toString() });
+  const addFacetFilter = (param: PersonSearchParameter, key: string) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
+    const currentValues = syncedParams.get(param)?.split(',') ?? [];
+    if (currentValues.length === 0) {
+      syncedParams.set(param, key);
+    } else {
+      syncedParams.set(param, [...currentValues, key].join(','));
+    }
+    syncedParams.delete(PersonSearchParameter.Page);
+    navigate({ search: syncedParams.toString() });
   };
 
   const removeFacetFilter = (parameter: PersonSearchParameter, keyToRemove: string) => {
-    const newSearchParams = removeSearchParamValue(searchParams, parameter, keyToRemove);
-    newSearchParams.set(SearchParam.Page, '1');
+    const syncedParams = syncParamsWithSearchFields(searchParams);
+    const newSearchParams = removeSearchParamValue(syncedParams, parameter, keyToRemove);
+    newSearchParams.delete(PersonSearchParameter.Page);
     navigate({ search: newSearchParams.toString() });
   };
 
   return (
     <>
-      {organizationFacet && organizationFacet?.length > 0 && (
-        <FacetItem title={t('common.institution')} dataTestId={dataTestId.aggregations.institutionFacets}>
+      {(personQuery.isPending || organizationFacet.length > 0) && (
+        <FacetItem
+          title={t('common.institution')}
+          dataTestId={dataTestId.aggregations.institutionFacets}
+          isPending={personQuery.isPending}>
           {organizationFacet.map((facet) => {
             const isSelected = selectedOrganizations.includes(facet.key);
             return (
@@ -55,7 +61,7 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
                 onClickFacet={() =>
                   isSelected
                     ? removeFacetFilter(PersonSearchParameter.Organization, facet.key)
-                    : addFacetFilter(facet.id)
+                    : addFacetFilter(PersonSearchParameter.Organization, facet.key)
                 }
               />
             );
@@ -63,8 +69,11 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
         </FacetItem>
       )}
 
-      {sectorFacet && sectorFacet?.length > 0 && (
-        <FacetItem title={t('search.sector')} dataTestId={dataTestId.aggregations.sectorFacets}>
+      {(personQuery.isPending || sectorFacet.length > 0) && (
+        <FacetItem
+          title={t('search.sector')}
+          dataTestId={dataTestId.aggregations.sectorFacets}
+          isPending={personQuery.isPending}>
           {sectorFacet.map((facet) => {
             const isSelected = selectedSectors.includes(facet.key);
             return (
@@ -76,7 +85,9 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
                 onClickFacet={() =>
-                  isSelected ? removeFacetFilter(PersonSearchParameter.Sector, facet.key) : addFacetFilter(facet.id)
+                  isSelected
+                    ? removeFacetFilter(PersonSearchParameter.Sector, facet.key)
+                    : addFacetFilter(PersonSearchParameter.Sector, facet.key)
                 }
               />
             );
