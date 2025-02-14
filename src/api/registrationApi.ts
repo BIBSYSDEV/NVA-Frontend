@@ -1,4 +1,5 @@
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
+import { RegistrationLogResponse } from '../types/log.types';
 import { TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import {
   DoiPreview,
@@ -98,6 +99,13 @@ export const fetchRegistration = async (registrationIdentifier: string, doNotRed
     : await apiRequest2<Registration>({ url });
 
   return fetchRegistrationResponse.data;
+};
+
+export const fetchRegistrationLog = async (registrationId: string) => {
+  const fetchRegistrationLogResponse = await authenticatedApiRequest2<RegistrationLogResponse>({
+    url: `${registrationId}/log`,
+  });
+  return fetchRegistrationLogResponse.data;
 };
 
 export const fetchRegistrationsByOwner = async () => {

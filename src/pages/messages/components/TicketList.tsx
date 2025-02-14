@@ -1,4 +1,5 @@
 import { FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { UseQueryResult } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -87,6 +88,9 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
       <Helmet>
         <title>{title}</title>
       </Helmet>
+      <Typography component="h1" sx={visuallyHidden}>
+        {title}
+      </Typography>
 
       <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
         <Grid item xs={16} md={5} lg={4}>

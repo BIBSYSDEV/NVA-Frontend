@@ -151,6 +151,8 @@ export interface PersonSearchParams {
   organization?: string | null;
   sector?: string | null;
   sort?: string | null;
+  results?: number | null;
+  page?: number | null;
 }
 
 export enum PersonSearchParameter {
@@ -163,11 +165,15 @@ export enum PersonSearchParameter {
   Sort = 'sort',
 }
 
-export const searchForPerson = async (
-  results: number,
-  page: number,
-  { name, orderBy, organization, sector, sort }: PersonSearchParams
-) => {
+export const searchForPerson = async ({
+  name,
+  orderBy,
+  organization,
+  sector,
+  sort,
+  results,
+  page,
+}: PersonSearchParams) => {
   const searchParams = new URLSearchParams();
   if (results) {
     searchParams.set(PersonSearchParameter.Results, results.toString());
@@ -301,9 +307,9 @@ export const searchForProjects = async (results: number, page: number, params?: 
   return fetchProjectsResponse.data;
 };
 
-export const fetchProject = async (projectId: string) => {
+export const fetchProject = async (identifier: string) => {
   const fetchProjectResponse = await apiRequest2<CristinProject>({
-    url: projectId,
+    url: `${CristinApiPath.Project}/${identifier}`,
   });
   return fetchProjectResponse.data;
 };

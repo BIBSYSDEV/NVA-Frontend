@@ -7,11 +7,14 @@ import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, use
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
+import { fetchFundingSource } from '../../../api/cristinApi';
+import { useFetchOrganizationByIdentifier } from '../../../api/hooks/useFetchOrganizationByIdentifier';
+import { useFetchPersonByIdentifier } from '../../../api/hooks/useFetchPerson';
 import { fetchPublisher, fetchSerialPublication } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import {
   createSearchConfigFromSearchParams,
   dataSearchFieldAttributeName,
@@ -223,13 +226,15 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                   case ResultParam.Contributor: {
                     fieldName = t('registration.contributors.contributor');
                     const personName = registrationQuery.data?.aggregations?.contributor?.find(
-                      (bucket) => bucket.key === value
+                      (bucket) => getIdentifierFromId(bucket.key) === value
                     )?.labels;
                     if (personName) {
                       fieldValueText = getLanguageString(personName);
                     } else {
                       fieldValueText = (
-                        <SelectedContributorFacetButton personId={typeof value === 'string' ? value : value[0]} />
+                        <SelectedContributorFacetButton
+                          personIdentifier={typeof value === 'string' ? value : value[0]}
+                        />
                       );
                     }
                     break;
@@ -237,7 +242,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                   case ResultParam.TopLevelOrganization: {
                     fieldName = t('common.institution');
                     const institutionLabels = registrationQuery.data?.aggregations?.topLevelOrganization?.find(
-                      (bucket) => bucket.key === value
+                      (bucket) => getIdentifierFromId(bucket.key) === value
                     )?.labels;
 
                     const institutionName = institutionLabels ? getLanguageString(institutionLabels) : '';
@@ -245,7 +250,9 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                       fieldValueText = institutionName;
                     } else {
                       fieldValueText = (
-                        <SelectedInstitutionFacetButton institutionId={typeof value === 'string' ? value : value[0]} />
+                        <SelectedInstitutionFacetButton
+                          institutionIdentifier={typeof value === 'string' ? value : value[0]}
+                        />
                       );
                     }
                     break;
@@ -358,38 +365,26 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
 };
 
 interface SelectedContributorFacetButtonProps {
-  personId: string;
+  personIdentifier: string;
 }
 
-const SelectedContributorFacetButton = ({ personId }: SelectedContributorFacetButtonProps) => {
+const SelectedContributorFacetButton = ({ personIdentifier }: SelectedContributorFacetButtonProps) => {
   const { t } = useTranslation();
 
-  const personQuery = useQuery({
-    enabled: !!personId,
-    queryKey: ['person', personId],
-    queryFn: () => (personId ? fetchPerson(personId) : undefined),
-    meta: { errorMessage: t('feedback.error.get_person') },
-  });
-
+  const personQuery = useFetchPersonByIdentifier(personIdentifier);
   const personName = getFullCristinName(personQuery.data?.names) || t('common.unknown');
 
   return <>{personQuery.isPending ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : personName}</>;
 };
 
 interface SelectedInstitutionFacetButtonProps {
-  institutionId: string;
+  institutionIdentifier: string;
 }
 
-const SelectedInstitutionFacetButton = ({ institutionId }: SelectedInstitutionFacetButtonProps) => {
+const SelectedInstitutionFacetButton = ({ institutionIdentifier }: SelectedInstitutionFacetButtonProps) => {
   const { t } = useTranslation();
 
-  const organizationQuery = useQuery({
-    queryKey: [institutionId],
-    queryFn: () => (institutionId ? fetchOrganization(institutionId) : undefined),
-    staleTime: Infinity,
-    gcTime: 1_800_000,
-    meta: { errorMessage: t('feedback.error.get_institution') },
-  });
+  const organizationQuery = useFetchOrganizationByIdentifier(institutionIdentifier);
 
   const institutionName = getLanguageString(organizationQuery.data?.labels) || t('common.unknown');
 

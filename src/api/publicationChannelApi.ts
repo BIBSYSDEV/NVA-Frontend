@@ -55,7 +55,7 @@ export const fetchPublisher = async (identifier: string) => {
   return fetchPublisherResponse.data;
 };
 
-export const defaultChannelSearchSize = 50;
+export const defaultChannelSearchSize = 10;
 
 export const searchForPublishers = async (query: string, year: string, size = defaultChannelSearchSize) => {
   const searchForPublishersResponse = await apiRequest2<SearchResponse2<Publisher>>({

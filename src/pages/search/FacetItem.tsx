@@ -3,16 +3,19 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Box, Collapse, List, ListItemButton, ListItemText, Theme, Typography, useMediaQuery } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FacetItemContentSkeleton } from './FacetItemContentSkeleton';
 
 interface FacetItemProps {
   dataTestId: string;
   title: string;
+  renderCustomSelect?: ReactNode;
   children: ReactNode | ReactNode[];
+  isPending?: boolean;
 }
 
 const itemsToShowByDefault = 3;
 
-export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
+export const FacetItem = ({ title, children, dataTestId, renderCustomSelect, isPending }: FacetItemProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'), { noSsr: true });
   const [isOpen, setIsOpen] = useState(!isMobile);
@@ -24,6 +27,7 @@ export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
 
   return (
     <Box
+      aria-busy={isPending}
       data-testid={dataTestId}
       sx={{
         bgcolor: 'background.default',
@@ -43,21 +47,26 @@ export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
         {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
+        {renderCustomSelect}
         {childrenIsList ? (
-          <List disablePadding>
-            {showAll ? children : children.slice(0, itemsToShowByDefault)}
-            {children.length > itemsToShowByDefault && (
-              <li>
-                <ListItemButton
-                  title={showAll ? t('common.show_fewer') : t('common.show_more')}
-                  dense
-                  sx={{ justifyContent: 'space-around' }}
-                  onClick={() => setShowAll(!showAll)}>
-                  {showAll ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-              </li>
-            )}
-          </List>
+          isPending ? (
+            <FacetItemContentSkeleton />
+          ) : (
+            <List disablePadding>
+              {showAll ? children : children.slice(0, itemsToShowByDefault)}
+              {children.length > itemsToShowByDefault && (
+                <li>
+                  <ListItemButton
+                    title={showAll ? t('common.show_fewer') : t('common.show_more')}
+                    dense
+                    sx={{ justifyContent: 'space-around' }}
+                    onClick={() => setShowAll(!showAll)}>
+                    {showAll ? <ExpandLess /> : <ExpandMore />}
+                  </ListItemButton>
+                </li>
+              )}
+            </List>
+          )
         ) : (
           children
         )}

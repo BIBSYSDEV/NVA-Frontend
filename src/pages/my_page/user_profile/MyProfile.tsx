@@ -86,7 +86,7 @@ export const MyProfile = () => {
         <title>{t('my_page.my_profile.heading.personalia')}</title>
       </Helmet>
 
-      <Typography variant="h2" sx={{ margin: '1rem' }}>
+      <Typography variant="h1" sx={{ margin: '1rem' }}>
         {t('my_page.my_profile.heading.personalia')}
       </Typography>
 
@@ -115,7 +115,7 @@ export const MyProfile = () => {
                 <Grid container rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
                   <Grid item xs={16}>
                     <ProfileBox>
-                      <Typography fontWeight="bold" sx={{ mb: '0.5rem' }}>
+                      <Typography variant="h2" sx={{ mb: '0.5rem' }}>
                         {t('my_page.my_profile.name')}
                       </Typography>
                       <Typography sx={{ mb: '0.5rem' }}>{t('my_page.my_profile.name_description')}</Typography>
@@ -189,7 +189,7 @@ export const MyProfile = () => {
                   </Grid>
                   <Grid item xs={16}>
                     <ProfileBox>
-                      <Typography fontWeight="bold" sx={{ mb: '0.5rem' }}>
+                      <Typography variant="h2" sx={{ mb: '0.5rem' }}>
                         {t('my_page.my_profile.identity.identity_numbers')}
                       </Typography>
                       <Typography sx={{ mb: '1rem' }}>
@@ -210,7 +210,7 @@ export const MyProfile = () => {
                   <Grid item xs={16}>
                     <ProfileBox>
                       <Box sx={{ display: 'flex', alignItems: 'center', mb: '0.5rem' }}>
-                        <Typography fontWeight="bold">{t('common.orcid')}</Typography>
+                        <Typography variant="h2">{t('common.orcid')}</Typography>
                         <UserOrcidHelperModal />
                       </Box>
                       <Trans
@@ -222,7 +222,7 @@ export const MyProfile = () => {
                   </Grid>
                   <Grid item xs={16}>
                     <ProfileBox>
-                      <Typography sx={{ mb: '0.5rem' }} fontWeight="bold">
+                      <Typography sx={{ mb: '0.5rem' }} variant="h2">
                         {t('my_page.my_profile.contact_information')}
                       </Typography>
                       <Trans
@@ -282,7 +282,7 @@ export const MyProfile = () => {
                 </Grid>
                 <Grid item>
                   <ProfileBox sx={{ gridArea: 'profile-picture', alignItems: 'center' }}>
-                    <Typography variant="h3" sx={{ mb: '1rem' }}>
+                    <Typography variant="h2" sx={{ mb: '1rem' }}>
                       {t('my_page.my_profile.profile_picture')}
                     </Typography>
                     <Trans

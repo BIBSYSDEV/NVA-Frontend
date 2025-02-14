@@ -65,6 +65,9 @@ declare module '@mui/material/Button' {
   }
 }
 
+const dialogTitleId = 'dialog-title-id';
+export const dialogDescriptionId = 'dialog-description-id';
+
 export const mainTheme = createTheme(
   {
     breakpoints: {
@@ -219,6 +222,23 @@ export const mainTheme = createTheme(
           variant: 'outlined',
         },
       },
+      MuiDialog: {
+        defaultProps: {
+          'aria-labelledby': dialogTitleId,
+          'aria-describedby': dialogDescriptionId,
+        },
+      },
+      MuiDialogTitle: {
+        defaultProps: {
+          id: dialogTitleId,
+          component: 'h1',
+        },
+      },
+      MuiDialogContent: {
+        defaultProps: {
+          id: dialogDescriptionId,
+        },
+      },
       MuiLink: {
         styleOverrides: {
           root: {
@@ -336,6 +356,11 @@ export const mainTheme = createTheme(
           root: {
             borderRadius: '0.25rem',
           },
+        },
+      },
+      MuiSkeleton: {
+        defaultProps: {
+          animation: 'wave',
         },
       },
     },
