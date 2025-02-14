@@ -1,5 +1,6 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
 import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
@@ -45,10 +46,10 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
         <LogHeaderIcon topic={logEntry.topic} />
         <Typography variant="h3">
           {logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.OpenFile
-            ? t('log.file_published')
+            ? t('log.open_file_published')
             : logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.InternalFile
-              ? t('log.file_archived')
-              : t(`log.entry_topic.${logEntry.topic}`, { defaultValue: logEntry.topic })}
+              ? t('log.internal_file_approved')
+              : t(`log.entry_topic.${logEntry.topic}`)}
         </Typography>
       </StyledLogRow>
       <LogDateItem date={new Date(logEntry.timestamp)} />
@@ -98,6 +99,11 @@ const getLogEntryBackgroundColor = (topic: LogEntryObject['topic']) => {
   switch (topic) {
     case 'PublicationImported':
       return 'centralImport.light';
+    case 'DoiReserved':
+    case 'DoiRequested':
+    case 'DoiRejected':
+    case 'DoiAssigned':
+      return 'doiRequest.light';
     default:
       return 'publishingRequest.light';
   }
@@ -122,6 +128,11 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
       return <DeleteOutlinedIcon {...logIconProps} />;
     case 'PublicationImported':
       return <CloudOutlinedIcon {...logIconProps} />;
+    case 'DoiReserved':
+    case 'DoiRequested':
+    case 'DoiRejected':
+    case 'DoiAssigned':
+      return <AddLinkOutlinedIcon {...logIconProps} />;
     default:
       return null;
   }
