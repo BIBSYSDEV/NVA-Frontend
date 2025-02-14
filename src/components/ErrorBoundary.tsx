@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { Component, PropsWithChildren } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
@@ -111,4 +112,6 @@ interface ErrorMessageProps {
   errorMessage: string;
 }
 
-const ErrorMessage = ({ errorMessage }: ErrorMessageProps) => <h1>{errorMessage} &#129301;</h1>;
+const ErrorMessage = ({ errorMessage }: ErrorMessageProps) => (
+  <Typography sx={{ m: '1rem 0.5rem', fontWeight: 'bold', fontSize: '1.25rem' }}>{errorMessage} &#129301;</Typography>
+);

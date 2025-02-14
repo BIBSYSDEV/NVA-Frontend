@@ -60,7 +60,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
-      {registration.status === RegistrationStatus.Published && <StructuredSeoData uri={registration.id} />}
+      {registration.status === RegistrationStatus.Published && <StructuredSeoData registration={registration} />}
       <Helmet>
         <title>{mainTitle}</title>
       </Helmet>

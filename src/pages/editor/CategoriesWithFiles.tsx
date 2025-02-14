@@ -23,11 +23,11 @@ export const CategoriesWithFiles = () => {
       <Helmet>
         <title>{t('editor.categories_with_files')}</title>
       </Helmet>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         {t('editor.categories_with_files')}
       </Typography>
 
-      <Typography sx={{ my: '2rem' }}>{t('editor.categories_with_files_description')}</Typography>
+      <Typography gutterBottom>{t('editor.categories_with_files_description')}</Typography>
 
       {customer && <CategoriesWithFilesForCustomer customer={customer} />}
     </>

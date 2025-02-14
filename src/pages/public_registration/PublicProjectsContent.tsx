@@ -1,9 +1,7 @@
-import { Divider, Link as MuiLink, Skeleton, Typography } from '@mui/material';
-import { styled } from '@mui/system';
-import { useQuery } from '@tanstack/react-query';
+import { Divider, Link as MuiLink, Skeleton, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { fetchProject } from '../../api/cristinApi';
+import { useFetchProject } from '../../api/hooks/useFetchProject';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ResearchProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -62,12 +60,8 @@ interface ProjectRowProps {
 const ProjectRow = ({ project }: ProjectRowProps) => {
   const { t } = useTranslation();
 
-  const projectQuery = useQuery({
-    enabled: !!project.id,
-    queryKey: ['project', project.id],
-    queryFn: () => fetchProject(project.id),
-    meta: { errorMessage: t('feedback.error.get_project') },
-  });
+  const projectQuery = useFetchProject(project.id);
+
   const fetchedProject = projectQuery.data;
   const projectTitle = fetchedProject?.title ?? project.name;
   const projectManagers = getProjectManagers(fetchedProject?.contributors ?? []);

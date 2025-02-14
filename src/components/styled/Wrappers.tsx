@@ -1,5 +1,4 @@
-import { Box, Checkbox, FormGroup, ListItem, Typography } from '@mui/material';
-import { styled } from '@mui/system';
+import { Box, Checkbox, FormGroup, ListItem, styled, Typography } from '@mui/material';
 
 export const StyledRightAlignedFooter = styled(Box)({
   display: 'flex',

@@ -44,7 +44,7 @@ export const MyProjects = () => {
       <Helmet>
         <title>{t('my_page.my_profile.my_projects')}</title>
       </Helmet>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         {t('my_page.my_profile.my_projects')}
       </Typography>
       <ListPagination

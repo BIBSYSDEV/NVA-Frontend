@@ -1,13 +1,12 @@
 import { Autocomplete } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { fetchFundingSources } from '../../../api/cristinApi';
+import { useFetchFundingSources } from '../../../api/hooks/useFetchFundingSources';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { FundingSource } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { fundingSourceAutocompleteFilterOptions, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 export const FundingSourceFilter = () => {
@@ -17,13 +16,7 @@ export const FundingSourceFilter = () => {
   const searchParams = new URLSearchParams(location.search);
   const fundingSourceParam = searchParams.get(ResultParam.FundingSource);
 
-  const fundingSourcesQuery = useQuery({
-    queryKey: ['fundingSources'],
-    queryFn: fetchFundingSources,
-    meta: { errorMessage: t('feedback.error.get_funding_sources') },
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-  });
+  const fundingSourcesQuery = useFetchFundingSources();
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
   const handleChange = (selectedValue: FundingSource | null) => {
@@ -48,6 +41,7 @@ export const FundingSourceFilter = () => {
         handleChange(newValue);
       }}
       options={fundingSourcesList}
+      filterOptions={fundingSourceAutocompleteFilterOptions}
       getOptionLabel={(option) => getLanguageString(option.name)}
       renderOption={({ key, ...props }, option) => (
         <li {...props} key={option.identifier}>
