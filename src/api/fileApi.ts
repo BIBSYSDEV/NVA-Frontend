@@ -1,7 +1,7 @@
 import { AwsS3Part } from '@uppy/aws-s3';
 import { Body, Meta, UppyFile } from '@uppy/core';
 import { FileApiPath, PublicationsApiPath } from './apiPaths';
-import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
+import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 import { userIsAuthenticated } from './authApi';
 
 interface DownloadImportCandidateFileResponse {
@@ -38,7 +38,7 @@ export const abortMultipartUpload = async (registrationIdentifier: string, uploa
     key,
   };
 
-  const abortResponse = await authenticatedApiRequest<any>({
+  const abortResponse = await authenticatedApiRequest2<any>({
     url: `${PublicationsApiPath.Registration}/${registrationIdentifier}${FileApiPath.Abort}`,
     method: 'POST',
     data: payload,
@@ -59,7 +59,7 @@ export const completeMultipartUpload = async (
     parts,
   };
 
-  const completeResponse = await authenticatedApiRequest<any>({
+  const completeResponse = await authenticatedApiRequest2<any>({
     url: `${PublicationsApiPath.Registration}/${registrationIdentifier}${FileApiPath.Complete}`,
     method: 'POST',
     data: payload,
@@ -75,7 +75,7 @@ export const createMultipartUpload = async (registrationIdentifier: string, file
     mimetype: file.data.type,
   };
 
-  const createResponse = await authenticatedApiRequest<any>({
+  const createResponse = await authenticatedApiRequest2<any>({
     url: `${PublicationsApiPath.Registration}/${registrationIdentifier}${FileApiPath.Create}`,
     method: 'POST',
     data: payload,
@@ -89,7 +89,7 @@ export const listParts = async (registrationIdentifier: string, uploadId: string
     key,
   };
 
-  const listPartsResponse = await authenticatedApiRequest<any>({
+  const listPartsResponse = await authenticatedApiRequest2<any>({
     url: `${PublicationsApiPath.Registration}/${registrationIdentifier}${FileApiPath.ListParts}`,
     method: 'POST',
     data: payload,
@@ -111,7 +111,7 @@ export const signPart = async (
     number,
   };
 
-  const prepareResponse = await authenticatedApiRequest<any>({
+  const prepareResponse = await authenticatedApiRequest2<any>({
     url: `${PublicationsApiPath.Registration}/${registrationIdentifier}${FileApiPath.Prepare}`,
     method: 'POST',
     data: payload,
