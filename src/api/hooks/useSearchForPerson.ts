@@ -15,11 +15,11 @@ interface PersonSearchOptions extends PersonSearchParams {
   placeholderData?: PlaceholderDataFunctionType;
 }
 
-export const useSearchForPerson = ({ enabled = true, placeholderData, ...searchParams }: PersonSearchOptions) => {
+export const useSearchForPerson = ({ enabled, placeholderData, ...searchParams }: PersonSearchOptions) => {
   const { t } = useTranslation();
 
   return useQuery({
-    enabled: enabled && !!searchParams.name && searchParams.name.length > 0,
+    enabled,
     queryKey: ['personSearch', searchParams],
     queryFn: () => searchForPerson(searchParams),
     meta: { errorMessage: t('feedback.error.person_search') },
