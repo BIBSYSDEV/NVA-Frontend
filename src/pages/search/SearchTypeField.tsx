@@ -7,13 +7,27 @@ import { useLocation, useNavigate } from 'react-router';
 import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
 import { ResultParam } from '../../api/searchApi';
 import { dataTestId } from '../../utils/dataTestIds';
-import { SearchParam } from '../../utils/searchHelpers';
+import { SearchParam, syncParamsWithSearchFields } from '../../utils/searchHelpers';
 
 export enum SearchTypeValue {
   Result = 'registration',
   Person = 'person',
   Project = 'project',
 }
+
+const getSyncedQueryValue = (params: URLSearchParams, searchType: SearchTypeValue) => {
+  const syncedParams = syncParamsWithSearchFields(params);
+  switch (searchType) {
+    case SearchTypeValue.Result:
+      return syncedParams.get(ResultParam.Query);
+    case SearchTypeValue.Person:
+      return syncedParams.get(PersonSearchParameter.Name);
+    case SearchTypeValue.Project:
+      return syncedParams.get(ProjectSearchParameter.Query);
+    default:
+      return '';
+  }
+};
 
 export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
   const { t } = useTranslation();
@@ -25,15 +39,6 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
   const projectIsSelected = paramsSearchType === SearchTypeValue.Project;
-
-  const currentSearchTerm =
-    !paramsSearchType || paramsSearchType === SearchTypeValue.Result
-      ? params.get(ResultParam.Query)
-      : paramsSearchType === SearchTypeValue.Person
-        ? params.get(PersonSearchParameter.Name)
-        : paramsSearchType === SearchTypeValue.Project
-          ? params.get(ProjectSearchParameter.Query)
-          : '';
 
   return (
     <TextField
@@ -58,8 +63,9 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         onClick={() => {
           if (!resultIsSelected) {
             const resultParams = new URLSearchParams();
-            if (currentSearchTerm) {
-              resultParams.set(ResultParam.Query, currentSearchTerm);
+            const searchTerm = getSyncedQueryValue(params, paramsSearchType);
+            if (searchTerm) {
+              resultParams.set(ResultParam.Query, searchTerm);
             }
             navigate({ search: resultParams.toString() });
           }
@@ -73,8 +79,9 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         onClick={() => {
           if (!personIsSeleced) {
             const personParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Person });
-            if (currentSearchTerm) {
-              personParams.set(PersonSearchParameter.Name, currentSearchTerm);
+            const searchTerm = getSyncedQueryValue(params, paramsSearchType);
+            if (searchTerm) {
+              personParams.set(PersonSearchParameter.Name, searchTerm);
             }
             navigate({ search: personParams.toString() });
           }
@@ -88,8 +95,9 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         onClick={() => {
           if (!projectIsSelected) {
             const projectParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Project });
-            if (currentSearchTerm) {
-              projectParams.set(ProjectSearchParameter.Query, currentSearchTerm);
+            const searchTerm = getSyncedQueryValue(params, paramsSearchType);
+            if (searchTerm) {
+              projectParams.set(ProjectSearchParameter.Query, searchTerm);
             }
             navigate({ search: projectParams.toString() });
           }
