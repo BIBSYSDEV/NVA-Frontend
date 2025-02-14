@@ -4,6 +4,8 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
+import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
+import { ResultParam } from '../../api/searchApi';
 import { dataTestId } from '../../utils/dataTestIds';
 import { SearchParam } from '../../utils/searchHelpers';
 
@@ -18,11 +20,20 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const paramsSearchType = params.get(SearchParam.Type);
+  const paramsSearchType = (params.get(SearchParam.Type) as SearchTypeValue | null) ?? SearchTypeValue.Result;
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
   const projectIsSelected = paramsSearchType === SearchTypeValue.Project;
+
+  const currentSearchTerm =
+    !paramsSearchType || paramsSearchType === SearchTypeValue.Result
+      ? params.get(ResultParam.Query)
+      : paramsSearchType === SearchTypeValue.Person
+        ? params.get(PersonSearchParameter.Name)
+        : paramsSearchType === SearchTypeValue.Project
+          ? params.get(ProjectSearchParameter.Query)
+          : '';
 
   return (
     <TextField
@@ -47,6 +58,9 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         onClick={() => {
           if (!resultIsSelected) {
             const resultParams = new URLSearchParams();
+            if (currentSearchTerm) {
+              resultParams.set(ResultParam.Query, currentSearchTerm);
+            }
             navigate({ search: resultParams.toString() });
           }
         }}>
@@ -58,8 +72,10 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         value={SearchTypeValue.Person}
         onClick={() => {
           if (!personIsSeleced) {
-            const personParams = new URLSearchParams();
-            personParams.set(SearchParam.Type, SearchTypeValue.Person);
+            const personParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Person });
+            if (currentSearchTerm) {
+              personParams.set(PersonSearchParameter.Name, currentSearchTerm);
+            }
             navigate({ search: personParams.toString() });
           }
         }}>
@@ -71,8 +87,10 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         value={SearchTypeValue.Project}
         onClick={() => {
           if (!projectIsSelected) {
-            const projectParams = new URLSearchParams();
-            projectParams.set(SearchParam.Type, SearchTypeValue.Project);
+            const projectParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Project });
+            if (currentSearchTerm) {
+              projectParams.set(ProjectSearchParameter.Query, currentSearchTerm);
+            }
             navigate({ search: projectParams.toString() });
           }
         }}>
