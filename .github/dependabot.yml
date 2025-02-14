@@ -15,7 +15,7 @@ updates:
           - '@emotion/*'
       uppy:
         patterns:
-          - '"@uppy/*'
+          - '@uppy/*'
       tanstack:
         patterns:
           - '@tanstack/*'
