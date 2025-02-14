@@ -10,7 +10,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { SearchParam } from '../../utils/searchHelpers';
 
 export enum SearchTypeValue {
-  Result = 'result',
+  Result = 'registration',
   Person = 'person',
   Project = 'project',
 }
@@ -47,7 +47,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
           display: 'flex',
           gap: '0.5rem',
           alignItems: 'center',
-          bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
+          bgcolor: `${paramsSearchType}.main`,
         },
         ...sx,
       }}
