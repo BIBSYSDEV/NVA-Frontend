@@ -15,7 +15,7 @@ export enum SearchTypeValue {
   Project = 'project',
 }
 
-const getSyncedQueryValue = (params: URLSearchParams, searchType: SearchTypeValue) => {
+const getSyncedSearchTerm = (params: URLSearchParams, searchType: SearchTypeValue) => {
   const syncedParams = syncParamsWithSearchFields(params);
   switch (searchType) {
     case SearchTypeValue.Result:
@@ -63,7 +63,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         onClick={() => {
           if (!resultIsSelected) {
             const resultParams = new URLSearchParams();
-            const searchTerm = getSyncedQueryValue(params, paramsSearchType);
+            const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
             if (searchTerm) {
               resultParams.set(ResultParam.Query, searchTerm);
             }
@@ -79,7 +79,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         onClick={() => {
           if (!personIsSeleced) {
             const personParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Person });
-            const searchTerm = getSyncedQueryValue(params, paramsSearchType);
+            const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
             if (searchTerm) {
               personParams.set(PersonSearchParameter.Name, searchTerm);
             }
@@ -95,7 +95,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         onClick={() => {
           if (!projectIsSelected) {
             const projectParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Project });
-            const searchTerm = getSyncedQueryValue(params, paramsSearchType);
+            const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
             if (searchTerm) {
               projectParams.set(ProjectSearchParameter.Query, searchTerm);
             }
