@@ -1,4 +1,5 @@
 import { Box, Chip, Link as MuiLink, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
@@ -27,12 +28,21 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
 
   return (
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
+      <Typography component="h2" sx={visuallyHidden}>
+        {t('project.about_project')}
+      </Typography>
       <div>
-        <Typography variant="overline">{t('project.project_id')}</Typography>
+        <Typography variant="overline" component="h3">
+          {t('project.project_id')}
+        </Typography>
         <Typography>{getValueByKey('CristinIdentifier', project.identifiers)}</Typography>
-        <Typography variant="overline">{t('project.coordinating_institution')}</Typography>
+        <Typography variant="overline" component="h3">
+          {t('project.coordinating_institution')}
+        </Typography>
         <Typography>{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
-        <Typography variant="overline">{t('project.project_manager')}</Typography>
+        <Typography variant="overline" component="h3">
+          {t('project.project_manager')}
+        </Typography>
         <Typography>
           {projectManager ? (
             projectManager.identity.id ? (
@@ -46,11 +56,15 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             '-'
           )}
         </Typography>
-        <Typography variant="overline">{t('project.period')}</Typography>
+        <Typography variant="overline" component="h3">
+          {t('project.period')}
+        </Typography>
         <Typography>{projectPeriodString ? `${projectPeriodString} (${projectStatusString})` : '-'}</Typography>
       </div>
       <div>
-        <Typography variant="overline">{t('common.funding')}</Typography>
+        <Typography variant="overline" component="h3">
+          {t('common.funding')}
+        </Typography>
         {project.funding.length > 0 ? (
           project.funding.map((funding, index) => {
             const sourceName = getLanguageString(funding.labels);
@@ -74,7 +88,9 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
           <Typography>-</Typography>
         )}
 
-        <Typography variant="overline">{t('project.project_category')}</Typography>
+        <Typography variant="overline" component="h3">
+          {t('project.project_category')}
+        </Typography>
         {project.projectCategories.length > 0 ? (
           <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             {project.projectCategories.map((category, index) => (
@@ -84,7 +100,9 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         ) : (
           <Typography>-</Typography>
         )}
-        <Typography variant="overline">{t('project.keywords')}</Typography>
+        <Typography variant="overline" component="h3">
+          {t('project.keywords')}
+        </Typography>
         {project.keywords.length > 0 ? (
           <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             {project.keywords.map((keyword, index) => (
