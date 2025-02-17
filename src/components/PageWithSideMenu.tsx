@@ -37,6 +37,8 @@ interface SideNavHeaderProps {
   text?: string;
 }
 
+export const sideNavHeaderId = 'left-side-menu-header';
+
 export const SideNavHeader = ({ icon, text }: SideNavHeaderProps) => {
   const IconComponent = icon;
   return (
@@ -47,7 +49,7 @@ export const SideNavHeader = ({ icon, text }: SideNavHeaderProps) => {
         component="h2"
         fontWeight="bold"
         fontSize="1rem"
-        id="left-side-menu-header"
+        id={sideNavHeaderId}
         sx={{ color: 'inherit' }}>
         {text}
       </Typography>
@@ -59,10 +61,12 @@ interface NavigationListProps extends BoxProps {
   component?: ElementType;
 }
 
+export const navigationListHeaderId = 'navigation-list-header';
+
 export const NavigationList = ({ sx, ...props }: NavigationListProps) => (
   <Box
     component="nav"
-    aria-labelledby="navigation-list-header"
+    aria-labelledby={navigationListHeaderId}
     sx={{
       mb: '0.5rem',
       mx: '0.5rem',

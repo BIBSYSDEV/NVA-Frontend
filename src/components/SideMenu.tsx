@@ -1,6 +1,7 @@
 import ReplyIcon from '@mui/icons-material/Reply';
 import { Box, IconButton, IconButtonProps, styled } from '@mui/material';
 import { ReactElement, ReactNode } from 'react';
+import { sideNavHeaderId } from './PageWithSideMenu';
 
 interface SideMenuProps {
   children: ReactNode;
@@ -25,7 +26,7 @@ export const MinimizedMenuIconButton = ({ children, ...props }: IconButtonProps)
 };
 
 export const SideMenu = ({ children, expanded, minimizedMenu }: SideMenuProps) => (
-  <Box component="nav" aria-labelledby="left-side-menu-header" sx={{ minWidth: '5rem' }}>
+  <Box component="nav" aria-labelledby={sideNavHeaderId} sx={{ minWidth: '5rem' }}>
     {expanded || !minimizedMenu ? (
       <Box sx={{ bgcolor: 'secondary.main', width: { xs: '100%', md: '20rem' }, height: '100%' }}>{children}</Box>
     ) : (

@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { navigationListHeaderId } from './PageWithSideMenu';
 
 interface NavigationListAccordionProps extends AccordionProps {
   title: string;
@@ -69,7 +70,7 @@ export const NavigationListAccordion = ({
             svg: { padding: '0.2rem' },
           }}>
           {startIcon}
-          <Typography variant="h3" fontWeight={500} id="navigation-list-header">
+          <Typography variant="h3" fontWeight={500} id={navigationListHeaderId}>
             {title}
           </Typography>
         </Box>
