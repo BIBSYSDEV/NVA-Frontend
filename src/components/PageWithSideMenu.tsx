@@ -35,20 +35,19 @@ const StyledSideMenuHeader = styled(StyledPaperHeader)({
 interface SideNavHeaderProps {
   icon?: typeof SvgIcon;
   text?: string;
-  id?: string;
 }
 
-export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
+export const SideNavHeader = ({ icon, text }: SideNavHeaderProps) => {
   const IconComponent = icon;
   return (
-    <StyledSideMenuHeader id="left-side-menu-header">
+    <StyledSideMenuHeader>
       {IconComponent && <IconComponent sx={{ fontSize: '1.5rem' }} />}
       <Typography
         textTransform={'uppercase'}
         component="h2"
         fontWeight="bold"
         fontSize="1rem"
-        id={id}
+        id="left-side-menu-header"
         sx={{ color: 'inherit' }}>
         {text}
       </Typography>
