@@ -83,7 +83,9 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <LinkIcon />
         <div>
-          <Typography variant="h2">{t('registration.registration.start_with_link_to_resource_title')}</Typography>
+          <Typography fontWeight="bold" fontSize="1.125rem">
+            {t('registration.registration.start_with_link_to_resource_title')}
+          </Typography>
           <Typography>{t('registration.registration.start_with_link_to_resource_description')}</Typography>
         </div>
       </AccordionSummary>

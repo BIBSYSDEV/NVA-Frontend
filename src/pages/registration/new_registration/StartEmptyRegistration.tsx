@@ -39,7 +39,7 @@ export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccor
         <InsertDriveFileIcon />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
           <div>
-            <Typography variant="h2" id={labelId}>
+            <Typography fontWeight="bold" fontSize="1.125rem" id={labelId}>
               {t('registration.registration.start_with_empty_registration_title')}
             </Typography>
             <Typography>{t('registration.registration.start_with_empty_registration_description')}</Typography>
