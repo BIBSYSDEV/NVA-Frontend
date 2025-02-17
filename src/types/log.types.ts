@@ -54,7 +54,7 @@ interface PublicationLogEntry extends BaseLogEntry {
     | 'PublicationUnpublished'
     | 'PublicationDeleted'
     | 'PublicationRepublished'
-    | 'DoiReserved' // TODO: new type?
+    | 'DoiReserved'
     | 'DoiRequested'
     | 'DoiRejected'
     | 'DoiAssigned';
