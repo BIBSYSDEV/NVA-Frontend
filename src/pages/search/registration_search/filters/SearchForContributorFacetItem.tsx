@@ -29,6 +29,7 @@ export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchFor
   useEffect(() => setSearchSize(defaultPersonSearchSize), [debouncedQuery]);
 
   const personSearchQuery = useSearchForPerson({
+    enabled: !!debouncedQuery,
     name: debouncedQuery,
     results: searchSize,
     placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
