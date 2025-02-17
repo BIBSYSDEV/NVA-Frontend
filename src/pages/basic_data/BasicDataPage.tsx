@@ -55,7 +55,6 @@ const BasicDataPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        aria-labelledby="basic-data-title"
         expanded={expandedMenu}
         minimizedMenu={
           simpleGoBack ? (
@@ -74,7 +73,7 @@ const BasicDataPage = () => {
             </Link>
           )
         }>
-        <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
+        <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} />
         {isInstitutionAdmin && (
           <NavigationListAccordion
             title={t('basic_data.person_register.person_register')}
