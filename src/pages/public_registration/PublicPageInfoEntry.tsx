@@ -9,7 +9,15 @@ interface PublicPageInfoEntryProps {
 
 export const PublicPageInfoEntry = ({ title, content, ...rest }: PublicPageInfoEntryProps) => (
   <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.25rem' }}>
-    <Typography sx={{ textWrap: 'nowrap', fontWeight: 700 }}>{title}:</Typography>
-    {typeof content === 'string' ? <Typography {...rest}>{content}</Typography> : <div {...rest}>{content}</div>}
+    <Typography component="dt" sx={{ textWrap: 'nowrap', fontWeight: 700 }}>
+      {title}:
+    </Typography>
+    {typeof content === 'string' ? (
+      <Typography component="dd" {...rest}>
+        {content}
+      </Typography>
+    ) : (
+      <dd {...rest}>{content}</dd>
+    )}
   </Box>
 );

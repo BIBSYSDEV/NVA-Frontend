@@ -31,19 +31,19 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
       <Typography component="h2" sx={visuallyHidden}>
         {t('project.about_project')}
       </Typography>
-      <div>
-        <Typography variant="overline" component="h3">
+      <dl>
+        <Typography variant="overline" component="dt">
           {t('project.project_id')}
         </Typography>
-        <Typography>{getValueByKey('CristinIdentifier', project.identifiers)}</Typography>
-        <Typography variant="overline" component="h3">
+        <Typography component="dd">{getValueByKey('CristinIdentifier', project.identifiers)}</Typography>
+        <Typography variant="overline" component="dt">
           {t('project.coordinating_institution')}
         </Typography>
-        <Typography>{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
-        <Typography variant="overline" component="h3">
+        <Typography component="dd">{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
+        <Typography variant="overline" component="dt">
           {t('project.project_manager')}
         </Typography>
-        <Typography>
+        <Typography component="dd">
           {projectManager ? (
             projectManager.identity.id ? (
               <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
@@ -56,13 +56,15 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             '-'
           )}
         </Typography>
-        <Typography variant="overline" component="h3">
+        <Typography variant="overline" component="dt">
           {t('project.period')}
         </Typography>
-        <Typography>{projectPeriodString ? `${projectPeriodString} (${projectStatusString})` : '-'}</Typography>
-      </div>
-      <div>
-        <Typography variant="overline" component="h3">
+        <Typography component="dd">
+          {projectPeriodString ? `${projectPeriodString} (${projectStatusString})` : '-'}
+        </Typography>
+      </dl>
+      <dl>
+        <Typography variant="overline" component="dt">
           {t('common.funding')}
         </Typography>
         {project.funding.length > 0 ? (
@@ -73,7 +75,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
               : sourceName;
 
             return (
-              <Typography key={index}>
+              <Typography key={index} component="dd">
                 {fundingSourceIsNfr(funding.source) && funding.identifier ? (
                   <MuiLink href={getNfrProjectUrl(funding.identifier)} target="_blank" rel="noopener noreferrer">
                     {fundingText}
@@ -85,10 +87,10 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             );
           })
         ) : (
-          <Typography>-</Typography>
+          <Typography component="dd">-</Typography>
         )}
 
-        <Typography variant="overline" component="h3">
+        <Typography variant="overline" component="dt">
           {t('project.project_category')}
         </Typography>
         {project.projectCategories.length > 0 ? (
@@ -98,9 +100,9 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             ))}
           </Box>
         ) : (
-          <Typography>-</Typography>
+          <Typography component="dd">-</Typography>
         )}
-        <Typography variant="overline" component="h3">
+        <Typography variant="overline" component="dt">
           {t('project.keywords')}
         </Typography>
         {project.keywords.length > 0 ? (
@@ -110,9 +112,9 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             ))}
           </Box>
         ) : (
-          <Typography>-</Typography>
+          <Typography component="dd">-</Typography>
         )}
-      </div>
+      </dl>
     </StyledGeneralInfo>
   );
 };
