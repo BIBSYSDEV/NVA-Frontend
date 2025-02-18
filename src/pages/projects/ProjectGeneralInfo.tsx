@@ -1,5 +1,4 @@
 import { Box, Chip, Link as MuiLink, Typography } from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
@@ -28,9 +27,6 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
 
   return (
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
-      <Typography component="h2" sx={visuallyHidden}>
-        {t('project.about_project')}
-      </Typography>
       <dl>
         <Typography variant="overline" component="dt">
           {t('project.project_id')}
