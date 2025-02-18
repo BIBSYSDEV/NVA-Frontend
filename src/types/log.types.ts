@@ -62,11 +62,9 @@ interface PublicationLogEntry extends BaseLogEntry {
 
 interface PublicationImportedLogEntry extends Omit<PublicationLogEntry, 'topic'> {
   topic: 'PublicationImported';
-  source: {
-    importSource: {
-      archive?: string;
-      source: string;
-    };
+  importSource: {
+    source: string;
+    archive?: string;
   };
 }
 
