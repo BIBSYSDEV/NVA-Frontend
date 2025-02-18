@@ -149,17 +149,6 @@ export const PublishingAccordion = ({
     lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataAndFiles';
   const registratorPublishesMetadataOnly = lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataOnly';
 
-  const filesAwaitingApproval = lastPublishingRequest ? lastPublishingRequest.filesForApproval.length : 0;
-  const ticketHasPendingFiles = filesAwaitingApproval > 0;
-
-  const approvedFileIdentifiers = publishingRequestTickets
-    .filter((ticket) => ticket.status === 'Completed' && ticket.approvedFiles.length > 0)
-    .flatMap((ticket) => ticket.approvedFiles.map((file) => file.identifier));
-
-  const registrationHasMismatchingFiles = getAssociatedFiles(registration.associatedArtifacts)
-    .filter((file) => approvedFileIdentifiers.includes(file.identifier)) // Find files handled by current institution
-    .some((file) => isPendingOpenFile(file) || file.type === FileType.PendingInternalFile);
-
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
   const hasCompletedTicket = lastPublishingRequest?.status === 'Completed';
@@ -169,7 +158,7 @@ export const PublishingAccordion = ({
   const mismatchingPublishedStatusWorkflow2 =
     registratorPublishesMetadataOnly &&
     !!lastPublishingRequest &&
-    (isDraftRegistration || (hasCompletedTicket && (ticketHasPendingFiles || registrationHasMismatchingFiles)));
+    (isDraftRegistration || hasMismatchingFiles(lastPublishingRequest, publishingRequestTickets, registration));
 
   const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
 
@@ -232,7 +221,11 @@ export const PublishingAccordion = ({
           <>
             <Typography sx={{ my: '1rem' }}>
               {isPublishedRegistration
-                ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
+                ? hasCompletedTicket
+                  ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
+                  : hasClosedTicket
+                    ? t('registration.public_page.tasks_panel.files_will_soon_be_rejected')
+                    : ''
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
             <LoadingButton
@@ -335,4 +328,40 @@ export const PublishingAccordion = ({
       </AccordionDetails>
     </Accordion>
   );
+};
+
+const hasMismatchingFiles = (
+  lastPublishingRequest: PublishingTicket,
+  allPublishingRequests: PublishingTicket[],
+  registration: Registration
+) => {
+  if (lastPublishingRequest.status === 'Completed') {
+    const ticketHasPendingFiles = lastPublishingRequest.filesForApproval.length > 0;
+    if (ticketHasPendingFiles) {
+      return true;
+    }
+    const approvedFileIdentifiers = allPublishingRequests
+      .filter((ticket) => ticket.status === 'Completed' && ticket.approvedFiles.length > 0)
+      .flatMap((ticket) => ticket.approvedFiles.map((file) => file.identifier));
+
+    const hasMismatchingApprovedFiles = getAssociatedFiles(registration.associatedArtifacts)
+      .filter((file) => approvedFileIdentifiers.includes(file.identifier)) // Find files handled by current institution
+      .some((file) => isPendingOpenFile(file) || file.type === FileType.PendingInternalFile);
+
+    return hasMismatchingApprovedFiles;
+  }
+
+  if (lastPublishingRequest.status === 'Closed') {
+    const rejectedFileIdentifiers = allPublishingRequests
+      .filter((ticket) => ticket.status === 'Closed' && ticket.filesForApproval.length > 0)
+      .flatMap((ticket) => ticket.filesForApproval.map((file) => file.identifier));
+
+    const hasMismatchingRejectedFiles = getAssociatedFiles(registration.associatedArtifacts)
+      .filter((file) => rejectedFileIdentifiers.includes(file.identifier)) // Find files handled by current institution
+      .some((file) => file.type === FileType.PendingOpenFile || file.type === FileType.PendingInternalFile);
+
+    return hasMismatchingRejectedFiles;
+  }
+
+  return false;
 };
