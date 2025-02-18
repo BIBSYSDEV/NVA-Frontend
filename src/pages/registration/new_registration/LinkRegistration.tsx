@@ -82,12 +82,18 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
         data-testid={dataTestId.registrationWizard.new.linkAccordion}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <LinkIcon />
-        <div>
-          <Typography fontWeight="bold" fontSize="1.125rem">
+        <span style={{ display: 'flex', flexDirection: 'column' }}>
+          <span
+            style={{
+              fontWeight: '600',
+              fontSize: '1.125rem',
+              lineHeight: '1.2',
+              fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+            }}>
             {t('registration.registration.start_with_link_to_resource_title')}
-          </Typography>
-          <Typography>{t('registration.registration.start_with_link_to_resource_description')}</Typography>
-        </div>
+          </span>
+          <span>{t('registration.registration.start_with_link_to_resource_description')}</span>
+        </span>
       </AccordionSummary>
 
       <AccordionDetails>
