@@ -2,7 +2,6 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, Divider, Link as MuiLink, styled, Typography } from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { dataTestId } from '../utils/dataTestIds';
@@ -35,9 +34,6 @@ export const Footer = () => {
         bgcolor: 'info.light',
         color: 'primary.main',
       }}>
-      <Typography component="h2" sx={visuallyHidden}>
-        {t('footer.footer')}
-      </Typography>
       <Button
         data-testid={dataTestId.footer.toTopButton}
         onClick={() => window.scroll({ top: 0, behavior: 'smooth' })}
@@ -52,7 +48,7 @@ export const Footer = () => {
         }}>
         <div>
           <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between' }}>
-            <Typography color="primary" variant="h3">
+            <Typography color="primary" variant="h2">
               {t('footer.about_nva')}
             </Typography>
 
@@ -72,7 +68,7 @@ export const Footer = () => {
 
           <Typography
             color="primary"
-            variant="h3"
+            variant="h2"
             sx={{
               gap: '0.5rem',
               mt: '2rem',
@@ -92,7 +88,7 @@ export const Footer = () => {
               justifyContent: 'space-between',
               gap: '0.5rem',
             }}>
-            <Typography color="primary" variant="h3">
+            <Typography color="primary" variant="h2">
               {t('footer.become_customer')}
             </Typography>
 
@@ -111,7 +107,7 @@ export const Footer = () => {
           <Typography color="primary">{t('footer.about_sikt_text')}</Typography>
 
           <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', mt: '2rem' }}>
-            <Typography color="primary" variant="h3">
+            <Typography color="primary" variant="h2">
               {t('footer.about_sikt')}
             </Typography>
 
