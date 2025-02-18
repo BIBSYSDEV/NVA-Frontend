@@ -83,16 +83,12 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <LinkIcon />
         <span style={{ display: 'flex', flexDirection: 'column' }}>
-          <span
-            style={{
-              fontWeight: '600',
-              fontSize: '1.125rem',
-              lineHeight: '1.2',
-              fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-            }}>
+          <Typography variant="h2" component="span">
             {t('registration.registration.start_with_link_to_resource_title')}
-          </span>
-          <span>{t('registration.registration.start_with_link_to_resource_description')}</span>
+          </Typography>
+          <Typography component="span">
+            {t('registration.registration.start_with_link_to_resource_description')}
+          </Typography>
         </span>
       </AccordionSummary>
 
