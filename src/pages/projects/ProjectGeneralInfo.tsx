@@ -96,7 +96,13 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         {project.projectCategories.length > 0 ? (
           <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             {project.projectCategories.map((category, index) => (
-              <Chip key={index} color="primary" label={getLanguageString(category.label)} />
+              <Chip
+                component="dd"
+                sx={{ m: '0' }}
+                key={index}
+                color="primary"
+                label={getLanguageString(category.label)}
+              />
             ))}
           </Box>
         ) : (
@@ -108,7 +114,13 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         {project.keywords.length > 0 ? (
           <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             {project.keywords.map((keyword, index) => (
-              <Chip key={index} color="primary" label={getLanguageString(keyword.label)} />
+              <Chip
+                component="dd"
+                sx={{ m: '0' }}
+                key={index}
+                color="primary"
+                label={getLanguageString(keyword.label)}
+              />
             ))}
           </Box>
         ) : (
