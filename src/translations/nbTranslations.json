@@ -704,8 +704,6 @@
     }
   },
   "log": {
-    "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
-    "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_afterwards": "Slettet i etterkant",
     "entry_topic": {
       "DoiAssigned": "DOI tildelt",
@@ -721,7 +719,7 @@
       "PublicationCreated": "Resultat opprettet",
       "PublicationDeleted": "Resultat slettet",
       "PublicationImported": "Importert",
-      "PublicationPublished": "Metadata publisert",
+      "PublicationPublished": "Resultat publisert",
       "PublicationRepublished": "Resultat republisert",
       "PublicationUnpublished": "Resultat avpublisert"
     },
@@ -732,6 +730,8 @@
     "imported_from_source": "Importert fra {{source}}",
     "imported_from_source_and_archive": "Importert fra {{source}} ({{archive}})",
     "internal_file_approved": "Intern fil godkjent",
+    "internal_files_on_registration_one": "Registreringen har {{count}} intern fil",
+    "internal_files_on_registration_other": "Registreringen har {{count}} interne filer",
     "metadata_last_updated": "Metadata sist oppdatert:",
     "open_file_published": "Åpen fil publisert",
     "show_messages": "Vis meldinger",
