@@ -21,9 +21,9 @@ import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.t
 import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
+import { hasFileAccessRight } from '../../../utils/fileHelpers';
 import { equalUris } from '../../../utils/general-helpers';
 import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
-import { hasFileAccessRight } from '../../registration/helpers/fileHelpers';
 import { PendingFilesInfo } from './PendingFilesInfo';
 import { DownloadUrl, PreviewFile } from './preview_file/PreviewFile';
 
