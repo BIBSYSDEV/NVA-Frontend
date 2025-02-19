@@ -1,4 +1,4 @@
-import { AssociatedFile, FileType } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, FileAllowedOperation, FileType } from '../../../types/associatedArtifact.types';
 import { Registration } from '../../../types/registration.types';
 import { User } from '../../../types/user.types';
 import { isDegree, isEmbargoed, isOpenFile, isPendingOpenFile } from '../../../utils/registration-helpers';
@@ -77,4 +77,8 @@ export const userCanEditFile = (file: AssociatedFile, user: User | null, registr
   }
 
   return false;
+};
+
+export const hasFileAccessRight = (file: AssociatedFile, operation: FileAllowedOperation) => {
+  return file.allowedOperations.includes(operation) ?? false;
 };

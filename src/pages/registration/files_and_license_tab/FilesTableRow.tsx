@@ -53,6 +53,7 @@ import { equalUris } from '../../../utils/general-helpers';
 import { isOpenFile, isPendingOpenFile } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
+import { hasFileAccessRight } from '../helpers/fileHelpers';
 import { DownloadFileButton } from './DownloadFileButton';
 
 const StyledFileTypeMenuItemContent = styled('div')({
@@ -71,7 +72,6 @@ interface FilesTableRowProps {
   baseFieldName: string;
   showFileVersion: boolean;
   showRrs: boolean;
-  disabled: boolean;
   showAllColumns: boolean;
 }
 
@@ -81,7 +81,6 @@ export const FilesTableRow = ({
   baseFieldName,
   showFileVersion,
   showRrs,
-  disabled,
   showAllColumns,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
@@ -149,44 +148,52 @@ export const FilesTableRow = ({
     onError: () => dispatch(setNotification({ message: t('feedback.error.delete_file'), variant: 'error' })),
   });
 
+  const disabledFile = !hasFileAccessRight(file, 'write-metadata');
+  const canDeleteFile = hasFileAccessRight(file, 'delete');
+  const canDownloadFile = hasFileAccessRight(file, 'download');
+
   return (
     <>
       <TableRow
         data-testid={dataTestId.registrationWizard.files.fileRow}
-        title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
+        title={disabledFile ? t('registration.files_and_license.disabled_helper_text') : ''}
         sx={{
-          bgcolor: disabled ? 'grey.400' : '',
+          bgcolor: disabledFile ? 'grey.400' : '',
           td: { verticalAlign: 'top', borderBottom: isOpenableFile ? 'unset' : '' },
         }}>
         <VerticalAlignedTableCell>
           <Box sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem', alignItems: 'center' }}>
-            <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
+            <InsertDriveFileOutlinedIcon sx={{ color: disabledFile ? 'grey.600' : '' }} />
             <Box sx={{ minWidth: '10rem' }}>
-              <TruncatableTypography sx={{ fontWeight: 'bold', color: disabled ? 'grey.600' : '' }}>
+              <TruncatableTypography sx={{ fontWeight: 'bold', color: disabledFile ? 'grey.600' : '' }}>
                 {file.name}
               </TruncatableTypography>
-              <Typography sx={{ color: disabled ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
+              <Typography sx={{ color: disabledFile ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
             </Box>
-            <Box sx={{ minWidth: '1.5rem', ml: 'auto' }}>
-              <DownloadFileButton file={file} />
-            </Box>
-            {!disabled && (
-              <DeleteIconButton
-                data-testid={dataTestId.registrationWizard.files.deleteFile}
-                onClick={toggleOpenConfirmDialog}
-                tooltip={t('registration.files_and_license.delete_file')}
-              />
+            {canDownloadFile && (
+              <Box sx={{ minWidth: '1.5rem', ml: 'auto' }}>
+                <DownloadFileButton file={file} />
+              </Box>
             )}
-            <ConfirmDialog
-              open={openConfirmDialog}
-              title={t('registration.files_and_license.delete_file')}
-              onAccept={() => deleteFileMutation.mutate()}
-              isLoading={deleteFileMutation.isPending}
-              onCancel={toggleOpenConfirmDialog}>
-              <Typography>
-                {t('registration.files_and_license.delete_file_description', { fileName: file.name })}
-              </Typography>
-            </ConfirmDialog>
+            {canDeleteFile && (
+              <>
+                <DeleteIconButton
+                  data-testid={dataTestId.registrationWizard.files.deleteFile}
+                  onClick={toggleOpenConfirmDialog}
+                  tooltip={t('registration.files_and_license.delete_file')}
+                />
+                <ConfirmDialog
+                  open={openConfirmDialog}
+                  title={t('registration.files_and_license.delete_file')}
+                  onAccept={() => deleteFileMutation.mutate()}
+                  isLoading={deleteFileMutation.isPending}
+                  onCancel={toggleOpenConfirmDialog}>
+                  <Typography>
+                    {t('registration.files_and_license.delete_file_description', { fileName: file.name })}
+                  </Typography>
+                </ConfirmDialog>
+              </>
+            )}
           </Box>
         </VerticalAlignedTableCell>
         <VerticalAlignedTableCell>
@@ -196,7 +203,7 @@ export const FilesTableRow = ({
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.fileTypeSelect}
                 select
-                disabled={disabled}
+                disabled={disabledFile}
                 variant="filled"
                 fullWidth
                 onChange={(event) => {
@@ -263,7 +270,7 @@ export const FilesTableRow = ({
                       <FormControl
                         data-testid={dataTestId.registrationWizard.files.version}
                         required
-                        disabled={disabled}>
+                        disabled={disabledFile}>
                         <RadioGroup
                           {...field}
                           row
@@ -326,7 +333,7 @@ export const FilesTableRow = ({
                         data-testid={dataTestId.registrationWizard.files.selectLicenseField}
                         sx={{ minWidth: '15rem' }}
                         select
-                        disabled={disabled}
+                        disabled={disabledFile}
                         slotProps={{
                           select: {
                             renderValue: (option) => {
@@ -437,8 +444,8 @@ export const FilesTableRow = ({
       </TableRow>
       {isOpenableFile && (
         <TableRow
-          sx={{ bgcolor: disabled ? 'grey.400' : '' }}
-          title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}>
+          sx={{ bgcolor: disabledFile ? 'grey.400' : '' }}
+          title={disabledFile ? t('registration.files_and_license.disabled_helper_text') : ''}>
           <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
             <Collapse in={openCollapsable}>
               <Box
@@ -487,7 +494,7 @@ export const FilesTableRow = ({
 
                       {canOverrideRrs && (
                         <FormControlLabel
-                          disabled={disabled}
+                          disabled={disabledFile}
                           label={
                             <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
                               {rrsPolicyLink}
@@ -531,7 +538,7 @@ export const FilesTableRow = ({
                           fullWidth
                           label={t('registration.files_and_license.public_note')}
                           multiline
-                          disabled={disabled}
+                          disabled={disabledFile}
                           helperText={<ErrorMessage name={field.name} />}
                         />
                       )}
@@ -548,7 +555,7 @@ export const FilesTableRow = ({
                         value={field.value ? new Date(field.value) : null}
                         onChange={(date) => setFieldValue(field.name, date ?? '')}
                         maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                        disabled={disabled}
+                        disabled={disabledFile}
                         sx={{ minWidth: '15rem' }}
                         slotProps={{
                           textField: {

@@ -30,7 +30,6 @@ import {
 } from '../../utils/registration-helpers';
 import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
-import { userCanEditFile } from './helpers/fileHelpers';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -51,7 +50,6 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
   const { values, setFieldTouched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
 
-  const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
 
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
@@ -206,7 +204,6 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                 <FilesTableRow
                   key={file.identifier}
                   file={file}
-                  disabled={!userCanEditFile(file, user, values)}
                   removeFile={() => {
                     const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                     if (uppy) {

@@ -26,6 +26,8 @@ export enum FileType {
   UpdloadedFile = 'UploadedFile',
 }
 
+export type FileAllowedOperation = 'delete' | 'download' | 'write-metadata';
+
 export interface AssociatedFile {
   type: FileType;
   identifier: string;
@@ -39,6 +41,7 @@ export interface AssociatedFile {
   rightsRetentionStrategy: FileRrs;
   uploadDetails?: UserUploadDetails | ImportUploadDetails;
   publishedDate?: string;
+  allowedOperations: FileAllowedOperation[];
 }
 
 interface UserUploadDetails {
@@ -66,6 +69,7 @@ export const emptyFile: AssociatedFile = {
   rightsRetentionStrategy: {
     type: 'NullRightsRetentionStrategy',
   },
+  allowedOperations: ['delete', 'download', 'write-metadata'],
 };
 
 export interface AssociatedLink {
