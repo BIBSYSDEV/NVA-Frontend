@@ -80,5 +80,5 @@ export const userCanEditFile = (file: AssociatedFile, user: User | null, registr
 };
 
 export const hasFileAccessRight = (file: AssociatedFile, operation: FileAllowedOperation) => {
-  return file.allowedOperations.includes(operation) ?? false;
+  return file.allowedOperations?.includes(operation) ?? false;
 };

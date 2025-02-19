@@ -41,7 +41,7 @@ export interface AssociatedFile {
   rightsRetentionStrategy: FileRrs;
   uploadDetails?: UserUploadDetails | ImportUploadDetails;
   publishedDate?: string;
-  allowedOperations: FileAllowedOperation[];
+  allowedOperations?: FileAllowedOperation[];
 }
 
 interface UserUploadDetails {
