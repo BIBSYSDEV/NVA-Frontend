@@ -80,13 +80,13 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
         <>
           <Divider />
           <Typography>
-            {logEntry.source.importSource.archive
+            {logEntry.importSource.archive
               ? t('log.imported_from_source_and_archive', {
-                  source: logEntry.source.importSource.source,
-                  archive: logEntry.source.importSource.archive,
+                  source: logEntry.importSource.source,
+                  archive: logEntry.importSource.archive,
                 })
               : t('log.imported_from_source', {
-                  source: logEntry.source.importSource.source,
+                  source: logEntry.importSource.source,
                 })}
           </Typography>
         </>
@@ -120,6 +120,8 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
     case 'FileApproved':
     case 'FileRejected':
     case 'FileImported':
+    case 'FileRetracted':
+    case 'FileHidden':
       return <InsertDriveFileOutlinedIcon {...logIconProps} />;
     case 'PublicationUnpublished':
       return <UnpublishedOutlinedIcon {...logIconProps} />;

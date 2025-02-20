@@ -66,7 +66,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
 
   if (registration.publishedDate) {
     entries.push({
-      text: t('registration.status.PUBLISHED_METADATA'),
+      text: t('log.entry_topic.PublicationPublished'),
       date: registration.publishedDate,
       bgcolor: 'publishingRequest.main',
       Icon: CheckIcon,
@@ -78,7 +78,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
     const lastUnpublishingNote = unpublishingNotes.pop();
     if (lastUnpublishingNote) {
       entries.push({
-        text: t('log.titles.result_unpublished'),
+        text: t('log.entry_topic.PublicationUnpublished'),
         date: lastUnpublishingNote.createdDate,
         bgcolor: 'publishingRequest.main',
         Icon: CheckIcon,
@@ -89,7 +89,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
 
   if (registration.status === 'DELETED') {
     entries.push({
-      text: t('log.titles.result_deleted'),
+      text: t('log.entry_topic.PublicationDeleted'),
       date: registration.modifiedDate,
       bgcolor: 'publishingRequest.main',
       Icon: CheckIcon,
@@ -110,7 +110,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       const openFilesCount = ticket.approvedFiles.filter(isOpenFile).length;
       if (openFilesCount > 0) {
         entries.push({
-          text: t('log.titles.file_published_count', { count: openFilesCount }),
+          text: t('log.open_file_published_count', { count: openFilesCount }),
           date: ticket.finalizedDate ?? ticket.modifiedDate,
           bgcolor: 'publishingRequest.main',
           Icon: CheckIcon,
@@ -120,7 +120,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       const internalFilesCount = ticket.approvedFiles.filter((file) => file.type === FileType.InternalFile).length;
       if (internalFilesCount > 0) {
         entries.push({
-          text: t('log.titles.file_archived_count', { count: internalFilesCount }),
+          text: t('log.internal_file_approved_count', { count: internalFilesCount }),
           date: ticket.finalizedDate ?? ticket.modifiedDate,
           bgcolor: 'publishingRequest.main',
           Icon: CheckIcon,

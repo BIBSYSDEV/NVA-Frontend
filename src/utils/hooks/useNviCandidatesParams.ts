@@ -3,7 +3,12 @@ import { FetchNviCandidatesParams, NviCandidateOrderBy, NviCandidatesSearchParam
 import { NviCandidateSearchStatus } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';
 
-const defaultNviYear = new Date().getFullYear();
+const getDefaultNviYear = () => {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+  return currentMonth < 4 ? currentYear - 1 : currentYear;
+};
 
 export const useNviCandidatesParams = () => {
   const location = useLocation();
@@ -19,7 +24,7 @@ export const useNviCandidatesParams = () => {
   const query = searchParams.get(NviCandidatesSearchParam.Query);
   const size = (searchParams.get(NviCandidatesSearchParam.Size) as number | null) ?? ROWS_PER_PAGE_OPTIONS[0];
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
-  const year = (searchParams.get(NviCandidatesSearchParam.Year) as number | null) ?? defaultNviYear;
+  const year = (searchParams.get(NviCandidatesSearchParam.Year) as number | null) ?? getDefaultNviYear();
 
   return {
     affiliations,
