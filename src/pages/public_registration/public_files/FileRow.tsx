@@ -21,6 +21,7 @@ import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.t
 import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
+import { hasFileAccessRight } from '../../../utils/fileHelpers';
 import { equalUris } from '../../../utils/general-helpers';
 import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
 import { PendingFilesInfo } from './PendingFilesInfo';
@@ -43,12 +44,18 @@ export const FileRow = ({
 }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
+  const canDownloadFile = hasFileAccessRight(file, 'download');
+
+  const [openPreviewAccordion, setOpenPreviewAccordion] = useState(canDownloadFile && openPreviewByDefault);
   const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
   const [previewFileUrl, setPreviewFileUrl] = useState<DownloadUrl | null>(null);
 
   const handleDownload = useCallback(
     async (previewFile = false) => {
+      if (!canDownloadFile) {
+        dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' }));
+        return;
+      }
       if (previewFile) {
         setIsLoadingPreviewFile(true);
       }
@@ -69,16 +76,16 @@ export const FileRow = ({
         setIsLoadingPreviewFile(false);
       }
     },
-    [t, dispatch, registrationIdentifier, file.identifier]
+    [t, dispatch, canDownloadFile, registrationIdentifier, file.identifier]
   );
 
   const fileIsEmbargoed = isEmbargoed(file.embargoDate);
 
   useEffect(() => {
-    if (openPreviewAccordion && !previewFileUrl && !fileIsEmbargoed) {
+    if (openPreviewAccordion && !previewFileUrl && canDownloadFile) {
       handleDownload(true); // Download file for preview
     }
-  }, [handleDownload, openPreviewAccordion, previewFileUrl, fileIsEmbargoed]);
+  }, [handleDownload, openPreviewAccordion, previewFileUrl, canDownloadFile]);
 
   const licenseData = licenses.find((license) => equalUris(license.id, file.license));
   const licenseTitle = licenseData?.name ?? '';
@@ -146,7 +153,7 @@ export const FileRow = ({
             <LockIcon />
             {t('common.will_be_available')} {toDateString(file.embargoDate)}
           </Typography>
-        ) : (
+        ) : canDownloadFile ? (
           <Button
             data-testid={dataTestId.registrationLandingPage.openFileButton}
             variant="contained"
@@ -155,14 +162,14 @@ export const FileRow = ({
             onClick={() => handleDownload(false)}>
             {t('common.open')}
           </Button>
-        )}
+        ) : null}
       </Box>
       {file.legalNote && (
         <Typography sx={{ gridArea: 'note', bgcolor: 'secondary.main', borderRadius: '5px', p: '0.5rem' }}>
           {file.legalNote}
         </Typography>
       )}
-      {!fileIsEmbargoed && (
+      {canDownloadFile && (
         <Accordion
           sx={{ gridArea: 'preview', maxHeight: '35rem', display: { xs: 'none', sm: 'block' } }}
           disableGutters

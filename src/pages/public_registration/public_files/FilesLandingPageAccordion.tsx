@@ -47,6 +47,8 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const customer = useSelector((store: RootState) => store.customer);
 
   const userCanUpdateRegistration = userHasAccessRight(registration, 'update');
+  const userCanUploadFile = userHasAccessRight(registration, 'upload-file');
+
   const [selectedTab, setSelectedTab] = useState(FileTab.OpenFiles);
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
@@ -77,7 +79,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     registration.status === RegistrationStatus.PublishedMetadata;
 
   const showLinkToUploadNewFiles =
-    userCanUpdateRegistration &&
+    userCanUploadFile &&
     totalFiles === 0 &&
     !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact) &&
     registration.entityDescription?.reference?.publicationInstance?.type &&

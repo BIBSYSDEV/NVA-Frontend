@@ -97,8 +97,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const originalDoi = entityDescription?.reference?.doi;
 
-  const canEditFiles = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
-  const canUploadFile = userHasAccessRight(values, 'publishing-request-create') && canEditFiles;
+  const canEditFilesAndLinks = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
+  const canUploadFile = userHasAccessRight(values, 'upload-file');
 
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -185,13 +185,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     {t('common.link')}
                   </Typography>
                   {originalDoi ? (
-                    <DoiField canEditDoi={canEditFiles} />
+                    <DoiField canEditDoi={canEditFilesAndLinks} />
                   ) : (
                     <TextField
                       fullWidth
                       variant="filled"
                       label={t('registration.files_and_license.link_to_resource')}
-                      disabled={!canEditFiles}
+                      disabled={!canEditFilesAndLinks}
                       value={
                         associatedLinkIndex >= 0 ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id : ''
                       }
