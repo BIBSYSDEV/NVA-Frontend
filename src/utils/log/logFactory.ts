@@ -61,15 +61,15 @@ interface SimpleLogItemEntry {
   Icon: typeof CheckIcon;
 }
 
-// Ignore file if it has been removed, has new type or is handled by a newer ticket
+// Ignore file if it has been removed from result, has new type, or is handled by a newer ticket
 const fileIsStillRelevant = (
   currentFiles: AssociatedFile[],
   file: AssociatedFile,
   allTickets: PublishingTicket[],
   ticket: PublishingTicket
 ) => {
-  const matchingFile = currentFiles.find((thisFile) => thisFile.identifier === file.identifier);
-  if (matchingFile?.type !== file.type) {
+  const matchingFileOnResult = currentFiles.find((thisFile) => thisFile.identifier === file.identifier);
+  if (matchingFileOnResult?.type !== file.type) {
     return false;
   }
 
