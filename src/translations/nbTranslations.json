@@ -725,7 +725,7 @@
       "PublicationUnpublished": "Resultat avpublisert"
     },
     "hidden_afterwards": "Endret til skjult fil i etterkant",
-    "hidden_file_uploaded": "Skjult fil lastet opp",
+    "hidden_file_added": "Skjult fil lagt til",
     "hidden_files_on_registration_one": "Registreringen har {{count}} skjult fil",
     "hidden_files_on_registration_other": "Registreringen har {{count}} skjulte filer",
     "hide_messages": "Skjul meldinger",

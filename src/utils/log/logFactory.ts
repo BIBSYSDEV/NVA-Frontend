@@ -127,7 +127,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
   const hiddenFiles = allCurrentFiles.filter((file) => file.type === FileType.HiddenFile);
   hiddenFiles.forEach((file) => {
     entries.push({
-      text: t('log.hidden_file_uploaded'),
+      text: t('log.hidden_file_added'),
       date: file.uploadDetails?.uploadedDate,
       bgcolor: 'publishingRequest.main',
       Icon: CheckIcon,
