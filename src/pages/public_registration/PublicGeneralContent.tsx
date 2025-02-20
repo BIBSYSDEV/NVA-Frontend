@@ -1,4 +1,4 @@
-import { Link, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviReportedStatus } from '../../api/hooks/useFetchNviReportedStatus';
@@ -128,12 +128,14 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         <Typography variant="h3" component="h2" gutterBottom>
           {t('registration.public_page.about_registration')}
         </Typography>
-        <dl>
+        <Box component="dl">
           {alternativeTitles.length > 0 && (
             <PublicPageInfoEntry
               title={t('registration.description.alternative_title')}
               content={alternativeTitles.map((title) => (
-                <Typography key={title}>{title}</Typography>
+                <Typography component="dd" gridColumn={2} key={title}>
+                  {title}
+                </Typography>
               ))}
             />
           )}
@@ -220,7 +222,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <PublicPageInfoEntry
               title={t('registration.public_page.cristin_id')}
               content={
-                <Typography>
+                <Typography component="dd" gridColumn={2}>
                   <Link
                     href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
                     target="_blank"
@@ -235,7 +237,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <PublicPageInfoEntry title={t('registration.public_page.scopus_id')} content={scopusIdentifier} />
           )}
           <PublicPageInfoEntry title={t('registration.registration_id')} content={registration.identifier} />
-        </dl>
+        </Box>
       </div>
 
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>

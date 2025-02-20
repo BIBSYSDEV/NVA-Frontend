@@ -45,7 +45,7 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
         <PublicPageInfoEntry
           title={t('registration.registration.link_to_resource')}
           content={
-            <Typography sx={{ wordBreak: 'break-all' }}>
+            <Typography component="dd" gridColumn={2} sx={{ wordBreak: 'break-all' }}>
               <Link
                 data-testid={dataTestId.registrationLandingPage.doiOriginalLink}
                 href={originalDoi || associatedLink}
@@ -61,7 +61,7 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
         <PublicPageInfoEntry
           title={t('common.doi')}
           content={
-            <Typography data-testid={dataTestId.registrationLandingPage.doiLink}>
+            <Typography component="dd" gridColumn={2} data-testid={dataTestId.registrationLandingPage.doiLink}>
               {nvaDoiIsFindable ? (
                 <Link href={nvaDoi} target="_blank" rel="noopener noreferrer">
                   {nvaDoi}
