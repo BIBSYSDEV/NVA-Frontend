@@ -61,12 +61,29 @@ interface SimpleLogItemEntry {
   Icon: typeof CheckIcon;
 }
 
-const fileIsStillRelevant = (currentFiles: AssociatedFile[], thisFile: AssociatedFile) => {
-  const matchingFile = currentFiles.find((file) => file.identifier === thisFile.identifier);
-  if (matchingFile?.type === thisFile.type) {
-    return true;
+// Ignore file if it has been removed, has new type or is handled by a newer ticket
+const fileIsStillRelevant = (
+  currentFiles: AssociatedFile[],
+  file: AssociatedFile,
+  allTickets: PublishingTicket[],
+  ticket: PublishingTicket
+) => {
+  const matchingFile = currentFiles.find((thisFile) => thisFile.identifier === file.identifier);
+  if (matchingFile?.type !== file.type) {
+    return false;
   }
-  return false;
+
+  const lastTicketWithThisFile = allTickets.findLast((thisTicket) =>
+    [...thisTicket.filesForApproval, ...thisTicket.approvedFiles].some(
+      (thisFile) => thisFile.identifier === file.identifier
+    )
+  );
+  const isLastTicketWithThisFile = lastTicketWithThisFile?.id === ticket.id;
+  if (!isLastTicketWithThisFile) {
+    return false;
+  }
+
+  return true;
 };
 
 export const generateSimplePublishingLog = (registration: Registration, tickets: Ticket[], t: TFunction) => {
@@ -128,8 +145,9 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
   filePublishingTickets.forEach((ticket) => {
     if (ticket.status === 'Completed') {
       const openFilesCount = ticket.approvedFiles.filter(
-        (file) => isOpenFile(file) && fileIsStillRelevant(allCurrentFiles, file)
+        (file) => isOpenFile(file) && fileIsStillRelevant(allCurrentFiles, file, filePublishingTickets, ticket)
       ).length;
+
       if (openFilesCount > 0) {
         entries.push({
           text: t('log.open_file_published_count', { count: openFilesCount }),
@@ -140,7 +158,9 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       }
 
       const internalFilesCount = ticket.approvedFiles.filter(
-        (file) => file.type === FileType.InternalFile && fileIsStillRelevant(allCurrentFiles, file)
+        (file) =>
+          file.type === FileType.InternalFile &&
+          fileIsStillRelevant(allCurrentFiles, file, filePublishingTickets, ticket)
       ).length;
       if (internalFilesCount > 0) {
         entries.push({
@@ -152,7 +172,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       }
     } else if (ticket.status === 'Pending' || ticket.status === 'New') {
       const pendingOpenFilesCount = ticket.filesForApproval.filter(
-        (file) => isPendingOpenFile(file) && fileIsStillRelevant(allCurrentFiles, file)
+        (file) => isPendingOpenFile(file) && fileIsStillRelevant(allCurrentFiles, file, filePublishingTickets, ticket)
       ).length;
       if (pendingOpenFilesCount > 0) {
         entries.push({
@@ -163,7 +183,9 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       }
 
       const pendingInternalFilesCount = ticket.filesForApproval.filter(
-        (file) => file.type === FileType.PendingInternalFile && fileIsStillRelevant(allCurrentFiles, file)
+        (file) =>
+          file.type === FileType.PendingInternalFile &&
+          fileIsStillRelevant(allCurrentFiles, file, filePublishingTickets, ticket)
       ).length;
       if (pendingInternalFilesCount > 0) {
         entries.push({
@@ -174,7 +196,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       }
     } else if (ticket.status === 'Closed') {
       const rejectedFilesCount = ticket.filesForApproval.filter((file) =>
-        fileIsStillRelevant(allCurrentFiles, file)
+        fileIsStillRelevant(allCurrentFiles, file, filePublishingTickets, ticket)
       ).length;
       if (rejectedFilesCount > 0) {
         entries.push({
