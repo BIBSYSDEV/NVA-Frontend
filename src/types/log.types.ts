@@ -32,6 +32,7 @@ export interface LogActionItem {
 
 interface LogEntryOnBehalfOf {
   id: string;
+  shortName: string;
   displayName: string;
 }
 
