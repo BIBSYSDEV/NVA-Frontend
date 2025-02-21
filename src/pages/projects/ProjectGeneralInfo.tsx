@@ -27,13 +27,19 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
 
   return (
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
-      <div>
-        <Typography variant="overline">{t('project.project_id')}</Typography>
-        <Typography>{getValueByKey('CristinIdentifier', project.identifiers)}</Typography>
-        <Typography variant="overline">{t('project.coordinating_institution')}</Typography>
-        <Typography>{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
-        <Typography variant="overline">{t('project.project_manager')}</Typography>
-        <Typography>
+      <dl>
+        <Typography variant="overline" component="dt">
+          {t('project.project_id')}
+        </Typography>
+        <Typography component="dd">{getValueByKey('CristinIdentifier', project.identifiers)}</Typography>
+        <Typography variant="overline" component="dt">
+          {t('project.coordinating_institution')}
+        </Typography>
+        <Typography component="dd">{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
+        <Typography variant="overline" component="dt">
+          {t('project.project_manager')}
+        </Typography>
+        <Typography component="dd">
           {projectManager ? (
             projectManager.identity.id ? (
               <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
@@ -46,11 +52,17 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             '-'
           )}
         </Typography>
-        <Typography variant="overline">{t('project.period')}</Typography>
-        <Typography>{projectPeriodString ? `${projectPeriodString} (${projectStatusString})` : '-'}</Typography>
-      </div>
-      <div>
-        <Typography variant="overline">{t('common.funding')}</Typography>
+        <Typography variant="overline" component="dt">
+          {t('project.period')}
+        </Typography>
+        <Typography component="dd">
+          {projectPeriodString ? `${projectPeriodString} (${projectStatusString})` : '-'}
+        </Typography>
+      </dl>
+      <dl>
+        <Typography variant="overline" component="dt">
+          {t('common.funding')}
+        </Typography>
         {project.funding.length > 0 ? (
           project.funding.map((funding, index) => {
             const sourceName = getLanguageString(funding.labels);
@@ -59,7 +71,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
               : sourceName;
 
             return (
-              <Typography key={index}>
+              <Typography key={index} component="dd">
                 {fundingSourceIsNfr(funding.source) && funding.identifier ? (
                   <MuiLink href={getNfrProjectUrl(funding.identifier)} target="_blank" rel="noopener noreferrer">
                     {fundingText}
@@ -71,30 +83,46 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             );
           })
         ) : (
-          <Typography>-</Typography>
+          <Typography component="dd">-</Typography>
         )}
 
-        <Typography variant="overline">{t('project.project_category')}</Typography>
+        <Typography variant="overline" component="dt">
+          {t('project.project_category')}
+        </Typography>
         {project.projectCategories.length > 0 ? (
           <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             {project.projectCategories.map((category, index) => (
-              <Chip key={index} color="primary" label={getLanguageString(category.label)} />
+              <Chip
+                component="dd"
+                sx={{ m: '0' }}
+                key={index}
+                color="primary"
+                label={getLanguageString(category.label)}
+              />
             ))}
           </Box>
         ) : (
-          <Typography>-</Typography>
+          <Typography component="dd">-</Typography>
         )}
-        <Typography variant="overline">{t('project.keywords')}</Typography>
+        <Typography variant="overline" component="dt">
+          {t('project.keywords')}
+        </Typography>
         {project.keywords.length > 0 ? (
           <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             {project.keywords.map((keyword, index) => (
-              <Chip key={index} color="primary" label={getLanguageString(keyword.label)} />
+              <Chip
+                component="dd"
+                sx={{ m: '0' }}
+                key={index}
+                color="primary"
+                label={getLanguageString(keyword.label)}
+              />
             ))}
           </Box>
         ) : (
-          <Typography>-</Typography>
+          <Typography component="dd">-</Typography>
         )}
-      </div>
+      </dl>
     </StyledGeneralInfo>
   );
 };
