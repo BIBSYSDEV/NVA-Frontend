@@ -66,7 +66,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
 
   if (registration.publishedDate) {
     entries.push({
-      text: t('log.entry_topic.PublicationPublished'),
+      text: t('log.titles.result_published'),
       date: registration.publishedDate,
       bgcolor: 'publishingRequest.main',
       Icon: CheckIcon,
@@ -78,7 +78,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
     const lastUnpublishingNote = unpublishingNotes.pop();
     if (lastUnpublishingNote) {
       entries.push({
-        text: t('log.entry_topic.PublicationUnpublished'),
+        text: t('log.titles.result_unpublished'),
         date: lastUnpublishingNote.createdDate,
         bgcolor: 'publishingRequest.main',
         Icon: CheckIcon,
@@ -89,7 +89,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
 
   if (registration.status === 'DELETED') {
     entries.push({
-      text: t('log.entry_topic.PublicationDeleted'),
+      text: t('log.titles.result_deleted'),
       date: registration.modifiedDate,
       bgcolor: 'publishingRequest.main',
       Icon: CheckIcon,

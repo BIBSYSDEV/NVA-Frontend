@@ -27,30 +27,6 @@ interface LogEntryProps {
   logEntry: LogEntryObject;
 }
 
-const getfileLogEntryTitle = (logEntry: LogEntryObject, t: TFunction) => {
-  if (logEntry.topic === 'FileImported') {
-    switch (logEntry.fileType) {
-      case FileType.OpenFile:
-        return t('log.open_file_published');
-      case FileType.InternalFile:
-        return t('log.internal_file_approved');
-      case FileType.HiddenFile:
-        return t('log.entry_topic.FileHidden');
-    }
-  }
-
-  if (logEntry.topic === 'FileApproved') {
-    switch (logEntry.fileType) {
-      case FileType.OpenFile:
-        return t('log.open_file_published');
-      case FileType.InternalFile:
-        return t('log.internal_file_approved');
-    }
-  }
-
-  return t(`log.entry_topic.${logEntry.topic}`);
-};
-
 export const LogEntry = ({ logEntry }: LogEntryProps) => {
   const { t } = useTranslation();
 
@@ -166,5 +142,52 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
       return <AddLinkOutlinedIcon {...logIconProps} />;
     default:
       return null;
+  }
+};
+
+const getfileLogEntryTitle = (logEntry: LogEntryObject, t: TFunction) => {
+  switch (logEntry.topic) {
+    case 'PublicationCreated':
+      return t('log.titles.result_created');
+    case 'PublicationPublished':
+    case 'PublicationImported':
+      return t('log.titles.result_published');
+    case 'PublicationRepublished':
+      return t('log.titles.result_republished');
+    case 'PublicationUnpublished':
+      return t('log.titles.result_unpublished');
+    case 'PublicationDeleted':
+      return t('log.titles.result_deleted');
+    case 'DoiReserved':
+      return t('log.titles.doi_reserved');
+    case 'DoiRequested':
+      return t('log.titles.doi_requested');
+    case 'DoiRejected':
+      return t('log.titles.doi_rejected');
+    case 'DoiAssigned':
+      return t('log.titles.doi_given');
+    case 'FileUploaded':
+      return t('log.titles.files_uploaded', { count: 1 });
+    case 'FileApproved':
+    case 'FileImported':
+      switch (logEntry.fileType) {
+        case FileType.OpenFile:
+          return t('log.open_file_published');
+        case FileType.InternalFile:
+          return t('log.internal_file_approved');
+        case FileType.HiddenFile:
+          return t('log.titles.file_hidden');
+      }
+      break;
+    case 'FileRejected':
+      return t('log.titles.files_rejected', { count: 1 });
+    case 'FileDeleted':
+      return t('log.titles.file_deleted');
+    case 'FileRetracted':
+      return t('log.titles.file_retracted');
+    case 'FileHidden':
+      return t('log.titles.file_hidden');
+    default:
+      return (logEntry as any).topic;
   }
 };
