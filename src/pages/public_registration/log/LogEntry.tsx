@@ -7,6 +7,7 @@ import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutl
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import UnpublishedOutlinedIcon from '@mui/icons-material/UnpublishedOutlined';
 import { Avatar, Box, Divider, styled, SvgIconProps, Typography } from '@mui/material';
+import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
 import { FileType } from '../../../types/associatedArtifact.types';
@@ -26,6 +27,30 @@ interface LogEntryProps {
   logEntry: LogEntryObject;
 }
 
+const getfileLogEntryTitle = (logEntry: LogEntryObject, t: TFunction) => {
+  if (logEntry.topic === 'FileImported') {
+    switch (logEntry.fileType) {
+      case FileType.OpenFile:
+        return t('log.open_file_published');
+      case FileType.InternalFile:
+        return t('log.internal_file_approved');
+      case FileType.HiddenFile:
+        return t('log.entry_topic.FileHidden');
+    }
+  }
+
+  if (logEntry.topic === 'FileApproved') {
+    switch (logEntry.fileType) {
+      case FileType.OpenFile:
+        return t('log.open_file_published');
+      case FileType.InternalFile:
+        return t('log.internal_file_approved');
+    }
+  }
+
+  return t(`log.entry_topic.${logEntry.topic}`);
+};
+
 export const LogEntry = ({ logEntry }: LogEntryProps) => {
   const { t } = useTranslation();
 
@@ -44,13 +69,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
       }}>
       <StyledLogRow>
         <LogHeaderIcon topic={logEntry.topic} />
-        <Typography variant="h3">
-          {logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.OpenFile
-            ? t('log.open_file_published')
-            : logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.InternalFile
-              ? t('log.internal_file_approved')
-              : t(`log.entry_topic.${logEntry.topic}`)}
-        </Typography>
+        <Typography variant="h3">{getfileLogEntryTitle(logEntry, t)}</Typography>
       </StyledLogRow>
       <LogDateItem date={new Date(logEntry.timestamp)} />
 

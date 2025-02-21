@@ -719,7 +719,7 @@
       "FileUploaded": "Fil lastet opp",
       "PublicationCreated": "Resultat opprettet",
       "PublicationDeleted": "Resultat slettet",
-      "PublicationImported": "Importert",
+      "PublicationImported": "$t(log.entry_topic.PublicationPublished)",
       "PublicationPublished": "Resultat publisert",
       "PublicationRepublished": "Resultat republisert",
       "PublicationUnpublished": "Resultat avpublisert"
