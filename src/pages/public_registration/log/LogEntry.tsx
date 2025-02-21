@@ -10,7 +10,7 @@ import { Avatar, Box, Divider, styled, SvgIconProps, Typography } from '@mui/mat
 import { useTranslation } from 'react-i18next';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
 import { FileType } from '../../../types/associatedArtifact.types';
-import { LogEntryObject } from '../../../types/log.types';
+import { ImportSourceLogData, LogEntryObject } from '../../../types/log.types';
 import { getInitials } from '../../../utils/general-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 
@@ -75,23 +75,32 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
               {logEntry.filename || t('log.unknown_filename')}
             </Typography>
           </StyledLogRow>
+          {logEntry.topic === 'FileImported' && <ImportSourceInfo importSource={logEntry.importSource} />}
         </>
       ) : logEntry.topic === 'PublicationImported' ? (
         <>
           <Divider />
-          <Typography>
-            {logEntry.importSource.archive
-              ? t('log.imported_from_source_and_archive', {
-                  source: logEntry.importSource.source,
-                  archive: logEntry.importSource.archive,
-                })
-              : t('log.imported_from_source', {
-                  source: logEntry.importSource.source,
-                })}
-          </Typography>
+          <ImportSourceInfo importSource={logEntry.importSource} />
         </>
       ) : null}
     </Box>
+  );
+};
+
+const ImportSourceInfo = ({ importSource }: { importSource: ImportSourceLogData }) => {
+  const { t } = useTranslation();
+
+  return (
+    <Typography>
+      {importSource.archive
+        ? t('log.imported_from_source_and_archive', {
+            source: importSource.source,
+            archive: importSource.archive,
+          })
+        : t('log.imported_from_source', {
+            source: importSource.source,
+          })}
+    </Typography>
   );
 };
 
