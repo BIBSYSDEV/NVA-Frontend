@@ -82,7 +82,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
           </StyledLogRow>
           {logEntry.topic === 'FileImported' && <ImportSourceInfo importSource={logEntry.importSource} />}
         </>
-      ) : logEntry.topic === 'PublicationImported' ? (
+      ) : logEntry.topic === 'PublicationImported' || logEntry.topic === 'PublicationMerged' ? (
         <>
           <Divider />
           <ImportSourceInfo importSource={logEntry.importSource} />
@@ -113,6 +113,7 @@ const getLogEntryBackgroundColor = (topic: LogEntryObject['topic']) => {
   switch (topic) {
     case 'PublicationImported':
     case 'FileImported':
+    case 'PublicationMerged':
       return 'centralImport.light';
     case 'DoiReserved':
     case 'DoiRequested':
@@ -144,6 +145,7 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
     case 'FileDeleted':
       return <DeleteOutlinedIcon {...logIconProps} />;
     case 'PublicationImported':
+    case 'PublicationMerged':
       return <CloudOutlinedIcon {...logIconProps} />;
     case 'DoiReserved':
     case 'DoiRequested':
@@ -162,6 +164,8 @@ const getfileLogEntryTitle = (logEntry: LogEntryObject, t: TFunction) => {
     case 'PublicationPublished':
     case 'PublicationImported':
       return t('log.titles.result_published');
+    case 'PublicationMerged':
+      return t('log.titles.result_merged');
     case 'PublicationRepublished':
       return t('log.titles.result_republished');
     case 'PublicationUnpublished':
