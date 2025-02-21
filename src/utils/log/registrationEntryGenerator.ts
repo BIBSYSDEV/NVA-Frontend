@@ -110,7 +110,7 @@ function generateMetadataPublishedEntry(
     // Assumption: Regardless of ticket status, if there exists publishing ticket(s), the first will be metadata published
     return {
       type: 'MetadataPublished',
-      title: t('log.titles.metadata_published'),
+      title: t('log.titles.result_published'),
       modifiedDate: firstPublishingTicket.createdDate,
       actions: [
         {
@@ -125,7 +125,7 @@ function generateMetadataPublishedEntry(
   if (registration.publishedDate) {
     return {
       type: 'MetadataPublished',
-      title: t('log.titles.metadata_published'),
+      title: t('log.titles.result_published'),
       modifiedDate: registration.publishedDate,
       actions: [],
     };
@@ -135,7 +135,7 @@ function generateMetadataPublishedEntry(
 function generateCreatedEntry(registration: Registration, t: TFunction): LogEntry {
   return {
     type: 'Created',
-    title: t('log.titles.created_in_nva'),
+    title: t('log.titles.result_created'),
     modifiedDate: registration.createdDate,
     actions: [
       {

@@ -11,7 +11,6 @@ module.exports = {
     'disciplines.',
     'editor.curators.role.',
     'licenses.labels.',
-    'log.entry_topic.',
     'my_page.messages.ticket_types.',
     'my_page.messages.types.',
     'privacy.disclosure_of_data.',
