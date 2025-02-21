@@ -748,6 +748,7 @@
       "open_file_awaiting_approval_other": "{{count}} åpne filer venter på godkjenning",
       "result_created": "Resultat opprettet",
       "result_deleted": "Resultat slettet",
+      "result_merged": "Metadata slått sammen",
       "result_published": "Resultat publisert",
       "result_republished": "Resultat republisert",
       "result_unpublished": "Resultat avpublisert"

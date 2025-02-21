@@ -66,8 +66,8 @@ export interface ImportSourceLogData {
   archive?: string;
 }
 
-interface PublicationImportedLogEntry extends Omit<PublicationLogEntry, 'topic'> {
-  topic: 'PublicationImported';
+interface PublicationImportLogEntry extends Omit<PublicationLogEntry, 'topic'> {
+  topic: 'PublicationImported' | 'PublicationMerged';
   importSource: ImportSourceLogData;
 }
 
@@ -78,12 +78,12 @@ interface FileLogEntry extends BaseLogEntry {
   fileType: FileType;
 }
 
-interface FileImportedLogEntry extends Omit<FileLogEntry, 'topic'> {
+interface FileImportLogEntry extends Omit<FileLogEntry, 'topic'> {
   topic: 'FileImported';
   importSource: ImportSourceLogData;
 }
 
-export type LogEntryObject = PublicationLogEntry | FileLogEntry | PublicationImportedLogEntry | FileImportedLogEntry;
+export type LogEntryObject = PublicationLogEntry | FileLogEntry | PublicationImportLogEntry | FileImportLogEntry;
 
 export interface RegistrationLogResponse {
   logEntries: LogEntryObject[];
