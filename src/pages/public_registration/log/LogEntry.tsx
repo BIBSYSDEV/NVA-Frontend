@@ -6,7 +6,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import UnpublishedOutlinedIcon from '@mui/icons-material/UnpublishedOutlined';
-import { Avatar, Box, Divider, styled, SvgIconProps, Typography } from '@mui/material';
+import { Avatar, Box, Divider, styled, SvgIconProps, Tooltip, Typography } from '@mui/material';
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
@@ -49,15 +49,25 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
       </StyledLogRow>
       <LogDateItem date={new Date(logEntry.timestamp)} />
 
-      {logEntry.performedBy && (
+      {(fullName || logEntry.performedBy?.onBehalfOf.shortName) && (
         <StyledLogRow>
-          <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.7rem', bgcolor: 'primary.main' }}>
-            {getInitials(fullName)}
-          </Avatar>
-          <Typography>{fullName}</Typography>
+          {fullName && (
+            <>
+              <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.7rem', bgcolor: 'primary.main' }}>
+                {getInitials(fullName)}
+              </Avatar>
+              <Typography>{fullName}</Typography>
+            </>
+          )}
 
-          <AccountBalanceIcon {...logIconProps} />
-          <Typography>{logEntry.performedBy.onBehalfOf.displayName}</Typography>
+          {logEntry.performedBy?.onBehalfOf.shortName && (
+            <>
+              <AccountBalanceIcon {...logIconProps} />
+              <Tooltip title={logEntry.performedBy.onBehalfOf.displayName}>
+                <Typography>{logEntry.performedBy.onBehalfOf.shortName}</Typography>
+              </Tooltip>
+            </>
+          )}
         </StyledLogRow>
       )}
 
