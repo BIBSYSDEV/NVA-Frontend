@@ -98,6 +98,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
 const getLogEntryBackgroundColor = (topic: LogEntryObject['topic']) => {
   switch (topic) {
     case 'PublicationImported':
+    case 'FileImported':
       return 'centralImport.light';
     case 'DoiReserved':
     case 'DoiRequested':
