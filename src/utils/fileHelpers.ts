@@ -5,7 +5,7 @@ export const hasFileAccessRight = (file: AssociatedFile, operation: FileAllowedO
   return file.allowedOperations?.includes(operation) ?? false;
 };
 
-export const isEqualLicenseUri = (uri1: string | null, uri2: string | null) => {
+const isEqualLicenseUri = (uri1: string | null, uri2: string | null) => {
   if (!uri1 || !uri2) {
     return false;
   }
