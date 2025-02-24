@@ -1,6 +1,7 @@
 import { Box, Chip, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -10,7 +11,6 @@ import { getFullName, getValueByKey } from '../../utils/user-helpers';
 import {
   fundingSourceIsNfr,
   getNfrProjectUrl,
-  getProjectCoordinatingInstitutionName,
   getProjectManagers,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
@@ -35,7 +35,9 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         <Typography variant="overline" component="dt">
           {t('project.coordinating_institution')}
         </Typography>
-        <Typography component="dd">{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
+        <Box component="dd" sx={{ m: 0 }}>
+          <AffiliationHierarchy unitUri={project.coordinatingInstitution.id} boldTopLevel={false} />
+        </Box>
         <Typography variant="overline" component="dt">
           {t('project.project_manager')}
         </Typography>
