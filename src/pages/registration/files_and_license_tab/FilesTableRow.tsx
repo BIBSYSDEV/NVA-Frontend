@@ -49,8 +49,7 @@ import { licenses, LicenseUri } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { hasFileAccessRight } from '../../../utils/fileHelpers';
-import { equalUris } from '../../../utils/general-helpers';
+import { getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
 import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
@@ -340,9 +339,8 @@ export const FilesTableRow = ({
                         slotProps={{
                           select: {
                             renderValue: (option) => {
-                              const selectedLicense = licenses.find((license) =>
-                                equalUris(license.id, option as string)
-                              );
+                              const selectedLicense = getLicenseData(option as string);
+
                               return selectedLicense ? (
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                   <img
@@ -357,7 +355,7 @@ export const FilesTableRow = ({
                           },
                         }}
                         variant="filled"
-                        value={licenses.find((license) => equalUris(license.id, field.value))?.id ?? ''}
+                        value={getLicenseData(field.value)?.id ?? ''}
                         error={!!error && touched}
                         helperText={<ErrorMessage name={field.name} />}
                         label={t('registration.files_and_license.conditions_for_using_file')}

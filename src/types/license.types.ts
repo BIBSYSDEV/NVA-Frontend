@@ -33,7 +33,7 @@ export enum LicenseUri {
   CC_BY_NC_ND_2 = 'https://creativecommons.org/licenses/by-nc-nd/2.0/',
   CC_BY_ND_NC_1 = 'https://creativecommons.org/licenses/by-nd-nc/1.0/',
   CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/',
-  RightsReserved = 'http://rightsstatements.org/vocab/InC/1.0/',
+  RightsReserved = 'https://rightsstatements.org/vocab/InC/1.0/',
 }
 
 interface LicenseInfo {
