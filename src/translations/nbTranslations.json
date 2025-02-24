@@ -1591,6 +1591,7 @@
         "duplicate_title_description_details": "<0>Det skal ikke opprettes duplikater i NVA. Sjekk om din registrering tilsvarer det som alt er publisert.</0><0>Om resultatet som er publisert har feil eller mangler så be registrator eller bidragsyter som er tilknyttet resultatet om å endre det.</0>",
         "duplicate_title_description_introduction": "Denne registreringen har samme tittel, år og kategori som følgende publikasjon:",
         "edit_publishing_request_description": "For å endre på synligheten til en eller flere filer, trykk på \"$t(registration.edit_registration)\" og velg annen status i nedtrekksmenyen under overskriften \"$t(registration.files_and_license.availability)\" til filen det gjelder.",
+        "files_will_soon_be_deleted": "Fil(er) vil bli slettet. Vent litt før du oppdaterer siden på nytt for å se oppdatert status.",
         "files_will_soon_be_published": "Fil(er) vil være tilgjengelig for andre om kort tid. Vent litt før du oppdaterer siden på nytt for å se status.",
         "files_will_soon_be_rejected": "Fil(er) vil bli markert som avvist. Vent litt før du oppdaterer siden på nytt for å se oppdatert status.",
         "fix_validation_errors_before_republishing": "Du må rette opp alle valideringsfeil før du kan republisere.",

@@ -1,7 +1,6 @@
 import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -36,6 +35,7 @@ import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
 import { PublishingAccordionLastTicketInfo } from './PublishingAccordionLastTicketInfo';
+import { RefreshPublishingRequestButton } from './RefreshPublishingRequestButton';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -168,6 +168,8 @@ export const PublishingAccordion = ({
     ? locationState.selectedTicketType === 'PublishingRequest'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
 
+  const isWaitingForFileDeletion = isDeletedRegistration && registration.associatedArtifacts.length > 0;
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
@@ -228,17 +230,14 @@ export const PublishingAccordion = ({
                     : ''
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
-            <LoadingButton
-              variant="contained"
-              color="info"
-              size="small"
-              loading={isLoadingData}
-              fullWidth
-              onClick={refetchData}
-              startIcon={<RefreshIcon />}
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
-              {t('registration.public_page.tasks_panel.reload')}
-            </LoadingButton>
+            <RefreshPublishingRequestButton refetchData={refetchData} isLoadingData={isLoadingData} />
+          </>
+        )}
+
+        {isDeletedRegistration && isWaitingForFileDeletion && (
+          <>
+            <Typography gutterBottom>{t('registration.public_page.tasks_panel.files_will_soon_be_deleted')}</Typography>
+            <RefreshPublishingRequestButton refetchData={refetchData} isLoadingData={isLoadingData} />
           </>
         )}
 
@@ -305,7 +304,7 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {lastPublishingRequest && !hasMismatchingPublishedStatus && (
+        {lastPublishingRequest && !hasMismatchingPublishedStatus && !isWaitingForFileDeletion && (
           <PublishingAccordionLastTicketInfo
             publishingTicket={lastPublishingRequest}
             canCreatePublishingRequest={userCanCreatePublishingRequest}
