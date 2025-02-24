@@ -129,7 +129,7 @@ export const FileRow = ({
 
       {isOpenableFile && licenseData && (
         <Link
-          href={licenseData?.link}
+          href={licenseData.link}
           target="_blank"
           rel="noopener noreferrer"
           sx={{ gridArea: 'license', maxHeight: '3rem', maxWidth: '8rem' }}>
@@ -137,7 +137,7 @@ export const FileRow = ({
             component="img"
             alt={licenseTitle}
             title={licenseTitle}
-            src={licenseData?.logo}
+            src={licenseData.logo}
             data-testid={dataTestId.registrationLandingPage.license}
           />
         </Link>

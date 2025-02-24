@@ -20,10 +20,8 @@ const isEqualLicenseUri = (uri1: string | null, uri2: string | null) => {
       // Require exact match for RightsReserved (except of protocol)
       return urlObj1.pathname === urlObj2.pathname;
     }
-
     return removeTrailingSlash(urlObj1.pathname).toLowerCase() === removeTrailingSlash(urlObj2.pathname).toLowerCase();
   }
-
   return false;
 };
 
