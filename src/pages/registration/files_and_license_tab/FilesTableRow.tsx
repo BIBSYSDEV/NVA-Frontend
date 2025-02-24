@@ -49,7 +49,7 @@ import { licenses, LicenseUri } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
+import { activeLicenses, getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
 import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
@@ -123,9 +123,6 @@ export const FilesTableRow = ({
   const [embargoPopperAnchorEl, setEmbargoPopperAnchorEl] = useState<null | HTMLElement>(null);
 
   const [inactiveLicensesOpen, setInactiveLicensesOpen] = useState(false);
-  const activeLicenses = licenses.filter(
-    (license) => license.version === 4 || license.id === LicenseUri.CC0 || license.id === LicenseUri.RightsReserved
-  );
   const inactiveLicenses = licenses.filter((license) => license.version && license.version !== 4);
 
   const isCompletedFile = isOpenFile(file) || file.type === FileType.InternalFile;

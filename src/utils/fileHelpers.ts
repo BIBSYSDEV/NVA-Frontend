@@ -36,3 +36,7 @@ export const getLicenseData = (licenseUri: string | null) => {
   const license = licenses.find((l) => isEqualLicenseUri(l.id, licenseUri));
   return license ?? null;
 };
+
+export const activeLicenses = licenses.filter(
+  (license) => license.version === 4 || license.id === LicenseUri.CC0 || license.id === LicenseUri.RightsReserved
+);
