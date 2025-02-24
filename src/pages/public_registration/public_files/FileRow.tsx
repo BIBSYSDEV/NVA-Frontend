@@ -87,6 +87,7 @@ export const FileRow = ({
     }
   }, [handleDownload, openPreviewAccordion, previewFileUrl, canDownloadFile]);
 
+  console.log(file.license);
   const licenseData = licenses.find((license) => equalUris(license.id, file.license));
   const licenseTitle = licenseData?.name ?? '';
 

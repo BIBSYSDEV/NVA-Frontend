@@ -32,8 +32,26 @@ export const getPeriodString = (from: string | undefined, to: string | undefined
 
 export const getIdentifierFromId = (id: string) => id.split('/').pop() ?? '';
 
-export const equalUris = (uri1: string | null, uri2: string | null) =>
-  uri1 && uri2 && removeTrailingSlash(uri1).toLocaleLowerCase() === removeTrailingSlash(uri2).toLocaleLowerCase();
+export const equalUris = (uri1: string | null, uri2: string | null) => {
+  if (!uri1 || !uri2) {
+    return false;
+  }
+  if (uri1 === uri2) {
+    return true;
+  }
+  const urlObj1 = new URL(uri1);
+  const urlObj2 = new URL(uri2);
+
+  if (urlObj1.hostname === urlObj2.hostname) {
+    if (urlObj1.pathname === urlObj2.pathname) {
+      return true;
+    }
+  }
+  return (
+    urlObj1.hostname === urlObj2.hostname &&
+    removeTrailingSlash(urlObj1.pathname) === removeTrailingSlash(urlObj2.pathname)
+  );
+};
 
 const removeTrailingSlash = (value: string) => (value.endsWith('/') ? value.slice(0, -1) : value);
 
