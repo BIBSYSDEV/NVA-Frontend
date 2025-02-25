@@ -1,5 +1,5 @@
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import { AccordionSummary, CircularProgress, Typography } from '@mui/material';
+import { AccordionSummary, Box, CircularProgress, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -36,15 +36,17 @@ export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccor
   return (
     <RegistrationAccordion elevation={5} onChange={onChange} onClick={createEmptyRegistration}>
       <AccordionSummary data-testid={dataTestId.registrationWizard.new.emptyRegistrationAccordion}>
-        <InsertDriveFileIcon />
-        <span style={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant="h2" component="span" id={labelId}>
-            {t('registration.registration.start_with_empty_registration_title')}
-          </Typography>
-          <Typography component="span">
-            {t('registration.registration.start_with_empty_registration_description')}
-          </Typography>
-        </span>
+        <Box component="span" sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+          <InsertDriveFileIcon />
+          <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: { sm: '0.8rem' } }}>
+            <Typography variant="h2" component="span" id={labelId}>
+              {t('registration.registration.start_with_empty_registration_title')}
+            </Typography>
+            <Typography component="span">
+              {t('registration.registration.start_with_empty_registration_description')}
+            </Typography>
+          </Box>
+        </Box>
         {isLoading && <CircularProgress aria-labelledby={labelId} />}
       </AccordionSummary>
     </RegistrationAccordion>
