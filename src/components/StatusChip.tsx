@@ -52,9 +52,10 @@ interface StatusChipProps {
   text: string;
   icon: 'check' | 'block' | 'hourglass';
   bgcolor?: string;
+  paddingY?: string | number;
 }
 
-export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon }: StatusChipProps) => {
+export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon, paddingY }: StatusChipProps) => {
   return (
     <Box
       sx={{
@@ -66,6 +67,7 @@ export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon }: StatusChi
         alignItems: 'center',
         p: '0.25rem 0.75rem 0.25rem 0.5rem',
         borderRadius: '1rem',
+        paddingY,
       }}>
       {icon === 'check' ? (
         <CheckIcon sx={{ fontSize: '1rem' }} />
