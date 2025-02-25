@@ -1,24 +1,30 @@
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { LoadingButton } from '@mui/lab';
-import { t } from 'i18next';
+import { ButtonProps } from '@mui/lab';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useTranslation } from 'react-i18next';
+import { Button } from '@mui/material';
 
-interface RefreshPublishingRequestButtonProps {
+interface RefreshPublishingRequestButtonProps extends ButtonProps {
   refetchData: () => void;
-  isLoadingData: boolean;
 }
-export const RefreshPublishingRequestButton = ({ refetchData, isLoadingData }: RefreshPublishingRequestButtonProps) => {
+
+export const RefreshPublishingRequestButton = ({
+  refetchData,
+  ...buttonProps
+}: RefreshPublishingRequestButtonProps) => {
+  const { t } = useTranslation();
+
   return (
-    <LoadingButton
+    <Button
+      {...buttonProps}
       variant="contained"
       color="info"
       size="small"
-      loading={isLoadingData}
       fullWidth
       onClick={refetchData}
       startIcon={<RefreshIcon />}
       data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
       {t('registration.public_page.tasks_panel.reload')}
-    </LoadingButton>
+    </Button>
   );
 };

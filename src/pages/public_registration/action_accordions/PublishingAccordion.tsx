@@ -160,15 +160,17 @@ export const PublishingAccordion = ({
     !!lastPublishingRequest &&
     (isDraftRegistration || hasMismatchingFiles(lastPublishingRequest, publishingRequestTickets, registration));
 
-  const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
+  const isWaitingForFileDeletion =
+    isDeletedRegistration && getAssociatedFiles(registration.associatedArtifacts).length > 0;
+
+  const hasMismatchingPublishedStatus =
+    mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2 || isWaitingForFileDeletion;
 
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
   const defaultExpanded = locationState?.selectedTicketType
     ? locationState.selectedTicketType === 'PublishingRequest'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
-
-  const isWaitingForFileDeletion = isDeletedRegistration && registration.associatedArtifacts.length > 0;
 
   return (
     <Accordion
@@ -230,14 +232,16 @@ export const PublishingAccordion = ({
                     : ''
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
-            <RefreshPublishingRequestButton refetchData={refetchData} isLoadingData={isLoadingData} />
+            <RefreshPublishingRequestButton refetchData={refetchData} loading={isLoadingData} />
           </>
         )}
 
-        {isDeletedRegistration && isWaitingForFileDeletion && (
+        {isWaitingForFileDeletion && (
           <>
-            <Typography gutterBottom>{t('registration.public_page.tasks_panel.files_will_soon_be_deleted')}</Typography>
-            <RefreshPublishingRequestButton refetchData={refetchData} isLoadingData={isLoadingData} />
+            <Typography sx={{ my: '1rem' }}>
+              {t('registration.public_page.tasks_panel.files_will_soon_be_deleted')}
+            </Typography>
+            <RefreshPublishingRequestButton refetchData={refetchData} loading={isLoadingData} />
           </>
         )}
 
