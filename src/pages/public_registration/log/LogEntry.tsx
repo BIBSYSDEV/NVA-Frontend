@@ -45,7 +45,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
       }}>
       <StyledLogRow>
         <LogHeaderIcon topic={logEntry.topic} />
-        <Typography variant="h3">{getfileLogEntryTitle(logEntry, t)}</Typography>
+        <Typography variant="h3">{getLogEntryTitle(logEntry, t)}</Typography>
       </StyledLogRow>
       <LogDateItem date={new Date(logEntry.timestamp)} />
 
@@ -157,7 +157,7 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
   }
 };
 
-const getfileLogEntryTitle = (logEntry: LogEntryObject, t: TFunction) => {
+const getLogEntryTitle = (logEntry: LogEntryObject, t: TFunction) => {
   switch (logEntry.topic) {
     case 'PublicationCreated':
       return t('log.titles.result_created');
