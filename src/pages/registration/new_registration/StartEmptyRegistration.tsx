@@ -47,7 +47,7 @@ export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccor
             {t('registration.registration.start_with_empty_registration_description')}
           </Typography>
         </span>
-        {!isLoading && <CircularProgress aria-labelledby={labelId} sx={{ marginLeft: 'auto' }} />}
+        {isLoading && <CircularProgress aria-labelledby={labelId} sx={{ marginLeft: 'auto' }} />}
       </AccordionSummary>
     </RegistrationAccordion>
   );
