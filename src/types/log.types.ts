@@ -61,29 +61,29 @@ interface PublicationLogEntry extends BaseLogEntry {
     | 'DoiAssigned';
 }
 
+export interface ImportSourceLogData {
+  source: string;
+  archive?: string;
+}
+
 interface PublicationImportedLogEntry extends Omit<PublicationLogEntry, 'topic'> {
   topic: 'PublicationImported';
-  importSource: {
-    source: string;
-    archive?: string;
-  };
+  importSource: ImportSourceLogData;
 }
 
 interface FileLogEntry extends BaseLogEntry {
   type: 'FileLogEntry';
-  topic:
-    | 'FileUploaded'
-    | 'FileApproved'
-    | 'FileRejected'
-    | 'FileDeleted'
-    | 'FileImported'
-    | 'FileRetracted'
-    | 'FileHidden';
+  topic: 'FileUploaded' | 'FileApproved' | 'FileRejected' | 'FileDeleted' | 'FileRetracted' | 'FileHidden';
   filename: string;
   fileType: FileType;
 }
 
-export type LogEntryObject = PublicationLogEntry | FileLogEntry | PublicationImportedLogEntry;
+interface FileImportedLogEntry extends Omit<FileLogEntry, 'topic'> {
+  topic: 'FileImported';
+  importSource: ImportSourceLogData;
+}
+
+export type LogEntryObject = PublicationLogEntry | FileLogEntry | PublicationImportedLogEntry | FileImportedLogEntry;
 
 export interface RegistrationLogResponse {
   logEntries: LogEntryObject[];

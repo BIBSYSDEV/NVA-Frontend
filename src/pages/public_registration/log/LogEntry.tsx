@@ -7,10 +7,11 @@ import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutl
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import UnpublishedOutlinedIcon from '@mui/icons-material/UnpublishedOutlined';
 import { Avatar, Box, Divider, styled, SvgIconProps, Tooltip, Typography } from '@mui/material';
+import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
 import { FileType } from '../../../types/associatedArtifact.types';
-import { LogEntryObject } from '../../../types/log.types';
+import { ImportSourceLogData, LogEntryObject } from '../../../types/log.types';
 import { getInitials } from '../../../utils/general-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 
@@ -44,13 +45,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
       }}>
       <StyledLogRow>
         <LogHeaderIcon topic={logEntry.topic} />
-        <Typography variant="h3">
-          {logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.OpenFile
-            ? t('log.open_file_published')
-            : logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.InternalFile
-              ? t('log.internal_file_approved')
-              : t(`log.entry_topic.${logEntry.topic}`)}
-        </Typography>
+        <Typography variant="h3">{getFileLogEntryTitle(logEntry, t)}</Typography>
       </StyledLogRow>
       <LogDateItem date={new Date(logEntry.timestamp)} />
 
@@ -85,29 +80,39 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
               {logEntry.filename || t('log.unknown_filename')}
             </Typography>
           </StyledLogRow>
+          {logEntry.topic === 'FileImported' && <ImportSourceInfo importSource={logEntry.importSource} />}
         </>
       ) : logEntry.topic === 'PublicationImported' ? (
         <>
           <Divider />
-          <Typography>
-            {logEntry.importSource.archive
-              ? t('log.imported_from_source_and_archive', {
-                  source: logEntry.importSource.source,
-                  archive: logEntry.importSource.archive,
-                })
-              : t('log.imported_from_source', {
-                  source: logEntry.importSource.source,
-                })}
-          </Typography>
+          <ImportSourceInfo importSource={logEntry.importSource} />
         </>
       ) : null}
     </Box>
   );
 };
 
+const ImportSourceInfo = ({ importSource }: { importSource: ImportSourceLogData }) => {
+  const { t } = useTranslation();
+
+  return (
+    <Typography>
+      {importSource.archive
+        ? t('log.imported_from_source_and_archive', {
+            source: importSource.source,
+            archive: importSource.archive,
+          })
+        : t('log.imported_from_source', {
+            source: importSource.source,
+          })}
+    </Typography>
+  );
+};
+
 const getLogEntryBackgroundColor = (topic: LogEntryObject['topic']) => {
   switch (topic) {
     case 'PublicationImported':
+    case 'FileImported':
       return 'centralImport.light';
     case 'DoiReserved':
     case 'DoiRequested':
@@ -147,5 +152,52 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
       return <AddLinkOutlinedIcon {...logIconProps} />;
     default:
       return null;
+  }
+};
+
+const getFileLogEntryTitle = (logEntry: LogEntryObject, t: TFunction) => {
+  switch (logEntry.topic) {
+    case 'PublicationCreated':
+      return t('log.titles.result_created');
+    case 'PublicationPublished':
+    case 'PublicationImported':
+      return t('log.titles.result_published');
+    case 'PublicationRepublished':
+      return t('log.titles.result_republished');
+    case 'PublicationUnpublished':
+      return t('log.titles.result_unpublished');
+    case 'PublicationDeleted':
+      return t('log.titles.result_deleted');
+    case 'DoiReserved':
+      return t('log.titles.doi_reserved');
+    case 'DoiRequested':
+      return t('log.titles.doi_requested');
+    case 'DoiRejected':
+      return t('log.titles.doi_rejected');
+    case 'DoiAssigned':
+      return t('log.titles.doi_given');
+    case 'FileUploaded':
+      return t('log.titles.files_uploaded', { count: 1 });
+    case 'FileApproved':
+    case 'FileImported':
+      switch (logEntry.fileType) {
+        case FileType.OpenFile:
+          return t('log.open_file_published');
+        case FileType.InternalFile:
+          return t('log.internal_file_approved');
+        case FileType.HiddenFile:
+          return t('log.titles.file_hidden');
+      }
+      break;
+    case 'FileRejected':
+      return t('log.titles.files_rejected', { count: 1 });
+    case 'FileDeleted':
+      return t('log.titles.file_deleted');
+    case 'FileRetracted':
+      return t('log.titles.file_retracted');
+    case 'FileHidden':
+      return t('log.titles.file_hidden');
+    default:
+      return (logEntry as any).topic;
   }
 };
