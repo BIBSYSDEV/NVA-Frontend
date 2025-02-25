@@ -1,5 +1,5 @@
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import { AccordionSummary, Box, CircularProgress, Typography } from '@mui/material';
+import { AccordionSummary, CircularProgress, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
