@@ -763,7 +763,7 @@
       "delete_message_description": "Er du sikker på at du vil slette meldingen?",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
-      "doi_pending": "Venter på DOI-tildeling",
+      "doi_pending": "DOI-forespørsel venter på godkjenning",
       "files_published_one": "{{count}} fil publisert",
       "files_published_other": "{{count}} filer publisert",
       "files_rejected_one": "{{count}} fil avvist",
