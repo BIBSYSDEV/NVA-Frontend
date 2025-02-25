@@ -45,7 +45,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
       }}>
       <StyledLogRow>
         <LogHeaderIcon topic={logEntry.topic} />
-        <Typography variant="h3">{getFileLogEntryTitle(logEntry, t)}</Typography>
+        <Typography variant="h3">{getLogEntryTitle(logEntry, t)}</Typography>
       </StyledLogRow>
       <LogDateItem date={new Date(logEntry.timestamp)} />
 
@@ -82,7 +82,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
           </StyledLogRow>
           {logEntry.topic === 'FileImported' && <ImportSourceInfo importSource={logEntry.importSource} />}
         </>
-      ) : logEntry.topic === 'PublicationImported' ? (
+      ) : logEntry.topic === 'PublicationImported' || logEntry.topic === 'PublicationMerged' ? (
         <>
           <Divider />
           <ImportSourceInfo importSource={logEntry.importSource} />
@@ -113,6 +113,7 @@ const getLogEntryBackgroundColor = (topic: LogEntryObject['topic']) => {
   switch (topic) {
     case 'PublicationImported':
     case 'FileImported':
+    case 'PublicationMerged':
       return 'centralImport.light';
     case 'DoiReserved':
     case 'DoiRequested':
@@ -144,6 +145,7 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
     case 'FileDeleted':
       return <DeleteOutlinedIcon {...logIconProps} />;
     case 'PublicationImported':
+    case 'PublicationMerged':
       return <CloudOutlinedIcon {...logIconProps} />;
     case 'DoiReserved':
     case 'DoiRequested':
@@ -155,13 +157,15 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
   }
 };
 
-const getFileLogEntryTitle = (logEntry: LogEntryObject, t: TFunction) => {
+const getLogEntryTitle = (logEntry: LogEntryObject, t: TFunction) => {
   switch (logEntry.topic) {
     case 'PublicationCreated':
       return t('log.titles.result_created');
     case 'PublicationPublished':
     case 'PublicationImported':
       return t('log.titles.result_published');
+    case 'PublicationMerged':
+      return t('log.titles.result_merged');
     case 'PublicationRepublished':
       return t('log.titles.result_republished');
     case 'PublicationUnpublished':
