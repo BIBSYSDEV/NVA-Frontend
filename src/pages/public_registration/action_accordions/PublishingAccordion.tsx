@@ -230,16 +230,9 @@ export const PublishingAccordion = ({
                   : hasClosedTicket
                     ? t('registration.public_page.tasks_panel.files_will_soon_be_rejected')
                     : ''
-                : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
-            </Typography>
-            <RefreshPublishingRequestButton refetchData={refetchData} loading={isLoadingData} />
-          </>
-        )}
-
-        {isWaitingForFileDeletion && (
-          <>
-            <Typography sx={{ my: '1rem' }}>
-              {t('registration.public_page.tasks_panel.files_will_soon_be_deleted')}
+                : isWaitingForFileDeletion
+                  ? t('registration.public_page.tasks_panel.files_will_soon_be_deleted')
+                  : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
             <RefreshPublishingRequestButton refetchData={refetchData} loading={isLoadingData} />
           </>
