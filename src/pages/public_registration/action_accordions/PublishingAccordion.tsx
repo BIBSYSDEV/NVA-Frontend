@@ -301,7 +301,7 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {lastPublishingRequest && !hasMismatchingPublishedStatus && !isWaitingForFileDeletion && (
+        {lastPublishingRequest && !hasMismatchingPublishedStatus && (
           <PublishingAccordionLastTicketInfo
             publishingTicket={lastPublishingRequest}
             canCreatePublishingRequest={userCanCreatePublishingRequest}

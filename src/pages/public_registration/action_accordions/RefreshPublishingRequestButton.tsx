@@ -1,8 +1,7 @@
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { ButtonProps } from '@mui/lab';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@mui/material';
+import { Button, ButtonProps } from '@mui/material';
 
 interface RefreshPublishingRequestButtonProps extends ButtonProps {
   refetchData: () => void;
