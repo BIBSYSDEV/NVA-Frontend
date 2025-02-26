@@ -12,7 +12,7 @@ export const useFetchFundingSources = ({ enabled }: FetchFundingSourcesOptions =
   return useQuery({
     enabled,
     queryKey: ['fundingSources'],
-    queryFn: fetchFundingSources,
+    queryFn: ({ signal }) => fetchFundingSources(signal),
     meta: { errorMessage: t('feedback.error.get_funding_sources') },
     staleTime: Infinity,
     gcTime: 1_800_000, // 30 minutes
