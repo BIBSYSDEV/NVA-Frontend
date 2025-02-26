@@ -65,6 +65,6 @@ export const associatedArtifactValidationSchema = Yup.object({
 });
 
 export const associatedArtifactPublishValidationSchema = Yup.object({
-  type: Yup.string(),
+  type: Yup.string().not([FileType.UpdloadedFile], associatedArtifactErrorMessage.availabilityRequired),
   id: linkValidation,
 });
