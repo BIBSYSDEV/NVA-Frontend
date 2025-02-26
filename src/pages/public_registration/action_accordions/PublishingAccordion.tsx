@@ -1,7 +1,6 @@
 import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -36,6 +35,7 @@ import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
 import { PublishingAccordionLastTicketInfo } from './PublishingAccordionLastTicketInfo';
+import { RefreshPublishingRequestButton } from './RefreshPublishingRequestButton';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -160,7 +160,11 @@ export const PublishingAccordion = ({
     !!lastPublishingRequest &&
     (isDraftRegistration || hasMismatchingFiles(lastPublishingRequest, publishingRequestTickets, registration));
 
-  const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
+  const isWaitingForFileDeletion =
+    isDeletedRegistration && getAssociatedFiles(registration.associatedArtifacts).length > 0;
+
+  const hasMismatchingPublishedStatus =
+    mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2 || isWaitingForFileDeletion;
 
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
@@ -217,7 +221,8 @@ export const PublishingAccordion = ({
         {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}
 
         {/* Option to reload data if status is not up to date with ticket */}
-        {userCanHandlePublishingRequest && !tabErrors && hasMismatchingPublishedStatus && (
+        {((userCanHandlePublishingRequest && !tabErrors && hasMismatchingPublishedStatus) ||
+          isWaitingForFileDeletion) && (
           <>
             <Typography sx={{ my: '1rem' }}>
               {isPublishedRegistration
@@ -226,19 +231,11 @@ export const PublishingAccordion = ({
                   : hasClosedTicket
                     ? t('registration.public_page.tasks_panel.files_will_soon_be_rejected')
                     : ''
-                : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
+                : isWaitingForFileDeletion
+                  ? t('registration.public_page.tasks_panel.files_will_soon_be_deleted')
+                  : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
-            <LoadingButton
-              variant="contained"
-              color="info"
-              size="small"
-              loading={isLoadingData}
-              fullWidth
-              onClick={refetchData}
-              startIcon={<RefreshIcon />}
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
-              {t('registration.public_page.tasks_panel.reload')}
-            </LoadingButton>
+            <RefreshPublishingRequestButton refetchData={refetchData} loading={isLoadingData} />
           </>
         )}
 
