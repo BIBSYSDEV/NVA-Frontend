@@ -61,12 +61,12 @@ export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon, paddingY }:
       sx={{
         width: 'fit-content',
         height: 'fit-content',
-        bgcolor,
         display: 'flex',
         gap: '0.2rem',
         alignItems: 'center',
         p: '0.25rem 0.75rem 0.25rem 0.5rem',
         borderRadius: '1rem',
+        bgcolor,
         paddingY,
       }}>
       {icon === 'check' ? (
