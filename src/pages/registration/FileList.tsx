@@ -18,9 +18,9 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
-import { licenses, LicenseUri } from '../../types/license.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { activeLicenses } from '../../utils/fileHelpers';
 import {
   associatedArtifactIsFile,
   isOpenFile,
@@ -159,27 +159,20 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                         <Typography sx={{ mb: '1rem' }}>
                           {t('registration.files_and_license.file_and_license_info')}
                         </Typography>
-                        {licenses
-                          .filter(
-                            (license) =>
-                              license.version === 4 ||
-                              license.id === LicenseUri.CC0 ||
-                              license.id === LicenseUri.RightsReserved
-                          )
-                          .map((license) => (
-                            <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-                              <Typography variant="h3" gutterBottom>
-                                {license.name}
-                              </Typography>
-                              <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
-                              <Typography sx={{ mb: '1rem' }}>{license.description}</Typography>
-                              {license.link && (
-                                <Link href={license.link} target="blank">
-                                  {license.link}
-                                </Link>
-                              )}
-                            </Box>
-                          ))}
+                        {activeLicenses.map((license) => (
+                          <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
+                            <Typography variant="h3" gutterBottom>
+                              {license.name}
+                            </Typography>
+                            <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
+                            <Typography sx={{ mb: '1rem' }}>{license.description}</Typography>
+                            {license.link && (
+                              <Link href={license.link} target="blank">
+                                {license.link}
+                              </Link>
+                            )}
+                          </Box>
+                        ))}
                       </HelperTextModal>
                     </Box>
                   </StyledTableCell>
