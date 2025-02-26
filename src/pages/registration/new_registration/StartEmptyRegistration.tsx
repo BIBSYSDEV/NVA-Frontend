@@ -35,7 +35,9 @@ export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccor
 
   return (
     <RegistrationAccordion elevation={5} onChange={onChange} onClick={createEmptyRegistration}>
-      <AccordionSummary data-testid={dataTestId.registrationWizard.new.emptyRegistrationAccordion}>
+      <AccordionSummary
+        data-testid={dataTestId.registrationWizard.new.emptyRegistrationAccordion}
+        sx={{ display: 'flex', alignItems: 'center' }}>
         <InsertDriveFileIcon />
         <span style={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant="h2" component="span" id={labelId}>
@@ -45,7 +47,7 @@ export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccor
             {t('registration.registration.start_with_empty_registration_description')}
           </Typography>
         </span>
-        {isLoading && <CircularProgress aria-labelledby={labelId} />}
+        {isLoading && <CircularProgress aria-labelledby={labelId} sx={{ marginLeft: 'auto' }} />}
       </AccordionSummary>
     </RegistrationAccordion>
   );

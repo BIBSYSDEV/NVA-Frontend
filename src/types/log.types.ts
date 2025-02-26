@@ -32,6 +32,7 @@ export interface LogActionItem {
 
 interface LogEntryOnBehalfOf {
   id: string;
+  shortName: string;
   displayName: string;
 }
 
@@ -60,29 +61,29 @@ interface PublicationLogEntry extends BaseLogEntry {
     | 'DoiAssigned';
 }
 
-interface PublicationImportedLogEntry extends Omit<PublicationLogEntry, 'topic'> {
-  topic: 'PublicationImported';
-  importSource: {
-    source: string;
-    archive?: string;
-  };
+export interface ImportSourceLogData {
+  source: string;
+  archive?: string;
+}
+
+interface PublicationImportLogEntry extends Omit<PublicationLogEntry, 'topic'> {
+  topic: 'PublicationImported' | 'PublicationMerged';
+  importSource: ImportSourceLogData;
 }
 
 interface FileLogEntry extends BaseLogEntry {
   type: 'FileLogEntry';
-  topic:
-    | 'FileUploaded'
-    | 'FileApproved'
-    | 'FileRejected'
-    | 'FileDeleted'
-    | 'FileImported'
-    | 'FileRetracted'
-    | 'FileHidden';
+  topic: 'FileUploaded' | 'FileApproved' | 'FileRejected' | 'FileDeleted' | 'FileRetracted' | 'FileHidden';
   filename: string;
   fileType: FileType;
 }
 
-export type LogEntryObject = PublicationLogEntry | FileLogEntry | PublicationImportedLogEntry;
+interface FileImportLogEntry extends Omit<FileLogEntry, 'topic'> {
+  topic: 'FileImported';
+  importSource: ImportSourceLogData;
+}
+
+export type LogEntryObject = PublicationLogEntry | FileLogEntry | PublicationImportLogEntry | FileImportLogEntry;
 
 export interface RegistrationLogResponse {
   logEntries: LogEntryObject[];
