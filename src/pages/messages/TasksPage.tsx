@@ -18,6 +18,7 @@ import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../utils/general-helpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getTaskNotificationsParams, resetPaginationAndNavigate } from '../../utils/searchHelpers';
 import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
@@ -68,7 +69,11 @@ const TasksPage = () => {
     .filter(([, selected]) => selected)
     .map(([key]) => key);
 
-  const organizationIdParam = searchParams.get(TicketSearchParam.OrganizationId);
+  // TODO: This should be redundant when NP-48485 is solved
+  const defaultOrganizationParam = institutionUserQuery.data?.viewingScope.includedUnits
+    ? institutionUserQuery.data.viewingScope.includedUnits.map((unit) => getIdentifierFromId(unit)).join(',')
+    : null;
+  const organizationIdParam = searchParams.get(TicketSearchParam.OrganizationId) ?? defaultOrganizationParam;
 
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
@@ -78,7 +83,7 @@ const TasksPage = () => {
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
     organizationId: organizationIdParam,
-    excludeSubUnits: !!organizationIdParam,
+    excludeSubUnits: !!organizationIdParam && organizationIdParam !== defaultOrganizationParam,
     assignee: searchParams.get(TicketSearchParam.Assignee),
     status: searchParams.get(TicketSearchParam.Status),
     type: selectedTicketTypes.join(','),
