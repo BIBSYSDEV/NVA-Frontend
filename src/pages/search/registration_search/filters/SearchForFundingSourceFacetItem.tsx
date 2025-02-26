@@ -13,7 +13,8 @@ interface SearchForFundingSourceFacetItemProps {
 
 export const SearchForFundingSourceFacetItem = ({ onSelectFunder }: SearchForFundingSourceFacetItemProps) => {
   const { t } = useTranslation();
-  const fundingSourcesQuery = useFetchFundingSources();
+  const [enableFundingSourcesQuery, setEnableFundingSourcesQuery] = useState(false);
+  const fundingSourcesQuery = useFetchFundingSources({ enabled: enableFundingSourcesQuery });
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -30,6 +31,7 @@ export const SearchForFundingSourceFacetItem = ({ onSelectFunder }: SearchForFun
           setSearchQuery(value);
         }
       }}
+      loading={fundingSourcesQuery.isFetching}
       options={fundingSourcesList}
       filterOptions={fundingSourceAutocompleteFilterOptions}
       renderOption={({ key, ...props }, option) => (
@@ -44,9 +46,11 @@ export const SearchForFundingSourceFacetItem = ({ onSelectFunder }: SearchForFun
         }
         setSearchQuery('');
       }}
+      onOpen={() => setEnableFundingSourcesQuery(true)}
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}
+          isLoading={fundingSourcesQuery.isFetching}
           data-testid={dataTestId.aggregations.fundingSourceFacetsSearchField}
           variant="outlined"
           aria-label={t('search.search_for_funder')}
