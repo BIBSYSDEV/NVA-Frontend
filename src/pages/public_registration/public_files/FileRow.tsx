@@ -18,11 +18,9 @@ import { useDispatch } from 'react-redux';
 import { downloadRegistrationFile } from '../../../api/fileApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
-import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
-import { hasFileAccessRight } from '../../../utils/fileHelpers';
-import { equalUris } from '../../../utils/general-helpers';
+import { getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
 import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
 import { PendingFilesInfo } from './PendingFilesInfo';
 import { DownloadUrl, PreviewFile } from './preview_file/PreviewFile';
@@ -87,7 +85,7 @@ export const FileRow = ({
     }
   }, [handleDownload, openPreviewAccordion, previewFileUrl, canDownloadFile]);
 
-  const licenseData = licenses.find((license) => equalUris(license.id, file.license));
+  const licenseData = getLicenseData(file.license);
   const licenseTitle = licenseData?.name ?? '';
 
   const isOpenableFile = file.type === 'OpenFile' || file.type === 'PendingOpenFile';
@@ -129,9 +127,9 @@ export const FileRow = ({
         </Typography>
       )}
 
-      {isOpenableFile && (
+      {isOpenableFile && licenseData && (
         <Link
-          href={licenseData?.link}
+          href={licenseData.link}
           target="_blank"
           rel="noopener noreferrer"
           sx={{ gridArea: 'license', maxHeight: '3rem', maxWidth: '8rem' }}>
@@ -139,7 +137,7 @@ export const FileRow = ({
             component="img"
             alt={licenseTitle}
             title={licenseTitle}
-            src={licenseData?.logo}
+            src={licenseData.logo}
             data-testid={dataTestId.registrationLandingPage.license}
           />
         </Link>
