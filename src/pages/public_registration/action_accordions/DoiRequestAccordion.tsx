@@ -48,6 +48,7 @@ interface DoiRequestAccordionProps {
   doiRequestTicket?: Ticket;
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
+  hasReservedDoi: boolean;
 }
 
 enum LoadingState {
@@ -72,6 +73,7 @@ export const DoiRequestAccordion = ({
   refetchData,
   isLoadingData,
   addMessage,
+  hasReservedDoi,
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -209,8 +211,6 @@ export const DoiRequestAccordion = ({
   const defaultExpanded = locationState?.selectedTicketType
     ? locationState.selectedTicketType === 'DoiRequest'
     : waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest;
-
-  const hasReservedDoi = !doiRequestTicket && !!registration.doi;
 
   const [openAccordion, setOpenAccordion] = useState(defaultExpanded);
 
