@@ -49,14 +49,11 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
           <Skeleton variant="rectangular" height={150} />
         </>
       ) : (
-        logQuery.data?.logEntries.toReversed().map((logEntry, index) => {
-          const messages = getLogEntryMessages(logEntry, tickets);
-          return (
-            <ErrorBoundary key={index}>
-              <LogEntry logEntry={logEntry} messages={messages} />
-            </ErrorBoundary>
-          );
-        })
+        logQuery.data?.logEntries.toReversed().map((logEntry, index) => (
+          <ErrorBoundary key={index}>
+            <LogEntry logEntry={logEntry} messages={getLogEntryMessages(logEntry, tickets)} />
+          </ErrorBoundary>
+        ))
       )}
     </Box>
   );
