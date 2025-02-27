@@ -77,8 +77,8 @@ const getLogEntryMessages = (logEntry: LogEntryObject, tickets: Ticket[]): Messa
   }
 
   if (logEntry.topic === 'DoiAssigned' || logEntry.topic === 'DoiRejected') {
-    const doiRequestTickets = ticketsWithinSimilarTime.find((ticket) => ticket.type === 'DoiRequest');
-    return doiRequestTickets?.messages ?? [];
+    const doiRequestTicket = ticketsWithinSimilarTime.find((ticket) => ticket.type === 'DoiRequest');
+    return doiRequestTicket?.messages ?? [];
   }
 
   return [];
