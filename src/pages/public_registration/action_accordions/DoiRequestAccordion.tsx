@@ -21,7 +21,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -210,7 +210,16 @@ export const DoiRequestAccordion = ({
     ? locationState.selectedTicketType === 'DoiRequest'
     : waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest;
 
-  const hasReservedDoi = !doiRequestTicket && registration.doi;
+  const hasReservedDoi = !doiRequestTicket && !!registration.doi;
+
+  const [openAccordion, setOpenAccordion] = useState(defaultExpanded);
+
+  useEffect(() => {
+    // Open accordion if a new DOI request is created
+    if (doiRequestTicket) {
+      setOpenAccordion(true);
+    }
+  }, [doiRequestTicket]);
 
   return (
     <Accordion
@@ -223,7 +232,8 @@ export const DoiRequestAccordion = ({
         },
       }}
       elevation={3}
-      defaultExpanded={defaultExpanded}>
+      expanded={openAccordion}
+      onChange={() => setOpenAccordion((open) => !open)}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
           {t('common.doi')}
