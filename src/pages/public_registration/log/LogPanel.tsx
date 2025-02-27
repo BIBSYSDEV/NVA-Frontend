@@ -10,6 +10,7 @@ import { FileType } from '../../../types/associatedArtifact.types';
 import { LogEntryObject } from '../../../types/log.types';
 import { Message, PublishingTicket, Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
+import { isSimilarTime } from '../../../utils/general-helpers';
 import { LogEntry } from './LogEntry';
 
 interface LogPanelProps {
@@ -61,7 +62,7 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
 
 const getLogEntryMessages = (logEntry: LogEntryObject, tickets: Ticket[]): Message[] => {
   const ticketsWithinSimilarTime = tickets.filter(
-    (ticket) => ticket.finalizedDate && isSimilarTime(ticket.finalizedDate, logEntry.timestamp)
+    (ticket) => ticket.finalizedDate && isSimilarTime(ticket.finalizedDate, logEntry.timestamp, 10_000)
   );
 
   if (logEntry.topic === 'FileApproved' || logEntry.topic === 'FileRejected') {
@@ -82,11 +83,4 @@ const getLogEntryMessages = (logEntry: LogEntryObject, tickets: Ticket[]): Messa
   }
 
   return [];
-};
-
-const msThreshold = 10_000; // 10 seconds
-const isSimilarTime = (dateString1: string, dateString2: string) => {
-  const date1 = new Date(dateString1);
-  const date2 = new Date(dateString2);
-  return Math.abs(date1.getTime() - date2.getTime()) < msThreshold;
 };
