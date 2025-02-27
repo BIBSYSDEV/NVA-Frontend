@@ -7,6 +7,7 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
 import { ArchivedFilesEntry } from '../../../components/Log/RegistrationLog';
 import { FileType } from '../../../types/associatedArtifact.types';
+import { LogEntryObject } from '../../../types/log.types';
 import { Message, PublishingTicket, Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
 import { LogEntry } from './LogEntry';
@@ -49,46 +50,41 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
         </>
       ) : (
         logQuery.data?.logEntries.toReversed().map((logEntry, index) => {
-          let msg: Message[] = [];
-
-          if (logEntry.type === 'FileLogEntry') {
-            const messages =
-              tickets.find((ticket) => {
-                const match =
-                  ticket.type === 'PublishingRequest' &&
-                  ticket.finalizedDate &&
-                  isSimilarTime(ticket.finalizedDate, logEntry.timestamp) &&
-                  ((ticket as PublishingTicket).approvedFiles.some(
-                    (file) => file.identifier === logEntry.fileIdentifier && file.type === logEntry.fileType
-                  ) ||
-                    (ticket as PublishingTicket).filesForApproval.some(
-                      (file) => file.identifier === logEntry.fileIdentifier && file.type === logEntry.fileType
-                    ));
-                return match;
-              })?.messages ?? [];
-            msg = messages;
-          } else if (logEntry.topic === 'DoiAssigned' || logEntry.topic === 'DoiRejected') {
-            const messages =
-              tickets.find((ticket) => {
-                const match =
-                  ticket.type === 'DoiRequest' &&
-                  ticket.finalizedDate &&
-                  isSimilarTime(ticket.finalizedDate, logEntry.timestamp);
-
-                return match;
-              })?.messages ?? [];
-            msg = messages;
-          }
-
+          const messages = getLogEntryMessages(logEntry, tickets);
           return (
             <ErrorBoundary key={index}>
-              <LogEntry logEntry={logEntry} messages={msg} />
+              <LogEntry logEntry={logEntry} messages={messages} />
             </ErrorBoundary>
           );
         })
       )}
     </Box>
   );
+};
+
+const getLogEntryMessages = (logEntry: LogEntryObject, tickets: Ticket[]): Message[] => {
+  const ticketsWithinSimilarTime = tickets.filter(
+    (ticket) => ticket.finalizedDate && isSimilarTime(ticket.finalizedDate, logEntry.timestamp)
+  );
+
+  if (logEntry.topic === 'FileApproved' || logEntry.topic === 'FileRejected') {
+    const publishingTickets = ticketsWithinSimilarTime.filter(
+      (ticket) => ticket.type === 'PublishingRequest'
+    ) as PublishingTicket[];
+    const matchingTicket = publishingTickets.find((ticket) =>
+      [...ticket.filesForApproval, ...ticket.approvedFiles].some(
+        (file) => file.identifier === logEntry.fileIdentifier && file.type === logEntry.fileType
+      )
+    );
+    return matchingTicket?.messages ?? [];
+  }
+
+  if (logEntry.topic === 'DoiAssigned' || logEntry.topic === 'DoiRejected') {
+    const doiRequestTickets = ticketsWithinSimilarTime.find((ticket) => ticket.type === 'DoiRequest');
+    return doiRequestTickets?.messages ?? [];
+  }
+
+  return [];
 };
 
 const msThreshold = 10_000; // 10 seconds
