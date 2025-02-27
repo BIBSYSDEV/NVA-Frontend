@@ -7,14 +7,16 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
 import { ArchivedFilesEntry } from '../../../components/Log/RegistrationLog';
 import { FileType } from '../../../types/associatedArtifact.types';
+import { Message, PublishingTicket, Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
 import { LogEntry } from './LogEntry';
 
 interface LogPanelProps {
   registration: Registration;
+  tickets: Ticket[];
 }
 
-export const LogPanel = ({ registration }: LogPanelProps) => {
+export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
   const { t } = useTranslation();
   const logQuery = useFetchRegistrationLog(registration.id);
 
@@ -46,12 +48,40 @@ export const LogPanel = ({ registration }: LogPanelProps) => {
           <Skeleton variant="rectangular" height={150} />
         </>
       ) : (
-        logQuery.data?.logEntries.toReversed().map((logEntry, index) => (
-          <ErrorBoundary key={index}>
-            <LogEntry logEntry={logEntry} />
-          </ErrorBoundary>
-        ))
+        logQuery.data?.logEntries.toReversed().map((logEntry, index) => {
+          let msg: Message[] = [];
+
+          if (logEntry.type === 'FileLogEntry') {
+            const messages =
+              tickets.find((ticket) => {
+                const match =
+                  ticket.type === 'PublishingRequest' &&
+                  ticket.finalizedDate &&
+                  isSimilarTime(ticket.finalizedDate, logEntry.timestamp) &&
+                  ((ticket as PublishingTicket).approvedFiles.some(
+                    (file) => file.identifier === logEntry.fileIdentifier && file.type === logEntry.fileType
+                  ) ||
+                    (ticket as PublishingTicket).filesForApproval.some(
+                      (file) => file.identifier === logEntry.fileIdentifier && file.type === logEntry.fileType
+                    ));
+                return match;
+              })?.messages ?? [];
+            msg = messages;
+          }
+
+          return (
+            <ErrorBoundary key={index}>
+              <LogEntry logEntry={logEntry} messages={msg} />
+            </ErrorBoundary>
+          );
+        })
       )}
     </Box>
   );
+};
+
+const isSimilarTime = (dateString1: string, dateString2: string) => {
+  const date1 = new Date(dateString1);
+  const date2 = new Date(dateString2);
+  return Math.abs(date1.getTime() - date2.getTime()) < 30000;
 };
