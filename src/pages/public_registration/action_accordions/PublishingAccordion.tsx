@@ -44,6 +44,7 @@ interface PublishingAccordionProps {
   publishingRequestTickets: PublishingTicket[];
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
+  hasReservedDoi: boolean;
 }
 
 export const PublishingAccordion = ({
@@ -52,6 +53,7 @@ export const PublishingAccordion = ({
   refetchData,
   isLoadingData,
   addMessage,
+  hasReservedDoi,
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -108,31 +110,20 @@ export const PublishingAccordion = ({
         })
       );
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      if (userCanApprovePublishingRequest) {
-        dispatch(
-          setNotification({
-            message: t('feedback.success.published_registration'),
-            variant: 'success',
-          })
-        );
-      } else {
-        const hasFilesWaitingForApproval = registration.associatedArtifacts.some(isPendingOpenFile);
-        if (hasFilesWaitingForApproval) {
-          dispatch(
-            setNotification({
-              message: t('feedback.success.published_metadata_waiting_for_files'),
-              variant: 'success',
-            })
-          );
-        } else {
-          dispatch(
-            setNotification({
-              message: t('feedback.success.published_registration'),
-              variant: 'success',
-            })
-          );
-        }
-      }
+      const hasFilesWaitingForApproval = registration.associatedArtifacts.some(
+        (file) => file.type === FileType.PendingOpenFile || file.type === FileType.PendingInternalFile
+      );
+
+      const successMessage =
+        hasFilesWaitingForApproval && hasReservedDoi
+          ? t('feedback.success.published_metadata_waiting_for_files_and_doi')
+          : hasFilesWaitingForApproval
+            ? t('feedback.success.published_metadata_waiting_for_files')
+            : hasReservedDoi
+              ? t('feedback.success.published_registration_waiting_for_doi')
+              : t('feedback.success.published_registration');
+
+      dispatch(setNotification({ message: successMessage, variant: 'success' }));
       await refetchData();
     }
     setIsCreatingPublishingRequest(false);
