@@ -18,7 +18,7 @@ const StyledMinimizedMenuButton = styled(IconButton)(({ theme }) => ({
 
 export const MinimizedMenuIconButton = ({ children, ...props }: IconButtonProps) => {
   return (
-    <StyledMinimizedMenuButton {...props}>
+    <StyledMinimizedMenuButton component="div" {...props}>
       <ReplyIcon />
       {children}
     </StyledMinimizedMenuButton>
