@@ -56,9 +56,10 @@ export const searchByNationalIdNumber = async (nationalIdNumber: string) => {
   });
 };
 
-export const fetchFundingSources = async () => {
+export const fetchFundingSources = async (signal?: AbortSignal) => {
   const getFundingSources = await apiRequest2<FundingSources>({
     url: CristinApiPath.FundingSources,
+    signal,
   });
   return getFundingSources.data;
 };
