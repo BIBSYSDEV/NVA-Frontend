@@ -1,11 +1,13 @@
 import Bold from '@tiptap/extension-bold';
-import Underline from '@tiptap/extension-underline';
-import Italic from '@tiptap/extension-italic';
-import History from '@tiptap/extension-history';
 import Document from '@tiptap/extension-document';
-import Text from '@tiptap/extension-text';
-import Paragraph from '@tiptap/extension-paragraph';
+import History from '@tiptap/extension-history';
+import Italic from '@tiptap/extension-italic';
 import Link from '@tiptap/extension-link';
+import Paragraph from '@tiptap/extension-paragraph';
+import Strike from '@tiptap/extension-strike';
+import Subscript from '@tiptap/extension-subscript';
+import Superscript from '@tiptap/extension-superscript';
+import Text from '@tiptap/extension-text';
 import { EditorContent, useEditor } from '@tiptap/react';
 import React from 'react';
 import { Box, Typography } from '@mui/material';
@@ -36,19 +38,21 @@ export const RichTextField = ({
 }: RichTextFieldTipTapProps) => {
   const editor = useEditor({
     extensions: [
-      Document,
-      Text,
       Bold,
-      Paragraph,
-      Underline,
-      Italic,
+      Document,
       History,
-      Placeholder.configure({ placeholder: placeholder }),
+      Italic,
       Link.configure({
         openOnClick: false,
         defaultProtocol: 'https',
         protocols: ['http', 'https'],
       }),
+      Paragraph,
+      Placeholder.configure({ placeholder: placeholder }),
+      Strike,
+      Subscript,
+      Superscript,
+      Text,
     ],
     content: value,
     editable: !disabled,

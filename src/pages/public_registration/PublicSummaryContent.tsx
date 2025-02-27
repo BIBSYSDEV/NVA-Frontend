@@ -12,13 +12,13 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
       {entityDescription.abstract && (
         <>
           <Typography fontWeight="bold" sx={{ textDecoration: 'underline' }}>
-            Lexical safe:
+            Safe mode:
           </Typography>
           <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} sx={{ mb: '1rem' }}>
             {entityDescription.abstract}
           </Typography>
           <Typography fontWeight="bold" sx={{ textDecoration: 'underline' }}>
-            Lexical danger:
+            Danger mode:
           </Typography>
           <Typography
             style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }}
@@ -42,20 +42,9 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
           <Typography variant="h3" color="primary" gutterBottom>
             {t('registration.description.description_of_content')}
           </Typography>
-          <Typography fontWeight="bold" sx={{ textDecoration: 'underline' }}>
-            TipTap safe:
-          </Typography>
           <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} sx={{ mb: '1rem' }}>
             {entityDescription.description}
           </Typography>
-          <Typography fontWeight="bold" sx={{ textDecoration: 'underline' }}>
-            TipTap danger:
-          </Typography>
-          <Typography
-            style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }}
-            sx={{ mb: '1rem' }}
-            dangerouslySetInnerHTML={{ __html: entityDescription.description }}
-          />
         </>
       )}
     </>

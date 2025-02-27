@@ -1,9 +1,11 @@
-import UndoIcon from '@mui/icons-material/Undo';
-import RedoIcon from '@mui/icons-material/Redo';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
-import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import LinkIcon from '@mui/icons-material/Link';
+import RedoIcon from '@mui/icons-material/Redo';
+import StrikethroughSIcon from '@mui/icons-material/StrikethroughS';
+import SubscriptIcon from '@mui/icons-material/Subscript';
+import SuperscriptIcon from '@mui/icons-material/Superscript';
+import UndoIcon from '@mui/icons-material/Undo';
 import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { Editor } from '@tiptap/react';
 import React, { useCallback } from 'react';
@@ -48,10 +50,6 @@ export const Toolbar = ({ editor, disabled }: ToolbarProps) => {
         editor.chain().focus().toggleItalic().run();
         break;
       }
-      case 'underline': {
-        editor.chain().focus().toggleUnderline().run();
-        break;
-      }
       case 'link': {
         toggleLink();
         break;
@@ -62,6 +60,18 @@ export const Toolbar = ({ editor, disabled }: ToolbarProps) => {
       }
       case 'redo': {
         editor?.commands.redo();
+        break;
+      }
+      case 'strike': {
+        editor.chain().focus().toggleStrike().run();
+        break;
+      }
+      case 'subscript': {
+        editor.chain().focus().toggleSubscript().run();
+        break;
+      }
+      case 'superscript': {
+        editor.chain().focus().toggleSuperscript().run();
         break;
       }
       default: {
@@ -87,13 +97,26 @@ export const Toolbar = ({ editor, disabled }: ToolbarProps) => {
         <ToggleButton value="italic" selected={editor.isActive('italic')}>
           <FormatItalicIcon />
         </ToggleButton>
-        <ToggleButton value="underline" selected={editor.isActive('underline')}>
-          <FormatUnderlinedIcon />
-        </ToggleButton>
       </ToggleButtonGroup>
       <ToggleButtonGroup size="small" onChange={handleButton} disabled={disabled}>
         <ToggleButton value="link" selected={editor.isActive('link')}>
           <LinkIcon />
+        </ToggleButton>
+      </ToggleButtonGroup>
+      <ToggleButtonGroup
+        size="small"
+        onChange={handleButton}
+        disabled={disabled}
+        style={{ border: '2px solid red' }}
+        title="Ikke tillatt av backend">
+        <ToggleButton value="strike" selected={editor.isActive('strike')}>
+          <StrikethroughSIcon />
+        </ToggleButton>
+        <ToggleButton value="subscript" selected={editor.isActive('subscript')}>
+          <SubscriptIcon />
+        </ToggleButton>
+        <ToggleButton value="superscript" selected={editor.isActive('superscript')}>
+          <SuperscriptIcon />
         </ToggleButton>
       </ToggleButtonGroup>
     </Box>
