@@ -92,7 +92,12 @@ export const LogEntry = ({ logEntry, messages }: LogEntryProps) => {
         </>
       ) : null}
 
-      {messages && messages.length > 0 && <LogMessageAccordion messages={messages} type={'PublishingRequest'} />}
+      {messages && messages.length > 0 && (
+        <LogMessageAccordion
+          messages={messages}
+          type={logEntry.type === 'FileLogEntry' ? 'PublishingRequest' : 'DoiRequest'}
+        />
+      )}
     </Box>
   );
 };

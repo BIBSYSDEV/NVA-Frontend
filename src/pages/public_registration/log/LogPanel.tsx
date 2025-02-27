@@ -67,6 +67,17 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
                 return match;
               })?.messages ?? [];
             msg = messages;
+          } else if (logEntry.topic === 'DoiAssigned' || logEntry.topic === 'DoiRejected') {
+            const messages =
+              tickets.find((ticket) => {
+                const match =
+                  ticket.type === 'DoiRequest' &&
+                  ticket.finalizedDate &&
+                  isSimilarTime(ticket.finalizedDate, logEntry.timestamp);
+
+                return match;
+              })?.messages ?? [];
+            msg = messages;
           }
 
           return (
@@ -80,8 +91,9 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
   );
 };
 
+const msThreshold = 10_000; // 10 seconds
 const isSimilarTime = (dateString1: string, dateString2: string) => {
   const date1 = new Date(dateString1);
   const date2 = new Date(dateString2);
-  return Math.abs(date1.getTime() - date2.getTime()) < 30000;
+  return Math.abs(date1.getTime() - date2.getTime()) < msThreshold;
 };
