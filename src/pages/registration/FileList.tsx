@@ -108,16 +108,12 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                             </>
                           ) : (
                             <>
-                              <Trans
-                                i18nKey="registration.files_and_license.version_helper_text"
-                                components={[
-                                  <Typography sx={{ mb: '1rem' }} key="1" />,
-                                  <Typography sx={{ mb: '1rem' }} key="2">
-                                    <Box component="span" sx={{ textDecoration: 'underline' }} />
-                                  </Typography>,
-                                ]}
-                              />
-
+                              <Typography sx={{ mb: '1rem' }}>
+                                <Trans
+                                  i18nKey="registration.files_and_license.version_helper_text"
+                                  components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
+                                />
+                              </Typography>
                               <Typography sx={{ mb: '1rem' }}>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_accepted_helper_text"
