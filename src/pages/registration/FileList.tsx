@@ -111,6 +111,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                               <Trans
                                 i18nKey="registration.files_and_license.version_helper_text"
                                 components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
+                                values={{ buttonText: t('my_page.messages.get_curator_support') }}
                               />
                               <Typography sx={{ mb: '1rem' }}>
                                 <Trans
