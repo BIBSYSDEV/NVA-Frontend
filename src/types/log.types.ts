@@ -59,6 +59,7 @@ interface PublicationLogEntry extends BaseLogEntry {
     | 'DoiRequested'
     | 'DoiRejected'
     | 'DoiAssigned';
+  timestamp: string;
 }
 
 export interface ImportSourceLogData {
@@ -76,6 +77,7 @@ interface FileLogEntry extends BaseLogEntry {
   topic: 'FileUploaded' | 'FileApproved' | 'FileRejected' | 'FileDeleted' | 'FileRetracted' | 'FileHidden';
   filename: string;
   fileType: FileType;
+  fileIdentifier: string;
 }
 
 interface FileImportLogEntry extends Omit<FileLogEntry, 'topic'> {

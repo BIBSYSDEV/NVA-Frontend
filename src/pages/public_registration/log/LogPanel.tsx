@@ -7,14 +7,18 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
 import { ArchivedFilesEntry } from '../../../components/Log/RegistrationLog';
 import { FileType } from '../../../types/associatedArtifact.types';
+import { LogEntryObject } from '../../../types/log.types';
+import { Message, PublishingTicket, Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
+import { isSimilarTime } from '../../../utils/general-helpers';
 import { LogEntry } from './LogEntry';
 
 interface LogPanelProps {
   registration: Registration;
+  tickets: Ticket[];
 }
 
-export const LogPanel = ({ registration }: LogPanelProps) => {
+export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
   const { t } = useTranslation();
   const logQuery = useFetchRegistrationLog(registration.id);
 
@@ -48,10 +52,35 @@ export const LogPanel = ({ registration }: LogPanelProps) => {
       ) : (
         logQuery.data?.logEntries.toReversed().map((logEntry, index) => (
           <ErrorBoundary key={index}>
-            <LogEntry logEntry={logEntry} />
+            <LogEntry logEntry={logEntry} messages={getLogEntryMessages(logEntry, tickets)} />
           </ErrorBoundary>
         ))
       )}
     </Box>
   );
+};
+
+const getLogEntryMessages = (logEntry: LogEntryObject, tickets: Ticket[]): Message[] => {
+  const ticketsWithinSimilarTime = tickets.filter(
+    (ticket) => ticket.finalizedDate && isSimilarTime(ticket.finalizedDate, logEntry.timestamp, 10_000)
+  );
+
+  if (logEntry.topic === 'FileApproved' || logEntry.topic === 'FileRejected') {
+    const publishingTickets = ticketsWithinSimilarTime.filter(
+      (ticket) => ticket.type === 'PublishingRequest'
+    ) as PublishingTicket[];
+    const matchingTicket = publishingTickets.find((ticket) =>
+      [...ticket.filesForApproval, ...ticket.approvedFiles].some(
+        (file) => file.identifier === logEntry.fileIdentifier && file.type === logEntry.fileType
+      )
+    );
+    return matchingTicket?.messages ?? [];
+  }
+
+  if (logEntry.topic === 'DoiAssigned' || logEntry.topic === 'DoiRejected') {
+    const doiRequestTicket = ticketsWithinSimilarTime.find((ticket) => ticket.type === 'DoiRequest');
+    return doiRequestTicket?.messages ?? [];
+  }
+
+  return [];
 };

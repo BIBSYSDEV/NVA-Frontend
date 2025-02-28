@@ -52,3 +52,9 @@ export const getCurrentPath = () => {
 
 export const getObjectEntriesWithValue = (object: Record<string, any>) =>
   Object.fromEntries(Object.entries(object).filter(([, value]) => value !== null && value !== undefined));
+
+export const isSimilarTime = (dateString1: string, dateString2: string, msThreshold: number) => {
+  const date1 = new Date(dateString1);
+  const date2 = new Date(dateString2);
+  return Math.abs(date1.getTime() - date2.getTime()) < msThreshold;
+};
