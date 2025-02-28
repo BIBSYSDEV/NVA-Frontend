@@ -1,6 +1,7 @@
 import ReplyIcon from '@mui/icons-material/Reply';
-import { Box, IconButton, IconButtonProps, styled } from '@mui/material';
+import { Box, IconButton, IconButtonProps } from '@mui/material';
 import { ReactElement, ReactNode } from 'react';
+import { Link, LinkProps } from 'react-router';
 import { sideNavHeaderId } from './PageWithSideMenu';
 
 interface SideMenuProps {
@@ -9,19 +10,27 @@ interface SideMenuProps {
   minimizedMenu?: ReactElement;
 }
 
-const StyledMinimizedMenuButton = styled(IconButton)(({ theme }) => ({
-  background: theme.palette.primary.main,
-  ':hover': { background: theme.palette.primary.dark },
-  color: theme.palette.common.white,
-  borderRadius: '0',
-}));
+interface CustomIconButtonProps extends IconButtonProps {
+  to?: LinkProps['to'];
+}
 
-export const MinimizedMenuIconButton = ({ children, ...props }: IconButtonProps) => {
+export const MinimizedMenuIconButton = ({ children, to, ...props }: CustomIconButtonProps) => {
   return (
-    <StyledMinimizedMenuButton component="div" {...props}>
+    <IconButton
+      component={to ? Link : IconButton}
+      to={to}
+      {...props}
+      sx={(theme) => ({
+        background: theme.palette.primary.main,
+        ':hover': {
+          background: theme.palette.primary.dark,
+        },
+        color: theme.palette.common.white,
+        borderRadius: '0',
+      })}>
       <ReplyIcon />
       {children}
-    </StyledMinimizedMenuButton>
+    </IconButton>
   );
 };
 
