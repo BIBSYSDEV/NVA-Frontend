@@ -118,7 +118,8 @@ export type RegistrationOperation =
   | 'doi-request-create'
   | 'doi-request-approve'
   | 'support-request-create'
-  | 'support-request-approve';
+  | 'support-request-approve'
+  | 'upload-file';
 
 interface UnpublishingNote {
   type: 'UnpublishingNote';

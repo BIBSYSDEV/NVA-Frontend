@@ -64,7 +64,7 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
             ))}
           </List>
         ) : (
-          <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('common.no_hits')}</Typography>
+          <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('search.no_persons')}</Typography>
         )}
       </CristinSearchPagination>
     </Box>

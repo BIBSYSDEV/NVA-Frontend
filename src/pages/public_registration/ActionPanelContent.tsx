@@ -48,6 +48,8 @@ export const ActionPanelContent = ({
     }
   };
 
+  const hasReservedDoi = !newestDoiRequestTicket && !!registration.doi;
+
   return (
     <>
       {shouldSeePublishingAccordion && (
@@ -58,6 +60,7 @@ export const ActionPanelContent = ({
             registration={registration}
             publishingRequestTickets={publishingRequestTickets}
             addMessage={addMessage}
+            hasReservedDoi={hasReservedDoi}
           />
         </ErrorBoundary>
       )}
@@ -71,6 +74,7 @@ export const ActionPanelContent = ({
               registration={registration}
               doiRequestTicket={newestDoiRequestTicket}
               addMessage={addMessage}
+              hasReservedDoi={hasReservedDoi}
             />
           )}
         </ErrorBoundary>

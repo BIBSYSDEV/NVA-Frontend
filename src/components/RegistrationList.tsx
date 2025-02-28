@@ -101,7 +101,8 @@ export const RegistrationListItemContent = ({
   const doNotRedirect =
     (location.pathname === UrlPathTemplate.TasksResultRegistrations ||
       location.pathname === UrlPathTemplate.InstitutionPortfolio) &&
-    registration.recordMetadata.status === RegistrationStatus.Unpublished;
+    (registration.recordMetadata.status === RegistrationStatus.Unpublished ||
+      registration.recordMetadata.status === RegistrationStatus.Deleted);
 
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>

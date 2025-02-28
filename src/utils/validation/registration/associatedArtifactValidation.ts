@@ -34,8 +34,13 @@ const linkValidation = Yup.string()
     associatedArtifactIsLink({ type }) ? schema.url(associatedArtifactErrorMessage.linkInvalid) : schema
   );
 
+const associatedArtifactTypeValidationSchema = Yup.string().not(
+  [FileType.UpdloadedFile],
+  associatedArtifactErrorMessage.availabilityRequired
+);
+
 export const associatedArtifactValidationSchema = Yup.object({
-  type: Yup.string().not([FileType.UpdloadedFile], associatedArtifactErrorMessage.availabilityRequired),
+  type: associatedArtifactTypeValidationSchema,
   embargoDate: Yup.date()
     .nullable()
     .when(['type'], ([type], schema) =>
@@ -65,6 +70,6 @@ export const associatedArtifactValidationSchema = Yup.object({
 });
 
 export const associatedArtifactPublishValidationSchema = Yup.object({
-  type: Yup.string(),
+  type: associatedArtifactTypeValidationSchema,
   id: linkValidation,
 });

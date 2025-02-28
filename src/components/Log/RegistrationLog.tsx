@@ -51,7 +51,7 @@ export const ArchivedFilesEntry = ({
       <Divider sx={{ mb: '0.5rem' }} />
       {numberOfArchivedFiles > 0 && (
         <Typography color="grey.700" sx={{ textAlign: 'center' }}>
-          {t('log.archived_files_on_registration', { count: numberOfArchivedFiles })}
+          {t('log.internal_files_on_registration', { count: numberOfArchivedFiles })}
         </Typography>
       )}
       {numberOfHiddenFiles > 0 && (

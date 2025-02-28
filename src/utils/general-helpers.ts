@@ -32,11 +32,6 @@ export const getPeriodString = (from: string | undefined, to: string | undefined
 
 export const getIdentifierFromId = (id: string) => id.split('/').pop() ?? '';
 
-export const equalUris = (uri1: string | null, uri2: string | null) =>
-  uri1 && uri2 && removeTrailingSlash(uri1).toLocaleLowerCase() === removeTrailingSlash(uri2).toLocaleLowerCase();
-
-const removeTrailingSlash = (value: string) => (value.endsWith('/') ? value.slice(0, -1) : value);
-
 export const getInitials = (name: string) => {
   if (!name) return '';
 
@@ -57,3 +52,9 @@ export const getCurrentPath = () => {
 
 export const getObjectEntriesWithValue = (object: Record<string, any>) =>
   Object.fromEntries(Object.entries(object).filter(([, value]) => value !== null && value !== undefined));
+
+export const isSimilarTime = (dateString1: string, dateString2: string, msThreshold: number) => {
+  const date1 = new Date(dateString1);
+  const date2 = new Date(dateString2);
+  return Math.abs(date1.getTime() - date2.getTime()) < msThreshold;
+};

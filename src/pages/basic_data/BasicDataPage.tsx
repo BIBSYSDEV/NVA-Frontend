@@ -6,7 +6,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
+import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -62,15 +62,14 @@ const BasicDataPage = () => {
               <BusinessCenterIcon />
             </MinimizedMenuIconButton>
           ) : (
-            <Link
+            <MinimizedMenuIconButton
+              title={t('basic_data.basic_data')}
               to={{
                 pathname: UrlPathTemplate.BasicDataCentralImport,
                 search: location.state?.previousSearch,
               }}>
-              <MinimizedMenuIconButton title={t('basic_data.basic_data')}>
-                <BusinessCenterIcon />
-              </MinimizedMenuIconButton>
-            </Link>
+              <BusinessCenterIcon />
+            </MinimizedMenuIconButton>
           )
         }>
         <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} />

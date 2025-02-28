@@ -82,10 +82,14 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
         data-testid={dataTestId.registrationWizard.new.linkAccordion}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <LinkIcon />
-        <div>
-          <Typography variant="h2">{t('registration.registration.start_with_link_to_resource_title')}</Typography>
-          <Typography>{t('registration.registration.start_with_link_to_resource_description')}</Typography>
-        </div>
+        <span style={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography variant="h2" component="span">
+            {t('registration.registration.start_with_link_to_resource_title')}
+          </Typography>
+          <Typography component="span">
+            {t('registration.registration.start_with_link_to_resource_description')}
+          </Typography>
+        </span>
       </AccordionSummary>
 
       <AccordionDetails>
