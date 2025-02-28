@@ -10,8 +10,10 @@ import { Avatar, Box, Divider, styled, SvgIconProps, Tooltip, Typography } from 
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
+import { LogMessageAccordion } from '../../../components/Log/LogMessageAccordion';
 import { FileType } from '../../../types/associatedArtifact.types';
 import { ImportSourceLogData, LogEntryObject } from '../../../types/log.types';
+import { Message } from '../../../types/publication_types/ticket.types';
 import { getInitials } from '../../../utils/general-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 
@@ -25,9 +27,10 @@ const StyledLogRow = styled(Box)({
 
 interface LogEntryProps {
   logEntry: LogEntryObject;
+  messages: Message[];
 }
 
-export const LogEntry = ({ logEntry }: LogEntryProps) => {
+export const LogEntry = ({ logEntry, messages }: LogEntryProps) => {
   const { t } = useTranslation();
 
   const fullName = logEntry.performedBy
@@ -88,6 +91,13 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
           <ImportSourceInfo importSource={logEntry.importSource} />
         </>
       ) : null}
+
+      {messages && messages.length > 0 && (
+        <LogMessageAccordion
+          messages={messages}
+          type={logEntry.type === 'FileLogEntry' ? 'PublishingRequest' : 'DoiRequest'}
+        />
+      )}
     </Box>
   );
 };

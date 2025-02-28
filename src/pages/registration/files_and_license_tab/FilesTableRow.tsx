@@ -406,7 +406,7 @@ export const FilesTableRow = ({
                       </TextField>
                     )}
                   </Field>
-                  {showRrs && (
+                  {showRrs && canEditFile && (
                     <>
                       {fileHasCustomerRrs && (
                         <Typography>
@@ -459,6 +459,7 @@ export const FilesTableRow = ({
                       {isAcceptedFile && isNullRrs && (
                         <FormControlLabel
                           label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
+                          disabled={disabledFile}
                           control={
                             <Checkbox
                               checked={fileHasFunderRrs}

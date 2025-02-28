@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
+import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -128,13 +128,12 @@ const MyPagePage = () => {
       <SideMenu
         expanded={expandMenu}
         minimizedMenu={
-          <Link
+          <MinimizedMenuIconButton
+            title={t('my_page.my_page')}
             to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: locationState?.previousSearch }}
             onClick={() => ticketsQuery.refetch()}>
-            <MinimizedMenuIconButton title={t('my_page.my_page')}>
-              <FavoriteBorderIcon />
-            </MinimizedMenuIconButton>
-          </Link>
+            <FavoriteBorderIcon />
+          </MinimizedMenuIconButton>
         }>
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
         <NavigationListAccordion

@@ -136,7 +136,7 @@ export const ActionPanel = ({
       {isBeta && (
         <TabPanel tabValue={tabValue} index={2}>
           <ErrorBoundary>
-            <LogPanel2 registration={registration} />
+            <LogPanel2 registration={registration} tickets={tickets} />
           </ErrorBoundary>
         </TabPanel>
       )}

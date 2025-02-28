@@ -41,7 +41,7 @@ export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
             ))}
           </List>
         ) : (
-          <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('common.no_hits')}</Typography>
+          <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('search.no_projects')}</Typography>
         )}
       </CristinSearchPagination>
     </Box>
