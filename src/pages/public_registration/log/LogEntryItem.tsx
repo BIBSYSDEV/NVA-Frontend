@@ -25,12 +25,12 @@ const StyledLogRow = styled(Box)({
   alignItems: 'center',
 });
 
-interface LogEntryProps {
+interface LogEntryItemProps {
   logEntry: LogEntry;
   messages: Message[];
 }
 
-export const LogEntryItem = ({ logEntry, messages }: LogEntryProps) => {
+export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
   const { t } = useTranslation();
 
   const fullName = logEntry.performedBy
