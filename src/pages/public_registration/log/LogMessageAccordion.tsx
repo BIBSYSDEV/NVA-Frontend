@@ -3,10 +3,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, BoxProps, Button, Collapse, Divider } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MessageItem } from '../../pages/messages/components/MessageList';
-import { LogEntryType } from '../../types/log.types';
-import { Message } from '../../types/publication_types/ticket.types';
-import { dataTestId } from '../../utils/dataTestIds';
+import { LogEntryType } from '../../../types/log.types';
+import { Message } from '../../../types/publication_types/ticket.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { MessageItem } from '../../messages/components/MessageList';
 
 interface LogMessageAccordionProps {
   messages: Message[];

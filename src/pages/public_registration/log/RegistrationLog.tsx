@@ -1,6 +1,6 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Log as LogType } from '../../types/log.types';
+import { Log as LogType } from '../../../types/log.types';
 
 export const ArchivedFilesEntry = ({
   numberOfArchivedFiles,

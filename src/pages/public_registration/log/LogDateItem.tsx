@@ -1,7 +1,7 @@
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import { Box, Typography } from '@mui/material';
-import { toDateString } from '../../utils/date-helpers';
+import { toDateString } from '../../../utils/date-helpers';
 
 interface LogDateItemProps {
   date: Date;

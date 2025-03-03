@@ -4,14 +4,14 @@ import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useFetchRegistrationLog } from '../../../api/hooks/useFetchRegistrationLog';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { LogDateItem } from '../../../components/Log/LogDateItem';
-import { ArchivedFilesEntry } from '../../../components/Log/RegistrationLog';
 import { FileType } from '../../../types/associatedArtifact.types';
 import { LogEntryObject } from '../../../types/log.types';
 import { Message, PublishingTicket, Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
 import { isSimilarTime } from '../../../utils/general-helpers';
+import { LogDateItem } from './LogDateItem';
 import { LogEntry } from './LogEntry';
+import { ArchivedFilesEntry } from './RegistrationLog';
 
 interface LogPanelProps {
   registration: Registration;
