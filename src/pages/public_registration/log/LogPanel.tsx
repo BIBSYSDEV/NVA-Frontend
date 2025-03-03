@@ -3,14 +3,13 @@ import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useFetchRegistrationLog } from '../../../api/hooks/useFetchRegistrationLog';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { FileType } from '../../../types/associatedArtifact.types';
 import { LogEntry } from '../../../types/log.types';
 import { Message, PublishingTicket, Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
 import { isSimilarTime } from '../../../utils/general-helpers';
+import { ArchivedFilesLogInfo } from './ArchivedFilesLogInfo';
 import { LogDateItem } from './LogDateItem';
 import { LogEntryItem } from './LogEntryItem';
-import { ArchivedFilesEntry } from './RegistrationLog';
 
 interface LogPanelProps {
   registration: Registration;
@@ -20,11 +19,6 @@ interface LogPanelProps {
 export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
   const { t } = useTranslation();
   const logQuery = useFetchRegistrationLog(registration.id);
-
-  const internalFilesCount = registration.associatedArtifacts.filter(
-    (file) => file.type === FileType.InternalFile
-  ).length;
-  const hiddenFilesCount = registration.associatedArtifacts.filter((file) => file.type === FileType.HiddenFile).length;
 
   return (
     <Box
@@ -40,7 +34,7 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
         </Typography>
         <LogDateItem date={registration.modifiedDate} />
       </Box>
-      <ArchivedFilesEntry numberOfArchivedFiles={internalFilesCount} numberOfHiddenFiles={hiddenFilesCount} />
+      <ArchivedFilesLogInfo registration={registration} />
 
       {logQuery.isPending ? (
         <>
