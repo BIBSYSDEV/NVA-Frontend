@@ -39,7 +39,7 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
         <Typography color="grey.700" sx={{ textAlign: 'center' }}>
           {t('log.metadata_last_updated')}
         </Typography>
-        <LogDateItem date={new Date(registration.modifiedDate)} />
+        <LogDateItem date={registration.modifiedDate} />
       </Box>
       <ArchivedFilesEntry numberOfArchivedFiles={internalFilesCount} numberOfHiddenFiles={hiddenFilesCount} />
 

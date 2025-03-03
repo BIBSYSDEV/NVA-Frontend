@@ -50,7 +50,7 @@ export const LogEntry = ({ logEntry, messages }: LogEntryProps) => {
         <LogHeaderIcon topic={logEntry.topic} />
         <Typography variant="h3">{getLogEntryTitle(logEntry, t)}</Typography>
       </StyledLogRow>
-      <LogDateItem date={new Date(logEntry.timestamp)} />
+      <LogDateItem date={logEntry.timestamp} />
 
       {(fullName || logEntry.performedBy?.onBehalfOf.shortName) && (
         <StyledLogRow>
