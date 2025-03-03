@@ -55,8 +55,8 @@ interface FileImportLogEntry extends Omit<FileLogEntry, 'topic'> {
   importSource: ImportSourceLogData;
 }
 
-export type LogEntryObject = PublicationLogEntry | FileLogEntry | PublicationImportLogEntry | FileImportLogEntry;
+export type LogEntry = PublicationLogEntry | FileLogEntry | PublicationImportLogEntry | FileImportLogEntry;
 
 export interface RegistrationLogResponse {
-  logEntries: LogEntryObject[];
+  logEntries: LogEntry[];
 }

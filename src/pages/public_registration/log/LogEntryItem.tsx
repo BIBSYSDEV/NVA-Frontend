@@ -10,7 +10,7 @@ import { Avatar, Box, Divider, styled, SvgIconProps, Tooltip, Typography } from 
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { FileType } from '../../../types/associatedArtifact.types';
-import { ImportSourceLogData, LogEntryObject } from '../../../types/log.types';
+import { ImportSourceLogData, LogEntry } from '../../../types/log.types';
 import { Message } from '../../../types/publication_types/ticket.types';
 import { getInitials } from '../../../utils/general-helpers';
 import { getFullName } from '../../../utils/user-helpers';
@@ -26,11 +26,11 @@ const StyledLogRow = styled(Box)({
 });
 
 interface LogEntryProps {
-  logEntry: LogEntryObject;
+  logEntry: LogEntry;
   messages: Message[];
 }
 
-export const LogEntry = ({ logEntry, messages }: LogEntryProps) => {
+export const LogEntryItem = ({ logEntry, messages }: LogEntryProps) => {
   const { t } = useTranslation();
 
   const fullName = logEntry.performedBy
@@ -119,7 +119,7 @@ const ImportSourceInfo = ({ importSource }: { importSource: ImportSourceLogData 
   );
 };
 
-const getMessageItemBackgroundColor = (topic: LogEntryObject['topic']) => {
+const getMessageItemBackgroundColor = (topic: LogEntry['topic']) => {
   switch (topic) {
     case 'DoiRejected':
     case 'DoiAssigned':
@@ -132,7 +132,7 @@ const getMessageItemBackgroundColor = (topic: LogEntryObject['topic']) => {
   }
 };
 
-const getLogEntryBackgroundColor = (topic: LogEntryObject['topic']) => {
+const getLogEntryBackgroundColor = (topic: LogEntry['topic']) => {
   switch (topic) {
     case 'PublicationImported':
     case 'FileImported':
@@ -148,7 +148,7 @@ const getLogEntryBackgroundColor = (topic: LogEntryObject['topic']) => {
   }
 };
 
-const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
+const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
   switch (topic) {
     case 'PublicationCreated':
       return <AddCircleOutlineIcon {...logIconProps} />;
@@ -180,7 +180,7 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
   }
 };
 
-const getLogEntryTitle = (logEntry: LogEntryObject, t: TFunction) => {
+const getLogEntryTitle = (logEntry: LogEntry, t: TFunction) => {
   switch (logEntry.topic) {
     case 'PublicationCreated':
       return t('log.titles.result_created');

@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { useFetchRegistrationLog } from '../../../api/hooks/useFetchRegistrationLog';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { FileType } from '../../../types/associatedArtifact.types';
-import { LogEntryObject } from '../../../types/log.types';
+import { LogEntry } from '../../../types/log.types';
 import { Message, PublishingTicket, Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
 import { isSimilarTime } from '../../../utils/general-helpers';
 import { LogDateItem } from './LogDateItem';
-import { LogEntry } from './LogEntry';
+import { LogEntryItem } from './LogEntryItem';
 import { ArchivedFilesEntry } from './RegistrationLog';
 
 interface LogPanelProps {
@@ -51,7 +51,7 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
       ) : (
         logQuery.data?.logEntries.toReversed().map((logEntry, index) => (
           <ErrorBoundary key={index}>
-            <LogEntry logEntry={logEntry} messages={getLogEntryMessages(logEntry, tickets)} />
+            <LogEntryItem logEntry={logEntry} messages={getLogEntryMessages(logEntry, tickets)} />
           </ErrorBoundary>
         ))
       )}
@@ -59,7 +59,7 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
   );
 };
 
-const getLogEntryMessages = (logEntry: LogEntryObject, tickets: Ticket[]): Message[] => {
+const getLogEntryMessages = (logEntry: LogEntry, tickets: Ticket[]): Message[] => {
   const ticketsWithinSimilarTime = tickets.filter(
     (ticket) => ticket.finalizedDate && isSimilarTime(ticket.finalizedDate, logEntry.timestamp, 10_000)
   );
