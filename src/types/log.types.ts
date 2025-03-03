@@ -1,34 +1,4 @@
 import { FileType } from './associatedArtifact.types';
-import { Message, TicketType } from './publication_types/ticket.types';
-
-export interface Log {
-  entries: LogEntry[];
-  metadataUpdated: string;
-  numberOfArchivedFiles: number;
-  numberOfHiddenFiles: number;
-}
-
-export type LogEntryType = TicketType | 'Import' | 'Created' | 'MetadataPublished' | 'Republished' | 'Deleted';
-
-interface LogEntry {
-  type: LogEntryType;
-  title: string;
-  modifiedDate: string;
-  actions: LogAction[];
-  messages?: Message[];
-}
-
-interface LogAction {
-  actor?: string;
-  organization?: string;
-  items: LogActionItem[];
-}
-
-interface LogActionItem {
-  description: string;
-  date?: string;
-  fileIcon?: 'file' | 'deletedFile' | 'archivedFile' | 'rejectedFile' | 'hiddenFile';
-}
 
 interface LogEntryOnBehalfOf {
   id: string;

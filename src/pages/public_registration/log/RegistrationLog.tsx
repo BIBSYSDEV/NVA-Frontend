@@ -1,11 +1,12 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Log as LogType } from '../../../types/log.types';
 
-export const ArchivedFilesEntry = ({
-  numberOfArchivedFiles,
-  numberOfHiddenFiles,
-}: Pick<LogType, 'numberOfArchivedFiles' | 'numberOfHiddenFiles'>) => {
+interface ArchivedFilesEntryProps {
+  numberOfArchivedFiles: number;
+  numberOfHiddenFiles: number;
+}
+
+export const ArchivedFilesEntry = ({ numberOfArchivedFiles, numberOfHiddenFiles }: ArchivedFilesEntryProps) => {
   const { t } = useTranslation();
   if (numberOfArchivedFiles === 0 && numberOfHiddenFiles === 0) {
     return null;

@@ -1,5 +1,4 @@
-import { Box, Typography } from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
+import { Box, Skeleton, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useFetchRegistrationLog } from '../../../api/hooks/useFetchRegistrationLog';
