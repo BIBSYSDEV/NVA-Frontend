@@ -1,11 +1,10 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Autocomplete, Box, Button, TextField } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { fetchOrganization } from '../../../../api/cristinApi';
+import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
 import { OrganizationRenderOption } from '../../../../components/OrganizationRenderOption';
 import { RootState } from '../../../../redux/store';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -25,14 +24,8 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
 
   const { isSubmitting } = useFormikContext();
 
-  const organizationQuery = useQuery({
-    enabled: !!topOrgCristinId,
-    queryKey: [topOrgCristinId],
-    queryFn: topOrgCristinId ? () => fetchOrganization(topOrgCristinId) : undefined,
-    meta: { errorMessage: t('feedback.error.get_institution') },
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-  });
+  const organizationQuery = useFetchOrganization(topOrgCristinId ?? '');
+
   const currentOrganization = organizationQuery.data;
   const options = currentOrganization
     ? getSortedSubUnits([currentOrganization]).filter((option) => !viewingScopes.includes(option.id))
