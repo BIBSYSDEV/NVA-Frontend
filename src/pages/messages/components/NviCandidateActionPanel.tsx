@@ -7,7 +7,7 @@ import { useFetchRegistrationTickets } from '../../../api/hooks/useFetchRegistra
 import { NviCandidate } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { LogPanel } from '../../public_registration/LogPanel';
+import { LogPanel } from '../../public_registration/log/LogPanel';
 import { NviDialoguePanel } from './NviDialoguePanel';
 
 interface NviCandidateActionPanelProps {
