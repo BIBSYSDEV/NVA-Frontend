@@ -3,17 +3,16 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, BoxProps, Button, Collapse, Divider } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LogEntryType } from '../../../types/log.types';
 import { Message } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { MessageItem } from '../../messages/components/MessageList';
 
 interface LogMessageAccordionProps {
   messages: Message[];
-  type: LogEntryType;
+  messageBackgroundColor: BoxProps['bgcolor'];
 }
 
-export const LogMessageAccordion = ({ messages, type }: LogMessageAccordionProps) => {
+export const LogMessageAccordion = ({ messages, messageBackgroundColor }: LogMessageAccordionProps) => {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -44,16 +43,11 @@ export const LogMessageAccordion = ({ messages, type }: LogMessageAccordionProps
               text={message.text}
               date={message.createdDate}
               username={message.sender}
-              backgroundColor={ticketMessageColor[type] ?? 'secondary.main'}
+              backgroundColor={messageBackgroundColor}
             />
           ))}
         </Box>
       </Collapse>
     </Box>
   );
-};
-
-const ticketMessageColor: { [key: string]: BoxProps['bgcolor'] } = {
-  PublishingRequest: 'publishingRequest.main',
-  DoiRequest: 'doiRequest.main',
 };

@@ -95,7 +95,7 @@ export const LogEntry = ({ logEntry, messages }: LogEntryProps) => {
       {messages && messages.length > 0 && (
         <LogMessageAccordion
           messages={messages}
-          type={logEntry.type === 'FileLogEntry' ? 'PublishingRequest' : 'DoiRequest'}
+          messageBackgroundColor={getMessageItemBackgroundColor(logEntry.topic)}
         />
       )}
     </Box>
@@ -117,6 +117,19 @@ const ImportSourceInfo = ({ importSource }: { importSource: ImportSourceLogData 
           })}
     </Typography>
   );
+};
+
+const getMessageItemBackgroundColor = (topic: LogEntryObject['topic']) => {
+  switch (topic) {
+    case 'DoiRejected':
+    case 'DoiAssigned':
+      return 'doiRequest.main';
+    case 'FileApproved':
+    case 'FileRejected':
+      return 'publishingRequest.main';
+    default:
+      return 'secondary.main';
+  }
 };
 
 const getLogEntryBackgroundColor = (topic: LogEntryObject['topic']) => {
