@@ -10,7 +10,7 @@ export interface Log {
 
 export type LogEntryType = TicketType | 'Import' | 'Created' | 'MetadataPublished' | 'Republished' | 'Deleted';
 
-export interface LogEntry {
+interface LogEntry {
   type: LogEntryType;
   title: string;
   modifiedDate: string;
@@ -18,13 +18,13 @@ export interface LogEntry {
   messages?: Message[];
 }
 
-export interface LogAction {
+interface LogAction {
   actor?: string;
   organization?: string;
   items: LogActionItem[];
 }
 
-export interface LogActionItem {
+interface LogActionItem {
   description: string;
   date?: string;
   fileIcon?: 'file' | 'deletedFile' | 'archivedFile' | 'rejectedFile' | 'hiddenFile';
