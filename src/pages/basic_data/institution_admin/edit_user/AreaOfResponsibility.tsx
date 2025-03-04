@@ -26,6 +26,7 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
   const { t } = useTranslation();
   const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
   const [addAreaOfResponsibility, setAddAreaOfResponsibility] = useState(false);
+  const [isUpdatingValue, setIsUpdatingValue] = useState(false);
 
   const { isSubmitting } = useFormikContext();
 
@@ -74,9 +75,10 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
           renderOption={({ key, ...props }, option) => (
             <OrganizationRenderOption key={option.id} props={props} option={option} />
           )}
-          disabled={isSubmitting}
+          disabled={isSubmitting || isUpdatingValue}
           onChange={async (_, value) => {
             if (value) {
+              setIsUpdatingValue(true);
               const fetchedUnit = await fetchOrganization(value.id);
               const allParentIds = getOrganizationHierarchy(fetchedUnit).map((unit) => unit.id);
               const allChildrenIds = getAllChildOrganizations([value]).map((unit) => unit.id);
@@ -90,10 +92,11 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
               const newViewingScopes = Array.from(new Set([...filteredScopes, value.id]));
               updateViewingScopes(newViewingScopes);
             }
+            setIsUpdatingValue(false);
             setAddAreaOfResponsibility(false);
           }}
           renderInput={(params) => (
-            <TextField {...params} fullWidth placeholder={t('basic_data.person_register.select_unit')} />
+            <TextField {...params} variant="filled" fullWidth label={t('basic_data.person_register.select_unit')} />
           )}
         />
       ) : (
