@@ -51,6 +51,7 @@ export interface UserRole {
 export interface InstitutionUser {
   familyName?: string;
   givenName?: string;
+  affiliation?: string;
   institution: string;
   institutionCristinId?: string;
   roles: UserRole[];
