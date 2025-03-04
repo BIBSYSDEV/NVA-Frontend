@@ -5,6 +5,7 @@ import { useLocation } from 'react-router';
 import { MinimizedMenuIconButton } from '../../components/SideMenu';
 import { PreviousPathLocationState } from '../../types/locationState.types';
 import { RegistrationLandingPage } from './RegistrationLandingPage';
+import { StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();
@@ -13,14 +14,7 @@ const PublicRegistration = () => {
   const previousPath = locationState?.previousPath;
 
   return (
-    <Box
-      sx={{
-        p: { xs: '0.5rem', md: '1rem' },
-        width: '100%',
-        display: 'grid',
-        gridTemplateColumns: { xs: '1fr', md: '1fr 5fr' },
-        gap: '0.5rem',
-      }}>
+    <StyledPageWithSideMenu>
       {previousPath && (
         <Box sx={{ alignSelf: 'start', justifySelf: 'start' }}>
           <MinimizedMenuIconButton title={t('common.search')} to={previousPath}>
@@ -31,7 +25,7 @@ const PublicRegistration = () => {
       <Box sx={{ gridColumn: { md: '2' } }}>
         <RegistrationLandingPage />
       </Box>
-    </Box>
+    </StyledPageWithSideMenu>
   );
 };
 
