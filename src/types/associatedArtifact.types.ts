@@ -50,7 +50,7 @@ interface UserUploadDetails {
   uploadedDate: string;
 }
 
-export interface ImportUploadDetails {
+interface ImportUploadDetails {
   type: 'ImportUploadDetails';
   source: string;
   archive: string;
