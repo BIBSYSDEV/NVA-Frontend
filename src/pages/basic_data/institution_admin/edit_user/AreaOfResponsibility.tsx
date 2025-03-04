@@ -60,6 +60,15 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
           fullWidth
           data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
           options={options}
+          filterOptions={(options, state) =>
+            options.filter((option) => {
+              const input = state.inputValue.toLowerCase();
+              return (
+                Object.values(option.labels).some((label) => label.toLowerCase().includes(input)) ||
+                option.acronym?.toLowerCase().includes(input)
+              );
+            })
+          }
           getOptionLabel={(option) => getLanguageString(option.labels)}
           renderOption={({ key, ...props }, option) => (
             <OrganizationRenderOption key={option.id} props={props} option={option} />
