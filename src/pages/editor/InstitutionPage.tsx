@@ -58,16 +58,10 @@ const InstitutionPage = () => {
         <NavigationListAccordion
           dataTestId={dataTestId.editor.overviewAccordion}
           title={t('editor.institution.organizing')}
-          startIcon={
-            <ArchitectureIcon
-              sx={{
-                bgcolor: 'white',
-              }}
-            />
-          }
+          startIcon={<ArchitectureIcon sx={{ bgcolor: 'white' }} />}
           accordionPath={UrlPathTemplate.InstitutionOverview}
           defaultPath={UrlPathTemplate.InstitutionOverviewPage}>
-          <NavigationList>
+          <NavigationList aria-label={t('editor.institution.organizing')}>
             <SelectableButton
               isSelected={currentPath === UrlPathTemplate.InstitutionOverviewPage}
               data-testid={dataTestId.editor.institutionsNameLinkButton}
@@ -120,7 +114,7 @@ const InstitutionPage = () => {
               startIcon={<GavelIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
               accordionPath={UrlPathTemplate.InstitutionSettings}
               defaultPath={UrlPathTemplate.InstitutionCurators}>
-              <NavigationList>
+              <NavigationList aria-label={t('common.settings')}>
                 <SelectableButton
                   isSelected={currentPath === UrlPathTemplate.InstitutionCurators}
                   data-testid={dataTestId.editor.curatorsSettingsLinkButton}
