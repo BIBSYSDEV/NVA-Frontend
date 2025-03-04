@@ -4,6 +4,7 @@ import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { fetchOrganization } from '../../../../api/cristinApi';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
 import { OrganizationRenderOption } from '../../../../components/OrganizationRenderOption';
 import { RootState } from '../../../../redux/store';
@@ -74,10 +75,11 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
             <OrganizationRenderOption key={option.id} props={props} option={option} />
           )}
           disabled={isSubmitting}
-          onChange={(_, value) => {
+          onChange={async (_, value) => {
             if (value) {
+              const fetchedUnit = await fetchOrganization(value.id);
+              const allParentIds = getOrganizationHierarchy(fetchedUnit).map((unit) => unit.id);
               const allChildrenIds = getAllChildOrganizations([value]).map((unit) => unit.id);
-              const allParentIds = getOrganizationHierarchy(value).map((unit) => unit.id);
               const organizationIdsToRemove = Array.from(new Set([...allChildrenIds, ...allParentIds]));
 
               // Remove existing organizations conflicting with the new organization
