@@ -8,7 +8,11 @@ import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization
 import { OrganizationRenderOption } from '../../../../components/OrganizationRenderOption';
 import { RootState } from '../../../../redux/store';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getSortedSubUnits } from '../../../../utils/institutions-helpers';
+import {
+  getAllChildOrganizations,
+  getOrganizationHierarchy,
+  getSortedSubUnits,
+} from '../../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { ViewingScopeChip } from './ViewingScopeChip';
 
@@ -63,7 +67,17 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
           disabled={isSubmitting}
           onChange={(_, value) => {
             if (value) {
-              updateViewingScopes([...viewingScopes, value.id]);
+              const allChildrenIds = getAllChildOrganizations([value]).map((unit) => unit.id);
+              const allParentIds = getOrganizationHierarchy(value).map((unit) => unit.id);
+              const organizationIdsToRemove = Array.from(new Set([...allChildrenIds, ...allParentIds]));
+
+              // Remove existing organizations conflicting with the new organization
+              const filteredScopes = viewingScopes.filter(
+                (scope) => !organizationIdsToRemove.includes(scope) && scope !== value?.id
+              );
+
+              const newViewingScopes = Array.from(new Set([...filteredScopes, value.id]));
+              updateViewingScopes(newViewingScopes);
             }
             setAddAreaOfResponsibility(false);
           }}
