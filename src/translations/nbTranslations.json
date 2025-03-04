@@ -706,8 +706,6 @@
     }
   },
   "log": {
-    "deleted_afterwards": "Slettet i etterkant",
-    "hidden_afterwards": "Endret til skjult fil i etterkant",
     "hidden_file_added": "Skjult fil lagt til",
     "hidden_files_on_registration_one": "Registreringen har {{count}} skjult fil",
     "hidden_files_on_registration_other": "Registreringen har {{count}} skjulte filer",
@@ -742,10 +740,8 @@
       "files_rejected_count_other": "{{count}} filer avvist",
       "files_uploaded_one": "Fil lastet opp",
       "files_uploaded_other": "Filer lastet opp",
-      "imported": "Importert",
       "internal_file_awaiting_approval_one": "{{count}} intern fil venter på godkjenning",
       "internal_file_awaiting_approval_other": "{{count}} interne filer venter på godkjenning",
-      "metadata_updated": "Metadata oppdatert",
       "open_file_awaiting_approval_one": "{{count}} åpen fil venter på godkjenning",
       "open_file_awaiting_approval_other": "{{count}} åpne filer venter på godkjenning",
       "result_created": "Resultat opprettet",
