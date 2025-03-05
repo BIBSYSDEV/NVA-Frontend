@@ -138,7 +138,7 @@ const HomePage = () => {
           startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
           accordionPath={UrlPathTemplate.Reports}
           dataTestId={dataTestId.startPage.reportsAccordion}>
-          <NavigationList>
+          <NavigationList aria-label={t('search.reports.reports')}>
             <SelectableButton
               data-testid={dataTestId.startPage.reportsOverviewButton}
               isSelected={currentPath === UrlPathTemplate.Reports}

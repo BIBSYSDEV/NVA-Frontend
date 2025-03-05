@@ -79,7 +79,7 @@ const BasicDataPage = () => {
             startIcon={<PeopleIcon sx={{ bgcolor: 'person.main' }} />}
             accordionPath={UrlPathTemplate.BasicDataPersonRegister}
             dataTestId={dataTestId.basicData.personRegisterAccordion}>
-            <NavigationList>
+            <NavigationList aria-label={t('basic_data.person_register.person_register')}>
               <SelectableButton
                 data-testid={dataTestId.basicData.personRegisterLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
@@ -108,7 +108,7 @@ const BasicDataPage = () => {
               startIcon={<AccountBalanceIcon sx={{ bgcolor: 'grey.500' }} />}
               accordionPath={UrlPathTemplate.BasicDataInstitutions}
               dataTestId={dataTestId.basicData.institutionsAccordion}>
-              <NavigationList>
+              <NavigationList aria-label={t('common.institutions')}>
                 <SelectableButton
                   data-testid={dataTestId.basicData.adminInstitutionsLink}
                   isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
@@ -131,7 +131,7 @@ const BasicDataPage = () => {
               startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
               accordionPath={UrlPathTemplate.BasicDataNvi}
               dataTestId={dataTestId.basicData.nviPeriodsLink}>
-              <NavigationList>
+              <NavigationList aria-label={t('common.nvi')}>
                 <SelectableButton
                   isSelected={currentPath === UrlPathTemplate.BasicDataNvi}
                   to={UrlPathTemplate.BasicDataNvi}>
