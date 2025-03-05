@@ -133,7 +133,6 @@ export const ImportCandidatesMenuFilters = () => {
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.type === facet.key}
                 label={t(`registration.publication_types.${facet.key}`)}
                 count={facet.count}
@@ -152,7 +151,6 @@ export const ImportCandidatesMenuFilters = () => {
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.topLevelOrganization === facet.key}
                 label={getLanguageString(facet.labels) || getIdentifierFromId(facet.key)}
                 count={facet.count}
@@ -171,7 +169,6 @@ export const ImportCandidatesMenuFilters = () => {
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.collaborationType === facet.key}
                 label={t(`basic_data.central_import.collaboration_type.${facet.key}`)}
                 count={facet.count}
@@ -190,7 +187,6 @@ export const ImportCandidatesMenuFilters = () => {
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.files === facet.key}
                 label={getFileFacetText(facet.key, t)}
                 count={facet.count}
