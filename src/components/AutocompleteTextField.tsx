@@ -25,17 +25,21 @@ export const AutocompleteTextField = ({
     slotProps={{
       input: {
         ...params.InputProps,
-        startAdornment: (
+        startAdornment: showSearchIcon ? (
           <>
             {params.InputProps.startAdornment}
             {showSearchIcon && <SearchIcon color="disabled" />}
           </>
+        ) : (
+          params.InputProps.startAdornment
         ),
-        endAdornment: (
+        endAdornment: isLoading ? (
           <>
             {isLoading && <CircularProgress size={20} aria-labelledby={params.InputLabelProps.id} />}
             {params.InputProps.endAdornment}
           </>
+        ) : (
+          params.InputProps.endAdornment
         ),
       },
     }}
