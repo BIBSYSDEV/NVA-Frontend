@@ -124,8 +124,11 @@ export const ImportCandidatesMenuFilters = () => {
       </RadioGroup>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '0.5rem' }}>
-        {typeAggregations?.length > 0 && (
-          <FacetItem title={t('common.category')} dataTestId={dataTestId.aggregations.typeFacets}>
+        {(importCandidateQuery.isPending || typeAggregations.length > 0) && (
+          <FacetItem
+            title={t('common.category')}
+            dataTestId={dataTestId.aggregations.typeFacets}
+            isPending={importCandidateQuery.isPending}>
             {typeAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
@@ -140,8 +143,11 @@ export const ImportCandidatesMenuFilters = () => {
           </FacetItem>
         )}
 
-        {topLevelOrgAggregations?.length > 0 && (
-          <FacetItem title={t('common.institution')} dataTestId={dataTestId.aggregations.typeFacets}>
+        {(importCandidateQuery.isPending || topLevelOrgAggregations.length > 0) && (
+          <FacetItem
+            title={t('common.institution')}
+            dataTestId={dataTestId.aggregations.typeFacets}
+            isPending={importCandidateQuery.isPending}>
             {topLevelOrgAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
@@ -156,10 +162,11 @@ export const ImportCandidatesMenuFilters = () => {
           </FacetItem>
         )}
 
-        {collaborationTypeAggregations?.length > 0 && (
+        {(importCandidateQuery.isPending || collaborationTypeAggregations.length > 0) && (
           <FacetItem
             title={t('basic_data.central_import.collaboration_type.Collaborative')}
-            dataTestId={dataTestId.aggregations.collaboardationTypeFacets}>
+            dataTestId={dataTestId.aggregations.collaboardationTypeFacets}
+            isPending={importCandidateQuery.isPending}>
             {collaborationTypeAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
@@ -174,8 +181,11 @@ export const ImportCandidatesMenuFilters = () => {
           </FacetItem>
         )}
 
-        {filesAggregations?.length > 0 && (
-          <FacetItem title={t('registration.files_and_license.files')} dataTestId={dataTestId.aggregations.filesFacets}>
+        {(importCandidateQuery.isPending || filesAggregations.length > 0) && (
+          <FacetItem
+            title={t('registration.files_and_license.files')}
+            dataTestId={dataTestId.aggregations.filesFacets}
+            isPending={importCandidateQuery.isPending}>
             {filesAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
