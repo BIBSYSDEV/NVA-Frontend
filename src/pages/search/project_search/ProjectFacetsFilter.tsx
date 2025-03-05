@@ -75,7 +75,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
@@ -106,7 +105,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
@@ -139,7 +137,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
@@ -165,7 +162,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
@@ -191,7 +187,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
@@ -217,7 +212,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
@@ -248,7 +242,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
@@ -279,7 +272,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}

@@ -77,7 +77,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
                 label={t(`registration.publication_types.${facet.key}`)}
                 count={facet.count}
@@ -110,7 +109,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(institutionIdentifier)}
-                isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels) || institutionIdentifier}
                 count={facet.count}
@@ -143,7 +141,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(contributorIdentifier)}
-                isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
@@ -176,7 +173,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 <FacetListItem
                   key={facet.key}
                   dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                  isLoading={registrationQuery.isPending}
                   isSelected={isSelected}
                   label={getLanguageString(facet.labels)}
                   count={facet.count}
@@ -210,7 +206,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels) || t('registration.missing_name')}
                 count={facet.count}
@@ -245,7 +240,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels) || t('registration.missing_name')}
                 count={facet.count}
@@ -280,7 +274,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels) || t('registration.missing_name')}
                 count={facet.count}
@@ -309,7 +302,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 <FacetListItem
                   key={facet.key}
                   dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                  isLoading={registrationQuery.isPending}
                   isSelected={isSelected}
                   label={facet.key}
                   count={facet.count}
@@ -341,7 +333,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 <FacetListItem
                   key={facet.key}
                   dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                  isLoading={registrationQuery.isPending}
                   isSelected={isSelected}
                   label={getFileFacetText(facet.key, t)}
                   count={facet.count}
