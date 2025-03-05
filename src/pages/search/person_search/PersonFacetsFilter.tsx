@@ -7,6 +7,7 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
 import { SearchPageProps } from '../SearchPage';
+import { SearchForInstitutionFacetItem } from '../registration_search/filters/SearchForInstitutionFacetItem';
 
 type PersonFacetsFilterProps = Pick<SearchPageProps, 'personQuery'>;
 
@@ -47,7 +48,14 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
         <FacetItem
           title={t('common.institution')}
           dataTestId={dataTestId.aggregations.institutionFacets}
-          isPending={personQuery.isPending}>
+          isPending={personQuery.isPending}
+          renderCustomSelect={
+            <SearchForInstitutionFacetItem
+              onSelectInstitution={(identifier) =>
+                addFacetFilter(PersonSearchParameter.Organization, identifier.split('.')[0])
+              }
+            />
+          }>
           {organizationFacet.map((facet) => {
             const isSelected = selectedOrganizations.includes(facet.key);
             return (
