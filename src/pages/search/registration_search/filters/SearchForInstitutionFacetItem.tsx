@@ -15,11 +15,15 @@ import { getLanguageString } from '../../../../utils/translation-helpers';
 
 interface SearchForInstitutionFacetItemProps {
   onSelectInstitution: (institutionId: string) => void;
+  placeholder?: string;
 }
 
 const defaultOrganizationSearchSize = 10;
 
-export const SearchForInstitutionFacetItem = ({ onSelectInstitution }: SearchForInstitutionFacetItemProps) => {
+export const SearchForInstitutionFacetItem = ({
+  onSelectInstitution,
+  placeholder,
+}: SearchForInstitutionFacetItemProps) => {
   const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -65,7 +69,7 @@ export const SearchForInstitutionFacetItem = ({ onSelectInstitution }: SearchFor
           variant="outlined"
           isLoading={institutionSearchQuery.isLoading}
           data-testid={dataTestId.aggregations.institutionFacetsSearchField}
-          placeholder={t('project.search_for_institution')}
+          placeholder={placeholder || t('project.search_for_institution')}
           showSearchIcon
         />
       )}

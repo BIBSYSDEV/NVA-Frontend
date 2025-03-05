@@ -15,11 +15,15 @@ import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/
 
 interface SearchForContributorFacetItemProps {
   onSelectContributor: (identifier: string) => void;
+  placeholder?: string;
 }
 
 const defaultPersonSearchSize = 10;
 
-export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchForContributorFacetItemProps) => {
+export const SearchForContributorFacetItem = ({
+  onSelectContributor,
+  placeholder,
+}: SearchForContributorFacetItemProps) => {
   const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -85,7 +89,7 @@ export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchFor
           variant="outlined"
           isLoading={personSearchQuery.isLoading}
           data-testid={dataTestId.aggregations.contributorFacetsSearchField}
-          placeholder={t('search.search_for_contributor')}
+          placeholder={placeholder || t('search.search_for_contributor')}
           showSearchIcon
         />
       )}

@@ -66,6 +66,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
           isPending={projectQuery.isPending}
           renderCustomSelect={
             <SearchForInstitutionFacetItem
+              placeholder={t('search.search_for_coordinating_institution')}
               onSelectInstitution={(identifier) => addFacetFilter(ProjectSearchParameter.CoordinatingFacet, identifier)}
             />
           }>
@@ -96,6 +97,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
           isPending={projectQuery.isPending}
           renderCustomSelect={
             <SearchForInstitutionFacetItem
+              placeholder={t('search.search_for_responsible_institution')}
               onSelectInstitution={(identifier) => addFacetFilter(ProjectSearchParameter.ResponsibleFacet, identifier)}
             />
           }>
@@ -126,6 +128,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
           isPending={projectQuery.isPending}
           renderCustomSelect={
             <SearchForInstitutionFacetItem
+              placeholder={t('search.search_for_participating_institution')}
               onSelectInstitution={(identifier) =>
                 addFacetFilter(ProjectSearchParameter.ParticipantOrgFacet, identifier.split('.')[0])
               }
@@ -233,6 +236,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
           isPending={projectQuery.isPending}
           renderCustomSelect={
             <SearchForContributorFacetItem
+              placeholder={t('search.search_for_participant')}
               onSelectContributor={(identifier) => addFacetFilter(ProjectSearchParameter.ParticipantFacet, identifier)}
             />
           }>
