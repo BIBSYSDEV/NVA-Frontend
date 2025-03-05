@@ -23,6 +23,7 @@ export const AutocompleteTextField = ({
     error={!!errorMessage}
     helperText={errorMessage}
     slotProps={{
+      htmlInput: params.label ? undefined : { 'aria-label': params.label || params.placeholder },
       input: {
         ...params.InputProps,
         startAdornment: showSearchIcon ? (

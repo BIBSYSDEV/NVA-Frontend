@@ -85,7 +85,6 @@ export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchFor
           variant="outlined"
           isLoading={personSearchQuery.isLoading}
           data-testid={dataTestId.aggregations.contributorFacetsSearchField}
-          aria-label={t('search.search_for_contributor')}
           placeholder={t('search.search_for_contributor')}
           showSearchIcon
         />

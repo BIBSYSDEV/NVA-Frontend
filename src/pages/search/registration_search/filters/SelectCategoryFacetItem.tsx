@@ -71,7 +71,6 @@ export const SelectCategoryFacetItem = ({ onSelectCategory }: SelectCategoryFace
           {...params}
           variant="outlined"
           data-testid={dataTestId.aggregations.categoryFacetsSearchField}
-          aria-label={t('registration.resource_type.select_resource_type')}
           placeholder={t('registration.resource_type.select_resource_type')}
           showSearchIcon
         />

@@ -68,7 +68,6 @@ export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPubl
           variant="outlined"
           isLoading={publisherSearchQuery.isLoading}
           data-testid={dataTestId.aggregations.publisherFacetsSearchField}
-          aria-label={t('registration.resource_type.search_for_publisher')}
           placeholder={t('registration.resource_type.search_for_publisher')}
           showSearchIcon
         />

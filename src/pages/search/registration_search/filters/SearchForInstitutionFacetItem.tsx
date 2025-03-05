@@ -65,7 +65,6 @@ export const SearchForInstitutionFacetItem = ({ onSelectInstitution }: SearchFor
           variant="outlined"
           isLoading={institutionSearchQuery.isLoading}
           data-testid={dataTestId.aggregations.institutionFacetsSearchField}
-          aria-label={t('project.search_for_institution')}
           placeholder={t('project.search_for_institution')}
           showSearchIcon
         />

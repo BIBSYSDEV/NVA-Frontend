@@ -79,7 +79,6 @@ export const SearchForSerialPublicationFacetItem = ({
               ? dataTestId.aggregations.seriesFacetsSearchField
               : dataTestId.aggregations.journalFacetsSearchField
           }
-          aria-label={searchMode === 'series' ? t('search.search_for_series') : t('search.search_for_journal')}
           placeholder={searchMode === 'series' ? t('search.search_for_series') : t('search.search_for_journal')}
           showSearchIcon
         />
