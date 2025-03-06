@@ -381,7 +381,7 @@ interface SelectedInstitutionFacetButtonProps {
   institutionIdentifier: string;
 }
 
-const SelectedInstitutionFacetButton = ({ institutionIdentifier }: SelectedInstitutionFacetButtonProps) => {
+export const SelectedInstitutionFacetButton = ({ institutionIdentifier }: SelectedInstitutionFacetButtonProps) => {
   const { t } = useTranslation();
 
   const organizationQuery = useFetchOrganizationByIdentifier(institutionIdentifier);
