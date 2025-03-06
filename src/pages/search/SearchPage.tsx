@@ -15,6 +15,7 @@ import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
+import { SelectedFacetsList } from './SelectedFacetsList';
 
 const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
   display: 'grid',
@@ -67,6 +68,7 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
             <SearchTypeField />
             <SearchForm paramName={PersonSearchParameter.Name} placeholder={t('search.person_search_placeholder')} />
           </StyledSearchBarContainer>
+          <SelectedFacetsList />
           <PersonSearch personQuery={personQuery} />
         </>
       )}

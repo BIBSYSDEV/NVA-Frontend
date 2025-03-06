@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Box, Button, IconButton, Skeleton } from '@mui/material';
-import { ClearIcon } from '@mui/x-date-pickers';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, useFormikContext } from 'formik';
 import { ReactNode } from 'react';
