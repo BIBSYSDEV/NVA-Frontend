@@ -1,17 +1,17 @@
 import { Autocomplete } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchForOrganizations } from '../../../../api/hooks/useSearchForOrganizations';
+import { useSearchForOrganizations } from '../../../api/hooks/useSearchForOrganizations';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
-} from '../../../../components/AutocompleteListboxWithExpansion';
-import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { OrganizationRenderOption } from '../../../../components/OrganizationRenderOption';
-import { dataTestId as dataTestIdEnum } from '../../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { getLanguageString } from '../../../../utils/translation-helpers';
+} from '../../../components/AutocompleteListboxWithExpansion';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
+import { dataTestId as dataTestIdEnum } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface SearchForInstitutionFacetItemProps {
   onSelectInstitution: (institutionId: string) => void;

@@ -1,16 +1,16 @@
 import { Autocomplete } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSerialPublicationSearch } from '../../../../api/hooks/useSerialPublicationSearch';
-import { defaultChannelSearchSize } from '../../../../api/publicationChannelApi';
+import { useSerialPublicationSearch } from '../../../api/hooks/useSerialPublicationSearch';
+import { defaultChannelSearchSize } from '../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
-} from '../../../../components/AutocompleteListboxWithExpansion';
-import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { PublicationChannelOption } from '../../../registration/resource_type_tab/components/PublicationChannelOption';
+} from '../../../components/AutocompleteListboxWithExpansion';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 interface SearchForSerialPublicationFacetItemProps {
   searchMode: 'journal' | 'series';

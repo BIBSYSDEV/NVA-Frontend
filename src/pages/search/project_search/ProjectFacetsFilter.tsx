@@ -4,11 +4,11 @@ import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { removeSearchParamValue, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { SearchForPersonFacetItem } from '../facet_search_fields/SearchForContributorFacetItem';
+import { SearchForFundingSourceFacetItem } from '../facet_search_fields/SearchForFundingSourceFacetItem';
+import { SearchForInstitutionFacetItem } from '../facet_search_fields/SearchForInstitutionFacetItem';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
-import { SearchForContributorFacetItem } from '../registration_search/filters/SearchForContributorFacetItem';
-import { SearchForFundingSourceFacetItem } from '../registration_search/filters/SearchForFundingSourceFacetItem';
-import { SearchForInstitutionFacetItem } from '../registration_search/filters/SearchForInstitutionFacetItem';
 import { SearchPageProps } from '../SearchPage';
 import { ProjectStatusFilter } from './ProjectStatusFilter';
 
@@ -238,9 +238,9 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
           dataTestId={dataTestId.aggregations.participantFacets}
           isPending={projectQuery.isPending}
           renderCustomSelect={
-            <SearchForContributorFacetItem
+            <SearchForPersonFacetItem
               placeholder={t('search.search_for_participant')}
-              onSelectContributor={(identifier) => addFacetFilter(ProjectSearchParameter.ParticipantFacet, identifier)}
+              onSelectPerson={(identifier) => addFacetFilter(ProjectSearchParameter.ParticipantFacet, identifier)}
             />
           }>
           {participantFacet.map((facet) => {

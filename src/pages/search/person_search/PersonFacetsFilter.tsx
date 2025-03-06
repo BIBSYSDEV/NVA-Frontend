@@ -7,7 +7,7 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
 import { SearchPageProps } from '../SearchPage';
-import { SearchForInstitutionFacetItem } from '../registration_search/filters/SearchForInstitutionFacetItem';
+import { SearchForInstitutionFacetItem } from '../facet_search_fields/SearchForInstitutionFacetItem';
 
 type PersonFacetsFilterProps = Pick<SearchPageProps, 'personQuery'>;
 

@@ -1,11 +1,11 @@
 import { Autocomplete } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFetchFundingSources } from '../../../../api/hooks/useFetchFundingSources';
-import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { fundingSourceAutocompleteFilterOptions } from '../../../../utils/searchHelpers';
-import { getLanguageString } from '../../../../utils/translation-helpers';
+import { useFetchFundingSources } from '../../../api/hooks/useFetchFundingSources';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { fundingSourceAutocompleteFilterOptions } from '../../../utils/searchHelpers';
+import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface SearchForFundingSourceFacetItemProps {
   onSelectFunder: (identifier: string) => void;

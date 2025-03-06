@@ -10,12 +10,12 @@ import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPageProps } from '../../SearchPage';
-import { SearchForContributorFacetItem } from './SearchForContributorFacetItem';
-import { SearchForFundingSourceFacetItem } from './SearchForFundingSourceFacetItem';
-import { SearchForInstitutionFacetItem } from './SearchForInstitutionFacetItem';
-import { SearchForPublisherFacetItem } from './SearchForPublisherFacetItem';
-import { SearchForSerialPublicationFacetItem } from './SearchForSerialPublicationFacetItem';
-import { SelectCategoryFacetItem } from './SelectCategoryFacetItem';
+import { SearchForPersonFacetItem } from '../../facet_search_fields/SearchForContributorFacetItem';
+import { SearchForFundingSourceFacetItem } from '../../facet_search_fields/SearchForFundingSourceFacetItem';
+import { SearchForInstitutionFacetItem } from '../../facet_search_fields/SearchForInstitutionFacetItem';
+import { SearchForPublisherFacetItem } from '../../facet_search_fields/SearchForPublisherFacetItem';
+import { SearchForSerialPublicationFacetItem } from '../../facet_search_fields/SearchForSerialPublicationFacetItem';
+import { SelectCategoryFacetItem } from '../../facet_search_fields/SelectCategoryFacetItem';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
@@ -129,8 +129,8 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           dataTestId={dataTestId.aggregations.contributorFacets}
           isPending={registrationQuery.isPending}
           renderCustomSelect={
-            <SearchForContributorFacetItem
-              onSelectContributor={(identifier) => addFacetFilter(ResultParam.Contributor, identifier)}
+            <SearchForPersonFacetItem
+              onSelectPerson={(identifier) => addFacetFilter(ResultParam.Contributor, identifier)}
             />
           }>
           {contributorFacet.map((facet) => {
