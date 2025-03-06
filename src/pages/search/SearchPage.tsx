@@ -68,10 +68,12 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
             <SearchTypeField />
             <SearchForm paramName={PersonSearchParameter.Name} placeholder={t('search.person_search_placeholder')} />
           </StyledSearchBarContainer>
-          <SelectedFacetsList
-            facetParams={[PersonSearchParameter.Organization, PersonSearchParameter.Sector]}
-            aggregations={personQuery.data?.aggregations}
-          />
+          {!personQuery.isPending && (
+            <SelectedFacetsList
+              facetParams={[PersonSearchParameter.Organization, PersonSearchParameter.Sector]}
+              aggregations={personQuery.data?.aggregations}
+            />
+          )}
           <PersonSearch personQuery={personQuery} />
         </>
       )}
