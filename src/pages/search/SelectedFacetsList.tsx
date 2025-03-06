@@ -17,12 +17,11 @@ interface SelectedFacet {
 }
 
 const getSelectedFacetsArray = (searchParams: URLSearchParams, facetParams: string[]): SelectedFacet[] =>
-  Array.from(searchParams).flatMap(
-    ([param, value]) =>
-      value
-        .split(',')
-        .map((thisValue) => ({ param, value: thisValue }))
-        .filter(({ param }) => facetParams.includes(param)) // TODO: Filter earlier?
+  Array.from(searchParams).flatMap(([param, value]) =>
+    value
+      .split(',')
+      .map((thisValue) => ({ param, value: thisValue }))
+      .filter(({ param }) => facetParams.includes(param))
   );
 
 interface SelectedFacetsListProps {
