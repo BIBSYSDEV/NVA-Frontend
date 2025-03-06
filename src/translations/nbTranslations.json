@@ -133,6 +133,7 @@
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Øvrige",
+        "UC": "$t(basic_data.institutions.sector_values.UHI)",
         "UHI": "Universitet og høyskoler (UH)"
       },
       "show_only_active": "Vis kun aktive",
