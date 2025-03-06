@@ -33,6 +33,10 @@ export const SelectedFacetsList = ({ facetParams, aggregations }: SelectedFacets
   const [searchParams] = useSearchParams();
   const selectedFacets = getSelectedFacetsArray(searchParams, facetParams);
 
+  if (selectedFacets.length === 0) {
+    return null;
+  }
+
   return (
     <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
       {selectedFacets.map(({ param, value }) => (
