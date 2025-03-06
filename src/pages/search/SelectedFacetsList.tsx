@@ -11,18 +11,25 @@ interface SelectedFacet {
   value: string;
 }
 
-const getSelectedFacetsArray = (searchParams: URLSearchParams): SelectedFacet[] =>
-  Array.from(searchParams).flatMap(([param, value]) =>
-    value.split(',').map((thisValue) => ({ param, value: thisValue }))
+const getSelectedFacetsArray = (searchParams: URLSearchParams, facetParams: string[]): SelectedFacet[] =>
+  Array.from(searchParams).flatMap(
+    ([param, value]) =>
+      value
+        .split(',')
+        .map((thisValue) => ({ param, value: thisValue }))
+        .filter(({ param }) => facetParams.includes(param)) // TODO: Filter earlier?
   );
 
-export const SelectedFacetsList = () => {
-  const [searchParams] = useSearchParams();
-  const selectedFacets = getSelectedFacetsArray(searchParams);
+interface SelectedFacetsListProps {
+  facetParams: string[];
+}
 
-  // TODO: Should be <ul>?
+export const SelectedFacetsList = ({ facetParams }: SelectedFacetsListProps) => {
+  const [searchParams] = useSearchParams();
+  const selectedFacets = getSelectedFacetsArray(searchParams, facetParams);
+
   return (
-    <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
+    <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
       {selectedFacets.map(({ param, value }) => (
         <SelectedFacetButton key={`${param}-${value}`} param={param} value={value} />
       ))}
@@ -35,20 +42,22 @@ const SelectedFacetButton = ({ param, value }: SelectedFacet) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   return (
-    <Button
-      data-testid={dataTestId.startPage.advancedSearch.removeFacetButton}
-      variant="outlined"
-      size="small"
-      title={t('search.remove_filter')}
-      sx={{ textTransform: 'none' }}
-      endIcon={<ClearIcon />}
-      onClick={() => {
-        const syncedParams = syncParamsWithSearchFields(searchParams);
-        const newParams = removeSearchParamValue(syncedParams, param, value);
-        newParams.delete(ResultParam.From);
-        setSearchParams(newParams);
-      }}>
-      {param}: {value}
-    </Button>
+    <li style={{ listStyleType: 'none' }}>
+      <Button
+        data-testid={dataTestId.startPage.advancedSearch.removeFacetButton}
+        variant="outlined"
+        size="small"
+        title={t('search.remove_filter')}
+        sx={{ textTransform: 'none' }}
+        endIcon={<ClearIcon />}
+        onClick={() => {
+          const syncedParams = syncParamsWithSearchFields(searchParams);
+          const newParams = removeSearchParamValue(syncedParams, param, value);
+          newParams.delete(ResultParam.From);
+          setSearchParams(newParams);
+        }}>
+        {param}: {value}
+      </Button>
+    </li>
   );
 };
