@@ -150,9 +150,7 @@ export const ImportCandidatesMenuFilters = () => {
             isPending={importCandidateQuery.isPending}
             renderCustomSelect={
               <SearchForInstitutionFacetItem
-                onSelectInstitution={(identifier) =>
-                  updateSearchParams(ImportCandidatesSearchParam.TopLevelOrganization, identifier)
-                }
+                onSelectInstitution={(id) => updateSearchParams(ImportCandidatesSearchParam.TopLevelOrganization, id)}
               />
             }>
             {topLevelOrgAggregations.map((facet) => (
