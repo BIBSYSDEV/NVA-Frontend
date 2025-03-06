@@ -77,7 +77,7 @@ const SelectedFacetButton = ({ param, value, aggregations }: SelectedFacetButton
         if (value === 'UC') {
           valueString = t('basic_data.institutions.sector_values.UHI');
         } else {
-          valueString = value; // TODO: Dont set this while aggregations is still loading
+          valueString = t(`basic_data.institutions.sector_values.${value}`, { defaultValue: value });
         }
       }
       break;
