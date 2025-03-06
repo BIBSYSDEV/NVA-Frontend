@@ -67,6 +67,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
           renderCustomSelect={
             <SearchForInstitutionFacetItem
               placeholder={t('search.search_for_coordinating_institution')}
+              dataTestId={dataTestId.aggregations.coordinatingFacetsSearchField}
               onSelectInstitution={(identifier) => addFacetFilter(ProjectSearchParameter.CoordinatingFacet, identifier)}
             />
           }>
@@ -98,6 +99,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
           renderCustomSelect={
             <SearchForInstitutionFacetItem
               placeholder={t('search.search_for_responsible_institution')}
+              dataTestId={dataTestId.aggregations.responsibleFacetsSearchField}
               onSelectInstitution={(identifier) => addFacetFilter(ProjectSearchParameter.ResponsibleFacet, identifier)}
             />
           }>
@@ -129,6 +131,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
           renderCustomSelect={
             <SearchForInstitutionFacetItem
               placeholder={t('search.search_for_participating_institution')}
+              dataTestId={dataTestId.aggregations.participantOrgFacetsSearchField}
               onSelectInstitution={(identifier) =>
                 addFacetFilter(ProjectSearchParameter.ParticipantOrgFacet, identifier.split('.')[0])
               }

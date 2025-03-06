@@ -8,7 +8,7 @@ import {
 } from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { OrganizationRenderOption } from '../../../../components/OrganizationRenderOption';
-import { dataTestId } from '../../../../utils/dataTestIds';
+import { dataTestId as dataTestIdEnum } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../../utils/translation-helpers';
@@ -16,6 +16,7 @@ import { getLanguageString } from '../../../../utils/translation-helpers';
 interface SearchForInstitutionFacetItemProps {
   onSelectInstitution: (institutionId: string) => void;
   placeholder?: string;
+  dataTestId?: string;
 }
 
 const defaultOrganizationSearchSize = 10;
@@ -23,6 +24,7 @@ const defaultOrganizationSearchSize = 10;
 export const SearchForInstitutionFacetItem = ({
   onSelectInstitution,
   placeholder,
+  dataTestId,
 }: SearchForInstitutionFacetItemProps) => {
   const { t } = useTranslation();
 
@@ -68,7 +70,7 @@ export const SearchForInstitutionFacetItem = ({
           {...params}
           variant="outlined"
           isLoading={institutionSearchQuery.isLoading}
-          data-testid={dataTestId.aggregations.institutionFacetsSearchField}
+          data-testid={dataTestId ?? dataTestIdEnum.aggregations.institutionFacetsSearchField}
           placeholder={placeholder || t('project.search_for_institution')}
           showSearchIcon
         />
