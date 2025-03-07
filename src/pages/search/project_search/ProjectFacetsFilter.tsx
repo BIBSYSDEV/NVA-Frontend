@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { removeSearchParamValue, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { SearchForPersonFacetItem } from '../facet_search_fields/SearchForContributorFacetItem';
@@ -41,7 +42,9 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const addFacetFilter = (param: ProjectSearchParameter, key: string) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     const currentValues = syncedParams.get(param)?.split(',') ?? [];
-    if (currentValues.length === 0) {
+    if (currentValues.includes(key)) {
+      return;
+    } else if (currentValues.length === 0) {
       syncedParams.set(param, key);
     } else {
       syncedParams.set(param, [...currentValues, key].join(','));
@@ -68,7 +71,9 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
             <SearchForInstitutionFacetItem
               placeholder={t('search.search_for_coordinating_institution')}
               dataTestId={dataTestId.aggregations.coordinatingFacetsSearchField}
-              onSelectInstitution={(identifier) => addFacetFilter(ProjectSearchParameter.CoordinatingFacet, identifier)}
+              onSelectInstitution={(id) =>
+                addFacetFilter(ProjectSearchParameter.CoordinatingFacet, getIdentifierFromId(id))
+              }
             />
           }>
           {coordinatingFacet.map((facet) => {
@@ -100,7 +105,9 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
             <SearchForInstitutionFacetItem
               placeholder={t('search.search_for_responsible_institution')}
               dataTestId={dataTestId.aggregations.responsibleFacetsSearchField}
-              onSelectInstitution={(identifier) => addFacetFilter(ProjectSearchParameter.ResponsibleFacet, identifier)}
+              onSelectInstitution={(id) =>
+                addFacetFilter(ProjectSearchParameter.ResponsibleFacet, getIdentifierFromId(id))
+              }
             />
           }>
           {responsibleFacet.map((facet) => {
@@ -132,8 +139,8 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
             <SearchForInstitutionFacetItem
               placeholder={t('search.search_for_participating_institution')}
               dataTestId={dataTestId.aggregations.participantOrgFacetsSearchField}
-              onSelectInstitution={(identifier) =>
-                addFacetFilter(ProjectSearchParameter.ParticipantOrgFacet, identifier.split('.')[0])
+              onSelectInstitution={(id) =>
+                addFacetFilter(ProjectSearchParameter.ParticipantOrgFacet, getIdentifierFromId(id).split('.')[0])
               }
             />
           }>

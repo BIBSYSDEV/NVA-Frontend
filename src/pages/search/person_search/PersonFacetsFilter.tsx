@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { PersonSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { removeSearchParamValue, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
@@ -51,8 +52,8 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
           isPending={personQuery.isPending}
           renderCustomSelect={
             <SearchForInstitutionFacetItem
-              onSelectInstitution={(identifier) =>
-                addFacetFilter(PersonSearchParameter.Organization, identifier.split('.')[0])
+              onSelectInstitution={(id) =>
+                addFacetFilter(PersonSearchParameter.Organization, getIdentifierFromId(id).split('.')[0])
               }
             />
           }>

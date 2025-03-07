@@ -9,12 +9,11 @@ import {
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
 import { dataTestId as dataTestIdEnum } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface SearchForInstitutionFacetItemProps {
-  onSelectInstitution: (institutionId: string) => void;
+  onSelectInstitution: (id: string) => void;
   placeholder?: string;
   dataTestId?: string;
 }
@@ -57,7 +56,7 @@ export const SearchForInstitutionFacetItem = ({
       }}
       onChange={(_, selectedInstitution) => {
         if (selectedInstitution) {
-          onSelectInstitution(getIdentifierFromId(selectedInstitution.id));
+          onSelectInstitution(selectedInstitution.id);
         }
         setSearchQuery('');
       }}
