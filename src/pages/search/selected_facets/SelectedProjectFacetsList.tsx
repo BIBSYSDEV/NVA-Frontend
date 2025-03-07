@@ -108,17 +108,26 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
         return <SelectedInstitutionFacetButton institutionIdentifier={`${value}.0.0.0`} />;
       }
     }
-    case ProjectSearchParameter.SectorFacet:
+    case ProjectSearchParameter.SectorFacet: {
       const sectorLabels = aggregations?.sectorFacet?.find((bucket) => bucket.key === value)?.labels;
       return getSectorValueContent(t, value, sectorLabels);
-    case ProjectSearchParameter.CategoryFacet:
-      return '';
-    case ProjectSearchParameter.HealthProjectFacet:
-      return '';
-    case ProjectSearchParameter.ParticipantFacet:
-      return '';
-    case ProjectSearchParameter.FundingSourceFacet:
-      return '';
+    }
+    case ProjectSearchParameter.CategoryFacet: {
+      const categoryLabels = aggregations?.categoryFacet?.find((bucket) => bucket.key === value)?.labels;
+      return getLanguageString(categoryLabels);
+    }
+    case ProjectSearchParameter.HealthProjectFacet: {
+      const healthProjectLabels = aggregations?.healthProjectFacet?.find((bucket) => bucket.key === value)?.labels;
+      return getLanguageString(healthProjectLabels);
+    }
+    case ProjectSearchParameter.ParticipantFacet: {
+      const participantLabels = aggregations?.participantFacet?.find((bucket) => bucket.key === value)?.labels;
+      return getLanguageString(participantLabels);
+    }
+    case ProjectSearchParameter.FundingSourceFacet: {
+      const fundingSourceLabels = aggregations?.fundingSourceFacet?.find((bucket) => bucket.key === value)?.labels;
+      return getLanguageString(fundingSourceLabels);
+    }
     default:
       return value || t('common.unknown');
   }
