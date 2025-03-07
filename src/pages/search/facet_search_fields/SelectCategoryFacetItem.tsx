@@ -1,6 +1,6 @@
 import { Autocomplete, Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import {
   ArtisticType,
   BookType,
@@ -14,9 +14,9 @@ import {
   PublicationType,
   ReportType,
   ResearchDataType,
-} from '../../../../types/publicationFieldNames';
-import { PublicationInstanceType } from '../../../../types/registration.types';
-import { dataTestId } from '../../../../utils/dataTestIds';
+} from '../../../types/publicationFieldNames';
+import { PublicationInstanceType } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 const createOptions = (enumObj: object, parentCategory: PublicationType) =>
   Object.values(enumObj).map((category: PublicationInstanceType) => ({ parentCategory, category }));
@@ -71,7 +71,6 @@ export const SelectCategoryFacetItem = ({ onSelectCategory }: SelectCategoryFace
           {...params}
           variant="outlined"
           data-testid={dataTestId.aggregations.categoryFacetsSearchField}
-          aria-label={t('registration.resource_type.select_resource_type')}
           placeholder={t('registration.resource_type.select_resource_type')}
           showSearchIcon
         />

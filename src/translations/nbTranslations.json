@@ -325,10 +325,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -400,7 +396,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -2061,10 +2061,14 @@
     "result": "Resultat",
     "result_search": "Resultatsøk",
     "search_for_contributor": "Søk etter bidragsyter",
+    "search_for_coordinating_institution": "Søk etter koordinerende institusjon",
     "search_for_course_code": "Søk etter emnekode",
     "search_for_funder": "Søk etter finansiør",
     "search_for_funding_identifier": "Søk på Tilskudds-ID",
     "search_for_journal": "Søk etter tidsskrift",
+    "search_for_participant": "Søk etter deltaker",
+    "search_for_participating_institution": "Søk etter deltakende institusjon",
+    "search_for_responsible_institution": "Søk etter forskningsansvarlig institusjon",
     "search_for_series": "Søk etter serie",
     "search_for_sub_unit": "Søk etter underenhet",
     "search_for_title": "Søk etter tittel",
