@@ -15,9 +15,9 @@ export const SelectedPersonFacetsList = ({ aggregations }: SelectedPersonFacetsL
   const [searchParams] = useSearchParams();
   const selectedFacets = getSelectedFacetsArray(searchParams, personFacetParams);
 
-  if (selectedFacets.length === 0) {
-    return null;
-  }
+  // if (selectedFacets.length === 0) {
+  //   return null;
+  // }
 
   return (
     <SelectedFacetsList>

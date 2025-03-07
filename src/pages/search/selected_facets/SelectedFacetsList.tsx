@@ -6,6 +6,10 @@ interface SelectedFacetsListProps {
 }
 
 export const SelectedFacetsList = ({ children }: SelectedFacetsListProps) => {
+  if (!children || (Array.isArray(children) && children.length === 0)) {
+    return;
+  }
+
   return (
     <Box component="ul" sx={{ m: '0 0 0.5rem 0', p: 0, display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
       {children}
