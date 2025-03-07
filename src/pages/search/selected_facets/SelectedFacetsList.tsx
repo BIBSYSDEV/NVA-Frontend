@@ -7,7 +7,7 @@ interface SelectedFacetsListProps {
 
 export const SelectedFacetsList = ({ children }: SelectedFacetsListProps) => {
   if (!children || (Array.isArray(children) && children.length === 0)) {
-    return;
+    return null;
   }
 
   return (
