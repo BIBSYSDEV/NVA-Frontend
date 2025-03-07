@@ -2,7 +2,10 @@ import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { ProjectAggregations } from '../../../types/project.types';
+import { getLanguageString } from '../../../utils/translation-helpers';
+import { SelectedInstitutionFacetButton } from '../registration_search/RegistrationSearchBar';
 import { SelectedFacetButton } from './SelectedFacetButton';
+import { getSectorValueContent } from './facetHelpers';
 
 interface SelectedProjectFacetButtonProps {
   param: string;
@@ -54,14 +57,36 @@ const getParamContent = (t: TFunction, param: string) => {
 
 const getValueContent = (t: TFunction, param: string, value: string, aggregations?: ProjectAggregations) => {
   switch (param) {
-    case ProjectSearchParameter.CoordinatingFacet:
-      return '';
-    case ProjectSearchParameter.ResponsibleFacet:
-      return '';
-    case ProjectSearchParameter.ParticipantOrgFacet:
-      return '';
+    case ProjectSearchParameter.CoordinatingFacet: {
+      const institutionLabels = aggregations?.coordinatingFacet?.find((bucket) => bucket.key === value)?.labels;
+      const institutionName = getLanguageString(institutionLabels);
+      if (institutionName) {
+        return institutionName;
+      } else {
+        return <SelectedInstitutionFacetButton institutionIdentifier={value} />;
+      }
+    }
+    case ProjectSearchParameter.ResponsibleFacet: {
+      const institutionLabels = aggregations?.responsibleFacet?.find((bucket) => bucket.key === value)?.labels;
+      const institutionName = getLanguageString(institutionLabels);
+      if (institutionName) {
+        return institutionName;
+      } else {
+        return <SelectedInstitutionFacetButton institutionIdentifier={value} />;
+      }
+    }
+    case ProjectSearchParameter.ParticipantOrgFacet: {
+      const institutionLabels = aggregations?.participantOrgFacet?.find((bucket) => bucket.key === value)?.labels;
+      const institutionName = getLanguageString(institutionLabels);
+      if (institutionName) {
+        return institutionName;
+      } else {
+        return <SelectedInstitutionFacetButton institutionIdentifier={`${value}.0.0.0`} />;
+      }
+    }
     case ProjectSearchParameter.SectorFacet:
-      return '';
+      const sectorLabels = aggregations?.sectorFacet?.find((bucket) => bucket.key === value)?.labels;
+      return getSectorValueContent(t, value, sectorLabels);
     case ProjectSearchParameter.CategoryFacet:
       return '';
     case ProjectSearchParameter.HealthProjectFacet:
