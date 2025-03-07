@@ -15,7 +15,7 @@ import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
-import { SelectedFacetsList } from './SelectedFacetsList';
+import { SelectedFacetsList } from './selected_facets/SelectedFacetsList';
 
 const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
   display: 'grid',

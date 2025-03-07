@@ -3,13 +3,13 @@ import { Button } from '@mui/material';
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
-import { PersonSearchParameter } from '../../api/cristinApi';
-import { ResultParam } from '../../api/searchApi';
-import { PersonAggregations } from '../../types/user.types';
-import { dataTestId } from '../../utils/dataTestIds';
-import { removeSearchParamValue, syncParamsWithSearchFields } from '../../utils/searchHelpers';
-import { getLanguageString } from '../../utils/translation-helpers';
-import { SelectedInstitutionFacetButton } from './registration_search/RegistrationSearchBar';
+import { PersonSearchParameter } from '../../../api/cristinApi';
+import { ResultParam } from '../../../api/searchApi';
+import { PersonAggregations } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { removeSearchParamValue, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { getLanguageString } from '../../../utils/translation-helpers';
+import { SelectedInstitutionFacetButton } from '../registration_search/RegistrationSearchBar';
 
 interface SelectedFacetButtonProps {
   param: string;

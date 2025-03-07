@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { useSearchParams } from 'react-router';
-import { PersonAggregations } from '../../types/user.types';
+import { PersonAggregations } from '../../../types/user.types';
 import { SelectedFacetButton } from './SelectedFacetButton';
 
 interface SelectedFacet {
