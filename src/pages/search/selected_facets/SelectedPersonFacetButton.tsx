@@ -68,6 +68,6 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
         }
       }
     default:
-      return typeof value === 'string' ? value || t('common.unknown') : t('common.unknown');
+      return value || t('common.unknown');
   }
 };
