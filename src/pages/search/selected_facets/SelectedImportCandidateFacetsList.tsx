@@ -39,7 +39,7 @@ export const SelectedImportCandidateFacetsList = ({ aggregations }: SelectedImpo
         const valueContent = getValueContent(t, param, value, aggregations);
 
         const buttonContent =
-          typeof valueContent === 'string' ? (
+          typeof paramContent === 'string' && typeof valueContent === 'string' ? (
             [paramContent, valueContent].filter(Boolean).join(': ')
           ) : (
             <>
@@ -60,7 +60,6 @@ const getParamContent = (t: TFunction, param: string) => {
     case ImportCandidatesSearchParam.TopLevelOrganization:
       return t('common.institution');
     case ImportCandidatesSearchParam.CollaborationType:
-      return '';
     case ImportCandidatesSearchParam.Files:
       return '';
     default:
