@@ -132,7 +132,7 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
       if (healthProjectName) {
         return healthProjectName;
       } else {
-        return value;
+        return t(`search.health_project_types.${value}`, { defaultValue: t('common.unknown') });
       }
     }
     case ProjectSearchParameter.ParticipantFacet: {
