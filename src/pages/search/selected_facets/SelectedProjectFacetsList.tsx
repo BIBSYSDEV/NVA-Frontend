@@ -23,6 +23,7 @@ const projectFacetParams: string[] = [
   ProjectSearchParameter.ParticipantOrgFacet,
   ProjectSearchParameter.ResponsibleFacet,
   ProjectSearchParameter.SectorFacet,
+  ProjectSearchParameter.Status,
 ];
 
 interface SelectedProjectFacetsListProps {
@@ -79,6 +80,8 @@ const getParamContent = (t: TFunction, param: string) => {
       return t('search.participant');
     case ProjectSearchParameter.FundingSourceFacet:
       return t('common.financier');
+    case ProjectSearchParameter.Status:
+      return t('common.project_status');
     default:
       return param || t('common.unknown');
   }
@@ -153,6 +156,8 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
         return <SelectedFundingFacetButton fundingIdentifier={value} />;
       }
     }
+    case ProjectSearchParameter.Status:
+      return t(`project.status.${value}`, { defaultValue: value });
     default:
       return value || t('common.unknown');
   }
