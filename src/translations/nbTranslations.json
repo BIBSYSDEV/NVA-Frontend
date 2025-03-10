@@ -2038,6 +2038,11 @@
     "export": "Eksporter",
     "field_label": "Felt",
     "health_project_type": "Helseprosjekttype",
+    "health_project_types": {
+      "DRUGSTUDY": "Legemiddelstudium",
+      "OTHERCLIN": "Annet klinisk behandlingsstudium",
+      "OTHERSTUDY": "Annet studium"
+    },
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
     "no_persons": "Ingen personer",
