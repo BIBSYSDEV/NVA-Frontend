@@ -1,25 +1,30 @@
 import { Autocomplete } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchForOrganizations } from '../../../../api/hooks/useSearchForOrganizations';
+import { useSearchForOrganizations } from '../../../api/hooks/useSearchForOrganizations';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
-} from '../../../../components/AutocompleteListboxWithExpansion';
-import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { OrganizationRenderOption } from '../../../../components/OrganizationRenderOption';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { getLanguageString } from '../../../../utils/translation-helpers';
+} from '../../../components/AutocompleteListboxWithExpansion';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
+import { dataTestId as dataTestIdEnum } from '../../../utils/dataTestIds';
+import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface SearchForInstitutionFacetItemProps {
-  onSelectInstitution: (institutionId: string) => void;
+  onSelectInstitution: (id: string) => void;
+  placeholder?: string;
+  dataTestId?: string;
 }
 
 const defaultOrganizationSearchSize = 10;
 
-export const SearchForInstitutionFacetItem = ({ onSelectInstitution }: SearchForInstitutionFacetItemProps) => {
+export const SearchForInstitutionFacetItem = ({
+  onSelectInstitution,
+  placeholder,
+  dataTestId,
+}: SearchForInstitutionFacetItemProps) => {
   const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -51,7 +56,7 @@ export const SearchForInstitutionFacetItem = ({ onSelectInstitution }: SearchFor
       }}
       onChange={(_, selectedInstitution) => {
         if (selectedInstitution) {
-          onSelectInstitution(getIdentifierFromId(selectedInstitution.id));
+          onSelectInstitution(selectedInstitution.id);
         }
         setSearchQuery('');
       }}
@@ -64,9 +69,8 @@ export const SearchForInstitutionFacetItem = ({ onSelectInstitution }: SearchFor
           {...params}
           variant="outlined"
           isLoading={institutionSearchQuery.isLoading}
-          data-testid={dataTestId.aggregations.institutionFacetsSearchField}
-          aria-label={t('project.search_for_institution')}
-          placeholder={t('project.search_for_institution')}
+          data-testid={dataTestId ?? dataTestIdEnum.aggregations.institutionFacetsSearchField}
+          placeholder={placeholder || t('project.search_for_institution')}
           showSearchIcon
         />
       )}

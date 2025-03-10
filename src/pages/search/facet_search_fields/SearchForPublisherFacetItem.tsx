@@ -1,16 +1,16 @@
 import { Autocomplete } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePublisherSearch } from '../../../../api/hooks/usePublisherSearch';
-import { defaultChannelSearchSize } from '../../../../api/publicationChannelApi';
+import { usePublisherSearch } from '../../../api/hooks/usePublisherSearch';
+import { defaultChannelSearchSize } from '../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
-} from '../../../../components/AutocompleteListboxWithExpansion';
-import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { PublicationChannelOption } from '../../../registration/resource_type_tab/components/PublicationChannelOption';
+} from '../../../components/AutocompleteListboxWithExpansion';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 interface SearchForPublisherFacetItemProps {
   onSelectPublisher: (publisherId: string) => void;
@@ -68,7 +68,6 @@ export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPubl
           variant="outlined"
           isLoading={publisherSearchQuery.isLoading}
           data-testid={dataTestId.aggregations.publisherFacetsSearchField}
-          aria-label={t('registration.resource_type.search_for_publisher')}
           placeholder={t('registration.resource_type.search_for_publisher')}
           showSearchIcon
         />

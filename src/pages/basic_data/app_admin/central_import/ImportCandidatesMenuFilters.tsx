@@ -16,6 +16,7 @@ import { getLanguageString } from '../../../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../../../utils/urlPaths';
 import { FacetItem } from '../../../search/FacetItem';
 import { FacetListItem } from '../../../search/FacetListItem';
+import { SearchForInstitutionFacetItem } from '../../../search/facet_search_fields/SearchForInstitutionFacetItem';
 
 const thisYear = new Date().getFullYear();
 const yearOptions = [thisYear, thisYear - 1, thisYear - 2, thisYear - 3, thisYear - 4, thisYear - 5];
@@ -146,7 +147,12 @@ export const ImportCandidatesMenuFilters = () => {
           <FacetItem
             title={t('common.institution')}
             dataTestId={dataTestId.aggregations.typeFacets}
-            isPending={importCandidateQuery.isPending}>
+            isPending={importCandidateQuery.isPending}
+            renderCustomSelect={
+              <SearchForInstitutionFacetItem
+                onSelectInstitution={(id) => updateSearchParams(ImportCandidatesSearchParam.TopLevelOrganization, id)}
+              />
+            }>
             {topLevelOrgAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}

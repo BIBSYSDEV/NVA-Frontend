@@ -2,8 +2,12 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { removeSearchParamValue, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { SearchForPersonFacetItem } from '../facet_search_fields/SearchForContributorFacetItem';
+import { SearchForFundingSourceFacetItem } from '../facet_search_fields/SearchForFundingSourceFacetItem';
+import { SearchForInstitutionFacetItem } from '../facet_search_fields/SearchForInstitutionFacetItem';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
 import { SearchPageProps } from '../SearchPage';
@@ -38,7 +42,9 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const addFacetFilter = (param: ProjectSearchParameter, key: string) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     const currentValues = syncedParams.get(param)?.split(',') ?? [];
-    if (currentValues.length === 0) {
+    if (currentValues.includes(key)) {
+      return;
+    } else if (currentValues.length === 0) {
       syncedParams.set(param, key);
     } else {
       syncedParams.set(param, [...currentValues, key].join(','));
@@ -60,7 +66,16 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
         <FacetItem
           title={t('project.coordinating_institution')}
           dataTestId={dataTestId.aggregations.coordinatingFacets}
-          isPending={projectQuery.isPending}>
+          isPending={projectQuery.isPending}
+          renderCustomSelect={
+            <SearchForInstitutionFacetItem
+              placeholder={t('search.search_for_coordinating_institution')}
+              dataTestId={dataTestId.aggregations.coordinatingFacetsSearchField}
+              onSelectInstitution={(id) =>
+                addFacetFilter(ProjectSearchParameter.CoordinatingFacet, getIdentifierFromId(id))
+              }
+            />
+          }>
           {coordinatingFacet.map((facet) => {
             const isSelected = selectedCoordinating.includes(facet.key);
             return (
@@ -85,7 +100,16 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
         <FacetItem
           title={t('search.responsible_institution')}
           dataTestId={dataTestId.aggregations.responsibleFacets}
-          isPending={projectQuery.isPending}>
+          isPending={projectQuery.isPending}
+          renderCustomSelect={
+            <SearchForInstitutionFacetItem
+              placeholder={t('search.search_for_responsible_institution')}
+              dataTestId={dataTestId.aggregations.responsibleFacetsSearchField}
+              onSelectInstitution={(id) =>
+                addFacetFilter(ProjectSearchParameter.ResponsibleFacet, getIdentifierFromId(id))
+              }
+            />
+          }>
           {responsibleFacet.map((facet) => {
             const isSelected = selectedResponsible.includes(facet.key);
             return (
@@ -110,7 +134,16 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
         <FacetItem
           title={t('search.participating_institution')}
           dataTestId={dataTestId.aggregations.participantOrgFacets}
-          isPending={projectQuery.isPending}>
+          isPending={projectQuery.isPending}
+          renderCustomSelect={
+            <SearchForInstitutionFacetItem
+              placeholder={t('search.search_for_participating_institution')}
+              dataTestId={dataTestId.aggregations.participantOrgFacetsSearchField}
+              onSelectInstitution={(id) =>
+                addFacetFilter(ProjectSearchParameter.ParticipantOrgFacet, getIdentifierFromId(id).split('.')[0])
+              }
+            />
+          }>
           {participantOrgFacet.map((facet) => {
             const isSelected = selectedParticipantOrg.includes(facet.key);
             return (
@@ -210,7 +243,13 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
         <FacetItem
           title={t('search.participant')}
           dataTestId={dataTestId.aggregations.participantFacets}
-          isPending={projectQuery.isPending}>
+          isPending={projectQuery.isPending}
+          renderCustomSelect={
+            <SearchForPersonFacetItem
+              placeholder={t('search.search_for_participant')}
+              onSelectPerson={(identifier) => addFacetFilter(ProjectSearchParameter.ParticipantFacet, identifier)}
+            />
+          }>
           {participantFacet.map((facet) => {
             const isSelected = selectedParticipants.includes(facet.key);
             return (
@@ -233,9 +272,14 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
 
       {(projectQuery.isPending || fundingSourceFacet.length > 0) && (
         <FacetItem
-          title={t('common.funding')}
+          title={t('common.financier')}
           dataTestId={dataTestId.aggregations.fundingSourceFacets}
-          isPending={projectQuery.isPending}>
+          isPending={projectQuery.isPending}
+          renderCustomSelect={
+            <SearchForFundingSourceFacetItem
+              onSelectFunder={(identifier) => addFacetFilter(ProjectSearchParameter.FundingSourceFacet, identifier)}
+            />
+          }>
           {fundingSourceFacet.map((facet) => {
             const isSelected = selectedFundingSources.includes(facet.key);
             return (
