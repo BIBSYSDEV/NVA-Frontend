@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, Link, Paper, TextField, Typography } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, Paper, TextField, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef } from 'react';
@@ -20,6 +20,7 @@ import {
   userIsValidImporter,
 } from '../../utils/registration-helpers';
 
+import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { DoiField } from './resource_type_tab/components/DoiField';
@@ -108,31 +109,24 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           : t('registration.heading.files_and_license')}
       </Typography>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-        <Paper elevation={5} component={BackgroundDiv}>
-          <Typography variant="h6" component="h2" gutterBottom>
+        <Paper elevation={5} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <Typography variant="h6" component="h2">
             {t('registration.files_and_license.info_from_channel_register')}
           </Typography>
           {journalIdentifier && (
-            <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
-              <Typography sx={{ mb: '1rem' }}>
-                {t('registration.files_and_license.find_journal_in_channel_register')}
-              </Typography>
-            </Link>
+            <OpenInNewLink href={getChannelRegisterJournalUrl(journalIdentifier)}>
+              {t('registration.files_and_license.find_journal_in_channel_register')}
+            </OpenInNewLink>
           )}
           {publisherIdentifier && (
-            <Link href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
-              <Typography gutterBottom>
-                {t('registration.files_and_license.find_publisher_in_channel_register')}
-              </Typography>
-            </Link>
+            <OpenInNewLink href={getChannelRegisterPublisherUrl(publisherIdentifier)}>
+              {t('registration.files_and_license.find_publisher_in_channel_register')}
+            </OpenInNewLink>
           )}
-
           {seriesIdentifier && (
-            <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
-              <Typography sx={{ mb: '1rem' }}>
-                {t('registration.files_and_license.find_series_in_channel_register')}
-              </Typography>
-            </Link>
+            <OpenInNewLink href={getChannelRegisterJournalUrl(seriesIdentifier)}>
+              {t('registration.files_and_license.find_series_in_channel_register')}
+            </OpenInNewLink>
           )}
         </Paper>
       )}
