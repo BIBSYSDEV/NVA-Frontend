@@ -13,6 +13,7 @@ import { SortSelector } from '../../../../components/SortSelector';
 import { useFetchImportCandidatesQuery } from '../../../../utils/hooks/useFetchImportCandidatesQuery';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../../utils/searchHelpers';
+import { SelectedImportCandidateFacetsList } from '../../../search/selected_facets/SelectedImportCandidateFacetsList';
 import { CentralImportResultItem } from './CentralImportResultItem';
 
 export const CentralImportPage = () => {
@@ -47,6 +48,8 @@ export const CentralImportPage = () => {
         {t('basic_data.central_import.central_import')}
       </Typography>
       <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
+
+      <SelectedImportCandidateFacetsList aggregations={importCandidateQuery.data?.aggregations} />
 
       <ListPagination
         count={importCandidateQuery.data?.totalHits ?? 0}
