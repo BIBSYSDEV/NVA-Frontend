@@ -5,6 +5,7 @@ import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { ProjectAggregations } from '../../../types/project.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import {
+  SelectedFundingFacetButton,
   SelectedInstitutionFacetButton,
   SelectedPersonFacetButton,
 } from '../registration_search/RegistrationSearchBar';
@@ -134,7 +135,12 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
     }
     case ProjectSearchParameter.FundingSourceFacet: {
       const fundingSourceLabels = aggregations?.fundingSourceFacet?.find((bucket) => bucket.key === value)?.labels;
-      return getLanguageString(fundingSourceLabels);
+      const fundingSourceName = getLanguageString(fundingSourceLabels);
+      if (fundingSourceName) {
+        return fundingSourceName;
+      } else {
+        return <SelectedFundingFacetButton fundingIdentifier={value} />;
+      }
     }
     default:
       return value || t('common.unknown');

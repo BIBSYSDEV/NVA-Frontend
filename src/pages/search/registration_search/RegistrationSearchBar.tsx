@@ -393,7 +393,7 @@ interface SelectedFundingFacetButtonProps {
   fundingIdentifier: string;
 }
 
-const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetButtonProps) => {
+export const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetButtonProps) => {
   const { t } = useTranslation();
 
   const fundingSourcesQuery = useQuery({
