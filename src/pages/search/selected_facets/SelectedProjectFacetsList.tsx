@@ -4,7 +4,10 @@ import { useSearchParams } from 'react-router';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { ProjectAggregations } from '../../../types/project.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { SelectedInstitutionFacetButton } from '../registration_search/RegistrationSearchBar';
+import {
+  SelectedInstitutionFacetButton,
+  SelectedPersonFacetButton,
+} from '../registration_search/RegistrationSearchBar';
 import { getSectorValueContent, getSelectedFacetsArray } from './facetHelpers';
 import { SelectedFacetButton } from './SelectedFacetButton';
 import { SelectedFacetsList } from './SelectedFacetsList';
@@ -122,7 +125,12 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
     }
     case ProjectSearchParameter.ParticipantFacet: {
       const participantLabels = aggregations?.participantFacet?.find((bucket) => bucket.key === value)?.labels;
-      return getLanguageString(participantLabels);
+      const participantName = getLanguageString(participantLabels);
+      if (participantName) {
+        return participantName;
+      } else {
+        return <SelectedPersonFacetButton personIdentifier={value} />;
+      }
     }
     case ProjectSearchParameter.FundingSourceFacet: {
       const fundingSourceLabels = aggregations?.fundingSourceFacet?.find((bucket) => bucket.key === value)?.labels;

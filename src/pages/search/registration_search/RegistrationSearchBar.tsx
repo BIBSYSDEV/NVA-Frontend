@@ -232,9 +232,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                       fieldValueText = getLanguageString(personName);
                     } else {
                       fieldValueText = (
-                        <SelectedContributorFacetButton
-                          personIdentifier={typeof value === 'string' ? value : value[0]}
-                        />
+                        <SelectedPersonFacetButton personIdentifier={typeof value === 'string' ? value : value[0]} />
                       );
                     }
                     break;
@@ -368,7 +366,7 @@ interface SelectedContributorFacetButtonProps {
   personIdentifier: string;
 }
 
-const SelectedContributorFacetButton = ({ personIdentifier }: SelectedContributorFacetButtonProps) => {
+export const SelectedPersonFacetButton = ({ personIdentifier }: SelectedContributorFacetButtonProps) => {
   const { t } = useTranslation();
 
   const personQuery = useFetchPersonByIdentifier(personIdentifier);
