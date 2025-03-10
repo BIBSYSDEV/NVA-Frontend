@@ -45,7 +45,7 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
         ) : registrationQuery.data?.hits && registrationQuery.data.hits.length > 0 ? (
           <RegistrationSearchResults searchResult={registrationQuery.data.hits} />
         ) : (
-          <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('search.no_results')}</Typography>
+          <Typography sx={{ mx: { xs: '0.5rem', md: 0 }, mt: '1rem' }}>{t('search.no_results')}</Typography>
         )}
       </ListPagination>
     </section>
