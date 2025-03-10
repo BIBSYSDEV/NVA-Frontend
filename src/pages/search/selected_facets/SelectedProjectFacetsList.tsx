@@ -10,6 +10,7 @@ import {
   SelectedPersonFacetButton,
 } from '../registration_search/RegistrationSearchBar';
 import { getSectorValueContent, getSelectedFacetsArray } from './facetHelpers';
+import { SelectedProjectCategoryFacetButton } from './SelectedCategoryFacetButton';
 import { SelectedFacetButton } from './SelectedFacetButton';
 import { SelectedFacetsList } from './SelectedFacetsList';
 
@@ -118,11 +119,21 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
     }
     case ProjectSearchParameter.CategoryFacet: {
       const categoryLabels = aggregations?.categoryFacet?.find((bucket) => bucket.key === value)?.labels;
-      return getLanguageString(categoryLabels);
+      const categoryName = getLanguageString(categoryLabels);
+      if (categoryName) {
+        return categoryName;
+      } else {
+        return <SelectedProjectCategoryFacetButton value={value} />;
+      }
     }
     case ProjectSearchParameter.HealthProjectFacet: {
       const healthProjectLabels = aggregations?.healthProjectFacet?.find((bucket) => bucket.key === value)?.labels;
-      return getLanguageString(healthProjectLabels);
+      const healthProjectName = getLanguageString(healthProjectLabels);
+      if (healthProjectName) {
+        return healthProjectName;
+      } else {
+        return value;
+      }
     }
     case ProjectSearchParameter.ParticipantFacet: {
       const participantLabels = aggregations?.participantFacet?.find((bucket) => bucket.key === value)?.labels;
