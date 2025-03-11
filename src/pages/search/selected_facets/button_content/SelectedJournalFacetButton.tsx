@@ -20,5 +20,5 @@ export const SelectedJournalFacetButton = ({ journalIdentifier }: SelectedJourna
 
   const journalName = journalQuery.data?.name || t('common.unknown');
 
-  return <>{journalQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : journalName}</>;
+  return journalQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : journalName;
 };

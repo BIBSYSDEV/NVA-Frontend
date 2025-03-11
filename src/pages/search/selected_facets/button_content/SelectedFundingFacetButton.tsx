@@ -21,5 +21,5 @@ export const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundin
 
   const fundingName = getLanguageString(fundingSourcesQuery.data?.name) || t('common.unknown');
 
-  return <>{fundingSourcesQuery.isPending ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : fundingName}</>;
+  return fundingSourcesQuery.isPending ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : fundingName;
 };

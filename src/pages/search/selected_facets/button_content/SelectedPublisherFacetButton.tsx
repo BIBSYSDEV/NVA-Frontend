@@ -20,5 +20,5 @@ export const SelectedPublisherFacetButton = ({ publisherIdentifier }: SelectedPu
 
   const publisherName = publisherQuery.data?.name || t('common.unknown');
 
-  return <>{publisherQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : publisherName}</>;
+  return publisherQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : publisherName;
 };

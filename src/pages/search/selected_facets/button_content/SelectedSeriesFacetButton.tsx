@@ -20,5 +20,5 @@ export const SelectedSeriesFacetButton = ({ seriesIdentifier }: SelectedSeriesFa
 
   const seriesName = seriesQuery.data?.name || t('common.unknown');
 
-  return <>{seriesQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : seriesName}</>;
+  return seriesQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : seriesName;
 };

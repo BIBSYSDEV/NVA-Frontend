@@ -13,5 +13,5 @@ export const SelectedPersonFacetButton = ({ personIdentifier }: SelectedContribu
   const personQuery = useFetchPersonByIdentifier(personIdentifier);
   const personName = getFullCristinName(personQuery.data?.names) || t('common.unknown');
 
-  return <>{personQuery.isPending ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : personName}</>;
+  return personQuery.isPending ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : personName;
 };
