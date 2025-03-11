@@ -113,90 +113,97 @@ export const RegistrationSearchBar = () => {
 
         navigate({ search: searchParams.toString() });
       }}>
-      {({ values, submitForm }) => (
-        <Box
-          component={Form}
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: 'auto 1fr auto' },
-            gridTemplateAreas: {
-              xs: "'typeSearch' 'searchbar' 'buttonRowTop' 'filter' 'buttonRowBottom'",
-              md: "'typeSearch searchbar buttonRowTop' 'filter filter buttonRowBottom'",
-            },
-            gap: '0.75rem 0.5rem',
-          }}>
-          <SearchTypeField sx={{ gridArea: 'typeSearch' }} />
-          <Field name="searchTerm" gridArea="searchbar">
-            {({ field }: FieldProps<string>) => (
-              <SearchTextField
-                {...field}
-                slotProps={{ htmlInput: { [dataSearchFieldAttributeName]: ResultParam.Query } }}
-                placeholder={t('search.search_placeholder')}
-                clearValue={() => {
-                  field.onChange({ target: { value: '', id: field.name } });
-                  submitForm();
-                }}
-              />
-            )}
-          </Field>
+      {({ values, submitForm }) => {
+        const showExtraFilterRow = values.properties.length > 0;
 
-          <Box gridArea="buttonRowTop">
-            <FilterButton />
-            <ExportResultsButton searchParams={searchParams} />
-          </Box>
-
-          {values.properties.length > 0 && (
-            <FieldArray name="properties">
-              {({ push, remove }: FieldArrayRenderProps) => (
-                <>
-                  <Box gridArea="filter" sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', mb: '1rem' }}>
-                    {values.properties.map((property, index) => (
-                      <AdvancedSearchRow
-                        key={index}
-                        queryParam={property.fieldName}
-                        removeFilter={() => {
-                          remove(index);
-                          const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
-                          const syncedParams = syncParamsWithSearchFields(searchParams);
-                          const newParams = removeSearchParamValue(syncedParams, property.fieldName, valueToRemove);
-                          newParams.delete(ResultParam.From);
-                          navigate({ search: newParams.toString() });
-                        }}
-                        baseFieldName={`properties[${index}]`}
-                      />
-                    ))}
-                  </Box>
-                  <Box
-                    gridArea="buttonRowBottom"
-                    sx={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem', mb: '1rem' }}>
-                    <IconButton
-                      sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
-                      size="small"
-                      color="primary"
-                      title={t('common.add_custom', { name: t('common.filter').toLocaleLowerCase() })}
-                      data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
-                      onClick={() => {
-                        const newPropertyFilter: PropertySearch = {
-                          fieldName: '',
-                          value: '',
-                        };
-                        push(newPropertyFilter);
-                      }}>
-                      <AddIcon />
-                    </IconButton>
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      data-testid={dataTestId.startPage.advancedSearch.searchButton}>
-                      {t('common.search')}
-                    </Button>
-                  </Box>
-                </>
+        return (
+          <Box
+            component={Form}
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', md: 'auto 1fr auto' },
+              gridTemplateAreas: {
+                xs: showExtraFilterRow
+                  ? "'typeSearch' 'searchbar' 'buttonRowTop' 'filter' 'buttonRowBottom'"
+                  : "'typeSearch' 'searchbar' 'buttonRowTop'",
+                md: showExtraFilterRow
+                  ? "'typeSearch searchbar buttonRowTop' 'filter filter buttonRowBottom'"
+                  : "'typeSearch searchbar buttonRowTop'",
+              },
+              gap: '0.75rem 0.5rem',
+            }}>
+            <SearchTypeField sx={{ gridArea: 'typeSearch' }} />
+            <Field name="searchTerm" gridArea="searchbar">
+              {({ field }: FieldProps<string>) => (
+                <SearchTextField
+                  {...field}
+                  slotProps={{ htmlInput: { [dataSearchFieldAttributeName]: ResultParam.Query } }}
+                  placeholder={t('search.search_placeholder')}
+                  clearValue={() => {
+                    field.onChange({ target: { value: '', id: field.name } });
+                    submitForm();
+                  }}
+                />
               )}
-            </FieldArray>
-          )}
-        </Box>
-      )}
+            </Field>
+
+            <Box gridArea="buttonRowTop">
+              <FilterButton />
+              <ExportResultsButton searchParams={searchParams} />
+            </Box>
+
+            {showExtraFilterRow && (
+              <FieldArray name="properties">
+                {({ push, remove }: FieldArrayRenderProps) => (
+                  <>
+                    <Box gridArea="filter" sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                      {values.properties.map((property, index) => (
+                        <AdvancedSearchRow
+                          key={index}
+                          queryParam={property.fieldName}
+                          removeFilter={() => {
+                            remove(index);
+                            const valueToRemove =
+                              typeof property.value === 'string' ? property.value : property.value[0];
+                            const syncedParams = syncParamsWithSearchFields(searchParams);
+                            const newParams = removeSearchParamValue(syncedParams, property.fieldName, valueToRemove);
+                            newParams.delete(ResultParam.From);
+                            navigate({ search: newParams.toString() });
+                          }}
+                          baseFieldName={`properties[${index}]`}
+                        />
+                      ))}
+                    </Box>
+                    <Box gridArea="buttonRowBottom" sx={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem' }}>
+                      <IconButton
+                        sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
+                        size="small"
+                        color="primary"
+                        title={t('common.add_custom', { name: t('common.filter').toLocaleLowerCase() })}
+                        data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
+                        onClick={() => {
+                          const newPropertyFilter: PropertySearch = {
+                            fieldName: '',
+                            value: '',
+                          };
+                          push(newPropertyFilter);
+                        }}>
+                        <AddIcon />
+                      </IconButton>
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        data-testid={dataTestId.startPage.advancedSearch.searchButton}>
+                        {t('common.search')}
+                      </Button>
+                    </Box>
+                  </>
+                )}
+              </FieldArray>
+            )}
+          </Box>
+        );
+      }}
     </Formik>
   );
 };
