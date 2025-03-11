@@ -156,12 +156,10 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
         return <SelectedJournalFacetButton journalIdentifier={value} />;
       }
     }
-    case ResultParam.ScientificReportPeriodSinceParam: {
+    case ResultParam.ScientificReportPeriodSinceParam:
       return value;
-    }
-    case ResultParam.Files: {
+    case ResultParam.Files:
       return getFileFacetText(value as AggregationFileKeyType, t);
-    }
     case ResultParam.PublicationYearBefore:
       return Number(value) - 1;
     case ResultParam.PublicationYearSince:
