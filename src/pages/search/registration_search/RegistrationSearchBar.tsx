@@ -153,57 +153,61 @@ export const RegistrationSearchBar = () => {
             <ExportResultsButton searchParams={searchParams} />
           </Box>
 
-          <FieldArray name="properties">
-            {({ push, remove }: FieldArrayRenderProps) => (
-              <>
-                <Box gridArea="filter" sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  {values.properties.map((property, index) => (
-                    <AdvancedSearchRow
-                      key={index}
-                      queryParam={property.fieldName}
-                      removeFilter={() => {
-                        remove(index);
-                        const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
-                        const syncedParams = syncParamsWithSearchFields(searchParams);
-                        const newParams = removeSearchParamValue(syncedParams, property.fieldName, valueToRemove);
-                        newParams.delete(ResultParam.From);
-                        navigate({ search: newParams.toString() });
-                      }}
-                      baseFieldName={`properties[${index}]`}
-                    />
-                  ))}
-                </Box>
-                <Box gridArea="buttonRowBottom" sx={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem' }}>
-                  {values.properties && values.properties.length > 0 && (
-                    <>
-                      <IconButton
-                        sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
-                        size="small"
-                        color="primary"
-                        title={t('common.add_custom', { name: t('common.filter').toLocaleLowerCase() })}
-                        data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
-                        onClick={() => {
-                          const newPropertyFilter: PropertySearch = {
-                            fieldName: '',
-                            value: '',
-                          };
-                          push(newPropertyFilter);
-                        }}>
-                        <AddIcon />
-                      </IconButton>
+          {values.properties.length > 0 && (
+            <FieldArray name="properties">
+              {({ push, remove }: FieldArrayRenderProps) => (
+                <>
+                  <Box gridArea="filter" sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', mb: '1rem' }}>
+                    {values.properties.map((property, index) => (
+                      <AdvancedSearchRow
+                        key={index}
+                        queryParam={property.fieldName}
+                        removeFilter={() => {
+                          remove(index);
+                          const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
+                          const syncedParams = syncParamsWithSearchFields(searchParams);
+                          const newParams = removeSearchParamValue(syncedParams, property.fieldName, valueToRemove);
+                          newParams.delete(ResultParam.From);
+                          navigate({ search: newParams.toString() });
+                        }}
+                        baseFieldName={`properties[${index}]`}
+                      />
+                    ))}
+                  </Box>
+                  <Box
+                    gridArea="buttonRowBottom"
+                    sx={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem', mb: '1rem' }}>
+                    {values.properties && values.properties.length > 0 && (
+                      <>
+                        <IconButton
+                          sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
+                          size="small"
+                          color="primary"
+                          title={t('common.add_custom', { name: t('common.filter').toLocaleLowerCase() })}
+                          data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
+                          onClick={() => {
+                            const newPropertyFilter: PropertySearch = {
+                              fieldName: '',
+                              value: '',
+                            };
+                            push(newPropertyFilter);
+                          }}>
+                          <AddIcon />
+                        </IconButton>
 
-                      <Button
-                        variant="contained"
-                        type="submit"
-                        data-testid={dataTestId.startPage.advancedSearch.searchButton}>
-                        {t('common.search')}
-                      </Button>
-                    </>
-                  )}
-                </Box>
-              </>
-            )}
-          </FieldArray>
+                        <Button
+                          variant="contained"
+                          type="submit"
+                          data-testid={dataTestId.startPage.advancedSearch.searchButton}>
+                          {t('common.search')}
+                        </Button>
+                      </>
+                    )}
+                  </Box>
+                </>
+              )}
+            </FieldArray>
+          )}
         </Box>
       )}
     </Formik>
