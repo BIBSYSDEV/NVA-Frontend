@@ -124,7 +124,6 @@ export const RegistrationSearchBar = () => {
               md: "'typeSearch searchbar buttonRowTop' 'filter filter buttonRowBottom'",
             },
             gap: '0.75rem 0.5rem',
-            mx: { xs: '0.5rem', md: 0 },
           }}>
           <SearchTypeField sx={{ gridArea: 'typeSearch' }} />
           <Field name="searchTerm" gridArea="searchbar">
@@ -170,32 +169,27 @@ export const RegistrationSearchBar = () => {
                   <Box
                     gridArea="buttonRowBottom"
                     sx={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem', mb: '1rem' }}>
-                    {values.properties && values.properties.length > 0 && (
-                      <>
-                        <IconButton
-                          sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
-                          size="small"
-                          color="primary"
-                          title={t('common.add_custom', { name: t('common.filter').toLocaleLowerCase() })}
-                          data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
-                          onClick={() => {
-                            const newPropertyFilter: PropertySearch = {
-                              fieldName: '',
-                              value: '',
-                            };
-                            push(newPropertyFilter);
-                          }}>
-                          <AddIcon />
-                        </IconButton>
-
-                        <Button
-                          variant="contained"
-                          type="submit"
-                          data-testid={dataTestId.startPage.advancedSearch.searchButton}>
-                          {t('common.search')}
-                        </Button>
-                      </>
-                    )}
+                    <IconButton
+                      sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
+                      size="small"
+                      color="primary"
+                      title={t('common.add_custom', { name: t('common.filter').toLocaleLowerCase() })}
+                      data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
+                      onClick={() => {
+                        const newPropertyFilter: PropertySearch = {
+                          fieldName: '',
+                          value: '',
+                        };
+                        push(newPropertyFilter);
+                      }}>
+                      <AddIcon />
+                    </IconButton>
+                    <Button
+                      variant="contained"
+                      type="submit"
+                      data-testid={dataTestId.startPage.advancedSearch.searchButton}>
+                      {t('common.search')}
+                    </Button>
                   </Box>
                 </>
               )}

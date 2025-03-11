@@ -7,7 +7,7 @@ import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getFileFacetText } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { SelectedInstitutionFacetButton } from '../registration_search/RegistrationSearchBar';
+import { SelectedInstitutionFacetButton } from './button_content/SelectedInstitutionFacetButton';
 import { getSelectedFacetsArray } from './facetHelpers';
 import { SelectedFacetButton } from './SelectedFacetButton';
 import { SelectedFacetsList } from './SelectedFacetsList';
