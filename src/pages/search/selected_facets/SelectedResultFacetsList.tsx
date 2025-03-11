@@ -10,14 +10,12 @@ import {
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getFileFacetText } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import {
-  SelectedFundingFacetButton,
-  SelectedInstitutionFacetButton,
-  SelectedJournalFacetButton,
-  SelectedPersonFacetButton,
-  SelectedPublisherFacetButton,
-  SelectedSeriesFacetButton,
-} from '../registration_search/RegistrationSearchBar';
+import { SelectedFundingFacetButton } from './button_content/SelectedFundingFacetButton';
+import { SelectedInstitutionFacetButton } from './button_content/SelectedInstitutionFacetButton';
+import { SelectedJournalFacetButton } from './button_content/SelectedJournalFacetButton';
+import { SelectedPersonFacetButton } from './button_content/SelectedPersonFacetButton';
+import { SelectedPublisherFacetButton } from './button_content/SelectedPublisherFacetButton';
+import { SelectedSeriesFacetButton } from './button_content/SelectedSeriesFacetButton';
 import { getSelectedFacetsArray } from './facetHelpers';
 import { SelectedFacetButton } from './SelectedFacetButton';
 import { SelectedFacetsList } from './SelectedFacetsList';

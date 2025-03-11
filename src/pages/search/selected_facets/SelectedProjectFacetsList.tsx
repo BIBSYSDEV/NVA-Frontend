@@ -4,13 +4,11 @@ import { useSearchParams } from 'react-router';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { ProjectAggregations } from '../../../types/project.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import {
-  SelectedFundingFacetButton,
-  SelectedInstitutionFacetButton,
-  SelectedPersonFacetButton,
-} from '../registration_search/RegistrationSearchBar';
+import { SelectedProjectCategoryFacetButton } from './button_content/SelectedCategoryFacetButton';
+import { SelectedFundingFacetButton } from './button_content/SelectedFundingFacetButton';
+import { SelectedInstitutionFacetButton } from './button_content/SelectedInstitutionFacetButton';
+import { SelectedPersonFacetButton } from './button_content/SelectedPersonFacetButton';
 import { getSectorValueContent, getSelectedFacetsArray } from './facetHelpers';
-import { SelectedProjectCategoryFacetButton } from './SelectedCategoryFacetButton';
 import { SelectedFacetButton } from './SelectedFacetButton';
 import { SelectedFacetsList } from './SelectedFacetsList';
 

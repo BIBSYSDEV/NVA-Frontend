@@ -1,7 +1,7 @@
 import { Skeleton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useFetchProjectCategoriesQuery } from '../../../api/hooks/useFetchProjectCategoriesQuery';
-import { getLanguageString } from '../../../utils/translation-helpers';
+import { useFetchProjectCategoriesQuery } from '../../../../api/hooks/useFetchProjectCategoriesQuery';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 
 interface SelectedProjectCategoryFacetButtonProps {
   value: string;

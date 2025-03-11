@@ -1,14 +1,9 @@
 import AddIcon from '@mui/icons-material/Add';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
-import { Box, Button, IconButton, Skeleton } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { Box, Button, IconButton } from '@mui/material';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { fetchFundingSource } from '../../../api/cristinApi';
-import { useFetchOrganizationByIdentifier } from '../../../api/hooks/useFetchOrganizationByIdentifier';
-import { useFetchPersonByIdentifier } from '../../../api/hooks/useFetchPerson';
-import { fetchPublisher, fetchSerialPublication } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
@@ -19,8 +14,6 @@ import {
   removeSearchParamValue,
   syncParamsWithSearchFields,
 } from '../../../utils/searchHelpers';
-import { getLanguageString } from '../../../utils/translation-helpers';
-import { getFullCristinName } from '../../../utils/user-helpers';
 import { ExportResultsButton } from '../ExportResultsButton';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
@@ -212,112 +205,6 @@ export const RegistrationSearchBar = () => {
       )}
     </Formik>
   );
-};
-
-interface SelectedContributorFacetButtonProps {
-  personIdentifier: string;
-}
-
-export const SelectedPersonFacetButton = ({ personIdentifier }: SelectedContributorFacetButtonProps) => {
-  const { t } = useTranslation();
-
-  const personQuery = useFetchPersonByIdentifier(personIdentifier);
-  const personName = getFullCristinName(personQuery.data?.names) || t('common.unknown');
-
-  return <>{personQuery.isPending ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : personName}</>;
-};
-
-interface SelectedInstitutionFacetButtonProps {
-  institutionIdentifier: string;
-}
-
-export const SelectedInstitutionFacetButton = ({ institutionIdentifier }: SelectedInstitutionFacetButtonProps) => {
-  const { t } = useTranslation();
-
-  const organizationQuery = useFetchOrganizationByIdentifier(institutionIdentifier);
-  const institutionName = getLanguageString(organizationQuery.data?.labels) || t('common.unknown');
-
-  return <>{organizationQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : institutionName}</>;
-};
-
-interface SelectedFundingFacetButtonProps {
-  fundingIdentifier: string;
-}
-
-export const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetButtonProps) => {
-  const { t } = useTranslation();
-
-  const fundingSourcesQuery = useQuery({
-    queryKey: ['fundingSources', fundingIdentifier],
-    queryFn: () => (fundingIdentifier ? fetchFundingSource(fundingIdentifier) : undefined),
-    staleTime: Infinity,
-    gcTime: 1_800_000,
-    meta: { errorMessage: t('feedback.error.get_funding_source') },
-  });
-
-  const fundingName = getLanguageString(fundingSourcesQuery.data?.name) || t('common.unknown');
-
-  return <>{fundingSourcesQuery.isPending ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : fundingName}</>;
-};
-
-interface SelectedPublisherFacetButtonProps {
-  publisherIdentifier: string;
-}
-
-export const SelectedPublisherFacetButton = ({ publisherIdentifier }: SelectedPublisherFacetButtonProps) => {
-  const { t } = useTranslation();
-
-  const publisherQuery = useQuery({
-    queryKey: [publisherIdentifier],
-    queryFn: () => (publisherIdentifier ? fetchPublisher(publisherIdentifier) : undefined),
-    staleTime: Infinity,
-    gcTime: 1_800_000,
-    meta: { errorMessage: t('feedback.error.get_publisher') },
-  });
-
-  const publisherName = publisherQuery.data?.name || t('common.unknown');
-
-  return <>{publisherQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : publisherName}</>;
-};
-
-interface SelectedSeriesFacetButtonProps {
-  seriesIdentifier: string;
-}
-
-export const SelectedSeriesFacetButton = ({ seriesIdentifier }: SelectedSeriesFacetButtonProps) => {
-  const { t } = useTranslation();
-
-  const seriesQuery = useQuery({
-    queryKey: [seriesIdentifier],
-    queryFn: () => (seriesIdentifier ? fetchSerialPublication(seriesIdentifier) : undefined),
-    staleTime: Infinity,
-    gcTime: 1_800_000,
-    meta: { errorMessage: t('feedback.error.get_series') },
-  });
-
-  const seriesName = seriesQuery.data?.name || t('common.unknown');
-
-  return <>{seriesQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : seriesName}</>;
-};
-
-interface SelectedJournalFacetButtonProps {
-  journalIdentifier: string;
-}
-
-export const SelectedJournalFacetButton = ({ journalIdentifier }: SelectedJournalFacetButtonProps) => {
-  const { t } = useTranslation();
-
-  const journalQuery = useQuery({
-    queryKey: [journalIdentifier],
-    queryFn: () => (journalIdentifier ? fetchSerialPublication(journalIdentifier) : undefined),
-    staleTime: Infinity,
-    gcTime: 1_800_000,
-    meta: { errorMessage: t('feedback.error.get_journal') },
-  });
-
-  const journalName = journalQuery.data?.name || t('common.unknown');
-
-  return <>{journalQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : journalName}</>;
 };
 
 const FilterButton = () => {
