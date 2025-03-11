@@ -115,8 +115,7 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
       const institutionLabels = aggregations?.topLevelOrganization?.find(
         (bucket) => getIdentifierFromId(bucket.key) === value
       )?.labels;
-
-      const institutionName = institutionLabels ? getLanguageString(institutionLabels) : '';
+      const institutionName = getLanguageString(institutionLabels);
       if (institutionName) {
         return institutionName;
       } else {
@@ -125,38 +124,38 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
     }
     case ResultParam.FundingSource: {
       const fundingLabels = aggregations?.fundingSource?.find((bucket) => bucket.key === value)?.labels;
-      const fundingName = fundingLabels ? getLanguageString(fundingLabels) : '';
+      const fundingName = getLanguageString(fundingLabels);
       if (fundingName) {
         return fundingName;
       } else {
-        return <SelectedFundingFacetButton fundingIdentifier={typeof value === 'string' ? value : value[0]} />;
+        return <SelectedFundingFacetButton fundingIdentifier={value} />;
       }
     }
     case ResultParam.Publisher: {
       const publisherLabels = aggregations?.publisher?.find((bucket) => bucket.key === value)?.labels;
-      const publisherName = publisherLabels ? getLanguageString(publisherLabels) : '';
+      const publisherName = getLanguageString(publisherLabels);
       if (publisherName) {
         return publisherName;
       } else {
-        return <SelectedPublisherFacetButton publisherIdentifier={typeof value === 'string' ? value : value[0]} />;
+        return <SelectedPublisherFacetButton publisherIdentifier={value} />;
       }
     }
     case ResultParam.Series: {
       const seriesLabels = aggregations?.series?.find((bucket) => bucket.key === value)?.labels;
-      const seriesName = seriesLabels ? getLanguageString(seriesLabels) : '';
+      const seriesName = getLanguageString(seriesLabels);
       if (seriesName) {
         return seriesName;
       } else {
-        return <SelectedSeriesFacetButton seriesIdentifier={typeof value === 'string' ? value : value[0]} />;
+        return <SelectedSeriesFacetButton seriesIdentifier={value} />;
       }
     }
     case ResultParam.Journal: {
       const journalLabels = aggregations?.journal?.find((bucket) => bucket.key === value)?.labels;
-      const journalName = journalLabels ? getLanguageString(journalLabels) : '';
+      const journalName = getLanguageString(journalLabels);
       if (journalName) {
         return journalName;
       } else {
-        return <SelectedJournalFacetButton journalIdentifier={typeof value === 'string' ? value : value[0]} />;
+        return <SelectedJournalFacetButton journalIdentifier={value} />;
       }
     }
     case ResultParam.ScientificReportPeriodSinceParam: {
