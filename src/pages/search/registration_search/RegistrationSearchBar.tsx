@@ -218,7 +218,7 @@ interface SelectedContributorFacetButtonProps {
   personIdentifier: string;
 }
 
-export const SelectedContributorFacetButton = ({ personIdentifier }: SelectedContributorFacetButtonProps) => {
+export const SelectedPersonFacetButton = ({ personIdentifier }: SelectedContributorFacetButtonProps) => {
   const { t } = useTranslation();
 
   const personQuery = useFetchPersonByIdentifier(personIdentifier);
@@ -235,7 +235,6 @@ export const SelectedInstitutionFacetButton = ({ institutionIdentifier }: Select
   const { t } = useTranslation();
 
   const organizationQuery = useFetchOrganizationByIdentifier(institutionIdentifier);
-
   const institutionName = getLanguageString(organizationQuery.data?.labels) || t('common.unknown');
 
   return <>{organizationQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : institutionName}</>;

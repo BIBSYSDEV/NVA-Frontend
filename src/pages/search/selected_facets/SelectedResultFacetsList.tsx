@@ -11,10 +11,10 @@ import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getFileFacetText } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import {
-  SelectedContributorFacetButton,
   SelectedFundingFacetButton,
   SelectedInstitutionFacetButton,
   SelectedJournalFacetButton,
+  SelectedPersonFacetButton,
   SelectedPublisherFacetButton,
   SelectedSeriesFacetButton,
 } from '../registration_search/RegistrationSearchBar';
@@ -108,7 +108,7 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
       if (personName) {
         return getLanguageString(personName);
       } else {
-        return <SelectedContributorFacetButton personIdentifier={value} />;
+        return <SelectedPersonFacetButton personIdentifier={value} />;
       }
     }
     case ResultParam.TopLevelOrganization: {

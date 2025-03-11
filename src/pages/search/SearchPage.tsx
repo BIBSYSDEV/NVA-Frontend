@@ -16,6 +16,7 @@ import { RegistrationSearch } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
 import { SelectedPersonFacetsList } from './selected_facets/SelectedPersonFacetsList';
+import { SelectedProjectFacetsList } from './selected_facets/SelectedProjectFacetsList';
 import { SelectedResultFacetsList } from './selected_facets/SelectedResultFacetsList';
 
 const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
@@ -85,6 +86,7 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
             <SearchTypeField />
             <SearchForm paramName={ProjectSearchParameter.Query} placeholder={t('search.search_project_placeholder')} />
           </StyledSearchBarContainer>
+          {!projectQuery.isPending && <SelectedProjectFacetsList aggregations={projectQuery.data?.aggregations} />}
           <ProjectSearch projectQuery={projectQuery} />
         </>
       )}
