@@ -85,56 +85,57 @@ export const Header = () => {
         aria-label={t('common.main')}
         component="nav"
         sx={{
-          display: 'grid',
-          justifyItems: 'center',
-          gridTemplateAreas: '"logo search new-result user-menu"',
-          gridTemplateColumns: { xs: 'auto auto 1fr auto', md: 'auto 1fr 10fr auto' },
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
           gap: { xs: '0.5rem', sm: '1rem' },
           px: '1rem',
         }}>
-        <Logo />
-        <MenuIconButton
-          color="inherit"
-          sx={{ gridArea: 'search' }}
-          title={t('common.search')}
-          isSelected={location.pathname === UrlPathTemplate.Root || currentPath === UrlPathTemplate.Root}
-          to={UrlPathTemplate.Root}>
-          <SearchIcon fontSize="large" />
-        </MenuIconButton>
+        <Box sx={{ display: 'flex', gap: '2rem' }} flex={1}>
+          <Logo />
+          <MenuIconButton
+            color="inherit"
+            title={t('common.search')}
+            isSelected={location.pathname === UrlPathTemplate.Root || currentPath === UrlPathTemplate.Root}
+            to={UrlPathTemplate.Root}>
+            <SearchIcon fontSize="large" />
+          </MenuIconButton>
+        </Box>
 
         {user?.isCreator && (
-          <MenuButton
-            sx={{
-              gridArea: 'new-result',
-              fontSize: '1.4rem',
-              fontWeight: 700,
-              gap: '0.5rem',
-              display: { xs: 'none', sm: 'inline-flex' },
-            }}
-            isSelected={currentPath === UrlPathTemplate.RegistrationNew}
-            color="inherit"
-            data-testid={dataTestId.header.newRegistrationLink}
-            to={UrlPathTemplate.RegistrationNew}
-            startIcon={
-              <AddIcon
-                sx={{
-                  color: 'white',
-                  bgcolor: 'primary.light',
-                  borderRadius: '50%',
-                  padding: '0.2rem',
-                  width: '2.25rem',
-                  height: '2.25rem',
-                }}
-              />
-            }>
-            {t('registration.new_registration')}
-          </MenuButton>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }} flex={1}>
+            <MenuButton
+              sx={{
+                fontSize: '1.4rem',
+                fontWeight: 700,
+                gap: '0.5rem',
+                display: { xs: 'none', sm: 'inline-flex' },
+              }}
+              isSelected={currentPath === UrlPathTemplate.RegistrationNew}
+              color="inherit"
+              data-testid={dataTestId.header.newRegistrationLink}
+              to={UrlPathTemplate.RegistrationNew}
+              startIcon={
+                <AddIcon
+                  sx={{
+                    color: 'white',
+                    bgcolor: 'primary.light',
+                    borderRadius: '50%',
+                    padding: '0.2rem',
+                    width: '2.25rem',
+                    height: '2.25rem',
+                  }}
+                />
+              }>
+              {t('registration.new_registration')}
+            </MenuButton>
+          </Box>
         )}
         <Box
+          flex={1}
           sx={{
-            gridArea: 'user-menu',
+            justifyContent: 'end',
             display: 'flex',
-            alignItems: 'stretch',
             gap: '1rem',
             'a, button': {
               flexDirection: 'column',
