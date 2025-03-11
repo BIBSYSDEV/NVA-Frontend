@@ -29,10 +29,11 @@ const resultFacetParams: string[] = [
   ResultParam.Publisher,
   ResultParam.Files,
   ResultParam.FundingSource,
+  ResultParam.PublicationYearBefore,
+  ResultParam.PublicationYearSince,
   ResultParam.ScientificReportPeriodSinceParam,
   ResultParam.Series,
   ResultParam.TopLevelOrganization,
-  // TODO: add date param
 ];
 
 interface SelectedResultFacetsListProps {
@@ -89,6 +90,10 @@ const getParamContent = (t: TFunction, param: string) => {
       return t('registration.resource_type.series');
     case ResultParam.TopLevelOrganization:
       return t('common.institution');
+    case ResultParam.PublicationYearBefore:
+      return t('search.year_to');
+    case ResultParam.PublicationYearSince:
+      return t('search.year_from');
     default:
       return param || t('common.unknown');
   }
@@ -160,6 +165,10 @@ const getValueContent = (t: TFunction, param: string, value: string, aggregation
     case ResultParam.Files: {
       return getFileFacetText(value as AggregationFileKeyType, t);
     }
+    case ResultParam.PublicationYearBefore:
+      return Number(value) - 1;
+    case ResultParam.PublicationYearSince:
+      return value;
     default:
       return value || t('common.unknown');
   }
