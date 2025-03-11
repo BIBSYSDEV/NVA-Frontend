@@ -232,9 +232,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                       fieldValueText = getLanguageString(personName);
                     } else {
                       fieldValueText = (
-                        <SelectedContributorFacetButton
-                          personIdentifier={typeof value === 'string' ? value : value[0]}
-                        />
+                        <SelectedPersonFacetButton personIdentifier={typeof value === 'string' ? value : value[0]} />
                       );
                     }
                     break;
@@ -368,7 +366,7 @@ interface SelectedContributorFacetButtonProps {
   personIdentifier: string;
 }
 
-const SelectedContributorFacetButton = ({ personIdentifier }: SelectedContributorFacetButtonProps) => {
+export const SelectedPersonFacetButton = ({ personIdentifier }: SelectedContributorFacetButtonProps) => {
   const { t } = useTranslation();
 
   const personQuery = useFetchPersonByIdentifier(personIdentifier);
@@ -385,7 +383,6 @@ export const SelectedInstitutionFacetButton = ({ institutionIdentifier }: Select
   const { t } = useTranslation();
 
   const organizationQuery = useFetchOrganizationByIdentifier(institutionIdentifier);
-
   const institutionName = getLanguageString(organizationQuery.data?.labels) || t('common.unknown');
 
   return <>{organizationQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : institutionName}</>;
@@ -395,7 +392,7 @@ interface SelectedFundingFacetButtonProps {
   fundingIdentifier: string;
 }
 
-const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetButtonProps) => {
+export const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetButtonProps) => {
   const { t } = useTranslation();
 
   const fundingSourcesQuery = useQuery({
