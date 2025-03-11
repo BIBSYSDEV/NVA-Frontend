@@ -56,7 +56,7 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
           <Typography variant="h1" sx={visuallyHidden}>
             {t('search.result_search')}
           </Typography>
-          <RegistrationSearchBar registrationQuery={registrationQuery} />
+          <RegistrationSearchBar />
           {!registrationQuery.isPending && (
             <SelectedResultFacetsList aggregations={registrationQuery.data?.aggregations} />
           )}

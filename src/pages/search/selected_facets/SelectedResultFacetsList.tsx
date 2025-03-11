@@ -32,6 +32,7 @@ const resultFacetParams: string[] = [
   ResultParam.ScientificReportPeriodSinceParam,
   ResultParam.Series,
   ResultParam.TopLevelOrganization,
+  // TODO: add date param
 ];
 
 interface SelectedResultFacetsListProps {
@@ -52,8 +53,6 @@ export const SelectedResultFacetsList = ({ aggregations }: SelectedResultFacetsL
       {selectedFacets.map(({ param, value }) => {
         const paramContent = getParamContent(t, param);
         const valueContent = getValueContent(t, param, value, aggregations);
-        console.log(param, paramContent);
-        console.log(value, valueContent);
 
         const content =
           typeof valueContent === 'string' ? (

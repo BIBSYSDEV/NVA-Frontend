@@ -22,7 +22,6 @@ import {
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getFullCristinName } from '../../../utils/user-helpers';
 import { ExportResultsButton } from '../ExportResultsButton';
-import { SearchPageProps } from '../SearchPage';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
 import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
@@ -55,7 +54,7 @@ interface SearchTermProperty {
   value: string;
 }
 
-export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
+export const RegistrationSearchBar = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -116,7 +115,6 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
         processSearchParamProperties(values, ResultParam.Doi);
         processSearchParamProperties(values, ResultParam.Handle);
         processSearchParamProperties(values, ResultParam.FundingIdentifier);
-        processSearchParamProperties(values, ResultParam.FundingSource);
         processSearchParamProperties(values, ResultParam.Course);
         processSearchParamProperties(values, ResultParam.CristinIdentifier);
 
@@ -206,153 +204,6 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
               </>
             )}
           </FieldArray>
-
-          {/* {!registrationQuery.isPending && selectedFacets.length > 0 && (
-            <Box sx={{ gridArea: 'facets', display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
-              {selectedFacets.map(({ param, value }) => {
-                let fieldName = '';
-                let fieldValueText: ReactNode = '';
-
-                switch (param) {
-                  case ResultParam.Category:
-                    fieldName = t('common.category');
-                    fieldValueText = t(`registration.publication_types.${value as PublicationInstanceType}`);
-                    break;
-                  case ResultParam.Contributor: {
-                    fieldName = t('registration.contributors.contributor');
-                    const personName = registrationQuery.data?.aggregations?.contributor?.find(
-                      (bucket) => getIdentifierFromId(bucket.key) === value
-                    )?.labels;
-                    if (personName) {
-                      fieldValueText = getLanguageString(personName);
-                    } else {
-                      fieldValueText = (
-                        <SelectedContributorFacetButton
-                          personIdentifier={typeof value === 'string' ? value : value[0]}
-                        />
-                      );
-                    }
-                    break;
-                  }
-                  case ResultParam.TopLevelOrganization: {
-                    fieldName = t('common.institution');
-                    const institutionLabels = registrationQuery.data?.aggregations?.topLevelOrganization?.find(
-                      (bucket) => getIdentifierFromId(bucket.key) === value
-                    )?.labels;
-
-                    const institutionName = institutionLabels ? getLanguageString(institutionLabels) : '';
-                    if (institutionName) {
-                      fieldValueText = institutionName;
-                    } else {
-                      fieldValueText = (
-                        <SelectedInstitutionFacetButton
-                          institutionIdentifier={typeof value === 'string' ? value : value[0]}
-                        />
-                      );
-                    }
-                    break;
-                  }
-                  case ResultParam.FundingSource: {
-                    fieldName = t('common.financier');
-                    const fundingLabels = registrationQuery.data?.aggregations?.fundingSource?.find(
-                      (bucket) => bucket.key === value
-                    )?.labels;
-                    const fundingName = fundingLabels ? getLanguageString(fundingLabels) : '';
-                    if (fundingName) {
-                      fieldValueText = fundingName;
-                    } else {
-                      fieldValueText = (
-                        <SelectedFundingFacetButton fundingIdentifier={typeof value === 'string' ? value : value[0]} />
-                      );
-                    }
-                    break;
-                  }
-                  case ResultParam.Publisher: {
-                    fieldName = t('common.publisher');
-                    const publisherLabels = registrationQuery.data?.aggregations?.publisher?.find(
-                      (bucket) => bucket.key === value
-                    )?.labels;
-                    const publisherName = publisherLabels ? getLanguageString(publisherLabels) : '';
-                    if (publisherName) {
-                      fieldValueText = publisherName;
-                    } else {
-                      fieldValueText = (
-                        <SelectedPublisherFacetButton
-                          publisherIdentifier={typeof value === 'string' ? value : value[0]}
-                        />
-                      );
-                    }
-                    break;
-                  }
-                  case ResultParam.Series: {
-                    fieldName = t('registration.resource_type.series');
-                    const seriesLabels = registrationQuery.data?.aggregations?.series?.find(
-                      (bucket) => bucket.key === value
-                    )?.labels;
-                    const seriesName = seriesLabels ? getLanguageString(seriesLabels) : '';
-                    if (seriesName) {
-                      fieldValueText = seriesName;
-                    } else {
-                      fieldValueText = (
-                        <SelectedSeriesFacetButton seriesIdentifier={typeof value === 'string' ? value : value[0]} />
-                      );
-                    }
-                    break;
-                  }
-                  case ResultParam.Journal: {
-                    fieldName = t('registration.resource_type.journal');
-                    const journalLabels = registrationQuery.data?.aggregations?.journal?.find(
-                      (bucket) => bucket.key === value
-                    )?.labels;
-                    const journalName = journalLabels ? getLanguageString(journalLabels) : '';
-                    if (journalName) {
-                      fieldValueText = journalName;
-                    } else {
-                      fieldValueText = (
-                        <SelectedJournalFacetButton journalIdentifier={typeof value === 'string' ? value : value[0]} />
-                      );
-                    }
-                    break;
-                  }
-                  case ResultParam.ScientificReportPeriodSinceParam: {
-                    fieldName = t('basic_data.nvi.nvi_publication_year');
-                    fieldValueText = value;
-                    break;
-                  }
-                  case ResultParam.Files: {
-                    fieldName = t('registration.files_and_license.files');
-                    fieldValueText = getFileFacetText(value as AggregationFileKeyType, t);
-                    break;
-                  }
-                  default:
-                    fieldValueText = typeof value === 'string' ? value : t('common.unknown');
-                }
-
-                if (!fieldName || !fieldValueText) {
-                  return null;
-                }
-
-                return (
-                  <Button
-                    key={`${param}-${value}`}
-                    data-testid={dataTestId.startPage.advancedSearch.removeFacetButton}
-                    variant="outlined"
-                    size="small"
-                    title={t('search.remove_filter')}
-                    sx={{ textTransform: 'none' }}
-                    endIcon={<ClearIcon />}
-                    onClick={() => {
-                      const syncedParams = syncParamsWithSearchFields(searchParams);
-                      const newParams = removeSearchParamValue(syncedParams, param, value);
-                      newParams.delete(ResultParam.From);
-                      navigate({ search: newParams.toString() });
-                    }}>
-                    {fieldName}: {fieldValueText}
-                  </Button>
-                );
-              })}
-            </Box>
-          )} */}
         </Box>
       )}
     </Formik>
