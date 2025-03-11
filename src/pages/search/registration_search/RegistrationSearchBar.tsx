@@ -1,10 +1,8 @@
 import AddIcon from '@mui/icons-material/Add';
-import ClearIcon from '@mui/icons-material/Clear';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Box, Button, IconButton, Skeleton } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, useFormikContext } from 'formik';
-import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { fetchFundingSource } from '../../../api/cristinApi';
@@ -12,13 +10,10 @@ import { useFetchOrganizationByIdentifier } from '../../../api/hooks/useFetchOrg
 import { useFetchPersonByIdentifier } from '../../../api/hooks/useFetchPerson';
 import { fetchPublisher, fetchSerialPublication } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
-import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
 import {
   createSearchConfigFromSearchParams,
   dataSearchFieldAttributeName,
-  getFileFacetText,
   isValidIsbn,
   PropertySearch,
   removeSearchParamValue,
@@ -134,8 +129,8 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
             display: 'grid',
             gridTemplateColumns: { xs: '1fr', md: 'auto 1fr auto' },
             gridTemplateAreas: {
-              xs: "'typeSearch' 'searchbar' 'buttonRowTop' 'filter' 'buttonRowBottom' 'facets'",
-              md: "'typeSearch searchbar buttonRowTop' 'filter filter buttonRowBottom' 'facets facets facets'",
+              xs: "'typeSearch' 'searchbar' 'buttonRowTop' 'filter' 'buttonRowBottom'",
+              md: "'typeSearch searchbar buttonRowTop' 'filter filter buttonRowBottom'",
             },
             gap: '0.75rem 0.5rem',
             mx: { xs: '0.5rem', md: 0 },
@@ -173,7 +168,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                         const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
                         const syncedParams = syncParamsWithSearchFields(searchParams);
                         const newParams = removeSearchParamValue(syncedParams, property.fieldName, valueToRemove);
-                        newParams.set(ResultParam.From, '0');
+                        newParams.delete(ResultParam.From);
                         navigate({ search: newParams.toString() });
                       }}
                       baseFieldName={`properties[${index}]`}
@@ -212,7 +207,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
             )}
           </FieldArray>
 
-          {!registrationQuery.isPending && selectedFacets.length > 0 && (
+          {/* {!registrationQuery.isPending && selectedFacets.length > 0 && (
             <Box sx={{ gridArea: 'facets', display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
               {selectedFacets.map(({ param, value }) => {
                 let fieldName = '';
@@ -357,7 +352,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                 );
               })}
             </Box>
-          )}
+          )} */}
         </Box>
       )}
     </Formik>
@@ -368,7 +363,7 @@ interface SelectedContributorFacetButtonProps {
   personIdentifier: string;
 }
 
-const SelectedContributorFacetButton = ({ personIdentifier }: SelectedContributorFacetButtonProps) => {
+export const SelectedContributorFacetButton = ({ personIdentifier }: SelectedContributorFacetButtonProps) => {
   const { t } = useTranslation();
 
   const personQuery = useFetchPersonByIdentifier(personIdentifier);
@@ -395,7 +390,7 @@ interface SelectedFundingFacetButtonProps {
   fundingIdentifier: string;
 }
 
-const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetButtonProps) => {
+export const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetButtonProps) => {
   const { t } = useTranslation();
 
   const fundingSourcesQuery = useQuery({
@@ -415,7 +410,7 @@ interface SelectedPublisherFacetButtonProps {
   publisherIdentifier: string;
 }
 
-const SelectedPublisherFacetButton = ({ publisherIdentifier }: SelectedPublisherFacetButtonProps) => {
+export const SelectedPublisherFacetButton = ({ publisherIdentifier }: SelectedPublisherFacetButtonProps) => {
   const { t } = useTranslation();
 
   const publisherQuery = useQuery({
@@ -435,7 +430,7 @@ interface SelectedSeriesFacetButtonProps {
   seriesIdentifier: string;
 }
 
-const SelectedSeriesFacetButton = ({ seriesIdentifier }: SelectedSeriesFacetButtonProps) => {
+export const SelectedSeriesFacetButton = ({ seriesIdentifier }: SelectedSeriesFacetButtonProps) => {
   const { t } = useTranslation();
 
   const seriesQuery = useQuery({
@@ -455,7 +450,7 @@ interface SelectedJournalFacetButtonProps {
   journalIdentifier: string;
 }
 
-const SelectedJournalFacetButton = ({ journalIdentifier }: SelectedJournalFacetButtonProps) => {
+export const SelectedJournalFacetButton = ({ journalIdentifier }: SelectedJournalFacetButtonProps) => {
   const { t } = useTranslation();
 
   const journalQuery = useQuery({
