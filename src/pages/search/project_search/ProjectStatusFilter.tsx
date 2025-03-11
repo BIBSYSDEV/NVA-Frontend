@@ -1,7 +1,7 @@
 import { MenuItem, Select, Typography } from '@mui/material';
 import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { ProjectStatus } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -20,9 +20,7 @@ const statusFilters: FilterItem[] = [
 
 export const ProjectStatusFilter = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <div>
@@ -42,17 +40,22 @@ export const ProjectStatusFilter = () => {
             borderBottom: 'none',
           },
         }}
-        defaultValue={searchParams.get(ProjectSearchParameter.Status) ?? ''}
+        value={searchParams.get(ProjectSearchParameter.Status) ?? ''}
         fullWidth
         displayEmpty
         onChange={(event) => {
           const status = event.target.value;
-          if (!status) {
-            searchParams.delete(ProjectSearchParameter.Status);
+          if (status) {
+            setSearchParams((params) => {
+              params.set(ProjectSearchParameter.Status, status);
+              return params;
+            });
           } else {
-            searchParams.set(ProjectSearchParameter.Status, status);
+            setSearchParams((params) => {
+              params.delete(ProjectSearchParameter.Status);
+              return params;
+            });
           }
-          navigate({ search: searchParams.toString() });
         }}
         data-testid={dataTestId.startPage.projectStatusFilter}
         variant="filled">
