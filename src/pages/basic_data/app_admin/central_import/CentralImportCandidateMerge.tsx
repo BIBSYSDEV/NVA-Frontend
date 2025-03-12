@@ -168,12 +168,12 @@ export const CentralImportCandidateMerge = () => {
             variant="standard"
             candidateValue={t(
               `registration.publication_types.${
-                importCandidate.entityDescription?.reference?.publicationInstance.type as PublicationInstanceType
+                importCandidate.entityDescription?.reference?.publicationInstance?.type as PublicationInstanceType
               }`
             )}
             registrationValue={t(
               `registration.publication_types.${
-                registration.entityDescription?.reference?.publicationInstance.type as PublicationInstanceType
+                registration.entityDescription?.reference?.publicationInstance?.type as PublicationInstanceType
               }`
             )}
           />
@@ -262,9 +262,9 @@ export const CentralImportCandidateMerge = () => {
           />
 
           {candidateMainType === PublicationType.PublicationInJournal &&
-            importCandidate.entityDescription?.reference?.publicationInstance.type !== JournalType.Corrigendum &&
+            importCandidate.entityDescription?.reference?.publicationInstance?.type !== JournalType.Corrigendum &&
             registrationMainType === PublicationType.PublicationInJournal &&
-            registration.entityDescription?.reference?.publicationInstance.type !== JournalType.Corrigendum && (
+            registration.entityDescription?.reference?.publicationInstance?.type !== JournalType.Corrigendum && (
               <CompareJournalFields importCandidate={importCandidate} />
             )}
 

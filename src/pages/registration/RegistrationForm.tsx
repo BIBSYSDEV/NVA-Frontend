@@ -95,7 +95,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             />
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <RegistrationIconHeader
-                publicationInstanceType={values.entityDescription?.reference?.publicationInstance.type}
+                publicationInstanceType={values.entityDescription?.reference?.publicationInstance?.type}
                 publicationDate={values.entityDescription?.publicationDate}
                 showYearOnly
               />

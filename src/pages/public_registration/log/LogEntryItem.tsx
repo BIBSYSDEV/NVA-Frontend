@@ -9,13 +9,13 @@ import UnpublishedOutlinedIcon from '@mui/icons-material/UnpublishedOutlined';
 import { Avatar, Box, Divider, styled, SvgIconProps, Tooltip, Typography } from '@mui/material';
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { LogDateItem } from '../../../components/Log/LogDateItem';
-import { LogMessageAccordion } from '../../../components/Log/LogMessageAccordion';
 import { FileType } from '../../../types/associatedArtifact.types';
-import { ImportSourceLogData, LogEntryObject } from '../../../types/log.types';
+import { ImportSourceLogData, LogEntry } from '../../../types/log.types';
 import { Message } from '../../../types/publication_types/ticket.types';
 import { getInitials } from '../../../utils/general-helpers';
 import { getFullName } from '../../../utils/user-helpers';
+import { LogDateItem } from './LogDateItem';
+import { LogMessageAccordion } from './LogMessageAccordion';
 
 const logIconProps: SvgIconProps = { color: 'primary', fontSize: 'small' };
 
@@ -25,12 +25,12 @@ const StyledLogRow = styled(Box)({
   alignItems: 'center',
 });
 
-interface LogEntryProps {
-  logEntry: LogEntryObject;
+interface LogEntryItemProps {
+  logEntry: LogEntry;
   messages: Message[];
 }
 
-export const LogEntry = ({ logEntry, messages }: LogEntryProps) => {
+export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
   const { t } = useTranslation();
 
   const fullName = logEntry.performedBy
@@ -50,7 +50,7 @@ export const LogEntry = ({ logEntry, messages }: LogEntryProps) => {
         <LogHeaderIcon topic={logEntry.topic} />
         <Typography variant="h3">{getLogEntryTitle(logEntry, t)}</Typography>
       </StyledLogRow>
-      <LogDateItem date={new Date(logEntry.timestamp)} />
+      <LogDateItem date={logEntry.timestamp} />
 
       {(fullName || logEntry.performedBy?.onBehalfOf.shortName) && (
         <StyledLogRow>
@@ -95,7 +95,7 @@ export const LogEntry = ({ logEntry, messages }: LogEntryProps) => {
       {messages && messages.length > 0 && (
         <LogMessageAccordion
           messages={messages}
-          type={logEntry.type === 'FileLogEntry' ? 'PublishingRequest' : 'DoiRequest'}
+          messageBackgroundColor={getMessageItemBackgroundColor(logEntry.topic)}
         />
       )}
     </Box>
@@ -119,7 +119,20 @@ const ImportSourceInfo = ({ importSource }: { importSource: ImportSourceLogData 
   );
 };
 
-const getLogEntryBackgroundColor = (topic: LogEntryObject['topic']) => {
+const getMessageItemBackgroundColor = (topic: LogEntry['topic']) => {
+  switch (topic) {
+    case 'DoiRejected':
+    case 'DoiAssigned':
+      return 'doiRequest.main';
+    case 'FileApproved':
+    case 'FileRejected':
+      return 'publishingRequest.main';
+    default:
+      return 'secondary.main';
+  }
+};
+
+const getLogEntryBackgroundColor = (topic: LogEntry['topic']) => {
   switch (topic) {
     case 'PublicationImported':
     case 'FileImported':
@@ -135,7 +148,7 @@ const getLogEntryBackgroundColor = (topic: LogEntryObject['topic']) => {
   }
 };
 
-const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
+const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
   switch (topic) {
     case 'PublicationCreated':
       return <AddCircleOutlineIcon {...logIconProps} />;
@@ -167,7 +180,7 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryObject, 'topic'>) => {
   }
 };
 
-const getLogEntryTitle = (logEntry: LogEntryObject, t: TFunction) => {
+const getLogEntryTitle = (logEntry: LogEntry, t: TFunction) => {
   switch (logEntry.topic) {
     case 'PublicationCreated':
       return t('log.titles.result_created');

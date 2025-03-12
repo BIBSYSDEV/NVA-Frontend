@@ -5,7 +5,7 @@ import { Registration, SerialPublication } from '../../types/registration.types'
 import { isJournal } from '../registration-helpers';
 
 export const useJournalSeoData = (registration: Registration) => {
-  const isJournalRegistration = isJournal(registration.entityDescription?.reference?.publicationInstance.type);
+  const isJournalRegistration = isJournal(registration.entityDescription?.reference?.publicationInstance?.type);
   const journalId = isJournalRegistration
     ? ((registration as JournalRegistration).entityDescription?.reference?.publicationContext.id ?? '')
     : '';

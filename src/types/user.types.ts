@@ -136,8 +136,8 @@ export interface CristinPerson extends CreateCristinPerson {
 }
 
 export interface PersonAggregations {
-  organizationFacet: AggregationValue[];
-  sectorFacet: AggregationValue[];
+  organizationFacet?: AggregationValue[];
+  sectorFacet?: AggregationValue[];
 }
 
 export interface FlatCristinPerson {
