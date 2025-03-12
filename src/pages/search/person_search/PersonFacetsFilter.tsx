@@ -2,11 +2,13 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { PersonSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { removeSearchParamValue, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
 import { SearchPageProps } from '../SearchPage';
+import { SearchForInstitutionFacetItem } from '../facet_search_fields/SearchForInstitutionFacetItem';
 
 type PersonFacetsFilterProps = Pick<SearchPageProps, 'personQuery'>;
 
@@ -47,14 +49,20 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
         <FacetItem
           title={t('common.institution')}
           dataTestId={dataTestId.aggregations.institutionFacets}
-          isPending={personQuery.isPending}>
+          isPending={personQuery.isPending}
+          renderCustomSelect={
+            <SearchForInstitutionFacetItem
+              onSelectInstitution={(id) =>
+                addFacetFilter(PersonSearchParameter.Organization, getIdentifierFromId(id).split('.')[0])
+              }
+            />
+          }>
           {organizationFacet.map((facet) => {
             const isSelected = selectedOrganizations.includes(facet.key);
             return (
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={personQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
@@ -80,7 +88,6 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
               <FacetListItem
                 key={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={personQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}

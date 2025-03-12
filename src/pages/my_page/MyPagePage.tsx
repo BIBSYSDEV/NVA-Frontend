@@ -142,7 +142,7 @@ const MyPagePage = () => {
           accordionPath={UrlPathTemplate.MyPageProfile}
           defaultPath={UrlPathTemplate.MyPageResearchProfile}
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
-          <NavigationList>
+          <NavigationList aria-label={t('my_page.research_profile')}>
             <Typography>{t('my_page.public_research_profile')}</Typography>
             <SelectableButton
               data-testid={dataTestId.myPage.researchProfileLink}

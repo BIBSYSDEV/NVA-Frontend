@@ -70,7 +70,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
       <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'registration.main' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <RegistrationIconHeader
-            publicationInstanceType={entityDescription?.reference?.publicationInstance.type}
+            publicationInstanceType={entityDescription?.reference?.publicationInstance?.type}
             publicationDate={entityDescription?.publicationDate}
             showYearOnly
             textColor="primary.contrastText"

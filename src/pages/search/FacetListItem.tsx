@@ -11,23 +11,15 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
 
 interface FacetListItemProps {
   dataTestId: string;
-  isLoading: boolean;
   isSelected: boolean;
   onClickFacet: () => void;
   label: string;
   count: number;
 }
 
-export const FacetListItem = ({
-  dataTestId,
-  isLoading,
-  isSelected,
-  label,
-  count,
-  onClickFacet,
-}: FacetListItemProps) => (
+export const FacetListItem = ({ dataTestId, isSelected, label, count, onClickFacet }: FacetListItemProps) => (
   <ListItem disablePadding data-testid={dataTestId}>
-    <StyledListItemButton disabled={isLoading} dense selected={isSelected} onClick={onClickFacet}>
+    <StyledListItemButton dense selected={isSelected} onClick={onClickFacet}>
       <Typography component="span" sx={{ wordBreak: 'break-word' }}>
         {label}
       </Typography>

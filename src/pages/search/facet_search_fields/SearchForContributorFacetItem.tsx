@@ -1,25 +1,26 @@
 import { Autocomplete, Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { keepSimilarPreviousData, useSearchForPerson } from '../../../../api/hooks/useSearchForPerson';
+import { keepSimilarPreviousData, useSearchForPerson } from '../../../api/hooks/useSearchForPerson';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
-} from '../../../../components/AutocompleteListboxWithExpansion';
-import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
+} from '../../../components/AutocompleteListboxWithExpansion';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { filterActiveAffiliations, getFullCristinName } from '../../../utils/user-helpers';
 
 interface SearchForContributorFacetItemProps {
-  onSelectContributor: (identifier: string) => void;
+  onSelectPerson: (identifier: string) => void;
+  placeholder?: string;
 }
 
 const defaultPersonSearchSize = 10;
 
-export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchForContributorFacetItemProps) => {
+export const SearchForPersonFacetItem = ({ onSelectPerson, placeholder }: SearchForContributorFacetItemProps) => {
   const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,7 +57,7 @@ export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchFor
       }}
       onChange={(_, selectedPerson) => {
         if (selectedPerson) {
-          onSelectContributor(getIdentifierFromId(selectedPerson.id));
+          onSelectPerson(getIdentifierFromId(selectedPerson.id));
         }
         setSearchQuery('');
       }}
@@ -85,8 +86,7 @@ export const SearchForContributorFacetItem = ({ onSelectContributor }: SearchFor
           variant="outlined"
           isLoading={personSearchQuery.isLoading}
           data-testid={dataTestId.aggregations.contributorFacetsSearchField}
-          aria-label={t('search.search_for_contributor')}
-          placeholder={t('search.search_for_contributor')}
+          placeholder={placeholder || t('search.search_for_contributor')}
           showSearchIcon
         />
       )}

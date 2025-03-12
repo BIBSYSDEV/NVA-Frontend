@@ -96,7 +96,7 @@ export interface AdditionalIdentifier {
   value: string;
 }
 
-export interface ImportDetail {
+interface ImportDetail {
   importDate: string;
   importSource: ImportSource;
 }
@@ -233,7 +233,8 @@ export type PublicationInstance =
   | MediaContributionPeriodicalPublicationInstance
   | ResearchDataPublicationInstance
   | MapPublicationInstance
-  | ExhibitionPublicationInstance;
+  | ExhibitionPublicationInstance
+  | EmptyPublicationInstance;
 
 export enum PublicationChannelType {
   Journal = 'Journal',
@@ -244,6 +245,17 @@ export enum PublicationChannelType {
   UnconfirmedMediaContributionPeriodical = 'UnconfirmedMediaContributionPeriodical',
   UnconfirmedPublisher = 'UnconfirmedPublisher',
   UnconfirmedSeries = 'UnconfirmedSeries',
+}
+
+interface EmptyPublicationInstance {
+  type?: '';
+}
+
+interface EntityDescriptionWithoutCategory extends BaseEntityDescription {
+  reference: BaseReference & {
+    publicationInstance?: EmptyPublicationInstance;
+    publicationContext?: { type?: '' };
+  };
 }
 
 export type EntityDescription =
@@ -257,7 +269,8 @@ export type EntityDescription =
   | MediaContributionEntityDescription
   | ResearchDataEntityDescription
   | MapEntityDescription
-  | ExhibitionEntityDescription;
+  | ExhibitionEntityDescription
+  | EntityDescriptionWithoutCategory;
 
 export interface Registration extends BaseRegistration {
   entityDescription?: EntityDescription;
