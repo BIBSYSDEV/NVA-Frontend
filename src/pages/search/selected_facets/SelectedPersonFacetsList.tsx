@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router';
 import { PersonSearchParameter } from '../../../api/cristinApi';
 import { PersonAggregations } from '../../../types/user.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { SelectedInstitutionFacetButton } from '../registration_search/RegistrationSearchBar';
+import { SelectedInstitutionFacetButton } from './button_content/SelectedInstitutionFacetButton';
 import { getSelectedFacetsArray } from './facetHelpers';
 import { SelectedFacetButton } from './SelectedFacetButton';
 import { SelectedFacetsList } from './SelectedFacetsList';
