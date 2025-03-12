@@ -33,7 +33,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   gap: '0.75rem',
 
-  marginBottom: '0.5rem',
+  marginBottom: '0.75rem',
   [theme.breakpoints.down('md')]: {
     margin: '0 0.5rem 0.75rem 0.5rem',
   },
