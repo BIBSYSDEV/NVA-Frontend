@@ -91,7 +91,7 @@ export const Header = () => {
           gap: { xs: '0.5rem', sm: '1rem' },
           px: '1rem',
         }}>
-        <Box sx={{ display: 'flex', gap: '2rem' }} flex={1}>
+        <Box sx={{ display: 'flex', flex: '1', gap: { sm: '1rem', md: '2rem' } }}>
           <Logo />
           <MenuIconButton
             color="inherit"
@@ -103,7 +103,7 @@ export const Header = () => {
         </Box>
 
         {user?.isCreator && (
-          <Box sx={{ display: 'flex', justifyContent: 'center' }} flex={1}>
+          <Box sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>
             <MenuButton
               sx={{
                 fontSize: '1.4rem',
@@ -132,10 +132,10 @@ export const Header = () => {
           </Box>
         )}
         <Box
-          flex={1}
           sx={{
             justifyContent: 'end',
             display: 'flex',
+            flex: '1',
             gap: '1rem',
             'a, button': {
               flexDirection: 'column',
