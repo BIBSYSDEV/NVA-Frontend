@@ -17,13 +17,11 @@ export enum RoleName {
 
 export interface User {
   nationalIdNumber: string;
-  createdDate?: string;
   cristinId?: string;
   customerId?: string;
   topOrgCristinId?: string;
   familyName: string;
   givenName: string;
-  feideId: string;
   isAppAdmin: boolean;
   isInternalImporter: boolean;
   isDoiCurator: boolean;
@@ -37,7 +35,6 @@ export interface User {
   isNviCurator: boolean;
   roles: RoleName[];
   nvaUsername: string;
-  orcid?: string;
   allowedCustomers: string[];
   currentTerms: string;
   acceptedTerms: string;
@@ -67,11 +64,9 @@ export interface UserList {
   users: InstitutionUser[];
 }
 
-export interface FeideUser {
-  'custom:feideId'?: string;
+export interface CustomUserAttributes {
   'custom:firstName'?: string;
   'custom:lastName'?: string;
-  'custom:orgFeideDomain'?: string;
   'custom:cristinId'?: string;
   'custom:customerId'?: string;
   'custom:topOrgCristinId'?: string;

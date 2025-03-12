@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import { getUserAttributes } from './api/authApi';
+import { getCustomUserAttributes } from './api/authApi';
 import { AppRoutes } from './AppRoutes';
 import { AcceptTermsDialog } from './components/AcceptTermsDialog';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
@@ -50,11 +50,10 @@ const Root = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch attributes of authenticated user
     const getUser = async () => {
-      const feideUser = await getUserAttributes();
-      if (feideUser) {
-        dispatch(setUser(feideUser));
+      const customUserAttributes = await getCustomUserAttributes();
+      if (customUserAttributes) {
+        dispatch(setUser(customUserAttributes));
       }
       setIsLoadingUserAttributes(false);
     };
