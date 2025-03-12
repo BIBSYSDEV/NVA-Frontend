@@ -19,7 +19,7 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
     return null;
   }
   const { reference } = registration.entityDescription;
-  const instanceType = reference?.publicationInstance.type;
+  const instanceType = reference?.publicationInstance?.type;
 
   const isNviApplicableJournalArticle =
     instanceType === JournalType.AcademicArticle || instanceType === JournalType.AcademicLiteratureReview;

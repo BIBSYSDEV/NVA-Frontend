@@ -99,7 +99,7 @@ export const isMediaContribution = (instanceType: any) => Object.values(MediaTyp
 
 export const isResearchData = (instanceType: any) => Object.values(ResearchDataType).includes(instanceType);
 
-export const isPeriodicalMediaContribution = (instanceType: string) =>
+export const isPeriodicalMediaContribution = (instanceType?: string) =>
   instanceType === MediaType.MediaFeatureArticle || instanceType === MediaType.MediaReaderOpinion;
 
 export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
@@ -852,7 +852,7 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     })) ?? [];
 
   const registrationSearchItem: RegistrationSearchItem = {
-    type: registration.entityDescription?.reference?.publicationInstance.type ?? '',
+    type: registration.entityDescription?.reference?.publicationInstance?.type ?? '',
     id: registration.id,
     identifier: registration.identifier,
     recordMetadata: {
