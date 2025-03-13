@@ -55,7 +55,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
   const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
   const showFileVersion = isCategoryWithFileVersion(publicationInstanceType);
-  const rrsApplicableCategory = isCategoryWithRrs(publicationInstanceType);
+  const isRrsApplicableCategory = isCategoryWithRrs(publicationInstanceType);
   const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
 
   return (
@@ -212,7 +212,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                   }}
                   baseFieldName={`${baseFieldName}[${associatedFileIndex}]`}
                   showFileVersion={showFileVersion}
-                  isRrsApplicableCategory={rrsApplicableCategory}
+                  isRrsApplicableCategory={isRrsApplicableCategory}
                   showAllColumns={showAllColumns}
                 />
               );
