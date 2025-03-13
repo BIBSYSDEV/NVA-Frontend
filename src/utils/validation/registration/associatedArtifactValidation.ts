@@ -4,9 +4,9 @@ import { FileType, FileVersion } from '../../../types/associatedArtifact.types';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
+  isCategoryWithFileVersion,
   isOpenFile,
   isPendingOpenFile,
-  isTypeWithFileVersionField,
 } from '../../registration-helpers';
 
 const associatedArtifactErrorMessage = {
@@ -53,7 +53,7 @@ export const associatedArtifactValidationSchema = Yup.object({
     .when(['type', '$publicationInstanceType'], ([type, publicationInstanceType], schema) =>
       associatedArtifactIsFile({ type }) &&
       (isOpenFile({ type }) || isPendingOpenFile({ type })) &&
-      isTypeWithFileVersionField(publicationInstanceType)
+      isCategoryWithFileVersion(publicationInstanceType)
         ? schema
             .required(associatedArtifactErrorMessage.fileVersionRequired)
             .oneOf([FileVersion.Published, FileVersion.Accepted], associatedArtifactErrorMessage.fileVersionRequired)

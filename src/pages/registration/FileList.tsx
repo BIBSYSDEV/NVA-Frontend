@@ -23,10 +23,10 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { activeLicenses } from '../../utils/fileHelpers';
 import {
   associatedArtifactIsFile,
+  isCategoryWithFileVersion,
+  isCategoryWithRrs,
   isOpenFile,
   isPendingOpenFile,
-  isTypeWithRrs as isRrsApplicableCategory,
-  isTypeWithFileVersionField,
 } from '../../utils/registration-helpers';
 import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
@@ -54,10 +54,9 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
 
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
   const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
-  const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
-
+  const showFileVersion = isCategoryWithFileVersion(publicationInstanceType);
+  const rrsApplicableCategory = isCategoryWithRrs(publicationInstanceType);
   const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
-  const rrsApplicableCategory = isRrsApplicableCategory(publicationInstanceType);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

@@ -406,7 +406,7 @@ export const FilesTableRow = ({
                       </TextField>
                     )}
                   </Field>
-                  {isRrsApplicableCategory && isAcceptedFile && canEditFile && (
+                  {isRrsApplicableCategory && canEditFile && (
                     <>
                       {fileHasCustomerRrs && (
                         <Typography>
