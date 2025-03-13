@@ -25,8 +25,8 @@ import {
   associatedArtifactIsFile,
   isOpenFile,
   isPendingOpenFile,
+  isTypeWithRrs as isRrsApplicableCategory,
   isTypeWithFileVersionField,
-  isTypeWithRrs,
 } from '../../utils/registration-helpers';
 import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
@@ -57,6 +57,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
   const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
 
   const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
+  const rrsApplicableCategory = isRrsApplicableCategory(publicationInstanceType);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -212,7 +213,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                   }}
                   baseFieldName={`${baseFieldName}[${associatedFileIndex}]`}
                   showFileVersion={showFileVersion}
-                  showRrs={isTypeWithRrs(publicationInstanceType)}
+                  isRrsApplicableCategory={rrsApplicableCategory}
                   showAllColumns={showAllColumns}
                 />
               );

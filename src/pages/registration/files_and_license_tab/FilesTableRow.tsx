@@ -70,7 +70,7 @@ interface FilesTableRowProps {
   removeFile: () => void;
   baseFieldName: string;
   showFileVersion: boolean;
-  showRrs: boolean;
+  isRrsApplicableCategory: boolean;
   showAllColumns: boolean;
 }
 
@@ -79,7 +79,7 @@ export const FilesTableRow = ({
   removeFile,
   baseFieldName,
   showFileVersion,
-  showRrs,
+  isRrsApplicableCategory,
   showAllColumns,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
@@ -278,7 +278,7 @@ export const FilesTableRow = ({
                             const fileVersion = event.target.value as FileVersion;
                             setFieldValue(field.name, fileVersion);
 
-                            if (showRrs) {
+                            if (isRrsApplicableCategory) {
                               if (fileVersion === FileVersion.Published) {
                                 const nullRrsValue: FileRrs = {
                                   type: 'NullRightsRetentionStrategy',
@@ -406,7 +406,7 @@ export const FilesTableRow = ({
                       </TextField>
                     )}
                   </Field>
-                  {showRrs && canEditFile && (
+                  {isRrsApplicableCategory && canEditFile && (
                     <>
                       {fileHasCustomerRrs && (
                         <Typography>
@@ -446,7 +446,7 @@ export const FilesTableRow = ({
             <Collapse in={openCollapsable}>
               <Box sx={{ m: '1rem', display: 'grid', gridTemplateColumns: '1fr auto', gap: '2rem' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  {showRrs && (
+                  {isRrsApplicableCategory && (
                     <>
                       {isAcceptedFile && isNullRrs && (
                         <FormControlLabel
