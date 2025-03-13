@@ -410,16 +410,14 @@ export const FilesTableRow = ({
                     <>
                       {fileHasCustomerRrs && (
                         <Typography>
-                          <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
+                          <Trans i18nKey="registration.files_and_license.institution_prefers_cc_by">
                             {rrsPolicyLink}
                           </Trans>
                         </Typography>
                       )}
                       {fileHasOverriddenRrs && (
                         <Typography>
-                          <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
-                            {rrsPolicyLink}
-                          </Trans>
+                          <Trans i18nKey="registration.files_and_license.opted_out_of_rrs">{rrsPolicyLink}</Trans>
                         </Typography>
                       )}
                     </>
@@ -446,13 +444,7 @@ export const FilesTableRow = ({
           title={disabledFile ? t('registration.files_and_license.disabled_helper_text') : ''}>
           <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
             <Collapse in={openCollapsable}>
-              <Box
-                sx={{
-                  m: '1rem',
-                  display: 'grid',
-                  gridTemplateColumns: '1fr auto',
-                  gap: '2rem',
-                }}>
+              <Box sx={{ m: '1rem', display: 'grid', gridTemplateColumns: '1fr auto', gap: '2rem' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {showRrs && (
                     <>
@@ -495,7 +487,7 @@ export const FilesTableRow = ({
                         <FormControlLabel
                           disabled={disabledFile}
                           label={
-                            <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
+                            <Trans i18nKey="registration.files_and_license.follow_institution_rights_policy">
                               {rrsPolicyLink}
                             </Trans>
                           }
@@ -578,10 +570,7 @@ export const FilesTableRow = ({
                     open={!!embargoPopperAnchorEl}
                     anchorEl={embargoPopperAnchorEl}
                     onClose={() => setEmbargoPopperAnchorEl(null)}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}>
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
                     <Paper sx={{ p: '1rem' }}>
                       <Typography>{t('registration.files_and_license.file_publish_date_helper_text')}</Typography>
                     </Paper>
