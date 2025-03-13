@@ -100,6 +100,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const canEditFilesAndLinks = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
   const canUploadFile = userHasAccessRight(values, 'upload-file');
+  const categorySupportsFiles =
+    customer && publicationInstanceType && customer.allowFileUploadForTypes.includes(publicationInstanceType);
 
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -136,9 +138,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           <>
             {!isNullAssociatedArtifact && (
               <>
-                {customer &&
-                publicationInstanceType &&
-                !customer.allowFileUploadForTypes.includes(publicationInstanceType) ? (
+                {!categorySupportsFiles ? (
                   <Typography>{t('registration.resource_type.protected_file_type')}</Typography>
                 ) : (
                   <FileUploader
