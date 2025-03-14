@@ -327,10 +327,12 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                         <NviNoteMenu
                           onDelete={deleteFunction}
                           isDeleting={isDeleting}
-                          deleteTitle={isFinalizedNote ? t('tasks.nvi.delete_approval') : t('tasks.nvi.delete_note')}
-                          deleteDescription={
+                          deleteDialogTitle={
+                            isFinalizedNote ? t('tasks.nvi.reset_approval') : t('tasks.nvi.delete_note')
+                          }
+                          deleteDialogDescription={
                             isFinalizedNote
-                              ? t('tasks.nvi.delete_approval_description')
+                              ? t('tasks.nvi.reset_approval_description')
                               : t('tasks.nvi.delete_note_description')
                           }
                         />

@@ -2133,6 +2133,8 @@
       "rejection_reason": "Begrunnelse for avvisning",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
+      "reset_approval": "Nullstill rapporteringsstatus",
+      "reset_approval_description": "Er du sikker på at du vil nullstille rapporteringsstatusen? Noen på din institusjon må da rapportere denne på nytt.",
       "save_note": "Lagre kommentar",
       "show_candidate_search": "Vis kandidatsøk",
       "show_reporting_status": "Vis rapporteringsstatus",
@@ -2146,9 +2148,7 @@
       },
       "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknytning til NVI-institusjon",
       "waiting_for_other_institutions": "Venter på andre institusjoner",
-      "waiting_for_your_institution": "Venter på din institusjon",
-      "delete_approval": "Nullstill rapporteringsstatus",
-      "delete_approval_description": "Er du sikker på at du vil nullstille rapporteringsstatusen? Noen på din institusjon må da rapportere denne på nytt."
+      "waiting_for_your_institution": "Venter på din institusjon"
     },
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag eller lignende",
     "select_other_unit_filter": "Velg andre",

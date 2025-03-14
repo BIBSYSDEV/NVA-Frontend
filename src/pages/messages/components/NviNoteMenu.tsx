@@ -9,13 +9,13 @@ import { dataTestId } from '../../../utils/dataTestIds';
 interface NviNoteMenuProps {
   onDelete: (() => Promise<void>) | undefined;
   isDeleting: boolean;
-  deleteTitle: string;
-  deleteDescription: string;
+  deleteDialogTitle: string;
+  deleteDialogDescription: string;
 }
 
 const menuId = 'nvi-note-menu';
 
-export const NviNoteMenu = ({ onDelete, isDeleting, deleteTitle, deleteDescription }: NviNoteMenuProps) => {
+export const NviNoteMenu = ({ onDelete, isDeleting, deleteDialogTitle, deleteDialogDescription }: NviNoteMenuProps) => {
   const { t } = useTranslation();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -63,7 +63,7 @@ export const NviNoteMenu = ({ onDelete, isDeleting, deleteTitle, deleteDescripti
 
       <ConfirmDialog
         open={showConfirmDialog}
-        title={deleteTitle}
+        title={deleteDialogTitle}
         onAccept={async () => {
           if (onDelete) {
             await onDelete();
@@ -72,7 +72,7 @@ export const NviNoteMenu = ({ onDelete, isDeleting, deleteTitle, deleteDescripti
         }}
         isLoading={isDeleting}
         onCancel={() => setShowConfirmDialog(false)}>
-        <Typography>{deleteDescription}</Typography>
+        <Typography>{deleteDialogDescription}</Typography>
       </ConfirmDialog>
     </section>
   );
