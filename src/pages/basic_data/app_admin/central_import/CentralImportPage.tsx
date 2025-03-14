@@ -47,7 +47,11 @@ export const CentralImportPage = () => {
       <Typography component="h1" sx={visuallyHidden}>
         {t('basic_data.central_import.central_import')}
       </Typography>
-      <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
+      <SearchForm
+        sx={{ mb: '1rem' }}
+        placeholder={t('tasks.search_placeholder')}
+        paginationOffsetParamName={ImportCandidatesSearchParam.From}
+      />
 
       <SelectedImportCandidateFacetsList aggregations={importCandidateQuery.data?.aggregations} />
 

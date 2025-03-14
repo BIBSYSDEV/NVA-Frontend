@@ -1,16 +1,23 @@
 import { Box, BoxProps, TextFieldProps } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { ResultParam } from '../api/searchApi';
 import { SearchTextField } from '../pages/search/SearchTextField';
-import { dataSearchFieldAttributeName, SearchParam, syncParamsWithSearchFields } from '../utils/searchHelpers';
+import { dataSearchFieldAttributeName, syncParamsWithSearchFields } from '../utils/searchHelpers';
 
 interface SearchFormProps extends Pick<BoxProps, 'sx'>, Pick<TextFieldProps, 'label' | 'placeholder'> {
+  paginationOffsetParamName: string;
   paramName?: string;
   dataTestId?: string;
 }
 
-export const SearchForm = ({ sx, label, placeholder, dataTestId, paramName = 'query' }: SearchFormProps) => {
+export const SearchForm = ({
+  sx,
+  label,
+  placeholder,
+  dataTestId,
+  paramName = 'query',
+  paginationOffsetParamName,
+}: SearchFormProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -36,9 +43,7 @@ export const SearchForm = ({ sx, label, placeholder, dataTestId, paramName = 'qu
           syncedParams.delete(paramName);
         }
 
-        syncedParams.delete(ResultParam.From);
-        syncedParams.delete(SearchParam.Page);
-
+        syncedParams.delete(paginationOffsetParamName);
         navigate({ search: searchParams.toString() });
       }}>
       <SearchTextField
