@@ -98,7 +98,9 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           isPending={registrationQuery.isPending}
           renderCustomSelect={
             <SearchForInstitutionFacetItem
-              onSelectInstitution={(identifier) => addFacetFilter(ResultParam.TopLevelOrganization, identifier)}
+              onSelectInstitution={(identifier) =>
+                addFacetFilter(ResultParam.TopLevelOrganization, getIdentifierFromId(identifier))
+              }
             />
           }>
           {topLevelOrganizationFacet.map((facet) => {
