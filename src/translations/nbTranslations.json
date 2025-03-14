@@ -325,10 +325,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -400,7 +396,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -2133,6 +2133,8 @@
       "rejection_reason": "Begrunnelse for avvisning",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
+      "reset_approval": "Nullstill rapporteringsstatus",
+      "reset_approval_description": "Er du sikker på at du vil nullstille rapporteringsstatusen? Noen på din institusjon må da rapportere denne på nytt.",
       "save_note": "Lagre kommentar",
       "show_candidate_search": "Vis kandidatsøk",
       "show_reporting_status": "Vis rapporteringsstatus",
