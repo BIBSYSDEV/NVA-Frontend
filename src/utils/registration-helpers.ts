@@ -699,11 +699,11 @@ export const isPendingOpenFile = (artifact: AssociatedArtifact) => artifact.type
 
 export const isOpenFile = (artifact: AssociatedArtifact) => artifact.type === FileType.OpenFile;
 
-export const isTypeWithRrs = (publicationInstanceType?: string) =>
+export const isCategoryWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
 
-export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
+export const isCategoryWithFileVersion = (publicationInstanceType?: string) =>
   isJournal(publicationInstanceType) || isBook(publicationInstanceType) || isChapter(publicationInstanceType);
 
 export const isEmbargoed = (embargoDate: Date | null) => {
