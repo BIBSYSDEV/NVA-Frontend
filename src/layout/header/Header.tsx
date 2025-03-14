@@ -20,7 +20,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getDialogueNotificationsParams, getTaskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { hasCuratorRole } from '../../utils/user-helpers';
+import { hasTicketCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
@@ -49,7 +49,7 @@ export const Header = () => {
     }
   }, [dispatch, customer]);
 
-  const isTicketCurator = hasCuratorRole(user);
+  const isTicketCurator = hasTicketCuratorRole(user);
 
   const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
   const dialogueNotificationsQuery = useQuery({
