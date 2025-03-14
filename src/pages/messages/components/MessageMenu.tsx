@@ -14,6 +14,8 @@ interface MessageMenuProps {
   refetchData?: () => void;
 }
 
+const menuId = 'message-menu';
+
 export const MessageMenu = ({ ticketId, messageIdentifier, refetchData, canDeleteMessage }: MessageMenuProps) => {
   const { t } = useTranslation();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -28,7 +30,7 @@ export const MessageMenu = ({ ticketId, messageIdentifier, refetchData, canDelet
   return (
     <section>
       <IconButton
-        aria-controls={open ? 'basic-menu' : undefined}
+        aria-controls={open ? menuId : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageOptionsButton}
@@ -40,6 +42,7 @@ export const MessageMenu = ({ ticketId, messageIdentifier, refetchData, canDelet
       </IconButton>
       <Menu
         anchorEl={anchorEl}
+        id={menuId}
         keepMounted
         open={open}
         onClose={() => setAnchorEl(null)}
