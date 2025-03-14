@@ -127,6 +127,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
       </Typography>
     ),
     username: rejectionStatus.finalizedBy,
+    institutionId: rejectionStatus.institutionId,
   }));
 
   const approvalNotes: NviNote[] = (
@@ -301,7 +302,9 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               let deleteFunction: (() => Promise<void>) | undefined = undefined;
               const noteIdentifier = note.identifier;
 
-              if (note.type === 'FinalizedNote' && canResetApproval && note.institutionId === user?.topOrgCristinId) {
+              const isFinalizedNote = note.type === 'FinalizedNote';
+
+              if (isFinalizedNote && canResetApproval && note.institutionId === user?.topOrgCristinId) {
                 deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
               } else if (note.type === 'GeneralNote' && noteIdentifier && note.username === user?.nvaUsername) {
                 deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
@@ -324,8 +327,12 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                         <NviNoteMenu
                           onDelete={deleteFunction}
                           isDeleting={isDeleting}
-                          deleteTitle={t('tasks.nvi.delete_note')}
-                          deleteDescription={t('tasks.nvi.delete_note_description')}
+                          deleteTitle={isFinalizedNote ? t('tasks.nvi.delete_approval') : t('tasks.nvi.delete_note')}
+                          deleteDescription={
+                            isFinalizedNote
+                              ? t('tasks.nvi.delete_approval_description')
+                              : t('tasks.nvi.delete_note_description')
+                          }
                         />
                       )
                     }
