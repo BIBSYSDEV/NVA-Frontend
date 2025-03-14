@@ -319,7 +319,16 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     username={note.username}
                     backgroundColor="nvi.main"
                     showOrganization
-                    menuElement={!!deleteFunction && <NviNoteMenu onDelete={deleteFunction} isDeleting={isDeleting} />}
+                    menuElement={
+                      !!deleteFunction && (
+                        <NviNoteMenu
+                          onDelete={deleteFunction}
+                          isDeleting={isDeleting}
+                          deleteTitle={t('tasks.nvi.delete_note')}
+                          deleteDescription={t('tasks.nvi.delete_note_description')}
+                        />
+                      )
+                    }
                   />
                 </ErrorBoundary>
               );

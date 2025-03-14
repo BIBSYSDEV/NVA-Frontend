@@ -9,9 +9,13 @@ import { dataTestId } from '../../../utils/dataTestIds';
 interface NviNoteMenuProps {
   onDelete: (() => Promise<void>) | undefined;
   isDeleting: boolean;
+  deleteTitle: string;
+  deleteDescription: string;
 }
 
-export const NviNoteMenu = ({ onDelete, isDeleting }: NviNoteMenuProps) => {
+const menuId = 'nvi-note-menu';
+
+export const NviNoteMenu = ({ onDelete, isDeleting, deleteTitle, deleteDescription }: NviNoteMenuProps) => {
   const { t } = useTranslation();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -24,11 +28,11 @@ export const NviNoteMenu = ({ onDelete, isDeleting }: NviNoteMenuProps) => {
   return (
     <section>
       <IconButton
-        aria-controls={open ? 'basic-menu' : undefined}
+        aria-controls={open ? menuId : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         data-testid={dataTestId.tasksPage.nvi.noteOptionsButton}
-        aria-label={t('common.delete')}
+        aria-label={t('common.show_more_options')}
         size="small"
         sx={{ alignSelf: 'end' }}
         onClick={handleClickMenuAnchor}>
@@ -36,6 +40,7 @@ export const NviNoteMenu = ({ onDelete, isDeleting }: NviNoteMenuProps) => {
       </IconButton>
       <Menu
         anchorEl={anchorEl}
+        id={menuId}
         keepMounted
         open={open}
         onClose={() => setAnchorEl(null)}
@@ -58,7 +63,7 @@ export const NviNoteMenu = ({ onDelete, isDeleting }: NviNoteMenuProps) => {
 
       <ConfirmDialog
         open={showConfirmDialog}
-        title={t('tasks.nvi.delete_note')}
+        title={deleteTitle}
         onAccept={async () => {
           if (onDelete) {
             await onDelete();
@@ -67,7 +72,7 @@ export const NviNoteMenu = ({ onDelete, isDeleting }: NviNoteMenuProps) => {
         }}
         isLoading={isDeleting}
         onCancel={() => setShowConfirmDialog(false)}>
-        <Typography>{t('tasks.nvi.delete_note_description')}</Typography>
+        <Typography>{deleteDescription}</Typography>
       </ConfirmDialog>
     </section>
   );
