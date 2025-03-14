@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FeideUser, RoleName, User } from '../types/user.types';
+import { CustomUserAttributes, RoleName, User } from '../types/user.types';
 
 const getStringValue = (text: string | undefined | null) => (text ? (text === 'null' ? '' : text) : '');
 
@@ -9,7 +9,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<FeideUser>) => {
+    setUser: (state, action: PayloadAction<CustomUserAttributes>) => {
       const firstName = action.payload['custom:firstName'] ?? '';
       const lastName = action.payload['custom:lastName'] ?? '';
       const customerId = getStringValue(action.payload['custom:customerId']);
@@ -17,7 +17,6 @@ const userSlice = createSlice({
       const nationalIdNumber = action.payload['custom:feideIdNin'] ?? action.payload['custom:nin'] ?? '';
       const nvaUsername = getStringValue(action.payload['custom:nvaUsername']);
       const topOrgCristinId = getStringValue(action.payload['custom:topOrgCristinId']);
-      const feideId = getStringValue(action.payload['custom:feideId']);
       const rolesString = getStringValue(action.payload['custom:roles']);
       const allowedCustomersString = getStringValue(action.payload['custom:allowedCustomers']);
       const roles = rolesString.split(',') as RoleName[];
@@ -29,7 +28,6 @@ const userSlice = createSlice({
         givenName: firstName,
         familyName: lastName,
         nationalIdNumber,
-        feideId,
         cristinId,
         nvaUsername,
         customerId,
