@@ -79,7 +79,11 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
           <StyledContainer>
             <StyledSearchBarContainer>
               <SearchTypeField />
-              <SearchForm paramName={PersonSearchParameter.Name} placeholder={t('search.person_search_placeholder')} />
+              <SearchForm
+                paramName={PersonSearchParameter.Name}
+                placeholder={t('search.person_search_placeholder')}
+                paginationOffsetParamName={PersonSearchParameter.Page}
+              />
             </StyledSearchBarContainer>
             {!personQuery.isPending && <SelectedPersonFacetsList aggregations={personQuery.data?.aggregations} />}
           </StyledContainer>
@@ -97,6 +101,7 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
               <SearchForm
                 paramName={ProjectSearchParameter.Query}
                 placeholder={t('search.search_project_placeholder')}
+                paginationOffsetParamName={ProjectSearchParameter.Page}
               />
             </StyledSearchBarContainer>
             {!projectQuery.isPending && <SelectedProjectFacetsList aggregations={projectQuery.data?.aggregations} />}

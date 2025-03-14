@@ -97,7 +97,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
           <TicketStatusFilter options={ticketStatusOptions} />
         </Grid>
         <Grid item xs={16} md={11} lg={10}>
-          <SearchForm placeholder={t('tasks.search_placeholder')} />
+          <SearchForm placeholder={t('tasks.search_placeholder')} paginationOffsetParamName={TicketSearchParam.From} />
         </Grid>
 
         {user && (
