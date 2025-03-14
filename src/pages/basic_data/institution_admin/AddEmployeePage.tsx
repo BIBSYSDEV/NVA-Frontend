@@ -68,7 +68,13 @@ export const AddEmployeePage = () => {
       });
       const createPersonResponse = await createCristinPerson(cristinPerson);
       if (isErrorStatus(createPersonResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
+        dispatch(
+          setNotification({
+            message: t('feedback.error.create_user'),
+            variant: 'error',
+            detail: (createPersonResponse.data as any).detail,
+          })
+        );
       } else if (isSuccessStatus(createPersonResponse.status)) {
         if (!nationalId) {
           dispatch(setNotification({ message: t('feedback.success.create_person'), variant: 'success' }));
