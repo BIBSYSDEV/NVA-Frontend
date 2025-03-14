@@ -39,6 +39,7 @@ interface NviNote {
   identifier?: string;
   date: string;
   username: string;
+  institutionId?: string;
   content: ReactNode;
 }
 
@@ -135,6 +136,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     date: approvalStatus.finalizedDate,
     content: <Typography fontWeight={700}>{t('tasks.nvi.status.Approved')}</Typography>,
     username: approvalStatus.finalizedBy,
+    institutionId: approvalStatus.institutionId,
   }));
 
   const generalNotes: NviNote[] = (nviCandidate?.notes ?? []).map((note) => ({
@@ -299,7 +301,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               let deleteFunction: (() => Promise<void>) | undefined = undefined;
               const noteIdentifier = note.identifier;
 
-              if (note.type === 'FinalizedNote' && canResetApproval) {
+              if (note.type === 'FinalizedNote' && canResetApproval && note.institutionId === user?.topOrgCristinId) {
                 deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
               } else if (note.type === 'GeneralNote' && noteIdentifier && note.username === user?.nvaUsername) {
                 deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
