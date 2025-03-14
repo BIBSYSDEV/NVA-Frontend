@@ -150,6 +150,7 @@ export const FilesTableRow = ({
 
   const canDeleteFile = hasFileAccessRight(file, 'delete') || canEditImportCandidateFile;
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
+  const canUploadOpenFile = false;
 
   return (
     <>
@@ -227,7 +228,9 @@ export const FilesTableRow = ({
                     <i>{t('registration.files_and_license.select_availability')}</i>
                   </MenuItem>
                 )}
-                <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
+                <MenuItem
+                  value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}
+                  disabled={!canUploadOpenFile}>
                   <StyledFileTypeMenuItemContent>
                     <CheckIcon fontSize="small" />
                     {t('registration.files_and_license.file_type.open_file')}

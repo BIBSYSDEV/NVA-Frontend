@@ -325,10 +325,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -400,7 +396,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1466,6 +1466,8 @@
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
       "no_files_or_links_present_in_this_registration": "Det er ikke lagt til fil eller lenke for registreringen",
       "open_file": "Åpne fil",
+      "open_files_not_preferred_curator": "Din institusjon støtter ikke at registrator kan laste opp åpne filer for denne kategorien. Som kurator kan du legge til en åpen fil på vegne av registrator.",
+      "open_files_not_preferred_registrator": "Din institusjon støtter ikke at du som registrator kan laste opp åpne filer for denne kategorien. Du kan fortsatt laste opp interne filer. Kontakt kuratorstøtte om du ønsker å ha en åpen fil på dette resultatet.",
       "opted_out_of_rrs": "Du har valgt å ikke følge vedtatt <0>rettighetspolitikk</0>",
       "public_note": "Offentlig kommentar",
       "published": "Publisert",
@@ -1943,7 +1945,7 @@
       "place_for_event": "Sted for arrangement",
       "print_issn": "Print ISSN",
       "protected_degree_type": "Du mangler tilgang. Det er kun studentoppgavekurator som har tilganger til å registrere denne kategorien. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
-      "protected_file_type": "Din institusjon har valgt å ikke støtte filer for denne kategorien.",
+      "protected_file_type": "Din institusjon har valgt å ikke støtte åpne filer for denne kategorien.",
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",
       "related_results_description": "Søk opp og velg resultat i søkefeltet for å knytte relaterte resultater til dette resultatet.",

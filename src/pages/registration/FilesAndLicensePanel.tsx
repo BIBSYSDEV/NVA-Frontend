@@ -21,6 +21,7 @@ import {
 } from '../../utils/registration-helpers';
 
 import { OpenInNewLink } from '../../components/OpenInNewLink';
+import { hasCuratorRole } from '../../utils/user-helpers';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { DoiField } from './resource_type_tab/components/DoiField';
@@ -99,9 +100,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const originalDoi = entityDescription?.reference?.doi;
 
   const canEditFilesAndLinks = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
-  const canUploadFile = userHasAccessRight(values, 'upload-file');
+
   const categorySupportsFiles =
     customer && publicationInstanceType && customer.allowFileUploadForTypes.includes(publicationInstanceType);
+  const canUploadFile = userHasAccessRight(values, 'upload-file');
+  const isCurator = hasCuratorRole(user);
+
+  // const canUploadOpenFile = canUploadFile && (categorySupportsFiles || isCurator);
 
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -139,8 +144,14 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             {!isNullAssociatedArtifact && (
               <>
                 {!categorySupportsFiles ? (
-                  <Typography>{t('registration.resource_type.protected_file_type')}</Typography>
-                ) : (
+                  isCurator ? (
+                    <Typography>{t('registration.files_and_license.open_files_not_preferred_curator')}</Typography>
+                  ) : (
+                    <Typography>{t('registration.files_and_license.open_files_not_preferred_registrator')}</Typography>
+                  )
+                ) : null}
+
+                {canUploadFile && (
                   <FileUploader
                     uppy={uppy}
                     addFile={(file) => {
@@ -152,9 +163,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       }
                       push(file);
                     }}
-                    disabled={!canUploadFile}
                   />
                 )}
+
                 {pendingFiles.length > 0 && (
                   <FileList
                     title={t('registration.files_and_license.files_in_progress')}
