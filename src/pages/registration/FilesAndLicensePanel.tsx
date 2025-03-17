@@ -104,9 +104,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const categorySupportsFiles =
     customer && publicationInstanceType && customer.allowFileUploadForTypes.includes(publicationInstanceType);
   const canUploadFile = userHasAccessRight(values, 'upload-file');
-  const isCurator = hasCuratorRole(user);
-
-  // const canUploadOpenFile = canUploadFile && (categorySupportsFiles || isCurator);
 
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -144,7 +141,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             {!isNullAssociatedArtifact && (
               <>
                 {!categorySupportsFiles ? (
-                  isCurator ? (
+                  hasCuratorRole(user) ? (
                     <Typography>{t('registration.files_and_license.open_files_not_preferred_curator')}</Typography>
                   ) : (
                     <Typography>{t('registration.files_and_license.open_files_not_preferred_registrator')}</Typography>

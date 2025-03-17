@@ -52,6 +52,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { activeLicenses, getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
 import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
+import { hasCuratorRole } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { DownloadFileButton } from './DownloadFileButton';
 
@@ -150,7 +151,11 @@ export const FilesTableRow = ({
 
   const canDeleteFile = hasFileAccessRight(file, 'delete') || canEditImportCandidateFile;
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
-  const canUploadOpenFile = false;
+
+  const publicationInstanceType = values.entityDescription?.reference?.publicationInstance?.type;
+  const categorySupportsFiles =
+    customer && publicationInstanceType && customer.allowFileUploadForTypes.includes(publicationInstanceType);
+  const canSelectOpenFile = categorySupportsFiles || hasCuratorRole(user);
 
   return (
     <>
@@ -230,7 +235,7 @@ export const FilesTableRow = ({
                 )}
                 <MenuItem
                   value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}
-                  disabled={!canUploadOpenFile}>
+                  disabled={!canSelectOpenFile}>
                   <StyledFileTypeMenuItemContent>
                     <CheckIcon fontSize="small" />
                     {t('registration.files_and_license.file_type.open_file')}
