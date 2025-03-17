@@ -55,6 +55,7 @@ import {
   SerialPublication,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
+import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -737,14 +738,18 @@ export const getDisabledCategories = (
     });
   }
 
-  const hasFiles = getAssociatedFiles(registration.associatedArtifacts).length > 0;
+  if (!hasCuratorRole(user)) {
+    const hasOpenFiles = registration.associatedArtifacts.some(
+      (artifact) => isOpenFile(artifact) || isPendingOpenFile(artifact)
+    );
 
-  if (hasFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
-    const categoriesWithoutFileSupport = allPublicationInstanceTypes
-      .filter((type) => !customer.allowFileUploadForTypes.includes(type))
-      .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
+    if (hasOpenFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
+      const categoriesWithoutFileSupport = allPublicationInstanceTypes
+        .filter((type) => !customer.allowFileUploadForTypes.includes(type))
+        .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
 
-    disabledCategories.push(...categoriesWithoutFileSupport);
+      disabledCategories.push(...categoriesWithoutFileSupport);
+    }
   }
 
   return disabledCategories;
