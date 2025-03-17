@@ -233,14 +233,14 @@ export const FilesTableRow = ({
                     <i>{t('registration.files_and_license.select_availability')}</i>
                   </MenuItem>
                 )}
-                <MenuItem
-                  value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}
-                  disabled={!canSelectOpenFile}>
-                  <StyledFileTypeMenuItemContent>
-                    <CheckIcon fontSize="small" />
-                    {t('registration.files_and_license.file_type.open_file')}
-                  </StyledFileTypeMenuItemContent>
-                </MenuItem>
+                {canSelectOpenFile && (
+                  <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
+                    <StyledFileTypeMenuItemContent>
+                      <CheckIcon fontSize="small" />
+                      {t('registration.files_and_license.file_type.open_file')}
+                    </StyledFileTypeMenuItemContent>
+                  </MenuItem>
+                )}
                 <MenuItem value={isCompletedFile ? FileType.InternalFile : FileType.PendingInternalFile}>
                   <StyledFileTypeMenuItemContent>
                     <Inventory2OutlinedIcon fontSize="small" />
