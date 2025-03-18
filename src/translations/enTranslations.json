@@ -2133,6 +2133,8 @@
       "rejection_reason": "Reason for rejection",
       "reporting_period_closed": "The reporting period for this result is closed.",
       "reporting_period_missing": "The reporting period for this result is not open.",
+      "reset_approval": "Reset reporting status",
+      "reset_approval_description": "Are you sure you want to reset the reporting status? Someone at your institution will then have to report it again.",
       "save_note": "Save comment",
       "show_candidate_search": "Show candidate search",
       "show_reporting_status": "Show reporting status",
