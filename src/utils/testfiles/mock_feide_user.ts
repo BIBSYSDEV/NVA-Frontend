@@ -12,8 +12,6 @@ export const mockUser: CustomUserAttributes = {
   'custom:allowedCustomers': 'https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a',
 };
 
-Object.values(RoleName).join(',');
-
 export const mockRoles: InstitutionUser = {
   roles: [
     { type: 'Role', rolename: RoleName.AppAdmin },

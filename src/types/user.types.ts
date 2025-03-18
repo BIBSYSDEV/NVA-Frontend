@@ -16,7 +16,6 @@ export enum RoleName {
 }
 
 export interface User {
-  nationalIdNumber: string; // TODO: remove
   cristinId?: string;
   customerId?: string;
   topOrgCristinId?: string;
@@ -74,8 +73,6 @@ export interface CustomUserAttributes {
   'custom:roles'?: string;
   'custom:accessRights'?: string;
   'custom:allowedCustomers'?: string;
-  'custom:feideIdNin'?: string;
-  'custom:nin'?: string; // TODO: remove
   'custom:currentTerms'?: string;
   'custom:acceptedTerms'?: string;
 }
