@@ -43,11 +43,12 @@ export const getCustomUserAttributes = async () => {
 };
 
 export const getCustomTokenAttributes = (tokens?: AuthSession['tokens']) => {
-  if (!tokens?.idToken?.payload || !tokens?.accessToken?.payload) {
+  const idTokenPayload = tokens?.idToken?.payload;
+  const accessTokenPayload = tokens?.accessToken?.payload;
+
+  if (!idTokenPayload || !accessTokenPayload) {
     return null;
   }
-  const idTokenPayload = tokens?.idToken?.payload ?? {};
-  const accessTokenPayload = tokens?.accessToken?.payload ?? {};
 
   const customAttributesObject = Object.entries({ ...idTokenPayload, ...accessTokenPayload })
     .filter(([key]) => key.startsWith('custom:'))
