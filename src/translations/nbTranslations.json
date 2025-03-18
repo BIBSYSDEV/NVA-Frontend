@@ -156,7 +156,6 @@
       "no_eligable_roles": "Personer uten nasjonalt identitetsnummer kan ikke ha roller",
       "no_employees_found": "Ingen ansatte funnet",
       "other_employments": "Andre aktive ansettelser",
-      "person_id": "PersonID",
       "person_register": "Personregister",
       "previous_employments": "Tidligere ansettelser",
       "remove_employment": "Fjern ansettelse",
@@ -811,7 +810,6 @@
         "roles": "Roller"
       },
       "identity": {
-        "identity": "Identitet",
         "upload_profile_photo": "Last opp profilfoto",
         "upload_profile_photo_info": "Maksimum størrelse: 1 MB. Støttede filtyper: .jpg eller .jpeg"
       },
