@@ -20,6 +20,7 @@ import {
   userIsValidImporter,
 } from '../../utils/registration-helpers';
 
+import { InfoBanner } from '../../components/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { FileList } from './FileList';
@@ -141,11 +142,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             {!isNullAssociatedArtifact && (
               <>
                 {!categorySupportsFiles && (
-                  <Typography>
-                    {hasCuratorRole(user)
-                      ? t('registration.files_and_license.open_files_not_preferred_curator')
-                      : t('registration.files_and_license.open_files_not_preferred_registrator')}
-                  </Typography>
+                  <InfoBanner
+                    text={
+                      hasCuratorRole(user)
+                        ? t('registration.files_and_license.open_files_not_preferred_curator')
+                        : t('registration.files_and_license.open_files_not_preferred_registrator')
+                    }
+                  />
                 )}
 
                 {canUploadFile && (
