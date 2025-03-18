@@ -102,7 +102,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const canEditFilesAndLinks = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
 
   const categorySupportsFiles =
-    customer && publicationInstanceType && customer.allowFileUploadForTypes.includes(publicationInstanceType);
+    !!publicationInstanceType && !!customer?.allowFileUploadForTypes.includes(publicationInstanceType);
   const canUploadFile = userHasAccessRight(values, 'upload-file');
 
   return (
@@ -140,13 +140,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           <>
             {!isNullAssociatedArtifact && (
               <>
-                {!categorySupportsFiles ? (
-                  hasCuratorRole(user) ? (
-                    <Typography>{t('registration.files_and_license.open_files_not_preferred_curator')}</Typography>
-                  ) : (
-                    <Typography>{t('registration.files_and_license.open_files_not_preferred_registrator')}</Typography>
-                  )
-                ) : null}
+                {!categorySupportsFiles && (
+                  <Typography>
+                    {hasCuratorRole(user)
+                      ? t('registration.files_and_license.open_files_not_preferred_curator')
+                      : t('registration.files_and_license.open_files_not_preferred_registrator')}
+                  </Typography>
+                )}
 
                 {canUploadFile && (
                   <FileUploader

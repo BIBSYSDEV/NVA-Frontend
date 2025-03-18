@@ -154,7 +154,7 @@ export const FilesTableRow = ({
 
   const publicationInstanceType = values.entityDescription?.reference?.publicationInstance?.type;
   const categorySupportsFiles =
-    customer && publicationInstanceType && customer.allowFileUploadForTypes.includes(publicationInstanceType);
+    !!publicationInstanceType && !!customer?.allowFileUploadForTypes.includes(publicationInstanceType);
   const canSelectOpenFile = categorySupportsFiles || hasCuratorRole(user);
 
   return (
