@@ -42,6 +42,11 @@ export const PublicRegistrationContributors = ({
   );
   const distinctUnits = getDistinctContributorUnits([...primaryContributorsToShow, ...secondaryContributorsToShow]);
 
+  const relevantRoles = [
+    ...contributorConfig[registrationType].primaryRoles,
+    ...contributorConfig[registrationType].secondaryRoles,
+  ];
+
   return (
     <Box
       data-testid={dataTestId.registrationLandingPage.contributors}
@@ -57,13 +62,13 @@ export const PublicRegistrationContributors = ({
             contributors={primaryContributorsToShow}
             distinctUnits={distinctUnits}
             hiddenCount={showAll ? undefined : hiddenContributorsCount.current}
-            registrationType={registrationType}
+            relevantRoles={relevantRoles}
           />
           {showAll && secondaryContributorsToShow.length > 0 && (
             <ContributorsRow
               contributors={secondaryContributorsToShow}
               distinctUnits={distinctUnits}
-              registrationType={registrationType}
+              relevantRoles={relevantRoles}
             />
           )}
         </Box>
@@ -111,10 +116,10 @@ interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: string[];
   hiddenCount?: number;
-  registrationType: PublicationInstanceType;
+  relevantRoles: ContributorRole[];
 }
 
-const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, registrationType }: ContributorsRowProps) => {
+const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRoles }: ContributorsRowProps) => {
   const { t } = useTranslation();
 
   return (
@@ -140,15 +145,10 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, registratio
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
 
-        const allRelevantRoles = [
-          ...contributorConfig[registrationType].primaryRoles,
-          ...contributorConfig[registrationType].secondaryRoles,
-        ];
-
-        const hasValidRole = allRelevantRoles.includes(contributor.role.type);
+        const hasValidRole = relevantRoles.includes(contributor.role.type);
 
         const showRole =
-          contributor.role.type !== ContributorRole.Creator || !allRelevantRoles.includes(ContributorRole.Creator);
+          contributor.role.type !== ContributorRole.Creator || !relevantRoles.includes(ContributorRole.Creator);
 
         const roleContent = showRole && (
           <Box component="span" sx={{ ml: '0.2rem' }}>
