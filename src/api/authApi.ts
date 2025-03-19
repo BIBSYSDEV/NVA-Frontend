@@ -35,8 +35,7 @@ export const userIsAuthenticated = async () => {
 export const getCustomUserAttributes = async () => {
   try {
     const currentSession = await fetchAuthSession();
-    const customTokenAttributes = getCustomTokenAttributes(currentSession.tokens);
-    return customTokenAttributes;
+    return getCustomTokenAttributes(currentSession.tokens);
   } catch {
     return null;
   }
