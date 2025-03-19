@@ -140,11 +140,25 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, registratio
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
 
-        const hasValidRole =
-          contributorConfig[registrationType].primaryRoles.includes(contributor.role.type) ||
-          contributorConfig[registrationType].secondaryRoles.includes(contributor.role.type);
+        const allRelevantRoles = [
+          ...contributorConfig[registrationType].primaryRoles,
+          ...contributorConfig[registrationType].secondaryRoles,
+        ];
 
-        const showRole = contributor.role.type !== ContributorRole.Creator && hasValidRole;
+        const hasValidRole = allRelevantRoles.includes(contributor.role.type);
+
+        const showRole =
+          contributor.role.type !== ContributorRole.Creator || !allRelevantRoles.includes(ContributorRole.Creator);
+
+        const roleContent = showRole && (
+          <Box component="span" sx={{ ml: '0.2rem' }}>
+            {hasValidRole ? (
+              <>({t(`registration.contributors.types.${contributor.role.type}`)})</>
+            ) : (
+              <i>({t('registration.public_page.unknown_role')})</i>
+            )}
+          </Box>
+        );
 
         return (
           <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
@@ -159,9 +173,13 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, registratio
               ) : (
                 name
               )}
-              {showRole && ` (${t(`registration.contributors.types.${contributor.role.type}`)})`}
+
+              {roleContent}
+
               {affiliationIndexes && affiliationIndexes.length > 0 && (
-                <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
+                <sup style={{ marginLeft: '0.1rem' }}>
+                  {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
+                </sup>
               )}
             </Typography>
             <ContributorIndicators

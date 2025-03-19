@@ -1601,6 +1601,7 @@
         "terminate_result_description": "<0>Slett resultatet om det er feilregistrert.</0><0>Slettes resultatet er det ikke mulig å gjenopprette informasjon og filer på resultatet.</0>",
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen."
       },
+      "unknown_role": "Ukjent rolle",
       "validation_errors": "Valideringsfeil"
     },
     "publication_types": {
