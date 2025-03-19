@@ -9,7 +9,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { correctionListConfig, CorrectionListId, nviCorrectionListQueryKey } from './NviCorrectionList';
 
-const getCorrectionListParams = (newCorrectionListId: CorrectionListId) => {
+const getCorrectionListSearchParams = (newCorrectionListId: CorrectionListId) => {
   const newSearchParams = new URLSearchParams();
   newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
   const correctionListCategoryFilter = correctionListConfig[newCorrectionListId].queryParams.categoryShould;
@@ -19,6 +19,10 @@ const getCorrectionListParams = (newCorrectionListId: CorrectionListId) => {
   return newSearchParams;
 };
 
+const accordionDefaultPath = `${UrlPathTemplate.TasksNviCorrectionList}?${getCorrectionListSearchParams(
+  'ApplicableCategoriesWithNonApplicableChannel'
+).toString()}`;
+
 export const NviCorrectionListNavigationAccordion = () => {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,7 +30,7 @@ export const NviCorrectionListNavigationAccordion = () => {
 
   const openNewCorrectionList = (newCorrectionListId: CorrectionListId) => {
     if (selectedNviList !== newCorrectionListId) {
-      const correctionListSearchParams = getCorrectionListParams(newCorrectionListId);
+      const correctionListSearchParams = getCorrectionListSearchParams(newCorrectionListId);
       const currentSearchSize = searchParams.get(ResultParam.Results);
       if (currentSearchSize) {
         correctionListSearchParams.set(ResultParam.Results, currentSearchSize);
@@ -40,9 +44,7 @@ export const NviCorrectionListNavigationAccordion = () => {
       title={t('tasks.correction_list')}
       startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
       accordionPath={UrlPathTemplate.TasksNviCorrectionList}
-      defaultPath={`${UrlPathTemplate.TasksNviCorrectionList}?${getCorrectionListParams(
-        'ApplicableCategoriesWithNonApplicableChannel'
-      ).toString()}`}
+      defaultPath={accordionDefaultPath}
       dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
       <NavigationList component="div">
         <SelectableButton
