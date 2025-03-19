@@ -1,4 +1,4 @@
-import { AuthSession, fetchAuthSession } from 'aws-amplify/auth';
+import { AuthSession, fetchAuthSession, FetchAuthSessionOptions } from 'aws-amplify/auth';
 import { CustomUserAttributes } from '../types/user.types';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { getCurrentPath } from '../utils/general-helpers';
@@ -32,16 +32,16 @@ export const userIsAuthenticated = async () => {
   }
 };
 
-export const getCustomUserAttributes = async () => {
+export const getCustomUserAttributes = async (options?: FetchAuthSessionOptions) => {
   try {
-    const currentSession = await fetchAuthSession();
+    const currentSession = await fetchAuthSession(options);
     return getCustomTokenAttributes(currentSession.tokens);
   } catch {
     return null;
   }
 };
 
-export const getCustomTokenAttributes = (tokens?: AuthSession['tokens']) => {
+const getCustomTokenAttributes = (tokens?: AuthSession['tokens']) => {
   const idTokenPayload = tokens?.idToken?.payload;
   const accessTokenPayload = tokens?.accessToken?.payload;
 

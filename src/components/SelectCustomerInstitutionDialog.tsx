@@ -1,13 +1,12 @@
 import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { fetchAuthSession } from 'aws-amplify/auth';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../api/apiPaths';
 import { authenticatedApiRequest } from '../api/apiRequest';
-import { getCustomTokenAttributes } from '../api/authApi';
+import { getCustomUserAttributes } from '../api/authApi';
 import { fetchOrganizations } from '../api/cristinApi';
 import { setNotification } from '../redux/notificationSlice';
 import { setUser } from '../redux/userSlice';
@@ -61,10 +60,9 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
           data: { customerId },
         });
         if (isSuccessStatus(response.status)) {
-          const newSession = await fetchAuthSession({ forceRefresh: true });
-          const customAttributes = getCustomTokenAttributes(newSession.tokens);
-          if (customAttributes) {
-            dispatch(setUser(customAttributes));
+          const newSessionAttributes = await getCustomUserAttributes({ forceRefresh: true });
+          if (newSessionAttributes) {
+            dispatch(setUser(newSessionAttributes));
           }
           setOpenDialog(false);
         }
