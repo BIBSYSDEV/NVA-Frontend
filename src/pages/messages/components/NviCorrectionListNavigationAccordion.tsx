@@ -9,6 +9,16 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { correctionListConfig, CorrectionListId, nviCorrectionListQueryKey } from './NviCorrectionList';
 
+const getCorrectionListParams = (newCorrectionListId: CorrectionListId) => {
+  const newSearchParams = new URLSearchParams();
+  newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
+  const correctionListCategoryFilter = correctionListConfig[newCorrectionListId].queryParams.categoryShould;
+  if (correctionListCategoryFilter && correctionListCategoryFilter.length > 0) {
+    newSearchParams.set(ResultParam.CategoryShould, correctionListCategoryFilter.join(','));
+  }
+  return newSearchParams;
+};
+
 export const NviCorrectionListNavigationAccordion = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -18,17 +28,12 @@ export const NviCorrectionListNavigationAccordion = () => {
 
   const openNewCorrectionList = (newCorrectionListId: CorrectionListId) => {
     if (selectedNviList !== newCorrectionListId) {
-      const newSearchParams = new URLSearchParams();
-      newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
-      const correctionListCategoryFilter = correctionListConfig[newCorrectionListId].queryParams.categoryShould;
-      if (correctionListCategoryFilter && correctionListCategoryFilter.length > 0) {
-        newSearchParams.set(ResultParam.CategoryShould, correctionListCategoryFilter.join(','));
-      }
+      const correctionListSearchParams = getCorrectionListParams(newCorrectionListId);
       const currentSearchSize = searchParams.get(ResultParam.Results);
       if (currentSearchSize) {
-        newSearchParams.set(ResultParam.Results, currentSearchSize);
+        correctionListSearchParams.set(ResultParam.Results, currentSearchSize);
       }
-      navigate({ search: newSearchParams.toString() });
+      navigate({ search: correctionListSearchParams.toString() });
     }
   };
 
@@ -37,9 +42,9 @@ export const NviCorrectionListNavigationAccordion = () => {
       title={t('tasks.correction_list')}
       startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
       accordionPath={UrlPathTemplate.TasksNviCorrectionList}
-      defaultPath={`${UrlPathTemplate.TasksNviCorrectionList}?${nviCorrectionListQueryKey}=${
-        'ApplicableCategoriesWithNonApplicableChannel' satisfies CorrectionListId
-      }`}
+      defaultPath={`${UrlPathTemplate.TasksNviCorrectionList}?${getCorrectionListParams(
+        'ApplicableCategoriesWithNonApplicableChannel'
+      ).toString()}`}
       dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
       <NavigationList component="div">
         <SelectableButton
