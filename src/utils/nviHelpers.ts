@@ -76,6 +76,7 @@ const hasChangedContributorsOrAffiliations = async (
       return true;
     }
   }
+
   return false;
 };
 
