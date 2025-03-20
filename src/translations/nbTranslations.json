@@ -325,10 +325,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -400,7 +396,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1685,7 +1685,9 @@
       "start_with_empty_registration_description": "Legg inn informasjon etterpå",
       "start_with_empty_registration_title": "Start i tomt registreringsskjema",
       "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på Internett",
-      "start_with_link_to_resource_title": "Start med lenke til original versjon"
+      "start_with_link_to_resource_title": "Start med lenke til original versjon",
+      "start_with_uploading_file_title": "Start med lenke til original versjon",
+      "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på internett"
     },
     "registration_id": "Resultat-ID",
     "resource_type": {
