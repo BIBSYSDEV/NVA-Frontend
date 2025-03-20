@@ -44,7 +44,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
-  const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
 
@@ -102,9 +101,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const originalDoi = entityDescription?.reference?.doi;
 
   const canEditFilesAndLinks = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
-
-  const categorySupportsFiles = allowsFileUpload(customer, publicationInstanceType);
   const canUploadFile = userHasAccessRight(values, 'upload-file');
+  const categorySupportsFiles = allowsFileUpload(customer, entityDescription?.reference?.publicationInstance?.type);
 
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>

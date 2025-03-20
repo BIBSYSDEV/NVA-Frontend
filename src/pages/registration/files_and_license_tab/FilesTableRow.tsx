@@ -157,8 +157,10 @@ export const FilesTableRow = ({
   const canDeleteFile = hasFileAccessRight(file, 'delete') || canEditImportCandidateFile;
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
 
-  const publicationInstanceType = values.entityDescription?.reference?.publicationInstance?.type;
-  const categorySupportsFiles = allowsFileUpload(customer, publicationInstanceType);
+  const categorySupportsFiles = allowsFileUpload(
+    customer,
+    values.entityDescription?.reference?.publicationInstance?.type
+  );
   const canSelectOpenFile = categorySupportsFiles || hasCuratorRole(user);
 
   return (
