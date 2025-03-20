@@ -886,5 +886,10 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
   return registrationSearchItem;
 };
 
+/**
+ * Checks if the customer allows file upload for the given category.
+ * If 'true' all user roles are allowed to upload open files.
+ * If 'false' only users with curator role can upload open files.
+ */
 export const allowsFileUpload = (customer: CustomerInstitution | null, category?: PublicationInstanceType | '') =>
   !!category && !!customer?.allowFileUploadForTypes.includes(category);
