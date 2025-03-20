@@ -147,8 +147,9 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
 
         const hasValidRole = relevantRoles.includes(contributor.role.type);
 
-        const showRole =
-          contributor.role.type !== ContributorRole.Creator || !relevantRoles.includes(ContributorRole.Creator);
+        const showRole = relevantRoles.includes(ContributorRole.Creator)
+          ? contributor.role.type !== ContributorRole.Creator
+          : true;
 
         const roleContent = showRole && (
           <Box component="span" sx={{ ml: '0.2rem' }}>
