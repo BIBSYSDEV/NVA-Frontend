@@ -885,3 +885,6 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
   };
   return registrationSearchItem;
 };
+
+export const allowsFileUpload = (customer: CustomerInstitution | null, category?: PublicationInstanceType | '') =>
+  !!category && !!customer?.allowFileUploadForTypes.includes(category);

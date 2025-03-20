@@ -11,6 +11,7 @@ import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationF
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
+  allowsFileUpload,
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
@@ -102,8 +103,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const canEditFilesAndLinks = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
 
-  const categorySupportsFiles =
-    !!publicationInstanceType && !!customer?.allowFileUploadForTypes.includes(publicationInstanceType);
+  const categorySupportsFiles = allowsFileUpload(customer, publicationInstanceType);
   const canUploadFile = userHasAccessRight(values, 'upload-file');
 
   return (

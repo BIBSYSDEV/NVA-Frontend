@@ -50,7 +50,12 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { activeLicenses, getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
-import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
+import {
+  allowsFileUpload,
+  isOpenFile,
+  isPendingOpenFile,
+  userIsValidImporter,
+} from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { hasCuratorRole } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
@@ -153,8 +158,7 @@ export const FilesTableRow = ({
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
 
   const publicationInstanceType = values.entityDescription?.reference?.publicationInstance?.type;
-  const categorySupportsFiles =
-    !!publicationInstanceType && !!customer?.allowFileUploadForTypes.includes(publicationInstanceType);
+  const categorySupportsFiles = allowsFileUpload(customer, publicationInstanceType);
   const canSelectOpenFile = categorySupportsFiles || hasCuratorRole(user);
 
   return (
