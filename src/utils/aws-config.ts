@@ -8,7 +8,7 @@ export const authOptions: ResourcesConfig = {
       loginWith: {
         oauth: {
           domain: import.meta.env.VITE_DOMAIN ?? '',
-          scopes: ['openid', 'https://api.nva.unit.no/scopes/frontend', 'aws.cognito.signin.user.admin'],
+          scopes: ['openid', 'https://api.nva.unit.no/scopes/frontend'],
           redirectSignIn: [import.meta.env.VITE_REDIRECT_SIGN_IN ?? ''],
           redirectSignOut: [import.meta.env.VITE_REDIRECT_SIGN_OUT ?? ''],
           responseType: 'code',
