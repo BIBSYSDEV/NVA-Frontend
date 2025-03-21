@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+import { Affiliation, Contributor, ContributorRole } from '../../types/contributor.types';
 import { BookRegistration } from '../../types/publication_types/bookRegistration.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { PublicationChannelType, Registration } from '../../types/registration.types';
@@ -97,8 +98,31 @@ describe.only('willResetNviStatuses()', () => {
     expect(result).toBe(true);
   });
 
-  test('Returns true when a new institution is added as affiliation', () => {
-    // TODO
+  test('Returns true when a new institution is added as affiliation', async () => {
+    const persistedAffiliations: Affiliation[] = [{ type: 'Organization', id: 'https://api.com/institution/1' }];
+    const persistedContributors: Contributor[] = [
+      {
+        type: 'Contributor',
+        affiliations: persistedAffiliations,
+        correspondingAuthor: false,
+        identity: {
+          type: 'Identity',
+          name: 'Name Nameson',
+        },
+        role: { type: ContributorRole.Creator },
+        sequence: 1,
+      },
+    ];
+
+    let persistedRegistration = structuredClone(nviRegistration);
+    persistedRegistration.entityDescription.contributors = persistedContributors;
+
+    let updatedRegistration = structuredClone(persistedRegistration);
+    const newAffiliation: Affiliation = { type: 'Organization', id: 'https://api.com/institution/2' };
+    updatedRegistration.entityDescription.contributors[0].affiliations = [...persistedAffiliations, newAffiliation];
+
+    const result = await willResetNviStatuses(nviRegistration, updatedRegistration);
+    expect(result).toBe(true);
   });
 
   test('Returns true when an affiliation is changed to another institution', () => {
