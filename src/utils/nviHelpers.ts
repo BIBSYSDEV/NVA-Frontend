@@ -45,7 +45,9 @@ const hasChangedContributorsOrAffiliations = async (
 
   for (const persistedContributor of persistedContributors) {
     const updatedContributor = updatedContributors.find(
-      (contributor) => contributor.identity.id === persistedContributor.identity.id
+      (contributor) =>
+        (contributor.identity.id && contributor.identity.id === persistedContributor.identity.id) ||
+        contributor.identity.name === persistedContributor.identity.name
     );
     if (updatedContributor) {
       const persistedAffiliations = persistedContributor.affiliations ?? [];

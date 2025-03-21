@@ -609,17 +609,6 @@ export const getContributorsWithPrimaryRole = (
   });
 };
 
-export const getContributorsWithSecondaryRole = (
-  contributors: PreviewContributor[] | Contributor[],
-  registrationType: PublicationInstanceType
-) => {
-  const { secondaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => {
-    const roleValue = typeof contributor.role === 'string' ? contributor.role : contributor.role.type;
-    return secondaryRoles.includes(roleValue);
-  });
-};
-
 export const getOutputName = (item: OutputItem): string => {
   switch (item.type) {
     case 'Venue':
