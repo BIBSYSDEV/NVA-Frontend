@@ -29,7 +29,6 @@ const hasChangedContributorsOrAffiliations = async (
   updatedContributors: Contributor[]
 ) => {
   const topLevelOrgCache: { [key: string]: string } = {};
-
   const getTopLevelOrgId = async (affiliationId: string) => {
     if (!topLevelOrgCache[affiliationId]) {
       const organization = await fetchOrganization(affiliationId);
@@ -74,7 +73,6 @@ const hasChangedContributorsOrAffiliations = async (
       return true;
     }
   }
-
   return false;
 };
 

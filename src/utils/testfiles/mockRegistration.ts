@@ -6,7 +6,7 @@ import { JournalType } from '../../types/publicationFieldNames';
 import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockUser } from './mock_feide_user';
 
-export const mockRegistration: JournalRegistration = {
+export const mockRegistration = {
   type: 'Publication',
   id: 'https://api.dev.nva.aws.unit.no/registration/12345679',
   identifier: '12345679',
@@ -108,7 +108,7 @@ export const mockRegistration: JournalRegistration = {
     },
   },
   allowedOperations: ['update', 'delete', 'unpublish'],
-};
+} satisfies JournalRegistration;
 
 export const mockTicketCollection: TicketCollection = {
   type: 'TicketCollection',

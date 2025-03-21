@@ -1,8 +1,31 @@
-import { describe, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
+import { JournalType } from '../../types/publicationFieldNames';
+import { Registration } from '../../types/registration.types';
+import { willResetNviStatuses } from '../nviHelpers';
+import { mockRegistration } from '../testfiles/mockRegistration';
 
-describe('willResetNviStatuses()', () => {
-  test('Returns false when result cannot be an NVI candidate', () => {
-    // TODO
+const nviRegistration = {
+  ...mockRegistration,
+} satisfies Registration;
+
+const nonNviRegistration = {
+  ...mockRegistration,
+  entityDescription: {
+    ...mockRegistration.entityDescription,
+    reference: {
+      ...mockRegistration.entityDescription.reference,
+      publicationInstance: {
+        ...mockRegistration.entityDescription.reference.publicationInstance,
+        type: JournalType.Review,
+      },
+    },
+  },
+} satisfies Registration;
+
+describe.only('willResetNviStatuses()', () => {
+  test('Returns false when existing result could not be an NVI candidate', async () => {
+    const result = await willResetNviStatuses(nonNviRegistration, nviRegistration);
+    expect(result).toBe(false);
   });
 
   test('Returns true when year is changed', () => {

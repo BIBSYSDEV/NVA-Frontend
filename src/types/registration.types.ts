@@ -342,7 +342,7 @@ export interface DoiPreview {
   entityDescription: EntityDescription;
 }
 
-export const emptyRegistration: Registration = {
+export const emptyRegistration = {
   type: 'Publication',
   id: '',
   identifier: '',
@@ -359,7 +359,7 @@ export const emptyRegistration: Registration = {
   associatedArtifacts: [],
   fundings: [],
   allowedOperations: ['update', 'delete', 'unpublish'],
-};
+} satisfies Registration;
 
 export interface ContextSeries {
   type: PublicationChannelType.Series | PublicationChannelType.UnconfirmedSeries;
