@@ -60,12 +60,35 @@ describe.only('willResetNviStatuses()', () => {
     expect(result).toBe(true);
   });
 
-  test('Returns true when journal or publisher is changed', () => {
-    // TODO
+  test('Returns true when journal or publisher is changed', async () => {
+    const channelId1 = 'https://api.com/channel/1';
+    const channelId2 = 'https://api.com/channel/2';
+
+    let persistedRegistration = structuredClone(nviRegistration);
+    persistedRegistration.entityDescription.reference!.publicationContext.id = channelId1;
+
+    let updatedRegistration = structuredClone(persistedRegistration);
+    updatedRegistration.entityDescription.reference!.publicationContext.id = channelId2;
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(true);
   });
 
-  test('Returns true when series is changed', () => {
-    // TODO
+  test('Returns true when series is changed', async () => {
+    // const seriesId1 = 'https://api.com/channel/1';
+    // const seriesId2 = 'https://api.com/channel/2';
+    // let persistedRegistration = structuredClone(nviRegistration) as BookRegistration;
+    // persistedRegistration.entityDescription.reference!.publicationContext = {
+    //   type: PublicationType.Book,
+    //   series: {
+    //     type: PublicationChannelType.Series,
+    //     id: seriesId1,
+    //   },
+    // };
+    // let updatedRegistration = structuredClone(persistedRegistration) as BookRegistration;
+    // updatedRegistration.entityDescription.reference!.publicationContext.series!.id = seriesId2;
+    // const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    // expect(result).toBe(true);
   });
 
   test('Returns true when a new institution is added as affiliation', () => {
