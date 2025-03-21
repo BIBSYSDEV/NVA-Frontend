@@ -45,7 +45,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const locationState = location.state as RegistrationFormLocationState;
 
   const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
-
   const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
   const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
 
@@ -141,7 +140,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         open={isResettableNviStatus && !hasAcceptedNviWarning && !disableNviCriticalFields}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={() => setHasAcceptedNviWarning(true)}
-        onCancel={() => (navigate.length > 0 ? navigate(-1) : navigate(UrlPathTemplate.Root))}>
+        onCancel={() => (locationState !== null ? navigate(-1) : navigate(UrlPathTemplate.Root))}>
         <Typography sx={{ mb: '1rem' }}>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>
