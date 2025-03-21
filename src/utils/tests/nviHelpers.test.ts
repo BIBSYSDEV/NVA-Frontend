@@ -4,9 +4,7 @@ import { Registration } from '../../types/registration.types';
 import { willResetNviStatuses } from '../nviHelpers';
 import { mockRegistration } from '../testfiles/mockRegistration';
 
-const nviRegistration = {
-  ...mockRegistration,
-} satisfies Registration;
+const nviRegistration = structuredClone(mockRegistration) satisfies Registration;
 
 const nonNviRegistration = {
   ...mockRegistration,
@@ -28,12 +26,30 @@ describe.only('willResetNviStatuses()', () => {
     expect(result).toBe(false);
   });
 
-  test('Returns true when year is changed', () => {
-    // TODO
+  test('Returns true when year is changed', async () => {
+    let persistedRegistration = structuredClone(nviRegistration);
+    persistedRegistration.entityDescription.publicationDate.year = '2000';
+
+    let updatedRegistration = structuredClone(persistedRegistration);
+    updatedRegistration.entityDescription.publicationDate.year = '2001';
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(true);
   });
 
-  test('Returns false when date is changed within same year', () => {
-    // TODO
+  test('Returns false when date is changed within same year', async () => {
+    let persistedRegistration = structuredClone(nviRegistration);
+    persistedRegistration.entityDescription.publicationDate.day = '1';
+    persistedRegistration.entityDescription.publicationDate.month = '1';
+    persistedRegistration.entityDescription.publicationDate.year = '2000';
+
+    let updatedRegistration = structuredClone(nviRegistration);
+    updatedRegistration.entityDescription.publicationDate.day = '2';
+    updatedRegistration.entityDescription.publicationDate.month = '2';
+    updatedRegistration.entityDescription.publicationDate.year = '2000';
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(false);
   });
 
   test('Returns true when category is changed', () => {
