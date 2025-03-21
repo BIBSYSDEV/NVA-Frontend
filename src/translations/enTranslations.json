@@ -1601,6 +1601,7 @@
         "terminate_result_description": "<0>Delete the result if it has been incorrectly registered.</0><0>If the result is deleted, it is not possible to restore the information and files associated with the result.</0>",
         "waiting_for_rejected_doi": "It may take some time before a reserved DOI is removed. Reload the page to check again."
       },
+      "unknown_role": "",
       "validation_errors": "Validation errors"
     },
     "publication_types": {
