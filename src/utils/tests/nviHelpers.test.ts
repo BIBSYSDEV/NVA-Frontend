@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { JournalType } from '../../types/publicationFieldNames';
-import { Registration } from '../../types/registration.types';
+import { BookRegistration } from '../../types/publication_types/bookRegistration.types';
+import { JournalType, PublicationType } from '../../types/publicationFieldNames';
+import { PublicationChannelType, Registration } from '../../types/registration.types';
 import { willResetNviStatuses } from '../nviHelpers';
 import { mockRegistration } from '../testfiles/mockRegistration';
 
@@ -75,20 +76,25 @@ describe.only('willResetNviStatuses()', () => {
   });
 
   test('Returns true when series is changed', async () => {
-    // const seriesId1 = 'https://api.com/channel/1';
-    // const seriesId2 = 'https://api.com/channel/2';
-    // let persistedRegistration = structuredClone(nviRegistration) as BookRegistration;
-    // persistedRegistration.entityDescription.reference!.publicationContext = {
-    //   type: PublicationType.Book,
-    //   series: {
-    //     type: PublicationChannelType.Series,
-    //     id: seriesId1,
-    //   },
-    // };
-    // let updatedRegistration = structuredClone(persistedRegistration) as BookRegistration;
-    // updatedRegistration.entityDescription.reference!.publicationContext.series!.id = seriesId2;
-    // const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
-    // expect(result).toBe(true);
+    const seriesId1 = 'https://api.com/channel/1';
+    const seriesId2 = 'https://api.com/channel/2';
+
+    let persistedRegistration = structuredClone(nviRegistration) as BookRegistration;
+    persistedRegistration.entityDescription.reference!.publicationContext = {
+      type: PublicationType.Book,
+      isbnList: [],
+      seriesNumber: '',
+      series: {
+        type: PublicationChannelType.Series,
+        id: seriesId1,
+      },
+    };
+
+    let updatedRegistration = structuredClone(persistedRegistration) as BookRegistration;
+    updatedRegistration.entityDescription.reference!.publicationContext.series!.id = seriesId2;
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(true);
   });
 
   test('Returns true when a new institution is added as affiliation', () => {
