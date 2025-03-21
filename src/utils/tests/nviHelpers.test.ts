@@ -29,6 +29,14 @@ describe('willResetNviStatuses()', () => {
     // TODO
   });
 
+  test('Returns true when an affiliation is changed to another institution', () => {
+    // TODO
+  });
+
+  test('Returns true when an affiliation is removed', () => {
+    // TODO
+  });
+
   test('Returns false when a new unit of an institution they already has as affiliation is added', () => {
     // TODO
   });
