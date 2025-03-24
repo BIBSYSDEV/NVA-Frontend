@@ -10,7 +10,7 @@ import { Avatar, Box, Divider, styled, SvgIconProps, Tooltip, Typography } from 
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { FileType } from '../../../types/associatedArtifact.types';
-import { ImportSourceLogData, LogEntry } from '../../../types/log.types';
+import { ImportSourceLogData, LogEntry, LogEntryOrganization, LogEntryPerson } from '../../../types/log.types';
 import { Message } from '../../../types/publication_types/ticket.types';
 import { getInitials } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -34,10 +34,6 @@ interface LogEntryItemProps {
 export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
   const { t } = useTranslation();
 
-  const fullName = logEntry.performedBy
-    ? getFullName(logEntry.performedBy.givenName, logEntry.performedBy.familyName)
-    : '';
-
   return (
     <Box
       sx={{
@@ -53,27 +49,11 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
       </StyledLogRow>
       <LogDateItem date={logEntry.timestamp} />
 
-      {(fullName || logEntry.performedBy?.onBehalfOf.acronym) && (
-        <StyledLogRow>
-          {fullName && (
-            <>
-              <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.7rem', bgcolor: 'primary.main' }}>
-                {getInitials(fullName)}
-              </Avatar>
-              <Typography>{fullName}</Typography>
-            </>
-          )}
-
-          {logEntry.performedBy?.onBehalfOf.acronym && (
-            <>
-              <AccountBalanceIcon {...logIconProps} />
-              <Tooltip title={getLanguageString(logEntry.performedBy.onBehalfOf.labels)}>
-                <Typography>{logEntry.performedBy.onBehalfOf.acronym}</Typography>
-              </Tooltip>
-            </>
-          )}
-        </StyledLogRow>
-      )}
+      {logEntry.performedBy.type === 'Person' ? (
+        <PerformedByPersonInfo performedBy={logEntry.performedBy} />
+      ) : logEntry.performedBy.type === 'Organization' ? (
+        <PerformedByOganizationInfo performedBy={logEntry.performedBy} />
+      ) : null}
 
       {logEntry.type === 'FileLogEntry' ? (
         <>
@@ -100,6 +80,36 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
         />
       )}
     </Box>
+  );
+};
+
+const PerformedByPersonInfo = ({ performedBy }: { performedBy: LogEntryPerson }) => {
+  const fullName = getFullName(performedBy.givenName, performedBy.familyName);
+
+  return (
+    <StyledLogRow>
+      {fullName && (
+        <>
+          <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.7rem', bgcolor: 'primary.main' }}>
+            {getInitials(fullName)}
+          </Avatar>
+          <Typography>{fullName}</Typography>
+        </>
+      )}
+
+      {performedBy.onBehalfOf.acronym && <PerformedByOganizationInfo performedBy={performedBy.onBehalfOf} />}
+    </StyledLogRow>
+  );
+};
+
+const PerformedByOganizationInfo = ({ performedBy }: { performedBy: LogEntryOrganization }) => {
+  return (
+    <StyledLogRow>
+      <AccountBalanceIcon {...logIconProps} />
+      <Tooltip title={getLanguageString(performedBy.labels)}>
+        <Typography>{performedBy.acronym}</Typography>
+      </Tooltip>
+    </StyledLogRow>
   );
 };
 
