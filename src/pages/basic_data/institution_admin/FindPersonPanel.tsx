@@ -85,6 +85,7 @@ export const FindPersonPanel = () => {
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
+                      type="number"
                       disabled={isSubmitting || confirmedIdentity}
                       required={!confirmedIdentity}
                       fullWidth
@@ -92,7 +93,10 @@ export const FindPersonPanel = () => {
                       label={t('common.national_id_number')}
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
-                      slotProps={{ htmlInput: { maxLength: 11 } }}
+                      onChange={(event) => {
+                        event.target.value = event.target.value.replace(/\D/g, ''); // Remove all non-digit characters
+                        field.onChange(event);
+                      }}
                     />
                   )}
                 </Field>
