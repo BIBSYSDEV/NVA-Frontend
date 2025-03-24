@@ -90,7 +90,7 @@
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.2.0",
     "husky": "^9.1.7",
-    "i18n-unused": "^0.17.2",
+    "i18n-unused": "^0.17.3",
     "lint-staged": "^15.5.0",
     "prettier": "^3.5.3",
     "start-server-and-test": "^2.0.11",
