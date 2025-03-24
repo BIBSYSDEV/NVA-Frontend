@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import { afterAll, afterEach, beforeAll, describe, expect, test } from 'vitest';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { Affiliation, Contributor, ContributorRole } from '../../types/contributor.types';
 import { Organization } from '../../types/organization.types';
 import { BookRegistration } from '../../types/publication_types/bookRegistration.types';
@@ -11,30 +11,48 @@ import { mockRegistration } from '../testfiles/mockRegistration';
 
 const nviRegistration = structuredClone(mockRegistration);
 
-const myInstitution: Organization = {
+const institutionA: Organization = {
   type: 'Organization',
   id: 'https://api.com/organization/1.0',
-  labels: { en: 'My Organization' },
+  labels: { en: 'Institution A' },
 };
 
-const mySubunit: Organization = {
+const subunitOnInstitutionA: Organization = {
   type: 'Organization',
-  id: 'https://api.com/organization/1.0',
-  labels: { en: 'My Organization' },
+  id: 'https://api.com/organization/1.1',
+  labels: { en: 'Subunit on institution A' },
+  partOf: [institutionA],
 };
 
-export const restHandlers = [
-  http.get(myInstitution.id, () => {
-    return HttpResponse.json(myInstitution);
+const institutionB: Organization = {
+  type: 'Organization',
+  id: 'https://api.com/organization/2.0',
+  labels: { en: 'Institution B' },
+};
+
+const restHandlers = [
+  http.get(institutionA.id, () => {
+    return HttpResponse.json(institutionA);
+  }),
+  http.get(subunitOnInstitutionA.id, () => {
+    return HttpResponse.json(subunitOnInstitutionA);
+  }),
+  http.get(institutionB.id, () => {
+    return HttpResponse.json(institutionB);
   }),
 ];
 
 const server = setupServer(...restHandlers);
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
-afterAll(() => server.close());
-afterEach(() => server.resetHandlers());
 
 describe('willResetNviStatuses()', () => {
+  beforeAll(() => {
+    server.listen({ onUnhandledRequest: 'error' });
+  });
+
+  afterAll(() => {
+    server.close();
+  });
+
   test('Returns false when existing result could not be an NVI candidate', async () => {
     let nonNviRegistration = structuredClone(nviRegistration);
     nonNviRegistration.entityDescription.reference!.publicationInstance.type = JournalType.Review;
@@ -114,7 +132,7 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when a new institution is added as affiliation', async () => {
-    const persistedAffiliations: Affiliation[] = [{ type: 'Organization', id: 'https://api.com/organization/1.0' }];
+    const persistedAffiliations: Affiliation[] = [{ type: 'Organization', id: institutionA.id }];
     const persistedContributors: Contributor[] = [
       {
         type: 'Contributor',
@@ -122,7 +140,7 @@ describe('willResetNviStatuses()', () => {
         correspondingAuthor: false,
         identity: {
           type: 'Identity',
-          name: 'Name Nameson',
+          name: 'Oste Loff',
         },
         role: { type: ContributorRole.Creator },
         sequence: 1,
@@ -130,11 +148,44 @@ describe('willResetNviStatuses()', () => {
     ];
     let persistedRegistration = structuredClone(nviRegistration);
     persistedRegistration.entityDescription.contributors = persistedContributors;
+
     let updatedRegistration = structuredClone(persistedRegistration);
-    const newAffiliation: Affiliation = { type: 'Organization', id: 'https://api.com/organization/1.1' };
-    updatedRegistration.entityDescription.contributors[0].affiliations = [...persistedAffiliations, newAffiliation];
+    const newInstitutionAffiliation: Affiliation = { type: 'Organization', id: institutionB.id };
+    updatedRegistration.entityDescription.contributors[0].affiliations = [
+      ...persistedAffiliations,
+      newInstitutionAffiliation,
+    ];
+
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
     expect(result).toBe(true);
+  });
+
+  test('Returns false when a new unit of an institution they already has as affiliation is added', async () => {
+    const persistedAffiliations: Affiliation[] = [{ type: 'Organization', id: institutionA.id }];
+    const persistedContributors: Contributor[] = [
+      {
+        type: 'Contributor',
+        affiliations: [{ type: 'Organization', id: institutionA.id }],
+        correspondingAuthor: false,
+        identity: {
+          type: 'Identity',
+          name: 'Oste Loff',
+        },
+        role: { type: ContributorRole.Creator },
+        sequence: 1,
+      },
+    ];
+    let persistedRegistration = structuredClone(nviRegistration);
+    persistedRegistration.entityDescription.contributors = persistedContributors;
+
+    let updatedRegistration = structuredClone(persistedRegistration);
+    updatedRegistration.entityDescription.contributors[0].affiliations = [
+      ...persistedAffiliations,
+      { type: 'Organization', id: subunitOnInstitutionA.id },
+    ];
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(false);
   });
 
   test('Returns true when an affiliation is changed to another institution', async () => {
@@ -163,10 +214,6 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when an affiliation is removed', () => {
-    // TODO
-  });
-
-  test('Returns false when a new unit of an institution they already has as affiliation is added', () => {
     // TODO
   });
 
