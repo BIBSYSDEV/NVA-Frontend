@@ -127,21 +127,19 @@ describe('willResetNviStatuses()', () => {
 
   test('Returns true when a new institution is added as affiliation', async () => {
     const persistedAffiliations: Affiliation[] = [{ type: 'Organization', id: institutionA.id }];
-    const persistedContributors: Contributor[] = [
-      {
-        type: 'Contributor',
-        affiliations: persistedAffiliations,
-        correspondingAuthor: false,
-        identity: {
-          type: 'Identity',
-          name: 'Oste Loff',
-        },
-        role: { type: ContributorRole.Creator },
-        sequence: 1,
+    const persistedContributor: Contributor = {
+      type: 'Contributor',
+      affiliations: persistedAffiliations,
+      correspondingAuthor: false,
+      identity: {
+        type: 'Identity',
+        name: 'Oste Loff',
       },
-    ];
+      role: { type: ContributorRole.Creator },
+      sequence: 1,
+    };
     let persistedRegistration = structuredClone(nviRegistration);
-    persistedRegistration.entityDescription.contributors = persistedContributors;
+    persistedRegistration.entityDescription.contributors = [persistedContributor];
 
     let updatedRegistration = structuredClone(persistedRegistration);
     const newInstitutionAffiliation: Affiliation = { type: 'Organization', id: institutionB.id };
@@ -156,21 +154,19 @@ describe('willResetNviStatuses()', () => {
 
   test('Returns false when a new unit of an institution they already has as affiliation is added', async () => {
     const persistedAffiliations: Affiliation[] = [{ type: 'Organization', id: institutionA.id }];
-    const persistedContributors: Contributor[] = [
-      {
-        type: 'Contributor',
-        affiliations: persistedAffiliations,
-        correspondingAuthor: false,
-        identity: {
-          type: 'Identity',
-          name: 'Oste Loff',
-        },
-        role: { type: ContributorRole.Creator },
-        sequence: 1,
+    const persistedContributor: Contributor = {
+      type: 'Contributor',
+      affiliations: persistedAffiliations,
+      correspondingAuthor: false,
+      identity: {
+        type: 'Identity',
+        name: 'Oste Loff',
       },
-    ];
+      role: { type: ContributorRole.Creator },
+      sequence: 1,
+    };
     let persistedRegistration = structuredClone(nviRegistration);
-    persistedRegistration.entityDescription.contributors = persistedContributors;
+    persistedRegistration.entityDescription.contributors = [persistedContributor];
 
     let updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.contributors[0].affiliations = [
@@ -183,21 +179,19 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when an affiliation is changed to another institution', async () => {
-    const persistedContributors: Contributor[] = [
-      {
-        type: 'Contributor',
-        affiliations: [{ type: 'Organization', id: institutionA.id }],
-        correspondingAuthor: false,
-        identity: {
-          type: 'Identity',
-          name: 'Name Nameson',
-        },
-        role: { type: ContributorRole.Creator },
-        sequence: 1,
+    const persistedContributor: Contributor = {
+      type: 'Contributor',
+      affiliations: [{ type: 'Organization', id: institutionA.id }],
+      correspondingAuthor: false,
+      identity: {
+        type: 'Identity',
+        name: 'Name Nameson',
       },
-    ];
+      role: { type: ContributorRole.Creator },
+      sequence: 1,
+    };
     let persistedRegistration = structuredClone(nviRegistration);
-    persistedRegistration.entityDescription.contributors = persistedContributors;
+    persistedRegistration.entityDescription.contributors = [persistedContributor];
 
     let updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.contributors[0].affiliations = [
@@ -209,21 +203,19 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns false when an affiliation is changed to another unit on the same institution', async () => {
-    const persistedContributors: Contributor[] = [
-      {
-        type: 'Contributor',
-        affiliations: [{ type: 'Organization', id: institutionA.id }],
-        correspondingAuthor: false,
-        identity: {
-          type: 'Identity',
-          name: 'Name Nameson',
-        },
-        role: { type: ContributorRole.Creator },
-        sequence: 1,
+    const persistedContributor: Contributor = {
+      type: 'Contributor',
+      affiliations: [{ type: 'Organization', id: institutionA.id }],
+      correspondingAuthor: false,
+      identity: {
+        type: 'Identity',
+        name: 'Name Nameson',
       },
-    ];
+      role: { type: ContributorRole.Creator },
+      sequence: 1,
+    };
     let persistedRegistration = structuredClone(nviRegistration);
-    persistedRegistration.entityDescription.contributors = persistedContributors;
+    persistedRegistration.entityDescription.contributors = [persistedContributor];
 
     let updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.contributors[0].affiliations = [
@@ -235,21 +227,20 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when an affiliation is removed', async () => {
-    const persistedContributors: Contributor[] = [
-      {
-        type: 'Contributor',
-        affiliations: [{ type: 'Organization', id: institutionA.id }],
-        correspondingAuthor: false,
-        identity: {
-          type: 'Identity',
-          name: 'Name Nameson',
-        },
-        role: { type: ContributorRole.Creator },
-        sequence: 1,
+    const persistedContributor: Contributor = {
+      type: 'Contributor',
+      affiliations: [{ type: 'Organization', id: institutionA.id }],
+      correspondingAuthor: false,
+      identity: {
+        type: 'Identity',
+        name: 'Name Nameson',
       },
-    ];
+      role: { type: ContributorRole.Creator },
+      sequence: 1,
+    };
+
     let persistedRegistration = structuredClone(nviRegistration);
-    persistedRegistration.entityDescription.contributors = persistedContributors;
+    persistedRegistration.entityDescription.contributors = [persistedContributor];
 
     let updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.contributors[0].affiliations = [];
