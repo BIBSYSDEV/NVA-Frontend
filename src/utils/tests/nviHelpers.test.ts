@@ -264,15 +264,37 @@ describe('willResetNviStatuses()', () => {
     expect(result).toBe(true);
   });
 
-  test('Returns false when an affiliation is changed to another unit in the same institution', () => {
-    // TODO
-  });
+  test('Returns true when a new contributor is added without any affiliations', async () => {
+    const persistedContributor: Contributor = {
+      type: 'Contributor',
+      affiliations: [{ type: 'Organization', id: institutionA.id }],
+      correspondingAuthor: false,
+      identity: {
+        type: 'Identity',
+        name: 'Name Nameson',
+      },
+      role: { type: ContributorRole.Creator },
+      sequence: 1,
+    };
 
-  test('Returns false when a new contributor is added without any affiliations', () => {
-    // TODO
-  });
+    let persistedRegistration = structuredClone(nviRegistration);
+    persistedRegistration.entityDescription.contributors = [persistedContributor];
 
-  test('Returns true when a new contributor is added with an affiliation', () => {
-    // TODO
+    const newContributor: Contributor = {
+      type: 'Contributor',
+      affiliations: [],
+      correspondingAuthor: false,
+      identity: {
+        type: 'Identity',
+        name: 'Name Nameson',
+      },
+      role: { type: ContributorRole.Creator },
+      sequence: 1,
+    };
+    let updatedRegistration = structuredClone(persistedRegistration);
+    updatedRegistration.entityDescription.contributors = [persistedContributor, newContributor];
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(true);
   });
 });
