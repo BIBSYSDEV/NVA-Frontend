@@ -34,9 +34,9 @@ export const Notifier = () => {
       TransitionComponent={Fade}
       transitionDuration={100}>
       <Alert onClose={handleClose} variant="filled" severity={notification.variant}>
-        <Typography color="white">{notification.message}</Typography>
+        <Typography color="inherit">{notification.message}</Typography>
         {notification.detail && (
-          <Typography color="white" lang="en">
+          <Typography color="inherit" lang="en">
             {notification.detail}
           </Typography>
         )}
