@@ -34,10 +34,12 @@ export const Notifier = () => {
       TransitionComponent={Fade}
       transitionDuration={100}>
       <Alert onClose={handleClose} variant="filled" severity={notification.variant}>
-        <Typography sx={{ display: 'flex', flexDirection: 'column', color: 'white', maxWidth: '25rem' }}>
-          {notification.message}
-          {notification.detail && <span>{notification.detail}</span>}
-        </Typography>
+        <Typography color="white">{notification.message}</Typography>
+        {notification.detail && (
+          <Typography color="white" lang="en">
+            {notification.detail}
+          </Typography>
+        )}
       </Alert>
     </Snackbar>
   ) : null;
