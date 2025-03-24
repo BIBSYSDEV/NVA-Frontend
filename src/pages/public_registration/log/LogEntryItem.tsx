@@ -103,6 +103,9 @@ const LogEntryPersonInfo = ({ performedBy }: { performedBy: LogEntryPerson }) =>
 };
 
 const LogEntryOganizationInfo = ({ performedBy }: { performedBy: LogEntryOrganization }) => {
+  if (!performedBy.acronym) {
+    return null;
+  }
   return (
     <StyledLogRow>
       <AccountBalanceIcon {...logIconProps} />

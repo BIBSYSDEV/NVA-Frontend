@@ -2,7 +2,11 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ImportSourceLogData } from '../../../types/log.types';
 
-export const LogEntryImportSourceInfo = ({ importSource }: { importSource: ImportSourceLogData }) => {
+interface LogEntryImportSourceInfoProps {
+  importSource: ImportSourceLogData;
+}
+
+export const LogEntryImportSourceInfo = ({ importSource }: LogEntryImportSourceInfoProps) => {
   const { t } = useTranslation();
 
   return (
