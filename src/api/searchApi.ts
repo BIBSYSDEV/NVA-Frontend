@@ -116,7 +116,7 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 
   searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());
   searchParams.set(TicketSearchParam.Results, (params.results ?? 10).toString());
-  searchParams.set(TicketSearchParam.OrderBy, params.orderBy || 'createdDate');
+  searchParams.set(TicketSearchParam.OrderBy, params.orderBy || 'modifiedDate');
   searchParams.set(TicketSearchParam.SortOrder, params.sortOrder || 'desc');
 
   const getTickets = await authenticatedApiRequest2<CustomerTicketSearchResponse>({
