@@ -35,8 +35,12 @@ export const Notifier = () => {
       transitionDuration={100}>
       <Alert onClose={handleClose} variant="filled" severity={notification.variant}>
         {notification.message}
-        <br />
-        {notification.detail}
+        {notification.detail && (
+          <>
+            <br />
+            {notification.detail}
+          </>
+        )}
       </Alert>
     </Snackbar>
   ) : null;
