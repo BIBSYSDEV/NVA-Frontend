@@ -10,12 +10,13 @@ import { Avatar, Box, Divider, styled, SvgIconProps, Tooltip, Typography } from 
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { FileType } from '../../../types/associatedArtifact.types';
-import { ImportSourceLogData, LogEntry, LogEntryOrganization, LogEntryPerson } from '../../../types/log.types';
+import { LogEntry, LogEntryOrganization, LogEntryPerson } from '../../../types/log.types';
 import { Message } from '../../../types/publication_types/ticket.types';
 import { getInitials } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 import { LogDateItem } from './LogDateItem';
+import { LogEntryImportSourceInfo } from './LogEntryImportSourceInfo';
 import { LogMessageAccordion } from './LogMessageAccordion';
 
 const logIconProps: SvgIconProps = { color: 'primary', fontSize: 'small' };
@@ -50,9 +51,9 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
       <LogDateItem date={logEntry.timestamp} />
 
       {logEntry.performedBy.type === 'Person' ? (
-        <PerformedByPersonInfo performedBy={logEntry.performedBy} />
+        <LogEntryPersonInfo performedBy={logEntry.performedBy} />
       ) : logEntry.performedBy.type === 'Organization' ? (
-        <PerformedByOganizationInfo performedBy={logEntry.performedBy} />
+        <LogEntryOganizationInfo performedBy={logEntry.performedBy} />
       ) : null}
 
       {logEntry.type === 'FileLogEntry' ? (
@@ -64,12 +65,12 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
               {logEntry.filename || t('log.unknown_filename')}
             </Typography>
           </StyledLogRow>
-          {logEntry.topic === 'FileImported' && <ImportSourceInfo importSource={logEntry.importSource} />}
+          {logEntry.topic === 'FileImported' && <LogEntryImportSourceInfo importSource={logEntry.importSource} />}
         </>
       ) : logEntry.topic === 'PublicationImported' || logEntry.topic === 'PublicationMerged' ? (
         <>
           <Divider />
-          <ImportSourceInfo importSource={logEntry.importSource} />
+          <LogEntryImportSourceInfo importSource={logEntry.importSource} />
         </>
       ) : null}
 
@@ -83,9 +84,8 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
   );
 };
 
-const PerformedByPersonInfo = ({ performedBy }: { performedBy: LogEntryPerson }) => {
+const LogEntryPersonInfo = ({ performedBy }: { performedBy: LogEntryPerson }) => {
   const fullName = getFullName(performedBy.givenName, performedBy.familyName);
-
   return (
     <StyledLogRow>
       {fullName && (
@@ -97,12 +97,12 @@ const PerformedByPersonInfo = ({ performedBy }: { performedBy: LogEntryPerson })
         </>
       )}
 
-      {performedBy.onBehalfOf.acronym && <PerformedByOganizationInfo performedBy={performedBy.onBehalfOf} />}
+      {performedBy.onBehalfOf && <LogEntryOganizationInfo performedBy={performedBy.onBehalfOf} />}
     </StyledLogRow>
   );
 };
 
-const PerformedByOganizationInfo = ({ performedBy }: { performedBy: LogEntryOrganization }) => {
+const LogEntryOganizationInfo = ({ performedBy }: { performedBy: LogEntryOrganization }) => {
   return (
     <StyledLogRow>
       <AccountBalanceIcon {...logIconProps} />
@@ -110,23 +110,6 @@ const PerformedByOganizationInfo = ({ performedBy }: { performedBy: LogEntryOrga
         <Typography>{performedBy.acronym}</Typography>
       </Tooltip>
     </StyledLogRow>
-  );
-};
-
-const ImportSourceInfo = ({ importSource }: { importSource: ImportSourceLogData }) => {
-  const { t } = useTranslation();
-
-  return (
-    <Typography>
-      {importSource.archive
-        ? t('log.imported_from_source_and_archive', {
-            source: importSource.source,
-            archive: importSource.archive,
-          })
-        : t('log.imported_from_source', {
-            source: importSource.source,
-          })}
-    </Typography>
   );
 };
 
