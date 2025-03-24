@@ -13,6 +13,7 @@ import { FileType } from '../../../types/associatedArtifact.types';
 import { ImportSourceLogData, LogEntry } from '../../../types/log.types';
 import { Message } from '../../../types/publication_types/ticket.types';
 import { getInitials } from '../../../utils/general-helpers';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 import { LogDateItem } from './LogDateItem';
 import { LogMessageAccordion } from './LogMessageAccordion';
@@ -52,7 +53,7 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
       </StyledLogRow>
       <LogDateItem date={logEntry.timestamp} />
 
-      {(fullName || logEntry.performedBy?.onBehalfOf.shortName) && (
+      {(fullName || logEntry.performedBy?.onBehalfOf.acronym) && (
         <StyledLogRow>
           {fullName && (
             <>
@@ -63,11 +64,11 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
             </>
           )}
 
-          {logEntry.performedBy?.onBehalfOf.shortName && (
+          {logEntry.performedBy?.onBehalfOf.acronym && (
             <>
               <AccountBalanceIcon {...logIconProps} />
-              <Tooltip title={logEntry.performedBy.onBehalfOf.displayName}>
-                <Typography>{logEntry.performedBy.onBehalfOf.shortName}</Typography>
+              <Tooltip title={getLanguageString(logEntry.performedBy.onBehalfOf.labels)}>
+                <Typography>{logEntry.performedBy.onBehalfOf.acronym}</Typography>
               </Tooltip>
             </>
           )}

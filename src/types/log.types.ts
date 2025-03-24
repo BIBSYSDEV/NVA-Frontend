@@ -1,9 +1,9 @@
 import { FileType } from './associatedArtifact.types';
+import { LanguageString } from './common.types';
 
 interface LogEntryOnBehalfOf {
-  id: string;
-  shortName: string;
-  displayName: string;
+  acronym: string;
+  labels: LanguageString;
 }
 
 interface LogEntryPerformedBy {
