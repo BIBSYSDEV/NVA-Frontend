@@ -1601,6 +1601,7 @@
         "terminate_result_description": "<0>Slett resultatet om det er feilregistrert.</0><0>Slettes resultatet er det ikke mulig å gjenopprette informasjon og filer på resultatet.</0>",
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen."
       },
+      "unknown_role": "Ukjent rolle",
       "validation_errors": "Valideringsfeil"
     },
     "publication_types": {
@@ -2133,6 +2134,8 @@
       "rejection_reason": "Begrunnelse for avvisning",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
+      "reset_approval": "Nullstill rapporteringsstatus",
+      "reset_approval_description": "Er du sikker på at du vil nullstille rapporteringsstatusen? Noen på din institusjon må da rapportere denne på nytt.",
       "save_note": "Lagre kommentar",
       "show_candidate_search": "Vis kandidatsøk",
       "show_reporting_status": "Vis rapporteringsstatus",

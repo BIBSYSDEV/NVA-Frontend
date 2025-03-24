@@ -90,6 +90,7 @@ export const AdvancedSearchPage = () => {
                 sx={{ flex: '1 0 15rem' }}
                 paramName={ResultParam.Title}
                 placeholder={t('search.search_for_title')}
+                paginationOffsetParamName={ResultParam.From}
               />
               <ExportResultsButton searchParams={params} />
             </Box>
@@ -146,7 +147,11 @@ export const AdvancedSearchPage = () => {
           <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
             <Grid item>
               <StyledFilterHeading>{t('registration.contributors.contributor')}</StyledFilterHeading>
-              <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
+              <SearchForm
+                paramName={ResultParam.ContributorName}
+                placeholder={t('search.search_for_contributor')}
+                paginationOffsetParamName={ResultParam.From}
+              />
             </Grid>
 
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
@@ -194,6 +199,7 @@ export const AdvancedSearchPage = () => {
               <SearchForm
                 paramName={ResultParam.FundingIdentifier}
                 placeholder={t('search.search_for_funding_identifier')}
+                paginationOffsetParamName={ResultParam.From}
               />
             </Grid>
 
@@ -205,6 +211,7 @@ export const AdvancedSearchPage = () => {
                 dataTestId={dataTestId.startPage.advancedSearch.courseField}
                 paramName={ResultParam.Course}
                 placeholder={t('search.search_for_course_code')}
+                paginationOffsetParamName={ResultParam.From}
               />
             </Grid>
 

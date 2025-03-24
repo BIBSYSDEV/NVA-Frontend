@@ -333,7 +333,7 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
 
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-      <Typography>{rowString}</Typography>
+      <Typography>{rowString?.trim() || <i>{t('common.unknown')}</i>}</Typography>
       <Tooltip title={t('common.show_details')}>
         <IconButton
           size="small"
@@ -344,7 +344,6 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
           <OpenInNewIcon fontSize="small" />
         </IconButton>
       </Tooltip>
-
       <Dialog open={openModal} onClose={toggleModal} fullWidth>
         <DialogTitle>{t('registration.resource_type.artistic.announcement')}</DialogTitle>
         <ErrorBoundary>

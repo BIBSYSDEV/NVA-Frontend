@@ -1601,6 +1601,7 @@
         "terminate_result_description": "<0>Slett resultatet om det er feilregistrert.</0><0>Slettar du resultatet er det ikkje mogleg å gjenopprette informasjon og filer på resultatet.</0>",
         "waiting_for_rejected_doi": "Det kan ta litt tid før ein reservert DOI forsvinn. Last innhaldet på nytt for å sjekke igjen."
       },
+      "unknown_role": "",
       "validation_errors": "Valideringsfeil"
     },
     "publication_types": {
@@ -2124,7 +2125,7 @@
       "note": "Kommentar",
       "nvi_control": "NVI-kontroll (Norsk vitskapsindeks)",
       "previous_candidate": "Gå til førre kandidat",
-      "problem_description": "<p>NVI-kandidaten har følgjande manglar:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)321</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatusar blir oppheva når ein uidentifisert person blir identifisert.</p>",
+      "problem_description": "<p>NVI-kandidaten har følgjande manglar:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatusar blir oppheva når ein uidentifisert person blir identifisert.</p>",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
       "reject_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen ikkje kan rapporterast. Du må grunngje avvisinga.",
@@ -2133,6 +2134,8 @@
       "rejection_reason": "Grunngjeving for avvising",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukka.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikkje open.",
+      "reset_approval": "Nullstill rapporteringsstatus",
+      "reset_approval_description": "Er du sikker på at du vil nullstill rapporteringsstatusen? Nokon på din institusjon må då rapportere denne på nytt.",
       "save_note": "Lagre kommentar",
       "show_candidate_search": "Vis kandidatsøk",
       "show_reporting_status": "Vis rapporteringsstatus",
