@@ -31,15 +31,9 @@ const institutionB: Organization = {
 };
 
 const restHandlers = [
-  http.get(institutionA.id, () => {
-    return HttpResponse.json(institutionA);
-  }),
-  http.get(subunitOnInstitutionA.id, () => {
-    return HttpResponse.json(subunitOnInstitutionA);
-  }),
-  http.get(institutionB.id, () => {
-    return HttpResponse.json(institutionB);
-  }),
+  http.get(institutionA.id, () => HttpResponse.json(institutionA)),
+  http.get(subunitOnInstitutionA.id, () => HttpResponse.json(subunitOnInstitutionA)),
+  http.get(institutionB.id, () => HttpResponse.json(institutionB)),
 ];
 
 const server = setupServer(...restHandlers);
