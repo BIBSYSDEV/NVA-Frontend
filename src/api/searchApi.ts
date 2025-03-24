@@ -584,7 +584,7 @@ export const fetchCustomerResults = async (params: FetchCustomerResultsParams, s
     searchParams.set(CustomerResultParam.Status, params.status.join(','));
   }
   if (params.query) {
-    searchParams.set(ResultParam.Title, params.query);
+    searchParams.set(ResultParam.Query, params.query);
   }
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
