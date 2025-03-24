@@ -165,7 +165,7 @@ describe('willResetNviStatuses()', () => {
     const persistedContributors: Contributor[] = [
       {
         type: 'Contributor',
-        affiliations: [{ type: 'Organization', id: institutionA.id }],
+        affiliations: persistedAffiliations,
         correspondingAuthor: false,
         identity: {
           type: 'Identity',
@@ -189,11 +189,10 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when an affiliation is changed to another institution', async () => {
-    const persistedAffiliations: Affiliation[] = [{ type: 'Organization', id: institutionA.id }];
     const persistedContributors: Contributor[] = [
       {
         type: 'Contributor',
-        affiliations: persistedAffiliations,
+        affiliations: [{ type: 'Organization', id: institutionA.id }],
         correspondingAuthor: false,
         identity: {
           type: 'Identity',
@@ -216,11 +215,10 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns false when an affiliation is changed to another unit on the same institution', async () => {
-    const persistedAffiliations: Affiliation[] = [{ type: 'Organization', id: institutionA.id }];
     const persistedContributors: Contributor[] = [
       {
         type: 'Contributor',
-        affiliations: persistedAffiliations,
+        affiliations: [{ type: 'Organization', id: institutionA.id }],
         correspondingAuthor: false,
         identity: {
           type: 'Identity',
@@ -242,8 +240,28 @@ describe('willResetNviStatuses()', () => {
     expect(result).toBe(false);
   });
 
-  test('Returns true when an affiliation is removed', () => {
-    // TODO
+  test('Returns true when an affiliation is removed', async () => {
+    const persistedContributors: Contributor[] = [
+      {
+        type: 'Contributor',
+        affiliations: [{ type: 'Organization', id: institutionA.id }],
+        correspondingAuthor: false,
+        identity: {
+          type: 'Identity',
+          name: 'Name Nameson',
+        },
+        role: { type: ContributorRole.Creator },
+        sequence: 1,
+      },
+    ];
+    let persistedRegistration = structuredClone(nviRegistration);
+    persistedRegistration.entityDescription.contributors = persistedContributors;
+
+    let updatedRegistration = structuredClone(persistedRegistration);
+    updatedRegistration.entityDescription.contributors[0].affiliations = [];
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(true);
   });
 
   test('Returns false when an affiliation is changed to another unit in the same institution', () => {
