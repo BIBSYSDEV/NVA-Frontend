@@ -1,8 +1,9 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { LoadingButton } from '@mui/lab';
-import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import { AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import Uppy from '@uppy/core';
 import { useState } from 'react';
@@ -32,9 +33,10 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
   const createRegistrationMutation = useMutation({
     mutationFn: async () => {
       const newRegistration = await createRegistration();
-      if (newRegistration.data.identifier) {
-        setUppy(createUppy(i18n.language, newRegistration.data.identifier));
-      }
+      // if (newRegistration.data.identifier) {
+      //   setUppy(createUppy(i18n.language, newRegistration.data.identifier));
+      // }
+      return newRegistration;
     },
     // onError:
   });
@@ -94,9 +96,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
               <input
                 type="file"
                 onChange={async (e) => {
-                  // const createRegistration = createRegistrationMutation.mutate();
-
-                  const newRegistration = await createRegistration();
+                  const newRegistration = await createRegistrationMutation.mutateAsync();
                   const newUppyInstance = createUppy(i18n.language, newRegistration.data.identifier);
                   setUppy(newUppyInstance);
                   const file = e.target.files?.[0];
@@ -107,27 +107,36 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
               />
             )}
 
-            {uploadedFiles.length > 0 && (
+            {uppy && uploadedFiles.length > 0 && (
               <>
                 <Typography variant="h3">{t('registration.files_and_license.files')}:</Typography>
                 {uploadedFiles.map((file) => (
-                  <>
-                    <p key={file.identifier}>{file.name}</p>
-                    {/* <UploadedFileRow
-                      key={file.identifier}
-                      file={file}
-                      removeFile={() => {
+                  <Box
+                    key={file.identifier}
+                    sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+                    <Typography sx={{ wordBreak: 'break-all' }}>{file.name}</Typography>
+                    <Button
+                      color="error"
+                      data-testid="button-remove-file" // TODO
+                      variant="outlined"
+                      startIcon={<RemoveCircleIcon />}
+                      onClick={() => {
                         const uppyFiles = uppy.getFiles();
-                        const uppyId = uppyFiles.find((uppyFile) => uppyFile.uploadURL === file.identifier)?.id;
+                        const uppyId = uppyFiles.find(
+                          (uppyFile) => uppyFile.response?.body?.identifier === file.identifier
+                        )?.id;
+                        console.log(uppyFiles, file, uppyId);
                         if (uppyId) {
                           uppy.removeFile(uppyId);
                         }
+                        // TODO: file removal must delete from result as well
                         setUploadedFiles(
                           uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
                         );
-                      }}
-                    /> */}
-                  </>
+                      }}>
+                      {t('common.remove')}
+                    </Button>
+                  </Box>
                 ))}
               </>
             )}
