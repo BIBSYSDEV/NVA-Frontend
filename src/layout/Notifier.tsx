@@ -1,4 +1,4 @@
-import { Alert, Fade, Snackbar, SnackbarCloseReason } from '@mui/material';
+import { Alert, Fade, Snackbar, SnackbarCloseReason, Typography } from '@mui/material';
 import { SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeNotification } from '../redux/notificationSlice';
@@ -34,7 +34,12 @@ export const Notifier = () => {
       TransitionComponent={Fade}
       transitionDuration={100}>
       <Alert onClose={handleClose} variant="filled" severity={notification.variant}>
-        {notification.message}
+        <Typography color="inherit">{notification.message}</Typography>
+        {notification.detail && (
+          <Typography color="inherit" lang="en">
+            {notification.detail}
+          </Typography>
+        )}
       </Alert>
     </Snackbar>
   ) : null;
