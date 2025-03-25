@@ -27,12 +27,14 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [uppy, setUppy] = useState<Uppy>();
+  const [uppy, setUppy] = useState<Uppy>(/*createUppy(i18n.language, '<IDENTIFIER>')*/);
 
   const createRegistrationMutation = useMutation({
-    mutationFn: createRegistration,
-    onSuccess: (response) => {
-      setUppy(createUppy(i18n.language, response.data.identifier));
+    mutationFn: async () => {
+      const newRegistration = await createRegistration();
+      if (newRegistration.data.identifier) {
+        setUppy(createUppy(i18n.language, newRegistration.data.identifier));
+      }
     },
     // onError:
   });
@@ -81,13 +83,36 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
       <AccordionDetails>
         {expanded && (
           <>
-            <FileUploader uppy={uppy} addFile={(newFile) => setUploadedFiles((files) => [newFile, ...files])} />
+            {uppy ? (
+              <FileUploader
+                uppy={uppy}
+                addFile={(newFile) => {
+                  setUploadedFiles((files) => [newFile, ...files]);
+                }}
+              />
+            ) : (
+              <input
+                type="file"
+                onChange={async (e) => {
+                  // const createRegistration = createRegistrationMutation.mutate();
+
+                  const newRegistration = await createRegistration();
+                  const newUppyInstance = createUppy(i18n.language, newRegistration.data.identifier);
+                  setUppy(newUppyInstance);
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    newUppyInstance.addFile(file);
+                  }
+                }}
+              />
+            )}
+
             {uploadedFiles.length > 0 && (
               <>
                 <Typography variant="h3">{t('registration.files_and_license.files')}:</Typography>
                 {uploadedFiles.map((file) => (
                   <>
-                    <p>{file.name}</p>
+                    <p key={file.identifier}>{file.name}</p>
                     {/* <UploadedFileRow
                       key={file.identifier}
                       file={file}
