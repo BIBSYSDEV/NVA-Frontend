@@ -3,6 +3,8 @@ import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { LoadingButton } from '@mui/lab';
 import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import Uppy from '@uppy/core';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -13,7 +15,9 @@ import { AssociatedFile } from '../../../types/associatedArtifact.types';
 import { BaseRegistration } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { createUppy } from '../../../utils/uppy/uppy-config';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { FileUploader } from '../files_and_license_tab/FileUploader';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
 import { RegistrationAccordion } from './RegistrationAccordion';
 
@@ -23,7 +27,28 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [uppy] = useState(() => createUppy(i18n.language));
+  const [uppy, setUppy] = useState<Uppy>();
+
+  const createRegistrationMutation = useMutation({
+    mutationFn: createRegistration,
+    onSuccess: (response) => {
+      setUppy(createUppy(i18n.language, response.data.identifier));
+    },
+    // onError:
+  });
+
+  const createEmptyRegistration = async () => {
+    setIsLoading(true);
+    const createRegistrationResponse = await createRegistration();
+    if (isErrorStatus(createRegistrationResponse.status)) {
+      dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
+      setIsLoading(false);
+    } else if (isSuccessStatus(createRegistrationResponse.status)) {
+      navigate(getRegistrationWizardPath(createRegistrationResponse.data.identifier), {
+        state: { highestValidatedTab: -1 },
+      });
+    }
+  };
 
   const createRegistrationWithFiles = async () => {
     setIsLoading(true);
@@ -54,32 +79,35 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
       </AccordionSummary>
 
       <AccordionDetails>
-        {/* {uppy && expanded && (
+        {expanded && (
           <>
             <FileUploader uppy={uppy} addFile={(newFile) => setUploadedFiles((files) => [newFile, ...files])} />
             {uploadedFiles.length > 0 && (
               <>
                 <Typography variant="h3">{t('registration.files_and_license.files')}:</Typography>
                 {uploadedFiles.map((file) => (
-                  <UploadedFileRow
-                    key={file.identifier}
-                    file={file}
-                    removeFile={() => {
-                      const uppyFiles = uppy.getFiles();
-                      const uppyId = uppyFiles.find((uppyFile) => uppyFile.uploadURL === file.identifier)?.id;
-                      if (uppyId) {
-                        uppy.removeFile(uppyId);
-                      }
-                      setUploadedFiles(
-                        uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
-                      );
-                    }}
-                  />
+                  <>
+                    <p>{file.name}</p>
+                    {/* <UploadedFileRow
+                      key={file.identifier}
+                      file={file}
+                      removeFile={() => {
+                        const uppyFiles = uppy.getFiles();
+                        const uppyId = uppyFiles.find((uppyFile) => uppyFile.uploadURL === file.identifier)?.id;
+                        if (uppyId) {
+                          uppy.removeFile(uppyId);
+                        }
+                        setUploadedFiles(
+                          uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
+                        );
+                      }}
+                    /> */}
+                  </>
                 ))}
               </>
             )}
           </>
-        )} */}
+        )}
       </AccordionDetails>
 
       <AccordionActions>

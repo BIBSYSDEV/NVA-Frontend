@@ -35,11 +35,11 @@ const EditRegistration = () => {
           gap: '2rem',
         }}>
         <LinkRegistration expanded={expanded === PanelName.LinkPanel} onChange={handleChange(PanelName.LinkPanel)} />
-        <StartEmptyRegistration onChange={handleChange(PanelName.EmptyPanel)} />
         <UploadRegistration
           expanded={expanded === PanelName.UploadFilePanel}
           onChange={handleChange(PanelName.UploadFilePanel)}
         />
+        <StartEmptyRegistration onChange={handleChange(PanelName.EmptyPanel)} />
       </Box>
     </StyledPageContent>
   ) : (
