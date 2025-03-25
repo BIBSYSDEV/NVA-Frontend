@@ -135,6 +135,7 @@ export const willResetNviStatuses = async (persistedRegistration: Registration, 
   ) {
     return true;
   }
+  return false;
 };
 
 export const hasUnidentifiedContributorProblem = (nviCandidateProblems: NviCandidateProblem[]) =>
