@@ -156,7 +156,6 @@
       "no_eligable_roles": "Personer uten nasjonalt identitetsnummer kan ikke ha roller",
       "no_employees_found": "Ingen ansatte funnet",
       "other_employments": "Andre aktive ansettelser",
-      "person_id": "PersonID",
       "person_register": "Personregister",
       "previous_employments": "Tidligere ansettelser",
       "remove_employment": "Fjern ansettelse",
@@ -811,12 +810,9 @@
         "roles": "Roller"
       },
       "identity": {
-        "identity": "Identitet",
-        "identity_numbers": "Identitetsnummere",
         "upload_profile_photo": "Last opp profilfoto",
         "upload_profile_photo_info": "Maksimum størrelse: 1 MB. Støttede filtyper: .jpg eller .jpeg"
       },
-      "identity_numbers_description": "Identitetsnummere hentes fra innloggingen.",
       "link_to_projects_search": "Se <0>søkesiden</0> for å filtrere blant alle prosjekter.",
       "link_to_results_search": "Se <0>søkesiden</0> for å filtrere blant alle resultater.",
       "list_contains_all_registration_you_have_created": "Listen viser alle prosjekter du har registrert",
