@@ -160,15 +160,15 @@ export const AddCuratorForm = ({
                 ? values.roles.filter((selectedRole) => selectedRole.rolename !== role)
                 : [...values.roles, { type: 'Role', rolename: role }];
 
-              if (!isRemovingRole && role === RoleName.CuratorThesisEmbargo) {
-                newRoles = [
-                  ...values.roles,
-                  { type: 'Role', rolename: RoleName.CuratorThesis },
-                  { type: 'Role', rolename: RoleName.CuratorThesisEmbargo },
-                ];
-              }
-
-              if (isRemovingRole) {
+              if (!isRemovingRole) {
+                if (role === RoleName.CuratorThesisEmbargo) {
+                  newRoles = [
+                    ...values.roles,
+                    { type: 'Role', rolename: RoleName.CuratorThesis },
+                    { type: 'Role', rolename: RoleName.CuratorThesisEmbargo },
+                  ];
+                }
+              } else if (isRemovingRole) {
                 // Remove roles that depend on the removed role
                 if (role === RoleName.CuratorThesis) {
                   newRoles = newRoles.filter((role) => role.rolename !== RoleName.CuratorThesisEmbargo);
