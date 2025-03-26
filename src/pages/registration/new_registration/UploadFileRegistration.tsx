@@ -65,80 +65,76 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
       </AccordionSummary>
 
       <AccordionDetails>
-        {expanded && (
+        {uppy ? (
+          <FileUploader uppy={uppy} addFile={(newFile) => setUploadedFiles((files) => [newFile, ...files])} />
+        ) : (
+          <Button
+            data-testid={dataTestId.registrationWizard.new.uploadFileButton}
+            variant="contained"
+            sx={{ alignSelf: 'center' }}
+            endIcon={<UploadIcon />}
+            loadingPosition="end"
+            loading={createRegistrationMutation.isPending}
+            onClick={() => fileInputRef.current?.click()}>
+            {t('common.select_file')}
+            <input
+              type="file"
+              hidden
+              ref={fileInputRef}
+              onChange={async (e) => {
+                const newRegistration = await createRegistrationMutation.mutateAsync();
+                const newUppyInstance = createUppy(i18n.language, newRegistration.identifier);
+                setUppy(newUppyInstance);
+                const file = e.target.files?.[0];
+                if (file) {
+                  newUppyInstance.addFile(file);
+                }
+              }}
+            />
+          </Button>
+        )}
+
+        {uppy && uploadedFiles.length > 0 && (
           <>
-            {uppy ? (
-              <FileUploader uppy={uppy} addFile={(newFile) => setUploadedFiles((files) => [newFile, ...files])} />
-            ) : (
-              <Button
-                data-testid={dataTestId.registrationWizard.new.uploadFileButton}
-                variant="contained"
-                sx={{ alignSelf: 'center' }}
-                endIcon={<UploadIcon />}
-                loadingPosition="end"
-                loading={createRegistrationMutation.isPending}
-                onClick={() => fileInputRef.current?.click()}>
-                {t('common.select_file')}
-                <input
-                  type="file"
-                  hidden
-                  ref={fileInputRef}
-                  onChange={async (e) => {
-                    const newRegistration = await createRegistrationMutation.mutateAsync();
-                    const newUppyInstance = createUppy(i18n.language, newRegistration.identifier);
-                    setUppy(newUppyInstance);
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      newUppyInstance.addFile(file);
+            <Typography variant="h3">{t('registration.files_and_license.files')}:</Typography>
+            {uploadedFiles.map((file) => (
+              <Box
+                key={file.identifier}
+                sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+                <Typography sx={{ wordBreak: 'break-all' }}>{file.name}</Typography>
+                <Button
+                  color="error"
+                  data-testid={dataTestId.registrationWizard.new.removeFileButton}
+                  variant="outlined"
+                  loading={
+                    deleteFileMutation.isPending && deleteFileMutation.variables?.fileIdentifier === file.identifier
+                  }
+                  startIcon={<RemoveCircleIcon />}
+                  onClick={async () => {
+                    const registrationIdentifier = createRegistrationMutation.data?.identifier;
+                    if (registrationIdentifier && file.identifier) {
+                      await deleteFileMutation.mutateAsync({
+                        registrationIdentifier,
+                        fileIdentifier: file.identifier,
+                      });
                     }
-                  }}
-                />
-              </Button>
-            )}
 
-            {uppy && uploadedFiles.length > 0 && (
-              <>
-                <Typography variant="h3">{t('registration.files_and_license.files')}:</Typography>
-                {uploadedFiles.map((file) => (
-                  <Box
-                    key={file.identifier}
-                    sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-                    <Typography sx={{ wordBreak: 'break-all' }}>{file.name}</Typography>
-                    <Button
-                      color="error"
-                      data-testid={dataTestId.registrationWizard.new.removeFileButton}
-                      variant="outlined"
-                      loading={
-                        deleteFileMutation.isPending && deleteFileMutation.variables?.fileIdentifier === file.identifier
-                      }
-                      startIcon={<RemoveCircleIcon />}
-                      onClick={async () => {
-                        const registrationIdentifier = createRegistrationMutation.data?.identifier;
-                        if (registrationIdentifier && file.identifier) {
-                          await deleteFileMutation.mutateAsync({
-                            registrationIdentifier,
-                            fileIdentifier: file.identifier,
-                          });
-                        }
+                    const uppyFiles = uppy.getFiles();
+                    const uppyId = uppyFiles.find(
+                      (uppyFile) => uppyFile.response?.body?.identifier === file.identifier
+                    )?.id;
+                    if (uppyId) {
+                      uppy.removeFile(uppyId);
+                    }
 
-                        const uppyFiles = uppy.getFiles();
-                        const uppyId = uppyFiles.find(
-                          (uppyFile) => uppyFile.response?.body?.identifier === file.identifier
-                        )?.id;
-                        if (uppyId) {
-                          uppy.removeFile(uppyId);
-                        }
-
-                        setUploadedFiles(
-                          uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
-                        );
-                      }}>
-                      {t('common.remove')}
-                    </Button>
-                  </Box>
-                ))}
-              </>
-            )}
+                    setUploadedFiles(
+                      uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
+                    );
+                  }}>
+                  {t('common.remove')}
+                </Button>
+              </Box>
+            ))}
           </>
         )}
       </AccordionDetails>
