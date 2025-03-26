@@ -672,6 +672,9 @@
     "to_top": "Til toppen"
   },
   "licenses": {
+    "additional_info": {
+      "cc0": "Det bør deles et åpent eller lukket notat, sammen med verket som:\n\ni) gjør rede for konklusjonen om at verket er å oppfatte som et \"fellesgode/public domain\", som definert av Åndsverksloven §11 Opphavsrettens vernetid eller §14 Åndsverk som ikke har opphavsrettslig vern, eller etter en annen lignende bestemmelse\n\nii) dokumenterer at opphaver frasier seg alle opphavsrettigheter og relaterte rettigheter de hadde til verket, som for eksempel omtalt i Åndsverksloven §3 Opphavsrettens innhold og §8 Fellesverk, og at verket er å oppfatte som et \"fellesgode/public domain\""
+    },
     "description": {
       "cc0": "Den person som har knyttet et verk til dette aktstykke (deed) har, i den utstrekning loven tillater, erklært dette verket er i det fri ved å si fra seg alle de opphavsrettigheter og nærstående rettigheter som vedkommende hadde til verket.",
       "cc_by": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort.",

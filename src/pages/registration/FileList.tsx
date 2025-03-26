@@ -166,6 +166,9 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                                 {license.link}
                               </Link>
                             )}
+                            {license.additionalInfo && (
+                              <Typography sx={{ mt: '1rem' }}>{license.additionalInfo}</Typography>
+                            )}
                           </Box>
                         ))}
                       </HelperTextModal>
