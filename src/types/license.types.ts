@@ -43,7 +43,7 @@ interface LicenseInfo {
   logo: string;
   link: string;
   version?: 1 | 2 | 2.5 | 3 | 4;
-  additionalInfo?: string | undefined;
+  i18nKey?: string;
 }
 
 export const licenses: LicenseInfo[] = [
@@ -293,7 +293,7 @@ export const licenses: LicenseInfo[] = [
     description: i18n.t('licenses.description.cc0'),
     link: i18n.t('licenses.links.cc0'),
     logo: LicenseImages.cc0Logo,
-    additionalInfo: i18n.t('licenses.additional_info.cc0'),
+    i18nKey: 'cc0',
   },
   {
     id: LicenseUri.RightsReserved,

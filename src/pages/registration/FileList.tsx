@@ -166,8 +166,11 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                                 {license.link}
                               </Link>
                             )}
-                            {license.additionalInfo && (
-                              <Typography sx={{ mt: '1rem' }}>{license.additionalInfo}</Typography>
+                            {license.i18nKey && (
+                              <Trans
+                                i18nKey={`licenses.additional_info.${license.i18nKey}` as any}
+                                components={[<Typography key={'1'} sx={{ mt: '1rem' }} />]}
+                              />
                             )}
                           </Box>
                         ))}
