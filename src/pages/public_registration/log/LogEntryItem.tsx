@@ -158,6 +158,7 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
     case 'FileImported':
     case 'FileRetracted':
     case 'FileHidden':
+    case 'FileTypeUpdated':
       return <InsertDriveFileOutlinedIcon {...logIconProps} />;
     case 'PublicationUnpublished':
       return <UnpublishedOutlinedIcon {...logIconProps} />;
@@ -213,6 +214,15 @@ const getLogEntryTitle = (logEntry: LogEntry, t: TFunction) => {
           return t('log.titles.file_hidden');
       }
       break;
+    case 'FileTypeUpdated': {
+      const newFileTypeString =
+        logEntry.fileType === 'PendingOpenFile'
+          ? t('registration.files_and_license.file_type.open_file')
+          : logEntry.fileType === 'PendingInternalFile'
+            ? t('registration.files_and_license.file_type.internal_file')
+            : logEntry.fileType;
+      return t('log.titles.file_type_updated', { newFileType: newFileTypeString.toLocaleLowerCase() });
+    }
     case 'FileRejected':
       return t('log.titles.files_rejected', { count: 1 });
     case 'FileDeleted':

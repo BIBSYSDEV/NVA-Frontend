@@ -46,7 +46,14 @@ interface PublicationImportLogEntry extends Omit<PublicationLogEntry, 'topic' | 
 
 interface FileLogEntry extends BaseLogEntry {
   type: 'FileLogEntry';
-  topic: 'FileUploaded' | 'FileApproved' | 'FileRejected' | 'FileDeleted' | 'FileRetracted' | 'FileHidden';
+  topic:
+    | 'FileUploaded'
+    | 'FileApproved'
+    | 'FileRejected'
+    | 'FileDeleted'
+    | 'FileRetracted'
+    | 'FileHidden'
+    | 'FileTypeUpdated';
   performedBy: LogEntryPerson;
   filename: string;
   fileType: FileType;
