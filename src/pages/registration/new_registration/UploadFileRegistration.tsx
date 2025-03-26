@@ -65,12 +65,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
         {expanded && (
           <>
             {uppy ? (
-              <FileUploader
-                uppy={uppy}
-                addFile={(newFile) => {
-                  setUploadedFiles((files) => [newFile, ...files]);
-                }}
-              />
+              <FileUploader uppy={uppy} addFile={(newFile) => setUploadedFiles((files) => [newFile, ...files])} />
             ) : (
               <input
                 type="file"
@@ -89,43 +84,45 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
             {uppy && uploadedFiles.length > 0 && (
               <>
                 <Typography variant="h3">{t('registration.files_and_license.files')}:</Typography>
-                {uploadedFiles.map((file) => (
-                  <Box
-                    key={file.identifier}
-                    sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-                    <Typography sx={{ wordBreak: 'break-all' }}>{file.name}</Typography>
-                    <Button
-                      color="error"
-                      data-testid="button-remove-file" // TODO
-                      variant="outlined"
-                      loading={
-                        deleteFileMutation.isPending && deleteFileMutation.variables?.fileIdentifier === file.identifier
-                      }
-                      startIcon={<RemoveCircleIcon />}
-                      onClick={async () => {
-                        const uppyFiles = uppy.getFiles();
-                        const uppyId = uppyFiles.find(
-                          (uppyFile) => uppyFile.response?.body?.identifier === file.identifier
-                        )?.id;
-
-                        if (createRegistrationMutation.data?.identifier) {
-                          await deleteFileMutation.mutateAsync({
-                            registrationIdentifier: createRegistrationMutation.data?.identifier,
-                            fileIdentifier: file.identifier,
-                          });
+                {uploadedFiles.map((file) => {
+                  const fileIdentifier = file.identifier;
+                  return (
+                    <Box
+                      key={file.identifier}
+                      sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+                      <Typography sx={{ wordBreak: 'break-all' }}>{file.name}</Typography>
+                      <Button
+                        color="error"
+                        data-testid="button-remove-file" // TODO
+                        variant="outlined"
+                        loading={
+                          deleteFileMutation.isPending &&
+                          deleteFileMutation.variables?.fileIdentifier === fileIdentifier
                         }
-                        if (uppyId) {
-                          uppy.removeFile(uppyId);
-                        }
+                        startIcon={<RemoveCircleIcon />}
+                        onClick={async () => {
+                          const registrationIdentifier = createRegistrationMutation.data?.identifier;
+                          if (registrationIdentifier && fileIdentifier) {
+                            await deleteFileMutation.mutateAsync({ registrationIdentifier, fileIdentifier });
+                          }
 
-                        setUploadedFiles(
-                          uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
-                        );
-                      }}>
-                      {t('common.remove')}
-                    </Button>
-                  </Box>
-                ))}
+                          const uppyFiles = uppy.getFiles();
+                          const uppyId = uppyFiles.find(
+                            (uppyFile) => uppyFile.response?.body?.identifier === file.identifier
+                          )?.id;
+                          if (uppyId) {
+                            uppy.removeFile(uppyId);
+                          }
+
+                          setUploadedFiles(
+                            uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
+                          );
+                        }}>
+                        {t('common.remove')}
+                      </Button>
+                    </Box>
+                  );
+                })}
               </>
             )}
           </>
