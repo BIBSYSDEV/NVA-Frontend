@@ -2,6 +2,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import UploadIcon from '@mui/icons-material/Upload';
 import { AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import Uppy from '@uppy/core';
@@ -67,18 +68,28 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
             {uppy ? (
               <FileUploader uppy={uppy} addFile={(newFile) => setUploadedFiles((files) => [newFile, ...files])} />
             ) : (
-              <input
-                type="file"
-                onChange={async (e) => {
-                  const newRegistration = await createRegistrationMutation.mutateAsync();
-                  const newUppyInstance = createUppy(i18n.language, newRegistration.identifier);
-                  setUppy(newUppyInstance);
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    newUppyInstance.addFile(file);
-                  }
-                }}
-              />
+              <Button
+                variant="contained"
+                component="label"
+                sx={{ width: 'fit-content', alignSelf: 'center' }}
+                endIcon={<UploadIcon />}
+                loadingPosition="end"
+                loading={createRegistrationMutation.isPending}>
+                {t('common.select_file')}
+                <input
+                  type="file"
+                  hidden
+                  onChange={async (e) => {
+                    const newRegistration = await createRegistrationMutation.mutateAsync();
+                    const newUppyInstance = createUppy(i18n.language, newRegistration.identifier);
+                    setUppy(newUppyInstance);
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      newUppyInstance.addFile(file);
+                    }
+                  }}
+                />
+              </Button>
             )}
 
             {uppy && uploadedFiles.length > 0 && (

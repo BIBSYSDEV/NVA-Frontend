@@ -283,6 +283,7 @@
     "search_summary_one": "{{count}} treff for \"{{searchTerm}}\"",
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Velg",
+    "select_file": "Velg fil",
     "select_institution": "Velg institusjon",
     "select_role": "Velg rolle",
     "select_unit": "Velg enhet",
@@ -1684,10 +1685,10 @@
       "start_registration": "Start registrering",
       "start_with_empty_registration_description": "Legg inn informasjon etterpå",
       "start_with_empty_registration_title": "Start i tomt registreringsskjema",
-      "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på Internett",
+      "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på internett",
       "start_with_link_to_resource_title": "Start med lenke til original versjon",
-      "start_with_uploading_file_title": "Start med lenke til original versjon",
-      "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på internett"
+      "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på internett",
+      "start_with_uploading_file_title": "Start med å laste opp fil"
     },
     "registration_id": "Resultat-ID",
     "resource_type": {
