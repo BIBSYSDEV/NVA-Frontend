@@ -13,9 +13,9 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import {
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  isCategoryWithFileVersion,
   isOpenFile,
   isPendingOpenFile,
-  isTypeWithFileVersionField,
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
 import { getWizardPathByRegistration } from '../../../utils/urlPaths';
@@ -70,7 +70,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
 
   const totalFiles = openableFilesToShow.length + internalFilesToShow.length;
 
-  const showFileVersionField = isTypeWithFileVersionField(
+  const showFileVersionField = isCategoryWithFileVersion(
     registration.entityDescription?.reference?.publicationInstance?.type
   );
 

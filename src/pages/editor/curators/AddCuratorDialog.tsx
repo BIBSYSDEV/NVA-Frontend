@@ -123,6 +123,7 @@ export const AddCuratorDialog = ({
               {getFullCristinName(option.names)}
             </li>
           )}
+          filterOptions={(options) => options}
           onInputChange={(_, value) => setSearchQuery(value)}
           onChange={async (_, value) => {
             setSearchQuery('');

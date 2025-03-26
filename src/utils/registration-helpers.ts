@@ -609,17 +609,6 @@ export const getContributorsWithPrimaryRole = (
   });
 };
 
-export const getContributorsWithSecondaryRole = (
-  contributors: PreviewContributor[] | Contributor[],
-  registrationType: PublicationInstanceType
-) => {
-  const { secondaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => {
-    const roleValue = typeof contributor.role === 'string' ? contributor.role : contributor.role.type;
-    return secondaryRoles.includes(roleValue);
-  });
-};
-
 export const getOutputName = (item: OutputItem): string => {
   switch (item.type) {
     case 'Venue':
@@ -699,11 +688,11 @@ export const isPendingOpenFile = (artifact: AssociatedArtifact) => artifact.type
 
 export const isOpenFile = (artifact: AssociatedArtifact) => artifact.type === FileType.OpenFile;
 
-export const isTypeWithRrs = (publicationInstanceType?: string) =>
+export const isCategoryWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
 
-export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
+export const isCategoryWithFileVersion = (publicationInstanceType?: string) =>
   isJournal(publicationInstanceType) || isBook(publicationInstanceType) || isChapter(publicationInstanceType);
 
 export const isEmbargoed = (embargoDate: Date | null) => {

@@ -1,20 +1,21 @@
 import { FileType } from './associatedArtifact.types';
+import { LanguageString } from './common.types';
 
-interface LogEntryOnBehalfOf {
-  id: string;
-  shortName: string;
-  displayName: string;
+export interface LogEntryOrganization {
+  type: 'Organization';
+  acronym: string;
+  labels: LanguageString;
 }
 
-interface LogEntryPerformedBy {
+export interface LogEntryPerson {
+  type: 'Person';
   givenName: string;
   familyName: string;
-  onBehalfOf: LogEntryOnBehalfOf;
+  onBehalfOf: LogEntryOrganization;
 }
 
 interface BaseLogEntry {
   timestamp: string;
-  performedBy?: LogEntryPerformedBy;
 }
 
 interface PublicationLogEntry extends BaseLogEntry {
@@ -29,7 +30,7 @@ interface PublicationLogEntry extends BaseLogEntry {
     | 'DoiRequested'
     | 'DoiRejected'
     | 'DoiAssigned';
-  timestamp: string;
+  performedBy: LogEntryPerson;
 }
 
 export interface ImportSourceLogData {
@@ -37,14 +38,23 @@ export interface ImportSourceLogData {
   archive?: string;
 }
 
-interface PublicationImportLogEntry extends Omit<PublicationLogEntry, 'topic'> {
+interface PublicationImportLogEntry extends Omit<PublicationLogEntry, 'topic' | 'performedBy'> {
   topic: 'PublicationImported' | 'PublicationMerged';
+  performedBy: LogEntryOrganization;
   importSource: ImportSourceLogData;
 }
 
 interface FileLogEntry extends BaseLogEntry {
   type: 'FileLogEntry';
-  topic: 'FileUploaded' | 'FileApproved' | 'FileRejected' | 'FileDeleted' | 'FileRetracted' | 'FileHidden';
+  topic:
+    | 'FileUploaded'
+    | 'FileApproved'
+    | 'FileRejected'
+    | 'FileDeleted'
+    | 'FileRetracted'
+    | 'FileHidden'
+    | 'FileTypeUpdated';
+  performedBy: LogEntryPerson;
   filename: string;
   fileType: FileType;
   fileIdentifier: string;

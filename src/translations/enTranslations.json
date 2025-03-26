@@ -156,7 +156,6 @@
       "no_eligable_roles": "Persons without a national identity number cannot have roles",
       "no_employees_found": "No employees found",
       "other_employments": "Other active employments",
-      "person_id": "Person ID",
       "person_register": "Person register",
       "previous_employments": "Previous employments",
       "remove_employment": "Remove employment",
@@ -732,6 +731,7 @@
       "file_deleted": "File deleted",
       "file_hidden": "File hidden",
       "file_retracted": "File redacted",
+      "file_type_updated": "",
       "files_published_one": "File published",
       "files_published_other": "Files published",
       "files_rejected_one": "File rejected",
@@ -811,12 +811,9 @@
         "roles": "Roles"
       },
       "identity": {
-        "identity": "Identity",
-        "identity_numbers": "Identity numbers",
         "upload_profile_photo": "Upload profile picture",
         "upload_profile_photo_info": "Maximum size: 1 MB. Supported file types: .jpg or .jpeg"
       },
-      "identity_numbers_description": "Identity numbers are retrieved from the login.",
       "link_to_projects_search": "See <0>the search page</0> to filter among all projects.",
       "link_to_results_search": "See <0>the search page</0> to filter among all results.",
       "list_contains_all_registration_you_have_created": "The list shows all the projects you have registered",
@@ -1601,6 +1598,7 @@
         "terminate_result_description": "<0>Delete the result if it has been incorrectly registered.</0><0>If the result is deleted, it is not possible to restore the information and files associated with the result.</0>",
         "waiting_for_rejected_doi": "It may take some time before a reserved DOI is removed. Reload the page to check again."
       },
+      "unknown_role": "Unknown role",
       "validation_errors": "Validation errors"
     },
     "publication_types": {
@@ -2133,6 +2131,8 @@
       "rejection_reason": "Reason for rejection",
       "reporting_period_closed": "The reporting period for this result is closed.",
       "reporting_period_missing": "The reporting period for this result is not open.",
+      "reset_approval": "Reset reporting status",
+      "reset_approval_description": "Are you sure you want to reset the reporting status? Someone at your institution will then have to report it again.",
       "save_note": "Save comment",
       "show_candidate_search": "Show candidate search",
       "show_reporting_status": "Show reporting status",

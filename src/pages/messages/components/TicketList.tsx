@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
-import { TicketSearchParam } from '../../../api/searchApi';
+import { SortOrder, TicketOrderBy, TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { CuratorSelector } from '../../../components/CuratorSelector';
@@ -63,8 +63,21 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
       size="small"
       variant="standard"
       options={[
-        { i18nKey: 'common.sort_newest_first', orderBy: 'createdDate', sortOrder: 'desc' },
-        { i18nKey: 'common.sort_oldest_first', orderBy: 'createdDate', sortOrder: 'asc' },
+        {
+          i18nKey: 'search.sort_by_modified_date',
+          orderBy: 'modifiedDate' satisfies TicketOrderBy,
+          sortOrder: 'desc' satisfies SortOrder,
+        },
+        {
+          i18nKey: 'common.sort_newest_first',
+          orderBy: 'createdDate' satisfies TicketOrderBy,
+          sortOrder: 'desc' satisfies SortOrder,
+        },
+        {
+          i18nKey: 'common.sort_oldest_first',
+          orderBy: 'createdDate' satisfies TicketOrderBy,
+          sortOrder: 'asc' satisfies SortOrder,
+        },
       ]}
     />
   );
@@ -97,7 +110,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
           <TicketStatusFilter options={ticketStatusOptions} />
         </Grid>
         <Grid item xs={16} md={11} lg={10}>
-          <SearchForm placeholder={t('tasks.search_placeholder')} />
+          <SearchForm placeholder={t('tasks.search_placeholder')} paginationOffsetParamName={TicketSearchParam.From} />
         </Grid>
 
         {user && (

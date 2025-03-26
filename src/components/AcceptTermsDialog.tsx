@@ -4,7 +4,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, Typogr
 import { useMutation } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { getUserAttributes, refreshSession } from '../api/authApi';
+import { getCustomUserAttributes } from '../api/authApi';
 import { acceptTermsAndConditions } from '../api/roleApi';
 import { LanguageSelector } from '../layout/header/LanguageSelector';
 import { setNotification } from '../redux/notificationSlice';
@@ -25,12 +25,9 @@ export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
     mutationFn: async () => {
       const acceptTermsResponse = await acceptTermsAndConditions(newTermsUri);
       if (acceptTermsResponse.data.termsConditionsUri) {
-        const newSession = await refreshSession();
-        if (newSession) {
-          const newUserInfo = await getUserAttributes();
-          if (newUserInfo) {
-            dispatch(setUser(newUserInfo));
-          }
+        const newSessionAttributes = await getCustomUserAttributes({ forceRefresh: true });
+        if (newSessionAttributes) {
+          dispatch(setUser(newSessionAttributes));
         }
       }
     },

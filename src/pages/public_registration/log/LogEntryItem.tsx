@@ -10,11 +10,13 @@ import { Avatar, Box, Divider, styled, SvgIconProps, Tooltip, Typography } from 
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { FileType } from '../../../types/associatedArtifact.types';
-import { ImportSourceLogData, LogEntry } from '../../../types/log.types';
+import { LogEntry, LogEntryOrganization, LogEntryPerson } from '../../../types/log.types';
 import { Message } from '../../../types/publication_types/ticket.types';
 import { getInitials } from '../../../utils/general-helpers';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 import { LogDateItem } from './LogDateItem';
+import { LogEntryImportSourceInfo } from './LogEntryImportSourceInfo';
 import { LogMessageAccordion } from './LogMessageAccordion';
 
 const logIconProps: SvgIconProps = { color: 'primary', fontSize: 'small' };
@@ -33,10 +35,6 @@ interface LogEntryItemProps {
 export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
   const { t } = useTranslation();
 
-  const fullName = logEntry.performedBy
-    ? getFullName(logEntry.performedBy.givenName, logEntry.performedBy.familyName)
-    : '';
-
   return (
     <Box
       sx={{
@@ -52,27 +50,11 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
       </StyledLogRow>
       <LogDateItem date={logEntry.timestamp} />
 
-      {(fullName || logEntry.performedBy?.onBehalfOf.shortName) && (
-        <StyledLogRow>
-          {fullName && (
-            <>
-              <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.7rem', bgcolor: 'primary.main' }}>
-                {getInitials(fullName)}
-              </Avatar>
-              <Typography>{fullName}</Typography>
-            </>
-          )}
-
-          {logEntry.performedBy?.onBehalfOf.shortName && (
-            <>
-              <AccountBalanceIcon {...logIconProps} />
-              <Tooltip title={logEntry.performedBy.onBehalfOf.displayName}>
-                <Typography>{logEntry.performedBy.onBehalfOf.shortName}</Typography>
-              </Tooltip>
-            </>
-          )}
-        </StyledLogRow>
-      )}
+      {logEntry.performedBy.type === 'Person' ? (
+        <LogEntryPersonInfo performedBy={logEntry.performedBy} />
+      ) : logEntry.performedBy.type === 'Organization' ? (
+        <LogEntryOganizationInfo performedBy={logEntry.performedBy} />
+      ) : null}
 
       {logEntry.type === 'FileLogEntry' ? (
         <>
@@ -83,12 +65,12 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
               {logEntry.filename || t('log.unknown_filename')}
             </Typography>
           </StyledLogRow>
-          {logEntry.topic === 'FileImported' && <ImportSourceInfo importSource={logEntry.importSource} />}
+          {logEntry.topic === 'FileImported' && <LogEntryImportSourceInfo importSource={logEntry.importSource} />}
         </>
       ) : logEntry.topic === 'PublicationImported' || logEntry.topic === 'PublicationMerged' ? (
         <>
           <Divider />
-          <ImportSourceInfo importSource={logEntry.importSource} />
+          <LogEntryImportSourceInfo importSource={logEntry.importSource} />
         </>
       ) : null}
 
@@ -102,20 +84,35 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
   );
 };
 
-const ImportSourceInfo = ({ importSource }: { importSource: ImportSourceLogData }) => {
-  const { t } = useTranslation();
-
+const LogEntryPersonInfo = ({ performedBy }: { performedBy: LogEntryPerson }) => {
+  const fullName = getFullName(performedBy.givenName, performedBy.familyName);
   return (
-    <Typography>
-      {importSource.archive
-        ? t('log.imported_from_source_and_archive', {
-            source: importSource.source,
-            archive: importSource.archive,
-          })
-        : t('log.imported_from_source', {
-            source: importSource.source,
-          })}
-    </Typography>
+    <StyledLogRow>
+      {fullName && (
+        <>
+          <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.7rem', bgcolor: 'primary.main' }}>
+            {getInitials(fullName)}
+          </Avatar>
+          <Typography>{fullName}</Typography>
+        </>
+      )}
+
+      {performedBy.onBehalfOf && <LogEntryOganizationInfo performedBy={performedBy.onBehalfOf} />}
+    </StyledLogRow>
+  );
+};
+
+const LogEntryOganizationInfo = ({ performedBy }: { performedBy: LogEntryOrganization }) => {
+  if (!performedBy.acronym) {
+    return null;
+  }
+  return (
+    <StyledLogRow>
+      <AccountBalanceIcon {...logIconProps} />
+      <Tooltip title={getLanguageString(performedBy.labels)}>
+        <Typography>{performedBy.acronym}</Typography>
+      </Tooltip>
+    </StyledLogRow>
   );
 };
 
@@ -161,6 +158,7 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
     case 'FileImported':
     case 'FileRetracted':
     case 'FileHidden':
+    case 'FileTypeUpdated':
       return <InsertDriveFileOutlinedIcon {...logIconProps} />;
     case 'PublicationUnpublished':
       return <UnpublishedOutlinedIcon {...logIconProps} />;
@@ -216,6 +214,15 @@ const getLogEntryTitle = (logEntry: LogEntry, t: TFunction) => {
           return t('log.titles.file_hidden');
       }
       break;
+    case 'FileTypeUpdated': {
+      const newFileTypeString =
+        logEntry.fileType === 'PendingOpenFile'
+          ? t('registration.files_and_license.file_type.open_file')
+          : logEntry.fileType === 'PendingInternalFile'
+            ? t('registration.files_and_license.file_type.internal_file')
+            : logEntry.fileType;
+      return t('log.titles.file_type_updated', { newFileType: newFileTypeString.toLocaleLowerCase() });
+    }
     case 'FileRejected':
       return t('log.titles.files_rejected', { count: 1 });
     case 'FileDeleted':

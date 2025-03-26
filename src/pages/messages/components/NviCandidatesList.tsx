@@ -51,7 +51,10 @@ export const NviCandidatesList = () => {
           flexDirection: 'column',
           gap: '1rem',
         }}>
-        <SearchForm placeholder={t('tasks.search_placeholder')} />
+        <SearchForm
+          placeholder={t('tasks.search_placeholder')}
+          paginationOffsetParamName={NviCandidatesSearchParam.Offset}
+        />
 
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <CuratorSelector
