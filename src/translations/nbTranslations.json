@@ -731,6 +731,7 @@
       "file_deleted": "Fil slettet",
       "file_hidden": "Fil skjult",
       "file_retracted": "Fil trukket tilbake",
+      "file_type_updated": "Fil endret til {{newFileType}}",
       "files_published_one": "Fil publisert",
       "files_published_other": "Filer publisert",
       "files_rejected_one": "Fil avvist",
