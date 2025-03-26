@@ -10,11 +10,10 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { deleteRegistrationFile } from '../../../api/fileApi';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';
-import { BaseRegistration } from '../../../types/registration.types';
-import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { createUppy } from '../../../utils/uppy/uppy-config';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
@@ -22,10 +21,14 @@ import { FileUploader } from '../files_and_license_tab/FileUploader';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
 import { RegistrationAccordion } from './RegistrationAccordion';
 
+interface DeleteFileMutationParams {
+  registrationIdentifier: string;
+  fileIdentifier: string;
+}
+
 export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t, i18n } = useTranslation();
   const [uploadedFiles, setUploadedFiles] = useState<AssociatedFile[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [uppy, setUppy] = useState<Uppy>(/*createUppy(i18n.language, '<IDENTIFIER>')*/);
@@ -33,42 +36,20 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
   const createRegistrationMutation = useMutation({
     mutationFn: async () => {
       const newRegistration = await createRegistration();
-      // if (newRegistration.data.identifier) {
-      //   setUppy(createUppy(i18n.language, newRegistration.data.identifier));
-      // }
-      return newRegistration;
+      return newRegistration.data;
     },
-    // onError:
+    onError: () => dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' })),
   });
 
-  const createEmptyRegistration = async () => {
-    setIsLoading(true);
-    const createRegistrationResponse = await createRegistration();
-    if (isErrorStatus(createRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
-      setIsLoading(false);
-    } else if (isSuccessStatus(createRegistrationResponse.status)) {
-      navigate(getRegistrationWizardPath(createRegistrationResponse.data.identifier), {
-        state: { highestValidatedTab: -1 },
-      });
-    }
-  };
-
-  const createRegistrationWithFiles = async () => {
-    setIsLoading(true);
-    const registrationPayload: Partial<BaseRegistration> = {
-      associatedArtifacts: uploadedFiles,
-    };
-    const createRegistrationResponse = await createRegistration(registrationPayload);
-    if (isErrorStatus(createRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
-      setIsLoading(false);
-    } else if (isSuccessStatus(createRegistrationResponse.status)) {
-      navigate(getRegistrationWizardPath(createRegistrationResponse.data.identifier), {
-        state: { highestValidatedTab: -1 },
-      });
-    }
-  };
+  const deleteFileMutation = useMutation({
+    mutationFn: async ({ registrationIdentifier, fileIdentifier }: DeleteFileMutationParams) => {
+      if (registrationIdentifier && fileIdentifier) {
+        await deleteRegistrationFile(registrationIdentifier, fileIdentifier);
+      }
+    },
+    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.delete_file'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_file'), variant: 'error' })),
+  });
 
   return (
     <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange}>
@@ -97,7 +78,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
                 type="file"
                 onChange={async (e) => {
                   const newRegistration = await createRegistrationMutation.mutateAsync();
-                  const newUppyInstance = createUppy(i18n.language, newRegistration.data.identifier);
+                  const newUppyInstance = createUppy(i18n.language, newRegistration.identifier);
                   setUppy(newUppyInstance);
                   const file = e.target.files?.[0];
                   if (file) {
@@ -119,16 +100,26 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
                       color="error"
                       data-testid="button-remove-file" // TODO
                       variant="outlined"
+                      loading={
+                        deleteFileMutation.isPending && deleteFileMutation.variables?.fileIdentifier === file.identifier
+                      }
                       startIcon={<RemoveCircleIcon />}
-                      onClick={() => {
+                      onClick={async () => {
                         const uppyFiles = uppy.getFiles();
                         const uppyId = uppyFiles.find(
                           (uppyFile) => uppyFile.response?.body?.identifier === file.identifier
                         )?.id;
-                        console.log(uppyFiles, file, uppyId);
+
+                        if (createRegistrationMutation.data?.identifier) {
+                          await deleteFileMutation.mutateAsync({
+                            registrationIdentifier: createRegistrationMutation.data?.identifier,
+                            fileIdentifier: file.identifier,
+                          });
+                        }
                         if (uppyId) {
                           uppy.removeFile(uppyId);
                         }
+
                         // TODO: file removal must delete from result as well
                         setUploadedFiles(
                           uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
@@ -150,9 +141,15 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
           endIcon={<ArrowForwardIcon fontSize="large" />}
           loadingPosition="end"
           variant="contained"
-          loading={isLoading}
-          disabled={uploadedFiles.length === 0}
-          onClick={createRegistrationWithFiles}>
+          disabled={uploadedFiles.length === 0 && !!createRegistrationMutation.data?.identifier} // TODO: Should disable when uploading
+          onClick={() => {
+            // TODO: Should be an anchor, not a button
+            if (createRegistrationMutation.data?.identifier) {
+              navigate(getRegistrationWizardPath(createRegistrationMutation.data?.identifier), {
+                state: { highestValidatedTab: -1 },
+              });
+            }
+          }}>
           {t('registration.registration.start_registration')}
         </LoadingButton>
       </AccordionActions>
