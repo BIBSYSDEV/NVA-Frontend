@@ -2,14 +2,13 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { LoadingButton } from '@mui/lab';
 import { AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import Uppy from '@uppy/core';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import { deleteRegistrationFile } from '../../../api/fileApi';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -29,9 +28,8 @@ interface DeleteFileMutationParams {
 export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t, i18n } = useTranslation();
   const [uploadedFiles, setUploadedFiles] = useState<AssociatedFile[]>([]);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [uppy, setUppy] = useState<Uppy>(/*createUppy(i18n.language, '<IDENTIFIER>')*/);
+  const [uppy, setUppy] = useState<Uppy>();
 
   const createRegistrationMutation = useMutation({
     mutationFn: async () => {
@@ -120,7 +118,6 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
                           uppy.removeFile(uppyId);
                         }
 
-                        // TODO: file removal must delete from result as well
                         setUploadedFiles(
                           uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
                         );
@@ -136,22 +133,22 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
       </AccordionDetails>
 
       <AccordionActions>
-        <LoadingButton
+        <Button
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
-          loadingPosition="end"
           variant="contained"
-          disabled={uploadedFiles.length === 0 && !!createRegistrationMutation.data?.identifier} // TODO: Should disable when uploading
-          onClick={() => {
-            // TODO: Should be an anchor, not a button
-            if (createRegistrationMutation.data?.identifier) {
-              navigate(getRegistrationWizardPath(createRegistrationMutation.data?.identifier), {
-                state: { highestValidatedTab: -1 },
-              });
-            }
-          }}>
+          disabled={
+            uploadedFiles.length === 0 || !createRegistrationMutation.data?.identifier || deleteFileMutation.isPending
+          }
+          component={Link}
+          to={
+            createRegistrationMutation.data?.identifier
+              ? getRegistrationWizardPath(createRegistrationMutation.data.identifier)
+              : ''
+          }
+          state={{ highestValidatedTab: -1 }}>
           {t('registration.registration.start_registration')}
-        </LoadingButton>
+        </Button>
       </AccordionActions>
     </RegistrationAccordion>
   );
