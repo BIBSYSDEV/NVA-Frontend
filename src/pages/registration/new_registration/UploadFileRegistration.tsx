@@ -6,7 +6,7 @@ import UploadIcon from '@mui/icons-material/Upload';
 import { AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import Uppy from '@uppy/core';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router';
@@ -28,9 +28,11 @@ interface DeleteFileMutationParams {
 
 export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t, i18n } = useTranslation();
-  const [uploadedFiles, setUploadedFiles] = useState<AssociatedFile[]>([]);
   const dispatch = useDispatch();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [uppy, setUppy] = useState<Uppy>();
+  const [uploadedFiles, setUploadedFiles] = useState<AssociatedFile[]>([]);
 
   const createRegistrationMutation = useMutation({
     mutationFn: async () => {
@@ -70,15 +72,16 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
             ) : (
               <Button
                 variant="contained"
-                component="label"
-                sx={{ width: 'fit-content', alignSelf: 'center' }}
+                sx={{ alignSelf: 'center' }}
                 endIcon={<UploadIcon />}
                 loadingPosition="end"
-                loading={createRegistrationMutation.isPending}>
+                loading={createRegistrationMutation.isPending}
+                onClick={() => fileInputRef.current?.click()}>
                 {t('common.select_file')}
                 <input
                   type="file"
                   hidden
+                  ref={fileInputRef}
                   onChange={async (e) => {
                     const newRegistration = await createRegistrationMutation.mutateAsync();
                     const newUppyInstance = createUppy(i18n.language, newRegistration.identifier);
