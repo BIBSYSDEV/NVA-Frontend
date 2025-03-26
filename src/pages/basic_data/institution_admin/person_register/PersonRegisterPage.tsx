@@ -102,7 +102,7 @@ export const PersonRegisterPage = () => {
               <caption style={visuallyHidden}>{t('basic_data.person_register.employee_table_caption')}</caption>
               <TableHead>
                 <TableRow>
-                  <TableCell>{t('basic_data.person_register.person_id')}</TableCell>
+                  <TableCell>{t('common.person_id')}</TableCell>
                   <TableCell>{t('common.national_id_number')}</TableCell>
                   <TableCell>{t('common.name')}</TableCell>
                   <TableCell>{t('common.employments')}</TableCell>

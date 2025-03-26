@@ -6,7 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
-import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
+import {
+  fetchCustomerTickets,
+  FetchTicketsParams,
+  SortOrder,
+  TicketOrderBy,
+  TicketSearchParam,
+} from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -75,8 +81,8 @@ const TasksPage = () => {
     query: searchParams.get(TicketSearchParam.Query),
     results: Number(searchParams.get(TicketSearchParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     from: Number(searchParams.get(TicketSearchParam.From) ?? 0),
-    orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
-    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
+    orderBy: searchParams.get(TicketSearchParam.OrderBy) as TicketOrderBy | null,
+    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as SortOrder | null,
     organizationId: organizationIdParam,
     excludeSubUnits: !!organizationIdParam,
     assignee: searchParams.get(TicketSearchParam.Assignee),

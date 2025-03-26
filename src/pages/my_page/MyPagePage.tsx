@@ -8,7 +8,13 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
-import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
+import {
+  fetchCustomerTickets,
+  FetchTicketsParams,
+  SortOrder,
+  TicketOrderBy,
+  TicketSearchParam,
+} from '../../api/searchApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
   LinkCreateButton,
@@ -76,8 +82,8 @@ const MyPagePage = () => {
     createdDate: searchParams.get(TicketSearchParam.CreatedDate),
     from: Number(searchParams.get(TicketSearchParam.From) ?? 0),
     owner: user?.nvaUsername,
-    orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
-    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
+    orderBy: searchParams.get(TicketSearchParam.OrderBy) as TicketOrderBy | null,
+    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as SortOrder | null,
     status: searchParams.get(TicketSearchParam.Status),
     viewedByNot: searchParams.get(TicketSearchParam.ViewedByNot),
     type: selectedTypesArray.join(','),

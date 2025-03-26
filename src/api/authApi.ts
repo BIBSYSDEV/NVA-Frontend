@@ -1,25 +1,8 @@
-import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
-import { FeideUser } from '../types/user.types';
+import { AuthSession, fetchAuthSession, FetchAuthSessionOptions } from 'aws-amplify/auth';
+import { CustomUserAttributes } from '../types/user.types';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { getCurrentPath } from '../utils/general-helpers';
 import { UrlPathTemplate } from '../utils/urlPaths';
-
-export const refreshSession = async () => {
-  try {
-    return await fetchAuthSession({ forceRefresh: true });
-  } catch {
-    return null;
-  }
-};
-
-export const getUserAttributes = async (): Promise<FeideUser | null> => {
-  try {
-    const userAttributes = (await fetchUserAttributes()) as FeideUser;
-    return userAttributes;
-  } catch {
-    return null;
-  }
-};
 
 export const getAccessToken = async () => {
   if (USE_MOCK_DATA) {
@@ -47,4 +30,28 @@ export const userIsAuthenticated = async () => {
   } catch {
     return false;
   }
+};
+
+export const getCustomUserAttributes = async (options?: FetchAuthSessionOptions) => {
+  try {
+    const currentSession = await fetchAuthSession(options);
+    return getCustomTokenAttributes(currentSession.tokens);
+  } catch {
+    return null;
+  }
+};
+
+const getCustomTokenAttributes = (tokens?: AuthSession['tokens']) => {
+  const idTokenPayload = tokens?.idToken?.payload;
+  const accessTokenPayload = tokens?.accessToken?.payload;
+
+  if (!idTokenPayload || !accessTokenPayload) {
+    return null;
+  }
+
+  const customAttributesObject = Object.entries({ ...idTokenPayload, ...accessTokenPayload })
+    .filter(([key]) => key.startsWith('custom:'))
+    .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}) as CustomUserAttributes;
+
+  return customAttributesObject;
 };

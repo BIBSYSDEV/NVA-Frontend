@@ -8,14 +8,12 @@ import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
-import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { personaliaValidationSchema } from '../../../utils/validation/personaliaValidation';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
@@ -189,26 +187,6 @@ export const MyProfile = () => {
                   </Grid>
                   <Grid item xs={16}>
                     <ProfileBox>
-                      <Typography variant="h2" sx={{ mb: '0.5rem' }}>
-                        {t('my_page.my_profile.identity.identity_numbers')}
-                      </Typography>
-                      <Typography sx={{ mb: '1rem' }}>
-                        {t('my_page.my_profile.identity_numbers_description')}
-                      </Typography>
-                      <StyledGridBox>
-                        <NationalIdNumberField nationalId={user.nationalIdNumber} />
-                        <TextField
-                          value={getIdentifierFromId(personId ?? '')}
-                          disabled
-                          label={t('common.person_id')}
-                          size="small"
-                          variant="filled"
-                        />
-                      </StyledGridBox>
-                    </ProfileBox>
-                  </Grid>
-                  <Grid item xs={16}>
-                    <ProfileBox>
                       <Box sx={{ display: 'flex', alignItems: 'center', mb: '0.5rem' }}>
                         <Typography variant="h2">{t('common.orcid')}</Typography>
                         <UserOrcidHelperModal />
@@ -217,7 +195,7 @@ export const MyProfile = () => {
                         i18nKey="my_page.my_profile.orcid_is_voluntary"
                         components={[<Typography key="1" gutterBottom />]}
                       />
-                      <UserOrcid user={user} sx={{ mt: '1rem' }} />
+                      <UserOrcid user={user} />
                     </ProfileBox>
                   </Grid>
                   <Grid item xs={16}>
