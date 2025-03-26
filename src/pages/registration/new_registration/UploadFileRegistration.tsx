@@ -1,7 +1,6 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import UploadIcon from '@mui/icons-material/Upload';
 import { AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
@@ -17,6 +16,7 @@ import { AssociatedFile } from '../../../types/associatedArtifact.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { createUppy } from '../../../utils/uppy/uppy-config';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { FileUploader } from '../files_and_license_tab/FileUploader';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
 import { RegistrationAccordion } from './RegistrationAccordion';
@@ -81,11 +81,11 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
               type="file"
               hidden
               ref={fileInputRef}
-              onChange={async (e) => {
+              onChange={async (event) => {
                 const newRegistration = await createRegistrationMutation.mutateAsync();
                 const newUppyInstance = createUppy(i18n.language, newRegistration.identifier);
                 setUppy(newUppyInstance);
-                const file = e.target.files?.[0];
+                const file = event.target.files?.[0];
                 if (file) {
                   newUppyInstance.addFile(file);
                 }
@@ -98,18 +98,10 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
           <>
             <Typography variant="h3">{t('registration.files_and_license.files')}:</Typography>
             {uploadedFiles.map((file) => (
-              <Box
-                key={file.identifier}
-                sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+              <Box key={file.identifier} sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Typography sx={{ wordBreak: 'break-all' }}>{file.name}</Typography>
-                <Button
-                  color="error"
-                  data-testid={dataTestId.registrationWizard.new.removeFileButton}
-                  variant="outlined"
-                  loading={
-                    deleteFileMutation.isPending && deleteFileMutation.variables?.fileIdentifier === file.identifier
-                  }
-                  startIcon={<RemoveCircleIcon />}
+                <DeleteIconButton
+                  data-testid={dataTestId.registrationWizard.files.deleteFile}
                   onClick={async () => {
                     const registrationIdentifier = createRegistrationMutation.data?.identifier;
                     if (registrationIdentifier && file.identifier) {
@@ -130,9 +122,9 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
                     setUploadedFiles(
                       uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
                     );
-                  }}>
-                  {t('common.remove')}
-                </Button>
+                  }}
+                  tooltip={t('registration.files_and_license.delete_file')}
+                />
               </Box>
             ))}
           </>
@@ -145,7 +137,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
           endIcon={<ArrowForwardIcon fontSize="large" />}
           variant="contained"
           disabled={
-            uploadedFiles.length === 0 || !createRegistrationMutation.data?.identifier || deleteFileMutation.isPending
+            !createRegistrationMutation.data?.identifier || uploadedFiles.length === 0 || deleteFileMutation.isPending
           }
           component={Link}
           to={
