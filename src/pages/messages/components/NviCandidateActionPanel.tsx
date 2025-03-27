@@ -7,6 +7,7 @@ import { useFetchRegistrationTickets } from '../../../api/hooks/useFetchRegistra
 import { NviCandidate } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { LogPanel } from '../../public_registration/log/LogPanel';
 import { NviDialoguePanel } from './NviDialoguePanel';
 
@@ -29,9 +30,10 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
   const { t } = useTranslation();
   const [tabValue, setTabValue] = useState(TabValue.Dialogue);
 
-  const ticketsQuery = useFetchRegistrationTickets(nviCandidate.publicationId);
   const registrationQuery = useFetchRegistration(getIdentifierFromId(nviCandidate.publicationId));
+  const canEditRegistration = userHasAccessRight(registrationQuery.data, 'update');
 
+  const ticketsQuery = useFetchRegistrationTickets(nviCandidate.publicationId, { enabled: canEditRegistration });
   const tickets = ticketsQuery.data?.tickets ?? [];
 
   return (
@@ -56,15 +58,19 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
             value={TabValue.Dialogue}
             data-testid={dataTestId.tasksPage.nvi.dialogTabButton}
           />
-          <Tab label={t('common.log')} value={TabValue.Log} data-testid={dataTestId.tasksPage.nvi.logTabButton} />
+          {canEditRegistration && (
+            <Tab label={t('common.log')} value={TabValue.Log} data-testid={dataTestId.tasksPage.nvi.logTabButton} />
+          )}
         </TabList>
 
         <StyledTabPanel value={TabValue.Dialogue}>
           <NviDialoguePanel nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
         </StyledTabPanel>
-        <StyledTabPanel value={TabValue.Log}>
-          {registrationQuery.data && <LogPanel tickets={tickets} registration={registrationQuery.data} />}
-        </StyledTabPanel>
+        {canEditRegistration && (
+          <StyledTabPanel value={TabValue.Log}>
+            {registrationQuery.data && <LogPanel tickets={tickets} registration={registrationQuery.data} />}
+          </StyledTabPanel>
+        )}
       </TabContext>
     </Paper>
   );
