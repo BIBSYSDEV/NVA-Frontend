@@ -52,7 +52,7 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
           onChange={(_, newValue: TabValue) => setTabValue(newValue)}
           sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', px: '0.5rem' }}
           textColor="inherit"
-          TabIndicatorProps={{ style: { backgroundColor: 'white', height: '0.4rem' } }}>
+          slotProps={{ indicator: { sx: { backgroundColor: 'white', height: '0.4rem' } } }}>
           <Tab
             label={t('common.dialogue')}
             value={TabValue.Dialogue}
