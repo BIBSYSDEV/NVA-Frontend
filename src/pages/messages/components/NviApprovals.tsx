@@ -17,13 +17,7 @@ export const NviApprovals = ({ approvals }: NviApprovalsProps) => {
 
   return (
     <Box sx={{ border: '1px solid', borderColor: 'nvi.main', gridArea: 'approvals' }}>
-      <Table
-        size="small"
-        sx={{
-          'th, td': {
-            borderBottomColor: 'nvi.main',
-          },
-        }}>
+      <Table size="small" sx={{ 'th, td': { borderBottomColor: 'nvi.main', px: '0.5rem' } }}>
         <TableHead>
           <TableRow sx={{ bgcolor: 'nvi.main' }}>
             <TableCell>{t('common.institution')}</TableCell>
@@ -92,7 +86,7 @@ const InstitutionStatus = ({ status }: InstitutionStatusProps) => {
     ) : null;
 
   return (
-    <Box sx={{ display: 'flex', gap: '0.2rem' }}>
+    <Box sx={{ display: 'flex', gap: '0.1rem' }}>
       {icon}
       <Typography sx={{ whiteSpace: 'nowrap' }}>{t(`tasks.nvi.status.${status}`)}</Typography>
     </Box>
