@@ -1859,7 +1859,7 @@
       "change_registration_type": "Bytte registreringstype?",
       "change_registration_type_description": "Merk at dette kan føre til at du mister noe av dataene du har lagt inn i de tilfellene hvor eksisterende data ikke er gyldig for den nye typen. Er du sikker på at du vil bytte registreringstype?",
       "chapter": {
-        "info_anthology": "Antologien som kapittelet er publisert i må være publisert før du kan registrere kapittelet",
+        "info_anthology": "Antologien som kapittelet er publisert i, må være registrert og offentliggjort i NVA før du kan registrere kapittelet",
         "info_book_of_abstracts": "Abstraktsamlingen hvor abstraktet er publisert i må være publisert først",
         "info_report": "Rapporten hvor kapittelet er publisert i må være publisert først",
         "published_in": "Publisert i",
