@@ -102,6 +102,9 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
                 <Typography sx={{ wordBreak: 'break-all' }}>{file.name}</Typography>
                 <DeleteIconButton
                   data-testid={dataTestId.registrationWizard.files.deleteFile}
+                  loading={
+                    deleteFileMutation.isPending && deleteFileMutation.variables.fileIdentifier === file.identifier
+                  }
                   onClick={async () => {
                     const registrationIdentifier = createRegistrationMutation.data?.identifier;
                     if (registrationIdentifier && file.identifier) {
