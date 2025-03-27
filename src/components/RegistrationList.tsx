@@ -11,11 +11,12 @@ import { Link, useLocation } from 'react-router';
 import { updatePromotedPublications } from '../api/preferencesApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
-import { PreviousPathLocationState, ShouldNotRedirectLocationState } from '../types/locationState.types';
+import { PreviousPathLocationState } from '../types/locationState.types';
 import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
+  doNotRedirectQueryParam,
   getRegistrationLandingPagePath,
   getRegistrationWizardPath,
   getResearchProfilePath,
@@ -138,13 +139,11 @@ export const RegistrationListItemContent = ({
             <MuiLink
               target={target}
               component={Link}
-              state={
-                {
-                  previousPath: `${location.pathname}${location.search}`,
-                  shouldNotRedirect: doNotRedirect,
-                } satisfies PreviousPathLocationState & ShouldNotRedirectLocationState
-              }
-              to={getRegistrationLandingPagePath(identifier)}>
+              state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
+              to={{
+                pathname: getRegistrationLandingPagePath(identifier),
+                search: doNotRedirect ? `${doNotRedirectQueryParam}=true` : '',
+              }}>
               {getTitleString(registration.mainTitle)}
             </MuiLink>
           )}

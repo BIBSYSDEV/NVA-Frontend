@@ -28,7 +28,3 @@ export interface NviCandidatePageLocationState extends PreviousSearchLocationSta
     nviQueryParams: FetchNviCandidatesParams;
   };
 }
-
-export interface ShouldNotRedirectLocationState {
-  shouldNotRedirect?: boolean;
-}

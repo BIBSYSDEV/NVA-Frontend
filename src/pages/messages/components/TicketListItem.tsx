@@ -8,17 +8,18 @@ import { RegistrationListItemContent } from '../../../components/RegistrationLis
 import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import {
-  PreviousSearchLocationState,
-  SelectedTicketTypeLocationState,
-  ShouldNotRedirectLocationState,
-} from '../../../types/locationState.types';
+import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
 import { getInitials } from '../../../utils/general-helpers';
 import { convertToRegistrationSearchItem } from '../../../utils/registration-helpers';
-import { getMyMessagesRegistrationPath, getTasksRegistrationPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import {
+  doNotRedirectQueryParam,
+  getMyMessagesRegistrationPath,
+  getTasksRegistrationPath,
+  UrlPathTemplate,
+} from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
@@ -81,8 +82,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           {
             previousSearch: window.location.search,
             selectedTicketType: ticket.type,
-            shouldNotRedirect: true,
-          } satisfies PreviousSearchLocationState & SelectedTicketTypeLocationState & ShouldNotRedirectLocationState
+          } satisfies PreviousSearchLocationState & SelectedTicketTypeLocationState
         }
         to={{
           pathname: isOnTasksPage
@@ -90,6 +90,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             : isOnMyPageMessages
               ? getMyMessagesRegistrationPath(identifier)
               : '',
+          search: `${doNotRedirectQueryParam}=true`,
         }}
         onClick={() => {
           if (!viewedByUser) {
