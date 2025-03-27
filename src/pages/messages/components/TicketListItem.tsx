@@ -8,7 +8,11 @@ import { RegistrationListItemContent } from '../../../components/RegistrationLis
 import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
+import {
+  PreviousSearchLocationState,
+  SelectedTicketTypeLocationState,
+  ShouldNotRedirectLocationState,
+} from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
@@ -77,7 +81,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           {
             previousSearch: window.location.search,
             selectedTicketType: ticket.type,
-          } satisfies PreviousSearchLocationState & SelectedTicketTypeLocationState
+            shouldNotRedirect: true,
+          } satisfies PreviousSearchLocationState & SelectedTicketTypeLocationState & ShouldNotRedirectLocationState
         }
         to={{
           pathname: isOnTasksPage
