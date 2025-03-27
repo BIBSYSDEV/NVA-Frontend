@@ -1,6 +1,8 @@
 import {
   Box,
   Link,
+  List,
+  ListItem,
   Paper,
   styled,
   Table,
@@ -169,7 +171,11 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                             {license.additionalInformation && (
                               <Trans
                                 defaults={license.additionalInformation}
-                                components={[<Typography key={'1'} sx={{ mt: '1rem' }} />]}
+                                components={{
+                                  p: <Typography sx={{ mt: '1rem' }} />,
+                                  ol: <ol style={{ listStyleType: 'lower-roman' }} />,
+                                  li: <li style={{ marginBottom: '0.5rem' }} />,
+                                }}
                               />
                             )}
                           </Box>

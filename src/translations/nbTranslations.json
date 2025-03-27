@@ -673,7 +673,7 @@
   },
   "licenses": {
     "additional_info": {
-      "cc0": "<0>Det bør deles et åpent eller lukket notat, sammen med verket som:</0><0>i) gjør rede for konklusjonen om at verket er å oppfatte som et \"fellesgode/public domain\", som definert av Åndsverksloven §11 Opphavsrettens vernetid eller §14 Åndsverk som ikke har opphavsrettslig vern, eller etter en annen lignende bestemmelse</0><0>ii) dokumenterer at opphaver frasier seg alle opphavsrettigheter og relaterte rettigheter de hadde til verket, som for eksempel omtalt i Åndsverksloven §3 Opphavsrettens innhold og §8 Fellesverk, og at verket er å oppfatte som et \"fellesgode/public domain\"</0>"
+      "cc0": "<p>Det bør deles et åpent eller lukket notat, sammen med verket som:</p><ol><li>Gjør rede for konklusjonen om at verket er å oppfatte som et \"fellesgode/public domain\", som definert av Åndsverksloven §11 Opphavsrettens vernetid eller §14 Åndsverk som ikke har opphavsrettslig vern, eller etter en annen lignende bestemmelse</li><li>Dokumenterer at opphaver frasier seg alle opphavsrettigheter og relaterte rettigheter de hadde til verket, som for eksempel omtalt i Åndsverksloven §3 Opphavsrettens innhold og §8 Fellesverk, og at verket er å oppfatte som et \"fellesgode/public domain\"</li></ol>"
     },
     "description": {
       "cc0": "Den person som har knyttet et verk til dette aktstykke (deed) har, i den utstrekning loven tillater, erklært dette verket er i det fri ved å si fra seg alle de opphavsrettigheter og nærstående rettigheter som vedkommende hadde til verket.",
