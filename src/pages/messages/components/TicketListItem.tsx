@@ -10,7 +10,7 @@ import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
-import { emptyRegistration, Registration } from '../../../types/registration.types';
+import { emptyRegistration, Registration, RegistrationStatus } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
 import { getInitials } from '../../../utils/general-helpers';
 import { convertToRegistrationSearchItem } from '../../../utils/registration-helpers';
@@ -90,7 +90,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             : isOnMyPageMessages
               ? getMyMessagesRegistrationPath(identifier)
               : '',
-          search: `${doNotRedirectQueryParam}=true`,
+          search: ticket.publication.status === RegistrationStatus.Unpublished ? `${doNotRedirectQueryParam}=true` : '',
         }}
         onClick={() => {
           if (!viewedByUser) {
