@@ -1,8 +1,17 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UploadIcon from '@mui/icons-material/Upload';
-import { AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
+import {
+  AccordionActions,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import Uppy from '@uppy/core';
 import { useRef, useState } from 'react';
@@ -16,7 +25,6 @@ import { AssociatedFile } from '../../../types/associatedArtifact.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { createUppy } from '../../../utils/uppy/uppy-config';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
-import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { FileUploader } from '../files_and_license_tab/FileUploader';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
 import { RegistrationAccordion } from './RegistrationAccordion';
@@ -100,7 +108,9 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
             {uploadedFiles.map((file) => (
               <Box key={file.identifier} sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Typography sx={{ wordBreak: 'break-all' }}>{file.name}</Typography>
-                <DeleteIconButton
+                <IconButton
+                  title={t('registration.files_and_license.delete_file')}
+                  color="primary"
                   data-testid={dataTestId.registrationWizard.files.deleteFile}
                   loading={
                     deleteFileMutation.isPending && deleteFileMutation.variables.fileIdentifier === file.identifier
@@ -125,9 +135,9 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
                     setUploadedFiles(
                       uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
                     );
-                  }}
-                  tooltip={t('registration.files_and_license.delete_file')}
-                />
+                  }}>
+                  <DeleteIcon />
+                </IconButton>
               </Box>
             ))}
           </>
