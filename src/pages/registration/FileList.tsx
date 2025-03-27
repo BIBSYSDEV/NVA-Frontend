@@ -1,8 +1,6 @@
 import {
   Box,
   Link,
-  List,
-  ListItem,
   Paper,
   styled,
   Table,
