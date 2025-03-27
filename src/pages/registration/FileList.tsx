@@ -28,8 +28,8 @@ import {
   isOpenFile,
   isPendingOpenFile,
 } from '../../utils/registration-helpers';
-import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
+import { HelperTextModal } from './HelperTextModal';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -166,9 +166,9 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                                 {license.link}
                               </Link>
                             )}
-                            {license.i18nKey && (
+                            {license.additionalInformation && (
                               <Trans
-                                i18nKey={`licenses.additional_info.${license.i18nKey}` as any}
+                                defaults={license.additionalInformation}
                                 components={[<Typography key={'1'} sx={{ mt: '1rem' }} />]}
                               />
                             )}
