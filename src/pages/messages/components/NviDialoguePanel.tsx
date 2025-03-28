@@ -47,7 +47,7 @@ export const NviDialoguePanel = ({ nviCandidate, nviCandidateQueryKey }: NviDial
               ? "'curator' 'approvals' 'divider0' 'problem' 'divider1' 'comment' 'divider2' 'actions'"
               : "'curator' 'approvals' 'divider1' 'comment' 'divider2' 'actions'",
         }}>
-        {periodStatus === 'OpenPeriod' && nviCandidate ? (
+        {periodStatus === 'OpenPeriod' && nviCandidate.allowedOperations.length > 0 ? (
           <NviCandidateActions nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
         ) : periodStatus === 'ClosedPeriod' ? (
           <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_closed')}</Typography>
