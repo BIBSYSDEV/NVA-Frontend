@@ -1,8 +1,9 @@
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, BoxProps, Typography } from '@mui/material';
+import { ReactNode } from 'react';
 
 interface PendingFilesInfoProps extends Pick<BoxProps, 'sx'> {
-  text: string;
+  text: string | ReactNode;
 }
 
 export const PendingFilesInfo = ({ text, sx }: PendingFilesInfoProps) => (

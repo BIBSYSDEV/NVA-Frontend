@@ -1525,7 +1525,7 @@
       "error_description_workflow2": "Resultatet har følgende mangler:",
       "files": {
         "awaits_approval": "{{count}} venter på godkjenning",
-        "file_awaits_approval": "Fil venter på godkjenning. Lastet opp av {{uploader}}."
+        "file_awaits_approval": "<p>Fil venter på godkjenning.</p><p>Lastet opp av {{uploader}}.</p>"
       },
       "files_tab_list_label": "Velg synlighet for filer",
       "find_in_channel_registry": "Finn i kanalregisteret",

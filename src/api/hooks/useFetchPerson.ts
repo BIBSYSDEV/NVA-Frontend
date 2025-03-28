@@ -14,7 +14,7 @@ export const useFetchPerson = (cristinId: string, options?: UseFetchPersonOption
   return useQuery({
     enabled: options?.enabled && !!cristinId,
     queryKey: ['person', cristinId],
-    queryFn: () => fetchPerson(cristinId),
+    queryFn: () => (cristinId ? fetchPerson(cristinId) : null),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 };
