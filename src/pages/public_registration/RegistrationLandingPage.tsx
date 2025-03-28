@@ -24,10 +24,10 @@ export const RegistrationLandingPage = () => {
   const registration = registrationQuery.data;
   const registrationId = registration?.id;
 
-  if (identifier && identifier !== registration?.identifier && !!registration?.identifier) {
+  if (identifier && !!registration?.identifier && identifier !== registration.identifier) {
+    // Update URL with the correct identifier if the original result yields an redirect due to being unpublished
     const newPath = location.pathname.replace(identifier, registration.identifier);
-    const searchParams = location.search ?? '';
-    navigate(newPath + searchParams, { replace: true });
+    navigate(newPath + location.search, { replace: true, state: location.state });
   }
 
   const canEditRegistration = userHasAccessRight(registration, 'update');

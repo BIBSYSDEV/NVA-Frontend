@@ -282,6 +282,7 @@
     "search_summary_one": "{{count}} treff for \"{{searchTerm}}\"",
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Velg",
+    "select_file": "Velg fil",
     "select_institution": "Velg institusjon",
     "select_role": "Velg rolle",
     "select_unit": "Velg enhet",
@@ -671,6 +672,9 @@
     "to_top": "Til toppen"
   },
   "licenses": {
+    "additional_info": {
+      "cc0": "<p>Det bør deles et åpent eller lukket notat, sammen med verket som:</p><ol><li>Gjør rede for konklusjonen om at verket er å oppfatte som et \"fellesgode/public domain\", som definert av Åndsverksloven §11 Opphavsrettens vernetid eller §14 Åndsverk som ikke har opphavsrettslig vern, eller etter en annen lignende bestemmelse</li><li>Dokumenterer at opphaver frasier seg alle opphavsrettigheter og relaterte rettigheter de hadde til verket, som for eksempel omtalt i Åndsverksloven §3 Opphavsrettens innhold og §8 Fellesverk, og at verket er å oppfatte som et \"fellesgode/public domain\"</li></ol>"
+    },
     "description": {
       "cc0": "Den person som har knyttet et verk til dette aktstykke (deed) har, i den utstrekning loven tillater, erklært dette verket er i det fri ved å si fra seg alle de opphavsrettigheter og nærstående rettigheter som vedkommende hadde til verket.",
       "cc_by": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort.",
@@ -1682,8 +1686,10 @@
       "start_registration": "Start registrering",
       "start_with_empty_registration_description": "Legg inn informasjon etterpå",
       "start_with_empty_registration_title": "Start i tomt registreringsskjema",
-      "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på Internett",
-      "start_with_link_to_resource_title": "Start med lenke til original versjon"
+      "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på internett",
+      "start_with_link_to_resource_title": "Start med lenke til original versjon",
+      "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på internett",
+      "start_with_uploading_file_title": "Start med å laste opp fil"
     },
     "registration_id": "Resultat-ID",
     "resource_type": {
@@ -1859,7 +1865,7 @@
       "change_registration_type": "Bytte registreringstype?",
       "change_registration_type_description": "Merk at dette kan føre til at du mister noe av dataene du har lagt inn i de tilfellene hvor eksisterende data ikke er gyldig for den nye typen. Er du sikker på at du vil bytte registreringstype?",
       "chapter": {
-        "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
+        "info_anthology": "Antologien som kapittelet er publisert i, må være registrert og offentliggjort i NVA før du kan registrere kapittelet",
         "info_book_of_abstracts": "Abstraktsamlingen hvor abstraktet er publisert i må være publisert først",
         "info_report": "Rapporten hvor kapittelet er publisert i må være publisert først",
         "published_in": "Publisert i",

@@ -19,6 +19,8 @@ interface LogPanelProps {
 export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
   const { t } = useTranslation();
   const logQuery = useFetchRegistrationLog(registration.id);
+  const sortedLogEntries =
+    logQuery.data?.logEntries.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()) ?? [];
 
   return (
     <Box
@@ -43,7 +45,7 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
           <Skeleton variant="rectangular" height={150} />
         </>
       ) : (
-        logQuery.data?.logEntries.toReversed().map((logEntry, index) => (
+        sortedLogEntries.map((logEntry, index) => (
           <ErrorBoundary key={index}>
             <LogEntryItem logEntry={logEntry} messages={getLogEntryMessages(logEntry, tickets)} />
           </ErrorBoundary>
