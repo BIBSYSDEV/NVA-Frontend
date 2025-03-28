@@ -11,6 +11,7 @@ import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationF
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
+  allowsFileUpload,
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
@@ -20,7 +21,9 @@ import {
   userIsValidImporter,
 } from '../../utils/registration-helpers';
 
+import { InfoBanner } from '../../components/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
+import { hasCuratorRole } from '../../utils/user-helpers';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { DoiField } from './resource_type_tab/components/DoiField';
@@ -41,7 +44,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
-  const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
 
@@ -100,6 +102,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const canEditFilesAndLinks = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
   const canUploadFile = userHasAccessRight(values, 'upload-file');
+  const categorySupportsFiles = allowsFileUpload(customer, entityDescription?.reference?.publicationInstance?.type);
 
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -136,11 +139,17 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           <>
             {!isNullAssociatedArtifact && (
               <>
-                {customer &&
-                publicationInstanceType &&
-                !customer.allowFileUploadForTypes.includes(publicationInstanceType) ? (
-                  <Typography>{t('registration.resource_type.protected_file_type')}</Typography>
-                ) : (
+                {!categorySupportsFiles && (
+                  <InfoBanner
+                    text={
+                      hasCuratorRole(user)
+                        ? t('registration.files_and_license.open_files_not_preferred_curator')
+                        : t('registration.files_and_license.open_files_not_preferred_registrator')
+                    }
+                  />
+                )}
+
+                {canUploadFile && (
                   <FileUploader
                     uppy={uppy}
                     addFile={(file) => {
@@ -152,9 +161,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       }
                       push(file);
                     }}
-                    disabled={!canUploadFile}
                   />
                 )}
+
                 {pendingFiles.length > 0 && (
                   <FileList
                     title={t('registration.files_and_license.files_in_progress')}

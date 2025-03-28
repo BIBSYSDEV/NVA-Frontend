@@ -358,7 +358,7 @@ export const emptyRegistration: Registration = {
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
-  allowedOperations: ['update', 'delete', 'unpublish'],
+  allowedOperations: ['update', 'delete', 'unpublish', 'upload-file'],
 };
 
 export interface ContextSeries {

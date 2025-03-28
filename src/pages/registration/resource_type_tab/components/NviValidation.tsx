@@ -1,8 +1,7 @@
-import InfoIcon from '@mui/icons-material/Info';
-import { Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchProtectedResource, fetchResource } from '../../../../api/commonApi';
+import { InfoBanner } from '../../../../components/InfoBanner';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
@@ -157,18 +156,15 @@ const NviStatus = ({ scientificValue }: NviStatusProps) => {
   const isRated = scientificValue === 'LevelOne' || scientificValue === 'LevelTwo';
 
   return (
-    <Paper elevation={5} sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', p: '1rem' }}>
-      <InfoIcon color="primary" fontSize="large" />
-      <Typography
-        data-testid={
-          isRated
-            ? dataTestId.registrationWizard.resourceType.nviSuccess
-            : dataTestId.registrationWizard.resourceType.nviFailed
-        }>
-        {isRated
-          ? t('registration.resource_type.nvi.applicable')
-          : t('registration.resource_type.nvi.channel_not_rated')}
-      </Typography>
-    </Paper>
+    <InfoBanner
+      text={
+        isRated ? t('registration.resource_type.nvi.applicable') : t('registration.resource_type.nvi.channel_not_rated')
+      }
+      data-testid={
+        isRated
+          ? dataTestId.registrationWizard.resourceType.nviSuccess
+          : dataTestId.registrationWizard.resourceType.nviFailed
+      }
+    />
   );
 };
