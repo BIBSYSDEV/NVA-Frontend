@@ -275,18 +275,25 @@ export const FilesTableRow = ({
                           row
                           sx={{ flexWrap: 'nowrap' }}
                           onChange={(event) => {
-                            const fileVersion = event.target.value as FileVersion;
-                            setFieldValue(field.name, fileVersion);
+                            const newFileVersion = event.target.value as FileVersion;
+                            const previousFileVersion = field.value as FileVersion;
+                            setFieldValue(field.name, newFileVersion);
 
                             if (isRrsApplicableCategory) {
-                              if (fileVersion === FileVersion.Published) {
+                              if (
+                                newFileVersion === FileVersion.Published &&
+                                previousFileVersion === FileVersion.Accepted
+                              ) {
                                 const nullRrsValue: FileRrs = {
                                   type: 'NullRightsRetentionStrategy',
                                   configuredType: rrsStrategy,
                                 };
                                 setFieldValue(rrsFieldName, nullRrsValue);
                                 setFieldValue(licenseFieldName, null);
-                              } else if (isCustomerRrs || isOverridableRrs) {
+                              } else if (
+                                newFileVersion === FileVersion.Accepted &&
+                                previousFileVersion === FileVersion.Published
+                              ) {
                                 const customerRrsValue: FileRrs = {
                                   type: 'CustomerRightsRetentionStrategy',
                                   configuredType: rrsStrategy,
