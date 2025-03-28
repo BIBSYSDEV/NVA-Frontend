@@ -282,6 +282,7 @@
     "search_summary_one": "{{count}} result for \"{{searchTerm}}\"",
     "search_summary_other": "{{count}} results for \"{{searchTerm}}\"",
     "select": "Select",
+    "select_file": "Select file",
     "select_institution": "Select institution",
     "select_role": "Select role",
     "select_unit": "Select unit",
@@ -671,6 +672,9 @@
     "to_top": "To the top"
   },
   "licenses": {
+    "additional_info": {
+      "cc0": ""
+    },
     "description": {
       "cc0": "The person who has associated a work with this deed has, to the extent the law allows, declared this work to be in the public domain by waiving all copyright and related rights that they had to the work.",
       "cc_by": "Share — copy, distribute and transmit the work in any medium or format. Adapt — remix, transform, and build upon the material for any purpose, including commercially.\n\nYou must give appropriate credit, provide a link to the licence, and indicate if changes have been made.",
@@ -731,7 +735,7 @@
       "file_deleted": "File deleted",
       "file_hidden": "File hidden",
       "file_retracted": "File redacted",
-      "file_type_updated": "",
+      "file_type_updated": "File changed to {{newFileType}}",
       "files_published_one": "File published",
       "files_published_other": "Files published",
       "files_rejected_one": "File rejected",
@@ -1683,7 +1687,9 @@
       "start_with_empty_registration_description": "Enter information later",
       "start_with_empty_registration_title": "Start in a blank registration form",
       "start_with_link_to_resource_description": "Link to the original version if the resource is already published on the Internet",
-      "start_with_link_to_resource_title": "Start with link to original version"
+      "start_with_link_to_resource_title": "Start with link to original version",
+      "start_with_uploading_file_description": "Upload file if the resource is not published on the internet",
+      "start_with_uploading_file_title": "Start by uploading file"
     },
     "registration_id": "Result ID",
     "resource_type": {
@@ -1859,7 +1865,7 @@
       "change_registration_type": "Change registration type?",
       "change_registration_type_description": "Note that this may result in you losing some data you have entered in cases where existing data is not valid for the new type. Are you sure you want to change the registration type?",
       "chapter": {
-        "info_anthology": "The anthology where the chapter is published must be published first",
+        "info_anthology": "The anthology where the chapter is published, must be registered and made public in NVA before you can register the chapter",
         "info_book_of_abstracts": "The abstract collection where the abstract is published must be published first",
         "info_report": "The report where the chapter is published must be published first",
         "published_in": "Published in",
