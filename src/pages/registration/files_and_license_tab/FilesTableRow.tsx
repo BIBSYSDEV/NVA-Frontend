@@ -276,7 +276,7 @@ export const FilesTableRow = ({
                           sx={{ flexWrap: 'nowrap' }}
                           onChange={(event) => {
                             const newFileVersion = event.target.value as FileVersion;
-                            const previousFileVersion = field.value as FileVersion;
+                            const previousFileVersion = field.value;
                             setFieldValue(field.name, newFileVersion);
 
                             if (isRrsApplicableCategory) {
@@ -286,7 +286,7 @@ export const FilesTableRow = ({
                                   configuredType: rrsStrategy,
                                 };
                                 setFieldValue(rrsFieldName, nullRrsValue);
-                                if (!!previousFileVersion) {
+                                if (previousFileVersion === FileVersion.Accepted) {
                                   setFieldValue(licenseFieldName, null);
                                 }
                               } else if (isCustomerRrs || isOverridableRrs) {
