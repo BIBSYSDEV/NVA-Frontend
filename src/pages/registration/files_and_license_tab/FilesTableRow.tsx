@@ -280,21 +280,16 @@ export const FilesTableRow = ({
                             setFieldValue(field.name, newFileVersion);
 
                             if (isRrsApplicableCategory) {
-                              if (
-                                newFileVersion === FileVersion.Published &&
-                                previousFileVersion === FileVersion.Accepted
-                              ) {
+                              if (newFileVersion === FileVersion.Published) {
                                 const nullRrsValue: FileRrs = {
                                   type: 'NullRightsRetentionStrategy',
                                   configuredType: rrsStrategy,
                                 };
                                 setFieldValue(rrsFieldName, nullRrsValue);
-                                setFieldValue(licenseFieldName, null);
-                              } else if (
-                                newFileVersion === FileVersion.Accepted &&
-                                previousFileVersion === FileVersion.Published &&
-                                (isCustomerRrs || isOverridableRrs)
-                              ) {
+                                if (!!previousFileVersion) {
+                                  setFieldValue(licenseFieldName, null);
+                                }
+                              } else if (isCustomerRrs || isOverridableRrs) {
                                 const customerRrsValue: FileRrs = {
                                   type: 'CustomerRightsRetentionStrategy',
                                   configuredType: rrsStrategy,
