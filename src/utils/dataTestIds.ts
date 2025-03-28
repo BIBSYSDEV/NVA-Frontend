@@ -501,9 +501,12 @@ export const dataTestId = {
     },
     new: {
       emptyRegistrationAccordion: 'new-registration-empty',
+      fileAccordion: 'file-accordion',
       linkAccordion: 'new-registration-link',
       linkMetadata: 'link-metadata',
+      removeFileButton: 'remove-file-button',
       startRegistrationButton: 'registration-start-button',
+      uploadFileButton: 'upload-file-button',
     },
     formActions: {
       cancelEditButton: 'cancel-edit-button',

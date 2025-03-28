@@ -8,10 +8,12 @@ import { IdentifierParams } from '../../../utils/urlPaths';
 import { RegistrationForm } from '../RegistrationForm';
 import { LinkRegistration } from './LinkRegistration';
 import { StartEmptyRegistration } from './StartEmptyRegistration';
+import { UploadRegistration } from './UploadFileRegistration';
 
 enum PanelName {
   LinkPanel,
   EmptyPanel,
+  UploadFilePanel,
 }
 
 const EditRegistration = () => {
@@ -33,6 +35,10 @@ const EditRegistration = () => {
           gap: '2rem',
         }}>
         <LinkRegistration expanded={expanded === PanelName.LinkPanel} onChange={handleChange(PanelName.LinkPanel)} />
+        <UploadRegistration
+          expanded={expanded === PanelName.UploadFilePanel}
+          onChange={handleChange(PanelName.UploadFilePanel)}
+        />
         <StartEmptyRegistration onChange={handleChange(PanelName.EmptyPanel)} />
       </Box>
     </StyledPageContent>
