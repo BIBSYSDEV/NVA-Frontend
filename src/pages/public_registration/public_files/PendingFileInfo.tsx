@@ -25,9 +25,14 @@ export const PendingFileDetails = ({ uploadedBy }: PendingFileDetailsProps) => {
 
   return (
     <PendingFilesInfo
+      aria-busy={isLoadingData}
+      aria-live="polite"
       text={
         isLoadingData ? (
-          <Skeleton sx={{ minWidth: '15rem' }} />
+          <>
+            <Skeleton sx={{ width: '10rem' }} />
+            <Skeleton sx={{ width: '15rem' }} />
+          </>
         ) : (
           <Trans
             i18nKey="registration.public_page.files.file_awaits_approval"
