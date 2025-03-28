@@ -12,7 +12,7 @@ export const useFetchPerson = (cristinId: string, options?: UseFetchPersonOption
   const { t } = useTranslation();
 
   return useQuery({
-    enabled: options?.enabled,
+    enabled: options?.enabled && !!cristinId,
     queryKey: ['person', cristinId],
     queryFn: () => fetchPerson(cristinId),
     meta: { errorMessage: t('feedback.error.get_person') },

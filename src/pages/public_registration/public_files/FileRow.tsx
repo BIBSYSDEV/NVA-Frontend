@@ -22,7 +22,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
 import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
-import { PendingFilesInfo } from './PendingFilesInfo';
+import { PendingFileDetails } from './PendingFileInfo';
 import { DownloadUrl, PreviewFile } from './preview_file/PreviewFile';
 
 interface FileRowProps {
@@ -112,7 +112,9 @@ export const FileRow = ({
           sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere', minWidth: '6rem' }}>
           {file.name}
         </Typography>
-        {fileAwaitsApproval && <PendingFilesInfo text={t('registration.public_page.files.file_awaits_approval')} />}
+        {fileAwaitsApproval && file.uploadDetails?.type === 'UserUploadDetails' && (
+          <PendingFileDetails uploadedBy={file.uploadDetails.uploadedBy} />
+        )}
       </Box>
       <Typography data-testid={dataTestId.registrationLandingPage.fileSize} sx={{ gridArea: 'size' }}>
         {prettyBytes(file.size, { locale: true })}
