@@ -46,12 +46,7 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
             menuElement={
               !!user &&
               (canDeleteMessage || user.nvaUsername === message.sender) && (
-                <MessageMenu
-                  ticketId={ticket.id}
-                  refetchData={refetchData}
-                  canDeleteMessage={!!message.text}
-                  messageIdentifier={message.identifier}
-                />
+                <MessageMenu messageId={ticket.id} refetchData={refetchData} canDeleteMessage={!!message.text} />
               )
             }
           />

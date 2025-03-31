@@ -9,19 +9,18 @@ import { useDeleteTicketMessage } from '../../../utils/hooks/useDeleteTicketMess
 
 interface MessageMenuProps {
   canDeleteMessage: boolean;
-  ticketId: string;
-  messageIdentifier: string;
+  messageId: string;
   refetchData?: () => void;
 }
 
 const menuId = 'message-menu';
 
-export const MessageMenu = ({ ticketId, messageIdentifier, refetchData, canDeleteMessage }: MessageMenuProps) => {
+export const MessageMenu = ({ messageId, refetchData, canDeleteMessage }: MessageMenuProps) => {
   const { t } = useTranslation();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const deleteTicketMessageMutation = useDeleteTicketMessage(ticketId, refetchData);
+  const deleteTicketMessageMutation = useDeleteTicketMessage(messageId, refetchData);
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -68,7 +67,7 @@ export const MessageMenu = ({ ticketId, messageIdentifier, refetchData, canDelet
         open={showConfirmDialog}
         title={t('my_page.messages.delete_message')}
         onAccept={async () => {
-          await deleteTicketMessageMutation.mutateAsync(messageIdentifier);
+          await deleteTicketMessageMutation.mutateAsync();
           setShowConfirmDialog(false);
         }}
         isLoading={deleteTicketMessageMutation.isPending}
