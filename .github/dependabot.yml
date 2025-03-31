@@ -22,3 +22,9 @@ updates:
       eslint:
         patterns:
           - 'eslint*'
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'
