@@ -21,7 +21,9 @@ export const PendingFileDetails = ({ uploadedBy }: PendingFileDetailsProps) => {
   const organizationName = organizationQuery.data?.acronym;
   const uploader = [fullName, organizationName].filter(Boolean).join(', ');
 
-  const isPending = userQuery.isPending || personQuery.isPending || organizationQuery.isPending;
+  const isPending =
+    (userQuery.isPending && !userQuery.isError) ||
+    (userQuery.data && (personQuery.isFetching || organizationQuery.isFetching));
 
   return (
     <PendingFilesInfo
@@ -33,7 +35,7 @@ export const PendingFileDetails = ({ uploadedBy }: PendingFileDetailsProps) => {
           {isPending ? (
             <Skeleton sx={{ width: '15rem' }} />
           ) : (
-            <Typography>{t('registration.public_page.files.uploaded_by', { uploader })}</Typography>
+            uploader && <Typography>{t('registration.public_page.files.uploaded_by', { uploader })}</Typography>
           )}
         </>
       }
