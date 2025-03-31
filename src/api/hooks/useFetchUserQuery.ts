@@ -20,6 +20,5 @@ export const useFetchUserQuery = (username: string, queryProps: UseFetchUserQuer
     queryKey: ['user', username],
     queryFn: () => fetchUser(username),
     meta: { errorMessage: t('feedback.error.get_person') },
-    ...queryProps,
   });
 };

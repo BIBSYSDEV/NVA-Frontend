@@ -18,6 +18,6 @@ export const PendingFilesInfo = ({ text, sx, ...rest }: PendingFilesInfoProps) =
       ...sx,
     }}>
     <HourglassEmptyIcon fontSize="small" />
-    <Typography>{text}</Typography>
+    {typeof text === 'string' ? <Typography>{text}</Typography> : <div>{text}</div>}
   </Box>
 );
