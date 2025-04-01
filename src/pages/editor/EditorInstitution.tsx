@@ -73,74 +73,41 @@ export const EditorInstitution = () => {
         <CircularProgress />
       ) : (
         <Grid container spacing={2}>
-          <Grid
-            size={{
-              xs: 12,
-              md: 4,
-            }}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h2">{t('editor.institution.institution_name_norwegian')}</Typography>
             <Typography>{institution?.labels.nb ?? '-'}</Typography>
           </Grid>
 
-          <Grid
-            size={{
-              xs: 12,
-              md: 4,
-            }}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h2">{t('editor.institution.institution_name_english')}</Typography>
             <Typography>{institution?.labels.en ?? '-'}</Typography>
           </Grid>
 
-          <Grid
-            container
-            size={{
-              xs: 12,
-              md: 4,
-            }}>
-            <Grid
-              size={{
-                xs: 4,
-                md: 6,
-              }}>
+          <Grid container size={{ xs: 12, md: 4 }}>
+            <Grid size={{ xs: 4, md: 6 }}>
               <Typography variant="h2">{t('editor.institution.institution_short_name')}</Typography>
               <Typography>{organizationQuery.data?.acronym ?? '-'}</Typography>
             </Grid>
 
-            <Grid
-              size={{
-                xs: 4,
-                md: 6,
-              }}>
+            <Grid size={{ xs: 4, md: 6 }}>
               <Typography variant="h2">{t('editor.institution.institution_code')}</Typography>
               <Typography>{institution?.id.split('/').pop() ?? '-'}</Typography>
             </Grid>
           </Grid>
 
-          <Grid
-            size={{
-              xs: 12,
-              md: 4,
-            }}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h2">{t('basic_data.institutions.sector')}</Typography>
             <Typography>
               {customer?.sector ? t(`basic_data.institutions.sector_values.${customer.sector}`) : '-'}
             </Typography>
           </Grid>
 
-          <Grid
-            size={{
-              xs: 12,
-              md: 4,
-            }}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h2">{t('editor.institution.unique_feide_id')}</Typography>
             <Typography>{customer?.feideOrganizationDomain ?? '-'}</Typography>
           </Grid>
 
-          <Grid
-            size={{
-              xs: 12,
-              md: 4,
-            }}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h2">{t('basic_data.institutions.ror')}</Typography>
             <Typography>
               {customer?.rorId ? (
@@ -184,13 +151,7 @@ export const EditorInstitution = () => {
             institutionUsers && (
               <Grid container size={12}>
                 {institutionAdmins && (
-                  <Grid
-                    size={{
-                      xs: 12,
-                      sm: 4,
-                      md: 6,
-                      lg: 4,
-                    }}>
+                  <Grid size={{ xs: 12, sm: 4, md: 6, lg: 4 }}>
                     <Typography variant="h2" gutterBottom>
                       {institutionAdmins.length > 0 &&
                         t('editor.institution.institution_admin', { count: institutionAdmins.length })}
@@ -204,13 +165,7 @@ export const EditorInstitution = () => {
                 )}
 
                 {institutionEditors && (
-                  <Grid
-                    size={{
-                      xs: 12,
-                      sm: 4,
-                      md: 6,
-                      lg: 4,
-                    }}>
+                  <Grid size={{ xs: 12, sm: 4, md: 6, lg: 4 }}>
                     <Typography variant="h2" gutterBottom>
                       {institutionEditors.length > 0 &&
                         t('editor.institution.institution_editor', { count: institutionEditors.length })}

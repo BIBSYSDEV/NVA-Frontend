@@ -38,41 +38,25 @@ export const CustomerInstitutionInformationFromCristin = ({
         </Grid>
       ) : (
         <>
-          <Grid
-            size={{
-              xs: 12,
-              md: 3,
-            }}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <Typography variant="h3" component="h2">
               {t('editor.institution.institution_name_norwegian')}
             </Typography>
             <Typography>{nbInstitutionName ?? '-'}</Typography>
           </Grid>
-          <Grid
-            size={{
-              xs: 12,
-              md: 3,
-            }}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <Typography variant="h3" component="h2">
               {t('editor.institution.institution_name_english')}
             </Typography>
             <Typography>{customerInformation?.labels.en ?? '-'}</Typography>
           </Grid>
-          <Grid
-            size={{
-              xs: 12,
-              md: 3,
-            }}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <Typography variant="h3" component="h2">
               {t('editor.institution.institution_short_name')}
             </Typography>
             <Typography>{customerInformation?.acronym ?? '-'}</Typography>
           </Grid>
-          <Grid
-            size={{
-              xs: 12,
-              md: 3,
-            }}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <Typography variant="h3" component="h2">
               {t('editor.institution.institution_code')}
             </Typography>
