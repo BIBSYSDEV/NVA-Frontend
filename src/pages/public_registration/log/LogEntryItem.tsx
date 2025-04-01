@@ -30,9 +30,10 @@ const StyledLogRow = styled(Box)({
 interface LogEntryItemProps {
   logEntry: LogEntry;
   messages: Message[];
+  refetchData?: () => void;
 }
 
-export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
+export const LogEntryItem = ({ logEntry, messages, refetchData }: LogEntryItemProps) => {
   const { t } = useTranslation();
 
   return (
@@ -78,6 +79,8 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
         <LogMessageAccordion
           messages={messages}
           messageBackgroundColor={getMessageItemBackgroundColor(logEntry.topic)}
+          refetchData={refetchData}
+          topic={logEntry.topic}
         />
       )}
     </Box>

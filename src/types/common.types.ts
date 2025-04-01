@@ -59,3 +59,5 @@ export interface AggregationValue<KeyType = string> {
   count: number;
   labels?: LanguageString;
 }
+
+export type MessageType = 'Publication' | 'Doi' | 'Support';

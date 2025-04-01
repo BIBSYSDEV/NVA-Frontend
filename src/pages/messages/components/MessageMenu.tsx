@@ -8,14 +8,14 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDeleteTicketMessage } from '../../../utils/hooks/useDeleteTicketMessage';
 
 interface MessageMenuProps {
-  canDeleteMessage: boolean;
+  disableDelete: boolean;
   messageId: string;
   refetchData?: () => void;
 }
 
 const menuId = 'message-menu';
 
-export const MessageMenu = ({ messageId, refetchData, canDeleteMessage }: MessageMenuProps) => {
+export const MessageMenu = ({ messageId, refetchData, disableDelete }: MessageMenuProps) => {
   const { t } = useTranslation();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -51,7 +51,7 @@ export const MessageMenu = ({ messageId, refetchData, canDeleteMessage }: Messag
         }}>
         <MenuItem
           data-testid={dataTestId.registrationLandingPage.tasksPanel.deleteMessageButton}
-          disabled={!canDeleteMessage}
+          disabled={!disableDelete}
           onClick={() => {
             setShowConfirmDialog(true);
             setAnchorEl(null);

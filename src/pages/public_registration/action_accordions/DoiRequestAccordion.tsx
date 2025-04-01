@@ -422,11 +422,7 @@ export const DoiRequestAccordion = ({
         {(isPendingDoiRequest || isClosedDoiRequest) && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {messages.length > 0 ? (
-              <TicketMessageList
-                ticket={doiRequestTicket}
-                canDeleteMessage={userCanAssignDoi}
-                refetchData={refetchData}
-              />
+              <TicketMessageList ticket={doiRequestTicket} refetchData={refetchData} />
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}

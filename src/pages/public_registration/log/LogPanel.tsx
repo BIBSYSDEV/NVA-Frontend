@@ -47,7 +47,11 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
       ) : (
         sortedLogEntries.map((logEntry, index) => (
           <ErrorBoundary key={index}>
-            <LogEntryItem logEntry={logEntry} messages={getLogEntryMessages(logEntry, tickets)} />
+            <LogEntryItem
+              logEntry={logEntry}
+              messages={getLogEntryMessages(logEntry, tickets)}
+              refetchData={() => {}}
+            />
           </ErrorBoundary>
         ))
       )}

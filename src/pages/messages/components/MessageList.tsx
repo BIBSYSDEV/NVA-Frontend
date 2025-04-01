@@ -9,7 +9,7 @@ import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
-import { getFullName } from '../../../utils/user-helpers';
+import { getFullName, userCanDeleteMessage } from '../../../utils/user-helpers';
 import { MessageItemOrganization } from './MessageItemOrganization';
 import { MessageMenu } from './MessageMenu';
 import { ticketColor } from './TicketListItem';
@@ -17,10 +17,9 @@ import { ticketColor } from './TicketListItem';
 interface MessageListProps {
   ticket: Ticket;
   refetchData?: () => void;
-  canDeleteMessage?: boolean;
 }
 
-export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: MessageListProps) => {
+export const TicketMessageList = ({ ticket, refetchData }: MessageListProps) => {
   const messages = ticket.messages ?? [];
   const user = useSelector((store: RootState) => store.user);
 
@@ -36,21 +35,23 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
           m: 0,
           gap: '0.25rem',
         }}>
-        {messages.map((message) => (
-          <MessageItem
-            key={message.identifier}
-            text={message.text}
-            date={message.createdDate}
-            username={message.sender}
-            backgroundColor={ticketColor[ticket.type]}
-            menuElement={
-              !!user &&
-              (canDeleteMessage || user.nvaUsername === message.sender) && (
-                <MessageMenu messageId={ticket.id} refetchData={refetchData} canDeleteMessage={!!message.text} />
-              )
-            }
-          />
-        ))}
+        {messages.map((message) => {
+          const canDeleteMessage = !!user && userCanDeleteMessage(user, message, ticket.type);
+          return (
+            <MessageItem
+              key={message.identifier}
+              text={message.text}
+              date={message.createdDate}
+              username={message.sender}
+              backgroundColor={ticketColor[ticket.type]}
+              menuElement={
+                canDeleteMessage && (
+                  <MessageMenu messageId={message.id} refetchData={refetchData} disableDelete={!!message.text} />
+                )
+              }
+            />
+          );
+        })}
       </Box>
     </ErrorBoundary>
   );
@@ -117,7 +118,7 @@ export const MessageItem = ({
       <Box
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
         component={typeof text === 'string' ? Typography : 'div'}>
-        {text ? text : <i>{t('my_page.messages.message_deleted')}</i>}
+        {text ? text : <i style={{ color: 'black' }}>{t('my_page.messages.message_deleted')}</i>}
       </Box>
     </Box>
   );

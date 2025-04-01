@@ -110,11 +110,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
             )}
 
             {supportTicket.messages.length > 0 && (
-              <TicketMessageList
-                ticket={supportTicket}
-                refetchData={refetchData}
-                canDeleteMessage={userCanCompleteTicket}
-              />
+              <TicketMessageList ticket={supportTicket} refetchData={refetchData} />
             )}
           </>
         )}
