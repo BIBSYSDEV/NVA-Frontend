@@ -41,7 +41,7 @@ const StyledDivider = styled(Divider)(({ theme }) => ({
 }));
 
 const gridRowDivider = (
-  <Grid item xs={12}>
+  <Grid size={12}>
     <StyledDivider />
   </Grid>
 );
@@ -79,11 +79,10 @@ export const AdvancedSearchPage = () => {
       <Helmet>
         <title>{t('search.advanced_search.advanced_search')}</title>
       </Helmet>
-
       <Grid container rowGap={2}>
         <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
           <Typography variant="h1">{t('search.advanced_search.advanced_search')}</Typography>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <StyledFilterHeading>{t('search.advanced_search.title_search')}</StyledFilterHeading>
             <Box sx={{ display: 'flex', gap: '0.5rem' }}>
               <SearchForm
@@ -97,28 +96,28 @@ export const AdvancedSearchPage = () => {
             <StyledDivider sx={{ mt: '1rem' }} />
           </Grid>
 
-          <Grid item container direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-            <Grid item sx={{ width: 'fit-content' }}>
+          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
+            <Grid sx={{ width: 'fit-content' }}>
               <StyledFilterHeading>{t('search.advanced_search.publishing_period')}</StyledFilterHeading>
               <PublicationYearIntervalFilter />
             </Grid>
 
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
-            <Grid item>
+            <Grid>
               <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
             </Grid>
 
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
-            <Grid item>
+            <Grid>
               <StyledFilterHeading id="language-select-label">{t('common.language')}</StyledFilterHeading>
               <LanguageFilter />
             </Grid>
 
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
-            <Grid item>
+            <Grid>
               <StyledFilterHeading>{t('common.nvi')}</StyledFilterHeading>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <FormControlLabel
@@ -134,7 +133,7 @@ export const AdvancedSearchPage = () => {
 
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
-            <Grid item>
+            <Grid>
               <StyledFilterHeading id="file-status-select-label">
                 {t('registration.files_and_license.files')}
               </StyledFilterHeading>
@@ -144,8 +143,8 @@ export const AdvancedSearchPage = () => {
 
           {gridRowDivider}
 
-          <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-            <Grid item>
+          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
+            <Grid>
               <StyledFilterHeading>{t('registration.contributors.contributor')}</StyledFilterHeading>
               <SearchForm
                 paramName={ResultParam.ContributorName}
@@ -156,7 +155,7 @@ export const AdvancedSearchPage = () => {
 
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
-            <Grid item>
+            <Grid>
               <OrganizationFilters
                 topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
                 unitId={registrationParams.unit ?? null}
@@ -166,35 +165,35 @@ export const AdvancedSearchPage = () => {
 
           {gridRowDivider}
 
-          <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-            <Grid container item direction={isLargeScreen ? 'row' : 'column'} gap={2}>
-              <Grid item>
+          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
+            <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2}>
+              <Grid>
                 <PublisherFilter />
               </Grid>
 
-              <Grid item>
+              <Grid>
                 <JournalFilter />
               </Grid>
 
-              <Grid item>
+              <Grid>
                 <SeriesFilter />
               </Grid>
             </Grid>
 
-            <Grid item>
+            <Grid>
               <ScientificValueFilter />
             </Grid>
           </Grid>
 
           {gridRowDivider}
 
-          <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-            <Grid item>
+          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
+            <Grid>
               <StyledFilterHeading>{t('common.financier')}</StyledFilterHeading>
               <FundingSourceFilter />
             </Grid>
 
-            <Grid item>
+            <Grid>
               <StyledFilterHeading>{t('project.grant_id')}</StyledFilterHeading>
               <SearchForm
                 paramName={ResultParam.FundingIdentifier}
@@ -205,7 +204,7 @@ export const AdvancedSearchPage = () => {
 
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
-            <Grid item>
+            <Grid>
               <StyledFilterHeading>{t('registration.resource_type.course_code')}</StyledFilterHeading>
               <SearchForm
                 dataTestId={dataTestId.startPage.advancedSearch.courseField}
@@ -217,19 +216,19 @@ export const AdvancedSearchPage = () => {
 
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
-            <Grid item>
+            <Grid>
               <StyledFilterHeading>{t('editor.vocabulary')}</StyledFilterHeading>
               <VocabularSearchField />
             </Grid>
           </Grid>
 
-          <Grid container item xs={12} sx={{ justifyContent: isLargeScreen ? 'end' : 'center' }}>
+          <Grid container sx={{ justifyContent: isLargeScreen ? 'end' : 'center' }} size={12}>
             <Button variant="outlined" onClick={() => navigate(location.pathname)}>
               {t('search.reset_selection')}
             </Button>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={12}>
           <RegistrationSearch registrationQuery={resultSearchQuery} />
         </Grid>
       </Grid>
