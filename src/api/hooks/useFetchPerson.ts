@@ -14,9 +14,9 @@ export const useFetchPerson = (cristinId: string, options?: UseFetchPersonOption
   const { t } = useTranslation();
 
   return useQuery({
-    enabled: options?.enabled && !!cristinId,
+    enabled: options?.enabled !== false && !!cristinId,
     queryKey: ['person', cristinId],
-    queryFn: () => (cristinId ? fetchPerson(cristinId) : null),
+    queryFn: () => fetchPerson(cristinId),
     meta: { errorMessage: t('feedback.error.get_person') },
     staleTime: options?.staleTime,
     gcTime: options?.gcTime,
