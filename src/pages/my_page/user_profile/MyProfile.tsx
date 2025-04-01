@@ -83,11 +83,9 @@ export const MyProfile = () => {
       <Helmet>
         <title>{t('my_page.my_profile.heading.personalia')}</title>
       </Helmet>
-
       <Typography variant="h1" sx={{ margin: '1rem' }}>
         {t('my_page.my_profile.heading.personalia')}
       </Typography>
-
       {personQuery.isPending && !person ? (
         <PageSpinner aria-labelledby="personalia-id" />
       ) : (
@@ -111,14 +109,14 @@ export const MyProfile = () => {
                   m: '1rem',
                 }}>
                 <Grid container rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
-                  <Grid item xs={16}>
+                  <Grid size={16}>
                     <ProfileBox>
                       <Typography variant="h2" sx={{ mb: '0.5rem' }}>
                         {t('my_page.my_profile.name')}
                       </Typography>
                       <Typography sx={{ mb: '0.5rem' }}>{t('my_page.my_profile.name_description')}</Typography>
                       <Typography sx={{ mb: '1.5rem' }}>{t('my_page.my_profile.writer_name_description')}</Typography>
-                      <Grid item xs={15}>
+                      <Grid size={15}>
                         <StyledGridBox sx={{ mb: '1rem' }}>
                           <TextField
                             value={user.givenName}
@@ -136,9 +134,9 @@ export const MyProfile = () => {
                           />
                         </StyledGridBox>
                       </Grid>
-                      <Grid item xs={16}>
+                      <Grid size={16}>
                         <Grid container columns={16}>
-                          <Grid item xs={15}>
+                          <Grid size={15}>
                             <StyledGridBox>
                               <Field name={'preferredFirstName'}>
                                 {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -172,7 +170,7 @@ export const MyProfile = () => {
                               </Field>
                             </StyledGridBox>
                           </Grid>
-                          <Grid item xs={1}>
+                          <Grid size={1}>
                             <Tooltip title={t('common.edit')}>
                               <IconButton
                                 data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
@@ -185,7 +183,7 @@ export const MyProfile = () => {
                       </Grid>
                     </ProfileBox>
                   </Grid>
-                  <Grid item xs={16}>
+                  <Grid size={16}>
                     <ProfileBox>
                       <Box sx={{ display: 'flex', alignItems: 'center', mb: '0.5rem' }}>
                         <Typography variant="h2">{t('common.orcid')}</Typography>
@@ -198,7 +196,7 @@ export const MyProfile = () => {
                       <UserOrcid user={user} />
                     </ProfileBox>
                   </Grid>
-                  <Grid item xs={16}>
+                  <Grid size={16}>
                     <ProfileBox>
                       <Typography sx={{ mb: '0.5rem' }} variant="h2">
                         {t('my_page.my_profile.contact_information')}
@@ -258,7 +256,7 @@ export const MyProfile = () => {
                     </ProfileBox>
                   </Grid>
                 </Grid>
-                <Grid item>
+                <Grid>
                   <ProfileBox sx={{ gridArea: 'profile-picture', alignItems: 'center' }}>
                     <Typography variant="h2" sx={{ mb: '1rem' }}>
                       {t('my_page.my_profile.profile_picture')}
