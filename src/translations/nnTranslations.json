@@ -282,6 +282,7 @@
     "search_summary_one": "{{count}} treff for \"{{searchTerm}}\"",
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Vel",
+    "select_file": "Vel fil",
     "select_institution": "Vel institusjon",
     "select_role": "Vel rolle",
     "select_unit": "Vel eining",
@@ -671,6 +672,9 @@
     "to_top": "Til toppen"
   },
   "licenses": {
+    "additional_info": {
+      "cc0": ""
+    },
     "description": {
       "cc0": "Den person som har knytt eit verk til dette aktstykke (deed) har, i den utstrekning lova tillèt, erklært at dette verket er i det fri ved å seie frå seg alle opphavsrettar og nærståande rettar som vedkomande hadde til verket.",
       "cc_by": "Dele — kopiere, distribuere og spre verket i kva som helst medium eller format. \nBearbeide — remixe, endre, og byggje vidare på materialet til eit kva som helst føremål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi ei lenkje til lisensen, og indikere om endringar er blitt gjort.",
@@ -731,7 +735,7 @@
       "file_deleted": "Fil sletta",
       "file_hidden": "Fil skjult",
       "file_retracted": "Fil trukket tilbake",
-      "file_type_updated": "",
+      "file_type_updated": "Fil endra til {{newFileType}}",
       "files_published_one": "Fil publisert",
       "files_published_other": "Filer publiserte",
       "files_rejected_one": "Fil avvist",
@@ -1683,7 +1687,9 @@
       "start_with_empty_registration_description": "Legg inn informasjon etterpå",
       "start_with_empty_registration_title": "Start i tomt registreringsskjema",
       "start_with_link_to_resource_description": "Lenkje til original versjon viss ressursen allereie er publisert på Internett",
-      "start_with_link_to_resource_title": "Start med lenkje til original versjon"
+      "start_with_link_to_resource_title": "Start med lenkje til original versjon",
+      "start_with_uploading_file_description": "Last opp fil dersom ressursen ikkje finst på internett",
+      "start_with_uploading_file_title": "Start med å laste opp fil"
     },
     "registration_id": "Resultat-ID",
     "resource_type": {
@@ -1859,7 +1865,7 @@
       "change_registration_type": "Byte registreringstype?",
       "change_registration_type_description": "Merk at dette kan føre til at du mister noko av data du har lagt inn i dei tilfella der eksisterande data ikkje er gyldig for den nye typen. Er du sikker på at du vil byte registreringstype?",
       "chapter": {
-        "info_anthology": "Antologien som kapittelet er publisert i må vere publisert først",
+        "info_anthology": "Antologien som kapittelet er publisert i, må vere registrert og offentleggjort i NVA før du kan registrere kapittelet",
         "info_book_of_abstracts": "Abstraktsamlinga som abstraktet er publisert i må vere publisert først",
         "info_report": "Rapporten som kapittelet er publisert i må vere publisert først",
         "published_in": "Publisert i",

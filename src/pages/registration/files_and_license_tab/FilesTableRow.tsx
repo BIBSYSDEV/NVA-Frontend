@@ -287,7 +287,9 @@ export const FilesTableRow = ({
                                   configuredType: rrsStrategy,
                                 };
                                 setFieldValue(rrsFieldName, nullRrsValue);
-                                setFieldValue(licenseFieldName, null);
+                                if (field.value === FileVersion.Accepted) {
+                                  setFieldValue(licenseFieldName, null);
+                                }
                               } else if (isCustomerRrs || isOverridableRrs) {
                                 const customerRrsValue: FileRrs = {
                                   type: 'CustomerRightsRetentionStrategy',
