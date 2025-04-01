@@ -6,6 +6,8 @@ import { fetchPerson } from '../cristinApi';
 
 interface UseFetchPersonOptions {
   enabled?: boolean;
+  staleTime?: number;
+  gcTime?: number;
 }
 
 export const useFetchPerson = (cristinId: string, options?: UseFetchPersonOptions) => {
@@ -16,6 +18,8 @@ export const useFetchPerson = (cristinId: string, options?: UseFetchPersonOption
     queryKey: ['person', cristinId],
     queryFn: () => (cristinId ? fetchPerson(cristinId) : null),
     meta: { errorMessage: t('feedback.error.get_person') },
+    staleTime: options?.staleTime,
+    gcTime: options?.gcTime,
   });
 };
 

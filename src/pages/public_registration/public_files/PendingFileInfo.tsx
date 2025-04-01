@@ -12,9 +12,9 @@ interface PendingFileDetailsProps {
 
 export const PendingFileDetails = ({ uploadedBy }: PendingFileDetailsProps) => {
   const { t } = useTranslation();
-  const userQuery = useFetchUserQuery(uploadedBy);
+  const userQuery = useFetchUserQuery(uploadedBy, { staleTime: Infinity, gcTime: 1_800_000 });
 
-  const personQuery = useFetchPerson(userQuery.data?.cristinId ?? '');
+  const personQuery = useFetchPerson(userQuery.data?.cristinId ?? '', { staleTime: Infinity, gcTime: 1_800_000 });
   const organizationQuery = useFetchOrganization(userQuery.data?.institutionCristinId ?? '');
 
   const fullName = getFullCristinName(personQuery.data?.names);
