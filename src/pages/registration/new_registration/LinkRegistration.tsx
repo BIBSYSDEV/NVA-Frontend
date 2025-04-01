@@ -2,12 +2,12 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LinkIcon from '@mui/icons-material/LinkOutlined';
 import SearchIcon from '@mui/icons-material/Search';
-import { LoadingButton } from '@mui/lab';
 import {
   AccordionActions,
   AccordionDetails,
   AccordionSummary,
   Box,
+  Button,
   Divider,
   TextField,
   Typography,
@@ -115,7 +115,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                     />
                   )}
                 </Field>
-                <LoadingButton
+                <Button
                   data-testid="doi-search-button"
                   variant="contained"
                   loading={isLookingUpDoi}
@@ -123,7 +123,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                   endIcon={<SearchIcon />}
                   loadingPosition="end">
                   {t('common.search')}
-                </LoadingButton>
+                </Button>
               </Box>
             </Form>
           )}
@@ -157,15 +157,16 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
       </AccordionDetails>
 
       <AccordionActions>
-        <LoadingButton
+        <Button
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
+          loadingPosition="end"
           variant="contained"
           disabled={isLookingUpDoi || registrationsWithDoi.length > 0 || !doiPreview || !doiQuery}
           loading={createRegistrationFromDoi.isPending}
           onClick={persistRegistration}>
           {t('registration.registration.start_registration')}
-        </LoadingButton>
+        </Button>
       </AccordionActions>
     </RegistrationAccordion>
   );

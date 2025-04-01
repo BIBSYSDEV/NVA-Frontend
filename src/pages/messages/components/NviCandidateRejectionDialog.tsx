@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -71,13 +70,13 @@ export const NviCandidateRejectionDialog = ({
           <Button data-testid={dataTestId.tasksPage.nvi.rejectionModalCancelButton} onClick={handleClose}>
             {t('common.cancel')}
           </Button>
-          <LoadingButton
+          <Button
             data-testid={dataTestId.tasksPage.nvi.rejectionModalRejectButton}
             loading={isLoading}
             variant="contained"
             type="submit">
             {t('common.reject')}
-          </LoadingButton>
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

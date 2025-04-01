@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import {
   Button,
   Checkbox,
@@ -123,9 +122,9 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setShowConfirmCancelDialog(true)}>{t('common.cancel')}</Button>
-              <LoadingButton type="submit" variant="contained" disabled={!acceptedTermsValue} loading={isSubmitting}>
+              <Button type="submit" variant="contained" disabled={!acceptedTermsValue} loading={isSubmitting}>
                 {t('common.create')}
-              </LoadingButton>
+              </Button>
             </DialogActions>
           </Form>
         )}

@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -62,14 +61,14 @@ export const AddUnverifiedContributorForm = ({
 
           <DialogActions>
             <Button onClick={handleCancel}>{t('common.cancel')}</Button>
-            <LoadingButton
+            <Button
               data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
               type="submit"
               variant="contained"
               loading={isSubmitting}
               disabled={isSubmitting}>
               {t('registration.contributors.add_contributor')}
-            </LoadingButton>
+            </Button>
           </DialogActions>
         </Form>
       )}
