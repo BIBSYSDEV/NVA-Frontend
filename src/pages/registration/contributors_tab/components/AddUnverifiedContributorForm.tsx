@@ -65,8 +65,7 @@ export const AddUnverifiedContributorForm = ({
               data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
               type="submit"
               variant="contained"
-              loading={isSubmitting}
-              disabled={isSubmitting}>
+              loading={isSubmitting}>
               {t('registration.contributors.add_contributor')}
             </Button>
           </DialogActions>
