@@ -114,7 +114,6 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   )?.value;
 
   const publicationDateString = displayDate(entityDescription?.publicationDate);
-
   const nviReportedYearString =
     nviReportedStatus.data?.reportStatus.status === 'REPORTED' && nviReportedStatus.data.period
       ? `(${t('basic_data.nvi.nvi_reporting_year')}: ${nviReportedStatus.data.period})`
