@@ -53,6 +53,7 @@ import { activeLicenses, getLicenseData, hasFileAccessRight } from '../../../uti
 import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
+import { FileUploaderInfo } from '../../public_registration/public_files/FileUploaderInfo';
 import { DownloadFileButton } from './DownloadFileButton';
 
 const StyledFileTypeMenuItemContent = styled('div')({
@@ -168,6 +169,13 @@ export const FilesTableRow = ({
                 {file.name}
               </TruncatableTypography>
               <Typography sx={{ color: disabledFile ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
+
+              {file.uploadDetails?.type === 'UserUploadDetails' && (
+                <FileUploaderInfo
+                  sx={{ color: disabledFile ? 'grey.600' : '' }}
+                  uploadedBy={file.uploadDetails.uploadedBy}
+                />
+              )}
             </Box>
             {canDownloadFile && (
               <Box sx={{ minWidth: '1.5rem', ml: 'auto' }}>

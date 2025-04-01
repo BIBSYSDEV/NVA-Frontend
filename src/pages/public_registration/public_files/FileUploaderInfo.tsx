@@ -1,16 +1,15 @@
-import { Skeleton, Typography } from '@mui/material';
+import { Skeleton, Typography, TypographyProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { useFetchPerson } from '../../../api/hooks/useFetchPerson';
 import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
 import { getFullCristinName } from '../../../utils/user-helpers';
-import { PendingFilesInfo } from './PendingFilesInfo';
 
-interface PendingFileDetailsProps {
+interface PendingFileDetailsProps extends TypographyProps {
   uploadedBy: string;
 }
 
-export const PendingFileDetails = ({ uploadedBy }: PendingFileDetailsProps) => {
+export const FileUploaderInfo = ({ uploadedBy, ...typographyProps }: PendingFileDetailsProps) => {
   const { t } = useTranslation();
   const userQuery = useFetchUserQuery(uploadedBy, { staleTime: Infinity, gcTime: 1_800_000 });
 
@@ -25,20 +24,17 @@ export const PendingFileDetails = ({ uploadedBy }: PendingFileDetailsProps) => {
     (userQuery.isPending && !userQuery.isError) ||
     (userQuery.data && (personQuery.isFetching || organizationQuery.isFetching));
 
+  if (!isPending && !uploader) {
+    return null;
+  }
+
   return (
-    <PendingFilesInfo
-      aria-busy={isPending}
-      aria-live="polite"
-      text={
-        <>
-          <Typography>{t('registration.public_page.files.file_awaits_approval')}</Typography>
-          {isPending ? (
-            <Skeleton sx={{ width: '15rem' }} />
-          ) : (
-            uploader && <Typography>{t('registration.public_page.files.uploaded_by', { uploader })}</Typography>
-          )}
-        </>
-      }
-    />
+    <div aria-busy={isPending} aria-live="polite">
+      {isPending ? (
+        <Skeleton sx={{ width: '15rem' }} />
+      ) : (
+        <Typography {...typographyProps}>{t('registration.public_page.files.uploaded_by', { uploader })}</Typography>
+      )}
+    </div>
   );
 };
