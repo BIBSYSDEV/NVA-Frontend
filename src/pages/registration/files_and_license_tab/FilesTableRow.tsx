@@ -169,13 +169,7 @@ export const FilesTableRow = ({
                 {file.name}
               </TruncatableTypography>
               <Typography sx={{ color: disabledFile ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
-
-              {file.uploadDetails?.type === 'UserUploadDetails' && (
-                <FileUploaderInfo
-                  sx={{ color: disabledFile ? 'grey.600' : '' }}
-                  uploadedBy={file.uploadDetails.uploadedBy}
-                />
-              )}
+              <FileUploaderInfo sx={{ color: disabledFile ? 'grey.600' : '' }} uploadDetails={file.uploadDetails} />
             </Box>
             {canDownloadFile && (
               <Box sx={{ minWidth: '1.5rem', ml: 'auto' }}>

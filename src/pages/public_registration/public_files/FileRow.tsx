@@ -113,12 +113,12 @@ export const FileRow = ({
           sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere', minWidth: '6rem' }}>
           {file.name}
         </Typography>
-        {fileAwaitsApproval && file.uploadDetails?.type === 'UserUploadDetails' && (
+        {fileAwaitsApproval && (
           <PendingFilesInfo
             text={
               <>
                 <Typography>{t('registration.public_page.files.file_awaits_approval')}</Typography>
-                <FileUploaderInfo uploadedBy={file.uploadDetails.uploadedBy} />
+                <FileUploaderInfo uploadDetails={file.uploadDetails} />
               </>
             }
           />
