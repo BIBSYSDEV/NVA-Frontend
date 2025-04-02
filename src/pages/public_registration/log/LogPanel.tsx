@@ -14,9 +14,10 @@ import { LogEntryItem } from './LogEntryItem';
 interface LogPanelProps {
   registration: Registration;
   tickets: Ticket[];
+  refetchData: () => Promise<void>;
 }
 
-export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
+export const LogPanel = ({ registration, tickets, refetchData }: LogPanelProps) => {
   const { t } = useTranslation();
   const logQuery = useFetchRegistrationLog(registration.id);
   const sortedLogEntries =
@@ -50,7 +51,7 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
             <LogEntryItem
               logEntry={logEntry}
               messages={getLogEntryMessages(logEntry, tickets)}
-              refetchData={() => {}}
+              refetchData={refetchData}
             />
           </ErrorBoundary>
         ))

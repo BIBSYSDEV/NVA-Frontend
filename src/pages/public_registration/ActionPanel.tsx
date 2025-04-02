@@ -121,7 +121,7 @@ export const ActionPanel = ({
       </TabPanel>
       <TabPanel tabValue={tabValue} index={1}>
         <ErrorBoundary>
-          <LogPanel registration={registration} tickets={tickets} />
+          <LogPanel registration={registration} tickets={tickets} refetchData={refetchRegistrationAndTickets} />
         </ErrorBoundary>
       </TabPanel>
     </Paper>
