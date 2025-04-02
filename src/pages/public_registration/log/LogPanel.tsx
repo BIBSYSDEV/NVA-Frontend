@@ -14,7 +14,7 @@ import { LogEntryItem } from './LogEntryItem';
 interface LogPanelProps {
   registration: Registration;
   tickets: Ticket[];
-  refetchData: () => Promise<void>;
+  refetchData?: () => Promise<void>;
 }
 
 export const LogPanel = ({ registration, tickets, refetchData }: LogPanelProps) => {
