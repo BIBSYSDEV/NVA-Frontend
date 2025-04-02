@@ -22,6 +22,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
 import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
+import { FileUploaderInfo } from './FileUploaderInfo';
 import { PendingFilesInfo } from './PendingFilesInfo';
 import { DownloadUrl, PreviewFile } from './preview_file/PreviewFile';
 
@@ -112,7 +113,16 @@ export const FileRow = ({
           sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere', minWidth: '6rem' }}>
           {file.name}
         </Typography>
-        {fileAwaitsApproval && <PendingFilesInfo text={t('registration.public_page.files.file_awaits_approval')} />}
+        {fileAwaitsApproval && (
+          <PendingFilesInfo
+            text={
+              <>
+                <Typography>{t('registration.public_page.files.file_awaits_approval')}</Typography>
+                <FileUploaderInfo uploadDetails={file.uploadDetails} />
+              </>
+            }
+          />
+        )}
       </Box>
       <Typography data-testid={dataTestId.registrationLandingPage.fileSize} sx={{ gridArea: 'size' }}>
         {prettyBytes(file.size, { locale: true })}

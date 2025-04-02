@@ -59,6 +59,7 @@ import {
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { hasCuratorRole } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
+import { FileUploaderInfo } from '../../public_registration/public_files/FileUploaderInfo';
 import { DownloadFileButton } from './DownloadFileButton';
 
 const StyledFileTypeMenuItemContent = styled('div')({
@@ -180,6 +181,7 @@ export const FilesTableRow = ({
                 {file.name}
               </TruncatableTypography>
               <Typography sx={{ color: disabledFile ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
+              <FileUploaderInfo sx={{ color: disabledFile ? 'grey.600' : '' }} uploadDetails={file.uploadDetails} />
             </Box>
             {canDownloadFile && (
               <Box sx={{ minWidth: '1.5rem', ml: 'auto' }}>
