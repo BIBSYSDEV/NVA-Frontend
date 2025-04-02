@@ -22,7 +22,11 @@ const fundingErrorMessage = {
 
 export const fundingValidationSchema = Yup.object({
   type: Yup.string<'ConfirmedFunding' | 'UnconfirmedFunding'>().defined(),
-  identifier: Yup.string().optional(),
+  identifier: Yup.string().when('labels.nb', {
+    is: (nb?: string) => !nb,
+    then: (schema) => schema.required(fundingErrorMessage.fundingNameOrIdentifierRequired),
+    otherwise: (schema) => schema.optional(),
+  }),
   activeFrom: Yup.string().optional(),
   activeTo: Yup.string().optional(),
   source: Yup.string().required(fundingErrorMessage.fundingSourceRequired),
@@ -48,15 +52,8 @@ export const fundingValidationSchema = Yup.object({
             .optional(),
         })
   ),
-}).test('test-label-and-identifier', fundingErrorMessage.fundingNameOrIdentifierRequired, (value, context) => {
-  const labelValue = context.originalValue.labels?.nb;
-  const identifierValue = context.originalValue.identifier;
-
-  if (!labelValue && !identifierValue) {
-    context.createError({
-      path: `${context.path}.identifier`,
-      message: fundingErrorMessage.fundingNameOrIdentifierRequired,
-    });
+}).test('test-label', fundingErrorMessage.fundingNameOrIdentifierRequired, (value, context) => {
+  if (!value.labels?.nb && !value.identifier) {
     return context.createError({
       path: `${context.path}.labels.nb`,
       message: fundingErrorMessage.fundingNameOrIdentifierRequired,
