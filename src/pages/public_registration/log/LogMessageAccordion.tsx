@@ -51,7 +51,7 @@ export const LogMessageAccordion = ({
             gap: '0.25rem',
           }}>
           {messages.map((message) => {
-            const messageType = getMessageTypeFromTopic(topic);
+            const messageType = getTicketTypeFromLogEntryTopic(topic);
             const canDeleteMessage = !!user && userCanDeleteMessage(user, message, messageType);
             return (
               <MessageItem
@@ -74,7 +74,7 @@ export const LogMessageAccordion = ({
   );
 };
 
-const getMessageTypeFromTopic = (topic: LogEntry['topic']): TicketType => {
+const getTicketTypeFromLogEntryTopic = (topic: LogEntry['topic']): TicketType => {
   switch (topic) {
     case 'DoiReserved':
     case 'DoiRequested':
