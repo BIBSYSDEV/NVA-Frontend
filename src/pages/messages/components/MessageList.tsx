@@ -116,9 +116,10 @@ export const MessageItem = ({
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
       <Box
+        sx={{ color: 'primary.main' }}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
         component={typeof text === 'string' ? Typography : 'div'}>
-        {text ? text : <i style={{ color: 'black' }}>{t('my_page.messages.message_deleted')}</i>}
+        {text ? text : <i>{t('my_page.messages.message_deleted')}</i>}
       </Box>
     </Box>
   );
