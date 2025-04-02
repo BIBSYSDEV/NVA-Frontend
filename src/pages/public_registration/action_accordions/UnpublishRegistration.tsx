@@ -56,11 +56,9 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
           </Button>
         </>
       ) : (
-        <Trans
-          t={t}
-          i18nKey="unpublish_actions.unpublish_not_allowed"
-          components={[<Typography gutterBottom key="1" />]}
-        />
+        <Trans i18nKey="unpublish_actions.unpublish_not_allowed">
+          <Typography gutterBottom />
+        </Trans>
       )}
 
       <Modal
