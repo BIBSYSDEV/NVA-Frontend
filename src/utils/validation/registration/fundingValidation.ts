@@ -9,6 +9,9 @@ const fundingErrorMessage = {
   fundingProjectRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.description.funding.funding_name'),
   }),
+  fundingNameOrIdentifierRequired: i18n.t('feedback.validation.is_required', {
+    field: `${i18n.t('registration.description.funding.funding_name')} eller ${i18n.t('registration.description.funding.funding_id')}`,
+  }),
   fundingNfrProjectRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.description.funding.nfr_project'),
   }),
@@ -19,7 +22,16 @@ const fundingErrorMessage = {
 
 export const fundingValidationSchema = Yup.object({
   type: Yup.string<'ConfirmedFunding' | 'UnconfirmedFunding'>().defined(),
-  identifier: Yup.string().optional(),
+  identifier: Yup.string().when('labels.nb', {
+    is: (nb?: string) => !nb,
+    then: (schema) => schema.required(fundingErrorMessage.fundingNameOrIdentifierRequired),
+    otherwise: (schema) => schema.optional(),
+  }),
+  // .test(
+  //   'identifier-test',
+  //   fundingErrorMessage.fundingNameOrIdentifierRequired,
+  //   (value, context) => !!value || !!context.parent.labels?.nb
+  // )
   activeFrom: Yup.string().optional(),
   activeTo: Yup.string().optional(),
   source: Yup.string().required(fundingErrorMessage.fundingSourceRequired),
@@ -31,7 +43,16 @@ export const fundingValidationSchema = Yup.object({
     return true;
   }),
   labels: Yup.object({
-    nb: Yup.string(),
+    nb: Yup.string().when('identifier', {
+      is: (identifier?: string) => !identifier,
+      then: (schema) => schema.required(fundingErrorMessage.fundingNameOrIdentifierRequired),
+      otherwise: (schema) => schema.optional(),
+    }),
+    // .test(
+    //   'labels-test',
+    //   fundingErrorMessage.fundingNameOrIdentifierRequired,
+    //   (value, context) => !!value || !!context.parent.identifier
+    // ),
   }),
   fundingAmount: Yup.object().when(['source'], ([source], schema) =>
     fundingSourceIsNfr(source)
