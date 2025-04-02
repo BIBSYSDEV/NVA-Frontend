@@ -1,5 +1,13 @@
-import { LoadingButton } from '@mui/lab';
-import { Autocomplete, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -115,13 +123,9 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
         />
       </DialogContent>
       <DialogActions>
-        <LoadingButton
-          variant="contained"
-          loading={isSelectingCustomer}
-          disabled={!selectedCustomer}
-          onClick={selectCustomer}>
+        <Button variant="contained" loading={isSelectingCustomer} disabled={!selectedCustomer} onClick={selectCustomer}>
           {t('common.select')}
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </Dialog>
   );

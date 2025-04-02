@@ -1,6 +1,5 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { LoadingButton } from '@mui/lab';
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -96,13 +95,13 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
             {userCanCompleteTicket && isOnTasksPage && supportTicket.status !== 'Completed' && (
-              <LoadingButton
+              <Button
                 sx={{ alignSelf: 'center', width: 'fit-content', bgcolor: 'white' }}
                 loading={ticketMutation.isPending}
                 variant="outlined"
                 onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
                 {t('my_page.messages.mark_as_completed')}
-              </LoadingButton>
+              </Button>
             )}
 
             {isOnTasksPage && tabErrors && (

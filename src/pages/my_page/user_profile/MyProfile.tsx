@@ -1,5 +1,4 @@
 import EditIcon from '@mui/icons-material/Edit';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Grid, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
@@ -286,14 +285,14 @@ export const MyProfile = () => {
                   }}>
                   {t('common.cancel')}
                 </Button>
-                <LoadingButton
+                <Button
                   data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
                   loading={isSubmitting}
                   disabled={!dirty}
                   variant="contained"
                   type="submit">
                   {t('common.save')}
-                </LoadingButton>
+                </Button>
               </Box>
             </Form>
           )}

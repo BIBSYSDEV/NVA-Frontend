@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Checkbox, DialogActions, FormControlLabel, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
@@ -131,14 +130,14 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
                 <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={toggleUnpublishModal}>
                   {t('common.cancel')}
                 </Button>
-                <LoadingButton
+                <Button
                   loading={updateRegistrationStatusMutation.isPending}
                   disabled={!confirmedUnpublish}
                   type="submit"
                   data-testid={dataTestId.confirmDialog.acceptButton}
                   variant="outlined">
                   {t('unpublish_actions.unpublish')}
-                </LoadingButton>
+                </Button>
               </DialogActions>
             </Form>
           </Formik>

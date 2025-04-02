@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -119,14 +118,14 @@ export const AddProjectManagerForm = ({
           variant="outlined">
           {t('project.add_unidentified_project_manager')}
         </Button>
-        <LoadingButton
+        <Button
           data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
           onClick={addSelfAsContributor.addSelf}
           disabled={!!selectedPerson}
           variant="outlined"
           loading={addSelfAsContributor.isFetching}>
           {t('project.add_self')}
-        </LoadingButton>
+        </Button>
         <Box
           sx={{
             display: 'flex',

@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import {
   Box,
   Button,
@@ -125,9 +124,9 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
             <Button onClick={closeDialog} disabled={publisherMutation.isPending}>
               {t('common.cancel')}
             </Button>
-            <LoadingButton variant="contained" loading={publisherMutation.isPending} type="submit">
+            <Button variant="contained" loading={publisherMutation.isPending} type="submit">
               {t('common.save')}
-            </LoadingButton>
+            </Button>
           </DialogActions>
         </Form>
       </Formik>

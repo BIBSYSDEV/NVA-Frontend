@@ -1,6 +1,5 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import { LoadingButton } from '@mui/lab';
 import { Button, DialogActions, FormControl, FormGroup, Typography, styled } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
@@ -232,7 +231,7 @@ export const AddCuratorForm = ({
             <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={closeDialog}>
               {t('common.cancel')}
             </Button>
-            <LoadingButton
+            <Button
               data-testid={dataTestId.confirmDialog.acceptButton}
               loading={isSubmitting}
               type="submit"
@@ -241,7 +240,7 @@ export const AddCuratorForm = ({
                 (!dirty && addedViewingScopes.length === 0) || (!('username' in values) && values.roles.length === 1)
               }>
               {t('editor.curators.add_curator')}
-            </LoadingButton>
+            </Button>
           </DialogActions>
         </Form>
       )}

@@ -1,7 +1,6 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
@@ -228,7 +227,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               />
             )}
 
-            <LoadingButton
+            <Button
               data-testid={dataTestId.tasksPage.nvi.approveButton}
               variant="outlined"
               fullWidth
@@ -237,9 +236,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               loading={statusMutation.isPending && statusMutation.variables?.status === 'Approved'}
               disabled={!canApproveCandidate || isMutating}
               endIcon={<CheckIcon />}
+              loadingPosition="end"
               onClick={() => statusMutation.mutate({ status: 'Approved' })}>
               {t('tasks.nvi.approve_nvi_candidate')}
-            </LoadingButton>
+            </Button>
           </>
         )}
 

@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
@@ -270,12 +269,12 @@ export const CentralImportCandidateMerge = () => {
 
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
             <Button onClick={() => navigate(-1)}>{t('common.cancel')}</Button>
-            <LoadingButton
+            <Button
               type="submit"
               variant="contained"
               loading={isSubmitting || registrationMutation.isPending || importCandidateMutation.isPending}>
               {t('basic_data.central_import.merge_candidate.merge')}
-            </LoadingButton>
+            </Button>
           </Box>
         </Box>
       )}
