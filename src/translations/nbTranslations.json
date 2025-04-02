@@ -2170,7 +2170,7 @@
     "unpublish": "Avpubliser",
     "unpublish_header": "Avpublisere",
     "unpublish_info": "Resultatet vil ikke lenger være synlig for andre hvis du velger å avpublisere. Du kan velge å publisere det på nytt senere",
-    "unpublish_not_allowed": "<0>Du kan ikke avpublisere dette resultatet fordi du mangler utvidede rettigheter.</0><0>Ta kontakt med kuratorstøtte om du har du behov for å avpublisere.</0>",
+    "unpublish_not_allowed": "<0>Du kan ikke avpublisere dette resultatet fordi du mangler rettigheter.</0><0>Ta kontakt med kuratorstøtte om du har du behov for å avpublisere.</0>",
     "unpublish_registration": "Avpubliser forskningsresultat",
     "unpublish_registration_detail_1": "Etter å ha avpublisert restultatet kan du ikke lengre søke det opp, men det er fortsatt tilgjengelig via direkte oppslag (fra siteringer).",
     "unpublish_registration_detail_2": "Kun metadata (ingen filer) vil være synlig ved direkte oppslag.",
