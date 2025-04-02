@@ -6,9 +6,6 @@ const fundingErrorMessage = {
   fundingSourceRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.description.funding.funder'),
   }),
-  fundingProjectRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.description.funding.funding_name'),
-  }),
   fundingNameOrIdentifierRequired: i18n.t('feedback.validation.is_required', {
     field: `${i18n.t('registration.description.funding.funding_name')} ${i18n.t('common.or').toLowerCase()} ${i18n.t('registration.description.funding.funding_id')}`,
   }),
@@ -23,7 +20,7 @@ const fundingErrorMessage = {
 export const fundingValidationSchema = Yup.object({
   type: Yup.string<'ConfirmedFunding' | 'UnconfirmedFunding'>().defined(),
   identifier: Yup.string().when('labels.nb', {
-    is: (nb?: string) => !nb,
+    is: (label?: string) => !label,
     then: (schema) => schema.required(fundingErrorMessage.fundingNameOrIdentifierRequired),
     otherwise: (schema) => schema.optional(),
   }),

@@ -141,11 +141,11 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                           <TextField
                             {...field}
                             value={field.value ?? ''}
-                            required
                             label={t('registration.description.funding.funding_name')}
                             fullWidth
                             variant="filled"
                             multiline
+                            required
                             sx={getTextFieldMargin(touched && !!error)}
                             error={touched && !!error}
                             helperText={touched && !!error ? error : undefined}
