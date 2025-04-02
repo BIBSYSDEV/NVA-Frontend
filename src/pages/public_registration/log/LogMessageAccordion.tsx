@@ -76,7 +76,6 @@ export const LogMessageAccordion = ({
 
 const getTicketTypeFromLogEntryTopic = (topic: LogEntry['topic']): TicketType => {
   switch (topic) {
-    case 'DoiReserved':
     case 'DoiRequested':
     case 'DoiRejected':
     case 'DoiAssigned':
