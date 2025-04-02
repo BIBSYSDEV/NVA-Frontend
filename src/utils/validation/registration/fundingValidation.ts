@@ -10,7 +10,7 @@ const fundingErrorMessage = {
     field: i18n.t('registration.description.funding.funding_name'),
   }),
   fundingNameOrIdentifierRequired: i18n.t('feedback.validation.is_required', {
-    field: `${i18n.t('registration.description.funding.funding_name')} eller ${i18n.t('registration.description.funding.funding_id')}`,
+    field: `${i18n.t('registration.description.funding.funding_name')} ${i18n.t('common.or').toLowerCase()} ${i18n.t('registration.description.funding.funding_id')}`,
   }),
   fundingNfrProjectRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.description.funding.nfr_project'),
