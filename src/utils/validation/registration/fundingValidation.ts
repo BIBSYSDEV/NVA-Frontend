@@ -31,13 +31,7 @@ export const fundingValidationSchema = Yup.object({
     return true;
   }),
   labels: Yup.object({
-    nb: Yup.string().test('test-labels', fundingErrorMessage.fundingProjectRequired, (value, context) => {
-      const isNfrSource = context.from && context.from.some((item) => fundingSourceIsNfr(item.value.source));
-      if (!isNfrSource && !value) {
-        return false;
-      }
-      return true;
-    }),
+    nb: Yup.string(),
   }),
   fundingAmount: Yup.object().when(['source'], ([source], schema) =>
     fundingSourceIsNfr(source)

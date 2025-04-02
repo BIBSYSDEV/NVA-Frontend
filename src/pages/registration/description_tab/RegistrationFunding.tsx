@@ -91,7 +91,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                         </Field>
                         <TextField
                           value={funding.identifier}
-                          disabled={hasSelectedNfrSource}
+                          disabled
                           label={t('registration.description.funding.funding_id')}
                           fullWidth
                           variant="filled"
@@ -141,12 +141,10 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                           <TextField
                             {...field}
                             value={field.value ?? ''}
-                            disabled={hasSelectedNfrSource}
                             label={t('registration.description.funding.funding_name')}
                             fullWidth
                             variant="filled"
                             multiline
-                            required={!hasSelectedNfrSource}
                             sx={getTextFieldMargin(touched && !!error)}
                             error={touched && !!error}
                             helperText={touched && !!error ? error : undefined}
