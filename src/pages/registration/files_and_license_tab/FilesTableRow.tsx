@@ -50,8 +50,14 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { activeLicenses, getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
-import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
+import {
+  allowsFileUpload,
+  isOpenFile,
+  isPendingOpenFile,
+  userIsValidImporter,
+} from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
+import { hasCuratorRole } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { DownloadFileButton } from './DownloadFileButton';
 
@@ -151,6 +157,12 @@ export const FilesTableRow = ({
   const canDeleteFile = hasFileAccessRight(file, 'delete') || canEditImportCandidateFile;
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
 
+  const categorySupportsFiles = allowsFileUpload(
+    customer,
+    values.entityDescription?.reference?.publicationInstance?.type
+  );
+  const canSelectOpenFile = categorySupportsFiles || hasCuratorRole(user);
+
   return (
     <>
       <TableRow
@@ -227,12 +239,14 @@ export const FilesTableRow = ({
                     <i>{t('registration.files_and_license.select_availability')}</i>
                   </MenuItem>
                 )}
-                <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
-                  <StyledFileTypeMenuItemContent>
-                    <CheckIcon fontSize="small" />
-                    {t('registration.files_and_license.file_type.open_file')}
-                  </StyledFileTypeMenuItemContent>
-                </MenuItem>
+                {canSelectOpenFile && (
+                  <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
+                    <StyledFileTypeMenuItemContent>
+                      <CheckIcon fontSize="small" />
+                      {t('registration.files_and_license.file_type.open_file')}
+                    </StyledFileTypeMenuItemContent>
+                  </MenuItem>
+                )}
                 <MenuItem value={isCompletedFile ? FileType.InternalFile : FileType.PendingInternalFile}>
                   <StyledFileTypeMenuItemContent>
                     <Inventory2OutlinedIcon fontSize="small" />

@@ -429,7 +429,7 @@
       "search_for_curator": "Søk etter kurator",
       "search_for_unit": "Søk etter enhet"
     },
-    "does_not_support_file_upload": "Støtter ikke filopplasting",
+    "does_not_support_open_files": "Støtter ikke åpne filer",
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) er en persistent identifikator.|Gjør det enklere å sitere publikasjoner korrekt.|Metadata om resultatet blir delt internasjonalt.|Synligheten til resultatet øker.|Bidrar til å oppfylle FAIR-prinsippene.|Understøtter åpen forskning.",
       "doi_information_bullet_points_2": "Tjenesten har støtte for å tildele $t(common.doi_long) til resultater.|Institusjonen som tildeler $t(common.doi_long) blir utgiver av resultatet.|Grundig sjekk av metadata, innhold i filer og lisenser er nødvendig før tildeling av $t(common.doi_long). Feil metadata er tidkrevende å rette i ettertid.",
@@ -1467,6 +1467,8 @@
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
       "no_files_or_links_present_in_this_registration": "Det er ikke lagt til fil eller lenke for registreringen",
       "open_file": "Åpne fil",
+      "open_files_not_preferred_curator": "Din institusjon støtter ikke at registrator kan laste opp åpne filer for denne kategorien. Som kurator kan du legge til en åpen fil på vegne av registrator.",
+      "open_files_not_preferred_registrator": "Din institusjon støtter ikke at du som registrator kan laste opp åpne filer for denne kategorien. Du kan fortsatt laste opp interne filer. Kontakt kuratorstøtte om du ønsker å ha en åpen fil på dette resultatet.",
       "opted_out_of_rrs": "Du har valgt å ikke følge vedtatt <0>rettighetspolitikk</0>",
       "public_note": "Offentlig kommentar",
       "published": "Publisert",
@@ -1947,7 +1949,7 @@
       "place_for_event": "Sted for arrangement",
       "print_issn": "Print ISSN",
       "protected_degree_type": "Du mangler tilgang. Det er kun studentoppgavekurator som har tilganger til å registrere denne kategorien. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
-      "protected_file_type": "Din institusjon har valgt å ikke støtte filer for denne kategorien.",
+      "protected_file_type": "Din institusjon har valgt å ikke støtte åpne filer for denne kategorien. Kontakt kuratorstøtte om du likevel vil legge til en åpen fil.",
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",
       "related_results_description": "Søk opp og velg resultat i søkefeltet for å knytte relaterte resultater til dette resultatet.",
