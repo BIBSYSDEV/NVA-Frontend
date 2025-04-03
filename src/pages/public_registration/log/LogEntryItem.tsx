@@ -74,12 +74,7 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
         </>
       ) : null}
 
-      {messages && messages.length > 0 && (
-        <LogMessageAccordion
-          messages={messages}
-          messageBackgroundColor={getMessageItemBackgroundColor(logEntry.topic)}
-        />
-      )}
+      {messages && messages.length > 0 && <LogMessageAccordion messages={messages} topic={logEntry.topic} />}
     </Box>
   );
 };
@@ -114,19 +109,6 @@ const LogEntryOganizationInfo = ({ performedBy }: { performedBy: LogEntryOrganiz
       </Tooltip>
     </StyledLogRow>
   );
-};
-
-const getMessageItemBackgroundColor = (topic: LogEntry['topic']) => {
-  switch (topic) {
-    case 'DoiRejected':
-    case 'DoiAssigned':
-      return 'doiRequest.main';
-    case 'FileApproved':
-    case 'FileRejected':
-      return 'publishingRequest.main';
-    default:
-      return 'secondary.main';
-  }
 };
 
 const getLogEntryBackgroundColor = (topic: LogEntry['topic']) => {

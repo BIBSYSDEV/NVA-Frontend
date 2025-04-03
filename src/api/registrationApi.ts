@@ -66,9 +66,9 @@ export const addTicketMessage = async (ticketId: string, message: string) =>
     data: { message },
   });
 
-export const deleteTicketMessage = async (ticketId: string, messageId: string) => {
+export const deleteTicketMessage = async (messageId: string) => {
   return await authenticatedApiRequest2({
-    url: `${ticketId}/message/${messageId}`,
+    url: messageId,
     method: 'DELETE',
   });
 };
