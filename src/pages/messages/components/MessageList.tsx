@@ -44,11 +44,7 @@ export const TicketMessageList = ({ ticket, refetchData }: MessageListProps) => 
               date={message.createdDate}
               username={message.sender}
               backgroundColor={ticketColor[ticket.type]}
-              menuElement={
-                canDeleteMessage && (
-                  <MessageMenu messageId={message.id} refetchData={refetchData} disableDelete={!!message.text} />
-                )
-              }
+              menuElement={canDeleteMessage && <MessageMenu messageId={message.id} refetchData={refetchData} />}
             />
           );
         })}

@@ -54,11 +54,7 @@ export const LogMessageAccordion = ({ messages, refetchData, topic }: LogMessage
                 date={message.createdDate}
                 username={message.sender}
                 backgroundColor={getMessageItemBackgroundColor(topic)}
-                menuElement={
-                  canDeleteMessage && (
-                    <MessageMenu messageId={message.id} refetchData={refetchData} disableDelete={!!message.text} />
-                  )
-                }
+                menuElement={canDeleteMessage && <MessageMenu messageId={message.id} refetchData={refetchData} />}
               />
             );
           })}
