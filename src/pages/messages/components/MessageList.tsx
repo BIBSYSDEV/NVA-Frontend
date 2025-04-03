@@ -16,10 +16,9 @@ import { ticketColor } from './TicketListItem';
 
 interface MessageListProps {
   ticket: Ticket;
-  refetchData?: () => void;
 }
 
-export const TicketMessageList = ({ ticket, refetchData }: MessageListProps) => {
+export const TicketMessageList = ({ ticket }: MessageListProps) => {
   const messages = ticket.messages ?? [];
   const user = useSelector((store: RootState) => store.user);
 
@@ -44,7 +43,7 @@ export const TicketMessageList = ({ ticket, refetchData }: MessageListProps) => 
               date={message.createdDate}
               username={message.sender}
               backgroundColor={ticketColor[ticket.type]}
-              menuElement={canDeleteMessage && <MessageMenu messageId={message.id} refetchData={refetchData} />}
+              menuElement={canDeleteMessage && <MessageMenu messageId={message.id} />}
             />
           );
         })}

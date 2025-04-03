@@ -108,9 +108,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
               <RegistrationErrorActions tabErrors={tabErrors} registration={registration} />
             )}
 
-            {supportTicket.messages.length > 0 && (
-              <TicketMessageList ticket={supportTicket} refetchData={refetchData} />
-            )}
+            {supportTicket.messages.length > 0 && <TicketMessageList ticket={supportTicket} />}
           </>
         )}
         <MessageForm

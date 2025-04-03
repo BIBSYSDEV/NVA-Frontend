@@ -14,11 +14,10 @@ import { MessageMenu } from '../../messages/components/MessageMenu';
 
 interface LogMessageAccordionProps {
   messages: Message[];
-  refetchData?: () => void;
   topic: LogEntry['topic'];
 }
 
-export const LogMessageAccordion = ({ messages, refetchData, topic }: LogMessageAccordionProps) => {
+export const LogMessageAccordion = ({ messages, topic }: LogMessageAccordionProps) => {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const user = useSelector((store: RootState) => store.user);
@@ -54,7 +53,7 @@ export const LogMessageAccordion = ({ messages, refetchData, topic }: LogMessage
                 date={message.createdDate}
                 username={message.sender}
                 backgroundColor={getMessageItemBackgroundColor(topic)}
-                menuElement={canDeleteMessage && <MessageMenu messageId={message.id} refetchData={refetchData} />}
+                menuElement={canDeleteMessage && <MessageMenu messageId={message.id} />}
               />
             );
           })}

@@ -146,9 +146,7 @@ export const PublishingAccordionLastTicketInfo = ({
                 hideRequiredAsterisk
               />
             )}
-            {publishingTicket.messages.length > 0 && (
-              <TicketMessageList ticket={publishingTicket} refetchData={refetchData} />
-            )}
+            {publishingTicket.messages.length > 0 && <TicketMessageList ticket={publishingTicket} />}
           </Box>
         </>
       )}

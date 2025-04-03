@@ -1,25 +1,27 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@mui/material';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDeleteTicketMessage } from '../../../utils/hooks/useDeleteTicketMessage';
+import { ActionPanelContext } from '../../../context/ActionPanelContext';
 
 interface MessageMenuProps {
   messageId: string;
-  refetchData?: () => void;
 }
 
 const menuId = 'message-menu';
 
-export const MessageMenu = ({ messageId, refetchData }: MessageMenuProps) => {
+export const MessageMenu = ({ messageId }: MessageMenuProps) => {
   const { t } = useTranslation();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const deleteTicketMessageMutation = useDeleteTicketMessage(messageId, refetchData);
+
+  const context = useContext(ActionPanelContext);
+  const deleteTicketMessageMutation = useDeleteTicketMessage(messageId, context.refetchData);
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
