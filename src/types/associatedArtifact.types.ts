@@ -44,13 +44,13 @@ export interface AssociatedFile {
   allowedOperations?: FileAllowedOperation[];
 }
 
-interface UserUploadDetails {
+export interface UserUploadDetails {
   type: 'UserUploadDetails';
   uploadedBy: string;
   uploadedDate: string;
 }
 
-interface ImportUploadDetails {
+export interface ImportUploadDetails {
   type: 'ImportUploadDetails';
   source: string;
   archive: string;

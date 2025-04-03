@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Button, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -89,13 +88,13 @@ export const AddContributorForm = ({
           </Button>
         )}
         {!isSelfAdded && !initialSearchTerm && (
-          <LoadingButton
+          <Button
             data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
             onClick={addSelfAsContributor}
             variant="outlined"
             loading={isAddingSelf}>
             {t('project.add_self')}
-          </LoadingButton>
+          </Button>
         )}
         <Button
           data-testid={dataTestId.registrationWizard.contributors.selectUserButton}

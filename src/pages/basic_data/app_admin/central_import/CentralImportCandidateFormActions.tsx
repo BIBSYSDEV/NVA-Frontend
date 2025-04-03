@@ -1,6 +1,5 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -57,14 +56,14 @@ export const CentralImportCandidateFormActions = ({
         </Button>
 
         {isLastTab ? (
-          <LoadingButton
+          <Button
             type="submit"
             variant="contained"
             loading={isSubmitting}
             data-testid={dataTestId.basicData.centralImport.importCandidateButton}
             disabled={!isValid}>
             {t('basic_data.central_import.import')}
-          </LoadingButton>
+          </Button>
         ) : (
           <Tooltip title={t('common.next')}>
             <IconButton

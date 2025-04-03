@@ -67,7 +67,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item md={6} sm={12}>
+        <Grid size={{ md: 6, sm: 12 }}>
           <Typography variant="h3" marginBottom={2} gutterBottom>
             {t('registration.support.self_help.header')}
           </Typography>
@@ -83,7 +83,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
           </Typography>
         </Grid>
         {customerServiceCenterUri && (
-          <Grid item md={6} sm={12}>
+          <Grid size={{ md: 6, sm: 12 }}>
             <Typography variant="h3" marginBottom={2} gutterBottom>
               {t('editor.institution.institution_support')}
             </Typography>

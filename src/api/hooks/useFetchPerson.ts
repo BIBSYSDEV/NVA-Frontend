@@ -6,16 +6,20 @@ import { fetchPerson } from '../cristinApi';
 
 interface UseFetchPersonOptions {
   enabled?: boolean;
+  staleTime?: number;
+  gcTime?: number;
 }
 
 export const useFetchPerson = (cristinId: string, options?: UseFetchPersonOptions) => {
   const { t } = useTranslation();
 
   return useQuery({
-    enabled: options?.enabled,
+    enabled: options?.enabled !== false && !!cristinId,
     queryKey: ['person', cristinId],
     queryFn: () => fetchPerson(cristinId),
     meta: { errorMessage: t('feedback.error.get_person') },
+    staleTime: options?.staleTime,
+    gcTime: options?.gcTime,
   });
 };
 

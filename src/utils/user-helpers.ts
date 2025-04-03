@@ -85,6 +85,9 @@ export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPers
 export const getFullName = (firstName?: string, lastName?: string) => [firstName, lastName].filter(Boolean).join(' ');
 
 export const hasCuratorRole = (user: User | null) =>
+  !!user && !!user.customerId && (hasTicketCuratorRole(user) || user.isNviCurator);
+
+export const hasTicketCuratorRole = (user: User | null) =>
   !!user &&
   !!user.customerId &&
   (user.isDoiCurator ||

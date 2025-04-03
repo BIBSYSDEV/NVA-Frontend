@@ -84,7 +84,7 @@ export const updateNviPeriod = async (data: NviPeriod) => {
   return updateNviPeriodResponse.data;
 };
 
-interface ReportStatusResponse {
+export interface ReportStatusResponse {
   publicationId: string;
   reportStatus: {
     status:

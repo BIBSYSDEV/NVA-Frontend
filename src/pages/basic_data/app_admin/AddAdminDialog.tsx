@@ -1,5 +1,4 @@
 import AddIcon from '@mui/icons-material/Add';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@mui/material';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useState } from 'react';
@@ -107,14 +106,15 @@ export const AddAdminDialog = ({ open, toggleOpen, refetchUsers, cristinInstitut
             </DialogContent>
             <DialogActions>
               <Button onClick={closeDialog}>{t('common.cancel')}</Button>
-              <LoadingButton
+              <Button
                 type="submit"
                 variant="contained"
                 loading={isSubmitting}
                 startIcon={<AddIcon />}
+                loadingPosition="start"
                 disabled={!cristinPerson}>
                 {t('common.add_custom', { name: t('my_page.roles.institution_admin').toLocaleLowerCase() })}
-              </LoadingButton>
+              </Button>
             </DialogActions>
           </Form>
         )}

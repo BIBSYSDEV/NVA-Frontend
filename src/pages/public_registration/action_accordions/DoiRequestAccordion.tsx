@@ -5,7 +5,6 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { LoadingButton } from '@mui/lab';
 import {
   Accordion,
   AccordionDetails,
@@ -185,13 +184,14 @@ export const DoiRequestAccordion = ({
   );
 
   const assignDoiButton = (
-    <LoadingButton
+    <Button
       sx={{ bgcolor: 'white' }}
       fullWidth
       size="small"
       variant="outlined"
       data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
       endIcon={<CheckIcon />}
+      loadingPosition="end"
       onClick={() => {
         if (openFilesOnRegistration.length > 0) {
           approveTicketMutation.mutate();
@@ -202,7 +202,7 @@ export const DoiRequestAccordion = ({
       loading={approveTicketMutation.isPending}
       disabled={isLoadingData}>
       {t('registration.public_page.tasks_panel.assign_doi')}
-    </LoadingButton>
+    </Button>
   );
 
   const userCanRequestDoi = userHasAccessRight(registration, 'doi-request-create');
@@ -260,14 +260,15 @@ export const DoiRequestAccordion = ({
         {waitingForRemovalOfDoi && (
           <>
             <Typography gutterBottom>{t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}</Typography>
-            <LoadingButton
+            <Button
               variant="outlined"
               onClick={refetchData}
               loading={isLoadingData}
               startIcon={<RefreshIcon />}
+              loadingPosition="start"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
               {t('registration.public_page.tasks_panel.reload')}
-            </LoadingButton>
+            </Button>
           </>
         )}
 
@@ -359,13 +360,13 @@ export const DoiRequestAccordion = ({
             <Button onClick={toggleRequestDoiModal} disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('common.cancel')}
             </Button>
-            <LoadingButton
+            <Button
               variant="contained"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.sendDoiButton}
               onClick={sendDoiRequest}
               loading={isLoadingData || isLoading !== LoadingState.None}>
               {t('registration.public_page.request_doi')}
-            </LoadingButton>
+            </Button>
           </DialogActions>
         </Modal>
 
