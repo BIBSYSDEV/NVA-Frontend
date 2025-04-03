@@ -429,7 +429,7 @@
       "search_for_curator": "Search for curator",
       "search_for_unit": "Search for unit"
     },
-    "does_not_support_file_upload": "Does not support file upload",
+    "does_not_support_open_files": "",
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) is a persistent identifier.|Simplifies citations of publications.|Metadata about the result is shared internationally.|Visiblity of result increases.|Contributes to fulfill the FAIR principles.|Supports open research.",
       "doi_information_bullet_points_2": "The service has support for assigning $t(common.doi_long) to results.|The institution that assigns $t(common.doi_long) becomes the publisher of the result.|Thorough checking of metadata, contents of files and licences is necessary before assigning $t(common.doi_long). Incorrect metadata is time-consuming to correct afterwards.",
@@ -673,7 +673,7 @@
   },
   "licenses": {
     "additional_info": {
-      "cc0": ""
+      "cc0": "<p>An open or closed note should be shared, along with the work that:</p><ol><li> Provide an explanation for the conclusion that the work is to be regarded as a \"common good/public domain,\" as defined by the Copyright Act §11 Protection Period of Copyright or §14 Works that do not have copyright protection, or under another similar provision</li><li> Document that the originator waives all copyright and related rights they had to the work, as mentioned in the Copyright Act §3 Content of Copyright and §8 Joint Work, and that the work is to be regarded as a \"common good/public domain\"</li></ol>"
     },
     "description": {
       "cc0": "The person who has associated a work with this deed has, to the extent the law allows, declared this work to be in the public domain by waiving all copyright and related rights that they had to the work.",
@@ -1467,6 +1467,8 @@
       "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
       "no_files_or_links_present_in_this_registration": "No file or link has been added for the registration",
       "open_file": "Open file",
+      "open_files_not_preferred_curator": "",
+      "open_files_not_preferred_registrator": "",
       "opted_out_of_rrs": "You have chosen not to follow the adopted <0>rights policy</0>",
       "public_note": "Public comment",
       "published": "Published",
@@ -1525,7 +1527,8 @@
       "error_description_workflow2": "The result lacks the following:",
       "files": {
         "awaits_approval": "{{count}} waiting for approval",
-        "file_awaits_approval": "File waiting for approval"
+        "file_awaits_approval": "File waiting for approval",
+        "uploaded_by": ""
       },
       "files_tab_list_label": "Choose visibility for files",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",
