@@ -1,6 +1,5 @@
 import LinkIcon from '@mui/icons-material/Link';
-import { LoadingButton } from '@mui/lab';
-import { InputAdornment, TextField, Typography } from '@mui/material';
+import { Button, InputAdornment, TextField, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { Helmet } from 'react-helmet-async';
@@ -68,13 +67,9 @@ export const InstitutionSupport = () => {
                 )}
               </Field>
 
-              <LoadingButton
-                variant="contained"
-                type="submit"
-                loading={isSubmitting}
-                sx={{ mt: 'auto', alignSelf: 'center' }}>
+              <Button variant="contained" type="submit" loading={isSubmitting} sx={{ mt: 'auto', alignSelf: 'center' }}>
                 {t('common.save')}
-              </LoadingButton>
+              </Button>
             </Form>
           )}
         </Formik>

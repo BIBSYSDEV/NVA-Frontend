@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import {
   Box,
   Button,
@@ -200,13 +199,13 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
             </DialogContent>
             <DialogActions sx={{ justifyContent: 'center' }}>
               <Button onClick={onClose}>{t('common.cancel')}</Button>
-              <LoadingButton
+              <Button
                 loading={isSubmitting}
                 disabled={!values.person || internalEmployments.length === 0 || !values.user}
                 variant="contained"
                 type="submit">
                 {t('common.save')}
-              </LoadingButton>
+              </Button>
             </DialogActions>
           </Form>
         )}

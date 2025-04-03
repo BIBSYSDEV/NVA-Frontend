@@ -1,8 +1,16 @@
 import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import { LoadingButton } from '@mui/lab';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Tooltip, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Divider,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -273,7 +281,7 @@ export const PublishingAccordion = ({
 
         {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && (
           <>
-            <LoadingButton
+            <Button
               disabled={isCreatingPublishingRequest || !canPublishMetadata || titleSearchPending}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
               sx={{ mt: '0.5rem' }}
@@ -283,7 +291,7 @@ export const PublishingAccordion = ({
               onClick={duplicateRegistration ? toggleDuplicateWarningModal : publishRegistration}
               loading={isLoadingData || isCreatingPublishingRequest || titleSearchPending}>
               {t('registration.public_page.tasks_panel.publish_registration')}
-            </LoadingButton>
+            </Button>
 
             {userHasAccessRight(registration, 'delete') && (
               <Typography sx={{ my: '1rem' }}>

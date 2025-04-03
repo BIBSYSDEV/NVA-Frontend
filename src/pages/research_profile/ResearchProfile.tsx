@@ -246,15 +246,15 @@ const ResearchProfile = () => {
             container
             spacing={1}>
             {user && (
-              <Grid item>
+              <Grid>
                 <UserOrcid user={user} />
               </Grid>
             )}
 
-            <Grid item>
+            <Grid>
               <UserOrcidHelperModal />
             </Grid>
-            <Grid item>
+            <Grid>
               <Typography>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
             </Grid>
           </Grid>
