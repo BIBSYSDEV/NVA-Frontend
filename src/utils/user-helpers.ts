@@ -112,20 +112,19 @@ export const getUsername = (person?: CristinPerson | null, topOrgCristinId?: str
 };
 
 export const userCanDeleteMessage = (user: User, message: Message, ticketType: TicketType): boolean => {
-  const userIsSender = user.nvaUsername === message.sender;
-
-  if (
-    (user.isPublishingCurator || userIsSender) &&
-    (ticketType === 'PublishingRequest' || ticketType === 'UnpublishRequest')
-  ) {
+  if (user.nvaUsername === message.sender) {
     return true;
   }
 
-  if ((user.isDoiCurator || userIsSender) && ticketType === 'DoiRequest') {
+  if (user.isPublishingCurator && (ticketType === 'PublishingRequest' || ticketType === 'UnpublishRequest')) {
     return true;
   }
 
-  if ((user.isSupportCurator || userIsSender) && ticketType === 'GeneralSupportCase') {
+  if (user.isDoiCurator && ticketType === 'DoiRequest') {
+    return true;
+  }
+
+  if (user.isSupportCurator && ticketType === 'GeneralSupportCase') {
     return true;
   }
 

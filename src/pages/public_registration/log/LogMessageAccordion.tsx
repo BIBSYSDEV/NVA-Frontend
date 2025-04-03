@@ -1,6 +1,6 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, BoxProps, Button, Collapse, Divider } from '@mui/material';
+import { Box, Button, Collapse, Divider } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -14,17 +14,11 @@ import { MessageMenu } from '../../messages/components/MessageMenu';
 
 interface LogMessageAccordionProps {
   messages: Message[];
-  messageBackgroundColor: BoxProps['bgcolor'];
   refetchData?: () => void;
   topic: LogEntry['topic'];
 }
 
-export const LogMessageAccordion = ({
-  messages,
-  messageBackgroundColor,
-  refetchData,
-  topic,
-}: LogMessageAccordionProps) => {
+export const LogMessageAccordion = ({ messages, refetchData, topic }: LogMessageAccordionProps) => {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const user = useSelector((store: RootState) => store.user);
@@ -59,7 +53,7 @@ export const LogMessageAccordion = ({
                 text={message.text}
                 date={message.createdDate}
                 username={message.sender}
-                backgroundColor={messageBackgroundColor}
+                backgroundColor={getMessageItemBackgroundColor(topic)}
                 menuElement={
                   canDeleteMessage && (
                     <MessageMenu messageId={message.id} refetchData={refetchData} disableDelete={!!message.text} />
@@ -82,5 +76,18 @@ const getTicketTypeFromLogEntryTopic = (topic: LogEntry['topic']): TicketType =>
       return 'DoiRequest';
     default:
       return 'PublishingRequest';
+  }
+};
+
+const getMessageItemBackgroundColor = (topic: LogEntry['topic']) => {
+  switch (topic) {
+    case 'DoiRejected':
+    case 'DoiAssigned':
+      return 'doiRequest.main';
+    case 'FileApproved':
+    case 'FileRejected':
+      return 'publishingRequest.main';
+    default:
+      return 'secondary.main';
   }
 };
