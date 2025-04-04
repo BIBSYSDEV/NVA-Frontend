@@ -128,7 +128,7 @@ export const NviCandidatesNavigationAccordion = () => {
           {t('tasks.status')}
         </FormLabel>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+        <Box component="fieldset" sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', border: 'none' }}>
           <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
