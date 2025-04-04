@@ -318,6 +318,7 @@ export const fetchNviCandidate = async (identifier: string) => {
 
 export enum ResultParam {
   Abstract = 'abstract',
+  AllScientificValues = 'allScientificValues',
   Aggregation = 'aggregation',
   Category = 'category',
   CategoryNot = 'categoryNot',
@@ -373,6 +374,7 @@ export enum ResultSearchOrder {
 
 export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
+  [ResultParam.AllScientificValues]?: string | null;
   [ResultParam.Aggregation]?: 'all' | 'none' | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
   [ResultParam.CategoryNot]?: PublicationInstanceType | PublicationInstanceType[] | null;
@@ -425,6 +427,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
 
   if (params.abstract) {
     searchParams.set(ResultParam.Abstract, encodeURIComponent(params.abstract));
+  }
+  if (params.allScientificValues) {
+    searchParams.set(ResultParam.AllScientificValues, params.allScientificValues);
   }
   if (params.aggregation) {
     searchParams.set(ResultParam.Aggregation, params.aggregation);
