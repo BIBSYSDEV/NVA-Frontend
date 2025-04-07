@@ -86,7 +86,9 @@ export const ActionPanel = ({
         onChange={(_, newValue) => setTabValue(newValue)}
         sx={{ bgcolor: 'primary.main', px: '0.5rem' }}
         textColor="inherit"
-        TabIndicatorProps={{ style: { backgroundColor: 'white', height: '0.4rem' } }}>
+        slotProps={{
+          indicator: { style: { backgroundColor: 'white', height: '0.4rem' } },
+        }}>
         {canSeeTasksPanel && (
           <Tab
             value={TabValue.Tasks}

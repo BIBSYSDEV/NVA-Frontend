@@ -1528,7 +1528,7 @@
       "files": {
         "awaits_approval": "{{count}} waiting for approval",
         "file_awaits_approval": "File waiting for approval",
-        "uploaded_by": ""
+        "uploaded_by": "Uploaded by {{uploader}}."
       },
       "files_tab_list_label": "Choose visibility for files",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",

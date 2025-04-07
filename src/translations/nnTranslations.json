@@ -1528,7 +1528,7 @@
       "files": {
         "awaits_approval": "{{count}} ventar på godkjenning",
         "file_awaits_approval": "Fil ventar på godkjenning",
-        "uploaded_by": ""
+        "uploaded_by": "Lasta opp av {{uploader}}."
       },
       "files_tab_list_label": "Vel synlegheit for filer",
       "find_in_channel_registry": "Finn i kanalregisteret",
