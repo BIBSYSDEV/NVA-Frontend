@@ -1,4 +1,5 @@
 import { VerificationStatus } from '../types/contributor.types';
+import { Message, TicketType } from '../types/publication_types/ticket.types';
 import {
   CreateCristinPerson,
   CristinArrayValue,
@@ -108,4 +109,26 @@ export const getUsername = (person?: CristinPerson | null, topOrgCristinId?: str
   }
 
   return `${personCristinIdentifier}@${topOrgCristinIdentifier}`;
+};
+
+export const userCanDeleteMessage = (user: User, message: Message, ticketType: TicketType): boolean => {
+  if (message.text) {
+    if (user.nvaUsername === message.sender) {
+      return true;
+    }
+
+    if (user.isPublishingCurator && (ticketType === 'PublishingRequest' || ticketType === 'UnpublishRequest')) {
+      return true;
+    }
+
+    if (user.isDoiCurator && ticketType === 'DoiRequest') {
+      return true;
+    }
+
+    if (user.isSupportCurator && ticketType === 'GeneralSupportCase') {
+      return true;
+    }
+  }
+
+  return false;
 };

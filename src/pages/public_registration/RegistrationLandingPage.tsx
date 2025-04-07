@@ -5,6 +5,7 @@ import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { useFetchRegistrationTickets } from '../../api/hooks/useFetchRegistrationTickets';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
+import { ActionPanelContext } from '../../context/ActionPanelContext';
 import { RegistrationStatus } from '../../types/registration.types';
 import { userHasAccessRight } from '../../utils/registration-helpers';
 import { doNotRedirectQueryParam, IdentifierParams } from '../../utils/urlPaths';
@@ -61,12 +62,14 @@ export const RegistrationLandingPage = () => {
             <PublicRegistrationContent registration={registration} />
 
             {canEditRegistration && ticketsQuery.isSuccess && (
-              <ActionPanel
-                registration={registration}
-                refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-                tickets={ticketsQuery.data?.tickets ?? []}
-                isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
-              />
+              <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
+                <ActionPanel
+                  registration={registration}
+                  refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+                  tickets={ticketsQuery.data?.tickets ?? []}
+                  isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
+                />
+              </ActionPanelContext.Provider>
             )}
           </ErrorBoundary>
         ) : (
