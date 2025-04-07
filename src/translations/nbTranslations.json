@@ -720,7 +720,6 @@
     "internal_file_approved_count_other": "{{count}} interne filer godkjent",
     "internal_files_on_registration_one": "Registreringen har {{count}} intern fil",
     "internal_files_on_registration_other": "Registreringen har {{count}} interne filer",
-    "metadata_last_updated": "Metadata sist oppdatert:",
     "open_file_published": "Åpen fil publisert",
     "open_file_published_count_one": "{{count}} åpen fil publisert",
     "open_file_published_count_other": "{{count}} åpne filer publisert",
