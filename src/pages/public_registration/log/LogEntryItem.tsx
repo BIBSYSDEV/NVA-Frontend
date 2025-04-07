@@ -133,6 +133,7 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
       return <AddCircleOutlineIcon {...logIconProps} />;
     case 'PublicationPublished':
     case 'PublicationRepublished':
+    case 'PublicationUpdated':
       return <LocalOfferOutlinedIcon {...logIconProps} />;
     case 'FileUploaded':
     case 'FileApproved':
