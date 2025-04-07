@@ -22,6 +22,7 @@ interface PublicationLogEntry extends BaseLogEntry {
   type: 'PublicationLogEntry';
   topic:
     | 'PublicationCreated'
+    | 'PublicationUpdated'
     | 'PublicationPublished'
     | 'PublicationUnpublished'
     | 'PublicationDeleted'

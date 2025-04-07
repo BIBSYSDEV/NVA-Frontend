@@ -164,6 +164,8 @@ const getLogEntryTitle = (logEntry: LogEntry, t: TFunction) => {
   switch (logEntry.topic) {
     case 'PublicationCreated':
       return t('log.titles.result_created');
+    case 'PublicationUpdated':
+      return t('log.titles.result_updated');
     case 'PublicationPublished':
     case 'PublicationImported':
       return t('log.titles.result_published');
