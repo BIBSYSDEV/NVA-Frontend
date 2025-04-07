@@ -42,17 +42,17 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
 
   return (
     <>
-      {(originalDoi || associatedLink) && (
+      {originalDoi && (
         <PublicPageInfoEntry
           title={t('registration.registration.link_to_resource')}
           content={
             <Typography component="dd" gridColumn={2} sx={{ wordBreak: 'break-all' }}>
               <Link
                 data-testid={dataTestId.registrationLandingPage.doiOriginalLink}
-                href={originalDoi || associatedLink}
+                href={originalDoi}
                 target="_blank"
                 rel="noopener noreferrer">
-                {originalDoi || associatedLink}
+                {originalDoi}
               </Link>
             </Typography>
           }
