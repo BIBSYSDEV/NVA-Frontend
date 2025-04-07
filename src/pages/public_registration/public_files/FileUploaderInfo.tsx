@@ -63,6 +63,6 @@ const ImportUploaderInfo = ({ uploadDetails, ...typographyProps }: ImportUploade
   return source && archive ? (
     <Typography {...typographyProps}>{t('log.imported_from_source_and_archive', { source, archive })}</Typography>
   ) : uploadDetails.source ? (
-    <Typography {...typographyProps}>{t('log.imported_from_source', source)}</Typography>
+    <Typography {...typographyProps}>{t('log.imported_from_source', { source })}</Typography>
   ) : null;
 };
