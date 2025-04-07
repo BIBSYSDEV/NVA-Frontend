@@ -20,6 +20,7 @@ import {
   RegistrationStatus,
 } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
+import { getDoiValue } from '../utils/general-helpers';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
@@ -459,7 +460,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.CristinIdentifier, params.cristinIdentifier);
   }
   if (params.doi) {
-    searchParams.set(ResultParam.Doi, params.doi);
+    const formattedDoiValue = getDoiValue(params.doi);
+    searchParams.set(ResultParam.Doi, formattedDoiValue);
   }
   if (params.excludeSubunits) {
     searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());
