@@ -5,7 +5,6 @@ import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
-import UnpublishedOutlinedIcon from '@mui/icons-material/UnpublishedOutlined';
 import { Avatar, Box, Divider, styled, SvgIconProps, Tooltip, Typography } from '@mui/material';
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -131,9 +130,10 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
   switch (topic) {
     case 'PublicationCreated':
       return <AddCircleOutlineIcon {...logIconProps} />;
-    case 'PublicationPublished':
-    case 'PublicationRepublished':
     case 'PublicationUpdated':
+    case 'PublicationPublished':
+    case 'PublicationUnpublished':
+    case 'PublicationRepublished':
       return <LocalOfferOutlinedIcon {...logIconProps} />;
     case 'FileUploaded':
     case 'FileApproved':
@@ -143,8 +143,6 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
     case 'FileHidden':
     case 'FileTypeUpdated':
       return <InsertDriveFileOutlinedIcon {...logIconProps} />;
-    case 'PublicationUnpublished':
-      return <UnpublishedOutlinedIcon {...logIconProps} />;
     case 'PublicationDeleted':
     case 'FileDeleted':
       return <DeleteOutlinedIcon {...logIconProps} />;
