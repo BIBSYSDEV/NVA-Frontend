@@ -247,7 +247,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 </Typography>
                 <Box sx={{ backgroundColor: 'white', width: '100%', p: '0.25rem 1rem' }}>
                   <FormControlLabel
-                    control={<Checkbox />}
+                    control={
+                      <Checkbox data-testid={dataTestId.registrationWizard.files.nullAssociatedArtifactCheckbox} />
+                    }
                     checked={isNullAssociatedArtifact}
                     onChange={(event, checked) => {
                       if (!checked) {
