@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef } from 'react';
@@ -237,34 +237,50 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     />
                   )} */}
 
-                  {values.doi && <LinkField fieldName="doi" label={t('common.doi')} />}
-
-                  {values.entityDescription?.reference?.doi && (
-                    <LinkField
-                      fieldName={ResourceFieldNames.Doi}
-                      label={t('registration.registration.link_to_resource')}
-                      canRemove={canEditFilesAndLinks}
-                    />
-                  )}
-
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    {values.doi && <LinkField fieldName="doi" label={t('common.doi')} />}
+
+                    {values.entityDescription?.reference?.doi && (
+                      <LinkField
+                        fieldName={ResourceFieldNames.Doi}
+                        label={t('registration.registration.link_to_resource')}
+                        handleDelete={
+                          canEditFilesAndLinks ? () => setFieldValue(ResourceFieldNames.Doi, '') : undefined
+                        }
+                      />
+                    )}
+
                     {associatedArtifacts.map((link, index) => {
                       if (link.type !== 'AssociatedLink') {
                         return null;
                       }
                       return (
                         <LinkField
-                          key={link.id}
+                          key={index}
                           // data-testid={dataTestId.registrationWizard.files.linkToResourceField}
                           fieldName={`${FileFieldNames.AssociatedArtifacts}[${index}].id`}
                           label={getAssociatedLinkRelationTitle(t, link.relation)}
                           canEdit={!link.relation && canEditFilesAndLinks}
-                          canRemove={canEditFilesAndLinks}
+                          handleDelete={canEditFilesAndLinks ? () => remove(index) : undefined}
                           // removeLinkTitle={t('registration.resource_type.remove_link')}
                           // removeLinkDescription=''
                         />
                       );
                     })}
+                    {canEditFilesAndLinks && (
+                      <Button
+                        variant="outlined"
+                        sx={{ alignSelf: 'start' }}
+                        // startIcon={<AddIcon />}
+                        onClick={() => push({ type: 'AssociatedLink', id: '' } satisfies AssociatedLink)}
+                        disabled={values.associatedArtifacts.some(
+                          (artifact) => artifact.type === 'AssociatedLink' && !artifact.relation && !artifact.id
+                        )}
+                        // data-testid={dataTestId.registrationWizard.files.addLinkButton}
+                      >
+                        Legg til lenke
+                      </Button>
+                    )}
                   </Box>
                 </Paper>
               </>
