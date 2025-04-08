@@ -13,9 +13,7 @@ interface AssociatedLinksLandingPageAccordionProps {
 export const AssociatedLinksLandingPageAccordion = ({ associatedLinks }: AssociatedLinksLandingPageAccordionProps) => {
   const { t } = useTranslation();
 
-  const numberOfLinks = associatedLinks.length || 0;
-
-  if (numberOfLinks === 0) {
+  if (!associatedLinks || associatedLinks.length === 0) {
     return null;
   }
 
