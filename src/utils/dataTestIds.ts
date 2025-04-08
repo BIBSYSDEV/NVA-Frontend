@@ -66,6 +66,7 @@ export const dataTestId = {
       customerStatusSelect: 'customer-status-select',
       editInstitutionButton: (id: string) => `edit-institution-button-${id}`,
     },
+    editPersonButton: (id: string) => `edit-person-button-${id}`,
     institutionsAccordion: 'institutions-accordion',
     institutionAdmin: {
       canAssignDoiCheckbox: 'can-assign-doi-checkbox',
@@ -493,6 +494,7 @@ export const dataTestId = {
       licenseItemShowOlderVersion: 'license-item-show-older-versions',
       licenseModal: 'license-modal',
       linkToResourceField: 'link-to-resource-field',
+      nullAssociatedArtifactCheckbox: 'null-associated-artifact-checkbox',
       selectLicenseField: 'uploaded-file-select-license',
       fileTypeSelect: 'file-type-select',
       version: 'version-radios',
@@ -651,8 +653,9 @@ export const dataTestId = {
     usersCreators: 'users-creators',
   },
   myPage: {
-    createProjectButton: 'create-project-button',
     addPromotedPublicationButton: 'edit-promoted-publication-button',
+    editProjectButton: (id: string) => `edit-project-button-${id}`,
+    createProjectButton: 'create-project-button',
     messagesAccordion: 'messages-accordion',
     myMessages: {
       ticketStatusField: 'ticket-status-field',
@@ -686,6 +689,7 @@ export const dataTestId = {
     myResultsLink: 'my-publications-link',
     newRegistrationLink: 'new-registration-link',
     projectRegistrationsAccordion: 'project-registrations-accordion',
+    removePromotedPublicationButton: 'remove-promoted-publication-button',
     registrationsAccordion: 'registrations-accordion',
     researchProfileAccordion: 'research-profile-accordion',
     researchProfileLink: 'research-profile-link',

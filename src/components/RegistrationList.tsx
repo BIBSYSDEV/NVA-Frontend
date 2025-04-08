@@ -195,7 +195,11 @@ export const RegistrationListItemContent = ({
           {location.pathname === UrlPathTemplate.MyPageResults && (
             <IconButton
               title={t('my_page.my_profile.edit_promoted_publication')}
-              data-testid={dataTestId.myPage.addPromotedPublicationButton}
+              data-testid={
+                isPromotedPublication
+                  ? dataTestId.myPage.removePromotedPublicationButton
+                  : dataTestId.myPage.addPromotedPublicationButton
+              }
               disabled={isMutating}
               onClick={() => {
                 if (isPromotedPublication) {
