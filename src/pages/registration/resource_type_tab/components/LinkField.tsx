@@ -41,6 +41,7 @@ export const LinkField = ({
               data-testid="doi-field"
               variant="filled"
               fullWidth
+              required
               sx={{ flex: '1 25rem' }}
               label={label}
               disabled={!canEdit}

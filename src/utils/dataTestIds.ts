@@ -483,7 +483,7 @@ export const dataTestId = {
       vocabularyRow: (vocabulary: string) => `vocabulary-row-${vocabulary}`,
     },
     files: {
-      addFilesOrLinksButton: 'add-files-or-links-button',
+      addLinkButton: 'add-link-button',
       deleteFile: 'delete-file-button',
       embargoDateField: 'embargo-date-field',
       expandFileRowButton: 'expand-file-row-button',

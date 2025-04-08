@@ -1,14 +1,18 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { InfoBanner } from '../../components/InfoBanner';
+import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { AssociatedLink, FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
 import { FileFieldNames, ResourceFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import {
   allowsFileUpload,
   associatedArtifactIsLink,
@@ -19,9 +23,6 @@ import {
   userHasAccessRight,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
-
-import { InfoBanner } from '../../components/InfoBanner';
-import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { getAssociatedLinkRelationTitle } from '../public_registration/public_links/AssociatedLinksLandingPageAccordion';
 import { FileList } from './FileList';
@@ -187,55 +188,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <Typography variant="h2" sx={{ mb: '1rem' }}>
                     {t('common.links')}
                   </Typography>
-                  {/* {originalDoi ? (
-                    <DoiField canEditDoi={canEditFilesAndLinks} />
-                  ) : (
-                    <TextField
-                      fullWidth
-                      variant="filled"
-                      label={t('registration.files_and_license.link_to_resource')}
-                      disabled={!canEditFilesAndLinks}
-                      value={
-                        associatedLinkIndex >= 0 ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id : ''
-                      }
-                      error={associatedLinkHasError}
-                      helperText={
-                        associatedLinkHasError
-                          ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
-                          : null
-                      }
-                      data-testid={dataTestId.registrationWizard.files.linkToResourceField}
-                      onChange={(event) => {
-                        const inputValue = event.target.value;
-                        if (inputValue) {
-                          if (associatedLinkIndex < 0) {
-                            const newAssociatedLink: AssociatedLink = {
-                              type: 'AssociatedLink',
-                              id: inputValue,
-                            };
-                            push(newAssociatedLink);
-                            const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
-                              associatedArtifactIsNullArtifact
-                            );
-                            if (nullAssociatedArtifactIndex > -1) {
-                              remove(nullAssociatedArtifactIndex);
-                            }
-                          } else {
-                            const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
-                            setFieldValue(fieldName, inputValue);
-                            setFieldTouched(fieldName);
-                          }
-                        } else {
-                          const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                          remove(associatedLinkIndex);
-                          if (associatedArtifactsBeforeRemoval === 1) {
-                            // Ensure field is set to touched even if it's empty
-                            setFieldTouched(name);
-                          }
-                        }
-                      }}
-                    />
-                  )} */}
 
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {values.doi && <LinkField fieldName="doi" label={t('common.doi')} />}
@@ -271,14 +223,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       <Button
                         variant="outlined"
                         sx={{ alignSelf: 'start' }}
-                        // startIcon={<AddIcon />}
+                        startIcon={<AddCircleOutlineIcon />}
                         onClick={() => push({ type: 'AssociatedLink', id: '' } satisfies AssociatedLink)}
                         disabled={values.associatedArtifacts.some(
                           (artifact) => artifact.type === 'AssociatedLink' && !artifact.relation && !artifact.id
                         )}
-                        // data-testid={dataTestId.registrationWizard.files.addLinkButton}
-                      >
-                        Legg til lenke
+                        data-testid={dataTestId.registrationWizard.files.addLinkButton}>
+                        {t('registration.files_and_license.add_link')}
                       </Button>
                     )}
                   </Box>
