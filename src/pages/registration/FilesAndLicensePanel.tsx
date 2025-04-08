@@ -214,8 +214,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                           label={getAssociatedLinkRelationTitle(t, link.relation)}
                           canEdit={!link.relation && canEditFilesAndLinks}
                           handleDelete={canEditFilesAndLinks ? () => remove(index) : undefined}
-                          // removeLinkTitle={t('registration.resource_type.remove_link')}
-                          // removeLinkDescription=''
                         />
                       );
                     })}

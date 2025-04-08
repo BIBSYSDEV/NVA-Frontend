@@ -12,18 +12,9 @@ interface LinkFieldProps {
   label: string;
   canEdit?: boolean;
   handleDelete?: () => void;
-  removeLinkTitle?: string;
-  removeLinkDescription?: string;
 }
 
-export const LinkField = ({
-  fieldName,
-  label,
-  canEdit = false,
-  handleDelete,
-  removeLinkTitle,
-  removeLinkDescription,
-}: LinkFieldProps) => {
+export const LinkField = ({ fieldName, label, canEdit = false, handleDelete }: LinkFieldProps) => {
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
@@ -62,18 +53,18 @@ export const LinkField = ({
             {handleDelete && (
               <>
                 <Button color="error" variant="outlined" endIcon={<CancelIcon />} onClick={toggleConfirmDialog}>
-                  {t('registration.resource_type.remove_doi')}
+                  {t('registration.resource_type.remove_link')}
                 </Button>
                 <ConfirmDialog
                   open={openConfirmDialog}
-                  title={t('registration.resource_type.remove_doi')}
+                  title={t('registration.resource_type.remove_link')}
                   onAccept={() => {
                     handleDelete();
                     toggleConfirmDialog();
                   }}
                   onCancel={toggleConfirmDialog}
                   dialogDataTestId="confirm-delete-doi-dialog">
-                  <Typography>{t('registration.resource_type.remove_doi_text')}</Typography>
+                  <Typography>{t('registration.resource_type.remove_link_text')}</Typography>
                 </ConfirmDialog>
               </>
             )}
