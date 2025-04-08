@@ -24,7 +24,7 @@ export const LinkField = ({ fieldName, label, canEdit = false, handleDelete }: L
   return (
     <Field name={fieldName}>
       {({ field, meta: { error, touched } }: FieldProps<string>) => (
-        <Box sx={{ display: 'flex', gap: '0.2rem 0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center', flexWrap: 'wrap' }}>
           <TextField
             {...field}
             data-testid={dataTestId.registrationWizard.files.linkField}
