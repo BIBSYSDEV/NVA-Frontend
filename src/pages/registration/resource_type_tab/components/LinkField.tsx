@@ -32,56 +32,54 @@ export const LinkField = ({
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-      <Field name={fieldName}>
-        {({ field, meta: { error, touched } }: FieldProps<string>) => (
-          <>
-            <TextField
-              {...field}
-              data-testid="doi-field"
-              variant="filled"
-              fullWidth
-              required
-              sx={{ flex: '1 25rem' }}
-              label={label}
-              disabled={!canEdit}
-              multiline
-              error={touched && !!error}
-              helperText={<ErrorMessage name={fieldName} />}
-              slotProps={{ input: { startAdornment: <LinkIcon sx={{ mr: '0.5rem' }} /> } }}
-            />
+    <Field name={fieldName}>
+      {({ field, meta: { error, touched } }: FieldProps<string>) => (
+        <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <TextField
+            {...field}
+            data-testid="doi-field"
+            variant="filled"
+            fullWidth
+            required
+            sx={{ flex: '1 25rem' }}
+            label={label}
+            disabled={!canEdit}
+            multiline
+            error={touched && !!error}
+            helperText={<ErrorMessage name={fieldName} />}
+            slotProps={{ input: { startAdornment: <LinkIcon sx={{ mr: '0.5rem' }} /> } }}
+          />
 
-            <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-              <Button
-                variant="outlined"
-                endIcon={<OpenInNewIcon />}
-                href={field.value}
-                target="_blank"
-                rel="noopener noreferrer">
-                {t('common.open')}
-              </Button>
-              {handleDelete && (
-                <>
-                  <Button color="error" variant="outlined" endIcon={<CancelIcon />} onClick={toggleConfirmDialog}>
-                    {t('registration.resource_type.remove_doi')}
-                  </Button>
-                  <ConfirmDialog
-                    open={openConfirmDialog}
-                    title={t('registration.resource_type.remove_doi')}
-                    onAccept={() => {
-                      handleDelete();
-                      toggleConfirmDialog();
-                    }}
-                    onCancel={toggleConfirmDialog}
-                    dialogDataTestId="confirm-delete-doi-dialog">
-                    <Typography>{t('registration.resource_type.remove_doi_text')}</Typography>
-                  </ConfirmDialog>
-                </>
-              )}
-            </Box>
-          </>
-        )}
-      </Field>
-    </Box>
+          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+            <Button
+              variant="outlined"
+              endIcon={<OpenInNewIcon />}
+              href={field.value}
+              target="_blank"
+              rel="noopener noreferrer">
+              {t('common.open')}
+            </Button>
+            {handleDelete && (
+              <>
+                <Button color="error" variant="outlined" endIcon={<CancelIcon />} onClick={toggleConfirmDialog}>
+                  {t('registration.resource_type.remove_doi')}
+                </Button>
+                <ConfirmDialog
+                  open={openConfirmDialog}
+                  title={t('registration.resource_type.remove_doi')}
+                  onAccept={() => {
+                    handleDelete();
+                    toggleConfirmDialog();
+                  }}
+                  onCancel={toggleConfirmDialog}
+                  dialogDataTestId="confirm-delete-doi-dialog">
+                  <Typography>{t('registration.resource_type.remove_doi_text')}</Typography>
+                </ConfirmDialog>
+              </>
+            )}
+          </Box>
+        </Box>
+      )}
+    </Field>
   );
 };
