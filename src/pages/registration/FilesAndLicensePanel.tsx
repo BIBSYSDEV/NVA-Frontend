@@ -10,7 +10,7 @@ import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { AssociatedLink, FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
-import { FileFieldNames, ResourceFieldNames } from '../../types/publicationFieldNames';
+import { FileFieldNames, ResourceFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
@@ -209,8 +209,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       return (
                         <LinkField
                           key={index}
-                          // data-testid={dataTestId.registrationWizard.files.linkToResourceField}
-                          fieldName={`${FileFieldNames.AssociatedArtifacts}[${index}].id`}
+                          fieldName={`${FileFieldNames.AssociatedArtifacts}[${index}].${SpecificLinkFieldNames.Id}`}
                           label={getAssociatedLinkRelationTitle(t, link.relation)}
                           canEdit={!link.relation && canEditFilesAndLinks}
                           handleDelete={canEditFilesAndLinks ? () => remove(index) : undefined}

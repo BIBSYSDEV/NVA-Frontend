@@ -6,6 +6,7 @@ import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface LinkFieldProps {
   fieldName: string;
@@ -16,11 +17,9 @@ interface LinkFieldProps {
 
 export const LinkField = ({ fieldName, label, canEdit = false, handleDelete }: LinkFieldProps) => {
   const { t } = useTranslation();
-  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
-  const toggleConfirmDialog = () => {
-    setOpenConfirmDialog(!openConfirmDialog);
-  };
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const toggleConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   return (
     <Field name={fieldName}>
@@ -28,7 +27,7 @@ export const LinkField = ({ fieldName, label, canEdit = false, handleDelete }: L
         <Box sx={{ display: 'flex', gap: '0.2rem 0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
           <TextField
             {...field}
-            data-testid="doi-field"
+            data-testid={dataTestId.registrationWizard.files.linkField}
             variant="filled"
             fullWidth
             required
@@ -53,6 +52,7 @@ export const LinkField = ({ fieldName, label, canEdit = false, handleDelete }: L
             <>
               <IconButton
                 color="primary"
+                data-testid={dataTestId.registrationWizard.files.removeLinkButton}
                 title={t('registration.resource_type.remove_link')}
                 onClick={toggleConfirmDialog}>
                 <CancelIcon />
@@ -64,8 +64,7 @@ export const LinkField = ({ fieldName, label, canEdit = false, handleDelete }: L
                   handleDelete();
                   toggleConfirmDialog();
                 }}
-                onCancel={toggleConfirmDialog}
-                dialogDataTestId="confirm-delete-doi-dialog">
+                onCancel={toggleConfirmDialog}>
                 <Typography>{t('registration.resource_type.remove_link_text')}</Typography>
               </ConfirmDialog>
             </>
