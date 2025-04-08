@@ -1,7 +1,7 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import LinkIcon from '@mui/icons-material/Link';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, IconButton, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +25,7 @@ export const LinkField = ({ fieldName, label, canEdit = false, handleDelete }: L
   return (
     <Field name={fieldName}>
       {({ field, meta: { error, touched } }: FieldProps<string>) => (
-        <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: '0.2rem 0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
           <TextField
             {...field}
             data-testid="doi-field"
@@ -41,34 +41,35 @@ export const LinkField = ({ fieldName, label, canEdit = false, handleDelete }: L
             slotProps={{ input: { startAdornment: <LinkIcon sx={{ mr: '0.5rem' }} /> } }}
           />
 
-          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-            <Button
-              variant="outlined"
-              endIcon={<OpenInNewIcon />}
-              href={field.value}
-              target="_blank"
-              rel="noopener noreferrer">
-              {t('common.open')}
-            </Button>
-            {handleDelete && (
-              <>
-                <Button color="error" variant="outlined" endIcon={<CancelIcon />} onClick={toggleConfirmDialog}>
-                  {t('registration.resource_type.remove_link')}
-                </Button>
-                <ConfirmDialog
-                  open={openConfirmDialog}
-                  title={t('registration.resource_type.remove_link')}
-                  onAccept={() => {
-                    handleDelete();
-                    toggleConfirmDialog();
-                  }}
-                  onCancel={toggleConfirmDialog}
-                  dialogDataTestId="confirm-delete-doi-dialog">
-                  <Typography>{t('registration.resource_type.remove_link_text')}</Typography>
-                </ConfirmDialog>
-              </>
-            )}
-          </Box>
+          <IconButton
+            color="primary"
+            title={t('common.open')}
+            href={field.value}
+            target="_blank"
+            rel="noopener noreferrer">
+            <OpenInNewIcon />
+          </IconButton>
+          {handleDelete && (
+            <>
+              <IconButton
+                color="primary"
+                title={t('registration.resource_type.remove_link')}
+                onClick={toggleConfirmDialog}>
+                <CancelIcon />
+              </IconButton>
+              <ConfirmDialog
+                open={openConfirmDialog}
+                title={t('registration.resource_type.remove_link')}
+                onAccept={() => {
+                  handleDelete();
+                  toggleConfirmDialog();
+                }}
+                onCancel={toggleConfirmDialog}
+                dialogDataTestId="confirm-delete-doi-dialog">
+                <Typography>{t('registration.resource_type.remove_link_text')}</Typography>
+              </ConfirmDialog>
+            </>
+          )}
         </Box>
       )}
     </Field>
