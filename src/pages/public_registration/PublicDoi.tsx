@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { StatusChip } from '../../components/StatusChip';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getAssociatedLinks, userHasAccessRight } from '../../utils/registration-helpers';
+import { userHasAccessRight } from '../../utils/registration-helpers';
 import { PublicPageInfoEntry } from './PublicPageInfoEntry';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
@@ -13,7 +13,6 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
 
   const nvaDoi = registration.doi;
   const originalDoi = registration.entityDescription?.reference?.doi ?? '';
-  const associatedLink = getAssociatedLinks(registration.associatedArtifacts)[0]?.id;
 
   const [nvaDoiIsFindable, setNvaDoiIsFindable] = useState<boolean | undefined>(
     !nvaDoi || registration.status === RegistrationStatus.Draft ? false : undefined
@@ -58,6 +57,7 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
           }
         />
       )}
+
       {canSeeNvaDoi && (
         <PublicPageInfoEntry
           title={t('common.doi')}

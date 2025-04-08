@@ -350,6 +350,7 @@ export const dataTestId = {
     noLinkOrFilesWarning: 'no-link-or-files-warning-typhography',
     npi: 'public-registration-npi',
     openFileButton: 'open-file-button',
+    otherLinksAccordion: 'other-links-accordion',
     primaryLanguage: 'public-registration-primary-language',
     projectsAccordion: 'projects-accordion',
     projectTitle: 'project-title',
