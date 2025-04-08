@@ -49,6 +49,6 @@ export const getAssociatedLinkRelationTitle = (t: TFunction, relation: Associate
     case 'metadataSource':
       return t('common.metadata_source');
     default:
-      return t('common.unknown');
+      return t('common.link');
   }
 };

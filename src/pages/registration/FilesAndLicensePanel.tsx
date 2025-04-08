@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, Paper, TextField, Typography } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef } from 'react';
@@ -7,9 +7,8 @@ import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { AssociatedLink, FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
-import { FileFieldNames } from '../../types/publicationFieldNames';
+import { FileFieldNames, ResourceFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import { dataTestId } from '../../utils/dataTestIds';
 import {
   allowsFileUpload,
   associatedArtifactIsLink,
@@ -27,7 +26,7 @@ import { hasCuratorRole } from '../../utils/user-helpers';
 import { getAssociatedLinkRelationTitle } from '../public_registration/public_links/AssociatedLinksLandingPageAccordion';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
-import { DoiField } from './resource_type_tab/components/DoiField';
+import { LinkField } from './resource_type_tab/components/LinkField';
 
 const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler/info';
 const getChannelRegisterJournalUrl = (pid: string) => `${channelRegisterBaseUrl}/tidsskrift?pid=${pid}`;
@@ -186,71 +185,83 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 )}
                 <Paper elevation={5} component={BackgroundDiv}>
                   <Typography variant="h2" sx={{ mb: '1rem' }}>
-                    {t('common.link')}
+                    {t('common.links')}
                   </Typography>
-                  {
-                    originalDoi ? <DoiField canEditDoi={canEditFilesAndLinks} /> : null
-                    // <TextField
-                    //   fullWidth
-                    //   variant="filled"
-                    //   label={t('registration.files_and_license.link_to_resource')}
-                    //   disabled={!canEditFilesAndLinks}
-                    //   value={
-                    //     associatedLinkIndex >= 0 ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id : ''
-                    //   }
-                    //   error={associatedLinkHasError}
-                    //   helperText={
-                    //     associatedLinkHasError
-                    //       ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
-                    //       : null
-                    //   }
-                    //   data-testid={dataTestId.registrationWizard.files.linkToResourceField}
-                    //   onChange={(event) => {
-                    //     const inputValue = event.target.value;
-                    //     if (inputValue) {
-                    //       if (associatedLinkIndex < 0) {
-                    //         const newAssociatedLink: AssociatedLink = {
-                    //           type: 'AssociatedLink',
-                    //           id: inputValue,
-                    //         };
-                    //         push(newAssociatedLink);
-                    //         const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
-                    //           associatedArtifactIsNullArtifact
-                    //         );
-                    //         if (nullAssociatedArtifactIndex > -1) {
-                    //           remove(nullAssociatedArtifactIndex);
-                    //         }
-                    //       } else {
-                    //         const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
-                    //         setFieldValue(fieldName, inputValue);
-                    //         setFieldTouched(fieldName);
-                    //       }
-                    //     } else {
-                    //       const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                    //       remove(associatedLinkIndex);
-                    //       if (associatedArtifactsBeforeRemoval === 1) {
-                    //         // Ensure field is set to touched even if it's empty
-                    //         setFieldTouched(name);
-                    //       }
-                    //     }
-                    //   }}
-                    // />
-                  }
+                  {/* {originalDoi ? (
+                    <DoiField canEditDoi={canEditFilesAndLinks} />
+                  ) : (
+                    <TextField
+                      fullWidth
+                      variant="filled"
+                      label={t('registration.files_and_license.link_to_resource')}
+                      disabled={!canEditFilesAndLinks}
+                      value={
+                        associatedLinkIndex >= 0 ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id : ''
+                      }
+                      error={associatedLinkHasError}
+                      helperText={
+                        associatedLinkHasError
+                          ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
+                          : null
+                      }
+                      data-testid={dataTestId.registrationWizard.files.linkToResourceField}
+                      onChange={(event) => {
+                        const inputValue = event.target.value;
+                        if (inputValue) {
+                          if (associatedLinkIndex < 0) {
+                            const newAssociatedLink: AssociatedLink = {
+                              type: 'AssociatedLink',
+                              id: inputValue,
+                            };
+                            push(newAssociatedLink);
+                            const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
+                              associatedArtifactIsNullArtifact
+                            );
+                            if (nullAssociatedArtifactIndex > -1) {
+                              remove(nullAssociatedArtifactIndex);
+                            }
+                          } else {
+                            const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
+                            setFieldValue(fieldName, inputValue);
+                            setFieldTouched(fieldName);
+                          }
+                        } else {
+                          const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                          remove(associatedLinkIndex);
+                          if (associatedArtifactsBeforeRemoval === 1) {
+                            // Ensure field is set to touched even if it's empty
+                            setFieldTouched(name);
+                          }
+                        }
+                      }}
+                    />
+                  )} */}
+
+                  {values.doi && <LinkField fieldName="doi" label={t('common.doi')} />}
+
+                  {values.entityDescription?.reference?.doi && (
+                    <LinkField
+                      fieldName={ResourceFieldNames.Doi}
+                      label={t('registration.registration.link_to_resource')}
+                      canRemove={canEditFilesAndLinks}
+                    />
+                  )}
 
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    {associatedArtifacts.map((link) => {
+                    {associatedArtifacts.map((link, index) => {
                       if (link.type !== 'AssociatedLink') {
                         return null;
                       }
                       return (
-                        <TextField
+                        <LinkField
                           key={link.id}
-                          data-testid={dataTestId.registrationWizard.files.linkToResourceField}
-                          variant="filled"
-                          fullWidth
-                          disabled={!canEditFilesAndLinks || !!link.relation}
-                          value={link.id}
+                          // data-testid={dataTestId.registrationWizard.files.linkToResourceField}
+                          fieldName={`${FileFieldNames.AssociatedArtifacts}[${index}].id`}
                           label={getAssociatedLinkRelationTitle(t, link.relation)}
+                          canEdit={!link.relation && canEditFilesAndLinks}
+                          canRemove={canEditFilesAndLinks}
+                          // removeLinkTitle={t('registration.resource_type.remove_link')}
+                          // removeLinkDescription=''
                         />
                       );
                     })}
