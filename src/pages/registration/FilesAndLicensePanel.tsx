@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { AssociatedLink, FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
-import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
+import { FileFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
@@ -24,6 +24,7 @@ import {
 import { InfoBanner } from '../../components/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { hasCuratorRole } from '../../utils/user-helpers';
+import { getAssociatedLinkRelationTitle } from '../public_registration/public_links/AssociatedLinksLandingPageAccordion';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { DoiField } from './resource_type_tab/components/DoiField';
@@ -187,55 +188,73 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <Typography variant="h2" sx={{ mb: '1rem' }}>
                     {t('common.link')}
                   </Typography>
-                  {originalDoi ? (
-                    <DoiField canEditDoi={canEditFilesAndLinks} />
-                  ) : (
-                    <TextField
-                      fullWidth
-                      variant="filled"
-                      label={t('registration.files_and_license.link_to_resource')}
-                      disabled={!canEditFilesAndLinks}
-                      value={
-                        associatedLinkIndex >= 0 ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id : ''
+                  {
+                    originalDoi ? <DoiField canEditDoi={canEditFilesAndLinks} /> : null
+                    // <TextField
+                    //   fullWidth
+                    //   variant="filled"
+                    //   label={t('registration.files_and_license.link_to_resource')}
+                    //   disabled={!canEditFilesAndLinks}
+                    //   value={
+                    //     associatedLinkIndex >= 0 ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id : ''
+                    //   }
+                    //   error={associatedLinkHasError}
+                    //   helperText={
+                    //     associatedLinkHasError
+                    //       ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
+                    //       : null
+                    //   }
+                    //   data-testid={dataTestId.registrationWizard.files.linkToResourceField}
+                    //   onChange={(event) => {
+                    //     const inputValue = event.target.value;
+                    //     if (inputValue) {
+                    //       if (associatedLinkIndex < 0) {
+                    //         const newAssociatedLink: AssociatedLink = {
+                    //           type: 'AssociatedLink',
+                    //           id: inputValue,
+                    //         };
+                    //         push(newAssociatedLink);
+                    //         const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
+                    //           associatedArtifactIsNullArtifact
+                    //         );
+                    //         if (nullAssociatedArtifactIndex > -1) {
+                    //           remove(nullAssociatedArtifactIndex);
+                    //         }
+                    //       } else {
+                    //         const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
+                    //         setFieldValue(fieldName, inputValue);
+                    //         setFieldTouched(fieldName);
+                    //       }
+                    //     } else {
+                    //       const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                    //       remove(associatedLinkIndex);
+                    //       if (associatedArtifactsBeforeRemoval === 1) {
+                    //         // Ensure field is set to touched even if it's empty
+                    //         setFieldTouched(name);
+                    //       }
+                    //     }
+                    //   }}
+                    // />
+                  }
+
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    {associatedArtifacts.map((link) => {
+                      if (link.type !== 'AssociatedLink') {
+                        return null;
                       }
-                      error={associatedLinkHasError}
-                      helperText={
-                        associatedLinkHasError
-                          ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
-                          : null
-                      }
-                      data-testid={dataTestId.registrationWizard.files.linkToResourceField}
-                      onChange={(event) => {
-                        const inputValue = event.target.value;
-                        if (inputValue) {
-                          if (associatedLinkIndex < 0) {
-                            const newAssociatedLink: AssociatedLink = {
-                              type: 'AssociatedLink',
-                              id: inputValue,
-                            };
-                            push(newAssociatedLink);
-                            const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
-                              associatedArtifactIsNullArtifact
-                            );
-                            if (nullAssociatedArtifactIndex > -1) {
-                              remove(nullAssociatedArtifactIndex);
-                            }
-                          } else {
-                            const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
-                            setFieldValue(fieldName, inputValue);
-                            setFieldTouched(fieldName);
-                          }
-                        } else {
-                          const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                          remove(associatedLinkIndex);
-                          if (associatedArtifactsBeforeRemoval === 1) {
-                            // Ensure field is set to touched even if it's empty
-                            setFieldTouched(name);
-                          }
-                        }
-                      }}
-                    />
-                  )}
+                      return (
+                        <TextField
+                          key={link.id}
+                          data-testid={dataTestId.registrationWizard.files.linkToResourceField}
+                          variant="filled"
+                          fullWidth
+                          disabled={!canEditFilesAndLinks || !!link.relation}
+                          value={link.id}
+                          label={getAssociatedLinkRelationTitle(t, link.relation)}
+                        />
+                      );
+                    })}
+                  </Box>
                 </Paper>
               </>
             )}
@@ -249,7 +268,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <FormControlLabel
                     control={<Checkbox />}
                     checked={isNullAssociatedArtifact}
-                    onChange={(event, checked) => {
+                    onChange={(_, checked) => {
                       if (!checked) {
                         const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
                           associatedArtifactIsNullArtifact

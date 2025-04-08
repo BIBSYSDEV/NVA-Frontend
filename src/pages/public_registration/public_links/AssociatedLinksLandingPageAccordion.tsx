@@ -38,7 +38,7 @@ export const AssociatedLinksLandingPageAccordion = ({ associatedLinks }: Associa
   );
 };
 
-const getAssociatedLinkRelationTitle = (t: TFunction, relation: AssociatedLink['relation']) => {
+export const getAssociatedLinkRelationTitle = (t: TFunction, relation: AssociatedLink['relation']) => {
   switch (relation) {
     case 'dataset':
       return t('registration.publication_types.DataSet');
