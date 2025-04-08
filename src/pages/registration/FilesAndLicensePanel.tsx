@@ -1,7 +1,7 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
-import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
+import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -15,7 +15,6 @@ import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   allowsFileUpload,
-  associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
   isOpenFile,
@@ -42,7 +41,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
 
-  const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
+  const { values, setFieldValue } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
 
@@ -59,17 +58,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
       file.type === FileType.UpdloadedFile
   );
 
-  const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
-  const associatedLinkHasError =
-    associatedLinkIndex >= 0 &&
-    !!(touched.associatedArtifacts?.[associatedLinkIndex] as FormikTouched<AssociatedLink> | undefined)?.id &&
-    !!(errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink> | undefined)?.id;
-
   const isNullAssociatedArtifact =
     associatedArtifacts.length === 1 && associatedArtifacts.some(associatedArtifactIsNullArtifact);
 
   const filesRef = useRef(files);
-
   useEffect(() => {
     filesRef.current = files;
   }, [files]);
