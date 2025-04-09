@@ -495,6 +495,7 @@ export const dataTestId = {
       licenseModal: 'license-modal',
       linkField: 'link-field',
       linkToResourceField: 'link-to-resource-field',
+      nullAssociatedArtifactCheckbox: 'null-associated-artifact-checkbox',
       removeLinkButton: 'remove-link-button',
       selectLicenseField: 'uploaded-file-select-license',
       version: 'version-radios',

@@ -11,6 +11,7 @@ import { RootState } from '../../redux/store';
 import { FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
 import { FileFieldNames, ResourceFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import {
   allowsFileUpload,
   associatedArtifactIsNullArtifact,
@@ -209,14 +210,16 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
               </>
             )}
 
-            {(associatedArtifacts.length === 0 || isNullAssociatedArtifact) && !originalDoi && (
+            {(associatedArtifacts.length === 0 || isNullAssociatedArtifact) && !originalDoi && !values.doi && (
               <Paper elevation={5} component={BackgroundDiv}>
                 <Typography variant="h2" sx={{ mb: '1rem' }}>
                   {t('registration.files_and_license.resource_is_a_reference')}
                 </Typography>
                 <Box sx={{ backgroundColor: 'white', width: '100%', p: '0.25rem 1rem' }}>
                   <FormControlLabel
-                    control={<Checkbox />}
+                    control={
+                      <Checkbox data-testid={dataTestId.registrationWizard.files.nullAssociatedArtifactCheckbox} />
+                    }
                     checked={isNullAssociatedArtifact}
                     onChange={(_, checked) => {
                       if (!checked) {
