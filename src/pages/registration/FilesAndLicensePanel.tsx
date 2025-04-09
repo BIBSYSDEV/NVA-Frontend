@@ -15,13 +15,13 @@ import {
   allowsFileUpload,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  getAssociatedLinkRelationTitle,
   isOpenFile,
   isPendingOpenFile,
   userHasAccessRight,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
 import { hasCuratorRole } from '../../utils/user-helpers';
-import { getAssociatedLinkRelationTitle } from '../public_registration/public_links/AssociatedLinksLandingPageAccordion';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { LinkField } from './resource_type_tab/components/LinkField';
@@ -180,7 +180,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   </Typography>
 
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    {values.doi && <LinkField fieldName="doi" label={t('common.doi')} />}
+                    {values.doi && <LinkField fieldName={FileFieldNames.Doi} label={t('common.doi')} />}
 
                     {(values.entityDescription?.reference?.doi || !values.doi) && (
                       <LinkField

@@ -196,6 +196,7 @@ export enum DescriptionFieldNames {
 
 export enum FileFieldNames {
   AssociatedArtifacts = 'associatedArtifacts',
+  Doi = 'doi',
 }
 
 // The following fields should be present in "associatedArtifacts[index].<KEY> for files"

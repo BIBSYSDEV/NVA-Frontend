@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
-import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { AssociatedLink } from '../../../types/associatedArtifact.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getAssociatedLinkRelationTitle } from '../../../utils/registration-helpers';
 
 interface AssociatedLinksLandingPageAccordionProps {
   associatedLinks: AssociatedLink[];
@@ -36,19 +36,4 @@ export const AssociatedLinksLandingPageAccordion = ({ associatedLinks }: Associa
       </dl>
     </LandingPageAccordion>
   );
-};
-
-export const getAssociatedLinkRelationTitle = (t: TFunction, relation: AssociatedLink['relation']) => {
-  switch (relation) {
-    case 'dataset':
-      return t('registration.publication_types.DataSet');
-    case 'mention':
-      return t('common.mention');
-    case 'sameAs':
-      return t('common.full_text');
-    case 'metadataSource':
-      return t('common.metadata_source');
-    default:
-      return t('common.link');
-  }
 };
