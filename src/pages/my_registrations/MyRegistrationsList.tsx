@@ -7,20 +7,15 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
 import { setNotification } from '../../redux/notificationSlice';
-import {
-  emptyRegistration,
-  Registration,
-  RegistrationPreview,
-  RegistrationSearchItem,
-} from '../../types/registration.types';
+import { RegistrationSearchItem } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
-import { convertToRegistrationSearchItem, getTitleString } from '../../utils/registration-helpers';
+import { getTitleString } from '../../utils/registration-helpers';
 
 interface MyRegistrationsListProps {
-  registrations: RegistrationPreview[];
-  refetchRegistrations: () => void;
+  registrations: RegistrationSearchItem[];
+  refetchRegistrations: () => Promise<unknown>;
 }
 
 export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyRegistrationsListProps) => {
@@ -38,25 +33,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     }
   }, [registrations, page, rowsPerPage]);
 
-  const registrationsOnPage = registrations.slice((page - 1) * rowsPerPage, page * rowsPerPage);
-
-  const registrationSearchItems: RegistrationSearchItem[] = registrationsOnPage.map((registrationPreview) => {
-    const { identifier, id, contributors, mainTitle, publicationInstance, status, abstract } = registrationPreview;
-    const registration = {
-      ...emptyRegistration,
-      identifier,
-      id,
-      status,
-      entityDescription: {
-        mainTitle,
-        abstract,
-        contributors,
-        reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
-      },
-    } as Registration;
-    return convertToRegistrationSearchItem(registration);
-  });
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationSearchItem>();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -72,9 +48,9 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
+      await refetchRegistrations();
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
       setIsDeleting(false);
-      refetchRegistrations();
       setShowDeleteModal(false);
     }
   };
@@ -86,7 +62,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
 
   return (
     <>
-      {registrationSearchItems.length > 0 ? (
+      {registrations.length > 0 ? (
         <ListPagination
           count={registrations.length}
           rowsPerPage={rowsPerPage}
@@ -98,7 +74,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
           }}>
           <RegistrationList
             onDeleteDraftRegistration={onClickDeleteRegistration}
-            registrations={registrationSearchItems}
+            registrations={registrations}
             canEditRegistration
           />
         </ListPagination>

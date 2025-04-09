@@ -62,11 +62,6 @@ const MyPagePage = () => {
   const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
   const navigate = useNavigate();
 
-  const [selectedRegistrationStatus, setSelectedRegistrationStatus] = useState({
-    published: false,
-    unpublished: true,
-  });
-
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
     generalSupportCase: true,
@@ -358,17 +353,7 @@ const MyPagePage = () => {
         />
         <Route
           path={getSubUrl(UrlPathTemplate.MyPageMyRegistrations, UrlPathTemplate.MyPage)}
-          element={
-            <PrivateRoute
-              element={
-                <MyRegistrations
-                  selectedPublished={selectedRegistrationStatus.published}
-                  selectedUnpublished={selectedRegistrationStatus.unpublished}
-                />
-              }
-              isAuthorized={isCreator}
-            />
-          }
+          element={<PrivateRoute element={<MyRegistrations />} isAuthorized={isCreator} />}
         />
 
         <Route path={getSubUrl(UrlPathTemplate.MyPage, UrlPathTemplate.MyPage, true)} element={<NotFound />} />

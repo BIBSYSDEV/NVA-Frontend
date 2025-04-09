@@ -15,12 +15,9 @@ import { RegistrationStatus } from '../../types/registration.types';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { MyRegistrationsList } from './MyRegistrationsList';
 
-interface MyRegistrationsProps {
-  selectedPublished: boolean;
-  selectedUnpublished: boolean;
-}
+const statusFilterLabelId = 'status-radio-buttons-group-label';
 
-export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRegistrationsProps) => {
+export const MyRegistrations = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [, setSearchParams] = useSearchParams();
@@ -37,11 +34,13 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
   });
 
   const nextRegistrations = userRegistrationsQuery.data?.hits ?? [];
-  const registrations = registrationsQuery.data?.publications ?? [];
+  // const registrations = registrationsQuery.data?.publications ?? [];
 
   const deleteDraftRegistrationMutation = useMutation({
     mutationFn: async () => {
-      const draftRegistrations = registrations.filter(({ status }) => status === RegistrationStatus.Draft);
+      const draftRegistrations = nextRegistrations.filter(
+        (registration) => registration.recordMetadata.status === RegistrationStatus.Draft
+      );
       const deletePromises = draftRegistrations.map((registration) => deleteRegistration(registration.identifier));
       await Promise.all(deletePromises);
       await registrationsQuery.refetch();
@@ -81,19 +80,18 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
 
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <FormControl>
-                <FormLabel id="demo-row-radio-buttons-group-label">Status</FormLabel>
+                <FormLabel id={statusFilterLabelId}>{t('common.status')}</FormLabel>
                 <RadioGroup
+                  aria-labelledby={statusFilterLabelId}
                   row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
                   value={params.status}
-                  onChange={(_, value) => {
+                  onChange={(_, value) =>
                     setSearchParams((params) => {
                       params.set(UserResultParam.Status, value);
                       params.delete(ResultParam.From);
                       return params;
-                    });
-                  }}>
+                    })
+                  }>
                   <FormControlLabel
                     value={RegistrationStatus.Draft}
                     control={<Radio />}
@@ -112,13 +110,12 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
                   sx={{ bgcolor: 'white' }}
                   variant="outlined"
                   onClick={() => setShowDeleteModal(true)}
-                  // disabled={draftRegistrations.length === 0}
-                >
+                  disabled={!params.status?.includes(RegistrationStatus.Draft)}>
                   {t('my_page.registrations.delete_all_draft_registrations')}
                 </Button>
               )}
             </Box>
-            <MyRegistrationsList registrations={registrations} refetchRegistrations={registrationsQuery.refetch} />
+            <MyRegistrationsList registrations={nextRegistrations} refetchRegistrations={registrationsQuery.refetch} />
           </>
         )}
       </div>
