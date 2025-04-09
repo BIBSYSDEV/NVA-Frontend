@@ -104,7 +104,7 @@ export const MyRegistrations = () => {
               <Button
                 variant="outlined"
                 onClick={() => setShowDeleteModal(true)}
-                disabled={!params.status?.includes(RegistrationStatus.Draft)}>
+                disabled={!params.status?.includes(RegistrationStatus.Draft) || registrations.length === 0}>
                 {t('my_page.registrations.delete_all_draft_registrations')}
               </Button>
             </Box>
