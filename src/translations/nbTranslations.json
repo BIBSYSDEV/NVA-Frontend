@@ -216,6 +216,7 @@
     "language": "Språk",
     "last_name": "Etternavn",
     "link": "Lenke",
+    "links": "Lenker",
     "log": "Logg",
     "main": "Hoved",
     "mention": "Omtale",
@@ -1437,6 +1438,7 @@
       "accepted": "Akseptert",
       "accepted_version": "Akseptert versjon",
       "add_files_or_links": "Legg til fil eller lenke",
+      "add_link": "Legg til lenke",
       "availability": "Tilgjengelighet",
       "conditions_for_using_file": "Betingelser for bruk",
       "delete_file": "Slett fil",
@@ -1958,8 +1960,8 @@
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",
       "related_results_description": "Søk opp og velg resultat i søkefeltet for å knytte relaterte resultater til dette resultatet.",
-      "remove_doi": "Fjern DOI",
-      "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
+      "remove_link": "Fjern lenke",
+      "remove_link_text": "Ønsker du å fjerne lenken?",
       "research_data": {
         "accept_dataset_terms": {
           "contains_personal_data": "Datasettet inneholder personopplysninger?*",
