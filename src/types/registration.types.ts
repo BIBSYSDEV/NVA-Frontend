@@ -319,21 +319,6 @@ export const emptyRegistrationDate: RegistrationDate = {
   day: '',
 };
 
-export interface RegistrationPreview {
-  abstract: string;
-  contributors: Contributor[];
-  identifier: string;
-  id: string;
-  mainTitle: string;
-  createdDate: string;
-  modifiedDate: string;
-  status: RegistrationStatus;
-  owner: string;
-  publicationInstance?: {
-    type: PublicationInstanceType;
-  };
-}
-
 export interface DoiPreview {
   entityDescription: EntityDescription;
 }
