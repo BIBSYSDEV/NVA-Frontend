@@ -28,7 +28,6 @@ export const MyRegistrations = () => {
 
   const params = useRegistrationsQueryParams();
   const userRegistrationsQuery = useUserRegistrationSearch(params);
-
   const registrations = userRegistrationsQuery.data?.hits ?? [];
 
   const deleteDraftRegistrationMutation = useMutation({
@@ -41,22 +40,11 @@ export const MyRegistrations = () => {
       await userRegistrationsQuery.refetch();
     },
     onSuccess: () => {
-      dispatch(
-        setNotification({
-          message: t('feedback.success.delete_draft_registrations'),
-          variant: 'success',
-        })
-      );
+      dispatch(setNotification({ message: t('feedback.success.delete_draft_registrations'), variant: 'success' }));
       setShowDeleteModal(false);
     },
-    onError: () => {
-      dispatch(
-        setNotification({
-          message: t('feedback.error.delete_draft_registrations'),
-          variant: 'error',
-        })
-      );
-    },
+    onError: () =>
+      dispatch(setNotification({ message: t('feedback.error.delete_draft_registrations'), variant: 'error' })),
   });
 
   return (
