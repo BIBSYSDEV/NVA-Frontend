@@ -1,12 +1,12 @@
 import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router';
 import { useUserRegistrationSearch } from '../../api/hooks/useFetchUserRegistrationSearch';
-import { deleteRegistration, fetchRegistrationsByOwner } from '../../api/registrationApi';
+import { deleteRegistration } from '../../api/registrationApi';
 import { ResultParam, UserResultParam } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -28,23 +28,16 @@ export const MyRegistrations = () => {
   const params = useRegistrationsQueryParams();
   const userRegistrationsQuery = useUserRegistrationSearch(params);
 
-  const registrationsQuery = useQuery({
-    queryKey: ['by-owner'],
-    queryFn: fetchRegistrationsByOwner,
-    meta: { errorMessage: t('feedback.error.search') },
-  });
-
-  const nextRegistrations = userRegistrationsQuery.data?.hits ?? [];
-  // const registrations = registrationsQuery.data?.publications ?? [];
+  const registrations = userRegistrationsQuery.data?.hits ?? [];
 
   const deleteDraftRegistrationMutation = useMutation({
     mutationFn: async () => {
-      const draftRegistrations = nextRegistrations.filter(
+      const draftRegistrations = registrations.filter(
         (registration) => registration.recordMetadata.status === RegistrationStatus.Draft
       );
       const deletePromises = draftRegistrations.map((registration) => deleteRegistration(registration.identifier));
       await Promise.all(deletePromises);
-      await registrationsQuery.refetch();
+      await userRegistrationsQuery.refetch();
     },
     onSuccess: () => {
       dispatch(
@@ -71,7 +64,7 @@ export const MyRegistrations = () => {
         <title>{t('common.result_registrations')}</title>
       </Helmet>
       <div>
-        {registrationsQuery.isPending ? (
+        {userRegistrationsQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
           <>
@@ -115,7 +108,7 @@ export const MyRegistrations = () => {
                 {t('my_page.registrations.delete_all_draft_registrations')}
               </Button>
             </Box>
-            <MyRegistrationsList registrations={nextRegistrations} refetchRegistrations={registrationsQuery.refetch} />
+            <MyRegistrationsList registrations={registrations} refetchRegistrations={userRegistrationsQuery.refetch} />
           </>
         )}
       </div>

@@ -12,7 +12,6 @@ import {
 import { mockDoiLookup } from '../utils/testfiles/mockDoiLookup';
 import { mockCompleteUpload, mockCreateUpload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
-import { mockMyRegistrations } from '../utils/testfiles/mockMyRegistrations';
 import { mockNviCandidate } from '../utils/testfiles/mockNviCandidate';
 import { mockNviReportStatus } from '../utils/testfiles/mockNviReportStatus';
 import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
@@ -57,9 +56,6 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(FileApiPath.Create)).reply(200, mockCreateUpload);
   mock.onPost(new RegExp(FileApiPath.Prepare)).reply(200, mockPrepareUpload);
   mock.onPost(new RegExp(FileApiPath.Complete)).reply(200, mockCompleteUpload);
-
-  //MY PUBLICATIONS
-  mock.onGet(new RegExp(PublicationsApiPath.RegistrationsByOwner)).reply(200, mockMyRegistrations);
 
   //MY MESSAGES
   mock.onGet(new RegExp(SearchApiPath.CustomerTickets)).reply(200, mockSearchTasks);

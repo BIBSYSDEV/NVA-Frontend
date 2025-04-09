@@ -83,10 +83,6 @@ export interface Publisher extends PublicationChannel {
   type: 'Publisher';
 }
 
-export interface MyRegistrationsResponse {
-  publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
-}
-
 type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier' | 'HandleIdentifier';
 type ImportSourceName = 'Cristin' | 'Scopus' | 'handle';
 
