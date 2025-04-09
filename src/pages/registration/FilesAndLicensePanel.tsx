@@ -39,7 +39,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
 
-  const { values, setFieldValue } = useFormikContext<Registration>();
+  const { values } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
 
@@ -187,9 +187,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                         fieldName={ResourceFieldNames.Doi}
                         label={t('registration.registration.link_to_resource')}
                         canEdit={canEditFilesAndLinks}
-                        handleDelete={
-                          canEditFilesAndLinks ? () => setFieldValue(ResourceFieldNames.Doi, '') : undefined
-                        }
                       />
                     )}
 
