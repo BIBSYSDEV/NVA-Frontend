@@ -45,6 +45,7 @@ export enum RoleApiPath {
 
 export enum SearchApiPath {
   CustomerRegistrations = '/search/customer/resources',
+  UserRegistrations = '/search/user/resources',
   Registrations = '/search/resources',
   RegistrationsExport = '/search/resources/export',
   CustomerTickets = '/search/customer/tickets',

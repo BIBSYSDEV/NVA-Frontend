@@ -1,14 +1,18 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router';
+import { useUserRegistrationSearch } from '../../api/hooks/useFetchUserRegistrationSearch';
 import { deleteRegistration, fetchRegistrationsByOwner } from '../../api/registrationApi';
+import { ResultParam, UserResultParam } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus } from '../../types/registration.types';
+import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { MyRegistrationsList } from './MyRegistrationsList';
 
 interface MyRegistrationsProps {
@@ -19,8 +23,12 @@ interface MyRegistrationsProps {
 export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRegistrationsProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [, setSearchParams] = useSearchParams();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const params = useRegistrationsQueryParams();
+  const userRegistrationsQuery = useUserRegistrationSearch(params);
 
   const registrationsQuery = useQuery({
     queryKey: ['by-owner'],
@@ -28,36 +36,13 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
     meta: { errorMessage: t('feedback.error.search') },
   });
 
+  const nextRegistrations = userRegistrationsQuery.data?.hits ?? [];
   const registrations = registrationsQuery.data?.publications ?? [];
-  const draftRegistrations = registrations.filter(({ status }) => status === RegistrationStatus.Draft);
-
-  const filteredRegistrations = registrations
-    .filter(
-      ({ status }) =>
-        (status === RegistrationStatus.Draft && selectedUnpublished) ||
-        ((status === RegistrationStatus.Published || status === RegistrationStatus.PublishedMetadata) &&
-          selectedPublished) ||
-        ((status === RegistrationStatus.Draft ||
-          status === RegistrationStatus.Published ||
-          status === RegistrationStatus.PublishedMetadata) &&
-          !selectedPublished &&
-          !selectedUnpublished)
-    )
-    .sort((a, b) => {
-      if (a.status === RegistrationStatus.Draft && b.status !== RegistrationStatus.Draft) {
-        return -1;
-      } else if (a.status !== RegistrationStatus.Draft && b.status === RegistrationStatus.Draft) {
-        return 1;
-      }
-      return 0;
-    });
 
   const deleteDraftRegistrationMutation = useMutation({
     mutationFn: async () => {
-      const deletePromises = draftRegistrations.map(
-        async (registration) => await deleteRegistration(registration.identifier)
-      );
-
+      const draftRegistrations = registrations.filter(({ status }) => status === RegistrationStatus.Draft);
+      const deletePromises = draftRegistrations.map((registration) => deleteRegistration(registration.identifier));
       await Promise.all(deletePromises);
       await registrationsQuery.refetch();
     },
@@ -90,24 +75,50 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
           <>
+            <Typography gutterBottom variant="h1">
+              {t('common.result_registrations')}
+            </Typography>
+
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Typography gutterBottom variant="h1">
-                {t('common.result_registrations')}
-              </Typography>
+              <FormControl>
+                <FormLabel id="demo-row-radio-buttons-group-label">Status</FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                  value={params.status}
+                  onChange={(_, value) => {
+                    setSearchParams((params) => {
+                      params.set(UserResultParam.Status, value);
+                      params.delete(ResultParam.From);
+                      return params;
+                    });
+                  }}>
+                  <FormControlLabel
+                    value={RegistrationStatus.Draft}
+                    control={<Radio />}
+                    label={t('registration.status.DRAFT')}
+                  />
+                  <FormControlLabel
+                    value={RegistrationStatus.Published}
+                    control={<Radio />}
+                    label={t('registration.status.PUBLISHED')}
+                  />
+                </RadioGroup>
+              </FormControl>
+
               {(!selectedPublished || selectedUnpublished) && (
                 <Button
                   sx={{ bgcolor: 'white' }}
                   variant="outlined"
                   onClick={() => setShowDeleteModal(true)}
-                  disabled={draftRegistrations.length === 0}>
+                  // disabled={draftRegistrations.length === 0}
+                >
                   {t('my_page.registrations.delete_all_draft_registrations')}
                 </Button>
               )}
             </Box>
-            <MyRegistrationsList
-              registrations={filteredRegistrations}
-              refetchRegistrations={registrationsQuery.refetch}
-            />
+            <MyRegistrationsList registrations={registrations} refetchRegistrations={registrationsQuery.refetch} />
           </>
         )}
       </div>

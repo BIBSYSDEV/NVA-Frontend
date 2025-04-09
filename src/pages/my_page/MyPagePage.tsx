@@ -2,7 +2,7 @@ import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Badge, Divider, FormControlLabel, Typography } from '@mui/material';
+import { Badge, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ import {
   SortOrder,
   TicketOrderBy,
   TicketSearchParam,
+  UserResultParam,
 } from '../../api/searchApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -25,10 +26,11 @@ import {
 import { ProfilePicture } from '../../components/ProfilePicture';
 import { SelectableButton } from '../../components/SelectableButton';
 import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
-import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
+import { RegistrationStatus } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -258,44 +260,13 @@ const MyPagePage = () => {
             key={dataTestId.myPage.registrationsAccordion}
             title={t('common.result_registrations')}
             startIcon={<NotesIcon fontSize="small" sx={{ bgcolor: 'registration.main' }} />}
-            accordionPath={UrlPathTemplate.MyPageRegistrations}
-            defaultPath={UrlPathTemplate.MyPageMyRegistrations}
+            accordionPath={UrlPathTemplate.MyPageMyRegistrations}
+            defaultPath={`${UrlPathTemplate.MyPageMyRegistrations}?${UserResultParam.Status}=${RegistrationStatus.Draft}`}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
-            <NavigationList component="div">
-              <StyledTicketSearchFormGroup>
-                <FormControlLabel
-                  data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
-                  checked={selectedRegistrationStatus.unpublished}
-                  control={
-                    <StyledStatusCheckbox
-                      onChange={() =>
-                        setSelectedRegistrationStatus({
-                          ...selectedRegistrationStatus,
-                          unpublished: !selectedRegistrationStatus.unpublished,
-                        })
-                      }
-                    />
-                  }
-                  label={t('my_page.registrations.unpublished')}
-                />
-                <FormControlLabel
-                  data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
-                  checked={selectedRegistrationStatus.published}
-                  control={
-                    <StyledStatusCheckbox
-                      onChange={() =>
-                        setSelectedRegistrationStatus({
-                          ...selectedRegistrationStatus,
-                          published: !selectedRegistrationStatus.published,
-                        })
-                      }
-                    />
-                  }
-                  label={t('my_page.registrations.published')}
-                />
-              </StyledTicketSearchFormGroup>
-            </NavigationList>
             <Divider sx={{ mt: '0.5rem' }} />
+            <Typography sx={{ margin: '1rem' }}>
+              {t('my_page.my_profile.list_contains_all_registration_you_have_created')}
+            </Typography>
             <LinkCreateButton
               data-testid={dataTestId.myPage.newRegistrationLink}
               to={UrlPathTemplate.RegistrationNew}
@@ -312,7 +283,7 @@ const MyPagePage = () => {
             dataTestId={dataTestId.myPage.projectRegistrationsAccordion}>
             <Divider sx={{ mt: '0.5rem' }} />
             <Typography sx={{ margin: '1rem' }}>
-              {t('my_page.my_profile.list_contains_all_registration_you_have_created')}
+              {t('my_page.my_profile.list_contains_all_projects_you_have_created')}
             </Typography>
             <LinkCreateButton
               data-testid={dataTestId.myPage.createProjectButton}
