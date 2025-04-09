@@ -868,9 +868,7 @@
       "delete_all_draft_registrations": "Slett alle kladder",
       "delete_all_draft_registrations_message": "Slett alle kladder?",
       "delete_registration": "Slett upublisert registrering",
-      "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-      "published": "Publisert",
-      "unpublished": "Kladd"
+      "delete_registration_message": "Ønsker du å slette \"{{title}}\"?"
     },
     "research_profile": "Forskerprofil",
     "roles": {
