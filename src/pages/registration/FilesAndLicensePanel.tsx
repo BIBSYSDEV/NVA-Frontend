@@ -1,5 +1,4 @@
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Box, Button, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef } from 'react';
@@ -9,10 +8,9 @@ import { InfoBanner } from '../../components/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { AssociatedLink, FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
+import { FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
 import { FileFieldNames, ResourceFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import { dataTestId } from '../../utils/dataTestIds';
 import {
   allowsFileUpload,
   associatedArtifactIsNullArtifact,
@@ -184,10 +182,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {values.doi && <LinkField fieldName="doi" label={t('common.doi')} />}
 
-                    {values.entityDescription?.reference?.doi && (
+                    {(values.entityDescription?.reference?.doi || !values.doi) && (
                       <LinkField
                         fieldName={ResourceFieldNames.Doi}
                         label={t('registration.registration.link_to_resource')}
+                        canEdit={canEditFilesAndLinks}
                         handleDelete={
                           canEditFilesAndLinks ? () => setFieldValue(ResourceFieldNames.Doi, '') : undefined
                         }
@@ -203,24 +202,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                           key={index}
                           fieldName={`${FileFieldNames.AssociatedArtifacts}[${index}].${SpecificLinkFieldNames.Id}`}
                           label={getAssociatedLinkRelationTitle(t, link.relation)}
-                          canEdit={!link.relation && canEditFilesAndLinks}
+                          canEdit={canEditFilesAndLinks}
                           handleDelete={canEditFilesAndLinks ? () => remove(index) : undefined}
                         />
                       );
                     })}
-                    {canEditFilesAndLinks && (
-                      <Button
-                        variant="outlined"
-                        sx={{ alignSelf: 'start' }}
-                        startIcon={<AddCircleOutlineIcon />}
-                        onClick={() => push({ type: 'AssociatedLink', id: '' } satisfies AssociatedLink)}
-                        disabled={values.associatedArtifacts.some(
-                          (artifact) => artifact.type === 'AssociatedLink' && !artifact.relation && !artifact.id
-                        )}
-                        data-testid={dataTestId.registrationWizard.files.addLinkButton}>
-                        {t('registration.files_and_license.add_link')}
-                      </Button>
-                    )}
                   </Box>
                 </Paper>
               </>

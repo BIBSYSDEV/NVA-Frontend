@@ -278,17 +278,6 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         )}
 
         <AssociatedLinksLandingPageAccordion associatedLinks={getAssociatedLinks(registration.associatedArtifacts)} />
-
-        {/* {associatedLinks.length > 0 && (
-          <LandingPageAccordion
-            // dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
-            defaultExpanded
-            heading={`${"Andre lenker"} (${associatedLinks.length})`}>
-            <dl>
-              <
-            </dl>
-          </LandingPageAccordion>
-        )} */}
       </BackgroundDiv>
     </Paper>
   );

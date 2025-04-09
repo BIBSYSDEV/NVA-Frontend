@@ -30,7 +30,6 @@ export const LinkField = ({ fieldName, label, canEdit = false, handleDelete }: L
             data-testid={dataTestId.registrationWizard.files.linkField}
             variant="filled"
             fullWidth
-            required
             sx={{ flex: '1 25rem' }}
             label={label}
             disabled={!canEdit}
