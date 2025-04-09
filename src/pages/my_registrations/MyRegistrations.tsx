@@ -10,6 +10,7 @@ import { deleteRegistration } from '../../api/registrationApi';
 import { ResultParam, UserResultParam } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListSkeleton } from '../../components/ListSkeleton';
+import { SearchForm } from '../../components/SearchForm';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -72,6 +73,12 @@ export const MyRegistrations = () => {
               {t('common.result_registrations')}
             </Typography>
 
+            <SearchForm
+              placeholder={t('search.search_placeholder')}
+              sx={{ my: '1rem' }}
+              paginationOffsetParamName={ResultParam.From}
+            />
+
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <FormControl>
                 <FormLabel id={statusFilterLabelId}>{t('common.status')}</FormLabel>
@@ -108,6 +115,7 @@ export const MyRegistrations = () => {
                 {t('my_page.registrations.delete_all_draft_registrations')}
               </Button>
             </Box>
+
             <MyRegistrationsList registrations={registrations} refetchRegistrations={userRegistrationsQuery.refetch} />
           </>
         )}
