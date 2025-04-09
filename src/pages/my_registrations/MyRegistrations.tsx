@@ -105,15 +105,12 @@ export const MyRegistrations = () => {
                 </RadioGroup>
               </FormControl>
 
-              {(!selectedPublished || selectedUnpublished) && (
-                <Button
-                  sx={{ bgcolor: 'white' }}
-                  variant="outlined"
-                  onClick={() => setShowDeleteModal(true)}
-                  disabled={!params.status?.includes(RegistrationStatus.Draft)}>
-                  {t('my_page.registrations.delete_all_draft_registrations')}
-                </Button>
-              )}
+              <Button
+                variant="outlined"
+                onClick={() => setShowDeleteModal(true)}
+                disabled={!params.status?.includes(RegistrationStatus.Draft)}>
+                {t('my_page.registrations.delete_all_draft_registrations')}
+              </Button>
             </Box>
             <MyRegistrationsList registrations={nextRegistrations} refetchRegistrations={registrationsQuery.refetch} />
           </>
