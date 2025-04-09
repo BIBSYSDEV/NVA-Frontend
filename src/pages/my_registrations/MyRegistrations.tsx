@@ -12,6 +12,7 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { MyRegistrationsList } from './MyRegistrationsList';
 
@@ -93,11 +94,13 @@ export const MyRegistrations = () => {
                     })
                   }>
                   <FormControlLabel
+                    data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
                     value={RegistrationStatus.Draft}
                     control={<Radio />}
                     label={t('registration.status.DRAFT')}
                   />
                   <FormControlLabel
+                    data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
                     value={RegistrationStatus.Published}
                     control={<Radio />}
                     label={t('registration.status.PUBLISHED')}

@@ -10,6 +10,7 @@ import {
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
 import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
+import { mockRegistrationSearchItem } from '../../src/utils/testfiles/mockRegistrationSearchItem';
 
 describe('User opens registration form and can see validation errors', () => {
   beforeEach('Given that the user is logged in as Creator:', () => {
@@ -18,7 +19,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.registrationsAccordion}]`).click();
-    cy.get('[data-testid=edit-registration-4327439]').click({ force: true });
+    cy.get(`[data-testid=edit-registration-${mockRegistrationSearchItem.identifier}]`).first().click({ force: true });
   });
 
   it('The User should be see validation errors for every tab', () => {
