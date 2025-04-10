@@ -75,8 +75,7 @@ export const emptyFile: AssociatedFile = {
 export interface AssociatedLink {
   type: 'AssociatedLink';
   id: string;
-  name?: string;
-  description?: string;
+  relation?: 'dataset' | 'mention' | 'sameAs' | 'metadataSource';
 }
 
 export interface NullAssociatedArtifact {
