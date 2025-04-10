@@ -78,7 +78,7 @@ export const MyResults = () => {
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
           <RegistrationSearchResults
             canEditRegistration
-            searchResult={registrationsQuery.data.hits}
+            registrations={registrationsQuery.data.hits}
             promotedPublications={promotedPublications}
           />
         ) : (

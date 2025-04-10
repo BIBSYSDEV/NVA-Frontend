@@ -28,7 +28,7 @@ import { RegistrationIconHeader } from './RegistrationIconHeader';
 import { SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
 
-interface RegistrationListProps extends Pick<LinkProps, 'target'> {
+export interface RegistrationListProps extends Pick<LinkProps, 'target'> {
   registrations: RegistrationSearchItem[];
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: RegistrationSearchItem) => void;

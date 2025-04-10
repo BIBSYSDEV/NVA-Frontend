@@ -11,6 +11,8 @@ import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react
 import {
   fetchCustomerTickets,
   FetchTicketsParams,
+  ResultParam,
+  ResultSearchOrder,
   SortOrder,
   TicketOrderBy,
   TicketSearchParam,
@@ -256,7 +258,7 @@ const MyPagePage = () => {
             title={t('common.result_registrations')}
             startIcon={<NotesIcon fontSize="small" sx={{ bgcolor: 'registration.main' }} />}
             accordionPath={UrlPathTemplate.MyPageMyRegistrations}
-            defaultPath={`${UrlPathTemplate.MyPageMyRegistrations}?${UserResultParam.Status}=${RegistrationStatus.Draft}`}
+            defaultPath={`${UrlPathTemplate.MyPageMyRegistrations}?${UserResultParam.Status}=${RegistrationStatus.Draft}&${ResultParam.Order}=${ResultSearchOrder.ModifiedDate}&${ResultParam.Sort}=${'desc' satisfies SortOrder}`}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
             <Divider sx={{ mt: '0.5rem' }} />
             <Typography sx={{ margin: '1rem' }}>

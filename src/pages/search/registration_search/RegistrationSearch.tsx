@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ListPagination } from '../../../components/ListPagination';
@@ -6,10 +7,15 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { SearchPageProps } from '../SearchPage';
-import { RegistrationSearchResults } from './RegistrationSearchResults';
+import { RegistrationSearchResults, RegistrationSearchResultsProps } from './RegistrationSearchResults';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
 
-export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
+interface RegistrationSearchProps extends Omit<RegistrationSearchResultsProps, 'registrations'> {
+  registrationQuery: SearchPageProps['registrationQuery'];
+  sortingComponent?: ReactNode;
+}
+
+export const RegistrationSearch = ({ registrationQuery, sortingComponent, ...rest }: RegistrationSearchProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,6 +34,8 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
     navigate({ search: syncedParams.toString() });
   };
 
+  const registrations = registrationQuery.data?.hits ?? [];
+
   return (
     <section>
       <ListPagination
@@ -39,11 +47,11 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
         onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
         maxHits={10_000}
         showPaginationTop
-        sortingComponent={<RegistrationSortSelector />}>
+        sortingComponent={sortingComponent ?? <RegistrationSortSelector />}>
         {registrationQuery.isFetching ? (
           <ListSkeleton arrayLength={3} minWidth={40} height={100} />
         ) : registrationQuery.data?.hits && registrationQuery.data.hits.length > 0 ? (
-          <RegistrationSearchResults searchResult={registrationQuery.data.hits} />
+          <RegistrationSearchResults registrations={registrations} {...rest} />
         ) : (
           <Typography sx={{ mx: { xs: '0.5rem', md: 0 }, mt: '1rem' }}>{t('search.no_results')}</Typography>
         )}

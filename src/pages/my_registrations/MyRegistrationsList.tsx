@@ -1,22 +1,19 @@
 import { Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router';
 import { deleteRegistration } from '../../api/registrationApi';
-import { ResultParam } from '../../api/searchApi';
+import { ResultParam, ResultSearchOrder } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { ListPagination } from '../../components/ListPagination';
-import { RegistrationList } from '../../components/RegistrationList';
+import { SortSelector } from '../../components/SortSelector';
 import { setNotification } from '../../redux/notificationSlice';
 import { SearchResponse2 } from '../../types/common.types';
 import { RegistrationAggregations, RegistrationSearchItem } from '../../types/registration.types';
-import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
-import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
-import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { getTitleString } from '../../utils/registration-helpers';
+import { RegistrationSearch } from '../search/registration_search/RegistrationSearch';
 
 interface MyRegistrationsListProps {
   registrationsQuery: UseQueryResult<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>;
@@ -25,17 +22,6 @@ interface MyRegistrationsListProps {
 export const MyRegistrationsList = ({ registrationsQuery }: MyRegistrationsListProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  const [, setSearchParams] = useSearchParams();
-  const { from, results } = useRegistrationsQueryParams();
-
-  const registrations = useMemo(() => registrationsQuery.data?.hits ?? [], [registrationsQuery.data]);
-
-  useEffect(() => {
-    if (registrations.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
-      typesetMathJax();
-    }
-  }, [registrations]);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationSearchItem>();
@@ -64,40 +50,28 @@ export const MyRegistrationsList = ({ registrationsQuery }: MyRegistrationsListP
     setShowDeleteModal(true);
   };
 
-  const rowsPerPage = (results && +results) || ROWS_PER_PAGE_OPTIONS[0];
-  const page = (from && rowsPerPage && Math.floor(+from / rowsPerPage)) || 0;
-
   return (
     <>
-      {registrations.length > 0 ? (
-        <ListPagination
-          count={registrationsQuery.data?.totalHits ?? 0}
-          rowsPerPage={rowsPerPage}
-          page={page + 1}
-          onPageChange={(newPage) =>
-            setSearchParams((params) => {
-              params.set(ResultParam.From, ((newPage - 1) * rowsPerPage).toString());
-              return params;
-            })
-          }
-          onRowsPerPageChange={(newRowsPerPage) => {
-            setSearchParams((params) => {
-              params.set(ResultParam.Results, newRowsPerPage.toString());
-              params.delete(ResultParam.From);
-              return params;
-            });
-          }}>
-          <RegistrationList
-            onDeleteDraftRegistration={onClickDeleteRegistration}
-            registrations={registrations}
-            canEditRegistration
+      <RegistrationSearch
+        registrationQuery={registrationsQuery}
+        onDeleteDraftRegistration={onClickDeleteRegistration}
+        canEditRegistration
+        sortingComponent={
+          <SortSelector
+            sortKey={ResultParam.Sort}
+            orderKey={ResultParam.Order}
+            paginationKey={ResultParam.From}
+            aria-label={t('search.sort_by')}
+            size="small"
+            variant="standard"
+            options={[
+              { orderBy: ResultSearchOrder.ModifiedDate, sortOrder: 'desc', i18nKey: 'search.sort_by_modified_date' },
+              { orderBy: ResultSearchOrder.Title, sortOrder: 'asc', i18nKey: 'search.sort_alphabetically_asc' },
+              { orderBy: ResultSearchOrder.Title, sortOrder: 'desc', i18nKey: 'search.sort_alphabetically_desc' },
+            ]}
           />
-        </ListPagination>
-      ) : (
-        <Typography>{t('common.no_hits')}</Typography>
-      )}
-
-      {/* <RegistrationSearch registrationQuery={registrationsQuery} onDeleteRegistration={onClickDeleteRegistration} /> */}
+        }
+      />
 
       <ConfirmDialog
         open={showDeleteModal}

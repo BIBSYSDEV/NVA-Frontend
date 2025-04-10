@@ -1,34 +1,36 @@
 import { useEffect } from 'react';
-import { RegistrationList } from '../../../components/RegistrationList';
+import { RegistrationList, RegistrationListProps } from '../../../components/RegistrationList';
 import { RegistrationSearchItem } from '../../../types/registration.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 
-interface SearchResultsProps {
-  searchResult: RegistrationSearchItem[];
+export interface RegistrationSearchResultsProps extends RegistrationListProps {
+  registrations: RegistrationSearchItem[];
   canEditRegistration?: boolean;
   promotedPublications?: string[];
 }
 
 export const RegistrationSearchResults = ({
-  searchResult,
+  registrations,
   canEditRegistration = false,
   promotedPublications = [],
-}: SearchResultsProps) => {
+  ...rest
+}: RegistrationSearchResultsProps) => {
   useEffect(() => {
     if (
-      searchResult.some(
+      registrations.some(
         ({ mainTitle, abstract }) => stringIncludesMathJax(mainTitle) || stringIncludesMathJax(abstract)
       )
     ) {
       typesetMathJax();
     }
-  }, [searchResult]);
+  }, [registrations]);
 
   return (
     <RegistrationList
+      registrations={registrations}
       canEditRegistration={canEditRegistration}
-      registrations={searchResult}
       promotedPublications={promotedPublications}
+      {...rest}
     />
   );
 };

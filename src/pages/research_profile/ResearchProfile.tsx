@@ -308,7 +308,7 @@ const ResearchProfile = () => {
             <ListSkeleton minWidth={100} height={100} />
           ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
             <RegistrationSearchResults
-              searchResult={registrationsQuery.data.hits}
+              registrations={registrationsQuery.data.hits}
               promotedPublications={promotedPublications}
             />
           ) : (
