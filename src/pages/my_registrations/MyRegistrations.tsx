@@ -67,48 +67,50 @@ export const MyRegistrations = () => {
         {t('common.result_registrations')}
       </Typography>
 
-      <SearchForm
-        placeholder={t('search.search_placeholder')}
-        sx={{ mb: '0.5rem' }}
-        paginationOffsetParamName={ResultParam.From}
-      />
+      <search>
+        <SearchForm
+          placeholder={t('search.search_placeholder')}
+          sx={{ mb: '0.5rem' }}
+          paginationOffsetParamName={ResultParam.From}
+        />
 
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <FormControl>
-          <FormLabel id={statusFilterLabelId}>{t('common.status')}</FormLabel>
-          <RadioGroup
-            aria-labelledby={statusFilterLabelId}
-            row
-            value={statusValue}
-            onChange={(_, value) =>
-              setSearchParams((params) => {
-                params.set(UserResultParam.Status, value);
-                params.delete(ResultParam.From);
-                return params;
-              })
-            }>
-            <FormControlLabel
-              data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
-              value={RegistrationStatus.Draft}
-              control={<Radio />}
-              label={t('registration.status.DRAFT')}
-            />
-            <FormControlLabel
-              data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
-              value={RegistrationStatus.Published}
-              control={<Radio />}
-              label={t('registration.status.PUBLISHED')}
-            />
-          </RadioGroup>
-        </FormControl>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <FormControl>
+            <FormLabel id={statusFilterLabelId}>{t('common.status')}</FormLabel>
+            <RadioGroup
+              aria-labelledby={statusFilterLabelId}
+              row
+              value={statusValue}
+              onChange={(_, value) =>
+                setSearchParams((params) => {
+                  params.set(UserResultParam.Status, value);
+                  params.delete(ResultParam.From);
+                  return params;
+                })
+              }>
+              <FormControlLabel
+                data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
+                value={RegistrationStatus.Draft}
+                control={<Radio />}
+                label={t('registration.status.DRAFT')}
+              />
+              <FormControlLabel
+                data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
+                value={RegistrationStatus.Published}
+                control={<Radio />}
+                label={t('registration.status.PUBLISHED')}
+              />
+            </RadioGroup>
+          </FormControl>
 
-        <Button
-          variant="outlined"
-          onClick={() => setShowDeleteModal(true)}
-          disabled={!params.status?.includes(RegistrationStatus.Draft) || registrations.length === 0}>
-          {t('my_page.registrations.delete_all_draft_registrations')}
-        </Button>
-      </Box>
+          <Button
+            variant="outlined"
+            onClick={() => setShowDeleteModal(true)}
+            disabled={!params.status?.includes(RegistrationStatus.Draft) || registrations.length === 0}>
+            {t('my_page.registrations.delete_all_draft_registrations')}
+          </Button>
+        </Box>
+      </search>
 
       {userRegistrationsQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
