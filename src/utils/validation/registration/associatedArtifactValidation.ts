@@ -26,12 +26,17 @@ const associatedArtifactErrorMessage = {
   linkInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.files_and_license.link_to_resource'),
   }),
+  linkRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.link'),
+  }),
 };
 
 const linkValidation = Yup.string()
   .nullable()
   .when('type', ([type], schema) =>
-    associatedArtifactIsLink({ type }) ? schema.url(associatedArtifactErrorMessage.linkInvalid) : schema
+    associatedArtifactIsLink({ type })
+      ? schema.url(associatedArtifactErrorMessage.linkInvalid).required(associatedArtifactErrorMessage.linkRequired)
+      : schema
   );
 
 const associatedArtifactTypeValidationSchema = Yup.string().not(

@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import { AxiosResponse } from 'axios';
-import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
+import { Field, FieldProps, Form, Formik } from 'formik';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -23,7 +23,7 @@ import { useLookupDoi } from '../../../api/hooks/useLookupDoi';
 import { RegistrationList } from '../../../components/RegistrationList';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { doiUrlBase, makeDoiUrl } from '../../../utils/general-helpers';
+import { doiUrlBase } from '../../../utils/general-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { RegistrationAccordion } from './RegistrationAccordion';
 
@@ -62,13 +62,6 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const { registrationsWithDoi, isLookingUpDoi, noHits, doiPreview } = useLookupDoi(doiQuery);
   const createRegistrationFromDoi = useCreateRegistrationFromDoi(onCreateRegistrationSuccess);
 
-  const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
-    const doiUrl = makeDoiUrl(values.link);
-
-    setDoiQuery(doiUrl);
-    setValues({ link: doiUrl });
-  };
-
   const persistRegistration = () => {
     if (!doiPreview) {
       return;
@@ -93,7 +86,10 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
       </AccordionSummary>
 
       <AccordionDetails>
-        <Formik onSubmit={onSubmit} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
+        <Formik
+          onSubmit={async (values) => setDoiQuery(values.link)}
+          initialValues={emptyDoiFormValues}
+          validationSchema={doiValidationSchema}>
           {({ isSubmitting }) => (
             <Form noValidate>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>

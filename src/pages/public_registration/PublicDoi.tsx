@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { StatusChip } from '../../components/StatusChip';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getAssociatedLinks, userHasAccessRight } from '../../utils/registration-helpers';
+import { userHasAccessRight } from '../../utils/registration-helpers';
 import { PublicPageInfoEntry } from './PublicPageInfoEntry';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
@@ -13,7 +13,6 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
 
   const nvaDoi = registration.doi;
   const originalDoi = registration.entityDescription?.reference?.doi ?? '';
-  const associatedLink = getAssociatedLinks(registration.associatedArtifacts)[0]?.id;
 
   const [nvaDoiIsFindable, setNvaDoiIsFindable] = useState<boolean | undefined>(
     !nvaDoi || registration.status === RegistrationStatus.Draft ? false : undefined
@@ -42,22 +41,23 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
 
   return (
     <>
-      {(originalDoi || associatedLink) && (
+      {originalDoi && (
         <PublicPageInfoEntry
           title={t('registration.registration.link_to_resource')}
           content={
             <Typography component="dd" gridColumn={2} sx={{ wordBreak: 'break-all' }}>
               <Link
                 data-testid={dataTestId.registrationLandingPage.doiOriginalLink}
-                href={originalDoi || associatedLink}
+                href={originalDoi}
                 target="_blank"
                 rel="noopener noreferrer">
-                {originalDoi || associatedLink}
+                {originalDoi}
               </Link>
             </Typography>
           }
         />
       )}
+
       {canSeeNvaDoi && (
         <PublicPageInfoEntry
           title={t('common.doi')}

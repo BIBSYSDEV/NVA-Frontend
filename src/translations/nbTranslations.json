@@ -204,6 +204,7 @@
     "filter": "Filter",
     "financier": "Finansiør",
     "first_name": "Fornavn",
+    "full_text": "Fulltekst",
     "funding": "Finansiering",
     "go_to_last": "Gå til siste",
     "help": "Hjelp",
@@ -215,11 +216,14 @@
     "language": "Språk",
     "last_name": "Etternavn",
     "link": "Lenke",
+    "links": "Lenker",
     "log": "Logg",
     "main": "Hoved",
+    "mention": "Omtale",
     "menu": "Meny",
     "message": "Melding",
     "messages": "Meldinger",
+    "metadata_source": "Metadatakilde",
     "move_down": "Flytt ned",
     "move_up": "Flytt opp",
     "name": "Navn",
@@ -241,6 +245,7 @@
     "orcid_profile": "ORCID-profil",
     "order": "Rekkefølge",
     "other": "Annet",
+    "other_links": "Andre lenker",
     "overview": "Oversikt",
     "page_title": "Nasjonalt vitenarkiv",
     "pagination_project_search": "Paginering for prosjektsøk",
@@ -325,6 +330,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -396,11 +405,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1953,8 +1958,8 @@
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",
       "related_results_description": "Søk opp og velg resultat i søkefeltet for å knytte relaterte resultater til dette resultatet.",
-      "remove_doi": "Fjern DOI",
-      "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
+      "remove_link": "Fjern lenke",
+      "remove_link_text": "Ønsker du å fjerne lenken?",
       "research_data": {
         "accept_dataset_terms": {
           "contains_personal_data": "Datasettet inneholder personopplysninger?*",

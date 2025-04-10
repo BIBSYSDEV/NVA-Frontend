@@ -2,6 +2,7 @@ import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { RegistrationLogResponse } from '../types/log.types';
 import { TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import { DoiPreview, Registration, UpdateRegistrationStatusRequest } from '../types/registration.types';
+import { makeDoiUrl } from '../utils/general-helpers';
 import { doNotRedirectQueryParam } from '../utils/urlPaths';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
@@ -31,10 +32,10 @@ export const updateRegistrationStatus = async (
     data: updateRequest,
   });
 
-export const getRegistrationByDoi = async (doiUrl: string) => {
+export const getRegistrationByDoi = async (value: string) => {
   const getRegistrationByDoiResponse = await authenticatedApiRequest2<DoiPreview>({
     url: PublicationsApiPath.DoiLookup,
-    data: { doiUrl },
+    data: { doiUrl: makeDoiUrl(value) },
     method: 'POST',
   });
 
