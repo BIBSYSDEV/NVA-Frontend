@@ -74,7 +74,7 @@ export const PersonTableRow = ({ cristinPerson, refetchEmployees }: PersonTableR
         </TableCell>
         <TableCell>
           <Tooltip title={t('common.edit')}>
-            <IconButton>
+            <IconButton data-testid={dataTestId.basicData.editPersonButton(cristinIdentifier)}>
               <EditIcon />
             </IconButton>
           </Tooltip>

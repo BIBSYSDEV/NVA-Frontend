@@ -19,6 +19,12 @@ export const makeDoiUrl = (doiInput: string) => {
   return doiUrl;
 };
 
+export const getDoiValue = (value: string) => {
+  const trimmedValue = value.trim();
+  const doi = isValidUrl(trimmedValue) ? new URL(trimmedValue).pathname.slice(1) : trimmedValue;
+  return doi;
+};
+
 export const getPeriodString = (from: string | undefined, to: string | undefined) => {
   const fromDate = from ? toDateString(from) : '';
   const toDate = to ? toDateString(to) : '';

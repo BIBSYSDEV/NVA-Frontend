@@ -882,3 +882,18 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
  */
 export const allowsFileUpload = (customer: CustomerInstitution | null, category?: PublicationInstanceType | '') =>
   !!category && !!customer?.allowFileUploadForTypes.includes(category);
+
+export const getAssociatedLinkRelationTitle = (t: TFunction, relation: AssociatedLink['relation']) => {
+  switch (relation) {
+    case 'dataset':
+      return t('registration.publication_types.DataSet');
+    case 'mention':
+      return t('common.mention');
+    case 'sameAs':
+      return t('common.full_text');
+    case 'metadataSource':
+      return t('common.metadata_source');
+    default:
+      return t('common.link');
+  }
+};
