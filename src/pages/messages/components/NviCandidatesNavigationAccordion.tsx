@@ -131,7 +131,7 @@ export const NviCandidatesNavigationAccordion = () => {
             {t('tasks.status')}
           </FormLabel>
 
-          <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
+          <StyledNviStatusBox role="radiogroup" sx={{ bgcolor: 'nvi.light' }}>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
               checked={nviParams.filter === 'pending'}
@@ -153,7 +153,7 @@ export const NviCandidatesNavigationAccordion = () => {
             />
           </StyledNviStatusBox>
 
-          <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
+          <StyledNviStatusBox role="radiogroup" sx={{ bgcolor: 'nvi.light' }}>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedRadio}
               checked={nviParams.filter === 'assigned'}
@@ -177,7 +177,7 @@ export const NviCandidatesNavigationAccordion = () => {
             />
           </StyledNviStatusBox>
 
-          <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
+          <StyledNviStatusBox role="radiogroup" sx={{ bgcolor: 'secondary.main' }}>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedRadio}
               checked={nviParams.filter === 'approved'}
@@ -201,7 +201,7 @@ export const NviCandidatesNavigationAccordion = () => {
             />
           </StyledNviStatusBox>
 
-          <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
+          <StyledNviStatusBox role="radiogroup" sx={{ bgcolor: 'secondary.main' }}>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedRadio}
               checked={nviParams.filter === 'rejected'}
