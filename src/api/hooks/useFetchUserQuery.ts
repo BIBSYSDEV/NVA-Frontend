@@ -2,13 +2,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchUser } from '../roleApi';
 
-interface UseFetchUserQueryProps {
+interface UseFetchUserOptions {
   retry?: number;
   staleTime?: number;
   gcTime?: number;
 }
 
-export const useFetchUserQuery = (username: string, queryProps: UseFetchUserQueryProps = {}) => {
+export const useFetchUserQuery = (username: string, options: UseFetchUserOptions = {}) => {
   const { t } = useTranslation();
 
   const usernameIdentifiers = username.split('@');
@@ -20,6 +20,6 @@ export const useFetchUserQuery = (username: string, queryProps: UseFetchUserQuer
     queryKey: ['user', username],
     queryFn: () => fetchUser(username),
     meta: { errorMessage: t('feedback.error.get_person') },
-    ...queryProps,
+    ...options,
   });
 };

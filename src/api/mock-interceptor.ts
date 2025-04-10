@@ -14,6 +14,7 @@ import { mockCompleteUpload, mockCreateUpload, mockPrepareUpload } from '../util
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
 import { mockMyRegistrations } from '../utils/testfiles/mockMyRegistrations';
 import { mockNviCandidate } from '../utils/testfiles/mockNviCandidate';
+import { mockNviReportStatus } from '../utils/testfiles/mockNviReportStatus';
 import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
 import { mockPositionResponse } from '../utils/testfiles/mockPositions';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
@@ -35,6 +36,7 @@ import {
   PublicationChannelApiPath,
   PublicationsApiPath,
   RoleApiPath,
+  ScientificIndexApiPath,
   SearchApiPath,
 } from './apiPaths';
 
@@ -44,6 +46,7 @@ export const interceptRequestsOnMock = () => {
 
   // Scientific Index
   mock.onGet(new RegExp(SearchApiPath.NviCandidate)).reply(200, mockNviCandidate);
+  mock.onGet(new RegExp(ScientificIndexApiPath.Publication)).reply(200, mockNviReportStatus);
 
   // SEARCH
   mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults);

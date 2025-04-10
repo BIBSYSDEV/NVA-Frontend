@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -58,13 +57,13 @@ export const ConfirmMessageDialog = ({
           <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={onCancel} disabled={isSubmitting}>
             {t('common.cancel')}
           </Button>
-          <LoadingButton
+          <Button
             type="submit"
             data-testid={dataTestId.confirmDialog.acceptButton}
             variant="contained"
             loading={isSubmitting}>
             {confirmButtonLabel ?? t('common.save')}
-          </LoadingButton>
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

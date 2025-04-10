@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
 import { useMutation } from '@tanstack/react-query';
@@ -160,9 +159,9 @@ export const UpsertNviPeriodDialog = ({
             </DialogContent>
             <DialogActions sx={{ gap: '0.5rem' }}>
               <Button onClick={closeDialog}>{t('common.cancel')}</Button>
-              <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
+              <Button variant="contained" type="submit" loading={isSubmitting}>
                 {t('common.save')}
-              </LoadingButton>
+              </Button>
             </DialogActions>
           </Form>
         )}

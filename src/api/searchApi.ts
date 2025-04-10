@@ -20,6 +20,7 @@ import {
   RegistrationStatus,
 } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
+import { getDoiValue } from '../utils/general-helpers';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
@@ -318,6 +319,7 @@ export const fetchNviCandidate = async (identifier: string) => {
 
 export enum ResultParam {
   Abstract = 'abstract',
+  AllScientificValues = 'allScientificValues',
   Aggregation = 'aggregation',
   Category = 'category',
   CategoryNot = 'categoryNot',
@@ -373,6 +375,7 @@ export enum ResultSearchOrder {
 
 export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
+  [ResultParam.AllScientificValues]?: string | null;
   [ResultParam.Aggregation]?: 'all' | 'none' | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
   [ResultParam.CategoryNot]?: PublicationInstanceType | PublicationInstanceType[] | null;
@@ -426,6 +429,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.abstract) {
     searchParams.set(ResultParam.Abstract, encodeURIComponent(params.abstract));
   }
+  if (params.allScientificValues) {
+    searchParams.set(ResultParam.AllScientificValues, params.allScientificValues);
+  }
   if (params.aggregation) {
     searchParams.set(ResultParam.Aggregation, params.aggregation);
   } else {
@@ -454,7 +460,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.CristinIdentifier, params.cristinIdentifier);
   }
   if (params.doi) {
-    searchParams.set(ResultParam.Doi, params.doi);
+    const formattedDoiValue = getDoiValue(params.doi);
+    searchParams.set(ResultParam.Doi, formattedDoiValue);
   }
   if (params.excludeSubunits) {
     searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());

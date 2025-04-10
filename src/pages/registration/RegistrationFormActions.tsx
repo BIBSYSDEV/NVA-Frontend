@@ -1,6 +1,5 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, IconButton, SxProps, Tooltip, TooltipProps, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
@@ -181,14 +180,14 @@ export const RegistrationFormActions = ({
             <>
               <TooltipButtonWrapper
                 title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
-                <LoadingButton
+                <Button
                   variant="outlined"
                   disabled={disableSaving}
                   loading={isSaving}
                   data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
                   onClick={handleSaveClick}>
                   {t('common.save')}
-                </LoadingButton>
+                </Button>
               </TooltipButtonWrapper>
               <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
                 <IconButton
@@ -201,14 +200,14 @@ export const RegistrationFormActions = ({
           ) : (
             <TooltipButtonWrapper
               title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
-              <LoadingButton
+              <Button
                 variant="contained"
                 disabled={disableSaving}
                 loading={isSaving}
                 data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
                 onClick={handleSaveClick}>
                 {t('common.save_and_view')}
-              </LoadingButton>
+              </Button>
             </TooltipButtonWrapper>
           )}
         </Box>

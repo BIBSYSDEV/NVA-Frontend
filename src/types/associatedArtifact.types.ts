@@ -44,13 +44,13 @@ export interface AssociatedFile {
   allowedOperations?: FileAllowedOperation[];
 }
 
-interface UserUploadDetails {
+export interface UserUploadDetails {
   type: 'UserUploadDetails';
   uploadedBy: string;
   uploadedDate: string;
 }
 
-interface ImportUploadDetails {
+export interface ImportUploadDetails {
   type: 'ImportUploadDetails';
   source: string;
   archive: string;
@@ -75,8 +75,7 @@ export const emptyFile: AssociatedFile = {
 export interface AssociatedLink {
   type: 'AssociatedLink';
   id: string;
-  name?: string;
-  description?: string;
+  relation?: 'dataset' | 'mention' | 'sameAs' | 'metadataSource';
 }
 
 export interface NullAssociatedArtifact {

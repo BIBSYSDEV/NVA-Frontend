@@ -204,6 +204,7 @@
     "filter": "Filter",
     "financier": "Funder",
     "first_name": "First name",
+    "full_text": "Full text",
     "funding": "Funding",
     "go_to_last": "Go to last",
     "help": "Help",
@@ -215,11 +216,14 @@
     "language": "Language",
     "last_name": "Last name",
     "link": "Link",
+    "links": "Links",
     "log": "Log",
     "main": "Main",
+    "mention": "Mention",
     "menu": "Menu",
     "message": "Message",
     "messages": "Messages",
+    "metadata_source": "Metadata source",
     "move_down": "Move down",
     "move_up": "Move up",
     "name": "Name",
@@ -241,6 +245,7 @@
     "orcid_profile": "ORCID profile",
     "order": "Order",
     "other": "Other",
+    "other_links": "Other links",
     "overview": "Overview",
     "page_title": "Norwegian Research Information Repository",
     "pagination_project_search": "Pagination for project search",
@@ -429,7 +434,7 @@
       "search_for_curator": "Search for curator",
       "search_for_unit": "Search for unit"
     },
-    "does_not_support_file_upload": "Does not support file upload",
+    "does_not_support_open_files": "Does not support open files",
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) is a persistent identifier.|Simplifies citations of publications.|Metadata about the result is shared internationally.|Visiblity of result increases.|Contributes to fulfill the FAIR principles.|Supports open research.",
       "doi_information_bullet_points_2": "The service has support for assigning $t(common.doi_long) to results.|The institution that assigns $t(common.doi_long) becomes the publisher of the result.|Thorough checking of metadata, contents of files and licences is necessary before assigning $t(common.doi_long). Incorrect metadata is time-consuming to correct afterwards.",
@@ -673,7 +678,7 @@
   },
   "licenses": {
     "additional_info": {
-      "cc0": ""
+      "cc0": "<p>An open or closed note should be shared, along with the work that:</p><ol><li> Provide an explanation for the conclusion that the work is to be regarded as a \"common good/public domain,\" as defined by the Copyright Act §11 Protection Period of Copyright or §14 Works that do not have copyright protection, or under another similar provision</li><li> Document that the originator waives all copyright and related rights they had to the work, as mentioned in the Copyright Act §3 Content of Copyright and §8 Joint Work, and that the work is to be regarded as a \"common good/public domain\"</li></ol>"
     },
     "description": {
       "cc0": "The person who has associated a work with this deed has, to the extent the law allows, declared this work to be in the public domain by waiving all copyright and related rights that they had to the work.",
@@ -720,7 +725,6 @@
     "internal_file_approved_count_other": "{{count}} internal files approved",
     "internal_files_on_registration_one": "The registration has {{count}} internal file",
     "internal_files_on_registration_other": "The registration has {{count}} internal files",
-    "metadata_last_updated": "Metadata last updated:",
     "open_file_published": "Open file published",
     "open_file_published_count_one": "{{count}} open file published",
     "open_file_published_count_other": "{{count}} open files published",
@@ -753,7 +757,8 @@
       "result_merged": "Metadata combined",
       "result_published": "Result published",
       "result_republished": "Result is republished",
-      "result_unpublished": "Result is unpublished"
+      "result_unpublished": "Result is unpublished",
+      "result_updated": "Metadata updated"
     },
     "unknown_filename": "Unknown file name"
   },
@@ -1467,6 +1472,8 @@
       "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
       "no_files_or_links_present_in_this_registration": "No file or link has been added for the registration",
       "open_file": "Open file",
+      "open_files_not_preferred_curator": "Your institution does not allow the registrar to upload open files for this category. As curator, you may add an open file on behalf of the registrar.",
+      "open_files_not_preferred_registrator": "Your institution does not allow you, as a registrar, to upload open files for this category. You may still upload internal files. Contact curator support if you wish to have an open file on this result.",
       "opted_out_of_rrs": "You have chosen not to follow the adopted <0>rights policy</0>",
       "public_note": "Public comment",
       "published": "Published",
@@ -1525,7 +1532,8 @@
       "error_description_workflow2": "The result lacks the following:",
       "files": {
         "awaits_approval": "{{count}} waiting for approval",
-        "file_awaits_approval": "File waiting for approval"
+        "file_awaits_approval": "File waiting for approval",
+        "uploaded_by": "Uploaded by {{uploader}}."
       },
       "files_tab_list_label": "Choose visibility for files",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",
@@ -1951,8 +1959,8 @@
       "related_result": "Related result",
       "related_results": "Related results",
       "related_results_description": "Search for and select results in the search field to link related results to this result",
-      "remove_doi": "Remove DOI",
-      "remove_doi_text": "You can remove the DOI that was used at the start of registration.\nDo you want to remove the link to the original DOI?",
+      "remove_link": "Remove link",
+      "remove_link_text": "Do you wish to remove the link?",
       "research_data": {
         "accept_dataset_terms": {
           "contains_personal_data": "Does the dataset contain personal data?*",

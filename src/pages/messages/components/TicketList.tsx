@@ -104,17 +104,16 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
       <Typography component="h1" sx={visuallyHidden}>
         {title}
       </Typography>
-
       <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
-        <Grid item xs={16} md={5} lg={4}>
+        <Grid size={{ xs: 16, md: 5, lg: 4 }}>
           <TicketStatusFilter options={ticketStatusOptions} />
         </Grid>
-        <Grid item xs={16} md={11} lg={10}>
+        <Grid size={{ xs: 16, md: 11, lg: 10 }}>
           <SearchForm placeholder={t('tasks.search_placeholder')} paginationOffsetParamName={TicketSearchParam.From} />
         </Grid>
 
         {user && (
-          <Grid item xs={16} md={5} lg={2}>
+          <Grid size={{ xs: 16, md: 5, lg: 2 }}>
             <FormControl fullWidth>
               <InputLabel id={viewedByLabelId}>{t('tasks.display_options')}</InputLabel>
               <Select
@@ -143,10 +142,10 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
 
         {isOnTasksPage && (
           <>
-            <Grid item xs={16} md={6} lg={4}>
+            <Grid size={{ xs: 16, md: 6, lg: 4 }}>
               <DialoguesWithoutCuratorButton />
             </Grid>
-            <Grid item xs={16} md={4} lg={4}>
+            <Grid size={{ xs: 16, md: 4, lg: 4 }}>
               <CuratorSelector
                 selectedUsername={searchParams.get(TicketSearchParam.Assignee)}
                 onChange={(curator) => {
@@ -163,7 +162,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                 roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
               />
             </Grid>
-            <Grid item xs={16} md={6} lg={5}>
+            <Grid size={{ xs: 16, md: 6, lg: 5 }}>
               <AreaOfResponsibilitySelector
                 paramName={TicketSearchParam.OrganizationId}
                 resetPagination={(params) => {
@@ -174,15 +173,14 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
           </>
         )}
 
-        <Grid item>
+        <Grid>
           <TicketDateIntervalFilter />
         </Grid>
 
-        <Grid item>
+        <Grid>
           <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} hideHeading />
         </Grid>
       </Grid>
-
       <ListPagination
         count={ticketsQuery.data?.totalHits ?? 0}
         page={page + 1}

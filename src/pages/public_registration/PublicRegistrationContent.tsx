@@ -17,10 +17,18 @@ import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames'
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getTitleString, isBook, isReport, isResearchData, userHasAccessRight } from '../../utils/registration-helpers';
+import {
+  getAssociatedLinks,
+  getTitleString,
+  isBook,
+  isReport,
+  isResearchData,
+  userHasAccessRight,
+} from '../../utils/registration-helpers';
 import { getWizardPathByRegistration } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
+import { AssociatedLinksLandingPageAccordion } from './public_links/AssociatedLinksLandingPageAccordion';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
 import { ShowRelatedDocuments } from './public_links/ShowRelatedDocuments';
@@ -268,6 +276,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <ListRegistrationRelations registrations={relatedRegistrationsQuery.data.hits} />
           </LandingPageAccordion>
         )}
+
+        <AssociatedLinksLandingPageAccordion associatedLinks={getAssociatedLinks(registration.associatedArtifacts)} />
       </BackgroundDiv>
     </Paper>
   );

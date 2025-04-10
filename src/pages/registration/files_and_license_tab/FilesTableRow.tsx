@@ -50,9 +50,16 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { activeLicenses, getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
-import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
+import {
+  allowsFileUpload,
+  isOpenFile,
+  isPendingOpenFile,
+  userIsValidImporter,
+} from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
+import { hasCuratorRole } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
+import { FileUploaderInfo } from '../../public_registration/public_files/FileUploaderInfo';
 import { DownloadFileButton } from './DownloadFileButton';
 
 const StyledFileTypeMenuItemContent = styled('div')({
@@ -151,6 +158,12 @@ export const FilesTableRow = ({
   const canDeleteFile = hasFileAccessRight(file, 'delete') || canEditImportCandidateFile;
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
 
+  const categorySupportsFiles = allowsFileUpload(
+    customer,
+    values.entityDescription?.reference?.publicationInstance?.type
+  );
+  const canSelectOpenFile = categorySupportsFiles || hasCuratorRole(user);
+
   return (
     <>
       <TableRow
@@ -168,6 +181,7 @@ export const FilesTableRow = ({
                 {file.name}
               </TruncatableTypography>
               <Typography sx={{ color: disabledFile ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
+              <FileUploaderInfo sx={{ color: disabledFile ? 'grey.600' : '' }} uploadDetails={file.uploadDetails} />
             </Box>
             {canDownloadFile && (
               <Box sx={{ minWidth: '1.5rem', ml: 'auto' }}>
@@ -227,12 +241,14 @@ export const FilesTableRow = ({
                     <i>{t('registration.files_and_license.select_availability')}</i>
                   </MenuItem>
                 )}
-                <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
-                  <StyledFileTypeMenuItemContent>
-                    <CheckIcon fontSize="small" />
-                    {t('registration.files_and_license.file_type.open_file')}
-                  </StyledFileTypeMenuItemContent>
-                </MenuItem>
+                {canSelectOpenFile && (
+                  <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
+                    <StyledFileTypeMenuItemContent>
+                      <CheckIcon fontSize="small" />
+                      {t('registration.files_and_license.file_type.open_file')}
+                    </StyledFileTypeMenuItemContent>
+                  </MenuItem>
+                )}
                 <MenuItem value={isCompletedFile ? FileType.InternalFile : FileType.PendingInternalFile}>
                   <StyledFileTypeMenuItemContent>
                     <Inventory2OutlinedIcon fontSize="small" />
@@ -285,7 +301,9 @@ export const FilesTableRow = ({
                                   configuredType: rrsStrategy,
                                 };
                                 setFieldValue(rrsFieldName, nullRrsValue);
-                                setFieldValue(licenseFieldName, null);
+                                if (field.value === FileVersion.Accepted) {
+                                  setFieldValue(licenseFieldName, null);
+                                }
                               } else if (isCustomerRrs || isOverridableRrs) {
                                 const customerRrsValue: FileRrs = {
                                   type: 'CustomerRightsRetentionStrategy',

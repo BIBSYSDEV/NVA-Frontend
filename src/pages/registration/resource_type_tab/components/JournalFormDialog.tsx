@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import {
   Box,
   Button,
@@ -172,9 +171,9 @@ export const JournalFormDialog = ({
             <Button onClick={closeDialog} disabled={isLoading}>
               {t('common.cancel')}
             </Button>
-            <LoadingButton variant="contained" loading={isLoading} type="submit">
+            <Button variant="contained" loading={isLoading} type="submit">
               {t('common.save')}
-            </LoadingButton>
+            </Button>
           </DialogActions>
         </Form>
       </Formik>

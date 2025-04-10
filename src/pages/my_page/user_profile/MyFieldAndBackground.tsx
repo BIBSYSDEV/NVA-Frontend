@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Box, Button, Chip, TextField, Typography } from '@mui/material';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
@@ -238,9 +237,9 @@ export const MyFieldAndBackground = () => {
                 }}>
                 {t('common.cancel')}
               </Button>
-              <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
+              <Button loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
                 {t('common.save')}
-              </LoadingButton>
+              </Button>
             </Box>
           </Form>
         )}

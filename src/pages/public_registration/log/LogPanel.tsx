@@ -8,7 +8,6 @@ import { Message, PublishingTicket, Ticket } from '../../../types/publication_ty
 import { Registration } from '../../../types/registration.types';
 import { isSimilarTime } from '../../../utils/general-helpers';
 import { ArchivedFilesLogInfo } from './ArchivedFilesLogInfo';
-import { LogDateItem } from './LogDateItem';
 import { LogEntryItem } from './LogEntryItem';
 
 interface LogPanelProps {
@@ -29,13 +28,6 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
       <Typography variant="h2" sx={visuallyHidden}>
         {t('common.log')}
       </Typography>
-
-      <Box sx={{ p: '0.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography color="grey.700" sx={{ textAlign: 'center' }}>
-          {t('log.metadata_last_updated')}
-        </Typography>
-        <LogDateItem date={registration.modifiedDate} />
-      </Box>
       <ArchivedFilesLogInfo registration={registration} />
 
       {logQuery.isPending ? (

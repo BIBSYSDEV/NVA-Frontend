@@ -30,7 +30,6 @@ export const FindPersonPanel = () => {
       <Typography variant="h2" gutterBottom>
         {t('common.person')}
       </Typography>
-
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <SearchForCristinPerson
           selectedPerson={values.person}
