@@ -1,5 +1,4 @@
 import { Typography } from '@mui/material';
-import { UseQueryResult } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -8,15 +7,15 @@ import { ResultParam, ResultSearchOrder } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { SortSelector } from '../../components/SortSelector';
 import { setNotification } from '../../redux/notificationSlice';
-import { SearchResponse2 } from '../../types/common.types';
-import { RegistrationAggregations, RegistrationSearchItem } from '../../types/registration.types';
+import { RegistrationSearchItem } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getTitleString } from '../../utils/registration-helpers';
 import { RegistrationSearch } from '../search/registration_search/RegistrationSearch';
+import { SearchPageProps } from '../search/SearchPage';
 
 interface MyRegistrationsListProps {
-  registrationsQuery: UseQueryResult<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>;
+  registrationsQuery: SearchPageProps['registrationQuery'];
 }
 
 export const MyRegistrationsList = ({ registrationsQuery }: MyRegistrationsListProps) => {

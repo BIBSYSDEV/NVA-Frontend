@@ -17,7 +17,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { MyRegistrationsList } from './MyRegistrationsList';
 
-const statusFilterLabelId = 'status-radio-buttons-group-label';
+const statusRadioGroupLabelId = 'status-radio-buttons-group-label';
 
 export const MyRegistrations = () => {
   const { t } = useTranslation();
@@ -31,14 +31,14 @@ export const MyRegistrations = () => {
   const orderValue = params.order ?? ResultSearchOrder.ModifiedDate;
   const sortValue = params.sort ?? ('desc' satisfies SortOrder);
 
-  const userRegistrationsQuery = useMyRegistrationsSearch({
+  const myRegistrationsQuery = useMyRegistrationsSearch({
     ...params,
     status: [statusValue],
     order: orderValue,
     sort: sortValue,
   });
 
-  const registrations = userRegistrationsQuery.data?.hits ?? [];
+  const registrations = myRegistrationsQuery.data?.hits ?? [];
 
   const deleteDraftRegistrationMutation = useMutation({
     mutationFn: async () => {
@@ -47,7 +47,7 @@ export const MyRegistrations = () => {
       );
       const deletePromises = draftRegistrations.map((registration) => deleteRegistration(registration.identifier));
       await Promise.all(deletePromises);
-      await userRegistrationsQuery.refetch();
+      await myRegistrationsQuery.refetch();
     },
     onSuccess: () => {
       dispatch(setNotification({ message: t('feedback.success.delete_draft_registrations'), variant: 'success' }));
@@ -76,9 +76,9 @@ export const MyRegistrations = () => {
 
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <FormControl>
-            <FormLabel id={statusFilterLabelId}>{t('common.status')}</FormLabel>
+            <FormLabel id={statusRadioGroupLabelId}>{t('common.status')}</FormLabel>
             <RadioGroup
-              aria-labelledby={statusFilterLabelId}
+              aria-labelledby={statusRadioGroupLabelId}
               row
               value={statusValue}
               onChange={(_, value) =>
@@ -106,16 +106,16 @@ export const MyRegistrations = () => {
           <Button
             variant="outlined"
             onClick={() => setShowDeleteModal(true)}
-            disabled={!params.status?.includes(RegistrationStatus.Draft) || registrations.length === 0}>
+            disabled={statusValue !== RegistrationStatus.Draft || registrations.length === 0}>
             {t('my_page.registrations.delete_all_draft_registrations')}
           </Button>
         </Box>
       </search>
 
-      {userRegistrationsQuery.isPending ? (
+      {myRegistrationsQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        <MyRegistrationsList registrationsQuery={userRegistrationsQuery} />
+        <MyRegistrationsList registrationsQuery={myRegistrationsQuery} />
       )}
 
       <ConfirmDialog
