@@ -124,11 +124,13 @@ export const NviCandidatesNavigationAccordion = () => {
           )}
         </StyledNviStatusBox>
 
-        <FormLabel component="legend" sx={{ fontWeight: 700 }}>
-          {t('tasks.status')}
-        </FormLabel>
+        <Box
+          component="fieldset"
+          sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', border: 'none', p: 0 }}>
+          <FormLabel component="legend" sx={{ fontWeight: 700 }}>
+            {t('tasks.status')}
+          </FormLabel>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
           <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
