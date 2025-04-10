@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router';
 import { useUserRegistrationSearch } from '../../api/hooks/useFetchUserRegistrationSearch';
 import { deleteRegistration } from '../../api/registrationApi';
-import { ResultParam, UserResultParam } from '../../api/searchApi';
+import { ResultParam, ResultSearchOrder, SortOrder, UserResultParam } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { SearchForm } from '../../components/SearchForm';
@@ -27,7 +27,17 @@ export const MyRegistrations = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const params = useRegistrationsQueryParams();
-  const userRegistrationsQuery = useUserRegistrationSearch(params);
+  const statusValue = params.status?.[0] ?? RegistrationStatus.Draft;
+  const orderValue = params.order ?? ResultSearchOrder.ModifiedDate;
+  const sortValue = params.sort ?? ('desc' satisfies SortOrder);
+
+  const userRegistrationsQuery = useUserRegistrationSearch({
+    ...params,
+    status: [statusValue],
+    order: orderValue,
+    sort: sortValue,
+  });
+
   const registrations = userRegistrationsQuery.data?.hits ?? [];
 
   const deleteDraftRegistrationMutation = useMutation({
@@ -69,7 +79,7 @@ export const MyRegistrations = () => {
           <RadioGroup
             aria-labelledby={statusFilterLabelId}
             row
-            value={params.status}
+            value={statusValue}
             onChange={(_, value) =>
               setSearchParams((params) => {
                 params.set(UserResultParam.Status, value);
