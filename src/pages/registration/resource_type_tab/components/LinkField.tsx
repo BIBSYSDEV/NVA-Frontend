@@ -24,13 +24,12 @@ export const LinkField = ({ fieldName, label, canEdit = false, handleDelete }: L
   return (
     <Field name={fieldName}>
       {({ field, meta: { error, touched } }: FieldProps<string>) => (
-        <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center', flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
           <TextField
             {...field}
             data-testid={dataTestId.registrationWizard.files.linkField}
             variant="filled"
             fullWidth
-            sx={{ flex: '1 25rem' }}
             label={label}
             disabled={!canEdit}
             multiline
