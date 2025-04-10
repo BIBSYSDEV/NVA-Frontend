@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router';
 import { useMyRegistrationsSearch } from '../../api/hooks/useMyRegistrationsSearch';
 import { deleteRegistration } from '../../api/registrationApi';
-import { ResultParam, ResultSearchOrder, SortOrder, UserResultParam } from '../../api/searchApi';
+import { ProtectedResultParam, ResultParam, ResultSearchOrder, SortOrder } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { SearchForm } from '../../components/SearchForm';
@@ -83,7 +83,7 @@ export const MyRegistrations = () => {
               value={statusValue}
               onChange={(_, value) =>
                 setSearchParams((params) => {
-                  params.set(UserResultParam.Status, value);
+                  params.set(ProtectedResultParam.Status, value);
                   params.delete(ResultParam.From);
                   return params;
                 })

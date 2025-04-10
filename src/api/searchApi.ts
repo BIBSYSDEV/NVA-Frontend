@@ -574,23 +574,23 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   return getResults.data;
 };
 
-export enum CustomerResultParam {
+export enum ProtectedResultParam {
   Status = 'status',
 }
 
-export interface FetchCustomerResultsParams
+export interface FetchProtectedResultsParams
   extends Pick<
     FetchResultsParams,
     ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
   > {
-  [CustomerResultParam.Status]?: RegistrationStatus[] | null;
+  [ProtectedResultParam.Status]?: RegistrationStatus[] | null;
 }
 
-export const fetchCustomerResults = async (params: FetchCustomerResultsParams, signal?: AbortSignal) => {
+export const fetchCustomerResults = async (params: FetchProtectedResultsParams, signal?: AbortSignal) => {
   const searchParams = new URLSearchParams();
 
   if (params.status && params.status.length > 0) {
-    searchParams.set(CustomerResultParam.Status, params.status.join(','));
+    searchParams.set(ProtectedResultParam.Status, params.status.join(','));
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
@@ -612,23 +612,11 @@ export const fetchCustomerResults = async (params: FetchCustomerResultsParams, s
   return getCustomerResults.data;
 };
 
-export enum UserResultParam {
-  Status = 'status',
-}
-
-export interface FetchUserResultsParams
-  extends Pick<
-    FetchResultsParams,
-    ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
-  > {
-  [UserResultParam.Status]?: RegistrationStatus[] | null;
-}
-
-export const fetchUserResults = async (params: FetchCustomerResultsParams, signal?: AbortSignal) => {
+export const fetchUserResults = async (params: FetchProtectedResultsParams, signal?: AbortSignal) => {
   const searchParams = new URLSearchParams();
 
   if (params.status && params.status.length > 0) {
-    searchParams.set(CustomerResultParam.Status, params.status.join(','));
+    searchParams.set(ProtectedResultParam.Status, params.status.join(','));
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
@@ -636,7 +624,7 @@ export const fetchUserResults = async (params: FetchCustomerResultsParams, signa
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
   searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
-  searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
+  searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.ModifiedDate);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
   const getCustomerResults = await authenticatedApiRequest2<

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchUserResults, FetchUserResultsParams } from '../searchApi';
+import { FetchProtectedResultsParams, fetchUserResults } from '../searchApi';
 
-export const useMyRegistrationsSearch = (params: FetchUserResultsParams) => {
+export const useMyRegistrationsSearch = (params: FetchProtectedResultsParams) => {
   const { t } = useTranslation();
 
   return useQuery({
