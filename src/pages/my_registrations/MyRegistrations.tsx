@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router';
-import { useUserRegistrationSearch } from '../../api/hooks/useFetchUserRegistrationSearch';
+import { useMyRegistrationsSearch } from '../../api/hooks/useMyRegistrationsSearch';
 import { deleteRegistration } from '../../api/registrationApi';
 import { ResultParam, ResultSearchOrder, SortOrder, UserResultParam } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
@@ -31,7 +31,7 @@ export const MyRegistrations = () => {
   const orderValue = params.order ?? ResultSearchOrder.ModifiedDate;
   const sortValue = params.sort ?? ('desc' satisfies SortOrder);
 
-  const userRegistrationsQuery = useUserRegistrationSearch({
+  const userRegistrationsQuery = useMyRegistrationsSearch({
     ...params,
     status: [statusValue],
     order: orderValue,
