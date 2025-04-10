@@ -14,7 +14,6 @@ import {
   SortOrder,
   TicketOrderBy,
   TicketSearchParam,
-  UserResultParam,
 } from '../../api/searchApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -30,7 +29,6 @@ import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
-import { RegistrationStatus } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -256,7 +254,7 @@ const MyPagePage = () => {
             title={t('common.result_registrations')}
             startIcon={<NotesIcon fontSize="small" sx={{ bgcolor: 'registration.main' }} />}
             accordionPath={UrlPathTemplate.MyPageMyRegistrations}
-            defaultPath={`${UrlPathTemplate.MyPageMyRegistrations}?${UserResultParam.Status}=${RegistrationStatus.Draft}`}
+            defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
             <Divider sx={{ mt: '0.5rem' }} />
             <Typography sx={{ margin: '1rem' }}>
