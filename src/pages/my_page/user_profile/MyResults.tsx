@@ -8,11 +8,11 @@ import { fetchPromotedPublicationsById } from '../../../api/preferencesApi';
 import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { RegistrationList } from '../../../components/RegistrationList';
 import { SortSelectorWithoutParams } from '../../../components/SortSelectorWithoutParams';
 import { RootState } from '../../../redux/store';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { RegistrationSearchResults } from '../../search/registration_search/RegistrationSearchResults';
 import { registrationSortOptions } from '../../search/registration_search/RegistrationSortSelector';
 
 export const MyResults = () => {
@@ -76,7 +76,7 @@ export const MyResults = () => {
         {registrationsQuery.isPending ? (
           <ListSkeleton minWidth={100} height={100} />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
-          <RegistrationSearchResults
+          <RegistrationList
             canEditRegistration
             registrations={registrationsQuery.data.hits}
             promotedPublications={promotedPublications}
