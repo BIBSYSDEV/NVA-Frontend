@@ -53,13 +53,13 @@ export const MyRegistrations = () => {
         <title>{t('common.result_registrations')}</title>
       </Helmet>
 
-      <Typography gutterBottom variant="h1">
+      <Typography variant="h1" sx={{ mb: '1rem' }}>
         {t('common.result_registrations')}
       </Typography>
 
       <SearchForm
         placeholder={t('search.search_placeholder')}
-        sx={{ my: '1rem' }}
+        sx={{ mb: '0.5rem' }}
         paginationOffsetParamName={ResultParam.From}
       />
 
@@ -103,7 +103,7 @@ export const MyRegistrations = () => {
       {userRegistrationsQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        <MyRegistrationsList registrations={registrations} refetchRegistrations={userRegistrationsQuery.refetch} />
+        <MyRegistrationsList registrationsQuery={userRegistrationsQuery} />
       )}
 
       <ConfirmDialog
