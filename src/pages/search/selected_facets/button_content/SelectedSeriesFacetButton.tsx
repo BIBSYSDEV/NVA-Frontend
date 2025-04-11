@@ -12,7 +12,7 @@ export const SelectedSeriesFacetButton = ({ seriesIdentifier }: SelectedSeriesFa
 
   const seriesQuery = useQuery({
     queryKey: [seriesIdentifier],
-    queryFn: () => (seriesIdentifier ? fetchSerialPublication(seriesIdentifier) : undefined),
+    queryFn: () => (seriesIdentifier ? fetchSerialPublication(seriesIdentifier) : null),
     staleTime: Infinity,
     gcTime: 1_800_000,
     meta: { errorMessage: t('feedback.error.get_series') },

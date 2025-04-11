@@ -1,7 +1,7 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router';

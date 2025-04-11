@@ -1,5 +1,5 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { Box, TypographyProps } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { TruncatableTypography } from './TruncatableTypography';
 
 interface PageHeaderProps extends TypographyProps {

@@ -27,7 +27,7 @@ export const CustomerInstitutionAdminsForm = ({
     queryKey: ['institutionAdmins', customerInstitutionId],
     enabled: !!customerInstitutionId,
     queryFn: () =>
-      customerInstitutionId ? fetchUsersByCustomer(customerInstitutionId, RoleName.InstitutionAdmin) : undefined,
+      customerInstitutionId ? fetchUsersByCustomer(customerInstitutionId, RoleName.InstitutionAdmin) : null,
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 

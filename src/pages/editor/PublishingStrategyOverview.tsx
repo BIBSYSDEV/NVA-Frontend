@@ -1,7 +1,7 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, Divider, Link, styled, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { PageSpinner } from '../../components/PageSpinner';

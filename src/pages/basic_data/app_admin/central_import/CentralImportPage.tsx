@@ -1,7 +1,7 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ImportCandidatesSearchParam } from '../../../../api/searchApi';

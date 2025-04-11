@@ -1,5 +1,5 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { Box, CircularProgress, Link as MuiLink, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';

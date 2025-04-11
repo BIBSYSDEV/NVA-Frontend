@@ -1,6 +1,6 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { Box, CircularProgress, Grid, Link, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
@@ -46,8 +46,7 @@ export const EditorInstitution = () => {
   const institutionUsersQuery = useQuery({
     queryKey: ['institutionUsers', customerId],
     enabled: !!customerId,
-    queryFn: () =>
-      customerId ? fetchUsersByCustomer(customerId, [RoleName.Editor, RoleName.InstitutionAdmin]) : undefined,
+    queryFn: () => (customerId ? fetchUsersByCustomer(customerId, [RoleName.Editor, RoleName.InstitutionAdmin]) : null),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 

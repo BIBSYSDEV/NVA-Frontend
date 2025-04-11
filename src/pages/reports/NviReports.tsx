@@ -1,6 +1,6 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { styled, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
 export const StyledReportIframe = styled('iframe')({
