@@ -135,10 +135,9 @@ export const CategorySelector = ({
       </Box>
       <Box
         sx={{
-          display: 'grid',
-          gridTemplateColumns: '1fr',
+          display: 'flex',
+          flexDirection: 'column',
           gap: '0.5rem',
-          alignItems: 'center',
         }}>
         {registrationRows.map(({ mainType, registrationTypes }) => (
           <RegistrationTypesRow
