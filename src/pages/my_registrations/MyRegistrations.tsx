@@ -29,14 +29,12 @@ export const MyRegistrations = () => {
 
   const params = useRegistrationsQueryParams();
   const statusValue = params.status?.[0] ?? RegistrationStatus.Draft;
-  const orderValue = params.order ?? ResultSearchOrder.ModifiedDate;
-  const sortValue = params.sort ?? ('desc' satisfies SortOrder);
 
   const myRegistrationsQuery = useMyRegistrationsSearch({
     ...params,
     status: [statusValue],
-    order: orderValue,
-    sort: sortValue,
+    order: params.order ?? ResultSearchOrder.ModifiedDate,
+    sort: params.sort ?? ('desc' satisfies SortOrder),
   });
 
   const registrations = myRegistrationsQuery.data?.hits ?? [];
@@ -64,55 +62,57 @@ export const MyRegistrations = () => {
         <title>{t('common.result_registrations')}</title>
       </Helmet>
 
-      <Typography variant="h1" sx={{ mb: '1rem' }}>
-        {t('common.result_registrations')}
-      </Typography>
+      <Box sx={{ mx: { xs: '0.5rem', md: 0 } }}>
+        <Typography variant="h1" sx={{ mb: '1rem' }}>
+          {t('common.result_registrations')}
+        </Typography>
 
-      <search>
-        <SearchForm
-          placeholder={t('search.search_placeholder')}
-          sx={{ mb: '0.5rem' }}
-          paginationOffsetParamName={ResultParam.From}
-        />
+        <search>
+          <SearchForm
+            placeholder={t('search.search_placeholder')}
+            sx={{ mb: '0.5rem' }}
+            paginationOffsetParamName={ResultParam.From}
+          />
 
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <FormControl>
-            <FormLabel id={statusRadioGroupLabelId}>{t('common.status')}</FormLabel>
-            <RadioGroup
-              aria-labelledby={statusRadioGroupLabelId}
-              row
-              value={statusValue}
-              onChange={(_, value) =>
-                setSearchParams((params) => {
-                  const syncedParams = syncParamsWithSearchFields(params);
-                  syncedParams.set(ProtectedResultParam.Status, value);
-                  syncedParams.delete(ResultParam.From);
-                  return syncedParams;
-                })
-              }>
-              <FormControlLabel
-                data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
-                value={RegistrationStatus.Draft}
-                control={<Radio />}
-                label={t('registration.status.DRAFT')}
-              />
-              <FormControlLabel
-                data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
-                value={RegistrationStatus.Published}
-                control={<Radio />}
-                label={t('registration.status.PUBLISHED')}
-              />
-            </RadioGroup>
-          </FormControl>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <FormControl>
+              <FormLabel id={statusRadioGroupLabelId}>{t('common.status')}</FormLabel>
+              <RadioGroup
+                aria-labelledby={statusRadioGroupLabelId}
+                row
+                value={statusValue}
+                onChange={(_, value) =>
+                  setSearchParams((params) => {
+                    const syncedParams = syncParamsWithSearchFields(params);
+                    syncedParams.set(ProtectedResultParam.Status, value);
+                    syncedParams.delete(ResultParam.From);
+                    return syncedParams;
+                  })
+                }>
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
+                  value={RegistrationStatus.Draft}
+                  control={<Radio />}
+                  label={t('registration.status.DRAFT')}
+                />
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
+                  value={RegistrationStatus.Published}
+                  control={<Radio />}
+                  label={t('registration.status.PUBLISHED')}
+                />
+              </RadioGroup>
+            </FormControl>
 
-          <Button
-            variant="outlined"
-            onClick={() => setShowDeleteModal(true)}
-            disabled={statusValue !== RegistrationStatus.Draft || registrations.length === 0}>
-            {t('my_page.registrations.delete_all_draft_registrations')}
-          </Button>
-        </Box>
-      </search>
+            <Button
+              variant="outlined"
+              onClick={() => setShowDeleteModal(true)}
+              disabled={statusValue !== RegistrationStatus.Draft || registrations.length === 0}>
+              {t('my_page.registrations.delete_all_draft_registrations')}
+            </Button>
+          </Box>
+        </search>
+      </Box>
 
       {myRegistrationsQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />

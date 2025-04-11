@@ -50,7 +50,7 @@ export const interceptRequestsOnMock = () => {
   // SEARCH
   mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults);
   mock.onGet(new RegExp(SearchApiPath.CustomerRegistrations)).reply(200, mockSearchResults);
-  mock.onGet(new RegExp(SearchApiPath.UserRegistrations)).reply(200, mockSearchResults);
+  mock.onGet(new RegExp(SearchApiPath.MyRegistrations)).reply(200, mockSearchResults);
   mock.onGet(new RegExp(SearchApiPath.ImportCandidates)).reply(200, mockSearchImportCandidates);
   // File
   mock.onPost(new RegExp(FileApiPath.Create)).reply(200, mockCreateUpload);

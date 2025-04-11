@@ -44,12 +44,12 @@ export enum RoleApiPath {
 
 export enum SearchApiPath {
   CustomerRegistrations = '/search/customer/resources',
-  UserRegistrations = '/search/user/resources',
-  Registrations = '/search/resources',
-  RegistrationsExport = '/search/resources/export',
   CustomerTickets = '/search/customer/tickets',
   ImportCandidates = '/search/customer/import-candidates',
+  MyRegistrations = '/search/user/resources',
   NviCandidate = '/scientific-index/candidate',
+  Registrations = '/search/resources',
+  RegistrationsExport = '/search/resources/export',
 }
 
 export enum VerifiedFundingApiPath {

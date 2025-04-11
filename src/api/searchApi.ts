@@ -613,8 +613,8 @@ export const fetchCustomerResults = async (params: FetchProtectedResultsParams, 
 };
 
 export const fetchMyResults = async (params: FetchProtectedResultsParams, signal?: AbortSignal) => {
-  const getCustomerResults = await authenticatedApiRequest2<RegistrationSearchResponse>({
-    url: SearchApiPath.UserRegistrations,
+  const getMyResults = await authenticatedApiRequest2<RegistrationSearchResponse>({
+    url: SearchApiPath.MyRegistrations,
     params: {
       [ResultParam.Query]: params.query,
       [ProtectedResultParam.Status]: params.status?.join(','),
@@ -625,5 +625,5 @@ export const fetchMyResults = async (params: FetchProtectedResultsParams, signal
     },
     signal,
   });
-  return getCustomerResults.data;
+  return getMyResults.data;
 };
