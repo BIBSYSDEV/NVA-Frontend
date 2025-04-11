@@ -50,7 +50,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
     queryFn: () => fetchProtectedResource<CristinPerson>(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
-  const person = existingPersonObject ?? personQuery.data;
+  const person = existingPersonObject ?? personQuery.data ?? undefined;
   const personEmployments = person?.employments ?? [];
 
   const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';

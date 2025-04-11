@@ -6,13 +6,12 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { fetchResource } from '../../../api/commonApi';
+import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { fetchUsersByCustomer } from '../../../api/roleApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
 import { RootState } from '../../../redux/store';
-import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
@@ -40,19 +39,12 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
   const [searchType, setSearchType] = useState(SearchTypeValue.Unit);
   const [searchValue, setSearchValue] = useState('');
 
-  const organizationQuery = useQuery({
-    queryKey: ['organization', organizationId],
-    enabled: !!organizationId,
-    queryFn: organizationId ? () => fetchResource<Organization>(organizationId) : undefined,
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-    meta: { errorMessage: t('feedback.error.get_institution') },
-  });
+  const organizationQuery = useFetchOrganization(organizationId ?? '');
 
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId],
     enabled: !!customerId,
-    queryFn: () => (customerId ? fetchUsersByCustomer(customerId, rolesWithAreaOfResponsibility) : undefined),
+    queryFn: () => (customerId ? fetchUsersByCustomer(customerId, rolesWithAreaOfResponsibility) : null),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 

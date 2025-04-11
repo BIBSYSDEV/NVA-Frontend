@@ -222,7 +222,7 @@ export const fetchEmployees = async (
   signal?: AbortSignal
 ) => {
   if (!organizationId) {
-    return;
+    return null;
   }
   const sortQueryParam = 'sort=name';
   const nameQueryParam = nameQuery ? `&name=${nameQuery}` : '';
@@ -307,7 +307,7 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
 
 export const fetchNviCandidate = async (identifier: string) => {
   if (!identifier) {
-    return;
+    return null;
   }
 
   const getNviCandidates = await authenticatedApiRequest2<NviCandidate>({
