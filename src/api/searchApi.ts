@@ -317,6 +317,8 @@ export const fetchNviCandidate = async (identifier: string) => {
   return getNviCandidates.data;
 };
 
+export type RegistrationSearchResponse = SearchResponse2<RegistrationSearchItem, RegistrationAggregations>;
+
 export enum ResultParam {
   Abstract = 'abstract',
   AllScientificValues = 'allScientificValues',
@@ -564,7 +566,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  const getResults = await apiRequest2<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>({
+  const getResults = await apiRequest2<RegistrationSearchResponse>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
     // TODO: Remove version when it becomes default
     headers: { accept: 'application/json; version=2024-12-01' },
@@ -601,9 +603,7 @@ export const fetchCustomerResults = async (params: FetchProtectedResultsParams, 
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  const getCustomerResults = await authenticatedApiRequest2<
-    SearchResponse2<RegistrationSearchItem, RegistrationAggregations>
-  >({
+  const getCustomerResults = await authenticatedApiRequest2<RegistrationSearchResponse>({
     url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
     headers: { accept: 'application/json; version=2024-12-01' },
     signal,
@@ -613,9 +613,7 @@ export const fetchCustomerResults = async (params: FetchProtectedResultsParams, 
 };
 
 export const fetchUserResults = async (params: FetchProtectedResultsParams, signal?: AbortSignal) => {
-  const getCustomerResults = await authenticatedApiRequest2<
-    SearchResponse2<RegistrationSearchItem, RegistrationAggregations>
-  >({
+  const getCustomerResults = await authenticatedApiRequest2<RegistrationSearchResponse>({
     url: SearchApiPath.UserRegistrations,
     params: {
       [ResultParam.Query]: params.query,

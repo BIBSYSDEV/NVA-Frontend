@@ -1,5 +1,6 @@
+import { UseQueryResult } from '@tanstack/react-query';
 import { AssociatedArtifact } from './associatedArtifact.types';
-import { AggregationValue, LanguageString } from './common.types';
+import { AggregationValue, LanguageString, SearchResponse2 } from './common.types';
 import { Contributor, PreviewContributor } from './contributor.types';
 import { ResearchProject } from './project.types';
 import { ArtisticEntityDescription, ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
@@ -424,3 +425,7 @@ export interface NpiSubjectDomain {
   subjectArea: string;
   subdomains: NpiSubjectSubdomain[];
 }
+
+export type RegistrationSearchQueryResponse = UseQueryResult<
+  SearchResponse2<RegistrationSearchItem, RegistrationAggregations>
+>;
