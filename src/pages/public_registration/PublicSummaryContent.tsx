@@ -41,7 +41,10 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
             <Typography variant="h3" color="primary" gutterBottom>
               {heading}
             </Typography>
-            <Typography lang={languageObject?.iso6391Code} style={{ whiteSpace: 'pre-line' }} sx={{ mb: '1rem' }}>
+            <Typography
+              lang={languageObject?.iso6391Code}
+              style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }}
+              sx={{ mb: '1rem' }}>
               {abstract}
             </Typography>
           </Fragment>
@@ -53,7 +56,7 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
           <Typography variant="h3" color="primary" gutterBottom>
             {t('registration.description.description_of_content')}
           </Typography>
-          <Typography style={{ whiteSpace: 'pre-line' }} sx={{ mb: '1rem' }}>
+          <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} sx={{ mb: '1rem' }}>
             {entityDescription.description}
           </Typography>
         </>
