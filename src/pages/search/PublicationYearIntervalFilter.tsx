@@ -54,7 +54,7 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-evenly', gap: '1rem', border: 'none', ...boxProps?.sx }}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-evenly', gap: '1rem', ...boxProps?.sx }}>
       <DatePicker
         {...commonDatepickerProps}
         {...datePickerProps}

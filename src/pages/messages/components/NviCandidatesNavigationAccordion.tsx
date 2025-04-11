@@ -127,13 +127,13 @@ export const NviCandidatesNavigationAccordion = () => {
           )}
         </StyledNviStatusBox>
 
-        <Box
-          component="fieldset"
-          sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', border: 'none', p: 0 }}>
+        <Box component="fieldset">
           <FormLabel component="legend" id={nviStatusSelectId} sx={{ fontWeight: 700 }}>
             {t('tasks.status')}
           </FormLabel>
-          <RadioGroup aria-labelledby={nviStatusSelectId}>
+          <RadioGroup
+            aria-labelledby={nviStatusSelectId}
+            sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
             <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
               <FormControlLabel
                 data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}

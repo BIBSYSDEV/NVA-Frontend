@@ -97,7 +97,7 @@ export const AdvancedSearchPage = () => {
           </Grid>
 
           <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
-            <Grid component="fieldset" sx={{ width: 'fit-content', border: 'none' }}>
+            <Grid component="fieldset" sx={{ width: 'fit-content' }}>
               <Typography component="legend" sx={{ mb: '0.2rem', fontWeight: 'bold' }}>
                 {t('search.advanced_search.publishing_period')}
               </Typography>

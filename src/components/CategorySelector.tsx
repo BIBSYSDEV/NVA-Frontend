@@ -170,7 +170,7 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
   const { t } = useTranslation();
 
   return registrationTypes.length > 0 ? (
-    <Box component="fieldset" sx={{ border: 'none' }}>
+    <Box component="fieldset">
       <Typography component="legend" fontWeight={700}>
         {t(`registration.publication_types.${mainType}`)}
       </Typography>

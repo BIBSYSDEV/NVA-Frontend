@@ -139,7 +139,6 @@ export const RegistrationFormActions = ({
           gridTemplateColumns: { xs: 'auto auto auto', md: '1fr 1fr 1fr' },
           alignItems: 'center',
           gap: '1rem',
-          border: 'none',
         }}>
         {!isFirstTab && (
           <Box sx={{ gridArea: 'back-button' }}>
