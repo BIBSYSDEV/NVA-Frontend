@@ -129,7 +129,6 @@ export const RegistrationFormActions = ({
   return (
     <>
       <Box
-        component="fieldset"
         sx={{
           display: 'grid',
           gridTemplateAreas: {
