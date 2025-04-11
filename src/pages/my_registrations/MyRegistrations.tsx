@@ -104,12 +104,11 @@ export const MyRegistrations = () => {
               </RadioGroup>
             </FormControl>
 
-            <Button
-              variant="outlined"
-              onClick={() => setShowDeleteModal(true)}
-              disabled={statusValue !== RegistrationStatus.Draft || registrations.length === 0}>
-              {t('my_page.registrations.delete_draft_registrations')}
-            </Button>
+            {statusValue === RegistrationStatus.Draft && (
+              <Button variant="outlined" onClick={() => setShowDeleteModal(true)} disabled={registrations.length === 0}>
+                {t('my_page.registrations.delete_draft_registrations')}
+              </Button>
+            )}
           </Box>
         </search>
       </Box>
