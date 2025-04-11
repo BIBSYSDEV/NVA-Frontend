@@ -207,6 +207,9 @@ export const mainTheme = createTheme(
             padding: 0,
             margin: 0,
           },
+          legend: {
+            padding: 0,
+          },
         },
       },
       MuiMenu: {
