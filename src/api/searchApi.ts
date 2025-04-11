@@ -612,7 +612,7 @@ export const fetchCustomerResults = async (params: FetchProtectedResultsParams, 
   return getCustomerResults.data;
 };
 
-export const fetchUserResults = async (params: FetchProtectedResultsParams, signal?: AbortSignal) => {
+export const fetchMyResults = async (params: FetchProtectedResultsParams, signal?: AbortSignal) => {
   const getCustomerResults = await authenticatedApiRequest2<RegistrationSearchResponse>({
     url: SearchApiPath.UserRegistrations,
     params: {
