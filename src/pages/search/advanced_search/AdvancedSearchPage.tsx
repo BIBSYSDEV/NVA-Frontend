@@ -98,9 +98,9 @@ export const AdvancedSearchPage = () => {
 
           <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
             <Grid component="fieldset" sx={{ width: 'fit-content' }}>
-              <Typography component="legend" sx={{ mb: '0.2rem', fontWeight: 'bold' }}>
+              <StyledFilterHeading component="legend">
                 {t('search.advanced_search.publishing_period')}
-              </Typography>
+              </StyledFilterHeading>
               <PublicationYearIntervalFilter />
             </Grid>
 
