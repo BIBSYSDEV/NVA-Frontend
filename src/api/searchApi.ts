@@ -613,26 +613,19 @@ export const fetchCustomerResults = async (params: FetchProtectedResultsParams, 
 };
 
 export const fetchUserResults = async (params: FetchProtectedResultsParams, signal?: AbortSignal) => {
-  const searchParams = new URLSearchParams();
-
-  if (params.status && params.status.length > 0) {
-    searchParams.set(ProtectedResultParam.Status, params.status.join(','));
-  }
-  if (params.query) {
-    searchParams.set(ResultParam.Query, params.query);
-  }
-
-  searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
-  searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
-  searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.ModifiedDate);
-  searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
-
   const getCustomerResults = await authenticatedApiRequest2<
     SearchResponse2<RegistrationSearchItem, RegistrationAggregations>
   >({
-    url: `${SearchApiPath.UserRegistrations}?${searchParams.toString()}`,
+    url: SearchApiPath.UserRegistrations,
+    params: {
+      [ResultParam.Query]: params.query,
+      [ProtectedResultParam.Status]: params.status?.join(','),
+      [ResultParam.From]: params.from || null,
+      [ResultParam.Results]: params.results ?? 10,
+      [ResultParam.Order]: params.order ?? ResultSearchOrder.ModifiedDate,
+      [ResultParam.Sort]: params.sort ?? ('desc' satisfies SortOrder),
+    },
     signal,
   });
-
   return getCustomerResults.data;
 };
