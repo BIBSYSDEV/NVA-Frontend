@@ -75,6 +75,8 @@ export const NviCandidatesNavigationAccordion = () => {
   const nviCompletedPercentage =
     nviCandidatesTotal > 0 ? Math.round((nviCandidatesCompeted / nviCandidatesTotal) * 100) : 100;
 
+  const nviStatusSelectId = 'nvi-status-select';
+
   return (
     <NavigationListAccordion
       title={t('tasks.nvi.nvi_control')}
@@ -128,10 +130,10 @@ export const NviCandidatesNavigationAccordion = () => {
         <Box
           component="fieldset"
           sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', border: 'none', p: 0 }}>
-          <FormLabel component="legend" id="nvi-status-select" sx={{ fontWeight: 700 }}>
+          <FormLabel component="legend" id={nviStatusSelectId} sx={{ fontWeight: 700 }}>
             {t('tasks.status')}
           </FormLabel>
-          <RadioGroup aria-labelledby="nvi-status-select">
+          <RadioGroup aria-labelledby={nviStatusSelectId}>
             <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
               <FormControlLabel
                 data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
