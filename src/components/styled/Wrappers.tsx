@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormGroup, ListItem, styled, Typography } from '@mui/material';
+import { Box, Checkbox, FormGroup, ListItem, styled, Typography, TypographyProps } from '@mui/material';
 
 export const StyledRightAlignedFooter = styled(Box)({
   display: 'flex',
@@ -127,7 +127,7 @@ export const StyledInfoBanner = styled(Box)(({ theme }) => ({
   color: 'white',
 }));
 
-export const StyledFilterHeading = styled(Typography)({
+export const StyledFilterHeading = styled(Typography)<TypographyProps>({
   marginBottom: '0.2rem',
   fontWeight: 'bold',
 });

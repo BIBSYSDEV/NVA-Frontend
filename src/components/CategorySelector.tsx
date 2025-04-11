@@ -135,10 +135,9 @@ export const CategorySelector = ({
       </Box>
       <Box
         sx={{
-          display: 'grid',
-          gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
-          gap: '1rem',
-          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
         }}>
         {registrationRows.map(({ mainType, registrationTypes }) => (
           <RegistrationTypesRow
@@ -171,8 +170,8 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
   const { t } = useTranslation();
 
   return registrationTypes.length > 0 ? (
-    <>
-      <Typography fontWeight={700} sx={{ maxWidth: '10rem' }}>
+    <Box component="fieldset">
+      <Typography component="legend" fontWeight={700}>
         {t(`registration.publication_types.${mainType}`)}
       </Typography>
       <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
@@ -180,7 +179,7 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
           <CategoryChip key={registrationType.value} category={registrationType} onClickChip={onChangeType} />
         ))}
       </Box>
-    </>
+    </Box>
   ) : null;
 };
 
