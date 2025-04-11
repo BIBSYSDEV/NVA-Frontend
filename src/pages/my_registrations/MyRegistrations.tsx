@@ -1,7 +1,7 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { deleteRegistration, fetchRegistrationsByOwner } from '../../api/registrationApi';

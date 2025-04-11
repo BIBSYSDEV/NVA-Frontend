@@ -1,5 +1,5 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Registration, RegistrationDate } from '../types/registration.types';
 import { useJournalSeoData } from '../utils/hooks/useJournalSeoData';
 
@@ -58,20 +58,20 @@ export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
 
   return (
     <Helmet>
-      {seoData && <script type="application/ld+json">{seoData}</script>}
+      {seoData ? <script type="application/ld+json">{seoData}</script> : null}
 
-      {registration.entityDescription?.mainTitle && (
+      {registration.entityDescription?.mainTitle ? (
         <meta name="citation_title" content={registration.entityDescription.mainTitle} />
-      )}
+      ) : null}
       {registration.entityDescription?.contributors?.map((contributor, index) => (
         <meta name="citation_author" content={contributor.identity.name} key={index} />
       ))}
-      {citationPublicationDate && <meta name="citation_publication_date" content={citationPublicationDate} />}
-      {citationDoi && <meta name="citation_doi" content={citationDoi} />}
+      {citationPublicationDate ? <meta name="citation_publication_date" content={citationPublicationDate} /> : null}
+      {citationDoi ? <meta name="citation_doi" content={citationDoi} /> : null}
 
-      {journalSeoData.journalName && <meta name="citation_journal_title" content={journalSeoData.journalName} />}
-      {journalSeoData.printIssn && <meta name="citation_issn" content={journalSeoData.printIssn} />}
-      {journalSeoData.onlineIssn && <meta name="citation_issn" content={journalSeoData.onlineIssn} />}
+      {journalSeoData.journalName ? <meta name="citation_journal_title" content={journalSeoData.journalName} /> : null}
+      {journalSeoData.printIssn ? <meta name="citation_issn" content={journalSeoData.printIssn} /> : null}
+      {journalSeoData.onlineIssn ? <meta name="citation_issn" content={journalSeoData.onlineIssn} /> : null}
     </Helmet>
   );
 };

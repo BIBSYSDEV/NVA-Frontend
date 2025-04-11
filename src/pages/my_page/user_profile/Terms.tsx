@@ -1,6 +1,6 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Link, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 

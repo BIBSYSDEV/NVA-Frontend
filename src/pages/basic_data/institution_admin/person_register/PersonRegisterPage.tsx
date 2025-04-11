@@ -1,3 +1,4 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import {
   CircularProgress,
   InputAdornment,
@@ -15,7 +16,6 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchEmployees } from '../../../../api/searchApi';

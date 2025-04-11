@@ -1,6 +1,6 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { Box, BoxProps } from '@mui/material';
 import { ReactNode } from 'react';
-import { Helmet } from 'react-helmet-async';
 
 interface PageHeaderProps extends BoxProps {
   children: ReactNode;

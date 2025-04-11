@@ -1,8 +1,8 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { UseQueryResult } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';

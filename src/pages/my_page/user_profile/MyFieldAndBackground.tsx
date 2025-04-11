@@ -1,8 +1,8 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { Autocomplete, Box, Button, Chip, TextField, Typography } from '@mui/material';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {

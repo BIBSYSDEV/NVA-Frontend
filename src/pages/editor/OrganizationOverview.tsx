@@ -1,3 +1,4 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
@@ -11,7 +12,6 @@ import {
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchResource } from '../../api/commonApi';

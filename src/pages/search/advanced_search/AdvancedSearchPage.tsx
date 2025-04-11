@@ -1,3 +1,4 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import {
   Box,
   Button,
@@ -10,7 +11,6 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';

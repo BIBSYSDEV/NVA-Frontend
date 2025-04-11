@@ -1,6 +1,6 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { Box, List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';

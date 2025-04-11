@@ -1,5 +1,5 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CategorySelector } from '../../components/CategorySelector';

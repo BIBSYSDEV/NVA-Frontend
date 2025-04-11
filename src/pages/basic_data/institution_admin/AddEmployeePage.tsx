@@ -1,8 +1,8 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { addEmployment, createCristinPerson } from '../../../api/cristinApi';

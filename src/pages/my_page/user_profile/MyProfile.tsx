@@ -1,9 +1,9 @@
+import { Helmet } from '@dr.pogodin/react-helmet';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Grid, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
