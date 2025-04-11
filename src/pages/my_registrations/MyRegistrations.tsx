@@ -75,8 +75,10 @@ export const MyRegistrations = () => {
           />
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <FormControl>
-              <FormLabel id={statusRadioGroupLabelId}>{t('common.status')}</FormLabel>
+            <FormControl component="fieldset">
+              <FormLabel component="legend" id={statusRadioGroupLabelId}>
+                {t('common.status')}
+              </FormLabel>
               <RadioGroup
                 aria-labelledby={statusRadioGroupLabelId}
                 row
