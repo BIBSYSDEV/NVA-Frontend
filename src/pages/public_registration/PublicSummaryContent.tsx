@@ -14,16 +14,18 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
           {entityDescription.abstract}
         </Typography>
       )}
-      {entityDescription.alternativeAbstracts.und && (
+
+      {Object.entries(entityDescription.alternativeAbstracts).map(([langKey, abstract]) => (
         <>
           <Typography variant="h3" color="primary" gutterBottom>
-            {t('registration.description.alternative_abstract')}
+            {t('registration.description.alternative_abstract')} ({langKey})
           </Typography>
           <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} sx={{ mb: '1rem' }}>
-            {entityDescription.alternativeAbstracts.und}
+            {abstract}
           </Typography>
         </>
-      )}
+      ))}
+
       {entityDescription.description && (
         <>
           <Typography variant="h3" color="primary" gutterBottom>
