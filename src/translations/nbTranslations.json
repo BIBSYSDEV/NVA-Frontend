@@ -870,8 +870,9 @@
     "project_registrations": "Prosjektregistreringer",
     "public_research_profile": "Offentlig forskerprofil",
     "registrations": {
-      "delete_all_draft_registrations": "Slett alle kladder",
-      "delete_all_draft_registrations_message": "Slett alle kladder?",
+      "delete_draft_registrations": "Slett kladder",
+      "delete_count_draft_registrations_message_one": "Ønsker du å slette kladden under?",
+      "delete_count_draft_registrations_message_other": "Ønsker du å slette de {{count}} synlige kladdene under?",
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?"
     },

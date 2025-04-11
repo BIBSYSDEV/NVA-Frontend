@@ -108,7 +108,7 @@ export const MyRegistrations = () => {
               variant="outlined"
               onClick={() => setShowDeleteModal(true)}
               disabled={statusValue !== RegistrationStatus.Draft || registrations.length === 0}>
-              {t('my_page.registrations.delete_all_draft_registrations')}
+              {t('my_page.registrations.delete_draft_registrations')}
             </Button>
           </Box>
         </search>
@@ -126,7 +126,9 @@ export const MyRegistrations = () => {
         onAccept={() => deleteDraftRegistrationMutation.mutate()}
         onCancel={() => setShowDeleteModal(false)}
         isLoading={deleteDraftRegistrationMutation.isPending}>
-        <Typography>{t('my_page.registrations.delete_all_draft_registrations_message')}</Typography>
+        <Typography>
+          {t('my_page.registrations.delete_count_draft_registrations_message', { count: registrations.length })}
+        </Typography>
       </ConfirmDialog>
     </section>
   );
