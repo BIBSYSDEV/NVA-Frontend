@@ -11,7 +11,7 @@ export const mockSearchResults: SearchResponse2<RegistrationSearchItem, Registra
   totalHits: 50,
   hits: [
     mockRegistrationSearchItemWithMathJax,
-    mockRegistrationSearchItem,
+    { ...mockRegistrationSearchItem, identifier: '4327439' },
     mockRegistrationSearchItem,
     mockRegistrationSearchItem,
     mockRegistrationSearchItem,
