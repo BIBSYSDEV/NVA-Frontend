@@ -200,6 +200,18 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiCssBaseline: {
+        styleOverrides: {
+          fieldset: {
+            border: 'none',
+            padding: 0,
+            margin: 0,
+          },
+          legend: {
+            padding: 0,
+          },
+        },
+      },
       MuiMenu: {
         defaultProps: {
           disablePortal: true,
