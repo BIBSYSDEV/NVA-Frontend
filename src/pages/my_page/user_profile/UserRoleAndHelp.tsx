@@ -23,9 +23,10 @@ export const UserRoleAndHelp = () => {
       <Helmet>
         <title>{t('my_page.my_profile.user_role_and_help.user_role_and_help')}</title>
       </Helmet>
+      <Typography variant="h1">{t('my_page.my_profile.user_role_and_help.user_role_and_help')}</Typography>
       {nvaUser?.viewingScope && hasCuratorRole(user) && (
         <div>
-          <Typography gutterBottom fontWeight="bold">
+          <Typography gutterBottom variant="h2">
             {t('editor.curators.area_of_responsibility')}
           </Typography>
           <Box
@@ -50,7 +51,7 @@ export const UserRoleAndHelp = () => {
           <Divider sx={{ bgcolor: 'primary.main' }} />
         </>
       )}
-      <Typography variant="h3">{t('common.help')}</Typography>
+      <Typography variant="h2">{t('common.help')}</Typography>
       <div>
         <Typography fontWeight="bold">{t('my_page.my_profile.user_role_and_help.application_help_text')}</Typography>
         <MuiLink

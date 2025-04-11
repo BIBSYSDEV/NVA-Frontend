@@ -23,19 +23,27 @@ export const AutocompleteTextField = ({
     error={!!errorMessage}
     helperText={errorMessage}
     slotProps={{
+      htmlInput: {
+        ...params.inputProps,
+        'aria-label': params.label ? undefined : params.placeholder,
+      },
       input: {
         ...params.InputProps,
-        startAdornment: (
+        startAdornment: showSearchIcon ? (
           <>
             {params.InputProps.startAdornment}
             {showSearchIcon && <SearchIcon color="disabled" />}
           </>
+        ) : (
+          params.InputProps.startAdornment
         ),
-        endAdornment: (
+        endAdornment: isLoading ? (
           <>
             {isLoading && <CircularProgress size={20} aria-labelledby={params.InputLabelProps.id} />}
             {params.InputProps.endAdornment}
           </>
+        ) : (
+          params.InputProps.endAdornment
         ),
       },
     }}

@@ -1,6 +1,5 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { LoadingButton } from '@mui/lab';
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +12,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { Ticket } from '../../../types/publication_types/ticket.types';
-import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { Registration } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
@@ -96,30 +95,20 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
             {userCanCompleteTicket && isOnTasksPage && supportTicket.status !== 'Completed' && (
-              <LoadingButton
+              <Button
                 sx={{ alignSelf: 'center', width: 'fit-content', bgcolor: 'white' }}
                 loading={ticketMutation.isPending}
                 variant="outlined"
                 onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
                 {t('my_page.messages.mark_as_completed')}
-              </LoadingButton>
+              </Button>
             )}
 
             {isOnTasksPage && tabErrors && (
-              <RegistrationErrorActions
-                tabErrors={tabErrors}
-                registrationIdentifier={registration.identifier}
-                isPublished={registration.status === RegistrationStatus.Published}
-              />
+              <RegistrationErrorActions tabErrors={tabErrors} registration={registration} />
             )}
 
-            {supportTicket.messages.length > 0 && (
-              <TicketMessageList
-                ticket={supportTicket}
-                refetchData={refetchData}
-                canDeleteMessage={userCanCompleteTicket}
-              />
-            )}
+            {supportTicket.messages.length > 0 && <TicketMessageList ticket={supportTicket} />}
           </>
         )}
         <MessageForm

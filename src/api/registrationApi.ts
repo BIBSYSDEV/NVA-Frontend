@@ -1,4 +1,5 @@
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
+import { RegistrationLogResponse } from '../types/log.types';
 import { TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import {
   DoiPreview,
@@ -6,6 +7,8 @@ import {
   Registration,
   UpdateRegistrationStatusRequest,
 } from '../types/registration.types';
+import { makeDoiUrl } from '../utils/general-helpers';
+import { doNotRedirectQueryParam } from '../utils/urlPaths';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 import { userIsAuthenticated } from './authApi';
@@ -34,10 +37,10 @@ export const updateRegistrationStatus = async (
     data: updateRequest,
   });
 
-export const getRegistrationByDoi = async (doiUrl: string) => {
+export const getRegistrationByDoi = async (value: string) => {
   const getRegistrationByDoiResponse = await authenticatedApiRequest2<DoiPreview>({
     url: PublicationsApiPath.DoiLookup,
-    data: { doiUrl },
+    data: { doiUrl: makeDoiUrl(value) },
     method: 'POST',
   });
 
@@ -64,9 +67,9 @@ export const addTicketMessage = async (ticketId: string, message: string) =>
     data: { message },
   });
 
-export const deleteTicketMessage = async (ticketId: string, messageId: string) => {
+export const deleteTicketMessage = async (messageId: string) => {
   return await authenticatedApiRequest2({
-    url: `${ticketId}/message/${messageId}`,
+    url: messageId,
     method: 'DELETE',
   });
 };
@@ -85,11 +88,11 @@ export const createDraftDoi = async (registrationId: string) =>
     method: 'POST',
   });
 
-export const fetchRegistration = async (registrationIdentifier: string, shouldNotRedirect?: boolean) => {
+export const fetchRegistration = async (registrationIdentifier: string, doNotRedirect?: boolean) => {
   const isAuthenticated = await userIsAuthenticated();
 
-  const url = shouldNotRedirect
-    ? `${PublicationsApiPath.Registration}/${registrationIdentifier}?doNotRedirect=true`
+  const url = doNotRedirect
+    ? `${PublicationsApiPath.Registration}/${registrationIdentifier}?${doNotRedirectQueryParam}=true`
     : `${PublicationsApiPath.Registration}/${registrationIdentifier}`;
 
   const fetchRegistrationResponse = isAuthenticated
@@ -97,6 +100,13 @@ export const fetchRegistration = async (registrationIdentifier: string, shouldNo
     : await apiRequest2<Registration>({ url });
 
   return fetchRegistrationResponse.data;
+};
+
+export const fetchRegistrationLog = async (registrationId: string) => {
+  const fetchRegistrationLogResponse = await authenticatedApiRequest2<RegistrationLogResponse>({
+    url: `${registrationId}/log`,
+  });
+  return fetchRegistrationLogResponse.data;
 };
 
 export const fetchRegistrationsByOwner = async () => {

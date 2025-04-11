@@ -174,12 +174,8 @@ export enum ProjectFieldName {
   PopularScientificSummaryEn = 'popularScientificSummary.en',
   Keywords = 'keywords',
   RelatedProjects = 'relatedProjects',
-  RoleType = 'roles[0].type',
-  Type = 'type',
 }
 
 export enum ProjectContributorFieldName {
-  Type = 'roles[0].type',
-  Identity = 'identity',
   Roles = 'roles',
 }

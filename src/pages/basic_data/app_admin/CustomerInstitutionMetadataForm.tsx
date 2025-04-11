@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Checkbox, Divider, FormControlLabel, FormLabel, MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -331,13 +330,13 @@ export const CustomerInstitutionMetadataForm = ({
                 }}>
                 {t('common.cancel')}
               </Button>
-              <LoadingButton
+              <Button
                 data-testid={dataTestId.basicData.institutionAdmin.saveButton}
                 variant="contained"
                 loading={isSubmitting}
                 type="submit">
                 {editMode ? t('common.save') : t('common.create')}
-              </LoadingButton>
+              </Button>
             </Box>
           </InputContainerBox>
         </Form>

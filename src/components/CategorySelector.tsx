@@ -127,7 +127,7 @@ export const CategorySelector = ({
             {categoriesWithoutFiles && (
               <>
                 <DoesNotSupportFileIcon />
-                <Typography>{t('editor.does_not_support_file_upload')}</Typography>
+                <Typography>{t('editor.does_not_support_open_files')}</Typography>
               </>
             )}
           </Box>

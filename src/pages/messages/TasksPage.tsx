@@ -4,9 +4,15 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router';
+import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
-import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
+import {
+  fetchCustomerTickets,
+  FetchTicketsParams,
+  SortOrder,
+  TicketOrderBy,
+  TicketSearchParam,
+} from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -19,7 +25,7 @@ import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { getTaskNotificationsParams } from '../../utils/searchHelpers';
+import { getTaskNotificationsParams, resetPaginationAndNavigate } from '../../utils/searchHelpers';
 import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
 import NotFound from '../errorpages/NotFound';
@@ -44,6 +50,7 @@ const TasksPage = () => {
   const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
   const isNviCurator = !!user?.isNviCurator;
   const isAnyCurator = isTicketCurator || isNviCurator;
+  const navigate = useNavigate();
 
   const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
@@ -52,9 +59,6 @@ const TasksPage = () => {
   const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
   const isOnNviCandidatePage =
     location.pathname.startsWith(UrlPathTemplate.TasksNvi) && !isOnNviCandidatesPage && !isOnNviStatusPage;
-
-  const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
 
@@ -75,12 +79,12 @@ const TasksPage = () => {
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
     query: searchParams.get(TicketSearchParam.Query),
-    results: rowsPerPage,
-    from: (page - 1) * rowsPerPage,
-    orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
-    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
+    results: Number(searchParams.get(TicketSearchParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
+    from: Number(searchParams.get(TicketSearchParam.From) ?? 0),
+    orderBy: searchParams.get(TicketSearchParam.OrderBy) as TicketOrderBy | null,
+    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as SortOrder | null,
     organizationId: organizationIdParam,
-    excludeSubUnits: organizationIdParam ? true : undefined,
+    excludeSubUnits: !!organizationIdParam,
     assignee: searchParams.get(TicketSearchParam.Assignee),
     status: searchParams.get(TicketSearchParam.Status),
     type: selectedTicketTypes.join(','),
@@ -124,15 +128,14 @@ const TasksPage = () => {
       <SideMenu
         expanded={!isOnTicketPage && !isOnNviCandidatePage}
         minimizedMenu={
-          <Link
+          <MinimizedMenuIconButton
+            title={t('common.tasks')}
             to={{
               pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
               search: locationState?.previousSearch,
             }}>
-            <MinimizedMenuIconButton title={t('common.tasks')}>
-              <AssignmentIcon />
-            </MinimizedMenuIconButton>
-          </Link>
+            <AssignmentIcon />
+          </MinimizedMenuIconButton>
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
@@ -143,7 +146,7 @@ const TasksPage = () => {
             accordionPath={UrlPathTemplate.TasksDialogue}
             onClick={() => {
               if (!isOnTicketsPage) {
-                setPage(1);
+                searchParams.delete(TicketSearchParam.From);
               }
             }}
             dataTestId={dataTestId.tasksPage.userDialogAccordion}>
@@ -155,7 +158,10 @@ const TasksPage = () => {
                   showCheckbox
                   isSelected={ticketTypes.publishingRequest}
                   color="publishingRequest"
-                  onClick={() => setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest })}>
+                  onClick={() => {
+                    setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
+                    resetPaginationAndNavigate(searchParams, navigate);
+                  }}>
                   {ticketTypes.publishingRequest && publishingRequestCount
                     ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
                     : t('my_page.messages.types.PublishingRequest')}
@@ -169,7 +175,10 @@ const TasksPage = () => {
                   showCheckbox
                   isSelected={ticketTypes.doiRequest}
                   color="doiRequest"
-                  onClick={() => setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest })}>
+                  onClick={() => {
+                    setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
+                    resetPaginationAndNavigate(searchParams, navigate);
+                  }}>
                   {ticketTypes.doiRequest && doiRequestCount
                     ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
                     : t('my_page.messages.types.DoiRequest')}
@@ -183,9 +192,10 @@ const TasksPage = () => {
                   showCheckbox
                   isSelected={ticketTypes.generalSupportCase}
                   color="generalSupportCase"
-                  onClick={() =>
-                    setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase })
-                  }>
+                  onClick={() => {
+                    setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });
+                    resetPaginationAndNavigate(searchParams, navigate);
+                  }}>
                   {ticketTypes.generalSupportCase && generalSupportCaseCount
                     ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                     : t('my_page.messages.types.GeneralSupportCase')}
@@ -232,14 +242,7 @@ const TasksPage = () => {
                 isAuthorized={isTicketCurator}
                 element={
                   <TicketListDefaultValuesWrapper>
-                    <TicketList
-                      ticketsQuery={ticketsQuery}
-                      rowsPerPage={rowsPerPage}
-                      setRowsPerPage={setRowsPerPage}
-                      page={page}
-                      setPage={setPage}
-                      title={t('common.tasks')}
-                    />
+                    <TicketList ticketsQuery={ticketsQuery} title={t('tasks.user_dialog')} />
                   </TicketListDefaultValuesWrapper>
                 }
               />

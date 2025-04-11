@@ -1,11 +1,12 @@
 import { FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { UseQueryResult } from '@tanstack/react-query';
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
-import { TicketSearchParam } from '../../../api/searchApi';
+import { SortOrder, TicketOrderBy, TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { CuratorSelector } from '../../../components/CuratorSelector';
@@ -19,6 +20,7 @@ import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
 import { RootState } from '../../../redux/store';
 import { CustomerTicketSearchResponse, ticketStatusValues } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
@@ -28,16 +30,12 @@ import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
   ticketsQuery: UseQueryResult<CustomerTicketSearchResponse>;
-  setRowsPerPage: Dispatch<SetStateAction<number>>;
-  rowsPerPage: number;
-  setPage: Dispatch<SetStateAction<number>>;
-  page: number;
   title: string;
 }
 
 const viewedByLabelId = 'viewed-by-select';
 
-export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
+export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -65,31 +63,57 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       size="small"
       variant="standard"
       options={[
-        { i18nKey: 'common.sort_newest_first', orderBy: 'createdDate', sortOrder: 'desc' },
-        { i18nKey: 'common.sort_oldest_first', orderBy: 'createdDate', sortOrder: 'asc' },
+        {
+          i18nKey: 'search.sort_by_modified_date',
+          orderBy: 'modifiedDate' satisfies TicketOrderBy,
+          sortOrder: 'desc' satisfies SortOrder,
+        },
+        {
+          i18nKey: 'common.sort_newest_first',
+          orderBy: 'createdDate' satisfies TicketOrderBy,
+          sortOrder: 'desc' satisfies SortOrder,
+        },
+        {
+          i18nKey: 'common.sort_oldest_first',
+          orderBy: 'createdDate' satisfies TicketOrderBy,
+          sortOrder: 'asc' satisfies SortOrder,
+        },
       ]}
     />
   );
 
   const searchParams = new URLSearchParams(location.search);
   const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || 'show-all';
+  const resultsParam = searchParams.get(TicketSearchParam.Results);
+  const fromParam = searchParams.get(TicketSearchParam.From);
+  const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
+  const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
+
+  const updatePath = (from: string, results: string) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
+    syncedParams.set(TicketSearchParam.From, from);
+    syncedParams.set(TicketSearchParam.Results, results);
+    navigate({ search: syncedParams.toString() });
+  };
 
   return (
     <section>
       <Helmet>
         <title>{title}</title>
       </Helmet>
-
+      <Typography component="h1" sx={visuallyHidden}>
+        {title}
+      </Typography>
       <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
-        <Grid item xs={16} md={5} lg={4}>
+        <Grid size={{ xs: 16, md: 5, lg: 4 }}>
           <TicketStatusFilter options={ticketStatusOptions} />
         </Grid>
-        <Grid item xs={16} md={11} lg={10}>
-          <SearchForm placeholder={t('tasks.search_placeholder')} />
+        <Grid size={{ xs: 16, md: 11, lg: 10 }}>
+          <SearchForm placeholder={t('tasks.search_placeholder')} paginationOffsetParamName={TicketSearchParam.From} />
         </Grid>
 
         {user && (
-          <Grid item xs={16} md={5} lg={2}>
+          <Grid size={{ xs: 16, md: 5, lg: 2 }}>
             <FormControl fullWidth>
               <InputLabel id={viewedByLabelId}>{t('tasks.display_options')}</InputLabel>
               <Select
@@ -118,10 +142,10 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
 
         {isOnTasksPage && (
           <>
-            <Grid item xs={16} md={6} lg={4}>
+            <Grid size={{ xs: 16, md: 6, lg: 4 }}>
               <DialoguesWithoutCuratorButton />
             </Grid>
-            <Grid item xs={16} md={4} lg={4}>
+            <Grid size={{ xs: 16, md: 4, lg: 4 }}>
               <CuratorSelector
                 selectedUsername={searchParams.get(TicketSearchParam.Assignee)}
                 onChange={(curator) => {
@@ -131,63 +155,55 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
                   } else {
                     syncedParams.delete(TicketSearchParam.Assignee);
                   }
+
+                  syncedParams.delete(TicketSearchParam.From);
                   navigate({ search: syncedParams.toString() });
                 }}
                 roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
               />
             </Grid>
-            <Grid item xs={16} md={6} lg={5}>
+            <Grid size={{ xs: 16, md: 6, lg: 5 }}>
               <AreaOfResponsibilitySelector
                 paramName={TicketSearchParam.OrganizationId}
-                resetPagination={() => {
-                  if (page !== 1) {
-                    setPage(1);
-                  }
+                resetPagination={(params) => {
+                  params.delete(TicketSearchParam.From);
                 }}
               />
             </Grid>
           </>
         )}
 
-        <Grid item>
+        <Grid>
           <TicketDateIntervalFilter />
         </Grid>
 
-        <Grid item>
+        <Grid>
           <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} hideHeading />
         </Grid>
       </Grid>
-
-      {ticketsQuery.isPending ? (
-        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-      ) : (
-        <>
-          {tickets.length === 0 ? (
-            <Typography>{t('my_page.messages.no_messages')}</Typography>
-          ) : (
-            <ListPagination
-              count={ticketsQuery.data?.totalHits ?? 0}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={(newPage) => setPage(newPage)}
-              onRowsPerPageChange={(newRowsPerPage) => {
-                setRowsPerPage(newRowsPerPage);
-                setPage(1);
-              }}
-              showPaginationTop
-              sortingComponent={sortingComponent}
-              maxHits={10_000}>
-              <List disablePadding sx={{ my: '0.5rem' }}>
-                {tickets.map((ticket) => (
-                  <ErrorBoundary key={ticket.id}>
-                    <TicketListItem ticket={ticket} />
-                  </ErrorBoundary>
-                ))}
-              </List>
-            </ListPagination>
-          )}
-        </>
-      )}
+      <ListPagination
+        count={ticketsQuery.data?.totalHits ?? 0}
+        page={page + 1}
+        onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
+        showPaginationTop
+        sortingComponent={sortingComponent}
+        maxHits={10_000}>
+        {ticketsQuery.isPending ? (
+          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+        ) : tickets.length === 0 ? (
+          <Typography>{t('my_page.messages.no_messages')}</Typography>
+        ) : (
+          <List disablePadding sx={{ my: '0.5rem' }}>
+            {tickets.map((ticket) => (
+              <ErrorBoundary key={ticket.id}>
+                <TicketListItem ticket={ticket} />
+              </ErrorBoundary>
+            ))}
+          </List>
+        )}
+      </ListPagination>
     </section>
   );
 };

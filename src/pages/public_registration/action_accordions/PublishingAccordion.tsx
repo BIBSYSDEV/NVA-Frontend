@@ -1,9 +1,16 @@
 import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import { LoadingButton } from '@mui/lab';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Tooltip, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Divider,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,6 +43,7 @@ import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
 import { PublishingAccordionLastTicketInfo } from './PublishingAccordionLastTicketInfo';
+import { RefreshPublishingRequestButton } from './RefreshPublishingRequestButton';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -44,6 +52,7 @@ interface PublishingAccordionProps {
   publishingRequestTickets: PublishingTicket[];
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
+  hasReservedDoi: boolean;
 }
 
 export const PublishingAccordion = ({
@@ -52,6 +61,7 @@ export const PublishingAccordion = ({
   refetchData,
   isLoadingData,
   addMessage,
+  hasReservedDoi,
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -108,31 +118,20 @@ export const PublishingAccordion = ({
         })
       );
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      if (userCanApprovePublishingRequest) {
-        dispatch(
-          setNotification({
-            message: t('feedback.success.published_registration'),
-            variant: 'success',
-          })
-        );
-      } else {
-        const hasFilesWaitingForApproval = registration.associatedArtifacts.some(isPendingOpenFile);
-        if (hasFilesWaitingForApproval) {
-          dispatch(
-            setNotification({
-              message: t('feedback.success.published_metadata_waiting_for_files'),
-              variant: 'success',
-            })
-          );
-        } else {
-          dispatch(
-            setNotification({
-              message: t('feedback.success.published_registration'),
-              variant: 'success',
-            })
-          );
-        }
-      }
+      const hasFilesWaitingForApproval = registration.associatedArtifacts.some(
+        (file) => file.type === FileType.PendingOpenFile || file.type === FileType.PendingInternalFile
+      );
+
+      const successMessage =
+        hasFilesWaitingForApproval && hasReservedDoi
+          ? t('feedback.success.published_metadata_waiting_for_files_and_doi')
+          : hasFilesWaitingForApproval
+            ? t('feedback.success.published_metadata_waiting_for_files')
+            : hasReservedDoi
+              ? t('feedback.success.published_registration_waiting_for_doi')
+              : t('feedback.success.published_registration');
+
+      dispatch(setNotification({ message: successMessage, variant: 'success' }));
       await refetchData();
     }
     setIsCreatingPublishingRequest(false);
@@ -149,17 +148,6 @@ export const PublishingAccordion = ({
     lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataAndFiles';
   const registratorPublishesMetadataOnly = lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataOnly';
 
-  const filesAwaitingApproval = lastPublishingRequest ? lastPublishingRequest.filesForApproval.length : 0;
-  const ticketHasPendingFiles = filesAwaitingApproval > 0;
-
-  const approvedFileIdentifiers = publishingRequestTickets
-    .filter((ticket) => ticket.status === 'Completed' && ticket.approvedFiles.length > 0)
-    .flatMap((ticket) => ticket.approvedFiles.map((file) => file.identifier));
-
-  const registrationHasMismatchingFiles = getAssociatedFiles(registration.associatedArtifacts)
-    .filter((file) => approvedFileIdentifiers.includes(file.identifier)) // Find files handled by current institution
-    .some((file) => isPendingOpenFile(file) || file.type === FileType.PendingInternalFile);
-
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
   const hasCompletedTicket = lastPublishingRequest?.status === 'Completed';
@@ -169,9 +157,13 @@ export const PublishingAccordion = ({
   const mismatchingPublishedStatusWorkflow2 =
     registratorPublishesMetadataOnly &&
     !!lastPublishingRequest &&
-    (isDraftRegistration || (hasCompletedTicket && (ticketHasPendingFiles || registrationHasMismatchingFiles)));
+    (isDraftRegistration || hasMismatchingFiles(lastPublishingRequest, publishingRequestTickets, registration));
 
-  const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
+  const isWaitingForFileDeletion =
+    isDeletedRegistration && getAssociatedFiles(registration.associatedArtifacts).length > 0;
+
+  const hasMismatchingPublishedStatus =
+    mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2 || isWaitingForFileDeletion;
 
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
@@ -216,13 +208,8 @@ export const PublishingAccordion = ({
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
-        {tabErrors && !isUnpublishedOrDeletedRegistration && (
-          <RegistrationErrorActions
-            tabErrors={tabErrors}
-            registrationIdentifier={registration.identifier}
-            isPublished={isPublishedRegistration}
-            sx={{ mb: '0.5rem' }}
-          />
+        {tabErrors && !isDeletedRegistration && (
+          <RegistrationErrorActions tabErrors={tabErrors} registration={registration} sx={{ mb: '0.5rem' }} />
         )}
 
         {/* Show approval history */}
@@ -233,24 +220,21 @@ export const PublishingAccordion = ({
         {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}
 
         {/* Option to reload data if status is not up to date with ticket */}
-        {userCanHandlePublishingRequest && !tabErrors && hasMismatchingPublishedStatus && (
+        {((userCanHandlePublishingRequest && !tabErrors && hasMismatchingPublishedStatus) ||
+          isWaitingForFileDeletion) && (
           <>
             <Typography sx={{ my: '1rem' }}>
               {isPublishedRegistration
-                ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
-                : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
+                ? hasCompletedTicket
+                  ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
+                  : hasClosedTicket
+                    ? t('registration.public_page.tasks_panel.files_will_soon_be_rejected')
+                    : ''
+                : isWaitingForFileDeletion
+                  ? t('registration.public_page.tasks_panel.files_will_soon_be_deleted')
+                  : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
-            <LoadingButton
-              variant="contained"
-              color="info"
-              size="small"
-              loading={isLoadingData}
-              fullWidth
-              onClick={refetchData}
-              startIcon={<RefreshIcon />}
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
-              {t('registration.public_page.tasks_panel.reload')}
-            </LoadingButton>
+            <RefreshPublishingRequestButton refetchData={refetchData} loading={isLoadingData} />
           </>
         )}
 
@@ -297,7 +281,7 @@ export const PublishingAccordion = ({
 
         {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && (
           <>
-            <LoadingButton
+            <Button
               disabled={isCreatingPublishingRequest || !canPublishMetadata || titleSearchPending}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
               sx={{ mt: '0.5rem' }}
@@ -307,11 +291,13 @@ export const PublishingAccordion = ({
               onClick={duplicateRegistration ? toggleDuplicateWarningModal : publishRegistration}
               loading={isLoadingData || isCreatingPublishingRequest || titleSearchPending}>
               {t('registration.public_page.tasks_panel.publish_registration')}
-            </LoadingButton>
+            </Button>
 
-            <Typography sx={{ my: '1rem' }}>
-              {t('registration.public_page.tasks_panel.delete_draft_description')}
-            </Typography>
+            {userHasAccessRight(registration, 'delete') && (
+              <Typography sx={{ my: '1rem' }}>
+                {t('registration.public_page.tasks_panel.delete_draft_description')}
+              </Typography>
+            )}
           </>
         )}
 
@@ -334,8 +320,44 @@ export const PublishingAccordion = ({
           onConfirmNotDuplicate={onConfirmNotDuplicate}
         />
 
-        <MoreActionsCollapse registration={registration} />
+        <MoreActionsCollapse registration={registration} registrationIsValid={registrationIsValid} />
       </AccordionDetails>
     </Accordion>
   );
+};
+
+const hasMismatchingFiles = (
+  lastPublishingRequest: PublishingTicket,
+  allPublishingRequests: PublishingTicket[],
+  registration: Registration
+) => {
+  if (lastPublishingRequest.status === 'Completed') {
+    const ticketHasPendingFiles = lastPublishingRequest.filesForApproval.length > 0;
+    if (ticketHasPendingFiles) {
+      return true;
+    }
+    const approvedFileIdentifiers = allPublishingRequests
+      .filter((ticket) => ticket.status === 'Completed' && ticket.approvedFiles.length > 0)
+      .flatMap((ticket) => ticket.approvedFiles.map((file) => file.identifier));
+
+    const hasMismatchingApprovedFiles = getAssociatedFiles(registration.associatedArtifacts)
+      .filter((file) => approvedFileIdentifiers.includes(file.identifier)) // Find files handled by current institution
+      .some((file) => isPendingOpenFile(file) || file.type === FileType.PendingInternalFile);
+
+    return hasMismatchingApprovedFiles;
+  }
+
+  if (lastPublishingRequest.status === 'Closed') {
+    const rejectedFileIdentifiers = allPublishingRequests
+      .filter((ticket) => ticket.status === 'Closed' && ticket.filesForApproval.length > 0)
+      .flatMap((ticket) => ticket.filesForApproval.map((file) => file.identifier));
+
+    const hasMismatchingRejectedFiles = getAssociatedFiles(registration.associatedArtifacts)
+      .filter((file) => rejectedFileIdentifiers.includes(file.identifier)) // Find files handled by current institution
+      .some((file) => file.type === FileType.PendingOpenFile || file.type === FileType.PendingInternalFile);
+
+    return hasMismatchingRejectedFiles;
+  }
+
+  return false;
 };

@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import {
   Box,
   Button,
@@ -26,7 +25,7 @@ import { getUsername, getValueByKey } from '../../../../utils/user-helpers';
 import { AffiliationFormSection } from './AffiliationFormSection';
 import { PersonFormSection } from './PersonFormSection';
 import { RolesFormSection } from './RolesFormSection';
-import { TasksFormSection, rolesWithAreaOfResponsibility } from './TasksFormSection';
+import { rolesWithAreaOfResponsibility, TasksFormSection } from './TasksFormSection';
 import { UserFormData, UserFormFieldName, validationSchema } from './userFormHelpers';
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
@@ -92,10 +91,8 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
 
   const userMutation = useMutation({
     mutationFn: async (user: InstitutionUser) => {
-      const filteredRoles = !user.roles.some((role) => role.rolename === RoleName.PublishingCurator)
-        ? user.roles.filter(
-            (role) => role.rolename !== RoleName.CuratorThesis && role.rolename !== RoleName.CuratorThesisEmbargo
-          )
+      const filteredRoles = !user.roles.some((role) => role.rolename === RoleName.CuratorThesis)
+        ? user.roles.filter((role) => role.rolename !== RoleName.CuratorThesisEmbargo)
         : user.roles;
       user.roles = filteredRoles;
       if (institutionUserQuery.isSuccess) {
@@ -171,18 +168,19 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                     personHasNin={!!values.person?.verified}
                     roles={values.user?.roles.map((role) => role.rolename) ?? []}
                     updateRoles={(newRoles) => {
-                      if (!newRoles.includes(RoleName.PublishingCurator)) {
-                        newRoles = newRoles.filter(
-                          (role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo
-                        );
-                      }
-
                       const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
-
                       setFieldValue(UserFormFieldName.Roles, newUserRoles);
+
                       const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
                       if (hasCuratorRole && !values.user?.viewingScope.includedUnits.length && topOrgCristinId) {
-                        setFieldValue(UserFormFieldName.ViewingScope, [topOrgCristinId]);
+                        const defaultViewingScope =
+                          values.person?.employments.find((employment) =>
+                            values.person?.affiliations.some(
+                              (affiliation) =>
+                                affiliation.organization === employment.organization && affiliation.active
+                            )
+                          )?.organization ?? topOrgCristinId;
+                        setFieldValue(UserFormFieldName.ViewingScope, [defaultViewingScope]);
                       } else if (!hasCuratorRole) {
                         setFieldValue(UserFormFieldName.ViewingScope, []);
                       }
@@ -195,23 +193,19 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                     updateViewingScopes={(newViewingScopes) =>
                       setFieldValue(UserFormFieldName.ViewingScope, newViewingScopes)
                     }
-                    updateRoles={(newRoles) => {
-                      const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
-                      setFieldValue(UserFormFieldName.Roles, newUserRoles);
-                    }}
                   />
                 </Box>
               )}
             </DialogContent>
             <DialogActions sx={{ justifyContent: 'center' }}>
               <Button onClick={onClose}>{t('common.cancel')}</Button>
-              <LoadingButton
+              <Button
                 loading={isSubmitting}
                 disabled={!values.person || internalEmployments.length === 0 || !values.user}
                 variant="contained"
                 type="submit">
                 {t('common.save')}
-              </LoadingButton>
+              </Button>
             </DialogActions>
           </Form>
         )}

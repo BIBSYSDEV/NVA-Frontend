@@ -7,11 +7,12 @@ import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 
-interface RepublishRegistrationProps {
+export interface RepublishRegistrationProps {
   registration: Registration;
+  registrationIsValid: boolean;
 }
 
-export const RepublishRegistration = ({ registration }: RepublishRegistrationProps) => {
+export const RepublishRegistration = ({ registration, registrationIsValid }: RepublishRegistrationProps) => {
   const { t } = useTranslation();
   const [openRepublishDialog, setOpenRepublishDialog] = useState(false);
   const toggleRepublishDialog = () => setOpenRepublishDialog(!openRepublishDialog);
@@ -33,12 +34,18 @@ export const RepublishRegistration = ({ registration }: RepublishRegistrationPro
       ) : (
         <>
           <Typography gutterBottom>{t('registration.public_page.tasks_panel.republish_description')}</Typography>
+          {!registrationIsValid && (
+            <Typography color="error" gutterBottom>
+              {t('registration.public_page.tasks_panel.fix_validation_errors_before_republishing')}
+            </Typography>
+          )}
           <Button
             data-testid={dataTestId.registrationLandingPage.tasksPanel.republishRegistrationButton}
             variant="outlined"
             fullWidth
             size="small"
             sx={{ bgcolor: 'white' }}
+            disabled={!registrationIsValid}
             onClick={toggleRepublishDialog}>
             {t('common.republish')}
           </Button>

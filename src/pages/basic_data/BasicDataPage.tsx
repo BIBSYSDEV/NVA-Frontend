@@ -6,7 +6,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
+import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -18,7 +18,6 @@ import {
 import { SelectableButton } from '../../components/SelectableButton';
 import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
-import { ImportCandidateStatus } from '../../types/importCandidate.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
@@ -32,10 +31,6 @@ import { ImportCandidatesMenuFilters } from './app_admin/central_import/ImportCa
 import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
-
-export type CandidateStatusFilter = {
-  [key in ImportCandidateStatus]: boolean;
-};
 
 const isOnEditOrMergeImportCandidate = (path: string) =>
   path.endsWith(UrlPathTemplate.BasicDataCentralImportCandidateWizard.split('/').pop() as string) ||
@@ -60,7 +55,6 @@ const BasicDataPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        aria-labelledby="basic-data-title"
         expanded={expandedMenu}
         minimizedMenu={
           simpleGoBack ? (
@@ -68,25 +62,24 @@ const BasicDataPage = () => {
               <BusinessCenterIcon />
             </MinimizedMenuIconButton>
           ) : (
-            <Link
+            <MinimizedMenuIconButton
+              title={t('basic_data.basic_data')}
               to={{
                 pathname: UrlPathTemplate.BasicDataCentralImport,
                 search: location.state?.previousSearch,
               }}>
-              <MinimizedMenuIconButton title={t('basic_data.basic_data')}>
-                <BusinessCenterIcon />
-              </MinimizedMenuIconButton>
-            </Link>
+              <BusinessCenterIcon />
+            </MinimizedMenuIconButton>
           )
         }>
-        <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
+        <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} />
         {isInstitutionAdmin && (
           <NavigationListAccordion
             title={t('basic_data.person_register.person_register')}
             startIcon={<PeopleIcon sx={{ bgcolor: 'person.main' }} />}
             accordionPath={UrlPathTemplate.BasicDataPersonRegister}
             dataTestId={dataTestId.basicData.personRegisterAccordion}>
-            <NavigationList>
+            <NavigationList aria-label={t('basic_data.person_register.person_register')}>
               <SelectableButton
                 data-testid={dataTestId.basicData.personRegisterLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
@@ -115,7 +108,7 @@ const BasicDataPage = () => {
               startIcon={<AccountBalanceIcon sx={{ bgcolor: 'grey.500' }} />}
               accordionPath={UrlPathTemplate.BasicDataInstitutions}
               dataTestId={dataTestId.basicData.institutionsAccordion}>
-              <NavigationList>
+              <NavigationList aria-label={t('common.institutions')}>
                 <SelectableButton
                   data-testid={dataTestId.basicData.adminInstitutionsLink}
                   isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
@@ -138,7 +131,7 @@ const BasicDataPage = () => {
               startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
               accordionPath={UrlPathTemplate.BasicDataNvi}
               dataTestId={dataTestId.basicData.nviPeriodsLink}>
-              <NavigationList>
+              <NavigationList aria-label={t('common.nvi')}>
                 <SelectableButton
                   isSelected={currentPath === UrlPathTemplate.BasicDataNvi}
                   to={UrlPathTemplate.BasicDataNvi}>

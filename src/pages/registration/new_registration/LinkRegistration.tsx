@@ -2,18 +2,18 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LinkIcon from '@mui/icons-material/LinkOutlined';
 import SearchIcon from '@mui/icons-material/Search';
-import { LoadingButton } from '@mui/lab';
 import {
   AccordionActions,
   AccordionDetails,
   AccordionSummary,
   Box,
+  Button,
   Divider,
   TextField,
   Typography,
 } from '@mui/material';
 import { AxiosResponse } from 'axios';
-import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
+import { Field, FieldProps, Form, Formik } from 'formik';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -23,7 +23,7 @@ import { useLookupDoi } from '../../../api/hooks/useLookupDoi';
 import { RegistrationList } from '../../../components/RegistrationList';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { doiUrlBase, makeDoiUrl } from '../../../utils/general-helpers';
+import { doiUrlBase } from '../../../utils/general-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { RegistrationAccordion } from './RegistrationAccordion';
 
@@ -62,13 +62,6 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const { registrationsWithDoi, isLookingUpDoi, noHits, doiPreview } = useLookupDoi(doiQuery);
   const createRegistrationFromDoi = useCreateRegistrationFromDoi(onCreateRegistrationSuccess);
 
-  const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
-    const doiUrl = makeDoiUrl(values.link);
-
-    setDoiQuery(doiUrl);
-    setValues({ link: doiUrl });
-  };
-
   const persistRegistration = () => {
     if (!doiPreview) {
       return;
@@ -82,14 +75,21 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
         data-testid={dataTestId.registrationWizard.new.linkAccordion}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <LinkIcon />
-        <div>
-          <Typography variant="h2">{t('registration.registration.start_with_link_to_resource_title')}</Typography>
-          <Typography>{t('registration.registration.start_with_link_to_resource_description')}</Typography>
-        </div>
+        <span style={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography variant="h2" component="span">
+            {t('registration.registration.start_with_link_to_resource_title')}
+          </Typography>
+          <Typography component="span">
+            {t('registration.registration.start_with_link_to_resource_description')}
+          </Typography>
+        </span>
       </AccordionSummary>
 
       <AccordionDetails>
-        <Formik onSubmit={onSubmit} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
+        <Formik
+          onSubmit={async (values) => setDoiQuery(values.link)}
+          initialValues={emptyDoiFormValues}
+          validationSchema={doiValidationSchema}>
           {({ isSubmitting }) => (
             <Form noValidate>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -111,7 +111,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                     />
                   )}
                 </Field>
-                <LoadingButton
+                <Button
                   data-testid="doi-search-button"
                   variant="contained"
                   loading={isLookingUpDoi}
@@ -119,7 +119,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                   endIcon={<SearchIcon />}
                   loadingPosition="end">
                   {t('common.search')}
-                </LoadingButton>
+                </Button>
               </Box>
             </Form>
           )}
@@ -153,15 +153,16 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
       </AccordionDetails>
 
       <AccordionActions>
-        <LoadingButton
+        <Button
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
+          loadingPosition="end"
           variant="contained"
           disabled={isLookingUpDoi || registrationsWithDoi.length > 0 || !doiPreview || !doiQuery}
           loading={createRegistrationFromDoi.isPending}
           onClick={persistRegistration}>
           {t('registration.registration.start_registration')}
-        </LoadingButton>
+        </Button>
       </AccordionActions>
     </RegistrationAccordion>
   );

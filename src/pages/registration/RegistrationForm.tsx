@@ -22,7 +22,7 @@ import { Registration, RegistrationStatus, RegistrationTab } from '../../types/r
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
 import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { doNotRedirectQueryParam, UrlPathTemplate } from '../../utils/urlPaths';
 import { Forbidden } from '../errorpages/Forbidden';
 import { ContributorsPanel } from './ContributorsPanel';
 import { DescriptionPanel } from './DescriptionPanel';
@@ -39,14 +39,15 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
-  const [uppy] = useState(() => createUppy(i18n.language));
+  const [uppy] = useState(() => createUppy(i18n.language, identifier));
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
   const location = useLocation();
   const locationState = location.state as RegistrationFormLocationState;
 
   const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
+  const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
+  const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
 
-  const registrationQuery = useFetchRegistration(identifier);
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
   const canHaveNviCandidate =
@@ -93,7 +94,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             />
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <RegistrationIconHeader
-                publicationInstanceType={values.entityDescription?.reference?.publicationInstance.type}
+                publicationInstanceType={values.entityDescription?.reference?.publicationInstance?.type}
                 publicationDate={values.entityDescription?.publicationDate}
                 showYearOnly
               />
@@ -139,7 +140,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         open={isResettableNviStatus && !hasAcceptedNviWarning && !disableNviCriticalFields}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={() => setHasAcceptedNviWarning(true)}
-        onCancel={() => (navigate.length > 1 ? navigate(-1) : navigate(UrlPathTemplate.Root))}>
+        onCancel={() => (!!locationState ? navigate(-1) : navigate(UrlPathTemplate.Root))}>
         <Typography sx={{ mb: '1rem' }}>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>

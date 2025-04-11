@@ -3,5 +3,5 @@ import { useTranslation } from 'react-i18next';
 
 export const DoesNotSupportFileIcon = () => {
   const { t } = useTranslation();
-  return <InsertPageBreakIcon titleAccess={t('editor.does_not_support_file_upload')} fontSize="small" />;
+  return <InsertPageBreakIcon titleAccess={t('editor.does_not_support_open_files')} fontSize="small" />;
 };

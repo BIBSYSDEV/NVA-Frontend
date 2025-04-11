@@ -26,6 +26,7 @@ export const useRegistrationsQueryParams = () => {
 
   const allParams = {
     abstract: searchParams.get(ResultParam.Abstract),
+    allScientificValues: searchParams.get(ResultParam.AllScientificValues),
     category: searchParams.get(ResultParam.Category) as PublicationInstanceType | null,
     categoryShould: categoryShould ? (categoryShould.split(',') as PublicationInstanceType[]) : null,
     contributor: searchParams.get(ResultParam.Contributor),

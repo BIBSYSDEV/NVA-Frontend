@@ -64,6 +64,7 @@ export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteToo
       <>
         {showEdit && (
           <EditIconButton
+            data-testid={dataTestId.myPage.editProjectButton(project.id)}
             tooltip={t('project.edit_project')}
             onClick={() => navigate(getEditProjectPath(project.id))}
           />

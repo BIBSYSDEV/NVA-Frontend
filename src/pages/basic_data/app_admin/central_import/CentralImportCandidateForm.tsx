@@ -17,7 +17,6 @@ import { ImportCandidate } from '../../../../types/importCandidate.types';
 import { RegistrationTab } from '../../../../types/registration.types';
 import { getTouchedTabFields } from '../../../../utils/formik-helpers/formik-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
-import { createUppy } from '../../../../utils/uppy/uppy-config';
 import { getImportCandidatePath, IdentifierParams } from '../../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../../utils/validation/registration/registrationValidation';
 import { ContributorsPanel } from '../../../registration/ContributorsPanel';
@@ -29,11 +28,10 @@ import { CentralImportCandidateFormActions } from './CentralImportCandidateFormA
 
 export const CentralImportCandidateForm = () => {
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
   const navigate = useNavigate();
   const location = useLocation();
-  const [uppy] = useState(createUppy(i18n.language));
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidate', identifier],
@@ -120,7 +118,7 @@ export const CentralImportCandidateForm = () => {
                     )}
                     {tabNumber === RegistrationTab.FilesAndLicenses && (
                       <ErrorBoundary>
-                        <FilesAndLicensePanel uppy={uppy} />
+                        <FilesAndLicensePanel />
                       </ErrorBoundary>
                     )}
                   </Box>

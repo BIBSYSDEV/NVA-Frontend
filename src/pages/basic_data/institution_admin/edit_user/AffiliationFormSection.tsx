@@ -39,7 +39,7 @@ export const AffiliationFormSection = () => {
 
   return (
     <section>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {t('common.employments')}
       </Typography>
       {employments.length === 0 ? (

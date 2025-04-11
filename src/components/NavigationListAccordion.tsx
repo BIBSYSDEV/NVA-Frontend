@@ -69,7 +69,7 @@ export const NavigationListAccordion = ({
             svg: { padding: '0.2rem' },
           }}>
           {startIcon}
-          <Typography variant="h2" fontWeight={500}>
+          <Typography variant="h3" fontWeight={500}>
             {title}
           </Typography>
         </Box>

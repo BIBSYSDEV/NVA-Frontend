@@ -91,7 +91,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
         ) : (
           <>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Typography gutterBottom variant="h2">
+              <Typography gutterBottom variant="h1">
                 {t('common.result_registrations')}
               </Typography>
               {(!selectedPublished || selectedUnpublished) && (

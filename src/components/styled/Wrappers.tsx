@@ -1,5 +1,4 @@
-import { Box, Checkbox, FormGroup, ListItem, Typography } from '@mui/material';
-import { styled } from '@mui/system';
+import { Box, Checkbox, FormGroup, ListItem, styled, Typography } from '@mui/material';
 
 export const StyledRightAlignedFooter = styled(Box)({
   display: 'flex',
@@ -62,6 +61,7 @@ export const InputContainerBox = styled(Box)({
 });
 
 export const BackgroundDiv = styled(Box)(({ theme }) => ({
+  overflowX: 'auto',
   background: theme.palette.secondary.light,
   [theme.breakpoints.up('md')]: {
     padding: '1rem 2rem',

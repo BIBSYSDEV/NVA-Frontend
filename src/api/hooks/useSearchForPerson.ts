@@ -1,14 +1,39 @@
-import { useQuery } from '@tanstack/react-query';
+import { PlaceholderDataFunction, Query, useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { PersonSearchParams, searchForPerson } from '../cristinApi';
 
-export const useSearchForPerson = (searchTerm: string, rowsPerPage = 20, page = 1, errorMessage = '') => {
-  const personQueryParams: PersonSearchParams = {
-    name: searchTerm,
-  };
+type SearchResponseType = Awaited<ReturnType<typeof searchForPerson>>;
+type PlaceholderDataFunctionType = PlaceholderDataFunction<
+  SearchResponseType,
+  Error,
+  SearchResponseType,
+  (string | PersonSearchParams)[]
+>;
+
+interface PersonSearchOptions extends PersonSearchParams {
+  enabled?: boolean;
+  placeholderData?: PlaceholderDataFunctionType;
+}
+
+export const useSearchForPerson = ({ enabled, placeholderData, ...searchParams }: PersonSearchOptions) => {
+  const { t } = useTranslation();
+
   return useQuery({
-    enabled: searchTerm.length > 0,
-    queryKey: ['person', rowsPerPage, page, personQueryParams],
-    queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
-    meta: { errorMessage: errorMessage },
+    enabled,
+    queryKey: ['personSearch', searchParams],
+    queryFn: () => searchForPerson(searchParams),
+    meta: { errorMessage: t('feedback.error.person_search') },
+    placeholderData,
   });
+};
+
+// Keep previous data if query has the same search term
+export const keepSimilarPreviousData = (
+  previousData: SearchResponseType | undefined,
+  query: Query<SearchResponseType, Error, SearchResponseType, (string | PersonSearchParams)[]> | undefined,
+  searchTerm?: string | null
+) => {
+  if (searchTerm && query?.queryKey.some((key) => typeof key === 'object' && key.name === searchTerm)) {
+    return previousData;
+  }
 };

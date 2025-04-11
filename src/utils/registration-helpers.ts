@@ -55,6 +55,7 @@ import {
   SerialPublication,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
+import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -99,7 +100,7 @@ export const isMediaContribution = (instanceType: any) => Object.values(MediaTyp
 
 export const isResearchData = (instanceType: any) => Object.values(ResearchDataType).includes(instanceType);
 
-export const isPeriodicalMediaContribution = (instanceType: string) =>
+export const isPeriodicalMediaContribution = (instanceType?: string) =>
   instanceType === MediaType.MediaFeatureArticle || instanceType === MediaType.MediaReaderOpinion;
 
 export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
@@ -609,17 +610,6 @@ export const getContributorsWithPrimaryRole = (
   });
 };
 
-export const getContributorsWithSecondaryRole = (
-  contributors: PreviewContributor[] | Contributor[],
-  registrationType: PublicationInstanceType
-) => {
-  const { secondaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => {
-    const roleValue = typeof contributor.role === 'string' ? contributor.role : contributor.role.type;
-    return secondaryRoles.includes(roleValue);
-  });
-};
-
 export const getOutputName = (item: OutputItem): string => {
   switch (item.type) {
     case 'Venue':
@@ -699,11 +689,11 @@ export const isPendingOpenFile = (artifact: AssociatedArtifact) => artifact.type
 
 export const isOpenFile = (artifact: AssociatedArtifact) => artifact.type === FileType.OpenFile;
 
-export const isTypeWithRrs = (publicationInstanceType?: string) =>
+export const isCategoryWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
 
-export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
+export const isCategoryWithFileVersion = (publicationInstanceType?: string) =>
   isJournal(publicationInstanceType) || isBook(publicationInstanceType) || isChapter(publicationInstanceType);
 
 export const isEmbargoed = (embargoDate: Date | null) => {
@@ -737,14 +727,18 @@ export const getDisabledCategories = (
     });
   }
 
-  const hasFiles = getAssociatedFiles(registration.associatedArtifacts).length > 0;
+  if (!hasCuratorRole(user)) {
+    const hasOpenFiles = registration.associatedArtifacts.some(
+      (artifact) => isOpenFile(artifact) || isPendingOpenFile(artifact)
+    );
 
-  if (hasFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
-    const categoriesWithoutFileSupport = allPublicationInstanceTypes
-      .filter((type) => !customer.allowFileUploadForTypes.includes(type))
-      .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
+    if (hasOpenFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
+      const categoriesWithoutFileSupport = allPublicationInstanceTypes
+        .filter((type) => !customer.allowFileUploadForTypes.includes(type))
+        .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
 
-    disabledCategories.push(...categoriesWithoutFileSupport);
+      disabledCategories.push(...categoriesWithoutFileSupport);
+    }
   }
 
   return disabledCategories;
@@ -852,7 +846,7 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     })) ?? [];
 
   const registrationSearchItem: RegistrationSearchItem = {
-    type: registration.entityDescription?.reference?.publicationInstance.type ?? '',
+    type: registration.entityDescription?.reference?.publicationInstance?.type ?? '',
     id: registration.id,
     identifier: registration.identifier,
     recordMetadata: {
@@ -879,4 +873,27 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     contributorsPreview: contributors,
   };
   return registrationSearchItem;
+};
+
+/**
+ * Checks if the customer allows file upload for the given category.
+ * If 'true' all user roles are allowed to upload open files.
+ * If 'false' only users with curator role can upload open files.
+ */
+export const allowsFileUpload = (customer: CustomerInstitution | null, category?: PublicationInstanceType | '') =>
+  !!category && !!customer?.allowFileUploadForTypes.includes(category);
+
+export const getAssociatedLinkRelationTitle = (t: TFunction, relation: AssociatedLink['relation']) => {
+  switch (relation) {
+    case 'dataset':
+      return t('registration.publication_types.DataSet');
+    case 'mention':
+      return t('common.mention');
+    case 'sameAs':
+      return t('common.full_text');
+    case 'metadataSource':
+      return t('common.metadata_source');
+    default:
+      return t('common.link');
+  }
 };

@@ -96,7 +96,7 @@ export interface AdditionalIdentifier {
   value: string;
 }
 
-export interface ImportDetail {
+interface ImportDetail {
   importDate: string;
   importSource: ImportSource;
 }
@@ -118,7 +118,8 @@ export type RegistrationOperation =
   | 'doi-request-create'
   | 'doi-request-approve'
   | 'support-request-create'
-  | 'support-request-approve';
+  | 'support-request-approve'
+  | 'upload-file';
 
 interface UnpublishingNote {
   type: 'UnpublishingNote';
@@ -232,7 +233,8 @@ export type PublicationInstance =
   | MediaContributionPeriodicalPublicationInstance
   | ResearchDataPublicationInstance
   | MapPublicationInstance
-  | ExhibitionPublicationInstance;
+  | ExhibitionPublicationInstance
+  | EmptyPublicationInstance;
 
 export enum PublicationChannelType {
   Journal = 'Journal',
@@ -243,6 +245,17 @@ export enum PublicationChannelType {
   UnconfirmedMediaContributionPeriodical = 'UnconfirmedMediaContributionPeriodical',
   UnconfirmedPublisher = 'UnconfirmedPublisher',
   UnconfirmedSeries = 'UnconfirmedSeries',
+}
+
+interface EmptyPublicationInstance {
+  type?: '';
+}
+
+interface EntityDescriptionWithoutCategory extends BaseEntityDescription {
+  reference: BaseReference & {
+    publicationInstance?: EmptyPublicationInstance;
+    publicationContext?: { type?: '' };
+  };
 }
 
 export type EntityDescription =
@@ -256,7 +269,8 @@ export type EntityDescription =
   | MediaContributionEntityDescription
   | ResearchDataEntityDescription
   | MapEntityDescription
-  | ExhibitionEntityDescription;
+  | ExhibitionEntityDescription
+  | EntityDescriptionWithoutCategory;
 
 export interface Registration extends BaseRegistration {
   entityDescription?: EntityDescription;
@@ -344,7 +358,7 @@ export const emptyRegistration: Registration = {
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
-  allowedOperations: ['update', 'delete', 'unpublish'],
+  allowedOperations: ['update', 'delete', 'unpublish', 'upload-file'],
 };
 
 export interface ContextSeries {

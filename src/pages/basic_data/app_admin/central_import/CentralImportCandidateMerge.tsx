@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
@@ -127,17 +126,21 @@ export const CentralImportCandidateMerge = () => {
             alignItems: 'center',
           }}>
           <Helmet>
-            <title>{t('basic_data.central_import.central_import')}</title>
+            <title>{t('basic_data.central_import.merge_candidate.merge')}</title>
           </Helmet>
+          <Typography variant="h1" gutterBottom>
+            {t('basic_data.central_import.merge_candidate.merge')}
+          </Typography>
+
           <Typography sx={{ gridColumn: '1/-1' }}>
             {t('basic_data.central_import.merge_candidate.merge_details_1')}
           </Typography>
           <Typography sx={{ gridColumn: '1/-1' }}>
             {t('basic_data.central_import.merge_candidate.merge_details_2')}
           </Typography>
-          <Typography variant="h1">{t('basic_data.central_import.merge_candidate.metadata_to_import')}</Typography>
+          <Typography variant="h2">{t('basic_data.central_import.merge_candidate.metadata_to_import')}</Typography>
           <span />
-          <Typography variant="h1">{t('basic_data.central_import.merge_candidate.result_in_nva')}</Typography>
+          <Typography variant="h2">{t('basic_data.central_import.merge_candidate.result_in_nva')}</Typography>
 
           <CompareFields
             candidateLabel={t('basic_data.central_import.merge_candidate.result_id')}
@@ -164,12 +167,12 @@ export const CentralImportCandidateMerge = () => {
             variant="standard"
             candidateValue={t(
               `registration.publication_types.${
-                importCandidate.entityDescription?.reference?.publicationInstance.type as PublicationInstanceType
+                importCandidate.entityDescription?.reference?.publicationInstance?.type as PublicationInstanceType
               }`
             )}
             registrationValue={t(
               `registration.publication_types.${
-                registration.entityDescription?.reference?.publicationInstance.type as PublicationInstanceType
+                registration.entityDescription?.reference?.publicationInstance?.type as PublicationInstanceType
               }`
             )}
           />
@@ -258,20 +261,20 @@ export const CentralImportCandidateMerge = () => {
           />
 
           {candidateMainType === PublicationType.PublicationInJournal &&
-            importCandidate.entityDescription?.reference?.publicationInstance.type !== JournalType.Corrigendum &&
+            importCandidate.entityDescription?.reference?.publicationInstance?.type !== JournalType.Corrigendum &&
             registrationMainType === PublicationType.PublicationInJournal &&
-            registration.entityDescription?.reference?.publicationInstance.type !== JournalType.Corrigendum && (
+            registration.entityDescription?.reference?.publicationInstance?.type !== JournalType.Corrigendum && (
               <CompareJournalFields importCandidate={importCandidate} />
             )}
 
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
             <Button onClick={() => navigate(-1)}>{t('common.cancel')}</Button>
-            <LoadingButton
+            <Button
               type="submit"
               variant="contained"
               loading={isSubmitting || registrationMutation.isPending || importCandidateMutation.isPending}>
               {t('basic_data.central_import.merge_candidate.merge')}
-            </LoadingButton>
+            </Button>
           </Box>
         </Box>
       )}

@@ -5,7 +5,6 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { LoadingButton } from '@mui/lab';
 import {
   Accordion,
   AccordionDetails,
@@ -21,7 +20,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -48,6 +47,7 @@ interface DoiRequestAccordionProps {
   doiRequestTicket?: Ticket;
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
+  hasReservedDoi: boolean;
 }
 
 enum LoadingState {
@@ -72,6 +72,7 @@ export const DoiRequestAccordion = ({
   refetchData,
   isLoadingData,
   addMessage,
+  hasReservedDoi,
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -183,13 +184,14 @@ export const DoiRequestAccordion = ({
   );
 
   const assignDoiButton = (
-    <LoadingButton
+    <Button
       sx={{ bgcolor: 'white' }}
       fullWidth
       size="small"
       variant="outlined"
       data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
       endIcon={<CheckIcon />}
+      loadingPosition="end"
       onClick={() => {
         if (openFilesOnRegistration.length > 0) {
           approveTicketMutation.mutate();
@@ -200,7 +202,7 @@ export const DoiRequestAccordion = ({
       loading={approveTicketMutation.isPending}
       disabled={isLoadingData}>
       {t('registration.public_page.tasks_panel.assign_doi')}
-    </LoadingButton>
+    </Button>
   );
 
   const userCanRequestDoi = userHasAccessRight(registration, 'doi-request-create');
@@ -210,7 +212,14 @@ export const DoiRequestAccordion = ({
     ? locationState.selectedTicketType === 'DoiRequest'
     : waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest;
 
-  const hasReservedDoi = !doiRequestTicket && registration.doi;
+  const [openAccordion, setOpenAccordion] = useState(defaultExpanded);
+
+  useEffect(() => {
+    // Open accordion if a new DOI request is created
+    if (doiRequestTicket) {
+      setOpenAccordion(true);
+    }
+  }, [doiRequestTicket]);
 
   return (
     <Accordion
@@ -223,7 +232,8 @@ export const DoiRequestAccordion = ({
         },
       }}
       elevation={3}
-      defaultExpanded={defaultExpanded}>
+      expanded={openAccordion}
+      onChange={() => setOpenAccordion((open) => !open)}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
           {t('common.doi')}
@@ -250,14 +260,15 @@ export const DoiRequestAccordion = ({
         {waitingForRemovalOfDoi && (
           <>
             <Typography gutterBottom>{t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}</Typography>
-            <LoadingButton
+            <Button
               variant="outlined"
               onClick={refetchData}
               loading={isLoadingData}
               startIcon={<RefreshIcon />}
+              loadingPosition="start"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
               {t('registration.public_page.tasks_panel.reload')}
-            </LoadingButton>
+            </Button>
           </>
         )}
 
@@ -349,13 +360,13 @@ export const DoiRequestAccordion = ({
             <Button onClick={toggleRequestDoiModal} disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('common.cancel')}
             </Button>
-            <LoadingButton
+            <Button
               variant="contained"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.sendDoiButton}
               onClick={sendDoiRequest}
               loading={isLoadingData || isLoading !== LoadingState.None}>
               {t('registration.public_page.request_doi')}
-            </LoadingButton>
+            </Button>
           </DialogActions>
         </Modal>
 
@@ -412,11 +423,7 @@ export const DoiRequestAccordion = ({
         {(isPendingDoiRequest || isClosedDoiRequest) && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {messages.length > 0 ? (
-              <TicketMessageList
-                ticket={doiRequestTicket}
-                canDeleteMessage={userCanAssignDoi}
-                refetchData={refetchData}
-              />
+              <TicketMessageList ticket={doiRequestTicket} />
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}

@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router';
 import { fetchResource } from '../../api/commonApi';
 import { fetchUsersByCustomer } from '../../api/roleApi';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -13,7 +14,7 @@ import { InstitutionUser, RoleName } from '../../types/user.types';
 import { getInitials } from '../../utils/general-helpers';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getResearchProfilePath } from '../../utils/urlPaths';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledBaseContributorIndicator } from '../registration/contributors_tab/ContributorIndicator';
 
@@ -65,63 +66,49 @@ export const EditorInstitution = () => {
       <Helmet>
         <title>{t('editor.institution.institution_profile')}</title>
       </Helmet>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         {t('editor.institution.institution_profile')}
       </Typography>
       {isLoadingCustomer || isLoadingInstitution ? (
         <CircularProgress />
       ) : (
         <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h3" component="h2">
-              {t('editor.institution.institution_name_norwegian')}
-            </Typography>
+          <Grid size={{ xs: 12, md: 4 }}>
+            <Typography variant="h2">{t('editor.institution.institution_name_norwegian')}</Typography>
             <Typography>{institution?.labels.nb ?? '-'}</Typography>
           </Grid>
 
-          <Grid item xs={12} md={4}>
-            <Typography variant="h3" component="h2">
-              {t('editor.institution.institution_name_english')}
-            </Typography>
+          <Grid size={{ xs: 12, md: 4 }}>
+            <Typography variant="h2">{t('editor.institution.institution_name_english')}</Typography>
             <Typography>{institution?.labels.en ?? '-'}</Typography>
           </Grid>
 
-          <Grid container item xs={12} md={4}>
-            <Grid item xs={4} md={6}>
-              <Typography variant="h3" component="h2">
-                {t('editor.institution.institution_short_name')}
-              </Typography>
+          <Grid container size={{ xs: 12, md: 4 }}>
+            <Grid size={{ xs: 4, md: 6 }}>
+              <Typography variant="h2">{t('editor.institution.institution_short_name')}</Typography>
               <Typography>{organizationQuery.data?.acronym ?? '-'}</Typography>
             </Grid>
 
-            <Grid item xs={4} md={6}>
-              <Typography variant="h3" component="h2">
-                {t('editor.institution.institution_code')}
-              </Typography>
+            <Grid size={{ xs: 4, md: 6 }}>
+              <Typography variant="h2">{t('editor.institution.institution_code')}</Typography>
               <Typography>{institution?.id.split('/').pop() ?? '-'}</Typography>
             </Grid>
           </Grid>
 
-          <Grid item xs={12} md={4}>
-            <Typography variant="h3" component="h2">
-              {t('basic_data.institutions.sector')}
-            </Typography>
+          <Grid size={{ xs: 12, md: 4 }}>
+            <Typography variant="h2">{t('basic_data.institutions.sector')}</Typography>
             <Typography>
               {customer?.sector ? t(`basic_data.institutions.sector_values.${customer.sector}`) : '-'}
             </Typography>
           </Grid>
 
-          <Grid item xs={12} md={4}>
-            <Typography variant="h3" component="h2">
-              {t('editor.institution.unique_feide_id')}
-            </Typography>
+          <Grid size={{ xs: 12, md: 4 }}>
+            <Typography variant="h2">{t('editor.institution.unique_feide_id')}</Typography>
             <Typography>{customer?.feideOrganizationDomain ?? '-'}</Typography>
           </Grid>
 
-          <Grid item xs={12} md={4}>
-            <Typography variant="h3" component="h2">
-              {t('basic_data.institutions.ror')}
-            </Typography>
+          <Grid size={{ xs: 12, md: 4 }}>
+            <Typography variant="h2">{t('basic_data.institutions.ror')}</Typography>
             <Typography>
               {customer?.rorId ? (
                 <Link href={customer.rorId} target="_blank" rel="noopener noreferrer">
@@ -133,10 +120,8 @@ export const EditorInstitution = () => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12}>
-            <Typography variant="h3" component="h2">
-              {t('common.nvi')}
-            </Typography>
+          <Grid size={12}>
+            <Typography variant="h2">{t('common.nvi')}</Typography>
             <Typography>
               {customer?.nviInstitution
                 ? t('editor.institution.institution_is_nvi_institution')
@@ -144,20 +129,16 @@ export const EditorInstitution = () => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12}>
-            <Typography variant="h3" component="h2">
-              {t('common.rbo')}
-            </Typography>
+          <Grid size={12}>
+            <Typography variant="h2">{t('common.rbo')}</Typography>
             <Typography>
               {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
             </Typography>
           </Grid>
 
           {customer?.serviceCenter?.uri && (
-            <Grid item xs={12}>
-              <Typography variant="h3" component="h2">
-                {t('editor.institution.institution_support')}
-              </Typography>
+            <Grid size={12}>
+              <Typography variant="h2">{t('editor.institution.institution_support')}</Typography>
               <Link href={customer.serviceCenter.uri} target="_blank" rel="noopener noreferrer">
                 {customer.serviceCenter.uri}
               </Link>
@@ -168,10 +149,10 @@ export const EditorInstitution = () => {
             <PageSpinner />
           ) : (
             institutionUsers && (
-              <Grid container item xs={12}>
+              <Grid container size={12}>
                 {institutionAdmins && (
-                  <Grid item xs={12} sm={4} md={6} lg={4}>
-                    <Typography variant="h3" gutterBottom>
+                  <Grid size={{ xs: 12, sm: 4, md: 6, lg: 4 }}>
+                    <Typography variant="h2" gutterBottom>
                       {institutionAdmins.length > 0 &&
                         t('editor.institution.institution_admin', { count: institutionAdmins.length })}
                     </Typography>
@@ -184,8 +165,8 @@ export const EditorInstitution = () => {
                 )}
 
                 {institutionEditors && (
-                  <Grid item xs={12} sm={4} md={6} lg={4}>
-                    <Typography variant="h3" gutterBottom>
+                  <Grid size={{ xs: 12, sm: 4, md: 6, lg: 4 }}>
+                    <Typography variant="h2" gutterBottom>
                       {institutionEditors.length > 0 &&
                         t('editor.institution.institution_editor', { count: institutionEditors.length })}
                     </Typography>
@@ -200,7 +181,7 @@ export const EditorInstitution = () => {
             )
           )}
 
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Typography sx={{ pt: '1rem' }}>
               <Trans t={t} i18nKey="editor.institution.institution_helper_text">
                 <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />
@@ -230,7 +211,9 @@ const InstitutionUserLink = ({ user }: InstitutionUserItemProps) => {
         }}>
         {getInitials(fullName)}
       </StyledBaseContributorIndicator>
-      <Link href={`${UrlPathTemplate.ResearchProfile}?id=${encodeURIComponent(user.cristinId ?? '')}`}>{fullName}</Link>
+      <Link component={RouterLink} to={getResearchProfilePath(user.cristinId ?? '')}>
+        {fullName}
+      </Link>
     </Box>
   );
 };

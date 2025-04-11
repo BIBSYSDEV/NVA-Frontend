@@ -46,6 +46,8 @@ export const DialoguesWithoutCuratorButton = () => {
     } else {
       syncedParams.set(TicketSearchParam.Status, [...currentStatusFilter, statusNew].join(','));
     }
+
+    syncedParams.delete(TicketSearchParam.From);
     navigate({ search: syncedParams.toString() });
   };
 

@@ -5,9 +5,10 @@ import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { useFetchRegistrationTickets } from '../../api/hooks/useFetchRegistrationTickets';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
+import { ActionPanelContext } from '../../context/ActionPanelContext';
 import { RegistrationStatus } from '../../types/registration.types';
 import { userHasAccessRight } from '../../utils/registration-helpers';
-import { IdentifierParams } from '../../utils/urlPaths';
+import { doNotRedirectQueryParam, IdentifierParams } from '../../utils/urlPaths';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
 import { ActionPanel } from './ActionPanel';
@@ -18,16 +19,16 @@ export const RegistrationLandingPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
-  const shouldNotRedirect = new URLSearchParams(location.search).has('shouldNotRedirect');
-  const registrationQuery = useFetchRegistration(identifier, { shouldNotRedirect });
+  const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
+  const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
 
   const registration = registrationQuery.data;
   const registrationId = registration?.id;
 
-  if (identifier && identifier !== registration?.identifier && !!registration?.identifier) {
+  if (identifier && !!registration?.identifier && identifier !== registration.identifier) {
+    // Update URL with the correct identifier if the original result yields an redirect due to being unpublished
     const newPath = location.pathname.replace(identifier, registration.identifier);
-    const searchParams = location.search ?? '';
-    navigate(newPath + searchParams, { replace: true });
+    navigate(newPath + location.search, { replace: true, state: location.state });
   }
 
   const canEditRegistration = userHasAccessRight(registration, 'update');
@@ -61,12 +62,14 @@ export const RegistrationLandingPage = () => {
             <PublicRegistrationContent registration={registration} />
 
             {canEditRegistration && ticketsQuery.isSuccess && (
-              <ActionPanel
-                registration={registration}
-                refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-                tickets={ticketsQuery.data?.tickets ?? []}
-                isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
-              />
+              <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
+                <ActionPanel
+                  registration={registration}
+                  refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+                  tickets={ticketsQuery.data?.tickets ?? []}
+                  isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
+                />
+              </ActionPanelContext.Provider>
             )}
           </ErrorBoundary>
         ) : (

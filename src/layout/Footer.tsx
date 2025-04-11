@@ -48,7 +48,7 @@ export const Footer = () => {
         }}>
         <div>
           <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between' }}>
-            <Typography color="primary" sx={{ fontWeight: 'bold' }}>
+            <Typography color="primary" variant="h3" component="h2">
               {t('footer.about_nva')}
             </Typography>
 
@@ -68,8 +68,9 @@ export const Footer = () => {
 
           <Typography
             color="primary"
+            variant="h3"
+            component="h2"
             sx={{
-              fontWeight: 'bold',
               gap: '0.5rem',
               mt: '2rem',
             }}>
@@ -88,7 +89,7 @@ export const Footer = () => {
               justifyContent: 'space-between',
               gap: '0.5rem',
             }}>
-            <Typography color="primary" sx={{ fontWeight: 'bold' }}>
+            <Typography color="primary" variant="h3" component="h2">
               {t('footer.become_customer')}
             </Typography>
 
@@ -107,7 +108,7 @@ export const Footer = () => {
           <Typography color="primary">{t('footer.about_sikt_text')}</Typography>
 
           <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', mt: '2rem' }}>
-            <Typography color="primary" sx={{ fontWeight: 'bold' }}>
+            <Typography color="primary" variant="h3" component="h2">
               {t('footer.about_sikt')}
             </Typography>
 

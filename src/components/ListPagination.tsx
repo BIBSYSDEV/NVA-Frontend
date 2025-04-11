@@ -31,6 +31,10 @@ export const ListPagination = ({
   const pageCounter = <ListPaginationCounter start={itemsStart} end={itemsEnd} total={count} />;
   const scrollToDivRef = useRef<HTMLDivElement>(null);
 
+  if (count === 0) {
+    return children;
+  }
+
   return (
     <>
       <Box ref={scrollToDivRef} sx={{ scrollMarginTop: '5rem' }} />

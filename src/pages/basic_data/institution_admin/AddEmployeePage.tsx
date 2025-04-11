@@ -68,7 +68,13 @@ export const AddEmployeePage = () => {
       });
       const createPersonResponse = await createCristinPerson(cristinPerson);
       if (isErrorStatus(createPersonResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
+        dispatch(
+          setNotification({
+            message: t('feedback.error.create_user'),
+            variant: 'error',
+            detail: (createPersonResponse.data as any).detail,
+          })
+        );
       } else if (isSuccessStatus(createPersonResponse.status)) {
         if (!nationalId) {
           dispatch(setNotification({ message: t('feedback.success.create_person'), variant: 'success' }));
@@ -116,7 +122,7 @@ export const AddEmployeePage = () => {
       <Helmet>
         <title>{t('basic_data.add_employee.add_employee')}</title>
       </Helmet>
-      <Typography variant="h2">{t('basic_data.add_employee.update_person_registry')}</Typography>
+      <Typography variant="h1">{t('basic_data.add_employee.update_person_registry')}</Typography>
       <Formik
         initialValues={initialValues}
         validationSchema={addEmployeeValidationSchema}
@@ -140,12 +146,6 @@ export const AddEmployeePage = () => {
                   personHasNin={!values.person.nvi?.verifiedAt.id}
                   roles={values.roles}
                   updateRoles={(newRoles) => {
-                    if (!newRoles.includes(RoleName.PublishingCurator)) {
-                      newRoles = newRoles.filter(
-                        (role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo
-                      );
-                    }
-
                     setFieldValue('roles', newRoles);
                     const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
                     if (hasCuratorRole && values.viewingScopes.length === 0 && topOrgCristinId) {
@@ -161,7 +161,6 @@ export const AddEmployeePage = () => {
                   roles={values.roles}
                   viewingScopes={values.viewingScopes}
                   updateViewingScopes={(newViewingScopes) => setFieldValue('viewingScopes', newViewingScopes)}
-                  updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
                 />
               </Box>
               <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'center' }}>

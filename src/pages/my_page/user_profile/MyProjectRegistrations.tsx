@@ -64,22 +64,22 @@ export const MyProjectRegistrations = () => {
       <Helmet>
         <title>{t('my_page.project_registrations')}</title>
       </Helmet>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         {t('my_page.project_registrations')}
       </Typography>
-      {projectsQuery.isPending || projectsQuery.isFetching ? (
-        <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-      ) : projectsQuery.data && projectsQuery.data.size > 0 ? (
-        <ListPagination
-          count={filteredProjects.length}
-          rowsPerPage={rowsPerPage}
-          page={validPage}
-          onPageChange={(newPage) => setPage(newPage)}
-          onRowsPerPageChange={(newRowsPerPage) => {
-            setRowsPerPage(newRowsPerPage);
-            setPage(1);
-          }}
-          sortingComponent={<ProjectSortSelector />}>
+      <ListPagination
+        count={filteredProjects.length}
+        rowsPerPage={rowsPerPage}
+        page={validPage}
+        onPageChange={(newPage) => setPage(newPage)}
+        onRowsPerPageChange={(newRowsPerPage) => {
+          setRowsPerPage(newRowsPerPage);
+          setPage(1);
+        }}
+        sortingComponent={<ProjectSortSelector />}>
+        {projectsQuery.isPending || projectsQuery.isFetching ? (
+          <ListSkeleton arrayLength={3} minWidth={40} height={100} />
+        ) : projectsQuery.data && projectsQuery.data.size > 0 ? (
           <List>
             {projectsToShow.map((project) => (
               <ProjectListItem
@@ -90,10 +90,10 @@ export const MyProjectRegistrations = () => {
               />
             ))}
           </List>
-        </ListPagination>
-      ) : (
-        <Typography>{t('common.no_hits')}</Typography>
-      )}
+        ) : (
+          <Typography>{t('common.no_hits')}</Typography>
+        )}
+      </ListPagination>
     </div>
   );
 };

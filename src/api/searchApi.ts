@@ -20,6 +20,7 @@ import {
   RegistrationStatus,
 } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
+import { getDoiValue } from '../utils/general-helpers';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
@@ -42,19 +43,21 @@ export enum TicketSearchParam {
   OrganizationId = 'organizationId',
 }
 
+export type TicketOrderBy = 'createdDate' | 'modifiedDate';
+
 export interface FetchTicketsParams {
   [TicketSearchParam.Aggregation]?: 'all' | null;
   [TicketSearchParam.Assignee]?: string | null;
   [TicketSearchParam.CreatedDate]?: string | null;
   [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
   [TicketSearchParam.From]?: number | null;
-  [TicketSearchParam.OrderBy]?: 'createdDate' | null;
+  [TicketSearchParam.OrderBy]?: TicketOrderBy | null;
   [TicketSearchParam.Owner]?: string | null;
   [TicketSearchParam.PublicationType]?: string | null;
   [TicketSearchParam.Query]?: string | null;
   [TicketSearchParam.Results]?: number | null;
   [TicketSearchParam.Role]?: 'creator';
-  [TicketSearchParam.SortOrder]?: 'desc' | 'asc' | null;
+  [TicketSearchParam.SortOrder]?: SortOrder | null;
   [TicketSearchParam.Status]?: string | null;
   [TicketSearchParam.Type]?: string | null;
   [TicketSearchParam.ViewedByNot]?: string | null;
@@ -114,7 +117,7 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 
   searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());
   searchParams.set(TicketSearchParam.Results, (params.results ?? 10).toString());
-  searchParams.set(TicketSearchParam.OrderBy, params.orderBy || 'createdDate');
+  searchParams.set(TicketSearchParam.OrderBy, params.orderBy || 'modifiedDate');
   searchParams.set(TicketSearchParam.SortOrder, params.sortOrder || 'desc');
 
   const getTickets = await authenticatedApiRequest2<CustomerTicketSearchResponse>({
@@ -316,6 +319,7 @@ export const fetchNviCandidate = async (identifier: string) => {
 
 export enum ResultParam {
   Abstract = 'abstract',
+  AllScientificValues = 'allScientificValues',
   Aggregation = 'aggregation',
   Category = 'category',
   CategoryNot = 'categoryNot',
@@ -371,6 +375,7 @@ export enum ResultSearchOrder {
 
 export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
+  [ResultParam.AllScientificValues]?: string | null;
   [ResultParam.Aggregation]?: 'all' | 'none' | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
   [ResultParam.CategoryNot]?: PublicationInstanceType | PublicationInstanceType[] | null;
@@ -424,6 +429,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.abstract) {
     searchParams.set(ResultParam.Abstract, encodeURIComponent(params.abstract));
   }
+  if (params.allScientificValues) {
+    searchParams.set(ResultParam.AllScientificValues, params.allScientificValues);
+  }
   if (params.aggregation) {
     searchParams.set(ResultParam.Aggregation, params.aggregation);
   } else {
@@ -452,7 +460,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.CristinIdentifier, params.cristinIdentifier);
   }
   if (params.doi) {
-    searchParams.set(ResultParam.Doi, params.doi);
+    const formattedDoiValue = getDoiValue(params.doi);
+    searchParams.set(ResultParam.Doi, formattedDoiValue);
   }
   if (params.excludeSubunits) {
     searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());
@@ -584,7 +593,7 @@ export const fetchCustomerResults = async (params: FetchCustomerResultsParams, s
     searchParams.set(CustomerResultParam.Status, params.status.join(','));
   }
   if (params.query) {
-    searchParams.set(ResultParam.Title, params.query);
+    searchParams.set(ResultParam.Query, params.query);
   }
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');

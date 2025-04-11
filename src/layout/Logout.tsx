@@ -9,8 +9,8 @@ const isPublicPage = (path: string) => {
     path === UrlPathTemplate.Root ||
     path === UrlPathTemplate.Search ||
     path === UrlPathTemplate.PrivacyPolicy ||
-    path.startsWith(UrlPathTemplate.ResearchProfile) ||
-    path.startsWith(UrlPathTemplate.Projects) ||
+    path.startsWith(UrlPathTemplate.ResearchProfileRoot) ||
+    path.startsWith(UrlPathTemplate.ProjectsRoot) ||
     (path.startsWith(`/${registrationLandingPageParts[1]}`) && path.endsWith(`/${registrationLandingPageParts[3]}`))
   ) {
     return true;

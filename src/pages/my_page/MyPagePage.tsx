@@ -7,8 +7,14 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router';
-import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
+import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
+import {
+  fetchCustomerTickets,
+  FetchTicketsParams,
+  SortOrder,
+  TicketOrderBy,
+  TicketSearchParam,
+} from '../../api/searchApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
   LinkCreateButton,
@@ -26,7 +32,7 @@ import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
+import { getDialogueNotificationsParams, resetPaginationAndNavigate } from '../../utils/searchHelpers';
 import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
@@ -52,10 +58,7 @@ const MyPagePage = () => {
   const isCreator = !!user?.customerId && (user.isCreator || hasCuratorRole(user));
   const personId = user?.cristinId ?? '';
   const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
-
-  const [page, setPage] = useState(1);
-  const apiPage = page - 1;
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const navigate = useNavigate();
 
   const [selectedRegistrationStatus, setSelectedRegistrationStatus] = useState({
     published: false,
@@ -75,12 +78,12 @@ const MyPagePage = () => {
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
     query: searchParams.get(TicketSearchParam.Query),
-    results: rowsPerPage,
+    results: Number(searchParams.get(TicketSearchParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     createdDate: searchParams.get(TicketSearchParam.CreatedDate),
-    from: apiPage * rowsPerPage,
+    from: Number(searchParams.get(TicketSearchParam.From) ?? 0),
     owner: user?.nvaUsername,
-    orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
-    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
+    orderBy: searchParams.get(TicketSearchParam.OrderBy) as TicketOrderBy | null,
+    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as SortOrder | null,
     status: searchParams.get(TicketSearchParam.Status),
     viewedByNot: searchParams.get(TicketSearchParam.ViewedByNot),
     type: selectedTypesArray.join(','),
@@ -131,13 +134,12 @@ const MyPagePage = () => {
       <SideMenu
         expanded={expandMenu}
         minimizedMenu={
-          <Link
+          <MinimizedMenuIconButton
+            title={t('my_page.my_page')}
             to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: locationState?.previousSearch }}
             onClick={() => ticketsQuery.refetch()}>
-            <MinimizedMenuIconButton title={t('my_page.my_page')}>
-              <FavoriteBorderIcon />
-            </MinimizedMenuIconButton>
-          </Link>
+            <FavoriteBorderIcon />
+          </MinimizedMenuIconButton>
         }>
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
         <NavigationListAccordion
@@ -146,7 +148,7 @@ const MyPagePage = () => {
           accordionPath={UrlPathTemplate.MyPageProfile}
           defaultPath={UrlPathTemplate.MyPageResearchProfile}
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
-          <NavigationList>
+          <NavigationList aria-label={t('my_page.research_profile')}>
             <Typography>{t('my_page.public_research_profile')}</Typography>
             <SelectableButton
               data-testid={dataTestId.myPage.researchProfileLink}
@@ -211,9 +213,10 @@ const MyPagePage = () => {
                 showCheckbox
                 isSelected={selectedTypes.publishingRequest}
                 color="publishingRequest"
-                onClick={() =>
-                  setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
-                }>
+                onClick={() => {
+                  setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest });
+                  resetPaginationAndNavigate(searchParams, navigate);
+                }}>
                 {selectedTypes.publishingRequest && publishingRequestCount
                   ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
                   : t('my_page.messages.types.PublishingRequest')}
@@ -225,7 +228,10 @@ const MyPagePage = () => {
                 showCheckbox
                 isSelected={selectedTypes.doiRequest}
                 color="doiRequest"
-                onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
+                onClick={() => {
+                  setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest });
+                  resetPaginationAndNavigate(searchParams, navigate);
+                }}>
                 {selectedTypes.doiRequest && doiRequestCount
                   ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
                   : t('my_page.messages.types.DoiRequest')}
@@ -237,9 +243,10 @@ const MyPagePage = () => {
                 showCheckbox
                 isSelected={selectedTypes.generalSupportCase}
                 color="generalSupportCase"
-                onClick={() =>
-                  setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase })
-                }>
+                onClick={() => {
+                  setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase });
+                  resetPaginationAndNavigate(searchParams, navigate);
+                }}>
                 {selectedTypes.generalSupportCase && generalSupportCaseCount
                   ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                   : t('my_page.messages.types.GeneralSupportCase')}
@@ -370,16 +377,7 @@ const MyPagePage = () => {
           element={
             <PrivateRoute
               isAuthorized={isCreator}
-              element={
-                <TicketList
-                  ticketsQuery={ticketsQuery}
-                  rowsPerPage={rowsPerPage}
-                  setRowsPerPage={setRowsPerPage}
-                  page={page}
-                  setPage={setPage}
-                  title={t('common.dialogue')}
-                />
-              }
+              element={<TicketList ticketsQuery={ticketsQuery} title={t('common.dialogue')} />}
             />
           }
         />

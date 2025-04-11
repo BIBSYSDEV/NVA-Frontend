@@ -1,5 +1,4 @@
 import AddIcon from '@mui/icons-material/Add';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@mui/material';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useState } from 'react';
@@ -18,7 +17,7 @@ import { StartDateField } from '../fields/StartDateField';
 
 interface AddAdminDialogProps extends Pick<DialogProps, 'open'> {
   toggleOpen: () => void;
-  refetchInstitutionUsers: () => void;
+  refetchUsers: () => Promise<unknown>;
   cristinInstitutionId: string;
 }
 
@@ -29,12 +28,7 @@ export interface AddAdminFormData {
 
 const addAdminInitialValues: AddAdminFormData = { startDate: '', position: '' };
 
-export const AddAdminDialog = ({
-  open,
-  toggleOpen,
-  refetchInstitutionUsers,
-  cristinInstitutionId,
-}: AddAdminDialogProps) => {
+export const AddAdminDialog = ({ open, toggleOpen, refetchUsers, cristinInstitutionId }: AddAdminDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -74,10 +68,10 @@ export const AddAdminDialog = ({
       if (isErrorStatus(createNvaUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
       } else if (isSuccessStatus(createNvaUserResponse.status)) {
+        await refetchUsers();
         dispatch(setNotification({ message: t('feedback.success.admin_added'), variant: 'success' }));
         closeDialog();
         resetForm();
-        refetchInstitutionUsers();
       }
     }
   };
@@ -112,14 +106,15 @@ export const AddAdminDialog = ({
             </DialogContent>
             <DialogActions>
               <Button onClick={closeDialog}>{t('common.cancel')}</Button>
-              <LoadingButton
+              <Button
                 type="submit"
                 variant="contained"
                 loading={isSubmitting}
                 startIcon={<AddIcon />}
+                loadingPosition="start"
                 disabled={!cristinPerson}>
                 {t('common.add_custom', { name: t('my_page.roles.institution_admin').toLocaleLowerCase() })}
-              </LoadingButton>
+              </Button>
             </DialogActions>
           </Form>
         )}

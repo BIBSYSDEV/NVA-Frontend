@@ -3,6 +3,28 @@ updates:
   - package-ecosystem: npm
     directory: '/'
     schedule:
-      interval: daily
+      interval: weekly
+      day: 'monday'
+      time: '07:00'
       timezone: Europe/Oslo
     open-pull-requests-limit: 20
+    groups:
+      mui:
+        patterns:
+          - '@mui/*'
+          - '@emotion/*'
+      uppy:
+        patterns:
+          - '@uppy/*'
+      tanstack:
+        patterns:
+          - '@tanstack/*'
+      eslint:
+        patterns:
+          - 'eslint*'
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'

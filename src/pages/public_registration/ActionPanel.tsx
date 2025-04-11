@@ -2,6 +2,7 @@ import { Paper, Tab, Tabs } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { RegistrationStatus } from '../../types/registration.types';
@@ -9,7 +10,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { userHasAccessRight } from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
-import { LogPanel } from './LogPanel';
+import { LogPanel } from './log/LogPanel';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 enum TabValue {
@@ -85,7 +86,9 @@ export const ActionPanel = ({
         onChange={(_, newValue) => setTabValue(newValue)}
         sx={{ bgcolor: 'primary.main', px: '0.5rem' }}
         textColor="inherit"
-        TabIndicatorProps={{ style: { backgroundColor: 'white', height: '0.4rem' } }}>
+        slotProps={{
+          indicator: { style: { backgroundColor: 'white', height: '0.4rem' } },
+        }}>
         {canSeeTasksPanel && (
           <Tab
             value={TabValue.Tasks}
@@ -104,20 +107,24 @@ export const ActionPanel = ({
         />
       </Tabs>
       <TabPanel tabValue={tabValue} index={0}>
-        <ActionPanelContent
-          refetchData={refetchRegistrationAndTickets}
-          isLoadingData={isLoadingData}
-          registration={registration}
-          shouldSeePublishingAccordion={shouldSeePublishingAccordion}
-          shouldSeeDoiAccordion={shouldSeeDoiAccordion}
-          shouldSeeSupportAccordion={shouldSeeSupportAccordion}
-          publishingRequestTickets={publishingRequestTickets}
-          newestDoiRequestTicket={newestDoiRequestTicket}
-          newestSupportTicket={newestSupportTicket}
-        />
+        <ErrorBoundary>
+          <ActionPanelContent
+            refetchData={refetchRegistrationAndTickets}
+            isLoadingData={isLoadingData}
+            registration={registration}
+            shouldSeePublishingAccordion={shouldSeePublishingAccordion}
+            shouldSeeDoiAccordion={shouldSeeDoiAccordion}
+            shouldSeeSupportAccordion={shouldSeeSupportAccordion}
+            publishingRequestTickets={publishingRequestTickets}
+            newestDoiRequestTicket={newestDoiRequestTicket}
+            newestSupportTicket={newestSupportTicket}
+          />
+        </ErrorBoundary>
       </TabPanel>
       <TabPanel tabValue={tabValue} index={1}>
-        <LogPanel tickets={tickets} registration={registration} />
+        <ErrorBoundary>
+          <LogPanel registration={registration} tickets={tickets} />
+        </ErrorBoundary>
       </TabPanel>
     </Paper>
   );

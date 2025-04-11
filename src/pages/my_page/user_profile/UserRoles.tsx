@@ -35,7 +35,7 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <Typography variant="h3">{t('my_page.my_profile.heading.roles')}</Typography>
+      <Typography variant="h2">{t('my_page.my_profile.heading.roles')}</Typography>
       {user.customerId ? (
         !hasAnyRole && (
           <Typography data-testid="no-roles-text" sx={{ color: 'error.main' }}>
@@ -135,7 +135,7 @@ const RoleItem = ({ dataTestId, label, text }: IconLabelTextLineProps) => (
       gridTemplateColumns: 'auto 1fr',
       borderRadius: '1px',
     }}>
-    <Typography variant="h4" sx={{ gridArea: 'label' }}>
+    <Typography fontWeight="bold" sx={{ gridArea: 'label' }}>
       {label}
     </Typography>
     <Typography gutterBottom sx={{ gridArea: 'text' }}>

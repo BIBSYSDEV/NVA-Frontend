@@ -1,30 +1,73 @@
-import { Message, TicketType } from './publication_types/ticket.types';
+import { FileType } from './associatedArtifact.types';
+import { LanguageString } from './common.types';
 
-export interface Log {
-  entries: LogEntry[];
-  metadataUpdated: string;
-  numberOfArchivedFiles: number;
-  numberOfHiddenFiles: number;
+export interface LogEntryOrganization {
+  type: 'Organization';
+  acronym: string;
+  labels: LanguageString;
 }
 
-export type LogEntryType = TicketType | 'Import' | 'Created' | 'MetadataPublished' | 'Republished' | 'Deleted';
-
-export interface LogEntry {
-  type: LogEntryType;
-  title: string;
-  modifiedDate: string;
-  actions: LogAction[];
-  messages?: Message[];
+export interface LogEntryPerson {
+  type: 'Person';
+  givenName: string;
+  familyName: string;
+  onBehalfOf: LogEntryOrganization;
 }
 
-export interface LogAction {
-  actor?: string;
-  organization?: string;
-  items: LogActionItem[];
+interface BaseLogEntry {
+  timestamp: string;
 }
 
-export interface LogActionItem {
-  description: string;
-  date?: string;
-  fileIcon?: 'file' | 'deletedFile' | 'archivedFile' | 'rejectedFile' | 'hiddenFile';
+interface PublicationLogEntry extends BaseLogEntry {
+  type: 'PublicationLogEntry';
+  topic:
+    | 'PublicationCreated'
+    | 'PublicationUpdated'
+    | 'PublicationPublished'
+    | 'PublicationUnpublished'
+    | 'PublicationDeleted'
+    | 'PublicationRepublished'
+    | 'DoiReserved'
+    | 'DoiRequested'
+    | 'DoiRejected'
+    | 'DoiAssigned';
+  performedBy: LogEntryPerson;
+}
+
+export interface ImportSourceLogData {
+  source: string;
+  archive?: string;
+}
+
+interface PublicationImportLogEntry extends Omit<PublicationLogEntry, 'topic' | 'performedBy'> {
+  topic: 'PublicationImported' | 'PublicationMerged';
+  performedBy: LogEntryOrganization;
+  importSource: ImportSourceLogData;
+}
+
+interface FileLogEntry extends BaseLogEntry {
+  type: 'FileLogEntry';
+  topic:
+    | 'FileUploaded'
+    | 'FileApproved'
+    | 'FileRejected'
+    | 'FileDeleted'
+    | 'FileRetracted'
+    | 'FileHidden'
+    | 'FileTypeUpdated';
+  performedBy: LogEntryPerson;
+  filename: string;
+  fileType: FileType;
+  fileIdentifier: string;
+}
+
+interface FileImportLogEntry extends Omit<FileLogEntry, 'topic'> {
+  topic: 'FileImported';
+  importSource: ImportSourceLogData;
+}
+
+export type LogEntry = PublicationLogEntry | FileLogEntry | PublicationImportLogEntry | FileImportLogEntry;
+
+export interface RegistrationLogResponse {
+  logEntries: LogEntry[];
 }

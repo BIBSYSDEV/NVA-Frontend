@@ -18,19 +18,18 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
-import { licenses, LicenseUri } from '../../types/license.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { activeLicenses } from '../../utils/fileHelpers';
 import {
   associatedArtifactIsFile,
+  isCategoryWithFileVersion,
+  isCategoryWithRrs,
   isOpenFile,
   isPendingOpenFile,
-  isTypeWithFileVersionField,
-  isTypeWithRrs,
 } from '../../utils/registration-helpers';
-import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
-import { userCanEditFile } from './helpers/fileHelpers';
+import { HelperTextModal } from './HelperTextModal';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -41,7 +40,7 @@ const StyledTableCell = styled(TableCell)({
 interface FileListProps {
   title: string;
   files: AssociatedFile[];
-  uppy: Uppy;
+  uppy?: Uppy;
   remove: (index: number) => any;
   baseFieldName: string;
 }
@@ -51,13 +50,12 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
   const { values, setFieldTouched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
 
-  const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
 
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
   const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
-  const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
-
+  const showFileVersion = isCategoryWithFileVersion(publicationInstanceType);
+  const isRrsApplicableCategory = isCategoryWithRrs(publicationInstanceType);
   const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
 
   return (
@@ -112,14 +110,9 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                             <>
                               <Trans
                                 i18nKey="registration.files_and_license.version_helper_text"
-                                components={[
-                                  <Typography sx={{ mb: '1rem' }} key="1" />,
-                                  <Typography sx={{ mb: '1rem' }} key="2">
-                                    <Box component="span" sx={{ textDecoration: 'underline' }} />
-                                  </Typography>,
-                                ]}
+                                components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
+                                values={{ buttonText: t('my_page.messages.get_curator_support') }}
                               />
-
                               <Typography sx={{ mb: '1rem' }}>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_accepted_helper_text"
@@ -161,27 +154,30 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                         <Typography sx={{ mb: '1rem' }}>
                           {t('registration.files_and_license.file_and_license_info')}
                         </Typography>
-                        {licenses
-                          .filter(
-                            (license) =>
-                              license.version === 4 ||
-                              license.id === LicenseUri.CC0 ||
-                              license.id === LicenseUri.RightsReserved
-                          )
-                          .map((license) => (
-                            <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-                              <Typography variant="h3" gutterBottom>
-                                {license.name}
-                              </Typography>
-                              <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
-                              <Typography sx={{ mb: '1rem' }}>{license.description}</Typography>
-                              {license.link && (
-                                <Link href={license.link} target="blank">
-                                  {license.link}
-                                </Link>
-                              )}
-                            </Box>
-                          ))}
+                        {activeLicenses.map((license) => (
+                          <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
+                            <Typography variant="h3" gutterBottom>
+                              {license.name}
+                            </Typography>
+                            <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
+                            <Typography sx={{ mb: '1rem' }}>{license.description}</Typography>
+                            {license.link && (
+                              <Link href={license.link} target="blank">
+                                {license.link}
+                              </Link>
+                            )}
+                            {license.additionalInformation && (
+                              <Trans
+                                defaults={license.additionalInformation}
+                                components={{
+                                  p: <Typography sx={{ mt: '1rem' }} />,
+                                  ol: <ol style={{ listStyleType: 'lower-roman' }} />,
+                                  li: <li style={{ marginBottom: '0.5rem' }} />,
+                                }}
+                              />
+                            )}
+                          </Box>
+                        ))}
                       </HelperTextModal>
                     </Box>
                   </StyledTableCell>
@@ -206,14 +202,16 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                 <FilesTableRow
                   key={file.identifier}
                   file={file}
-                  disabled={!userCanEditFile(file, user, values)}
                   removeFile={() => {
                     const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-
-                    const uppyFiles = uppy.getFiles();
-                    const uppyId = uppyFiles.find((uppyFile) => uppyFile.uploadURL === file.identifier)?.id;
-                    if (uppyId) {
-                      uppy.removeFile(uppyId);
+                    if (uppy) {
+                      const uppyFiles = uppy.getFiles();
+                      const uppyId = uppyFiles.find(
+                        (uppyFile) => uppyFile.response?.body?.identifier === file.identifier
+                      )?.id;
+                      if (uppyId) {
+                        uppy.removeFile(uppyId);
+                      }
                     }
                     remove(associatedFileIndex);
 
@@ -224,7 +222,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                   }}
                   baseFieldName={`${baseFieldName}[${associatedFileIndex}]`}
                   showFileVersion={showFileVersion}
-                  showRrs={isTypeWithRrs(publicationInstanceType)}
+                  isRrsApplicableCategory={isRrsApplicableCategory}
                   showAllColumns={showAllColumns}
                 />
               );

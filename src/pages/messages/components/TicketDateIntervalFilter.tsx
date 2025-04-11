@@ -36,6 +36,8 @@ export const TicketDateIntervalFilter = () => {
     } else {
       syncedParams.delete(TicketSearchParam.CreatedDate);
     }
+
+    syncedParams.delete(TicketSearchParam.From);
     navigate({ search: syncedParams.toString() });
   };
 
