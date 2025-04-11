@@ -15,6 +15,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
+import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 import { MyRegistrationsList } from './MyRegistrationsList';
 
 const statusRadioGroupLabelId = 'status-radio-buttons-group-label';
@@ -83,9 +84,10 @@ export const MyRegistrations = () => {
               value={statusValue}
               onChange={(_, value) =>
                 setSearchParams((params) => {
-                  params.set(ProtectedResultParam.Status, value);
-                  params.delete(ResultParam.From);
-                  return params;
+                  const syncedParams = syncParamsWithSearchFields(params);
+                  syncedParams.set(ProtectedResultParam.Status, value);
+                  syncedParams.delete(ResultParam.From);
+                  return syncedParams;
                 })
               }>
               <FormControlLabel
