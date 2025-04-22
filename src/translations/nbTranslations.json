@@ -444,7 +444,9 @@
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
+      "add_publisher_channel_ownership": "Sett eierskap til utgiver",
       "administer_publisher_channel_ownership": "Administrer eierskap for utgivere",
+      "administer_publisher_channel_ownership_description": "<p>På denne siden kan du administrere eierskap for utgivere som tilhører din institusjon.</p><p>Eierskap settes av institusjonen, så kontakt kanaleier ved feilregistrering.</p><addOwnershipButton/><p>Eierskap styrer hvilken institusjon som mottar publiseringsforespørselen, uavhengig av registratorens tilhørighet.</p><p>Kanaleier bestemmer om brukere fra andre institusjoner kan registrere resultater med utgiver.</p>",
       "change_institution_support": "Endre brukerstøttepunkt",
       "institution_admin_one": "Institusjonens administrator",
       "institution_admin_other": "Institusjonens administratorer",
