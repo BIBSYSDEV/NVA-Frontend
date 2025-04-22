@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogActions, DialogProps, DialogTitle } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle, Typography } from '@mui/material';
+import { Trans, useTranslation } from 'react-i18next';
 import { Publisher } from '../../types/registration.types';
 
 interface AddChannelOwnershipDialogProps extends Pick<DialogProps, 'open'> {
@@ -13,9 +13,19 @@ export const AddChannelOwnershipDialog = ({ channelType, open, closeDialog }: Ad
   return (
     <Dialog open={open} onClose={closeDialog}>
       <DialogTitle>{t('editor.institution.add_publisher_channel_ownership')}</DialogTitle>
+      <DialogContent>
+        <Trans
+          i18nKey="editor.institution.add_publisher_ownership_description"
+          components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
+        />
+      </DialogContent>
       <DialogActions>
-        <Button onClick={() => closeDialog()}>{t('common.cancel')}</Button>
-        <Button variant="contained" onClick={() => closeDialog()}>
+        <Button onClick={closeDialog}>{t('common.cancel')}</Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            // TODO
+          }}>
           {t('editor.institution.set_ownership')}
         </Button>
       </DialogActions>
