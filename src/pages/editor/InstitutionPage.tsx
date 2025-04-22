@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Outlet, Route, Routes, useLocation } from 'react-router';
 import { fetchResource } from '../../api/commonApi';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
@@ -25,6 +26,7 @@ import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PortfolioSearchPage } from './PortfolioSearchPage';
 import { PublishStrategySettings } from './PublishStrategySettings';
+import { PublisherOwnershipSettings } from './PublisherOwnershipSettings';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
 import { VocabularyOverview } from './VocabularyOverview';
@@ -145,6 +147,14 @@ const InstitutionPage = () => {
                   to={UrlPathTemplate.InstitutionSupport}>
                   {t('editor.institution.change_institution_support')}
                 </SelectableButton>
+                <BetaFunctionality>
+                  <SelectableButton
+                    isSelected={currentPath === UrlPathTemplate.InstitutionPublisherOwnership}
+                    data-testid={dataTestId.editor.publisherOwnershipButton}
+                    to={UrlPathTemplate.InstitutionPublisherOwnership}>
+                    {t('editor.institution.administer_publisher_channel_ownership')}
+                  </SelectableButton>
+                </BetaFunctionality>
               </NavigationList>
             </NavigationListAccordion>
 
@@ -234,6 +244,11 @@ const InstitutionPage = () => {
                 isAuthorized={isEditor}
               />
             }
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionPublisherOwnership, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<PublisherOwnershipSettings />} isAuthorized={isEditor} />}
           />
 
           <Route

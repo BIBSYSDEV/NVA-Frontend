@@ -146,6 +146,7 @@ export const dataTestId = {
     organizationOverviewLinkButton: 'organization-overview-link-button',
     organizationOverviewSearchField: 'organization-overview-search-field',
     overviewAccordion: 'overview-accordion',
+    publisherOwnershipButton: 'channel-ownership-button',
     publishStrategyLinkButton: 'publishing-strategy-link-button',
     publishStrategyOverviewLinkButton: 'publishing-strategy-overview-link-button',
     resultsPortfolioAccordion: 'results-portfolio-accordion',
