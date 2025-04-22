@@ -21,6 +21,11 @@ export default [
       react: eslintPluginReact,
       'react-hooks': eslintPluginReactHooks,
     },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
     rules: {
       ...eslintPluginTypeScript.configs.recommended.rules,
       ...eslintPluginTanstackQuery.configs.recommended.rules,
