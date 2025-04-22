@@ -13,7 +13,7 @@ export const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundin
 
   const fundingSourcesQuery = useQuery({
     queryKey: ['fundingSources', fundingIdentifier],
-    queryFn: () => (fundingIdentifier ? fetchFundingSource(fundingIdentifier) : undefined),
+    queryFn: () => (fundingIdentifier ? fetchFundingSource(fundingIdentifier) : null),
     staleTime: Infinity,
     gcTime: 1_800_000,
     meta: { errorMessage: t('feedback.error.get_funding_source') },
