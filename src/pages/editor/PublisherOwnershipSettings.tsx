@@ -1,5 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 
 export const PublisherOwnershipSettings = () => {
@@ -7,6 +8,9 @@ export const PublisherOwnershipSettings = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{t('editor.institution.administer_publisher_channel_ownership')}</title>
+      </Helmet>
       <Typography variant="h1" gutterBottom>
         {t('editor.institution.administer_publisher_channel_ownership')}
       </Typography>
