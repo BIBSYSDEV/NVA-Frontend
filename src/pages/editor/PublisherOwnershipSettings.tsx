@@ -9,7 +9,7 @@ export const PublisherOwnershipSettings = () => {
   const { t } = useTranslation();
 
   const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);
-  const toggleAddChannelCLaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
+  const toggleAddChannelClaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
 
   return (
     <>
@@ -23,19 +23,19 @@ export const PublisherOwnershipSettings = () => {
         i18nKey="editor.institution.administer_publisher_channel_claim_description"
         components={{
           p: <Typography gutterBottom />,
-          addOwnershipButton: (
+          button: (
             <Button
               variant="outlined"
               startIcon={<AddIcon />}
               sx={{ my: '0.5rem', textTransform: 'none' }}
-              onClick={toggleAddChannelCLaimDialog}>
+              onClick={toggleAddChannelClaimDialog}>
               {t('editor.institution.add_publisher_channel_claim')}
             </Button>
           ),
         }}>
         <Typography />
       </Trans>
-      <AddChannelClaimDialog open={openAddChannelClaimDialog} closeDialog={toggleAddChannelCLaimDialog} />
+      <AddChannelClaimDialog open={openAddChannelClaimDialog} closeDialog={toggleAddChannelClaimDialog} />
     </>
   );
 };
