@@ -1,4 +1,4 @@
-import { Autocomplete } from '@mui/material';
+import { Autocomplete, AutocompleteProps } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePublisherSearch } from '../../../api/hooks/usePublisherSearch';
@@ -7,16 +7,23 @@ import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
 } from '../../../components/AutocompleteListboxWithExpansion';
-import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { AutocompleteTextField, AutocompleteTextFieldProps } from '../../../components/AutocompleteTextField';
+import { Publisher } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 interface SearchForPublisherFacetItemProps {
-  onSelectPublisher: (publisherId: string) => void;
+  onSelectPublisher: (publisher: Publisher) => void;
+  autocompleteProps?: Partial<AutocompleteProps<Publisher, false, false, false>>;
+  textFieldProps?: Partial<AutocompleteTextFieldProps>;
 }
 
-export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPublisherFacetItemProps) => {
+export const SearchForPublisherFacetItem = ({
+  onSelectPublisher,
+  autocompleteProps,
+  textFieldProps,
+}: SearchForPublisherFacetItemProps) => {
   const { t } = useTranslation();
 
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
@@ -31,12 +38,9 @@ export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPubl
 
   return (
     <Autocomplete
-      fullWidth
-      size="small"
-      sx={{ p: '0.25rem 0.5rem' }}
+      {...autocompleteProps}
       options={options}
       inputMode="search"
-      value={null}
       getOptionLabel={(option) => option.name}
       getOptionKey={(option) => option.id}
       filterOptions={(options) => options}
@@ -48,9 +52,9 @@ export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPubl
       }}
       onChange={(_, selectedPublisher) => {
         if (selectedPublisher) {
-          onSelectPublisher(selectedPublisher.identifier);
+          onSelectPublisher(selectedPublisher);
         }
-        setSearchQuery('');
+        // setSearchQuery('');
       }}
       loading={publisherSearchQuery.isFetching}
       renderOption={({ key, ...props }, option, state) => (
@@ -69,7 +73,7 @@ export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPubl
           isLoading={publisherSearchQuery.isLoading}
           data-testid={dataTestId.aggregations.publisherFacetsSearchField}
           placeholder={t('registration.resource_type.search_for_publisher')}
-          showSearchIcon
+          {...textFieldProps}
         />
       )}
       slotProps={{

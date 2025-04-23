@@ -1,7 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { AutocompleteRenderInputParams, CircularProgress, TextField, TextFieldProps } from '@mui/material';
 
-interface AutocompleteTextFieldProps
+export interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
     Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur' | 'multiline' | 'variant'> {
   isLoading?: boolean;
