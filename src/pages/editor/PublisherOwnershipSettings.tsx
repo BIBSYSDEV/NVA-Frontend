@@ -1,7 +1,8 @@
 import { Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchChannelClaims } from '../../api/customerInstitutionsApi';
-import { useQuery } from '@tanstack/react-query';
+import { ChannelClaimTable } from './ChannelClaimTable';
 
 export const PublisherOwnershipSettings = () => {
   const { t } = useTranslation();
@@ -12,22 +13,12 @@ export const PublisherOwnershipSettings = () => {
   });
 
   const channelClaims = channelClaimsQuery.data?.channelClaims;
-  console.log(channelClaims && channelClaims);
-
   return (
     <>
       <Typography variant="h1" gutterBottom>
         {t('editor.institution.administer_publisher_channel_ownership')}
       </Typography>
-      {!!channelClaims &&
-        channelClaims.length > 0 &&
-        channelClaims.map((channelClaim) => {
-          return (
-            <Typography key={channelClaim.claimedBy.id} gutterBottom>
-              {channelClaim.claimedBy.organizationId}
-            </Typography>
-          );
-        })}
+      {!!channelClaims && channelClaims.length > 0 && <ChannelClaimTable channelClaims={channelClaims} />}
     </>
   );
 };

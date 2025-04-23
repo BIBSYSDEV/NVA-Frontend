@@ -148,18 +148,22 @@ export interface VocabularyList {
   vocabularies: CustomerVocabulary[];
 }
 
-interface ChannelClaim {
+export interface ClaimedChannel {
+  id: string;
   claimedBy: {
     id: string;
     organizationId: string;
   };
-  constraints: {
-    publishingPolicy: 'Everyone' | 'OwnerOnly';
-    editingPolicy: 'Everyone' | 'OwnerOnly';
-    scope: DegreeType[];
+  channelClaim: {
+    channel: string;
+    constraint: {
+      publishingPolicy: 'Everyone' | 'OwnerOnly';
+      editingPolicy: 'Everyone' | 'OwnerOnly';
+      scope: DegreeType[];
+    };
   };
 }
 
 export interface ChannelClaimsList {
-  channelClaims: ChannelClaim[];
+  channelClaims: ClaimedChannel[];
 }
