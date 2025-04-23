@@ -14,7 +14,7 @@ interface ChannelClaimTableProps {
 }
 
 export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClaimTableProps) => {
-  const channelClaims = filterClaimedChannels({ channelType, channelClaimList }) ?? [];
+  const channelClaims = filterClaimedChannels({ channelClaimList, channelType }) ?? [];
 
   return (
     <TableContainer component={Paper}>
