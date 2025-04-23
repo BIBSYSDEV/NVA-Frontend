@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +25,6 @@ import { SearchForPublisherFacetItem } from '../search/facet_search_fields/Searc
 const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
 
 interface AddChannelOwnershipDialogProps extends Pick<DialogProps, 'open'> {
-  // channelType: Publisher['type']; // TODO?
   closeDialog: () => void;
 }
 
@@ -41,7 +41,7 @@ export const AddChannelOwnershipDialog = ({ open, closeDialog }: AddChannelOwner
         const channelIdWithoutYear = publisherId.replace(/\/\d{4}$/, '');
         return setChannelClaim(customer.id, {
           channel: channelIdWithoutYear,
-          constraints: {
+          constraint: {
             scope: selectedCategories,
             publishingPolicy: 'Everyone',
             editingPolicy: 'OwnerOnly',
@@ -51,15 +51,15 @@ export const AddChannelOwnershipDialog = ({ open, closeDialog }: AddChannelOwner
       return Promise.reject(new Error('Customer ID or Publisher ID is missing'));
     },
     onSuccess: () => {
-      dispatch(setNotification({ message: 'Kanaleierskap ble oppdatert', variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.set_channel_claim'), variant: 'success' }));
       closeDialog();
     },
-    onError: (error) => {
+    onError: (error: AxiosError<{ detail?: string }>) => {
       dispatch(
         setNotification({
-          message: 'Kunne ikke sette kanaleierskap',
+          message: t('feedback.error.set_channel_claim'),
           variant: 'error',
-          detail: (error as any).response?.data?.detail, // TODO: Simplify type?
+          detail: error.response?.data.detail,
         })
       );
     },
@@ -72,7 +72,6 @@ export const AddChannelOwnershipDialog = ({ open, closeDialog }: AddChannelOwner
         onSubmit={async (event) => {
           event.preventDefault();
           if (selectedChannel) {
-            // TODO: Get value from form instead of state?
             await addChannelClaim.mutateAsync(selectedChannel.id);
           }
           closeDialog();
@@ -97,7 +96,7 @@ export const AddChannelOwnershipDialog = ({ open, closeDialog }: AddChannelOwner
                 key={category}
                 variant="filled"
                 color="primary"
-                label={t(`registration.publication_types.${category}` as any)}
+                label={t(`registration.publication_types.${category}`)}
               />
             ))}
           </Box>

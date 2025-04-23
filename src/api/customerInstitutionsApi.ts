@@ -52,7 +52,7 @@ type ChannelPolicy = 'OwnerOnly' | 'Everyone';
 
 interface ClaimChannelPayload {
   channel: string;
-  constraints: {
+  constraint: {
     scope: PublicationInstanceType[];
     publishingPolicy: ChannelPolicy;
     editingPolicy: ChannelPolicy;
