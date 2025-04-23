@@ -1,5 +1,11 @@
 import { CancelToken } from 'axios';
-import { CustomerInstitution, DoiAgent, ProtectedDoiAgent, VocabularyList } from '../types/customerInstitution.types';
+import {
+  ChannelClaimsList,
+  CustomerInstitution,
+  DoiAgent,
+  ProtectedDoiAgent,
+  VocabularyList,
+} from '../types/customerInstitution.types';
 import { CustomerInstitutionApiPath } from './apiPaths';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
@@ -45,4 +51,13 @@ export const fetchVocabulary = async (customerId: string) => {
   });
 
   return getVocabulary.data;
+};
+
+export const fetchChannelClaims = async () => {
+  const getChannelClaims = await authenticatedApiRequest2<ChannelClaimsList>({
+    url: '/customer/channel-claims',
+    method: 'GET',
+  });
+
+  return getChannelClaims.data;
 };

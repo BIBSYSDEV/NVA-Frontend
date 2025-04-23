@@ -1,4 +1,4 @@
-import { allPublicationInstanceTypes } from './publicationFieldNames';
+import { allPublicationInstanceTypes, DegreeType } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
 
 export interface SimpleCustomerInstitution {
@@ -146,4 +146,20 @@ export interface VocabularyList {
   type: 'VocabularyList';
   id: string;
   vocabularies: CustomerVocabulary[];
+}
+
+interface ChannelClaim {
+  claimedBy: {
+    id: string;
+    organizationId: string;
+  };
+  constraints: {
+    publishingPolicy: 'Everyone' | 'OwnerOnly';
+    editingPolicy: 'Everyone' | 'OwnerOnly';
+    scope: DegreeType[];
+  };
+}
+
+export interface ChannelClaimsList {
+  channelClaims: ChannelClaim[];
 }
