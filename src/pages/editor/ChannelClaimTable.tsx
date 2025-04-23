@@ -1,12 +1,21 @@
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import { PublicationChannelTableRow } from './PublicationChannelTableRow';
 import { ClaimedChannel } from '../../types/customerInstitution.types';
+import { PublicationChannelType } from '../../types/registration.types';
+
+type SelectedPublicationChannelType =
+  | PublicationChannelType.Journal
+  | PublicationChannelType.Publisher
+  | PublicationChannelType.Series;
 
 interface ChannelClaimTableProps {
-  channelClaims: ClaimedChannel[];
+  channelClaimList: ClaimedChannel[];
+  channelType: SelectedPublicationChannelType;
 }
 
-export const ChannelClaimTable = ({ channelClaims }: ChannelClaimTableProps) => {
+export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClaimTableProps) => {
+  const channelClaims = filterClaimedChannels({ channelType, channelClaimList }) ?? [];
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -27,4 +36,10 @@ export const ChannelClaimTable = ({ channelClaims }: ChannelClaimTableProps) => 
       </Table>
     </TableContainer>
   );
+};
+
+const filterClaimedChannels = ({ channelClaimList, channelType }: ChannelClaimTableProps) => {
+  if (channelType === PublicationChannelType.Publisher) {
+    return channelClaimList.filter((channel) => channel.channelClaim.channel.includes('/publisher'));
+  }
 };

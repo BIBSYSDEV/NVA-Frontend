@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchChannelClaims } from '../../api/customerInstitutionsApi';
 import { ChannelClaimTable } from './ChannelClaimTable';
+import { PublicationChannelType } from '../../types/registration.types';
 
 export const PublisherOwnershipSettings = () => {
   const { t } = useTranslation();
@@ -18,7 +19,9 @@ export const PublisherOwnershipSettings = () => {
       <Typography variant="h1" gutterBottom>
         {t('editor.institution.administer_publisher_channel_ownership')}
       </Typography>
-      {!!channelClaims && channelClaims.length > 0 && <ChannelClaimTable channelClaims={channelClaims} />}
+      {!!channelClaims && channelClaims.length > 0 && (
+        <ChannelClaimTable channelClaimList={channelClaims} channelType={PublicationChannelType.Publisher} />
+      )}
     </>
   );
 };
