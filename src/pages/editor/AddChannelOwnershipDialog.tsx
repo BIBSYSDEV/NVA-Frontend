@@ -1,4 +1,14 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogProps,
+  DialogTitle,
+  Typography,
+} from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -7,15 +17,18 @@ import { setChannelClaim } from '../../api/customerInstitutionsApi';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { DegreeType } from '../../types/publicationFieldNames';
-import { Publisher } from '../../types/registration.types';
+import { PublicationInstanceType, Publisher } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { SearchForPublisherFacetItem } from '../search/facet_search_fields/SearchForPublisherFacetItem';
 
+const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
+
 interface AddChannelOwnershipDialogProps extends Pick<DialogProps, 'open'> {
-  channelType: Publisher['type'];
+  // channelType: Publisher['type']; // TODO?
   closeDialog: () => void;
 }
 
-export const AddChannelOwnershipDialog = ({ channelType, open, closeDialog }: AddChannelOwnershipDialogProps) => {
+export const AddChannelOwnershipDialog = ({ open, closeDialog }: AddChannelOwnershipDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -23,14 +36,14 @@ export const AddChannelOwnershipDialog = ({ channelType, open, closeDialog }: Ad
   const [selectedChannel, setSelectedChannel] = useState<Publisher>();
 
   const addChannelClaim = useMutation({
-    mutationFn: (publisher: Publisher) => {
-      if (customer?.id && publisher.id) {
-        const channelIdWithoutYear = publisher.id.replace(/\/\d{4}$/, '');
+    mutationFn: (publisherId: string) => {
+      if (customer?.id && publisherId) {
+        const channelIdWithoutYear = publisherId.replace(/\/\d{4}$/, '');
         return setChannelClaim(customer.id, {
           channel: channelIdWithoutYear,
           constraints: {
-            scope: Object.values(DegreeType),
-            publishingPolicy: 'OwnerOnly',
+            scope: selectedCategories,
+            publishingPolicy: 'Everyone',
             editingPolicy: 'OwnerOnly',
           },
         });
@@ -46,7 +59,7 @@ export const AddChannelOwnershipDialog = ({ channelType, open, closeDialog }: Ad
         setNotification({
           message: 'Kunne ikke sette kanaleierskap',
           variant: 'error',
-          detail: (error as any).response?.data?.detail,
+          detail: (error as any).response?.data?.detail, // TODO: Simplify type?
         })
       );
     },
@@ -58,9 +71,9 @@ export const AddChannelOwnershipDialog = ({ channelType, open, closeDialog }: Ad
       <form
         onSubmit={async (event) => {
           event.preventDefault();
-          console.log('submit', selectedChannel);
           if (selectedChannel) {
-            await addChannelClaim.mutateAsync(selectedChannel);
+            // TODO: Get value from form instead of state?
+            await addChannelClaim.mutateAsync(selectedChannel.id);
           }
           closeDialog();
         }}>
@@ -75,12 +88,28 @@ export const AddChannelOwnershipDialog = ({ channelType, open, closeDialog }: Ad
             }}
             textFieldProps={{ variant: 'filled', label: t('common.publisher'), required: true }}
           />
+          <Typography sx={{ mt: '1rem' }} gutterBottom>
+            {t('editor.institution.claim_category_restriction')}:
+          </Typography>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+            {selectedCategories.map((category) => (
+              <Chip
+                key={category}
+                variant="filled"
+                color="primary"
+                label={t(`registration.publication_types.${category}` as any)}
+              />
+            ))}
+          </Box>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={closeDialog}>{t('common.cancel')}</Button>
+        <DialogActions sx={{ justifyContent: 'center' }}>
+          <Button onClick={closeDialog} data-testid={dataTestId.confirmDialog.cancelButton}>
+            {t('common.cancel')}
+          </Button>
           <Button
-            // data-testid="add-channel-ownership"
+            data-testid={dataTestId.confirmDialog.acceptButton}
             type="submit"
+            loading={addChannelClaim.isPending}
             variant="contained"
             disabled={!selectedChannel}>
             {t('editor.institution.set_ownership')}

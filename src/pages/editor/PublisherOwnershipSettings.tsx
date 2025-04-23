@@ -35,11 +35,7 @@ export const PublisherOwnershipSettings = () => {
         }}>
         <Typography />
       </Trans>
-      <AddChannelOwnershipDialog
-        channelType="Publisher"
-        open={openAddOwnershipDialog}
-        closeDialog={toggleAddOwnershipDialog}
-      />
+      <AddChannelOwnershipDialog open={openAddOwnershipDialog} closeDialog={toggleAddOwnershipDialog} />
     </>
   );
 };

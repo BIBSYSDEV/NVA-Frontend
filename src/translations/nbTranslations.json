@@ -469,7 +469,8 @@
       "organizing": "Organisering",
       "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)",
       "set_ownership": "Sett eierskap",
-      "unique_feide_id": "Unik Feide-ID"
+      "unique_feide_id": "Unik Feide-ID",
+      "claim_category_restriction": "Kategorier som begrensningen skal gjelde for"
     },
     "organization_overview": "Organisasjonsstruktur",
     "publish_strategy": {
