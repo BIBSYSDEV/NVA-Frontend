@@ -81,10 +81,15 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
             i18nKey="editor.institution.add_publisher_claim_description"
             components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
           />
+
+          {/* TODO:
+           * 1) Selecting a publisher triggers a new redundant search request.
+           * 2) SearchForPublisherFacetItem is no longer specific to facet, and should be renamed and moved.
+           * 3) Should only show channels with level 0, or unassigned.
+           * 4) Should not show channels that do not yet have any claim.
+           */}
           <SearchForPublisherFacetItem
-            onSelectPublisher={(publisher) => {
-              setSelectedChannel(publisher);
-            }}
+            onSelectPublisher={(publisher) => setSelectedChannel(publisher)}
             textFieldProps={{ variant: 'filled', label: t('common.publisher'), required: true }}
           />
           <Typography sx={{ mt: '1rem' }} gutterBottom>
