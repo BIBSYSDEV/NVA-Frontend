@@ -445,6 +445,12 @@
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
       "administer_publisher_channel_ownership": "Administrer eierskap for utgivere",
+      "channel_claims": {
+        "category_limitations": "Begrensning for kategori",
+        "channel_owner": "Kanaleier",
+        "editing_access": "Tilgang til å redigere",
+        "publishing_access": "Tilgang til å publisere"
+      },
       "change_institution_support": "Endre brukerstøttepunkt",
       "institution_admin_one": "Institusjonens administrator",
       "institution_admin_other": "Institusjonens administratorer",

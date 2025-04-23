@@ -1,7 +1,8 @@
-import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
-import { PublicationChannelTableRow } from './PublicationChannelTableRow';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ClaimedChannel } from '../../types/customerInstitution.types';
 import { PublicationChannelType } from '../../types/registration.types';
+import { ChannelClaimTableRow } from './PublicationChannelTableRow';
 
 type SelectedPublicationChannelType =
   | PublicationChannelType.Journal
@@ -14,6 +15,7 @@ interface ChannelClaimTableProps {
 }
 
 export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClaimTableProps) => {
+  const { t } = useTranslation();
   const channelClaims = filterClaimedChannels({ channelClaimList, channelType }) ?? [];
 
   return (
@@ -21,16 +23,16 @@ export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClai
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Utgiver</TableCell>
-            <TableCell>Kanaleier</TableCell>
-            <TableCell>Tilgang til å registrere</TableCell>
-            <TableCell>Tilgang til å redigere</TableCell>
-            <TableCell>Begrensning for kategori</TableCell>
+            <TableCell>{t('common.publisher')}</TableCell>
+            <TableCell>{t('editor.institution.channel_claims.channel_owner')}</TableCell>
+            <TableCell>{t('editor.institution.channel_claims.publishing_access')}</TableCell>
+            <TableCell>{t('editor.institution.channel_claims.editing_access')}</TableCell>
+            <TableCell>{t('editor.institution.channel_claims.category_limitations')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {channelClaims.map((claim, index) => {
-            return <PublicationChannelTableRow claim={claim} key={index} />;
+            return <ChannelClaimTableRow claim={claim} key={index} />;
           })}
         </TableBody>
       </Table>
