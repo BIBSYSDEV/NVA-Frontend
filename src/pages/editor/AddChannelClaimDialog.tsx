@@ -24,11 +24,11 @@ import { SearchForPublisherFacetItem } from '../search/facet_search_fields/Searc
 
 const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
 
-interface AddChannelOwnershipDialogProps extends Pick<DialogProps, 'open'> {
+interface AddChannelClaimDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
 }
 
-export const AddChannelOwnershipDialog = ({ open, closeDialog }: AddChannelOwnershipDialogProps) => {
+export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -67,7 +67,7 @@ export const AddChannelOwnershipDialog = ({ open, closeDialog }: AddChannelOwner
 
   return (
     <Dialog open={open} onClose={closeDialog}>
-      <DialogTitle>{t('editor.institution.add_publisher_channel_ownership')}</DialogTitle>
+      <DialogTitle>{t('editor.institution.add_publisher_channel_claim')}</DialogTitle>
       <form
         onSubmit={async (event) => {
           event.preventDefault();
@@ -78,7 +78,7 @@ export const AddChannelOwnershipDialog = ({ open, closeDialog }: AddChannelOwner
         }}>
         <DialogContent>
           <Trans
-            i18nKey="editor.institution.add_publisher_ownership_description"
+            i18nKey="editor.institution.add_publisher_claim_description"
             components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
           />
           <SearchForPublisherFacetItem
@@ -111,7 +111,7 @@ export const AddChannelOwnershipDialog = ({ open, closeDialog }: AddChannelOwner
             loading={addChannelClaim.isPending}
             variant="contained"
             disabled={!selectedChannel}>
-            {t('editor.institution.set_ownership')}
+            {t('editor.institution.set_channel_claim')}
           </Button>
         </DialogActions>
       </form>

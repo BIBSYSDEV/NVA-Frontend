@@ -149,10 +149,10 @@ const InstitutionPage = () => {
                 </SelectableButton>
                 <BetaFunctionality>
                   <SelectableButton
-                    isSelected={currentPath === UrlPathTemplate.InstitutionPublisherOwnership}
-                    data-testid={dataTestId.editor.publisherOwnershipButton}
-                    to={UrlPathTemplate.InstitutionPublisherOwnership}>
-                    {t('editor.institution.administer_publisher_channel_ownership')}
+                    isSelected={currentPath === UrlPathTemplate.InstitutionPublisherClaims}
+                    data-testid={dataTestId.editor.publisherClaimButton}
+                    to={UrlPathTemplate.InstitutionPublisherClaims}>
+                    {t('editor.institution.administer_publisher_channel_claim')}
                   </SelectableButton>
                 </BetaFunctionality>
               </NavigationList>
@@ -247,7 +247,7 @@ const InstitutionPage = () => {
           />
 
           <Route
-            path={getSubUrl(UrlPathTemplate.InstitutionPublisherOwnership, UrlPathTemplate.Institution)}
+            path={getSubUrl(UrlPathTemplate.InstitutionPublisherClaims, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<PublisherOwnershipSettings />} isAuthorized={isEditor} />}
           />
 

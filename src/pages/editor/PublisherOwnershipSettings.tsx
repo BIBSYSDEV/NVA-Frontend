@@ -3,24 +3,24 @@ import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
-import { AddChannelOwnershipDialog } from './AddChannelOwnershipDialog';
+import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 
 export const PublisherOwnershipSettings = () => {
   const { t } = useTranslation();
 
-  const [openAddOwnershipDialog, setOpenAddOwnershipDialog] = useState(false);
-  const toggleAddOwnershipDialog = () => setOpenAddOwnershipDialog(!openAddOwnershipDialog);
+  const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);
+  const toggleAddChannelCLaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
 
   return (
     <>
       <Helmet>
-        <title>{t('editor.institution.administer_publisher_channel_ownership')}</title>
+        <title>{t('editor.institution.administer_publisher_channel_claim')}</title>
       </Helmet>
       <Typography variant="h1" gutterBottom>
-        {t('editor.institution.administer_publisher_channel_ownership')}
+        {t('editor.institution.administer_publisher_channel_claim')}
       </Typography>
       <Trans
-        i18nKey="editor.institution.administer_publisher_channel_ownership_description"
+        i18nKey="editor.institution.administer_publisher_channel_claim_description"
         components={{
           p: <Typography gutterBottom />,
           addOwnershipButton: (
@@ -28,14 +28,14 @@ export const PublisherOwnershipSettings = () => {
               variant="outlined"
               startIcon={<AddIcon />}
               sx={{ my: '0.5rem', textTransform: 'none' }}
-              onClick={toggleAddOwnershipDialog}>
-              {t('editor.institution.add_publisher_channel_ownership')}
+              onClick={toggleAddChannelCLaimDialog}>
+              {t('editor.institution.add_publisher_channel_claim')}
             </Button>
           ),
         }}>
         <Typography />
       </Trans>
-      <AddChannelOwnershipDialog open={openAddOwnershipDialog} closeDialog={toggleAddOwnershipDialog} />
+      <AddChannelClaimDialog open={openAddChannelClaimDialog} closeDialog={toggleAddChannelCLaimDialog} />
     </>
   );
 };
