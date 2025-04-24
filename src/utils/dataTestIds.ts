@@ -133,8 +133,10 @@ export const dataTestId = {
     subSearchField: 'sub-organization-search-field',
   },
   editor: {
+    addChannelClaimButton: 'add-channel-claim-button',
     addCuratorButton: (id: string) => `add-curator-button-${id}`,
     categoriesLinkButton: 'categories-link-button',
+    channelSearchField: 'channel-search-field',
     curatorsOverviewLinkButton: 'curators-overview-link-button',
     curatorsSettingsLinkButton: 'curators-settings-link-button',
     curatorsSearchForPersonField: 'curators-search-for-person-field',

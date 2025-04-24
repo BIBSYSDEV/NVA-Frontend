@@ -94,8 +94,16 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
            */}
           <SearchForPublisher
             onSelectPublisher={(publisher) => setSelectedChannel(publisher)}
-            autocompleteProps={{ value: selectedChannel, disabled: addChannelClaim.isPending }}
-            textFieldProps={{ variant: 'filled', label: t('common.publisher'), required: true }}
+            autocompleteProps={{
+              value: selectedChannel,
+              disabled: addChannelClaim.isPending,
+            }}
+            textFieldProps={{
+              'data-testid': dataTestId.editor.channelSearchField,
+              variant: 'filled',
+              label: t('common.publisher'),
+              required: true,
+            }}
           />
           <Typography sx={{ mt: '1rem' }} gutterBottom>
             {t('editor.institution.claim_category_restriction')}:

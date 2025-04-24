@@ -3,6 +3,7 @@ import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
+import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 
 export const PublisherOwnershipSettings = () => {
@@ -25,6 +26,7 @@ export const PublisherOwnershipSettings = () => {
           p: <Typography gutterBottom />,
           button: (
             <Button
+              data-testid={dataTestId.editor.addChannelClaimButton}
               variant="outlined"
               startIcon={<AddIcon />}
               sx={{ my: '0.5rem', textTransform: 'none' }}

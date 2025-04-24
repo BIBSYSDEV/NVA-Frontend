@@ -5,7 +5,6 @@ import { usePublisherSearch } from '../api/hooks/usePublisherSearch';
 import { defaultChannelSearchSize } from '../api/publicationChannelApi';
 import { PublicationChannelOption } from '../pages/registration/resource_type_tab/components/PublicationChannelOption';
 import { Publisher } from '../types/registration.types';
-import { dataTestId } from '../utils/dataTestIds';
 import { useDebounce } from '../utils/hooks/useDebounce';
 import {
   AutocompleteListboxWithExpansion,
@@ -16,7 +15,7 @@ import { AutocompleteTextField, AutocompleteTextFieldProps } from './Autocomplet
 interface SearchForPublisherFacet {
   onSelectPublisher: (publisher: Publisher | null) => void;
   autocompleteProps?: Partial<AutocompleteProps<Publisher, false, false, false>>;
-  textFieldProps?: Partial<AutocompleteTextFieldProps>;
+  textFieldProps?: Partial<AutocompleteTextFieldProps> & { 'data-testid'?: string };
 }
 
 export const SearchForPublisher = ({
@@ -70,7 +69,6 @@ export const SearchForPublisher = ({
           {...params}
           variant="outlined"
           isLoading={publisherSearchQuery.isLoading}
-          data-testid={dataTestId.aggregations.publisherFacetsSearchField}
           placeholder={t('registration.resource_type.search_for_publisher')}
           {...textFieldProps}
         />

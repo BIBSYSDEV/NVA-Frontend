@@ -205,6 +205,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                   sx: { p: '0.25rem 0.5rem' },
                 }}
                 textFieldProps={{
+                  'data-testid': dataTestId.aggregations.publisherFacetsSearchField,
                   showSearchIcon: true,
                 }}
               />
