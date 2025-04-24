@@ -89,8 +89,8 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
           />
 
           {/* TODO:
-           * 1) Should only show channels with level 0, or unassigned.
-           * 2) Should not show channels that do not yet have any claim.
+           * 1) Should not be able to select publishers with scientific level 1 or 2.
+           * 2) Should not be able to select already claimed publishers.
            */}
           <SearchForPublisher
             onSelectPublisher={(publisher) => setSelectedChannel(publisher)}
