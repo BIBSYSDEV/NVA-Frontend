@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchChannelClaims } from '../../api/customerInstitutionsApi';
+import { fetchClaimedChannels } from '../../api/customerInstitutionsApi';
 import { ChannelClaimTable } from './ChannelClaimTable';
 import { PublicationChannelType } from '../../types/registration.types';
 
@@ -10,7 +10,7 @@ export const PublisherOwnershipSettings = () => {
 
   const channelClaimsQuery = useQuery({
     queryKey: ['channelClaims'],
-    queryFn: fetchChannelClaims,
+    queryFn: fetchClaimedChannels,
   });
 
   const channelClaims = channelClaimsQuery.data?.channelClaims;

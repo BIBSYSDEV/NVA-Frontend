@@ -164,7 +164,7 @@ export interface ClaimedChannel {
   };
 }
 
-export interface ChannelClaimsList {
+export interface ClaimedChannelList {
   channelClaims: ClaimedChannel[];
 }
 
