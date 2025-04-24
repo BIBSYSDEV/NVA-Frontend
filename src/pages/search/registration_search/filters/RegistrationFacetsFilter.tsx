@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../../api/searchApi';
+import { SearchForPublisher } from '../../../../components/SearchForPublisher';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useRegistrationsQueryParams } from '../../../../utils/hooks/useRegistrationSearchParams';
@@ -13,7 +14,6 @@ import { SearchPageProps } from '../../SearchPage';
 import { SearchForPersonFacetItem } from '../../facet_search_fields/SearchForContributorFacetItem';
 import { SearchForFundingSourceFacetItem } from '../../facet_search_fields/SearchForFundingSourceFacetItem';
 import { SearchForInstitutionFacetItem } from '../../facet_search_fields/SearchForInstitutionFacetItem';
-import { SearchForPublisherFacetItem } from '../../facet_search_fields/SearchForPublisherFacetItem';
 import { SearchForSerialPublicationFacetItem } from '../../facet_search_fields/SearchForSerialPublicationFacetItem';
 import { SelectCategoryFacetItem } from '../../facet_search_fields/SelectCategoryFacetItem';
 
@@ -193,7 +193,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           dataTestId={dataTestId.aggregations.publisherFacets}
           renderCustomSelect={
             !searchParams.has(ResultParam.Publisher) && (
-              <SearchForPublisherFacetItem
+              <SearchForPublisher
                 onSelectPublisher={(publisher) => {
                   if (publisher) {
                     addFacetFilter(ResultParam.Publisher, publisher.identifier);

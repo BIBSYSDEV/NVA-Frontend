@@ -15,12 +15,12 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChannelClaim } from '../../api/customerInstitutionsApi';
+import { SearchForPublisher } from '../../components/SearchForPublisher';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { DegreeType } from '../../types/publicationFieldNames';
 import { PublicationInstanceType, Publisher } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { SearchForPublisherFacetItem } from '../search/facet_search_fields/SearchForPublisherFacetItem';
 
 const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
 
@@ -89,12 +89,10 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
           />
 
           {/* TODO:
-           * 1) Selecting a publisher triggers a new redundant search request.
-           * 2) SearchForPublisherFacetItem is no longer specific to facet, and should be renamed and moved.
-           * 3) Should only show channels with level 0, or unassigned.
-           * 4) Should not show channels that do not yet have any claim.
+           * 1) Should only show channels with level 0, or unassigned.
+           * 2) Should not show channels that do not yet have any claim.
            */}
-          <SearchForPublisherFacetItem
+          <SearchForPublisher
             onSelectPublisher={(publisher) => setSelectedChannel(publisher)}
             autocompleteProps={{ value: selectedChannel, disabled: addChannelClaim.isPending }}
             textFieldProps={{ variant: 'filled', label: t('common.publisher'), required: true }}
