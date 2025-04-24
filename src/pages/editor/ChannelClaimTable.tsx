@@ -11,7 +11,10 @@ interface ChannelClaimTableProps {
 
 export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClaimTableProps) => {
   const { t } = useTranslation();
-  const claimedChannels = filterClaimedChannels({ channelClaimList, channelType }) ?? [];
+  const claimedChannels =
+    channelType === PublicationChannelType.Publisher
+      ? channelClaimList.filter((channel) => channel.channelClaim.channel.includes('/publisher'))
+      : [];
 
   return (
     <TableContainer>
@@ -33,10 +36,4 @@ export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClai
       </Table>
     </TableContainer>
   );
-};
-
-const filterClaimedChannels = ({ channelClaimList, channelType }: ChannelClaimTableProps) => {
-  if (channelType === PublicationChannelType.Publisher) {
-    return channelClaimList.filter((channel) => channel.channelClaim.channel.includes('/publisher'));
-  }
 };
