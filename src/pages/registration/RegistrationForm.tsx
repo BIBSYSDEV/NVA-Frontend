@@ -75,7 +75,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
-    <NviCandidateContext.Provider value={{ disableNviCriticalFields }}>
+    <NviCandidateContext.Provider value={{ disableNviCriticalFields, disableChannelClaimsFields: false }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
