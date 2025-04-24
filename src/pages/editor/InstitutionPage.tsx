@@ -152,7 +152,7 @@ const InstitutionPage = () => {
                     isSelected={currentPath === UrlPathTemplate.InstitutionPublisherClaims}
                     data-testid={dataTestId.editor.publisherClaimButton}
                     to={UrlPathTemplate.InstitutionPublisherClaims}>
-                    {t('editor.institution.administer_publisher_channel_claim')}
+                    {t('editor.institution.channel_claims.administer_publisher_channel_claim')}
                   </SelectableButton>
                 </BetaFunctionality>
               </NavigationList>

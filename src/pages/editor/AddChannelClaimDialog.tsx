@@ -72,7 +72,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
 
   return (
     <Dialog open={open} onClose={closeDialogAndResetSelectedChannel}>
-      <DialogTitle>{t('editor.institution.add_publisher_channel_claim')}</DialogTitle>
+      <DialogTitle>{t('editor.institution.channel_claims.add_publisher_channel_claim')}</DialogTitle>
       <form
         noValidate
         onSubmit={async (event) => {
@@ -84,7 +84,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
         }}>
         <DialogContent>
           <Trans
-            i18nKey="editor.institution.add_publisher_claim_description"
+            i18nKey="editor.institution.channel_claims.add_publisher_claim_description"
             components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
           />
 
@@ -106,7 +106,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
             }}
           />
           <Typography sx={{ mt: '1rem' }} gutterBottom>
-            {t('editor.institution.claim_category_restriction')}:
+            {t('editor.institution.channel_claims.claim_category_restriction')}:
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
             {selectedCategories.map((category) => (
@@ -129,7 +129,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
             loading={addChannelClaimMutation.isPending}
             variant="contained"
             disabled={!selectedChannel}>
-            {t('editor.institution.set_channel_claim')}
+            {t('editor.institution.channel_claims.set_channel_claim')}
           </Button>
         </DialogActions>
       </form>
