@@ -194,8 +194,13 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           renderCustomSelect={
             !searchParams.has(ResultParam.Publisher) && (
               <SearchForPublisherFacetItem
-                onSelectPublisher={(publisher) => addFacetFilter(ResultParam.Publisher, publisher.identifier)}
+                onSelectPublisher={(publisher) => {
+                  if (publisher) {
+                    addFacetFilter(ResultParam.Publisher, publisher.identifier);
+                  }
+                }}
                 autocompleteProps={{
+                  value: null,
                   size: 'small',
                   sx: { p: '0.25rem 0.5rem' },
                 }}

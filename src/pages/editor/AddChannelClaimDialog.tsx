@@ -33,7 +33,12 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
   const dispatch = useDispatch();
 
   const customer = useSelector((state: RootState) => state.customer);
-  const [selectedChannel, setSelectedChannel] = useState<Publisher>();
+
+  const closeDialogAndResetSelectedChannel = () => {
+    closeDialog();
+    setSelectedChannel(null);
+  };
+  const [selectedChannel, setSelectedChannel] = useState<Publisher | null>(null);
 
   const addChannelClaim = useMutation({
     mutationFn: (publisherId: string) => {
@@ -52,7 +57,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
     },
     onSuccess: () => {
       dispatch(setNotification({ message: t('feedback.success.set_channel_claim'), variant: 'success' }));
-      closeDialog();
+      closeDialogAndResetSelectedChannel();
     },
     onError: (error: AxiosError<{ detail?: string }>) => {
       dispatch(
@@ -66,7 +71,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
   });
 
   return (
-    <Dialog open={open} onClose={closeDialog}>
+    <Dialog open={open} onClose={closeDialogAndResetSelectedChannel}>
       <DialogTitle>{t('editor.institution.add_publisher_channel_claim')}</DialogTitle>
       <form
         onSubmit={async (event) => {
@@ -74,7 +79,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
           if (selectedChannel) {
             await addChannelClaim.mutateAsync(selectedChannel.id);
           }
-          closeDialog();
+          closeDialogAndResetSelectedChannel();
         }}>
         <DialogContent>
           <Trans
@@ -90,6 +95,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
            */}
           <SearchForPublisherFacetItem
             onSelectPublisher={(publisher) => setSelectedChannel(publisher)}
+            autocompleteProps={{ value: selectedChannel }}
             textFieldProps={{ variant: 'filled', label: t('common.publisher'), required: true }}
           />
           <Typography sx={{ mt: '1rem' }} gutterBottom>
@@ -107,7 +113,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
           </Box>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button onClick={closeDialog} data-testid={dataTestId.confirmDialog.cancelButton}>
+          <Button onClick={closeDialogAndResetSelectedChannel} data-testid={dataTestId.confirmDialog.cancelButton}>
             {t('common.cancel')}
           </Button>
           <Button

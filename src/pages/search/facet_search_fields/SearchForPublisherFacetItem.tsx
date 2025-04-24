@@ -1,4 +1,4 @@
-import { Autocomplete, AutocompleteProps } from '@mui/material';
+import { Autocomplete, AutocompleteProps, Chip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePublisherSearch } from '../../../api/hooks/usePublisherSearch';
@@ -14,7 +14,7 @@ import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 interface SearchForPublisherFacetItemProps {
-  onSelectPublisher: (publisher: Publisher) => void;
+  onSelectPublisher: (publisher: Publisher | null) => void;
   autocompleteProps?: Partial<AutocompleteProps<Publisher, false, false, false>>;
   textFieldProps?: Partial<AutocompleteTextFieldProps>;
 }
@@ -51,10 +51,8 @@ export const SearchForPublisherFacetItem = ({
         }
       }}
       onChange={(_, selectedPublisher) => {
-        if (selectedPublisher) {
-          onSelectPublisher(selectedPublisher);
-        }
-        // setSearchQuery('');
+        onSelectPublisher(selectedPublisher);
+        setSearchQuery('');
       }}
       loading={publisherSearchQuery.isFetching}
       renderOption={({ key, ...props }, option, state) => (
@@ -66,6 +64,7 @@ export const SearchForPublisherFacetItem = ({
           hideScientificLevel
         />
       )}
+      renderValue={(value, getItemProps) => <Chip label={value.name} {...getItemProps()} />}
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}
