@@ -1,9 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchPublisher } from '../publicationChannelApi';
+import { useTranslation } from 'react-i18next';
 
-export const useFetchPublisher = (id: string) => {
+export const useFetchPublisher = (identifier: string) => {
+  const { t } = useTranslation();
+
   return useQuery({
-    queryKey: ['fetchPublisher', id],
-    queryFn: () => fetchPublisher(id),
+    enabled: !!identifier,
+    queryKey: ['fetchPublisher', identifier],
+    queryFn: () => fetchPublisher(identifier),
+    meta: { errorMessage: t('feedback.error.get_publisher') },
   });
 };

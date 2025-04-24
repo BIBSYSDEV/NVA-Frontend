@@ -19,7 +19,7 @@ export const PublisherOwnershipSettings = () => {
       <Typography variant="h1" gutterBottom>
         {t('editor.institution.administer_publisher_channel_ownership')}
       </Typography>
-      {!!channelClaims && channelClaims.length > 0 && (
+      {channelClaims && channelClaims.length > 0 && (
         <ChannelClaimTable channelClaimList={channelClaims} channelType={PublicationChannelType.Publisher} />
       )}
     </>

@@ -19,8 +19,12 @@ export const ChannelClaimTableRow = ({ claim }: ChannelClaimTableRowProps) => {
 
   return (
     <TableRow key={claim.id}>
-      <TableCell sx={{ verticalAlign: 'top' }}>{!!publisherName ? publisherName : t('common.unknown')}</TableCell>
-      <TableCell sx={{ verticalAlign: 'top' }}>{!!organizationName ? organizationName : t('common.unknown')}</TableCell>
+      <TableCell sx={{ verticalAlign: 'top' }}>
+        {publisherName ? publisherName : <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>}
+      </TableCell>
+      <TableCell sx={{ verticalAlign: 'top' }}>
+        {organizationName ? organizationName : <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>}
+      </TableCell>
       <TableCell sx={{ verticalAlign: 'top' }}>{claim.channelClaim.constraint.publishingPolicy}</TableCell>
       <TableCell sx={{ verticalAlign: 'top' }}>{claim.channelClaim.constraint.editingPolicy}</TableCell>
       <TableCell sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', verticalAlign: 'top' }}>
