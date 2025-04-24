@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import { useTranslation } from 'react-i18next';
 import { ClaimedChannel } from '../../types/customerInstitution.types';
 import { PublicationChannelType, Publisher, SerialPublication } from '../../types/registration.types';
-import { ChannelClaimTableRow } from './PublicationChannelTableRow';
+import { ChannelClaimTableRow } from './ChannelClaimTableRow';
 
 interface ChannelClaimTableProps {
   channelClaimList: ClaimedChannel[];

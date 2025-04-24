@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { useFetchPublisher } from '../../api/hooks/useFetchPublisher';
 import { ClaimedChannel } from '../../types/customerInstitution.types';
-import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 
 interface ChannelClaimTableRowProps {
@@ -14,11 +13,12 @@ const StyledTableCell = styled(TableCell)({
 });
 export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowProps) => {
   const { t } = useTranslation();
-  const publisher = useFetchPublisher(getIdentifierFromId(claimedChannel.channelClaim.channel));
-  const publisherName = publisher ? publisher.data?.name : '';
 
-  const organization = useFetchOrganization(claimedChannel.claimedBy.organizationId);
-  const organizationName = organization ? getLanguageString(organization.data?.labels) : '';
+  const publisherQuery = useFetchPublisher(claimedChannel.channelClaim.channel);
+  const publisherName = publisherQuery ? publisherQuery.data?.name : '';
+
+  const organizationQuery = useFetchOrganization(claimedChannel.claimedBy.organizationId);
+  const organizationName = organizationQuery ? getLanguageString(organizationQuery.data?.labels) : '';
 
   return (
     <TableRow>
@@ -30,11 +30,11 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
       </StyledTableCell>
       <StyledTableCell>{claimedChannel.channelClaim.constraint.publishingPolicy}</StyledTableCell>
       <StyledTableCell>{claimedChannel.channelClaim.constraint.editingPolicy}</StyledTableCell>
-      <TableCell sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', verticalAlign: 'top' }}>
+      <StyledTableCell sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         {claimedChannel.channelClaim.constraint.scope.map((scope) => (
           <Chip key={scope} label={scope} />
         ))}
-      </TableCell>
+      </StyledTableCell>
     </TableRow>
   );
 };
