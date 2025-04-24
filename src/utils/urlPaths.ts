@@ -34,6 +34,7 @@ export enum UrlPathTemplate {
   InstitutionVocabularyOverview = '/institution/overview/vocabulary',
   InstitutionCategories = '/institution/settings/categories',
   InstitutionCategoriesOverview = '/institution/overview/categories',
+  InstitutionPublisherOwnership = '/institution/settings/publisher-ownership',
   Login = '/login',
   Logout = '/logout',
   MyPage = '/my-page',
