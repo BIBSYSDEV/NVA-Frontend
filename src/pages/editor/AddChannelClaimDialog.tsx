@@ -74,6 +74,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
     <Dialog open={open} onClose={closeDialogAndResetSelectedChannel}>
       <DialogTitle>{t('editor.institution.add_publisher_channel_claim')}</DialogTitle>
       <form
+        noValidate
         onSubmit={async (event) => {
           event.preventDefault();
           if (selectedChannel) {
@@ -95,7 +96,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
            */}
           <SearchForPublisherFacetItem
             onSelectPublisher={(publisher) => setSelectedChannel(publisher)}
-            autocompleteProps={{ value: selectedChannel }}
+            autocompleteProps={{ value: selectedChannel, disabled: addChannelClaim.isPending }}
             textFieldProps={{ variant: 'filled', label: t('common.publisher'), required: true }}
           />
           <Typography sx={{ mt: '1rem' }} gutterBottom>
