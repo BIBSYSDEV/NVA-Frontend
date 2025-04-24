@@ -1,4 +1,4 @@
-import { Chip, TableCell, TableRow } from '@mui/material';
+import { Chip, styled, TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { useFetchPublisher } from '../../api/hooks/useFetchPublisher';
@@ -7,29 +7,32 @@ import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 
 interface ChannelClaimTableRowProps {
-  channel: ClaimedChannel;
+  claimedChannel: ClaimedChannel;
 }
-export const ChannelClaimTableRow = ({ channel: claim }: ChannelClaimTableRowProps) => {
+const StyledTableCell = styled(TableCell)({
+  verticalAllign: 'top',
+});
+export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowProps) => {
   const { t } = useTranslation();
-  const publisher = useFetchPublisher(getIdentifierFromId(claim.channelClaim.channel));
+  const publisher = useFetchPublisher(getIdentifierFromId(claimedChannel.channelClaim.channel));
   const publisherName = publisher ? publisher.data?.name : '';
 
-  const organization = useFetchOrganization(claim.claimedBy.organizationId);
+  const organization = useFetchOrganization(claimedChannel.claimedBy.organizationId);
   const organizationName = organization ? getLanguageString(organization.data?.labels) : '';
 
   return (
-    <TableRow key={claim.id}>
-      <TableCell sx={{ verticalAlign: 'top' }}>
+    <TableRow>
+      <StyledTableCell>
         {publisherName ? publisherName : <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>}
-      </TableCell>
-      <TableCell sx={{ verticalAlign: 'top' }}>
+      </StyledTableCell>
+      <StyledTableCell>
         {organizationName ? organizationName : <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>}
-      </TableCell>
-      <TableCell sx={{ verticalAlign: 'top' }}>{claim.channelClaim.constraint.publishingPolicy}</TableCell>
-      <TableCell sx={{ verticalAlign: 'top' }}>{claim.channelClaim.constraint.editingPolicy}</TableCell>
+      </StyledTableCell>
+      <StyledTableCell>{claimedChannel.channelClaim.constraint.publishingPolicy}</StyledTableCell>
+      <StyledTableCell>{claimedChannel.channelClaim.constraint.editingPolicy}</StyledTableCell>
       <TableCell sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', verticalAlign: 'top' }}>
-        {claim.channelClaim.constraint.scope.map((scope, index) => (
-          <Chip key={index} label={scope} />
+        {claimedChannel.channelClaim.constraint.scope.map((scope) => (
+          <Chip key={scope} label={scope} />
         ))}
       </TableCell>
     </TableRow>

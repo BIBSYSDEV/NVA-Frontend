@@ -1,5 +1,5 @@
 import { allPublicationInstanceTypes, DegreeType } from './publicationFieldNames';
-import { PublicationChannelType, PublicationInstanceType } from './registration.types';
+import { PublicationInstanceType } from './registration.types';
 
 export interface SimpleCustomerInstitution {
   active: boolean;
@@ -163,12 +163,3 @@ export interface ClaimedChannel {
     };
   };
 }
-
-export interface ClaimedChannelList {
-  channelClaims: ClaimedChannel[];
-}
-
-export type SelectedPublicationChannelType =
-  | PublicationChannelType.Journal
-  | PublicationChannelType.Publisher
-  | PublicationChannelType.Series;

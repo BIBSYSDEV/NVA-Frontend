@@ -1,12 +1,12 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ClaimedChannel, SelectedPublicationChannelType } from '../../types/customerInstitution.types';
-import { PublicationChannelType } from '../../types/registration.types';
+import { ClaimedChannel } from '../../types/customerInstitution.types';
+import { PublicationChannelType, Publisher, SerialPublication } from '../../types/registration.types';
 import { ChannelClaimTableRow } from './PublicationChannelTableRow';
 
 interface ChannelClaimTableProps {
   channelClaimList: ClaimedChannel[];
-  channelType: SelectedPublicationChannelType;
+  channelType: Publisher['type'] | SerialPublication['type'];
 }
 
 export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClaimTableProps) => {
@@ -26,8 +26,8 @@ export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClai
           </TableRow>
         </TableHead>
         <TableBody>
-          {claimedChannels.map((channel, index) => (
-            <ChannelClaimTableRow channel={channel} key={index} />
+          {claimedChannels.map((channel) => (
+            <ChannelClaimTableRow claimedChannel={channel} key={channel.id} />
           ))}
         </TableBody>
       </Table>

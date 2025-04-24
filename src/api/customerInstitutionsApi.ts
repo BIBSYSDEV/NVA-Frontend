@@ -1,6 +1,6 @@
 import { CancelToken } from 'axios';
 import {
-  ClaimedChannelList,
+  ClaimedChannel,
   CustomerInstitution,
   DoiAgent,
   ProtectedDoiAgent,
@@ -53,10 +53,15 @@ export const fetchVocabulary = async (customerId: string) => {
   return getVocabulary.data;
 };
 
-export const fetchClaimedChannels = async () => {
+interface ClaimedChannelList {
+  channelClaims: ClaimedChannel[];
+}
+
+export const fetchClaimedChannels = async (signal?: AbortSignal) => {
   const getClaimedChannels = await authenticatedApiRequest2<ClaimedChannelList>({
-    url: '/customer/channel-claims',
+    url: CustomerInstitutionApiPath.ChannelClaims,
     method: 'GET',
+    signal,
   });
 
   return getClaimedChannels.data;
