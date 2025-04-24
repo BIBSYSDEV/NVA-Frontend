@@ -15,7 +15,7 @@ import { AutocompleteTextField, AutocompleteTextFieldProps } from './Autocomplet
 interface SearchForPublisherFacet {
   onSelectPublisher: (publisher: Publisher | null) => void;
   autocompleteProps?: Partial<AutocompleteProps<Publisher, false, false, false>>;
-  textFieldProps?: Partial<AutocompleteTextFieldProps> & { 'data-testid'?: string };
+  textFieldProps?: Partial<AutocompleteTextFieldProps>;
 }
 
 export const SearchForPublisher = ({
