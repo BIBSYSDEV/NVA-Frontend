@@ -54,10 +54,10 @@ export const fetchVocabulary = async (customerId: string) => {
 };
 
 export const fetchClaimedChannels = async () => {
-  const getChannelClaims = await authenticatedApiRequest2<ClaimedChannelList>({
+  const getClaimedChannels = await authenticatedApiRequest2<ClaimedChannelList>({
     url: '/customer/channel-claims',
     method: 'GET',
   });
 
-  return getChannelClaims.data;
+  return getClaimedChannels.data;
 };

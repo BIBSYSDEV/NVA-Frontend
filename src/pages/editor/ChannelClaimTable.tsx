@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ClaimedChannel, SelectedPublicationChannelType } from '../../types/customerInstitution.types';
 import { PublicationChannelType } from '../../types/registration.types';
@@ -11,10 +11,10 @@ interface ChannelClaimTableProps {
 
 export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClaimTableProps) => {
   const { t } = useTranslation();
-  const channelClaims = filterClaimedChannels({ channelClaimList, channelType }) ?? [];
+  const claimedChannels = filterClaimedChannels({ channelClaimList, channelType }) ?? [];
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
       <Table>
         <TableHead>
           <TableRow>
@@ -26,8 +26,8 @@ export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClai
           </TableRow>
         </TableHead>
         <TableBody>
-          {channelClaims.map((claim, index) => (
-            <ChannelClaimTableRow claim={claim} key={index} />
+          {claimedChannels.map((channel, index) => (
+            <ChannelClaimTableRow channel={channel} key={index} />
           ))}
         </TableBody>
       </Table>

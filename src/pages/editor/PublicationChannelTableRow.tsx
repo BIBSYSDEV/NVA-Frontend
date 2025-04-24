@@ -7,9 +7,9 @@ import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 
 interface ChannelClaimTableRowProps {
-  claim: ClaimedChannel;
+  channel: ClaimedChannel;
 }
-export const ChannelClaimTableRow = ({ claim }: ChannelClaimTableRowProps) => {
+export const ChannelClaimTableRow = ({ channel: claim }: ChannelClaimTableRowProps) => {
   const { t } = useTranslation();
   const publisher = useFetchPublisher(getIdentifierFromId(claim.channelClaim.channel));
   const publisherName = publisher ? publisher.data?.name : '';
