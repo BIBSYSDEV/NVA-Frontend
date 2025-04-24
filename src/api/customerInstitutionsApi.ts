@@ -1,5 +1,6 @@
 import { CancelToken } from 'axios';
 import { CustomerInstitution, DoiAgent, ProtectedDoiAgent, VocabularyList } from '../types/customerInstitution.types';
+import { PublicationInstanceType } from '../types/registration.types';
 import { CustomerInstitutionApiPath } from './apiPaths';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
@@ -46,3 +47,21 @@ export const fetchVocabulary = async (customerId: string) => {
 
   return getVocabulary.data;
 };
+
+type ChannelPolicy = 'OwnerOnly' | 'Everyone';
+
+interface ClaimChannelPayload {
+  channel: string;
+  constraint: {
+    scope: PublicationInstanceType[];
+    publishingPolicy: ChannelPolicy;
+    editingPolicy: ChannelPolicy;
+  };
+}
+
+export const setChannelClaim = async (customerId: string, data: ClaimChannelPayload) =>
+  await authenticatedApiRequest2({
+    url: `${customerId}/channel-claim`,
+    method: 'POST',
+    data,
+  });
