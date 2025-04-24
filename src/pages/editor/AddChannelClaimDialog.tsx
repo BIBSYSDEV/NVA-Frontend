@@ -31,16 +31,16 @@ interface AddChannelClaimDialogProps extends Pick<DialogProps, 'open'> {
 export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
   const customer = useSelector((state: RootState) => state.customer);
+
+  const [selectedChannel, setSelectedChannel] = useState<Publisher | null>(null);
 
   const closeDialogAndResetSelectedChannel = () => {
     closeDialog();
     setSelectedChannel(null);
   };
-  const [selectedChannel, setSelectedChannel] = useState<Publisher | null>(null);
 
-  const addChannelClaim = useMutation({
+  const addChannelClaimMutation = useMutation({
     mutationFn: (publisherId: string) => {
       if (customer?.id && publisherId) {
         const channelIdWithoutYear = publisherId.replace(/\/\d{4}$/, '');
@@ -78,7 +78,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
         onSubmit={async (event) => {
           event.preventDefault();
           if (selectedChannel) {
-            await addChannelClaim.mutateAsync(selectedChannel.id);
+            await addChannelClaimMutation.mutateAsync(selectedChannel.id);
           }
           closeDialogAndResetSelectedChannel();
         }}>
@@ -96,7 +96,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
             onSelectPublisher={(publisher) => setSelectedChannel(publisher)}
             autocompleteProps={{
               value: selectedChannel,
-              disabled: addChannelClaim.isPending,
+              disabled: addChannelClaimMutation.isPending,
             }}
             textFieldProps={{
               'data-testid': dataTestId.editor.channelSearchField,
@@ -126,7 +126,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
           <Button
             data-testid={dataTestId.confirmDialog.acceptButton}
             type="submit"
-            loading={addChannelClaim.isPending}
+            loading={addChannelClaimMutation.isPending}
             variant="contained"
             disabled={!selectedChannel}>
             {t('editor.institution.set_channel_claim')}
