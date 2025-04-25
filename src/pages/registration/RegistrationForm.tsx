@@ -20,6 +20,7 @@ import { RootState } from '../../redux/store';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
+import { useShouldDisableFieldsDueToChannelClaims } from '../../utils/hooks/useFetchChannelClaim';
 import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { doNotRedirectQueryParam, UrlPathTemplate } from '../../utils/urlPaths';
@@ -47,9 +48,11 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
   const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
   const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
-
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
+
+  const channelClaims = useShouldDisableFieldsDueToChannelClaims(registration);
+
   const canHaveNviCandidate =
     registration?.status === RegistrationStatus.Published ||
     registration?.status === RegistrationStatus.PublishedMetadata;
@@ -70,12 +73,15 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [tabNumber]);
 
-  return registrationQuery.isPending || (canHaveNviCandidate && nviReportedStatus.isPending) ? (
+  return registrationQuery.isPending ||
+    channelClaims.isLoading ||
+    (canHaveNviCandidate && nviReportedStatus.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
-    <NviCandidateContext.Provider value={{ disableNviCriticalFields, disableChannelClaimsFields: false }}>
+    <NviCandidateContext.Provider
+      value={{ disableNviCriticalFields, disableChannelClaimsFields: channelClaims.shouldDisableFields }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
