@@ -1,10 +1,14 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
+import { fetchClaimedChannels } from '../../api/customerInstitutionsApi';
+import { PublicationChannelType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
+import { ChannelClaimTable } from './ChannelClaimTable';
 
 export const PublisherOwnershipSettings = () => {
   const { t } = useTranslation();
@@ -12,6 +16,13 @@ export const PublisherOwnershipSettings = () => {
   const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);
   const toggleAddChannelClaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
 
+  const channelClaimsQuery = useQuery({
+    queryKey: ['channelClaims'],
+    queryFn: ({ signal }) => fetchClaimedChannels(signal),
+    meta: { errorMessage: t('feedback.error.get_channel_claim') },
+  });
+
+  const channelClaimList = channelClaimsQuery.data?.channelClaims;
   return (
     <>
       <Helmet>
@@ -38,6 +49,9 @@ export const PublisherOwnershipSettings = () => {
         <Typography />
       </Trans>
       <AddChannelClaimDialog open={openAddChannelClaimDialog} closeDialog={toggleAddChannelClaimDialog} />
+      {channelClaimList && channelClaimList.length > 0 && (
+        <ChannelClaimTable channelClaimList={channelClaimList} channelType={PublicationChannelType.Publisher} />
+      )}
     </>
   );
 };

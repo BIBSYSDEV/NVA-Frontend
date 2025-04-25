@@ -1,5 +1,11 @@
 import { CancelToken } from 'axios';
-import { CustomerInstitution, DoiAgent, ProtectedDoiAgent, VocabularyList } from '../types/customerInstitution.types';
+import {
+  ClaimedChannel,
+  CustomerInstitution,
+  DoiAgent,
+  ProtectedDoiAgent,
+  VocabularyList,
+} from '../types/customerInstitution.types';
 import { PublicationInstanceType } from '../types/registration.types';
 import { CustomerInstitutionApiPath } from './apiPaths';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
@@ -65,3 +71,17 @@ export const setChannelClaim = async (customerId: string, data: ClaimChannelPayl
     method: 'POST',
     data,
   });
+
+interface ClaimedChannelList {
+  channelClaims: ClaimedChannel[];
+}
+
+export const fetchClaimedChannels = async (signal: AbortSignal) => {
+  const getClaimedChannels = await authenticatedApiRequest2<ClaimedChannelList>({
+    url: CustomerInstitutionApiPath.ChannelClaims,
+    method: 'GET',
+    signal,
+  });
+
+  return getClaimedChannels.data;
+};
