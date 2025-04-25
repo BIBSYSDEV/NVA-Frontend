@@ -112,7 +112,7 @@ const TasksPage = () => {
     (notification) => notification.key === 'DoiRequest'
   )?.count;
   const publishingNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
-    (notification) => notification.key === 'PublishingRequest'
+    (notification) => notification.key === 'PublishingRequest' || notification.key === 'FileApprovalThesis'
   )?.count;
   const supportNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
     (notification) => notification.key === 'GeneralSupportCase'
@@ -120,7 +120,9 @@ const TasksPage = () => {
 
   const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
   const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
-  const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
+  const publishingRequestCount = ticketTypeBuckets.find(
+    (bucket) => bucket.key === 'PublishingRequest' || bucket.key === 'FileApprovalThesis'
+  )?.count;
   const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   return (

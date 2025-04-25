@@ -111,7 +111,7 @@ const MyPagePage = () => {
     (bucket) => bucket.key === 'DoiRequest'
   )?.count;
   const unreadPublishingCount = notificationsQuery.data?.aggregations?.type?.find(
-    (bucket) => bucket.key === 'PublishingRequest'
+    (bucket) => bucket.key === 'PublishingRequest' || bucket.key === 'FileApprovalThesis'
   )?.count;
   const unreadGeneralSupportCount = notificationsQuery.data?.aggregations?.type?.find(
     (bucket) => bucket.key === 'GeneralSupportCase'
@@ -119,7 +119,9 @@ const MyPagePage = () => {
 
   const typeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
   const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
-  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
+  const publishingRequestCount = typeBuckets.find(
+    (bucket) => bucket.key === 'PublishingRequest' || bucket.key === 'FileApprovalThesis'
+  )?.count;
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
