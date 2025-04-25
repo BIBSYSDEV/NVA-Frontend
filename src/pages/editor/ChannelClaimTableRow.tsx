@@ -15,10 +15,10 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
   const { t } = useTranslation();
 
   const publisherQuery = useFetchPublisher(claimedChannel.channelClaim.channel);
-  const publisherName = publisherQuery ? publisherQuery.data?.name : '';
+  const publisherName = publisherQuery.data?.name;
 
   const organizationQuery = useFetchOrganization(claimedChannel.claimedBy.organizationId);
-  const organizationName = organizationQuery ? getLanguageString(organizationQuery.data?.labels) : '';
+  const organizationName = getLanguageString(organizationQuery.data?.labels);
 
   return (
     <TableRow>
