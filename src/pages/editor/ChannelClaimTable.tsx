@@ -20,7 +20,7 @@ export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClai
     <TableContainer>
       <Table>
         <TableHead>
-          <TableRow>
+          <TableRow sx={{ bgcolor: 'secondary.main' }}>
             <TableCell>{t('common.publisher')}</TableCell>
             <TableCell>{t('editor.institution.channel_claims.channel_owner')}</TableCell>
             <TableCell>{t('editor.institution.channel_claims.publishing_access')}</TableCell>

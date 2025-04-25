@@ -1,4 +1,6 @@
 import BlockIcon from '@mui/icons-material/Block';
+import LockOutlineIcon from '@mui/icons-material/LockOutline';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, Typography } from '@mui/material';
@@ -50,7 +52,7 @@ export const NviStatusChip = ({ status }: NviStatusChip) => {
 
 interface StatusChipProps {
   text: string;
-  icon: 'check' | 'block' | 'hourglass';
+  icon: 'check' | 'block' | 'hourglass' | 'locked' | 'open';
   bgcolor?: string;
   paddingY?: string | number;
 }
@@ -75,6 +77,10 @@ export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon, paddingY }:
         <BlockIcon sx={{ fontSize: '1rem' }} />
       ) : icon === 'hourglass' ? (
         <HourglassEmptyIcon sx={{ fontSize: '1rem' }} />
+      ) : icon === 'open' ? (
+        <LockOpenIcon sx={{ fontSize: '1rem' }} />
+      ) : icon === 'locked' ? (
+        <LockOutlineIcon sx={{ fontSize: '1rem' }} />
       ) : null}
       <Typography>{text}</Typography>
     </Box>
