@@ -3,10 +3,11 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { Autocomplete, Box, Button, CircularProgress, Divider, MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { getLanguageByIso6393Code } from 'nva-language';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDuplicateRegistrationSearch } from '../../api/hooks/useDuplicateRegistrationSearch';
 import { InputContainerBox } from '../../components/styled/Wrappers';
+import { NviCandidateContext } from '../../context/NviCandidateContext';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -29,6 +30,8 @@ export const DescriptionPanel = () => {
     identifier: values.identifier,
   });
 
+  const { disableChannelClaimsFields } = useContext(NviCandidateContext);
+
   return (
     <InputContainerBox>
       <Box
@@ -42,6 +45,7 @@ export const DescriptionPanel = () => {
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
+              disabled={disableChannelClaimsFields}
               value={field.value ?? ''}
               required
               data-testid={dataTestId.registrationWizard.description.titleField}
@@ -75,6 +79,7 @@ export const DescriptionPanel = () => {
               {field.value !== undefined ? (
                 <TextField
                   {...field}
+                  disabled={disableChannelClaimsFields}
                   value={field.value ?? ''}
                   data-testid={dataTestId.registrationWizard.description.alternativeTitleField}
                   variant="filled"
@@ -85,7 +90,7 @@ export const DescriptionPanel = () => {
               {field.value || field.value === '' ? null : (
                 <Button
                   startIcon={<AddCircleOutlineIcon />}
-                  disabled={!values.entityDescription?.mainTitle}
+                  disabled={!values.entityDescription?.mainTitle || disableChannelClaimsFields}
                   onClick={() => setFieldValue(field.name, '')}>
                   {t('common.add_custom', {
                     name: t('registration.description.alternative_title').toLocaleLowerCase(),
@@ -107,6 +112,7 @@ export const DescriptionPanel = () => {
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
+              disabled={disableChannelClaimsFields}
               value={field.value ?? ''}
               data-testid={dataTestId.registrationWizard.description.abstractField}
               variant="filled"
@@ -122,6 +128,7 @@ export const DescriptionPanel = () => {
               {field.value !== undefined ? (
                 <TextField
                   {...field}
+                  disabled={disableChannelClaimsFields}
                   value={field.value ?? ''}
                   data-testid={dataTestId.registrationWizard.description.alternativeAbstractField}
                   variant="filled"
@@ -134,7 +141,7 @@ export const DescriptionPanel = () => {
               {field.value || field.value === '' ? null : (
                 <Button
                   startIcon={<AddCircleOutlineIcon />}
-                  disabled={!values.entityDescription?.abstract}
+                  disabled={!values.entityDescription?.abstract || disableChannelClaimsFields}
                   onClick={() => setFieldValue(field.name, '')}>
                   {t('common.add_custom', {
                     name: t('registration.description.alternative_abstract').toLocaleLowerCase(),
