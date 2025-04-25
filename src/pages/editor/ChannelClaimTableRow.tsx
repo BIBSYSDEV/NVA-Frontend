@@ -1,10 +1,11 @@
-import { Chip, styled, TableCell, TableRow } from '@mui/material';
+import { Chip, Skeleton, styled, TableCell, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { useFetchPublisher } from '../../api/hooks/useFetchPublisher';
 import { ClaimedChannel } from '../../types/customerInstitution.types';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { StatusChip } from '../../components/StatusChip';
+import { ListSkeleton } from '../../components/ListSkeleton';
 
 interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
@@ -27,10 +28,22 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
   return (
     <TableRow sx={{ bgcolor: 'white' }}>
       <StyledTableCell>
-        {publisherName ? publisherName : <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>}
+        {publisherQuery.isPending ? (
+          <Skeleton width={300} />
+        ) : publisherName ? (
+          publisherName
+        ) : (
+          <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>
+        )}
       </StyledTableCell>
       <StyledTableCell>
-        {organizationName ? organizationName : <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>}
+        {organizationQuery.isPending ? (
+          <Skeleton width={300} />
+        ) : organizationName ? (
+          <Typography>{organizationName}</Typography>
+        ) : (
+          <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>
+        )}
       </StyledTableCell>
       <StyledTableCell>
         <StatusChip
