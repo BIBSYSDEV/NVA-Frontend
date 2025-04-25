@@ -3,7 +3,7 @@ import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
-import { Box, Typography } from '@mui/material';
+import { Box, SxProps, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { NviCandidateStatus } from '../types/nvi.types';
 import { Ticket } from '../types/publication_types/ticket.types';
@@ -55,9 +55,10 @@ interface StatusChipProps {
   icon: 'check' | 'block' | 'hourglass' | 'locked' | 'open';
   bgcolor?: string;
   paddingY?: string | number;
+  sx?: SxProps;
 }
 
-export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon, paddingY }: StatusChipProps) => {
+export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon, paddingY, sx }: StatusChipProps) => {
   return (
     <Box
       sx={{
@@ -70,6 +71,7 @@ export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon, paddingY }:
         borderRadius: '1rem',
         bgcolor,
         paddingY,
+        ...sx,
       }}>
       {icon === 'check' ? (
         <CheckIcon sx={{ fontSize: '1rem' }} />

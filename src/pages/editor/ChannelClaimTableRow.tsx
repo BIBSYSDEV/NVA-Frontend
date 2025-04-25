@@ -10,7 +10,7 @@ interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
 }
 const StyledTableCell = styled(TableCell)({
-  verticalAllign: 'top',
+  verticalAlign: 'top',
 });
 export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowProps) => {
   const { t } = useTranslation();
@@ -34,6 +34,7 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
       </StyledTableCell>
       <StyledTableCell>
         <StatusChip
+          sx={{ textWrap: 'nowrap' }}
           text={t(`editor.institution.channel_claims.access_policies.${publishingPolicy}`)}
           icon={publishingPolicy === 'Everyone' ? 'open' : 'locked'}
           bgcolor={publishingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main'}
@@ -41,12 +42,13 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
       </StyledTableCell>
       <StyledTableCell>
         <StatusChip
+          sx={{ textWrap: 'nowrap' }}
           text={t(`editor.institution.channel_claims.access_policies.${editingPolicy}`)}
           icon={editingPolicy === 'Everyone' ? 'open' : 'locked'}
           bgcolor={editingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main'}
         />
       </StyledTableCell>
-      <StyledTableCell sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', maxWidth: '20rem' }}>
+      <StyledTableCell sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', maxWidth: '30rem' }}>
         {claimedChannel.channelClaim.constraint.scope.map((scope) => (
           <Chip
             key={scope}
