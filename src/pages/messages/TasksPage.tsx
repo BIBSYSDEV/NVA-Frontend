@@ -43,14 +43,16 @@ const TasksPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const locationState = location.state as PreviousSearchLocationState;
+  const navigate = useNavigate();
+
   const user = useSelector((store: RootState) => store.user);
   const isSupportCurator = !!user?.isSupportCurator;
   const isDoiCurator = !!user?.isDoiCurator;
   const isPublishingCurator = !!user?.isPublishingCurator;
-  const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
+  const isThesisCurator = !!user?.isThesisCurator;
+  const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator || isThesisCurator;
   const isNviCurator = !!user?.isNviCurator;
   const isAnyCurator = isTicketCurator || isNviCurator;
-  const navigate = useNavigate();
 
   const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
@@ -68,6 +70,7 @@ const TasksPage = () => {
     doiRequest: isDoiCurator,
     generalSupportCase: isSupportCurator,
     publishingRequest: isPublishingCurator,
+    fileApprovalThesis: isThesisCurator,
   });
 
   const selectedTicketTypes = Object.entries(ticketTypes)
@@ -112,7 +115,10 @@ const TasksPage = () => {
     (notification) => notification.key === 'DoiRequest'
   )?.count;
   const publishingNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
-    (notification) => notification.key === 'PublishingRequest' || notification.key === 'FileApprovalThesis'
+    (notification) => notification.key === 'PublishingRequest'
+  )?.count;
+  const thesisPublishingNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
+    (notification) => notification.key === 'FileApprovalThesis'
   )?.count;
   const supportNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
     (notification) => notification.key === 'GeneralSupportCase'
@@ -120,9 +126,8 @@ const TasksPage = () => {
 
   const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
   const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
-  const publishingRequestCount = ticketTypeBuckets.find(
-    (bucket) => bucket.key === 'PublishingRequest' || bucket.key === 'FileApprovalThesis'
-  )?.count;
+  const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
+  const thesisPublishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'FileApprovalThesis')?.count;
   const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   return (
@@ -167,6 +172,23 @@ const TasksPage = () => {
                   {ticketTypes.publishingRequest && publishingRequestCount
                     ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
                     : t('my_page.messages.types.PublishingRequest')}
+                </TicketTypeFilterButton>
+              )}
+
+              {isThesisCurator && (
+                <TicketTypeFilterButton
+                  data-testid={dataTestId.tasksPage.typeSearch.publishThesisButton}
+                  endIcon={<Badge badgeContent={thesisPublishingNotificationsCount} />}
+                  showCheckbox
+                  isSelected={ticketTypes.fileApprovalThesis}
+                  color="publishingRequest"
+                  onClick={() => {
+                    setTicketTypes({ ...ticketTypes, fileApprovalThesis: !ticketTypes.fileApprovalThesis });
+                    resetPaginationAndNavigate(searchParams, navigate);
+                  }}>
+                  {ticketTypes.fileApprovalThesis && thesisPublishingRequestCount
+                    ? `${t('my_page.messages.types.FileApprovalThesis')} (${thesisPublishingRequestCount})`
+                    : t('my_page.messages.types.FileApprovalThesis')}
                 </TicketTypeFilterButton>
               )}
 

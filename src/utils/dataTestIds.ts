@@ -771,6 +771,7 @@ export const dataTestId = {
     typeSearch: {
       doiButton: 'doi-button',
       publishingButton: 'publishing-request-button',
+      publishThesisButton: 'publish-thesis-button',
       supportButton: 'support-button',
     },
     unreadSearchSelect: 'unread-search-select',
