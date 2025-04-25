@@ -9,6 +9,7 @@ import { PublicationChannelType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimTable } from './ChannelClaimTable';
+import { PageSpinner } from '../../components/PageSpinner';
 
 export const PublisherOwnershipSettings = () => {
   const { t } = useTranslation();
@@ -49,8 +50,14 @@ export const PublisherOwnershipSettings = () => {
         <Typography />
       </Trans>
       <AddChannelClaimDialog open={openAddChannelClaimDialog} closeDialog={toggleAddChannelClaimDialog} />
-      {channelClaimList && channelClaimList.length > 0 && (
-        <ChannelClaimTable channelClaimList={channelClaimList} channelType={PublicationChannelType.Publisher} />
+
+      {channelClaimsQuery.isPending ? (
+        <PageSpinner aria-label={t('editor.institution.channel_claims.channel_owner')} />
+      ) : (
+        channelClaimList &&
+        channelClaimList.length > 0 && (
+          <ChannelClaimTable channelClaimList={channelClaimList} channelType={PublicationChannelType.Publisher} />
+        )
       )}
     </>
   );
