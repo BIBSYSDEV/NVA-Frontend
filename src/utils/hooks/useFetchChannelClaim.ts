@@ -13,14 +13,17 @@ import {
   isReport,
   isResearchData,
 } from '../registration-helpers';
+import { useBetaFlag } from './useBetaFlag';
 
 export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registration) => {
   const user = useSelector((state: RootState) => state.user);
+  const beta = useBetaFlag();
 
-  const channelId = getChannelId(registration);
+  const channelId = beta ? getChannelId(registration) : '';
   const channelClaimQuery = useFetchChannelClaim(channelId);
 
-  const claimedByOtherInstitution = channelClaimQuery.data?.claimedBy.organizationId !== user?.topOrgCristinId;
+  const claimedByOtherInstitution =
+    !!channelClaimQuery.data && channelClaimQuery.data.claimedBy.organizationId !== user?.topOrgCristinId;
 
   // TOOO: Check if channel claims this category for another institution
   // TODO: Check if user has curator roles that overrides the channel claim
