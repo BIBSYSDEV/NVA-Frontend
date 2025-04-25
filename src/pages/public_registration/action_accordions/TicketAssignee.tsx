@@ -10,6 +10,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
+import { isFileApprovalTicket } from '../../../utils/ticketHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
 
@@ -26,7 +27,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
   const canEditTicket =
     !!(ticket.type === 'DoiRequest' && user?.isDoiCurator) ||
     !!(ticket.type === 'GeneralSupportCase' && user?.isSupportCurator) ||
-    !!(ticket.type === 'PublishingRequest' && user?.isPublishingCurator);
+    !!(isFileApprovalTicket(ticket) && user?.isPublishingCurator);
 
   const ticketMutation = useMutation({
     mutationFn: async (assigneeUsername: string) => {
@@ -58,7 +59,9 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
           ? RoleName.PublishingCurator
           : ticket.type === 'DoiRequest'
             ? RoleName.DoiCurator
-            : RoleName.SupportCurator
+            : ticket.type === 'FileApprovalThesis'
+              ? RoleName.PublishingCurator
+              : RoleName.SupportCurator
       }
     />
   ) : ticket.assignee || isPendingTicket ? (

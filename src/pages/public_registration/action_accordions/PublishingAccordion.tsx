@@ -163,7 +163,8 @@ export const PublishingAccordion = ({
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
   const defaultExpanded = locationState?.selectedTicketType
-    ? locationState.selectedTicketType === 'PublishingRequest'
+    ? locationState.selectedTicketType === 'PublishingRequest' ||
+      locationState.selectedTicketType === 'FileApprovalThesis'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
 
   return (

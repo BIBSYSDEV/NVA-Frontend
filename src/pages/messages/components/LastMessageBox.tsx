@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { toDateString } from '../../../utils/date-helpers';
+import { isFileApprovalTicket } from '../../../utils/ticketHelpers';
 import { StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
 
 interface LastMessageBoxProps {
@@ -23,7 +24,7 @@ export const LastMessageBox = ({ ticket }: LastMessageBoxProps) => {
   const ticketColor =
     ticket.type === 'GeneralSupportCase'
       ? 'generalSupportCase.main'
-      : ticket.type === 'PublishingRequest'
+      : isFileApprovalTicket(ticket)
         ? 'publishingRequest.main'
         : ticket.type === 'DoiRequest'
           ? 'doiRequest.main'

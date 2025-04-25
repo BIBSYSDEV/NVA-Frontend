@@ -23,7 +23,12 @@ export interface TicketCollection {
   tickets: Ticket[];
 }
 
-export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest' | 'UnpublishRequest';
+export type TicketType =
+  | 'DoiRequest'
+  | 'GeneralSupportCase'
+  | 'PublishingRequest'
+  | 'FileApprovalThesis'
+  | 'UnpublishRequest';
 export type TicketStatus = 'New' | 'Pending' | 'Closed' | 'Completed' | 'NotApplicable';
 export const ticketStatusValues: TicketStatus[] = ['New', 'Pending', 'Closed', 'Completed'];
 
