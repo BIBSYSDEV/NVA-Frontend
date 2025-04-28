@@ -29,7 +29,7 @@ import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../compone
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
-import { TicketType } from '../../types/publication_types/ticket.types';
+import { TicketType, TicketTypeSelection } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -66,7 +66,7 @@ const MyPagePage = () => {
     unpublished: true,
   });
 
-  const [selectedTypes, setSelectedTypes] = useState({
+  const [selectedTypes, setSelectedTypes] = useState<TicketTypeSelection>({
     doiRequest: true,
     generalSupportCase: true,
     publishingRequest: true,
@@ -220,7 +220,7 @@ const MyPagePage = () => {
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 endIcon={<Badge badgeContent={allUnreadPublishingCount} />}
                 showCheckbox
-                isSelected={selectedTypes.publishingRequest}
+                isSelected={!!selectedTypes.publishingRequest}
                 color="publishingRequest"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest });
@@ -235,7 +235,7 @@ const MyPagePage = () => {
                 data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                 endIcon={<Badge badgeContent={unreadDoiCount} />}
                 showCheckbox
-                isSelected={selectedTypes.doiRequest}
+                isSelected={!!selectedTypes.doiRequest}
                 color="doiRequest"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest });
@@ -250,7 +250,7 @@ const MyPagePage = () => {
                 data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                 endIcon={<Badge badgeContent={unreadGeneralSupportCount} />}
                 showCheckbox
-                isSelected={selectedTypes.generalSupportCase}
+                isSelected={!!selectedTypes.generalSupportCase}
                 color="generalSupportCase"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase });

@@ -4,14 +4,14 @@ import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { NviCandidateStatus } from '../types/nvi.types';
-import { Ticket } from '../types/publication_types/ticket.types';
+import { Ticket, TicketTypeColor } from '../types/publication_types/ticket.types';
 
 const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
   FilesApprovalThesis: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
-};
+} satisfies TicketTypeColor;
 
 interface TicketStatusChipProps {
   ticket: Pick<Ticket, 'status' | 'type'>;

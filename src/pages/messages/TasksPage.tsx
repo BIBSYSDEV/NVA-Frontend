@@ -22,6 +22,7 @@ import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefau
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
+import { TicketTypeSelection } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -66,7 +67,7 @@ const TasksPage = () => {
 
   const searchParams = new URLSearchParams(location.search);
 
-  const [ticketTypes, setTicketTypes] = useState({
+  const [ticketTypes, setTicketTypes] = useState<TicketTypeSelection>({
     doiRequest: isDoiCurator,
     generalSupportCase: isSupportCurator,
     publishingRequest: isPublishingCurator,
@@ -163,7 +164,7 @@ const TasksPage = () => {
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                   endIcon={<Badge badgeContent={publishingNotificationsCount} />}
                   showCheckbox
-                  isSelected={ticketTypes.publishingRequest}
+                  isSelected={!!ticketTypes.publishingRequest}
                   color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
@@ -180,7 +181,7 @@ const TasksPage = () => {
                   data-testid={dataTestId.tasksPage.typeSearch.publishThesisButton}
                   endIcon={<Badge badgeContent={thesisPublishingNotificationsCount} />}
                   showCheckbox
-                  isSelected={ticketTypes.filesApprovalThesis}
+                  isSelected={!!ticketTypes.filesApprovalThesis}
                   color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, filesApprovalThesis: !ticketTypes.filesApprovalThesis });
@@ -197,7 +198,7 @@ const TasksPage = () => {
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                   endIcon={<Badge badgeContent={doiNotificationsCount} />}
                   showCheckbox
-                  isSelected={ticketTypes.doiRequest}
+                  isSelected={!!ticketTypes.doiRequest}
                   color="doiRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
@@ -214,7 +215,7 @@ const TasksPage = () => {
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                   endIcon={<Badge badgeContent={supportNotificationsCount} />}
                   showCheckbox
-                  isSelected={ticketTypes.generalSupportCase}
+                  isSelected={!!ticketTypes.generalSupportCase}
                   color="generalSupportCase"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });

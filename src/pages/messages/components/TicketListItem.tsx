@@ -9,7 +9,11 @@ import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
-import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
+import {
+  ExpandedPublishingTicket,
+  ExpandedTicket,
+  TicketTypeColor,
+} from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration, RegistrationStatus } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
 import { getInitials } from '../../../utils/general-helpers';
@@ -33,8 +37,7 @@ export const ticketColor = {
   FilesApprovalThesis: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
-  Import: 'grey.300',
-};
+} satisfies TicketTypeColor;
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;
