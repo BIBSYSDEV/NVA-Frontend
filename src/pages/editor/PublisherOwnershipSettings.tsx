@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Button, Typography } from '@mui/material';
+import { Button, TableContainer, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -54,10 +54,11 @@ export const PublisherOwnershipSettings = () => {
       {channelClaimsQuery.isPending ? (
         <PageSpinner aria-label={t('editor.institution.channel_claims.channel_owner')} />
       ) : (
-        channelClaimList &&
-        channelClaimList.length > 0 && (
-          <ChannelClaimTable channelClaimList={channelClaimList} channelType={PublicationChannelType.Publisher} />
-        )
+        <TableContainer aria-live="polite" sx={{ mt: '1rem' }}>
+          {channelClaimList && channelClaimList.length > 0 && (
+            <ChannelClaimTable channelClaimList={channelClaimList} channelType={PublicationChannelType.Publisher} />
+          )}
+        </TableContainer>
       )}
     </>
   );

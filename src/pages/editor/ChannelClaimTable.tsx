@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ClaimedChannel } from '../../types/customerInstitution.types';
 import { PublicationChannelType, Publisher, SerialPublication } from '../../types/registration.types';
@@ -17,23 +17,21 @@ export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClai
       : [];
 
   return (
-    <TableContainer>
-      <Table>
-        <TableHead>
-          <TableRow sx={{ bgcolor: 'secondary.main' }}>
-            <TableCell>{t('common.publisher')}</TableCell>
-            <TableCell>{t('editor.institution.channel_claims.channel_owner')}</TableCell>
-            <TableCell>{t('editor.institution.channel_claims.publishing_access')}</TableCell>
-            <TableCell>{t('editor.institution.channel_claims.editing_access')}</TableCell>
-            <TableCell>{t('editor.institution.channel_claims.category_limitations')}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {claimedChannels.map((channel) => (
-            <ChannelClaimTableRow claimedChannel={channel} key={channel.id} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Table>
+      <TableHead>
+        <TableRow sx={{ bgcolor: 'secondary.main' }}>
+          <TableCell>{t('common.publisher')}</TableCell>
+          <TableCell>{t('editor.institution.channel_claims.channel_owner')}</TableCell>
+          <TableCell>{t('editor.institution.channel_claims.publishing_access')}</TableCell>
+          <TableCell>{t('editor.institution.channel_claims.editing_access')}</TableCell>
+          <TableCell>{t('editor.institution.channel_claims.category_limitations')}</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {claimedChannels.map((channel) => (
+          <ChannelClaimTableRow claimedChannel={channel} key={channel.id} />
+        ))}
+      </TableBody>
+    </Table>
   );
 };
