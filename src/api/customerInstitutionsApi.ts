@@ -72,7 +72,7 @@ export const setChannelClaim = async (customerId: string, data: ClaimChannelPayl
     data,
   });
 
-interface ClaimedChannelList {
+export interface ClaimedChannelList {
   channelClaims: ClaimedChannel[];
 }
 
