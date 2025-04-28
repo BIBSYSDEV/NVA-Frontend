@@ -30,7 +30,7 @@ import { SupportMessagesColumn } from './SupportMessagesColumn';
 export const ticketColor = {
   UnpublishRequest: 'publishingRequest.main',
   PublishingRequest: 'publishingRequest.main',
-  FileApprovalThesis: 'publishingRequest.main',
+  FilesApprovalThesis: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
   Import: 'grey.300',

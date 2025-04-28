@@ -59,7 +59,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
           ? RoleName.PublishingCurator
           : ticket.type === 'DoiRequest'
             ? RoleName.DoiCurator
-            : ticket.type === 'FileApprovalThesis'
+            : ticket.type === 'FilesApprovalThesis'
               ? RoleName.PublishingCurator
               : RoleName.SupportCurator
       }

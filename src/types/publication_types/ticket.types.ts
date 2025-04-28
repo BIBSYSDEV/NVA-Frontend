@@ -27,7 +27,7 @@ export type TicketType =
   | 'DoiRequest'
   | 'GeneralSupportCase'
   | 'PublishingRequest'
-  | 'FileApprovalThesis'
+  | 'FilesApprovalThesis'
   | 'UnpublishRequest';
 export type TicketStatus = 'New' | 'Pending' | 'Closed' | 'Completed' | 'NotApplicable';
 export const ticketStatusValues: TicketStatus[] = ['New', 'Pending', 'Closed', 'Completed'];

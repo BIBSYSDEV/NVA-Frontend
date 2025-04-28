@@ -148,7 +148,7 @@ const commonTaskNotificationsParams: FetchTicketsParams = {
 export const getTaskNotificationsParams = (user: User | null): FetchTicketsParams => {
   const typeParam = [
     user?.isPublishingCurator && ('PublishingRequest' satisfies TicketType),
-    user?.isThesisCurator && ('FileApprovalThesis' satisfies TicketType),
+    user?.isThesisCurator && ('FilesApprovalThesis' satisfies TicketType),
     user?.isDoiCurator && ('DoiRequest' satisfies TicketType),
     user?.isSupportCurator && ('GeneralSupportCase' satisfies TicketType),
   ]

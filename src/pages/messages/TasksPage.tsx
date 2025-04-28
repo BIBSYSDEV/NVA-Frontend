@@ -70,7 +70,7 @@ const TasksPage = () => {
     doiRequest: isDoiCurator,
     generalSupportCase: isSupportCurator,
     publishingRequest: isPublishingCurator,
-    fileApprovalThesis: isThesisCurator,
+    filesApprovalThesis: isThesisCurator,
   });
 
   const selectedTicketTypes = Object.entries(ticketTypes)
@@ -118,7 +118,7 @@ const TasksPage = () => {
     (notification) => notification.key === 'PublishingRequest'
   )?.count;
   const thesisPublishingNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
-    (notification) => notification.key === 'FileApprovalThesis'
+    (notification) => notification.key === 'FilesApprovalThesis'
   )?.count;
   const supportNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
     (notification) => notification.key === 'GeneralSupportCase'
@@ -127,7 +127,7 @@ const TasksPage = () => {
   const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
   const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
   const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
-  const thesisPublishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'FileApprovalThesis')?.count;
+  const thesisPublishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'FilesApprovalThesis')?.count;
   const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   return (
@@ -180,15 +180,15 @@ const TasksPage = () => {
                   data-testid={dataTestId.tasksPage.typeSearch.publishThesisButton}
                   endIcon={<Badge badgeContent={thesisPublishingNotificationsCount} />}
                   showCheckbox
-                  isSelected={ticketTypes.fileApprovalThesis}
+                  isSelected={ticketTypes.filesApprovalThesis}
                   color="publishingRequest"
                   onClick={() => {
-                    setTicketTypes({ ...ticketTypes, fileApprovalThesis: !ticketTypes.fileApprovalThesis });
+                    setTicketTypes({ ...ticketTypes, filesApprovalThesis: !ticketTypes.filesApprovalThesis });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  {ticketTypes.fileApprovalThesis && thesisPublishingRequestCount
-                    ? `${t('my_page.messages.types.FileApprovalThesis')} (${thesisPublishingRequestCount})`
-                    : t('my_page.messages.types.FileApprovalThesis')}
+                  {ticketTypes.filesApprovalThesis && thesisPublishingRequestCount
+                    ? `${t('my_page.messages.types.FilesApprovalThesis')} (${thesisPublishingRequestCount})`
+                    : t('my_page.messages.types.FilesApprovalThesis')}
                 </TicketTypeFilterButton>
               )}
 

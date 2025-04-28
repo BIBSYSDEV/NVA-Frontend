@@ -164,7 +164,7 @@ export const PublishingAccordion = ({
 
   const defaultExpanded = locationState?.selectedTicketType
     ? locationState.selectedTicketType === 'PublishingRequest' ||
-      locationState.selectedTicketType === 'FileApprovalThesis'
+      locationState.selectedTicketType === 'FilesApprovalThesis'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
 
   return (

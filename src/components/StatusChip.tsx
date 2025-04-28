@@ -8,7 +8,7 @@ import { Ticket } from '../types/publication_types/ticket.types';
 
 const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
-  FileApprovalThesis: 'publishingRequest.main',
+  FilesApprovalThesis: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
 };

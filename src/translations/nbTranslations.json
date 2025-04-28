@@ -808,7 +808,7 @@
       },
       "types": {
         "DoiRequest": "DOI",
-        "FileApprovalThesis": "Studentoppgave",
+        "FilesApprovalThesis": "Studentoppgave",
         "GeneralSupportCase": "Kuratorstøtte",
         "PublishingRequest": "Publisering"
       }
