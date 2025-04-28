@@ -15,7 +15,7 @@ import { RequiredDescription } from '../../components/RequiredDescription';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
@@ -80,7 +80,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
-    <NviCandidateContext.Provider
+    <RegistrationFormContext.Provider
       value={{ disableNviCriticalFields, disableChannelClaimsFields: channelClaims.shouldDisableFields }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
@@ -150,6 +150,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         <Typography sx={{ mb: '1rem' }}>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>
-    </NviCandidateContext.Provider>
+    </RegistrationFormContext.Provider>
   ) : null;
 };

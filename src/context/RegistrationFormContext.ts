@@ -1,11 +1,11 @@
 import { createContext } from 'react';
 
-interface NviCandidateContextType {
+interface RegistrationFormContextType {
   disableNviCriticalFields: boolean;
   disableChannelClaimsFields: boolean;
 }
 
-export const NviCandidateContext = createContext<NviCandidateContextType>({
+export const RegistrationFormContext = createContext<RegistrationFormContextType>({
   disableNviCriticalFields: false,
   disableChannelClaimsFields: false,
 });

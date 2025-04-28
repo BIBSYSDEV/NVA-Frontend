@@ -7,7 +7,7 @@ import { ChangeEvent, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDuplicateRegistrationSearch } from '../../api/hooks/useDuplicateRegistrationSearch';
 import { InputContainerBox } from '../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -30,7 +30,7 @@ export const DescriptionPanel = () => {
     identifier: values.identifier,
   });
 
-  const { disableChannelClaimsFields } = useContext(NviCandidateContext);
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   return (
     <InputContainerBox>

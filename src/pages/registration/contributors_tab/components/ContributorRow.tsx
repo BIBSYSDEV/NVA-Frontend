@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ContributorName } from '../../../../components/ContributorName';
 import { SimpleWarning } from '../../../../components/messages/SimpleWarning';
-import { NviCandidateContext } from '../../../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { Contributor, ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { CristinPerson } from '../../../../types/user.types';
@@ -52,7 +52,7 @@ export const ContributorRow = ({
   const [openRemoveContributor, setOpenRemoveContributor] = useState(false);
   const [openVerifyContributor, setOpenVerifyContributor] = useState(false);
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(RegistrationFormContext);
 
   const baseFieldName = `${ContributorFieldNames.Contributors}[${contributorIndex}]`;
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
