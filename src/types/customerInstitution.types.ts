@@ -1,4 +1,4 @@
-import { allPublicationInstanceTypes, DegreeType } from './publicationFieldNames';
+import { allPublicationInstanceTypes } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
 
 export interface SimpleCustomerInstitution {
@@ -159,7 +159,7 @@ export interface ClaimedChannel {
     constraint: {
       publishingPolicy: 'Everyone' | 'OwnerOnly';
       editingPolicy: 'Everyone' | 'OwnerOnly';
-      scope: DegreeType[];
+      scope: PublicationInstanceType[];
     };
   };
 }

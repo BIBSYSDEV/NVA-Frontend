@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useFetchChannelClaim } from '../../api/hooks/useFetchChannelClaim';
 import { RootState } from '../../redux/store';
+import { FileType } from '../../types/associatedArtifact.types';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import { Registration } from '../../types/registration.types';
@@ -22,12 +23,47 @@ export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registra
   const channelId = beta ? getChannelId(registration) : '';
   const channelClaimQuery = useFetchChannelClaim(channelId);
 
+  if (!registration?.entityDescription?.reference?.publicationInstance?.type) {
+    return { isLoading: false, shouldDisableFields: false };
+  }
+
+  // TODO: Return false if no claim
+
   const claimedByOtherInstitution =
     !!channelClaimQuery.data && channelClaimQuery.data.claimedBy.organizationId !== user?.topOrgCristinId;
 
-  // TOOO: Check if channel claims this category for another institution
-  // TODO: Check if user has curator roles that overrides the channel claim
-  // TODO: Return shouldDisableFields = true if fields should be disabled due to channel claims
+  if (!claimedByOtherInstitution) {
+    return { isLoading: false, shouldDisableFields: false };
+  }
+
+  const claimedForThisCategory = channelClaimQuery.data.channelClaim.constraint.scope.includes(
+    registration.entityDescription.reference.publicationInstance.type
+  );
+  if (!claimedForThisCategory) {
+    return { isLoading: false, shouldDisableFields: false };
+  }
+
+  const isThesisCurator =
+    isDegree(registration.entityDescription.reference.publicationInstance.type) &&
+    user?.isThesisCurator &&
+    registration.allowedOperations?.includes('update'); // TODO: All returns should consider this?
+
+  if (isThesisCurator && registration.associatedArtifacts.some((artifact) => artifact.type !== FileType.OpenFile)) {
+    return { isLoading: false, shouldDisableFields: false };
+  }
+
+  if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'Everyone') {
+    return { isLoading: false, shouldDisableFields: registration.allowedOperations?.includes('update') };
+  }
+
+  if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'OwnerOnly') {
+    return {
+      isLoading: false,
+      shouldDisableFields: user?.topOrgCristinId === channelClaimQuery.data.claimedBy.organizationId,
+    };
+  }
+
+  // TODO: Check if user has curator roles that overrides the channel claim?
 
   return { isLoading: channelClaimQuery.isFetching, shouldDisableFields: claimedByOtherInstitution };
 };
