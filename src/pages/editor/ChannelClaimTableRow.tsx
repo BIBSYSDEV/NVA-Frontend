@@ -5,6 +5,7 @@ import { useFetchPublisher } from '../../api/hooks/useFetchPublisher';
 import { StatusChip } from '../../components/StatusChip';
 import { ClaimedChannel } from '../../types/customerInstitution.types';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { ChannelPolicy } from '../../api/customerInstitutionsApi';
 
 interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
@@ -21,8 +22,8 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
   const organizationQuery = useFetchOrganization(claimedChannel.claimedBy.organizationId);
   const organizationName = getLanguageString(organizationQuery.data?.labels);
 
-  const publishingPolicy = claimedChannel.channelClaim.constraint.publishingPolicy;
-  const editingPolicy = claimedChannel.channelClaim.constraint.editingPolicy;
+  const publishingPolicy = claimedChannel.channelClaim.constraint.publishingPolicy as ChannelPolicy;
+  const editingPolicy = claimedChannel.channelClaim.constraint.editingPolicy as ChannelPolicy;
 
   return (
     <TableRow sx={{ bgcolor: 'white' }}>
@@ -30,7 +31,7 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
         {publisherQuery.isPending ? (
           <Skeleton width={300} />
         ) : publisherName ? (
-          publisherName
+          <Typography>{publisherName}</Typography>
         ) : (
           <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>
         )}
