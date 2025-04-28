@@ -29,6 +29,7 @@ import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../compone
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
+import { TicketType } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -86,7 +87,9 @@ const MyPagePage = () => {
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as SortOrder | null,
     status: searchParams.get(TicketSearchParam.Status),
     viewedByNot: searchParams.get(TicketSearchParam.ViewedByNot),
-    type: selectedTypesArray.join(','),
+    type: selectedTypes.publishingRequest
+      ? [...selectedTypesArray, 'FilesApprovalThesis' satisfies TicketType].join(',')
+      : selectedTypesArray.join(','),
     publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
 
@@ -110,18 +113,22 @@ const MyPagePage = () => {
   const unreadDoiCount = notificationsQuery.data?.aggregations?.type?.find(
     (bucket) => bucket.key === 'DoiRequest'
   )?.count;
-  const unreadPublishingCount = notificationsQuery.data?.aggregations?.type?.find(
-    (bucket) => bucket.key === 'PublishingRequest' || bucket.key === 'FilesApprovalThesis'
-  )?.count;
+  const unreadPublishingCount =
+    notificationsQuery.data?.aggregations?.type?.find((bucket) => bucket.key === 'PublishingRequest')?.count ?? 0;
+  const unreadThesisPublishingCount =
+    notificationsQuery.data?.aggregations?.type?.find((bucket) => bucket.key === 'FilesApprovalThesis')?.count ?? 0;
+  const allUnreadPublishingCount = unreadPublishingCount + unreadThesisPublishingCount;
+
   const unreadGeneralSupportCount = notificationsQuery.data?.aggregations?.type?.find(
     (bucket) => bucket.key === 'GeneralSupportCase'
   )?.count;
 
   const typeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
   const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
-  const publishingRequestCount = typeBuckets.find(
-    (bucket) => bucket.key === 'PublishingRequest' || bucket.key === 'FilesApprovalThesis'
-  )?.count;
+  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count ?? 0;
+  const thesisPublishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'FilesApprovalThesis')?.count ?? 0;
+  const allPublishingRequestCount = publishingRequestCount + thesisPublishingRequestCount;
+
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
@@ -211,7 +218,7 @@ const MyPagePage = () => {
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               <TicketTypeFilterButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
-                endIcon={<Badge badgeContent={unreadPublishingCount} />}
+                endIcon={<Badge badgeContent={allUnreadPublishingCount} />}
                 showCheckbox
                 isSelected={selectedTypes.publishingRequest}
                 color="publishingRequest"
@@ -219,8 +226,8 @@ const MyPagePage = () => {
                   setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest });
                   resetPaginationAndNavigate(searchParams, navigate);
                 }}>
-                {selectedTypes.publishingRequest && publishingRequestCount
-                  ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
+                {selectedTypes.publishingRequest && allPublishingRequestCount
+                  ? `${t('my_page.messages.types.PublishingRequest')} (${allPublishingRequestCount})`
                   : t('my_page.messages.types.PublishingRequest')}
               </TicketTypeFilterButton>
 
