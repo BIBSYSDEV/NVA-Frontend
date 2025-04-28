@@ -24,7 +24,7 @@ export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClai
           <TableCell>{t('editor.institution.channel_claims.channel_owner')}</TableCell>
           <TableCell>{t('editor.institution.channel_claims.publishing_access')}</TableCell>
           <TableCell>{t('editor.institution.channel_claims.editing_access')}</TableCell>
-          <TableCell>{t('editor.institution.channel_claims.category_limitations')}</TableCell>
+          <TableCell width="20%">{t('editor.institution.channel_claims.category_limitations')}</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
