@@ -51,7 +51,7 @@ export const PublisherOwnershipSettings = () => {
       </Trans>
       <AddChannelClaimDialog open={openAddChannelClaimDialog} closeDialog={toggleAddChannelClaimDialog} />
 
-      <TableContainer aria-live="polite" sx={{ mt: '1rem' }}>
+      <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
         {channelClaimsQuery.isPending ? (
           <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
         ) : channelClaimList && channelClaimList.length > 0 ? (

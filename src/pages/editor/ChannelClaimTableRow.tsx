@@ -26,7 +26,7 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
 
   return (
     <TableRow sx={{ bgcolor: 'white' }}>
-      <StyledTableCell aria-live="polite">
+      <StyledTableCell aria-live="polite" aria-busy={publisherQuery.isPending}>
         {publisherQuery.isPending ? (
           <Skeleton width={300} />
         ) : publisherName ? (
@@ -35,7 +35,7 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
           <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>
         )}
       </StyledTableCell>
-      <StyledTableCell aria-live="polite">
+      <StyledTableCell aria-live="polite" aria-busy={organizationQuery.isPending}>
         {organizationQuery.isPending ? (
           <Skeleton width={300} />
         ) : organizationName ? (
