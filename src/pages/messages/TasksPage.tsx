@@ -178,7 +178,7 @@ const TasksPage = () => {
 
               {isThesisCurator && (
                 <TicketTypeFilterButton
-                  data-testid={dataTestId.tasksPage.typeSearch.publishThesisButton}
+                  data-testid={dataTestId.tasksPage.typeSearch.thesisPublishingRequestsButton}
                   endIcon={<Badge badgeContent={thesisPublishingNotificationsCount} />}
                   showCheckbox
                   isSelected={!!ticketTypes.filesApprovalThesis}
