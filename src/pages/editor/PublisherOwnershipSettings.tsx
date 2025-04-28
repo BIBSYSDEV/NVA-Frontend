@@ -51,15 +51,13 @@ export const PublisherOwnershipSettings = () => {
       </Trans>
       <AddChannelClaimDialog open={openAddChannelClaimDialog} closeDialog={toggleAddChannelClaimDialog} />
 
-      {channelClaimsQuery.isPending ? (
-        <PageSpinner aria-label={t('editor.institution.channel_claims.channel_owner')} />
-      ) : (
-        <TableContainer aria-live="polite" sx={{ mt: '1rem' }}>
-          {channelClaimList && channelClaimList.length > 0 && (
-            <ChannelClaimTable channelClaimList={channelClaimList} channelType={PublicationChannelType.Publisher} />
-          )}
-        </TableContainer>
-      )}
+      <TableContainer aria-live="polite" sx={{ mt: '1rem' }}>
+        {channelClaimsQuery.isPending ? (
+          <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
+        ) : channelClaimList && channelClaimList.length > 0 ? (
+          <ChannelClaimTable channelClaimList={channelClaimList} channelType={PublicationChannelType.Publisher} />
+        ) : null}
+      </TableContainer>
     </>
   );
 };

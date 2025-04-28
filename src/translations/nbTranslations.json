@@ -456,6 +456,7 @@
         "administer_publisher_channel_claim_description": "<p>På denne siden kan du administrere eierskap for utgivere som tilhører din institusjon.</p><p>Eierskap settes av institusjonen, så kontakt kanaleier ved feilregistrering.</p><button/><p>Eierskap styrer hvilken institusjon som mottar publiseringsforespørselen, uavhengig av registratorens tilhørighet.</p><p>Kanaleier bestemmer om brukere fra andre institusjoner kan registrere resultater med utgiver.</p>",
         "administer_publisher_channel_ownership": "Administrer eierskap for utgivere",
         "category_limitations": "Begrensning for kategori",
+        "channel_claim": "Kanaleierskap",
         "channel_owner": "Kanaleier",
         "claim_category_restriction": "Kategorier som begrensningen skal gjelde for",
         "editing_access": "Tilgang til å redigere",
