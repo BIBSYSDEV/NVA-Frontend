@@ -54,7 +54,7 @@ export const fetchVocabulary = async (customerId: string) => {
   return getVocabulary.data;
 };
 
-type ChannelPolicy = 'OwnerOnly' | 'Everyone';
+export type ChannelPolicy = 'OwnerOnly' | 'Everyone';
 
 interface ClaimChannelPayload {
   channel: string;
