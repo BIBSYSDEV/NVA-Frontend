@@ -47,7 +47,7 @@ export const ActionPanel = ({
 
   const canCreatePublishingTicket = userHasAccessRight(registration, 'publishing-request-create');
   const canApprovePublishingTicket =
-    publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'publishing-request-approve');
+    publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'approve-files');
   const hasOtherPublishingRights =
     userHasAccessRight(registration, 'unpublish') ||
     userHasAccessRight(registration, 'republish') ||

@@ -90,7 +90,7 @@ export const PublishingAccordion = ({
   );
 
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
-  const userCanApprovePublishingRequest = userHasAccessRight(registration, 'publishing-request-approve'); // TODO: This should be handled by allowedOperations (NP-48995)
+  const userCanApprovePublishingRequest = userHasAccessRight(registration, 'approve-files');
   const userCanHandlePublishingRequest = userCanCreatePublishingRequest || userCanApprovePublishingRequest;
 
   const formErrors = validateRegistrationForm(registration);
