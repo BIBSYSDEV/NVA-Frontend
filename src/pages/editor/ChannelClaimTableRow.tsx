@@ -15,7 +15,11 @@ const StyledTableCell = styled(TableCell)({
 });
 
 const StyledChip = styled(Chip)({
-  textWrap: 'nowrap',
+  '.MuiChip-label': {
+    whiteSpace: 'nowrap',
+  },
+  variant: 'filled',
+  color: 'secondary',
 });
 
 export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowProps) => {
@@ -63,9 +67,8 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
         />
       </StyledTableCell>
       <StyledTableCell>
-        <Chip
+        <StyledChip
           size="small"
-          component="div"
           sx={{
             bgcolor: editingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main',
           }}
