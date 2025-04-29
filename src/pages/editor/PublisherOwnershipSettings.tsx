@@ -5,11 +5,11 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { fetchClaimedChannels } from '../../api/customerInstitutionsApi';
+import { PageSpinner } from '../../components/PageSpinner';
 import { PublicationChannelType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimTable } from './ChannelClaimTable';
-import { PageSpinner } from '../../components/PageSpinner';
 
 export const PublisherOwnershipSettings = () => {
   const { t } = useTranslation();
@@ -49,7 +49,11 @@ export const PublisherOwnershipSettings = () => {
         }}>
         <Typography />
       </Trans>
-      <AddChannelClaimDialog open={openAddChannelClaimDialog} closeDialog={toggleAddChannelClaimDialog} />
+      <AddChannelClaimDialog
+        open={openAddChannelClaimDialog}
+        closeDialog={toggleAddChannelClaimDialog}
+        refetchClaimedChannels={channelClaimsQuery.refetch}
+      />
 
       <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
         {channelClaimsQuery.isPending ? (
