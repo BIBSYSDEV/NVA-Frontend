@@ -155,6 +155,7 @@ export const dataTestId = {
     resultsPortfolioDeletedCheckbox: 'results-portfolio-deleted-checkbox',
     resultsPortfolioPublishedCheckbox: 'results-portfolio-published-checkbox',
     resultsPortfolioUnpublishedCheckbox: 'results-portfolio-unpublished-checkbox',
+    seriesClaimButton: 'series-claim-button',
     settingsAccordion: 'settings-accordion',
     vocabularyLinkButton: 'vocabulary-link-button',
     vocabularyOverviewLinkButton: 'vocabulary-overview-link-button',

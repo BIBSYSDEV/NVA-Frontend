@@ -32,6 +32,7 @@ import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNaviga
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
 import { OrganizationCurators } from './curators/OrganizationCurators';
+import { SeriesOwnershipSettings } from './SeriesOwnershipSettings';
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
@@ -154,6 +155,12 @@ const InstitutionPage = () => {
                     to={UrlPathTemplate.InstitutionPublisherClaims}>
                     {t('editor.institution.channel_claims.administer_publisher_channel_claim')}
                   </SelectableButton>
+                  <SelectableButton
+                    isSelected={currentPath === UrlPathTemplate.InstitutionSeriesClaims}
+                    data-testid={dataTestId.editor.seriesClaimButton}
+                    to={UrlPathTemplate.InstitutionSeriesClaims}>
+                    {t('editor.institution.channel_claims.administer_series_channel_claim')}
+                  </SelectableButton>
                 </BetaFunctionality>
               </NavigationList>
             </NavigationListAccordion>
@@ -249,6 +256,11 @@ const InstitutionPage = () => {
           <Route
             path={getSubUrl(UrlPathTemplate.InstitutionPublisherClaims, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<PublisherOwnershipSettings />} isAuthorized={isEditor} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionSeriesClaims, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<SeriesOwnershipSettings />} isAuthorized={isEditor} />}
           />
 
           <Route

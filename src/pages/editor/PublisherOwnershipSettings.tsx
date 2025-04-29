@@ -46,9 +46,8 @@ export const PublisherOwnershipSettings = () => {
               {t('editor.institution.channel_claims.add_publisher_channel_claim')}
             </Button>
           ),
-        }}>
-        <Typography />
-      </Trans>
+        }}
+      />
       <AddChannelClaimDialog
         open={openAddChannelClaimDialog}
         closeDialog={toggleAddChannelClaimDialog}
