@@ -18,8 +18,6 @@ const StyledChip = styled(Chip)({
   '.MuiChip-label': {
     whiteSpace: 'nowrap',
   },
-  variant: 'filled',
-  color: 'secondary',
 });
 
 export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowProps) => {
@@ -56,6 +54,8 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
       </StyledTableCell>
       <StyledTableCell>
         <StyledChip
+          variant="filled"
+          color="secondary"
           size="small"
           sx={{
             bgcolor: publishingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main',
@@ -68,6 +68,8 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
       </StyledTableCell>
       <StyledTableCell>
         <StyledChip
+          variant="filled"
+          color="secondary"
           size="small"
           sx={{
             bgcolor: editingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main',
