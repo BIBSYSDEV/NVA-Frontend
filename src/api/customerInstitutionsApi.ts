@@ -76,9 +76,9 @@ interface ClaimedChannelList {
   channelClaims: ClaimedChannel[];
 }
 
-export const fetchClaimedChannels = async (signal: AbortSignal) => {
+export const fetchClaimedChannels = async (signal: AbortSignal, channelType: 'publisher' | 'serial-publication') => {
   const getClaimedChannels = await authenticatedApiRequest2<ClaimedChannelList>({
-    url: CustomerInstitutionApiPath.ChannelClaims,
+    url: `${CustomerInstitutionApiPath.ChannelClaims}?channelType=${channelType}`,
     method: 'GET',
     signal,
   });
