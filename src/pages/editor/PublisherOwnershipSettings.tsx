@@ -48,7 +48,12 @@ export const PublisherOwnershipSettings = () => {
         }}>
         <Typography />
       </Trans>
-      <AddChannelClaimDialog open={openAddChannelClaimDialog} closeDialog={toggleAddChannelClaimDialog} />
+      <AddChannelClaimDialog
+        open={openAddChannelClaimDialog}
+        closeDialog={toggleAddChannelClaimDialog}
+        refetchClaimedChannels={channelClaimsQuery.refetch}
+      />
+
       {channelClaimList && channelClaimList.length > 0 && (
         <ChannelClaimTable channelClaimList={channelClaimList} channelType={PublicationChannelType.Publisher} />
       )}
