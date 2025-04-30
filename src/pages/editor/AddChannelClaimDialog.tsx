@@ -86,7 +86,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog, refetchClaimedChannel
         }}>
         <DialogContent>
           <Trans
-            i18nKey="editor.institution.channel_claims.add_publisher_claim_description"
+            i18nKey="editor.institution.channel_claims.add_publisher_channel_claim_description"
             components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
           />
 

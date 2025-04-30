@@ -11,7 +11,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimTable } from './ChannelClaimTable';
 
-export const PublisherOwnershipSettings = () => {
+export const PublisherClaimsSettings = () => {
   const { t } = useTranslation();
 
   const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);
@@ -46,9 +46,8 @@ export const PublisherOwnershipSettings = () => {
               {t('editor.institution.channel_claims.add_publisher_channel_claim')}
             </Button>
           ),
-        }}>
-        <Typography />
-      </Trans>
+        }}
+      />
       <AddChannelClaimDialog
         open={openAddChannelClaimDialog}
         closeDialog={toggleAddChannelClaimDialog}
