@@ -10,6 +10,7 @@ module.exports = {
     'basic_data.institutions.sector_values.',
     'disciplines.',
     'editor.curators.role.',
+    `editor.institution.channel_claims.access_policies.`,
     'health_project_types.',
     'licenses.labels.',
     'my_page.messages.ticket_types.',

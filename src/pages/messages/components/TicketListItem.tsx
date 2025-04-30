@@ -9,11 +9,16 @@ import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
-import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
+import {
+  ExpandedPublishingTicket,
+  ExpandedTicket,
+  TicketTypeColor,
+} from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration, RegistrationStatus } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
 import { getInitials } from '../../../utils/general-helpers';
 import { convertToRegistrationSearchItem } from '../../../utils/registration-helpers';
+import { isFileApprovalTicket } from '../../../utils/ticketHelpers';
 import {
   doNotRedirectQueryParam,
   getMyMessagesRegistrationPath,
@@ -29,10 +34,10 @@ import { SupportMessagesColumn } from './SupportMessagesColumn';
 export const ticketColor = {
   UnpublishRequest: 'publishingRequest.main',
   PublishingRequest: 'publishingRequest.main',
+  FilesApprovalThesis: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
-  Import: 'grey.300',
-};
+} satisfies TicketTypeColor;
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;
@@ -111,7 +116,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             gridTemplateColumns: { xs: '1fr', sm: '10fr 4fr 2fr 2fr 1fr' },
           }}>
           <RegistrationListItemContent registration={convertToRegistrationSearchItem(registrationCopy)} ticketView />
-          {ticket.type === 'PublishingRequest' ? (
+          {isFileApprovalTicket(ticket) ? (
             <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
           ) : ticket.type === 'DoiRequest' ? (
             <DoiRequestMessagesColumn ticket={ticket} showLastMessage />

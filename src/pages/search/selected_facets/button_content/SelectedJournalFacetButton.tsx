@@ -12,7 +12,7 @@ export const SelectedJournalFacetButton = ({ journalIdentifier }: SelectedJourna
 
   const journalQuery = useQuery({
     queryKey: [journalIdentifier],
-    queryFn: () => (journalIdentifier ? fetchSerialPublication(journalIdentifier) : undefined),
+    queryFn: () => (journalIdentifier ? fetchSerialPublication(journalIdentifier) : null),
     staleTime: Infinity,
     gcTime: 1_800_000,
     meta: { errorMessage: t('feedback.error.get_journal') },

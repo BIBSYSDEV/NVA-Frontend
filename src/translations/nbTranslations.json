@@ -330,10 +330,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -405,7 +401,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -445,6 +445,26 @@
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
       "change_institution_support": "Endre brukerstøttepunkt",
+      "channel_claims": {
+        "access_policies": {
+          "Everyone": "Alle institusjoner",
+          "OwnerOnly": "Kun utgiverinstitusjon"
+        },
+        "add_publisher_channel_claim": "Sett eierskap til utgiver",
+        "add_publisher_channel_claim_description": "<p>Sett eierskap til utgiver som tilhører din institusjon.</p><p>Din institusjon vil bli oppgitt som ansvarlig for resultat og kan få spørsmål via brukerstøttepunkt som angitt på institusjonens brukerstøtte.</p><p>Med å sette eierskap på utgiver så sendes publiseringsforespørsel til din institusjon uavhengig av om registrator tilhører en annen institusjon.</p>",
+        "add_serial_publication_channel_claim": "Sett eierskap for serie/tidsskrift",
+        "administer_publisher_channel_claim": "Administrer eierskap for utgivere",
+        "administer_publisher_channel_claim_description": "<p>På denne siden kan du administrere eierskap for utgivere som tilhører din institusjon.</p><p>Eierskap settes av institusjonen, så kontakt kanaleier ved feilregistrering.</p><button/><p>Eierskap styrer hvilken institusjon som mottar publiseringsforespørselen, uavhengig av registratorens tilhørighet.</p><p>Kanaleier bestemmer om brukere fra andre institusjoner kan registrere resultater med utgiver.</p>",
+        "administer_serial_publication_channel_claim": "Administrer eierskap for serie/tidsskrift",
+        "administer_serial_publication_channel_claim_description": "<p>På denne siden kan du administrere eierskap for serie/tidsskrift som tilhører din institusjon.</p><p>Eierskap settes av institusjonen, så kontakt kanaleier ved feilregistrering.</p><button/><p>Eierskap styrer hvilken institusjon som mottar publiseringsforespørselen, uavhengig av registratorens tilhørighet.</p><p>Kanaleier bestemmer om brukere fra andre institusjoner kan registrere resultater med serie/tidsskrift.</p>",
+        "category_limitations": "Begrensning for kategori",
+        "channel_claim": "Kanaleierskap",
+        "channel_owner": "Kanaleier",
+        "claim_category_restriction": "Kategorier som begrensningen skal gjelde for",
+        "editing_access": "Tilgang til å redigere",
+        "publishing_access": "Tilgang til å publisere",
+        "set_channel_claim": "Sett eierskap"
+      },
       "institution_admin_one": "Institusjonens administrator",
       "institution_admin_other": "Institusjonens administratorer",
       "institution_code": "Kode",
@@ -530,6 +550,7 @@
       "fetch": "Kunne ikke hente {{resource}}",
       "fetch_log": "Kunne ikke hente logg",
       "get_affiliation_name": "Kunne ikke hente navn på tilknytning for {{unitUri}}",
+      "get_channel_claim": "Kunne ikke hente kanaleierskap",
       "get_curators_for_institution": "Kunne ikke hente kuratorer",
       "get_customer": "Kunne ikke hente kundeinstitusjon",
       "get_customers": "Kunne ikke hente kundeinstitusjoner",
@@ -574,6 +595,7 @@
       "reserve_doi": "Reservasjon av DOI feilet",
       "search": "Søk feilet",
       "send_message": "Kunne ikke sende melding",
+      "set_channel_claim": "Kunne ikke sette kanaleierskap",
       "storing_orcid_credentials": "Kunne ikke lagre orcid-data",
       "update_customer": "Kunne ikke oppdatere institusjon",
       "update_doi_agent": "Kunne ikke oppdatere DOI-konfigurasjon",
@@ -623,6 +645,7 @@
       "removed_role": "Rollen ble fjernet",
       "reserve_doi": "DOI er reservert",
       "send_message": "Melding sendt",
+      "set_channel_claim": "Kanaleierskap ble oppdatert",
       "update_customer": "Institusjon er oppdatert",
       "update_institution_user": "Bruker er oppdatert",
       "update_nvi_period": "NVI-perioden ble oppdatert",
@@ -793,6 +816,7 @@
       },
       "types": {
         "DoiRequest": "DOI",
+        "FilesApprovalThesis": "Studentoppgave",
         "GeneralSupportCase": "Kuratorstøtte",
         "PublishingRequest": "Publisering"
       }

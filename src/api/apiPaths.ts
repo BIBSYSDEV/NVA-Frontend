@@ -1,4 +1,5 @@
 export enum CustomerInstitutionApiPath {
+  ChannelClaims = '/customer/channel-claims',
   Customer = '/customer',
 }
 
