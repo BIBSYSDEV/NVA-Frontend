@@ -19,7 +19,7 @@ export const PublisherOwnershipSettings = () => {
 
   const channelClaimsQuery = useQuery({
     queryKey: ['publisherChannelClaims'],
-    queryFn: ({ signal }) => fetchClaimedChannels(signal, 'publisher'),
+    queryFn: ({ signal }) => fetchClaimedChannels('publisher', signal),
     meta: { errorMessage: t('feedback.error.get_channel_claim') },
   });
 
