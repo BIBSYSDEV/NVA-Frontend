@@ -29,10 +29,10 @@ import { PublishStrategySettings } from './PublishStrategySettings';
 import { PublisherClaimsSettings } from './PublisherClaimsSettings';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
+import { SerialPublicationClaimsSettings } from './SerialPublicationClaimsSettings';
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
 import { OrganizationCurators } from './curators/OrganizationCurators';
-import { SerialPublicationClaimsSettings } from './SerialPublicationClaimsSettings';
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
@@ -157,7 +157,7 @@ const InstitutionPage = () => {
                   </SelectableButton>
                   <SelectableButton
                     isSelected={currentPath === UrlPathTemplate.InstitutionSerialPublicationClaims}
-                    data-testid={dataTestId.editor.seriesClaimButton}
+                    data-testid={dataTestId.editor.serialPublicationClaimButton}
                     to={UrlPathTemplate.InstitutionSerialPublicationClaims}>
                     {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
                   </SelectableButton>
