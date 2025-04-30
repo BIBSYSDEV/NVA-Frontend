@@ -721,18 +721,16 @@ export const getDisabledCategories = (
 ) => {
   const disabledCategories: DisabledCategory[] = [];
 
-  if (!user?.isThesisCurator) {
-    Object.values(DegreeType).forEach((type) => {
-      disabledCategories.push({ type, text: t('registration.resource_type.protected_degree_type') });
-    });
-  }
-
   if (!hasCuratorRole(user)) {
-    const hasOpenFiles = registration.associatedArtifacts.some(
+    const hasOpenableFiles = registration.associatedArtifacts.some(
       (artifact) => isOpenFile(artifact) || isPendingOpenFile(artifact)
     );
 
-    if (hasOpenFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
+    if (
+      hasOpenableFiles &&
+      customer &&
+      customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length
+    ) {
       const categoriesWithoutFileSupport = allPublicationInstanceTypes
         .filter((type) => !customer.allowFileUploadForTypes.includes(type))
         .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
