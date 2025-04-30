@@ -816,6 +816,7 @@
       },
       "types": {
         "DoiRequest": "DOI",
+        "FilesApprovalThesis": "Studentoppgave",
         "GeneralSupportCase": "Kuratorstøtte",
         "PublishingRequest": "Publisering"
       }

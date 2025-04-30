@@ -7,6 +7,7 @@ import { LogEntry } from '../../../types/log.types';
 import { Message, PublishingTicket, Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
 import { isSimilarTime } from '../../../utils/general-helpers';
+import { isFileApprovalTicket } from '../../../utils/ticketHelpers';
 import { ArchivedFilesLogInfo } from './ArchivedFilesLogInfo';
 import { LogEntryItem } from './LogEntryItem';
 
@@ -53,9 +54,7 @@ const getLogEntryMessages = (logEntry: LogEntry, tickets: Ticket[]): Message[] =
   );
 
   if (logEntry.topic === 'FileApproved' || logEntry.topic === 'FileRejected') {
-    const publishingTickets = ticketsWithinSimilarTime.filter(
-      (ticket) => ticket.type === 'PublishingRequest'
-    ) as PublishingTicket[];
+    const publishingTickets = ticketsWithinSimilarTime.filter(isFileApprovalTicket) as PublishingTicket[];
     const matchingTicket = publishingTickets.find((ticket) =>
       [...ticket.filesForApproval, ...ticket.approvedFiles].some(
         (file) => file.identifier === logEntry.fileIdentifier && file.type === logEntry.fileType

@@ -773,6 +773,7 @@ export const dataTestId = {
       doiButton: 'doi-button',
       publishingButton: 'publishing-request-button',
       supportButton: 'support-button',
+      thesisPublishingRequestsButton: 'thesis-publishing-requests-button',
     },
     unreadSearchSelect: 'unread-search-select',
     userDialogAccordion: 'user-dialog-accordion',

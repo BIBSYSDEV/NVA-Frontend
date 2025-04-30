@@ -90,7 +90,7 @@ export const PublishingAccordion = ({
   );
 
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
-  const userCanApprovePublishingRequest = userHasAccessRight(registration, 'publishing-request-approve');
+  const userCanApprovePublishingRequest = userHasAccessRight(registration, 'approve-files');
   const userCanHandlePublishingRequest = userCanCreatePublishingRequest || userCanApprovePublishingRequest;
 
   const formErrors = validateRegistrationForm(registration);
@@ -163,7 +163,8 @@ export const PublishingAccordion = ({
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
   const defaultExpanded = locationState?.selectedTicketType
-    ? locationState.selectedTicketType === 'PublishingRequest'
+    ? locationState.selectedTicketType === 'PublishingRequest' ||
+      locationState.selectedTicketType === 'FilesApprovalThesis'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
 
   return (
