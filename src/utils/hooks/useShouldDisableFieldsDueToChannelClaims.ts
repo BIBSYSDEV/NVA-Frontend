@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 import { useFetchChannelClaim } from '../../api/hooks/useFetchChannelClaim';
 import { RootState } from '../../redux/store';
-import { FileType } from '../../types/associatedArtifact.types';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import { Registration } from '../../types/registration.types';
 import {
+  getAssociatedFiles,
   isBook,
   isDegree,
   isJournal,
@@ -20,14 +20,22 @@ export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registra
   const user = useSelector((state: RootState) => state.user);
   const beta = useBetaFlag();
 
-  const channelId = beta ? getChannelId(registration) : '';
+  const shouldFetch = beta && registration?.entityDescription?.reference?.publicationInstance?.type;
+
+  const channelId = shouldFetch ? getChannelId(registration) : '';
   const channelClaimQuery = useFetchChannelClaim(channelId);
 
   if (!registration?.entityDescription?.reference?.publicationInstance?.type) {
     return { isLoading: false, shouldDisableFields: false };
   }
 
-  // TODO: Return false if no claim
+  if (!channelClaimQuery.data) {
+    return { isLoading: channelClaimQuery.isFetching, shouldDisableFields: false };
+  }
+
+  if (!getAssociatedFiles(registration.associatedArtifacts).some((file) => file.type === 'OpenFile')) {
+    return { isLoading: false, shouldDisableFields: false };
+  }
 
   const claimedByOtherInstitution =
     !!channelClaimQuery.data && channelClaimQuery.data.claimedBy.organizationId !== user?.topOrgCristinId;
@@ -43,28 +51,27 @@ export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registra
     return { isLoading: false, shouldDisableFields: false };
   }
 
-  const isThesisCurator =
-    isDegree(registration.entityDescription.reference.publicationInstance.type) &&
-    user?.isThesisCurator &&
-    registration.allowedOperations?.includes('update'); // TODO: All returns should consider this?
+  // const isThesisCurator =
+  //   isDegree(registration.entityDescription.reference.publicationInstance.type) &&
+  //   user?.isThesisCurator &&
+  //   registration.allowedOperations?.includes('update'); // TODO: All returns should consider this?
 
-  if (isThesisCurator && registration.associatedArtifacts.some((artifact) => artifact.type !== FileType.OpenFile)) {
-    return { isLoading: false, shouldDisableFields: false };
-  }
+  // if (isThesisCurator && registration.associatedArtifacts.some((artifact) => artifact.type !== FileType.OpenFile)) {
+  //   return { isLoading: false, shouldDisableFields: false };
+  // }
 
-  if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'Everyone') {
-    return { isLoading: false, shouldDisableFields: registration.allowedOperations?.includes('update') };
-  }
+  // if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'Everyone') {
+  //   return { isLoading: false, shouldDisableFields: registration.allowedOperations?.includes('update') };
+  // }
 
-  if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'OwnerOnly') {
-    return {
-      isLoading: false,
-      shouldDisableFields: user?.topOrgCristinId === channelClaimQuery.data.claimedBy.organizationId,
-    };
-  }
+  // if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'OwnerOnly') {
+  //   return {
+  //     isLoading: false,
+  //     shouldDisableFields: user?.topOrgCristinId === channelClaimQuery.data.claimedBy.organizationId,
+  //   };
+  // }
 
   // TODO: Check if user has curator roles that overrides the channel claim?
-
   return { isLoading: channelClaimQuery.isFetching, shouldDisableFields: claimedByOtherInstitution };
 };
 
