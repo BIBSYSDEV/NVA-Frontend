@@ -18,8 +18,8 @@ export const PublisherOwnershipSettings = () => {
   const toggleAddChannelClaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
 
   const channelClaimsQuery = useQuery({
-    queryKey: ['channelClaims'],
-    queryFn: ({ signal }) => fetchClaimedChannels(signal),
+    queryKey: ['publisherChannelClaims'],
+    queryFn: ({ signal }) => fetchClaimedChannels('publisher', signal),
     meta: { errorMessage: t('feedback.error.get_channel_claim') },
   });
 
