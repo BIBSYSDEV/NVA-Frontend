@@ -1,9 +1,9 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Typography } from '@mui/material';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useState } from 'react';
 
 export const SerialPublicationClaimsSettings = () => {
   const { t } = useTranslation();

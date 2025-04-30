@@ -156,9 +156,9 @@ const InstitutionPage = () => {
                     {t('editor.institution.channel_claims.administer_publisher_channel_claim')}
                   </SelectableButton>
                   <SelectableButton
-                    isSelected={currentPath === UrlPathTemplate.InstitutionSeriesClaims}
+                    isSelected={currentPath === UrlPathTemplate.InstitutionSerialPublicationClaims}
                     data-testid={dataTestId.editor.seriesClaimButton}
-                    to={UrlPathTemplate.InstitutionSeriesClaims}>
+                    to={UrlPathTemplate.InstitutionSerialPublicationClaims}>
                     {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
                   </SelectableButton>
                 </BetaFunctionality>
@@ -259,7 +259,7 @@ const InstitutionPage = () => {
           />
 
           <Route
-            path={getSubUrl(UrlPathTemplate.InstitutionSeriesClaims, UrlPathTemplate.Institution)}
+            path={getSubUrl(UrlPathTemplate.InstitutionSerialPublicationClaims, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<SerialPublicationClaimsSettings />} isAuthorized={isEditor} />}
           />
 
