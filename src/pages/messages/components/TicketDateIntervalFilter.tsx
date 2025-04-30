@@ -8,7 +8,6 @@ import { formatDateStringToISO } from '../../../utils/date-helpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
-  views: ['year', 'month', 'day'],
   disableHighlightToday: true,
   slotProps: {
     textField: { sx: { maxWidth: '10rem' }, size: 'small' },
