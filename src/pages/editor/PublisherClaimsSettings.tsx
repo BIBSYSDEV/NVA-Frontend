@@ -1,24 +1,25 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Button, Typography } from '@mui/material';
+import { Button, TableContainer, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { fetchClaimedChannels } from '../../api/customerInstitutionsApi';
+import { PageSpinner } from '../../components/PageSpinner';
 import { PublicationChannelType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimTable } from './ChannelClaimTable';
 
-export const PublisherOwnershipSettings = () => {
+export const PublisherClaimsSettings = () => {
   const { t } = useTranslation();
 
   const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);
   const toggleAddChannelClaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
 
   const channelClaimsQuery = useQuery({
-    queryKey: ['channelClaims'],
-    queryFn: ({ signal }) => fetchClaimedChannels(signal),
+    queryKey: ['publisherChannelClaims'],
+    queryFn: ({ signal }) => fetchClaimedChannels('publisher', signal),
     meta: { errorMessage: t('feedback.error.get_channel_claim') },
   });
 
@@ -45,18 +46,21 @@ export const PublisherOwnershipSettings = () => {
               {t('editor.institution.channel_claims.add_publisher_channel_claim')}
             </Button>
           ),
-        }}>
-        <Typography />
-      </Trans>
+        }}
+      />
       <AddChannelClaimDialog
         open={openAddChannelClaimDialog}
         closeDialog={toggleAddChannelClaimDialog}
         refetchClaimedChannels={channelClaimsQuery.refetch}
       />
 
-      {channelClaimList && channelClaimList.length > 0 && (
-        <ChannelClaimTable channelClaimList={channelClaimList} channelType={PublicationChannelType.Publisher} />
-      )}
+      <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
+        {channelClaimsQuery.isPending ? (
+          <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
+        ) : channelClaimList && channelClaimList.length > 0 ? (
+          <ChannelClaimTable channelClaimList={channelClaimList} channelType={PublicationChannelType.Publisher} />
+        ) : null}
+      </TableContainer>
     </>
   );
 };

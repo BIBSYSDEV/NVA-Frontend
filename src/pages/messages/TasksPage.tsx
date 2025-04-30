@@ -22,6 +22,7 @@ import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefau
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
+import { TicketTypeSelection } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -43,14 +44,16 @@ const TasksPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const locationState = location.state as PreviousSearchLocationState;
+  const navigate = useNavigate();
+
   const user = useSelector((store: RootState) => store.user);
   const isSupportCurator = !!user?.isSupportCurator;
   const isDoiCurator = !!user?.isDoiCurator;
   const isPublishingCurator = !!user?.isPublishingCurator;
-  const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
+  const isThesisCurator = !!user?.isThesisCurator;
+  const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator || isThesisCurator;
   const isNviCurator = !!user?.isNviCurator;
   const isAnyCurator = isTicketCurator || isNviCurator;
-  const navigate = useNavigate();
 
   const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
@@ -64,10 +67,11 @@ const TasksPage = () => {
 
   const searchParams = new URLSearchParams(location.search);
 
-  const [ticketTypes, setTicketTypes] = useState({
+  const [ticketTypes, setTicketTypes] = useState<TicketTypeSelection>({
     doiRequest: isDoiCurator,
     generalSupportCase: isSupportCurator,
     publishingRequest: isPublishingCurator,
+    filesApprovalThesis: isThesisCurator,
   });
 
   const selectedTicketTypes = Object.entries(ticketTypes)
@@ -114,6 +118,9 @@ const TasksPage = () => {
   const publishingNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
     (notification) => notification.key === 'PublishingRequest'
   )?.count;
+  const thesisPublishingNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
+    (notification) => notification.key === 'FilesApprovalThesis'
+  )?.count;
   const supportNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
     (notification) => notification.key === 'GeneralSupportCase'
   )?.count;
@@ -121,6 +128,7 @@ const TasksPage = () => {
   const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
   const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
   const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
+  const thesisPublishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'FilesApprovalThesis')?.count;
   const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   return (
@@ -156,7 +164,7 @@ const TasksPage = () => {
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                   endIcon={<Badge badgeContent={publishingNotificationsCount} />}
                   showCheckbox
-                  isSelected={ticketTypes.publishingRequest}
+                  isSelected={!!ticketTypes.publishingRequest}
                   color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
@@ -168,12 +176,29 @@ const TasksPage = () => {
                 </TicketTypeFilterButton>
               )}
 
+              {isThesisCurator && (
+                <TicketTypeFilterButton
+                  data-testid={dataTestId.tasksPage.typeSearch.thesisPublishingRequestsButton}
+                  endIcon={<Badge badgeContent={thesisPublishingNotificationsCount} />}
+                  showCheckbox
+                  isSelected={!!ticketTypes.filesApprovalThesis}
+                  color="publishingRequest"
+                  onClick={() => {
+                    setTicketTypes({ ...ticketTypes, filesApprovalThesis: !ticketTypes.filesApprovalThesis });
+                    resetPaginationAndNavigate(searchParams, navigate);
+                  }}>
+                  {ticketTypes.filesApprovalThesis && thesisPublishingRequestCount
+                    ? `${t('my_page.messages.types.FilesApprovalThesis')} (${thesisPublishingRequestCount})`
+                    : t('my_page.messages.types.FilesApprovalThesis')}
+                </TicketTypeFilterButton>
+              )}
+
               {isDoiCurator && (
                 <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                   endIcon={<Badge badgeContent={doiNotificationsCount} />}
                   showCheckbox
-                  isSelected={ticketTypes.doiRequest}
+                  isSelected={!!ticketTypes.doiRequest}
                   color="doiRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
@@ -190,7 +215,7 @@ const TasksPage = () => {
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                   endIcon={<Badge badgeContent={supportNotificationsCount} />}
                   showCheckbox
-                  isSelected={ticketTypes.generalSupportCase}
+                  isSelected={!!ticketTypes.generalSupportCase}
                   color="generalSupportCase"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });

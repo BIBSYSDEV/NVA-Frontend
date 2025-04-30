@@ -54,6 +54,12 @@ export const createRegistrationFromDoi = async (doiPreview: Partial<DoiPreview>)
     data: doiPreview,
   });
 
+export const publishRegistration = async (registrationId: string) =>
+  await authenticatedApiRequest2<null>({
+    url: `${registrationId}/publish`,
+    method: 'POST',
+  });
+
 export const deleteRegistration = async (identifier: string) =>
   await authenticatedApiRequest({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
