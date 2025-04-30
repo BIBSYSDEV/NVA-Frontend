@@ -16,7 +16,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
-import { createTicket } from '../../../api/registrationApi';
+import { publishRegistration } from '../../../api/registrationApi';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -107,16 +107,11 @@ export const PublishingAccordion = ({
     publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
     publishingRequestTickets.at(-1);
 
-  const publishRegistration = async () => {
+  const handlePublishRegistration = async () => {
     setIsCreatingPublishingRequest(true);
-    const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
+    const createPublishingRequestTicketResponse = await publishRegistration(registration.id);
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
-      dispatch(
-        setNotification({
-          message: t('feedback.error.publish_registration'),
-          variant: 'error',
-        })
-      );
+      dispatch(setNotification({ message: t('feedback.error.publish_registration'), variant: 'error' }));
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
       const hasFilesWaitingForApproval = registration.associatedArtifacts.some(
         (file) => file.type === FileType.PendingOpenFile || file.type === FileType.PendingInternalFile
@@ -138,7 +133,7 @@ export const PublishingAccordion = ({
   };
 
   const onConfirmNotDuplicate = () => {
-    publishRegistration();
+    handlePublishRegistration();
     toggleDuplicateWarningModal();
   };
 
@@ -288,7 +283,7 @@ export const PublishingAccordion = ({
               variant="contained"
               color="info"
               fullWidth
-              onClick={duplicateRegistration ? toggleDuplicateWarningModal : publishRegistration}
+              onClick={duplicateRegistration ? toggleDuplicateWarningModal : handlePublishRegistration}
               loading={isLoadingData || isCreatingPublishingRequest || titleSearchPending}>
               {t('registration.public_page.tasks_panel.publish_registration')}
             </Button>
