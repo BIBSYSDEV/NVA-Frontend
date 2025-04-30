@@ -1,4 +1,6 @@
-import { Chip, styled, TableCell, TableRow } from '@mui/material';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LockOutlineIcon from '@mui/icons-material/LockOutline';
+import { Chip, Skeleton, styled, TableCell, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { useFetchPublisher } from '../../api/hooks/useFetchPublisher';
@@ -9,8 +11,15 @@ interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
 }
 const StyledTableCell = styled(TableCell)({
-  verticalAllign: 'top',
+  verticalAlign: 'top',
 });
+
+const StyledChip = styled(Chip)({
+  '.MuiChip-label': {
+    whiteSpace: 'nowrap',
+  },
+});
+
 export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowProps) => {
   const { t } = useTranslation();
 
@@ -20,19 +29,58 @@ export const ChannelClaimTableRow = ({ claimedChannel }: ChannelClaimTableRowPro
   const organizationQuery = useFetchOrganization(claimedChannel.claimedBy.organizationId);
   const organizationName = getLanguageString(organizationQuery.data?.labels);
 
+  const publishingPolicy = claimedChannel.channelClaim.constraint.publishingPolicy;
+  const editingPolicy = claimedChannel.channelClaim.constraint.editingPolicy;
+
   return (
-    <TableRow>
-      <StyledTableCell>
-        {publisherName ? publisherName : <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>}
+    <TableRow sx={{ bgcolor: 'white' }}>
+      <StyledTableCell aria-live="polite" aria-busy={publisherQuery.isPending}>
+        {publisherQuery.isPending ? (
+          <Skeleton width={300} />
+        ) : publisherName ? (
+          <Typography>{publisherName}</Typography>
+        ) : (
+          <Typography sx={{ fontStyle: 'italic' }}>{t('common.unknown')}</Typography>
+        )}
+      </StyledTableCell>
+      <StyledTableCell aria-live="polite" aria-busy={organizationQuery.isPending}>
+        {organizationQuery.isPending ? (
+          <Skeleton width={300} />
+        ) : organizationName ? (
+          <Typography>{organizationName}</Typography>
+        ) : (
+          <Typography sx={{ fontStyle: 'italic' }}>{t('common.unknown')}</Typography>
+        )}
       </StyledTableCell>
       <StyledTableCell>
-        {organizationName ? organizationName : <span style={{ fontStyle: 'italic' }}>{t('common.unknown')}</span>}
+        <StyledChip
+          variant="filled"
+          color="secondary"
+          size="small"
+          sx={{
+            bgcolor: publishingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main',
+          }}
+          label={t(`editor.institution.channel_claims.access_policies.${publishingPolicy}`)}
+          icon={
+            publishingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlineIcon fontSize="small" />
+          }
+        />
       </StyledTableCell>
-      <StyledTableCell>{claimedChannel.channelClaim.constraint.publishingPolicy}</StyledTableCell>
-      <StyledTableCell>{claimedChannel.channelClaim.constraint.editingPolicy}</StyledTableCell>
-      <StyledTableCell sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <StyledTableCell>
+        <StyledChip
+          variant="filled"
+          color="secondary"
+          size="small"
+          sx={{
+            bgcolor: editingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main',
+          }}
+          label={t(`editor.institution.channel_claims.access_policies.${editingPolicy}`)}
+          icon={editingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlineIcon fontSize="small" />}
+        />
+      </StyledTableCell>
+      <StyledTableCell sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
         {claimedChannel.channelClaim.constraint.scope.map((scope) => (
-          <Chip key={scope} label={scope} />
+          <Chip key={scope} variant="filled" color="primary" label={t(`registration.publication_types.${scope}`)} />
         ))}
       </StyledTableCell>
     </TableRow>
