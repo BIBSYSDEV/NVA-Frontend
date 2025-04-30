@@ -14,13 +14,13 @@ export const SerialPublicationClaimsSettings = () => {
   return (
     <>
       <Helmet>
-        <title>{t('editor.institution.channel_claims.administer_series_channel_claim')}</title>
+        <title>{t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}</title>
       </Helmet>
       <Typography variant="h1" gutterBottom>
-        {t('editor.institution.channel_claims.administer_series_channel_claim')}
+        {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
       </Typography>
       <Trans
-        i18nKey="editor.institution.channel_claims.administer_series_channel_claim_description"
+        i18nKey="editor.institution.channel_claims.administer_serial_publication_channel_claim_description"
         components={{
           p: <Typography gutterBottom />,
           button: (
@@ -30,7 +30,7 @@ export const SerialPublicationClaimsSettings = () => {
               startIcon={<AddIcon />}
               sx={{ my: '0.5rem', textTransform: 'none' }}
               onClick={toggleAddChannelClaimDialog}>
-              {t('editor.institution.channel_claims.add_publisher_channel_claim')}
+              {t('editor.institution.channel_claims.add_serial_publication_channel_claim')}
             </Button>
           ),
         }}
