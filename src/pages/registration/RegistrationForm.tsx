@@ -20,7 +20,7 @@ import { RootState } from '../../redux/store';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
-import { useShouldDisableFieldsDueToChannelClaims } from '../../utils/hooks/useFetchChannelClaim';
+import { useShouldDisableFieldsDueToChannelClaims } from '../../utils/hooks/useShouldDisableFieldsDueToChannelClaims';
 import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { doNotRedirectQueryParam, UrlPathTemplate } from '../../utils/urlPaths';
