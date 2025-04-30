@@ -26,9 +26,10 @@ const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
 
 interface AddChannelClaimDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
+  refetchClaimedChannels: () => Promise<unknown>;
 }
 
-export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDialogProps) => {
+export const AddChannelClaimDialog = ({ open, closeDialog, refetchClaimedChannels }: AddChannelClaimDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((state: RootState) => state.customer);
@@ -55,8 +56,9 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
       }
       return Promise.reject(new Error('Customer ID or Publisher ID is missing'));
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       dispatch(setNotification({ message: t('feedback.success.set_channel_claim'), variant: 'success' }));
+      await refetchClaimedChannels();
       closeDialogAndResetSelectedChannel();
     },
     onError: (error: AxiosError<{ detail?: string }>) => {
@@ -84,7 +86,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
         }}>
         <DialogContent>
           <Trans
-            i18nKey="editor.institution.channel_claims.add_publisher_claim_description"
+            i18nKey="editor.institution.channel_claims.add_publisher_channel_claim_description"
             components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
           />
 

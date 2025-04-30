@@ -1,3 +1,4 @@
+import { ChannelPolicy } from '../api/customerInstitutionsApi';
 import { allPublicationInstanceTypes } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
 
@@ -157,8 +158,8 @@ export interface ClaimedChannel {
   channelClaim: {
     channel: string;
     constraint: {
-      publishingPolicy: 'Everyone' | 'OwnerOnly';
-      editingPolicy: 'Everyone' | 'OwnerOnly';
+      publishingPolicy: ChannelPolicy;
+      editingPolicy: ChannelPolicy;
       scope: PublicationInstanceType[];
     };
   };

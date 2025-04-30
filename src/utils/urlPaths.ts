@@ -35,6 +35,7 @@ export enum UrlPathTemplate {
   InstitutionCategories = '/institution/settings/categories',
   InstitutionCategoriesOverview = '/institution/overview/categories',
   InstitutionPublisherClaims = '/institution/settings/publisher-claims',
+  InstitutionSerialPublicationClaims = '/institution/settings/serial-publication-claims',
   Login = '/login',
   Logout = '/logout',
   MyPage = '/my-page',
