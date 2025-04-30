@@ -11,7 +11,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimTable } from './ChannelClaimTable';
 
-export const PublisherOwnershipSettings = () => {
+export const PublisherClaimsSettings = () => {
   const { t } = useTranslation();
 
   const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);

@@ -26,13 +26,13 @@ import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PortfolioSearchPage } from './PortfolioSearchPage';
 import { PublishStrategySettings } from './PublishStrategySettings';
-import { PublisherOwnershipSettings } from './PublisherClaimsSettings';
+import { PublisherClaimsSettings } from './PublisherClaimsSettings';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
 import { OrganizationCurators } from './curators/OrganizationCurators';
-import { SeriesOwnershipSettings } from './SerialPublicationClaimsSettings';
+import { SerialPublicationClaimsSettings } from './SerialPublicationClaimsSettings';
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
@@ -255,12 +255,12 @@ const InstitutionPage = () => {
 
           <Route
             path={getSubUrl(UrlPathTemplate.InstitutionPublisherClaims, UrlPathTemplate.Institution)}
-            element={<PrivateRoute element={<PublisherOwnershipSettings />} isAuthorized={isEditor} />}
+            element={<PrivateRoute element={<PublisherClaimsSettings />} isAuthorized={isEditor} />}
           />
 
           <Route
             path={getSubUrl(UrlPathTemplate.InstitutionSeriesClaims, UrlPathTemplate.Institution)}
-            element={<PrivateRoute element={<SeriesOwnershipSettings />} isAuthorized={isEditor} />}
+            element={<PrivateRoute element={<SerialPublicationClaimsSettings />} isAuthorized={isEditor} />}
           />
 
           <Route

@@ -5,7 +5,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useState } from 'react';
 
-export const SeriesOwnershipSettings = () => {
+export const SerialPublicationClaimsSettings = () => {
   const { t } = useTranslation();
 
   const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);
