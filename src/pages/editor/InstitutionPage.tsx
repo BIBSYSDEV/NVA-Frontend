@@ -26,13 +26,13 @@ import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PortfolioSearchPage } from './PortfolioSearchPage';
 import { PublishStrategySettings } from './PublishStrategySettings';
-import { PublisherOwnershipSettings } from './PublisherOwnershipSettings';
+import { PublisherOwnershipSettings } from './PublisherClaimsSettings';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
 import { OrganizationCurators } from './curators/OrganizationCurators';
-import { SeriesOwnershipSettings } from './SeriesOwnershipSettings';
+import { SeriesOwnershipSettings } from './SerialPublicationClaimsSettings';
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
