@@ -220,51 +220,111 @@ export const contributorConfig: ContributorConfig = {
   // Journal
   [JournalType.AcademicArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.AcademicLiteratureReview]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Letter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Review]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Leader]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Corrigendum]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Issue]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.ConferenceAbstract]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.CaseReport]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.StudyProtocol]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.ProfessionalArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.PopularScienceArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   // Book
   [BookType.AcademicMonograph]: {
@@ -382,39 +442,84 @@ export const contributorConfig: ContributorConfig = {
   // Chapter
   [ChapterType.AcademicChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.NonFictionChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.PopularScienceChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.TextbookChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.EncyclopediaChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.Introduction]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ExhibitionCatalogChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ReportChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ConferenceAbstract]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   // Presentation
   [PresentationType.ConferenceLecture]: {
@@ -721,18 +826,32 @@ export const getDisabledCategories = (
 ) => {
   const disabledCategories: DisabledCategory[] = [];
 
-  if (!user?.isThesisCurator) {
-    Object.values(DegreeType).forEach((type) => {
-      disabledCategories.push({ type, text: t('registration.resource_type.protected_degree_type') });
-    });
+  // Do not allow changing from degree to non-degree (and vice-versa) if result has open (approved) files
+  if (registration.associatedArtifacts.some(isOpenFile)) {
+    if (isDegree(registration.entityDescription?.reference?.publicationInstance?.type)) {
+      const nonDegreeTypes = allPublicationInstanceTypes.filter((type) => !isDegree(type));
+      nonDegreeTypes.forEach((type) => {
+        disabledCategories.push({
+          type,
+          text: t('registration.resource_type.cannot_select_non_degree_when_degree_has_open_file'),
+        });
+      });
+    } else {
+      Object.values(DegreeType).forEach((type) => {
+        disabledCategories.push({
+          type,
+          text: t('registration.resource_type.cannot_select_degree_when_non_degree_has_open_file'),
+        });
+      });
+    }
   }
 
-  if (!hasCuratorRole(user)) {
-    const hasOpenFiles = registration.associatedArtifacts.some(
-      (artifact) => isOpenFile(artifact) || isPendingOpenFile(artifact)
-    );
-
-    if (hasOpenFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
+  // Do not allow non-curator to select a category that don't support file upload if result has an open (approved) file
+  if (
+    !hasCuratorRole(user) &&
+    registration.associatedArtifacts.some((artifact) => isOpenFile(artifact) || isPendingOpenFile(artifact))
+  ) {
+    if (customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
       const categoriesWithoutFileSupport = allPublicationInstanceTypes
         .filter((type) => !customer.allowFileUploadForTypes.includes(type))
         .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));

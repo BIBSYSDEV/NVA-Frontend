@@ -164,3 +164,5 @@ export interface ClaimedChannel {
     };
   };
 }
+
+export type ChannelClaimType = 'publisher' | 'serial-publication';

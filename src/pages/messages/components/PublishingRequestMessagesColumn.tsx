@@ -48,7 +48,6 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
               </StyledIconAndTextWrapper>
             </StyledStatusMessageBox>
           )}
-          <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />
         </>
       ) : ticket.status === 'Completed' ? (
         <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
@@ -71,9 +70,9 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
             </StyledIconAndTextWrapper>
             {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>
-          <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />
         </>
       ) : null}
+      <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />
     </StyledMessagesContainer>
   );
 };

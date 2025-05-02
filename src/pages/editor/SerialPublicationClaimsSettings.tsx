@@ -1,15 +1,21 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Button, Typography } from '@mui/material';
+import { Button, TableContainer, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
+import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
+import { PageSpinner } from '../../components/PageSpinner';
 import { dataTestId } from '../../utils/dataTestIds';
+import { ChannelClaimTable } from './ChannelClaimTable';
 
 export const SerialPublicationClaimsSettings = () => {
   const { t } = useTranslation();
 
   const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);
   const toggleAddChannelClaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
+
+  const channelClaimsQuery = useFetchChannelClaims('serial-publication');
+  const channelClaimList = channelClaimsQuery.data?.channelClaims;
 
   return (
     <>
@@ -35,6 +41,14 @@ export const SerialPublicationClaimsSettings = () => {
           ),
         }}
       />
+
+      <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
+        {channelClaimsQuery.isPending ? (
+          <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
+        ) : channelClaimList && channelClaimList.length > 0 ? (
+          <ChannelClaimTable channelClaimList={channelClaimList} channelType={'serial-publication'} />
+        ) : null}
+      </TableContainer>
     </>
   );
 };
