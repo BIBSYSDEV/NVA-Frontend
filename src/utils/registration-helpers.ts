@@ -721,7 +721,7 @@ export const getDisabledCategories = (
 ) => {
   const disabledCategories: DisabledCategory[] = [];
 
-  // Do not allow registrator to change from degree to non-degree (and vice-versa) if result has open (approved) files
+  // Do not allow changing from degree to non-degree (and vice-versa) if result has open (approved) files
   if (registration.associatedArtifacts.some(isOpenFile)) {
     if (isDegree(registration.entityDescription?.reference?.publicationInstance?.type)) {
       const nonDegreeTypes = allPublicationInstanceTypes.filter((type) => !isDegree(type));
