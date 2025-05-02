@@ -8,6 +8,7 @@ import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.t
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { userHasAccessRight } from '../../utils/registration-helpers';
+import { isFileApprovalTicket } from '../../utils/ticketHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
 import { LogPanel } from './log/LogPanel';
@@ -33,9 +34,7 @@ export const ActionPanel = ({
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
 
-  const publishingRequestTickets = tickets.filter(
-    (ticket) => ticket.type === 'PublishingRequest'
-  ) as PublishingTicket[];
+  const publishingRequestTickets = tickets.filter(isFileApprovalTicket) as PublishingTicket[];
   const newestDoiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest');
   const newestSupportTicket = tickets.findLast((ticket) => ticket.type === 'GeneralSupportCase');
 
@@ -48,7 +47,7 @@ export const ActionPanel = ({
 
   const canCreatePublishingTicket = userHasAccessRight(registration, 'publishing-request-create');
   const canApprovePublishingTicket =
-    publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'publishing-request-approve');
+    publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'approve-files');
   const hasOtherPublishingRights =
     userHasAccessRight(registration, 'unpublish') ||
     userHasAccessRight(registration, 'republish') ||

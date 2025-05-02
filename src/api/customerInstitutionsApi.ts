@@ -1,5 +1,12 @@
 import { CancelToken } from 'axios';
-import { CustomerInstitution, DoiAgent, ProtectedDoiAgent, VocabularyList } from '../types/customerInstitution.types';
+import {
+  ClaimedChannel,
+  CustomerInstitution,
+  DoiAgent,
+  ProtectedDoiAgent,
+  VocabularyList,
+} from '../types/customerInstitution.types';
+import { PublicationInstanceType } from '../types/registration.types';
 import { CustomerInstitutionApiPath } from './apiPaths';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
@@ -45,4 +52,36 @@ export const fetchVocabulary = async (customerId: string) => {
   });
 
   return getVocabulary.data;
+};
+
+export type ChannelPolicy = 'OwnerOnly' | 'Everyone';
+
+interface ClaimChannelPayload {
+  channel: string;
+  constraint: {
+    scope: PublicationInstanceType[];
+    publishingPolicy: ChannelPolicy;
+    editingPolicy: ChannelPolicy;
+  };
+}
+
+export const setChannelClaim = async (customerId: string, data: ClaimChannelPayload) =>
+  await authenticatedApiRequest2({
+    url: `${customerId}/channel-claim`,
+    method: 'POST',
+    data,
+  });
+
+interface ClaimedChannelList {
+  channelClaims: ClaimedChannel[];
+}
+
+export const fetchClaimedChannels = async (channelType: 'publisher' | 'serial-publication', signal: AbortSignal) => {
+  const getClaimedChannels = await authenticatedApiRequest2<ClaimedChannelList>({
+    url: CustomerInstitutionApiPath.ChannelClaims,
+    params: { channelType },
+    signal,
+  });
+
+  return getClaimedChannels.data;
 };

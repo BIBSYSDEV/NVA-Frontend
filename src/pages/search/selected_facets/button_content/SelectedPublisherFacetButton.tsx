@@ -12,7 +12,7 @@ export const SelectedPublisherFacetButton = ({ publisherIdentifier }: SelectedPu
 
   const publisherQuery = useQuery({
     queryKey: [publisherIdentifier],
-    queryFn: () => (publisherIdentifier ? fetchPublisher(publisherIdentifier) : undefined),
+    queryFn: () => (publisherIdentifier ? fetchPublisher(publisherIdentifier) : null),
     staleTime: Infinity,
     gcTime: 1_800_000,
     meta: { errorMessage: t('feedback.error.get_publisher') },

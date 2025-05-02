@@ -24,7 +24,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
   const adminsQuery = useQuery({
     queryKey: ['institutionAdmins', customerId],
     enabled: !!customerId,
-    queryFn: () => (customerId ? fetchUsersByCustomer(customerId, RoleName.InstitutionAdmin) : undefined),
+    queryFn: () => (customerId ? fetchUsersByCustomer(customerId, RoleName.InstitutionAdmin) : null),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 

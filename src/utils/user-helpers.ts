@@ -121,6 +121,10 @@ export const userCanDeleteMessage = (user: User, message: Message, ticketType: T
       return true;
     }
 
+    if (user.isThesisCurator && ticketType === 'FilesApprovalThesis') {
+      return true;
+    }
+
     if (user.isDoiCurator && ticketType === 'DoiRequest') {
       return true;
     }

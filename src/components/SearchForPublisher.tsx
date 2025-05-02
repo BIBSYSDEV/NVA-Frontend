@@ -1,22 +1,28 @@
-import { Autocomplete } from '@mui/material';
+import { Autocomplete, AutocompleteProps, Chip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePublisherSearch } from '../../../api/hooks/usePublisherSearch';
-import { defaultChannelSearchSize } from '../../../api/publicationChannelApi';
+import { usePublisherSearch } from '../api/hooks/usePublisherSearch';
+import { defaultChannelSearchSize } from '../api/publicationChannelApi';
+import { PublicationChannelOption } from '../pages/registration/resource_type_tab/components/PublicationChannelOption';
+import { Publisher } from '../types/registration.types';
+import { useDebounce } from '../utils/hooks/useDebounce';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
-} from '../../../components/AutocompleteListboxWithExpansion';
-import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
+} from './AutocompleteListboxWithExpansion';
+import { AutocompleteTextField, AutocompleteTextFieldProps } from './AutocompleteTextField';
 
-interface SearchForPublisherFacetItemProps {
-  onSelectPublisher: (publisherId: string) => void;
+interface SearchForPublisherFacet {
+  onSelectPublisher: (publisher: Publisher | null) => void;
+  autocompleteProps?: Partial<AutocompleteProps<Publisher, false, false, false>>;
+  textFieldProps?: Partial<AutocompleteTextFieldProps>;
 }
 
-export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPublisherFacetItemProps) => {
+export const SearchForPublisher = ({
+  onSelectPublisher,
+  autocompleteProps,
+  textFieldProps,
+}: SearchForPublisherFacet) => {
   const { t } = useTranslation();
 
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
@@ -31,12 +37,9 @@ export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPubl
 
   return (
     <Autocomplete
-      fullWidth
-      size="small"
-      sx={{ p: '0.25rem 0.5rem' }}
+      {...autocompleteProps}
       options={options}
       inputMode="search"
-      value={null}
       getOptionLabel={(option) => option.name}
       getOptionKey={(option) => option.id}
       filterOptions={(options) => options}
@@ -47,9 +50,7 @@ export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPubl
         }
       }}
       onChange={(_, selectedPublisher) => {
-        if (selectedPublisher) {
-          onSelectPublisher(selectedPublisher.identifier);
-        }
+        onSelectPublisher(selectedPublisher);
         setSearchQuery('');
       }}
       loading={publisherSearchQuery.isFetching}
@@ -62,14 +63,14 @@ export const SearchForPublisherFacetItem = ({ onSelectPublisher }: SearchForPubl
           hideScientificLevel
         />
       )}
+      renderValue={(value, getItemProps) => <Chip label={value.name} {...getItemProps()} />}
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}
           variant="outlined"
           isLoading={publisherSearchQuery.isLoading}
-          data-testid={dataTestId.aggregations.publisherFacetsSearchField}
           placeholder={t('registration.resource_type.search_for_publisher')}
-          showSearchIcon
+          {...textFieldProps}
         />
       )}
       slotProps={{
