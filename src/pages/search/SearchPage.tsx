@@ -4,10 +4,10 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
+import { RegistrationSearchResponse } from '../../api/searchApi';
 import { SearchForm } from '../../components/SearchForm';
-import { SearchResponse, SearchResponse2 } from '../../types/common.types';
+import { SearchResponse } from '../../types/common.types';
 import { CristinProject, ProjectAggregations } from '../../types/project.types';
-import { RegistrationAggregations, RegistrationSearchItem } from '../../types/registration.types';
 import { CristinPerson, PersonAggregations } from '../../types/user.types';
 import { SearchParam } from '../../utils/searchHelpers';
 import { PersonSearch } from './person_search/PersonSearch';
@@ -40,7 +40,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 }));
 
 export interface SearchPageProps {
-  registrationQuery: UseQueryResult<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>;
+  registrationQuery: UseQueryResult<RegistrationSearchResponse>;
   personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
   projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
 }

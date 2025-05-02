@@ -1,12 +1,7 @@
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { RegistrationLogResponse } from '../types/log.types';
 import { TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
-import {
-  DoiPreview,
-  MyRegistrationsResponse,
-  Registration,
-  UpdateRegistrationStatusRequest,
-} from '../types/registration.types';
+import { DoiPreview, Registration, UpdateRegistrationStatusRequest } from '../types/registration.types';
 import { makeDoiUrl } from '../utils/general-helpers';
 import { doNotRedirectQueryParam } from '../utils/urlPaths';
 import { PublicationsApiPath } from './apiPaths';
@@ -115,12 +110,6 @@ export const fetchRegistrationLog = async (registrationId: string) => {
   return fetchRegistrationLogResponse.data;
 };
 
-export const fetchRegistrationsByOwner = async () => {
-  const fetchRegistrationsByOwnerResponse = await authenticatedApiRequest2<MyRegistrationsResponse>({
-    url: PublicationsApiPath.RegistrationsByOwner,
-  });
-  return fetchRegistrationsByOwnerResponse.data;
-};
 export const fetchRegistrationTickets = async (registrationId: string) => {
   const getTickets = await authenticatedApiRequest2<TicketCollection>({
     url: `${registrationId}/tickets`,

@@ -317,6 +317,8 @@ export const fetchNviCandidate = async (identifier: string) => {
   return getNviCandidates.data;
 };
 
+export type RegistrationSearchResponse = SearchResponse2<RegistrationSearchItem, RegistrationAggregations>;
+
 export enum ResultParam {
   Abstract = 'abstract',
   AllScientificValues = 'allScientificValues',
@@ -564,7 +566,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  const getResults = await apiRequest2<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>({
+  const getResults = await apiRequest2<RegistrationSearchResponse>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
     // TODO: Remove version when it becomes default
     headers: { accept: 'application/json; version=2024-12-01' },
@@ -574,23 +576,23 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   return getResults.data;
 };
 
-export enum CustomerResultParam {
+export enum ProtectedResultParam {
   Status = 'status',
 }
 
-export interface FetchCustomerResultsParams
+export interface FetchProtectedResultsParams
   extends Pick<
     FetchResultsParams,
     ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
   > {
-  [CustomerResultParam.Status]?: RegistrationStatus[] | null;
+  [ProtectedResultParam.Status]?: RegistrationStatus[] | null;
 }
 
-export const fetchCustomerResults = async (params: FetchCustomerResultsParams, signal?: AbortSignal) => {
+export const fetchCustomerResults = async (params: FetchProtectedResultsParams, signal?: AbortSignal) => {
   const searchParams = new URLSearchParams();
 
   if (params.status && params.status.length > 0) {
-    searchParams.set(CustomerResultParam.Status, params.status.join(','));
+    searchParams.set(ProtectedResultParam.Status, params.status.join(','));
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
@@ -601,13 +603,27 @@ export const fetchCustomerResults = async (params: FetchCustomerResultsParams, s
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  const getCustomerResults = await authenticatedApiRequest2<
-    SearchResponse2<RegistrationSearchItem, RegistrationAggregations>
-  >({
+  const getCustomerResults = await authenticatedApiRequest2<RegistrationSearchResponse>({
     url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
     headers: { accept: 'application/json; version=2024-12-01' },
     signal,
   });
 
   return getCustomerResults.data;
+};
+
+export const fetchMyResults = async (params: FetchProtectedResultsParams, signal?: AbortSignal) => {
+  const getMyResults = await authenticatedApiRequest2<RegistrationSearchResponse>({
+    url: SearchApiPath.MyRegistrations,
+    params: {
+      [ResultParam.Query]: params.query,
+      [ProtectedResultParam.Status]: params.status?.join(','),
+      [ResultParam.From]: params.from || null,
+      [ResultParam.Results]: params.results ?? 10,
+      [ResultParam.Order]: params.order ?? ResultSearchOrder.ModifiedDate,
+      [ResultParam.Sort]: params.sort ?? ('desc' satisfies SortOrder),
+    },
+    signal,
+  });
+  return getMyResults.data;
 };
