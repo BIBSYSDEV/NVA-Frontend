@@ -220,51 +220,111 @@ export const contributorConfig: ContributorConfig = {
   // Journal
   [JournalType.AcademicArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.AcademicLiteratureReview]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Letter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Review]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Leader]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Corrigendum]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Issue]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.ConferenceAbstract]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.CaseReport]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.StudyProtocol]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.ProfessionalArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.PopularScienceArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   // Book
   [BookType.AcademicMonograph]: {
@@ -382,39 +442,84 @@ export const contributorConfig: ContributorConfig = {
   // Chapter
   [ChapterType.AcademicChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.NonFictionChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.PopularScienceChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.TextbookChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.EncyclopediaChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.Introduction]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ExhibitionCatalogChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ReportChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ConferenceAbstract]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   // Presentation
   [PresentationType.ConferenceLecture]: {
