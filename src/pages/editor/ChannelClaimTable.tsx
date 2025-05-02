@@ -10,12 +10,6 @@ interface ChannelClaimTableProps {
 
 export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClaimTableProps) => {
   const { t } = useTranslation();
-  const claimedChannels =
-    channelType === 'publisher'
-      ? channelClaimList.filter((channel) => channel.channelClaim.channel.includes('/publisher'))
-      : channelType === 'serial-publication'
-        ? channelClaimList.filter((channel) => channel.channelClaim.channel.includes('/serial-publication'))
-        : [];
 
   return (
     <Table>
@@ -29,7 +23,7 @@ export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClai
         </TableRow>
       </TableHead>
       <TableBody>
-        {claimedChannels.map((channel) => (
+        {channelClaimList.map((channel) => (
           <ChannelClaimTableRow key={channel.id} claimedChannel={channel} channelType={channelType} />
         ))}
       </TableBody>

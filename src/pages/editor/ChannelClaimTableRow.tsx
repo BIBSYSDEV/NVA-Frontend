@@ -31,7 +31,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType }: ChannelCla
 
   const isPublisherChannel = channelType === 'publisher';
 
-  const publisherQuery = useFetchPublisher(channelId, isPublisherChannel);
+  const publisherQuery = useFetchPublisher(isPublisherChannel ? channelId : '');
 
   const serialPublicationQuery = useQuery({
     enabled: !isPublisherChannel,
@@ -49,7 +49,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType }: ChannelCla
 
   const channelName = isPublisherChannel ? publisherQuery.data?.name : serialPublicationQuery.data?.name;
 
-  const pendingChannelQuery = publisherQuery.isPending || serialPublicationQuery.isPending;
+  const pendingChannelQuery = isPublisherChannel ? publisherQuery.isPending : serialPublicationQuery.isPending;
 
   return (
     <TableRow sx={{ bgcolor: 'white' }}>
