@@ -331,6 +331,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -402,11 +406,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -895,9 +895,9 @@
     "project_registrations": "Prosjektregistreringer",
     "public_research_profile": "Offentlig forskerprofil",
     "registrations": {
-      "delete_draft_registrations": "Slett kladder",
       "delete_count_draft_registrations_message_one": "Ønsker du å slette kladden under?",
       "delete_count_draft_registrations_message_other": "Ønsker du å slette de {{count}} synlige kladdene under?",
+      "delete_draft_registrations": "Slett kladder",
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?"
     },
