@@ -1894,8 +1894,8 @@
         },
         "web_link": "Lenke"
       },
-      "cannot_select_non_degree_when_degree_has_open_file": "Du kan ikke velge annet enn studentoppgave når det er en åpen fil på gjeldende studentoppgave. Slett filen før du endrer kategori om kategorien er feil.",
       "cannot_select_degree_when_non_degree_has_open_file": "Du kan ikke velge studentoppgave når det er en åpen fil på resultatet fra før. Slett filen før du endrer kategori om kategorien er feil.",
+      "cannot_select_non_degree_when_degree_has_open_file": "Du kan ikke velge annet enn studentoppgave når det er en åpen fil på gjeldende studentoppgave. Slett filen før du endrer kategori om kategorien er feil.",
       "change_registration_type": "Bytte registreringstype?",
       "change_registration_type_description": "Merk at dette kan føre til at du mister noe av dataene du har lagt inn i de tilfellene hvor eksisterende data ikke er gyldig for den nye typen. Er du sikker på at du vil bytte registreringstype?",
       "chapter": {
