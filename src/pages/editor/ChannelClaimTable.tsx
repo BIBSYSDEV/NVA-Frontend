@@ -1,20 +1,21 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ClaimedChannel } from '../../types/customerInstitution.types';
-import { PublicationChannelType, Publisher, SerialPublication } from '../../types/registration.types';
+import { ChannelClaimType, ClaimedChannel } from '../../types/customerInstitution.types';
 import { ChannelClaimTableRow } from './ChannelClaimTableRow';
 
 interface ChannelClaimTableProps {
   channelClaimList: ClaimedChannel[];
-  channelType: Publisher['type'] | SerialPublication['type'];
+  channelType: ChannelClaimType;
 }
 
 export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClaimTableProps) => {
   const { t } = useTranslation();
   const claimedChannels =
-    channelType === PublicationChannelType.Publisher
+    channelType === 'publisher'
       ? channelClaimList.filter((channel) => channel.channelClaim.channel.includes('/publisher'))
-      : [];
+      : channelType === 'serial-publication'
+        ? channelClaimList.filter((channel) => channel.channelClaim.channel.includes('/serial-publication'))
+        : [];
 
   return (
     <Table>
@@ -29,7 +30,7 @@ export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClai
       </TableHead>
       <TableBody>
         {claimedChannels.map((channel) => (
-          <ChannelClaimTableRow claimedChannel={channel} key={channel.id} />
+          <ChannelClaimTableRow claimedChannel={channel} key={channel.id} channelType={channelType} />
         ))}
       </TableBody>
     </Table>

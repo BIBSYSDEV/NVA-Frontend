@@ -1,15 +1,13 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Button, TableContainer, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
-import { fetchClaimedChannels } from '../../api/customerInstitutionsApi';
 import { PageSpinner } from '../../components/PageSpinner';
-import { PublicationChannelType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimTable } from './ChannelClaimTable';
+import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 
 export const PublisherClaimsSettings = () => {
   const { t } = useTranslation();
@@ -17,13 +15,9 @@ export const PublisherClaimsSettings = () => {
   const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);
   const toggleAddChannelClaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
 
-  const channelClaimsQuery = useQuery({
-    queryKey: ['publisherChannelClaims'],
-    queryFn: ({ signal }) => fetchClaimedChannels('publisher', signal),
-    meta: { errorMessage: t('feedback.error.get_channel_claim') },
-  });
-
+  const channelClaimsQuery = useFetchChannelClaims('publisher');
   const channelClaimList = channelClaimsQuery.data?.channelClaims;
+
   return (
     <>
       <Helmet>
@@ -58,7 +52,7 @@ export const PublisherClaimsSettings = () => {
         {channelClaimsQuery.isPending ? (
           <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
         ) : channelClaimList && channelClaimList.length > 0 ? (
-          <ChannelClaimTable channelClaimList={channelClaimList} channelType={PublicationChannelType.Publisher} />
+          <ChannelClaimTable channelClaimList={channelClaimList} channelType={'publisher'} />
         ) : null}
       </TableContainer>
     </>
