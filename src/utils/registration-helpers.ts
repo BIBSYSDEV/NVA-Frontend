@@ -721,16 +721,32 @@ export const getDisabledCategories = (
 ) => {
   const disabledCategories: DisabledCategory[] = [];
 
-  if (!hasCuratorRole(user)) {
-    const hasOpenableFiles = registration.associatedArtifacts.some(
-      (artifact) => isOpenFile(artifact) || isPendingOpenFile(artifact)
-    );
+  // Do not allow registrator to change from degree to non-degree (and vice-versa) if result has open (approved) files
+  if (registration.associatedArtifacts.some(isOpenFile)) {
+    if (isDegree(registration.entityDescription?.reference?.publicationInstance?.type)) {
+      const nonDegreeTypes = allPublicationInstanceTypes.filter((type) => !isDegree(type));
+      nonDegreeTypes.forEach((type) => {
+        disabledCategories.push({
+          type,
+          text: t('registration.resource_type.cannot_select_non_degree_when_degree_has_open_file'),
+        });
+      });
+    } else {
+      Object.values(DegreeType).forEach((type) => {
+        disabledCategories.push({
+          type,
+          text: t('registration.resource_type.cannot_select_degree_when_non_degree_has_open_file'),
+        });
+      });
+    }
+  }
 
-    if (
-      hasOpenableFiles &&
-      customer &&
-      customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length
-    ) {
+  // Do not allow non-curator to select a category that don't support file upload if result has an open (approved) file
+  if (
+    !hasCuratorRole(user) &&
+    registration.associatedArtifacts.some((artifact) => isOpenFile(artifact) || isPendingOpenFile(artifact))
+  ) {
+    if (customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
       const categoriesWithoutFileSupport = allPublicationInstanceTypes
         .filter((type) => !customer.allowFileUploadForTypes.includes(type))
         .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
