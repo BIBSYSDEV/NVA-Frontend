@@ -14,6 +14,7 @@ import {
   isReport,
   isResearchData,
 } from '../registration-helpers';
+import { hasCuratorRole } from '../user-helpers';
 import { useBetaFlag } from './useBetaFlag';
 
 export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registration) => {
@@ -24,6 +25,10 @@ export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registra
 
   const channelId = shouldFetch ? getChannelId(registration) : '';
   const channelClaimQuery = useFetchChannelClaim(channelId);
+
+  if (!beta) {
+    return { isLoading: false, shouldDisableFields: false };
+  }
 
   if (!registration?.entityDescription?.reference?.publicationInstance?.type) {
     return { isLoading: false, shouldDisableFields: false };
@@ -51,27 +56,23 @@ export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registra
     return { isLoading: false, shouldDisableFields: false };
   }
 
-  // const isThesisCurator =
-  //   isDegree(registration.entityDescription.reference.publicationInstance.type) &&
-  //   user?.isThesisCurator &&
-  //   registration.allowedOperations?.includes('update'); // TODO: All returns should consider this?
+  if (isDegree(registration.entityDescription.reference.publicationInstance.type) && user?.isThesisCurator) {
+    return { isLoading: false, shouldDisableFields: false };
+  } else if (!isDegree(registration.entityDescription.reference.publicationInstance.type) && hasCuratorRole(user)) {
+    return { isLoading: false, shouldDisableFields: false };
+  }
 
-  // if (isThesisCurator && registration.associatedArtifacts.some((artifact) => artifact.type !== FileType.OpenFile)) {
-  //   return { isLoading: false, shouldDisableFields: false };
-  // }
+  if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'Everyone') {
+    return { isLoading: false, shouldDisableFields: false };
+  }
 
-  // if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'Everyone') {
-  //   return { isLoading: false, shouldDisableFields: registration.allowedOperations?.includes('update') };
-  // }
+  if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'OwnerOnly') {
+    return {
+      isLoading: false,
+      shouldDisableFields: user?.topOrgCristinId === channelClaimQuery.data.claimedBy.organizationId,
+    };
+  }
 
-  // if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'OwnerOnly') {
-  //   return {
-  //     isLoading: false,
-  //     shouldDisableFields: user?.topOrgCristinId === channelClaimQuery.data.claimedBy.organizationId,
-  //   };
-  // }
-
-  // TODO: Check if user has curator roles that overrides the channel claim?
   return { isLoading: channelClaimQuery.isFetching, shouldDisableFields: claimedByOtherInstitution };
 };
 
