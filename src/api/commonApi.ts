@@ -2,7 +2,7 @@ import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
 export const fetchResource = async <T>(id: string) => {
   if (!id) {
-    return;
+    return null;
   }
 
   const getByIdResponse = await apiRequest2<T>({ url: id });
@@ -11,7 +11,7 @@ export const fetchResource = async <T>(id: string) => {
 
 export const fetchProtectedResource = async <T>(id: string) => {
   if (!id) {
-    return;
+    return null;
   }
 
   const getByIdResponse = await authenticatedApiRequest2<T>({ url: id });

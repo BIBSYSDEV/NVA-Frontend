@@ -1,4 +1,5 @@
-import { allPublicationInstanceTypes } from './publicationFieldNames';
+import { ChannelPolicy } from '../api/customerInstitutionsApi';
+import { allPublicationInstanceTypes, DegreeType } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
 
 export interface SimpleCustomerInstitution {
@@ -147,3 +148,21 @@ export interface VocabularyList {
   id: string;
   vocabularies: CustomerVocabulary[];
 }
+
+export interface ClaimedChannel {
+  id: string;
+  claimedBy: {
+    id: string;
+    organizationId: string;
+  };
+  channelClaim: {
+    channel: string;
+    constraint: {
+      publishingPolicy: ChannelPolicy;
+      editingPolicy: ChannelPolicy;
+      scope: DegreeType[];
+    };
+  };
+}
+
+export type ChannelClaimType = 'publisher' | 'serial-publication';

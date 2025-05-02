@@ -292,6 +292,7 @@
     "select_role": "Velg rolle",
     "select_unit": "Velg enhet",
     "send": "Send",
+    "serial_publication": "Serie/Tidsskrift",
     "settings": "Innstillinger",
     "show": "Vis",
     "show_all": "Vis alle",
@@ -445,6 +446,26 @@
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
       "change_institution_support": "Endre brukerstøttepunkt",
+      "channel_claims": {
+        "access_policies": {
+          "Everyone": "Alle institusjoner",
+          "OwnerOnly": "Kun utgiverinstitusjon"
+        },
+        "add_publisher_channel_claim": "Sett eierskap til utgiver",
+        "add_publisher_channel_claim_description": "<p>Sett eierskap til utgiver som tilhører din institusjon.</p><p>Din institusjon vil bli oppgitt som ansvarlig for resultat og kan få spørsmål via brukerstøttepunkt som angitt på institusjonens brukerstøtte.</p><p>Med å sette eierskap på utgiver så sendes publiseringsforespørsel til din institusjon uavhengig av om registrator tilhører en annen institusjon.</p>",
+        "add_serial_publication_channel_claim": "Sett eierskap for serie/tidsskrift",
+        "administer_publisher_channel_claim": "Administrer eierskap for utgivere",
+        "administer_publisher_channel_claim_description": "<p>På denne siden kan du administrere eierskap for utgivere som tilhører din institusjon.</p><p>Eierskap settes av institusjonen, så kontakt kanaleier ved feilregistrering.</p><button/><p>Eierskap styrer hvilken institusjon som mottar publiseringsforespørselen, uavhengig av registratorens tilhørighet.</p><p>Kanaleier bestemmer om brukere fra andre institusjoner kan registrere resultater med utgiver.</p>",
+        "administer_serial_publication_channel_claim": "Administrer eierskap for serie/tidsskrift",
+        "administer_serial_publication_channel_claim_description": "<p>På denne siden kan du administrere eierskap for serie/tidsskrift som tilhører din institusjon.</p><p>Eierskap settes av institusjonen, så kontakt kanaleier ved feilregistrering.</p><button/><p>Eierskap styrer hvilken institusjon som mottar publiseringsforespørselen, uavhengig av registratorens tilhørighet.</p><p>Kanaleier bestemmer om brukere fra andre institusjoner kan registrere resultater med serie/tidsskrift.</p>",
+        "category_limitations": "Begrensning for kategori",
+        "channel_claim": "Kanaleierskap",
+        "channel_owner": "Kanaleier",
+        "claim_category_restriction": "Kategorier som begrensningen skal gjelde for",
+        "editing_access": "Tilgang til å redigere",
+        "publishing_access": "Tilgang til å publisere",
+        "set_channel_claim": "Sett eierskap"
+      },
       "institution_admin_one": "Institusjonens administrator",
       "institution_admin_other": "Institusjonens administratorer",
       "institution_code": "Kode",
@@ -530,6 +551,7 @@
       "fetch": "Kunne ikke hente {{resource}}",
       "fetch_log": "Kunne ikke hente logg",
       "get_affiliation_name": "Kunne ikke hente navn på tilknytning for {{unitUri}}",
+      "get_channel_claim": "Kunne ikke hente kanaleierskap",
       "get_curators_for_institution": "Kunne ikke hente kuratorer",
       "get_customer": "Kunne ikke hente kundeinstitusjon",
       "get_customers": "Kunne ikke hente kundeinstitusjoner",
@@ -574,6 +596,7 @@
       "reserve_doi": "Reservasjon av DOI feilet",
       "search": "Søk feilet",
       "send_message": "Kunne ikke sende melding",
+      "set_channel_claim": "Kunne ikke sette kanaleierskap",
       "storing_orcid_credentials": "Kunne ikke lagre orcid-data",
       "update_customer": "Kunne ikke oppdatere institusjon",
       "update_doi_agent": "Kunne ikke oppdatere DOI-konfigurasjon",
@@ -623,6 +646,7 @@
       "removed_role": "Rollen ble fjernet",
       "reserve_doi": "DOI er reservert",
       "send_message": "Melding sendt",
+      "set_channel_claim": "Kanaleierskap ble oppdatert",
       "update_customer": "Institusjon er oppdatert",
       "update_institution_user": "Bruker er oppdatert",
       "update_nvi_period": "NVI-perioden ble oppdatert",
@@ -793,6 +817,7 @@
       },
       "types": {
         "DoiRequest": "DOI",
+        "FilesApprovalThesis": "Studentoppgave",
         "GeneralSupportCase": "Kuratorstøtte",
         "PublishingRequest": "Publisering"
       }
@@ -825,7 +850,8 @@
       },
       "link_to_projects_search": "Se <0>søkesiden</0> for å filtrere blant alle prosjekter.",
       "link_to_results_search": "Se <0>søkesiden</0> for å filtrere blant alle resultater.",
-      "list_contains_all_registration_you_have_created": "Listen viser alle prosjekter du har registrert",
+      "list_contains_all_projects_you_have_created": "Listen viser alle prosjekter du har registrert",
+      "list_contains_all_registration_you_have_created": "Listen viser alle resultater du har registrert",
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskningsresultat",
       "name": "Navn",
@@ -869,12 +895,11 @@
     "project_registrations": "Prosjektregistreringer",
     "public_research_profile": "Offentlig forskerprofil",
     "registrations": {
-      "delete_all_draft_registrations": "Slett alle kladder",
-      "delete_all_draft_registrations_message": "Slett alle kladder?",
+      "delete_count_draft_registrations_message_one": "Ønsker du å slette kladden under?",
+      "delete_count_draft_registrations_message_other": "Ønsker du å slette de {{count}} synlige kladdene under?",
+      "delete_draft_registrations": "Slett kladder",
       "delete_registration": "Slett upublisert registrering",
-      "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-      "published": "Publisert",
-      "unpublished": "Kladd"
+      "delete_registration_message": "Ønsker du å slette \"{{title}}\"?"
     },
     "research_profile": "Forskerprofil",
     "roles": {
@@ -1870,6 +1895,8 @@
         },
         "web_link": "Lenke"
       },
+      "cannot_select_degree_when_non_degree_has_open_file": "Du kan ikke velge studentoppgave når det er en åpen fil på resultatet fra før. Slett filen før du endrer kategori om kategorien er feil.",
+      "cannot_select_non_degree_when_degree_has_open_file": "Du kan ikke velge annet enn studentoppgave når det er en åpen fil på gjeldende studentoppgave. Slett filen før du endrer kategori om kategorien er feil.",
       "change_registration_type": "Bytte registreringstype?",
       "change_registration_type_description": "Merk at dette kan føre til at du mister noe av dataene du har lagt inn i de tilfellene hvor eksisterende data ikke er gyldig for den nye typen. Er du sikker på at du vil bytte registreringstype?",
       "chapter": {
@@ -1954,7 +1981,6 @@
       "pages_to": "til",
       "place_for_event": "Sted for arrangement",
       "print_issn": "Print ISSN",
-      "protected_degree_type": "Du mangler tilgang. Det er kun studentoppgavekurator som har tilganger til å registrere denne kategorien. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
       "protected_file_type": "Din institusjon har valgt å ikke støtte åpne filer for denne kategorien. Kontakt kuratorstøtte om du likevel vil legge til en åpen fil.",
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",

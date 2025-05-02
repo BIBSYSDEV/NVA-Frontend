@@ -292,6 +292,7 @@
     "select_role": "Vel rolle",
     "select_unit": "Vel eining",
     "send": "Send",
+    "serial_publication": "",
     "settings": "Innstillingar",
     "show": "Vis",
     "show_all": "Vis alle",
@@ -445,6 +446,26 @@
     "hrcs_categories": "Health Research Classification System Health Research Classification System — Categories Categories",
     "institution": {
       "change_institution_support": "Endre brukarstøttepunkt",
+      "channel_claims": {
+        "access_policies": {
+          "Everyone": "Alle institusjonar",
+          "OwnerOnly": "Kun utgjevarinstitusjon"
+        },
+        "add_publisher_channel_claim": "Set eigarskap for utgjevar",
+        "add_publisher_channel_claim_description": "",
+        "add_serial_publication_channel_claim": "",
+        "administer_publisher_channel_claim": "Administrer eigarskap for utgjevarar",
+        "administer_publisher_channel_claim_description": "<p>På denne sida kan du administrere eigarskap for utgjevarar som hgøyrer til din institusjon</p><p>Eigarskap vert sett av institusjonen, så kontakt kanaleigar ved feilregistrering</p><button/><p>Eigarskap vert styrt av kva institusjon som mottek publiseringsførespurnaden, uavhengig av kor registrator høyrer til.</p><p>Kanaleigar avgjer om brukarar frå andre institusjonar kan registrere resultat med utgjevar.</p>",
+        "administer_serial_publication_channel_claim": "",
+        "administer_serial_publication_channel_claim_description": "",
+        "category_limitations": "Avgrensing for kategori",
+        "channel_claim": "Kanaleigarskap",
+        "channel_owner": "Kanaleigar",
+        "claim_category_restriction": "Kategoriar som begrensninga skal gjelde for",
+        "editing_access": "Tilgang til å redigere",
+        "publishing_access": "Tilgang til å registrere",
+        "set_channel_claim": "Set eigarskap"
+      },
       "institution_admin_one": "Institusjonen sin administrator",
       "institution_admin_other": "Institusjonen sine administratorar",
       "institution_code": "Kode",
@@ -530,6 +551,7 @@
       "fetch": "Kunne ikkje hente {{resource}}",
       "fetch_log": "Kunne ikkje hente logg",
       "get_affiliation_name": "Kunne ikkje hente namn på tilknyting for {{unitUri}}",
+      "get_channel_claim": "Kunne ikkje hente kanaleigarskap",
       "get_curators_for_institution": "Kunne ikkje hente kurator",
       "get_customer": "Kunne ikkje hente kundeinstitusjon",
       "get_customers": "Kunne ikkje hente kundeinstitusjonar",
@@ -574,6 +596,7 @@
       "reserve_doi": "Reservasjon av DOI feila",
       "search": "Søk feila",
       "send_message": "Kunne ikkje sende melding",
+      "set_channel_claim": "Kunne ikkje setje kanaleigarskap",
       "storing_orcid_credentials": "Kunne ikkje lagre orcid-data",
       "update_customer": "Kunne ikkje oppdatere institusjon",
       "update_doi_agent": "Kunne ikkje oppdatere DOI-konfigurasjon",
@@ -623,6 +646,7 @@
       "removed_role": "Rolla vart fjerna",
       "reserve_doi": "DOI er reservert",
       "send_message": "Melding sendt",
+      "set_channel_claim": "Kanaleigarskap vart oppdatert",
       "update_customer": "Institusjon er oppdatert",
       "update_institution_user": "Brukar er oppdatert",
       "update_nvi_period": "NVI-perioden vart oppdatert",
@@ -793,6 +817,7 @@
       },
       "types": {
         "DoiRequest": "DOI",
+        "FilesApprovalThesis": "",
         "GeneralSupportCase": "Kuratorstøtte",
         "PublishingRequest": "Publisering"
       }
@@ -825,6 +850,7 @@
       },
       "link_to_projects_search": "Sjå <0>søkesida</0> for å filtrere blant alle prosjekt.",
       "link_to_results_search": "Sjå <0>søkesida</0> for å filtrere blant alle resultat.",
+      "list_contains_all_projects_you_have_created": "",
       "list_contains_all_registration_you_have_created": "Lista viser alle prosjekt du har registrert",
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskingsresultat",
@@ -869,12 +895,11 @@
     "project_registrations": "Prosjektregistreringar",
     "public_research_profile": "Offentleg forskarprofil",
     "registrations": {
-      "delete_all_draft_registrations": "Slett alle kladdar",
-      "delete_all_draft_registrations_message": "Slett alle kladdar?",
+      "delete_count_draft_registrations_message_one": "",
+      "delete_count_draft_registrations_message_other": "",
+      "delete_draft_registrations": "",
       "delete_registration": "Slett upublisert registrering",
-      "delete_registration_message": "Ønskjer du å slette \"{{title}}\"?",
-      "published": "Publisert",
-      "unpublished": "Kladd"
+      "delete_registration_message": "Ønskjer du å slette \"{{title}}\"?"
     },
     "research_profile": "Forskarprofil",
     "roles": {
@@ -1870,6 +1895,8 @@
         },
         "web_link": "Lenkje"
       },
+      "cannot_select_degree_when_non_degree_has_open_file": "",
+      "cannot_select_non_degree_when_degree_has_open_file": "",
       "change_registration_type": "Byte registreringstype?",
       "change_registration_type_description": "Merk at dette kan føre til at du mister noko av data du har lagt inn i dei tilfella der eksisterande data ikkje er gyldig for den nye typen. Er du sikker på at du vil byte registreringstype?",
       "chapter": {
@@ -1954,7 +1981,6 @@
       "pages_to": "til",
       "place_for_event": "Stad for arrangement",
       "print_issn": "Print ISSN",
-      "protected_degree_type": "Du manglar tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utanlandsk, be om kuratorstøtte for hjelp til publiseringa.",
       "protected_file_type": "Din institusjon har valt å ikkje støtte opplasting av filer for denne kategorien.",
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",

@@ -3,7 +3,7 @@ import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { CustomerResultParam } from '../../api/searchApi';
+import { ProtectedResultParam } from '../../api/searchApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NavigationList } from '../../components/PageWithSideMenu';
 import { RegistrationStatus } from '../../types/registration.types';
@@ -26,7 +26,7 @@ export const ResultsPortfolioNavigationListAccodion = () => {
       title={t('common.result_portfolio')}
       startIcon={<NotesIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
       accordionPath={UrlPathTemplate.InstitutionPortfolio}
-      defaultPath={`${UrlPathTemplate.InstitutionPortfolio}?${CustomerResultParam.Status}=${RegistrationStatus.Published}`}>
+      defaultPath={`${UrlPathTemplate.InstitutionPortfolio}?${ProtectedResultParam.Status}=${RegistrationStatus.Published}`}>
       <NavigationList component="div">
         <FormGroup
           sx={{ mx: '1rem' }}
@@ -40,9 +40,9 @@ export const ResultsPortfolioNavigationListAccodion = () => {
               : [...selectedStatuses, clickedStatus];
 
             if (newStatuses.length === 0) {
-              syncedParams.delete(CustomerResultParam.Status);
+              syncedParams.delete(ProtectedResultParam.Status);
             } else {
-              syncedParams.set(CustomerResultParam.Status, newStatuses.join(','));
+              syncedParams.set(ProtectedResultParam.Status, newStatuses.join(','));
             }
             navigate({ search: syncedParams.toString() });
           }}>

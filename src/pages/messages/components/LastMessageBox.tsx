@@ -1,6 +1,9 @@
 import { Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { toDateString } from '../../../utils/date-helpers';
+import { isFileApprovalTicket } from '../../../utils/ticketHelpers';
 import { StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
 
 interface LastMessageBoxProps {
@@ -8,9 +11,14 @@ interface LastMessageBoxProps {
 }
 
 export const LastMessageBox = ({ ticket }: LastMessageBoxProps) => {
+  const user = useSelector((store: RootState) => store.user);
   const lastMessage = ticket.messages.at(-1);
 
   if (!lastMessage) {
+    return null;
+  }
+
+  if (ticket.status === 'Completed' && ticket.viewedBy.some((viewer) => viewer.username === user?.nvaUsername)) {
     return null;
   }
 
@@ -23,7 +31,7 @@ export const LastMessageBox = ({ ticket }: LastMessageBoxProps) => {
   const ticketColor =
     ticket.type === 'GeneralSupportCase'
       ? 'generalSupportCase.main'
-      : ticket.type === 'PublishingRequest'
+      : isFileApprovalTicket(ticket)
         ? 'publishingRequest.main'
         : ticket.type === 'DoiRequest'
           ? 'doiRequest.main'

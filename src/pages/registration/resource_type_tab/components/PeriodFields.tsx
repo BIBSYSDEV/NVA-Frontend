@@ -29,7 +29,6 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
               }
               setFieldValue(field.name, date ?? '');
             }}
-            views={['year', 'month', 'day']}
             maxDate={toValue ? new Date(toValue) : maxDate}
             slotProps={{
               textField: {
@@ -55,7 +54,6 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
               }
               setFieldValue(field.name, date ?? '');
             }}
-            views={['year', 'month', 'day']}
             minDate={fromValue ? new Date(fromValue) : undefined}
             maxDate={maxDate}
             slotProps={{
