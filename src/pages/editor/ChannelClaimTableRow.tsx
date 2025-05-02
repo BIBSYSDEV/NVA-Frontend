@@ -35,7 +35,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType }: ChannelCla
   const publisherName = publisherQuery.data?.name;
 
   const serialPublicationQuery = useQuery({
-    enabled: channelType === 'serial-publication',
+    enabled: !isPublisherChannel,
     queryKey: ['channel', channelId],
     queryFn: () => fetchResource<SerialPublication>(channelId + '/2024'), // TODO: Remove year when NP-48868 is merged
     meta: { errorMessage: t('feedback.error.get_journal') },
