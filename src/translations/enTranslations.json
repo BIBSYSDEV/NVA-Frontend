@@ -292,6 +292,7 @@
     "select_role": "Select role",
     "select_unit": "Select unit",
     "send": "Send",
+    "serial_publication": "",
     "settings": "Settings",
     "show": "Show",
     "show_all": "Show all",
@@ -445,6 +446,26 @@
     "hrcs_categories": "Health Research Classification System — Categories",
     "institution": {
       "change_institution_support": "Change user support point of contact",
+      "channel_claims": {
+        "access_policies": {
+          "Everyone": "All institutions",
+          "OwnerOnly": "Only publishing institution"
+        },
+        "add_publisher_channel_claim": "Set ownership for publisher",
+        "add_publisher_channel_claim_description": "",
+        "add_serial_publication_channel_claim": "",
+        "administer_publisher_channel_claim": "Administer ownership for publishers",
+        "administer_publisher_channel_claim_description": "<p>On this page, you can manage ownership for publishers that belong to your institution.</p><p> Ownership is assigned by the institution, so contact the channel owner in case of incorrect registration.</p><button/><p>Ownership determines which institution receives the publication request, regardless of the registrant's affiliation.</p><p> The channel owner decides whether users from other institutions can register results with the publisher.</p>",
+        "administer_serial_publication_channel_claim": "",
+        "administer_serial_publication_channel_claim_description": "",
+        "category_limitations": "Limitations for category",
+        "channel_claim": "Channel ownership",
+        "channel_owner": "Channel owner",
+        "claim_category_restriction": "Categories the limitation should apply to",
+        "editing_access": "Access to edit",
+        "publishing_access": "Access to publish",
+        "set_channel_claim": "Set ownership"
+      },
       "institution_admin_one": "The institution's administrator",
       "institution_admin_other": "The institution's administrators",
       "institution_code": "Code",
@@ -530,6 +551,7 @@
       "fetch": "Failed to retrieve {{resource}}",
       "fetch_log": "Could not retrieve log",
       "get_affiliation_name": "Failed to retrieve affiliation name for {{unitUri}}",
+      "get_channel_claim": "Could not retrieve channel ownership",
       "get_curators_for_institution": "Failed to retrieve curator",
       "get_customer": "Failed to retrieve customer institution",
       "get_customers": "Failed to retrieve customer institutions",
@@ -574,6 +596,7 @@
       "reserve_doi": "Reservation of DOI failed",
       "search": "Search failed",
       "send_message": "Failed to send message",
+      "set_channel_claim": "Could not set channel ownership",
       "storing_orcid_credentials": "Failed to save ORCID data",
       "update_customer": "Failed to update institution",
       "update_doi_agent": "Failed to update DOI configuration",
@@ -623,6 +646,7 @@
       "removed_role": "Role removed",
       "reserve_doi": "DOI is reserved",
       "send_message": "Message sent",
+      "set_channel_claim": "Channel ownership updated",
       "update_customer": "Institution updated successfully",
       "update_institution_user": "User updated successfully",
       "update_nvi_period": "NVI period was updated",
@@ -793,6 +817,7 @@
       },
       "types": {
         "DoiRequest": "DOI",
+        "FilesApprovalThesis": "",
         "GeneralSupportCase": "Curator support",
         "PublishingRequest": "Publishing request"
       }
@@ -1870,6 +1895,8 @@
         },
         "web_link": "Link"
       },
+      "cannot_select_degree_when_non_degree_has_open_file": "",
+      "cannot_select_non_degree_when_degree_has_open_file": "",
       "change_registration_type": "Change registration type?",
       "change_registration_type_description": "Note that this may result in you losing some data you have entered in cases where existing data is not valid for the new type. Are you sure you want to change the registration type?",
       "chapter": {
@@ -1954,7 +1981,6 @@
       "pages_to": "to",
       "place_for_event": "Place for event",
       "print_issn": "Print ISSN",
-      "protected_degree_type": "You do not have access. Contact the institution that awarded you the degree to get it published. If it is foreign, ask for curator support to get help.",
       "protected_file_type": "Your institution has chosen not to support file upload for this category",
       "related_result": "Related result",
       "related_results": "Related results",
