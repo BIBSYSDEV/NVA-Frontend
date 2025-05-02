@@ -30,7 +30,7 @@ export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClai
       </TableHead>
       <TableBody>
         {claimedChannels.map((channel) => (
-          <ChannelClaimTableRow claimedChannel={channel} key={channel.id} channelType={channelType} />
+          <ChannelClaimTableRow key={channel.id} claimedChannel={channel} channelType={channelType} />
         ))}
       </TableBody>
     </Table>

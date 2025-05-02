@@ -32,7 +32,6 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType }: ChannelCla
   const isPublisherChannel = channelType === 'publisher';
 
   const publisherQuery = useFetchPublisher(channelId, isPublisherChannel);
-  const publisherName = publisherQuery.data?.name;
 
   const serialPublicationQuery = useQuery({
     enabled: !isPublisherChannel,
@@ -41,7 +40,6 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType }: ChannelCla
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
   });
-  const serialPublicationName = serialPublicationQuery.data?.name;
 
   const organizationQuery = useFetchOrganization(claimedChannel.claimedBy.organizationId);
   const organizationName = getLanguageString(organizationQuery.data?.labels);
@@ -49,13 +47,17 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType }: ChannelCla
   const publishingPolicy = claimedChannel.channelClaim.constraint.publishingPolicy;
   const editingPolicy = claimedChannel.channelClaim.constraint.editingPolicy;
 
+  const channelName = isPublisherChannel ? publisherQuery.data?.name : serialPublicationQuery.data?.name;
+
+  const pendingChannelQuery = publisherQuery.isPending || serialPublicationQuery.isPending;
+
   return (
     <TableRow sx={{ bgcolor: 'white' }}>
-      <StyledTableCell aria-live="polite" aria-busy={publisherQuery.isPending || serialPublicationQuery.isPending}>
-        {publisherQuery.isPending || serialPublicationQuery.isPending ? (
+      <StyledTableCell aria-live="polite" aria-busy={pendingChannelQuery}>
+        {pendingChannelQuery ? (
           <Skeleton width={300} />
-        ) : publisherName || serialPublicationName ? (
-          <Typography>{isPublisherChannel ? publisherName : serialPublicationName}</Typography>
+        ) : !!channelName ? (
+          <Typography>{channelName}</Typography>
         ) : (
           <Typography sx={{ fontStyle: 'italic' }}>{t('common.unknown')}</Typography>
         )}

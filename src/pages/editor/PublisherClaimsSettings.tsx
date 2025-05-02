@@ -3,11 +3,11 @@ import { Button, TableContainer, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
+import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 import { PageSpinner } from '../../components/PageSpinner';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimTable } from './ChannelClaimTable';
-import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 
 export const PublisherClaimsSettings = () => {
   const { t } = useTranslation();
