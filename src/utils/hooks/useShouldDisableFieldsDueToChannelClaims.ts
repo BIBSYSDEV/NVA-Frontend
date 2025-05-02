@@ -14,7 +14,6 @@ import {
   isReport,
   isResearchData,
 } from '../registration-helpers';
-import { hasCuratorRole } from '../user-helpers';
 import { useBetaFlag } from './useBetaFlag';
 
 export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registration) => {
@@ -56,22 +55,22 @@ export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registra
     return { isLoading: false, shouldDisableFields: false };
   }
 
-  if (isDegree(registration.entityDescription.reference.publicationInstance.type) && user?.isThesisCurator) {
-    return { isLoading: false, shouldDisableFields: false };
-  } else if (!isDegree(registration.entityDescription.reference.publicationInstance.type) && hasCuratorRole(user)) {
-    return { isLoading: false, shouldDisableFields: false };
-  }
+  // if (isDegree(registration.entityDescription.reference.publicationInstance.type) && user?.isThesisCurator) {
+  //   return { isLoading: false, shouldDisableFields: false };
+  // } else if (!isDegree(registration.entityDescription.reference.publicationInstance.type) && hasCuratorRole(user)) {
+  //   return { isLoading: false, shouldDisableFields: false };
+  // }
 
-  if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'Everyone') {
-    return { isLoading: false, shouldDisableFields: false };
-  }
+  // if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'Everyone') {
+  //   return { isLoading: false, shouldDisableFields: false };
+  // }
 
-  if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'OwnerOnly') {
-    return {
-      isLoading: false,
-      shouldDisableFields: user?.topOrgCristinId === channelClaimQuery.data.claimedBy.organizationId,
-    };
-  }
+  // if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'OwnerOnly') {
+  //   return {
+  //     isLoading: false,
+  //     shouldDisableFields: user?.topOrgCristinId === channelClaimQuery.data.claimedBy.organizationId,
+  //   };
+  // }
 
   return { isLoading: channelClaimQuery.isFetching, shouldDisableFields: claimedByOtherInstitution };
 };
@@ -94,7 +93,7 @@ const getChannelId = (registration?: Registration) => {
   const canHaveJournal = !canHavePublisher && (isJournal(category) || isPeriodicalMediaContribution(category));
 
   if (canHavePublisher) {
-    return (registration.entityDescription?.reference?.publicationContext as BookPublicationContext).publisher?.id; // TODO: Can ignore series?
+    return (registration.entityDescription?.reference?.publicationContext as BookPublicationContext).publisher?.id; // TODO: Should consider claimed series if not claimed publisher
   }
   if (canHaveJournal) {
     return (registration.entityDescription?.reference?.publicationContext as JournalPublicationContext).id;
