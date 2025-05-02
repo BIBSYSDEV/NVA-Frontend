@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormGroup, ListItem, styled, Typography, TypographyProps } from '@mui/material';
+import { Box, FormGroup, ListItem, styled, Typography, TypographyProps } from '@mui/material';
 
 export const StyledRightAlignedFooter = styled(Box)({
   display: 'flex',
@@ -104,11 +104,6 @@ export const SearchListItemDiv = styled('div')(({ theme }) => ({
   background: 'white',
   padding: '0.5rem 1rem',
 }));
-
-export const StyledStatusCheckbox = styled(Checkbox)({
-  paddingTop: '0.2rem',
-  paddingBottom: '0.2rem',
-});
 
 export const StyledTicketSearchFormGroup = styled(FormGroup)({
   margin: '1rem',

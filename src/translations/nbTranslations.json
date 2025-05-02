@@ -850,7 +850,8 @@
       },
       "link_to_projects_search": "Se <0>søkesiden</0> for å filtrere blant alle prosjekter.",
       "link_to_results_search": "Se <0>søkesiden</0> for å filtrere blant alle resultater.",
-      "list_contains_all_registration_you_have_created": "Listen viser alle prosjekter du har registrert",
+      "list_contains_all_projects_you_have_created": "Listen viser alle prosjekter du har registrert",
+      "list_contains_all_registration_you_have_created": "Listen viser alle resultater du har registrert",
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskningsresultat",
       "name": "Navn",
@@ -894,12 +895,11 @@
     "project_registrations": "Prosjektregistreringer",
     "public_research_profile": "Offentlig forskerprofil",
     "registrations": {
-      "delete_all_draft_registrations": "Slett alle kladder",
-      "delete_all_draft_registrations_message": "Slett alle kladder?",
+      "delete_draft_registrations": "Slett kladder",
+      "delete_count_draft_registrations_message_one": "Ønsker du å slette kladden under?",
+      "delete_count_draft_registrations_message_other": "Ønsker du å slette de {{count}} synlige kladdene under?",
       "delete_registration": "Slett upublisert registrering",
-      "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-      "published": "Publisert",
-      "unpublished": "Kladd"
+      "delete_registration_message": "Ønsker du å slette \"{{title}}\"?"
     },
     "research_profile": "Forskerprofil",
     "roles": {
