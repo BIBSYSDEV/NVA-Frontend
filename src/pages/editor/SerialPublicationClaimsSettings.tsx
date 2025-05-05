@@ -7,6 +7,7 @@ import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 import { PageSpinner } from '../../components/PageSpinner';
 import { dataTestId } from '../../utils/dataTestIds';
 import { ChannelClaimTable } from './ChannelClaimTable';
+import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 
 export const SerialPublicationClaimsSettings = () => {
   const { t } = useTranslation();
@@ -49,6 +50,13 @@ export const SerialPublicationClaimsSettings = () => {
           <ChannelClaimTable channelClaimList={channelClaimList} channelType={'serial-publication'} />
         ) : null}
       </TableContainer>
+
+      <AddChannelClaimDialog
+        open={openAddChannelClaimDialog}
+        closeDialog={toggleAddChannelClaimDialog}
+        refetchClaimedChannels={channelClaimsQuery.refetch}
+        channelType={'serial-publication'}
+      />
     </>
   );
 };
