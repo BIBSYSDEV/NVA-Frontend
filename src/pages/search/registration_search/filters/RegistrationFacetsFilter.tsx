@@ -14,7 +14,7 @@ import { SearchPageProps } from '../../SearchPage';
 import { SearchForPersonFacetItem } from '../../facet_search_fields/SearchForContributorFacetItem';
 import { SearchForFundingSourceFacetItem } from '../../facet_search_fields/SearchForFundingSourceFacetItem';
 import { SearchForInstitutionFacetItem } from '../../facet_search_fields/SearchForInstitutionFacetItem';
-import { SearchForSerialPublicationFacetItem } from '../../facet_search_fields/SearchForSerialPublicationFacetItem';
+import { SearchForSerialPublication } from '../../facet_search_fields/SearchForSerialPublicationFacetItem';
 import { SelectCategoryFacetItem } from '../../facet_search_fields/SelectCategoryFacetItem';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
@@ -239,9 +239,21 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           dataTestId={dataTestId.aggregations.seriesFacets}
           renderCustomSelect={
             !searchParams.has(ResultParam.Series) && (
-              <SearchForSerialPublicationFacetItem
+              <SearchForSerialPublication
                 searchMode="series"
-                onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Series, identifier)}
+                onSelectSerialPublication={(series) => {
+                  if (series) {
+                    addFacetFilter(ResultParam.Series, series.identifier);
+                  }
+                }}
+                autocompleteProps={{
+                  value: null,
+                  size: 'small',
+                  sx: { p: '0.25rem 0.5rem' },
+                }}
+                textFieldProps={{
+                  showSearchIcon: true,
+                }}
               />
             )
           }
@@ -273,9 +285,21 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           dataTestId={dataTestId.aggregations.journalFacets}
           renderCustomSelect={
             !searchParams.has(ResultParam.Journal) && (
-              <SearchForSerialPublicationFacetItem
+              <SearchForSerialPublication
                 searchMode="journal"
-                onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Journal, identifier)}
+                onSelectSerialPublication={(journal) => {
+                  if (journal) {
+                    addFacetFilter(ResultParam.Journal, journal.identifier);
+                  }
+                }}
+                autocompleteProps={{
+                  value: null,
+                  size: 'small',
+                  sx: { p: '0.25rem 0.5rem' },
+                }}
+                textFieldProps={{
+                  showSearchIcon: true,
+                }}
               />
             )
           }
