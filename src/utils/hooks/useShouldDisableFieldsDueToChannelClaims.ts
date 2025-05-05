@@ -14,6 +14,7 @@ import {
   isReport,
   isResearchData,
 } from '../registration-helpers';
+import { hasCuratorRole } from '../user-helpers';
 import { useBetaFlag } from './useBetaFlag';
 
 export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registration) => {
@@ -41,10 +42,9 @@ export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registra
     return { isLoading: false, shouldDisableFields: false };
   }
 
-  const claimedByOtherInstitution =
-    !!channelClaimQuery.data && channelClaimQuery.data.claimedBy.organizationId !== user?.topOrgCristinId;
-
-  if (!claimedByOtherInstitution) {
+  const claimedByCurrentInstitution =
+    !!channelClaimQuery.data && channelClaimQuery.data.claimedBy.organizationId === user?.topOrgCristinId;
+  if (claimedByCurrentInstitution) {
     return { isLoading: false, shouldDisableFields: false };
   }
 
@@ -55,24 +55,22 @@ export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registra
     return { isLoading: false, shouldDisableFields: false };
   }
 
-  // if (isDegree(registration.entityDescription.reference.publicationInstance.type) && user?.isThesisCurator) {
-  //   return { isLoading: false, shouldDisableFields: false };
-  // } else if (!isDegree(registration.entityDescription.reference.publicationInstance.type) && hasCuratorRole(user)) {
-  //   return { isLoading: false, shouldDisableFields: false };
-  // }
+  if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'Everyone') {
+    return { isLoading: false, shouldDisableFields: false };
+  }
 
-  // if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'Everyone') {
-  //   return { isLoading: false, shouldDisableFields: false };
-  // }
+  const registrationIsOwnedByUserInstitution = user?.topOrgCristinId === registration.resourceOwner.ownerAffiliation;
+  if (isDegree(registration.entityDescription.reference.publicationInstance.type)) {
+    if (user?.isThesisCurator && registrationIsOwnedByUserInstitution) {
+      return { isLoading: false, shouldDisableFields: false };
+    }
+  } else {
+    if (hasCuratorRole(user) && registrationIsOwnedByUserInstitution) {
+      return { isLoading: false, shouldDisableFields: false };
+    }
+  }
 
-  // if (channelClaimQuery.data.channelClaim.constraint.editingPolicy === 'OwnerOnly') {
-  //   return {
-  //     isLoading: false,
-  //     shouldDisableFields: user?.topOrgCristinId === channelClaimQuery.data.claimedBy.organizationId,
-  //   };
-  // }
-
-  return { isLoading: channelClaimQuery.isFetching, shouldDisableFields: claimedByOtherInstitution };
+  return { isLoading: channelClaimQuery.isFetching, shouldDisableFields: true };
 };
 
 const getChannelId = (registration?: Registration) => {
