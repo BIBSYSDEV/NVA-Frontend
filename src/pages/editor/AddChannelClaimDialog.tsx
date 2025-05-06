@@ -41,6 +41,7 @@ export const AddChannelClaimDialog = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((state: RootState) => state.customer);
+  const isPublisherChannelClaim = channelType === 'publisher';
 
   const [selectedPublisherChannel, setSelectedPublisherChannel] = useState<Publisher | null>(null);
   const [selectedSerialPublicationChannel, setSelectedSerialPublicationChannel] = useState<SerialPublication | null>(
@@ -49,7 +50,11 @@ export const AddChannelClaimDialog = ({
 
   const closeDialogAndResetSelectedChannel = () => {
     closeDialog();
-    setSelectedPublisherChannel(null);
+    if (isPublisherChannelClaim) {
+      setSelectedPublisherChannel(null);
+    } else {
+      setSelectedSerialPublicationChannel(null);
+    }
   };
 
   const addChannelClaimMutation = useMutation({
@@ -86,7 +91,7 @@ export const AddChannelClaimDialog = ({
   return (
     <Dialog open={open} onClose={closeDialogAndResetSelectedChannel}>
       <DialogTitle>
-        {channelType === 'publisher'
+        {isPublisherChannelClaim
           ? t('editor.institution.channel_claims.add_publisher_channel_claim')
           : t('editor.institution.channel_claims.add_serial_publication_channel_claim')}
       </DialogTitle>
@@ -104,7 +109,7 @@ export const AddChannelClaimDialog = ({
         <DialogContent>
           <Trans
             i18nKey={
-              channelType === 'publisher'
+              isPublisherChannelClaim
                 ? 'editor.institution.channel_claims.add_publisher_channel_claim_description'
                 : 'editor.institution.channel_claims.add_serial_publication_channel_claim_description'
             }
@@ -115,7 +120,7 @@ export const AddChannelClaimDialog = ({
            * 1) Should not be able to select publishers with scientific level 1 or 2.
            * 2) Should not be able to select already claimed publishers.
            */}
-          {channelType === 'publisher' ? (
+          {isPublisherChannelClaim ? (
             <SearchForPublisher
               onSelectPublisher={(publisher) => setSelectedPublisherChannel(publisher)}
               autocompleteProps={{
@@ -168,7 +173,7 @@ export const AddChannelClaimDialog = ({
             type="submit"
             loading={addChannelClaimMutation.isPending}
             variant="contained"
-            disabled={channelType === 'publisher' ? !selectedPublisherChannel : !selectedSerialPublicationChannel}>
+            disabled={isPublisherChannelClaim ? !selectedPublisherChannel : !selectedSerialPublicationChannel}>
             {t('editor.institution.channel_claims.set_channel_claim')}
           </Button>
         </DialogActions>
