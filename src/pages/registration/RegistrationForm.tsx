@@ -1,12 +1,10 @@
-import LockIcon from '@mui/icons-material/Lock';
 import { Box, Typography } from '@mui/material';
 import { Form, Formik, FormikProps } from 'formik';
 import { useEffect, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviReportedStatus } from '../../api/hooks/useFetchNviReportedStatus';
-import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -24,10 +22,10 @@ import { Registration, RegistrationStatus, RegistrationTab } from '../../types/r
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
 import { useFetchChannelClaimsData } from '../../utils/hooks/useFetchChannelClaimsData';
 import { getTitleString, temporaryExtendedEditAccess, userHasAccessRight } from '../../utils/registration-helpers';
-import { getLanguageString } from '../../utils/translation-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { doNotRedirectQueryParam, UrlPathTemplate } from '../../utils/urlPaths';
 import { Forbidden } from '../errorpages/Forbidden';
+import { ChannelClaimInfoBox } from './ChannelClaimInfoBox';
 import { ContributorsPanel } from './ContributorsPanel';
 import { DescriptionPanel } from './DescriptionPanel';
 import { FilesAndLicensePanel } from './FilesAndLicensePanel';
@@ -55,9 +53,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const registrationId = registrationQuery.data?.id ?? '';
 
   const channelClaimData = useFetchChannelClaimsData(registration);
-  const channelClaimOrganization = useFetchOrganization(
-    channelClaimData.channelClaimQuery.data?.claimedBy.organizationId ?? ''
-  );
 
   const canHaveNviCandidate =
     registration?.status === RegistrationStatus.Published ||
@@ -117,31 +112,11 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             <RequiredDescription />
             <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
               <Box id="form" mb="2rem">
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '1rem',
-                    bgcolor: 'grey.400',
-                    p: '1rem',
-                    borderRadius: '0.5rem',
-                    mb: '1rem',
-                  }}>
-                  <LockIcon fontSize="large" />
-                  <div>
-                    <Trans
-                      i18nKey="registration.disable_fields_due_to_channel_claim"
-                      components={{
-                        heading: <Typography variant="h2" />,
-                        p: <Typography />,
-                        institution: (
-                          <Typography component="span" sx={{ fontWeight: 'bold' }}>
-                            {getLanguageString(channelClaimOrganization.data?.labels)}
-                          </Typography>
-                        ),
-                      }}
-                    />
-                  </div>
-                </Box>
+                {channelClaimData.shouldDisableFields && (
+                  <ChannelClaimInfoBox
+                    organizationId={channelClaimData.channelClaimQuery.data?.claimedBy.organizationId ?? ''}
+                  />
+                )}
                 {tabNumber === RegistrationTab.Description && (
                   <ErrorBoundary>
                     <DescriptionPanel />
