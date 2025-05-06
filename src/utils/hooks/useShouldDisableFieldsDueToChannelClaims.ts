@@ -25,19 +25,19 @@ export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registra
   const channelId = shouldFetch ? getChannelId(registration) : '';
   const channelClaimQuery = useFetchChannelClaim(channelId);
   if (!beta) {
-    return { isLoading: false, shouldDisableFields: false };
+    return { channelClaimQuery: channelClaimQuery, shouldDisableFields: false };
   }
 
   if (!registration?.entityDescription?.reference?.publicationInstance?.type) {
-    return { isLoading: false, shouldDisableFields: false };
+    return { channelClaimQuery: channelClaimQuery, shouldDisableFields: false };
   }
 
   if (!channelClaimQuery.data) {
-    return { isLoading: channelClaimQuery.isFetching, shouldDisableFields: false };
+    return { channelClaimQuery: channelClaimQuery, shouldDisableFields: false };
   }
 
   if (!user) {
-    return { isLoading: false, shouldDisableFields: true };
+    return { channelClaimQuery: channelClaimQuery, shouldDisableFields: true };
   }
 
   if (
@@ -45,16 +45,16 @@ export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registra
     registration.associatedArtifacts.some(isOpenFile)
   ) {
     if (!user.isThesisCurator) {
-      return { isLoading: false, shouldDisableFields: true };
+      return { channelClaimQuery: channelClaimQuery, shouldDisableFields: true };
     }
     if (channelClaimQuery.data.claimedBy.organizationId !== user.topOrgCristinId) {
-      return { isLoading: false, shouldDisableFields: true };
+      return { channelClaimQuery: channelClaimQuery, shouldDisableFields: true };
     } else if (user.topOrgCristinId !== registration.resourceOwner.ownerAffiliation) {
-      return { isLoading: false, shouldDisableFields: true };
+      return { channelClaimQuery: channelClaimQuery, shouldDisableFields: true };
     }
   }
 
-  return { isLoading: false, shouldDisableFields: false };
+  return { channelClaimQuery: channelClaimQuery, shouldDisableFields: false };
 };
 
 const getChannelId = (registration?: Registration) => {

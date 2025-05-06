@@ -1,3 +1,4 @@
+import LockIcon from '@mui/icons-material/Lock';
 import { Box, Typography } from '@mui/material';
 import { Form, Formik, FormikProps } from 'formik';
 import { useEffect, useState } from 'react';
@@ -5,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviReportedStatus } from '../../api/hooks/useFetchNviReportedStatus';
+import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -22,6 +24,7 @@ import { Registration, RegistrationStatus, RegistrationTab } from '../../types/r
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
 import { useShouldDisableFieldsDueToChannelClaims } from '../../utils/hooks/useShouldDisableFieldsDueToChannelClaims';
 import { getTitleString, temporaryExtendedEditAccess, userHasAccessRight } from '../../utils/registration-helpers';
+import { getLanguageString } from '../../utils/translation-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { doNotRedirectQueryParam, UrlPathTemplate } from '../../utils/urlPaths';
 import { Forbidden } from '../errorpages/Forbidden';
@@ -52,6 +55,9 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const registrationId = registrationQuery.data?.id ?? '';
 
   const channelClaims = useShouldDisableFieldsDueToChannelClaims(registration);
+  const channelClaimOrganization = useFetchOrganization(
+    channelClaims.channelClaimQuery.data?.claimedBy.organizationId ?? ''
+  );
 
   const canHaveNviCandidate =
     registration?.status === RegistrationStatus.Published ||
@@ -75,7 +81,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   }, [tabNumber]);
 
   return registrationQuery.isPending ||
-    channelClaims.isLoading ||
+    channelClaims.channelClaimQuery.isPending ||
     (canHaveNviCandidate && nviReportedStatus.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
@@ -111,6 +117,34 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             <RequiredDescription />
             <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
               <Box id="form" mb="2rem">
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: '1rem',
+                    bgcolor: 'grey.400',
+                    p: '1rem',
+                    borderRadius: '0.5rem',
+                    mb: '1rem',
+                  }}>
+                  <LockIcon fontSize="large" />
+                  <div>
+                    <Typography variant="h2">Felt låst for redigering</Typography>
+                    <Typography>
+                      Dette resultatet er tilknyttet en kanal som eies av &quot;
+                      <Box component="span" sx={{ fontWeight: 'bold' }}>
+                        {getLanguageString(channelClaimOrganization.data?.labels)}
+                      </Box>
+                      &quot;.
+                    </Typography>
+                    <Typography>
+                      De har satt at kun studentkurator fra sin institusjon kan redigere resultatet.
+                    </Typography>
+                    <Typography>
+                      Ta kontakt med studentkurator for endringer. Gå til loggen på resultat for detaljer for hvilken
+                      kurator som har behandlet publiseringsforespørselen
+                    </Typography>
+                  </div>
+                </Box>
                 {tabNumber === RegistrationTab.Description && (
                   <ErrorBoundary>
                     <DescriptionPanel />
