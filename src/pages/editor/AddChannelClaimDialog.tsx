@@ -53,9 +53,9 @@ export const AddChannelClaimDialog = ({
   };
 
   const addChannelClaimMutation = useMutation({
-    mutationFn: (publisherId: string) => {
-      if (customer?.id && publisherId) {
-        const channelIdWithoutYear = publisherId.replace(/\/\d{4}$/, '');
+    mutationFn: (channelId: string) => {
+      if (customer?.id && channelId) {
+        const channelIdWithoutYear = channelId.replace(/\/\d{4}$/, '');
         return setChannelClaim(customer.id, {
           channel: channelIdWithoutYear,
           constraint: {
@@ -85,19 +85,29 @@ export const AddChannelClaimDialog = ({
 
   return (
     <Dialog open={open} onClose={closeDialogAndResetSelectedChannel}>
-      <DialogTitle>{t('editor.institution.channel_claims.add_publisher_channel_claim')}</DialogTitle>
+      <DialogTitle>
+        {channelType === 'publisher'
+          ? t('editor.institution.channel_claims.add_publisher_channel_claim')
+          : t('editor.institution.channel_claims.add_serial_publication_channel_claim')}
+      </DialogTitle>
       <form
         noValidate
         onSubmit={async (event) => {
           event.preventDefault();
-          if (selectedSerialPublicationChannel) {
+          if (!!selectedSerialPublicationChannel) {
             await addChannelClaimMutation.mutateAsync(selectedSerialPublicationChannel.id);
+          } else if (!!selectedPublisherChannel) {
+            await addChannelClaimMutation.mutateAsync(selectedPublisherChannel.id);
           }
           closeDialogAndResetSelectedChannel();
         }}>
         <DialogContent>
           <Trans
-            i18nKey="editor.institution.channel_claims.add_publisher_channel_claim_description"
+            i18nKey={
+              channelType === 'publisher'
+                ? 'editor.institution.channel_claims.add_publisher_channel_claim_description'
+                : 'editor.institution.channel_claims.add_serial_publication_channel_claim_description'
+            }
             components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
           />
 
@@ -121,8 +131,8 @@ export const AddChannelClaimDialog = ({
             />
           ) : (
             <SearchForSerialPublication
-              searchMode={'series'}
-              onSelectSerialPublication={(channel) => setSelectedSerialPublicationChannel(channel)}
+              searchMode={'serial-publication'}
+              onSelectSerialPublication={(serialPublication) => setSelectedSerialPublicationChannel(serialPublication)}
               autocompleteProps={{
                 value: selectedSerialPublicationChannel,
                 disabled: addChannelClaimMutation.isPending,
@@ -158,7 +168,7 @@ export const AddChannelClaimDialog = ({
             type="submit"
             loading={addChannelClaimMutation.isPending}
             variant="contained"
-            disabled={!selectedSerialPublicationChannel}>
+            disabled={channelType === 'publisher' ? !selectedPublisherChannel : !selectedSerialPublicationChannel}>
             {t('editor.institution.channel_claims.set_channel_claim')}
           </Button>
         </DialogActions>

@@ -14,7 +14,7 @@ import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 interface SearchForSerialPublicationProps {
-  searchMode: 'journal' | 'series';
+  searchMode: 'journal' | 'series' | 'serial-publication';
   onSelectSerialPublication: (SerialPublication: SerialPublication | null) => void;
   autocompleteProps?: Partial<AutocompleteProps<SerialPublication, false, false, false>>;
   textFieldProps?: Partial<AutocompleteTextFieldProps>;
@@ -78,9 +78,17 @@ export const SearchForSerialPublication = ({
           data-testid={
             searchMode === 'series'
               ? dataTestId.aggregations.seriesFacetsSearchField
-              : dataTestId.aggregations.journalFacetsSearchField
+              : searchMode === 'journal'
+                ? dataTestId.aggregations.journalFacetsSearchField
+                : dataTestId.editor.channelSearchField
           }
-          placeholder={searchMode === 'series' ? t('search.search_for_series') : t('search.search_for_journal')}
+          placeholder={
+            searchMode === 'series'
+              ? t('search.search_for_series')
+              : searchMode === 'journal'
+                ? t('search.search_for_journal')
+                : t('search.search_for_serial_publication')
+          }
           {...textFieldProps}
         />
       )}

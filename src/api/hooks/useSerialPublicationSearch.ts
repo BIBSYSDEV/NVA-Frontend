@@ -4,7 +4,7 @@ import { keepSimilarPreviousData } from '../../utils/searchHelpers';
 import { searchForSerialPublications } from '../publicationChannelApi';
 
 interface SerialPublicationSearchParams {
-  searchMode: 'journal' | 'series';
+  searchMode: 'journal' | 'series' | 'serial-publication';
   searchTerm: string;
   size: number;
   year?: string;
