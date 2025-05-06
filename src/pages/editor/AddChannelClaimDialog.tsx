@@ -22,7 +22,7 @@ import { ChannelClaimType } from '../../types/customerInstitution.types';
 import { DegreeType } from '../../types/publicationFieldNames';
 import { PublicationInstanceType, Publisher, SerialPublication } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { SearchForSerialPublication } from '../search/facet_search_fields/SearchForSerialPublicationFacetItem';
+import { SearchForSerialPublication } from '../search/facet_search_fields/SearchForSerialPublication';
 
 const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
 
@@ -173,7 +173,7 @@ export const AddChannelClaimDialog = ({
             type="submit"
             loading={addChannelClaimMutation.isPending}
             variant="contained"
-            disabled={isPublisherChannelClaim ? !selectedPublisherChannel : !selectedSerialPublicationChannel}>
+            disabled={!selectedPublisherChannel || !selectedSerialPublicationChannel}>
             {t('editor.institution.channel_claims.set_channel_claim')}
           </Button>
         </DialogActions>

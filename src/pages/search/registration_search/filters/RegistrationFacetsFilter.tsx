@@ -14,7 +14,7 @@ import { SearchPageProps } from '../../SearchPage';
 import { SearchForPersonFacetItem } from '../../facet_search_fields/SearchForContributorFacetItem';
 import { SearchForFundingSourceFacetItem } from '../../facet_search_fields/SearchForFundingSourceFacetItem';
 import { SearchForInstitutionFacetItem } from '../../facet_search_fields/SearchForInstitutionFacetItem';
-import { SearchForSerialPublication } from '../../facet_search_fields/SearchForSerialPublicationFacetItem';
+import { SearchForSerialPublication } from '../../facet_search_fields/SearchForSerialPublication';
 import { SelectCategoryFacetItem } from '../../facet_search_fields/SelectCategoryFacetItem';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
