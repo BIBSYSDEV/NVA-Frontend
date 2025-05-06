@@ -4,6 +4,7 @@ import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
 import { fetchResults, FetchResultsParams } from '../../api/searchApi';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
@@ -12,6 +13,7 @@ import { RegistrationIconHeader } from '../../components/RegistrationIconHeader'
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { RootState } from '../../redux/store';
 import { PreviousPathLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
@@ -23,6 +25,7 @@ import {
   isBook,
   isReport,
   isResearchData,
+  temporaryExtendedEditAccess,
   userHasAccessRight,
 } from '../../utils/registration-helpers';
 import { getWizardPathByRegistration } from '../../utils/urlPaths';
@@ -46,6 +49,7 @@ export interface PublicRegistrationContentProps {
 
 export const PublicRegistrationContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
+  const user = useSelector((state: RootState) => state.user);
 
   const { identifier, entityDescription, projects, subjects, fundings } = registration;
   const contributors = entityDescription?.contributors ?? [];
@@ -64,7 +68,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const userCanEditRegistration = userHasAccessRight(registration, 'update');
+  const userCanEditRegistration =
+    userHasAccessRight(registration, 'update') || temporaryExtendedEditAccess(registration, user);
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>

@@ -21,7 +21,7 @@ import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
 import { useShouldDisableFieldsDueToChannelClaims } from '../../utils/hooks/useShouldDisableFieldsDueToChannelClaims';
-import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
+import { getTitleString, temporaryExtendedEditAccess, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { doNotRedirectQueryParam, UrlPathTemplate } from '../../utils/urlPaths';
 import { Forbidden } from '../errorpages/Forbidden';
@@ -67,7 +67,8 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
-  const canEditRegistration = userHasAccessRight(registration, 'update');
+  const canEditRegistration =
+    userHasAccessRight(registration, 'update') || temporaryExtendedEditAccess(registration, user);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
