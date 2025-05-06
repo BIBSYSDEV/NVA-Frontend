@@ -16,7 +16,7 @@ import {
 } from '../registration-helpers';
 import { useBetaFlag } from './useBetaFlag';
 
-export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registration) => {
+export const useFetchChannelClaimsData = (registration?: Registration) => {
   const user = useSelector((state: RootState) => state.user);
   const beta = useBetaFlag();
 

@@ -2,7 +2,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { Box, Typography } from '@mui/material';
 import { Form, Formik, FormikProps } from 'formik';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviReportedStatus } from '../../api/hooks/useFetchNviReportedStatus';
@@ -22,7 +22,7 @@ import { RootState } from '../../redux/store';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
-import { useShouldDisableFieldsDueToChannelClaims } from '../../utils/hooks/useShouldDisableFieldsDueToChannelClaims';
+import { useFetchChannelClaimsData } from '../../utils/hooks/useFetchChannelClaimsData';
 import { getTitleString, temporaryExtendedEditAccess, userHasAccessRight } from '../../utils/registration-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
@@ -54,9 +54,9 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
 
-  const channelClaims = useShouldDisableFieldsDueToChannelClaims(registration);
+  const channelClaimData = useFetchChannelClaimsData(registration);
   const channelClaimOrganization = useFetchOrganization(
-    channelClaims.channelClaimQuery.data?.claimedBy.organizationId ?? ''
+    channelClaimData.channelClaimQuery.data?.claimedBy.organizationId ?? ''
   );
 
   const canHaveNviCandidate =
@@ -81,14 +81,14 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   }, [tabNumber]);
 
   return registrationQuery.isPending ||
-    channelClaims.channelClaimQuery.isPending ||
+    channelClaimData.channelClaimQuery.isPending ||
     (canHaveNviCandidate && nviReportedStatus.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
     <RegistrationFormContext.Provider
-      value={{ disableNviCriticalFields, disableChannelClaimsFields: channelClaims.shouldDisableFields }}>
+      value={{ disableNviCriticalFields, disableChannelClaimsFields: channelClaimData.shouldDisableFields }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
@@ -128,21 +128,18 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
                   }}>
                   <LockIcon fontSize="large" />
                   <div>
-                    <Typography variant="h2">Felt låst for redigering</Typography>
-                    <Typography>
-                      Dette resultatet er tilknyttet en kanal som eies av &quot;
-                      <Box component="span" sx={{ fontWeight: 'bold' }}>
-                        {getLanguageString(channelClaimOrganization.data?.labels)}
-                      </Box>
-                      &quot;.
-                    </Typography>
-                    <Typography>
-                      De har satt at kun studentkurator fra sin institusjon kan redigere resultatet.
-                    </Typography>
-                    <Typography>
-                      Ta kontakt med studentkurator for endringer. Gå til loggen på resultat for detaljer for hvilken
-                      kurator som har behandlet publiseringsforespørselen
-                    </Typography>
+                    <Trans
+                      i18nKey="registration.disable_fields_due_to_channel_claim"
+                      components={{
+                        heading: <Typography variant="h2" />,
+                        p: <Typography />,
+                        institution: (
+                          <Typography component="span" sx={{ fontWeight: 'bold' }}>
+                            {getLanguageString(channelClaimOrganization.data?.labels)}
+                          </Typography>
+                        ),
+                      }}
+                    />
                   </div>
                 </Box>
                 {tabNumber === RegistrationTab.Description && (
