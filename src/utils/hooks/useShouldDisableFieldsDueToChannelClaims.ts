@@ -5,10 +5,10 @@ import { BookPublicationContext } from '../../types/publication_types/bookRegist
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import { Registration } from '../../types/registration.types';
 import {
-  getAssociatedFiles,
   isBook,
   isDegree,
   isJournal,
+  isOpenFile,
   isOtherRegistration,
   isPeriodicalMediaContribution,
   isReport,
@@ -38,7 +38,7 @@ export const useShouldDisableFieldsDueToChannelClaims = (registration?: Registra
     return { isLoading: channelClaimQuery.isFetching, shouldDisableFields: false };
   }
 
-  if (!getAssociatedFiles(registration.associatedArtifacts).some((file) => file.type === 'OpenFile')) {
+  if (!registration.associatedArtifacts.some(isOpenFile)) {
     return { isLoading: false, shouldDisableFields: false };
   }
 
