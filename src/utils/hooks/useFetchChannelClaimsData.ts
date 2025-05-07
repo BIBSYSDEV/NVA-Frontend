@@ -75,7 +75,8 @@ const getChannelId = (registration?: Registration) => {
   const canHaveJournal = !canHavePublisher && (isJournal(category) || isPeriodicalMediaContribution(category));
 
   if (canHavePublisher) {
-    return (registration.entityDescription?.reference?.publicationContext as BookPublicationContext).publisher?.id; // TODO: Should consider claimed series if not claimed publisher
+    // TODO: Should consider claimed series if publisher is not claimed
+    return (registration.entityDescription?.reference?.publicationContext as BookPublicationContext).publisher?.id;
   }
   if (canHaveJournal) {
     return (registration.entityDescription?.reference?.publicationContext as JournalPublicationContext).id;
