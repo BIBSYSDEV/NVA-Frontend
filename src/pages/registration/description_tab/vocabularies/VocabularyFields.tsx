@@ -3,10 +3,11 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { ParseKeys } from 'i18next';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../../../utils/constants';
@@ -45,6 +46,7 @@ interface VocabularyFieldsProps {
 
 export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: VocabularyFieldsProps) => {
   const { t } = useTranslation();
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
   const {
     setFieldValue,
     values: { subjects },
@@ -84,6 +86,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                   data-testid={dataTestId.registrationWizard.description.vocabularyRow(vocabulary)}
                   sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
                   <VocabularyComponent
+                    disabled={disableChannelClaimsFields}
                     selectedIds={selectedIds}
                     addValue={push}
                     removeValue={(valueToRemove) => remove(subjects.indexOf(valueToRemove))}
@@ -153,6 +156,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
 
       {addableVocabularies.length > 0 && (
         <Button
+          disabled={disableChannelClaimsFields}
           data-testid={dataTestId.registrationWizard.description.addVocabularyButton}
           onClick={(event) => setNewVocabularyAnchor(event.currentTarget)}
           startIcon={<AddIcon />}

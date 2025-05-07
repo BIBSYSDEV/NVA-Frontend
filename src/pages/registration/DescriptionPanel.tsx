@@ -156,6 +156,7 @@ export const DescriptionPanel = () => {
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
+            disabled={disableChannelClaimsFields}
             value={field.value ?? ''}
             data-testid={dataTestId.registrationWizard.description.descriptionField}
             label={t('registration.description.description_of_content')}
@@ -169,6 +170,7 @@ export const DescriptionPanel = () => {
         {({ field }: FieldProps) => (
           <Autocomplete
             {...field}
+            disabled={disableChannelClaimsFields}
             value={field.value ?? []}
             freeSolo
             multiple
@@ -209,7 +211,7 @@ export const DescriptionPanel = () => {
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
-              id={field.name}
+              disabled={disableChannelClaimsFields}
               value={field.value ?? ''}
               data-testid={dataTestId.registrationWizard.description.languageField}
               fullWidth
