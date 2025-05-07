@@ -27,9 +27,9 @@ export const PublisherClaimsSettings = () => {
   const channelClaims = channelClaimsQuery.data?.channelClaims;
 
   const [searchParams] = useSearchParams();
-  const showOnlyOwnInstitution = !!searchParams.get('viewingOptions');
+  const shouldFilter = !!searchParams.get('viewingOptions');
 
-  const channelClaimList = channelClaims ? filterChannelClaims(channelClaims, showOnlyOwnInstitution, customerId) : [];
+  const channelClaimList = channelClaims ? filterChannelClaims(channelClaims, shouldFilter, customerId) : [];
 
   return (
     <>
