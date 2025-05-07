@@ -18,33 +18,47 @@ import { setChannelClaim } from '../../api/customerInstitutionsApi';
 import { SearchForPublisher } from '../../components/SearchForPublisher';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
+import { ChannelClaimType } from '../../types/customerInstitution.types';
 import { DegreeType } from '../../types/publicationFieldNames';
-import { PublicationInstanceType, Publisher } from '../../types/registration.types';
+import { PublicationInstanceType, Publisher, SerialPublication } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { SearchForSerialPublication } from '../search/facet_search_fields/SearchForSerialPublication';
 
 const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
 
 interface AddChannelClaimDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
   refetchClaimedChannels: () => Promise<unknown>;
+  channelType: ChannelClaimType;
 }
 
-export const AddChannelClaimDialog = ({ open, closeDialog, refetchClaimedChannels }: AddChannelClaimDialogProps) => {
+export const AddChannelClaimDialog = ({
+  open,
+  closeDialog,
+  refetchClaimedChannels,
+  channelType,
+}: AddChannelClaimDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((state: RootState) => state.customer);
+  const isPublisherChannelClaim = channelType === 'publisher';
 
-  const [selectedChannel, setSelectedChannel] = useState<Publisher | null>(null);
+  const [selectedPublisher, setSelectedPublisher] = useState<Publisher | null>(null);
+  const [selectedSerialPublication, setSelectedSerialPublication] = useState<SerialPublication | null>(null);
 
   const closeDialogAndResetSelectedChannel = () => {
     closeDialog();
-    setSelectedChannel(null);
+    if (isPublisherChannelClaim) {
+      setSelectedPublisher(null);
+    } else {
+      setSelectedSerialPublication(null);
+    }
   };
 
   const addChannelClaimMutation = useMutation({
-    mutationFn: (publisherId: string) => {
-      if (customer?.id && publisherId) {
-        const channelIdWithoutYear = publisherId.replace(/\/\d{4}$/, '');
+    mutationFn: (channelId: string) => {
+      if (customer?.id && channelId) {
+        const channelIdWithoutYear = channelId.replace(/\/\d{4}$/, '');
         return setChannelClaim(customer.id, {
           channel: channelIdWithoutYear,
           constraint: {
@@ -54,7 +68,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog, refetchClaimedChannel
           },
         });
       }
-      return Promise.reject(new Error('Customer ID or Publisher ID is missing'));
+      return Promise.reject(new Error('Customer ID or Channel ID is missing'));
     },
     onSuccess: async () => {
       dispatch(setNotification({ message: t('feedback.success.set_channel_claim'), variant: 'success' }));
@@ -74,19 +88,29 @@ export const AddChannelClaimDialog = ({ open, closeDialog, refetchClaimedChannel
 
   return (
     <Dialog open={open} onClose={closeDialogAndResetSelectedChannel}>
-      <DialogTitle>{t('editor.institution.channel_claims.add_publisher_channel_claim')}</DialogTitle>
+      <DialogTitle>
+        {isPublisherChannelClaim
+          ? t('editor.institution.channel_claims.add_publisher_channel_claim')
+          : t('editor.institution.channel_claims.add_serial_publication_channel_claim')}
+      </DialogTitle>
       <form
         noValidate
         onSubmit={async (event) => {
           event.preventDefault();
-          if (selectedChannel) {
-            await addChannelClaimMutation.mutateAsync(selectedChannel.id);
+          if (selectedSerialPublication) {
+            await addChannelClaimMutation.mutateAsync(selectedSerialPublication.id);
+          } else if (selectedPublisher) {
+            await addChannelClaimMutation.mutateAsync(selectedPublisher.id);
           }
           closeDialogAndResetSelectedChannel();
         }}>
         <DialogContent>
           <Trans
-            i18nKey="editor.institution.channel_claims.add_publisher_channel_claim_description"
+            i18nKey={
+              isPublisherChannelClaim
+                ? 'editor.institution.channel_claims.add_publisher_channel_claim_description'
+                : 'editor.institution.channel_claims.add_serial_publication_channel_claim_description'
+            }
             components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
           />
 
@@ -94,19 +118,36 @@ export const AddChannelClaimDialog = ({ open, closeDialog, refetchClaimedChannel
            * 1) Should not be able to select publishers with scientific level 1 or 2.
            * 2) Should not be able to select already claimed publishers.
            */}
-          <SearchForPublisher
-            onSelectPublisher={(publisher) => setSelectedChannel(publisher)}
-            autocompleteProps={{
-              value: selectedChannel,
-              disabled: addChannelClaimMutation.isPending,
-            }}
-            textFieldProps={{
-              'data-testid': dataTestId.editor.channelSearchField,
-              variant: 'filled',
-              label: t('common.publisher'),
-              required: true,
-            }}
-          />
+          {isPublisherChannelClaim ? (
+            <SearchForPublisher
+              onSelectPublisher={(publisher) => setSelectedPublisher(publisher)}
+              autocompleteProps={{
+                value: selectedPublisher,
+                disabled: addChannelClaimMutation.isPending,
+              }}
+              textFieldProps={{
+                'data-testid': dataTestId.editor.channelSearchField,
+                variant: 'filled',
+                label: t('common.publisher'),
+                required: true,
+              }}
+            />
+          ) : (
+            <SearchForSerialPublication
+              searchMode={'serial-publication'}
+              onSelectSerialPublication={(serialPublication) => setSelectedSerialPublication(serialPublication)}
+              autocompleteProps={{
+                value: selectedSerialPublication,
+                disabled: addChannelClaimMutation.isPending,
+              }}
+              textFieldProps={{
+                'data-testid': dataTestId.editor.channelSearchField,
+                variant: 'filled',
+                label: t('common.serial_publication'),
+                required: true,
+              }}
+            />
+          )}
           <Typography sx={{ mt: '1rem' }} gutterBottom>
             {t('editor.institution.channel_claims.claim_category_restriction')}:
           </Typography>
@@ -130,7 +171,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog, refetchClaimedChannel
             type="submit"
             loading={addChannelClaimMutation.isPending}
             variant="contained"
-            disabled={!selectedChannel}>
+            disabled={!selectedPublisher && !selectedSerialPublication}>
             {t('editor.institution.channel_claims.set_channel_claim')}
           </Button>
         </DialogActions>

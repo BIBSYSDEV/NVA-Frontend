@@ -42,11 +42,6 @@ export const PublisherClaimsSettings = () => {
           ),
         }}
       />
-      <AddChannelClaimDialog
-        open={openAddChannelClaimDialog}
-        closeDialog={toggleAddChannelClaimDialog}
-        refetchClaimedChannels={channelClaimsQuery.refetch}
-      />
 
       <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
         {channelClaimsQuery.isPending ? (
@@ -55,6 +50,13 @@ export const PublisherClaimsSettings = () => {
           <ChannelClaimTable channelClaimList={channelClaimList} channelType={'publisher'} />
         ) : null}
       </TableContainer>
+
+      <AddChannelClaimDialog
+        open={openAddChannelClaimDialog}
+        closeDialog={toggleAddChannelClaimDialog}
+        refetchClaimedChannels={channelClaimsQuery.refetch}
+        channelType={'publisher'}
+      />
     </>
   );
 };
