@@ -21,6 +21,7 @@ import { RootState } from '../../redux/store';
 import { DegreeType } from '../../types/publicationFieldNames';
 import { PublicationInstanceType, Publisher } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { removeTrailingYearPathFromUrl } from '../../utils/general-helpers';
 
 const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
 
@@ -44,9 +45,8 @@ export const AddChannelClaimDialog = ({ open, closeDialog, refetchClaimedChannel
   const addChannelClaimMutation = useMutation({
     mutationFn: (publisherId: string) => {
       if (customer?.id && publisherId) {
-        const channelIdWithoutYear = publisherId.replace(/\/\d{4}$/, '');
         return setChannelClaim(customer.id, {
-          channel: channelIdWithoutYear,
+          channel: removeTrailingYearPathFromUrl(publisherId),
           constraint: {
             scope: selectedCategories,
             publishingPolicy: 'Everyone',

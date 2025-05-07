@@ -16,6 +16,7 @@ import {
 } from '../registration-helpers';
 import { useBetaFlag } from './useBetaFlag';
 
+// TODO: This functionality for calculating shouldDisableFields should be replaced with allowedOperations when it is implemented in the backend
 export const useFetchChannelClaimsData = (registration?: Registration) => {
   const user = useSelector((state: RootState) => state.user);
   const beta = useBetaFlag();
