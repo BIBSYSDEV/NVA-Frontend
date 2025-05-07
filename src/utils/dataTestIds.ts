@@ -137,6 +137,7 @@ export const dataTestId = {
     addCuratorButton: (id: string) => `add-curator-button-${id}`,
     categoriesLinkButton: 'categories-link-button',
     channelSearchField: 'channel-search-field',
+    channelClaimFilterSelect: 'channel-claim-filter-select',
     curatorsOverviewLinkButton: 'curators-overview-link-button',
     curatorsSettingsLinkButton: 'curators-settings-link-button',
     curatorsSearchForPersonField: 'curators-search-for-person-field',

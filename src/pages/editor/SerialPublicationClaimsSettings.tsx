@@ -8,6 +8,7 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimTable } from './ChannelClaimTable';
+import { ChannelClaimFilter } from './ChannelClaimFilter';
 
 export const SerialPublicationClaimsSettings = () => {
   const { t } = useTranslation();
@@ -42,6 +43,8 @@ export const SerialPublicationClaimsSettings = () => {
           ),
         }}
       />
+
+      <ChannelClaimFilter />
 
       <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
         {channelClaimsQuery.isPending ? (
