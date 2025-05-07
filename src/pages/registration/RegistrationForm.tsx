@@ -76,7 +76,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   }, [tabNumber]);
 
   return registrationQuery.isPending ||
-    channelClaimData.channelClaimQuery.isPending ||
+    channelClaimData.channelClaimQuery.isLoading ||
     (canHaveNviCandidate && nviReportedStatus.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
@@ -112,9 +112,10 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             <RequiredDescription />
             <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
               <Box id="form" mb="2rem">
-                {channelClaimData.shouldDisableFields && (
+                {channelClaimData.channelClaimQuery.data && channelClaimData.shouldDisableFields && (
                   <ChannelClaimInfoBox
-                    organizationId={channelClaimData.channelClaimQuery.data?.claimedBy.organizationId ?? ''}
+                    channelClaim={channelClaimData.channelClaimQuery.data}
+                    registration={registration}
                   />
                 )}
                 {tabNumber === RegistrationTab.Description && (
