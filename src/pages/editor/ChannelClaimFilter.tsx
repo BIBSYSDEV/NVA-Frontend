@@ -2,6 +2,7 @@ import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { dataTestId } from '../../utils/dataTestIds';
+import { ChannelClaimParams } from '../../api/searchApi';
 
 export const ChannelClaimFilter = () => {
   const { t } = useTranslation();
@@ -19,14 +20,14 @@ export const ChannelClaimFilter = () => {
           label={t('tasks.display_options')}
           size="small"
           variant="outlined"
-          value={searchParams.get('viewingOptions') || 'showAll'}
+          value={searchParams.get(ChannelClaimParams.ViewingOptions) || 'showAll'}
           onChange={(event) => {
             const selectedOption = event.target.value;
             setSearchParams((params) => {
               if (selectedOption === 'showOwn') {
-                params.set('viewingOptions', selectedOption);
+                params.set(ChannelClaimParams.ViewingOptions, selectedOption);
               } else {
-                params.delete('viewingOptions');
+                params.delete(ChannelClaimParams.ViewingOptions);
               }
               return params;
             });

@@ -3,20 +3,33 @@ import { Button, TableContainer, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router';
 import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 import { PageSpinner } from '../../components/PageSpinner';
+import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
+import { filterChannelClaims } from '../../utils/institutions-helpers';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
+import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
 
 export const PublisherClaimsSettings = () => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
+  const customerId = user?.customerId ?? '';
 
   const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);
   const toggleAddChannelClaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
 
   const channelClaimsQuery = useFetchChannelClaims('publisher');
-  const channelClaimList = channelClaimsQuery.data?.channelClaims;
+
+  const channelClaims = channelClaimsQuery.data?.channelClaims;
+
+  const [searchParams] = useSearchParams();
+  const showOnlyOwnInstitution = !!searchParams.get('viewingOptions');
+
+  const channelClaimList = channelClaims ? filterChannelClaims(channelClaims, showOnlyOwnInstitution, customerId) : [];
 
   return (
     <>
@@ -42,6 +55,8 @@ export const PublisherClaimsSettings = () => {
           ),
         }}
       />
+
+      <ChannelClaimFilter />
 
       <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
         {channelClaimsQuery.isPending ? (
