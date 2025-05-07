@@ -6,6 +6,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 import { PageSpinner } from '../../components/PageSpinner';
 import { dataTestId } from '../../utils/dataTestIds';
+import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimTable } from './ChannelClaimTable';
 
 export const SerialPublicationClaimsSettings = () => {
@@ -49,6 +50,13 @@ export const SerialPublicationClaimsSettings = () => {
           <ChannelClaimTable channelClaimList={channelClaimList} channelType={'serial-publication'} />
         ) : null}
       </TableContainer>
+
+      <AddChannelClaimDialog
+        open={openAddChannelClaimDialog}
+        closeDialog={toggleAddChannelClaimDialog}
+        refetchClaimedChannels={channelClaimsQuery.refetch}
+        channelType={'serial-publication'}
+      />
     </>
   );
 };
