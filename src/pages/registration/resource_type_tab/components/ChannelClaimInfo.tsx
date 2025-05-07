@@ -46,12 +46,12 @@ export const ChannelClaimInfo = ({ channelId, channelType }: ChannelClaimInfoPro
           <Typography color="inherit">
             {t('registration.resource_type.channel_claimed_by_other_institution', { channelType })}
           </Typography>
-          <Typography color="inherit" sx={{ display: 'flex' }}>
+          <Typography color="inherit">
             <Trans
               i18nKey="registration.resource_type.files_will_be_handled_by_other_institution"
               components={{
                 institution: organizationQuery.isPending ? (
-                  <Skeleton sx={{ width: '12rem' }} />
+                  <Skeleton sx={{ width: '12rem', display: 'inline-block' }} />
                 ) : (
                   <Box component="span" sx={{ fontWeight: 'bold' }}>
                     {getLanguageString(organizationQuery.data?.labels)}
