@@ -121,6 +121,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   {t('registration.files_and_license.find_series_in_channel_register')}
                 </OpenInNewLink>
               )}
+
+              {/* TODO: Show channel claim info here */}
             </Paper>
           )}
 
