@@ -26,15 +26,15 @@ import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PortfolioSearchPage } from './PortfolioSearchPage';
 import { PublishStrategySettings } from './PublishStrategySettings';
+import { PublisherClaimsOverview } from './PublisherClaimsOverview';
 import { PublisherClaimsSettings } from './PublisherClaimsSettings';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
+import { SerialPublicationClaimsOverview } from './SerialPublicationClaimsOverview';
 import { SerialPublicationClaimsSettings } from './SerialPublicationClaimsSettings';
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
 import { OrganizationCurators } from './curators/OrganizationCurators';
-import { SerialPublicationClaimsOverview } from './SerialPublicationClaimsOverview';
-import { PublisherClaimsOverview } from './PublisherClaimsOverview';
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
