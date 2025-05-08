@@ -25,7 +25,7 @@ import {
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
-import { ChannelClaimInfo } from './resource_type_tab/components/ChannelClaimInfo';
+import { ClaimedChannelInfoBox } from './resource_type_tab/components/ClaimedChannelInfoBox';
 import { LinkField } from './resource_type_tab/components/LinkField';
 
 const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler/info';
@@ -112,7 +112,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 </OpenInNewLink>
               )}
               {journalId && (
-                <ChannelClaimInfo channelId={journalId} channelType={t('registration.resource_type.journal')} />
+                <ClaimedChannelInfoBox channelId={journalId} channelType={t('registration.resource_type.journal')} />
               )}
 
               {publisherIdentifier && (
@@ -120,7 +120,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   {t('registration.files_and_license.find_publisher_in_channel_register')}
                 </OpenInNewLink>
               )}
-              {publisherId && <ChannelClaimInfo channelId={publisherId} channelType={t('common.publisher')} />}
+              {publisherId && <ClaimedChannelInfoBox channelId={publisherId} channelType={t('common.publisher')} />}
 
               {seriesIdentifier && (
                 <OpenInNewLink href={getChannelRegisterJournalUrl(seriesIdentifier)}>
@@ -128,7 +128,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 </OpenInNewLink>
               )}
               {seriesId && (
-                <ChannelClaimInfo channelId={seriesId} channelType={t('registration.resource_type.series')} />
+                <ClaimedChannelInfoBox channelId={seriesId} channelType={t('registration.resource_type.series')} />
               )}
             </Paper>
           )}

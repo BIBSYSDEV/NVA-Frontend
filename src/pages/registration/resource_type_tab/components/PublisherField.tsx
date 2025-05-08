@@ -19,7 +19,7 @@ import { PublicationChannelType, Publisher, Registration } from '../../../../typ
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
-import { ChannelClaimInfo } from './ChannelClaimInfo';
+import { ClaimedChannelInfoBox } from './ClaimedChannelInfoBox';
 import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -161,7 +161,7 @@ export const PublisherField = () => {
         )}
       </Field>
 
-      {publisher?.id && <ChannelClaimInfo channelId={publisher.id} channelType={t('common.publisher')} />}
+      {publisher?.id && <ClaimedChannelInfoBox channelId={publisher.id} channelType={t('common.publisher')} />}
 
       {!publisher?.id && publisherOptionsQuery.isFetched && (
         <>

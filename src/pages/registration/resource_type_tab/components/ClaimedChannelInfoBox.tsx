@@ -10,12 +10,12 @@ import { RootState } from '../../../../redux/store';
 import { Registration } from '../../../../types/registration.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
-interface ChannelClaimInfoProps {
+interface ClaimedChannelInfoBoxProps {
   channelId: string;
   channelType: string;
 }
 
-export const ChannelClaimInfo = ({ channelId, channelType }: ChannelClaimInfoProps) => {
+export const ClaimedChannelInfoBox = ({ channelId, channelType }: ClaimedChannelInfoBoxProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
   const { values } = useFormikContext<Registration>();
