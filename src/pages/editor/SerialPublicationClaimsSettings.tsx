@@ -13,6 +13,7 @@ import { filterChannelClaims } from '../../utils/institutions-helpers';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
+import { ChannelClaimParams } from '../../api/searchApi';
 
 export const SerialPublicationClaimsSettings = () => {
   const { t } = useTranslation();
@@ -26,9 +27,11 @@ export const SerialPublicationClaimsSettings = () => {
   const channelClaims = channelClaimsQuery.data?.channelClaims;
 
   const [searchParams] = useSearchParams();
-  const shouldFilter = !!searchParams.get('viewingOptions');
 
-  const channelClaimList = channelClaims ? filterChannelClaims(channelClaims, shouldFilter, customerId) : [];
+  const channelClaimList =
+    channelClaims && !!searchParams.get(ChannelClaimParams.ViewingOptions)
+      ? filterChannelClaims(channelClaims, customerId)
+      : channelClaims;
 
   return (
     <>

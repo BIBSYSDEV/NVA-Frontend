@@ -1,17 +1,18 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
-import { dataTestId } from '../../utils/dataTestIds';
 import { ChannelClaimParams } from '../../api/searchApi';
+import { dataTestId } from '../../utils/dataTestIds';
+
+const selectLabelId = 'select-label-id';
 
 export const ChannelClaimFilter = () => {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const selectLabelId = 'select-label-id';
 
   return (
     <Box sx={{ display: 'flex', gap: '1rem', my: '1rem', justifyContent: 'end' }}>
-      <FormControl size="small">
+      <FormControl>
         <InputLabel id={selectLabelId}>{t('tasks.display_options')}</InputLabel>
         <Select
           data-testid={dataTestId.editor.channelClaimFilterSelect}

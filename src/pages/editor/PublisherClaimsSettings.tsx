@@ -13,6 +13,7 @@ import { filterChannelClaims } from '../../utils/institutions-helpers';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
+import { ChannelClaimParams } from '../../api/searchApi';
 
 export const PublisherClaimsSettings = () => {
   const { t } = useTranslation();
@@ -23,13 +24,14 @@ export const PublisherClaimsSettings = () => {
   const toggleAddChannelClaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
 
   const channelClaimsQuery = useFetchChannelClaims('publisher');
-
   const channelClaims = channelClaimsQuery.data?.channelClaims;
 
   const [searchParams] = useSearchParams();
-  const shouldFilter = !!searchParams.get('viewingOptions');
 
-  const channelClaimList = channelClaims ? filterChannelClaims(channelClaims, shouldFilter, customerId) : [];
+  const channelClaimList =
+    channelClaims && !!searchParams.get(ChannelClaimParams.ViewingOptions)
+      ? filterChannelClaims(channelClaims, customerId)
+      : channelClaims;
 
   return (
     <>
