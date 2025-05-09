@@ -37,7 +37,7 @@ export const ChannelClaimInfoBox = ({ channelClaim, registration }: ChannelClaim
             i18nKey="registration.channel_claim_info_owned_by"
             components={{
               institution: organizationQuery.isPending ? (
-                <Skeleton sx={{ width: '12rem' }} />
+                <Skeleton sx={{ display: 'inline-block', width: '12rem' }} />
               ) : (
                 <Typography component="span" sx={{ fontWeight: 'bold' }}>
                   {getLanguageString(organizationQuery.data?.labels)}
