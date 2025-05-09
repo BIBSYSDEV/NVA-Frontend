@@ -1,6 +1,6 @@
 import { CristinApiPath } from '../api/apiPaths';
 import { ConfirmedAffiliation, Contributor } from '../types/contributor.types';
-import { ClaimedChannel, SimpleCustomerInstitution } from '../types/customerInstitution.types';
+import { SimpleCustomerInstitution } from '../types/customerInstitution.types';
 import { Organization } from '../types/organization.types';
 import { API_URL } from './constants';
 import { getLanguageString } from './translation-helpers';
@@ -56,7 +56,3 @@ export const getTopLevelOrganization = (organization: Organization): Organizatio
 
 export const sortCustomerInstitutions = <T extends SimpleCustomerInstitution>(customers: T[] = []) =>
   customers.sort((a, b) => (a.displayName?.toLocaleLowerCase() < b.displayName?.toLocaleLowerCase() ? -1 : 1));
-
-export const filterChannelClaims = (channelClaimList: ClaimedChannel[], customerId: string): ClaimedChannel[] => {
-  return channelClaimList.filter((claim) => claim.claimedBy.id === customerId);
-};

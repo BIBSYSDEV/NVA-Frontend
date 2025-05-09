@@ -6,14 +6,14 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router';
 import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
+import { ChannelClaimParams } from '../../api/searchApi';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
-import { filterChannelClaims } from '../../utils/institutions-helpers';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
-import { ChannelClaimParams } from '../../api/searchApi';
+import { filterChannelClaims } from '../../utils/customerHelpers';
 
 export const SerialPublicationClaimsSettings = () => {
   const { t } = useTranslation();
