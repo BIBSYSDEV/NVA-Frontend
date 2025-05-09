@@ -465,9 +465,9 @@
         "claim_category_restriction": "Kategorier som begrensningen skal gjelde for",
         "editing_access": "Tilgang til å redigere",
         "publishing_access": "Tilgang til å publisere",
-        "publisher_claims_overview": "Oversikt over utgivere",
+        "publisher_claims_overview": "Oversikt over utgivereierskap",
         "set_channel_claim": "Sett eierskap",
-        "serial_publication_claims_overview": "Oversikt over serie/tidsskrift"
+        "serial_publication_claims_overview": "Oversikt over serie-/tidsskrifteierskap"
       },
       "institution_admin_one": "Institusjonens administrator",
       "institution_admin_other": "Institusjonens administratorer",
