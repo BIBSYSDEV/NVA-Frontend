@@ -4,7 +4,7 @@ import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledInfoBanner } from '../../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../../context/RegistrationFormContext';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -26,7 +26,7 @@ export const DatePickerField = () => {
   const [date, setDate] = useState(getRegistrationDate(dateData));
   const [yearOnly, setYearOnly] = useState(!!dateData?.year && !dateData?.month);
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(RegistrationFormContext);
 
   const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
     const updatedDate: RegistrationDate = {

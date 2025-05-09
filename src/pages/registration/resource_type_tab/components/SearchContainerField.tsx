@@ -9,7 +9,7 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { PreviewContributor } from '../../../../types/contributor.types';
 import {
   PublicationInstanceType,
@@ -61,7 +61,7 @@ export const SearchContainerField = ({
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(RegistrationFormContext);
 
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
     getIn(values, fieldName),

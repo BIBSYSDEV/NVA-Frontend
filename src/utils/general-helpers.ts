@@ -64,3 +64,8 @@ export const isSimilarTime = (dateString1: string, dateString2: string, msThresh
   const date2 = new Date(dateString2);
   return Math.abs(date1.getTime() - date2.getTime()) < msThreshold;
 };
+
+export const removeTrailingYearPathFromUrl = (url: string) => {
+  const urlWithoutYear = url.replace(/\/\d{4}$/, '');
+  return urlWithoutYear;
+};
