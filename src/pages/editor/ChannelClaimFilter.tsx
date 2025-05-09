@@ -36,7 +36,7 @@ export const ChannelClaimFilter = () => {
         }}>
         <MenuItem value={ChannelClaimsViewingOptions.ShowAll}>{t('common.show_all')}</MenuItem>
         <MenuItem value={ChannelClaimsViewingOptions.ShowOwn}>
-          {t('editor.institution.channel_claims.show_my_institution_only')}
+          {t('editor.institution.channel_claims.show_only_my_institution')}
         </MenuItem>
       </TextField>
     </Box>
