@@ -22,6 +22,7 @@ import { ChannelClaimType } from '../../types/customerInstitution.types';
 import { DegreeType } from '../../types/publicationFieldNames';
 import { PublicationInstanceType, Publisher, SerialPublication } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { removeTrailingYearPathFromUrl } from '../../utils/general-helpers';
 import { SearchForSerialPublication } from '../search/facet_search_fields/SearchForSerialPublication';
 
 const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
@@ -58,9 +59,8 @@ export const AddChannelClaimDialog = ({
   const addChannelClaimMutation = useMutation({
     mutationFn: (channelId: string) => {
       if (customer?.id && channelId) {
-        const channelIdWithoutYear = channelId.replace(/\/\d{4}$/, '');
         return setChannelClaim(customer.id, {
-          channel: channelIdWithoutYear,
+          channel: removeTrailingYearPathFromUrl(channelId),
           constraint: {
             scope: selectedCategories,
             publishingPolicy: 'Everyone',

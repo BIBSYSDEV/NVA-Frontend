@@ -5,7 +5,7 @@ import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { OrganizationBox } from '../../../../components/institution/OrganizationBox';
 import { UnconfirmedOrganizationBox } from '../../../../components/institution/UnconfirmedOrganizationBox';
-import { NviCandidateContext } from '../../../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { Affiliation } from '../../../../types/contributor.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
@@ -24,7 +24,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(RegistrationFormContext);
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 

@@ -627,3 +627,7 @@ export const fetchMyResults = async (params: FetchProtectedResultsParams, signal
   });
   return getMyResults.data;
 };
+
+export enum ChannelClaimParams {
+  ViewingOptions = 'viewingOptions',
+}

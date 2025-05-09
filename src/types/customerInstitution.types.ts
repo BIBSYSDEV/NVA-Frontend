@@ -1,5 +1,5 @@
 import { ChannelPolicy } from '../api/customerInstitutionsApi';
-import { allPublicationInstanceTypes, DegreeType } from './publicationFieldNames';
+import { allPublicationInstanceTypes } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
 
 export interface SimpleCustomerInstitution {
@@ -160,7 +160,7 @@ export interface ClaimedChannel {
     constraint: {
       publishingPolicy: ChannelPolicy;
       editingPolicy: ChannelPolicy;
-      scope: DegreeType[];
+      scope: PublicationInstanceType[];
     };
   };
 }

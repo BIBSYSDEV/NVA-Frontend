@@ -55,6 +55,7 @@ import {
   SerialPublication,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
+import { LocalStorageKey } from './constants';
 import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
@@ -1015,4 +1016,17 @@ export const getAssociatedLinkRelationTitle = (t: TFunction, relation: Associate
     default:
       return t('common.link');
   }
+};
+
+/**
+ * TODO: Remove when API handles this in allowedOperations.
+ * This is  used to determine if the user can edit the registration in case of thesis.
+ */
+export const temporaryExtendedEditAccess = (registration: Registration | undefined, user: User | undefined | null) => {
+  return (
+    localStorage.getItem(LocalStorageKey.Beta) === 'true' &&
+    isDegree(registration?.entityDescription?.reference?.publicationInstance?.type) &&
+    registration?.associatedArtifacts.some(isOpenFile) &&
+    user?.topOrgCristinId === registration.resourceOwner.ownerAffiliation
+  );
 };

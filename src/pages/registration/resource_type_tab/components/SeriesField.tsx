@@ -11,7 +11,7 @@ import {
 } from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { PublicationChannelType, Registration, SerialPublication } from '../../../../types/registration.types';
@@ -33,7 +33,7 @@ export const SeriesField = () => {
   const series = reference?.publicationContext.series;
   const year = publicationDate?.year ?? '';
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(RegistrationFormContext);
 
   const [showSeriesForm, setShowSeriesForm] = useState(false);
   const toggleSeriesForm = () => setShowSeriesForm(!showSeriesForm);

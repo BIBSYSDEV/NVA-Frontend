@@ -466,13 +466,14 @@
         "editing_access": "Tilgang til å redigere",
         "publishing_access": "Tilgang til å publisere",
         "publisher_claims_overview": "Oversikt over utgivereierskap",
+        "serial_publication_claims_overview": "Oversikt over serie-/tidsskrifteierskap",
         "set_channel_claim": "Sett eierskap",
-        "serial_publication_claims_overview": "Oversikt over serie-/tidsskrifteierskap"
+        "show_only_my_institution": "Vis kun min institusjon"
       },
       "institution_admin_one": "Institusjonens administrator",
       "institution_admin_other": "Institusjonens administratorer",
-      "institution_code": "Kode",
       "institution_editor_one": "Institusjonens redaktør",
+      "institution_code": "Kode",
       "institution_editor_other": "Institusjonens redaktører",
       "institution_has_no_administrator": "Institusjonen har ingen administrator",
       "institution_has_no_editor": "Institusjonen har ingen redaktør",
@@ -1462,6 +1463,10 @@
       "search_for_npi_discipline": "Søk etter fagfelt",
       "year_only": "Kun årstall"
     },
+    "channel_claim_info_heading": "Felt låst for redigering",
+    "channel_claim_info_owned_by": "Dette resultatet er tilknyttet en kanal som eies av \"<institution/>\".",
+    "disable_fields_due_to_channel_claim": "<p>De har satt begrensinger på at kun brukere på deres institusjon kan redigere resultatet.</p>",
+    "disable_fields_due_to_channel_claim_thesis": "<p>De har satt at kun studentoppgavekurator fra sin institusjon kan redigere resultatet.</p><p>Ta kontakt med studentoppgavekurator for endring. Gå til loggen på resultat for detaljer om hvilken kurator som har behandlet publiseringsforespørselen.</p>",
     "edit_registration": "Rediger resultat",
     "files_and_license": {
       "accepted": "Akseptert",

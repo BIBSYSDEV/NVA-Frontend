@@ -85,3 +85,12 @@ export const fetchClaimedChannels = async (channelType: 'publisher' | 'serial-pu
 
   return getClaimedChannels.data;
 };
+
+export const fetchChannelClaim = async (channelIdentifier: string, signal: AbortSignal) => {
+  const getChannelClaim = await authenticatedApiRequest2<ClaimedChannel>({
+    url: `${CustomerInstitutionApiPath.ChannelClaim}/${channelIdentifier}`,
+    signal,
+  });
+
+  return getChannelClaim.data;
+};
