@@ -26,9 +26,11 @@ import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PortfolioSearchPage } from './PortfolioSearchPage';
 import { PublishStrategySettings } from './PublishStrategySettings';
+import { PublisherClaimsOverview } from './PublisherClaimsOverview';
 import { PublisherClaimsSettings } from './PublisherClaimsSettings';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
+import { SerialPublicationClaimsOverview } from './SerialPublicationClaimsOverview';
 import { SerialPublicationClaimsSettings } from './SerialPublicationClaimsSettings';
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
@@ -107,6 +109,20 @@ const InstitutionPage = () => {
               to={UrlPathTemplate.InstitutionCategoriesOverview}>
               {t('editor.categories_with_files')}
             </SelectableButton>
+            <BetaFunctionality>
+              <SelectableButton
+                isSelected={currentPath === UrlPathTemplate.InstitutionPublisherClaimsOverview}
+                data-testid={dataTestId.editor.publisherClaimOverviewButton}
+                to={UrlPathTemplate.InstitutionPublisherClaimsOverview}>
+                {t('editor.institution.channel_claims.publisher_claims_overview')}
+              </SelectableButton>
+              <SelectableButton
+                isSelected={currentPath === UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}
+                data-testid={dataTestId.editor.serialPublicationClaimOverviewButton}
+                to={UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}>
+                {t('editor.institution.channel_claims.serial_publication_claims_overview')}
+              </SelectableButton>
+            </BetaFunctionality>
           </NavigationList>
         </NavigationListAccordion>
         {isEditor && (
@@ -236,6 +252,16 @@ const InstitutionPage = () => {
           <Route
             path={getSubUrl(UrlPathTemplate.InstitutionOrganizationOverview, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<OrganizationOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionPublisherClaimsOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<PublisherClaimsOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionSerialPublicationClaimsOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<SerialPublicationClaimsOverview />} isAuthorized={hasCustomer} />}
           />
 
           <Route
