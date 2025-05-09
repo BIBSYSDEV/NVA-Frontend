@@ -13,7 +13,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
-import { filterChannelClaims } from '../../utils/customerHelpers';
+import { filterChannelClaims } from '../../utils/customer-helpers';
 
 export const PublisherClaimsSettings = () => {
   const { t } = useTranslation();
