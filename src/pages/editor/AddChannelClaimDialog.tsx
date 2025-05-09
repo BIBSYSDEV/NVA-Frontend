@@ -105,14 +105,17 @@ export const AddChannelClaimDialog = ({
           closeDialogAndResetSelectedChannel();
         }}>
         <DialogContent>
-          <Trans
-            i18nKey={
-              isPublisherChannelClaim
-                ? 'editor.institution.channel_claims.add_publisher_channel_claim_description'
-                : 'editor.institution.channel_claims.add_serial_publication_channel_claim_description'
-            }
-            components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
-          />
+          {isPublisherChannelClaim ? (
+            <Trans
+              i18nKey="editor.institution.channel_claims.add_publisher_channel_claim_description"
+              components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
+            />
+          ) : (
+            <Trans
+              i18nKey="editor.institution.channel_claims.add_serial_publication_channel_claim_description"
+              components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
+            />
+          )}
 
           {/* TODO:
            * 1) Should not be able to select publishers with scientific level 1 or 2.
