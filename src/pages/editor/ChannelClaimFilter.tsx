@@ -26,7 +26,7 @@ export const ChannelClaimFilter = () => {
         onChange={(event) => {
           const selectedOption = event.target.value;
           setSearchParams((params) => {
-            if (selectedOption === ChannelClaimsViewingOptions.ShowAll) {
+            if (selectedOption === ChannelClaimsViewingOptions.ShowOwn) {
               params.set(ChannelClaimParams.ViewingOptions, selectedOption);
             } else {
               params.delete(ChannelClaimParams.ViewingOptions);
@@ -34,8 +34,10 @@ export const ChannelClaimFilter = () => {
             return params;
           });
         }}>
-        <MenuItem value="showAll">{t('common.show_all')}</MenuItem>
-        <MenuItem value="showOwn">{t('editor.institution.channel_claims.show_only_my_institution')}</MenuItem>
+        <MenuItem value={ChannelClaimsViewingOptions.ShowAll}>{t('common.show_all')}</MenuItem>
+        <MenuItem value={ChannelClaimsViewingOptions.ShowOwn}>
+          {t('editor.institution.channel_claims.show_only_my_institution')}
+        </MenuItem>
       </TextField>
     </Box>
   );
