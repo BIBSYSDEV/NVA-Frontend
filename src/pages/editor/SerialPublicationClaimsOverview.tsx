@@ -28,7 +28,6 @@ export const SerialPublicationClaimsOverview = () => {
   return (
     <>
       <Typography variant="h1"> {t('editor.institution.channel_claims.serial_publication_claims_overview')}</Typography>
-
       <ChannelClaimFilter />
       <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
         {channelClaimsQuery.isPending ? (
