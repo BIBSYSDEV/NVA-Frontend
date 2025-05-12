@@ -62,7 +62,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const journalId = reference?.publicationContext.id ?? '';
   const year = publicationDate?.year ?? '';
 
-  const { disableNviCriticalFields } = useContext(RegistrationFormContext);
+  const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const [showJournalForm, setShowJournalForm] = useState(false);
   const toggleJournalForm = () => setShowJournalForm(!showJournalForm);
@@ -129,7 +129,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
       <Field name={ResourceFieldNames.PublicationContextId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
-            disabled={disableNviCriticalFields}
+            disabled={disableNviCriticalFields || disableChannelClaimsFields}
             fullWidth
             multiple
             id={journalFieldTestId}

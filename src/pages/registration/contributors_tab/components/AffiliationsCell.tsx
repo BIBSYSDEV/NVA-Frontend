@@ -24,7 +24,8 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
 
-  const { disableNviCriticalFields } = useContext(RegistrationFormContext);
+  const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
+  const disabled = disableNviCriticalFields || disableChannelClaimsFields;
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
@@ -64,15 +65,15 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
               authorName={authorName}
               affiliations={affiliations}
               baseFieldName={baseFieldName}
-              removeAffiliation={disableNviCriticalFields ? undefined : () => removeAffiliation(index)}
+              removeAffiliation={disabled ? undefined : () => removeAffiliation(index)}
               sx={{ width: '100%' }}
-              canEdit={!disableNviCriticalFields}
+              canEdit={!disabled}
             />
           )}
           {affiliation.type === 'UnconfirmedOrganization' && (
             <UnconfirmedOrganizationBox
               name={affiliation.name}
-              onIdentifyAffiliationClick={disableNviCriticalFields ? undefined : onIdentifyAffiliationClick}
+              onIdentifyAffiliationClick={disabled ? undefined : onIdentifyAffiliationClick}
               removeAffiliation={() => removeAffiliation(index)}
               sx={{ width: '100%' }}
             />
@@ -80,7 +81,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
         </Box>
       ))}
       <Button
-        disabled={disableNviCriticalFields}
+        disabled={disabled}
         variant="outlined"
         sx={{ padding: '0.1rem 0.75rem' }}
         data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}

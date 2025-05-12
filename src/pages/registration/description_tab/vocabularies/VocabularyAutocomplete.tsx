@@ -7,6 +7,7 @@ export interface VocabularyComponentProps {
   addValue: (value: string) => void;
   removeValue: (value: string) => void;
   clear: () => void;
+  disabled?: boolean;
 }
 
 interface VocabularyAutocompleteProps
@@ -23,6 +24,7 @@ export const VocabularyAutocomplete = ({
   id,
   options,
   renderOption,
+  disabled,
 }: VocabularyAutocompleteProps) => {
   const selectedOptions = selectedIds
     .map((id) => options.find((option) => option.id === id))
@@ -30,6 +32,7 @@ export const VocabularyAutocomplete = ({
 
   return (
     <Autocomplete
+      disabled={disabled}
       id={id}
       aria-labelledby={`${id}-label`}
       options={options}

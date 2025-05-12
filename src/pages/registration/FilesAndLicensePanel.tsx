@@ -1,12 +1,13 @@
 import { Box, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import { useEffect, useMemo, useRef } from 'react';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { InfoBanner } from '../../components/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
 import { FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
 import { FileFieldNames, ResourceFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
@@ -39,6 +40,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const { values } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
@@ -92,7 +94,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const originalDoi = entityDescription?.reference?.doi;
 
-  const canEditFilesAndLinks = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
+  const canEditFilesAndLinks =
+    (userHasAccessRight(values, 'update') || userIsValidImporter(user, values)) && !disableChannelClaimsFields;
   const canUploadFile = userHasAccessRight(values, 'upload-file');
   const categorySupportsFiles = allowsFileUpload(customer, entityDescription?.reference?.publicationInstance?.type);
 
