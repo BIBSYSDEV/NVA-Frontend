@@ -39,29 +39,27 @@ export const ClaimedChannelInfoBox = ({ channelId, channelType }: ClaimedChannel
   }
 
   return (
-    <StyledInfoBanner sx={{ gridColumn: '1/-1' }}>
-      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-        <ErrorIcon />
-        <div>
-          <Typography color="inherit">
-            {t('registration.resource_type.channel_claimed_by_other_institution', { channelType })}
-          </Typography>
-          <Typography color="inherit">
-            <Trans
-              i18nKey="registration.resource_type.files_will_be_handled_by_other_institution"
-              components={{
-                institution: organizationQuery.isPending ? (
-                  <Skeleton sx={{ width: '12rem', display: 'inline-block' }} />
-                ) : (
-                  <Box component="span" sx={{ fontWeight: 'bold' }}>
-                    {getLanguageString(organizationQuery.data?.labels)}
-                  </Box>
-                ),
-              }}
-            />
-          </Typography>
-        </div>
-      </Box>
+    <StyledInfoBanner sx={{ gridColumn: '1/-1', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+      <ErrorIcon />
+      <div>
+        <Typography color="inherit">
+          {t('registration.resource_type.channel_claimed_by_other_institution', { channelType })}
+        </Typography>
+        <Typography color="inherit">
+          <Trans
+            i18nKey="registration.resource_type.files_will_be_handled_by_other_institution"
+            components={{
+              institution: organizationQuery.isPending ? (
+                <Skeleton sx={{ width: '12rem', display: 'inline-block' }} />
+              ) : (
+                <Box component="span" sx={{ fontWeight: 'bold' }}>
+                  {getLanguageString(organizationQuery.data?.labels)}
+                </Box>
+              ),
+            }}
+          />
+        </Typography>
+      </div>
     </StyledInfoBanner>
   );
 };
