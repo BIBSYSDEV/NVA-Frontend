@@ -94,3 +94,11 @@ export const fetchChannelClaim = async (channelIdentifier: string, signal: Abort
 
   return getChannelClaim.data;
 };
+
+export const deleteChannelClaim = async (customerIdentifier: string, channelIdentifier: string) => {
+  const deleteResponse = await authenticatedApiRequest2<null>({
+    url: `${CustomerInstitutionApiPath.Customer}/${customerIdentifier}/channel-claim/${channelIdentifier}`,
+    method: 'DELETE',
+  });
+  return deleteResponse.data;
+};
