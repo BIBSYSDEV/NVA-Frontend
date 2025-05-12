@@ -1,6 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Button, TableContainer, Typography } from '@mui/material';
-import { useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -32,6 +32,8 @@ export const SerialPublicationClaimsSettings = () => {
     channelClaims && !!searchParams.get(ChannelClaimParams.ViewingOptions)
       ? filterChannelClaims(channelClaims, customerId)
       : channelClaims;
+
+  const ChannelClaimContext = createContext(null);
 
   return (
     <>

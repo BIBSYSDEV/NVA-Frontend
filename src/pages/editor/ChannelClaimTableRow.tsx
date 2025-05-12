@@ -1,25 +1,27 @@
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
-import { Button, Chip, Skeleton, styled, TableCell, TableRow, Typography } from '@mui/material';
+import { Chip, IconButton, Skeleton, styled, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchResource } from '../../api/commonApi';
+import { deleteChannelClaim } from '../../api/customerInstitutionsApi';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { useFetchPublisher } from '../../api/hooks/useFetchPublisher';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { setNotification } from '../../redux/notificationSlice';
+import { RootState } from '../../redux/store';
 import { ChannelClaimType, ClaimedChannel } from '../../types/customerInstitution.types';
 import { SerialPublication } from '../../types/registration.types';
-import { getLanguageString } from '../../utils/translation-helpers';
 import { getIdentifierFromId } from '../../utils/general-helpers';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { deleteChannelClaim } from '../../api/customerInstitutionsApi';
-import { setNotification } from '../../redux/notificationSlice';
-import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { useState } from 'react';
+import { getLanguageString } from '../../utils/translation-helpers';
 
 interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
   channelType: ChannelClaimType;
+  isOnSettingsPage: boolean;
 }
 
 const StyledTableCell = styled(TableCell)({
@@ -32,7 +34,7 @@ const StyledChip = styled(Chip)({
   },
 });
 
-export const ChannelClaimTableRow = ({ claimedChannel, channelType }: ChannelClaimTableRowProps) => {
+export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettingsPage }: ChannelClaimTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
@@ -126,17 +128,34 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType }: ChannelCla
             <Chip key={scope} variant="filled" color="primary" label={t(`registration.publication_types.${scope}`)} />
           ))}
         </StyledTableCell>
-        <StyledTableCell>
-          <Button onClick={() => setOpenConfirmDialog(true)}>delete</Button>
-        </StyledTableCell>
+        {isOnSettingsPage && (
+          <>
+            <StyledTableCell>
+              <Tooltip title={t('common.delete')}>
+                <IconButton
+                  data-testid={`delete-channel-claim-${channelIdentifier}`}
+                  onClick={() => setOpenConfirmDialog(true)}
+                  size="small"
+                  sx={{ width: '1.5rem', height: '1.5rem' }}>
+                  <CloseOutlinedIcon fontSize="inherit" />
+                </IconButton>
+              </Tooltip>
+            </StyledTableCell>
+          </>
+        )}
       </TableRow>
 
       <ConfirmDialog
         open={openConfirmDialog}
-        title={''}
-        onAccept={deleteMutation.mutate}
+        title={t('editor.institution.channel_claims.delete_channel_claim')}
+        isLoading={deleteMutation.isPending}
+        onAccept={async () => (await deleteMutation.mutateAsync(), setOpenConfirmDialog(false))}
         onCancel={() => setOpenConfirmDialog(false)}>
-        <Typography>TEST</Typography>
+        <Trans
+          i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
+          values={{ name: channelName }}
+          components={{ span: <span style={{ fontWeight: 'bold' }} /> }}
+        />
       </ConfirmDialog>
     </>
   );
