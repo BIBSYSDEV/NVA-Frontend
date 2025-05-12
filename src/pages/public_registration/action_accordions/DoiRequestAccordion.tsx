@@ -19,7 +19,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -37,6 +37,7 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getOpenFiles, userHasAccessRight } from '../../../utils/registration-helpers';
+import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
@@ -76,6 +77,7 @@ export const DoiRequestAccordion = ({
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
 
@@ -104,6 +106,7 @@ export const DoiRequestAccordion = ({
     },
     onSuccess: async () => {
       await refetchData();
+      invalidateQueryKeyDueToReindexing(queryClient, 'taskNotifications');
       dispatch(setNotification({ message: t('feedback.success.doi_request_approved'), variant: 'success' }));
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.approve_doi_request'), variant: 'error' })),
@@ -251,7 +254,6 @@ export const DoiRequestAccordion = ({
 
         {hasReservedDoi && (
           <Trans
-            t={t}
             i18nKey="registration.public_page.tasks_panel.has_reserved_doi"
             components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
@@ -277,7 +279,6 @@ export const DoiRequestAccordion = ({
             {isPublishedRegistration && userCanRequestDoi && (
               <>
                 <Trans
-                  t={t}
                   i18nKey="registration.public_page.tasks_panel.request_doi_description"
                   values={{ buttonText: t('registration.public_page.request_doi') }}
                   components={[
@@ -294,7 +295,6 @@ export const DoiRequestAccordion = ({
             {isDraftRegistration && (
               <>
                 <Trans
-                  t={t}
                   i18nKey="registration.public_page.tasks_panel.draft_doi_description"
                   values={{ buttonText: t('registration.public_page.reserve_doi') }}
                   components={[
@@ -324,7 +324,6 @@ export const DoiRequestAccordion = ({
                   onAccept={addDraftDoi}
                   onCancel={toggleReserveDoiDialog}>
                   <Trans
-                    t={t}
                     i18nKey="registration.public_page.tasks_panel.reserve_doi_confirmation"
                     components={[
                       <Typography sx={{ mb: '1rem' }} key="1" />,
@@ -343,7 +342,6 @@ export const DoiRequestAccordion = ({
           headingText={t('registration.public_page.request_doi')}
           dataTestId={dataTestId.registrationLandingPage.tasksPanel.requestDoiModal}>
           <Trans
-            t={t}
             i18nKey="registration.public_page.request_doi_description"
             components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
@@ -380,7 +378,6 @@ export const DoiRequestAccordion = ({
           isLoading={isLoadingData || approveTicketMutation.isPending}
           onCancel={toggleConfirmDialogAssignDoi}>
           <Trans
-            t={t}
             i18nKey="registration.public_page.tasks_panel.no_published_files_on_registration_description"
             components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
@@ -409,6 +406,7 @@ export const DoiRequestAccordion = ({
               onAccept={async (message: string) => {
                 await rejectDoiMutation.mutateAsync(message);
                 toggleRejectDoiDialog();
+                invalidateQueryKeyDueToReindexing(queryClient, 'taskNotifications');
               }}
               onCancel={toggleRejectDoiDialog}
               textFieldLabel={t('common.message')}
