@@ -8,26 +8,25 @@ import { useSearchParams } from 'react-router';
 import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 import { ChannelClaimParams } from '../../api/searchApi';
 import { PageSpinner } from '../../components/PageSpinner';
+import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { RootState } from '../../redux/store';
+import { filterChannelClaims } from '../../utils/customer-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
-import { filterChannelClaims } from '../../utils/customer-helpers';
-import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 
 export const PublisherClaimsSettings = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
+  const [searchParams] = useSearchParams();
 
   const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);
   const toggleAddChannelClaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
 
   const channelClaimsQuery = useFetchChannelClaims('publisher');
   const channelClaims = channelClaimsQuery.data?.channelClaims;
-
-  const [searchParams] = useSearchParams();
 
   const channelClaimList =
     channelClaims && !!searchParams.get(ChannelClaimParams.ViewingOptions)

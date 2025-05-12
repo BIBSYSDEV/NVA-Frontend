@@ -20,14 +20,13 @@ export const SerialPublicationClaimsSettings = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
+  const [searchParams] = useSearchParams();
 
   const [openAddChannelClaimDialog, setOpenAddChannelClaimDialog] = useState(false);
   const toggleAddChannelClaimDialog = () => setOpenAddChannelClaimDialog(!openAddChannelClaimDialog);
 
   const channelClaimsQuery = useFetchChannelClaims('serial-publication');
   const channelClaims = channelClaimsQuery.data?.channelClaims;
-
-  const [searchParams] = useSearchParams();
 
   const channelClaimList =
     channelClaims && !!searchParams.get(ChannelClaimParams.ViewingOptions)

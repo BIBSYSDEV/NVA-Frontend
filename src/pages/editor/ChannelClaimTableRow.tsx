@@ -11,13 +11,13 @@ import { deleteChannelClaim } from '../../api/customerInstitutionsApi';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { useFetchPublisher } from '../../api/hooks/useFetchPublisher';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { ChannelClaimType, ClaimedChannel } from '../../types/customerInstitution.types';
 import { SerialPublication } from '../../types/registration.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 
 interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
@@ -43,12 +43,9 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
   const channelId = claimedChannel.channelClaim.channel;
   const channelIdentifier = getIdentifierFromId(claimedChannel.id);
   const dispatch = useDispatch();
-
   const context = useContext(ChannelClaimContext);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-
   const isPublisherChannel = channelType === 'publisher';
-
   const publisherQuery = useFetchPublisher(isPublisherChannel ? channelId : '');
 
   const serialPublicationQuery = useQuery({
@@ -59,20 +56,22 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
     staleTime: Infinity,
   });
 
+  const channelName = isPublisherChannel ? publisherQuery.data?.name : serialPublicationQuery.data?.name;
+  const pendingChannelQuery = isPublisherChannel ? publisherQuery.isPending : serialPublicationQuery.isPending;
+
   const organizationQuery = useFetchOrganization(claimedChannel.claimedBy.organizationId);
   const organizationName = getLanguageString(organizationQuery.data?.labels);
 
   const publishingPolicy = claimedChannel.channelClaim.constraint.publishingPolicy;
   const editingPolicy = claimedChannel.channelClaim.constraint.editingPolicy;
 
-  const channelName = isPublisherChannel ? publisherQuery.data?.name : serialPublicationQuery.data?.name;
-
-  const pendingChannelQuery = isPublisherChannel ? publisherQuery.isPending : serialPublicationQuery.isPending;
-
   const deleteMutation = useMutation({
     mutationFn: async () => await deleteChannelClaim(customerIdentfier, channelIdentifier),
-    onSuccess: () =>
-      dispatch(setNotification({ message: t('feedback.success.delete_channel_claim'), variant: 'success' })),
+    onSuccess: async () => {
+      dispatch(setNotification({ message: t('feedback.success.delete_channel_claim'), variant: 'success' }));
+      await context.refetchClaimedChannels();
+      setOpenConfirmDialog(false);
+    },
     onError: () => dispatch(setNotification({ message: t('feedback.error.delete_channel_claim'), variant: 'error' })),
   });
 
@@ -133,7 +132,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
         {isOnSettingsPage && (
           <>
             <StyledTableCell>
-              <Tooltip title={t('common.delete')}>
+              <Tooltip title={t('common.remove')}>
                 <IconButton
                   data-testid={`delete-channel-claim-${channelIdentifier}`}
                   onClick={() => setOpenConfirmDialog(true)}
@@ -151,9 +150,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
         open={openConfirmDialog}
         title={t('editor.institution.channel_claims.delete_channel_claim')}
         isLoading={deleteMutation.isPending}
-        onAccept={async () => (
-          await deleteMutation.mutateAsync(), await context.refetchClaimedChannels(), setOpenConfirmDialog(false)
-        )}
+        onAccept={async () => await deleteMutation.mutateAsync()}
         onCancel={() => setOpenConfirmDialog(false)}>
         <Trans
           i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
