@@ -3,7 +3,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import { Chip, IconButton, Skeleton, styled, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchResource } from '../../api/commonApi';
@@ -17,6 +17,7 @@ import { ChannelClaimType, ClaimedChannel } from '../../types/customerInstitutio
 import { SerialPublication } from '../../types/registration.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 
 interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
@@ -43,6 +44,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
   const channelIdentifier = getIdentifierFromId(claimedChannel.id);
   const dispatch = useDispatch();
 
+  const context = useContext(ChannelClaimContext);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
   const isPublisherChannel = channelType === 'publisher';
@@ -149,7 +151,9 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
         open={openConfirmDialog}
         title={t('editor.institution.channel_claims.delete_channel_claim')}
         isLoading={deleteMutation.isPending}
-        onAccept={async () => (await deleteMutation.mutateAsync(), setOpenConfirmDialog(false))}
+        onAccept={async () => (
+          await deleteMutation.mutateAsync(), await context.refetchClaimedChannels(), setOpenConfirmDialog(false)
+        )}
         onCancel={() => setOpenConfirmDialog(false)}>
         <Trans
           i18nKey="editor.institution.channel_claims.delete_channel_claim_description"

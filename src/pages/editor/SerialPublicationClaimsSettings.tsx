@@ -1,6 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Button, TableContainer, Typography } from '@mui/material';
-import { createContext, useContext, useState } from 'react';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -8,12 +8,13 @@ import { useSearchParams } from 'react-router';
 import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 import { ChannelClaimParams } from '../../api/searchApi';
 import { PageSpinner } from '../../components/PageSpinner';
+import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { RootState } from '../../redux/store';
+import { filterChannelClaims } from '../../utils/customer-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
-import { filterChannelClaims } from '../../utils/customer-helpers';
 
 export const SerialPublicationClaimsSettings = () => {
   const { t } = useTranslation();
@@ -32,8 +33,6 @@ export const SerialPublicationClaimsSettings = () => {
     channelClaims && !!searchParams.get(ChannelClaimParams.ViewingOptions)
       ? filterChannelClaims(channelClaims, customerId)
       : channelClaims;
-
-  const ChannelClaimContext = createContext(null);
 
   return (
     <>
@@ -66,14 +65,15 @@ export const SerialPublicationClaimsSettings = () => {
         {channelClaimsQuery.isPending ? (
           <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
         ) : channelClaimList && channelClaimList.length > 0 ? (
-          <ChannelClaimTable channelClaimList={channelClaimList} channelType={'serial-publication'} />
+          <ChannelClaimContext.Provider value={{ refetchClaimedChannels: channelClaimsQuery.refetch }}>
+            <ChannelClaimTable channelClaimList={channelClaimList} channelType={'serial-publication'} />
+          </ChannelClaimContext.Provider>
         ) : null}
       </TableContainer>
 
       <AddChannelClaimDialog
         open={openAddChannelClaimDialog}
         closeDialog={toggleAddChannelClaimDialog}
-        refetchClaimedChannels={channelClaimsQuery.refetch}
         channelType={'serial-publication'}
       />
     </>

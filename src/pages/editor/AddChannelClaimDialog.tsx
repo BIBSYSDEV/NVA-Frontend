@@ -11,11 +11,12 @@ import {
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChannelClaim } from '../../api/customerInstitutionsApi';
 import { SearchForPublisher } from '../../components/SearchForPublisher';
+import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { ChannelClaimType } from '../../types/customerInstitution.types';
@@ -29,20 +30,15 @@ const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
 
 interface AddChannelClaimDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
-  refetchClaimedChannels: () => Promise<unknown>;
   channelType: ChannelClaimType;
 }
 
-export const AddChannelClaimDialog = ({
-  open,
-  closeDialog,
-  refetchClaimedChannels,
-  channelType,
-}: AddChannelClaimDialogProps) => {
+export const AddChannelClaimDialog = ({ open, closeDialog, channelType }: AddChannelClaimDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((state: RootState) => state.customer);
   const isPublisherChannelClaim = channelType === 'publisher';
+  const context = useContext(ChannelClaimContext);
 
   const [selectedPublisher, setSelectedPublisher] = useState<Publisher | null>(null);
   const [selectedSerialPublication, setSelectedSerialPublication] = useState<SerialPublication | null>(null);
@@ -72,7 +68,7 @@ export const AddChannelClaimDialog = ({
     },
     onSuccess: async () => {
       dispatch(setNotification({ message: t('feedback.success.set_channel_claim'), variant: 'success' }));
-      await refetchClaimedChannels();
+      await context.refetchClaimedChannels();
       closeDialogAndResetSelectedChannel();
     },
     onError: (error: AxiosError<{ detail?: string }>) => {

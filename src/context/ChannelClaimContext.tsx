@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 
 interface ChannelClaimContextProps {
-  refetchData: () => Promise<void>;
+  refetchClaimedChannels: () => Promise<unknown>;
 }
 
 export const ChannelClaimContext = createContext<ChannelClaimContextProps>({
-  refetchData: async () => {},
+  refetchClaimedChannels: async () => {},
 });

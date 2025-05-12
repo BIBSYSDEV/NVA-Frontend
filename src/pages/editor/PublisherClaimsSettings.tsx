@@ -14,6 +14,7 @@ import { AddChannelClaimDialog } from './AddChannelClaimDialog';
 import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
 import { filterChannelClaims } from '../../utils/customer-helpers';
+import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 
 export const PublisherClaimsSettings = () => {
   const { t } = useTranslation();
@@ -64,14 +65,15 @@ export const PublisherClaimsSettings = () => {
         {channelClaimsQuery.isPending ? (
           <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
         ) : channelClaimList && channelClaimList.length > 0 ? (
-          <ChannelClaimTable channelClaimList={channelClaimList} channelType={'publisher'} />
+          <ChannelClaimContext.Provider value={{ refetchClaimedChannels: channelClaimsQuery.refetch }}>
+            <ChannelClaimTable channelClaimList={channelClaimList} channelType={'publisher'} />
+          </ChannelClaimContext.Provider>
         ) : null}
       </TableContainer>
 
       <AddChannelClaimDialog
         open={openAddChannelClaimDialog}
         closeDialog={toggleAddChannelClaimDialog}
-        refetchClaimedChannels={channelClaimsQuery.refetch}
         channelType={'publisher'}
       />
     </>
