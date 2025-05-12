@@ -1,5 +1,5 @@
 import { FilterOptionsState } from '@mui/material';
-import { Query } from '@tanstack/react-query';
+import { Query, QueryClient } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
 import { NavigateFunction } from 'react-router';
 import { FetchTicketsParams, ResultParam, TicketSearchParam } from '../api/searchApi';
@@ -218,4 +218,10 @@ export const fundingSourceAutocompleteFilterOptions = (
     const identifier = option.identifier.toLocaleLowerCase();
     return identifier.includes(filter) || names.some((name) => name.includes(filter));
   });
+};
+
+export const invalidateQueryKeyDueToReindexing = (queryClient: QueryClient, key: string, waitMs = 5_000) => {
+  setTimeout(() => {
+    queryClient.invalidateQueries({ queryKey: [key] });
+  }, waitMs);
 };
