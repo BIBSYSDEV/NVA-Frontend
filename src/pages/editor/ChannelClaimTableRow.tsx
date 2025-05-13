@@ -136,7 +136,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
                 data-testid={`delete-channel-claim-${channelIdentifier}`}
                 onClick={() => setOpenConfirmDialog(true)}
                 size="small"
-                sx={{ width: '1.5rem', height: '1.5rem' }}>
+                sx={{ width: '1.5rem', height: '1.5rem', bgcolor: 'secondary.main' }}>
                 <CloseOutlinedIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
