@@ -65,7 +65,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
   const publishingPolicy = claimedChannel.channelClaim.constraint.publishingPolicy;
   const editingPolicy = claimedChannel.channelClaim.constraint.editingPolicy;
 
-  const deleteMutation = useMutation({
+  const deleteChannelClaimMutation = useMutation({
     mutationFn: async () => await deleteChannelClaim(customerIdentfier, channelIdentifier),
     onSuccess: async () => {
       dispatch(setNotification({ message: t('feedback.success.delete_channel_claim'), variant: 'success' }));
@@ -149,8 +149,8 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
       <ConfirmDialog
         open={openConfirmDialog}
         title={t('editor.institution.channel_claims.delete_channel_claim')}
-        isLoading={deleteMutation.isPending}
-        onAccept={async () => await deleteMutation.mutateAsync()}
+        isLoading={deleteChannelClaimMutation.isPending}
+        onAccept={async () => await deleteChannelClaimMutation.mutateAsync()}
         onCancel={() => setOpenConfirmDialog(false)}>
         <Trans
           i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
