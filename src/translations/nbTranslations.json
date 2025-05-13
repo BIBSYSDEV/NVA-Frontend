@@ -464,7 +464,7 @@
         "channel_owner": "Kanaleier",
         "claim_category_restriction": "Kategorier som begrensningen skal gjelde for",
         "delete_channel_claim": "Fjern eierskap til kanal",
-        "delete_channel_claim_description": "<p>Er du sikker på at du vil fjerne eierskapet til <span>{{name}}</span>?</p",
+        "delete_channel_claim_description": "<p>Er du sikker på at du vil fjerne eierskapet til <span>{{name}}</span>?</p>",
         "editing_access": "Tilgang til å redigere",
         "publishing_access": "Tilgang til å publisere",
         "publisher_claims_overview": "Oversikt over utgivereierskap",
