@@ -29,12 +29,12 @@ export const ClaimedChannelInfoBox = ({ channelId, channelType }: ClaimedChannel
     return null;
   }
 
-  const claimsThisCategory = channelClaim.channelClaim.constraint.scope.includes(
+  const constrictsThisCategory = channelClaim.channelClaim.constraint.scope.includes(
     values.entityDescription.reference.publicationInstance.type
   );
   const claimedBySameInstitutionAsUser = channelClaim.claimedBy.organizationId === user?.topOrgCristinId;
 
-  if (!claimsThisCategory || claimedBySameInstitutionAsUser) {
+  if (!constrictsThisCategory || claimedBySameInstitutionAsUser) {
     return null;
   }
 
