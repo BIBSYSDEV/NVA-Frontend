@@ -1,19 +1,21 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import { ChannelClaimType, ClaimedChannel } from '../../types/customerInstitution.types';
+import { ChannelClaimContext } from '../../context/ChannelClaimContext';
+import { ClaimedChannel } from '../../types/customerInstitution.types';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ChannelClaimTableRow } from './ChannelClaimTableRow';
 
 interface ChannelClaimTableProps {
   channelClaimList: ClaimedChannel[];
-  channelType: ChannelClaimType;
 }
 
-export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClaimTableProps) => {
+export const ChannelClaimTable = ({ channelClaimList }: ChannelClaimTableProps) => {
   const { t } = useTranslation();
   const location = useLocation();
   const isOnSettingsPage = location.pathname.startsWith(UrlPathTemplate.InstitutionSettings);
+  const { channelType } = useContext(ChannelClaimContext);
 
   return (
     <Table>
@@ -24,14 +26,14 @@ export const ChannelClaimTable = ({ channelClaimList, channelType }: ChannelClai
           <TableCell>{t('editor.institution.channel_claims.publishing_access')}</TableCell>
           <TableCell>{t('editor.institution.channel_claims.editing_access')}</TableCell>
           <TableCell>{t('editor.institution.channel_claims.category_limitations')}</TableCell>
-          {isOnSettingsPage && <TableCell></TableCell>}
+          {isOnSettingsPage && <TableCell>{t('common.actions')}</TableCell>}
         </TableRow>
       </TableHead>
       <TableBody>
-        {channelClaimList.map((channel) => (
+        {channelClaimList.map((claimedChannel) => (
           <ChannelClaimTableRow
-            key={channel.id}
-            claimedChannel={channel}
+            key={claimedChannel.id}
+            claimedChannel={claimedChannel}
             channelType={channelType}
             isOnSettingsPage={isOnSettingsPage}
           />

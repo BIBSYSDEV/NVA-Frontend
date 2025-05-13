@@ -3,7 +3,7 @@ import { ChannelClaimType } from '../types/customerInstitution.types';
 
 interface ChannelClaimContextProps {
   refetchClaimedChannels: () => Promise<unknown>;
-  channelType?: ChannelClaimType;
+  channelType: ChannelClaimType;
 }
 
 export const ChannelClaimContext = createContext<ChannelClaimContextProps>({

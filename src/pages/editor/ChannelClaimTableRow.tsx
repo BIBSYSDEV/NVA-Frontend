@@ -142,22 +142,22 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
                 </IconButton>
               </Tooltip>
             </StyledTableCell>
+
+            <ConfirmDialog
+              open={openConfirmDialog}
+              title={t('editor.institution.channel_claims.delete_channel_claim')}
+              isLoading={deleteChannelClaimMutation.isPending}
+              onAccept={async () => await deleteChannelClaimMutation.mutateAsync()}
+              onCancel={() => setOpenConfirmDialog(false)}>
+              <Trans
+                i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
+                values={{ name: channelName }}
+                components={{ span: <span style={{ fontWeight: 'bold' }} /> }}
+              />
+            </ConfirmDialog>
           </>
         )}
       </TableRow>
-
-      <ConfirmDialog
-        open={openConfirmDialog}
-        title={t('editor.institution.channel_claims.delete_channel_claim')}
-        isLoading={deleteChannelClaimMutation.isPending}
-        onAccept={async () => await deleteChannelClaimMutation.mutateAsync()}
-        onCancel={() => setOpenConfirmDialog(false)}>
-        <Trans
-          i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
-          values={{ name: channelName }}
-          components={{ span: <span style={{ fontWeight: 'bold' }} /> }}
-        />
-      </ConfirmDialog>
     </>
   );
 };
