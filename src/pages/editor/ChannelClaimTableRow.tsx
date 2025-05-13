@@ -43,7 +43,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
   const channelId = claimedChannel.channelClaim.channel;
   const channelIdentifier = getIdentifierFromId(claimedChannel.id);
   const dispatch = useDispatch();
-  const context = useContext(ChannelClaimContext);
+  const { refetchClaimedChannels } = useContext(ChannelClaimContext);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const isPublisherChannel = channelType === 'publisher';
   const publisherQuery = useFetchPublisher(isPublisherChannel ? channelId : '');
@@ -69,7 +69,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
     mutationFn: async () => await deleteChannelClaim(customerIdentfier, channelIdentifier),
     onSuccess: async () => {
       dispatch(setNotification({ message: t('feedback.success.delete_channel_claim'), variant: 'success' }));
-      await context.refetchClaimedChannels();
+      await refetchClaimedChannels();
       setOpenConfirmDialog(false);
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.delete_channel_claim'), variant: 'error' })),

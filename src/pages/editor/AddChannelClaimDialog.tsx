@@ -38,7 +38,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog, channelType }: AddCha
   const dispatch = useDispatch();
   const customer = useSelector((state: RootState) => state.customer);
   const isPublisherChannelClaim = channelType === 'publisher';
-  const context = useContext(ChannelClaimContext);
+  const { refetchClaimedChannels } = useContext(ChannelClaimContext);
 
   const [selectedPublisher, setSelectedPublisher] = useState<Publisher | null>(null);
   const [selectedSerialPublication, setSelectedSerialPublication] = useState<SerialPublication | null>(null);
@@ -68,7 +68,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog, channelType }: AddCha
     },
     onSuccess: async () => {
       dispatch(setNotification({ message: t('feedback.success.set_channel_claim'), variant: 'success' }));
-      await context.refetchClaimedChannels();
+      await refetchClaimedChannels();
       closeDialogAndResetSelectedChannel();
     },
     onError: (error: AxiosError<{ detail?: string }>) => {
