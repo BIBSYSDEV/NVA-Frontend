@@ -6,7 +6,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers';
 
 interface RefreshPublishingRequestButtonProps extends ButtonProps {
-  refetchData: () => void;
+  refetchData: () => Promise<unknown>;
 }
 
 export const RefreshPublishingRequestButton = ({
@@ -23,8 +23,8 @@ export const RefreshPublishingRequestButton = ({
       color="info"
       size="small"
       fullWidth
-      onClick={() => {
-        refetchData();
+      onClick={async () => {
+        await refetchData();
         invalidateQueryKeyDueToReindexing(queryClient, 'taskNotifications');
       }}
       startIcon={<RefreshIcon />}
