@@ -56,7 +56,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const [currentPage, setCurrentPage] = useState(1);
   const [filterInput, setFilterInput] = useState('');
 
-  const { disableNviCriticalFields } = useContext(RegistrationFormContext);
+  const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const contributors = values.entityDescription?.contributors ?? [];
 
@@ -266,7 +266,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       />
 
       <Button
-        disabled={disableNviCriticalFields}
+        disabled={disableNviCriticalFields || disableChannelClaimsFields}
         sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
         onClick={() => setOpenAddContributor(true)}
         variant="contained"

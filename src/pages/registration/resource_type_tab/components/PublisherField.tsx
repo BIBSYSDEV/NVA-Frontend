@@ -32,7 +32,7 @@ export const PublisherField = () => {
   const { reference, publicationDate } = values.entityDescription as BookEntityDescription;
   const publisher = reference?.publicationContext.publisher;
 
-  const { disableNviCriticalFields } = useContext(RegistrationFormContext);
+  const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const [showPublisherForm, setShowPublisherForm] = useState(false);
   const togglePublisherForm = () => setShowPublisherForm(!showPublisherForm);
@@ -82,7 +82,7 @@ export const PublisherField = () => {
       <Field name={ResourceFieldNames.PublicationContextPublisherId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
-            disabled={disableNviCriticalFields}
+            disabled={disableNviCriticalFields || disableChannelClaimsFields}
             fullWidth
             multiple
             id={publisherFieldTestId}
