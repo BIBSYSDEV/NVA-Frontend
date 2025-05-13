@@ -221,7 +221,7 @@ export const fundingSourceAutocompleteFilterOptions = (
 };
 
 // Note: The waiting time is a bit arbitrary, but it should be enough time for the reindexing to finish in many cases.
-export const invalidateQueryKeyDueToReindexing = (queryClient: QueryClient, key: string, waitMs = 6_000) => {
+export const invalidateQueryKeyDueToReindexing = (queryClient: QueryClient, key: string, waitMs = 5_000) => {
   setTimeout(() => {
     queryClient.invalidateQueries({ queryKey: [key] });
   }, waitMs);
