@@ -16,9 +16,9 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { ChannelClaimType, ClaimedChannel } from '../../types/customerInstitution.types';
 import { SerialPublication } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { dataTestId } from '../../utils/dataTestIds';
 
 interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
@@ -39,8 +39,6 @@ const StyledChip = styled(Chip)({
 export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettingsPage }: ChannelClaimTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const customerId = user?.customerId ?? '';
-  const customerIdentifier = getIdentifierFromId(customerId);
   const channelId = claimedChannel.channelClaim.channel;
   const channelIdentifier = getIdentifierFromId(claimedChannel.id);
   const dispatch = useDispatch();
@@ -67,7 +65,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
   const editingPolicy = claimedChannel.channelClaim.constraint.editingPolicy;
 
   const deleteChannelClaimMutation = useMutation({
-    mutationFn: async () => await deleteChannelClaim(customerIdentifier, channelIdentifier),
+    mutationFn: async () => await deleteChannelClaim(user?.customerId ?? '', channelIdentifier),
     onSuccess: async () => {
       await refetchClaimedChannels();
       setOpenConfirmDialog(false);
