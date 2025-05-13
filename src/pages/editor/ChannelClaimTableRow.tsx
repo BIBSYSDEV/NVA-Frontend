@@ -18,6 +18,7 @@ import { ChannelClaimType, ClaimedChannel } from '../../types/customerInstitutio
 import { SerialPublication } from '../../types/registration.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { dataTestId } from '../../utils/dataTestIds';
 
 interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
@@ -133,7 +134,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Tooltip title={t('common.remove')}>
               <IconButton
-                data-testid={`delete-channel-claim-${channelIdentifier}`}
+                data-testid={dataTestId.editor.deleteChannelClaimButton(channelIdentifier)}
                 onClick={() => setOpenConfirmDialog(true)}
                 size="small"
                 sx={{ width: '1.5rem', height: '1.5rem', bgcolor: 'secondary.main' }}>
