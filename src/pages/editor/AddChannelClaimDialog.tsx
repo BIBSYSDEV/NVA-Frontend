@@ -19,7 +19,6 @@ import { SearchForPublisher } from '../../components/SearchForPublisher';
 import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import { ChannelClaimType } from '../../types/customerInstitution.types';
 import { DegreeType } from '../../types/publicationFieldNames';
 import { PublicationInstanceType, Publisher, SerialPublication } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -30,15 +29,14 @@ const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
 
 interface AddChannelClaimDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
-  channelType: ChannelClaimType;
 }
 
-export const AddChannelClaimDialog = ({ open, closeDialog, channelType }: AddChannelClaimDialogProps) => {
+export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((state: RootState) => state.customer);
+  const { refetchClaimedChannels, channelType } = useContext(ChannelClaimContext);
   const isPublisherChannelClaim = channelType === 'publisher';
-  const { refetchClaimedChannels } = useContext(ChannelClaimContext);
 
   const [selectedPublisher, setSelectedPublisher] = useState<Publisher | null>(null);
   const [selectedSerialPublication, setSelectedSerialPublication] = useState<SerialPublication | null>(null);

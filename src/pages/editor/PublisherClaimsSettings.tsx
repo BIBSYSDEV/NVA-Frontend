@@ -60,21 +60,18 @@ export const PublisherClaimsSettings = () => {
 
       <ChannelClaimFilter />
 
-      <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
-        {channelClaimsQuery.isPending ? (
-          <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
-        ) : channelClaimList && channelClaimList.length > 0 ? (
-          <ChannelClaimContext.Provider value={{ refetchClaimedChannels: channelClaimsQuery.refetch }}>
+      <ChannelClaimContext.Provider
+        value={{ refetchClaimedChannels: channelClaimsQuery.refetch, channelType: 'publisher' }}>
+        <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
+          {channelClaimsQuery.isPending ? (
+            <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
+          ) : channelClaimList && channelClaimList.length > 0 ? (
             <ChannelClaimTable channelClaimList={channelClaimList} channelType={'publisher'} />
-          </ChannelClaimContext.Provider>
-        ) : null}
-      </TableContainer>
+          ) : null}
+        </TableContainer>
 
-      <AddChannelClaimDialog
-        open={openAddChannelClaimDialog}
-        closeDialog={toggleAddChannelClaimDialog}
-        channelType={'publisher'}
-      />
+        <AddChannelClaimDialog open={openAddChannelClaimDialog} closeDialog={toggleAddChannelClaimDialog} />
+      </ChannelClaimContext.Provider>
     </>
   );
 };
