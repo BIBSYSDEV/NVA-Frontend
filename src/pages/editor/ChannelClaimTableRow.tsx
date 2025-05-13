@@ -39,7 +39,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
-  const customerIdentfier = customerId ? getIdentifierFromId(customerId) : '';
+  const customerIdentifier = getIdentifierFromId(customerId);
   const channelId = claimedChannel.channelClaim.channel;
   const channelIdentifier = getIdentifierFromId(claimedChannel.id);
   const dispatch = useDispatch();
@@ -66,98 +66,92 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
   const editingPolicy = claimedChannel.channelClaim.constraint.editingPolicy;
 
   const deleteChannelClaimMutation = useMutation({
-    mutationFn: async () => await deleteChannelClaim(customerIdentfier, channelIdentifier),
+    mutationFn: async () => await deleteChannelClaim(customerIdentifier, channelIdentifier),
     onSuccess: async () => {
-      dispatch(setNotification({ message: t('feedback.success.delete_channel_claim'), variant: 'success' }));
       await refetchClaimedChannels();
       setOpenConfirmDialog(false);
+      dispatch(setNotification({ message: t('feedback.success.delete_channel_claim'), variant: 'success' }));
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.delete_channel_claim'), variant: 'error' })),
   });
 
   return (
-    <>
-      <TableRow sx={{ bgcolor: 'white' }}>
-        <StyledTableCell aria-live="polite" aria-busy={pendingChannelQuery}>
-          {pendingChannelQuery ? (
-            <Skeleton width={300} />
-          ) : !!channelName ? (
-            <Typography>{channelName}</Typography>
-          ) : (
-            <Typography sx={{ fontStyle: 'italic' }}>{t('common.unknown')}</Typography>
-          )}
-        </StyledTableCell>
-        <StyledTableCell aria-live="polite" aria-busy={organizationQuery.isPending}>
-          {organizationQuery.isPending ? (
-            <Skeleton width={300} />
-          ) : organizationName ? (
-            <Typography>{organizationName}</Typography>
-          ) : (
-            <Typography sx={{ fontStyle: 'italic' }}>{t('common.unknown')}</Typography>
-          )}
-        </StyledTableCell>
-        <StyledTableCell>
-          <StyledChip
-            variant="filled"
-            color="secondary"
-            size="small"
-            sx={{
-              bgcolor: publishingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main',
-            }}
-            label={t(`editor.institution.channel_claims.access_policies.${publishingPolicy}`)}
-            icon={
-              publishingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlineIcon fontSize="small" />
-            }
-          />
-        </StyledTableCell>
-        <StyledTableCell>
-          <StyledChip
-            variant="filled"
-            color="secondary"
-            size="small"
-            sx={{
-              bgcolor: editingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main',
-            }}
-            label={t(`editor.institution.channel_claims.access_policies.${editingPolicy}`)}
-            icon={
-              editingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlineIcon fontSize="small" />
-            }
-          />
-        </StyledTableCell>
-        <StyledTableCell sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-          {claimedChannel.channelClaim.constraint.scope.map((scope) => (
-            <Chip key={scope} variant="filled" color="primary" label={t(`registration.publication_types.${scope}`)} />
-          ))}
-        </StyledTableCell>
-        {isOnSettingsPage && (
-          <>
-            <StyledTableCell>
-              <Tooltip title={t('common.remove')}>
-                <IconButton
-                  data-testid={`delete-channel-claim-${channelIdentifier}`}
-                  onClick={() => setOpenConfirmDialog(true)}
-                  size="small"
-                  sx={{ width: '1.5rem', height: '1.5rem' }}>
-                  <CloseOutlinedIcon fontSize="inherit" />
-                </IconButton>
-              </Tooltip>
-            </StyledTableCell>
-
-            <ConfirmDialog
-              open={openConfirmDialog}
-              title={t('editor.institution.channel_claims.delete_channel_claim')}
-              isLoading={deleteChannelClaimMutation.isPending}
-              onAccept={async () => await deleteChannelClaimMutation.mutateAsync()}
-              onCancel={() => setOpenConfirmDialog(false)}>
-              <Trans
-                i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
-                values={{ name: channelName }}
-                components={{ span: <span style={{ fontWeight: 'bold' }} /> }}
-              />
-            </ConfirmDialog>
-          </>
+    <TableRow sx={{ bgcolor: 'white' }}>
+      <StyledTableCell aria-live="polite" aria-busy={pendingChannelQuery}>
+        {pendingChannelQuery ? (
+          <Skeleton width={300} />
+        ) : !!channelName ? (
+          <Typography>{channelName}</Typography>
+        ) : (
+          <Typography sx={{ fontStyle: 'italic' }}>{t('common.unknown')}</Typography>
         )}
-      </TableRow>
-    </>
+      </StyledTableCell>
+      <StyledTableCell aria-live="polite" aria-busy={organizationQuery.isPending}>
+        {organizationQuery.isPending ? (
+          <Skeleton width={300} />
+        ) : organizationName ? (
+          <Typography>{organizationName}</Typography>
+        ) : (
+          <Typography sx={{ fontStyle: 'italic' }}>{t('common.unknown')}</Typography>
+        )}
+      </StyledTableCell>
+      <StyledTableCell>
+        <StyledChip
+          variant="filled"
+          color="secondary"
+          size="small"
+          sx={{
+            bgcolor: publishingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main',
+          }}
+          label={t(`editor.institution.channel_claims.access_policies.${publishingPolicy}`)}
+          icon={
+            publishingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlineIcon fontSize="small" />
+          }
+        />
+      </StyledTableCell>
+      <StyledTableCell>
+        <StyledChip
+          variant="filled"
+          color="secondary"
+          size="small"
+          sx={{
+            bgcolor: editingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main',
+          }}
+          label={t(`editor.institution.channel_claims.access_policies.${editingPolicy}`)}
+          icon={editingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlineIcon fontSize="small" />}
+        />
+      </StyledTableCell>
+      <StyledTableCell sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+        {claimedChannel.channelClaim.constraint.scope.map((scope) => (
+          <Chip key={scope} variant="filled" color="primary" label={t(`registration.publication_types.${scope}`)} />
+        ))}
+      </StyledTableCell>
+      {isOnSettingsPage && (
+        <StyledTableCell>
+          <Tooltip title={t('common.remove')}>
+            <IconButton
+              data-testid={`delete-channel-claim-${channelIdentifier}`}
+              onClick={() => setOpenConfirmDialog(true)}
+              size="small"
+              sx={{ width: '1.5rem', height: '1.5rem' }}>
+              <CloseOutlinedIcon fontSize="inherit" />
+            </IconButton>
+          </Tooltip>
+
+          <ConfirmDialog
+            open={openConfirmDialog}
+            title={t('editor.institution.channel_claims.delete_channel_claim')}
+            isLoading={deleteChannelClaimMutation.isPending}
+            onAccept={deleteChannelClaimMutation.mutate}
+            onCancel={() => setOpenConfirmDialog(false)}>
+            <Trans
+              i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
+              values={{ name: channelName }}
+              components={{ p: <Typography />, span: <span style={{ fontWeight: 'bold' }} /> }}
+            />
+          </ConfirmDialog>
+        </StyledTableCell>
+      )}
+    </TableRow>
   );
 };
