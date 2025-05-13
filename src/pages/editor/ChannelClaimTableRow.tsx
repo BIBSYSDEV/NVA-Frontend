@@ -1,7 +1,7 @@
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
-import { Chip, IconButton, Skeleton, styled, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
+import { Box, Chip, IconButton, Skeleton, styled, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -121,35 +121,39 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
           icon={editingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlineIcon fontSize="small" />}
         />
       </StyledTableCell>
-      <StyledTableCell sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-        {claimedChannel.channelClaim.constraint.scope.map((scope) => (
-          <Chip key={scope} variant="filled" color="primary" label={t(`registration.publication_types.${scope}`)} />
-        ))}
+      <StyledTableCell>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+          {claimedChannel.channelClaim.constraint.scope.map((scope) => (
+            <Chip key={scope} variant="filled" color="primary" label={t(`registration.publication_types.${scope}`)} />
+          ))}
+        </Box>
       </StyledTableCell>
       {isOnSettingsPage && (
         <StyledTableCell>
-          <Tooltip title={t('common.remove')}>
-            <IconButton
-              data-testid={`delete-channel-claim-${channelIdentifier}`}
-              onClick={() => setOpenConfirmDialog(true)}
-              size="small"
-              sx={{ width: '1.5rem', height: '1.5rem' }}>
-              <CloseOutlinedIcon fontSize="inherit" />
-            </IconButton>
-          </Tooltip>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Tooltip title={t('common.remove')}>
+              <IconButton
+                data-testid={`delete-channel-claim-${channelIdentifier}`}
+                onClick={() => setOpenConfirmDialog(true)}
+                size="small"
+                sx={{ width: '1.5rem', height: '1.5rem' }}>
+                <CloseOutlinedIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
 
-          <ConfirmDialog
-            open={openConfirmDialog}
-            title={t('editor.institution.channel_claims.delete_channel_claim')}
-            isLoading={deleteChannelClaimMutation.isPending}
-            onAccept={deleteChannelClaimMutation.mutate}
-            onCancel={() => setOpenConfirmDialog(false)}>
-            <Trans
-              i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
-              values={{ name: channelName }}
-              components={{ p: <Typography />, span: <span style={{ fontWeight: 'bold' }} /> }}
-            />
-          </ConfirmDialog>
+            <ConfirmDialog
+              open={openConfirmDialog}
+              title={t('editor.institution.channel_claims.delete_channel_claim')}
+              isLoading={deleteChannelClaimMutation.isPending}
+              onAccept={deleteChannelClaimMutation.mutate}
+              onCancel={() => setOpenConfirmDialog(false)}>
+              <Trans
+                i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
+                values={{ name: channelName }}
+                components={{ p: <Typography />, span: <span style={{ fontWeight: 'bold' }} /> }}
+              />
+            </ConfirmDialog>
+          </Box>
         </StyledTableCell>
       )}
     </TableRow>
