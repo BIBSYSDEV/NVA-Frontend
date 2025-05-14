@@ -1,6 +1,6 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -17,6 +17,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
+import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
@@ -37,6 +38,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   const user = useSelector((store: RootState) => store.user);
   const userIsTicketOwner = user && supportTicket?.owner === user.nvaUsername;
 
+  const queryClient = useQueryClient();
   const ticketMutation = useMutation({
     mutationFn: supportTicket
       ? (newTicketData: UpdateTicketData) => updateTicket(supportTicket.id, newTicketData)
@@ -99,7 +101,10 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
                 sx={{ alignSelf: 'center', width: 'fit-content', bgcolor: 'white' }}
                 loading={ticketMutation.isPending}
                 variant="outlined"
-                onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
+                onClick={async () => {
+                  await ticketMutation.mutateAsync({ status: 'Completed' });
+                  invalidateQueryKeyDueToReindexing(queryClient, 'taskNotifications');
+                }}>
                 {t('my_page.messages.mark_as_completed')}
               </Button>
             )}
@@ -119,6 +124,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
                 await addMessage(supportTicket.id, message);
                 if (userCanCompleteTicket && !userIsTicketOwner) {
                   await updateTicket(supportTicket.id, { status: 'Completed' });
+                  invalidateQueryKeyDueToReindexing(queryClient, 'taskNotifications');
                 }
               } else {
                 await createSupportTicket(message);
