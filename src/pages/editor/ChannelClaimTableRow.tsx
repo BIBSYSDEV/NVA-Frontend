@@ -1,18 +1,29 @@
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
-import { Chip, Skeleton, styled, TableCell, TableRow, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
+import { Box, Chip, IconButton, Skeleton, styled, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useContext, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchResource } from '../../api/commonApi';
+import { deleteChannelClaim } from '../../api/customerInstitutionsApi';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { useFetchPublisher } from '../../api/hooks/useFetchPublisher';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { ChannelClaimContext } from '../../context/ChannelClaimContext';
+import { setNotification } from '../../redux/notificationSlice';
+import { RootState } from '../../redux/store';
 import { ChannelClaimType, ClaimedChannel } from '../../types/customerInstitution.types';
 import { SerialPublication } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 
 interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
   channelType: ChannelClaimType;
+  isOnSettingsPage: boolean;
 }
 
 const StyledTableCell = styled(TableCell)({
@@ -25,12 +36,15 @@ const StyledChip = styled(Chip)({
   },
 });
 
-export const ChannelClaimTableRow = ({ claimedChannel, channelType }: ChannelClaimTableRowProps) => {
+export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettingsPage }: ChannelClaimTableRowProps) => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
   const channelId = claimedChannel.channelClaim.channel;
-
+  const channelIdentifier = getIdentifierFromId(claimedChannel.id);
+  const dispatch = useDispatch();
+  const { refetchClaimedChannels } = useContext(ChannelClaimContext);
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const isPublisherChannel = channelType === 'publisher';
-
   const publisherQuery = useFetchPublisher(isPublisherChannel ? channelId : '');
 
   const serialPublicationQuery = useQuery({
@@ -41,15 +55,24 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType }: ChannelCla
     staleTime: Infinity,
   });
 
+  const channelName = isPublisherChannel ? publisherQuery.data?.name : serialPublicationQuery.data?.name;
+  const pendingChannelQuery = isPublisherChannel ? publisherQuery.isPending : serialPublicationQuery.isPending;
+
   const organizationQuery = useFetchOrganization(claimedChannel.claimedBy.organizationId);
   const organizationName = getLanguageString(organizationQuery.data?.labels);
 
   const publishingPolicy = claimedChannel.channelClaim.constraint.publishingPolicy;
   const editingPolicy = claimedChannel.channelClaim.constraint.editingPolicy;
 
-  const channelName = isPublisherChannel ? publisherQuery.data?.name : serialPublicationQuery.data?.name;
-
-  const pendingChannelQuery = isPublisherChannel ? publisherQuery.isPending : serialPublicationQuery.isPending;
+  const deleteChannelClaimMutation = useMutation({
+    mutationFn: async () => await deleteChannelClaim(user?.customerId ?? '', channelIdentifier),
+    onSuccess: async () => {
+      await refetchClaimedChannels();
+      setOpenConfirmDialog(false);
+      dispatch(setNotification({ message: t('feedback.success.delete_channel_claim'), variant: 'success' }));
+    },
+    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_channel_claim'), variant: 'error' })),
+  });
 
   return (
     <TableRow sx={{ bgcolor: 'white' }}>
@@ -97,11 +120,39 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType }: ChannelCla
           icon={editingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlineIcon fontSize="small" />}
         />
       </StyledTableCell>
-      <StyledTableCell sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-        {claimedChannel.channelClaim.constraint.scope.map((scope) => (
-          <Chip key={scope} variant="filled" color="primary" label={t(`registration.publication_types.${scope}`)} />
-        ))}
+      <StyledTableCell>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+          {claimedChannel.channelClaim.constraint.scope.map((scope) => (
+            <Chip key={scope} variant="filled" color="primary" label={t(`registration.publication_types.${scope}`)} />
+          ))}
+        </Box>
       </StyledTableCell>
+      {isOnSettingsPage && (
+        <StyledTableCell align="center">
+          <Tooltip title={t('common.remove')}>
+            <IconButton
+              data-testid={dataTestId.editor.deleteChannelClaimButton(channelIdentifier)}
+              onClick={() => setOpenConfirmDialog(true)}
+              size="small"
+              sx={{ width: '1.5rem', height: '1.5rem', bgcolor: 'secondary.main' }}>
+              <CloseOutlinedIcon fontSize="inherit" />
+            </IconButton>
+          </Tooltip>
+
+          <ConfirmDialog
+            open={openConfirmDialog}
+            title={t('editor.institution.channel_claims.delete_channel_claim')}
+            isLoading={deleteChannelClaimMutation.isPending}
+            onAccept={deleteChannelClaimMutation.mutate}
+            onCancel={() => setOpenConfirmDialog(false)}>
+            <Trans
+              i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
+              values={{ name: channelName }}
+              components={{ p: <Typography />, span: <span style={{ fontWeight: 'bold' }} /> }}
+            />
+          </ConfirmDialog>
+        </StyledTableCell>
+      )}
     </TableRow>
   );
 };

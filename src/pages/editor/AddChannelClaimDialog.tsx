@@ -11,14 +11,14 @@ import {
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChannelClaim } from '../../api/customerInstitutionsApi';
 import { SearchForPublisher } from '../../components/SearchForPublisher';
+import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import { ChannelClaimType } from '../../types/customerInstitution.types';
 import { DegreeType } from '../../types/publicationFieldNames';
 import { PublicationInstanceType, Publisher, SerialPublication } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -29,19 +29,13 @@ const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
 
 interface AddChannelClaimDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
-  refetchClaimedChannels: () => Promise<unknown>;
-  channelType: ChannelClaimType;
 }
 
-export const AddChannelClaimDialog = ({
-  open,
-  closeDialog,
-  refetchClaimedChannels,
-  channelType,
-}: AddChannelClaimDialogProps) => {
+export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((state: RootState) => state.customer);
+  const { refetchClaimedChannels, channelType } = useContext(ChannelClaimContext);
   const isPublisherChannelClaim = channelType === 'publisher';
 
   const [selectedPublisher, setSelectedPublisher] = useState<Publisher | null>(null);

@@ -141,6 +141,7 @@ export const dataTestId = {
     curatorsOverviewLinkButton: 'curators-overview-link-button',
     curatorsSettingsLinkButton: 'curators-settings-link-button',
     curatorsSearchForPersonField: 'curators-search-for-person-field',
+    deleteChannelClaimButton: (identifier: string) => `delete-channel-claim-${identifier}`,
     editUserButton: 'edit-user-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
     institutionSupportInputField: 'institution-support-input-field',

@@ -38,7 +38,7 @@ export const SerialPublicationClaimsOverview = () => {
         {channelClaimsQuery.isPending ? (
           <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
         ) : channelClaimList && channelClaimList.length > 0 ? (
-          <ChannelClaimTable channelClaimList={channelClaimList} channelType={'serial-publication'} />
+          <ChannelClaimTable channelClaimList={channelClaimList} />
         ) : null}
       </TableContainer>
     </>
