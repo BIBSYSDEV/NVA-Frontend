@@ -103,8 +103,8 @@ interface ImportSource {
 }
 
 export type RegistrationOperation =
-  | 'partial-update'
-  | 'update'
+  | 'partial-update' // Can edit projects and funding
+  | 'update' // Can update all fields
   | 'delete'
   | 'unpublish'
   | 'republish'
