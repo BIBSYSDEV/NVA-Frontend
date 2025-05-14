@@ -25,7 +25,7 @@ export const ExcludeSubunitsCheckbox = ({ paramName, paginationParamName, disabl
           } else {
             syncedParams.delete(paramName);
           }
-          searchParams.delete(paginationParamName);
+          syncedParams.delete(paginationParamName);
           return syncedParams;
         });
       }}
