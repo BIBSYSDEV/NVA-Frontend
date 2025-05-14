@@ -359,6 +359,22 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiPickersFilledInput: {
+        styleOverrides: {
+          root: {
+            backgroundColor: Color.White,
+            '&.Mui-focused': {
+              backgroundColor: Color.White,
+            },
+            '&:hover': {
+              backgroundColor: Color.White,
+            },
+            '&.Mui-disabled': {
+              backgroundColor: Color.White,
+            },
+          },
+        },
+      },
       MuiMenuItem: {
         styleOverrides: {
           root: {
