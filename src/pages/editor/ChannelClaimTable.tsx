@@ -7,6 +7,7 @@ import { ClaimedChannel } from '../../types/customerInstitution.types';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { HelperTextModal } from '../registration/HelperTextModal';
 import { ChannelClaimTableRow } from './ChannelClaimTableRow';
+import { dataTestId } from '../../utils/dataTestIds';
 
 interface ChannelClaimTableProps {
   channelClaimList: ClaimedChannel[];
@@ -30,7 +31,9 @@ export const ChannelClaimTable = ({ channelClaimList }: ChannelClaimTableProps) 
           <TableCell>{channelType === 'publisher' ? t('common.publisher') : t('common.serial_publication')}</TableCell>
           <TableCell>
             {t('editor.institution.channel_claims.channel_owner')}
-            <HelperTextModal modalTitle={t('editor.institution.channel_claims.channel_owner')}>
+            <HelperTextModal
+              buttonDataTestId={dataTestId.editor.channelOwnerInfoButton}
+              modalTitle={t('editor.institution.channel_claims.channel_owner')}>
               <Trans
                 i18nKey="editor.institution.channel_claims.channel_owner_helper_text"
                 components={helperTextModalComponents}
@@ -39,7 +42,9 @@ export const ChannelClaimTable = ({ channelClaimList }: ChannelClaimTableProps) 
           </TableCell>
           <TableCell sx={{ textWrap: 'nowrap' }}>
             {t('editor.institution.channel_claims.register_access')}
-            <HelperTextModal modalTitle={t('editor.institution.channel_claims.register_access')}>
+            <HelperTextModal
+              buttonDataTestId={dataTestId.editor.registerAccessInfoButton}
+              modalTitle={t('editor.institution.channel_claims.register_access')}>
               <Trans
                 i18nKey="editor.institution.channel_claims.register_access_helper_text"
                 components={helperTextModalComponents}
@@ -48,7 +53,9 @@ export const ChannelClaimTable = ({ channelClaimList }: ChannelClaimTableProps) 
           </TableCell>
           <TableCell sx={{ textWrap: 'nowrap' }}>
             {t('editor.institution.channel_claims.editing_access')}
-            <HelperTextModal modalTitle={t('editor.institution.channel_claims.editing_access')}>
+            <HelperTextModal
+              buttonDataTestId={dataTestId.editor.editingAccessInfoButton}
+              modalTitle={t('editor.institution.channel_claims.editing_access')}>
               <Trans
                 i18nKey="editor.institution.channel_claims.editing_access_helper_text"
                 components={helperTextModalComponents}
@@ -57,7 +64,9 @@ export const ChannelClaimTable = ({ channelClaimList }: ChannelClaimTableProps) 
           </TableCell>
           <TableCell sx={{ textWrap: 'nowrap' }}>
             {t('editor.institution.channel_claims.category_limitations')}
-            <HelperTextModal modalTitle={t('editor.institution.channel_claims.category_limitations')}>
+            <HelperTextModal
+              buttonDataTestId={dataTestId.editor.categoryLimitationsInfoButton}
+              modalTitle={t('editor.institution.channel_claims.category_limitations')}>
               <Trans
                 i18nKey="editor.institution.channel_claims.category_limitations_helper_text"
                 components={helperTextModalComponents}
