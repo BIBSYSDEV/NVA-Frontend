@@ -31,7 +31,7 @@ export const RegistrationLandingPage = () => {
     navigate(newPath + location.search, { replace: true, state: location.state });
   }
 
-  const canEditRegistration = userHasAccessRight(registration, 'update');
+  const canEditRegistration = userHasAccessRight(registration, 'partial-update');
 
   const isAllowedToSeePublicRegistration =
     registration?.status === RegistrationStatus.Published ||
