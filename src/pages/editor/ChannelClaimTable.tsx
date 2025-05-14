@@ -4,10 +4,10 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { ClaimedChannel } from '../../types/customerInstitution.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { HelperTextModal } from '../registration/HelperTextModal';
 import { ChannelClaimTableRow } from './ChannelClaimTableRow';
-import { dataTestId } from '../../utils/dataTestIds';
 
 interface ChannelClaimTableProps {
   channelClaimList: ClaimedChannel[];
