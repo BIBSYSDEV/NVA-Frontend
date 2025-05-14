@@ -25,7 +25,6 @@ import {
   isBook,
   isReport,
   isResearchData,
-  temporaryExtendedEditAccess,
   userHasAccessRight,
 } from '../../utils/registration-helpers';
 import { getWizardPathByRegistration } from '../../utils/urlPaths';
@@ -68,8 +67,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const userCanEditRegistration =
-    userHasAccessRight(registration, 'partial-update') || temporaryExtendedEditAccess(registration, user);
+  const userCanEditRegistration = userHasAccessRight(registration, 'partial-update');
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
