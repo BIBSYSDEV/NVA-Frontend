@@ -36,7 +36,7 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
     lookupNvaDoi();
   }, [nvaDoi, registration.status]);
 
-  const canSeeDraftDoi = userHasAccessRight(registration, 'update');
+  const canSeeDraftDoi = userHasAccessRight(registration, 'partial-update');
   const canSeeNvaDoi = nvaDoi && (nvaDoiIsFindable || canSeeDraftDoi);
 
   return (

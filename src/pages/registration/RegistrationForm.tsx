@@ -15,15 +15,17 @@ import { RequiredDescription } from '../../components/RequiredDescription';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
+import { useFetchChannelClaimsData } from '../../utils/hooks/useFetchChannelClaimsData';
 import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { doNotRedirectQueryParam, UrlPathTemplate } from '../../utils/urlPaths';
 import { Forbidden } from '../errorpages/Forbidden';
+import { ChannelClaimInfoBox } from './ChannelClaimInfoBox';
 import { ContributorsPanel } from './ContributorsPanel';
 import { DescriptionPanel } from './DescriptionPanel';
 import { FilesAndLicensePanel } from './FilesAndLicensePanel';
@@ -47,9 +49,11 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
   const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
   const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
-
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
+
+  const channelClaimData = useFetchChannelClaimsData(registration);
+
   const canHaveNviCandidate =
     registration?.status === RegistrationStatus.Published ||
     registration?.status === RegistrationStatus.PublishedMetadata;
@@ -64,18 +68,21 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
-  const canEditRegistration = userHasAccessRight(registration, 'update');
+  const canEditRegistration = userHasAccessRight(registration, 'partial-update');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [tabNumber]);
 
-  return registrationQuery.isPending || (canHaveNviCandidate && nviReportedStatus.isPending) ? (
+  return registrationQuery.isPending ||
+    channelClaimData.channelClaimQuery.isLoading ||
+    (canHaveNviCandidate && nviReportedStatus.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
-    <NviCandidateContext.Provider value={{ disableNviCriticalFields }}>
+    <RegistrationFormContext.Provider
+      value={{ disableNviCriticalFields, disableChannelClaimsFields: channelClaimData.shouldDisableFields }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
@@ -104,6 +111,12 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             <RequiredDescription />
             <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
               <Box id="form" mb="2rem">
+                {channelClaimData.channelClaimQuery.data && channelClaimData.shouldDisableFields && (
+                  <ChannelClaimInfoBox
+                    channelClaim={channelClaimData.channelClaimQuery.data}
+                    registration={registration}
+                  />
+                )}
                 {tabNumber === RegistrationTab.Description && (
                   <ErrorBoundary>
                     <DescriptionPanel />
@@ -144,6 +157,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         <Typography sx={{ mb: '1rem' }}>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>
-    </NviCandidateContext.Provider>
+    </RegistrationFormContext.Provider>
   ) : null;
 };

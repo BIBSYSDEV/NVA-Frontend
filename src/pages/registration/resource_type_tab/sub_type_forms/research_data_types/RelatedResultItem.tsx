@@ -3,11 +3,12 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Box, IconButton, ListItem, Skeleton, TextField, Tooltip, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { RegistrationListItemContent } from '../../../../../components/RegistrationList';
 import { SearchListItemDiv } from '../../../../../components/styled/Wrappers';
+import { RegistrationFormContext } from '../../../../../context/RegistrationFormContext';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { Registration, RelatedDocument } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
@@ -31,6 +32,7 @@ export const RelatedResultItem = ({
   onRemoveDocument,
 }: RelatedResultItemProps) => {
   const { t } = useTranslation();
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
   const [indexToRemove, setIndexToRemove] = useState<number | null>(null);
   const uri = document.type === 'ConfirmedDocument' ? document.identifier : '';
   const isInternalRegistration = uri.includes(API_URL);
@@ -52,6 +54,7 @@ export const RelatedResultItem = ({
               <Tooltip title={t('common.move_down')}>
                 <IconButton
                   size="small"
+                  disabled={disableChannelClaimsFields}
                   sx={{ minWidth: 'auto', height: 'fit-content', gridColumn: 1 }}
                   onClick={() =>
                     !!document.sequence && document.sequence > 0
@@ -66,6 +69,7 @@ export const RelatedResultItem = ({
               <Tooltip title={t('common.move_up')}>
                 <IconButton
                   size="small"
+                  disabled={disableChannelClaimsFields}
                   sx={{ minWidth: 'auto', height: 'fit-content', gridColumn: 2 }}
                   onClick={() =>
                     !!document.sequence && document.sequence > 0
@@ -88,7 +92,7 @@ export const RelatedResultItem = ({
               <SearchListItemDiv sx={{ borderLeftColor: 'registration.main', width: '100%' }}>
                 <RegistrationListItemContent
                   registration={convertToRegistrationSearchItem(registration)}
-                  onRemoveRelated={() => setIndexToRemove(index)}
+                  onRemoveRelated={disableChannelClaimsFields ? undefined : () => setIndexToRemove(index)}
                 />
               </SearchListItemDiv>
             )
@@ -109,6 +113,7 @@ export const RelatedResultItem = ({
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <TextField
                 {...field}
+                disabled={disableChannelClaimsFields}
                 label={t('common.reference')}
                 placeholder={t('feedback.validation.reference_required')}
                 variant="filled"
@@ -122,6 +127,7 @@ export const RelatedResultItem = ({
           </Field>
           <IconButton
             title={t('registration.resource_type.research_data.remove_relation')}
+            disabled={disableChannelClaimsFields}
             data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
             onClick={() => setIndexToRemove(index)}>
             <CancelIcon color="primary" />

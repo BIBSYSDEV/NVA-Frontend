@@ -12,7 +12,7 @@ import {
 } from './AutocompleteListboxWithExpansion';
 import { AutocompleteTextField, AutocompleteTextFieldProps } from './AutocompleteTextField';
 
-interface SearchForPublisherFacet {
+interface SearchForPublisherProps {
   onSelectPublisher: (publisher: Publisher | null) => void;
   autocompleteProps?: Partial<AutocompleteProps<Publisher, false, false, false>>;
   textFieldProps?: Partial<AutocompleteTextFieldProps>;
@@ -22,7 +22,7 @@ export const SearchForPublisher = ({
   onSelectPublisher,
   autocompleteProps,
   textFieldProps,
-}: SearchForPublisherFacet) => {
+}: SearchForPublisherProps) => {
   const { t } = useTranslation();
 
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);

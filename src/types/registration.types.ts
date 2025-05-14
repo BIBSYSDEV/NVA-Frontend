@@ -103,7 +103,8 @@ interface ImportSource {
 }
 
 export type RegistrationOperation =
-  | 'update'
+  | 'partial-update' // Can edit projects and funding
+  | 'update' // Can update all fields
   | 'delete'
   | 'unpublish'
   | 'republish'
@@ -339,7 +340,7 @@ export const emptyRegistration: Registration = {
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
-  allowedOperations: ['update', 'delete', 'unpublish', 'upload-file'],
+  allowedOperations: ['partial-update', 'update', 'delete', 'unpublish', 'upload-file'],
 };
 
 export interface ContextSeries {

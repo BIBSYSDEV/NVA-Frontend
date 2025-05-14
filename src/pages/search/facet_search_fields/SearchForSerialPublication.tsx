@@ -1,4 +1,4 @@
-import { Autocomplete } from '@mui/material';
+import { Autocomplete, AutocompleteProps, Chip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSerialPublicationSearch } from '../../../api/hooks/useSerialPublicationSearch';
@@ -7,20 +7,25 @@ import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
 } from '../../../components/AutocompleteListboxWithExpansion';
-import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { AutocompleteTextField, AutocompleteTextFieldProps } from '../../../components/AutocompleteTextField';
+import { SerialPublication } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
-interface SearchForSerialPublicationFacetItemProps {
-  searchMode: 'journal' | 'series';
-  onSelectSerialPublication: (identifier: string) => void;
+interface SearchForSerialPublicationProps {
+  searchMode: 'journal' | 'series' | 'serial-publication';
+  onSelectSerialPublication: (SerialPublication: SerialPublication | null) => void;
+  autocompleteProps?: Partial<AutocompleteProps<SerialPublication, false, false, false>>;
+  textFieldProps?: Partial<AutocompleteTextFieldProps>;
 }
 
-export const SearchForSerialPublicationFacetItem = ({
+export const SearchForSerialPublication = ({
   searchMode,
   onSelectSerialPublication,
-}: SearchForSerialPublicationFacetItemProps) => {
+  autocompleteProps,
+  textFieldProps,
+}: SearchForSerialPublicationProps) => {
   const { t } = useTranslation();
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,12 +43,9 @@ export const SearchForSerialPublicationFacetItem = ({
 
   return (
     <Autocomplete
-      fullWidth
-      size="small"
-      sx={{ p: '0.25rem 0.5rem' }}
+      {...autocompleteProps}
       options={options}
       inputMode="search"
-      value={null}
       getOptionLabel={(option) => option.name}
       getOptionKey={(option) => option.id}
       filterOptions={(options) => options}
@@ -54,9 +56,7 @@ export const SearchForSerialPublicationFacetItem = ({
         }
       }}
       onChange={(_, selectedSerialPublication) => {
-        if (selectedSerialPublication) {
-          onSelectSerialPublication(selectedSerialPublication.identifier);
-        }
+        onSelectSerialPublication(selectedSerialPublication);
         setSearchQuery('');
       }}
       loading={serialPublicationSearchQuery.isFetching}
@@ -69,6 +69,7 @@ export const SearchForSerialPublicationFacetItem = ({
           hideScientificLevel
         />
       )}
+      renderValue={(value, getItemProps) => <Chip label={value.name} {...getItemProps()} />}
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}
@@ -77,10 +78,18 @@ export const SearchForSerialPublicationFacetItem = ({
           data-testid={
             searchMode === 'series'
               ? dataTestId.aggregations.seriesFacetsSearchField
-              : dataTestId.aggregations.journalFacetsSearchField
+              : searchMode === 'journal'
+                ? dataTestId.aggregations.journalFacetsSearchField
+                : dataTestId.editor.channelSearchField
           }
-          placeholder={searchMode === 'series' ? t('search.search_for_series') : t('search.search_for_journal')}
-          showSearchIcon
+          placeholder={
+            searchMode === 'series'
+              ? t('search.search_for_series')
+              : searchMode === 'journal'
+                ? t('search.search_for_journal')
+                : t('search.search_for_serial_publication')
+          }
+          {...textFieldProps}
         />
       )}
       slotProps={{

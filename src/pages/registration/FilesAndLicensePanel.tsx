@@ -1,12 +1,13 @@
 import { Box, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import { useEffect, useMemo, useRef } from 'react';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { InfoBanner } from '../../components/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
 import { FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
 import { FileFieldNames, ResourceFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
@@ -25,6 +26,7 @@ import {
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
+import { ClaimedChannelInfoBox } from './resource_type_tab/components/ClaimedChannelInfoBox';
 import { LinkField } from './resource_type_tab/components/LinkField';
 
 const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler/info';
@@ -39,6 +41,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const { values } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
@@ -79,20 +82,20 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     });
   }, [t, uppy, filesRef]);
 
-  const publisherIdentifier =
-    (publicationContext &&
-      'publisher' in publicationContext &&
-      publicationContext.publisher?.id?.split('/').reverse()[1]) ||
-    '';
-  const seriesIdentifier =
-    (publicationContext && 'series' in publicationContext && publicationContext.series?.id?.split('/').reverse()[1]) ||
-    '';
-  const journalIdentifier =
-    (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
+  const publisherId =
+    (publicationContext && 'publisher' in publicationContext && publicationContext.publisher?.id) || '';
+  const publisherIdentifier = publisherId?.split('/').reverse()[1];
+
+  const seriesId = (publicationContext && 'series' in publicationContext && publicationContext.series?.id) || '';
+  const seriesIdentifier = seriesId?.split('/').reverse()[1];
+
+  const journalId = (publicationContext && 'id' in publicationContext && publicationContext.id) || '';
+  const journalIdentifier = journalId?.split('/').reverse()[1] || '';
 
   const originalDoi = entityDescription?.reference?.doi;
 
-  const canEditFilesAndLinks = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
+  const canEditFilesAndLinks =
+    (userHasAccessRight(values, 'partial-update') || userIsValidImporter(user, values)) && !disableChannelClaimsFields;
   const canUploadFile = userHasAccessRight(values, 'upload-file');
   const categorySupportsFiles = allowsFileUpload(customer, entityDescription?.reference?.publicationInstance?.type);
 
@@ -111,15 +114,24 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   {t('registration.files_and_license.find_journal_in_channel_register')}
                 </OpenInNewLink>
               )}
+              {journalId && (
+                <ClaimedChannelInfoBox channelId={journalId} channelType={t('registration.resource_type.journal')} />
+              )}
+
               {publisherIdentifier && (
                 <OpenInNewLink href={getChannelRegisterPublisherUrl(publisherIdentifier)}>
                   {t('registration.files_and_license.find_publisher_in_channel_register')}
                 </OpenInNewLink>
               )}
+              {publisherId && <ClaimedChannelInfoBox channelId={publisherId} channelType={t('common.publisher')} />}
+
               {seriesIdentifier && (
                 <OpenInNewLink href={getChannelRegisterJournalUrl(seriesIdentifier)}>
                   {t('registration.files_and_license.find_series_in_channel_register')}
                 </OpenInNewLink>
+              )}
+              {seriesId && (
+                <ClaimedChannelInfoBox channelId={seriesId} channelType={t('registration.resource_type.series')} />
               )}
             </Paper>
           )}

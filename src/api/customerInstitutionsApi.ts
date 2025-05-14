@@ -85,3 +85,20 @@ export const fetchClaimedChannels = async (channelType: 'publisher' | 'serial-pu
 
   return getClaimedChannels.data;
 };
+
+export const fetchChannelClaim = async (channelIdentifier: string, signal: AbortSignal) => {
+  const getChannelClaim = await authenticatedApiRequest2<ClaimedChannel>({
+    url: `${CustomerInstitutionApiPath.ChannelClaim}/${channelIdentifier}`,
+    signal,
+  });
+
+  return getChannelClaim.data;
+};
+
+export const deleteChannelClaim = async (customerId: string, channelIdentifier: string) => {
+  const deleteResponse = await authenticatedApiRequest2<null>({
+    url: `${customerId}/channel-claim/${channelIdentifier}`,
+    method: 'DELETE',
+  });
+  return deleteResponse.data;
+};
