@@ -85,7 +85,6 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
 
   const searchParams = new URLSearchParams(location.search);
   const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || 'show-all';
-  const excludeSubunits = searchParams.get(TicketSearchParam.ExcludeSubUnits) === 'true';
   const resultsParam = searchParams.get(TicketSearchParam.Results);
   const fromParam = searchParams.get(TicketSearchParam.From);
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
@@ -176,7 +175,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
               <ExcludeSubunitsCheckbox
                 paramName={TicketSearchParam.ExcludeSubUnits}
                 paginationParamName={TicketSearchParam.From}
-                disabled={excludeSubunits}
+                disabled={!searchParams.has(TicketSearchParam.OrganizationId)}
               />
             </Grid>
           </>
