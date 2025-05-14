@@ -7,7 +7,7 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 interface ExcludeSubunitsCheckboxProps {
   paramName: string;
   paginationParamName: string;
-  disabled?: boolean;
+  disabled: boolean;
 }
 
 export const ExcludeSubunitsCheckbox = ({ paramName, paginationParamName, disabled }: ExcludeSubunitsCheckboxProps) => {
