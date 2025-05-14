@@ -340,7 +340,7 @@ export const emptyRegistration: Registration = {
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
-  allowedOperations: ['partial-update', 'delete', 'unpublish', 'upload-file'],
+  allowedOperations: ['partial-update', 'update', 'delete', 'unpublish', 'upload-file'],
 };
 
 export interface ContextSeries {
