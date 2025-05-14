@@ -331,10 +331,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -406,7 +402,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1912,6 +1912,7 @@
       "cannot_select_non_degree_when_degree_has_open_file": "Du kan ikke velge annet enn studentoppgave når det er en åpen fil på gjeldende studentoppgave. Slett filen før du endrer kategori om kategorien er feil.",
       "change_registration_type": "Bytte registreringstype?",
       "change_registration_type_description": "Merk at dette kan føre til at du mister noe av dataene du har lagt inn i de tilfellene hvor eksisterende data ikke er gyldig for den nye typen. Er du sikker på at du vil bytte registreringstype?",
+      "channel_claimed_by_other_institution": "{{channelType}} eies av en annen institusjon enn det du er logget inn med.",
       "chapter": {
         "info_anthology": "Antologien som kapittelet er publisert i, må være registrert og offentliggjort i NVA før du kan registrere kapittelet",
         "info_book_of_abstracts": "Abstraktsamlingen hvor abstraktet er publisert i må være publisert først",
@@ -1949,6 +1950,7 @@
           "TemporaryExhibition": "Temporær utstilling"
         }
       },
+      "files_will_be_handled_by_other_institution": "Eventuelle filer blir behandlet av kurator ved \"<institution/>\".",
       "isbn": "ISBN",
       "isbn_prefix": "ISBN-prefiks",
       "issn": "ISSN",
