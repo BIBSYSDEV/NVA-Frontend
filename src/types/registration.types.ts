@@ -104,6 +104,7 @@ interface ImportSource {
 
 export type RegistrationOperation =
   | 'partial-update'
+  | 'update'
   | 'delete'
   | 'unpublish'
   | 'republish'
