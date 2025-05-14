@@ -331,6 +331,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -402,11 +406,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -468,16 +468,16 @@
         "delete_channel_claim": "Fjern eierskap til kanal",
         "delete_channel_claim_description": "<p>Er du sikker på at du vil fjerne eierskapet til <span>{{name}}</span>?</p>",
         "editing_access": "Tilgang til å redigere",
-        "publishing_access": "Tilgang til å publisere",
         "publisher_claims_overview": "Oversikt over utgivereierskap",
+        "publishing_access": "Tilgang til å publisere",
         "serial_publication_claims_overview": "Oversikt over serie-/tidsskrifteierskap",
         "set_channel_claim": "Sett eierskap",
         "show_only_my_institution": "Vis kun min institusjon"
       },
       "institution_admin_one": "Institusjonens administrator",
       "institution_admin_other": "Institusjonens administratorer",
-      "institution_editor_one": "Institusjonens redaktør",
       "institution_code": "Kode",
+      "institution_editor_one": "Institusjonens redaktør",
       "institution_editor_other": "Institusjonens redaktører",
       "institution_has_no_administrator": "Institusjonen har ingen administrator",
       "institution_has_no_editor": "Institusjonen har ingen redaktør",
@@ -640,8 +640,8 @@
       "create_series": "Serien ble opprettet",
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
-      "delete_draft_registrations": "Alle kladdene ble slettet",
       "delete_channel_claim": "Kanaleierskapet ble fjernet",
+      "delete_draft_registrations": "Alle kladdene ble slettet",
       "delete_file": "Filen ble slettet",
       "delete_message": "Meldingen ble slettet",
       "delete_registration": "Registrering ble slettet",
@@ -1329,6 +1329,8 @@
   },
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikke lagre fordi resultatet er publisert og inneholder valideringsfeil",
+    "channel_claim_info_heading": "Felt låst for redigering",
+    "channel_claim_info_owned_by": "Dette resultatet er tilknyttet en kanal som eies av \"<institution/>\".",
     "citation_points_to": "Siteringen viser til",
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
@@ -1469,8 +1471,6 @@
       "search_for_npi_discipline": "Søk etter fagfelt",
       "year_only": "Kun årstall"
     },
-    "channel_claim_info_heading": "Felt låst for redigering",
-    "channel_claim_info_owned_by": "Dette resultatet er tilknyttet en kanal som eies av \"<institution/>\".",
     "disable_fields_due_to_channel_claim": "<p>De har satt begrensinger på at kun brukere på deres institusjon kan redigere resultatet.</p>",
     "disable_fields_due_to_channel_claim_thesis": "<p>De har satt at kun studentoppgavekurator fra sin institusjon kan redigere resultatet.</p><p>Ta kontakt med studentoppgavekurator for endring. Gå til loggen på resultat for detaljer om hvilken kurator som har behandlet publiseringsforespørselen.</p>",
     "edit_registration": "Rediger resultat",
