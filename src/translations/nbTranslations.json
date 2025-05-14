@@ -461,6 +461,8 @@
         "administer_serial_publication_channel_claim_description": "<p>På denne siden kan du administrere eierskap for serie/tidsskrift som tilhører din institusjon.</p><p>Eierskap settes av institusjonen, så kontakt kanaleier ved feilregistrering.</p><button/><p>Eierskap styrer hvilken institusjon som mottar publiseringsforespørselen, uavhengig av registratorens tilhørighet.</p><p>Kanaleier bestemmer om brukere fra andre institusjoner kan registrere resultater med serie/tidsskrift.</p>",
         "category_limitations": "Begrensning for kategori",
         "channel_claim": "Kanaleierskap",
+        "channel_claims_overview_description": "Oversikt over kanaler fra Kanalregisteret:",
+        "channel_claims_settings_description": "Administrer eierskap og tilganger til kanaler fra Kanalregisteret:",
         "channel_owner": "Kanaleier",
         "claim_category_restriction": "Kategorier som begrensningen skal gjelde for",
         "delete_channel_claim": "Fjern eierskap til kanal",

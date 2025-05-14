@@ -1,12 +1,12 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ArchitectureIcon from '@mui/icons-material/Architecture';
 import GavelIcon from '@mui/icons-material/Gavel';
+import { Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Outlet, Route, Routes, useLocation } from 'react-router';
 import { fetchResource } from '../../api/commonApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
@@ -109,20 +109,22 @@ const InstitutionPage = () => {
               to={UrlPathTemplate.InstitutionCategoriesOverview}>
               {t('editor.categories_with_files')}
             </SelectableButton>
-            <BetaFunctionality>
-              <SelectableButton
-                isSelected={currentPath === UrlPathTemplate.InstitutionPublisherClaimsOverview}
-                data-testid={dataTestId.editor.publisherClaimOverviewButton}
-                to={UrlPathTemplate.InstitutionPublisherClaimsOverview}>
-                {t('editor.institution.channel_claims.publisher_claims_overview')}
-              </SelectableButton>
-              <SelectableButton
-                isSelected={currentPath === UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}
-                data-testid={dataTestId.editor.serialPublicationClaimOverviewButton}
-                to={UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}>
-                {t('editor.institution.channel_claims.serial_publication_claims_overview')}
-              </SelectableButton>
-            </BetaFunctionality>
+
+            <Typography sx={{ mt: '0.5rem' }}>
+              {t('editor.institution.channel_claims.channel_claims_overview_description')}
+            </Typography>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionPublisherClaimsOverview}
+              data-testid={dataTestId.editor.publisherClaimOverviewButton}
+              to={UrlPathTemplate.InstitutionPublisherClaimsOverview}>
+              {t('editor.institution.channel_claims.publisher_claims_overview')}
+            </SelectableButton>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}
+              data-testid={dataTestId.editor.serialPublicationClaimOverviewButton}
+              to={UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}>
+              {t('editor.institution.channel_claims.serial_publication_claims_overview')}
+            </SelectableButton>
           </NavigationList>
         </NavigationListAccordion>
         {isEditor && (
@@ -164,20 +166,22 @@ const InstitutionPage = () => {
                   to={UrlPathTemplate.InstitutionSupport}>
                   {t('editor.institution.change_institution_support')}
                 </SelectableButton>
-                <BetaFunctionality>
-                  <SelectableButton
-                    isSelected={currentPath === UrlPathTemplate.InstitutionPublisherClaims}
-                    data-testid={dataTestId.editor.publisherClaimButton}
-                    to={UrlPathTemplate.InstitutionPublisherClaims}>
-                    {t('editor.institution.channel_claims.administer_publisher_channel_claim')}
-                  </SelectableButton>
-                  <SelectableButton
-                    isSelected={currentPath === UrlPathTemplate.InstitutionSerialPublicationClaims}
-                    data-testid={dataTestId.editor.serialPublicationClaimButton}
-                    to={UrlPathTemplate.InstitutionSerialPublicationClaims}>
-                    {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
-                  </SelectableButton>
-                </BetaFunctionality>
+
+                <Typography sx={{ mt: '0.5rem' }}>
+                  {t('editor.institution.channel_claims.channel_claims_settings_description')}
+                </Typography>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionPublisherClaims}
+                  data-testid={dataTestId.editor.publisherClaimButton}
+                  to={UrlPathTemplate.InstitutionPublisherClaims}>
+                  {t('editor.institution.channel_claims.administer_publisher_channel_claim')}
+                </SelectableButton>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionSerialPublicationClaims}
+                  data-testid={dataTestId.editor.serialPublicationClaimButton}
+                  to={UrlPathTemplate.InstitutionSerialPublicationClaims}>
+                  {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
+                </SelectableButton>
               </NavigationList>
             </NavigationListAccordion>
 
