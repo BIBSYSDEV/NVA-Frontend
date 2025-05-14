@@ -19,6 +19,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
+import { ClaimedChannelInfoBox } from './ClaimedChannelInfoBox';
 import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
@@ -157,6 +158,11 @@ export const SeriesField = () => {
           />
         )}
       </Field>
+
+      {series?.id && (
+        <ClaimedChannelInfoBox channelId={series.id} channelType={t('registration.resource_type.series')} />
+      )}
+
       {!series?.id && seriesOptionsQuery.isFetched && (
         <>
           <StyledCreateChannelButton variant="outlined" onClick={toggleSeriesForm}>

@@ -106,6 +106,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(CristinApiPath.Position)).reply(200, mockPositionResponse);
 
   //memberinstitutions
+  mock.onGet(new RegExp(CustomerInstitutionApiPath.ChannelClaim)).reply(404);
   mock
     .onGet(new RegExp(`${CustomerInstitutionApiPath.Customer}/.+/vocabularies`))
     .reply(200, mockCustomerInstitutionVocabularies);

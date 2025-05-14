@@ -26,6 +26,7 @@ import {
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
+import { ClaimedChannelInfoBox } from './resource_type_tab/components/ClaimedChannelInfoBox';
 import { LinkField } from './resource_type_tab/components/LinkField';
 
 const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler/info';
@@ -81,16 +82,15 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     });
   }, [t, uppy, filesRef]);
 
-  const publisherIdentifier =
-    (publicationContext &&
-      'publisher' in publicationContext &&
-      publicationContext.publisher?.id?.split('/').reverse()[1]) ||
-    '';
-  const seriesIdentifier =
-    (publicationContext && 'series' in publicationContext && publicationContext.series?.id?.split('/').reverse()[1]) ||
-    '';
-  const journalIdentifier =
-    (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
+  const publisherId =
+    (publicationContext && 'publisher' in publicationContext && publicationContext.publisher?.id) || '';
+  const publisherIdentifier = publisherId?.split('/').reverse()[1];
+
+  const seriesId = (publicationContext && 'series' in publicationContext && publicationContext.series?.id) || '';
+  const seriesIdentifier = seriesId?.split('/').reverse()[1];
+
+  const journalId = (publicationContext && 'id' in publicationContext && publicationContext.id) || '';
+  const journalIdentifier = journalId?.split('/').reverse()[1] || '';
 
   const originalDoi = entityDescription?.reference?.doi;
 
@@ -114,15 +114,24 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   {t('registration.files_and_license.find_journal_in_channel_register')}
                 </OpenInNewLink>
               )}
+              {journalId && (
+                <ClaimedChannelInfoBox channelId={journalId} channelType={t('registration.resource_type.journal')} />
+              )}
+
               {publisherIdentifier && (
                 <OpenInNewLink href={getChannelRegisterPublisherUrl(publisherIdentifier)}>
                   {t('registration.files_and_license.find_publisher_in_channel_register')}
                 </OpenInNewLink>
               )}
+              {publisherId && <ClaimedChannelInfoBox channelId={publisherId} channelType={t('common.publisher')} />}
+
               {seriesIdentifier && (
                 <OpenInNewLink href={getChannelRegisterJournalUrl(seriesIdentifier)}>
                   {t('registration.files_and_license.find_series_in_channel_register')}
                 </OpenInNewLink>
+              )}
+              {seriesId && (
+                <ClaimedChannelInfoBox channelId={seriesId} channelType={t('registration.resource_type.series')} />
               )}
             </Paper>
           )}

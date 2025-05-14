@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getIdentifierFromId, removeTrailingYearPathFromUrl } from '../../utils/general-helpers';
 import { fetchChannelClaim } from '../customerInstitutionsApi';
 
-export const useFetchChannelClaim = (id = '') => {
+export const useFetchChannelClaim = (id = '', { ignoreErrorMessage = false } = {}) => {
   const { t } = useTranslation();
   const channelIdentifier = getIdentifierFromId(removeTrailingYearPathFromUrl(id));
 
@@ -11,6 +11,6 @@ export const useFetchChannelClaim = (id = '') => {
     queryKey: ['channelClaim', channelIdentifier],
     enabled: !!channelIdentifier,
     queryFn: ({ signal }) => fetchChannelClaim(channelIdentifier, signal),
-    meta: { errorMessage: t('feedback.error.get_channel_claim') },
+    meta: { errorMessage: !ignoreErrorMessage && t('feedback.error.get_channel_claim') },
   });
 };
