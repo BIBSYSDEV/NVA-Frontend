@@ -69,7 +69,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
   const canEditRegistration =
-    userHasAccessRight(registration, 'update') || temporaryExtendedEditAccess(registration, user);
+    userHasAccessRight(registration, 'partial-update') || temporaryExtendedEditAccess(registration, user);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

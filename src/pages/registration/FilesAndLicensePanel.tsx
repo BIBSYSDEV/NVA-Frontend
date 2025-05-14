@@ -95,7 +95,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const originalDoi = entityDescription?.reference?.doi;
 
   const canEditFilesAndLinks =
-    (userHasAccessRight(values, 'update') || userIsValidImporter(user, values)) && !disableChannelClaimsFields;
+    (userHasAccessRight(values, 'partial-update') || userIsValidImporter(user, values)) && !disableChannelClaimsFields;
   const canUploadFile = userHasAccessRight(values, 'upload-file');
   const categorySupportsFiles = allowsFileUpload(customer, entityDescription?.reference?.publicationInstance?.type);
 

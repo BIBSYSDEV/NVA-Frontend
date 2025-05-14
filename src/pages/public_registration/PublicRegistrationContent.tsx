@@ -69,7 +69,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   });
 
   const userCanEditRegistration =
-    userHasAccessRight(registration, 'update') || temporaryExtendedEditAccess(registration, user);
+    userHasAccessRight(registration, 'partial-update') || temporaryExtendedEditAccess(registration, user);
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>

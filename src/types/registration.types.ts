@@ -103,7 +103,7 @@ interface ImportSource {
 }
 
 export type RegistrationOperation =
-  | 'update'
+  | 'partial-update'
   | 'delete'
   | 'unpublish'
   | 'republish'
@@ -339,7 +339,7 @@ export const emptyRegistration: Registration = {
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
-  allowedOperations: ['update', 'delete', 'unpublish', 'upload-file'],
+  allowedOperations: ['partial-update', 'delete', 'unpublish', 'upload-file'],
 };
 
 export interface ContextSeries {

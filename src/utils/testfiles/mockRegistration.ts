@@ -107,7 +107,7 @@ export const mockRegistration: JournalRegistration = {
       },
     },
   },
-  allowedOperations: ['update', 'delete', 'unpublish', 'upload-file'],
+  allowedOperations: ['partial-update', 'delete', 'unpublish', 'upload-file'],
 };
 
 export const mockTicketCollection: TicketCollection = {
