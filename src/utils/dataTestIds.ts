@@ -405,6 +405,7 @@ export const dataTestId = {
       tabPanelLog: 'tab-panel-log',
       tabPanelTasks: 'tab-panel-tasks',
       terminateRegistrationButton: 'terminate-registration-button',
+      updateTicketOwnershipButton: 'update-ticket-ownership-button',
     },
     duplicateRegistrationModal: {
       duplicationModal: 'duplication-modal',

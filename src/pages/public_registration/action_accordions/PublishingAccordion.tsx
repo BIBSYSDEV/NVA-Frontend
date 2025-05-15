@@ -316,7 +316,11 @@ export const PublishingAccordion = ({
           onConfirmNotDuplicate={onConfirmNotDuplicate}
         />
 
-        <MoreActionsCollapse registration={registration} registrationIsValid={registrationIsValid} />
+        <MoreActionsCollapse
+          registration={registration}
+          registrationIsValid={registrationIsValid}
+          ticket={lastPublishingRequest}
+        />
       </AccordionDetails>
     </Accordion>
   );

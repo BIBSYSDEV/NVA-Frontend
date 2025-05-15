@@ -49,6 +49,7 @@ export interface Ticket extends BaseTicket {
   messages: Message[];
   finalizedBy?: string;
   finalizedDate?: string;
+  availableInstitutions?: string[];
 }
 
 export interface ExpandedTicket extends BaseTicket {
