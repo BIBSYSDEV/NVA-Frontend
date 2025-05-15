@@ -75,7 +75,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   }, [tabNumber]);
 
   return registrationQuery.isPending ||
-    channelClaimData.channelClaimQuery.isLoading ||
+    // channelClaimData.channelClaimQuery.isLoading || // TODO: Ensure this loading does not trigger an infinite loop
     (canHaveNviCandidate && nviReportedStatus.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
