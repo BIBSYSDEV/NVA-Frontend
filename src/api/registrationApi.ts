@@ -22,6 +22,14 @@ export const updateRegistration = async (registration: Registration) =>
     data: registration,
   });
 
+export const partialUpdateRegistration = async (registration: Registration) => {
+  return await authenticatedApiRequest<Registration>({
+    url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
+    method: 'PUT',
+    data: { ...registration, type: 'PartialUpdatePublicationRequest' },
+  });
+};
+
 export const updateRegistrationStatus = async (
   registrationIdentifier: string,
   updateRequest: UpdateRegistrationStatusRequest
@@ -79,7 +87,13 @@ export const createTicket = async (registrationId: string, type: TicketType, mes
   return authenticatedApiRequest<null>({
     url: `${registrationId}/ticket`,
     method: 'POST',
-    data: message && message.length > 0 ? { type, messages: [{ type: 'Message', text: message }] } : { type },
+    data:
+      message && message.length > 0
+        ? {
+            type,
+            messages: [{ type: 'Message', text: message }],
+          }
+        : { type },
   });
 };
 
