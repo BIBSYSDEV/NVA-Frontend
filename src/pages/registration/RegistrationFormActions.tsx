@@ -21,7 +21,7 @@ import { willResetNviStatuses } from '../../utils/nviHelpers';
 import {
   getFormattedRegistration,
   userHasAccessRight,
-  userHasAccessRightPartialUpdateButNotUpdate,
+  userCanOnlyDoPartialUpdate,
 } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
@@ -79,7 +79,7 @@ export const RegistrationFormActions = ({
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
     const formattedValues = getFormattedRegistration(values);
-    const updateRegistrationResponse = userHasAccessRightPartialUpdateButNotUpdate(formattedValues)
+    const updateRegistrationResponse = userCanOnlyDoPartialUpdate(formattedValues)
       ? await partialUpdateRegistration(formattedValues)
       : await updateRegistration(formattedValues);
     const isSuccess = isSuccessStatus(updateRegistrationResponse.status);

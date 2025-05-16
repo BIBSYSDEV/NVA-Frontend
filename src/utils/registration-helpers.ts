@@ -213,7 +213,10 @@ export const getFormattedRegistration = (registration: Registration) => {
 };
 
 type ContributorConfig = {
-  [type in PublicationInstanceType]: { primaryRoles: ContributorRole[]; secondaryRoles: ContributorRole[] };
+  [type in PublicationInstanceType]: {
+    primaryRoles: ContributorRole[];
+    secondaryRoles: ContributorRole[];
+  };
 };
 
 export const contributorConfig: ContributorConfig = {
@@ -769,7 +772,7 @@ export const getOutputName = (item: OutputItem): string => {
 export const userHasAccessRight = (registration: Registration | undefined, operation: RegistrationOperation) =>
   registration?.allowedOperations?.includes(operation) ?? false;
 
-export const userHasAccessRightPartialUpdateButNotUpdate = (registration: Registration) =>
+export const userCanOnlyDoPartialUpdate = (registration: Registration) =>
   userHasAccessRight(registration, 'partial-update') && !userHasAccessRight(registration, 'update');
 
 export const hyphenateIsrc = (isrc: string) =>
