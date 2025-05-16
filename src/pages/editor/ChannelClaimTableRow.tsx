@@ -46,6 +46,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const isPublisherChannel = channelType === 'publisher';
   const publisherQuery = useFetchPublisher(isPublisherChannel ? channelId : '');
+  const isOwnedByUserCustomer = claimedChannel.claimedBy.id === user?.customerId;
 
   const serialPublicationQuery = useQuery({
     enabled: !isPublisherChannel,
@@ -127,7 +128,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
           ))}
         </Box>
       </StyledTableCell>
-      {isOnSettingsPage && (
+      {isOnSettingsPage && isOwnedByUserCustomer && (
         <StyledTableCell align="center">
           <Tooltip title={t('common.remove')}>
             <IconButton
