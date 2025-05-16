@@ -23,7 +23,7 @@ export const updateRegistration = async (registration: Registration) =>
   });
 
 export const partialUpdateRegistration = async (registration: Registration) => {
-  return await authenticatedApiRequest2<Registration>({
+  return await authenticatedApiRequest<Registration>({
     url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
     data: { ...registration, type: 'PartialUpdatePublicationRequest' },
