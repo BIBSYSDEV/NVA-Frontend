@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { ChannelClaimType } from '../types/customerInstitution.types';
 
 interface ChannelClaimContextProps {
-  refetchClaimedChannels: () => Promise<unknown>;
+  refetchClaimedChannels?: () => Promise<unknown>;
   channelType: ChannelClaimType;
 }
 

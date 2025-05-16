@@ -10,6 +10,7 @@ import { RootState } from '../../redux/store';
 import { filterChannelClaims } from '../../utils/customer-helpers';
 import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
+import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 
 export const PublisherClaimsOverview = () => {
   const { t } = useTranslation();
@@ -34,13 +35,15 @@ export const PublisherClaimsOverview = () => {
 
       <Typography variant="h1">{t('editor.institution.channel_claims.publisher_claims_overview')}</Typography>
       <ChannelClaimFilter />
-      <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
-        {channelClaimsQuery.isPending ? (
-          <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
-        ) : channelClaimList && channelClaimList.length > 0 ? (
-          <ChannelClaimTable channelClaimList={channelClaimList} />
-        ) : null}
-      </TableContainer>
+      <ChannelClaimContext.Provider value={{ channelType: 'publisher' }}>
+        <TableContainer aria-live="polite" aria-busy={channelClaimsQuery.isPending} sx={{ mt: '1rem' }}>
+          {channelClaimsQuery.isPending ? (
+            <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
+          ) : channelClaimList && channelClaimList.length > 0 ? (
+            <ChannelClaimTable channelClaimList={channelClaimList} />
+          ) : null}
+        </TableContainer>
+      </ChannelClaimContext.Provider>
     </>
   );
 };

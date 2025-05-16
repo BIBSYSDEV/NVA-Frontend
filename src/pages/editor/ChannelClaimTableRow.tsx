@@ -67,7 +67,9 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
   const deleteChannelClaimMutation = useMutation({
     mutationFn: async () => await deleteChannelClaim(user?.customerId ?? '', channelIdentifier),
     onSuccess: async () => {
-      await refetchClaimedChannels();
+      if (refetchClaimedChannels) {
+        await refetchClaimedChannels();
+      }
       setOpenConfirmDialog(false);
       dispatch(setNotification({ message: t('feedback.success.delete_channel_claim'), variant: 'success' }));
     },
