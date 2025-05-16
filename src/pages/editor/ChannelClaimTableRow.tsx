@@ -46,7 +46,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const isPublisherChannel = channelType === 'publisher';
   const publisherQuery = useFetchPublisher(isPublisherChannel ? channelId : '');
-  const canDeleteChannelClaim = claimedChannel.claimedBy.id === user?.customerId;
+  const canDeleteChannelClaim = claimedChannel.claimedBy.organizationId === user?.topOrgCristinId;
 
   const serialPublicationQuery = useQuery({
     enabled: !isPublisherChannel,
