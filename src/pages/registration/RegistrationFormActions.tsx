@@ -79,7 +79,7 @@ export const RegistrationFormActions = ({
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
     const formattedValues = getFormattedRegistration(values);
-    const updateRegistrationResponse = userHasAccessRightPartialUpdateButNotUpdate
+    const updateRegistrationResponse = userHasAccessRightPartialUpdateButNotUpdate(values)
       ? await partialUpdateRegistration(formattedValues)
       : await updateRegistration(formattedValues);
     const isSuccess = isSuccessStatus(updateRegistrationResponse.status);
