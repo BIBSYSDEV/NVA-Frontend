@@ -769,6 +769,9 @@ export const getOutputName = (item: OutputItem): string => {
 export const userHasAccessRight = (registration: Registration | undefined, operation: RegistrationOperation) =>
   registration?.allowedOperations?.includes(operation) ?? false;
 
+export const userHasAccessRightPartialUpdateButNotUpdate = (registration: Registration) =>
+  userHasAccessRight(registration, 'partial-update') && !userHasAccessRight(registration, 'update');
+
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
 
