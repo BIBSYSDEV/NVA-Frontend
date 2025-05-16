@@ -14,8 +14,8 @@ interface ChannelClaimTableProps {
 }
 
 const helperTextModalComponents = {
-  p: <Typography />,
-  heading: <Typography variant="h2" sx={{ mt: '1rem' }} />,
+  p: <Typography sx={{ mb: '1rem' }} />,
+  heading: <Typography variant="h2" />,
 };
 
 export const ChannelClaimTable = ({ channelClaimList }: ChannelClaimTableProps) => {
@@ -28,7 +28,9 @@ export const ChannelClaimTable = ({ channelClaimList }: ChannelClaimTableProps) 
     <Table>
       <TableHead>
         <TableRow sx={{ bgcolor: 'secondary.main' }}>
-          <TableCell>{channelType === 'publisher' ? t('common.publisher') : t('common.serial_publication')}</TableCell>
+          <TableCell sx={{ textWrap: 'nowrap' }}>
+            {channelType === 'publisher' ? t('common.publisher') : t('common.serial_publication')}
+          </TableCell>
           <TableCell>
             {t('editor.institution.channel_claims.channel_owner')}
             <HelperTextModal

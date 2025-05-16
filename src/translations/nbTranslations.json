@@ -465,7 +465,7 @@
         "channel_claims_overview_description": "Oversikt over kanaler fra Kanalregisteret:",
         "channel_claims_settings_description": "Administrer eierskap og tilganger til kanaler fra Kanalregisteret:",
         "channel_owner": "Kanaleier",
-        "channel_owner_helper_text": "<p>Institusjonen som har tatt eierskap til kanalen (utgiverinstitusjon).</p><p>Hvis en utgiver har feil kanaleier, ta kontakt med institusjonen for å få rettet feilen.</p>",
+        "channel_owner_helper_text": "<p>Institusjonen som har tatt eierskap til kanalen (utgiverinstitusjon).</p><p>Hvis en kanal har feil kanaleier, ta kontakt med institusjonen for å få rettet feilen.</p>",
         "claim_category_restriction": "Kategorier som begrensningen skal gjelde for",
         "delete_channel_claim": "Fjern eierskap til kanal",
         "delete_channel_claim_description": "<p>Er du sikker på at du vil fjerne eierskapet til <span>{{name}}</span>?</p>",
