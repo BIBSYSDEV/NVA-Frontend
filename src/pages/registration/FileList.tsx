@@ -15,8 +15,6 @@ import { visuallyHidden } from '@mui/utils';
 import Uppy from '@uppy/core';
 import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -45,15 +43,18 @@ interface FileListProps {
   baseFieldName: string;
 }
 
+const translationComponents = {
+  heading: <Typography variant="h2" />,
+  p: <Typography sx={{ mb: '1rem' }} />,
+  bold: <span style={{ fontWeight: 'bold' }} />,
+};
+
 export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileListProps) => {
   const { t } = useTranslation();
   const { values, setFieldTouched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
 
-  const customer = useSelector((store: RootState) => store.customer);
-
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
-  const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
   const showFileVersion = isCategoryWithFileVersion(publicationInstanceType);
   const isRrsApplicableCategory = isCategoryWithRrs(publicationInstanceType);
   const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
@@ -82,63 +83,18 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                           modalTitle={t('common.version')}
                           modalDataTestId={dataTestId.registrationWizard.files.versionModal}
                           buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
-                          {registratorPublishesMetadataOnly ? (
-                            <>
-                              <Typography sx={{ mb: '1rem' }}>
-                                {t('registration.files_and_license.version_helper_text_metadata_only')}
-                              </Typography>
-                              <Typography sx={{ mb: '1rem' }}>
-                                <Trans
-                                  i18nKey="registration.files_and_license.version_accepted_helper_text_metadata_only"
-                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                                />
-                              </Typography>
-                              <Typography sx={{ mb: '1rem' }}>
-                                <Trans
-                                  i18nKey="registration.files_and_license.version_published_helper_text_metadata_only"
-                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                                />
-                              </Typography>
-                              <Typography sx={{ mb: '1rem' }}>
-                                <Trans
-                                  i18nKey="registration.files_and_license.version_publishing_agreement_helper_text_metadata_only"
-                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                                />
-                              </Typography>
-                            </>
-                          ) : (
-                            <>
-                              <Trans
-                                i18nKey="registration.files_and_license.version_helper_text"
-                                components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
-                                values={{ buttonText: t('my_page.messages.get_curator_support') }}
-                              />
-                              <Typography sx={{ mb: '1rem' }}>
-                                <Trans
-                                  i18nKey="registration.files_and_license.version_accepted_helper_text"
-                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                                />
-                              </Typography>
-                              <Typography sx={{ mb: '1rem' }}>
-                                <Trans
-                                  i18nKey="registration.files_and_license.version_published_helper_text"
-                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                                />
-                              </Typography>
-                              <Typography sx={{ mb: '1rem' }}>
-                                <Trans
-                                  i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
-                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                                />
-                              </Typography>
-                              <Typography sx={{ mb: '1rem' }}>
-                                <Trans
-                                  i18nKey="registration.files_and_license.version_embargo_helper_text"
-                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                                />
-                              </Typography>
-                            </>
-                          )}
+                          <Trans
+                            i18nKey="registration.files_and_license.version_helper_text"
+                            components={translationComponents}
+                          />
+                          <Trans
+                            i18nKey="registration.files_and_license.version_accepted_helper_text"
+                            components={translationComponents}
+                          />
+                          <Trans
+                            i18nKey="registration.files_and_license.version_published_helper_text"
+                            components={translationComponents}
+                          />
                         </HelperTextModal>
                       </Box>
                     </StyledTableCell>
