@@ -16,6 +16,7 @@ import { fetchOrganization } from '../../../api/cristinApi';
 import { updateTicket } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
+import { Organization } from '../../../types/organization.types';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -31,6 +32,8 @@ export const UpdateTicketOwnership = ({ ticket }: UpdateTicketOwnershipProps) =>
 
   const [showUpdateOwnershipDialog, setShowUpdateOwnershipDialog] = useState(false);
   const toggleUpdateOwnershipDialog = () => setShowUpdateOwnershipDialog(!showUpdateOwnershipDialog);
+
+  const [selectedOrganization, setSelectedOrganization] = useState<Organization | null>(null);
 
   const allowedInstitutionIds = ticket.availableInstitutions ?? [];
 
@@ -75,37 +78,45 @@ export const UpdateTicketOwnership = ({ ticket }: UpdateTicketOwnershipProps) =>
       </Button>
 
       <Dialog open={showUpdateOwnershipDialog} maxWidth="sm" fullWidth onClose={toggleUpdateOwnershipDialog}>
-        <DialogTitle>{t('registration.public_page.tasks_panel.move_task')}</DialogTitle>
-        <DialogContent>
-          <Typography sx={{ mb: '1rem' }}>
-            {t('registration.public_page.tasks_panel.move_task_dialog_description')}
-          </Typography>
+        <form
+          onSubmit={async (event) => {
+            event.preventDefault();
+            if (selectedOrganization) {
+              await changeTicketOwnership.mutateAsync(selectedOrganization.id);
+              toggleUpdateOwnershipDialog();
+            }
+          }}>
+          <DialogTitle>{t('registration.public_page.tasks_panel.move_task')}</DialogTitle>
+          <DialogContent>
+            <Typography sx={{ mb: '1rem' }}>
+              {t('registration.public_page.tasks_panel.move_task_dialog_description')}
+            </Typography>
 
-          <Autocomplete
-            options={allowedOrganizations}
-            getOptionDisabled={(option) => option?.id === customer?.cristinId}
-            getOptionLabel={(option) => getLanguageString(option?.labels)}
-            loading={!isPending}
-            renderInput={(params) => <TextField {...params} label={t('common.select_institution')} />}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            data-testid={dataTestId.common.cancel}
-            disabled={changeTicketOwnership.isPending}
-            onClick={toggleUpdateOwnershipDialog}>
-            {t('common.cancel')}
-          </Button>
-          <Button
-            data-testid={dataTestId.common.save}
-            loading={changeTicketOwnership.isPending}
-            variant="contained"
-            onClick={() => {
-              changeTicketOwnership.mutate('sfdsd');
-            }}>
-            {t('common.save')}
-          </Button>
-        </DialogActions>
+            <Autocomplete
+              options={allowedOrganizations}
+              onChange={(_, value) => setSelectedOrganization(value ?? null)}
+              getOptionDisabled={(option) => option?.id === customer?.cristinId}
+              getOptionLabel={(option) => getLanguageString(option?.labels)}
+              loading={!isPending}
+              renderInput={(params) => <TextField {...params} required label={t('common.select_institution')} />}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              data-testid={dataTestId.common.cancel}
+              disabled={changeTicketOwnership.isPending}
+              onClick={toggleUpdateOwnershipDialog}>
+              {t('common.cancel')}
+            </Button>
+            <Button
+              data-testid={dataTestId.common.save}
+              loading={changeTicketOwnership.isPending}
+              variant="contained"
+              type="submit">
+              {t('common.save')}
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </section>
   );
