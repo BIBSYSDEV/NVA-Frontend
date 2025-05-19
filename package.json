@@ -83,7 +83,7 @@
     "axios-mock-adapter": "^2.1.0",
     "cypress": "^14.3.3",
     "cypress-axe": "^1.6.0",
-    "eslint": "^9.26.0",
+    "eslint": "^9.27.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.4.0",
