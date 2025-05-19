@@ -8,10 +8,14 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useQueries } from '@tanstack/react-query';
+import { useMutation, useQueries } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrganization } from '../../../api/cristinApi';
+import { updateTicket } from '../../../api/registrationApi';
+import { setNotification } from '../../../redux/notificationSlice';
+import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -22,6 +26,8 @@ interface UpdateTicketOwnershipProps {
 
 export const UpdateTicketOwnership = ({ ticket }: UpdateTicketOwnershipProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const customer = useSelector((state: RootState) => state.customer);
 
   const [showUpdateOwnershipDialog, setShowUpdateOwnershipDialog] = useState(false);
   const toggleUpdateOwnershipDialog = () => setShowUpdateOwnershipDialog(!showUpdateOwnershipDialog);
@@ -37,6 +43,15 @@ export const UpdateTicketOwnership = ({ ticket }: UpdateTicketOwnershipProps) =>
       staleTime: Infinity,
       gcTime: 1_800_000,
     })),
+  });
+
+  const changeTicketOwnership = useMutation({
+    mutationFn: (institutionId: string) =>
+      updateTicket(ticket.id, { type: 'UpdateTicketOwnershipRequest', ownerAffiliation: institutionId }),
+    onSuccess: () =>
+      dispatch(setNotification({ message: t('feedback.success.ticket_ownership_updated'), variant: 'success' })),
+    onError: () =>
+      dispatch(setNotification({ message: t('feedback.error.ticket_ownership_update_failed'), variant: 'error' })),
   });
 
   const isPending = organizationQueries.some((query) => query.isPending);
@@ -68,20 +83,25 @@ export const UpdateTicketOwnership = ({ ticket }: UpdateTicketOwnershipProps) =>
 
           <Autocomplete
             options={allowedOrganizations}
+            getOptionDisabled={(option) => option?.id === customer?.cristinId}
             getOptionLabel={(option) => getLanguageString(option?.labels)}
             loading={!isPending}
             renderInput={(params) => <TextField {...params} label={t('common.select_institution')} />}
           />
         </DialogContent>
         <DialogActions>
-          <Button data-testid={dataTestId.common.cancel} onClick={toggleUpdateOwnershipDialog}>
+          <Button
+            data-testid={dataTestId.common.cancel}
+            disabled={changeTicketOwnership.isPending}
+            onClick={toggleUpdateOwnershipDialog}>
             {t('common.cancel')}
           </Button>
           <Button
             data-testid={dataTestId.common.save}
+            loading={changeTicketOwnership.isPending}
             variant="contained"
             onClick={() => {
-              // TODO
+              changeTicketOwnership.mutate('sfdsd');
             }}>
             {t('common.save')}
           </Button>
