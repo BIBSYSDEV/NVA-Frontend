@@ -1,4 +1,4 @@
-import { FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
+import { Button, FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { UseQueryResult } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
@@ -193,7 +193,26 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
         {ticketsQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : tickets.length === 0 ? (
-          <Typography>{t('my_page.messages.no_messages')}</Typography>
+          <>
+            {viewedByNotParam === 'show-all' ? (
+              <Typography>{t('my_page.messages.no_messages')}</Typography>
+            ) : (
+              <>
+                <Typography gutterBottom>{t('my_page.messages.no_unread_messages')}</Typography>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => {
+                    const syncedParams = syncParamsWithSearchFields(searchParams);
+                    syncedParams.delete(TicketSearchParam.ViewedByNot);
+                    syncedParams.delete(TicketSearchParam.From);
+                    navigate({ search: syncedParams.toString() });
+                  }}>
+                  {t('my_page.messages.show_read_messages')}
+                </Button>
+              </>
+            )}
+          </>
         ) : (
           <List disablePadding sx={{ my: '0.5rem' }}>
             {tickets.map((ticket) => (
