@@ -49,16 +49,16 @@ export const UpdateTicketOwnership = ({ ticket }: UpdateTicketOwnershipProps) =>
   });
 
   const changeTicketOwnership = useMutation({
-    mutationFn: (institutionId: string) =>
-      updateTicket(ticket.id, { type: 'UpdateTicketOwnershipRequest', ownerAffiliation: institutionId }),
+    mutationFn: (newInstitutionId: string) =>
+      updateTicket(ticket.id, { type: 'UpdateTicketOwnershipRequest', ownerAffiliation: newInstitutionId }),
     onSuccess: () =>
       dispatch(setNotification({ message: t('feedback.success.ticket_ownership_updated'), variant: 'success' })),
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.ticket_ownership_update_failed'), variant: 'error' })),
   });
 
-  const isPending = organizationQueries.some((query) => query.isPending);
-  const allowedOrganizations = isPending ? [] : organizationQueries.map((query) => query.data);
+  const fetchOrganizationsIsPending = organizationQueries.some((query) => query.isPending);
+  const allowedOrganizations = fetchOrganizationsIsPending ? [] : organizationQueries.map((query) => query.data);
 
   return (
     <section>
@@ -93,12 +93,12 @@ export const UpdateTicketOwnership = ({ ticket }: UpdateTicketOwnershipProps) =>
             </Typography>
 
             <Autocomplete
-              disabled={isPending || changeTicketOwnership.isPending}
+              disabled={fetchOrganizationsIsPending || changeTicketOwnership.isPending}
               options={allowedOrganizations}
               onChange={(_, value) => setSelectedOrganization(value ?? null)}
               getOptionDisabled={(option) => option?.id === customer?.cristinId}
               getOptionLabel={(option) => getLanguageString(option?.labels)}
-              loading={!isPending}
+              loading={!fetchOrganizationsIsPending}
               renderInput={(params) => <TextField {...params} required label={t('common.select_institution')} />}
             />
           </DialogContent>
