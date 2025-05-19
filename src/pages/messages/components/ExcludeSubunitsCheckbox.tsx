@@ -1,35 +1,37 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
-import { NviCandidatesSearchParam } from '../../../api/searchApi';
+import { useSearchParams } from 'react-router';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
-export const ExcludeSubunitsCheckbox = () => {
+interface ExcludeSubunitsCheckboxProps {
+  paramName: string;
+  paginationParamName: string;
+  disabled: boolean;
+}
+
+export const ExcludeSubunitsCheckbox = ({ paramName, paginationParamName, disabled }: ExcludeSubunitsCheckboxProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-
-  const { excludeSubUnits, affiliations } = useNviCandidatesParams();
-
-  const disableExcludeSubUnits = affiliations === null || affiliations.length === 0;
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <FormControlLabel
       data-testid={dataTestId.tasksPage.nvi.excludeSubunitsCheckbox}
       onChange={(_, checked) => {
-        if (checked) {
-          searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, checked.toString());
-        } else {
-          searchParams.delete(NviCandidatesSearchParam.ExcludeSubUnits);
-        }
-        searchParams.delete(NviCandidatesSearchParam.Offset);
-        navigate({ search: searchParams.toString() });
+        setSearchParams((prev) => {
+          const syncedParams = syncParamsWithSearchFields(prev);
+          if (checked) {
+            syncedParams.set(paramName, checked.toString());
+          } else {
+            syncedParams.delete(paramName);
+          }
+          syncedParams.delete(paginationParamName);
+          return syncedParams;
+        });
       }}
-      disabled={disableExcludeSubUnits}
+      disabled={disabled}
       label={t('tasks.nvi.exclude_subunits')}
-      control={<Checkbox checked={excludeSubUnits} />}
+      control={<Checkbox checked={searchParams.get(paramName) === 'true'} />}
     />
   );
 };

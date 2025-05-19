@@ -25,6 +25,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { TicketDateIntervalFilter } from './TicketDateIntervalFilter';
 import { TicketListItem } from './TicketListItem';
 
@@ -108,12 +109,12 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
         <Grid size={{ xs: 16, md: 5, lg: 4 }}>
           <TicketStatusFilter options={ticketStatusOptions} />
         </Grid>
-        <Grid size={{ xs: 16, md: 11, lg: 10 }}>
+        <Grid size={{ xs: 16, md: 11, lg: 9 }}>
           <SearchForm placeholder={t('tasks.search_placeholder')} paginationOffsetParamName={TicketSearchParam.From} />
         </Grid>
 
         {user && (
-          <Grid size={{ xs: 16, md: 5, lg: 2 }}>
+          <Grid size={{ xs: 16, md: 5, lg: 3 }}>
             <FormControl fullWidth>
               <InputLabel id={viewedByLabelId}>{t('tasks.display_options')}</InputLabel>
               <Select
@@ -142,10 +143,10 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
 
         {isOnTasksPage && (
           <>
-            <Grid size={{ xs: 16, md: 6, lg: 4 }}>
+            <Grid size={{ xs: 16, sm: 8, md: 6, lg: 4 }}>
               <DialoguesWithoutCuratorButton />
             </Grid>
-            <Grid size={{ xs: 16, md: 4, lg: 4 }}>
+            <Grid size={{ xs: 16, sm: 8, md: 5, lg: 4 }}>
               <CuratorSelector
                 selectedUsername={searchParams.get(TicketSearchParam.Assignee)}
                 onChange={(curator) => {
@@ -162,12 +163,19 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                 roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
               />
             </Grid>
-            <Grid size={{ xs: 16, md: 6, lg: 5 }}>
+            <Grid size={{ xs: 8, lg: 5 }}>
               <AreaOfResponsibilitySelector
                 paramName={TicketSearchParam.OrganizationId}
                 resetPagination={(params) => {
                   params.delete(TicketSearchParam.From);
                 }}
+              />
+            </Grid>
+            <Grid size={{ xs: 8, lg: 3 }}>
+              <ExcludeSubunitsCheckbox
+                paramName={TicketSearchParam.ExcludeSubUnits}
+                paginationParamName={TicketSearchParam.From}
+                disabled={!searchParams.has(TicketSearchParam.OrganizationId)}
               />
             </Grid>
           </>

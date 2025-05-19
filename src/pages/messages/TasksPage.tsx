@@ -88,7 +88,7 @@ const TasksPage = () => {
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as TicketOrderBy | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as SortOrder | null,
     organizationId: organizationIdParam,
-    excludeSubUnits: !!organizationIdParam,
+    excludeSubUnits: searchParams.get(TicketSearchParam.ExcludeSubUnits) === 'true',
     assignee: searchParams.get(TicketSearchParam.Assignee),
     status: searchParams.get(TicketSearchParam.Status),
     type: selectedTicketTypes.join(','),
