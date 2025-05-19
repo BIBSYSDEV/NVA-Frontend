@@ -93,6 +93,7 @@ export const UpdateTicketOwnership = ({ ticket }: UpdateTicketOwnershipProps) =>
             </Typography>
 
             <Autocomplete
+              disabled={isPending || changeTicketOwnership.isPending}
               options={allowedOrganizations}
               onChange={(_, value) => setSelectedOrganization(value ?? null)}
               getOptionDisabled={(option) => option?.id === customer?.cristinId}
