@@ -2,7 +2,7 @@ import { Box, Checkbox, FormControlLabel, Paper, Typography } from '@mui/materia
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useContext, useEffect, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { InfoBanner } from '../../components/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
@@ -28,6 +28,7 @@ import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { ClaimedChannelInfoBox } from './resource_type_tab/components/ClaimedChannelInfoBox';
 import { LinkField } from './resource_type_tab/components/LinkField';
+import { HelperTextModal } from './HelperTextModal';
 
 const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler/info';
 const getChannelRegisterJournalUrl = (pid: string) => `${channelRegisterBaseUrl}/tidsskrift?pid=${pid}`;
@@ -41,6 +42,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
+  const currentPublishStrategy = customer?.publicationWorkflow;
+
   const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const { values } = useFormikContext<Registration>();
@@ -142,7 +145,36 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 elevation={0}
                 component={BackgroundDiv}
                 sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
+                  <HelperTextModal modalTitle={t('registration.files_and_license.files')}>
+                    <Trans
+                      i18nKey="registration.files_and_license.files_helper_text"
+                      components={{
+                        p: <Typography gutterBottom />,
+                        heading: <Typography variant="h2" />,
+                      }}
+                    />
+                    {currentPublishStrategy === 'RegistratorPublishesMetadataOnly' ? (
+                      <Typography gutterBottom>
+                        {t('registration.files_and_license.files_helper_text_metadata_only')}
+                      </Typography>
+                    ) : (
+                      <Typography gutterBottom>
+                        {t('registration.files_and_license.file_helper_text_metadata_and_files')}
+                      </Typography>
+                    )}
+                    <Typography gutterBottom>{t('registration.files_and_license.files_helper_text_2')}</Typography>
+                    <Trans
+                      i18nKey="registration.files_and_license.file_helper_text_point_list"
+                      components={{
+                        ul: <ul />,
+                        li: <li />,
+                        p: <Typography />,
+                      }}
+                    />
+                  </HelperTextModal>
+                </Box>
                 {!categorySupportsFiles && (
                   <InfoBanner
                     text={
