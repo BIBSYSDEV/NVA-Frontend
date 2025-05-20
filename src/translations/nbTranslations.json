@@ -817,8 +817,8 @@
       "mark_as_completed": "Sett til ferdig",
       "message_deleted": "Meldingen er slettet",
       "metadata_published": "Metadata publisert",
-      "no_dialogues": "Du har ingen dialoger.",
-      "no_unread_dialogues": "Du har ingen uleste dialoger.",
+      "no_dialogues": "Du har ingen dialoger for dette søket.",
+      "no_unread_dialogues": "Du har ingen uleste dialoger for dette søket.",
       "pending_curator": "Venter på kurator",
       "show_read_dialogues": "Vis leste dialoger",
       "ticket_types": {
