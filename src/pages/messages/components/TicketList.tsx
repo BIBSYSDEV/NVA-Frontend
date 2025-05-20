@@ -195,10 +195,10 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
         ) : tickets.length === 0 ? (
           <>
             {viewedByNotParam === 'show-all' ? (
-              <Typography>{t('my_page.messages.no_messages')}</Typography>
+              <Typography>{t('my_page.messages.no_dialogues')}</Typography>
             ) : (
               <>
-                <Typography gutterBottom>{t('my_page.messages.no_unread_messages')}</Typography>
+                <Typography gutterBottom>{t('my_page.messages.no_unread_dialogues')}</Typography>
                 <Button
                   variant="outlined"
                   size="small"
@@ -208,7 +208,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                     syncedParams.delete(TicketSearchParam.From);
                     navigate({ search: syncedParams.toString() });
                   }}>
-                  {t('my_page.messages.show_read_messages')}
+                  {t('my_page.messages.show_read_dialogues')}
                 </Button>
               </>
             )}
