@@ -161,7 +161,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       </Typography>
                     ) : (
                       <Typography gutterBottom>
-                        {t('registration.files_and_license.file_helper_text_metadata_and_files')}
+                        {t('registration.files_and_license.file_helper_text_metadata_and_files', {
+                          buttonText: t('my_page.messages.get_curator_support'),
+                        })}
                       </Typography>
                     )}
                     <Typography gutterBottom>{t('registration.files_and_license.files_helper_text_2')}</Typography>

@@ -46,7 +46,6 @@ interface FileListProps {
 const translationComponents = {
   heading: <Typography variant="h2" />,
   p: <Typography sx={{ mb: '1rem' }} />,
-  bold: <span style={{ fontWeight: 'bold' }} />,
 };
 
 export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileListProps) => {
