@@ -34,7 +34,7 @@ interface TicketListProps {
 }
 
 const viewedByLabelId = 'viewed-by-select';
-const showAllViewedByParamValue = 'show-all';
+const showAllViewedByValue = 'show-all';
 
 export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
   const { t } = useTranslation();
@@ -84,7 +84,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
   );
 
   const searchParams = new URLSearchParams(location.search);
-  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || showAllViewedByParamValue;
+  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || showAllViewedByValue;
   const resultsParam = searchParams.get(TicketSearchParam.Results);
   const fromParam = searchParams.get(TicketSearchParam.From);
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
@@ -126,7 +126,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                 onChange={(event) => {
                   const value = event.target.value;
                   const syncedParams = syncParamsWithSearchFields(searchParams);
-                  if (value === showAllViewedByParamValue) {
+                  if (value === showAllViewedByValue) {
                     syncedParams.delete(TicketSearchParam.ViewedByNot);
                   } else {
                     syncedParams.set(TicketSearchParam.ViewedByNot, value);
@@ -134,7 +134,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                   syncedParams.delete(TicketSearchParam.From);
                   navigate({ search: syncedParams.toString() });
                 }}>
-                <MenuItem value={showAllViewedByParamValue}>{t('common.show_all')}</MenuItem>
+                <MenuItem value={showAllViewedByValue}>{t('common.show_all')}</MenuItem>
                 <MenuItem value={user.nvaUsername}>{t('tasks.unread_only')}</MenuItem>
               </Select>
             </FormControl>
@@ -194,7 +194,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
         {ticketsQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : tickets.length === 0 ? (
-          viewedByNotParam === showAllViewedByParamValue ? (
+          viewedByNotParam === showAllViewedByValue ? (
             <Typography>{t('my_page.messages.no_dialogues')}</Typography>
           ) : (
             <>
