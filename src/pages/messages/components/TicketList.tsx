@@ -34,6 +34,7 @@ interface TicketListProps {
 }
 
 const viewedByLabelId = 'viewed-by-select';
+const showAllViewedByParamValue = 'show-all';
 
 export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
   const { t } = useTranslation();
@@ -83,7 +84,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
   );
 
   const searchParams = new URLSearchParams(location.search);
-  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || 'show-all';
+  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || showAllViewedByParamValue;
   const resultsParam = searchParams.get(TicketSearchParam.Results);
   const fromParam = searchParams.get(TicketSearchParam.From);
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
@@ -125,7 +126,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                 onChange={(event) => {
                   const value = event.target.value;
                   const syncedParams = syncParamsWithSearchFields(searchParams);
-                  if (value === 'show-all') {
+                  if (value === showAllViewedByParamValue) {
                     syncedParams.delete(TicketSearchParam.ViewedByNot);
                   } else {
                     syncedParams.set(TicketSearchParam.ViewedByNot, value);
@@ -133,7 +134,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                   syncedParams.delete(TicketSearchParam.From);
                   navigate({ search: syncedParams.toString() });
                 }}>
-                <MenuItem value={'show-all'}>{t('common.show_all')}</MenuItem>
+                <MenuItem value={showAllViewedByParamValue}>{t('common.show_all')}</MenuItem>
                 <MenuItem value={user.nvaUsername}>{t('tasks.unread_only')}</MenuItem>
               </Select>
             </FormControl>
@@ -194,7 +195,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : tickets.length === 0 ? (
           <>
-            {viewedByNotParam === 'show-all' ? (
+            {viewedByNotParam === showAllViewedByParamValue ? (
               <Typography>{t('my_page.messages.no_dialogues')}</Typography>
             ) : (
               <>
