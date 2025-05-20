@@ -31,7 +31,8 @@ export const MoreActionsCollapse = ({ registration, registrationIsValid, ticket 
     ticket.availableInstitutions &&
     ticket.availableInstitutions.length > 0 &&
     ((!isDegree(registration.entityDescription?.reference?.publicationInstance?.type) && user?.isPublishingCurator) ||
-      (isDegree(registration.entityDescription?.reference?.publicationInstance?.type) && user?.isThesisCurator));
+      (isDegree(registration.entityDescription?.reference?.publicationInstance?.type) && user?.isThesisCurator)) &&
+    ticket.ownerAffiliation === user.topOrgCristinId;
 
   if (!(isPublished || isUnpublished || canDeleteRegistration || canChangeTicketOwnership)) {
     return null;

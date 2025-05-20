@@ -45,6 +45,7 @@ interface BaseTicket {
 export interface Ticket extends BaseTicket {
   assignee?: string;
   owner: string;
+  ownerAffiliation: string;
   viewedBy: string[];
   messages: Message[];
   finalizedBy?: string;
