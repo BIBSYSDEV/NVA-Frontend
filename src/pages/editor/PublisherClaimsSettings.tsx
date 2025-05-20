@@ -45,6 +45,7 @@ export const PublisherClaimsSettings = () => {
         i18nKey="editor.institution.channel_claims.administer_publisher_channel_claim_description"
         components={{
           p: <Typography gutterBottom />,
+          heading: <Typography variant="h2" sx={{ mt: '1rem' }} />,
           button: (
             <Button
               data-testid={dataTestId.editor.addChannelClaimButton}
