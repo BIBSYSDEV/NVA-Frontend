@@ -168,7 +168,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                         })}
                       </Typography>
                     )}
-                    <Typography gutterBottom>
+                    <Typography sx={{ mb: '1rem' }}>
                       {t('registration.files_and_license.files_helper_text_paragraph_2')}
                     </Typography>
                     <Trans
