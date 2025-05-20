@@ -147,20 +147,23 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
-                  <HelperTextModal modalTitle={t('registration.files_and_license.files')}>
+                  <HelperTextModal
+                    modalTitle={t('registration.files_and_license.files')}
+                    modalDataTestId={dataTestId.registrationWizard.files.fileHelpModal}
+                    buttonDataTestId={dataTestId.registrationWizard.files.fileHelpButton}>
                     <Trans
                       i18nKey="registration.files_and_license.files_helper_text"
                       components={{
-                        p: <Typography gutterBottom />,
+                        p: <Typography sx={{ mb: '1rem' }} />,
                         heading: <Typography variant="h2" />,
                       }}
                     />
                     {currentPublishStrategy === 'RegistratorPublishesMetadataOnly' ? (
-                      <Typography gutterBottom>
+                      <Typography sx={{ mb: '1rem' }}>
                         {t('registration.files_and_license.files_helper_text_metadata_only')}
                       </Typography>
                     ) : (
-                      <Typography gutterBottom>
+                      <Typography sx={{ mb: '1rem' }}>
                         {t('registration.files_and_license.file_helper_text_metadata_and_files', {
                           buttonText: t('my_page.messages.get_curator_support'),
                         })}
