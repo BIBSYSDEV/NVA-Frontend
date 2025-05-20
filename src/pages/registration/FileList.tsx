@@ -28,6 +28,7 @@ import {
 } from '../../utils/registration-helpers';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { HelperTextModal } from './HelperTextModal';
+import { OpenInNewLink } from '../../components/OpenInNewLink';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -46,6 +47,7 @@ interface FileListProps {
 const translationComponents = {
   heading: <Typography variant="h2" />,
   p: <Typography sx={{ mb: '1rem' }} />,
+  ccLink: <OpenInNewLink href="https://creativecommons.org/share-your-work/cclicenses/">(i18n content)</OpenInNewLink>,
 };
 
 export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileListProps) => {
@@ -83,7 +85,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                           modalDataTestId={dataTestId.registrationWizard.files.versionModal}
                           buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
                           <Trans
-                            i18nKey="registration.files_and_license.version_helper_text"
+                            i18nKey={'registration.files_and_license.version_helper_text'}
                             components={translationComponents}
                           />
                           <Trans
