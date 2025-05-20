@@ -194,27 +194,25 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
         {ticketsQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : tickets.length === 0 ? (
-          <>
-            {viewedByNotParam === showAllViewedByParamValue ? (
-              <Typography>{t('my_page.messages.no_dialogues')}</Typography>
-            ) : (
-              <>
-                <Typography gutterBottom>{t('my_page.messages.no_unread_dialogues')}</Typography>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  sx={{ textTransform: 'none' }}
-                  onClick={() => {
-                    const syncedParams = syncParamsWithSearchFields(searchParams);
-                    syncedParams.delete(TicketSearchParam.ViewedByNot);
-                    syncedParams.delete(TicketSearchParam.From);
-                    navigate({ search: syncedParams.toString() });
-                  }}>
-                  {t('my_page.messages.show_read_dialogues')}
-                </Button>
-              </>
-            )}
-          </>
+          viewedByNotParam === showAllViewedByParamValue ? (
+            <Typography>{t('my_page.messages.no_dialogues')}</Typography>
+          ) : (
+            <>
+              <Typography gutterBottom>{t('my_page.messages.no_unread_dialogues')}</Typography>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{ textTransform: 'none' }}
+                onClick={() => {
+                  const syncedParams = syncParamsWithSearchFields(searchParams);
+                  syncedParams.delete(TicketSearchParam.ViewedByNot);
+                  syncedParams.delete(TicketSearchParam.From);
+                  navigate({ search: syncedParams.toString() });
+                }}>
+                {t('my_page.messages.show_read_dialogues')}
+              </Button>
+            </>
+          )
         ) : (
           <List disablePadding sx={{ my: '0.5rem' }}>
             {tickets.map((ticket) => (
