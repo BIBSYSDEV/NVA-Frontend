@@ -133,7 +133,7 @@ interface GeneralPublicationNote {
 type PublicationNote = UnpublishingNote | GeneralPublicationNote;
 
 export interface BaseRegistration {
-  readonly type: 'Publication' | 'ImportCandidate';
+  readonly type: 'Publication' | 'ImportCandidate' | 'PartialUpdatePublicationRequest';
   readonly id: string;
   readonly identifier: string;
   readonly createdDate: string;

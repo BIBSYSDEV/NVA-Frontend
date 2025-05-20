@@ -44,7 +44,7 @@ export const SerialPublicationClaimsSettings = () => {
       <Trans
         i18nKey="editor.institution.channel_claims.administer_serial_publication_channel_claim_description"
         components={{
-          p: <Typography gutterBottom />,
+          p: <Typography sx={{ mb: '1rem' }} />,
           button: (
             <Button
               data-testid={dataTestId.editor.addChannelClaimButton}

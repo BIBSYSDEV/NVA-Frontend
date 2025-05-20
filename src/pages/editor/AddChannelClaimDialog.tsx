@@ -66,7 +66,9 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
     },
     onSuccess: async () => {
       dispatch(setNotification({ message: t('feedback.success.set_channel_claim'), variant: 'success' }));
-      await refetchClaimedChannels();
+      if (refetchClaimedChannels) {
+        await refetchClaimedChannels();
+      }
       closeDialogAndResetSelectedChannel();
     },
     onError: (error: AxiosError<{ detail?: string }>) => {
