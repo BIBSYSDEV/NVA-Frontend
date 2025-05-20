@@ -26,9 +26,9 @@ import {
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
+import { HelperTextModal } from './HelperTextModal';
 import { ClaimedChannelInfoBox } from './resource_type_tab/components/ClaimedChannelInfoBox';
 import { LinkField } from './resource_type_tab/components/LinkField';
-import { HelperTextModal } from './HelperTextModal';
 
 const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler/info';
 const getChannelRegisterJournalUrl = (pid: string) => `${channelRegisterBaseUrl}/tidsskrift?pid=${pid}`;
@@ -42,7 +42,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
-  const currentPublishStrategy = customer?.publicationWorkflow;
 
   const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
@@ -158,7 +157,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                         heading: <Typography variant="h2" />,
                       }}
                     />
-                    {currentPublishStrategy === 'RegistratorPublishesMetadataOnly' ? (
+                    {customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
                       <Typography sx={{ mb: '1rem' }}>
                         {t('registration.files_and_license.files_helper_text_metadata_only')}
                       </Typography>

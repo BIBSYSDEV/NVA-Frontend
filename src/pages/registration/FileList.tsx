@@ -85,7 +85,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                           modalDataTestId={dataTestId.registrationWizard.files.versionModal}
                           buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
                           <Trans
-                            i18nKey={'registration.files_and_license.version_helper_text'}
+                            i18nKey="registration.files_and_license.version_helper_text"
                             components={translationComponents}
                           />
                           <Trans
