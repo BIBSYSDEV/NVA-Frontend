@@ -1498,7 +1498,7 @@
       "files_completed": "Ferdig",
       "files_count": "Filer ({{count}})",
       "files_helper_text": "<p>Her kan du laste opp fulltekst av publikasjonen og andre dokumenter som supplement og appendiks.</p>",
-      "files_helper_text_2": "Du kan laste opp dokument(er) som spesifiserer kravene til offentliggjøring, som hvilken versjon du kan offentliggjøre, lisens og eventuell dato for utsatt tilgjengeliggjøring (sperrefrist/embargo). For eksempel er forfatteravtalen inngått med forlaget til hjelp når kurator skal sjekker om og når filen kan gjøres offentlig i NVA.",
+      "files_helper_text_paragraph_2": "Du kan laste opp dokument(er) som spesifiserer kravene til offentliggjøring, som hvilken versjon du kan offentliggjøre, lisens og eventuell dato for utsatt tilgjengeliggjøring (sperrefrist/embargo). For eksempel er forfatteravtalen inngått med forlaget til hjelp når kurator skal sjekker om og når filen kan gjøres offentlig i NVA.",
       "file_helper_text_point_list": "<ul><li><p>Velg åpen fil for dokumenter som skal gjøres åpent tilgjengelige.</p></li><li><p>Velg intern fil for dokumenter som skal deles med kurator.</p></li></ul>",
       "file_helper_text_metadata_and_files": "Din institusjon har gitt deg tilgang til å publisere. Du må sjekke at du har lov til å publisere filene du har lastet opp og at påført lisens er korrekt. Om du trenger hjelp, trykk på \"{{buttonText}}\"-knappen, nederst på siden.",
       "files_helper_text_metadata_only": "En kurator vil gå gjennom filene og sørge for at det kun er de filene du har lov til å dele, som bli delt, og at de er tildelt korrekt lisens.",

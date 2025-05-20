@@ -168,7 +168,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                         })}
                       </Typography>
                     )}
-                    <Typography gutterBottom>{t('registration.files_and_license.files_helper_text_2')}</Typography>
+                    <Typography gutterBottom>
+                      {t('registration.files_and_license.files_helper_text_paragraph_2')}
+                    </Typography>
                     <Trans
                       i18nKey="registration.files_and_license.file_helper_text_point_list"
                       components={{
