@@ -2,7 +2,7 @@ import { Box, Checkbox, FormControlLabel, Paper, Typography } from '@mui/materia
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useContext, useEffect, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { InfoBanner } from '../../components/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
@@ -26,6 +26,7 @@ import {
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
+import { HelperTextModal } from './HelperTextModal';
 import { ClaimedChannelInfoBox } from './resource_type_tab/components/ClaimedChannelInfoBox';
 import { LinkField } from './resource_type_tab/components/LinkField';
 
@@ -41,6 +42,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
+
   const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const { values } = useFormikContext<Registration>();
@@ -142,7 +144,43 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 elevation={0}
                 component={BackgroundDiv}
                 sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
+                  <HelperTextModal
+                    modalTitle={t('registration.files_and_license.files')}
+                    modalDataTestId={dataTestId.registrationWizard.files.fileHelpModal}
+                    buttonDataTestId={dataTestId.registrationWizard.files.fileHelpButton}>
+                    <Trans
+                      i18nKey="registration.files_and_license.files_helper_text"
+                      components={{
+                        p: <Typography sx={{ mb: '1rem' }} />,
+                        heading: <Typography variant="h2" />,
+                      }}
+                    />
+                    {customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
+                      <Typography sx={{ mb: '1rem' }}>
+                        {t('registration.files_and_license.files_helper_text_metadata_only')}
+                      </Typography>
+                    ) : (
+                      <Typography sx={{ mb: '1rem' }}>
+                        {t('registration.files_and_license.file_helper_text_metadata_and_files', {
+                          buttonText: t('my_page.messages.get_curator_support'),
+                        })}
+                      </Typography>
+                    )}
+                    <Typography sx={{ mb: '1rem' }}>
+                      {t('registration.files_and_license.files_helper_text_paragraph_2')}
+                    </Typography>
+                    <Trans
+                      i18nKey="registration.files_and_license.file_helper_text_point_list"
+                      components={{
+                        ul: <ul />,
+                        li: <li />,
+                        p: <Typography />,
+                      }}
+                    />
+                  </HelperTextModal>
+                </Box>
                 {!categorySupportsFiles && (
                   <InfoBanner
                     text={
