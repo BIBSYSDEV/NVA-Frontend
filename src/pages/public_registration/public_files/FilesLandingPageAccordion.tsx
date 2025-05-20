@@ -46,7 +46,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
 
-  const userCanUpdateRegistration = userHasAccessRight(registration, 'update');
+  const userCanUpdateRegistration = userHasAccessRight(registration, 'partial-update');
   const userCanUploadFile = userHasAccessRight(registration, 'upload-file');
 
   const [selectedTab, setSelectedTab] = useState(FileTab.OpenFiles);

@@ -1,6 +1,8 @@
 import { TextField } from '@mui/material';
 import { Field, FieldProps } from 'formik';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { DegreeType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { PublisherField } from '../components/PublisherField';
@@ -16,6 +18,8 @@ interface DegreeFormProps {
 export const DegreeForm = ({ subType }: DegreeFormProps) => {
   const { t } = useTranslation();
 
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
+
   if (subType === DegreeType.Phd || subType === DegreeType.ArtisticPhd) {
     return <PhdForm subType={subType} />;
   }
@@ -29,6 +33,7 @@ export const DegreeForm = ({ subType }: DegreeFormProps) => {
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
+              disabled={disableChannelClaimsFields}
               data-testid={dataTestId.registrationWizard.resourceType.courseCodeField}
               variant="filled"
               sx={{ width: 'fit-content' }}

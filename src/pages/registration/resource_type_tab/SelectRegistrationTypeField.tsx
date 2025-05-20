@@ -9,7 +9,7 @@ import { NviApplicableIcon } from '../../../components/atoms/NviApplicableIcon';
 import { CategorySelector } from '../../../components/CategorySelector';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { StyledInfoBanner } from '../../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../../context/RegistrationFormContext';
 import { RootState } from '../../../redux/store';
 import { emptyArtisticPublicationInstance } from '../../../types/publication_types/artisticRegistration.types';
 import { emptyBookPublicationInstance } from '../../../types/publication_types/bookRegistration.types';
@@ -64,7 +64,7 @@ export const SelectRegistrationTypeField = () => {
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const [openSelectType, setOpenSelectType] = useState(!currentInstanceType);
   const [confirmNewType, setConfirmNewType] = useState<PublicationInstanceType | ''>('');
@@ -377,7 +377,7 @@ export const SelectRegistrationTypeField = () => {
       <FormLabel sx={{ display: 'block' }}>{t('registration.resource_type.resource_type')}</FormLabel>
       <Chip
         data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(currentInstanceType)}
-        disabled={disableNviCriticalFields}
+        disabled={disableNviCriticalFields || disableChannelClaimsFields}
         icon={
           nviApplicableTypes.includes(currentInstanceType) || categoriesWithoutFiles.includes(currentInstanceType) ? (
             <Box sx={{ display: 'flex' }}>
@@ -392,7 +392,9 @@ export const SelectRegistrationTypeField = () => {
         onClick={() => setOpenSelectType(true)}
         sx={{ mt: '0.25rem', width: 'max-content' }}
       />
-      <FormHelperText>{t('registration.resource_type.click_to_change_resource_type')}</FormHelperText>
+      {!disableNviCriticalFields && !disableChannelClaimsFields && (
+        <FormHelperText>{t('registration.resource_type.click_to_change_resource_type')}</FormHelperText>
+      )}
     </div>
   );
 };

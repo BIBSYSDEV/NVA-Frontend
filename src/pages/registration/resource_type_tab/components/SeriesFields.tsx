@@ -1,13 +1,16 @@
 import { TextField, Typography } from '@mui/material';
 import { Field, FieldProps } from 'formik';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { SeriesField } from './SeriesField';
 
 export const SeriesFields = () => {
   const { t } = useTranslation();
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   return (
     <div>
@@ -22,7 +25,7 @@ export const SeriesFields = () => {
             <TextField
               sx={{ alignSelf: 'flex-start' }}
               {...field}
-              id={field.name}
+              disabled={disableChannelClaimsFields}
               data-testid={dataTestId.registrationWizard.resourceType.seriesNumber}
               value={field.value ?? ''}
               variant="filled"
