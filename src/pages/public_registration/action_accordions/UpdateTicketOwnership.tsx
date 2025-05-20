@@ -50,7 +50,11 @@ export const UpdateTicketOwnership = ({ ticket }: UpdateTicketOwnershipProps) =>
 
   const changeTicketOwnership = useMutation({
     mutationFn: (newInstitutionId: string) =>
-      updateTicket(ticket.id, { type: 'UpdateTicketOwnershipRequest', ownerAffiliation: newInstitutionId }),
+      updateTicket(ticket.id, {
+        type: 'UpdateTicketOwnershipRequest',
+        ownerAffiliation: newInstitutionId,
+        responsibilityArea: newInstitutionId,
+      }),
     onSuccess: () =>
       dispatch(setNotification({ message: t('feedback.success.ticket_ownership_updated'), variant: 'success' })),
     onError: () =>

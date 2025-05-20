@@ -126,6 +126,7 @@ export interface UpdateTicketData {
 interface UpdateTicketOwnershipData {
   type: 'UpdateTicketOwnershipRequest';
   ownerAffiliation: string;
+  responsibilityArea: string;
 }
 
 export const updateTicket = async (ticketId: string, ticketData: UpdateTicketData | UpdateTicketOwnershipData) => {
