@@ -750,7 +750,8 @@
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no",
       "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
-    }
+    },
+    "read_more_about_license": "Les mer om lisensen {{license}}"
   },
   "log": {
     "hidden_file_added": "Skjult fil lagt til",

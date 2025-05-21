@@ -1,5 +1,5 @@
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { IconButton, Tooltip } from '@mui/material';
+import { Breakpoint, IconButton, Tooltip } from '@mui/material';
 import { t } from 'i18next';
 import { ReactNode, useState } from 'react';
 import { Modal } from '../../components/Modal';
@@ -9,8 +9,15 @@ interface HelperTextModalProps {
   children: ReactNode;
   modalDataTestId?: string;
   buttonDataTestId?: string;
+  maxWidth?: Breakpoint;
 }
-export const HelperTextModal = ({ modalTitle, children, modalDataTestId, buttonDataTestId }: HelperTextModalProps) => {
+export const HelperTextModal = ({
+  modalTitle,
+  children,
+  modalDataTestId,
+  buttonDataTestId,
+  maxWidth = 'sm',
+}: HelperTextModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => {
@@ -26,7 +33,12 @@ export const HelperTextModal = ({ modalTitle, children, modalDataTestId, buttonD
       </Tooltip>
 
       {isOpen && (
-        <Modal headingText={modalTitle} open={isOpen} onClose={toggleModal} maxWidth="sm" dataTestId={modalDataTestId}>
+        <Modal
+          headingText={modalTitle}
+          open={isOpen}
+          onClose={toggleModal}
+          maxWidth={maxWidth}
+          dataTestId={modalDataTestId}>
           {children}
         </Modal>
       )}

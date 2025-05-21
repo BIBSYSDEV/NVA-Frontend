@@ -1,6 +1,5 @@
 import {
   Box,
-  Link,
   Paper,
   styled,
   Table,
@@ -15,6 +14,7 @@ import { visuallyHidden } from '@mui/utils';
 import Uppy from '@uppy/core';
 import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
+import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -28,7 +28,6 @@ import {
 } from '../../utils/registration-helpers';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { HelperTextModal } from './HelperTextModal';
-import { OpenInNewLink } from '../../components/OpenInNewLink';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -99,36 +98,41 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                       {t('registration.files_and_license.license')}
                       <HelperTextModal
+                        maxWidth="xl"
                         modalTitle={t('registration.files_and_license.licenses')}
                         modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
                         buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
                         <Typography sx={{ mb: '1rem' }}>
                           {t('registration.files_and_license.file_and_license_info')}
                         </Typography>
-                        {activeLicenses.map((license) => (
-                          <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-                            <Typography variant="h3" gutterBottom>
-                              {license.name}
-                            </Typography>
-                            <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
-                            <Typography sx={{ mb: '1rem' }}>{license.description}</Typography>
-                            {license.link && (
-                              <Link href={license.link} target="blank">
-                                {license.link}
-                              </Link>
-                            )}
-                            {license.additionalInformation && (
-                              <Trans
-                                defaults={license.additionalInformation}
-                                components={{
-                                  p: <Typography sx={{ mt: '1rem' }} />,
-                                  ol: <ol style={{ listStyleType: 'lower-roman' }} />,
-                                  li: <li style={{ marginBottom: '0.5rem' }} />,
-                                }}
-                              />
-                            )}
-                          </Box>
-                        ))}
+                        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem' }}>
+                          {activeLicenses.map((license) => (
+                            <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
+                                <Box component="img" src={license.logo} alt="" sx={{ width: '5rem' }} />
+                                <Typography variant="h3" gutterBottom>
+                                  {license.name}
+                                </Typography>
+                              </Box>
+                              <Typography sx={{ mb: '1rem' }}>{license.description}</Typography>
+                              {license.link && (
+                                <OpenInNewLink href={license.link}>
+                                  {t('licenses.read_more_about_license', { license: license.name })}
+                                </OpenInNewLink>
+                              )}
+                              {license.additionalInformation && (
+                                <Trans
+                                  defaults={license.additionalInformation}
+                                  components={{
+                                    p: <Typography sx={{ mt: '1rem' }} />,
+                                    ol: <ol style={{ listStyleType: 'lower-roman' }} />,
+                                    li: <li style={{ marginBottom: '0.5rem' }} />,
+                                  }}
+                                />
+                              )}
+                            </Box>
+                          ))}
+                        </Box>
                       </HelperTextModal>
                     </Box>
                   </StyledTableCell>
