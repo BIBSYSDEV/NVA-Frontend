@@ -144,7 +144,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 elevation={0}
                 component={BackgroundDiv}
                 sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                   <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
                   <HelperTextModal
                     modalTitle={t('registration.files_and_license.files')}
@@ -176,7 +176,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       components={{
                         ul: <ul />,
                         li: <li />,
-                        p: <Typography />,
                       }}
                     />
                   </HelperTextModal>

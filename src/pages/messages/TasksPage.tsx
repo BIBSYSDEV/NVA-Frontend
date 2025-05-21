@@ -304,7 +304,7 @@ const TasksPage = () => {
             element={
               <PrivateRoute
                 element={<PortfolioSearchPage title={t('common.result_registrations')} />}
-                isAuthorized={isNviCurator}
+                isAuthorized={isAnyCurator}
               />
             }
           />

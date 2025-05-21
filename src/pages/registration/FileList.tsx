@@ -44,12 +44,6 @@ interface FileListProps {
   baseFieldName: string;
 }
 
-const translationComponents = {
-  heading: <Typography variant="h2" />,
-  p: <Typography sx={{ mb: '1rem' }} />,
-  ccLink: <OpenInNewLink href="https://creativecommons.org/share-your-work/cclicenses/">(i18n content)</OpenInNewLink>,
-};
-
 export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileListProps) => {
   const { t } = useTranslation();
   const { values, setFieldTouched } = useFormikContext<Registration>();
@@ -86,15 +80,15 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                           buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
                           <Trans
                             i18nKey="registration.files_and_license.version_helper_text"
-                            components={translationComponents}
-                          />
-                          <Trans
-                            i18nKey="registration.files_and_license.version_accepted_helper_text"
-                            components={translationComponents}
-                          />
-                          <Trans
-                            i18nKey="registration.files_and_license.version_published_helper_text"
-                            components={translationComponents}
+                            components={{
+                              heading: <Typography variant="h2" />,
+                              p: <Typography sx={{ mb: '1rem' }} />,
+                              ccLink: (
+                                <OpenInNewLink href="https://creativecommons.org/share-your-work/cclicenses/">
+                                  (i18n content)
+                                </OpenInNewLink>
+                              ),
+                            }}
                           />
                         </HelperTextModal>
                       </Box>
