@@ -717,17 +717,18 @@
   },
   "licenses": {
     "additional_info": {
-      "cc0": "<p>Det bør deles et åpent eller lukket notat, sammen med verket som:</p><ol><li>Gjør rede for konklusjonen om at verket er å oppfatte som et \"fellesgode/public domain\", som definert av Åndsverksloven §11 Opphavsrettens vernetid eller §14 Åndsverk som ikke har opphavsrettslig vern, eller etter en annen lignende bestemmelse</li><li>Dokumenterer at opphaver frasier seg alle opphavsrettigheter og relaterte rettigheter de hadde til verket, som for eksempel omtalt i Åndsverksloven §3 Opphavsrettens innhold og §8 Fellesverk, og at verket er å oppfatte som et \"fellesgode/public domain\"</li></ol>"
+      "cc0": "<p>Se Åndsverksloven <link1>§3</link1>,<link2>§8</link2>,<link3>§11</link3> og <link4>§14</link4></p>"
     },
     "description": {
-      "cc0": "Den person som har knyttet et verk til dette aktstykke (deed) har, i den utstrekning loven tillater, erklært dette verket er i det fri ved å si fra seg alle de opphavsrettigheter og nærstående rettigheter som vedkommende hadde til verket.",
-      "cc_by": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort.",
-      "cc_by_nc": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål.",
-      "cc_by_nc_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
-      "cc_by_nc_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
-      "cc_by_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
-      "cc_by_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
-      "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner. \n\n\"Utgivers betingelser\" er ikke en lisens, men en erklæring om at noen rettigheter er forbeholdt utgiveren, forfatteren og muligens andre. Leseren må selv klargjøre hva loven tillater ham å gjøre med dette verket, utover å lese det."
+      "cc0": "<p>Verket er frigitt til offentlig bruk, uten opphavsrettigheter, så langt loven tillater.</p><p>Bruker du denne lisensen, last opp et dokument der du begrunner hvorfor.</p>",
+      "cc_by": "<p>Du kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p><p>Du må: gi riktig kreditering og si fra om endringer.</p>",
+      "cc_by_nc": "<p>Du kan: kopiere, dele og endre verket, men kun for ikke-kommersielle formål. Du må: gi riktig kreditering og si fra om endringer.</p>",
+      "cc_by_nc_nd": "<p>Du kan: kopiere og dele verket for ikke-kommersielle formål</p><p>Du kan ikke: endre eller tilpasse verket.</p><p>Du må: gi riktig kreditering.</p>",
+      "cc_by_nc_sa": "<p>Du kan: kopiere, dele og endre verket for ikke-kommersielle formål.</p><p>Du må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
+      "cc_by_nd": "<p>Du kan: kopiere og dele verket for alle typer bruk, også kommersielle.</p><p>Du kan ikke: endre eller tilpasse verket.</p><p>Du må: gi riktig kreditering.</p>",
+      "cc_by_sa": "<p>Du kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p<p>Du må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
+      "rights_reserved": "<p>Dette verket har ikke en lisens som tydeliggjør rettigheter for gjenbruk. Du må selv kontakte opphavsperson for å finne ut om, og hvordan, du kan gjenbruke arbeidet.</p>",
+      "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens"
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -738,7 +739,8 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "rights_reserved": "Utgivers betingelser"
+      "rights_reserved": "Utgivers betingelser",
+      "older_licenses": "Eldre lisenser"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
@@ -1491,7 +1493,7 @@
       "delete_file_description": "Ønsker du å slette {{fileName}}? Merk at fila vil slettes for godt med en gang du bekrefter dette.",
       "disabled_helper_text": "Denne filen er allerede publisert med en godkjent lisens. Ta kontakt med kurator om du vil endre eller slette filen",
       "embargo": "Embargo/utsatt publisering",
-      "file_and_license_info": "Enhver fil i NVA må ha en lisens, slik at leser er informert om hva som er tillatt å gjøre med innholdet.",
+      "file_and_license_info": "<p>Lisensen informerer lesere om hvordan de kan gjenbruke arbeidet i sitt eget arbeid.</p><p>Creative commons (CC) definerer 6 standardiserte lisenstyper med ulik grad av frihet og en lisens der opphavspersonen frasier seg alle rettigheter.</p><p>Les mer om <ccLink>Creative commons-lisenser på openscience.no</ccLink> for mer utfyllende informasjon om rettigheter og plikter i hver av lisensene.</p>",
       "file_helper_text_metadata_and_files": "Din institusjon har gitt deg tilgang til å publisere. Du må sjekke at du har lov til å publisere filene du har lastet opp og at påført lisens er korrekt. Om du trenger hjelp, trykk på \"{{buttonText}}\"-knappen, nederst på siden.",
       "file_helper_text_point_list": "<ul><li>Velg åpen fil for dokumenter som skal gjøres åpent tilgjengelige.</li><li>Velg intern fil for dokumenter som skal deles med kurator.</li></ul>",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",

@@ -1,5 +1,6 @@
 import {
   Box,
+  Divider,
   Paper,
   styled,
   Table,
@@ -82,11 +83,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                             components={{
                               heading: <Typography variant="h2" />,
                               p: <Typography sx={{ mb: '1rem' }} />,
-                              ccLink: (
-                                <OpenInNewLink href="https://creativecommons.org/share-your-work/cclicenses/">
-                                  (i18n content)
-                                </OpenInNewLink>
-                              ),
+                              ccLink: <OpenInNewLink href="https://creativecommons.org/share-your-work/cclicenses/" />,
                             }}
                           />
                         </HelperTextModal>
@@ -102,10 +99,21 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                         modalTitle={t('registration.files_and_license.licenses')}
                         modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
                         buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
-                        <Typography sx={{ mb: '1rem' }}>
-                          {t('registration.files_and_license.file_and_license_info')}
-                        </Typography>
-                        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem' }}>
+                        <Trans
+                          i18nKey="registration.files_and_license.file_and_license_info"
+                          components={{
+                            p: <Typography gutterBottom />,
+                            ccLink: <OpenInNewLink href="https://creativecommons.org/licenses/" />,
+                          }}
+                        />
+                        <Divider sx={{ my: '1rem', borderColor: 'black', borderWidth: '1px' }} />
+                        <Box
+                          sx={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(3, 1fr)',
+                            columnGap: '3rem',
+                            rowGap: '1rem',
+                          }}>
                           {activeLicenses.map((license) => (
                             <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
@@ -114,7 +122,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                                   {license.name}
                                 </Typography>
                               </Box>
-                              <Typography sx={{ mb: '1rem' }}>{license.description}</Typography>
+                              <Trans defaults={license.description} components={{ p: <Typography gutterBottom /> }} />
                               {license.link && (
                                 <OpenInNewLink href={license.link}>
                                   {t('licenses.read_more_about_license', { license: license.name })}
@@ -125,13 +133,21 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                                   defaults={license.additionalInformation}
                                   components={{
                                     p: <Typography sx={{ mt: '1rem' }} />,
-                                    ol: <ol style={{ listStyleType: 'lower-roman' }} />,
-                                    li: <li style={{ marginBottom: '0.5rem' }} />,
+                                    link1: <OpenInNewLink href="https://lovdata.no/lov/2018-06-15-40/%C2%A73" />,
+                                    link2: <OpenInNewLink href="https://lovdata.no/lov/2018-06-15-40/%C2%A78" />,
+                                    link3: <OpenInNewLink href="https://lovdata.no/lov/2018-06-15-40/%C2%A711" />,
+                                    link4: <OpenInNewLink href="https://lovdata.no/lov/2018-06-15-40/%C2%A714" />,
                                   }}
                                 />
                               )}
                             </Box>
                           ))}
+                          <Box>
+                            <Typography variant="h3" gutterBottom>
+                              {t('licenses.labels.older_licenses')}
+                            </Typography>
+                            <Typography>{t('licenses.description.older_licenses')}</Typography>
+                          </Box>
                         </Box>
                       </HelperTextModal>
                     </Box>
