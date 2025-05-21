@@ -52,17 +52,18 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
 
   const addChannelClaimMutation = useMutation({
     mutationFn: (channelId: string) => {
-      if (customer?.id && channelId) {
-        return setChannelClaim(customer.id, {
-          channel: removeTrailingYearPathFromUrl(channelId),
-          constraint: {
-            scope: selectedCategories,
-            publishingPolicy: 'Everyone',
-            editingPolicy: 'OwnerOnly',
-          },
-        });
+      if (!customer?.id || !channelId) {
+        return Promise.reject(new Error('Customer ID or Channel ID is missing'));
       }
-      return Promise.reject(new Error('Customer ID or Channel ID is missing'));
+
+      return setChannelClaim(customer.id, {
+        channel: removeTrailingYearPathFromUrl(channelId),
+        constraint: {
+          scope: selectedCategories,
+          publishingPolicy: 'Everyone',
+          editingPolicy: 'OwnerOnly',
+        },
+      });
     },
     onSuccess: async () => {
       dispatch(setNotification({ message: t('feedback.success.set_channel_claim'), variant: 'success' }));
@@ -93,12 +94,14 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
         noValidate
         onSubmit={async (event) => {
           event.preventDefault();
-          if (selectedSerialPublication) {
-            await addChannelClaimMutation.mutateAsync(selectedSerialPublication.id);
-          } else if (selectedPublisher) {
-            await addChannelClaimMutation.mutateAsync(selectedPublisher.id);
-          }
-          closeDialogAndResetSelectedChannel();
+          try {
+            if (selectedSerialPublication) {
+              await addChannelClaimMutation.mutateAsync(selectedSerialPublication.id);
+            } else if (selectedPublisher) {
+              await addChannelClaimMutation.mutateAsync(selectedPublisher.id);
+            }
+            closeDialogAndResetSelectedChannel();
+          } catch {}
         }}>
         <DialogContent>
           {isPublisherChannelClaim ? (

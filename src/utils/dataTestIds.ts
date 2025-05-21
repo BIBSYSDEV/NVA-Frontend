@@ -500,6 +500,8 @@ export const dataTestId = {
       deleteFile: 'delete-file-button',
       embargoDateField: 'embargo-date-field',
       expandFileRowButton: 'expand-file-row-button',
+      fileHelpModal: 'file-help-modal',
+      fileHelpButton: 'file-modal-button',
       fileRow: 'uploaded-file-row',
       fileTypeSelect: 'file-type-select',
       legalNoteField: 'legal-note-field',
