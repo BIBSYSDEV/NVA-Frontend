@@ -1492,7 +1492,7 @@
       "embargo": "Embargo/utsatt publisering",
       "file_and_license_info": "Enhver fil i NVA må ha en lisens, slik at leser er informert om hva som er tillatt å gjøre med innholdet.",
       "file_helper_text_metadata_and_files": "Din institusjon har gitt deg tilgang til å publisere. Du må sjekke at du har lov til å publisere filene du har lastet opp og at påført lisens er korrekt. Om du trenger hjelp, trykk på \"{{buttonText}}\"-knappen, nederst på siden.",
-      "file_helper_text_point_list": "<ul><li><p>Velg åpen fil for dokumenter som skal gjøres åpent tilgjengelige.</p></li><li><p>Velg intern fil for dokumenter som skal deles med kurator.</p></li></ul>",
+      "file_helper_text_point_list": "<ul><li>Velg åpen fil for dokumenter som skal gjøres åpent tilgjengelige.</li><li>Velg intern fil for dokumenter som skal deles med kurator.</li></ul>",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "file_type": {
         "hidden_file": "Skjult fil",
@@ -1535,9 +1535,7 @@
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
       "select_availability": "Velg tilgjengelighet",
       "show_all_older_versions": "Vis alle tidligere versjoner",
-      "version_accepted_helper_text": "<heading>Akseptert versjon (authors accepted manuscript, AAM)</heading> <p>Forfatters siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har.</p>",
-      "version_helper_text": "<p>Hvilken versjon som kan gjøres åpent tilgjengelig er avhengig av publiseringsavtalen med forlag/utgiver.</p><p>Last opp akseptert versjon, dersom publisert versjon ikke er åpent publisert med <ccLink>Creative Commons lisens</ccLink>.</p>",
-      "version_published_helper_text": "<heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den presenteres i et tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere redaksjonelle forbedringer, og forlagets grafiske profil. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Forlaget har bestemt lisens, du må velge den samme som artikkelen er publisert med.</p>"
+      "version_helper_text": "<p>Hvilken versjon som kan gjøres åpent tilgjengelig er avhengig av publiseringsavtalen med forlag/utgiver.</p><p>Last opp akseptert versjon, dersom publisert versjon ikke er åpent publisert med <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading> <p>Forfatters siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den presenteres i et tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere redaksjonelle forbedringer, og forlagets grafiske profil. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Forlaget har bestemt lisens, du må velge den samme som artikkelen er publisert med.</p>"
     },
     "heading": {
       "contributors": "Bidragsytere",
