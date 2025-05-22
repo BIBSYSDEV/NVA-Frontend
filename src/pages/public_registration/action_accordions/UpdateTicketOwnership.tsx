@@ -50,12 +50,14 @@ export const UpdateTicketOwnership = ({ ticket, refetchData }: UpdateTicketOwner
   });
 
   const changeTicketOwnership = useMutation({
-    mutationFn: (newInstitutionId: string) =>
-      updateTicket(ticket.id, {
+    mutationFn: async (newInstitutionId: string) => {
+      await updateTicket(ticket.id, {
         type: 'UpdateTicketOwnershipRequest',
         ownerAffiliation: newInstitutionId,
         responsibilityArea: newInstitutionId,
-      }),
+      });
+      await refetchData();
+    },
     onSuccess: () =>
       dispatch(setNotification({ message: t('feedback.success.ticket_ownership_updated'), variant: 'success' })),
     onError: () =>
@@ -88,7 +90,6 @@ export const UpdateTicketOwnership = ({ ticket, refetchData }: UpdateTicketOwner
             event.preventDefault();
             if (selectedOrganization) {
               await changeTicketOwnership.mutateAsync(selectedOrganization.id);
-              await refetchData();
               toggleUpdateOwnershipDialog();
             }
           }}>
