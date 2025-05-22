@@ -133,10 +133,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                                   defaults={license.additionalInformation}
                                   components={{
                                     p: <Typography sx={{ mt: '1rem' }} />,
-                                    link1: <OpenInNewLink href="https://lovdata.no/lov/2018-06-15-40/%C2%A73" />,
-                                    link2: <OpenInNewLink href="https://lovdata.no/lov/2018-06-15-40/%C2%A78" />,
-                                    link3: <OpenInNewLink href="https://lovdata.no/lov/2018-06-15-40/%C2%A711" />,
-                                    link4: <OpenInNewLink href="https://lovdata.no/lov/2018-06-15-40/%C2%A714" />,
+                                    link1: <OpenInNewLink href="https://lovdata.no/lov/2018-06-15-40/" />,
                                   }}
                                 />
                               )}
