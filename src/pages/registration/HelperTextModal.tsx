@@ -1,7 +1,7 @@
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Breakpoint, IconButton, Tooltip } from '@mui/material';
-import { t } from 'i18next';
 import { ReactNode, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Modal } from '../../components/Modal';
 
 interface HelperTextModalProps {
@@ -11,6 +11,7 @@ interface HelperTextModalProps {
   buttonDataTestId?: string;
   maxWidth?: Breakpoint;
 }
+
 export const HelperTextModal = ({
   modalTitle,
   children,
@@ -19,6 +20,7 @@ export const HelperTextModal = ({
   maxWidth = 'sm',
 }: HelperTextModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation();
 
   const toggleModal = () => {
     setIsOpen(!isOpen);

@@ -110,14 +110,14 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                         <Box
                           sx={{
                             display: 'grid',
-                            gridTemplateColumns: { md: 'repeat(1, 1fr)', lg: 'repeat(3, 1fr)' },
+                            gridTemplateColumns: { md: '1fr', lg: 'repeat(3, 1fr)' },
                             gap: '1.5rem',
                           }}>
                           {activeLicenses.map((license) => (
-                            <Box key={license.id} sx={{ whiteSpace: 'pre-wrap' }}>
+                            <Box key={license.id}>
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
                                 <Box component="img" src={license.logo} alt="" sx={{ width: '5rem' }} />
-                                <Typography component="h2" variant="h3" gutterBottom>
+                                <Typography component="h2" variant="h3">
                                   {license.name}
                                 </Typography>
                               </Box>

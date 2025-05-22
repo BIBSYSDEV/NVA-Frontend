@@ -717,7 +717,7 @@
   },
   "licenses": {
     "additional_info": {
-      "cc0": "<p>Se Åndsverksloven <link1>§3, §8, §11 og §14</link1></p>"
+      "cc0": "<p>Se <link1>Åndsverksloven</link1> §3, §8, §11 og §14</p>"
     },
     "description": {
       "cc0": "<p>Verket er frigitt til offentlig bruk, uten opphavsrettigheter, så langt loven tillater.</p><p>Bruker du denne lisensen, last opp et dokument der du begrunner hvorfor.</p>",
@@ -1493,7 +1493,7 @@
       "delete_file_description": "Ønsker du å slette {{fileName}}? Merk at fila vil slettes for godt med en gang du bekrefter dette.",
       "disabled_helper_text": "Denne filen er allerede publisert med en godkjent lisens. Ta kontakt med kurator om du vil endre eller slette filen",
       "embargo": "Embargo/utsatt publisering",
-      "file_and_license_info": "<p>Lisensen informerer lesere om hvordan de kan gjenbruke arbeidet i sitt eget arbeid.</p><p>Creative commons (CC) definerer 6 standardiserte lisenstyper med ulik grad av frihet og en lisens der opphavspersonen frasier seg alle rettigheter.</p><p>Les mer om <ccLink>Creative commons-lisenser på openscience.no</ccLink> for mer utfyllende informasjon om rettigheter og plikter i hver av lisensene.</p>",
+      "file_and_license_info": "<p>Lisensen informerer lesere om hvordan de kan gjenbruke arbeidet i sitt eget arbeid.</p><p>Creative commons (CC) definerer 6 standardiserte lisenstyper med ulik grad av frihet og en lisens der opphavspersonen frasier seg alle rettigheter.</p><p><ccLink>Les mer om Creative commons-lisenser</ccLink> for mer utfyllende informasjon om rettigheter og plikter i hver av lisensene.</p>",
       "file_helper_text_metadata_and_files": "Din institusjon har gitt deg tilgang til å publisere. Du må sjekke at du har lov til å publisere filene du har lastet opp og at påført lisens er korrekt. Om du trenger hjelp, trykk på \"{{buttonText}}\"-knappen, nederst på siden.",
       "file_helper_text_point_list": "<ul><li>Velg åpen fil for dokumenter som skal gjøres åpent tilgjengelige.</li><li>Velg intern fil for dokumenter som skal deles med kurator.</li></ul>",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
