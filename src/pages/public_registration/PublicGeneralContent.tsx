@@ -92,6 +92,8 @@ const prioritiseIdentifiersFromCristin = (a: AdditionalIdentifier, b: Additional
   return 0;
 };
 
+const minNvaSyntheticCristinId = 10_000_000;
+
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
   const { entityDescription, id, status } = registration;
@@ -106,9 +108,14 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
 
   const cristinIdentifier = registration.additionalIdentifiers
-    ?.filter((identifier) => identifier.type === 'CristinIdentifier' || identifier.sourceName === 'Cristin')
+    ?.filter(
+      (identifier) =>
+        (identifier.type === 'CristinIdentifier' || identifier.sourceName === 'Cristin') &&
+        +identifier.value < minNvaSyntheticCristinId
+    )
     .sort((a, b) => prioritiseIdentifiersFromCristin(a, b))
     .shift()?.value;
+
   const scopusIdentifier = registration.additionalIdentifiers?.find(
     (identifier) => identifier.type === 'ScopusIdentifier' || identifier.sourceName === 'Scopus'
   )?.value;
