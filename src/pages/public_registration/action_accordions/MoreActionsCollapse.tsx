@@ -16,9 +16,15 @@ import { UpdateTicketOwnership } from './UpdateTicketOwnership';
 
 interface MoreActionsCollapseProps extends RepublishRegistrationProps {
   ticket?: PublishingTicket;
+  refetchData: () => Promise<void>;
 }
 
-export const MoreActionsCollapse = ({ registration, registrationIsValid, ticket }: MoreActionsCollapseProps) => {
+export const MoreActionsCollapse = ({
+  registration,
+  registrationIsValid,
+  ticket,
+  refetchData,
+}: MoreActionsCollapseProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
   const [openMoreActions, setOpenMoreActions] = useState(false);
@@ -60,7 +66,7 @@ export const MoreActionsCollapse = ({ registration, registrationIsValid, ticket 
             </>
           )}
           {canDeleteRegistration && <DeleteDraftRegistration registration={registration} />}
-          {canChangeTicketOwnership && <UpdateTicketOwnership ticket={ticket} />}
+          {canChangeTicketOwnership && <UpdateTicketOwnership ticket={ticket} refetchData={refetchData} />}
         </Box>
       )}
     </Box>

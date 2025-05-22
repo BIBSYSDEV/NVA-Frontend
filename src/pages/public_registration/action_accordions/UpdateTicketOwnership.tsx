@@ -23,9 +23,10 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface UpdateTicketOwnershipProps {
   ticket: Ticket;
+  refetchData: () => Promise<void>;
 }
 
-export const UpdateTicketOwnership = ({ ticket }: UpdateTicketOwnershipProps) => {
+export const UpdateTicketOwnership = ({ ticket, refetchData }: UpdateTicketOwnershipProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((state: RootState) => state.customer);
@@ -87,6 +88,7 @@ export const UpdateTicketOwnership = ({ ticket }: UpdateTicketOwnershipProps) =>
             event.preventDefault();
             if (selectedOrganization) {
               await changeTicketOwnership.mutateAsync(selectedOrganization.id);
+              await refetchData();
               toggleUpdateOwnershipDialog();
             }
           }}>

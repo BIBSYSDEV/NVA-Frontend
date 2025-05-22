@@ -324,6 +324,7 @@ export const PublishingAccordion = ({
           registration={registration}
           registrationIsValid={registrationIsValid}
           ticket={lastPublishingRequest}
+          refetchData={refetchData}
         />
       </AccordionDetails>
     </Accordion>
