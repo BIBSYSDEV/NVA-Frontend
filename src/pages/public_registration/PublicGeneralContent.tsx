@@ -92,7 +92,7 @@ const prioritiseIdentifiersFromCristin = (a: AdditionalIdentifier, b: Additional
   return 0;
 };
 
-const minNvaSyntheticCristinId = 10_000_000;
+const minNvaSyntheticCristinIdentifier = 10_000_000;
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
@@ -111,7 +111,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     ?.filter(
       (identifier) =>
         (identifier.type === 'CristinIdentifier' || identifier.sourceName === 'Cristin') &&
-        +identifier.value < minNvaSyntheticCristinId
+        +identifier.value < minNvaSyntheticCristinIdentifier
     )
     .sort((a, b) => prioritiseIdentifiersFromCristin(a, b))
     .shift()?.value;
