@@ -118,7 +118,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                             <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
                                 <Box component="img" src={license.logo} alt="" sx={{ width: '5rem' }} />
-                                <Typography variant="h3" gutterBottom>
+                                <Typography component="h2" variant="h3" gutterBottom>
                                   {license.name}
                                 </Typography>
                               </Box>
