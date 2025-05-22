@@ -105,7 +105,7 @@ export const UpdateTicketOwnership = ({ ticket, refetchData }: UpdateTicketOwner
               onChange={(_, value) => setSelectedOrganization(value ?? null)}
               getOptionDisabled={(option) => option?.id === customer?.cristinId}
               getOptionLabel={(option) => getLanguageString(option?.labels)}
-              loading={!fetchOrganizationsIsPending}
+              loading={fetchOrganizationsIsPending}
               renderInput={(params) => <TextField {...params} required label={t('common.select_institution')} />}
             />
           </DialogContent>
