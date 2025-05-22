@@ -138,12 +138,12 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                               )}
                             </div>
                           ))}
-                          <Box>
+                          <div>
                             <Typography variant="h3" gutterBottom>
                               {t('licenses.labels.older_licenses')}
                             </Typography>
                             <Typography>{t('licenses.description.older_licenses')}</Typography>
-                          </Box>
+                          </div>
                         </Box>
                       </HelperTextModal>
                     </Box>
