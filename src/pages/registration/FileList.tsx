@@ -110,7 +110,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                         <Box
                           sx={{
                             display: 'grid',
-                            gridTemplateColumns: 'repeat(3, 1fr)',
+                            gridTemplateColumns: { md: 'repeat(1, 1fr)', lg: 'repeat(3, 1fr)' },
                             columnGap: '3rem',
                             rowGap: '1rem',
                           }}>
