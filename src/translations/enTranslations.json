@@ -612,6 +612,7 @@
       "send_message": "Failed to send message",
       "set_channel_claim": "Could not set channel ownership",
       "storing_orcid_credentials": "Failed to save ORCID data",
+      "ticket_ownership_update_failed": "",
       "update_customer": "Failed to update institution",
       "update_doi_agent": "Failed to update DOI configuration",
       "update_import_status": "Failed to update import status",
@@ -662,6 +663,7 @@
       "reserve_doi": "DOI is reserved",
       "send_message": "Message sent",
       "set_channel_claim": "Channel ownership updated",
+      "ticket_ownership_updated": "",
       "update_customer": "Institution updated successfully",
       "update_institution_user": "User updated successfully",
       "update_nvi_period": "NVI period was updated",
@@ -727,6 +729,7 @@
       "cc_by_nc_sa": "Share — copy, distribute and transmit the work in any medium or format.\nAdapt — remix, transform, and build upon the material.\n\nYou must give appropriate credit, provide a link to the licence, and indicate if changes have been made.\nYou may not use the material for commercial purposes.\nIf you remix, transform, or build upon the material, you must distribute your contributions under the same licence as the original.",
       "cc_by_nd": "Share — copy, distribute and transmit the work in any medium or format for any purpose, including commercially.\n\nYou must give appropriate credit, provide a link to the licence, and indicate if changes have been made.\nIf you remix, transform, or build upon the material, you may not distribute the modified material.",
       "cc_by_sa": "Share — copy, distribute and transmit the work in any medium or format.\nAdapt — remix, transform, and build upon the material for any purpose, including commercially.\n\nYou must give appropriate credit, provide a link to the licence, and indicate if changes have been made.\nIf you remix, transform, or build upon the material, you must distribute your contributions under the same licence as the original.",
+      "older_licenses": "",
       "rights_reserved": "This work is published here for personal use, and only in accordance with the publisher's rules and conditions for the use of self-archived versions.\n\n\"Publisher's conditions\" is not a licence, but a statement that some rights are reserved for the publisher, the author, and possibly others. The reader must clarify for themselves what the law allows them to do with this work, beyond reading it."
     },
     "labels": {
@@ -738,6 +741,7 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
+      "older_licenses": "",
       "rights_reserved": "Publisher's terms"
     },
     "links": {
@@ -750,7 +754,8 @@
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}",
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}",
       "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
-    }
+    },
+    "read_more_about_license": ""
   },
   "log": {
     "hidden_file_added": "Hidden file added",
@@ -1491,7 +1496,7 @@
       "disabled_helper_text": "This file is already published with an approved licence. Contact the curator if you wish to edit or delete the file",
       "embargo": "Embargo/delayed publication",
       "file_and_license_info": "Every file in NVA must have a licence, to inform the reader about what they are allowed to do with the content.",
-      "file_helper_text_metadata_and_files": "",
+      "file_helper_text_metadata_and_files": "Your institution has given you access to publish. You must check that you are allowed to publish the files you have uploaded, and that the selected licence is correct. If you need help, click the button {{buttonText}} at the bottom of the page.",
       "file_helper_text_point_list": "",
       "file_publish_date_helper_text": "The file is locked until the specified date",
       "file_type": {
@@ -1535,9 +1540,7 @@
       "resource_is_a_reference": "The resource is a reference and has no files or links to publish",
       "select_availability": "Select availability",
       "show_all_older_versions": "Show all previous versions",
-      "version_accepted_helper_text": "<0>Accepted version</0>: the author's final revised version after the article has been peer-reviewed, as it was sent to the publisher. This version does not have the publisher's page numbers and graphic style, or any editorial rewrites, that the published version has. This version should be shared in NVA, preferably in pdf format, with a CC-BY licence.",
-      "version_helper_text": "<0>Upload the published or accepted version of the article. If the published version has a CC licence, it is not necessary to upload the accepted version. Please also upload the publishing agreement or other formal communication (email) with the editor, which clarifies the conditions for the delayed publication date (embargo) or licence terms. Mark such files as \"Internal,\" and they will only be visible to those who have access to edit your registration (i.e., you, co-authors, and involved curators/editors).</0><0>Your institution has granted you access to publish. You must check that you are allowed to publish the files you have uploaded and that the applied licence is correct. If you need help, click the \"{{buttonText}}\" button at the bottom of the page.</0>",
-      "version_published_helper_text": "<0>Published version</0>: Also known as VOR or the “version of record”. The published version of the article in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The licence is normally decided by the publisher, so the safe option for a licence is “Publisher's conditions”. Many publishers support Open Access and allow use of the CC-BY licence."
+      "version_helper_text": "<p>Which version can be made openly available depends on the publishing agreement with the publisher.</p><p>Upload the accepted version if the published version is not openly published with a <ccLink>Creative Commons licence</ccLink>. </p><heading>Accepted Version (Authors Accepted Manuscript, AAM)</heading><p>Author's final version after peer review, as submitted to the publisher. This version does not have the publisher's pagination and graphic style or any editorial rewrites that the published version includes.</p><heading>Published Version (Version of Records, VOR) </heading><p>The article as presented in a journal, in print and/or online. This version will include editorial improvements and the publisher's graphic profile. Usually available on a publisher's website, in PDF format. The publisher has determined the licence, and you must choose the same one with which the article is published.</p>"
     },
     "heading": {
       "contributors": "Contributors",
@@ -1634,6 +1637,9 @@
         "has_rejected_files_publishing_request": "<0>The files are not deleted but hidden from the result view.</0><0>You will receive a new task if the registrar requests a new assessment of a rejected file or wants to approve a newly uploaded file.</0><0>To delete files permanently, edit the registration and remove the file.</0><0>If you want to unpublish the entire result, open more options at the bottom of this menu.</0>",
         "has_rejected_files_publishing_request_registrator": "<0>The curator has rejected file(s), and they have been removed from the presentation page of the result. You can find the reason for the rejection in the message field of this menu.</0><0>If you wish to delete one or more files, press \"$t(registration.edit_registration)\" and remove the files there.</0><0>If you disagree with the rejection, change the status of the file(s) under \"$t(registration.files_and_license.availability)\" from \"Rejected\" to new status. The file will then be sent to the curator for new approval. Feel free to include a reason for the curator in the message field.</0>",
         "has_reserved_doi": "<0>You can share the reserved DOI with those who will cite the result. Lookup via DOI is not possible until the DOI is assigned by the curator.</0><0>The DOI request is sent to the curator when the result is published. You publish the registration in the publishing menu.</0>",
+        "move_task": "",
+        "move_task_description": "",
+        "move_task_dialog_description": "",
         "no_access_to_republish": "<0>Should the result not have been unpublished</0><0>Contact the editor to have the result republished.</0>",
         "no_published_files_on_registration": "No published files on the result",
         "no_published_files_on_registration_description": "<0>The result has no published files.</0><0>Check with the registrar if it is correct that the result should not have published files in NVA.</0><0>Do you want to assign a DOI to a result without a file?</0>",

@@ -389,6 +389,7 @@ export const dataTestId = {
       messageText: 'message-text',
       messageTimestamp: 'message-timestamp',
       morePublishingActionsButton: 'more-publishing-actions-button',
+      moveTicketToOrganizationTextField: 'move-ticket-to-organization-textfield',
       panelRoot: 'tasks-panel',
       publishButton: 'button-publish-registration',
       publishingRequestAcceptButton: 'publishing-request-accept-button',
@@ -409,6 +410,7 @@ export const dataTestId = {
       tabPanelLog: 'tab-panel-log',
       tabPanelTasks: 'tab-panel-tasks',
       terminateRegistrationButton: 'terminate-registration-button',
+      updateTicketOwnershipButton: 'update-ticket-ownership-button',
     },
     duplicateRegistrationModal: {
       duplicationModal: 'duplication-modal',
