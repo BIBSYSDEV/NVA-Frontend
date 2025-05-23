@@ -43,7 +43,7 @@ export const ChannelClaimInfoBox = ({ channelClaim }: ChannelClaimInfoBoxProps) 
 
         {/* TODO "Check for unused keys after evaluation fomr test group */}
         <Trans
-          // i18nKey="registration.use_curator_help_button"
+          i18nKey="registration.use_curator_help_button"
           values={{ buttonText: t('my_page.messages.get_curator_support') }}
           components={{ p: <Typography /> }}
         />
