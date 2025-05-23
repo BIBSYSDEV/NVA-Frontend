@@ -6,12 +6,17 @@ import { fetchChannelClaim } from '../customerInstitutionsApi';
 export const useFetchChannelClaim = (id = '', { enabled = !!id, ignoreErrorMessage = false }) => {
   const { t } = useTranslation();
   const channelIdentifier = getIdentifierFromId(removeTrailingYearPathFromUrl(id));
-  console.log('useFetchChannelClaim');
 
   return useQuery({
     queryKey: ['channelClaim', channelIdentifier],
     enabled: enabled && !!channelIdentifier,
     queryFn: ({ signal }) => fetchChannelClaim(channelIdentifier, signal),
+    retry: (failureCount, error) => {
+      if ('status' in error && error.status === 404) {
+        return false;
+      }
+      return failureCount < 1;
+    },
     meta: { errorMessage: !ignoreErrorMessage && t('feedback.error.get_channel_claim') },
   });
 };

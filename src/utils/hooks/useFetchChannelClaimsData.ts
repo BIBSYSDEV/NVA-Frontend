@@ -15,7 +15,6 @@ import {
 
 export const useFetchChannelClaimsData = (registration?: Registration) => {
   const canUpdateEverything = userHasAccessRight(registration, 'update');
-  console.log('useFetchChannelClaimsData');
 
   const channelId = getChannelId(registration) ?? '';
   const channelClaimQuery = useFetchChannelClaim(channelId, { enabled: !canUpdateEverything });
