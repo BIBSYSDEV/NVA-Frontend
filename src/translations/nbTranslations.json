@@ -476,7 +476,7 @@
         "publisher_claims_overview": "Oversikt over utgivereierskap",
         "publisher_in_channel_registry": "Utgiver i Kanalregisteret",
         "register_access": "Tilgang til å registrere",
-        "register_access_helper_text": "<p>Redaktør bestemmer hvilke personer som kan registrere resultater på kanaler i Kanalregisteret. Redaktør kan velge mellom “Alle institusjoner” og “Kun utgiverinstitusjon”.</p><heading>Alle institusjoner</heading><p>Alle med tilgang til å registrere, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p><heading>Kun redaktørs institusjon</heading><p>Alle med tilgang til å registrere, som er ansatt ved redaktørs institusjon, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p>",
+        "register_access_helper_text": "<p>Redaktør bestemmer hvilke personer som kan registrere resultater på kanaler i Kanalregisteret. Redaktør kan velge mellom “Alle institusjoner” og “Kun utgiverinstitusjon”.</p><heading>Alle institusjoner</heading><p>Alle med tilgang til å registrere, som er ansatt ved redaktørs institusjon, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p><heading>Kun redaktørs institusjon</heading><p>Alle med tilgang til å registrere, som er ansatt ved redaktørs institusjon, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p>",
         "serial_publication_claims_overview": "Oversikt over serie-/tidsskrifteierskap",
         "serial_publication_in_channel_registry": "Serie/tidsskrift i Kanalregisteret",
         "set_channel_claim": "Sett eierskap",
