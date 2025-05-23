@@ -106,7 +106,14 @@ export const UpdateTicketOwnership = ({ ticket, refetchData }: UpdateTicketOwner
               getOptionDisabled={(option) => option?.id === customer?.cristinId}
               getOptionLabel={(option) => getLanguageString(option?.labels)}
               loading={fetchOrganizationsIsPending}
-              renderInput={(params) => <TextField {...params} required label={t('common.select_institution')} />}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.moveTicketToOrganizationTextField}
+                  required
+                  label={t('common.select_institution')}
+                />
+              )}
             />
           </DialogContent>
           <DialogActions>
@@ -121,7 +128,7 @@ export const UpdateTicketOwnership = ({ ticket, refetchData }: UpdateTicketOwner
               loading={changeTicketOwnership.isPending}
               variant="contained"
               type="submit">
-              {t('common.save')}
+              {t('registration.public_page.tasks_panel.move_task')}
             </Button>
           </DialogActions>
         </form>
