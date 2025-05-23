@@ -64,7 +64,6 @@ const ResearchProfile = () => {
     : getIdentifierFromId(currentCristinId); // Page for My Research Profile
 
   const personQuery = useFetchPersonByIdentifier(personIdentifier);
-
   const person = personQuery.data;
 
   const registrationsQueryConfig: FetchResultsParams = {
@@ -130,7 +129,9 @@ const ResearchProfile = () => {
     projectsQuery.isPending ||
     promotedPublicationsQuery.isPending;
 
-  return isPending ? (
+  return personQuery.isError ? (
+    <NotFound />
+  ) : isPending ? (
     <PageSpinner aria-label={t('my_page.research_profile')} />
   ) : !person ? (
     <NotFound />
