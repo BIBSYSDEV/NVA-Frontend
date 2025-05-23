@@ -66,6 +66,7 @@ export const PublishingAccordion = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
+  const user = useSelector((store: RootState) => store.user);
   const location = useLocation();
   const locationState = location.state as SelectedTicketTypeLocationState | undefined;
 
@@ -89,8 +90,15 @@ export const PublishingAccordion = ({
     (file) => isOpenFile(file) || file.type === FileType.InternalFile
   );
 
+  const lastPublishingRequest =
+    publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
+    publishingRequestTickets.at(-1);
+
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
-  const userCanApprovePublishingRequest = userHasAccessRight(registration, 'approve-files');
+  const userCanApprovePublishingRequest =
+    userHasAccessRight(registration, 'approve-files') &&
+    !!lastPublishingRequest?.ownerAffiliation &&
+    lastPublishingRequest.ownerAffiliation === user?.topOrgCristinId;
   const userCanHandlePublishingRequest = userCanCreatePublishingRequest || userCanApprovePublishingRequest;
 
   const formErrors = validateRegistrationForm(registration);
@@ -102,10 +110,6 @@ export const PublishingAccordion = ({
     ((customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' &&
       isPublishableForWorkflow2(registration)) ||
       (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' && registrationIsValid));
-
-  const lastPublishingRequest =
-    publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
-    publishingRequestTickets.at(-1);
 
   const handlePublishRegistration = async () => {
     setIsCreatingPublishingRequest(true);
@@ -316,7 +320,12 @@ export const PublishingAccordion = ({
           onConfirmNotDuplicate={onConfirmNotDuplicate}
         />
 
-        <MoreActionsCollapse registration={registration} registrationIsValid={registrationIsValid} />
+        <MoreActionsCollapse
+          registration={registration}
+          registrationIsValid={registrationIsValid}
+          ticket={lastPublishingRequest}
+          refetchData={refetchData}
+        />
       </AccordionDetails>
     </Accordion>
   );
