@@ -37,7 +37,7 @@ export const ChannelClaimTable = ({ channelClaimList }: ChannelClaimTableProps) 
             {t('common.institution')}
             <HelperTextModal
               buttonDataTestId={dataTestId.editor.channelOwnerInfoButton}
-              modalTitle={t('editor.institution.channel_claims.channel_owner')}>
+              modalTitle={t('editor.institution.channel_claims.institution_with_editorial_responsibility')}>
               <Trans
                 i18nKey="editor.institution.channel_claims.channel_owner_helper_text"
                 components={helperTextModalComponents}
