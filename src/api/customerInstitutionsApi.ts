@@ -87,6 +87,8 @@ export const fetchClaimedChannels = async (channelType: 'publisher' | 'serial-pu
 };
 
 export const fetchChannelClaim = async (channelIdentifier: string, signal: AbortSignal) => {
+  await new Promise((resolve) => setTimeout(resolve, 5_000)); // Simulate async operation
+
   const getChannelClaim = await authenticatedApiRequest2<ClaimedChannel>({
     url: `${CustomerInstitutionApiPath.ChannelClaim}/${channelIdentifier}`,
     signal,
