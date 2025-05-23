@@ -6,6 +6,7 @@ import { fetchChannelClaim } from '../customerInstitutionsApi';
 export const useFetchChannelClaim = (id = '', { enabled = !!id, ignoreErrorMessage = false }) => {
   const { t } = useTranslation();
   const channelIdentifier = getIdentifierFromId(removeTrailingYearPathFromUrl(id));
+  console.log('useFetchChannelClaim');
 
   return useQuery({
     queryKey: ['channelClaim', channelIdentifier],
