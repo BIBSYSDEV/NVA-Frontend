@@ -729,8 +729,8 @@
       "cc_by_nc_sa": "<p>Du kan: kopiere, dele og endre verket for ikke-kommersielle formål.</p><p>Du må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
       "cc_by_nd": "<p>Du kan: kopiere og dele verket for alle typer bruk, også kommersielle.</p><p>Du kan ikke: endre eller tilpasse verket.</p><p>Du må: gi riktig kreditering.</p>",
       "cc_by_sa": "<p>Du kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p<p>Du må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
-      "rights_reserved": "<p>Dette verket har ikke en lisens som tydeliggjør rettigheter for gjenbruk. Du må selv kontakte opphavsperson for å finne ut om, og hvordan, du kan gjenbruke arbeidet.</p>",
-      "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens"
+      "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens",
+      "rights_reserved": "<p>Dette verket har ikke en lisens som tydeliggjør rettigheter for gjenbruk. Du må selv kontakte opphavsperson for å finne ut om, og hvordan, du kan gjenbruke arbeidet.</p>"
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -741,8 +741,8 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "rights_reserved": "Utgivers betingelser",
-      "older_licenses": "Eldre lisenser"
+      "older_licenses": "Eldre lisenser",
+      "rights_reserved": "Utgivers betingelser"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
