@@ -47,11 +47,12 @@ export const ChannelClaimInfoBox = ({ channelClaim, registration }: ChannelClaim
           />
         </Typography>
 
-        {isDegree(registration.entityDescription?.reference?.publicationInstance?.type) && !user?.isThesisCurator ? (
-          <Trans i18nKey="registration.disable_fields_due_to_channel_claim_thesis" components={{ p: <Typography /> }} />
-        ) : (
-          <Trans i18nKey="registration.disable_fields_due_to_channel_claim" components={{ p: <Typography /> }} />
-        )}
+        {/* TODO "Check for unused keys after evaluation fomr test group */}
+        <Trans
+          // i18nKey="registration.use_curator_help_button"
+          values={{ buttonText: t('my_page.messages.get_curator_support') }}
+          components={{ p: <Typography /> }}
+        />
       </div>
     </Box>
   );

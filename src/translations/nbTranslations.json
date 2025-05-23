@@ -1345,7 +1345,7 @@
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikke lagre fordi resultatet er publisert og inneholder valideringsfeil",
     "channel_claim_info_heading": "Felt låst for redigering",
-    "channel_claim_info_owned_by": "Dette resultatet er tilknyttet en kanal som eies av \"<institution/>\".",
+    "channel_claim_info_owned_by": "Dette resultatet er underlagt redaksjonell kontroll av \"<institution/>\".",
     "citation_points_to": "Siteringen viser til",
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
@@ -2088,6 +2088,7 @@
         "institution_help_description": "<0>Har du tekniske problemer?</0><0>Se og eventuelt meld inn feil til brukerstøtte</0>"
       }
     },
+    "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål.",
     "year_published": "Publiseringsår"
   },
   "search": {
