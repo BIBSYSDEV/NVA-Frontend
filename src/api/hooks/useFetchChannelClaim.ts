@@ -3,20 +3,24 @@ import { useTranslation } from 'react-i18next';
 import { getIdentifierFromId, removeTrailingYearPathFromUrl } from '../../utils/general-helpers';
 import { fetchChannelClaim } from '../customerInstitutionsApi';
 
-export const useFetchChannelClaim = (id = '', { enabled = !!id, ignoreErrorMessage = false }) => {
+export const useFetchChannelClaim = (id = '', { enabled = !!id } = {}) => {
   const { t } = useTranslation();
   const channelIdentifier = getIdentifierFromId(removeTrailingYearPathFromUrl(id));
 
   return useQuery({
     queryKey: ['channelClaim', channelIdentifier],
     enabled: enabled && !!channelIdentifier,
-    queryFn: ({ signal }) => fetchChannelClaim(channelIdentifier, signal),
-    retry: (failureCount, error) => {
-      if ('status' in error && error.status === 404) {
-        return false;
+    queryFn: async ({ signal }) => {
+      try {
+        return await fetchChannelClaim(channelIdentifier, signal);
+      } catch (error: any) {
+        if (error.status === 404) {
+          return null; // Handle 404 as an OK response with no data
+        }
+        throw error;
       }
-      return failureCount < 1;
     },
-    meta: { errorMessage: !ignoreErrorMessage && t('feedback.error.get_channel_claim') },
+    staleTime: 120_000, // 2 minutes
+    meta: { errorMessage: t('feedback.error.get_channel_claim') },
   });
 };
