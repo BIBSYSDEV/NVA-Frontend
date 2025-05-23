@@ -29,10 +29,12 @@ export const ChannelClaimTable = ({ channelClaimList }: ChannelClaimTableProps) 
       <TableHead>
         <TableRow sx={{ bgcolor: 'secondary.main' }}>
           <TableCell sx={{ textWrap: 'nowrap' }}>
-            {channelType === 'publisher' ? t('common.publisher') : t('common.serial_publication')}
+            {channelType === 'publisher'
+              ? t('editor.institution.channel_claims.publisher_in_channel_registry')
+              : t('editor.institution.channel_claims.serial_publication_in_channel_registry')}
           </TableCell>
           <TableCell>
-            {t('editor.institution.channel_claims.channel_owner')}
+            {t('common.institution')}
             <HelperTextModal
               buttonDataTestId={dataTestId.editor.channelOwnerInfoButton}
               modalTitle={t('editor.institution.channel_claims.channel_owner')}>
