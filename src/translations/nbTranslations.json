@@ -1515,8 +1515,8 @@
       "files_completed": "Ferdig",
       "files_count": "Filer ({{count}})",
       "files_helper_text": "<p>Her kan du laste opp fulltekst av publikasjonen og andre dokumenter som supplement og appendiks.</p>",
-      "files_helper_text_metadata_only": "En kurator vil gå gjennom filene og sørge for at det kun er de filene du har lov til å dele, som bli delt, og at de er tildelt korrekt lisens.",
-      "files_helper_text_paragraph_2": "Du kan laste opp dokument(er) som spesifiserer kravene til offentliggjøring, som hvilken versjon du kan offentliggjøre, lisens og eventuell dato for utsatt tilgjengeliggjøring (sperrefrist/embargo). For eksempel er forfatteravtalen inngått med forlaget til hjelp når kurator skal sjekker om og når filen kan gjøres offentlig i NVA.",
+      "files_helper_text_metadata_only": "En kurator vil gå gjennom filene og sørge for at det kun er de filene du har lov til å dele, som vil bli delt, og at de er tildelt korrekt lisens.",
+      "files_helper_text_paragraph_2": "Du kan også laste opp dokument(er) som spesifiserer kravene til offentliggjøring, som hvilken versjon du kan gjøre åpent tilgjengelig, lisens og eventuell dato for utsatt tilgjengeliggjøring (sperrefrist/embargo). For eksempel er forfatteravtalen inngått med forlaget til hjelp når kurator skal sjekker om og når filen kan gjøres åpent tilgjengelig i NVA.",
       "files_in_progress": "Under behandling",
       "find_journal_in_channel_register": "Se informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Se informasjon om utgiveren i Kanalregisteret",
@@ -1544,7 +1544,7 @@
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
       "select_availability": "Velg tilgjengelighet",
       "show_all_older_versions": "Vis alle tidligere versjoner",
-      "version_helper_text": "<p>Hvilken versjon som kan gjøres åpent tilgjengelig er avhengig av publiseringsavtalen med forlag/utgiver.</p><p>Last opp akseptert versjon, dersom publisert versjon ikke er åpent publisert med <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading> <p>Forfatters siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den presenteres i et tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere redaksjonelle forbedringer, og forlagets grafiske profil. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Forlaget har bestemt lisens, du må velge den samme som artikkelen er publisert med.</p>"
+      "version_helper_text": "<p>Last opp akseptert versjon, dersom publisert versjon ikke er åpent publisert med en <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading> <p>Forfatters siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den presenteres i et tidsskrift. Denne versjonen vil inkludere redaksjonelle forbedringer, og forlagets grafiske profil. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Du må velge den samme Creative Commons-lisensen som artikkelen er publisert med.</p>"
     },
     "heading": {
       "contributors": "Bidragsytere",
