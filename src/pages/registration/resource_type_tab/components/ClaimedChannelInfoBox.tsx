@@ -20,7 +20,7 @@ export const ClaimedChannelInfoBox = ({ channelId, channelType }: ClaimedChannel
   const user = useSelector((state: RootState) => state.user);
   const { values } = useFormikContext<Registration>();
 
-  const channelClaimQuery = useFetchChannelClaim(channelId, { ignoreErrorMessage: true });
+  const channelClaimQuery = useFetchChannelClaim(channelId);
   const channelClaim = channelClaimQuery.data;
 
   const organizationQuery = useFetchOrganization(channelClaim?.claimedBy.organizationId ?? '');

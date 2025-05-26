@@ -260,6 +260,7 @@
     "project": "Prosjekt",
     "project_status": "Prosjektstatus",
     "publisher": "Utgiver",
+    "publishers": "Utgivere",
     "publishing_year": "Publiseringsår",
     "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
@@ -462,19 +463,22 @@
         "category_limitations": "Begrensning for kategori",
         "category_limitations_helper_text": "<p>Kanaleier kan velge om tilgangsbegrensninger skal gjelde for alle resultatkategorier eller bare noen utvalgte.</p><heading>Publiseringsforespørsler</heading><p>For resultatkategorier MED tilgangsbegrensning blir publiseringsforespørsler sendt til filkurator hos kanaleier.</p><p>For resultatkategorier UTEN tilgangsbegrensning, blir publiseringsforespørsler sendt til filkurator ved institusjonen som registrator er logget inn på.</p>",
         "channel_claim": "Kanaleierskap",
-        "channel_claims_overview_description": "Oversikt over kanaler fra Kanalregisteret:",
+        "channel_claims_overview_description": "Kanaler med redaktør",
         "channel_claims_settings_description": "Administrer eierskap og tilganger til kanaler fra Kanalregisteret:",
         "channel_owner": "Kanaleier",
-        "channel_owner_helper_text": "<p>Institusjonen som har tatt eierskap til kanalen (utgiverinstitusjon).</p><p>Hvis en kanal har feil kanaleier, ta kontakt med institusjonen for å få rettet feilen.</p>",
+        "channel_owner_helper_text": "<p>Institusjonen som har tatt det redaksjonelle ansvaret for innholdet utgitt av kanalen.</p><p>Hvis en kanal har feil redaktør, ta kontakt med institusjonen for å få rettet feilen.</p>",
         "claim_category_restriction": "Kategorier som begrensningen skal gjelde for",
         "delete_channel_claim": "Fjern eierskap til kanal",
         "delete_channel_claim_description": "<p>Er du sikker på at du vil fjerne eierskapet til <span>{{name}}</span>?</p>",
         "editing_access": "Tilgang til å redigere",
         "editing_access_helper_text": "<p>Kanaleier (utgiverinstitusjon) kan velge om ansatte utenfor egen institusjon kan redigere resultater som er utgitt i sine publikasjonskanaler.</p><heading>Alle institusjoner</heading><p>Ansatte ved andre institusjoner kan redigere resultater som er utgitt på institusjonens kanal.</p><p>Kurator ved andre institusjoner kan redigere og slette filer som allerede er godkjent. For nyopplastede filer, blir publiseringsforespørsel sendt til kurator hos utgiverinstitusjonen (kanaleier).</p><heading>Kun utgiverinstitusjon</heading><p>Bare egne ansatte kan redigere resultater som er utgitt på publiseringskanalen.</p><p>Registrator og kurator som ikke er logget inn hos utgiverinstitusjon, får ikke redigert metadata på resultatet etter at opplastede filer er godkjent.</p><p>Registratorer som ikke er logget inn hos kanaleier, får feilmelding om de velger en av publiseringskanalene og beskjed om å kontake brukerstøtte hos utgiverinstitusjon.</p>",
+        "institution_with_editorial_responsibility": "Institusjon med redaksjonsansvar",
         "publisher_claims_overview": "Oversikt over utgivereierskap",
+        "publisher_in_channel_registry": "Utgiver i Kanalregisteret",
         "register_access": "Tilgang til å registrere",
-        "register_access_helper_text": "<p>Kanaleier kan velge om personer utenfor egen institusjon kan registrere resultater som er utgitt på publiseringskanaler de eier.</p><heading>Alle institusjoner</heading><p>Registratorer fra andre institusjoner kan registrere resultater som er utgitt på institusjonens kanaler. Publiseringsforespørsler blir sendt til filkurator hos kanaleier.</p><heading>Kun utgiverinstitusjon</heading><p>Bare egne ansatte kan redigere resultater som er utgitt på publiseringskanalen.</p><p>Registratorer som ikke er logget inn hos kanaleier, får feilmelding om de velger en av publiseringskanalene og beskjed om å kontake brukerstøtte hos utgiverinstitusjon.</p>",
+        "register_access_helper_text": "<p>Redaktør bestemmer hvilke personer som kan registrere resultater på kanaler i Kanalregisteret. Redaktør kan velge mellom “Alle institusjoner” og “Kun utgiverinstitusjon”.</p><heading>Alle institusjoner</heading><p>Alle med tilgang til å registrere, som er ansatt ved redaktørs institusjon, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p><heading>Kun redaktørs institusjon</heading><p>Alle med tilgang til å registrere, som er ansatt ved redaktørs institusjon, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p>",
         "serial_publication_claims_overview": "Oversikt over serie-/tidsskrifteierskap",
+        "serial_publication_in_channel_registry": "Serie/tidsskrift i Kanalregisteret",
         "set_channel_claim": "Sett eierskap",
         "show_only_my_institution": "Vis kun min institusjon"
       },
@@ -728,7 +732,7 @@
       "cc_by_nc_nd": "<p>Du kan: kopiere og dele verket for ikke-kommersielle formål</p><p>Du kan ikke: endre eller tilpasse verket.</p><p>Du må: gi riktig kreditering.</p>",
       "cc_by_nc_sa": "<p>Du kan: kopiere, dele og endre verket for ikke-kommersielle formål.</p><p>Du må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
       "cc_by_nd": "<p>Du kan: kopiere og dele verket for alle typer bruk, også kommersielle.</p><p>Du kan ikke: endre eller tilpasse verket.</p><p>Du må: gi riktig kreditering.</p>",
-      "cc_by_sa": "<p>Du kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p<p>Du må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
+      "cc_by_sa": "<p>Du kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p><p>Du må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
       "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens",
       "rights_reserved": "<p>Dette verket har ikke en lisens som tydeliggjør rettigheter for gjenbruk. Du må selv kontakte opphavsperson for å finne ut om, og hvordan, du kan gjenbruke arbeidet.</p>"
     },
@@ -1341,7 +1345,7 @@
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikke lagre fordi resultatet er publisert og inneholder valideringsfeil",
     "channel_claim_info_heading": "Felt låst for redigering",
-    "channel_claim_info_owned_by": "Dette resultatet er tilknyttet en kanal som eies av \"<institution/>\".",
+    "channel_claim_info_owned_by": "Dette resultatet er underlagt redaksjonell kontroll av \"<institution/>\".",
     "citation_points_to": "Siteringen viser til",
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
@@ -2084,6 +2088,7 @@
         "institution_help_description": "<0>Har du tekniske problemer?</0><0>Se og eventuelt meld inn feil til brukerstøtte</0>"
       }
     },
+    "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål.",
     "year_published": "Publiseringsår"
   },
   "search": {
