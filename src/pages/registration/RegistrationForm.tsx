@@ -118,10 +118,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
               <Box id="form" mb="2rem">
                 {channelClaimData.channelClaimQuery.data && channelClaimData.shouldDisableFields && (
-                  <ChannelClaimInfoBox
-                    channelClaim={channelClaimData.channelClaimQuery.data}
-                    registration={registration}
-                  />
+                  <ChannelClaimInfoBox channelClaim={channelClaimData.channelClaimQuery.data} />
                 )}
                 {tabNumber === RegistrationTab.Description && (
                   <ErrorBoundary>
