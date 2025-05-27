@@ -750,6 +750,8 @@ export const dataTestId = {
       rejectionModalCancelButton: 'rejection-modal-cancel-button',
       rejectionModalRejectButton: 'rejection-modal-reject-button',
       rejectionModalTextField: 'rejection-modal-text-field',
+      showCandidateSearchButton: 'show candidate-search-button',
+      showReportingStatusButton: 'show-reporting-status-button',
       statusFilter: {
         approvedRadio: 'approved-radio',
         approvedCollaborationRadio: 'approved-collaboration-radio',
@@ -761,7 +763,6 @@ export const dataTestId = {
         rejectedRadio: 'rejected-radio',
         rejectedCollaborationRadio: 'rejected-collaboration-radio',
       },
-      toggleStatusLink: 'toggle-status-button',
       yearSelect: 'year-select',
     },
     nviAccordion: 'nvi-accordion',
