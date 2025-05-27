@@ -55,7 +55,7 @@ export const NviCandidatesNavigationAccordion = () => {
 
   const nviAggregationsQuery = useFetchNviCandidates({
     enabled: isOnNviCandidatesPage || isOnNviStatusPage,
-    params: { ...nviParams, filter: null, size: 1, aggregation: 'all' },
+    params: { ...nviParams, filter: null, visibility: null, size: 1, aggregation: 'all' },
   });
 
   const nviAggregations = nviAggregationsQuery.data?.aggregations;
