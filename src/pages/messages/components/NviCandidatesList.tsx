@@ -19,7 +19,7 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
-import { NviStatusFilter } from './NviStatusFilter';
+import { NviAvailabilityFilter, NviStatusFilter } from './NviStatusFilter';
 import { NviYearSelector } from './NviYearSelector';
 
 export const NviCandidatesList = () => {
@@ -52,12 +52,13 @@ export const NviCandidatesList = () => {
           flexDirection: 'column',
           gap: '1rem',
         }}>
-        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 4fr', alignItems: 'center', gap: '1rem' }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 5fr 1fr', alignItems: 'center', gap: '1rem' }}>
           <NviStatusFilter />
           <SearchForm
             placeholder={t('tasks.search_placeholder')}
             paginationOffsetParamName={NviCandidatesSearchParam.Offset}
           />
+          <NviAvailabilityFilter />
         </Box>
 
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
