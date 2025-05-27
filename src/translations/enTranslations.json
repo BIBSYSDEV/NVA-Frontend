@@ -1486,8 +1486,6 @@
       "search_for_npi_discipline": "Search for scientific field",
       "year_only": "Year only"
     },
-    "disable_fields_due_to_channel_claim": "<p>They have put restrictions in place so that inly users at their institution may edit the result.</p>",
-    "disable_fields_due_to_channel_claim_thesis": "<p>They have indicated that only student thesis curators at their institution can register the result.</p><p>Contact the student thesis curator for changes. Go to the log on result for details about which curator has reviewed the publication request.</p>",
     "edit_registration": "Edit registration",
     "files_and_license": {
       "accepted": "Accepted",
