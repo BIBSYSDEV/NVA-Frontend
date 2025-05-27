@@ -39,9 +39,9 @@ export const NviCandidatesNavigationAccordion = () => {
   const nviDisputeCount = nviAggregations?.dispute.docCount.toLocaleString();
 
   const nviCandidatesTotal = nviAggregations?.totalCount.docCount ?? 0;
-  const nviCandidatesCompeted = nviAggregations?.completed.docCount ?? 0;
+  const nviCandidatesCompleted = nviAggregations?.completed.docCount ?? 0;
   const nviCompletedPercentage =
-    nviCandidatesTotal > 0 ? Math.round((nviCandidatesCompeted / nviCandidatesTotal) * 100) : 100;
+    nviCandidatesTotal > 0 ? Math.round((nviCandidatesCompleted / nviCandidatesTotal) * 100) : 100;
 
   return (
     <NavigationListAccordion
@@ -81,7 +81,7 @@ export const NviCandidatesNavigationAccordion = () => {
               </Box>
               <Typography id="progress-label" gutterBottom>
                 {t('tasks.nvi.completed_count', {
-                  completed: nviCandidatesCompeted,
+                  completed: nviCandidatesCompleted,
                   total: nviCandidatesTotal,
                 })}
               </Typography>
