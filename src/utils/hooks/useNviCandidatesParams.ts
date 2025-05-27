@@ -25,6 +25,7 @@ export const useNviCandidatesParams = () => {
   const size = (searchParams.get(NviCandidatesSearchParam.Size) as number | null) ?? ROWS_PER_PAGE_OPTIONS[0];
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
   const year = (searchParams.get(NviCandidatesSearchParam.Year) as number | null) ?? getDefaultNviYear();
+  const visibility = searchParams.get(NviCandidatesSearchParam.Visibility) as NviCandidateSearchStatus | null;
 
   return {
     affiliations,
@@ -38,5 +39,6 @@ export const useNviCandidatesParams = () => {
     size,
     sortOrder,
     year,
+    visibility,
   } satisfies FetchNviCandidatesParams;
 };

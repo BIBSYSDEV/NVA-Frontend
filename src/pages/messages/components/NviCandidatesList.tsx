@@ -52,7 +52,7 @@ export const NviCandidatesList = () => {
           flexDirection: 'column',
           gap: '1rem',
         }}>
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', alignItems: 'center', gap: '1rem' }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 4fr', alignItems: 'center', gap: '1rem' }}>
           <NviStatusFilter />
           <SearchForm
             placeholder={t('tasks.search_placeholder')}
@@ -107,7 +107,7 @@ export const NviCandidatesList = () => {
             disabled={nviParams.affiliations === null || nviParams.affiliations.length === 0}
           />
 
-          <NviYearSelector sx={{ ml: 'auto' }} />
+          <NviYearSelector sx={{ ml: 'auto', height: 'fit-content' }} />
         </Box>
       </Box>
 
