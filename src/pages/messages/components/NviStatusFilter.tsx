@@ -1,14 +1,14 @@
 import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 export const NviStatusFilter = () => {
   const { t } = useTranslation();
-  const [searchParams, setSearchParams] = useSearchParams();
 
-  const statusValue = searchParams.get('filter') ?? '';
-  const visibilityFilter = searchParams.get('visibility') ?? '';
+  const [, setSearchParams] = useSearchParams();
+  const { filter, visibility } = useNviCandidatesParams();
 
   return (
     <>
@@ -17,7 +17,7 @@ export const NviStatusFilter = () => {
         size="small"
         label={t('common.status')}
         sx={{ width: '15rem' }}
-        value={statusValue}
+        value={filter}
         onChange={(event: any) => {
           const newStatus = event.target.value;
           setSearchParams((prevParams) => {
@@ -32,25 +32,9 @@ export const NviStatusFilter = () => {
           });
         }}>
         <MenuItem value="pending">{t('tasks.nvi.status.New')}</MenuItem>
-        {/* <MenuItem value="pendingCollaboration" sx={{ ml: '1rem' }}>
-          {t('tasks.nvi.waiting_for_your_institution')}
-        </MenuItem> */}
-
         <MenuItem value="assigned">{t('tasks.nvi.status.Pending')}</MenuItem>
-        {/* <MenuItem value="assignedCollaboration" sx={{ ml: '1rem' }}>
-          {t('tasks.nvi.waiting_for_your_institution')}
-        </MenuItem> */}
-
         <MenuItem value="approved">{t('tasks.nvi.status.Approved')}</MenuItem>
-        {/* <MenuItem value="approvedCollaboration" sx={{ ml: '1rem' }}>
-          {t('tasks.nvi.waiting_for_other_institutions')}
-        </MenuItem> */}
-
         <MenuItem value="rejected">{t('tasks.nvi.status.Rejected')}</MenuItem>
-        {/* <MenuItem value="rejectedCollaboration" sx={{ ml: '1rem' }}>
-          {t('tasks.nvi.waiting_for_other_institutions')}
-        </MenuItem> */}
-
         <MenuItem value="dispute">{t('tasks.nvi.status.Dispute')}</MenuItem>
       </TextField>
 
@@ -60,7 +44,7 @@ export const NviStatusFilter = () => {
         size="small"
         label={t('tasks.display_options')}
         sx={{ width: '15rem' }}
-        value={visibilityFilter}
+        value={visibility ?? ''}
         onChange={(event: any) => {
           const newVisibility = event.target.value;
           setSearchParams((prevParams) => {
@@ -74,20 +58,16 @@ export const NviStatusFilter = () => {
           });
         }}>
         <MenuItem value="">{t('common.show_all')}</MenuItem>
-
-        {statusValue === 'pending' && (
+        {filter === 'pending' && (
           <MenuItem value="pendingCollaboration">{t('tasks.nvi.waiting_for_your_institution')}</MenuItem>
         )}
-
-        {statusValue === 'assigned' && (
+        {filter === 'assigned' && (
           <MenuItem value="assignedCollaboration">{t('tasks.nvi.waiting_for_your_institution')}</MenuItem>
         )}
-
-        {statusValue === 'approved' && (
+        {filter === 'approved' && (
           <MenuItem value="approvedCollaboration">{t('tasks.nvi.waiting_for_other_institutions')}</MenuItem>
         )}
-
-        {statusValue === 'rejected' && (
+        {filter === 'rejected' && (
           <MenuItem value="rejectedCollaboration">{t('tasks.nvi.waiting_for_other_institutions')}</MenuItem>
         )}
       </TextField>
