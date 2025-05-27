@@ -1,5 +1,5 @@
 import AdjustIcon from '@mui/icons-material/Adjust';
-import { Box, Divider, LinearProgress, Skeleton, styled, Typography } from '@mui/material';
+import { Box, ButtonGroup, Divider, LinearProgress, Skeleton, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
@@ -14,6 +14,7 @@ const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   padding: '0.5rem',
   borderRadius: '0.25rem',
   backgroundColor: theme.palette.secondary.main,
+  marginBottom: '0.5rem',
 }));
 
 export const NviCandidatesNavigationAccordion = () => {
@@ -60,13 +61,13 @@ export const NviCandidatesNavigationAccordion = () => {
           ) : (
             <>
               <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}</Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <LinearProgress
                   aria-labelledby="progress-label"
                   variant="determinate"
                   value={nviCompletedPercentage}
                   sx={{
-                    width: '85%',
+                    flexGrow: '1',
                     my: '0.175rem',
                     height: '1rem',
                     bgcolor: 'white',
@@ -76,7 +77,7 @@ export const NviCandidatesNavigationAccordion = () => {
                     },
                   }}
                 />
-                <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
+                <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage}%</Typography>
               </Box>
               <Typography id="progress-label" gutterBottom>
                 {t('tasks.nvi.completed_count', {
@@ -85,7 +86,7 @@ export const NviCandidatesNavigationAccordion = () => {
                 })}
               </Typography>
 
-              <Box
+              <ButtonGroup
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -96,40 +97,40 @@ export const NviCandidatesNavigationAccordion = () => {
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.nvi.showCandidateSearchButton}
                   sx={{ justifyContent: 'center' }}
-                  isSelected={location.pathname === UrlPathTemplate.TasksNvi}
+                  isSelected={isOnNviCandidatesPage}
                   onClick={() => navigate(UrlPathTemplate.TasksNvi)}>
                   {t('tasks.nvi.show_candidate_search')}
                 </SelectableButton>
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.nvi.showReportingStatusButton}
                   sx={{ justifyContent: 'center' }}
-                  isSelected={location.pathname === UrlPathTemplate.TasksNviStatus}
+                  isSelected={isOnNviStatusPage}
                   onClick={() => navigate(UrlPathTemplate.TasksNviStatus)}>
                   {t('tasks.nvi.show_reporting_status')}
                 </SelectableButton>
-              </Box>
+              </ButtonGroup>
             </>
           )}
         </StyledNviStatusBox>
 
-        <Box sx={{ mt: '0.5rem' }}>
-          <StyledNviStatusBox sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}</Typography>
-            <Typography>Kandidater til kontroll ({nviCandidatesTotal})</Typography>
-            <Divider sx={{ bgcolor: 'black' }} />
-            <Typography fontWeight="bold">Kontrollert:</Typography>
-            <Typography>
-              {t('tasks.nvi.status.Approved')} ({nviApprovedCount})
-            </Typography>
-            <Typography>
-              {t('tasks.nvi.status.Rejected')} ({nviRejectedCount})
-            </Typography>
-            <Divider sx={{ bgcolor: 'black' }} />
-            <Typography>
-              {t('tasks.nvi.status.Dispute')} ({nviDisputeCount})
-            </Typography>
-          </StyledNviStatusBox>
-        </Box>
+        <StyledNviStatusBox sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+          <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}:</Typography>
+          <Typography>
+            {t('tasks.nvi.candidates_for_control')} ({nviCandidatesTotal})
+          </Typography>
+          <Divider sx={{ bgcolor: 'black' }} />
+          <Typography fontWeight="bold">Kontrollert:</Typography>
+          <Typography>
+            {t('tasks.nvi.status.Approved')} ({nviApprovedCount})
+          </Typography>
+          <Typography>
+            {t('tasks.nvi.status.Rejected')} ({nviRejectedCount})
+          </Typography>
+          <Divider sx={{ bgcolor: 'black' }} />
+          <Typography>
+            {t('tasks.nvi.status.Dispute')} ({nviDisputeCount})
+          </Typography>
+        </StyledNviStatusBox>
       </StyledTicketSearchFormGroup>
     </NavigationListAccordion>
   );
