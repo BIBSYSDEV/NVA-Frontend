@@ -2177,6 +2177,7 @@
       "approve_rejected_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen skal rapporteres. Da fjernes også begrunnelsen for avvisningen.",
       "candidates_for_control": "Kandidater til kontroll",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
+      "controlled": "Kontrollert",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Antologier med tellende kapittel",
         "anthology_without_chapter": "Antologier uten kapittel",

@@ -119,7 +119,7 @@ export const NviCandidatesNavigationAccordion = () => {
             {t('tasks.nvi.candidates_for_control')} ({nviCandidatesTotal})
           </Typography>
           <Divider sx={{ bgcolor: 'black' }} />
-          <Typography fontWeight="bold">Kontrollert:</Typography>
+          <Typography fontWeight="bold">{t('tasks.nvi.controlled')}:</Typography>
           <Typography>
             {t('tasks.nvi.status.Approved')} ({nviApprovedCount})
           </Typography>
