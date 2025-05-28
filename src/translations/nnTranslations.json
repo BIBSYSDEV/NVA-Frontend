@@ -1486,8 +1486,6 @@
       "search_for_npi_discipline": "Søk etter fagfelt",
       "year_only": "Berre årstal"
     },
-    "disable_fields_due_to_channel_claim": "<p>Dei har satt begrensningar på at kun brukarar på deira institusjon kan redigere resultatet.</p>",
-    "disable_fields_due_to_channel_claim_thesis": "<p>Dei har satt at kun studentoppgåvekurator får sin institusjon kan redigere resultatet.</p><p>Ta kontakt med studentoppgåvekurator for endring. Gå til loggen på resultat for detaljer om kuratoren som har behandla publiseringsførespurnaden.</p>",
     "edit_registration": "Endre registrering",
     "files_and_license": {
       "accepted": "Akseptert",
