@@ -136,7 +136,6 @@ export const NviCandidatesNavigationAccordion = () => {
             sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
             <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
                 checked={nviParams.filter === 'pending'}
                 disabled={!!nviParams.assignee}
                 control={<StyledStatusRadio onChange={() => setNviStatusParam('pending')} />}
@@ -146,7 +145,6 @@ export const NviCandidatesNavigationAccordion = () => {
                 }
               />
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingCollaborationRadio}
                 checked={nviParams.filter === 'pendingCollaboration'}
                 disabled={!!nviParams.assignee}
                 control={<StyledStatusRadio onChange={() => setNviStatusParam('pendingCollaboration')} />}
@@ -160,7 +158,6 @@ export const NviCandidatesNavigationAccordion = () => {
 
             <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedRadio}
                 checked={nviParams.filter === 'assigned'}
                 control={<StyledStatusRadio onChange={() => setNviStatusParam('assigned')} />}
                 slotProps={{ typography: { fontWeight: 700 } }}
@@ -171,7 +168,6 @@ export const NviCandidatesNavigationAccordion = () => {
                 }
               />
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedCollaborationRadio}
                 checked={nviParams.filter === 'assignedCollaboration'}
                 control={<StyledStatusRadio onChange={() => setNviStatusParam('assignedCollaboration')} />}
                 label={
@@ -184,7 +180,6 @@ export const NviCandidatesNavigationAccordion = () => {
 
             <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedRadio}
                 checked={nviParams.filter === 'approved'}
                 control={<StyledStatusRadio onChange={() => setNviStatusParam('approved')} />}
                 slotProps={{ typography: { fontWeight: 700 } }}
@@ -195,7 +190,6 @@ export const NviCandidatesNavigationAccordion = () => {
                 }
               />
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedCollaborationRadio}
                 checked={nviParams.filter === 'approvedCollaboration'}
                 control={<StyledStatusRadio onChange={() => setNviStatusParam('approvedCollaboration')} />}
                 label={
@@ -208,7 +202,6 @@ export const NviCandidatesNavigationAccordion = () => {
 
             <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedRadio}
                 checked={nviParams.filter === 'rejected'}
                 control={<StyledStatusRadio onChange={() => setNviStatusParam('rejected')} />}
                 slotProps={{ typography: { fontWeight: 700 } }}
@@ -219,7 +212,6 @@ export const NviCandidatesNavigationAccordion = () => {
                 }
               />
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedCollaborationRadio}
                 checked={nviParams.filter === 'rejectedCollaboration'}
                 control={<StyledStatusRadio onChange={() => setNviStatusParam('rejectedCollaboration')} />}
                 label={
@@ -232,7 +224,6 @@ export const NviCandidatesNavigationAccordion = () => {
 
             <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.disputeRadio}
                 checked={nviParams.filter === 'dispute'}
                 control={<StyledStatusRadio onChange={() => setNviStatusParam('dispute')} />}
                 slotProps={{ typography: { fontWeight: 700 } }}
