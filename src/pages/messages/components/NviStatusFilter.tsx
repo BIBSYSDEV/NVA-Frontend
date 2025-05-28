@@ -1,6 +1,8 @@
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
+import { NviCandidatesSearchParam } from '../../../api/searchApi';
+import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
@@ -24,19 +26,19 @@ export const NviStatusFilter = (props: TextFieldProps) => {
         setSearchParams((prevParams) => {
           const syncedParams = syncParamsWithSearchFields(prevParams);
           if (newStatus) {
-            syncedParams.set('filter', newStatus);
+            syncedParams.set(NviCandidatesSearchParam.Filter, newStatus);
           } else {
-            syncedParams.delete('filter');
+            syncedParams.delete(NviCandidatesSearchParam.Filter);
           }
-          syncedParams.delete('visibility');
+          syncedParams.delete(NviCandidatesSearchParam.Visibility);
           return syncedParams;
         });
       }}>
-      <MenuItem value="pending">{t('tasks.nvi.status.New')}</MenuItem>
-      <MenuItem value="assigned">{t('tasks.nvi.status.Pending')}</MenuItem>
-      <MenuItem value="approved">{t('tasks.nvi.status.Approved')}</MenuItem>
-      <MenuItem value="rejected">{t('tasks.nvi.status.Rejected')}</MenuItem>
-      <MenuItem value="dispute">{t('tasks.nvi.status.Dispute')}</MenuItem>
+      <MenuItem value={'pending' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.New')}</MenuItem>
+      <MenuItem value={'assigned' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Pending')}</MenuItem>
+      <MenuItem value={'approved' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Approved')}</MenuItem>
+      <MenuItem value={'rejected' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Rejected')}</MenuItem>
+      <MenuItem value={'dispute' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Dispute')}</MenuItem>
     </TextField>
   );
 };
@@ -61,25 +63,33 @@ export const NviAvailabilityFilter = (props: TextFieldProps) => {
         setSearchParams((prevParams) => {
           const syncedParams = syncParamsWithSearchFields(prevParams);
           if (newVisibility) {
-            syncedParams.set('visibility', newVisibility);
+            syncedParams.set(NviCandidatesSearchParam.Visibility, newVisibility);
           } else {
-            syncedParams.delete('visibility');
+            syncedParams.delete(NviCandidatesSearchParam.Visibility);
           }
           return syncedParams;
         });
       }}>
       <MenuItem value="">{t('common.show_all')}</MenuItem>
       {filter === 'pending' && (
-        <MenuItem value="pendingCollaboration">{t('tasks.nvi.waiting_for_your_institution')}</MenuItem>
+        <MenuItem value={'pendingCollaboration' satisfies NviCandidateSearchStatus}>
+          {t('tasks.nvi.waiting_for_your_institution')}
+        </MenuItem>
       )}
       {filter === 'assigned' && (
-        <MenuItem value="assignedCollaboration">{t('tasks.nvi.waiting_for_your_institution')}</MenuItem>
+        <MenuItem value={'assignedCollaboration' satisfies NviCandidateSearchStatus}>
+          {t('tasks.nvi.waiting_for_your_institution')}
+        </MenuItem>
       )}
       {filter === 'approved' && (
-        <MenuItem value="approvedCollaboration">{t('tasks.nvi.waiting_for_other_institutions')}</MenuItem>
+        <MenuItem value={'approvedCollaboration' satisfies NviCandidateSearchStatus}>
+          {t('tasks.nvi.waiting_for_other_institutions')}
+        </MenuItem>
       )}
       {filter === 'rejected' && (
-        <MenuItem value="rejectedCollaboration">{t('tasks.nvi.waiting_for_other_institutions')}</MenuItem>
+        <MenuItem value={'rejectedCollaboration' satisfies NviCandidateSearchStatus}>
+          {t('tasks.nvi.waiting_for_other_institutions')}
+        </MenuItem>
       )}
     </TextField>
   );
