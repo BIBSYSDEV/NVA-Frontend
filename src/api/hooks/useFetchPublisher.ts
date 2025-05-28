@@ -8,7 +8,7 @@ export const useFetchPublisher = (id: string) => {
 
   return useQuery({
     enabled: !!id,
-    queryKey: ['channel', id],
+    queryKey: ['publisher', id],
     queryFn: () => fetchPublisher(getIdentifierFromId(id)),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
