@@ -1,10 +1,10 @@
-import { MenuItem, TextField } from '@mui/material';
+import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
-export const NviStatusFilter = () => {
+export const NviStatusFilter = (props: TextFieldProps) => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
@@ -12,12 +12,12 @@ export const NviStatusFilter = () => {
 
   return (
     <TextField
+      {...props}
       select
       size="small"
       label={t('common.status')}
-      sx={{ width: '15rem' }}
       value={filter}
-      onChange={(event: any) => {
+      onChange={(event) => {
         const newStatus = event.target.value;
         setSearchParams((prevParams) => {
           const syncedParams = syncParamsWithSearchFields(prevParams);
@@ -39,7 +39,7 @@ export const NviStatusFilter = () => {
   );
 };
 
-export const NviAvailabilityFilter = () => {
+export const NviAvailabilityFilter = (props: TextFieldProps) => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
@@ -47,13 +47,13 @@ export const NviAvailabilityFilter = () => {
 
   return (
     <TextField
+      {...props}
       select
       slotProps={{ select: { displayEmpty: true }, inputLabel: { shrink: true } }}
       size="small"
       label={t('tasks.display_options')}
-      sx={{ width: '15rem' }}
       value={visibility ?? ''}
-      onChange={(event: any) => {
+      onChange={(event) => {
         const newVisibility = event.target.value;
         setSearchParams((prevParams) => {
           const syncedParams = syncParamsWithSearchFields(prevParams);

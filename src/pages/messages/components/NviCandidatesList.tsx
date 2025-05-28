@@ -52,13 +52,14 @@ export const NviCandidatesList = () => {
           flexDirection: 'column',
           gap: '1rem',
         }}>
-        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 5fr 1fr', alignItems: 'center', gap: '1rem' }}>
-          <NviStatusFilter />
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+          <NviStatusFilter sx={{ flex: '1 15rem' }} />
           <SearchForm
+            sx={{ flex: '1 30rem' }}
             placeholder={t('tasks.search_placeholder')}
             paginationOffsetParamName={NviCandidatesSearchParam.Offset}
           />
-          <NviAvailabilityFilter />
+          <NviAvailabilityFilter sx={{ flex: '1 15rem' }} />
         </Box>
 
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
