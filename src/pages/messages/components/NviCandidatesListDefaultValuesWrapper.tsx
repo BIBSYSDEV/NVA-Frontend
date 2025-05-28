@@ -5,11 +5,11 @@ import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { RootState } from '../../../redux/store';
 import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 
-interface TicketListDefaultValuesWrapperProps {
+interface NviCandidatesListDefaultValuesWrapperProps {
   children: ReactNode;
 }
 
-export const NviCandidatesListDefaultValuesWrapper = ({ children }: TicketListDefaultValuesWrapperProps) => {
+export const NviCandidatesListDefaultValuesWrapper = ({ children }: NviCandidatesListDefaultValuesWrapperProps) => {
   const user = useSelector((store: RootState) => store.user);
   const nvaUsername = user?.nvaUsername ?? '';
 
