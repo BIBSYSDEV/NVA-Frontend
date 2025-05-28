@@ -1,6 +1,7 @@
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
@@ -13,6 +14,7 @@ export const NviStatusFilter = (props: TextFieldProps) => {
   return (
     <TextField
       {...props}
+      data-testid={dataTestId.tasksPage.nvi.statusFilter}
       select
       size="small"
       label={t('common.status')}
@@ -48,6 +50,7 @@ export const NviAvailabilityFilter = (props: TextFieldProps) => {
   return (
     <TextField
       {...props}
+      data-testid={dataTestId.tasksPage.nvi.availabilityFilter}
       select
       slotProps={{ select: { displayEmpty: true }, inputLabel: { shrink: true } }}
       size="small"
