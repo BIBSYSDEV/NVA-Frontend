@@ -30,6 +30,9 @@ export const NviStatusFilter = (props: TextFieldProps) => {
           } else {
             syncedParams.delete(NviCandidatesSearchParam.Filter);
           }
+          if (newStatus === ('pending' satisfies NviCandidateSearchStatus)) {
+            syncedParams.delete(NviCandidatesSearchParam.Assignee);
+          }
           syncedParams.delete(NviCandidatesSearchParam.Visibility);
           return syncedParams;
         });

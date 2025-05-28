@@ -33,6 +33,7 @@ import NotFound from '../errorpages/NotFound';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
+import { NviCandidatesListDefaultValuesWrapper } from './components/NviCandidatesListDefaultValuesWrapper';
 import { NviCandidatesNavigationAccordion } from './components/NviCandidatesNavigationAccordion';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { NviCorrectionListNavigationAccordion } from './components/NviCorrectionListNavigationAccordion';
@@ -281,7 +282,16 @@ const TasksPage = () => {
 
           <Route
             path={getSubUrl(UrlPathTemplate.TasksNvi, UrlPathTemplate.Tasks)}
-            element={<PrivateRoute element={<NviCandidatesList />} isAuthorized={isNviCurator} />}
+            element={
+              <PrivateRoute
+                element={
+                  <NviCandidatesListDefaultValuesWrapper>
+                    <NviCandidatesList />
+                  </NviCandidatesListDefaultValuesWrapper>
+                }
+                isAuthorized={isNviCurator}
+              />
+            }
           />
 
           <Route
