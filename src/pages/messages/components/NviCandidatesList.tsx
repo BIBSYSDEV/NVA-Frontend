@@ -30,7 +30,7 @@ export const NviCandidatesList = () => {
 
   const searchParams = new URLSearchParams(location.search);
 
-  const nviCandidatesQuery = useFetchNviCandidates({ params: nviParams });
+  const nviCandidatesQuery = useFetchNviCandidates({ params: nviParams, enabled: !!nviParams.filter });
   const nviCandidatesQueryResults = nviCandidatesQuery.data?.hits ?? [];
 
   const page = Math.floor(nviParams.offset / nviParams.size) + 1;

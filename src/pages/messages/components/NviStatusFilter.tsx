@@ -20,7 +20,7 @@ export const NviStatusFilter = (props: TextFieldProps) => {
       select
       size="small"
       label={t('common.status')}
-      value={filter}
+      value={filter ?? ''}
       onChange={(event) => {
         const newStatus = event.target.value;
         setSearchParams((prevParams) => {
