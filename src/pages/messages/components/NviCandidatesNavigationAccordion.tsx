@@ -12,16 +12,18 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers';
+import { RootState } from '../../../redux/store';
 import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
 
 const StyledStatusRadio = styled(Radio)({
   paddingTop: '0.05rem',
@@ -37,6 +39,7 @@ export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const user = useSelector((store: RootState) => store.user);
   const searchParams = new URLSearchParams(location.search);
 
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
@@ -82,6 +85,7 @@ export const NviCandidatesNavigationAccordion = () => {
       title={t('tasks.nvi.nvi_control')}
       startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
       accordionPath={UrlPathTemplate.TasksNvi}
+      defaultPath={getNviCandidatesSearchPath(user?.nvaUsername)}
       dataTestId={dataTestId.tasksPage.nviAccordion}>
       <StyledTicketSearchFormGroup>
         <StyledNviStatusBox sx={{ bgcolor: 'nvi.light', mb: '1rem' }}>
@@ -116,10 +120,14 @@ export const NviCandidatesNavigationAccordion = () => {
                 <MuiLink
                   data-testid={dataTestId.tasksPage.nvi.toggleStatusLink}
                   component={Link}
-                  to={{
-                    pathname: isOnNviCandidatesPage ? UrlPathTemplate.TasksNviStatus : UrlPathTemplate.TasksNvi,
-                    search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-                  }}>
+                  to={
+                    isOnNviCandidatesPage
+                      ? {
+                          pathname: UrlPathTemplate.TasksNviStatus,
+                          search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
+                        }
+                      : getNviCandidatesSearchPath(user?.nvaUsername, nviParams.year)
+                  }>
                   {isOnNviCandidatesPage ? t('tasks.nvi.show_reporting_status') : t('tasks.nvi.show_candidate_search')}
                 </MuiLink>
               </Box>

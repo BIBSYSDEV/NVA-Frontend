@@ -27,13 +27,12 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getTaskNotificationsParams, resetPaginationAndNavigate } from '../../utils/searchHelpers';
-import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
+import { getNviCandidatesSearchPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
 import NotFound from '../errorpages/NotFound';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
-import { NviCandidatesListDefaultValuesWrapper } from './components/NviCandidatesListDefaultValuesWrapper';
 import { NviCandidatesNavigationAccordion } from './components/NviCandidatesNavigationAccordion';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { NviCorrectionListNavigationAccordion } from './components/NviCorrectionListNavigationAccordion';
@@ -254,7 +253,7 @@ const TasksPage = () => {
                   isTicketCurator ? (
                     <Navigate to={UrlPathTemplate.TasksDialogue} replace />
                   ) : (
-                    <Navigate to={UrlPathTemplate.TasksNvi} replace />
+                    <Navigate to={getNviCandidatesSearchPath(user?.nvaUsername)} replace />
                   )
                 }
               />
@@ -282,16 +281,7 @@ const TasksPage = () => {
 
           <Route
             path={getSubUrl(UrlPathTemplate.TasksNvi, UrlPathTemplate.Tasks)}
-            element={
-              <PrivateRoute
-                element={
-                  <NviCandidatesListDefaultValuesWrapper>
-                    <NviCandidatesList />
-                  </NviCandidatesListDefaultValuesWrapper>
-                }
-                isAuthorized={isNviCurator}
-              />
-            }
+            element={<PrivateRoute element={<NviCandidatesList />} isAuthorized={isNviCurator} />}
           />
 
           <Route

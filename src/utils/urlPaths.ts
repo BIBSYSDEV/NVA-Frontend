@@ -1,4 +1,6 @@
 import { To } from 'react-router';
+import { NviCandidatesSearchParam } from '../api/searchApi';
+import { NviCandidateSearchStatus } from '../types/nvi.types';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
 
@@ -155,3 +157,16 @@ export const getMyMessagesRegistrationPath = (identifier: string) =>
 
 export const getNviCandidatePath = (identifier: string) =>
   UrlPathTemplate.TasksNviCandidate.replace(':identifier', encodeURIComponent(identifier));
+
+export const getNviCandidatesSearchPath = (currentUsername = '', year?: number) => {
+  const searchParams = new URLSearchParams({
+    [NviCandidatesSearchParam.Filter]: 'assigned' satisfies NviCandidateSearchStatus,
+  });
+  if (currentUsername) {
+    searchParams.set(NviCandidatesSearchParam.Assignee, currentUsername);
+  }
+  if (year) {
+    searchParams.set(NviCandidatesSearchParam.Year, year.toString());
+  }
+  return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
+};
