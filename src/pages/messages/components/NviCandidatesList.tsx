@@ -30,7 +30,7 @@ export const NviCandidatesList = () => {
 
   const searchParams = new URLSearchParams(location.search);
 
-  const nviCandidatesQuery = useFetchNviCandidates({ params: nviParams, enabled: !!nviParams.filter });
+  const nviCandidatesQuery = useFetchNviCandidates({ params: nviParams });
   const nviCandidatesQueryResults = nviCandidatesQuery.data?.hits ?? [];
 
   const page = Math.floor(nviParams.offset / nviParams.size) + 1;
@@ -53,13 +53,13 @@ export const NviCandidatesList = () => {
           gap: '1rem',
         }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-          <NviStatusFilter sx={{ flex: '1 15rem' }} />
+          <NviStatusFilter sx={{ flex: '1 13rem' }} />
           <SearchForm
             sx={{ flex: '1 30rem' }}
             placeholder={t('tasks.search_placeholder')}
             paginationOffsetParamName={NviCandidatesSearchParam.Offset}
           />
-          <NviAvailabilityFilter sx={{ flex: '1 15rem' }} />
+          <NviAvailabilityFilter sx={{ flex: '1 13rem' }} />
         </Box>
 
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
