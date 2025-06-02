@@ -57,16 +57,14 @@ export const NviCandidatesNavigationAccordion = () => {
       dataTestId={dataTestId.tasksPage.nviAccordion}>
       <StyledTicketSearchFormGroup>
         <StyledNviStatusBox>
+          <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}</Typography>
           {nviAggregationsQuery.isPending ? (
             <>
-              <Skeleton sx={{ maxWidth: '10rem' }} />
               <Skeleton />
-              <Skeleton sx={{ maxWidth: '2rem', mx: 'auto' }} />
-              <Skeleton sx={{ maxWidth: '8rem', mx: 'auto' }} />
+              <Skeleton sx={{ maxWidth: '10rem' }} />
             </>
           ) : (
             <>
-              <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}</Typography>
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <LinearProgress
                   aria-labelledby={progressLabel}
@@ -83,28 +81,27 @@ export const NviCandidatesNavigationAccordion = () => {
                   total: nviCandidatesTotal,
                 })}
               </Typography>
-
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
-                <SelectableButton
-                  data-testid={dataTestId.tasksPage.nvi.showCandidateSearchButton}
-                  sx={{ justifyContent: 'center' }}
-                  isSelected={isOnNviCandidatesPage}
-                  to={getNviCandidatesSearchPath(user?.nvaUsername, nviParams.year)}>
-                  {t('tasks.nvi.show_candidate_search')}
-                </SelectableButton>
-                <SelectableButton
-                  data-testid={dataTestId.tasksPage.nvi.showReportingStatusButton}
-                  sx={{ justifyContent: 'center' }}
-                  isSelected={isOnNviStatusPage}
-                  to={{
-                    pathname: UrlPathTemplate.TasksNviStatus,
-                    search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-                  }}>
-                  {t('tasks.nvi.show_reporting_status')}
-                </SelectableButton>
-              </Box>
             </>
           )}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
+            <SelectableButton
+              data-testid={dataTestId.tasksPage.nvi.showCandidateSearchButton}
+              sx={{ justifyContent: 'center' }}
+              isSelected={isOnNviCandidatesPage}
+              to={getNviCandidatesSearchPath(user?.nvaUsername, nviParams.year)}>
+              {t('tasks.nvi.show_candidate_search')}
+            </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.tasksPage.nvi.showReportingStatusButton}
+              sx={{ justifyContent: 'center' }}
+              isSelected={isOnNviStatusPage}
+              to={{
+                pathname: UrlPathTemplate.TasksNviStatus,
+                search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
+              }}>
+              {t('tasks.nvi.show_reporting_status')}
+            </SelectableButton>
+          </Box>
         </StyledNviStatusBox>
 
         <StyledNviStatusBox sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
