@@ -19,6 +19,7 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
+import { NviAvailabilityFilter, NviStatusFilter } from './NviStatusFilter';
 import { NviYearSelector } from './NviYearSelector';
 
 export const NviCandidatesList = () => {
@@ -51,10 +52,15 @@ export const NviCandidatesList = () => {
           flexDirection: 'column',
           gap: '1rem',
         }}>
-        <SearchForm
-          placeholder={t('tasks.search_placeholder')}
-          paginationOffsetParamName={NviCandidatesSearchParam.Offset}
-        />
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+          <NviStatusFilter sx={{ flex: '1 13rem' }} />
+          <SearchForm
+            sx={{ flex: '1 30rem' }}
+            placeholder={t('tasks.search_placeholder')}
+            paginationOffsetParamName={NviCandidatesSearchParam.Offset}
+          />
+          <NviAvailabilityFilter sx={{ flex: '1 13rem' }} />
+        </Box>
 
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <CuratorSelector
@@ -103,7 +109,7 @@ export const NviCandidatesList = () => {
             disabled={nviParams.affiliations === null || nviParams.affiliations.length === 0}
           />
 
-          <NviYearSelector sx={{ ml: 'auto' }} />
+          <NviYearSelector sx={{ ml: 'auto', height: 'fit-content' }} />
         </Box>
       </Box>
 
