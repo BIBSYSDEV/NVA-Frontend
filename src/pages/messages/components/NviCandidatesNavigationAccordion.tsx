@@ -17,11 +17,12 @@ const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   marginBottom: '0.5rem',
 }));
 
+const progressLabel = 'progress-label';
+
 export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const progressLabel = 'progress-label';
 
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
@@ -78,7 +79,7 @@ export const NviCandidatesNavigationAccordion = () => {
                 />
                 <Typography>{nviCompletedPercentage}%</Typography>
               </Box>
-              <Typography id="progress-label" gutterBottom>
+              <Typography id={progressLabel} gutterBottom>
                 {t('tasks.nvi.completed_count', {
                   completed: nviCandidatesCompleted,
                   total: nviCandidatesTotal,
@@ -96,14 +97,14 @@ export const NviCandidatesNavigationAccordion = () => {
                   data-testid={dataTestId.tasksPage.nvi.showCandidateSearchButton}
                   sx={{ justifyContent: 'center' }}
                   isSelected={isOnNviCandidatesPage}
-                  onClick={() => navigate(UrlPathTemplate.TasksNvi)}>
+                  to={UrlPathTemplate.TasksNvi}>
                   {t('tasks.nvi.show_candidate_search')}
                 </SelectableButton>
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.nvi.showReportingStatusButton}
                   sx={{ justifyContent: 'center' }}
                   isSelected={isOnNviStatusPage}
-                  onClick={() => navigate(UrlPathTemplate.TasksNviStatus)}>
+                  to={UrlPathTemplate.TasksNviStatus}>
                   {t('tasks.nvi.show_reporting_status')}
                 </SelectableButton>
               </Box>
