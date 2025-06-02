@@ -2192,7 +2192,7 @@
       "institution_nvi_status": "Status NVI-rapportering",
       "message_description": "Har du relevante opplysninger for kontrollen, legg inn en kommentar. Kommentaren er synlig for andre NVI-kuratorer med redigeringstilgang.",
       "next_candidate": "Gå til neste kandidat",
-      "no_nvi_candidates": "Ingen NVI-kandidater",
+      "no_nvi_candidates": "Du har ingen kandidater for dette søket.",
       "note": "Kommentar",
       "nvi_control": "NVI-kontroll (Norsk vitenskapsindeks)",
       "nvi_reporting_status": "Status NVI-rapportering",

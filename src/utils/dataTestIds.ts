@@ -737,6 +737,7 @@ export const dataTestId = {
     messageSendButton: 'send-note-button',
     nvi: {
       approveButton: 'approve-button',
+      availabilityFilter: 'availability-filter',
       candidatesList: 'nvi-candidates-list',
       deleteNoteButton: 'delete-note-button',
       dialogTabButton: 'dialog-tab-button',
@@ -750,6 +751,7 @@ export const dataTestId = {
       rejectionModalCancelButton: 'rejection-modal-cancel-button',
       rejectionModalRejectButton: 'rejection-modal-reject-button',
       rejectionModalTextField: 'rejection-modal-text-field',
+      statusFilter: 'status-filter',
       showCandidateSearchButton: 'show-candidate-search-button',
       showReportingStatusButton: 'show-reporting-status-button',
       yearSelect: 'year-select',

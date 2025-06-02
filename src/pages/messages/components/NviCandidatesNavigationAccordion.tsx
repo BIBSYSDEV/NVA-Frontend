@@ -1,14 +1,17 @@
 import AdjustIcon from '@mui/icons-material/Adjust';
 import { Box, Divider, LinearProgress, Skeleton, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
+import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
 import { StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers';
+import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
 
 const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   padding: '0.5rem',
@@ -22,6 +25,7 @@ const progressLabel = 'progress-label';
 export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const user = useSelector((store: RootState) => store.user);
 
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
@@ -30,7 +34,7 @@ export const NviCandidatesNavigationAccordion = () => {
 
   const nviAggregationsQuery = useFetchNviCandidates({
     enabled: isOnNviCandidatesPage || isOnNviStatusPage,
-    params: { ...nviParams, filter: null, size: 1, aggregation: 'all' },
+    params: { year: nviParams.year, size: 0, aggregation: 'all' },
   });
 
   const nviAggregations = nviAggregationsQuery.data?.aggregations;
@@ -49,6 +53,7 @@ export const NviCandidatesNavigationAccordion = () => {
       title={t('tasks.nvi.nvi_control')}
       startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
       accordionPath={UrlPathTemplate.TasksNvi}
+      defaultPath={getNviCandidatesSearchPath(user?.nvaUsername)}
       dataTestId={dataTestId.tasksPage.nviAccordion}>
       <StyledTicketSearchFormGroup>
         <StyledNviStatusBox>
@@ -68,13 +73,7 @@ export const NviCandidatesNavigationAccordion = () => {
                   variant="determinate"
                   value={nviCompletedPercentage}
                   color="info"
-                  sx={{
-                    flexGrow: '1',
-                    my: '0.175rem',
-                    height: '1rem',
-                    bgcolor: 'white',
-                    borderRadius: '0.5rem',
-                  }}
+                  sx={{ flexGrow: '1', my: '0.175rem', height: '1rem', bgcolor: 'white', borderRadius: '0.5rem' }}
                 />
                 <Typography>{nviCompletedPercentage}%</Typography>
               </Box>
@@ -85,25 +84,22 @@ export const NviCandidatesNavigationAccordion = () => {
                 })}
               </Typography>
 
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.5rem',
-                  mt: '0.5rem',
-                }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.nvi.showCandidateSearchButton}
                   sx={{ justifyContent: 'center' }}
                   isSelected={isOnNviCandidatesPage}
-                  to={UrlPathTemplate.TasksNvi}>
+                  to={getNviCandidatesSearchPath(user?.nvaUsername, nviParams.year)}>
                   {t('tasks.nvi.show_candidate_search')}
                 </SelectableButton>
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.nvi.showReportingStatusButton}
                   sx={{ justifyContent: 'center' }}
                   isSelected={isOnNviStatusPage}
-                  to={UrlPathTemplate.TasksNviStatus}>
+                  to={{
+                    pathname: UrlPathTemplate.TasksNviStatus,
+                    search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
+                  }}>
                   {t('tasks.nvi.show_reporting_status')}
                 </SelectableButton>
               </Box>
