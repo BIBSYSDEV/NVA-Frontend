@@ -260,6 +260,7 @@
     "project": "Project",
     "project_status": "Project status",
     "publisher": "Publisher",
+    "publishers": "Publishers",
     "publishing_year": "Publication year",
     "rbo": "Performance-based funding allocation (RBO)",
     "read": "Read",
@@ -456,25 +457,28 @@
         "add_serial_publication_channel_claim": "Set ownership to series/journal",
         "add_serial_publication_channel_claim_description": "<p>Claim ownership to the series/journal that belongs to your institution.</p><p>Your institution will be designated as responsible for the result and may receive inquiries via the support point specified in the institution's support system.</p><p>By assigning ownership to the series/journal, the publication request is sent to your institution regardless of whether the registrant belongs to another institution.</p>",
         "administer_publisher_channel_claim": "Administer ownership for publishers",
-        "administer_publisher_channel_claim_description": "<p>On this page, you can manage ownership for publishers that belong to your institution.</p><p> Ownership is assigned by the institution, so contact the channel owner in case of incorrect registration.</p><button/><p>Ownership determines which institution receives the publication request, regardless of the registrant's affiliation.</p><p> The channel owner decides whether users from other institutions can register results with the publisher.</p>",
+        "administer_publisher_channel_claim_description": "<p>On this page, you manage ownership of publishers registered in the Channel Register.</p><p>Institutions themselves assign ownership to their publishers.</p><p>If a publisher has the wrong channel owner, contact the institution to correct the error.</p><button/><heading>Publishing Rights and Requests</heading><p>The channel owner determines who can publish metadata, files, and licences in the channels they own, for all result categories or just selected ones.</p><p>Channel ownership affects which institution receives publication requests.</p><p>For categories and publishers with a channel owner, the requests go to the channel owner. For everything else, they go to the registrant's institution.</p>",
         "administer_serial_publication_channel_claim": "Administer ownership to series/journal",
         "administer_serial_publication_channel_claim_description": "<p>On this page, you can manage ownership for series/journals that belong to your institution.</p><p>Ownership is claimed by the institution, so contact the channel owner in case of incorrect registration.</p><button/><p>Ownership determines which institution receives the publication request, regardless of the registrant's affiliation.</p><p>The channel owner decides whether users from other institutions can register results with the series/journal.</p>",
         "category_limitations": "Limitations for category",
-        "category_limitations_helper_text": "",
+        "category_limitations_helper_text": "<p>Channel owners can choose whether access restrictions should apply to all result categories or just selected ones.</p><heading>Publication Requests</heading><p>For result categories WITH access restrictions, publication requests are sent to the file curator at the channel owner.</p><p>For result categories WITHOUT access restrictions, publication requests are sent to the file curator at the institution where the registrant is logged in.</p>",
         "channel_claim": "Channel ownership",
         "channel_claims_overview_description": "Overview of channels from the Channel registry:",
         "channel_claims_settings_description": "Administer ownership and access to channels from the Channel registry:",
         "channel_owner": "Channel owner",
-        "channel_owner_helper_text": "",
+        "channel_owner_helper_text": "<p>The institution that has taken ownership of the channel (publishing institution).</p><p>If a channel has the wrong channel owner, contact the institution to correct the error.</p>",
         "claim_category_restriction": "Categories the limitation should apply to",
         "delete_channel_claim": "Remove ownership to channel",
         "delete_channel_claim_description": "<p>Are you sure you want to remove ownership to <span>{{name}}</span>?</p>",
         "editing_access": "Access to edit",
-        "editing_access_helper_text": "",
+        "editing_access_helper_text": "<p>Channel owners (publishing institutions) can choose whether employees outside their institution can edit results published in their publication channels.</p><heading>All Institutions</heading><p>Employees at other institutions can edit results published on the institution's channel.</p><p>Curators at other institutions can edit and delete files that have already been approved. For newly uploaded files, publication requests are sent to the curator at the publishing institution (channel owner).</p><heading>Only Publishing Institution</heading><p>Only own employees can edit results published on the publication channel.</p><p>Registrants and curators not logged in at the publishing institution cannot edit metadata on the result after the uploaded files have been approved.</p><p>Registrants not logged in at the channel owner receive an error message if they select one of the publication channels and are instructed to contact support at the publishing institution.</p>",
+        "institution_with_editorial_responsibility": "Institution with editorial responsibility",
         "publisher_claims_overview": "Overview of publisher ownership",
-        "register_access": "",
-        "register_access_helper_text": "",
+        "publisher_in_channel_registry": "Publisher in the Channel registry",
+        "register_access": "Access to register",
+        "register_access_helper_text": "<p>Channel owners can choose whether individuals outside their institution can register results published on the publication channels they own.</p><heading>All Institutions</heading><p>Registrants from other institutions can register results published on the institution's channels. Publication requests are sent to the file curator at the channel owner.</p><heading>Only Publishing Institution</heading><p>Only own employees can edit results published on the publication channel.</p><p>Registrants not logged in at the channel owner receive an error message if they select one of the publication channels and are instructed to contact support at the publishing institution.</p>",
         "serial_publication_claims_overview": "Overview of series/journal ownership",
+        "serial_publication_in_channel_registry": "Series/journal in the Channel registry",
         "set_channel_claim": "Set ownership",
         "show_only_my_institution": "Show only my institution"
       },
@@ -612,6 +616,7 @@
       "send_message": "Failed to send message",
       "set_channel_claim": "Could not set channel ownership",
       "storing_orcid_credentials": "Failed to save ORCID data",
+      "ticket_ownership_update_failed": "Failed to move task",
       "update_customer": "Failed to update institution",
       "update_doi_agent": "Failed to update DOI configuration",
       "update_import_status": "Failed to update import status",
@@ -662,6 +667,7 @@
       "reserve_doi": "DOI is reserved",
       "send_message": "Message sent",
       "set_channel_claim": "Channel ownership updated",
+      "ticket_ownership_updated": "Task was moved to new institution",
       "update_customer": "Institution updated successfully",
       "update_institution_user": "User updated successfully",
       "update_nvi_period": "NVI period was updated",
@@ -717,17 +723,18 @@
   },
   "licenses": {
     "additional_info": {
-      "cc0": "<p>An open or closed note should be shared, along with the work that:</p><ol><li> Provide an explanation for the conclusion that the work is to be regarded as a \"common good/public domain,\" as defined by the Copyright Act §11 Protection Period of Copyright or §14 Works that do not have copyright protection, or under another similar provision</li><li> Document that the originator waives all copyright and related rights they had to the work, as mentioned in the Copyright Act §3 Content of Copyright and §8 Joint Work, and that the work is to be regarded as a \"common good/public domain\"</li></ol>"
+      "cc0": "<p>See the <link1>Copyright Act</link1> §§3, 8, 11, and 14</p>"
     },
     "description": {
-      "cc0": "The person who has associated a work with this deed has, to the extent the law allows, declared this work to be in the public domain by waiving all copyright and related rights that they had to the work.",
-      "cc_by": "Share — copy, distribute and transmit the work in any medium or format. Adapt — remix, transform, and build upon the material for any purpose, including commercially.\n\nYou must give appropriate credit, provide a link to the licence, and indicate if changes have been made.",
-      "cc_by_nc": "Share — copy, distribute and transmit the work in any medium or format. Adapt — remix, transform, and build upon the material for any purpose.\n\nYou must give appropriate credit, provide a link to the licence, and indicate if changes have been made.\nYou may not use the material for commercial purposes.",
-      "cc_by_nc_nd": "Share — copy, distribute and transmit the work in any medium or format.\n\nYou must give appropriate credit, provide a link to the licence, and indicate if changes have been made.\nYou may not use the material for commercial purposes.\nIf you remix, transform, or build upon the material, you may not distribute the modified material.",
-      "cc_by_nc_sa": "Share — copy, distribute and transmit the work in any medium or format.\nAdapt — remix, transform, and build upon the material.\n\nYou must give appropriate credit, provide a link to the licence, and indicate if changes have been made.\nYou may not use the material for commercial purposes.\nIf you remix, transform, or build upon the material, you must distribute your contributions under the same licence as the original.",
-      "cc_by_nd": "Share — copy, distribute and transmit the work in any medium or format for any purpose, including commercially.\n\nYou must give appropriate credit, provide a link to the licence, and indicate if changes have been made.\nIf you remix, transform, or build upon the material, you may not distribute the modified material.",
-      "cc_by_sa": "Share — copy, distribute and transmit the work in any medium or format.\nAdapt — remix, transform, and build upon the material for any purpose, including commercially.\n\nYou must give appropriate credit, provide a link to the licence, and indicate if changes have been made.\nIf you remix, transform, or build upon the material, you must distribute your contributions under the same licence as the original.",
-      "rights_reserved": "This work is published here for personal use, and only in accordance with the publisher's rules and conditions for the use of self-archived versions.\n\n\"Publisher's conditions\" is not a licence, but a statement that some rights are reserved for the publisher, the author, and possibly others. The reader must clarify for themselves what the law allows them to do with this work, beyond reading it."
+      "cc0": "<p>The work is released for public use, without copyright, as far as the law allows.</p><p>If you use this licence, upload a document explaining why.</p>",
+      "cc_by": "<p>You may: copy, share, and modify the work for all types of use, including commercial.</p><p>You must: provide appropriate credit and indicate changes.</p>",
+      "cc_by_nc": "<p>You may: copy, share, and modify the work, but only for non-commercial purposes.</p><p>You must: provide appropriate credit and indicate changes.</p>",
+      "cc_by_nc_nd": "<p>You may: copy and share the work for non-commercial purposes.</p><p>You may not: modify or adapt the work.</p><p>You must: provide appropriate credit.</p>",
+      "cc_by_nc_sa": "<p>You may: copy, share, and modify the work for non-commercial purposes.</p><p>You must: provide appropriate credit, indicate changes, and use the same licence for the new work.</p>",
+      "cc_by_nd": "<p>You may: copy and share the work for all types of use, including commercial.</p><p>You may not: modify or adapt the work.</p><p>You must: provide appropriate credit.</p>",
+      "cc_by_sa": "<p>You may: copy, share, and modify the work for all types of use, including commercial.</p><p>You must: provide appropriate credit, indicate changes, and use the same licence for the new work.</p>",
+      "older_licenses": "If you need to register an older research result that was published with a previous licence version, click on \"Show all previous versions\" in the dropdown menu to find the correct licence",
+      "rights_reserved": "<p>This work does not have a licence that clarifies rights for reuse. You must contact the creator yourself to find out if, and how, you can reuse the work.</p>"
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -738,6 +745,7 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
+      "older_licenses": "Older licences",
       "rights_reserved": "Publisher's terms"
     },
     "links": {
@@ -750,7 +758,8 @@
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}",
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}",
       "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
-    }
+    },
+    "read_more_about_license": "Read more about {{license}}"
   },
   "log": {
     "hidden_file_added": "Hidden file added",
@@ -821,10 +830,10 @@
       "mark_as_completed": "Mark as completed",
       "message_deleted": "Message deleted",
       "metadata_published": "Metadata published",
-      "no_dialogues": "",
-      "no_unread_dialogues": "",
+      "no_dialogues": "You have no dialogues for this search.",
+      "no_unread_dialogues": "You have no unread dialogues for this search.",
       "pending_curator": "Waiting for curator",
-      "show_read_dialogues": "",
+      "show_read_dialogues": "Show read dialogues",
       "ticket_types": {
         "Closed": "Rejected",
         "Completed": "Completed",
@@ -1335,7 +1344,7 @@
   },
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Cannot save because the result is published and contains validation errors",
-    "channel_claim_info_heading": "Field locked for editing",
+    "channel_claim_info_heading": "Fields locked for editing",
     "channel_claim_info_owned_by": "This result is connected to a channel owned by \"<institution/>\".",
     "citation_points_to": "The citation refers to",
     "contributors": {
@@ -1477,8 +1486,6 @@
       "search_for_npi_discipline": "Search for scientific field",
       "year_only": "Year only"
     },
-    "disable_fields_due_to_channel_claim": "<p>They have put restrictions in place so that inly users at their institution may edit the result.</p>",
-    "disable_fields_due_to_channel_claim_thesis": "<p>They have indicated that only student thesis curators at their institution can register the result.</p><p>Contact the student thesis curator for changes. Go to the log on result for details about which curator has reviewed the publication request.</p>",
     "edit_registration": "Edit registration",
     "files_and_license": {
       "accepted": "Accepted",
@@ -1490,9 +1497,9 @@
       "delete_file_description": "Do you wish to delete {{fileName}}? Note that the file will be permanently deleted as soon as you confirm.",
       "disabled_helper_text": "This file is already published with an approved licence. Contact the curator if you wish to edit or delete the file",
       "embargo": "Embargo/delayed publication",
-      "file_and_license_info": "Every file in NVA must have a licence, to inform the reader about what they are allowed to do with the content.",
-      "file_helper_text_metadata_and_files": "",
-      "file_helper_text_point_list": "",
+      "file_and_license_info": "<p>The licence informs readers how they can reuse the work in their own work.</p><p>Creative Commons (CC) defines 6 standardized licence types with varying degrees of freedom and one licence where the creator waives all rights.</p><p><ccLink>Read more about Creative Commons licences</ccLink> for comprehensive information about rights and obligations in each of the licences.</p>",
+      "file_helper_text_metadata_and_files": "Your institution has given you access to publish. You must check that you are allowed to publish the files you have uploaded, and that the selected licence is correct. If you need help, click the button {{buttonText}} at the bottom of the page.",
+      "file_helper_text_point_list": "<ul><li>Select \"open file\" for documents that should be made publicly available.</li><li>Select \"internal file\" for documents that should be shared with the curator.</li></ul>",
       "file_publish_date_helper_text": "The file is locked until the specified date",
       "file_type": {
         "hidden_file": "Hidden file",
@@ -1505,9 +1512,9 @@
       "files_awaits_approval_other": "{{count}} files and selected licences are waiting to be verified",
       "files_completed": "Finished",
       "files_count": "Files ({{count}})",
-      "files_helper_text": "",
-      "files_helper_text_metadata_only": "",
-      "files_helper_text_paragraph_2": "",
+      "files_helper_text": "<p>Here you can upload the full text of the publication and other documents as supplements and appendices.</p>",
+      "files_helper_text_metadata_only": "A curator will review the files and ensure that only the files you are allowed to share are shared, and that they are assigned the correct licence.",
+      "files_helper_text_paragraph_2": "You can upload document(s) that specify the requirements for publication, such as which version you can make public, the license, and any date for delayed availability (embargo). For example, the author agreement made with the publisher is helpful when the curator checks if and when the file can be made public in NVA.",
       "files_in_progress": "Under consideration",
       "find_journal_in_channel_register": "See information about the journal in the Norwegian Register",
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
@@ -1535,9 +1542,7 @@
       "resource_is_a_reference": "The resource is a reference and has no files or links to publish",
       "select_availability": "Select availability",
       "show_all_older_versions": "Show all previous versions",
-      "version_accepted_helper_text": "<0>Accepted version</0>: the author's final revised version after the article has been peer-reviewed, as it was sent to the publisher. This version does not have the publisher's page numbers and graphic style, or any editorial rewrites, that the published version has. This version should be shared in NVA, preferably in pdf format, with a CC-BY licence.",
-      "version_helper_text": "<0>Upload the published or accepted version of the article. If the published version has a CC licence, it is not necessary to upload the accepted version. Please also upload the publishing agreement or other formal communication (email) with the editor, which clarifies the conditions for the delayed publication date (embargo) or licence terms. Mark such files as \"Internal,\" and they will only be visible to those who have access to edit your registration (i.e., you, co-authors, and involved curators/editors).</0><0>Your institution has granted you access to publish. You must check that you are allowed to publish the files you have uploaded and that the applied licence is correct. If you need help, click the \"{{buttonText}}\" button at the bottom of the page.</0>",
-      "version_published_helper_text": "<0>Published version</0>: Also known as VOR or the “version of record”. The published version of the article in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The licence is normally decided by the publisher, so the safe option for a licence is “Publisher's conditions”. Many publishers support Open Access and allow use of the CC-BY licence."
+      "version_helper_text": "<p>Which version can be made openly available depends on the publishing agreement with the publisher.</p><p>Upload the accepted version if the published version is not openly published with a <ccLink>Creative Commons licence</ccLink>. </p><heading>Accepted Version (Authors Accepted Manuscript, AAM)</heading><p>Author's final version after peer review, as submitted to the publisher. This version does not have the publisher's pagination and graphic style or any editorial rewrites that the published version includes.</p><heading>Published Version (Version of Records, VOR) </heading><p>The article as presented in a journal, in print and/or online. This version will include editorial improvements and the publisher's graphic profile. Usually available on a publisher's website, in PDF format. The publisher has determined the licence, and you must choose the same one with which the article is published.</p>"
     },
     "heading": {
       "contributors": "Contributors",
@@ -1634,6 +1639,9 @@
         "has_rejected_files_publishing_request": "<0>The files are not deleted but hidden from the result view.</0><0>You will receive a new task if the registrar requests a new assessment of a rejected file or wants to approve a newly uploaded file.</0><0>To delete files permanently, edit the registration and remove the file.</0><0>If you want to unpublish the entire result, open more options at the bottom of this menu.</0>",
         "has_rejected_files_publishing_request_registrator": "<0>The curator has rejected file(s), and they have been removed from the presentation page of the result. You can find the reason for the rejection in the message field of this menu.</0><0>If you wish to delete one or more files, press \"$t(registration.edit_registration)\" and remove the files there.</0><0>If you disagree with the rejection, change the status of the file(s) under \"$t(registration.files_and_license.availability)\" from \"Rejected\" to new status. The file will then be sent to the curator for new approval. Feel free to include a reason for the curator in the message field.</0>",
         "has_reserved_doi": "<0>You can share the reserved DOI with those who will cite the result. Lookup via DOI is not possible until the DOI is assigned by the curator.</0><0>The DOI request is sent to the curator when the result is published. You publish the registration in the publishing menu.</0>",
+        "move_task": "Move task",
+        "move_task_description": "<p>A publishing request has been sent to your area of responsibility because the registrant who uploaded the file is employed at this unit.</p><p>Move the task if the files should be handled by a curator at another institution or unit within your institution.</p>",
+        "move_task_dialog_description": "Select the right institution from the list of credited institutions",
         "no_access_to_republish": "<0>Should the result not have been unpublished</0><0>Contact the editor to have the result republished.</0>",
         "no_published_files_on_registration": "No published files on the result",
         "no_published_files_on_registration_description": "<0>The result has no published files.</0><0>Check with the registrar if it is correct that the result should not have published files in NVA.</0><0>Do you want to assign a DOI to a result without a file?</0>",
@@ -1919,7 +1927,7 @@
       "cannot_select_non_degree_when_degree_has_open_file": "You cannot select anything other than student theses when there is an open file on the current student thesis. Delete the file before you change category, if the category is wrong.",
       "change_registration_type": "Change registration type?",
       "change_registration_type_description": "Note that this may result in you losing some data you have entered in cases where existing data is not valid for the new type. Are you sure you want to change the registration type?",
-      "channel_claimed_by_other_institution": "{{channelType}}is owned by a different institution than what you are logged in to.",
+      "channel_claimed_by_other_institution": "{{channelType}} is owned by a different institution than what you are logged in to.",
       "chapter": {
         "info_anthology": "The anthology where the chapter is published, must be registered and made public in NVA before you can register the chapter",
         "info_book_of_abstracts": "The abstract collection where the abstract is published must be published first",
@@ -2078,6 +2086,7 @@
         "institution_help_description": "<0>Do you have technical issues?</0><0>See and possibly report errors to user support</0>"
       }
     },
+    "use_curator_help_button": "Use the \"{{buttonText}}\" button below if you have questions",
     "year_published": "Publication year"
   },
   "search": {

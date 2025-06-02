@@ -1,6 +1,6 @@
 import {
   Box,
-  Link,
+  Divider,
   Paper,
   styled,
   Table,
@@ -15,6 +15,7 @@ import { visuallyHidden } from '@mui/utils';
 import Uppy from '@uppy/core';
 import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
+import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -28,7 +29,6 @@ import {
 } from '../../utils/registration-helpers';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { HelperTextModal } from './HelperTextModal';
-import { OpenInNewLink } from '../../components/OpenInNewLink';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -43,12 +43,6 @@ interface FileListProps {
   remove: (index: number) => any;
   baseFieldName: string;
 }
-
-const translationComponents = {
-  heading: <Typography variant="h2" />,
-  p: <Typography sx={{ mb: '1rem' }} />,
-  ccLink: <OpenInNewLink href="https://creativecommons.org/share-your-work/cclicenses/">(i18n content)</OpenInNewLink>,
-};
 
 export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileListProps) => {
   const { t } = useTranslation();
@@ -86,15 +80,11 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                           buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
                           <Trans
                             i18nKey="registration.files_and_license.version_helper_text"
-                            components={translationComponents}
-                          />
-                          <Trans
-                            i18nKey="registration.files_and_license.version_accepted_helper_text"
-                            components={translationComponents}
-                          />
-                          <Trans
-                            i18nKey="registration.files_and_license.version_published_helper_text"
-                            components={translationComponents}
+                            components={{
+                              heading: <Typography variant="h2" />,
+                              p: <Typography sx={{ mb: '1rem' }} />,
+                              ccLink: <OpenInNewLink href="https://creativecommons.org/share-your-work/cclicenses/" />,
+                            }}
                           />
                         </HelperTextModal>
                       </Box>
@@ -105,36 +95,56 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                       {t('registration.files_and_license.license')}
                       <HelperTextModal
+                        maxWidth="xl"
                         modalTitle={t('registration.files_and_license.licenses')}
                         modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
                         buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
-                        <Typography sx={{ mb: '1rem' }}>
-                          {t('registration.files_and_license.file_and_license_info')}
-                        </Typography>
-                        {activeLicenses.map((license) => (
-                          <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
+                        <Trans
+                          i18nKey="registration.files_and_license.file_and_license_info"
+                          components={{
+                            p: <Typography gutterBottom />,
+                            ccLink: <OpenInNewLink href="https://creativecommons.org/licenses/" />,
+                          }}
+                        />
+                        <Divider sx={{ my: '1rem', borderColor: 'black', borderWidth: '1px' }} />
+                        <Box
+                          sx={{
+                            display: 'grid',
+                            gridTemplateColumns: { md: '1fr', lg: 'repeat(3, 1fr)' },
+                            gap: '1.5rem',
+                          }}>
+                          {activeLicenses.map((license) => (
+                            <div key={license.id}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
+                                <Box component="img" src={license.logo} alt="" sx={{ width: '5rem' }} />
+                                <Typography component="h2" variant="h3">
+                                  {license.name}
+                                </Typography>
+                              </Box>
+                              <Trans defaults={license.description} components={{ p: <Typography gutterBottom /> }} />
+                              {license.link && (
+                                <OpenInNewLink href={license.link}>
+                                  {t('licenses.read_more_about_license', { license: license.name })}
+                                </OpenInNewLink>
+                              )}
+                              {license.additionalInformation && (
+                                <Trans
+                                  defaults={license.additionalInformation}
+                                  components={{
+                                    p: <Typography sx={{ mt: '1rem' }} />,
+                                    link1: <OpenInNewLink href="https://lovdata.no/lov/2018-06-15-40/" />,
+                                  }}
+                                />
+                              )}
+                            </div>
+                          ))}
+                          <div>
                             <Typography variant="h3" gutterBottom>
-                              {license.name}
+                              {t('licenses.labels.older_licenses')}
                             </Typography>
-                            <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
-                            <Typography sx={{ mb: '1rem' }}>{license.description}</Typography>
-                            {license.link && (
-                              <Link href={license.link} target="blank">
-                                {license.link}
-                              </Link>
-                            )}
-                            {license.additionalInformation && (
-                              <Trans
-                                defaults={license.additionalInformation}
-                                components={{
-                                  p: <Typography sx={{ mt: '1rem' }} />,
-                                  ol: <ol style={{ listStyleType: 'lower-roman' }} />,
-                                  li: <li style={{ marginBottom: '0.5rem' }} />,
-                                }}
-                              />
-                            )}
-                          </Box>
-                        ))}
+                            <Typography>{t('licenses.description.older_licenses')}</Typography>
+                          </div>
+                        </Box>
                       </HelperTextModal>
                     </Box>
                   </StyledTableCell>

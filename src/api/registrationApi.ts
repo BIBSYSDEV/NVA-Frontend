@@ -137,7 +137,13 @@ export interface UpdateTicketData {
   viewStatus?: 'Read' | 'Unread';
 }
 
-export const updateTicket = async (ticketId: string, ticketData: UpdateTicketData) => {
+interface UpdateTicketOwnershipData {
+  type: 'UpdateTicketOwnershipRequest';
+  ownerAffiliation: string;
+  responsibilityArea: string;
+}
+
+export const updateTicket = async (ticketId: string, ticketData: UpdateTicketData | UpdateTicketOwnershipData) => {
   const updateTicket = await authenticatedApiRequest2<null>({
     url: ticketId,
     method: 'PUT',

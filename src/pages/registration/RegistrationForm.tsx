@@ -74,8 +74,14 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [tabNumber]);
 
+  const isLoadingChannelClaim =
+    canEditRegistration &&
+    !userHasAccessRight(registration, 'update') &&
+    !channelClaimData.channelClaimQuery.data &&
+    channelClaimData.channelClaimQuery.isPending;
+
   return registrationQuery.isPending ||
-    // channelClaimData.channelClaimQuery.isLoading || // TODO: Ensure this loading does not trigger an infinite loop
+    isLoadingChannelClaim ||
     (canHaveNviCandidate && nviReportedStatus.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
@@ -112,10 +118,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
               <Box id="form" mb="2rem">
                 {channelClaimData.channelClaimQuery.data && channelClaimData.shouldDisableFields && (
-                  <ChannelClaimInfoBox
-                    channelClaim={channelClaimData.channelClaimQuery.data}
-                    registration={registration}
-                  />
+                  <ChannelClaimInfoBox channelClaim={channelClaimData.channelClaimQuery.data} />
                 )}
                 {tabNumber === RegistrationTab.Description && (
                   <ErrorBoundary>

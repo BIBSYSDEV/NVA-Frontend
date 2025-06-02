@@ -178,51 +178,22 @@ interface PublicJournalContentProps {
   errorMessage: string;
 }
 
-const journalIdSubstring = '/journal/';
-const seriesIdSubstring = '/series/';
-
 const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) => {
   const { t } = useTranslation();
-  const [alternativeJournalId, setAlternativeJournalId] = useState('');
 
   const journalQuery = useQuery({
     enabled: !!id,
     queryKey: ['channel', id],
     queryFn: () => fetchResource<SerialPublication>(id),
-    retry: 1,
-    meta: {
-      errorMessage: false,
-      handleError: () => {
-        // Some IDs are mixed with journal and series, so we must retry with the alternative ID
-        // TODO: Consider removing this when NP-31819 is Done
-        const currentId = id?.toLowerCase();
-        if (currentId?.includes(journalIdSubstring)) {
-          const alternativeId = currentId.replace(journalIdSubstring, seriesIdSubstring);
-          setAlternativeJournalId(alternativeId);
-        } else if (currentId?.includes(seriesIdSubstring)) {
-          const alternativeId = currentId.replace(seriesIdSubstring, journalIdSubstring);
-          setAlternativeJournalId(alternativeId);
-        }
-      },
-    },
-  });
-
-  const journalBackupQuery = useQuery({
-    enabled: journalQuery.isError && !!alternativeJournalId,
-    queryKey: ['channel', alternativeJournalId],
-    queryFn: () => fetchResource<SerialPublication>(alternativeJournalId),
-    retry: 1,
     meta: { errorMessage },
   });
-
-  const isLoadingJournal = (!!id && journalQuery.isPending) || (journalQuery.isError && journalBackupQuery.isPending);
-  const journal = journalQuery.data ?? journalBackupQuery.data;
+  const journal = journalQuery.data;
 
   const journalName = journal?.discontinued
     ? `${journal.name} (${t('common.discontinued')}: ${journal.discontinued})`
     : journal?.name;
 
-  return isLoadingJournal ? (
+  return journalQuery.isPending ? (
     <ListSkeleton height={20} />
   ) : !journal ? null : (
     <>
