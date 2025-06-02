@@ -1344,7 +1344,7 @@
   },
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Cannot save because the result is published and contains validation errors",
-    "channel_claim_info_heading": "Field locked for editing",
+    "channel_claim_info_heading": "Fields locked for editing",
     "channel_claim_info_owned_by": "This result is connected to a channel owned by \"<institution/>\".",
     "citation_points_to": "The citation refers to",
     "contributors": {
@@ -1927,7 +1927,7 @@
       "cannot_select_non_degree_when_degree_has_open_file": "You cannot select anything other than student theses when there is an open file on the current student thesis. Delete the file before you change category, if the category is wrong.",
       "change_registration_type": "Change registration type?",
       "change_registration_type_description": "Note that this may result in you losing some data you have entered in cases where existing data is not valid for the new type. Are you sure you want to change the registration type?",
-      "channel_claimed_by_other_institution": "{{channelType}}is owned by a different institution than what you are logged in to.",
+      "channel_claimed_by_other_institution": "{{channelType}} is owned by a different institution than what you are logged in to.",
       "chapter": {
         "info_anthology": "The anthology where the chapter is published, must be registered and made public in NVA before you can register the chapter",
         "info_book_of_abstracts": "The abstract collection where the abstract is published must be published first",
