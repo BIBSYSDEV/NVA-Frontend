@@ -1,5 +1,5 @@
 import AdjustIcon from '@mui/icons-material/Adjust';
-import { Box, ButtonGroup, Divider, LinearProgress, Skeleton, styled, Typography } from '@mui/material';
+import { Box, Divider, LinearProgress, Skeleton, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
@@ -21,6 +21,7 @@ export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const progressLabel = 'progress-label';
 
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
@@ -63,21 +64,19 @@ export const NviCandidatesNavigationAccordion = () => {
               <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}</Typography>
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <LinearProgress
-                  aria-labelledby="progress-label"
+                  aria-labelledby={progressLabel}
                   variant="determinate"
                   value={nviCompletedPercentage}
+                  color="info"
                   sx={{
                     flexGrow: '1',
                     my: '0.175rem',
                     height: '1rem',
                     bgcolor: 'white',
                     borderRadius: '0.5rem',
-                    '& .MuiLinearProgress-bar': {
-                      backgroundColor: 'info.main',
-                    },
                   }}
                 />
-                <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage}%</Typography>
+                <Typography>{nviCompletedPercentage}%</Typography>
               </Box>
               <Typography id="progress-label" gutterBottom>
                 {t('tasks.nvi.completed_count', {
@@ -86,12 +85,11 @@ export const NviCandidatesNavigationAccordion = () => {
                 })}
               </Typography>
 
-              <ButtonGroup
+              <Box
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '0.5rem',
-                  justifyContent: 'center',
                   mt: '0.5rem',
                 }}>
                 <SelectableButton
@@ -108,7 +106,7 @@ export const NviCandidatesNavigationAccordion = () => {
                   onClick={() => navigate(UrlPathTemplate.TasksNviStatus)}>
                   {t('tasks.nvi.show_reporting_status')}
                 </SelectableButton>
-              </ButtonGroup>
+              </Box>
             </>
           )}
         </StyledNviStatusBox>
