@@ -59,10 +59,10 @@ export const NviCandidatesNavigationAccordion = () => {
         <StyledNviStatusBox>
           <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}</Typography>
           {nviAggregationsQuery.isPending ? (
-            <Box>
+            <>
               <Skeleton />
               <Skeleton sx={{ maxWidth: '10rem' }} />
-            </Box>
+            </>
           ) : (
             <>
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
