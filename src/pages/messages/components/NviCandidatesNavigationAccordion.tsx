@@ -1,7 +1,7 @@
 import AdjustIcon from '@mui/icons-material/Adjust';
 import { Box, Divider, LinearProgress, Skeleton, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
@@ -22,7 +22,6 @@ const progressLabel = 'progress-label';
 export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
