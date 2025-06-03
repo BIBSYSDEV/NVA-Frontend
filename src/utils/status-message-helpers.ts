@@ -1,4 +1,4 @@
-export const useMaintenanceInfo = () => {
+export const getMaintenanceInfo = () => {
   const nbHeading = import.meta.env.VITE_STATUS_HEADING_NB as string | undefined;
   const nbDescription = import.meta.env.VITE_STATUS_DESCRIPTION_NB as string | undefined;
 

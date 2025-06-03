@@ -17,7 +17,7 @@ import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
-import { useMaintenanceInfo } from './utils/hooks/useMaintenanceInfo';
+import { getMaintenanceInfo } from './utils/status-message-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
 
@@ -93,7 +93,7 @@ const router = createBrowserRouter([{ path: '*', element: <Root /> }]);
 
 export const App = () => {
   const { t } = useTranslation();
-  const maintenaneInfo = useMaintenanceInfo();
+  const maintenaneInfo = getMaintenanceInfo();
 
   return (
     <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
@@ -107,21 +107,29 @@ export const App = () => {
 };
 
 const StatusPageRouter = () => {
+  const { t, i18n } = useTranslation();
+
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route
-          path="*"
-          element={
-            <Box sx={{ my: '2rem' }}>
-              <Typography variant="h1" gutterBottom>
-                {import.meta.env.VITE_STATUS_HEADING_NB}
-              </Typography>
-              <Typography>{import.meta.env.VITE_STATUS_DESCRIPTION_NB}</Typography>
-            </Box>
-          }
-        />
-      </Route>
-    </Routes>
+    <>
+      <Helmet>
+        <html lang={getLanguageTagValue(i18n.language)} />
+        <title>{t('common.page_title')}</title>
+      </Helmet>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route
+            path="*"
+            element={
+              <Box sx={{ m: '2rem 0.5rem' }}>
+                <Typography variant="h1" gutterBottom>
+                  {import.meta.env.VITE_STATUS_HEADING_NB}
+                </Typography>
+                <Typography>{import.meta.env.VITE_STATUS_DESCRIPTION_NB}</Typography>
+              </Box>
+            }
+          />
+        </Route>
+      </Routes>
+    </>
   );
 };
