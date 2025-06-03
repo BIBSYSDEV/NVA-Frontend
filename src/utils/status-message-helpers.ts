@@ -1,4 +1,22 @@
+const queryParamName = 'admin';
+const sessionStorageKey = 'disableStatusPage';
+
 export const getMaintenanceInfo = () => {
+  const statusPageDisabled = sessionStorage.getItem(sessionStorageKey) === 'true';
+  if (statusPageDisabled) {
+    return null;
+  }
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const disableStatusParam = searchParams.get(queryParamName);
+  if (disableStatusParam) {
+    sessionStorage.setItem(sessionStorageKey, 'true');
+    searchParams.delete(queryParamName);
+    const queryString = searchParams.toString();
+    const newUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
+    window.location.replace(newUrl);
+  }
+
   const nbHeading = import.meta.env.VITE_STATUS_HEADING_NB as string | undefined;
   const nbDescription = import.meta.env.VITE_STATUS_DESCRIPTION_NB as string | undefined;
 
