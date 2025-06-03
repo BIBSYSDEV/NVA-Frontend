@@ -94,7 +94,7 @@ export const PublishingAccordion = ({
     publishingRequestTickets.at(-1);
 
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
-  const userCanApprovePublishingRequest = lastPublishingRequest?.allowedOperations.includes('approve');
+  const userCanApprovePublishingRequest = !!lastPublishingRequest?.allowedOperations.includes('approve');
   const userCanHandlePublishingRequest = userCanCreatePublishingRequest || userCanApprovePublishingRequest;
 
   const formErrors = validateRegistrationForm(registration);
