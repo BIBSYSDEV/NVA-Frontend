@@ -52,13 +52,10 @@ export const NavigationListAccordion = ({
         sx={{ paddingX: '0.75rem' }}
         expandIcon={!isExpanded ? <ExpandMoreIcon /> : null}
         onClick={() => {
-          if (!isExpanded) {
-            navigate(defaultPath);
-
-            if (!isMobile) {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+          if (!isExpanded && !isMobile) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }
+          navigate(defaultPath);
         }}>
         <Box
           sx={{

@@ -117,13 +117,13 @@ const InstitutionPage = () => {
               isSelected={currentPath === UrlPathTemplate.InstitutionPublisherClaimsOverview}
               data-testid={dataTestId.editor.publisherClaimOverviewButton}
               to={UrlPathTemplate.InstitutionPublisherClaimsOverview}>
-              {t('editor.institution.channel_claims.publisher_claims_overview')}
+              {t('common.publishers')}
             </SelectableButton>
             <SelectableButton
               isSelected={currentPath === UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}
               data-testid={dataTestId.editor.serialPublicationClaimOverviewButton}
               to={UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}>
-              {t('editor.institution.channel_claims.serial_publication_claims_overview')}
+              {t('common.serial_publication')}
             </SelectableButton>
           </NavigationList>
         </NavigationListAccordion>

@@ -27,7 +27,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getTaskNotificationsParams, resetPaginationAndNavigate } from '../../utils/searchHelpers';
-import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
+import { getNviCandidatesSearchPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
 import NotFound from '../errorpages/NotFound';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
@@ -88,7 +88,7 @@ const TasksPage = () => {
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as TicketOrderBy | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as SortOrder | null,
     organizationId: organizationIdParam,
-    excludeSubUnits: !!organizationIdParam,
+    excludeSubUnits: searchParams.get(TicketSearchParam.ExcludeSubUnits) === 'true',
     assignee: searchParams.get(TicketSearchParam.Assignee),
     status: searchParams.get(TicketSearchParam.Status),
     type: selectedTicketTypes.join(','),
@@ -253,7 +253,7 @@ const TasksPage = () => {
                   isTicketCurator ? (
                     <Navigate to={UrlPathTemplate.TasksDialogue} replace />
                   ) : (
-                    <Navigate to={UrlPathTemplate.TasksNvi} replace />
+                    <Navigate to={getNviCandidatesSearchPath(user?.nvaUsername)} replace />
                   )
                 }
               />
@@ -304,7 +304,7 @@ const TasksPage = () => {
             element={
               <PrivateRoute
                 element={<PortfolioSearchPage title={t('common.result_registrations')} />}
-                isAuthorized={isNviCurator}
+                isAuthorized={isAnyCurator}
               />
             }
           />

@@ -20,6 +20,8 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
     isCreator,
     isInternalImporter,
     isNviCurator,
+    isThesisCurator,
+    isEmbargoThesisCurator,
   } = user;
 
   const hasAnyRole =
@@ -31,7 +33,9 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
     isSupportCurator ||
     isCreator ||
     isInternalImporter ||
-    isNviCurator;
+    isNviCurator ||
+    isThesisCurator ||
+    isEmbargoThesisCurator;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -84,6 +88,20 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
           dataTestId="user-role-nvi-curator"
           label={t('my_page.roles.nvi_curator')}
           text={t('my_page.roles.nvi_curator_description')}
+        />
+      )}
+      {isThesisCurator && (
+        <RoleItem
+          dataTestId="user-role-thesis-curator"
+          label={t('my_page.roles.thesis_curator')}
+          text={t('my_page.roles.thesis_curator_description')}
+        />
+      )}
+      {isEmbargoThesisCurator && (
+        <RoleItem
+          dataTestId="user-role-embargo-thesis-curator"
+          label={t('my_page.roles.thesis_embargo_curator')}
+          text={t('my_page.roles.thesis_embargo_curator_description')}
         />
       )}
       {isEditor && (

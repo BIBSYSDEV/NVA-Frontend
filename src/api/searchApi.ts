@@ -245,6 +245,7 @@ export enum NviCandidatesSearchParam {
   Size = 'size',
   SortOrder = 'sortOrder',
   Year = 'year',
+  Visibility = 'visibility',
 }
 
 export type NviCandidateOrderBy = 'createdDate';
@@ -261,6 +262,7 @@ export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Size]?: number | null;
   [NviCandidatesSearchParam.SortOrder]?: SortOrder | null;
   [NviCandidatesSearchParam.Year]?: number | null;
+  [NviCandidatesSearchParam.Visibility]?: NviCandidateSearchStatus | null;
 }
 
 export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
@@ -281,9 +283,13 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
   if (params.excludeSubUnits === true || params.excludeSubUnits === false) {
     searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, params.excludeSubUnits.toString());
   }
-  if (params.filter) {
+
+  if (params.visibility) {
+    searchParams.set(NviCandidatesSearchParam.Filter, params.visibility);
+  } else if (params.filter) {
     searchParams.set(NviCandidatesSearchParam.Filter, params.filter);
   }
+
   if (params.query) {
     searchParams.set(NviCandidatesSearchParam.Query, params.query);
   }

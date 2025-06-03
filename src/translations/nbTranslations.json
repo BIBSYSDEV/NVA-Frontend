@@ -260,6 +260,7 @@
     "project": "Prosjekt",
     "project_status": "Prosjektstatus",
     "publisher": "Utgiver",
+    "publishers": "Utgivere",
     "publishing_year": "Publiseringsår",
     "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
@@ -331,6 +332,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -402,11 +407,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -456,28 +457,35 @@
         "add_serial_publication_channel_claim": "Sett eierskap for serie/tidsskrift",
         "add_serial_publication_channel_claim_description": "<p>Sett eierskap til serie/tidsskrift som tilhører din institusjon.</p><p>Din institusjon vil bli oppgitt som ansvarlig for resultat og kan få spørsmål via brukerstøttepunkt som angitt på institusjonens brukerstøtte.</p><p>Med å sette eierskap på serie/tidsskrift så sendes publiseringsforespørsel til din institusjon uavhengig av om registrator tilhører en annen institusjon.</p>",
         "administer_publisher_channel_claim": "Administrer eierskap for utgivere",
-        "administer_publisher_channel_claim_description": "<p>På denne siden kan du administrere eierskap for utgivere som tilhører din institusjon.</p><p>Eierskap settes av institusjonen, så kontakt kanaleier ved feilregistrering.</p><button/><p>Eierskap styrer hvilken institusjon som mottar publiseringsforespørselen, uavhengig av registratorens tilhørighet.</p><p>Kanaleier bestemmer om brukere fra andre institusjoner kan registrere resultater med utgiver.</p>",
+        "administer_publisher_channel_claim_description": "<p>På denne siden administrerer du eierskap til utgivere som er registrert i Kanalregisteret.</p><p>Institusjonen setter selv eierskap til sine utgivere.</p><p>Hvis en utgiver har feil kanaleier, ta kontakt med institusjonen for å få rettet feilen.</p><button/><heading>Publiseringsrettigheter og -forespørsler</heading><p>Kanaleier bestemmer hvem som kan publisere metadata, fil og lisens i kanalene de eier, for alle resultatkategorier eller bare noen utvalgte.</p><p>Kanaleierskap påvirker hvilken institusjon som mottar publiseringsforespørsler.</p><p>For kategorier og utgivere med kanaleier, går det til kanaleier. For alt annet, går det til registrators institusjon.</p>",
         "administer_serial_publication_channel_claim": "Administrer eierskap for serie/tidsskrift",
         "administer_serial_publication_channel_claim_description": "<p>På denne siden kan du administrere eierskap for serie/tidsskrift som tilhører din institusjon.</p><p>Eierskap settes av institusjonen, så kontakt kanaleier ved feilregistrering.</p><button/><p>Eierskap styrer hvilken institusjon som mottar publiseringsforespørselen, uavhengig av registratorens tilhørighet.</p><p>Kanaleier bestemmer om brukere fra andre institusjoner kan registrere resultater med serie/tidsskrift.</p>",
         "category_limitations": "Begrensning for kategori",
+        "category_limitations_helper_text": "<p>Kanaleier kan velge om tilgangsbegrensninger skal gjelde for alle resultatkategorier eller bare noen utvalgte.</p><heading>Publiseringsforespørsler</heading><p>For resultatkategorier MED tilgangsbegrensning blir publiseringsforespørsler sendt til filkurator hos kanaleier.</p><p>For resultatkategorier UTEN tilgangsbegrensning, blir publiseringsforespørsler sendt til filkurator ved institusjonen som registrator er logget inn på.</p>",
         "channel_claim": "Kanaleierskap",
-        "channel_claims_overview_description": "Oversikt over kanaler fra Kanalregisteret:",
+        "channel_claims_overview_description": "Kanaler med redaktør",
         "channel_claims_settings_description": "Administrer eierskap og tilganger til kanaler fra Kanalregisteret:",
         "channel_owner": "Kanaleier",
+        "channel_owner_helper_text": "<p>Institusjonen som har tatt det redaksjonelle ansvaret for innholdet utgitt av kanalen.</p><p>Hvis en kanal har feil redaktør, ta kontakt med institusjonen for å få rettet feilen.</p>",
         "claim_category_restriction": "Kategorier som begrensningen skal gjelde for",
         "delete_channel_claim": "Fjern eierskap til kanal",
         "delete_channel_claim_description": "<p>Er du sikker på at du vil fjerne eierskapet til <span>{{name}}</span>?</p>",
         "editing_access": "Tilgang til å redigere",
-        "publishing_access": "Tilgang til å publisere",
+        "editing_access_helper_text": "<p>Kanaleier (utgiverinstitusjon) kan velge om ansatte utenfor egen institusjon kan redigere resultater som er utgitt i sine publikasjonskanaler.</p><heading>Alle institusjoner</heading><p>Ansatte ved andre institusjoner kan redigere resultater som er utgitt på institusjonens kanal.</p><p>Kurator ved andre institusjoner kan redigere og slette filer som allerede er godkjent. For nyopplastede filer, blir publiseringsforespørsel sendt til kurator hos utgiverinstitusjonen (kanaleier).</p><heading>Kun utgiverinstitusjon</heading><p>Bare egne ansatte kan redigere resultater som er utgitt på publiseringskanalen.</p><p>Registrator og kurator som ikke er logget inn hos utgiverinstitusjon, får ikke redigert metadata på resultatet etter at opplastede filer er godkjent.</p><p>Registratorer som ikke er logget inn hos kanaleier, får feilmelding om de velger en av publiseringskanalene og beskjed om å kontake brukerstøtte hos utgiverinstitusjon.</p>",
+        "institution_with_editorial_responsibility": "Institusjon med redaksjonsansvar",
         "publisher_claims_overview": "Oversikt over utgivereierskap",
+        "publisher_in_channel_registry": "Utgiver i Kanalregisteret",
+        "register_access": "Tilgang til å registrere",
+        "register_access_helper_text": "<p>Redaktør bestemmer hvilke personer som kan registrere resultater på kanaler i Kanalregisteret. Redaktør kan velge mellom “Alle institusjoner” og “Kun utgiverinstitusjon”.</p><heading>Alle institusjoner</heading><p>Alle med tilgang til å registrere, som er ansatt ved redaktørs institusjon, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p><heading>Kun redaktørs institusjon</heading><p>Alle med tilgang til å registrere, som er ansatt ved redaktørs institusjon, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p>",
         "serial_publication_claims_overview": "Oversikt over serie-/tidsskrifteierskap",
+        "serial_publication_in_channel_registry": "Serie/tidsskrift i Kanalregisteret",
         "set_channel_claim": "Sett eierskap",
         "show_only_my_institution": "Vis kun min institusjon"
       },
       "institution_admin_one": "Institusjonens administrator",
       "institution_admin_other": "Institusjonens administratorer",
-      "institution_editor_one": "Institusjonens redaktør",
       "institution_code": "Kode",
+      "institution_editor_one": "Institusjonens redaktør",
       "institution_editor_other": "Institusjonens redaktører",
       "institution_has_no_administrator": "Institusjonen har ingen administrator",
       "institution_has_no_editor": "Institusjonen har ingen redaktør",
@@ -608,6 +616,7 @@
       "send_message": "Kunne ikke sende melding",
       "set_channel_claim": "Kunne ikke sette kanaleierskap",
       "storing_orcid_credentials": "Kunne ikke lagre orcid-data",
+      "ticket_ownership_update_failed": "Flytting av oppgave feilet",
       "update_customer": "Kunne ikke oppdatere institusjon",
       "update_doi_agent": "Kunne ikke oppdatere DOI-konfigurasjon",
       "update_import_status": "Kunne ikke oppdatere importstatus",
@@ -640,8 +649,8 @@
       "create_series": "Serien ble opprettet",
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
-      "delete_draft_registrations": "Alle kladdene ble slettet",
       "delete_channel_claim": "Kanaleierskapet ble fjernet",
+      "delete_draft_registrations": "Alle kladdene ble slettet",
       "delete_file": "Filen ble slettet",
       "delete_message": "Meldingen ble slettet",
       "delete_registration": "Registrering ble slettet",
@@ -658,6 +667,7 @@
       "reserve_doi": "DOI er reservert",
       "send_message": "Melding sendt",
       "set_channel_claim": "Kanaleierskap ble oppdatert",
+      "ticket_ownership_updated": "Oppgaven ble flyttet til ny institusjon",
       "update_customer": "Institusjon er oppdatert",
       "update_institution_user": "Bruker er oppdatert",
       "update_nvi_period": "NVI-perioden ble oppdatert",
@@ -713,17 +723,18 @@
   },
   "licenses": {
     "additional_info": {
-      "cc0": "<p>Det bør deles et åpent eller lukket notat, sammen med verket som:</p><ol><li>Gjør rede for konklusjonen om at verket er å oppfatte som et \"fellesgode/public domain\", som definert av Åndsverksloven §11 Opphavsrettens vernetid eller §14 Åndsverk som ikke har opphavsrettslig vern, eller etter en annen lignende bestemmelse</li><li>Dokumenterer at opphaver frasier seg alle opphavsrettigheter og relaterte rettigheter de hadde til verket, som for eksempel omtalt i Åndsverksloven §3 Opphavsrettens innhold og §8 Fellesverk, og at verket er å oppfatte som et \"fellesgode/public domain\"</li></ol>"
+      "cc0": "<p>Se <link1>Åndsverksloven</link1> §3, §8, §11 og §14</p>"
     },
     "description": {
-      "cc0": "Den person som har knyttet et verk til dette aktstykke (deed) har, i den utstrekning loven tillater, erklært dette verket er i det fri ved å si fra seg alle de opphavsrettigheter og nærstående rettigheter som vedkommende hadde til verket.",
-      "cc_by": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort.",
-      "cc_by_nc": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål.",
-      "cc_by_nc_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
-      "cc_by_nc_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
-      "cc_by_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
-      "cc_by_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
-      "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner. \n\n\"Utgivers betingelser\" er ikke en lisens, men en erklæring om at noen rettigheter er forbeholdt utgiveren, forfatteren og muligens andre. Leseren må selv klargjøre hva loven tillater ham å gjøre med dette verket, utover å lese det."
+      "cc0": "<p>Verket er frigitt til offentlig bruk, uten opphavsrettigheter, så langt loven tillater.</p><p>Bruker du denne lisensen, last opp et dokument der du begrunner hvorfor.</p>",
+      "cc_by": "<p>Du kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p><p>Du må: gi riktig kreditering og si fra om endringer.</p>",
+      "cc_by_nc": "<p>Du kan: kopiere, dele og endre verket, men kun for ikke-kommersielle formål. Du må: gi riktig kreditering og si fra om endringer.</p>",
+      "cc_by_nc_nd": "<p>Du kan: kopiere og dele verket for ikke-kommersielle formål</p><p>Du kan ikke: endre eller tilpasse verket.</p><p>Du må: gi riktig kreditering.</p>",
+      "cc_by_nc_sa": "<p>Du kan: kopiere, dele og endre verket for ikke-kommersielle formål.</p><p>Du må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
+      "cc_by_nd": "<p>Du kan: kopiere og dele verket for alle typer bruk, også kommersielle.</p><p>Du kan ikke: endre eller tilpasse verket.</p><p>Du må: gi riktig kreditering.</p>",
+      "cc_by_sa": "<p>Du kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p><p>Du må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
+      "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens",
+      "rights_reserved": "<p>Dette verket har ikke en lisens som tydeliggjør rettigheter for gjenbruk. Du må selv kontakte opphavsperson for å finne ut om, og hvordan, du kan gjenbruke arbeidet.</p>"
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -734,6 +745,7 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
+      "older_licenses": "Eldre lisenser",
       "rights_reserved": "Utgivers betingelser"
     },
     "links": {
@@ -746,7 +758,8 @@
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no",
       "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
-    }
+    },
+    "read_more_about_license": "Les mer om {{license}}"
   },
   "log": {
     "hidden_file_added": "Skjult fil lagt til",
@@ -817,8 +830,10 @@
       "mark_as_completed": "Sett til ferdig",
       "message_deleted": "Meldingen er slettet",
       "metadata_published": "Metadata publisert",
-      "no_messages": "Du har ingen meldinger",
+      "no_dialogues": "Du har ingen dialoger for dette søket.",
+      "no_unread_dialogues": "Du har ingen uleste dialoger for dette søket.",
       "pending_curator": "Venter på kurator",
+      "show_read_dialogues": "Vis leste dialoger",
       "ticket_types": {
         "Closed": "Avvist",
         "Completed": "Ferdig",
@@ -1329,6 +1344,8 @@
   },
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikke lagre fordi resultatet er publisert og inneholder valideringsfeil",
+    "channel_claim_info_heading": "Felt låst for redigering",
+    "channel_claim_info_owned_by": "Dette resultatet er underlagt redaksjonell kontroll av \"<institution/>\".",
     "citation_points_to": "Siteringen viser til",
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
@@ -1469,10 +1486,6 @@
       "search_for_npi_discipline": "Søk etter fagfelt",
       "year_only": "Kun årstall"
     },
-    "channel_claim_info_heading": "Felt låst for redigering",
-    "channel_claim_info_owned_by": "Dette resultatet er tilknyttet en kanal som eies av \"<institution/>\".",
-    "disable_fields_due_to_channel_claim": "<p>De har satt begrensinger på at kun brukere på deres institusjon kan redigere resultatet.</p>",
-    "disable_fields_due_to_channel_claim_thesis": "<p>De har satt at kun studentoppgavekurator fra sin institusjon kan redigere resultatet.</p><p>Ta kontakt med studentoppgavekurator for endring. Gå til loggen på resultat for detaljer om hvilken kurator som har behandlet publiseringsforespørselen.</p>",
     "edit_registration": "Rediger resultat",
     "files_and_license": {
       "accepted": "Akseptert",
@@ -1484,7 +1497,9 @@
       "delete_file_description": "Ønsker du å slette {{fileName}}? Merk at fila vil slettes for godt med en gang du bekrefter dette.",
       "disabled_helper_text": "Denne filen er allerede publisert med en godkjent lisens. Ta kontakt med kurator om du vil endre eller slette filen",
       "embargo": "Embargo/utsatt publisering",
-      "file_and_license_info": "Enhver fil i NVA må ha en lisens, slik at leser er informert om hva som er tillatt å gjøre med innholdet.",
+      "file_and_license_info": "<p>Lisensen informerer lesere om hvordan de kan gjenbruke arbeidet i sitt eget arbeid.</p><p>Creative commons (CC) definerer 6 standardiserte lisenstyper med ulik grad av frihet og en lisens der opphavspersonen frasier seg alle rettigheter.</p><p><ccLink>Les mer om Creative commons-lisenser</ccLink> for mer utfyllende informasjon om rettigheter og plikter i hver av lisensene.</p>",
+      "file_helper_text_metadata_and_files": "Din institusjon har gitt deg tilgang til å publisere. Du må sjekke at du har lov til å publisere filene du har lastet opp og at påført lisens er korrekt. Om du trenger hjelp, trykk på \"{{buttonText}}\"-knappen, nederst på siden.",
+      "file_helper_text_point_list": "<ul><li>Velg åpen fil for dokumenter som skal gjøres åpent tilgjengelige.</li><li>Velg intern fil for dokumenter som skal deles med kurator.</li></ul>",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "file_type": {
         "hidden_file": "Skjult fil",
@@ -1497,6 +1512,9 @@
       "files_awaits_approval_other": "{{count}} filer venter på å bli godkjent",
       "files_completed": "Ferdig",
       "files_count": "Filer ({{count}})",
+      "files_helper_text": "<p>Her kan du laste opp fulltekst av publikasjonen og andre dokumenter som supplement og appendiks.</p>",
+      "files_helper_text_metadata_only": "En kurator vil gå gjennom filene og sørge for at det kun er de filene du har lov til å dele, som vil bli delt, og at de er tildelt korrekt lisens.",
+      "files_helper_text_paragraph_2": "Du kan også laste opp dokument(er) som spesifiserer kravene til offentliggjøring, som hvilken versjon du kan gjøre åpent tilgjengelig, lisens og eventuell dato for utsatt tilgjengeliggjøring (sperrefrist/embargo). For eksempel er forfatteravtalen inngått med forlaget til hjelp når kurator skal sjekke om og når filen kan gjøres åpent tilgjengelig i NVA.",
       "files_in_progress": "Under behandling",
       "find_journal_in_channel_register": "Se informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Se informasjon om utgiveren i Kanalregisteret",
@@ -1524,15 +1542,7 @@
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
       "select_availability": "Velg tilgjengelighet",
       "show_all_older_versions": "Vis alle tidligere versjoner",
-      "version_accepted_helper_text": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
-      "version_accepted_helper_text_metadata_only": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
-      "version_embargo_helper_text": "<0>Embargo/utsatt publiseringsdato</0>: De fleste forlag vil kreve at du ikke offentliggjør publisert versjon av artikkelen før det har gått en viss tid. Dato for tillatt offentliggjøring er normalt spesifisert i en forfatteravtale. I noen tilfeller kan også akseptert versjon være underlagt krav om utsatt publiseringsdato.",
-      "version_helper_text": "<0>Last opp publisert eller akseptert versjon av artikkelen. Om publisert versjon har CC-lisens, så er det ikke nødvendig å laste opp akseptert versjon. Last gjerne også opp publiseringsavtale eller annen formell kommunikasjon (epost) med redaktør, som avklarer betingelser for utsatt publiseringstidspunkt (embargo) eller lisensvilkår. Slike filer markerer du som \"Intern\" og blir kun synlig for de som har tilgang til å redigere din registrering (dvs deg, medforfattere og impliserte kuratorer/redaktører).</0><0>Din institusjon har gitt deg tilgang til å publisere. Du må sjekke at du har lov til å publisere filene du har lastet opp og at påført lisens er korrekt. Om du trenger hjelp, trykk på \"{{buttonText}}\"-knappen, nederst på siden.<0>",
-      "version_helper_text_metadata_only": "Last opp akseptert og/eller publisert versjon av artikkelen og publiseringsavtaler, som formelle kontrakter eller annen kommunikasjon med redaktøren. En kurator ved din institusjon vil gå gjennom filene og sørge for at det bare er de filene du har lov til å dele som blir delt, og at de har påført korrekte lisenser.",
-      "version_published_helper_text": "<0>Publisert versjon</0>: Artikkelen slik den presenteres i et tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere eventuelle redaksjonelle forbedringer, og forlagets grafiske profil, etter utført fagfellevurdering. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Lisensen er normalt bestemt av utgiveren, så det sikre valget for lisens er «Utgivers betingelser». Mange utgivere støtter derimot Open Access og tillater bruk av CC-BY-lisensen.",
-      "version_published_helper_text_metadata_only": "<0>Publisert versjon</0>: Artikkelen slik den presenteres i et tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere eventuelle redaksjonelle forbedringer og forlagets grafiske profil, etter utført fagfellevurdering. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Lisensen er normalt bestemt av utgiveren, så det sikre valget for lisens er «Utgivers betingelser». Mange utgivere støtter derimot Open Access og tillater bruk av CC-BY-lisensen.",
-      "version_publishing_agreement_helper_text": "<0>Forfatteravtalen</0> er en kontrakt mellom en utgiver og en artist eller forfatter. Den spesifiserer forhold som intellektuelt eierskap, hvor og hvordan verket kan offentliggjøres, betalinger, ansvarsbeskyttelse, konfidensialitet og royalty. Dette dokumentet er til stor hjelp for kuratorer når de gjør vurderinger om lisens og publiseringsdato (embargo). Ulike dokumenter som informerer om det som publiseres, merkes som \"interne filer\". Interne filer har ikke lisens og er kun synlig for de som har redigeringstilgang til en publisering.",
-      "version_publishing_agreement_helper_text_metadata_only": "<0>Forfatteravtalen</0> er en kontrakt mellom en utgiver og en artist eller forfatter. Den spesifiserer forhold som intellektuelt eierskap, hvor og hvordan verket kan offentliggjøres, betalinger, ansvarsbeskyttelse, konfidensialitet og royalty. Dette dokumentet er til stor hjelp for kuratorer når de gjør vurderinger om lisens og publiseringsdato (embargo). Ulike dokumenter som informerer om det som publiseres, merkes som \"interne filer\". Interne filer har ikke lisens og er kun synlig for de som har redigeringstilgang til en publisering."
+      "version_helper_text": "<p>Last opp akseptert versjon, dersom publisert versjon ikke er åpent publisert med en <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading> <p>Forfatters siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den presenteres i et tidsskrift. Denne versjonen vil inkludere redaksjonelle forbedringer, og forlagets grafiske profil. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Du må velge den samme Creative Commons-lisensen som artikkelen er publisert med.</p>"
     },
     "heading": {
       "contributors": "Bidragsytere",
@@ -1629,6 +1639,9 @@
         "has_rejected_files_publishing_request": "<0>Filene er ikke slettet, men skjult fra visningen av resultatet.</0><0>Du får en ny oppgave dersom registrator ønsker ny vurdering av avvist fil eller å få godkjent en nyopplastet fil.</0><0>For å slette filer permanent, rediger registrering og fjern filen.</0><0>Ønsker du å avpublisere hele resultatet, åpne flere valg nederst i denne menyen.</0>",
         "has_rejected_files_publishing_request_registrator": "<0>Kurator har avvist fil(er), og de er fjernet fra presentasjonssiden til resultatet. Du finner begrunnelse for avvisningen under meldingsfeltet i denne menyen.</0><0>Ønsker du å slette en eller flere filer, trykk på \"$t(registration.edit_registration)\" og fjern filene der.</0><0>Er du uenig i avvisningen, endre status for filen(e) under \"$t(registration.files_and_license.availability)\" fra \"Avvist\" til ny status. Filen blir da sendt til kurator for ny godkjenning. Legg gjerne inn en begrunnelse til kurator i meldingsfeltet.</0>",
         "has_reserved_doi": "<0>Du kan dele reservert DOI med de som skal sitere resultatet. Oppslag via DOI er ikke mulig før DOI er tildelt av kurator.</0><0>DOI-forespørselen blir sendt til kurator når resultatet publiseres. Du publiserer registreringen i publiseringsmenyen.</0>",
+        "move_task": "Flytt oppgave",
+        "move_task_description": "<p>Publiseringsforespørsel er sendt til ditt ansvarsområde fordi registrator som har lastet opp fil har ansettelse på denne enheten.</p><p>Flytt oppgave his filene skal behandles av kurator ved en annen institusjon eller enhet hos din institusjon.</p>",
+        "move_task_dialog_description": "Velg riktig institusjon fra listen over krediterte institusjoner.",
         "no_access_to_republish": "<0>Er det feil at resultatet er avpublisert?</0><0>Ta kontakt med redaktør for å få resultatet republisert.</0>",
         "no_published_files_on_registration": "Ingen publiserte filer på resultatet",
         "no_published_files_on_registration_description": "<0>Resultatet har ingen publiserte filer.</0><0>Sjekk med registrator om det er korrekt at resultatet ikke skal ha publiserte filer i NVA.</0><0>Ønsker du å tildele DOI på resultat uten fil?</0>",
@@ -2073,6 +2086,7 @@
         "institution_help_description": "<0>Har du tekniske problemer?</0><0>Se og eventuelt meld inn feil til brukerstøtte</0>"
       }
     },
+    "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål.",
     "year_published": "Publiseringsår"
   },
   "search": {
@@ -2161,7 +2175,9 @@
       "approve_nvi_candidate": "Godkjenn resultat",
       "approve_nvi_candidate_description": "<p>Kontroll av forskningsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporteres. Se <hyperlink>Rapporteringsinstruksen</hyperlink> for mer informasjon.</p>",
       "approve_rejected_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen skal rapporteres. Da fjernes også begrunnelsen for avvisningen.",
+      "candidates_for_control": "Kandidater til kontroll",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
+      "controlled": "Kontrollert",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Antologier med tellende kapittel",
         "anthology_without_chapter": "Antologier uten kapittel",
@@ -2176,9 +2192,10 @@
       "institution_nvi_status": "Status NVI-rapportering",
       "message_description": "Har du relevante opplysninger for kontrollen, legg inn en kommentar. Kommentaren er synlig for andre NVI-kuratorer med redigeringstilgang.",
       "next_candidate": "Gå til neste kandidat",
-      "no_nvi_candidates": "Ingen NVI-kandidater",
+      "no_nvi_candidates": "Du har ingen kandidater for dette søket.",
       "note": "Kommentar",
       "nvi_control": "NVI-kontroll (Norsk vitenskapsindeks)",
+      "nvi_reporting_status": "Status NVI-rapportering",
       "previous_candidate": "Gå til forrige kandidat",
       "problem_description": "<p>NVI-kandidaten har følgende mangler:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatuser blir opphevet når en uidentifisert person blir identifisert.</p>",
       "publication_points": "Publiseringspoeng",
