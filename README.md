@@ -24,6 +24,9 @@ Info about all environment variables are listed in the table below. Note that yo
 | VITE_DOMAIN                       | `XXXXXXXXX.auth.eu-west-1.amazoncognito.com` | Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify.                                |
 | VITE_ORCID_BASE_URL               | `https://sandbox.orcid.org`                  | Base URL to ORCID integration.                                                                                 |
 | VITE_ORCID_CLIENT_ID              | `APP-XXXXXXXXX`                              | Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify.                                |
+| VITE_STATUS_MESSAGE               | `<h1>Under maintenance</h1><p>...</p>`       | Information to show users when the service has downtime.                                                       |
+| VITE_STATUS_START                 | `2025-01-01T12:00:00.000Z`                   | If supplied, the `VITE_STATUS_MESSAGE` will not be shown to users before this time.                            |
+| VITE_STATUS_END                   | `2025-01-02T12:00:00.000Z`                   | If supplied, the `VITE_STATUS_MESSAGE` will not be shown to users after this time.                             |
 | VITE_MATOMO_CONTAINER_URL         | `https://matomo.sikt.no/js/container_XXX`    | Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify.                                |
 
 ## Available Scripts
