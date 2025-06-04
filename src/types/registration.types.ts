@@ -111,7 +111,6 @@ export type RegistrationOperation =
   | 'terminate'
   | 'update-including-files'
   | 'publishing-request-create'
-  | 'approve-files'
   | 'doi-request-create'
   | 'doi-request-approve'
   | 'support-request-create'
