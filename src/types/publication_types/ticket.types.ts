@@ -68,7 +68,7 @@ type TicketPublication = Pick<
     publicationInstance: { type: PublicationInstanceType };
   };
 
-type TicketAllowedOperations = 'approve';
+type TicketAllowedOperations = 'approve' | 'transfer';
 
 export interface PublishingTicket extends Ticket {
   approvedFiles: AssociatedFile[];

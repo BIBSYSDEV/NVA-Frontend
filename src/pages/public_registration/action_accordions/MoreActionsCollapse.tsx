@@ -3,11 +3,9 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Box, Divider, IconButton } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { isDegree, userHasAccessRight } from '../../../utils/registration-helpers';
+import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { DeleteDraftRegistration } from './DeleteDraftRegistration';
 import { RepublishRegistration, RepublishRegistrationProps } from './RepublishRegistration';
 import { TerminateRegistration } from './TerminateRegistration';
@@ -26,19 +24,12 @@ export const MoreActionsCollapse = ({
   refetchData,
 }: MoreActionsCollapseProps) => {
   const { t } = useTranslation();
-  const user = useSelector((state: RootState) => state.user);
   const [openMoreActions, setOpenMoreActions] = useState(false);
 
   const isPublished = registration.status === 'PUBLISHED' || registration.status === 'PUBLISHED_METADATA';
   const isUnpublished = registration.status === 'UNPUBLISHED';
   const canDeleteRegistration = userHasAccessRight(registration, 'delete');
-  const canChangeTicketOwnership =
-    (ticket?.status === 'New' || ticket?.status === 'Pending') &&
-    ticket.availableInstitutions &&
-    ticket.availableInstitutions.length > 0 &&
-    ((!isDegree(registration.entityDescription?.reference?.publicationInstance?.type) && user?.isPublishingCurator) ||
-      (isDegree(registration.entityDescription?.reference?.publicationInstance?.type) && user?.isThesisCurator)) &&
-    ticket.ownerAffiliation === user.topOrgCristinId;
+  const canChangeTicketOwnership = ticket && ticket.allowedOperations.includes('transfer');
 
   if (!(isPublished || isUnpublished || canDeleteRegistration || canChangeTicketOwnership)) {
     return null;
