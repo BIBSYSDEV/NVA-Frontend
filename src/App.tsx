@@ -19,6 +19,7 @@ import { authOptions } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { getMaintenanceInfo } from './utils/status-message-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
+import { getLanguageString } from './utils/translation-helpers';
 import { UrlPathTemplate } from './utils/urlPaths';
 
 const getLanguageTagValue = (language: string) => {
@@ -93,11 +94,11 @@ const router = createBrowserRouter([{ path: '*', element: <Root /> }]);
 
 export const App = () => {
   const { t } = useTranslation();
-  const maintenaneInfo = getMaintenanceInfo();
+  const maintenanceInfo = getMaintenanceInfo();
 
   return (
     <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
-      {maintenaneInfo ? (
+      {maintenanceInfo ? (
         <RouterProvider router={createBrowserRouter([{ path: '*', element: <StatusPageRouter /> }])} />
       ) : (
         <RouterProvider router={router} />
@@ -108,6 +109,7 @@ export const App = () => {
 
 const StatusPageRouter = () => {
   const { t, i18n } = useTranslation();
+  const maintenanceInfo = getMaintenanceInfo();
 
   return (
     <>
@@ -122,7 +124,7 @@ const StatusPageRouter = () => {
             element={
               <Box sx={{ m: '2rem 0.5rem' }}>
                 <Trans
-                  defaults={import.meta.env.VITE_STATUS_MESSAGE_NB}
+                  defaults={getLanguageString(maintenanceInfo?.message)}
                   components={{
                     h1: <Typography variant="h1" gutterBottom />,
                     h2: <Typography variant="h2" gutterBottom />,

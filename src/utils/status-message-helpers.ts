@@ -1,3 +1,5 @@
+import { LanguageString } from '../types/common.types';
+
 const queryParamName = 'admin';
 const sessionStorageKey = 'disableStatusPage';
 
@@ -38,11 +40,13 @@ export const getMaintenanceInfo = () => {
     }
   }
 
+  const message: LanguageString = { nb: nbMessage };
+  if (import.meta.env.VITE_STATUS_MESSAGE_EN) {
+    message.en = import.meta.env.VITE_STATUS_MESSAGE_EN as string;
+  }
+
   return {
-    message: {
-      nb: nbMessage,
-      en: import.meta.env.VITE_STATUS_MESSAGE_EN as string | undefined,
-    },
+    message,
     startDate,
     endDate,
   };
