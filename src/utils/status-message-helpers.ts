@@ -17,10 +17,8 @@ export const getMaintenanceInfo = () => {
     window.location.replace(newUrl);
   }
 
-  const nbHeading = import.meta.env.VITE_STATUS_HEADING_NB as string | undefined;
-  const nbDescription = import.meta.env.VITE_STATUS_DESCRIPTION_NB as string | undefined;
-
-  if (!nbHeading || !nbDescription) {
+  const nbMessage = import.meta.env.VITE_STATUS_MESSAGE_NB as string | undefined;
+  if (!nbMessage) {
     return null;
   }
 
@@ -41,13 +39,9 @@ export const getMaintenanceInfo = () => {
   }
 
   return {
-    heading: {
-      nb: nbHeading,
-      en: import.meta.env.VITE_STATUS_HEADING_EN as string | undefined,
-    },
-    description: {
-      nb: nbDescription,
-      en: import.meta.env.VITE_STATUS_DESCRIPTION_EN as string | undefined,
+    message: {
+      nb: nbMessage,
+      en: import.meta.env.VITE_STATUS_MESSAGE_EN as string | undefined,
     },
     startDate,
     endDate,

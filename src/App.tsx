@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { Amplify } from 'aws-amplify';
 import { Suspense, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router';
 import { getCustomUserAttributes } from './api/authApi';
@@ -121,10 +121,14 @@ const StatusPageRouter = () => {
             path="*"
             element={
               <Box sx={{ m: '2rem 0.5rem' }}>
-                <Typography variant="h1" gutterBottom>
-                  {import.meta.env.VITE_STATUS_HEADING_NB}
-                </Typography>
-                <Typography>{import.meta.env.VITE_STATUS_DESCRIPTION_NB}</Typography>
+                <Trans
+                  defaults={import.meta.env.VITE_STATUS_MESSAGE_NB}
+                  components={{
+                    h1: <Typography variant="h1" gutterBottom />,
+                    h2: <Typography variant="h2" gutterBottom />,
+                    p: <Typography gutterBottom />,
+                  }}
+                />
               </Box>
             }
           />
