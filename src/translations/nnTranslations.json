@@ -463,7 +463,7 @@
         "category_limitations": "Avgrensing for kategori",
         "category_limitations_helper_text": "<p>Kanaleigar kan velje om tilgangsavgrensingar skal gjelde for alle resultatkategoriar eller berre nokre utvalde.</p><heading>Publiseringsførespurnader</heading><p>For resultatkategoriar MED tilgangsavgrensing blir publiseringsførespurnader sendt til filkurator hos kanaleigar.</p><p>For resultatkategoriar UTAN tilgangsavgrensing, blir publiseringsførespurnader sendt til filkurator ved institusjonen som registrator er logga inn på.</p>",
         "channel_claim": "Kanaleigarskap",
-        "channel_claims_overview_description": "Oversikt over kanalar frå Kanalregisteret:",
+        "channel_claims_overview_description": "Kanalar med redaktør",
         "channel_claims_settings_description": "Administrer eigarskap og tilgangar til kanaler frå Kanalregisteret:",
         "channel_owner": "Kanaleigar",
         "channel_owner_helper_text": "<p>Institusjonen som har tatt eigarskap til kanalen (utgjevarinstitusjon).</p><p>Om ein kanal har feil kanaleigar, ta kontakt med institusjonen for å få retta feilen.</p>",
@@ -1542,7 +1542,7 @@
       "resource_is_a_reference": "Ressursen er ein referanse og har ingen filer eller lenkjer å publisere",
       "select_availability": "Vel tilgjengelegheit",
       "show_all_older_versions": "Vis alle tidlegare versjonar",
-      "version_helper_text": "<p>Kva for versjon som kan gjerast ope tilgjengeleg er avhengig av publiseringsavtalen med forlag/utgjevar.</p><p>Last opp akseptert versjon, dersom publisert versjon ikkje er ope publisert med <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading><p>Forfattars siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikkje forlagets sidetal og grafiske stil, eller eventuelle redaksjonelle omskrivingar, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den blir presentert i eit tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere redaksjonelle forbetringar, og forlagets grafiske profil. Vanlegvis tilgjengeleg på ein utgjevar sitt nettstad, i PDF-format. Forlaget har bestemt lisens, du må velje den same som artikkelen er publisert med.</p>"
+      "version_helper_text": "<p>Last opp akseptert versjon, dersom publisert versjon ikkje er ope publisert med <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading><p>Forfattars siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikkje forlagets sidetal og grafiske stil, eller eventuelle redaksjonelle omskrivingar, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den blir presentert i eit tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere redaksjonelle forbetringar, og forlagets grafiske profil. Vanlegvis tilgjengeleg på ein utgjevar sitt nettstad, i PDF-format. Forlaget har bestemt lisens, du må velje den same som artikkelen er publisert med.</p>"
     },
     "heading": {
       "contributors": "Bidragsytarar",
@@ -2086,7 +2086,7 @@
         "institution_help_description": "<0>Har du tekniske problem?</0><0>Sjå og eventuelt meld inn feil til brukarstøtte</0>"
       }
     },
-    "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål",
+    "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål.",
     "year_published": "Publiseringsår"
   },
   "search": {
@@ -2175,7 +2175,9 @@
       "approve_nvi_candidate": "Godkjenn resultat",
       "approve_nvi_candidate_description": "<p>Kontroll av forskingsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporterast. Sjå <hyperlink>Rapporteringsinstruksen</hyperlink> for meir informasjon.</p>",
       "approve_rejected_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen skal rapporterast. Då vert også grunngjevinga for avvisinga fjerna.",
+      "candidates_for_control": "Kandidatar til kontroll",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
+      "controlled": "Kontrollert",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Antologiar med teljande kapittel",
         "anthology_without_chapter": "Antologiar utan kapittel",
@@ -2190,9 +2192,10 @@
       "institution_nvi_status": "Status NVI-rapportering",
       "message_description": "Har du relevante opplysingar for kontrollen, legg inn ein kommentar. Kommentaren er synleg for andre NVI-kuratorar med redigeringstilgang.",
       "next_candidate": "Gå til neste kandidat",
-      "no_nvi_candidates": "Ingen NVI-kandidatar",
+      "no_nvi_candidates": "Du har ingen NVI-kandidatar for dette søket.",
       "note": "Kommentar",
       "nvi_control": "NVI-kontroll (Norsk vitskapsindeks)",
+      "nvi_reporting_status": "Status NVI-rapportering",
       "previous_candidate": "Gå til førre kandidat",
       "problem_description": "<p>NVI-kandidaten har følgjande manglar:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatusar blir oppheva når ein uidentifisert person blir identifisert.</p>",
       "publication_points": "Publiseringspoeng",

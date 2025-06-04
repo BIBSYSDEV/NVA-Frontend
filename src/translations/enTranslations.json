@@ -463,7 +463,7 @@
         "category_limitations": "Limitations for category",
         "category_limitations_helper_text": "<p>Channel owners can choose whether access restrictions should apply to all result categories or just selected ones.</p><heading>Publication Requests</heading><p>For result categories WITH access restrictions, publication requests are sent to the file curator at the channel owner.</p><p>For result categories WITHOUT access restrictions, publication requests are sent to the file curator at the institution where the registrant is logged in.</p>",
         "channel_claim": "Channel ownership",
-        "channel_claims_overview_description": "Overview of channels from the Channel registry:",
+        "channel_claims_overview_description": "Channels with editor",
         "channel_claims_settings_description": "Administer ownership and access to channels from the Channel registry:",
         "channel_owner": "Channel owner",
         "channel_owner_helper_text": "<p>The institution that has taken ownership of the channel (publishing institution).</p><p>If a channel has the wrong channel owner, contact the institution to correct the error.</p>",
@@ -1514,7 +1514,7 @@
       "files_count": "Files ({{count}})",
       "files_helper_text": "<p>Here you can upload the full text of the publication and other documents as supplements and appendices.</p>",
       "files_helper_text_metadata_only": "A curator will review the files and ensure that only the files you are allowed to share are shared, and that they are assigned the correct licence.",
-      "files_helper_text_paragraph_2": "You can upload document(s) that specify the requirements for publication, such as which version you can make public, the license, and any date for delayed availability (embargo). For example, the author agreement made with the publisher is helpful when the curator checks if and when the file can be made public in NVA.",
+      "files_helper_text_paragraph_2": "You can upload document(s) that specify the requirements for publication, such as which version you can make public, the licence, and any date for delayed availability (embargo). For example, the author agreement made with the publisher is helpful when the curator checks if and when the file can be made public in NVA.",
       "files_in_progress": "Under consideration",
       "find_journal_in_channel_register": "See information about the journal in the Norwegian Register",
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
@@ -1542,7 +1542,7 @@
       "resource_is_a_reference": "The resource is a reference and has no files or links to publish",
       "select_availability": "Select availability",
       "show_all_older_versions": "Show all previous versions",
-      "version_helper_text": "<p>Which version can be made openly available depends on the publishing agreement with the publisher.</p><p>Upload the accepted version if the published version is not openly published with a <ccLink>Creative Commons licence</ccLink>. </p><heading>Accepted Version (Authors Accepted Manuscript, AAM)</heading><p>Author's final version after peer review, as submitted to the publisher. This version does not have the publisher's pagination and graphic style or any editorial rewrites that the published version includes.</p><heading>Published Version (Version of Records, VOR) </heading><p>The article as presented in a journal, in print and/or online. This version will include editorial improvements and the publisher's graphic profile. Usually available on a publisher's website, in PDF format. The publisher has determined the licence, and you must choose the same one with which the article is published.</p>"
+      "version_helper_text": "<p>Upload the accepted version if the published version is not openly published with a <ccLink>Creative Commons licence</ccLink>. </p><heading>Accepted Version (Authors Accepted Manuscript, AAM)</heading><p>Author's final version after peer review, as submitted to the publisher. This version does not have the publisher's pagination and graphic style or any editorial rewrites that the published version includes.</p><heading>Published Version (Version of Records, VOR) </heading><p>The article as presented in a journal, in print and/or online. This version will include editorial improvements and the publisher's graphic profile. Usually available on a publisher's website, in PDF format. The publisher has determined the licence, and you must choose the same one with which the article is published.</p>"
     },
     "heading": {
       "contributors": "Contributors",
@@ -2086,7 +2086,7 @@
         "institution_help_description": "<0>Do you have technical issues?</0><0>See and possibly report errors to user support</0>"
       }
     },
-    "use_curator_help_button": "Use the \"{{buttonText}}\" button below if you have questions",
+    "use_curator_help_button": "Use the \"{{buttonText}}\" button below if you have questions.",
     "year_published": "Publication year"
   },
   "search": {
@@ -2175,7 +2175,9 @@
       "approve_nvi_candidate": "Approve result",
       "approve_nvi_candidate_description": "<p>Check of research result for Norwegian Publication Indicator (NVI) reporting.</p><p>Press \"{{buttonText}}\" if the publication can be reported. See the <hyperlink>Reporting Instruction</hyperlink> for more information.</p>",
       "approve_rejected_nvi_candidate_description": "Press \"{{buttonText}}\" if the publication is to be reported. The reason for the rejection will also be removed.",
+      "candidates_for_control": "Candidates for control",
       "completed_count": "Finished checking ({{completed}} of {{total}})",
+      "controlled": "Controlled",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Anthologies with academic chapters",
         "anthology_without_chapter": "Anthologies without a chapter",
@@ -2190,9 +2192,10 @@
       "institution_nvi_status": "Status NVI reporting",
       "message_description": "If you have relevant information for the check, please add a comment. The comment is visible to other Norwegian Science Index (NVI) curators with editing access.",
       "next_candidate": "Go to the next candidate",
-      "no_nvi_candidates": "No NVI candidates",
+      "no_nvi_candidates": "You have no NVI candidates for this search.",
       "note": "Comment",
       "nvi_control": "NVI control (Norwegian Science Index)",
+      "nvi_reporting_status": "Status NVI reporting",
       "previous_candidate": "Go to previous candidate",
       "problem_description": "<p>The NVI candidate lacks required information:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identify the person before approving by editing the result. Control statuses are reset when an unidentified person is identified.</p>",
       "publication_points": "Publication points",
