@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../api/searchApi';
 import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 
-const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
+const commonDatepickerProps: Partial<DatePickerProps> = {
   views: ['year'],
   disableHighlightToday: true,
   slotProps: { textField: { sx: { maxWidth: '10rem' }, size: 'small' } },
@@ -13,7 +13,7 @@ const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
 
 interface PublicationDateIntervalFilterProps {
   boxProps?: Pick<BoxProps, 'sx'>;
-  datePickerProps?: Partial<DatePickerProps<Date>>;
+  datePickerProps?: Partial<DatePickerProps>;
 }
 
 const defaultMaxDate = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999);
