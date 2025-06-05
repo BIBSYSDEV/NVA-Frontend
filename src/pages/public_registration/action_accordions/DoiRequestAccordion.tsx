@@ -20,7 +20,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -217,9 +217,10 @@ export const DoiRequestAccordion = ({
 
   const [openAccordion, setOpenAccordion] = useState(defaultExpanded);
 
+  const initialDoiRequest = useRef(doiRequestTicket);
   useEffect(() => {
-    // Open accordion if a new DOI request is created
-    if (doiRequestTicket) {
+    // Open accordion if a new DOI request is created, e.g. when publishing a result with a draft DOI
+    if (!initialDoiRequest.current && doiRequestTicket) {
       setOpenAccordion(true);
     }
   }, [doiRequestTicket]);
