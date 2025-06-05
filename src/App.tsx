@@ -84,8 +84,6 @@ const Root = () => {
   );
 };
 
-const router = createBrowserRouter([{ path: '*', element: <Root /> }]);
-
 export const App = () => {
   useMatomoTracking();
   const { t, i18n } = useTranslation();
@@ -101,7 +99,7 @@ export const App = () => {
         {maintenanceInfo ? (
           <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenancePage /> }])} />
         ) : (
-          <RouterProvider router={router} />
+          <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
         )}
       </Suspense>
     </>
