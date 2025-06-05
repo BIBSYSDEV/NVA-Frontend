@@ -41,8 +41,9 @@ export const getMaintenanceInfo = () => {
   }
 
   const message: LanguageString = { nb: nbMessage };
-  if (import.meta.env.VITE_STATUS_MESSAGE_EN) {
-    message.en = import.meta.env.VITE_STATUS_MESSAGE_EN as string;
+  const enMessage = import.meta.env.VITE_STATUS_MESSAGE_EN as string | undefined;
+  if (enMessage) {
+    message.en = enMessage;
   }
 
   return {
