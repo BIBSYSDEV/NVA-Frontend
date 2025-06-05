@@ -39,9 +39,8 @@ if (
 }
 
 const Root = () => {
-  useMatomoTracking();
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
 
@@ -88,6 +87,7 @@ const Root = () => {
 const router = createBrowserRouter([{ path: '*', element: <Root /> }]);
 
 export const App = () => {
+  useMatomoTracking();
   const { t, i18n } = useTranslation();
   const maintenanceInfo = getMaintenanceInfo();
 

@@ -19,12 +19,12 @@ export const getMaintenanceInfo = () => {
     window.location.replace(newUrl);
   }
 
-  const nbMessage = import.meta.env.VITE_STATUS_MESSAGE_NB as string | undefined;
+  const nbMessage = import.meta.env.VITE_MAINTENANCE_MESSAGE_NB as string | undefined;
   if (!nbMessage) {
     return null;
   }
 
-  const startDate = import.meta.env.VITE_STATUS_START as string | undefined;
+  const startDate = import.meta.env.VITE_MAINTENANCE_START as string | undefined;
   if (startDate) {
     const currentDate = new Date();
     if (new Date(startDate) > currentDate) {
@@ -32,7 +32,7 @@ export const getMaintenanceInfo = () => {
     }
   }
 
-  const endDate = import.meta.env.VITE_STATUS_END as string | undefined;
+  const endDate = import.meta.env.VITE_MAINTENANCE_END as string | undefined;
   if (endDate) {
     const currentDate = new Date();
     if (new Date(endDate) < currentDate) {
@@ -41,7 +41,7 @@ export const getMaintenanceInfo = () => {
   }
 
   const message: LanguageString = { nb: nbMessage };
-  const enMessage = import.meta.env.VITE_STATUS_MESSAGE_EN as string | undefined;
+  const enMessage = import.meta.env.VITE_MAINTENANCE_MESSAGE_EN as string | undefined;
   if (enMessage) {
     message.en = enMessage;
   }
