@@ -66,7 +66,6 @@ export const PublishingAccordion = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
-  const user = useSelector((store: RootState) => store.user);
   const location = useLocation();
   const locationState = location.state as SelectedTicketTypeLocationState | undefined;
 
@@ -95,10 +94,7 @@ export const PublishingAccordion = ({
     publishingRequestTickets.at(-1);
 
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
-  const userCanApprovePublishingRequest =
-    userHasAccessRight(registration, 'approve-files') &&
-    !!lastPublishingRequest?.ownerAffiliation &&
-    lastPublishingRequest.ownerAffiliation === user?.topOrgCristinId;
+  const userCanApprovePublishingRequest = !!lastPublishingRequest?.allowedOperations.includes('approve');
   const userCanHandlePublishingRequest = userCanCreatePublishingRequest || userCanApprovePublishingRequest;
 
   const formErrors = validateRegistrationForm(registration);

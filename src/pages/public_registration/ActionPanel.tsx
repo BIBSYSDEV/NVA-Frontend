@@ -46,8 +46,9 @@ export const ActionPanel = ({
   const isNotOnTasksDialoguePage = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   const canCreatePublishingTicket = userHasAccessRight(registration, 'publishing-request-create');
-  const canApprovePublishingTicket =
-    publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'approve-files');
+  const canApprovePublishingTicket = publishingRequestTickets.some(
+    (ticket) => (ticket.status === 'New' || ticket.status === 'Pending') && ticket.allowedOperations.includes('approve')
+  );
   const hasOtherPublishingRights =
     userHasAccessRight(registration, 'unpublish') ||
     userHasAccessRight(registration, 'republish') ||
