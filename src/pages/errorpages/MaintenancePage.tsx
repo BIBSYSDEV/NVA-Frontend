@@ -1,14 +1,20 @@
 import { Box, Typography } from '@mui/material';
+import { lazy } from 'react';
 import { Trans } from 'react-i18next';
 import { Route, Routes } from 'react-router';
 import { Layout } from '../../Layout';
 import { getMaintenanceInfo } from '../../utils/status-message-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+
+const PrivacyPolicy = lazy(() => import('../infopages/PrivacyPolicy'));
 
 const MaintenancePage = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
+        <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
+        {/* TODO: Add license page */}
         <Route path="*" element={<MaintenanceMessage />} />
       </Route>
     </Routes>
