@@ -1,7 +1,7 @@
 import { LanguageString } from '../types/common.types';
 
 const queryParamName = 'admin';
-const sessionStorageKey = 'disableStatusPage';
+const sessionStorageKey = 'disableMaintenancePage';
 
 export const getMaintenanceInfo = () => {
   const statusPageDisabled = sessionStorage.getItem(sessionStorageKey) === 'true';

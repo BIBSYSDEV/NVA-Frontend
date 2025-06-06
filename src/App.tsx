@@ -19,7 +19,7 @@ import { getMaintenanceInfo } from './utils/status-message-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
 
-const MaintenancePage = lazy(() => import('./pages/errorpages/MaintenancePage'));
+const MaintenanceModeApp = lazy(() => import('./MaintenanceModeApp'));
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -97,7 +97,7 @@ export const App = () => {
 
       <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
         {maintenanceInfo ? (
-          <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenancePage /> }])} />
+          <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
         ) : (
           <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
         )}
