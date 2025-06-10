@@ -1,5 +1,6 @@
 import * as LicenseImages from '../resources/images/licenses';
 import i18n from '../translations/i18n';
+import { UrlPathTemplate } from '../utils/urlPaths';
 
 export enum LicenseUri {
   CC_BY_4 = 'https://creativecommons.org/licenses/by/4.0/',
@@ -35,7 +36,7 @@ export enum LicenseUri {
   CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/',
 }
 
-export const copyrightActUri = `${window.location.origin}/license/todo`;
+export const copyrightActUri = `${window.location.origin}${UrlPathTemplate.CopyrightAct}`;
 
 interface LicenseInfo {
   id: string;
