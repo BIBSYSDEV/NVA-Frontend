@@ -9,7 +9,8 @@ const CopyrightActTerms = () => {
 
   return (
     <BackgroundDiv sx={{ maxWidth: '45rem', my: '2rem' }}>
-      <Helmet>
+      <Helmet
+        bodyAttributes={{ about: window.location.href, vocab: 'http://creativecommons.org/ns#', typeof: 'License' }}>
         <title>{t('licenses.copyright_act.terms_of_use_under_the_copyright_act')}</title>
       </Helmet>
       <Trans
