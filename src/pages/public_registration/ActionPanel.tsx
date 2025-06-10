@@ -46,7 +46,7 @@ export const ActionPanel = ({
   const isNotOnTasksDialoguePage = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   const canCreatePublishingTicket = userHasAccessRight(registration, 'publishing-request-create');
-  const canApprovePublishingTicket = publishingRequestTickets.some((ticket) => ticket.allowedOperations.length > 0);
+  const canHandlePublishingTicket = publishingRequestTickets.some((ticket) => ticket.allowedOperations.length > 0);
   const hasOtherPublishingRights =
     userHasAccessRight(registration, 'unpublish') ||
     userHasAccessRight(registration, 'republish') ||
@@ -63,7 +63,7 @@ export const ActionPanel = ({
   const canApproveSupportTicket = !!newestSupportTicket && userHasAccessRight(registration, 'support-request-approve');
 
   const shouldSeePublishingAccordion =
-    canCreatePublishingTicket || canApprovePublishingTicket || hasOtherPublishingRights;
+    canCreatePublishingTicket || canHandlePublishingTicket || hasOtherPublishingRights;
   const shouldSeeDoiAccordion =
     !registration.entityDescription?.reference?.doi &&
     !!customerHasConfiguredDoi &&
