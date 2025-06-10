@@ -1,5 +1,5 @@
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import AddIcon from '@mui/icons-material/Add';
-import CancelIcon from '@mui/icons-material/Cancel';
 import {
   Box,
   Button,
@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
+  InputAdornment,
   MenuItem,
   TextField,
   Typography,
@@ -26,8 +27,10 @@ import {
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 import { OutputModalActions } from '../OutputModalActions';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;
@@ -237,7 +240,7 @@ export const AudioVisualPublicationModal = ({
                     fullWidth
                     label={t('registration.resource_type.artistic.music_score_isrc')}
                     error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
+                    helperText={!!error ? <ErrorMessage name={field.name} /> : 'hallo'}
                     data-testid={dataTestId.registrationWizard.resourceType.scoreIsrc}
                     slotProps={{ input: { inputComponent: MaskIsrcInput as any } }}
                   />
@@ -247,11 +250,34 @@ export const AudioVisualPublicationModal = ({
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <>
                     <Typography variant="h3">{t('registration.resource_type.artistic.content_track')}</Typography>
+                    <Button
+                      variant="outlined"
+                      sx={{ width: 'fit-content', textTransform: 'none' }}
+                      onClick={() => push(emptyMusicTrack)}
+                      startIcon={<AddIcon />}
+                      data-testid={dataTestId.registrationWizard.resourceType.audioVideoAddTrack}>
+                      {t('common.add_custom', {
+                        name: t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
+                      })}
+                    </Button>
 
                     {values.trackList.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
-                        <Box key={index} sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                        <Box
+                          key={index}
+                          sx={{
+                            display: 'flex',
+                            gap: '0.5rem',
+                            alignItems: 'top',
+                            border: '1px solid lightgrey',
+                            p: '0.5rem',
+                            bgcolor: '#fefbf3',
+                          }}>
+                          <Box sx={{ display: 'flex', alignSelf: 'center' }}>
+                            <ArrowRightAltIcon sx={{ transform: 'rotate(-90deg)' }} />
+                            <ArrowRightAltIcon sx={{ transform: 'rotate(90deg)' }} />
+                          </Box>
                           <Field name={`${baseFieldName}.title`}>
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (
                               <TextField
@@ -285,25 +311,31 @@ export const AudioVisualPublicationModal = ({
                               <TextField
                                 {...field}
                                 variant="filled"
-                                fullWidth
                                 label={t('registration.resource_type.artistic.extent_in_minutes')}
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
                                 data-testid={`${dataTestId.registrationWizard.resourceType.artisticOutputDuration}-${index}`}
+                                sx={{ minWidth: '12rem' }}
+                                placeholder="MM:SS"
+                                slotProps={{
+                                  input: {
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        <AccessTimeIcon />
+                                      </InputAdornment>
+                                    ),
+                                  },
+                                }}
                               />
                             )}
                           </Field>
-                          <Button
-                            variant="outlined"
-                            color="error"
-                            title={t('registration.resource_type.artistic.remove_music_work')}
+                          <DeleteIconButton
+                            sx={{ alignSelf: 'center' }}
+                            data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentRemove}-${index}`}
                             onClick={() => setRemoveTrackIndex(index)}
-                            sx={{ px: '2rem' }}
-                            startIcon={<CancelIcon />}
-                            data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentRemove}-${index}`}>
-                            {t('common.remove')}
-                          </Button>
+                            tooltip={t('registration.resource_type.artistic.remove_music_work')}
+                          />
                         </Box>
                       );
                     })}
@@ -318,16 +350,6 @@ export const AudioVisualPublicationModal = ({
                       <Typography>{t('registration.resource_type.artistic.remove_music_work_description')}</Typography>
                     </ConfirmDialog>
 
-                    <Button
-                      variant="outlined"
-                      sx={{ width: 'fit-content' }}
-                      onClick={() => push(emptyMusicTrack)}
-                      startIcon={<AddIcon />}
-                      data-testid={dataTestId.registrationWizard.resourceType.audioVideoAddTrack}>
-                      {t('common.add_custom', {
-                        name: t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
-                      })}
-                    </Button>
                     {!!touched.trackList && typeof errors.trackList === 'string' && (
                       <FormHelperText error>
                         <ErrorMessage name={name} />
