@@ -33,14 +33,15 @@ export enum LicenseUri {
   CC_BY_NC_ND_2 = 'https://creativecommons.org/licenses/by-nc-nd/2.0/',
   CC_BY_ND_NC_1 = 'https://creativecommons.org/licenses/by-nd-nc/1.0/',
   CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/',
-  RightsReserved = 'https://rightsstatements.org/vocab/InC/1.0/',
 }
 
+export const copyrightActUri = `${window.location.origin}/license/todo`;
+
 interface LicenseInfo {
-  id: LicenseUri;
+  id: string;
   name: string;
   description: string;
-  logo: string;
+  logo?: string;
   link: string;
   version?: 1 | 2 | 2.5 | 3 | 4;
   additionalInformation?: string;
@@ -296,10 +297,9 @@ export const licenses: LicenseInfo[] = [
     additionalInformation: i18n.t('licenses.additional_info.cc0'),
   },
   {
-    id: LicenseUri.RightsReserved,
-    name: i18n.t('licenses.labels.rights_reserved'),
-    description: i18n.t('licenses.description.rights_reserved'),
-    link: i18n.t('licenses.links.rights_reserved'),
-    logo: LicenseImages.rightsReservedLogo,
+    id: copyrightActUri,
+    name: i18n.t('licenses.copyright_act.terms_of_use_under_the_copyright_act'),
+    description: 'TODO', // i18n.t('licenses.description.rights_reserved'), // TODO
+    link: copyrightActUri,
   },
 ];

@@ -725,6 +725,9 @@
     "additional_info": {
       "cc0": "<p>Se <link1>Åndsverksloven</link1> §3, §8, §11 og §14</p>"
     },
+    "copyright_act": {
+      "terms_of_use_under_the_copyright_act": "Bruksvilkår etter åndsverkloven"
+    },
     "description": {
       "cc0": "<p>Verket er frigitt til offentlig bruk, uten opphavsrettigheter, så langt loven tillater.</p><p>Brukes denne lisensen, last opp et dokument der du begrunner hvorfor.</p>",
       "cc_by": "<p>Brukeren kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p><p>Brukeren må: gi riktig kreditering og si fra om endringer.</p>",
@@ -745,8 +748,7 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "older_licenses": "Eldre lisenser",
-      "rights_reserved": "Utgivers betingelser"
+      "older_licenses": "Eldre lisenser"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
@@ -756,8 +758,7 @@
       "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/{{version}}/deed.no",
       "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}/deed.no",
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no",
-      "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no"
     },
     "read_more_about_license": "Les mer om {{license}}"
   },
