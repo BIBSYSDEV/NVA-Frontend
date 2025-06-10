@@ -298,7 +298,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: copyrightActUri,
-    name: i18n.t('licenses.copyright_act.terms_of_use_under_the_copyright_act'),
+    name: i18n.t('licenses.labels.copyright_act'),
     description: i18n.t('licenses.description.copyright_act'),
     link: copyrightActUri,
   },
