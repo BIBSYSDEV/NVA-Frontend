@@ -116,12 +116,21 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                           {activeLicenses.map((license) => (
                             <div key={license.id}>
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
-                                <Box component="img" src={license.logo} alt="" sx={{ width: '5rem' }} />
+                                {license.logo && (
+                                  <Box component="img" src={license.logo} alt="" sx={{ width: '5rem' }} />
+                                )}
                                 <Typography component="h2" variant="h3">
                                   {license.name}
                                 </Typography>
                               </Box>
-                              <Trans defaults={license.description} components={{ p: <Typography gutterBottom /> }} />
+                              <Trans
+                                defaults={license.description}
+                                components={{
+                                  p: <Typography gutterBottom />,
+                                  ul: <Box component="ul" sx={{ mt: 0, mb: '0.5rem' }} />,
+                                  li: <li />,
+                                }}
+                              />
                               {license.link && (
                                 <OpenInNewLink href={license.link}>
                                   {t('licenses.read_more_about_license', { license: license.name })}
