@@ -38,7 +38,7 @@ export enum LicenseUri {
 }
 
 interface LicenseInfo {
-  id: string;
+  id: LicenseUri;
   name: string;
   description: string;
   logo?: string;

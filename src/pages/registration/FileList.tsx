@@ -116,9 +116,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                           {activeLicenses.map((license) => (
                             <div key={license.id}>
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
-                                {license.logo && (
-                                  <Box component="img" src={license.logo} alt="" sx={{ width: '5rem' }} />
-                                )}
+                                {license.logo && <img src={license.logo} alt="" style={{ width: '5rem' }} />}
                                 <Typography component="h2" variant="h3">
                                   {license.name}
                                 </Typography>
