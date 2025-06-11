@@ -36,7 +36,7 @@ export enum LicenseUri {
   CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/',
 }
 
-export const copyrightActUri = `${window.location.origin}${UrlPathTemplate.CopyrightAct}`;
+export const copyrightActLicenseUri = `${import.meta.env.VITE_REDIRECT_SIGN_IN}${UrlPathTemplate.CopyrightAct}`;
 
 interface LicenseInfo {
   id: string;
@@ -298,9 +298,9 @@ export const licenses: LicenseInfo[] = [
     additionalInformation: i18n.t('licenses.additional_info.cc0'),
   },
   {
-    id: copyrightActUri,
+    id: copyrightActLicenseUri,
     name: i18n.t('licenses.labels.copyright_act'),
     description: i18n.t('licenses.description.copyright_act'),
-    link: copyrightActUri,
+    link: copyrightActLicenseUri,
   },
 ];

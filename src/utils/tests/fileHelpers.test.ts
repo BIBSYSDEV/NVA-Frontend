@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { LicenseUri } from '../../types/license.types';
+import { copyrightActLicenseUri, LicenseUri } from '../../types/license.types';
 import { getLicenseData } from '../fileHelpers';
 
 describe('getLicenseData()', () => {
@@ -23,25 +23,15 @@ describe('getLicenseData()', () => {
     expect(resultWithUpperCase).toBe(LicenseUri.CC_BY_2);
   });
 
-  // test('Returns RightsReserved license with https', () => {
-  //   const result = getLicenseData('https://rightsstatements.org/vocab/InC/1.0/');
-  //   expect(result?.id).toBe(LicenseUri.RightsReserved);
-  // });
+  test('Returns copyright act license without trailing slash', () => {
+    const result = getLicenseData(copyrightActLicenseUri);
+    expect(result?.id).toBe(copyrightActLicenseUri);
+  });
 
-  // test('Returns RightsReserved license with http', () => {
-  //   const result = getLicenseData('http://rightsstatements.org/vocab/InC/1.0/');
-  //   expect(result?.id).toBe(LicenseUri.RightsReserved);
-  // });
-
-  // test('Returnes null when RightsReserved license lacks trailing slash', () => {
-  //   const result = getLicenseData('https://rightsstatements.org/vocab/InC/1.0');
-  //   expect(result).toBe(null);
-  // });
-
-  // test('Returnes null when RightsReserved license has invalid casing', () => {
-  //   const result = getLicenseData('https://rightsstatements.org/vocab/Inc/1.0/');
-  //   expect(result).toBe(null);
-  // });
+  test('Returns copyright act license with trailing slash', () => {
+    const result = getLicenseData(`${copyrightActLicenseUri}/`);
+    expect(result?.id).toBe(copyrightActLicenseUri);
+  });
 
   test('Returnes null when no matching license is found', () => {
     const resultInvalidUri = getLicenseData('https://creativecommons.org/licenses/asd/');
