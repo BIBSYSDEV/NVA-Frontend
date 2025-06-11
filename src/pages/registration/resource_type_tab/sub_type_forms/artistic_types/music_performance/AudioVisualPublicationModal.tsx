@@ -117,23 +117,11 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
           })
         )
         .matches(
-          /^\d{2}:\d{2}$/,
+          /^([0-5][0-9])([0-5][0-9])$/,
           i18n.t('feedback.validation.invalid_format', {
             field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
             format: 'MM:SS',
           })
-        )
-        .test(
-          'valid-time',
-          i18n.t('feedback.validation.has_invalid_format', {
-            field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-          }),
-          (value) => {
-            if (!value) return false;
-            const [minutes, seconds] = value.split(':').map(Number);
-
-            return minutes >= 0 && seconds >= 0 && seconds <= 59;
-          }
         ),
     })
   ),
@@ -342,6 +330,7 @@ export const AudioVisualPublicationModal = ({
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (
                               <TextField
                                 {...field}
+                                value={field.value ?? ''}
                                 variant="filled"
                                 label={t('registration.resource_type.artistic.extent_in_minutes')}
                                 required
@@ -352,6 +341,7 @@ export const AudioVisualPublicationModal = ({
                                 placeholder="MM:SS"
                                 slotProps={{
                                   input: {
+                                    inputComponent: MaskExtentInput as any,
                                     endAdornment: (
                                       <InputAdornment position="end">
                                         <AccessTimeIcon />
@@ -412,3 +402,13 @@ const MaskIsrcInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...pr
   />
 ));
 MaskIsrcInput.displayName = 'MaskIsrcInput';
+
+const MaskExtentInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...props }, ref) => (
+  <IMaskInput
+    {...props}
+    mask="00:00"
+    inputRef={ref}
+    onAccept={(value) => onChange({ target: { name: props.name, value: value.replaceAll(':', '') } })}
+  />
+));
+MaskExtentInput.displayName = 'MaskExtentInput';
