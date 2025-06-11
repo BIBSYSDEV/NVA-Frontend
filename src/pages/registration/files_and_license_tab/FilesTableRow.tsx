@@ -382,11 +382,9 @@ export const FilesTableRow = ({
                             divider
                             dense
                             sx={{ gap: '1rem' }}>
-                            {license.logo && (
-                              <ListItemIcon>
-                                <img style={{ width: '5rem' }} src={license.logo} alt="" />
-                              </ListItemIcon>
-                            )}
+                            <ListItemIcon>
+                              <img style={{ width: '5rem' }} src={license.logo} alt="" />
+                            </ListItemIcon>
                             <ListItemText>
                               <Typography>{license.name}</Typography>
                             </ListItemText>
