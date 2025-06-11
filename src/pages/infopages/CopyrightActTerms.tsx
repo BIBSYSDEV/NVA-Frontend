@@ -24,7 +24,7 @@ const CopyrightActTerms = () => {
           ),
           ul: <ul />,
           li: <li />,
-          hr: <Divider sx={{ my: '1.5rem', bgcolor: 'primary.main', height: '2px', width: '40%', mx: 'auto' }} />,
+          hr: <Divider sx={{ my: '1.5rem', bgcolor: 'primary.main', height: '1px', width: '40%', mx: 'auto' }} />,
         }}
       />
     </BackgroundDiv>
