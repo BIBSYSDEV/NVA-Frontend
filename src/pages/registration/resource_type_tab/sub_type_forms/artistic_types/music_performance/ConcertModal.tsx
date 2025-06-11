@@ -1,5 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
-import CancelIcon from '@mui/icons-material/Cancel';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+
 import {
   Box,
   Button,
@@ -9,6 +10,7 @@ import {
   DialogTitle,
   FormControlLabel,
   FormHelperText,
+  IconButton,
   TextField,
   Typography,
 } from '@mui/material';
@@ -26,8 +28,9 @@ import {
   validateYupSchema,
   yupToFormErrors,
 } from 'formik';
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IMaskInput } from 'react-imask';
 import * as Yup from 'yup';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
@@ -36,6 +39,8 @@ import { Concert, MusicalWorkPerformance } from '../../../../../../types/publica
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
+import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 import { PeriodFields } from '../../../components/PeriodFields';
 import { OutputModalActions } from '../OutputModalActions';
 
@@ -97,11 +102,19 @@ const validationSchema = Yup.object<YupShape<Concert>>({
         })
   ),
 
-  extent: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-    })
-  ),
+  extent: Yup.string()
+    .required(
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+      })
+    )
+    .matches(
+      /^([0-9][0-9])([0-5][0-9])([0-5][0-9])$/,
+      i18n.t('feedback.validation.invalid_format', {
+        field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+        format: 'TT:MM:SS',
+      })
+    ),
   concertProgramme: Yup.array()
     .of(
       Yup.object<YupShape<MusicalWorkPerformance>>({
@@ -167,6 +180,20 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
         {({ values, errors, touched, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<Concert>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Field name="place.name">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('common.place')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
+                  />
+                )}
+              </Field>
               <FormControlLabel
                 data-testid={dataTestId.registrationWizard.resourceType.concertSeriesCheckbox}
                 label={t('registration.resource_type.artistic.concert_part_of_series')}
@@ -185,6 +212,60 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                   />
                 }
               />
+              <Box sx={{ display: 'flex', gap: '1rem' }}>
+                {partOfSeries ? (
+                  <PeriodFields fromFieldName="time.from" toFieldName="time.to" />
+                ) : (
+                  <Field name="time.value">
+                    {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                      <DatePicker
+                        label={t('common.date')}
+                        value={field.value ? new Date(field.value) : null}
+                        onChange={(date) => {
+                          if (!touched) {
+                            setFieldTouched(field.name, true, false);
+                          }
+                          setFieldValue(field.name, date ?? '');
+                        }}
+                        slotProps={{
+                          textField: {
+                            inputProps: {
+                              'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                            },
+                            sx: { maxWidth: '15rem' },
+                            onBlur: () => !touched && setFieldTouched(field.name),
+                            variant: 'filled',
+                            required: true,
+                            error: touched && !!error,
+                            helperText: <ErrorMessage name={field.name} />,
+                          },
+                        }}
+                      />
+                    )}
+                  </Field>
+                )}
+
+                <Field name="extent">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      {...field}
+                      value={field.value ?? ''}
+                      variant="filled"
+                      label={t('registration.resource_type.artistic.extent_in_minutes')}
+                      required
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                      sx={{ minWidth: '12rem' }}
+                      placeholder="TT:MM:SS"
+                      slotProps={{
+                        input: {
+                          inputComponent: MaskExtentInput as any,
+                        },
+                      }}
+                    />
+                  )}
+                </Field>
+              </Box>
               {partOfSeries && (
                 <Field name="concertSeries">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
@@ -204,79 +285,59 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                   )}
                 </Field>
               )}
-              <Field name="place.name">
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    variant="filled"
-                    fullWidth
-                    label={t('common.place')}
-                    required
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
-                  />
-                )}
-              </Field>
-
-              {partOfSeries ? (
-                <Box sx={{ display: 'flex', gap: '1rem' }}>
-                  <PeriodFields fromFieldName="time.from" toFieldName="time.to" />
-                </Box>
-              ) : (
-                <Field name="time.value">
-                  {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                    <DatePicker
-                      label={t('common.date')}
-                      value={field.value ? new Date(field.value) : null}
-                      onChange={(date) => {
-                        if (!touched) {
-                          setFieldTouched(field.name, true, false);
-                        }
-                        setFieldValue(field.name, date ?? '');
-                      }}
-                      slotProps={{
-                        textField: {
-                          inputProps: {
-                            'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
-                          },
-                          sx: { maxWidth: '15rem' },
-                          onBlur: () => !touched && setFieldTouched(field.name),
-                          variant: 'filled',
-                          required: true,
-                          error: touched && !!error,
-                          helperText: <ErrorMessage name={field.name} />,
-                        },
-                      }}
-                    />
-                  )}
-                </Field>
-              )}
-
-              <Field name="extent">
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    sx={{ maxWidth: '15rem' }}
-                    variant="filled"
-                    fullWidth
-                    label={t('registration.resource_type.artistic.extent_in_minutes')}
-                    required
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
-                  />
-                )}
-              </Field>
 
               <FieldArray name="concertProgramme">
-                {({ name, push, remove }: FieldArrayRenderProps) => (
+                {({ name, push, remove, move }: FieldArrayRenderProps) => (
                   <>
-                    <Typography variant="h3">{t('registration.resource_type.artistic.program')}</Typography>
+                    <Typography variant="h3" component="h2">
+                      {t('registration.resource_type.artistic.program')}
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      sx={{ width: 'fit-content', textTransform: 'none' }}
+                      onClick={() => push(emptyMusicalWorkPerformance)}
+                      startIcon={<AddIcon />}
+                      data-testid={dataTestId.registrationWizard.resourceType.concertAddWork}>
+                      {t('common.add_custom', {
+                        name: t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
+                      })}
+                    </Button>
+
                     {values.concertProgramme.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
-                        <Box key={index} sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                        <Box
+                          key={index}
+                          sx={{
+                            display: 'flex',
+                            gap: '0.5rem',
+                            alignItems: 'top',
+                            border: '1px solid lightgrey',
+                            p: '0.5rem',
+                            bgcolor: '#fefbf3',
+                          }}>
+                          <Box sx={{ display: 'flex', alignSelf: 'center' }}>
+                            <IconButton
+                              title={t('common.move_up')}
+                              data-testid={dataTestId.registrationWizard.moveUpButton}
+                              sx={{ visibility: index === 0 ? 'hidden' : 'visible' }}
+                              onClick={() => {
+                                move(index, index - 1);
+                              }}>
+                              <ArrowRightAltIcon sx={{ transform: 'rotate(-90deg)' }} />
+                            </IconButton>
+
+                            <IconButton
+                              title={t('common.move_down')}
+                              data-testid={dataTestId.registrationWizard.moveDownButton}
+                              sx={{ visibility: index === values.concertProgramme.length - 1 ? 'hidden' : 'visible' }}
+                              onClick={() => {
+                                move(index, index + 1);
+                              }}>
+                              <ArrowRightAltIcon sx={{ transform: 'rotate(90deg)' }} />
+                            </IconButton>
+                          </Box>
+
                           <Field name={`${baseFieldName}.title`}>
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (
                               <TextField
@@ -291,6 +352,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                               />
                             )}
                           </Field>
+
                           <Field name={`${baseFieldName}.composer`}>
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (
                               <TextField
@@ -305,12 +367,13 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                               />
                             )}
                           </Field>
+
                           <Field name={`${baseFieldName}.premiere`}>
                             {({ field }: FieldProps<boolean>) => (
                               <FormControlLabel
-                                {...field}
                                 control={
                                   <Checkbox
+                                    {...field}
                                     checked={field.value}
                                     data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramIsPremiere}-${index}`}
                                   />
@@ -319,19 +382,17 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                               />
                             )}
                           </Field>
-                          <Button
-                            variant="outlined"
-                            color="error"
-                            title={t('registration.resource_type.artistic.remove_music_work')}
+
+                          <DeleteIconButton
+                            sx={{ alignSelf: 'center' }}
+                            data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramRemove}-${index}`}
                             onClick={() => setRemoveWorkItemIndex(index)}
-                            sx={{ px: '2rem' }}
-                            startIcon={<CancelIcon />}
-                            data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramRemove}-${index}`}>
-                            {t('common.remove')}
-                          </Button>
+                            tooltip={t('registration.resource_type.artistic.remove_music_work')}
+                          />
                         </Box>
                       );
                     })}
+
                     <ConfirmDialog
                       title={t('registration.resource_type.artistic.remove_music_work')}
                       open={removeWorkItemIndex > -1}
@@ -343,16 +404,6 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                       <Typography>{t('registration.resource_type.artistic.remove_music_work_description')}</Typography>
                     </ConfirmDialog>
 
-                    <Button
-                      variant="outlined"
-                      sx={{ width: 'fit-content' }}
-                      onClick={() => push(emptyMusicalWorkPerformance)}
-                      startIcon={<AddIcon />}
-                      data-testid={dataTestId.registrationWizard.resourceType.concertAddWork}>
-                      {t('common.add_custom', {
-                        name: t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
-                      })}
-                    </Button>
                     {!!touched.concertProgramme && typeof errors.concertProgramme === 'string' && (
                       <FormHelperText error>
                         <ErrorMessage name={name} />
@@ -369,3 +420,13 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
     </Dialog>
   );
 };
+
+const MaskExtentInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...props }, ref) => (
+  <IMaskInput
+    {...props}
+    mask="00:00:00"
+    inputRef={ref}
+    onAccept={(value) => onChange({ target: { name: props.name, value: value.replaceAll(':', '') } })}
+  />
+));
+MaskExtentInput.displayName = 'MaskExtentInput';

@@ -1,4 +1,3 @@
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AddIcon from '@mui/icons-material/Add';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import {
@@ -9,7 +8,6 @@ import {
   DialogTitle,
   FormHelperText,
   IconButton,
-  InputAdornment,
   MenuItem,
   TextField,
   Typography,
@@ -342,11 +340,6 @@ export const AudioVisualPublicationModal = ({
                                 slotProps={{
                                   input: {
                                     inputComponent: MaskExtentInput as any,
-                                    endAdornment: (
-                                      <InputAdornment position="end">
-                                        <AccessTimeIcon />
-                                      </InputAdornment>
-                                    ),
                                   },
                                 }}
                               />
