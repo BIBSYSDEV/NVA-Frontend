@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { copyrightActLicenseUri, LicenseUri } from '../../types/license.types';
+import { LicenseUri } from '../../types/license.types';
 import { getLicenseData } from '../fileHelpers';
 
 describe('getLicenseData()', () => {
@@ -24,13 +24,13 @@ describe('getLicenseData()', () => {
   });
 
   test('Returns copyright act license without trailing slash', () => {
-    const result = getLicenseData(copyrightActLicenseUri);
-    expect(result?.id).toBe(copyrightActLicenseUri);
+    const result = getLicenseData(LicenseUri.CopyrightAct);
+    expect(result?.id).toBe(LicenseUri.CopyrightAct);
   });
 
   test('Returns copyright act license with trailing slash', () => {
-    const result = getLicenseData(`${copyrightActLicenseUri}/`);
-    expect(result?.id).toBe(copyrightActLicenseUri);
+    const result = getLicenseData(`${LicenseUri.CopyrightAct}/`);
+    expect(result?.id).toBe(LicenseUri.CopyrightAct);
   });
 
   test('Returnes null when no matching license is found', () => {

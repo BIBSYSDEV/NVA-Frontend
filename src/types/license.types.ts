@@ -34,9 +34,8 @@ export enum LicenseUri {
   CC_BY_NC_ND_2 = 'https://creativecommons.org/licenses/by-nc-nd/2.0/',
   CC_BY_ND_NC_1 = 'https://creativecommons.org/licenses/by-nd-nc/1.0/',
   CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/',
+  CopyrightAct = `https://nva.sikt.no${UrlPathTemplate.CopyrightAct}`,
 }
-
-export const copyrightActLicenseUri = `${import.meta.env.VITE_REDIRECT_SIGN_IN}${UrlPathTemplate.CopyrightAct}`;
 
 interface LicenseInfo {
   id: string;
@@ -298,9 +297,9 @@ export const licenses: LicenseInfo[] = [
     additionalInformation: i18n.t('licenses.additional_info.cc0'),
   },
   {
-    id: copyrightActLicenseUri,
+    id: LicenseUri.CopyrightAct,
     name: i18n.t('licenses.labels.copyright_act'),
     description: i18n.t('licenses.description.copyright_act'),
-    link: copyrightActLicenseUri,
+    link: LicenseUri.CopyrightAct,
   },
 ];

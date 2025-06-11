@@ -1,5 +1,5 @@
 import { AssociatedFile, FileAllowedOperation } from '../types/associatedArtifact.types';
-import { copyrightActLicenseUri, licenses, LicenseUri } from '../types/license.types';
+import { licenses, LicenseUri } from '../types/license.types';
 
 export const hasFileAccessRight = (file: AssociatedFile, operation: FileAllowedOperation) => {
   return file.allowedOperations?.includes(operation) ?? false;
@@ -32,5 +32,5 @@ export const getLicenseData = (licenseUri: string | null) => {
 };
 
 export const activeLicenses = licenses.filter(
-  (license) => license.version === 4 || license.id === LicenseUri.CC0 || license.id === copyrightActLicenseUri
+  (license) => license.version === 4 || license.id === LicenseUri.CC0 || license.id === LicenseUri.CopyrightAct
 );
