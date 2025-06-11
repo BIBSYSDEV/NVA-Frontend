@@ -11,10 +11,10 @@ const CopyrightActTerms = () => {
     <BackgroundDiv sx={{ maxWidth: '45rem', my: '2rem' }}>
       <Helmet
         bodyAttributes={{ about: window.location.href, vocab: 'http://creativecommons.org/ns#', typeof: 'License' }}>
-        <title>{t('licenses.description.copyright_act')}</title>
+        <title>{t('licenses.labels.copyright_act')}</title>
       </Helmet>
       <Trans
-        i18nKey="licenses.description.copyright_act"
+        i18nKey="licenses.terms_of_use_under_the_copyright_act"
         components={{
           h1: <Typography variant="h1" gutterBottom />,
           p: <Typography sx={{ my: '1rem' }} />,
