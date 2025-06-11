@@ -18,7 +18,7 @@ export enum UrlPathTemplate {
   BasicDataNvi = '/basic-data/nvi',
   BasicDataNviNew = '/basic-data/nvi/new',
   BasicDataPersonRegister = '/basic-data/person-register',
-  CopyrightAct = '/licences/terms-of-use/1.0',
+  CopyrightAct = '/license/copyright-act/1.0',
   Root = '/',
   Institution = '/institution',
   InstitutionCurators = '/institution/settings/curators',
