@@ -1,5 +1,6 @@
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AddIcon from '@mui/icons-material/Add';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import {
   Box,
   Button,
@@ -7,6 +8,7 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
+  IconButton,
   InputAdornment,
   MenuItem,
   TextField,
@@ -30,7 +32,6 @@ import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 import { OutputModalActions } from '../OutputModalActions';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;
@@ -97,39 +98,45 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
         })
       ),
   }),
-  trackList: Yup.array()
-    .of(
-      Yup.object<YupShape<MusicTrack>>({
-        title: Yup.string().required(
+  trackList: Yup.array().of(
+    Yup.object<YupShape<MusicTrack>>({
+      title: Yup.string().required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.title'),
+        })
+      ),
+      composer: Yup.string().required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('registration.resource_type.artistic.composer'),
+        })
+      ),
+      extent: Yup.string()
+        .required(
           i18n.t('feedback.validation.is_required', {
-            field: i18n.t('common.title'),
+            field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
           })
-        ),
-        composer: Yup.string().required(
-          i18n.t('feedback.validation.is_required', {
-            field: i18n.t('registration.resource_type.artistic.composer'),
+        )
+        .matches(
+          /^\d{2}:\d{2}$/,
+          i18n.t('feedback.validation.invalid_format', {
+            field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+            format: 'MM:SS',
           })
+        )
+        .test(
+          'valid-time',
+          i18n.t('feedback.validation.has_invalid_format', {
+            field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+          }),
+          (value) => {
+            if (!value) return false;
+            const [minutes, seconds] = value.split(':').map(Number);
+
+            return minutes >= 0 && seconds >= 0 && seconds <= 59;
+          }
         ),
-        extent: Yup.number()
-          .typeError(
-            i18n.t('feedback.validation.has_invalid_format', {
-              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-            })
-          )
-          .required(
-            i18n.t('feedback.validation.is_required', {
-              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-            })
-          ),
-      })
-    )
-    .min(
-      1,
-      i18n.t('feedback.validation.must_have_minimum', {
-        min: 1,
-        field: i18n.t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
-      })
-    ),
+    })
+  ),
 });
 
 export const AudioVisualPublicationModal = ({
@@ -240,16 +247,24 @@ export const AudioVisualPublicationModal = ({
                     fullWidth
                     label={t('registration.resource_type.artistic.music_score_isrc')}
                     error={touched && !!error}
-                    helperText={!!error ? <ErrorMessage name={field.name} /> : 'hallo'}
+                    helperText={
+                      !!error ? (
+                        <ErrorMessage name={field.name} />
+                      ) : (
+                        t('registration.resource_type.artistic.music_score_isrc_helper_text')
+                      )
+                    }
                     data-testid={dataTestId.registrationWizard.resourceType.scoreIsrc}
                     slotProps={{ input: { inputComponent: MaskIsrcInput as any } }}
                   />
                 )}
               </Field>
               <FieldArray name="trackList">
-                {({ name, push, remove }: FieldArrayRenderProps) => (
+                {({ name, push, remove, move }: FieldArrayRenderProps) => (
                   <>
-                    <Typography variant="h3">{t('registration.resource_type.artistic.content_track')}</Typography>
+                    <Typography variant="h2" component="h2">
+                      {t('registration.resource_type.artistic.content_track')}
+                    </Typography>
                     <Button
                       variant="outlined"
                       sx={{ width: 'fit-content', textTransform: 'none' }}
@@ -275,8 +290,25 @@ export const AudioVisualPublicationModal = ({
                             bgcolor: '#fefbf3',
                           }}>
                           <Box sx={{ display: 'flex', alignSelf: 'center' }}>
-                            <ArrowRightAltIcon sx={{ transform: 'rotate(-90deg)' }} />
-                            <ArrowRightAltIcon sx={{ transform: 'rotate(90deg)' }} />
+                            <IconButton
+                              title={t('common.move_up')}
+                              data-testid={dataTestId.registrationWizard.moveUpButton}
+                              sx={{ visibility: index === 0 ? 'hidden' : 'visible' }}
+                              onClick={() => {
+                                move(index, index - 1);
+                              }}>
+                              <ArrowRightAltIcon sx={{ transform: 'rotate(-90deg)' }} />
+                            </IconButton>
+
+                            <IconButton
+                              title={t('common.move_down')}
+                              data-testid={dataTestId.registrationWizard.moveDownButton}
+                              sx={{ visibility: index === values.trackList.length - 1 ? 'hidden' : 'visible' }}
+                              onClick={() => {
+                                move(index, index + 1);
+                              }}>
+                              <ArrowRightAltIcon sx={{ transform: 'rotate(90deg)' }} />
+                            </IconButton>
                           </Box>
                           <Field name={`${baseFieldName}.title`}>
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (
