@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
@@ -25,10 +25,8 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
-import { OutputModalActions } from '../OutputModalActions';
-import { IMaskInput } from 'react-imask';
-import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 import { ExtentField } from '../../../components/ExtentField';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;
@@ -182,7 +180,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                             <Box sx={{ display: 'flex', alignSelf: 'center' }}>
                               <IconButton
                                 title={t('common.move_up')}
-                                data-testid={dataTestId.registrationWizard.moveUpButton}
+                                data-testid={dataTestId.registrationWizard.moveUpButton(index)}
                                 sx={{ visibility: index === 0 ? 'hidden' : 'visible' }}
                                 onClick={() => {
                                   move(index, index - 1);
@@ -192,7 +190,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
 
                               <IconButton
                                 title={t('common.move_down')}
-                                data-testid={dataTestId.registrationWizard.moveDownButton}
+                                data-testid={dataTestId.registrationWizard.moveDownButton(index)}
                                 sx={{ visibility: index === values.musicalWorks.length - 1 ? 'hidden' : 'visible' }}
                                 onClick={() => {
                                   move(index, index + 1);
@@ -265,13 +263,3 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
     </Dialog>
   );
 };
-
-const MaskExtentInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...props }, ref) => (
-  <IMaskInput
-    {...props}
-    mask="00:00"
-    inputRef={ref}
-    onAccept={(value) => onChange({ target: { name: props.name, value: value.replaceAll(':', '') } })}
-  />
-));
-MaskExtentInput.displayName = 'MaskExtentInput';

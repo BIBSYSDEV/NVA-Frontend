@@ -306,7 +306,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                             <Box sx={{ display: 'flex', alignSelf: 'center' }}>
                               <IconButton
                                 title={t('common.move_up')}
-                                data-testid={dataTestId.registrationWizard.moveUpButton}
+                                data-testid={dataTestId.registrationWizard.moveUpButton(index)}
                                 sx={{ visibility: index === 0 ? 'hidden' : 'visible' }}
                                 onClick={() => {
                                   move(index, index - 1);
@@ -316,7 +316,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
 
                               <IconButton
                                 title={t('common.move_down')}
-                                data-testid={dataTestId.registrationWizard.moveDownButton}
+                                data-testid={dataTestId.registrationWizard.moveDownButton(index)}
                                 sx={{ visibility: index === values.concertProgramme.length - 1 ? 'hidden' : 'visible' }}
                                 onClick={() => {
                                   move(index, index + 1);

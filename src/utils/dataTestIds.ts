@@ -519,8 +519,8 @@ export const dataTestId = {
       versionHelpButton: 'version-help-button',
       versionModal: 'version-modal',
     },
-    moveDownButton: 'move-down-button',
-    moveUpButton: 'move-up-button',
+    moveDownButton: (index: number) => `move-down-button-${index}`,
+    moveUpButton: (index: number) => `move-up-button-${index}`,
     new: {
       emptyRegistrationAccordion: 'new-registration-empty',
       fileAccordion: 'file-accordion',
