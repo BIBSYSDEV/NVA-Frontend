@@ -52,6 +52,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { activeLicenses, getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
 import {
   allowsFileUpload,
+  isDegree,
   isOpenFile,
   isPendingOpenFile,
   userIsValidImporter,
@@ -158,11 +159,12 @@ export const FilesTableRow = ({
   const canDeleteFile = hasFileAccessRight(file, 'delete') || canEditImportCandidateFile;
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
 
-  const categorySupportsFiles = allowsFileUpload(
-    customer,
-    values.entityDescription?.reference?.publicationInstance?.type
-  );
+  const category = values.entityDescription?.reference?.publicationInstance?.type;
+  const categorySupportsFiles = allowsFileUpload(customer, category);
   const canSelectOpenFile = categorySupportsFiles || hasCuratorRole(user);
+  const canUploadHiddenFile = isDegree(values.entityDescription?.reference?.publicationInstance?.type)
+    ? user?.isThesisCurator
+    : user?.isPublishingCurator;
 
   return (
     <>
@@ -255,7 +257,8 @@ export const FilesTableRow = ({
                     {t('registration.files_and_license.file_type.internal_file')}
                   </StyledFileTypeMenuItemContent>
                 </MenuItem>
-                {(user?.isPublishingCurator || field.value === FileType.HiddenFile) && (
+
+                {(canUploadHiddenFile || field.value === FileType.HiddenFile) && (
                   <MenuItem value={FileType.HiddenFile}>
                     <StyledFileTypeMenuItemContent>
                       <VisibilityOffOutlinedIcon fontSize="small" />
