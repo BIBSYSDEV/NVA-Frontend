@@ -30,6 +30,7 @@ import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 import { OutputModalActions } from '../OutputModalActions';
+import { ExtentField } from '../../../components/ExtentField';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;
@@ -326,27 +327,11 @@ export const AudioVisualPublicationModal = ({
                               />
                             )}
                           </Field>
-                          <Field name={`${baseFieldName}.extent`}>
-                            {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                              <TextField
-                                {...field}
-                                value={field.value ?? ''}
-                                variant="filled"
-                                label={t('registration.resource_type.artistic.extent_in_minutes')}
-                                required
-                                error={touched && !!error}
-                                helperText={<ErrorMessage name={field.name} />}
-                                data-testid={`${dataTestId.registrationWizard.resourceType.artisticOutputDuration}-${index}`}
-                                sx={{ minWidth: '12rem' }}
-                                placeholder="MM:SS"
-                                slotProps={{
-                                  input: {
-                                    inputComponent: MaskExtentInput as any,
-                                  },
-                                }}
-                              />
-                            )}
-                          </Field>
+                          <ExtentField
+                            fieldName={`${baseFieldName}.extent`}
+                            mask="00:00"
+                            dataTestId={`${dataTestId.registrationWizard.resourceType.artisticOutputDuration}-${index}`}
+                          />
                           <DeleteIconButton
                             sx={{ alignSelf: 'center' }}
                             data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentRemove}-${index}`}
@@ -397,13 +382,3 @@ const MaskIsrcInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...pr
   />
 ));
 MaskIsrcInput.displayName = 'MaskIsrcInput';
-
-const MaskExtentInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...props }, ref) => (
-  <IMaskInput
-    {...props}
-    mask="00:00"
-    inputRef={ref}
-    onAccept={(value) => onChange({ target: { name: props.name, value: value.replaceAll(':', '') } })}
-  />
-));
-MaskExtentInput.displayName = 'MaskExtentInput';

@@ -28,6 +28,7 @@ import { DeleteIconButton } from '../../../../../messages/components/DeleteIconB
 import { OutputModalActions } from '../OutputModalActions';
 import { IMaskInput } from 'react-imask';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
+import { ExtentField } from '../../../components/ExtentField';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;
@@ -144,28 +145,11 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                 )}
               </Field>
 
-              <Field name="extent">
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    value={field.value ?? ''}
-                    sx={{ maxWidth: '15rem' }}
-                    placeholder="MM:SS"
-                    variant="filled"
-                    fullWidth
-                    label={t('registration.resource_type.artistic.extent_in_minutes')}
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
-                    slotProps={{
-                      input: {
-                        inputComponent: MaskExtentInput as any,
-                      },
-                    }}
-                  />
-                )}
-              </Field>
-
+              <ExtentField
+                fieldName="extent"
+                mask="00:00"
+                dataTestId={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
+              />
               <FieldArray name="musicalWorks">
                 {({ name, push, remove, move }: FieldArrayRenderProps) => (
                   <>

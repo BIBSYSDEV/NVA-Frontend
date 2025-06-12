@@ -28,9 +28,8 @@ import {
   validateYupSchema,
   yupToFormErrors,
 } from 'formik';
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IMaskInput } from 'react-imask';
 import * as Yup from 'yup';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
@@ -40,7 +39,7 @@ import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
-import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
+import { ExtentField } from '../../../components/ExtentField';
 import { PeriodFields } from '../../../components/PeriodFields';
 import { OutputModalActions } from '../OutputModalActions';
 
@@ -245,26 +244,13 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                   </Field>
                 )}
 
-                <Field name="extent">
-                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                    <TextField
-                      {...field}
-                      value={field.value ?? ''}
-                      variant="filled"
-                      label={t('registration.resource_type.artistic.extent_in_minutes')}
-                      required
-                      error={touched && !!error}
-                      helperText={<ErrorMessage name={field.name} />}
-                      sx={{ minWidth: '12rem' }}
-                      placeholder="TT:MM:SS"
-                      slotProps={{
-                        input: {
-                          inputComponent: MaskExtentInput as any,
-                        },
-                      }}
-                    />
-                  )}
-                </Field>
+                <ExtentField
+                  fieldName="extent"
+                  mask="00:00:00"
+                  dataTestId={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
+                  placeholder="TT:MM:SS"
+                  label={t('registration.resource_type.artistic.extent')}
+                />
               </Box>
               {partOfSeries && (
                 <Field name="concertSeries">
@@ -422,13 +408,3 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
     </Dialog>
   );
 };
-
-const MaskExtentInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...props }, ref) => (
-  <IMaskInput
-    {...props}
-    mask="00:00:00"
-    inputRef={ref}
-    onAccept={(value) => onChange({ target: { name: props.name, value: value.replaceAll(':', '') } })}
-  />
-));
-MaskExtentInput.displayName = 'MaskExtentInput';
