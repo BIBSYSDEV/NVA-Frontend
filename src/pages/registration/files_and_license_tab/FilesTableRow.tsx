@@ -358,11 +358,9 @@ export const FilesTableRow = ({
 
                               return selectedLicense ? (
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                  <img
-                                    style={{ width: '5rem' }}
-                                    src={selectedLicense.logo}
-                                    alt={selectedLicense.name}
-                                  />
+                                  {selectedLicense.logo && (
+                                    <img style={{ width: '5rem' }} src={selectedLicense.logo} alt="" />
+                                  )}
                                   <span>{selectedLicense.name}</span>
                                 </Box>
                               ) : null;
@@ -385,7 +383,7 @@ export const FilesTableRow = ({
                             dense
                             sx={{ gap: '1rem' }}>
                             <ListItemIcon>
-                              <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                              <img style={{ width: '5rem' }} src={license.logo} alt="" />
                             </ListItemIcon>
                             <ListItemText>
                               <Typography>{license.name}</Typography>

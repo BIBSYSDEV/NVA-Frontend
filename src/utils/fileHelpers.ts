@@ -16,10 +16,6 @@ const isEqualLicenseUri = (uri1: string | null, uri2: string | null) => {
   const urlObj2 = new URL(uri2);
 
   if (urlObj1.hostname === urlObj2.hostname) {
-    if (urlObj1.hostname === new URL(LicenseUri.RightsReserved).hostname) {
-      // Require exact match for RightsReserved (except of protocol)
-      return urlObj1.pathname === urlObj2.pathname;
-    }
     return removeTrailingSlash(urlObj1.pathname).toLowerCase() === removeTrailingSlash(urlObj2.pathname).toLowerCase();
   }
   return false;
@@ -36,5 +32,5 @@ export const getLicenseData = (licenseUri: string | null) => {
 };
 
 export const activeLicenses = licenses.filter(
-  (license) => license.version === 4 || license.id === LicenseUri.CC0 || license.id === LicenseUri.RightsReserved
+  (license) => license.version === 4 || license.id === LicenseUri.CC0 || license.id === LicenseUri.CopyrightAct
 );
