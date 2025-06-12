@@ -24,12 +24,12 @@ describe('getLicenseData()', () => {
   });
 
   test('Returns copyright act license without trailing slash', () => {
-    const result = getLicenseData(LicenseUri.CopyrightAct);
+    const result = getLicenseData('https://nva.sikt.no/license/copyright-act/1.0');
     expect(result?.id).toBe(LicenseUri.CopyrightAct);
   });
 
   test('Returns copyright act license with trailing slash', () => {
-    const result = getLicenseData(`${LicenseUri.CopyrightAct}/`);
+    const result = getLicenseData('https://nva.sikt.no/license/copyright-act/1.0/');
     expect(result?.id).toBe(LicenseUri.CopyrightAct);
   });
 
