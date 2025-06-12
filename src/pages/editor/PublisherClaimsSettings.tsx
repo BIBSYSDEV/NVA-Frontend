@@ -49,7 +49,7 @@ export const PublisherClaimsSettings = () => {
           heading: <Typography variant="h2" sx={{ mt: '1rem' }} />,
           button: (
             <Button
-              data-testid={dataTestId.editor.addChannelClaimButton}
+              data-testid={dataTestId.basicData.addChannelClaimButton}
               variant="outlined"
               startIcon={<AddIcon />}
               sx={{ my: '0.5rem', textTransform: 'none' }}

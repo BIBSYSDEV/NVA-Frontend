@@ -48,7 +48,7 @@ export const SerialPublicationClaimsSettings = () => {
           p: <Typography sx={{ mb: '1rem' }} />,
           button: (
             <Button
-              data-testid={dataTestId.editor.addChannelClaimButton}
+              data-testid={dataTestId.basicData.addChannelClaimButton}
               variant="outlined"
               startIcon={<AddIcon />}
               sx={{ my: '0.5rem', textTransform: 'none' }}

@@ -136,7 +136,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
             <>
               <Tooltip title={t('common.remove')}>
                 <IconButton
-                  data-testid={dataTestId.editor.deleteChannelClaimButton(channelIdentifier)}
+                  data-testid={dataTestId.basicData.deleteChannelClaimButton(channelIdentifier)}
                   onClick={() => setOpenConfirmDialog(true)}
                   size="small"
                   sx={{ width: '1.5rem', height: '1.5rem', bgcolor: 'secondary.main' }}>

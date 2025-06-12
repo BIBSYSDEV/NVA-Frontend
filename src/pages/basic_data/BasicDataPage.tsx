@@ -2,6 +2,7 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AdjustIcon from '@mui/icons-material/Adjust';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
+import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import PeopleIcon from '@mui/icons-material/People';
 import { Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -153,24 +154,23 @@ const BasicDataPage = () => {
 
             <NavigationListAccordion
               title={t('editor.institution.channel_claims.channel_claim')}
-              startIcon={<AdjustIcon sx={{ bgcolor: 'grey.500' }} />}
+              startIcon={<LockOutlineIcon sx={{ bgcolor: 'grey.500' }} />}
               accordionPath={UrlPathTemplate.BasicDataChannelClaims}
               defaultPath={UrlPathTemplate.BasicDataPublisherClaims}
-              dataTestId={dataTestId.basicData.nviPeriodsLink} // TODO
-            >
+              dataTestId={dataTestId.basicData.channelClaimLink}>
               <NavigationList aria-label={t('editor.institution.channel_claims.channel_claim')}>
                 <Typography sx={{ mt: '0.5rem' }}>
                   {t('editor.institution.channel_claims.channel_claims_settings_description')}
                 </Typography>
                 <SelectableButton
                   isSelected={currentPath === UrlPathTemplate.BasicDataPublisherClaims}
-                  // data-testid={dataTestId.editor.publisherClaimButton}
+                  data-testid={dataTestId.basicData.publisherClaimsLink}
                   to={UrlPathTemplate.BasicDataPublisherClaims}>
                   {t('editor.institution.channel_claims.administer_publisher_channel_claim')}
                 </SelectableButton>
                 <SelectableButton
                   isSelected={currentPath === UrlPathTemplate.BasicDataSerialPublicationClaims}
-                  // data-testid={dataTestId.editor.serialPublicationClaimButton}
+                  data-testid={dataTestId.basicData.serialPublicationClaimsLink}
                   to={UrlPathTemplate.BasicDataSerialPublicationClaims}>
                   {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
                 </SelectableButton>
