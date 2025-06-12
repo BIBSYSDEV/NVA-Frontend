@@ -255,7 +255,6 @@ export const FilesTableRow = ({
                     {t('registration.files_and_license.file_type.internal_file')}
                   </StyledFileTypeMenuItemContent>
                 </MenuItem>
-
                 {(canUploadHiddenFile || field.value === FileType.HiddenFile) && (
                   <MenuItem value={FileType.HiddenFile}>
                     <StyledFileTypeMenuItemContent>
