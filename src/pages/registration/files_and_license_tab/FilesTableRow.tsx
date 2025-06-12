@@ -162,9 +162,7 @@ export const FilesTableRow = ({
   const category = values.entityDescription?.reference?.publicationInstance?.type;
   const categorySupportsFiles = allowsFileUpload(customer, category);
   const canSelectOpenFile = categorySupportsFiles || hasCuratorRole(user);
-  const canUploadHiddenFile = isDegree(values.entityDescription?.reference?.publicationInstance?.type)
-    ? user?.isThesisCurator
-    : user?.isPublishingCurator;
+  const canUploadHiddenFile = isDegree(category) ? user?.isThesisCurator : user?.isPublishingCurator;
 
   return (
     <>
