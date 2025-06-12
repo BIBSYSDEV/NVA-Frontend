@@ -8,6 +8,7 @@ import { useSearchParams } from 'react-router';
 import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 import { ChannelClaimParams } from '../../api/searchApi';
 import { PageSpinner } from '../../components/PageSpinner';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { RootState } from '../../redux/store';
 import { filterChannelClaims } from '../../utils/customer-helpers';
@@ -34,7 +35,7 @@ export const SerialPublicationClaimsSettings = () => {
       : channelClaims;
 
   return (
-    <>
+    <BackgroundDiv>
       <Helmet>
         <title>{t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}</title>
       </Helmet>
@@ -66,12 +67,12 @@ export const SerialPublicationClaimsSettings = () => {
           {channelClaimsQuery.isPending ? (
             <PageSpinner aria-label={t('editor.institution.channel_claims.channel_claim')} />
           ) : channelClaimList && channelClaimList.length > 0 ? (
-            <ChannelClaimTable channelClaimList={channelClaimList} />
+            <ChannelClaimTable channelClaimList={channelClaimList} canEdit />
           ) : null}
         </TableContainer>
 
         <AddChannelClaimDialog open={openAddChannelClaimDialog} closeDialog={toggleAddChannelClaimDialog} />
       </ChannelClaimContext.Provider>
-    </>
+    </BackgroundDiv>
   );
 };
