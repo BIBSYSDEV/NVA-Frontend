@@ -157,7 +157,13 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                     fullWidth
                     label={t('registration.resource_type.artistic.music_score_ismn')}
                     error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
+                    helperText={
+                      !!error ? (
+                        <ErrorMessage name={field.name} />
+                      ) : (
+                        t('registration.resource_type.artistic.music_score_ismn_helper_text')
+                      )
+                    }
                     data-testid={dataTestId.registrationWizard.resourceType.scoreIsmn}
                   />
                 )}

@@ -316,27 +316,29 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                             p: '0.5rem',
                             bgcolor: '#fefbf3',
                           }}>
-                          <Box sx={{ display: 'flex', alignSelf: 'center' }}>
-                            <IconButton
-                              title={t('common.move_up')}
-                              data-testid={dataTestId.registrationWizard.moveUpButton}
-                              sx={{ visibility: index === 0 ? 'hidden' : 'visible' }}
-                              onClick={() => {
-                                move(index, index - 1);
-                              }}>
-                              <ArrowRightAltIcon sx={{ transform: 'rotate(-90deg)' }} />
-                            </IconButton>
+                          {values.concertProgramme.length > 1 && (
+                            <Box sx={{ display: 'flex', alignSelf: 'center' }}>
+                              <IconButton
+                                title={t('common.move_up')}
+                                data-testid={dataTestId.registrationWizard.moveUpButton}
+                                sx={{ visibility: index === 0 ? 'hidden' : 'visible' }}
+                                onClick={() => {
+                                  move(index, index - 1);
+                                }}>
+                                <ArrowRightAltIcon sx={{ transform: 'rotate(-90deg)' }} />
+                              </IconButton>
 
-                            <IconButton
-                              title={t('common.move_down')}
-                              data-testid={dataTestId.registrationWizard.moveDownButton}
-                              sx={{ visibility: index === values.concertProgramme.length - 1 ? 'hidden' : 'visible' }}
-                              onClick={() => {
-                                move(index, index + 1);
-                              }}>
-                              <ArrowRightAltIcon sx={{ transform: 'rotate(90deg)' }} />
-                            </IconButton>
-                          </Box>
+                              <IconButton
+                                title={t('common.move_down')}
+                                data-testid={dataTestId.registrationWizard.moveDownButton}
+                                sx={{ visibility: index === values.concertProgramme.length - 1 ? 'hidden' : 'visible' }}
+                                onClick={() => {
+                                  move(index, index + 1);
+                                }}>
+                                <ArrowRightAltIcon sx={{ transform: 'rotate(90deg)' }} />
+                              </IconButton>
+                            </Box>
+                          )}
 
                           <Field name={`${baseFieldName}.title`}>
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (

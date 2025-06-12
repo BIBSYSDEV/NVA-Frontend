@@ -1862,6 +1862,7 @@
         },
         "music_score_ensemble": "Besetning",
         "music_score_ismn": "ISMN",
+        "music_score_ismn_helper_text": "Består av 12 tall. Eksempel: 9790260000438",
         "music_score_isrc": "ISRC",
         "music_score_isrc_helper_text": "Består av 12 alfanumeriske tegn. Eksempel: NO-6Q7-25-00047",
         "music_score_movements": "Satser",
