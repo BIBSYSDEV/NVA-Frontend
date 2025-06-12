@@ -726,15 +726,15 @@
       "cc0": "<p>Sjå <link1>Åndsverksloven</link1> §3, §8, §11 og §14</p>"
     },
     "description": {
-      "cc0": "<p>Verket er frigitt til offentleg bruk, utan opphavsrettar, så langt lova tillèt.</p><p>Brukar du denne lisensen, last opp eit dokument der du grunngjev kvifor.</p>",
-      "cc_by": "<p>Du kan: kopiere, dele og endre verket for alle typar bruk, også kommersielle.</p><p>Du må: gi riktig kreditering og seie frå om endringar.</p>",
-      "cc_by_nc": "<p>Du kan: kopiere, dele og endre verket, men berre for ikkje-kommersielle formål.</p><p>Du må: gi riktig kreditering og seie frå om endringar.</p>",
-      "cc_by_nc_nd": "<p>Du kan: kopiere og dele verket for ikkje-kommersielle formål.</p><p>Du kan ikkje: endre eller tilpasse verket.</p><p>Du må: gi riktig kreditering.</p>",
-      "cc_by_nc_sa": "<p>Du kan: kopiere, dele og endre verket for ikkje-kommersielle formål.</p><p>Du må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
-      "cc_by_nd": "<p>Du kan: kopiere og dele verket for alle typar bruk, også kommersielle.</p><p>Du kan ikkje: endre eller tilpasse verket.</p><p>Du må: gi riktig kreditering.</p>",
-      "cc_by_sa": "<p>Du kan: kopiere, dele og endre verket for alle typar bruk, også kommersielle.</p><p>Du må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
-      "older_licenses": "Skal du registrere eit eldre forskingsresultat som blei publisert med ein tidlegare lisensversjon, trykk på \"Vis alle tidlegare versjonar\" i nedtrekksmenyen for å finne riktig lisens.",
-      "rights_reserved": "<p>Dette verket har ikkje ein lisens som tydeleggjer rettar for gjenbruk. Du må sjølv kontakte opphavspersonen for å finne ut om, og korleis, du kan gjenbruke arbeidet.</p>"
+      "cc0": "<p>Verket er frigitt til offentleg bruk, utan opphavsrettar, så langt lova tillèt.</p><p>Blir denne lisensen brukt, last opp eit dokument der du grunngjev kvifor.</p>",
+      "cc_by": "<p>Brukaren kan: kopiere, dele og endre verket for alle typar bruk, også kommersielle.</p><p>Brukaren må: gi riktig kreditering og seie frå om endringar.</p>",
+      "cc_by_nc": "<p>Brukaren kan: kopiere, dele og endre verket, men berre for ikkje-kommersielle formål.</p><p>Brukaren må: gi riktig kreditering og seie frå om endringar.</p>",
+      "cc_by_nc_nd": "<p>Brukaren kan: kopiere og dele verket for ikkje-kommersielle formål.</p><p>Brukaren kan ikkje: endre eller tilpasse verket.</p><p>Brukaren må: gi riktig kreditering.</p>",
+      "cc_by_nc_sa": "<p>Brukaren kan: kopiere, dele og endre verket for ikkje-kommersielle formål.</p><p>Brukaren må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
+      "cc_by_nd": "<p>Brukaren kan: kopiere og dele verket for alle typar bruk, også kommersielle.</p><p>Brukaren kan ikkje: endre eller tilpasse verket.</p><p>Brukaren må: gi riktig kreditering.</p>",
+      "cc_by_sa": "<p>Brukaren kan: kopiere, dele og endre verket for alle typar bruk, også kommersielle.</p><p>Brukaren må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
+      "copyright_act": "<p>Brukaren kan:</p><ul><li>lese og lenke til materialet, og sitere frå materialet i samsvar med god skikk, og i den grad formålet tilseier det</li><li>kopiere materialet kun til privat bruk</li></ul><p>Brukaren må: gi riktig kreditering</p>",
+      "older_licenses": "Skal du registrere eit eldre forskingsresultat som blei publisert med ein tidlegare lisensversjon, trykk på \"Vis alle tidlegare versjonar\" i nedtrekksmenyen for å finne riktig lisens."
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -745,8 +745,8 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "older_licenses": "Eldre lisensar",
-      "rights_reserved": "Utgjevaren sine vilkår"
+      "copyright_act": "Bruksvilkår etter åndsverkslova",
+      "older_licenses": "Eldre lisensar"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
@@ -756,10 +756,10 @@
       "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/{{version}}/deed.no",
       "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}/deed.no",
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no",
-      "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no"
     },
-    "read_more_about_license": "Les meir om {{license}}"
+    "read_more_about_license": "Les meir om {{license}}",
+    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Etter <link1>åndsverklova</link1> gjeld følgjande vilkår for bruk av materialet:</p><ul><li>Du har lov til å lese og lenkje til materialet, og kan sitere frå materialet i samsvar med god skikk, og i den grad formålet tilseier det.</li><li>Du har ikkje lov til å publisere materialet på nytt, eller på annan måte kopiere materialet (med mindre det er til privat bruk).</li></ul><p>Dersom du ønskjer å bruke materialet på annan måte, må du sjølv innhente samtykke direkte frå rettshavar.</p><hr/><p>Dersom du er rettshavar til eit åndsverk som har fått denne lisensen og er ueinig i at materialet kan brukast som skildra over, må du ta kontakt med utgjevaren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikkje er mogleg å kontakte utgjevaren, kan du ta kontakt med tenesteleverandøren for NVA, Sikt: <link2>Henvending om opphavsrett</link2>.</p>"
   },
   "log": {
     "hidden_file_added": "Skjult fil lagt til",
