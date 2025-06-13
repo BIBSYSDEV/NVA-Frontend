@@ -29,7 +29,6 @@ enum Color {
   PublishingRequestLight = '#FFF0D3',
   NviMain = '#EE95EA',
   NviLight = '#F8D3F6',
-  Table = '#FEFBF3',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;

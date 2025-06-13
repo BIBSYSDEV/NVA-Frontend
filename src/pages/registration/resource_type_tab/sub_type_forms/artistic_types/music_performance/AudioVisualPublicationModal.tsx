@@ -1,13 +1,10 @@
 import AddIcon from '@mui/icons-material/Add';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import {
-  Box,
   Button,
   Dialog,
   DialogContent,
   DialogTitle,
   FormHelperText,
-  IconButton,
   MenuItem,
   TextField,
   Typography,
@@ -31,6 +28,7 @@ import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
 import { ExtentField } from '../../../components/ExtentField';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
+import { MusicalWorkMoveButtons } from '../../../components/MusicalWorkMoveButtons';
 import { OutputModalActions } from '../OutputModalActions';
 
 interface AudioVisualPublicationModalProps {
@@ -269,27 +267,11 @@ export const AudioVisualPublicationModal = ({
                       return (
                         <StyledMusicalWorkListDiv key={index}>
                           {values.trackList.length > 1 && (
-                            <Box sx={{ display: 'flex', alignSelf: 'center' }}>
-                              <IconButton
-                                title={t('common.move_up')}
-                                data-testid={dataTestId.registrationWizard.moveUpButton(index)}
-                                sx={{ visibility: index === 0 ? 'hidden' : 'visible' }}
-                                onClick={() => {
-                                  move(index, index - 1);
-                                }}>
-                                <ArrowRightAltIcon sx={{ transform: 'rotate(-90deg)' }} />
-                              </IconButton>
-
-                              <IconButton
-                                title={t('common.move_down')}
-                                data-testid={dataTestId.registrationWizard.moveDownButton(index)}
-                                sx={{ visibility: index === values.trackList.length - 1 ? 'hidden' : 'visible' }}
-                                onClick={() => {
-                                  move(index, index + 1);
-                                }}>
-                                <ArrowRightAltIcon sx={{ transform: 'rotate(90deg)' }} />
-                              </IconButton>
-                            </Box>
+                            <MusicalWorkMoveButtons
+                              index={index}
+                              listLength={values.trackList.length}
+                              moveItem={(newIndex) => move(index, newIndex)}
+                            />
                           )}
                           <Field name={`${baseFieldName}.title`}>
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (

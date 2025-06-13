@@ -1,16 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  FormHelperText,
-  IconButton,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Button, Dialog, DialogContent, DialogTitle, FormHelperText, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,6 +16,7 @@ import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
 import { ExtentField } from '../../../components/ExtentField';
+import { MusicalWorkMoveButtons } from '../../../components/MusicalWorkMoveButtons';
 import { OutputModalActions } from '../OutputModalActions';
 
 interface OtherPerformanceModalProps {
@@ -169,27 +159,11 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                       return (
                         <StyledMusicalWorkListDiv key={index}>
                           {values.musicalWorks.length > 1 && (
-                            <Box sx={{ display: 'flex', alignSelf: 'center' }}>
-                              <IconButton
-                                title={t('common.move_up')}
-                                data-testid={dataTestId.registrationWizard.moveUpButton(index)}
-                                sx={{ visibility: index === 0 ? 'hidden' : 'visible' }}
-                                onClick={() => {
-                                  move(index, index - 1);
-                                }}>
-                                <ArrowRightAltIcon sx={{ transform: 'rotate(-90deg)' }} />
-                              </IconButton>
-
-                              <IconButton
-                                title={t('common.move_down')}
-                                data-testid={dataTestId.registrationWizard.moveDownButton(index)}
-                                sx={{ visibility: index === values.musicalWorks.length - 1 ? 'hidden' : 'visible' }}
-                                onClick={() => {
-                                  move(index, index + 1);
-                                }}>
-                                <ArrowRightAltIcon sx={{ transform: 'rotate(90deg)' }} />
-                              </IconButton>
-                            </Box>
+                            <MusicalWorkMoveButtons
+                              index={index}
+                              listLength={values.musicalWorks.length}
+                              moveItem={(newIndex) => move(index, newIndex)}
+                            />
                           )}
                           <Field name={`${baseFieldName}.title`}>
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (
