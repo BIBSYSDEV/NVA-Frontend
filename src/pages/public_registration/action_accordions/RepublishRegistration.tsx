@@ -1,11 +1,13 @@
 import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router';
 import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistrationStatus';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
+import { doNotRedirectQueryParam } from '../../../utils/urlPaths';
 
 export interface RepublishRegistrationProps {
   registration: Registration;
@@ -21,6 +23,8 @@ export const RepublishRegistration = ({
   const { t } = useTranslation();
   const [openRepublishDialog, setOpenRepublishDialog] = useState(false);
   const toggleRepublishDialog = () => setOpenRepublishDialog(!openRepublishDialog);
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const updateRegistrationStatusMutation = useUpdateRegistrationStatus();
 
@@ -63,6 +67,12 @@ export const RepublishRegistration = ({
                 onSuccess: toggleRepublishDialog,
               });
               await refetchData();
+              if (searchParams.has(doNotRedirectQueryParam)) {
+                setSearchParams((params) => {
+                  params.delete(doNotRedirectQueryParam);
+                  return params;
+                });
+              }
             }}
             isLoading={updateRegistrationStatusMutation.isPending}
             confirmButtonLabel={t('common.republish')}
