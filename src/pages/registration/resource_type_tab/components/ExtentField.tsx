@@ -44,29 +44,27 @@ export const ExtentField = ({
   return (
     <Field name={fieldName}>
       {({ field, meta: { touched, error } }: FieldProps<string>) => (
-        <>
-          <TextField
-            {...field}
-            value={field.value ?? ''}
-            sx={{ maxWidth: '15rem' }}
-            placeholder={placeholder}
-            variant="filled"
-            required={required}
-            fullWidth
-            label={label ?? t('registration.resource_type.artistic.extent_in_minutes')}
-            error={touched && !!error}
-            helperText={<ErrorMessage name={field.name} />}
-            data-testid={dataTestId}
-            slotProps={{
-              input: {
-                inputComponent: MaskExtentInput as any,
-                inputProps: {
-                  mask,
-                },
+        <TextField
+          {...field}
+          value={field.value ?? ''}
+          sx={{ maxWidth: '15rem' }}
+          placeholder={placeholder}
+          variant="filled"
+          required={required}
+          fullWidth
+          label={label ?? t('registration.resource_type.artistic.extent_in_minutes')}
+          error={touched && !!error}
+          helperText={<ErrorMessage name={field.name} />}
+          data-testid={dataTestId}
+          slotProps={{
+            input: {
+              inputComponent: MaskExtentInput as any,
+              inputProps: {
+                mask,
               },
-            }}
-          />
-        </>
+            },
+          }}
+        />
       )}
     </Field>
   );

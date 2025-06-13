@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
+import { StyledMusicalWorkListDiv } from '../../../../../../components/styled/Wrappers';
 import i18n from '../../../../../../translations/i18n';
 import { emptyPlace } from '../../../../../../types/common.types';
 import {
@@ -166,16 +167,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     {values.musicalWorks.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
-                        <Box
-                          key={index}
-                          sx={{
-                            display: 'flex',
-                            gap: '0.5rem',
-                            alignItems: 'top',
-                            border: '1px solid lightgrey',
-                            p: '0.5rem',
-                            bgcolor: '#fefbf3',
-                          }}>
+                        <StyledMusicalWorkListDiv key={index}>
                           {values.musicalWorks.length > 1 && (
                             <Box sx={{ display: 'flex', alignSelf: 'center' }}>
                               <IconButton
@@ -233,7 +225,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                             onClick={() => setRemoveWorkItemIndex(index)}
                             tooltip={t('registration.resource_type.artistic.remove_music_work')}
                           />
-                        </Box>
+                        </StyledMusicalWorkListDiv>
                       );
                     })}
                     <ConfirmDialog

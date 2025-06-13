@@ -139,3 +139,12 @@ export const StyledContributorModalActions = styled(Box)(({ theme }) => ({
   marginTop: '2rem',
   gap: '1rem',
 }));
+
+export const StyledMusicalWorkListDiv = styled(Box)({
+  display: 'flex',
+  gap: '0.5rem',
+  alignItems: 'top',
+  border: '1px solid lightgrey',
+  padding: '0.5rem',
+  backgroundColor: '#FEFBF4',
+});

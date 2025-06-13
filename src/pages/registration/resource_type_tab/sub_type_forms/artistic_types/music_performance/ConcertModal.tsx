@@ -32,6 +32,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
+import { StyledMusicalWorkListDiv } from '../../../../../../components/styled/Wrappers';
 import i18n from '../../../../../../translations/i18n';
 import { emptyInstant, emptyPeriod, emptyPlace } from '../../../../../../types/common.types';
 import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
@@ -292,16 +293,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     {values.concertProgramme.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
-                        <Box
-                          key={index}
-                          sx={{
-                            display: 'flex',
-                            gap: '0.5rem',
-                            alignItems: 'top',
-                            border: '1px solid lightgrey',
-                            p: '0.5rem',
-                            bgcolor: '#fefbf3',
-                          }}>
+                        <StyledMusicalWorkListDiv key={index}>
                           {values.concertProgramme.length > 1 && (
                             <Box sx={{ display: 'flex', alignSelf: 'center' }}>
                               <IconButton
@@ -377,7 +369,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                             onClick={() => setRemoveWorkItemIndex(index)}
                             tooltip={t('registration.resource_type.artistic.remove_music_work')}
                           />
-                        </Box>
+                        </StyledMusicalWorkListDiv>
                       );
                     })}
 

@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { IMaskInput } from 'react-imask';
 import * as Yup from 'yup';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
+import { StyledMusicalWorkListDiv } from '../../../../../../components/styled/Wrappers';
 import i18n from '../../../../../../translations/i18n';
 import {
   AudioVisualPublication,
@@ -28,9 +29,9 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
+import { ExtentField } from '../../../components/ExtentField';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 import { OutputModalActions } from '../OutputModalActions';
-import { ExtentField } from '../../../components/ExtentField';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;
@@ -266,16 +267,7 @@ export const AudioVisualPublicationModal = ({
                     {values.trackList.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
-                        <Box
-                          key={index}
-                          sx={{
-                            display: 'flex',
-                            gap: '0.5rem',
-                            alignItems: 'top',
-                            border: '1px solid lightgrey',
-                            p: '0.5rem',
-                            bgcolor: '#fefbf3',
-                          }}>
+                        <StyledMusicalWorkListDiv key={index}>
                           {values.trackList.length > 1 && (
                             <Box sx={{ display: 'flex', alignSelf: 'center' }}>
                               <IconButton
@@ -339,7 +331,7 @@ export const AudioVisualPublicationModal = ({
                             onClick={() => setRemoveTrackIndex(index)}
                             tooltip={t('registration.resource_type.artistic.remove_music_work')}
                           />
-                        </Box>
+                        </StyledMusicalWorkListDiv>
                       );
                     })}
                     <ConfirmDialog
