@@ -56,7 +56,7 @@ const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
     })
   ),
   extent: Yup.string().matches(
-    /^([0-5][0-9])([0-5][0-9])$/,
+    /^([0-5][0-9]):([0-5][0-9])$/,
     i18n.t('feedback.validation.invalid_format', {
       field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
       format: 'MM:SS',

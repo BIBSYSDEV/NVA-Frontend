@@ -116,7 +116,7 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
           })
         )
         .matches(
-          /^([0-5][0-9])([0-5][0-9])$/,
+          /^([0-5][0-9]):([0-5][0-9])$/,
           i18n.t('feedback.validation.invalid_format', {
             field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
             format: 'MM:SS',
@@ -331,6 +331,7 @@ export const AudioVisualPublicationModal = ({
                             fieldName={`${baseFieldName}.extent`}
                             mask="00:00"
                             dataTestId={`${dataTestId.registrationWizard.resourceType.artisticOutputDuration}-${index}`}
+                            required
                           />
                           <DeleteIconButton
                             sx={{ alignSelf: 'center' }}
