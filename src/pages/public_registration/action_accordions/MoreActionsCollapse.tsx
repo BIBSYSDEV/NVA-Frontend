@@ -52,7 +52,11 @@ export const MoreActionsCollapse = ({
           {isPublished && <UnpublishRegistration registration={registration} />}
           {isUnpublished && (
             <>
-              <RepublishRegistration registration={registration} registrationIsValid={registrationIsValid} />
+              <RepublishRegistration
+                registration={registration}
+                registrationIsValid={registrationIsValid}
+                refetchData={refetchData}
+              />
               <TerminateRegistration registration={registration} />
             </>
           )}

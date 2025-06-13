@@ -10,9 +10,14 @@ import { userHasAccessRight } from '../../../utils/registration-helpers';
 export interface RepublishRegistrationProps {
   registration: Registration;
   registrationIsValid: boolean;
+  refetchData: () => Promise<void>;
 }
 
-export const RepublishRegistration = ({ registration, registrationIsValid }: RepublishRegistrationProps) => {
+export const RepublishRegistration = ({
+  registration,
+  registrationIsValid,
+  refetchData,
+}: RepublishRegistrationProps) => {
   const { t } = useTranslation();
   const [openRepublishDialog, setOpenRepublishDialog] = useState(false);
   const toggleRepublishDialog = () => setOpenRepublishDialog(!openRepublishDialog);
@@ -52,13 +57,14 @@ export const RepublishRegistration = ({ registration, registrationIsValid }: Rep
           <ConfirmDialog
             open={openRepublishDialog}
             title={t('common.republish')}
-            onAccept={() =>
-              updateRegistrationStatusMutation.mutate({
+            onAccept={async () => {
+              await updateRegistrationStatusMutation.mutateAsync({
                 registrationIdentifier: registration.identifier,
                 updateStatusRequest: { type: 'RepublishPublicationRequest' },
                 onSuccess: toggleRepublishDialog,
-              })
-            }
+              });
+              await refetchData();
+            }}
             isLoading={updateRegistrationStatusMutation.isPending}
             confirmButtonLabel={t('common.republish')}
             cancelButtonLabel={t('common.cancel')}
