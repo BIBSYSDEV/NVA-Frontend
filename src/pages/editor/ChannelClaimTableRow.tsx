@@ -81,7 +81,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
     <TableRow sx={{ bgcolor: 'white' }}>
       <StyledTableCell aria-live="polite" aria-busy={pendingChannelQuery}>
         {pendingChannelQuery ? (
-          <Skeleton width={300} />
+          <Skeleton sx={{ width: '10rem' }} />
         ) : !!channelName ? (
           <Typography>{channelName}</Typography>
         ) : (
@@ -90,7 +90,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
       </StyledTableCell>
       <StyledTableCell aria-live="polite" aria-busy={organizationQuery.isPending}>
         {organizationQuery.isPending ? (
-          <Skeleton width={300} />
+          <Skeleton sx={{ width: '10rem' }} />
         ) : organizationName ? (
           <Typography>{organizationName}</Typography>
         ) : (

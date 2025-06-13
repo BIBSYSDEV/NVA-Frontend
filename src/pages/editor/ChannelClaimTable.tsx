@@ -25,7 +25,7 @@ export const ChannelClaimTable = ({ channelClaimList, canEdit = false }: Channel
     <Table>
       <TableHead>
         <TableRow sx={{ bgcolor: 'secondary.main' }}>
-          <TableCell sx={{ textWrap: 'nowrap' }}>
+          <TableCell>
             {channelType === 'publisher'
               ? t('editor.institution.channel_claims.publisher_in_channel_registry')
               : t('editor.institution.channel_claims.serial_publication_in_channel_registry')}
