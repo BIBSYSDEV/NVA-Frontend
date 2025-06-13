@@ -23,24 +23,14 @@ describe('getLicenseData()', () => {
     expect(resultWithUpperCase).toBe(LicenseUri.CC_BY_2);
   });
 
-  test('Returns RightsReserved license with https', () => {
-    const result = getLicenseData('https://rightsstatements.org/vocab/InC/1.0/');
-    expect(result?.id).toBe(LicenseUri.RightsReserved);
+  test('Returns copyright act license without trailing slash', () => {
+    const result = getLicenseData('https://nva.sikt.no/license/copyright-act/1.0');
+    expect(result?.id).toBe(LicenseUri.CopyrightAct);
   });
 
-  test('Returns RightsReserved license with http', () => {
-    const result = getLicenseData('http://rightsstatements.org/vocab/InC/1.0/');
-    expect(result?.id).toBe(LicenseUri.RightsReserved);
-  });
-
-  test('Returnes null when RightsReserved license lacks trailing slash', () => {
-    const result = getLicenseData('https://rightsstatements.org/vocab/InC/1.0');
-    expect(result).toBe(null);
-  });
-
-  test('Returnes null when RightsReserved license has invalid casing', () => {
-    const result = getLicenseData('https://rightsstatements.org/vocab/Inc/1.0/');
-    expect(result).toBe(null);
+  test('Returns copyright act license with trailing slash', () => {
+    const result = getLicenseData('https://nva.sikt.no/license/copyright-act/1.0/');
+    expect(result?.id).toBe(LicenseUri.CopyrightAct);
   });
 
   test('Returnes null when no matching license is found', () => {
