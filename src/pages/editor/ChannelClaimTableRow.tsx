@@ -23,7 +23,7 @@ import { getLanguageString } from '../../utils/translation-helpers';
 interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
   channelType: ChannelClaimType;
-  isOnSettingsPage: boolean;
+  canEdit: boolean;
 }
 
 const StyledTableCell = styled(TableCell)({
@@ -36,7 +36,7 @@ const StyledChip = styled(Chip)({
   },
 });
 
-export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettingsPage }: ChannelClaimTableRowProps) => {
+export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: ChannelClaimTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const channelId = claimedChannel.channelClaim.channel;
@@ -130,7 +130,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
           ))}
         </Box>
       </StyledTableCell>
-      {isOnSettingsPage && (
+      {canEdit && (
         <StyledTableCell align="center">
           {canDeleteChannelClaim && (
             <>

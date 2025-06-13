@@ -83,7 +83,7 @@ export const ChannelClaimTable = ({ channelClaimList, canEdit = false }: Channel
             key={claimedChannel.id}
             claimedChannel={claimedChannel}
             channelType={channelType}
-            isOnSettingsPage={canEdit}
+            canEdit={canEdit}
           />
         ))}
       </TableBody>
