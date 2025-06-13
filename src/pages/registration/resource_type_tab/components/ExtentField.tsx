@@ -9,14 +9,13 @@ interface MaskExtentInputProps extends MaskInputProps {
   mask: string;
 }
 
-const MaskExtentInput = forwardRef<HTMLElement, MaskExtentInputProps>(({ onChange, ...props }, ref) => {
-  const { mask, ...other } = props;
+const MaskExtentInput = forwardRef<HTMLElement, MaskExtentInputProps>(({ onChange, name, mask, ...props }, ref) => {
   return (
     <IMaskInput
-      {...other}
+      {...props}
       mask={mask}
       inputRef={ref}
-      onAccept={(value) => onChange({ target: { name: props.name, value: value.replaceAll(':', '') } })}
+      onAccept={(value) => onChange({ target: { name, value: value.replaceAll(':', '') } })}
     />
   );
 });
@@ -43,7 +42,7 @@ export const ExtentField = ({ fieldName, mask, dataTestId, placeholder = 'MM:SS'
           placeholder={placeholder}
           variant="filled"
           fullWidth
-          label={label ? label : t('registration.resource_type.artistic.extent_in_minutes')}
+          label={label ?? t('registration.resource_type.artistic.extent_in_minutes')}
           error={touched && !!error}
           helperText={<ErrorMessage name={field.name} />}
           data-testid={dataTestId}
@@ -51,7 +50,7 @@ export const ExtentField = ({ fieldName, mask, dataTestId, placeholder = 'MM:SS'
             input: {
               inputComponent: MaskExtentInput as any,
               inputProps: {
-                mask: mask,
+                mask,
               },
             },
           }}
