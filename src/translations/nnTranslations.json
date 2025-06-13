@@ -463,7 +463,7 @@
         "category_limitations": "Avgrensing for kategori",
         "category_limitations_helper_text": "<p>Kanaleigar kan velje om tilgangsavgrensingar skal gjelde for alle resultatkategoriar eller berre nokre utvalde.</p><heading>Publiseringsførespurnader</heading><p>For resultatkategoriar MED tilgangsavgrensing blir publiseringsførespurnader sendt til filkurator hos kanaleigar.</p><p>For resultatkategoriar UTAN tilgangsavgrensing, blir publiseringsførespurnader sendt til filkurator ved institusjonen som registrator er logga inn på.</p>",
         "channel_claim": "Kanaleigarskap",
-        "channel_claims_overview_description": "Oversikt over kanalar frå Kanalregisteret:",
+        "channel_claims_overview_description": "Kanalar med redaktør",
         "channel_claims_settings_description": "Administrer eigarskap og tilgangar til kanaler frå Kanalregisteret:",
         "channel_owner": "Kanaleigar",
         "channel_owner_helper_text": "<p>Institusjonen som har tatt eigarskap til kanalen (utgjevarinstitusjon).</p><p>Om ein kanal har feil kanaleigar, ta kontakt med institusjonen for å få retta feilen.</p>",
@@ -726,15 +726,15 @@
       "cc0": "<p>Sjå <link1>Åndsverksloven</link1> §3, §8, §11 og §14</p>"
     },
     "description": {
-      "cc0": "<p>Verket er frigitt til offentleg bruk, utan opphavsrettar, så langt lova tillèt.</p><p>Brukar du denne lisensen, last opp eit dokument der du grunngjev kvifor.</p>",
-      "cc_by": "<p>Du kan: kopiere, dele og endre verket for alle typar bruk, også kommersielle.</p><p>Du må: gi riktig kreditering og seie frå om endringar.</p>",
-      "cc_by_nc": "<p>Du kan: kopiere, dele og endre verket, men berre for ikkje-kommersielle formål.</p><p>Du må: gi riktig kreditering og seie frå om endringar.</p>",
-      "cc_by_nc_nd": "<p>Du kan: kopiere og dele verket for ikkje-kommersielle formål.</p><p>Du kan ikkje: endre eller tilpasse verket.</p><p>Du må: gi riktig kreditering.</p>",
-      "cc_by_nc_sa": "<p>Du kan: kopiere, dele og endre verket for ikkje-kommersielle formål.</p><p>Du må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
-      "cc_by_nd": "<p>Du kan: kopiere og dele verket for alle typar bruk, også kommersielle.</p><p>Du kan ikkje: endre eller tilpasse verket.</p><p>Du må: gi riktig kreditering.</p>",
-      "cc_by_sa": "<p>Du kan: kopiere, dele og endre verket for alle typar bruk, også kommersielle.</p><p>Du må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
-      "older_licenses": "Skal du registrere eit eldre forskingsresultat som blei publisert med ein tidlegare lisensversjon, trykk på \"Vis alle tidlegare versjonar\" i nedtrekksmenyen for å finne riktig lisens.",
-      "rights_reserved": "<p>Dette verket har ikkje ein lisens som tydeleggjer rettar for gjenbruk. Du må sjølv kontakte opphavspersonen for å finne ut om, og korleis, du kan gjenbruke arbeidet.</p>"
+      "cc0": "<p>Verket er frigitt til offentleg bruk, utan opphavsrettar, så langt lova tillèt.</p><p>Blir denne lisensen brukt, last opp eit dokument der du grunngjev kvifor.</p>",
+      "cc_by": "<p>Brukaren kan: kopiere, dele og endre verket for alle typar bruk, også kommersielle.</p><p>Brukaren må: gi riktig kreditering og seie frå om endringar.</p>",
+      "cc_by_nc": "<p>Brukaren kan: kopiere, dele og endre verket, men berre for ikkje-kommersielle formål.</p><p>Brukaren må: gi riktig kreditering og seie frå om endringar.</p>",
+      "cc_by_nc_nd": "<p>Brukaren kan: kopiere og dele verket for ikkje-kommersielle formål.</p><p>Brukaren kan ikkje: endre eller tilpasse verket.</p><p>Brukaren må: gi riktig kreditering.</p>",
+      "cc_by_nc_sa": "<p>Brukaren kan: kopiere, dele og endre verket for ikkje-kommersielle formål.</p><p>Brukaren må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
+      "cc_by_nd": "<p>Brukaren kan: kopiere og dele verket for alle typar bruk, også kommersielle.</p><p>Brukaren kan ikkje: endre eller tilpasse verket.</p><p>Brukaren må: gi riktig kreditering.</p>",
+      "cc_by_sa": "<p>Brukaren kan: kopiere, dele og endre verket for alle typar bruk, også kommersielle.</p><p>Brukaren må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
+      "copyright_act": "<p>Brukaren kan:</p><ul><li>lese og lenke til materialet, og sitere frå materialet i samsvar med god skikk, og i den grad formålet tilseier det</li><li>kopiere materialet kun til privat bruk</li></ul><p>Brukaren må: gi riktig kreditering</p>",
+      "older_licenses": "Skal du registrere eit eldre forskingsresultat som blei publisert med ein tidlegare lisensversjon, trykk på \"Vis alle tidlegare versjonar\" i nedtrekksmenyen for å finne riktig lisens."
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -745,8 +745,8 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "older_licenses": "Eldre lisensar",
-      "rights_reserved": "Utgjevaren sine vilkår"
+      "copyright_act": "Bruksvilkår etter åndsverkslova",
+      "older_licenses": "Eldre lisensar"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
@@ -756,10 +756,10 @@
       "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/{{version}}/deed.no",
       "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}/deed.no",
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no",
-      "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no"
     },
-    "read_more_about_license": "Les meir om {{license}}"
+    "read_more_about_license": "Les meir om {{license}}",
+    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Etter <link1>åndsverklova</link1> gjeld følgjande vilkår for bruk av materialet:</p><ul><li>Du har lov til å lese og lenkje til materialet, og kan sitere frå materialet i samsvar med god skikk, og i den grad formålet tilseier det.</li><li>Du har ikkje lov til å publisere materialet på nytt, eller på annan måte kopiere materialet (med mindre det er til privat bruk).</li></ul><p>Dersom du ønskjer å bruke materialet på annan måte, må du sjølv innhente samtykke direkte frå rettshavar.</p><hr/><p>Dersom du er rettshavar til eit åndsverk som har fått denne lisensen og er ueinig i at materialet kan brukast som skildra over, må du ta kontakt med utgjevaren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikkje er mogleg å kontakte utgjevaren, kan du ta kontakt med tenesteleverandøren for NVA, Sikt: <link2>Henvending om opphavsrett</link2>.</p>"
   },
   "log": {
     "hidden_file_added": "Skjult fil lagt til",
@@ -1542,7 +1542,7 @@
       "resource_is_a_reference": "Ressursen er ein referanse og har ingen filer eller lenkjer å publisere",
       "select_availability": "Vel tilgjengelegheit",
       "show_all_older_versions": "Vis alle tidlegare versjonar",
-      "version_helper_text": "<p>Kva for versjon som kan gjerast ope tilgjengeleg er avhengig av publiseringsavtalen med forlag/utgjevar.</p><p>Last opp akseptert versjon, dersom publisert versjon ikkje er ope publisert med <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading><p>Forfattars siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikkje forlagets sidetal og grafiske stil, eller eventuelle redaksjonelle omskrivingar, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den blir presentert i eit tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere redaksjonelle forbetringar, og forlagets grafiske profil. Vanlegvis tilgjengeleg på ein utgjevar sitt nettstad, i PDF-format. Forlaget har bestemt lisens, du må velje den same som artikkelen er publisert med.</p>"
+      "version_helper_text": "<p>Last opp akseptert versjon, dersom publisert versjon ikkje er ope publisert med <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading><p>Forfattars siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikkje forlagets sidetal og grafiske stil, eller eventuelle redaksjonelle omskrivingar, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den blir presentert i eit tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere redaksjonelle forbetringar, og forlagets grafiske profil. Vanlegvis tilgjengeleg på ein utgjevar sitt nettstad, i PDF-format. Forlaget har bestemt lisens, du må velje den same som artikkelen er publisert med.</p>"
     },
     "heading": {
       "contributors": "Bidragsytarar",
@@ -2086,7 +2086,7 @@
         "institution_help_description": "<0>Har du tekniske problem?</0><0>Sjå og eventuelt meld inn feil til brukarstøtte</0>"
       }
     },
-    "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål",
+    "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål.",
     "year_published": "Publiseringsår"
   },
   "search": {
@@ -2175,7 +2175,9 @@
       "approve_nvi_candidate": "Godkjenn resultat",
       "approve_nvi_candidate_description": "<p>Kontroll av forskingsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporterast. Sjå <hyperlink>Rapporteringsinstruksen</hyperlink> for meir informasjon.</p>",
       "approve_rejected_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen skal rapporterast. Då vert også grunngjevinga for avvisinga fjerna.",
+      "candidates_for_control": "Kandidatar til kontroll",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
+      "controlled": "Kontrollert",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Antologiar med teljande kapittel",
         "anthology_without_chapter": "Antologiar utan kapittel",
@@ -2190,9 +2192,10 @@
       "institution_nvi_status": "Status NVI-rapportering",
       "message_description": "Har du relevante opplysingar for kontrollen, legg inn ein kommentar. Kommentaren er synleg for andre NVI-kuratorar med redigeringstilgang.",
       "next_candidate": "Gå til neste kandidat",
-      "no_nvi_candidates": "Ingen NVI-kandidatar",
+      "no_nvi_candidates": "Du har ingen NVI-kandidatar for dette søket.",
       "note": "Kommentar",
       "nvi_control": "NVI-kontroll (Norsk vitskapsindeks)",
+      "nvi_reporting_status": "Status NVI-rapportering",
       "previous_candidate": "Gå til førre kandidat",
       "problem_description": "<p>NVI-kandidaten har følgjande manglar:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatusar blir oppheva når ein uidentifisert person blir identifisert.</p>",
       "publication_points": "Publiseringspoeng",
