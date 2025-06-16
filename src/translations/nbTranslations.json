@@ -430,7 +430,7 @@
         "Curator-thesis-embargo": "Studentembargo",
         "Doi-Curator": "DOI",
         "Nvi-Curator": "NVI",
-        "Publishing-Curator": "Publisering",
+        "Publishing-Curator": "Filgodkjenning",
         "Support-Curator": "Brukerstøtte"
       },
       "search_for_curator": "Søk etter kurator",
@@ -845,7 +845,7 @@
         "DoiRequest": "DOI",
         "FilesApprovalThesis": "Studentoppgave",
         "GeneralSupportCase": "Kuratorstøtte",
-        "PublishingRequest": "Publisering"
+        "PublishingRequest": "Filgodkjenning"
       }
     },
     "my_page": "Min side",
