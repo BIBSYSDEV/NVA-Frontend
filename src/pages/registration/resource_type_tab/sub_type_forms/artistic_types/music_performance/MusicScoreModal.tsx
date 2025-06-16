@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, styled, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -176,3 +176,12 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
     </Dialog>
   );
 };
+
+export const StyledMusicalWorkListDiv = styled(Box)({
+  display: 'flex',
+  gap: '0.5rem',
+  alignItems: 'top',
+  border: '1px solid lightgrey',
+  padding: '0.5rem',
+  backgroundColor: '#FEFBF4',
+});

@@ -1,5 +1,4 @@
 import AddIcon from '@mui/icons-material/Add';
-
 import {
   Box,
   Button,
@@ -30,7 +29,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
-import { StyledMusicalWorkListDiv } from '../../../../../../components/styled/Wrappers';
 import i18n from '../../../../../../translations/i18n';
 import { emptyInstant, emptyPeriod, emptyPlace } from '../../../../../../types/common.types';
 import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
@@ -42,6 +40,7 @@ import { ExtentField } from '../../../components/ExtentField';
 import { MusicalWorkMoveButtons } from '../../../components/MusicalWorkMoveButtons';
 import { PeriodFields } from '../../../components/PeriodFields';
 import { OutputModalActions } from '../OutputModalActions';
+import { StyledMusicalWorkListDiv } from './MusicScoreModal';
 
 interface ConcertModalProps {
   concert?: Concert;
@@ -104,14 +103,14 @@ const validationSchema = Yup.object<YupShape<Concert>>({
   extent: Yup.string()
     .required(
       i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+        field: i18n.t('registration.resource_type.artistic.extent'),
       })
     )
     .matches(
       /^([0-9][0-9]):([0-5][0-9]):([0-5][0-9])$/,
       i18n.t('feedback.validation.invalid_format', {
-        field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-        format: 'TT:MM:SS',
+        field: i18n.t('registration.resource_type.artistic.extent'),
+        format: i18n.t('registration.resource_type.artistic.music_score_format.hours'),
       })
     ),
   concertProgramme: Yup.array()
@@ -248,7 +247,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                   fieldName="extent"
                   mask="00:00:00"
                   dataTestId={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
-                  placeholder="TT:MM:SS"
+                  placeholder={t('registration.resource_type.artistic.music_score_format.hours')}
                   label={t('registration.resource_type.artistic.extent')}
                   required
                 />

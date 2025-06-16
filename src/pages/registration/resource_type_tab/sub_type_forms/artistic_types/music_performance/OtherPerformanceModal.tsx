@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
-import { StyledMusicalWorkListDiv } from '../../../../../../components/styled/Wrappers';
 import i18n from '../../../../../../translations/i18n';
 import { emptyPlace } from '../../../../../../types/common.types';
 import {
@@ -18,6 +17,7 @@ import { DeleteIconButton } from '../../../../../messages/components/DeleteIconB
 import { ExtentField } from '../../../components/ExtentField';
 import { MusicalWorkMoveButtons } from '../../../components/MusicalWorkMoveButtons';
 import { OutputModalActions } from '../OutputModalActions';
+import { StyledMusicalWorkListDiv } from './MusicScoreModal';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;
@@ -50,7 +50,7 @@ const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
     /^([0-5][0-9]):([0-5][0-9])$/,
     i18n.t('feedback.validation.invalid_format', {
       field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-      format: 'MM:SS',
+      format: i18n.t('registration.resource_type.artistic.music_score_format.minutes'),
     })
   ),
   musicalWorks: Yup.array()

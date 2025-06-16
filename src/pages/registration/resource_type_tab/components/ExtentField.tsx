@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import { BaseTextFieldProps, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,27 +15,24 @@ const MaskExtentInput = forwardRef<HTMLElement, MaskExtentInputProps>(({ onChang
       {...props}
       inputRef={ref}
       onAccept={(value) => {
-        onChange({ target: { name: props.name, value: value } });
+        onChange({ target: { name: props.name, value } });
       }}
     />
   );
 });
 MaskExtentInput.displayName = 'MaskExtentInput';
 
-interface ExtentFieldProps {
+interface ExtentFieldProps extends BaseTextFieldProps {
   fieldName: string;
   mask: string;
   dataTestId: string;
-  placeholder?: string;
-  label?: string;
-  required?: boolean;
 }
 
 export const ExtentField = ({
   fieldName,
   mask,
   dataTestId,
-  placeholder = 'MM:SS',
+  placeholder,
   label,
   required = false,
 }: ExtentFieldProps) => {
@@ -48,7 +45,7 @@ export const ExtentField = ({
           {...field}
           value={field.value ?? ''}
           sx={{ maxWidth: '15rem' }}
-          placeholder={placeholder}
+          placeholder={placeholder ?? t('registration.resource_type.artistic.music_score_format.minutes')}
           variant="filled"
           required={required}
           fullWidth

@@ -15,7 +15,6 @@ import { useTranslation } from 'react-i18next';
 import { IMaskInput } from 'react-imask';
 import * as Yup from 'yup';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
-import { StyledMusicalWorkListDiv } from '../../../../../../components/styled/Wrappers';
 import i18n from '../../../../../../translations/i18n';
 import {
   AudioVisualPublication,
@@ -30,6 +29,7 @@ import { ExtentField } from '../../../components/ExtentField';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 import { MusicalWorkMoveButtons } from '../../../components/MusicalWorkMoveButtons';
 import { OutputModalActions } from '../OutputModalActions';
+import { StyledMusicalWorkListDiv } from './MusicScoreModal';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;
@@ -118,7 +118,7 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
           /^([0-5][0-9]):([0-5][0-9])$/,
           i18n.t('feedback.validation.invalid_format', {
             field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-            format: 'MM:SS',
+            format: i18n.t('registration.resource_type.artistic.music_score_format.minutes'),
           })
         ),
     })
