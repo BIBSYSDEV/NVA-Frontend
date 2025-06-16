@@ -109,7 +109,6 @@ export type RegistrationOperation =
   | 'unpublish'
   | 'republish'
   | 'terminate'
-  | 'update-including-files'
   | 'publishing-request-create'
   | 'doi-request-create'
   | 'doi-request-approve'
