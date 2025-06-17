@@ -10,7 +10,7 @@ export const CustomersAutocomplete = (
   const { t } = useTranslation();
 
   const customersQuery = useFetchCustomers();
-  const customers = sortCustomerInstitutions(customersQuery.data?.data.customers ?? []);
+  const customers = sortCustomerInstitutions(customersQuery.data?.customers ?? []);
 
   return (
     <Autocomplete

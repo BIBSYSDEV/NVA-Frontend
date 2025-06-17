@@ -9,7 +9,7 @@ export const AdminCustomerInstitutions = () => {
   const { t } = useTranslation();
 
   const customersQuery = useFetchCustomers();
-  const customers = customersQuery.data?.data.customers ?? [];
+  const customers = customersQuery.data?.customers ?? [];
 
   return (
     <>
