@@ -49,7 +49,7 @@ export const MoreActionsCollapse = ({
 
       {openMoreActions && (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {isPublished && <UnpublishRegistration registration={registration} />}
+          {isPublished && <UnpublishRegistration registration={registration} refetchData={refetchData} />}
           {isUnpublished && (
             <>
               <RepublishRegistration
