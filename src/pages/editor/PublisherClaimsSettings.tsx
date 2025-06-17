@@ -14,7 +14,6 @@ import { RootState } from '../../redux/store';
 import { filterChannelClaims } from '../../utils/customer-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
-import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
 
 export const PublisherClaimsSettings = () => {
@@ -59,8 +58,6 @@ export const PublisherClaimsSettings = () => {
           ),
         }}
       />
-
-      <ChannelClaimFilter />
 
       <ChannelClaimContext.Provider
         value={{ refetchClaimedChannels: channelClaimsQuery.refetch, channelType: 'publisher' }}>

@@ -14,7 +14,6 @@ import { RootState } from '../../redux/store';
 import { filterChannelClaims } from '../../utils/customer-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AddChannelClaimDialog } from './AddChannelClaimDialog';
-import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
 
 export const SerialPublicationClaimsSettings = () => {
@@ -58,8 +57,6 @@ export const SerialPublicationClaimsSettings = () => {
           ),
         }}
       />
-
-      <ChannelClaimFilter />
 
       <ChannelClaimContext.Provider
         value={{ refetchClaimedChannels: channelClaimsQuery.refetch, channelType: 'serial-publication' }}>

@@ -46,7 +46,6 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: C
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const isPublisherChannel = channelType === 'publisher';
   const publisherQuery = useFetchPublisher(isPublisherChannel ? channelId : '');
-  const canDeleteChannelClaim = claimedChannel.claimedBy.organizationId === user?.topOrgCristinId;
 
   const serialPublicationQuery = useQuery({
     enabled: !isPublisherChannel,
@@ -132,31 +131,27 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: C
       </StyledTableCell>
       {canEdit && (
         <StyledTableCell align="center">
-          {canDeleteChannelClaim && (
-            <>
-              <Tooltip title={t('common.remove')}>
-                <IconButton
-                  data-testid={dataTestId.basicData.deleteChannelClaimButton(channelIdentifier)}
-                  onClick={() => setOpenConfirmDialog(true)}
-                  size="small"
-                  sx={{ width: '1.5rem', height: '1.5rem', bgcolor: 'secondary.main' }}>
-                  <CloseOutlinedIcon fontSize="inherit" />
-                </IconButton>
-              </Tooltip>
-              <ConfirmDialog
-                open={openConfirmDialog}
-                title={t('editor.institution.channel_claims.delete_channel_claim')}
-                isLoading={deleteChannelClaimMutation.isPending}
-                onAccept={deleteChannelClaimMutation.mutate}
-                onCancel={() => setOpenConfirmDialog(false)}>
-                <Trans
-                  i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
-                  values={{ name: channelName }}
-                  components={{ p: <Typography />, span: <span style={{ fontWeight: 'bold' }} /> }}
-                />
-              </ConfirmDialog>
-            </>
-          )}
+          <Tooltip title={t('common.remove')}>
+            <IconButton
+              data-testid={dataTestId.basicData.deleteChannelClaimButton(channelIdentifier)}
+              onClick={() => setOpenConfirmDialog(true)}
+              size="small"
+              sx={{ width: '1.5rem', height: '1.5rem', bgcolor: 'secondary.main' }}>
+              <CloseOutlinedIcon fontSize="inherit" />
+            </IconButton>
+          </Tooltip>
+          <ConfirmDialog
+            open={openConfirmDialog}
+            title={t('editor.institution.channel_claims.delete_channel_claim')}
+            isLoading={deleteChannelClaimMutation.isPending}
+            onAccept={deleteChannelClaimMutation.mutate}
+            onCancel={() => setOpenConfirmDialog(false)}>
+            <Trans
+              i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
+              values={{ name: channelName }}
+              components={{ p: <Typography />, span: <span style={{ fontWeight: 'bold' }} /> }}
+            />
+          </ConfirmDialog>
         </StyledTableCell>
       )}
     </TableRow>
