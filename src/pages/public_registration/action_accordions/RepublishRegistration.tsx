@@ -64,7 +64,6 @@ export const RepublishRegistration = ({
               await updateRegistrationStatusMutation.mutateAsync({
                 registrationIdentifier: registration.identifier,
                 updateStatusRequest: { type: 'RepublishPublicationRequest' },
-                onSuccess: toggleRepublishDialog,
               });
               await refetchData();
               if (searchParams.has(doNotRedirectQueryParam)) {
@@ -73,6 +72,7 @@ export const RepublishRegistration = ({
                   return params;
                 });
               }
+              toggleRepublishDialog();
             }}
             isLoading={updateRegistrationStatusMutation.isPending}
             confirmButtonLabel={t('common.republish')}
