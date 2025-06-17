@@ -24,6 +24,7 @@ import { DegreeType } from '../../types/publicationFieldNames';
 import { PublicationInstanceType, Publisher, SerialPublication } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { removeTrailingYearPathFromUrl } from '../../utils/general-helpers';
+import { OrganizationSearchField } from '../basic_data/app_admin/OrganizationSearchField';
 import { SearchForSerialPublication } from '../search/facet_search_fields/SearchForSerialPublication';
 
 const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
@@ -53,7 +54,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
   };
 
   const addChannelClaimMutation = useMutation({
-    mutationFn: (channelId: string) => {
+    mutationFn: ({ channelId: string, customerId: string }) => {
       if (!customer?.id || !channelId) {
         return Promise.reject(new Error('Customer ID or Channel ID is missing'));
       }
@@ -105,18 +106,20 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
             closeDialogAndResetSelectedChannel();
           } catch {}
         }}>
-        <DialogContent>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {isPublisherChannelClaim ? (
             <Trans
               i18nKey="editor.institution.channel_claims.add_publisher_channel_claim_description"
-              components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
+              components={{ p: <Typography /> }}
             />
           ) : (
             <Trans
               i18nKey="editor.institution.channel_claims.add_serial_publication_channel_claim_description"
-              components={{ p: <Typography sx={{ mb: '1rem' }} /> }}
+              components={{ p: <Typography /> }}
             />
           )}
+
+          <OrganizationSearchField />
 
           {isPublisherChannelClaim ? (
             <SearchForPublisher
@@ -138,7 +141,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
             />
           ) : (
             <SearchForSerialPublication
-              searchMode={'serial-publication'}
+              searchMode="serial-publication"
               onSelectSerialPublication={(serialPublication) => setSelectedSerialPublication(serialPublication)}
               autocompleteProps={{
                 value: selectedSerialPublication,
@@ -152,19 +155,20 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
               }}
             />
           )}
-          <Typography sx={{ mt: '1rem' }} gutterBottom>
-            {t('editor.institution.channel_claims.claim_category_restriction')}:
-          </Typography>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-            {selectedCategories.map((category) => (
-              <Chip
-                key={category}
-                variant="filled"
-                color="primary"
-                label={t(`registration.publication_types.${category}`)}
-              />
-            ))}
-          </Box>
+
+          <div>
+            <Typography gutterBottom>{t('editor.institution.channel_claims.claim_category_restriction')}:</Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+              {selectedCategories.map((category) => (
+                <Chip
+                  key={category}
+                  variant="filled"
+                  color="primary"
+                  label={t(`registration.publication_types.${category}`)}
+                />
+              ))}
+            </Box>
+          </div>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center' }}>
           <Button onClick={closeDialogAndResetSelectedChannel} data-testid={dataTestId.confirmDialog.cancelButton}>
