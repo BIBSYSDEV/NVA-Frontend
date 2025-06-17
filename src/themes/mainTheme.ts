@@ -216,6 +216,13 @@ export const mainTheme = createTheme(
       MuiDatePicker: {
         defaultProps: {
           views: ['year', 'month', 'day'],
+          /*
+           * Use fallback to the old DOM structure for DatePicker since the new way introduces
+           * problems to Cypress tests, where they are not able to enter a value to the input
+           * field as it is hidden. The old DOM structure has som accessibility issues.
+           * Documentation: https://mui.com/x/migration/migration-pickers-v7/#new-dom-structure-for-the-field
+           */
+          enableAccessibleFieldDOMStructure: false, // TODO: Remove this when we find a solution to the Cypress issue
         },
       },
       MuiMenu: {
@@ -344,6 +351,22 @@ export const mainTheme = createTheme(
         },
       },
       MuiFilledInput: {
+        styleOverrides: {
+          root: {
+            backgroundColor: Color.White,
+            '&.Mui-focused': {
+              backgroundColor: Color.White,
+            },
+            '&:hover': {
+              backgroundColor: Color.White,
+            },
+            '&.Mui-disabled': {
+              backgroundColor: Color.White,
+            },
+          },
+        },
+      },
+      MuiPickersFilledInput: {
         styleOverrides: {
           root: {
             backgroundColor: Color.White,

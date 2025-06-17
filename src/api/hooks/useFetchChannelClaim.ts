@@ -1,11 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { getIdentifierFromId, removeTrailingYearPathFromUrl } from '../../utils/general-helpers';
+import { PublicationChannelApiPath } from '../apiPaths';
 import { fetchChannelClaim } from '../customerInstitutionsApi';
 
 export const useFetchChannelClaim = (id = '', { enabled = !!id } = {}) => {
   const { t } = useTranslation();
-  const channelIdentifier = getIdentifierFromId(removeTrailingYearPathFromUrl(id));
+
+  const isChannelId =
+    id.includes(PublicationChannelApiPath.Publisher) || id.includes(PublicationChannelApiPath.SerialPublication);
+
+  const channelIdentifier = isChannelId ? getIdentifierFromId(removeTrailingYearPathFromUrl(id)) : '';
 
   return useQuery({
     queryKey: ['channelClaim', channelIdentifier],

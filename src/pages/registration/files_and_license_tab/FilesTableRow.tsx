@@ -52,6 +52,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { activeLicenses, getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
 import {
   allowsFileUpload,
+  isDegree,
   isOpenFile,
   isPendingOpenFile,
   userIsValidImporter,
@@ -158,11 +159,10 @@ export const FilesTableRow = ({
   const canDeleteFile = hasFileAccessRight(file, 'delete') || canEditImportCandidateFile;
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
 
-  const categorySupportsFiles = allowsFileUpload(
-    customer,
-    values.entityDescription?.reference?.publicationInstance?.type
-  );
+  const category = values.entityDescription?.reference?.publicationInstance?.type;
+  const categorySupportsFiles = allowsFileUpload(customer, category);
   const canSelectOpenFile = categorySupportsFiles || hasCuratorRole(user);
+  const canUploadHiddenFile = isDegree(category) ? user?.isThesisCurator : user?.isPublishingCurator;
 
   return (
     <>
@@ -255,7 +255,7 @@ export const FilesTableRow = ({
                     {t('registration.files_and_license.file_type.internal_file')}
                   </StyledFileTypeMenuItemContent>
                 </MenuItem>
-                {(user?.isPublishingCurator || field.value === FileType.HiddenFile) && (
+                {(canUploadHiddenFile || field.value === FileType.HiddenFile) && (
                   <MenuItem value={FileType.HiddenFile}>
                     <StyledFileTypeMenuItemContent>
                       <VisibilityOffOutlinedIcon fontSize="small" />
@@ -358,11 +358,9 @@ export const FilesTableRow = ({
 
                               return selectedLicense ? (
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                  <img
-                                    style={{ width: '5rem' }}
-                                    src={selectedLicense.logo}
-                                    alt={selectedLicense.name}
-                                  />
+                                  {selectedLicense.logo && (
+                                    <img style={{ width: '5rem' }} src={selectedLicense.logo} alt="" />
+                                  )}
                                   <span>{selectedLicense.name}</span>
                                 </Box>
                               ) : null;
@@ -385,7 +383,7 @@ export const FilesTableRow = ({
                             dense
                             sx={{ gap: '1rem' }}>
                             <ListItemIcon>
-                              <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                              <img style={{ width: '5rem' }} src={license.logo} alt="" />
                             </ListItemIcon>
                             <ListItemText>
                               <Typography>{license.name}</Typography>

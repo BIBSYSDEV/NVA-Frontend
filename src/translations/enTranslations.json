@@ -430,7 +430,7 @@
         "Curator-thesis-embargo": "Student embargo",
         "Doi-Curator": "DOI",
         "Nvi-Curator": "NVI",
-        "Publishing-Curator": "Publishing",
+        "Publishing-Curator": "File approval",
         "Support-Curator": "User support"
       },
       "search_for_curator": "Search for curator",
@@ -463,7 +463,7 @@
         "category_limitations": "Limitations for category",
         "category_limitations_helper_text": "<p>Channel owners can choose whether access restrictions should apply to all result categories or just selected ones.</p><heading>Publication Requests</heading><p>For result categories WITH access restrictions, publication requests are sent to the file curator at the channel owner.</p><p>For result categories WITHOUT access restrictions, publication requests are sent to the file curator at the institution where the registrant is logged in.</p>",
         "channel_claim": "Channel ownership",
-        "channel_claims_overview_description": "Overview of channels from the Channel registry:",
+        "channel_claims_overview_description": "Channels with editor",
         "channel_claims_settings_description": "Administer ownership and access to channels from the Channel registry:",
         "channel_owner": "Channel owner",
         "channel_owner_helper_text": "<p>The institution that has taken ownership of the channel (publishing institution).</p><p>If a channel has the wrong channel owner, contact the institution to correct the error.</p>",
@@ -515,7 +515,7 @@
     },
     "retention_strategy": {
       "creator_can_override_rrs_text": "<0>The institution has made it possible for the registrar to choose not to follow the institution's rights retention strategy (RRS). By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S.</0></0> <1>In NVA, the registrar removes RRS from the accepted version of the file in the registration of a scientific article. The RRS checkbox appears by clicking on the arrow icon under the accepted version of the file. By removing the check from RRS, the selected licence on the file is removed and the licence must be selected again.</1>",
-      "curator_can_override_rrs_text": "<0>The publishing curator has access to set that files do not follow the institution's rights retention strategy (RRS).</0> <0>If the registrar does not wish to follow the institution's rights retention strategy (RRS), look at the terms for not following RRS on the information page about the institution's rights retention strategy.</0> <1>By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S</0>.</1>",
+      "curator_can_override_rrs_text": "<0>The file curator has access to set that files do not follow the institution's rights retention strategy (RRS).</0> <0>If the registrar does not wish to follow the institution's rights retention strategy (RRS), look at the terms for not following RRS on the information page about the institution's rights retention strategy.</0> <1>By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S</0>.</1>",
       "customer_has_no_rrs": "<0>The institution has not provided a rights retention strategy (RRS) in NVA.</0> <0>Without an institutional rights retention strategy, it is up to the registrar to set the correct licence on the accepted version of files in the registration of scientific articles.</0> <1>It is up to the registrar to potentially mark whether the publication should follow an RRS. By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S.</0></1> <0>If the publication is funded by an actor that requires adherence to RRS (ref. Plan S), then RRS must be set. In NVA, the registrar sets RRS on the accepted version of the file in the registration of a scientific article. The RRS checkbox appears by clicking on the arrow icon under the accepted version of the file. By checking the box for RRS, the licence for the file is set to CC-BY.</0>",
       "customer_has_rrs_text": "<0>The institution has provided a rights retention strategy (RRS) in NVA.</0> <0>The CC-BY licence is set when you choose the accepted version of the file in the registration of a scientific article in NVA.</0>",
       "possible_not_to_follow_rrs": "Possible to not follow the institution's rights retention policy",
@@ -726,15 +726,15 @@
       "cc0": "<p>See the <link1>Copyright Act</link1> §§3, 8, 11, and 14</p>"
     },
     "description": {
-      "cc0": "<p>The work is released for public use, without copyright, as far as the law allows.</p><p>If you use this licence, upload a document explaining why.</p>",
-      "cc_by": "<p>You may: copy, share, and modify the work for all types of use, including commercial.</p><p>You must: provide appropriate credit and indicate changes.</p>",
-      "cc_by_nc": "<p>You may: copy, share, and modify the work, but only for non-commercial purposes.</p><p>You must: provide appropriate credit and indicate changes.</p>",
-      "cc_by_nc_nd": "<p>You may: copy and share the work for non-commercial purposes.</p><p>You may not: modify or adapt the work.</p><p>You must: provide appropriate credit.</p>",
-      "cc_by_nc_sa": "<p>You may: copy, share, and modify the work for non-commercial purposes.</p><p>You must: provide appropriate credit, indicate changes, and use the same licence for the new work.</p>",
-      "cc_by_nd": "<p>You may: copy and share the work for all types of use, including commercial.</p><p>You may not: modify or adapt the work.</p><p>You must: provide appropriate credit.</p>",
-      "cc_by_sa": "<p>You may: copy, share, and modify the work for all types of use, including commercial.</p><p>You must: provide appropriate credit, indicate changes, and use the same licence for the new work.</p>",
-      "older_licenses": "If you need to register an older research result that was published with a previous licence version, click on \"Show all previous versions\" in the dropdown menu to find the correct licence",
-      "rights_reserved": "<p>This work does not have a licence that clarifies rights for reuse. You must contact the creator yourself to find out if, and how, you can reuse the work.</p>"
+      "cc0": "<p>The work is released for public use, without copyright, as far as the law allows.</p><p>If this licence is used, upload a document explaining why.</p>",
+      "cc_by": "<p>The user may: copy, share, and modify the work for all types of use, including commercial.</p><p>The user must: provide appropriate credit and indicate changes.</p>",
+      "cc_by_nc": "<p>The user may: copy, share, and modify the work, but only for non-commercial purposes.</p><p>The user must: provide appropriate credit and indicate changes.</p>",
+      "cc_by_nc_nd": "<p>The user may: copy and share the work for non-commercial purposes.</p><p>The user may not: modify or adapt the work.</p><p>The user must: provide appropriate credit.</p>",
+      "cc_by_nc_sa": "<p>The user may: copy, share, and modify the work for non-commercial purposes.</p><p>The user must: provide appropriate credit, indicate changes, and use the same licence for the new work.</p>",
+      "cc_by_nd": "<p>The user may: copy and share the work for all types of use, including commercial.</p><p>The user may not: modify or adapt the work.</p><p>The user must: provide appropriate credit.</p>",
+      "cc_by_sa": "<p>The user may: copy, share, and modify the work for all types of use, including commercial.</p><p>The user must: provide appropriate credit, indicate changes, and use the same licence for the new work.</p>",
+      "copyright_act": "<p>The user may: </p><ul><li>Read and link to the material, and cite from the material in accordance with fair practice and to the extent justified by the purpose.</li><li>Copy the material only for private use.</li></ul><p>The user must: provide appropriate credit.</p>",
+      "older_licenses": "If you need to register an older research result that was published with a previous licence version, click on \"Show all previous versions\" in the dropdown menu to find the correct licence"
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -745,8 +745,8 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "older_licenses": "Older licences",
-      "rights_reserved": "Publisher's terms"
+      "copyright_act": "Terms of Use under the Copyright Act",
+      "older_licenses": "Older licences"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0",
@@ -756,10 +756,10 @@
       "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/{{version}}",
       "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}",
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}",
-      "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}"
     },
-    "read_more_about_license": "Read more about {{license}}"
+    "read_more_about_license": "Read more about {{license}}",
+    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>According to the <link1>Copyright Act</link1>, the following terms apply for the use of the material:</p><ul><li>You are allowed to read and link to the material and may cite from the material in accordance with fair practice and to the extent justified by the purpose.</li><li>You are not allowed to republish the material or otherwise copy it (unless it is for private use).</li></ul><p>If you wish to use the material in another way, you must obtain permission directly from the copyright holder.</p><hr/><p>If you are the copyright holder of a work that has been assigned this licence and disagree with the described usage, you must contact the publisher (institution or journal) that has published it.</p><p>If it is not possible to contact the publisher, you can contact the service provider for NVA, Sikt: <link2>Copyright Inquiries</link2>.</p>"
   },
   "log": {
     "hidden_file_added": "Hidden file added",
@@ -845,7 +845,7 @@
         "DoiRequest": "DOI",
         "FilesApprovalThesis": "Student thesis",
         "GeneralSupportCase": "Curator support",
-        "PublishingRequest": "Publishing request"
+        "PublishingRequest": "File approval"
       }
     },
     "my_page": "My page",
@@ -947,12 +947,12 @@
       "not_customer": "You have no roles because your institution is unknown to the application.",
       "nvi_curator": "NVI curator",
       "nvi_curator_description": "Can view and process NVI candidates.",
-      "publishing_curator": "Publishing curator",
+      "publishing_curator": "File curator",
       "publishing_curator_description": "Can view and handle publishing requests.",
       "support_curator": "User support curator",
       "support_curator_description": "Can view and handle user support requests.",
       "thesis_curator": "Student file curator",
-      "thesis_curator_description": "Can view student publication requests and publish files",
+      "thesis_curator_description": "Can view and process publication requests for student theses.",
       "thesis_embargo_curator": "Delayed publication date",
       "thesis_embargo_curator_description": "Can view and edit files with embargo on theses."
     }
@@ -1514,7 +1514,7 @@
       "files_count": "Files ({{count}})",
       "files_helper_text": "<p>Here you can upload the full text of the publication and other documents as supplements and appendices.</p>",
       "files_helper_text_metadata_only": "A curator will review the files and ensure that only the files you are allowed to share are shared, and that they are assigned the correct licence.",
-      "files_helper_text_paragraph_2": "You can upload document(s) that specify the requirements for publication, such as which version you can make public, the license, and any date for delayed availability (embargo). For example, the author agreement made with the publisher is helpful when the curator checks if and when the file can be made public in NVA.",
+      "files_helper_text_paragraph_2": "You can upload document(s) that specify the requirements for publication, such as which version you can make public, the licence, and any date for delayed availability (embargo). For example, the author agreement made with the publisher is helpful when the curator checks if and when the file can be made public in NVA.",
       "files_in_progress": "Under consideration",
       "find_journal_in_channel_register": "See information about the journal in the Norwegian Register",
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
@@ -1542,7 +1542,7 @@
       "resource_is_a_reference": "The resource is a reference and has no files or links to publish",
       "select_availability": "Select availability",
       "show_all_older_versions": "Show all previous versions",
-      "version_helper_text": "<p>Which version can be made openly available depends on the publishing agreement with the publisher.</p><p>Upload the accepted version if the published version is not openly published with a <ccLink>Creative Commons licence</ccLink>. </p><heading>Accepted Version (Authors Accepted Manuscript, AAM)</heading><p>Author's final version after peer review, as submitted to the publisher. This version does not have the publisher's pagination and graphic style or any editorial rewrites that the published version includes.</p><heading>Published Version (Version of Records, VOR) </heading><p>The article as presented in a journal, in print and/or online. This version will include editorial improvements and the publisher's graphic profile. Usually available on a publisher's website, in PDF format. The publisher has determined the licence, and you must choose the same one with which the article is published.</p>"
+      "version_helper_text": "<p>Upload the accepted version if the published version is not openly published with a <ccLink>Creative Commons licence</ccLink>. </p><heading>Accepted Version (Authors Accepted Manuscript, AAM)</heading><p>Author's final version after peer review, as submitted to the publisher. This version does not have the publisher's pagination and graphic style or any editorial rewrites that the published version includes.</p><heading>Published Version (Version of Records, VOR) </heading><p>The article as presented in a journal, in print and/or online. This version will include editorial improvements and the publisher's graphic profile. Usually available on a publisher's website, in PDF format. The publisher has determined the licence, and you must choose the same one with which the article is published.</p>"
     },
     "heading": {
       "contributors": "Contributors",
@@ -2086,7 +2086,7 @@
         "institution_help_description": "<0>Do you have technical issues?</0><0>See and possibly report errors to user support</0>"
       }
     },
-    "use_curator_help_button": "Use the \"{{buttonText}}\" button below if you have questions",
+    "use_curator_help_button": "Use the \"{{buttonText}}\" button below if you have questions.",
     "year_published": "Publication year"
   },
   "search": {
@@ -2175,7 +2175,9 @@
       "approve_nvi_candidate": "Approve result",
       "approve_nvi_candidate_description": "<p>Check of research result for Norwegian Publication Indicator (NVI) reporting.</p><p>Press \"{{buttonText}}\" if the publication can be reported. See the <hyperlink>Reporting Instruction</hyperlink> for more information.</p>",
       "approve_rejected_nvi_candidate_description": "Press \"{{buttonText}}\" if the publication is to be reported. The reason for the rejection will also be removed.",
+      "candidates_for_control": "Candidates for control",
       "completed_count": "Finished checking ({{completed}} of {{total}})",
+      "controlled": "Controlled",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Anthologies with academic chapters",
         "anthology_without_chapter": "Anthologies without a chapter",
@@ -2190,9 +2192,10 @@
       "institution_nvi_status": "Status NVI reporting",
       "message_description": "If you have relevant information for the check, please add a comment. The comment is visible to other Norwegian Science Index (NVI) curators with editing access.",
       "next_candidate": "Go to the next candidate",
-      "no_nvi_candidates": "No NVI candidates",
+      "no_nvi_candidates": "You have no NVI candidates for this search.",
       "note": "Comment",
       "nvi_control": "NVI control (Norwegian Science Index)",
+      "nvi_reporting_status": "Status NVI reporting",
       "previous_candidate": "Go to previous candidate",
       "problem_description": "<p>The NVI candidate lacks required information:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identify the person before approving by editing the result. Control statuses are reset when an unidentified person is identified.</p>",
       "publication_points": "Publication points",
