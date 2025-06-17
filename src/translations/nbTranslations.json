@@ -1,4 +1,8 @@
 {
+  "time_format": {
+    "minutes": "MM:SS",
+    "hours": "TT:MM:SS"
+  },
   "about": {
     "availability_statement": "Tilgjengelighetserklæring",
     "copyright_inquiries": "Henvendelser om opphavsrett",
@@ -1862,10 +1866,6 @@
           "Vinyl": "LP/EP"
         },
         "music_score_ensemble": "Besetning",
-        "music_score_format": {
-          "minutes": "MM:SS",
-          "hours": "TT:MM:SS"
-        },
         "music_score_ismn": "ISMN",
         "music_score_ismn_helper_text": "Består av 12 tall. Eksempel: 9790260000438",
         "music_score_isrc": "ISRC",

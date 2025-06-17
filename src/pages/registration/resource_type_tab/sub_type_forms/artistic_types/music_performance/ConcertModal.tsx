@@ -110,7 +110,7 @@ const validationSchema = Yup.object<YupShape<Concert>>({
       /^([0-9][0-9]):([0-5][0-9]):([0-5][0-9])$/,
       i18n.t('feedback.validation.invalid_format', {
         field: i18n.t('registration.resource_type.artistic.extent'),
-        format: i18n.t('registration.resource_type.artistic.music_score_format.hours'),
+        format: i18n.t('time_format.hours'),
       })
     ),
   concertProgramme: Yup.array()
@@ -247,7 +247,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                   fieldName="extent"
                   mask="00:00:00"
                   dataTestId={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
-                  placeholder={t('registration.resource_type.artistic.music_score_format.hours')}
+                  placeholder={t('time_format.hours')}
                   label={t('registration.resource_type.artistic.extent')}
                   required
                 />

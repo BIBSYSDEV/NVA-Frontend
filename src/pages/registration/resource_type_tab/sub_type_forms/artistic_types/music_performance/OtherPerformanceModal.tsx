@@ -50,7 +50,7 @@ const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
     /^([0-5][0-9]):([0-5][0-9])$/,
     i18n.t('feedback.validation.invalid_format', {
       field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-      format: i18n.t('registration.resource_type.artistic.music_score_format.minutes'),
+      format: i18n.t('time_format.minutes'),
     })
   ),
   musicalWorks: Yup.array()

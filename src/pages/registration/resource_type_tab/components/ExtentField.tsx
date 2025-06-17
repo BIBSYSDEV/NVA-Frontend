@@ -46,7 +46,7 @@ export const ExtentField = ({
           {...field}
           value={field.value ?? ''}
           sx={{ maxWidth: '15rem' }}
-          placeholder={placeholder ?? t('registration.resource_type.artistic.music_score_format.minutes')}
+          placeholder={placeholder ?? t('time_format.minutes')}
           variant="filled"
           required={required}
           fullWidth
