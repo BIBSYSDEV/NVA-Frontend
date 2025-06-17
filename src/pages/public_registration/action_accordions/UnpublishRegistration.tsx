@@ -2,7 +2,7 @@ import { Box, Button, Checkbox, DialogActions, FormControlLabel, TextField, Typo
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router';
 import * as Yup from 'yup';
 import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistrationStatus';
 import { Modal } from '../../../components/Modal';
@@ -15,11 +15,12 @@ import { FindRegistration } from './FindRegistration';
 
 interface UnpublishRegistrationProps {
   registration: Registration;
+  refetchData: () => Promise<void>;
 }
 
-export const UnpublishRegistration = ({ registration }: UnpublishRegistrationProps) => {
+export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRegistrationProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
 
   const [showUnpublishModal, setShowUnpublishModal] = useState(false);
   const toggleUnpublishModal = () => setShowUnpublishModal(!showUnpublishModal);
@@ -72,20 +73,22 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
           <Formik
             initialValues={{ comment: '' }}
             validationSchema={unpublishValidationSchema}
-            onSubmit={(values) =>
-              updateRegistrationStatusMutation.mutate({
+            onSubmit={async (values) => {
+              await updateRegistrationStatusMutation.mutateAsync({
                 registrationIdentifier: registration.identifier,
                 updateStatusRequest: {
                   type: 'UnpublishPublicationRequest',
                   duplicateOf: selectedDuplicate?.id,
                   comment: values.comment,
                 },
-                onSuccess: () => {
-                  toggleUnpublishModal();
-                  navigate({ search: `?${doNotRedirectQueryParam}=true` });
-                },
-              })
-            }>
+              });
+              await refetchData();
+              setSearchParams((params) => {
+                params.set(doNotRedirectQueryParam, 'true');
+                return params;
+              });
+              toggleUnpublishModal();
+            }}>
             <Form noValidate>
               <Box sx={{ my: '1rem' }}>
                 <Typography gutterBottom>{t('unpublish_actions.unpublish_registration_reason')}</Typography>
