@@ -430,7 +430,7 @@
         "Curator-thesis-embargo": "Studentembargo",
         "Doi-Curator": "DOI",
         "Nvi-Curator": "NVI",
-        "Publishing-Curator": "Publisering",
+        "Publishing-Curator": "Filgodkjenning",
         "Support-Curator": "Brukarstøtte"
       },
       "search_for_curator": "Søk etter kurator",
@@ -515,7 +515,7 @@
     },
     "retention_strategy": {
       "creator_can_override_rrs_text": "<0>Institusjonen har opna opp for at registrator sjølv kan velje å ikkje følgje institusjonen sin rettigheitspolitikk (RRS). Med å følgje rettigheitspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></0> <1>I NVA fjernar registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å fjerne avkryssinga av RRS, blir lisensen som er sett på fila fjerna og lisensen må settast på nytt.</1>",
-      "curator_can_override_rrs_text": "<0>Publiseringskurator har tilgang til å setje at filer ikkje følgjer institusjonen sin rettigheitspolitikk (RRS).</0> <0>Om registrator ikkje ynskjer å følgje institusjonen sin rettigheitspolitikk (RRS), sjå på vilkår for ikkje å følgje RRS på informasjonssida om institusjonen sin rettigheitspolitikk.</0> <1>Med å følgje rettigheitspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S</0>.</1>",
+      "curator_can_override_rrs_text": "<0>Filkurator har tilgang til å setje at filer ikkje følgjer institusjonen sin rettigheitspolitikk (RRS).</0> <0>Om registrator ikkje ynskjer å følgje institusjonen sin rettigheitspolitikk (RRS), sjå på vilkår for ikkje å følgje RRS på informasjonssida om institusjonen sin rettigheitspolitikk.</0> <1>Med å følgje rettigheitspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S</0>.</1>",
       "customer_has_no_rrs": "<0>Institusjonen har ikkje oppgitt ein rettigheitspolitikk (RRS) i NVA.</0> <0>Utan institusjonell rettigheitspolitikk er det opp til registrator å setje korrekt lisens på akseptert versjon av filer i registrering av vitskaplege artiklar.</0> <1>Det er opp til registrator å eventuelt merke at publikasjonen skal følgje ein RRS. Ved å følgje rettigheitspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></1> <0>Om publikasjonen er finansiert av ein aktør som pålegg å følgje RRS (ref. Plan S), må RRS settast. I NVA set registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å avkrysse for RRS så setjast lisens på fila til CC-BY.</0>",
       "customer_has_rrs_text": "<0>Institusjonen har oppgitt ein rettigheitspolitikk (RRS) i NVA.</0> <0>Lisens CC-BY blir sett når du vel akseptert versjon på fila i registreringa av ein vitskapleg artikkel i NVA.</0>",
       "possible_not_to_follow_rrs": "Mogleg å ikkje følgje institusjonen sin rettigheitspolitikk",
@@ -845,7 +845,7 @@
         "DoiRequest": "DOI",
         "FilesApprovalThesis": "Studentoppgåve",
         "GeneralSupportCase": "Kuratorstøtte",
-        "PublishingRequest": "Publisering"
+        "PublishingRequest": "Filgodkjenning"
       }
     },
     "my_page": "Mi side",
@@ -947,12 +947,12 @@
       "not_customer": "Du har ingen roller fordi institusjonen din er ukjend for applikasjonen",
       "nvi_curator": "NVI-kurator",
       "nvi_curator_description": "Kan sjå og behandle NVI-kandidatar.",
-      "publishing_curator": "Publiseringskurator",
+      "publishing_curator": "Filkurator",
       "publishing_curator_description": "Kan sjå og behandle publiseringsførespurnader.",
       "support_curator": "Brukarstøttekurator",
       "support_curator_description": "Kan sjå og behandle brukarstøtteførespurnader.",
       "thesis_curator": "Studentfilkurator",
-      "thesis_curator_description": "Kan sjå studentpubliseringsførespurnader og publisere filer",
+      "thesis_curator_description": "Kan sjå og behandle publiseringsførespurnader for studentoppgåver.",
       "thesis_embargo_curator": "Utsett publiseringsdato",
       "thesis_embargo_curator_description": "Kan sjå og endre embargofiler på studentoppgåver."
     }
