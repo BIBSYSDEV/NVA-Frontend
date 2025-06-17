@@ -31,6 +31,7 @@ export const dataTestId = {
     institutionFacetsSearchField: 'institution-facets-search-field',
   },
   basicData: {
+    addChannelClaimButton: 'add-channel-claim-button',
     addCustomerLink: 'add-customer-link',
     addEmployeeLink: 'add-employee-link',
     addEmployeeConfirmWindow: 'add-employee-confirm-window',
@@ -60,12 +61,14 @@ export const dataTestId = {
       textFieldYear: 'duplicate-search-year-textfield',
     },
     centralImportAccordion: 'central-import-accordion',
+    channelClaimLink: 'channel-claim-link',
     customers: {
       customerList: 'customer-institutions-list',
       customerNameSearchField: 'customer-name-searchfield',
       customerStatusSelect: 'customer-status-select',
       editInstitutionButton: (id: string) => `edit-institution-button-${id}`,
     },
+    deleteChannelClaimButton: (identifier: string) => `delete-channel-claim-${identifier}`,
     editPersonButton: (id: string) => `edit-person-button-${id}`,
     institutionsAccordion: 'institutions-accordion',
     institutionAdmin: {
@@ -112,6 +115,8 @@ export const dataTestId = {
     personRegisterAccordion: 'person-register-accordion',
     personRegisterLink: 'person-register-link',
     personRegisterSearchBar: 'person-register-search-bar',
+    publisherClaimsLink: 'publisher-claim-link',
+    serialPublicationClaimsLink: 'serial-publication-claim-link',
   },
   common: {
     cancel: 'cancel',
@@ -133,7 +138,6 @@ export const dataTestId = {
     subSearchField: 'sub-organization-search-field',
   },
   editor: {
-    addChannelClaimButton: 'add-channel-claim-button',
     addCuratorButton: (id: string) => `add-curator-button-${id}`,
     categoriesLinkButton: 'categories-link-button',
     categoryLimitationsInfoButton: 'category-limitations-info-button',
@@ -143,7 +147,6 @@ export const dataTestId = {
     curatorsOverviewLinkButton: 'curators-overview-link-button',
     curatorsSettingsLinkButton: 'curators-settings-link-button',
     curatorsSearchForPersonField: 'curators-search-for-person-field',
-    deleteChannelClaimButton: (identifier: string) => `delete-channel-claim-${identifier}`,
     editingAccessInfoButton: 'editing-access-info-button',
     editUserButton: 'edit-user-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
@@ -153,7 +156,6 @@ export const dataTestId = {
     organizationOverviewLinkButton: 'organization-overview-link-button',
     organizationOverviewSearchField: 'organization-overview-search-field',
     overviewAccordion: 'overview-accordion',
-    publisherClaimButton: 'publisher-claim-button',
     publisherClaimOverviewButton: 'publisher-claim-overview-button',
     publishStrategyLinkButton: 'publishing-strategy-link-button',
     publishStrategyOverviewLinkButton: 'publishing-strategy-overview-link-button',
@@ -162,7 +164,6 @@ export const dataTestId = {
     resultsPortfolioDeletedCheckbox: 'results-portfolio-deleted-checkbox',
     resultsPortfolioPublishedCheckbox: 'results-portfolio-published-checkbox',
     resultsPortfolioUnpublishedCheckbox: 'results-portfolio-unpublished-checkbox',
-    serialPublicationClaimButton: 'serial-publication-claim-button',
     serialPublicationClaimOverviewButton: 'serial-publication-claim-overview-button',
     settingsAccordion: 'settings-accordion',
     vocabularyLinkButton: 'vocabulary-link-button',

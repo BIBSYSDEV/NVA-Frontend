@@ -23,7 +23,7 @@ import { getLanguageString } from '../../utils/translation-helpers';
 interface ChannelClaimTableRowProps {
   claimedChannel: ClaimedChannel;
   channelType: ChannelClaimType;
-  isOnSettingsPage: boolean;
+  canEdit: boolean;
 }
 
 const StyledTableCell = styled(TableCell)({
@@ -36,7 +36,7 @@ const StyledChip = styled(Chip)({
   },
 });
 
-export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettingsPage }: ChannelClaimTableRowProps) => {
+export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: ChannelClaimTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const channelId = claimedChannel.channelClaim.channel;
@@ -81,7 +81,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
     <TableRow sx={{ bgcolor: 'white' }}>
       <StyledTableCell aria-live="polite" aria-busy={pendingChannelQuery}>
         {pendingChannelQuery ? (
-          <Skeleton width={300} />
+          <Skeleton sx={{ width: '10rem' }} />
         ) : !!channelName ? (
           <Typography>{channelName}</Typography>
         ) : (
@@ -90,7 +90,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
       </StyledTableCell>
       <StyledTableCell aria-live="polite" aria-busy={organizationQuery.isPending}>
         {organizationQuery.isPending ? (
-          <Skeleton width={300} />
+          <Skeleton sx={{ width: '10rem' }} />
         ) : organizationName ? (
           <Typography>{organizationName}</Typography>
         ) : (
@@ -130,13 +130,13 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, isOnSettings
           ))}
         </Box>
       </StyledTableCell>
-      {isOnSettingsPage && (
+      {canEdit && (
         <StyledTableCell align="center">
           {canDeleteChannelClaim && (
             <>
               <Tooltip title={t('common.remove')}>
                 <IconButton
-                  data-testid={dataTestId.editor.deleteChannelClaimButton(channelIdentifier)}
+                  data-testid={dataTestId.basicData.deleteChannelClaimButton(channelIdentifier)}
                   onClick={() => setOpenConfirmDialog(true)}
                   size="small"
                   sx={{ width: '1.5rem', height: '1.5rem', bgcolor: 'secondary.main' }}>

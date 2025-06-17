@@ -27,11 +27,9 @@ import { OrganizationOverview } from './OrganizationOverview';
 import { PortfolioSearchPage } from './PortfolioSearchPage';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { PublisherClaimsOverview } from './PublisherClaimsOverview';
-import { PublisherClaimsSettings } from './PublisherClaimsSettings';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
 import { SerialPublicationClaimsOverview } from './SerialPublicationClaimsOverview';
-import { SerialPublicationClaimsSettings } from './SerialPublicationClaimsSettings';
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
 import { OrganizationCurators } from './curators/OrganizationCurators';
@@ -166,25 +164,8 @@ const InstitutionPage = () => {
                   to={UrlPathTemplate.InstitutionSupport}>
                   {t('editor.institution.change_institution_support')}
                 </SelectableButton>
-
-                <Typography sx={{ mt: '0.5rem' }}>
-                  {t('editor.institution.channel_claims.channel_claims_settings_description')}
-                </Typography>
-                <SelectableButton
-                  isSelected={currentPath === UrlPathTemplate.InstitutionPublisherClaims}
-                  data-testid={dataTestId.editor.publisherClaimButton}
-                  to={UrlPathTemplate.InstitutionPublisherClaims}>
-                  {t('editor.institution.channel_claims.administer_publisher_channel_claim')}
-                </SelectableButton>
-                <SelectableButton
-                  isSelected={currentPath === UrlPathTemplate.InstitutionSerialPublicationClaims}
-                  data-testid={dataTestId.editor.serialPublicationClaimButton}
-                  to={UrlPathTemplate.InstitutionSerialPublicationClaims}>
-                  {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
-                </SelectableButton>
               </NavigationList>
             </NavigationListAccordion>
-
             <ResultsPortfolioNavigationListAccodion />
           </>
         )}
@@ -281,16 +262,6 @@ const InstitutionPage = () => {
                 isAuthorized={isEditor}
               />
             }
-          />
-
-          <Route
-            path={getSubUrl(UrlPathTemplate.InstitutionPublisherClaims, UrlPathTemplate.Institution)}
-            element={<PrivateRoute element={<PublisherClaimsSettings />} isAuthorized={isEditor} />}
-          />
-
-          <Route
-            path={getSubUrl(UrlPathTemplate.InstitutionSerialPublicationClaims, UrlPathTemplate.Institution)}
-            element={<PrivateRoute element={<SerialPublicationClaimsSettings />} isAuthorized={isEditor} />}
           />
 
           <Route
