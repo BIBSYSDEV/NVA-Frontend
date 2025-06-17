@@ -1,12 +1,16 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, AutocompleteProps, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchCustomers } from '../api/hooks/useFetchCustomers';
+import { SimpleCustomerInstitution } from '../types/customerInstitution.types';
+import { sortCustomerInstitutions } from '../utils/institutions-helpers';
 
-export const CustomersAutocomplete = () => {
+export const CustomersAutocomplete = (
+  props: Pick<AutocompleteProps<SimpleCustomerInstitution, false, false, false>, 'disabled' | 'onChange'>
+) => {
   const { t } = useTranslation();
 
   const customersQuery = useFetchCustomers();
-  const customers = customersQuery.data?.data.customers ?? [];
+  const customers = sortCustomerInstitutions(customersQuery.data?.data.customers ?? []);
 
   return (
     <Autocomplete
@@ -16,8 +20,10 @@ export const CustomersAutocomplete = () => {
           {option.displayName}
         </li>
       )}
+      loading={customersQuery.isPending}
       getOptionLabel={(option) => option.displayName}
       renderInput={(params) => <TextField {...params} variant="filled" required label={t('common.institution')} />}
+      {...props}
     />
   );
 };

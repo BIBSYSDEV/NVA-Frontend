@@ -13,14 +13,12 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setChannelClaim } from '../../api/customerInstitutionsApi';
 import { CustomersAutocomplete } from '../../components/CustomersAutocomplete';
 import { SearchForPublisher } from '../../components/SearchForPublisher';
 import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { setNotification } from '../../redux/notificationSlice';
-import { RootState } from '../../redux/store';
-import { Organization } from '../../types/organization.types';
 import { DegreeType } from '../../types/publicationFieldNames';
 import { PublicationInstanceType, Publisher, SerialPublication } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -29,6 +27,11 @@ import { SearchForSerialPublication } from '../search/facet_search_fields/Search
 
 const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
 
+interface ChannelClaimMutationData {
+  channelId: string;
+  customerId: string;
+}
+
 interface AddChannelClaimDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
 }
@@ -36,13 +39,13 @@ interface AddChannelClaimDialogProps extends Pick<DialogProps, 'open'> {
 export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const customer = useSelector((state: RootState) => state.customer);
+
   const { refetchClaimedChannels, channelType } = useContext(ChannelClaimContext);
   const isPublisherChannelClaim = channelType === 'publisher';
 
   const [selectedPublisher, setSelectedPublisher] = useState<Publisher | null>(null);
   const [selectedSerialPublication, setSelectedSerialPublication] = useState<SerialPublication | null>(null);
-  const [selectedInstitution, setSelectedInstitution] = useState<Organization | null>(null);
+  const [selectedCustomerId, setSelectedCustomerId] = useState('');
 
   const closeDialogAndResetSelectedChannel = () => {
     closeDialog();
@@ -54,25 +57,20 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
   };
 
   const addChannelClaimMutation = useMutation({
-    mutationFn: (channelId: string) => {
-      if (!customer?.id || !channelId) {
-        return Promise.reject(new Error('Customer ID or Channel ID is missing'));
-      }
-
-      return setChannelClaim(customer.id, {
+    mutationFn: ({ channelId, customerId }: ChannelClaimMutationData) =>
+      setChannelClaim(customerId, {
         channel: removeTrailingYearPathFromUrl(channelId),
         constraint: {
           scope: selectedCategories,
           publishingPolicy: 'Everyone',
           editingPolicy: 'OwnerOnly',
         },
-      });
-    },
+      }),
     onSuccess: async () => {
-      dispatch(setNotification({ message: t('feedback.success.set_channel_claim'), variant: 'success' }));
       if (refetchClaimedChannels) {
         await refetchClaimedChannels();
       }
+      dispatch(setNotification({ message: t('feedback.success.set_channel_claim'), variant: 'success' }));
       closeDialogAndResetSelectedChannel();
     },
     onError: (error: AxiosError<{ detail?: string }>) => {
@@ -99,9 +97,15 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
           event.preventDefault();
           try {
             if (selectedSerialPublication) {
-              await addChannelClaimMutation.mutateAsync(selectedSerialPublication.id);
+              await addChannelClaimMutation.mutateAsync({
+                channelId: selectedSerialPublication.id,
+                customerId: selectedCustomerId,
+              });
             } else if (selectedPublisher) {
-              await addChannelClaimMutation.mutateAsync(selectedPublisher.id);
+              await addChannelClaimMutation.mutateAsync({
+                channelId: selectedPublisher.id,
+                customerId: selectedCustomerId,
+              });
             }
             closeDialogAndResetSelectedChannel();
           } catch {}
@@ -119,7 +123,10 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
             />
           )}
 
-          <CustomersAutocomplete />
+          <CustomersAutocomplete
+            disabled={addChannelClaimMutation.isPending}
+            onChange={(_, customer) => setSelectedCustomerId(customer?.id ?? '')}
+          />
 
           {isPublisherChannelClaim ? (
             <SearchForPublisher
@@ -127,10 +134,8 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
               autocompleteProps={{
                 value: selectedPublisher,
                 disabled: addChannelClaimMutation.isPending,
-                getOptionDisabled: (option) => {
-                  // TODO: Should not be able to select already claimed publishers.
-                  return option.scientificValue === 'LevelOne' || option.scientificValue === 'LevelTwo';
-                },
+                getOptionDisabled: (option) =>
+                  option.scientificValue === 'LevelOne' || option.scientificValue === 'LevelTwo',
               }}
               textFieldProps={{
                 'data-testid': dataTestId.editor.channelSearchField,
@@ -179,7 +184,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
             type="submit"
             loading={addChannelClaimMutation.isPending}
             variant="contained"
-            disabled={!selectedPublisher && !selectedSerialPublication}>
+            disabled={(!selectedPublisher && !selectedSerialPublication) || !selectedCustomerId}>
             {t('editor.institution.channel_claims.set_channel_claim')}
           </Button>
         </DialogActions>
