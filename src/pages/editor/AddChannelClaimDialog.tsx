@@ -15,6 +15,7 @@ import { useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChannelClaim } from '../../api/customerInstitutionsApi';
+import { CustomersAutocomplete } from '../../components/CustomersAutocomplete';
 import { SearchForPublisher } from '../../components/SearchForPublisher';
 import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { setNotification } from '../../redux/notificationSlice';
@@ -24,7 +25,6 @@ import { DegreeType } from '../../types/publicationFieldNames';
 import { PublicationInstanceType, Publisher, SerialPublication } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { removeTrailingYearPathFromUrl } from '../../utils/general-helpers';
-import { OrganizationSearchField } from '../basic_data/app_admin/OrganizationSearchField';
 import { SearchForSerialPublication } from '../search/facet_search_fields/SearchForSerialPublication';
 
 const selectedCategories: PublicationInstanceType[] = Object.values(DegreeType);
@@ -54,7 +54,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
   };
 
   const addChannelClaimMutation = useMutation({
-    mutationFn: ({ channelId: string, customerId: string }) => {
+    mutationFn: (channelId: string) => {
       if (!customer?.id || !channelId) {
         return Promise.reject(new Error('Customer ID or Channel ID is missing'));
       }
@@ -119,7 +119,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
             />
           )}
 
-          <OrganizationSearchField />
+          <CustomersAutocomplete />
 
           {isPublisherChannelClaim ? (
             <SearchForPublisher
