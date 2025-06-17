@@ -340,7 +340,7 @@ export const FilesTableRow = ({
                 )}
               </VerticalAlignedTableCell>
             )}
-            <VerticalAlignedTableCell>
+            <VerticalAlignedTableCell sx={{ maxWidth: '20rem' }}>
               {isOpenableFile && (
                 <>
                   <Field name={licenseFieldName}>
@@ -348,8 +348,8 @@ export const FilesTableRow = ({
                       <TextField
                         id={field.name}
                         data-testid={dataTestId.registrationWizard.files.selectLicenseField}
-                        sx={{ minWidth: '15rem' }}
                         select
+                        fullWidth
                         disabled={disabledFile}
                         slotProps={{
                           select: {
@@ -357,11 +357,18 @@ export const FilesTableRow = ({
                               const selectedLicense = getLicenseData(option as string);
 
                               return selectedLicense ? (
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem',
+                                  }}>
                                   {selectedLicense.logo && (
                                     <img style={{ width: '5rem' }} src={selectedLicense.logo} alt="" />
                                   )}
-                                  <span>{selectedLicense.name}</span>
+                                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                    {selectedLicense.name}
+                                  </span>
                                 </Box>
                               ) : null;
                             },
