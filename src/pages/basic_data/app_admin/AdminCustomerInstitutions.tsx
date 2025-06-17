@@ -17,7 +17,7 @@ export const AdminCustomerInstitutions = () => {
       {customersQuery.isPending ? (
         <PageSpinner aria-labelledby="admin-institutions-label" />
       ) : (
-        customers && <CustomerInstitutionList customerInstitutions={sortCustomerInstitutions(customers)} />
+        <CustomerInstitutionList customerInstitutions={sortCustomerInstitutions(customers)} />
       )}
     </>
   );
