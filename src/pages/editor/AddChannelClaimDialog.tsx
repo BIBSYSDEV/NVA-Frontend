@@ -19,6 +19,7 @@ import { SearchForPublisher } from '../../components/SearchForPublisher';
 import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
+import { Organization } from '../../types/organization.types';
 import { DegreeType } from '../../types/publicationFieldNames';
 import { PublicationInstanceType, Publisher, SerialPublication } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -40,6 +41,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
 
   const [selectedPublisher, setSelectedPublisher] = useState<Publisher | null>(null);
   const [selectedSerialPublication, setSelectedSerialPublication] = useState<SerialPublication | null>(null);
+  const [selectedInstitution, setSelectedInstitution] = useState<Organization | null>(null);
 
   const closeDialogAndResetSelectedChannel = () => {
     closeDialog();
@@ -116,16 +118,16 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
             />
           )}
 
-          {/* TODO:
-           * 1) Should not be able to select publishers with scientific level 1 or 2.
-           * 2) Should not be able to select already claimed publishers.
-           */}
           {isPublisherChannelClaim ? (
             <SearchForPublisher
               onSelectPublisher={(publisher) => setSelectedPublisher(publisher)}
               autocompleteProps={{
                 value: selectedPublisher,
                 disabled: addChannelClaimMutation.isPending,
+                getOptionDisabled: (option) => {
+                  // TODO: Should not be able to select already claimed publishers.
+                  return option.scientificValue === 'LevelOne' || option.scientificValue === 'LevelTwo';
+                },
               }}
               textFieldProps={{
                 'data-testid': dataTestId.editor.channelSearchField,
