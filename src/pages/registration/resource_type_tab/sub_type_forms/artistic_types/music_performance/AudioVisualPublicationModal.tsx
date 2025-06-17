@@ -91,38 +91,47 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
       .nullable()
       .matches(
         /^[A-Z]{2}[A-Z\d]{3}\d{7}$/,
-        i18n.t('feedback.validation.has_invalid_format', {
+        i18n.t('feedback.validation.has_invalid_format_example', {
           field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
+          example: 'NO-6Q7-25-00047',
         })
       ),
   }),
-  trackList: Yup.array().of(
-    Yup.object<YupShape<MusicTrack>>({
-      title: Yup.string().required(
-        i18n.t('feedback.validation.is_required', {
-          field: i18n.t('common.title'),
-        })
-      ),
-      composer: Yup.string().required(
-        i18n.t('feedback.validation.is_required', {
-          field: i18n.t('registration.resource_type.artistic.composer'),
-        })
-      ),
-      extent: Yup.string()
-        .required(
+  trackList: Yup.array()
+    .of(
+      Yup.object<YupShape<MusicTrack>>({
+        title: Yup.string().required(
           i18n.t('feedback.validation.is_required', {
-            field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-          })
-        )
-        .matches(
-          /^([0-5][0-9]):([0-5][0-9])$/,
-          i18n.t('feedback.validation.invalid_format', {
-            field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-            format: i18n.t('registration.resource_type.artistic.music_score_format.minutes'),
+            field: i18n.t('common.title'),
           })
         ),
-    })
-  ),
+        composer: Yup.string().required(
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('registration.resource_type.artistic.composer'),
+          })
+        ),
+        extent: Yup.string()
+          .required(
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+            })
+          )
+          .matches(
+            /^([0-5][0-9]):([0-5][0-9])$/,
+            i18n.t('feedback.validation.invalid_format', {
+              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+              format: i18n.t('registration.resource_type.artistic.music_score_format.minutes'),
+            })
+          ),
+      })
+    )
+    .min(
+      1,
+      i18n.t('feedback.validation.must_have_minimum', {
+        min: 1,
+        field: i18n.t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
+      })
+    ),
 });
 
 export const AudioVisualPublicationModal = ({
@@ -248,7 +257,7 @@ export const AudioVisualPublicationModal = ({
               <FieldArray name="trackList">
                 {({ name, push, remove, move }: FieldArrayRenderProps) => (
                   <>
-                    <Typography variant="h2" component="h2">
+                    <Typography variant="h3" component="h2">
                       {t('registration.resource_type.artistic.content_track')}
                     </Typography>
                     <Button

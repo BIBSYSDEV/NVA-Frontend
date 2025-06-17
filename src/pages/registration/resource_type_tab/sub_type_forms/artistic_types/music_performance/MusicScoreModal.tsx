@@ -60,8 +60,9 @@ const validationSchema = Yup.object<YupShape<MusicScore>>({
       .nullable()
       .matches(
         /^9790\d{9}$/,
-        i18n.t('feedback.validation.has_invalid_format', {
+        i18n.t('feedback.validation.has_invalid_format_example', {
           field: i18n.t('registration.resource_type.artistic.music_score_ismn'),
+          example: '9790260000438',
         })
       ),
   }),
@@ -180,7 +181,6 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
 export const StyledMusicalWorkListDiv = styled(Box)({
   display: 'flex',
   gap: '0.5rem',
-  alignItems: 'top',
   border: '1px solid lightgrey',
   padding: '0.5rem',
   backgroundColor: '#FEFBF4',

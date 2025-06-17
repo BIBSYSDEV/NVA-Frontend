@@ -3,9 +3,10 @@ import { ErrorMessage, Field, FieldProps } from 'formik';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IMaskInput } from 'react-imask';
-import { MaskInputProps } from './isbn_and_pages/IsbnField';
 
-interface MaskExtentInputProps extends MaskInputProps {
+interface MaskExtentInputProps {
+  onChange: (event: { target: { name: string; value: string } }) => void;
+  name: string;
   mask: string;
 }
 
