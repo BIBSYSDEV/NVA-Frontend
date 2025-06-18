@@ -184,8 +184,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <InfoBanner
                     text={
                       hasCuratorRole(user)
-                        ? t('file_upload_disabled_due_to_institution_policy')
-                        : t('file_upload_disabled_curator_can_upload_on_behalf')
+                        ? t('file_upload_disabled_curator_can_upload_on_behalf')
+                        : t('file_upload_disabled_due_to_institution_policy')
                     }
                   />
                 )}
