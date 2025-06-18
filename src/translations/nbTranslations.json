@@ -733,7 +733,7 @@
       "cc_by_nc_sa": "<p>Brukeren kan: kopiere, dele og endre verket for ikke-kommersielle formål.</p><p>Brukeren må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
       "cc_by_nd": "<p>Brukeren kan: kopiere og dele verket for alle typer bruk, også kommersielle.</p><p>Brukeren kan ikke: endre eller tilpasse verket.</p><p>Brukeren må: gi riktig kreditering.</p>",
       "cc_by_sa": "<p>Brukeren kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p><p>Brukeren må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
-      "copyright_act": "<p>Brukeren kan:</p><ul><li>lese og lenke til materialet, og sitere fra materialet i samsvar med god skikk, og i den grad formålet tilsier det</li><li>kopiere materialet kun til privat bruk</li></ul><p>Brukeren må: gi riktig kreditering</p>",
+      "copyright_act": "<p>For dette materialet gjelder følgende vilkår, for bruk til yrkesmessig formål:</p><ul><li>Du har lov til å lese og lenke til materialet</li><li>Du kan sitere fra materialet i samsvar med god skikk, og i den grad formålet tilsier det</li></ul><p>Dersom du ønsker å bruke materialet på annen måte, for eksempel til re-publisering, må du innhente samtykke direkte fra rettighetshaver</p>",
       "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens"
     },
     "labels": {
@@ -745,7 +745,7 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "copyright_act": "Bruksvilkår etter åndsverkloven",
+      "copyright_act": "Generelle bruksvilkår for immaterielle rettigheter",
       "older_licenses": "Eldre lisenser"
     },
     "links": {
