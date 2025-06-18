@@ -45,7 +45,7 @@ export const RegistrationLandingPage = () => {
     registration?.status === RegistrationStatus.Unpublished;
 
   const ticketsQuery = useFetchRegistrationTickets(registrationId, {
-    enabled: !!registrationId && (canEditRegistration || isTicketCurator),
+    enabled: canEditRegistration || isTicketCurator,
   });
 
   const refetchRegistrationAndTickets = async () => {
