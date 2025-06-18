@@ -708,6 +708,8 @@
       "reference_required": "Oppgi referanse på resultat"
     }
   },
+  "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Som kurator kan du legge til en fil på vegne av registrator.",
+  "file_upload_disabled_due_to_institution_policy": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønsker å ha en fil på dette resultatet.",
   "footer": {
     "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
     "about_nva_text": "Nasjonalt vitenarkiv (NVA) samler publikasjoner og andre forskningsresultater, og gjør dem åpent tilgjengelig i en felles nasjonal løsning. Dette gjør resultater fra norsk forskning tilgjengelig i én tjeneste.",
@@ -1530,8 +1532,6 @@
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
       "no_files_or_links_present_in_this_registration": "Det er ikke lagt til fil eller lenke for registreringen",
       "open_file": "Åpne fil",
-      "open_files_not_preferred_curator": "Din institusjon støtter ikke at registrator kan laste opp åpne filer for denne kategorien. Som kurator kan du legge til en åpen fil på vegne av registrator.",
-      "open_files_not_preferred_registrator": "Din institusjon støtter ikke at du som registrator kan laste opp åpne filer for denne kategorien. Du kan fortsatt laste opp interne filer. Kontakt kuratorstøtte om du ønsker å ha en åpen fil på dette resultatet.",
       "opted_out_of_rrs": "Du har valgt å ikke følge vedtatt <0>rettighetspolitikk</0>",
       "public_note": "Offentlig kommentar",
       "published": "Publisert",

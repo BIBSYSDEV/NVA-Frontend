@@ -14,7 +14,7 @@ type UploadedFile = Pick<
   'type' | 'identifier' | 'name' | 'size' | 'mimeType' | 'rightsRetentionStrategy' | 'uploadDetails'
 >;
 
-export const FileUploader = ({ addFile, uppy, disabled = !uppy }: FileUploaderProps) => {
+export const FileUploader = ({ addFile, uppy }: FileUploaderProps) => {
   useEffect(() => {
     if (uppy && !uppy.opts.meta.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file, response) => {
@@ -30,5 +30,5 @@ export const FileUploader = ({ addFile, uppy, disabled = !uppy }: FileUploaderPr
     }
   }, [addFile, uppy]);
 
-  return uppy ? <UppyDashboard uppy={uppy} disabled={disabled} /> : null;
+  return uppy ? <UppyDashboard uppy={uppy} disabled={!uppy} /> : null;
 };
