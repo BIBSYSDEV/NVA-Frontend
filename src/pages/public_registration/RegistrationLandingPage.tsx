@@ -44,7 +44,9 @@ export const RegistrationLandingPage = () => {
     registration?.status === RegistrationStatus.DraftForDeletion ||
     registration?.status === RegistrationStatus.Unpublished;
 
-  const ticketsQuery = useFetchRegistrationTickets(registrationId, { enabled: canEditRegistration || isTicketCurator });
+  const ticketsQuery = useFetchRegistrationTickets(registrationId, {
+    enabled: !!registrationId && (canEditRegistration || isTicketCurator),
+  });
 
   const refetchRegistrationAndTickets = async () => {
     await Promise.all([ticketsQuery.refetch(), registrationQuery.refetch()]);
