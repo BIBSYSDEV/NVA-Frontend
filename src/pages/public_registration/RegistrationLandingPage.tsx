@@ -68,7 +68,7 @@ export const RegistrationLandingPage = () => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registration} />
 
-            {canEditRegistration && ticketsQuery.isSuccess && (
+            {(canEditRegistration || (ticketsQuery.data && ticketsQuery.data.tickets.length > 0)) && (
               <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
                 <ActionPanel
                   registration={registration}
