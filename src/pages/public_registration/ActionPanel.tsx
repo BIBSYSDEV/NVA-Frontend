@@ -76,6 +76,8 @@ export const ActionPanel = ({
 
   const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Log);
 
+  const canEditRegistration = userHasAccessRight(registration, 'partial-update');
+
   return (
     <Paper
       elevation={0}
@@ -98,13 +100,15 @@ export const ActionPanel = ({
             aria-controls="action-panel-tab-panel-0"
           />
         )}
-        <Tab
-          value={TabValue.Log}
-          label={t('common.log')}
-          data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
-          id="action-panel-tab-1"
-          aria-controls="action-panel-tab-panel-1"
-        />
+        {canEditRegistration && (
+          <Tab
+            value={TabValue.Log}
+            label={t('common.log')}
+            data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
+            id="action-panel-tab-1"
+            aria-controls="action-panel-tab-panel-1"
+          />
+        )}
       </Tabs>
       <TabPanel tabValue={tabValue} index={0}>
         <ErrorBoundary>
