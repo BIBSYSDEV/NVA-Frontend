@@ -744,7 +744,7 @@ export const getOutputName = (item: OutputItem): string => {
     case 'AudioVisualPublication':
       return (item as AudioVisualPublication).publisher.name;
     case 'Concert':
-      return (item as Concert).place.name;
+      return (item as Concert).place?.name ?? i18n.t('registration.resource_type.artistic.output_type.Concert');
     case 'OtherPerformance': {
       const otherMusicPerformance = item as OtherMusicPerformance;
 
