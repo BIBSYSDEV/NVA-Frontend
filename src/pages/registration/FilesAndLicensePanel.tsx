@@ -98,8 +98,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const canEditFilesAndLinks =
     (userHasAccessRight(values, 'partial-update') || userIsValidImporter(user, values)) && !disableChannelClaimsFields;
-  const canUploadFile = userHasAccessRight(values, 'upload-file');
   const categorySupportsFiles = allowsFileUpload(customer, entityDescription?.reference?.publicationInstance?.type);
+  const canUploadFile = userHasAccessRight(values, 'upload-file') && (categorySupportsFiles || hasCuratorRole(user));
 
   return (
     <FieldArray name={FileFieldNames.AssociatedArtifacts}>
@@ -184,8 +184,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <InfoBanner
                     text={
                       hasCuratorRole(user)
-                        ? t('registration.files_and_license.open_files_not_preferred_curator')
-                        : t('registration.files_and_license.open_files_not_preferred_registrator')
+                        ? t('file_upload_disabled_curator_can_upload_on_behalf')
+                        : t('file_upload_disabled_due_to_institution_policy')
                     }
                   />
                 )}

@@ -2,13 +2,22 @@ import { CancelToken } from 'axios';
 import {
   ClaimedChannel,
   CustomerInstitution,
+  CustomerList,
   DoiAgent,
   ProtectedDoiAgent,
   VocabularyList,
 } from '../types/customerInstitution.types';
 import { PublicationInstanceType } from '../types/registration.types';
 import { CustomerInstitutionApiPath } from './apiPaths';
-import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
+import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
+
+export const fetchCustomers = async (signal?: AbortSignal) => {
+  const fetchCustomersResponse = await apiRequest2<CustomerList>({
+    url: CustomerInstitutionApiPath.Customer,
+    signal,
+  });
+  return fetchCustomersResponse.data;
+};
 
 export const createCustomerInstitution = async (
   customer: Omit<CustomerInstitution, 'doiAgent'>,
