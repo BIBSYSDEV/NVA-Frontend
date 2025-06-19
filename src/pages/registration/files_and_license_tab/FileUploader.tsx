@@ -30,5 +30,5 @@ export const FileUploader = ({ addFile, uppy }: FileUploaderProps) => {
     }
   }, [addFile, uppy]);
 
-  return uppy ? <UppyDashboard uppy={uppy} disabled={!uppy} /> : null;
+  return uppy ? <UppyDashboard uppy={uppy} /> : null;
 };
