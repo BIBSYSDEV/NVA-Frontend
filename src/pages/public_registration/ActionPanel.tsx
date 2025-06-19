@@ -63,16 +63,20 @@ export const ActionPanel = ({
   const canApproveSupportTicket = !!newestSupportTicket && userHasAccessRight(registration, 'support-request-approve');
 
   const shouldSeePublishingAccordion =
-    canCreatePublishingTicket || canHandlePublishingTicket || hasOtherPublishingRights;
+    canCreatePublishingTicket || canHandlePublishingTicket || hasOtherPublishingRights || !!publishingRequestTickets;
+
   const shouldSeeDoiAccordion =
     !registration.entityDescription?.reference?.doi &&
     !!customerHasConfiguredDoi &&
-    (canCreateDoiTicket || canApproveDoiTicket);
-  const shouldSeeSupportAccordion = canCreateSupportTicket || canApproveSupportTicket;
+    (canCreateDoiTicket || canApproveDoiTicket || !!newestDoiRequestTicket);
+
+  const shouldSeeSupportAccordion = canCreateSupportTicket || canApproveSupportTicket || !!newestSupportTicket;
 
   const canSeeTasksPanel = shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion;
 
   const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Log);
+
+  const canEditRegistration = userHasAccessRight(registration, 'partial-update');
 
   return (
     <Paper
@@ -96,13 +100,15 @@ export const ActionPanel = ({
             aria-controls="action-panel-tab-panel-0"
           />
         )}
-        <Tab
-          value={TabValue.Log}
-          label={t('common.log')}
-          data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
-          id="action-panel-tab-1"
-          aria-controls="action-panel-tab-panel-1"
-        />
+        {canEditRegistration && (
+          <Tab
+            value={TabValue.Log}
+            label={t('common.log')}
+            data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
+            id="action-panel-tab-1"
+            aria-controls="action-panel-tab-panel-1"
+          />
+        )}
       </Tabs>
       <TabPanel tabValue={tabValue} index={0}>
         <ErrorBoundary>
