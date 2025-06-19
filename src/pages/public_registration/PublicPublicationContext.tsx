@@ -273,7 +273,9 @@ export const PublicOutputs = ({ outputs, showType = false }: PublicOutputsProps)
         {t('registration.resource_type.artistic.announcements')}
       </Typography>
       {outputs.map((output, index) => (
-        <PublicOutputRow key={index} output={output} showType={showType} />
+        <ErrorBoundary key={index}>
+          <PublicOutputRow output={output} showType={showType} />
+        </ErrorBoundary>
       ))}
     </>
   );
@@ -610,7 +612,7 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       <Typography sx={{ mb: '1rem' }}>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
 
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography sx={{ mb: '1rem' }}>{place.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{place?.name ?? '-'}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
       <Typography sx={{ mb: '1rem' }}>{concertSeries ? t('common.yes') : t('common.no')} </Typography>
@@ -622,11 +624,13 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       )}
 
       <Typography variant="h3">{t('common.date')}</Typography>
-      {time.type === 'Instant' ? (
-        <Typography sx={{ mb: '1rem' }}>{toDateString(time.value)}</Typography>
-      ) : (
-        <Typography sx={{ mb: '1rem' }}>{getPeriodString(time.from, time.to)}</Typography>
-      )}
+      <Typography sx={{ mb: '1rem' }}>
+        {time?.type === 'Instant'
+          ? toDateString(time.value)
+          : time?.type === 'Period'
+            ? getPeriodString(time.from, time.to)
+            : '-'}
+      </Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography sx={{ mb: '1rem' }}>{extent}</Typography>
@@ -647,8 +651,8 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
           <TableBody>
             {concertProgramme.map((item, index) => (
               <TableRow key={index}>
-                <TableCell>{item.title}</TableCell>
-                <TableCell>{item.composer}</TableCell>
+                <TableCell>{item.title ?? '-'}</TableCell>
+                <TableCell>{item.composer ?? '-'}</TableCell>
                 <TableCell>{item.premiere ? t('common.yes') : null}</TableCell>
               </TableRow>
             ))}
