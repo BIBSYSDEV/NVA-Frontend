@@ -430,7 +430,7 @@
         "Curator-thesis-embargo": "Student embargo",
         "Doi-Curator": "DOI",
         "Nvi-Curator": "NVI",
-        "Publishing-Curator": "Publishing",
+        "Publishing-Curator": "File approval",
         "Support-Curator": "User support"
       },
       "search_for_curator": "Search for curator",
@@ -515,7 +515,7 @@
     },
     "retention_strategy": {
       "creator_can_override_rrs_text": "<0>The institution has made it possible for the registrar to choose not to follow the institution's rights retention strategy (RRS). By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S.</0></0> <1>In NVA, the registrar removes RRS from the accepted version of the file in the registration of a scientific article. The RRS checkbox appears by clicking on the arrow icon under the accepted version of the file. By removing the check from RRS, the selected licence on the file is removed and the licence must be selected again.</1>",
-      "curator_can_override_rrs_text": "<0>The publishing curator has access to set that files do not follow the institution's rights retention strategy (RRS).</0> <0>If the registrar does not wish to follow the institution's rights retention strategy (RRS), look at the terms for not following RRS on the information page about the institution's rights retention strategy.</0> <1>By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S</0>.</1>",
+      "curator_can_override_rrs_text": "<0>The file curator has access to set that files do not follow the institution's rights retention strategy (RRS).</0> <0>If the registrar does not wish to follow the institution's rights retention strategy (RRS), look at the terms for not following RRS on the information page about the institution's rights retention strategy.</0> <1>By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S</0>.</1>",
       "customer_has_no_rrs": "<0>The institution has not provided a rights retention strategy (RRS) in NVA.</0> <0>Without an institutional rights retention strategy, it is up to the registrar to set the correct licence on the accepted version of files in the registration of scientific articles.</0> <1>It is up to the registrar to potentially mark whether the publication should follow an RRS. By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S.</0></1> <0>If the publication is funded by an actor that requires adherence to RRS (ref. Plan S), then RRS must be set. In NVA, the registrar sets RRS on the accepted version of the file in the registration of a scientific article. The RRS checkbox appears by clicking on the arrow icon under the accepted version of the file. By checking the box for RRS, the licence for the file is set to CC-BY.</0>",
       "customer_has_rrs_text": "<0>The institution has provided a rights retention strategy (RRS) in NVA.</0> <0>The CC-BY licence is set when you choose the accepted version of the file in the registration of a scientific article in NVA.</0>",
       "possible_not_to_follow_rrs": "Possible to not follow the institution's rights retention policy",
@@ -708,6 +708,8 @@
       "reference_required": "Reference required"
     }
   },
+  "file_upload_disabled_curator_can_upload_on_behalf": "Your institution does not allow the registrar to upload files for this category. As curator, you may add a file on behalf of the registrar.",
+  "file_upload_disabled_due_to_institution_policy": "Your institution does not allow you, as a registrar, to upload files for this category. Contact curator support if you wish to have a file on this result.",
   "footer": {
     "about_nva": "About The Norwegian Research Information Repository (NVA)",
     "about_nva_text": "The Norwegian Research Information Repository (NVA) collects publications and other research results, and makes them openly available in a common national solution. This makes results from Norwegian research available in a single service.",
@@ -845,7 +847,7 @@
         "DoiRequest": "DOI",
         "FilesApprovalThesis": "Student thesis",
         "GeneralSupportCase": "Curator support",
-        "PublishingRequest": "Publishing request"
+        "PublishingRequest": "File approval"
       }
     },
     "my_page": "My page",
@@ -947,12 +949,12 @@
       "not_customer": "You have no roles because your institution is unknown to the application.",
       "nvi_curator": "NVI curator",
       "nvi_curator_description": "Can view and process NVI candidates.",
-      "publishing_curator": "Publishing curator",
+      "publishing_curator": "File curator",
       "publishing_curator_description": "Can view and handle publishing requests.",
       "support_curator": "User support curator",
       "support_curator_description": "Can view and handle user support requests.",
       "thesis_curator": "Student file curator",
-      "thesis_curator_description": "Can view student publication requests and publish files",
+      "thesis_curator_description": "Can view and process publication requests for student theses.",
       "thesis_embargo_curator": "Delayed publication date",
       "thesis_embargo_curator_description": "Can view and edit files with embargo on theses."
     }
@@ -2011,7 +2013,7 @@
       "pages_to": "to",
       "place_for_event": "Place for event",
       "print_issn": "Print ISSN",
-      "protected_file_type": "Your institution has chosen not to support file upload for this category. Contact curator support if you still wish to add an open file.",
+      "protected_file_type": "Your institution has chosen not to support file upload for this category. Contact curator support if you still wish to add a file.",
       "related_result": "Related result",
       "related_results": "Related results",
       "related_results_description": "Search for and select results in the search field to link related results to this result",

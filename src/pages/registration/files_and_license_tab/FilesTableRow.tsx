@@ -50,15 +50,8 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { activeLicenses, getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
-import {
-  allowsFileUpload,
-  isDegree,
-  isOpenFile,
-  isPendingOpenFile,
-  userIsValidImporter,
-} from '../../../utils/registration-helpers';
+import { isDegree, isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
-import { hasCuratorRole } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { FileUploaderInfo } from '../../public_registration/public_files/FileUploaderInfo';
 import { DownloadFileButton } from './DownloadFileButton';
@@ -160,15 +153,16 @@ export const FilesTableRow = ({
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
 
   const category = values.entityDescription?.reference?.publicationInstance?.type;
-  const categorySupportsFiles = allowsFileUpload(customer, category);
-  const canSelectOpenFile = categorySupportsFiles || hasCuratorRole(user);
   const canUploadHiddenFile = isDegree(category) ? user?.isThesisCurator : user?.isPublishingCurator;
+
+  const disabledFileDescription =
+    disabledFile && file.type === 'OpenFile' ? t('registration.files_and_license.disabled_helper_text') : '';
 
   return (
     <>
       <TableRow
         data-testid={dataTestId.registrationWizard.files.fileRow}
-        title={disabledFile ? t('registration.files_and_license.disabled_helper_text') : ''}
+        title={disabledFileDescription}
         sx={{
           bgcolor: disabledFile ? 'grey.400' : '',
           td: { verticalAlign: 'top', borderBottom: isOpenableFile ? 'unset' : '' },
@@ -241,14 +235,12 @@ export const FilesTableRow = ({
                     <i>{t('registration.files_and_license.select_availability')}</i>
                   </MenuItem>
                 )}
-                {canSelectOpenFile && (
-                  <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
-                    <StyledFileTypeMenuItemContent>
-                      <CheckIcon fontSize="small" />
-                      {t('registration.files_and_license.file_type.open_file')}
-                    </StyledFileTypeMenuItemContent>
-                  </MenuItem>
-                )}
+                <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
+                  <StyledFileTypeMenuItemContent>
+                    <CheckIcon fontSize="small" />
+                    {t('registration.files_and_license.file_type.open_file')}
+                  </StyledFileTypeMenuItemContent>
+                </MenuItem>
                 <MenuItem value={isCompletedFile ? FileType.InternalFile : FileType.PendingInternalFile}>
                   <StyledFileTypeMenuItemContent>
                     <Inventory2OutlinedIcon fontSize="small" />
@@ -340,7 +332,7 @@ export const FilesTableRow = ({
                 )}
               </VerticalAlignedTableCell>
             )}
-            <VerticalAlignedTableCell>
+            <VerticalAlignedTableCell sx={{ maxWidth: '20rem' }}>
               {isOpenableFile && (
                 <>
                   <Field name={licenseFieldName}>
@@ -348,8 +340,8 @@ export const FilesTableRow = ({
                       <TextField
                         id={field.name}
                         data-testid={dataTestId.registrationWizard.files.selectLicenseField}
-                        sx={{ minWidth: '15rem' }}
                         select
+                        fullWidth
                         disabled={disabledFile}
                         slotProps={{
                           select: {
@@ -357,11 +349,18 @@ export const FilesTableRow = ({
                               const selectedLicense = getLicenseData(option as string);
 
                               return selectedLicense ? (
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem',
+                                  }}>
                                   {selectedLicense.logo && (
                                     <img style={{ width: '5rem' }} src={selectedLicense.logo} alt="" />
                                   )}
-                                  <span>{selectedLicense.name}</span>
+                                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                    {selectedLicense.name}
+                                  </span>
                                 </Box>
                               ) : null;
                             },
@@ -455,9 +454,7 @@ export const FilesTableRow = ({
         )}
       </TableRow>
       {isOpenableFile && (
-        <TableRow
-          sx={{ bgcolor: disabledFile ? 'grey.400' : '' }}
-          title={disabledFile ? t('registration.files_and_license.disabled_helper_text') : ''}>
+        <TableRow sx={{ bgcolor: disabledFile ? 'grey.400' : '' }} title={disabledFileDescription}>
           <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
             <Collapse in={openCollapsable}>
               <Box sx={{ m: '1rem', display: 'grid', gridTemplateColumns: '1fr auto', gap: '2rem' }}>
