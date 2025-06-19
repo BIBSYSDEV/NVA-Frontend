@@ -12,7 +12,7 @@ export const OutputModalActions = ({ isSubmitting, closeModal, isAddAction }: Ou
   const { t } = useTranslation();
 
   return (
-    <DialogActions>
+    <DialogActions sx={{ justifyContent: 'center' }}>
       <Button onClick={closeModal}>{t('common.cancel')}</Button>
       <Button
         data-testid={dataTestId.registrationWizard.resourceType.artisticOutputSaveButton}

@@ -1,7 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import CancelIcon from '@mui/icons-material/Cancel';
 import {
-  Box,
   Button,
   Dialog,
   DialogContent,
@@ -26,8 +24,12 @@ import {
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
+import { ExtentField } from '../../../components/ExtentField';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
+import { MusicalWorkMoveButtons } from '../../../components/MusicalWorkMoveButtons';
 import { OutputModalActions } from '../OutputModalActions';
+import { StyledMusicalWorkListDiv } from './MusicScoreModal';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;
@@ -89,8 +91,9 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
       .nullable()
       .matches(
         /^[A-Z]{2}[A-Z\d]{3}\d{7}$/,
-        i18n.t('feedback.validation.has_invalid_format', {
+        i18n.t('feedback.validation.has_invalid_format_example', {
           field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
+          example: 'NO-6Q7-25-00047',
         })
       ),
   }),
@@ -107,15 +110,17 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
             field: i18n.t('registration.resource_type.artistic.composer'),
           })
         ),
-        extent: Yup.number()
-          .typeError(
-            i18n.t('feedback.validation.has_invalid_format', {
-              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-            })
-          )
+        extent: Yup.string()
           .required(
             i18n.t('feedback.validation.is_required', {
               field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+            })
+          )
+          .matches(
+            /^([0-5][0-9]):([0-5][0-9])$/,
+            i18n.t('feedback.validation.invalid_format', {
+              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+              format: i18n.t('time_format.minutes'),
             })
           ),
       })
@@ -237,21 +242,44 @@ export const AudioVisualPublicationModal = ({
                     fullWidth
                     label={t('registration.resource_type.artistic.music_score_isrc')}
                     error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
+                    helperText={
+                      !!error ? (
+                        <ErrorMessage name={field.name} />
+                      ) : (
+                        t('registration.resource_type.artistic.music_score_isrc_helper_text')
+                      )
+                    }
                     data-testid={dataTestId.registrationWizard.resourceType.scoreIsrc}
                     slotProps={{ input: { inputComponent: MaskIsrcInput as any } }}
                   />
                 )}
               </Field>
               <FieldArray name="trackList">
-                {({ name, push, remove }: FieldArrayRenderProps) => (
+                {({ name, push, remove, move }: FieldArrayRenderProps) => (
                   <>
-                    <Typography variant="h3">{t('registration.resource_type.artistic.content_track')}</Typography>
+                    <Typography variant="h2">{t('registration.resource_type.artistic.content_track')}</Typography>
+                    <Button
+                      variant="outlined"
+                      sx={{ width: 'fit-content', textTransform: 'none' }}
+                      onClick={() => push(emptyMusicTrack)}
+                      startIcon={<AddIcon />}
+                      data-testid={dataTestId.registrationWizard.resourceType.audioVideoAddTrack}>
+                      {t('common.add_custom', {
+                        name: t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
+                      })}
+                    </Button>
 
                     {values.trackList.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
-                        <Box key={index} sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                        <StyledMusicalWorkListDiv key={index}>
+                          {values.trackList.length > 1 && (
+                            <MusicalWorkMoveButtons
+                              index={index}
+                              listLength={values.trackList.length}
+                              moveItem={(newIndex) => move(index, newIndex)}
+                            />
+                          )}
                           <Field name={`${baseFieldName}.title`}>
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (
                               <TextField
@@ -280,31 +308,19 @@ export const AudioVisualPublicationModal = ({
                               />
                             )}
                           </Field>
-                          <Field name={`${baseFieldName}.extent`}>
-                            {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                              <TextField
-                                {...field}
-                                variant="filled"
-                                fullWidth
-                                label={t('registration.resource_type.artistic.extent_in_minutes')}
-                                required
-                                error={touched && !!error}
-                                helperText={<ErrorMessage name={field.name} />}
-                                data-testid={`${dataTestId.registrationWizard.resourceType.artisticOutputDuration}-${index}`}
-                              />
-                            )}
-                          </Field>
-                          <Button
-                            variant="outlined"
-                            color="error"
-                            title={t('registration.resource_type.artistic.remove_music_work')}
+                          <ExtentField
+                            fieldName={`${baseFieldName}.extent`}
+                            mask="00:00"
+                            dataTestId={`${dataTestId.registrationWizard.resourceType.artisticOutputDuration}-${index}`}
+                            required
+                          />
+                          <DeleteIconButton
+                            sx={{ alignSelf: 'center' }}
+                            data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentRemove}-${index}`}
                             onClick={() => setRemoveTrackIndex(index)}
-                            sx={{ px: '2rem' }}
-                            startIcon={<CancelIcon />}
-                            data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentRemove}-${index}`}>
-                            {t('common.remove')}
-                          </Button>
-                        </Box>
+                            tooltip={t('registration.resource_type.artistic.remove_music_work')}
+                          />
+                        </StyledMusicalWorkListDiv>
                       );
                     })}
                     <ConfirmDialog
@@ -318,16 +334,6 @@ export const AudioVisualPublicationModal = ({
                       <Typography>{t('registration.resource_type.artistic.remove_music_work_description')}</Typography>
                     </ConfirmDialog>
 
-                    <Button
-                      variant="outlined"
-                      sx={{ width: 'fit-content' }}
-                      onClick={() => push(emptyMusicTrack)}
-                      startIcon={<AddIcon />}
-                      data-testid={dataTestId.registrationWizard.resourceType.audioVideoAddTrack}>
-                      {t('common.add_custom', {
-                        name: t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
-                      })}
-                    </Button>
                     {!!touched.trackList && typeof errors.trackList === 'string' && (
                       <FormHelperText error>
                         <ErrorMessage name={name} />

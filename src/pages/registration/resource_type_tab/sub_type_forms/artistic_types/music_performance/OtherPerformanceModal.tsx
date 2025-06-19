@@ -1,6 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, Button, Dialog, DialogContent, DialogTitle, FormHelperText, TextField, Typography } from '@mui/material';
+import { Button, Dialog, DialogContent, DialogTitle, FormHelperText, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +13,11 @@ import {
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
+import { ExtentField } from '../../../components/ExtentField';
+import { MusicalWorkMoveButtons } from '../../../components/MusicalWorkMoveButtons';
 import { OutputModalActions } from '../OutputModalActions';
+import { StyledMusicalWorkListDiv } from './MusicScoreModal';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;
@@ -41,6 +44,13 @@ const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
   performanceType: Yup.string().required(
     i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.performance_type'),
+    })
+  ),
+  extent: Yup.string().matches(
+    /^([0-5][0-9]):([0-5][0-9])$/,
+    i18n.t('feedback.validation.invalid_format', {
+      field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+      format: i18n.t('time_format.minutes'),
     })
   ),
   musicalWorks: Yup.array()
@@ -124,30 +134,37 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                 )}
               </Field>
 
-              <Field name="extent">
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    sx={{ maxWidth: '15rem' }}
-                    variant="filled"
-                    fullWidth
-                    label={t('registration.resource_type.artistic.extent_in_minutes')}
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
-                  />
-                )}
-              </Field>
-
+              <ExtentField
+                fieldName="extent"
+                mask="00:00"
+                dataTestId={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
+              />
               <FieldArray name="musicalWorks">
-                {({ name, push, remove }: FieldArrayRenderProps) => (
+                {({ name, push, remove, move }: FieldArrayRenderProps) => (
                   <>
-                    <Typography variant="h3">{t('registration.resource_type.artistic.musical_works')}</Typography>
+                    <Typography variant="h2">{t('registration.resource_type.artistic.musical_works')}</Typography>
+                    <Button
+                      variant="outlined"
+                      sx={{ width: 'fit-content', textTransform: 'none' }}
+                      onClick={() => push(emptyMusicalWork)}
+                      data-testid={dataTestId.registrationWizard.resourceType.otherPerfomanceAddWork}
+                      startIcon={<AddIcon />}>
+                      {t('common.add_custom', {
+                        name: t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
+                      })}
+                    </Button>
 
                     {values.musicalWorks.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
-                        <Box key={index} sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                        <StyledMusicalWorkListDiv key={index}>
+                          {values.musicalWorks.length > 1 && (
+                            <MusicalWorkMoveButtons
+                              index={index}
+                              listLength={values.musicalWorks.length}
+                              moveItem={(newIndex) => move(index, newIndex)}
+                            />
+                          )}
                           <Field name={`${baseFieldName}.title`}>
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (
                               <TextField
@@ -176,17 +193,13 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                               />
                             )}
                           </Field>
-                          <Button
-                            variant="outlined"
-                            color="error"
-                            title={t('registration.resource_type.artistic.remove_music_work')}
-                            onClick={() => setRemoveWorkItemIndex(index)}
-                            sx={{ px: '2rem' }}
+                          <DeleteIconButton
+                            sx={{ alignSelf: 'center' }}
                             data-testid={dataTestId.registrationWizard.resourceType.otherPerformanceWorkRemove}
-                            startIcon={<CancelIcon />}>
-                            {t('common.remove')}
-                          </Button>
-                        </Box>
+                            onClick={() => setRemoveWorkItemIndex(index)}
+                            tooltip={t('registration.resource_type.artistic.remove_music_work')}
+                          />
+                        </StyledMusicalWorkListDiv>
                       );
                     })}
                     <ConfirmDialog
@@ -200,16 +213,6 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                       <Typography>{t('registration.resource_type.artistic.remove_music_work_description')}</Typography>
                     </ConfirmDialog>
 
-                    <Button
-                      variant="outlined"
-                      sx={{ width: 'fit-content' }}
-                      onClick={() => push(emptyMusicalWork)}
-                      data-testid={dataTestId.registrationWizard.resourceType.otherPerfomanceAddWork}
-                      startIcon={<AddIcon />}>
-                      {t('common.add_custom', {
-                        name: t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
-                      })}
-                    </Button>
                     {!!touched.musicalWorks && typeof errors.musicalWorks === 'string' && (
                       <FormHelperText error>
                         <ErrorMessage name={name} />

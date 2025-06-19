@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, styled, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -60,8 +60,9 @@ const validationSchema = Yup.object<YupShape<MusicScore>>({
       .nullable()
       .matches(
         /^9790\d{9}$/,
-        i18n.t('feedback.validation.has_invalid_format', {
+        i18n.t('feedback.validation.has_invalid_format_example', {
           field: i18n.t('registration.resource_type.artistic.music_score_ismn'),
+          example: '9790260000438',
         })
       ),
   }),
@@ -157,7 +158,13 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                     fullWidth
                     label={t('registration.resource_type.artistic.music_score_ismn')}
                     error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
+                    helperText={
+                      !!error ? (
+                        <ErrorMessage name={field.name} />
+                      ) : (
+                        t('registration.resource_type.artistic.music_score_ismn_helper_text')
+                      )
+                    }
                     data-testid={dataTestId.registrationWizard.resourceType.scoreIsmn}
                   />
                 )}
@@ -170,3 +177,11 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
     </Dialog>
   );
 };
+
+export const StyledMusicalWorkListDiv = styled(Box)({
+  display: 'flex',
+  gap: '0.5rem',
+  border: '1px solid lightgrey',
+  padding: '0.5rem',
+  backgroundColor: '#FEFBF4',
+});
