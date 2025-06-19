@@ -708,6 +708,8 @@
       "reference_required": "Reference required"
     }
   },
+  "file_upload_disabled_curator_can_upload_on_behalf": "Your institution does not allow the registrar to upload files for this category. As curator, you may add a file on behalf of the registrar.",
+  "file_upload_disabled_due_to_institution_policy": "Your institution does not allow you, as a registrar, to upload files for this category. Contact curator support if you wish to have a file on this result.",
   "footer": {
     "about_nva": "About The Norwegian Research Information Repository (NVA)",
     "about_nva_text": "The Norwegian Research Information Repository (NVA) collects publications and other research results, and makes them openly available in a common national solution. This makes results from Norwegian research available in a single service.",
@@ -2011,7 +2013,7 @@
       "pages_to": "to",
       "place_for_event": "Place for event",
       "print_issn": "Print ISSN",
-      "protected_file_type": "Your institution has chosen not to support file upload for this category. Contact curator support if you still wish to add an open file.",
+      "protected_file_type": "Your institution has chosen not to support file upload for this category. Contact curator support if you still wish to add a file.",
       "related_result": "Related result",
       "related_results": "Related results",
       "related_results_description": "Search for and select results in the search field to link related results to this result",
