@@ -49,8 +49,8 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: C
 
   const serialPublicationQuery = useQuery({
     enabled: !isPublisherChannel,
-    queryKey: ['channel', channelId],
-    queryFn: () => fetchResource<SerialPublication>(channelId + '/2024'), // TODO: Remove year when NP-48868 is merged
+    queryKey: ['serial-publication', channelId],
+    queryFn: () => fetchResource<SerialPublication>(channelId + '/2023'), // TODO: Remove year when NP-48868 is merged
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
   });
