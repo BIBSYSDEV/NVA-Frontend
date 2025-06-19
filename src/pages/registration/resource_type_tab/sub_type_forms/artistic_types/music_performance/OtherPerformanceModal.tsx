@@ -142,7 +142,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
               <FieldArray name="musicalWorks">
                 {({ name, push, remove, move }: FieldArrayRenderProps) => (
                   <>
-                    <Typography variant="h3">{t('registration.resource_type.artistic.musical_works')}</Typography>
+                    <Typography variant="h2">{t('registration.resource_type.artistic.musical_works')}</Typography>
                     <Button
                       variant="outlined"
                       sx={{ width: 'fit-content', textTransform: 'none' }}

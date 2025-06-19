@@ -257,9 +257,7 @@ export const AudioVisualPublicationModal = ({
               <FieldArray name="trackList">
                 {({ name, push, remove, move }: FieldArrayRenderProps) => (
                   <>
-                    <Typography variant="h3" component="h2">
-                      {t('registration.resource_type.artistic.content_track')}
-                    </Typography>
+                    <Typography variant="h2">{t('registration.resource_type.artistic.content_track')}</Typography>
                     <Button
                       variant="outlined"
                       sx={{ width: 'fit-content', textTransform: 'none' }}

@@ -275,9 +275,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
               <FieldArray name="concertProgramme">
                 {({ name, push, remove, move }: FieldArrayRenderProps) => (
                   <>
-                    <Typography variant="h3" component="h2">
-                      {t('registration.resource_type.artistic.program')}
-                    </Typography>
+                    <Typography variant="h2">{t('registration.resource_type.artistic.program')}</Typography>
                     <Button
                       variant="outlined"
                       sx={{ width: 'fit-content', textTransform: 'none' }}
