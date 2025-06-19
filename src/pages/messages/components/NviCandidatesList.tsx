@@ -1,8 +1,10 @@
-import { Box, List, Typography } from '@mui/material';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import { Box, Button, List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
@@ -25,15 +27,52 @@ import { NviYearSelector } from './NviYearSelector';
 export const NviCandidatesList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const location = useLocation();
   const nviParams = useNviCandidatesParams();
 
-  const searchParams = new URLSearchParams(location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const nviCandidatesQuery = useFetchNviCandidates({ params: nviParams });
   const nviCandidatesQueryResults = nviCandidatesQuery.data?.hits ?? [];
 
   const page = Math.floor(nviParams.offset / nviParams.size) + 1;
+
+  const toggleValueFromSearchParams = (key: NviCandidatesSearchParam, value: string) => {
+    setSearchParams((params) => {
+      // const syncedParams = syncParamsWithSearchFields(params);
+      // if (syncedParams.has(key)) {
+      //   const currentValues = syncedParams.get(key)?.split(',') ?? [];
+      //   if (currentValues.includes(value)) {
+      //     currentValues.splice(currentValues.indexOf(value), 1);
+      //   } else {
+      //     currentValues.push(value);
+      //   }
+      //   if (currentValues.length === 0) {
+      //     syncedParams.delete(key);
+      //   } else {
+      //     syncedParams.set(key, currentValues.join(','));
+      //   }
+      // } else {
+      //   syncedParams.set(key, value);
+      // }
+      // syncedParams.delete(NviCandidatesSearchParam.Offset);
+      // return syncedParams;
+      const syncedParams = syncParamsWithSearchFields(params);
+      const currentValues = syncedParams.get(key)?.split(',') ?? [];
+
+      const updatedValues = currentValues.includes(value)
+        ? currentValues.filter((v) => v !== value)
+        : [...currentValues, value];
+
+      if (updatedValues.length > 0) {
+        syncedParams.set(key, updatedValues.join(','));
+      } else {
+        syncedParams.delete(key);
+      }
+
+      syncedParams.delete(NviCandidatesSearchParam.Offset);
+      return syncedParams;
+    });
+  };
 
   return (
     <section>
@@ -62,7 +101,17 @@ export const NviCandidatesList = () => {
           <NviAvailabilityFilter sx={{ flex: '1 13rem' }} />
         </Box>
 
-        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          <Button
+            variant="outlined"
+            sx={{ textTransform: 'none' }}
+            startIcon={nviParams.statusShould?.includes('new') ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+            onClick={() => {
+              toggleValueFromSearchParams(NviCandidatesSearchParam.StatusShould, 'new');
+            }}>
+            Inkluder kandidater uten kurator
+          </Button>
+
           <CuratorSelector
             selectedUsername={nviParams.assignee}
             onChange={(curator) => {

@@ -23,6 +23,12 @@ export const useNviCandidatesParams = () => {
   const orderBy = searchParams.get(NviCandidatesSearchParam.OrderBy) as NviCandidateOrderBy | null;
   const query = searchParams.get(NviCandidatesSearchParam.Query);
   const size = (searchParams.get(NviCandidatesSearchParam.Size) as number | null) ?? ROWS_PER_PAGE_OPTIONS[0];
+  const statusShould = searchParams.get(NviCandidatesSearchParam.StatusShould)?.split(',') as
+    | null
+    | ('new' | 'pending' | 'approved' | 'rejected')[];
+  const globalStatusShould = searchParams.get(NviCandidatesSearchParam.GlobalStatusShould)?.split(',') as
+    | null
+    | ('pending' | 'approved' | 'rejected' | 'dispute')[];
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
   const year = (searchParams.get(NviCandidatesSearchParam.Year) as number | null) ?? getDefaultNviYear();
   const visibility = searchParams.get(NviCandidatesSearchParam.Visibility) as NviCandidateSearchStatus | null;
@@ -37,6 +43,8 @@ export const useNviCandidatesParams = () => {
     orderBy,
     query,
     size,
+    statusShould,
+    globalStatusShould,
     sortOrder,
     year,
     visibility,
