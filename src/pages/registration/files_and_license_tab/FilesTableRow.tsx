@@ -155,11 +155,14 @@ export const FilesTableRow = ({
   const category = values.entityDescription?.reference?.publicationInstance?.type;
   const canUploadHiddenFile = isDegree(category) ? user?.isThesisCurator : user?.isPublishingCurator;
 
+  const disabledFileDescription =
+    disabledFile && file.type === 'OpenFile' ? t('registration.files_and_license.disabled_helper_text') : '';
+
   return (
     <>
       <TableRow
         data-testid={dataTestId.registrationWizard.files.fileRow}
-        title={disabledFile ? t('registration.files_and_license.disabled_helper_text') : ''}
+        title={disabledFileDescription}
         sx={{
           bgcolor: disabledFile ? 'grey.400' : '',
           td: { verticalAlign: 'top', borderBottom: isOpenableFile ? 'unset' : '' },
@@ -444,9 +447,7 @@ export const FilesTableRow = ({
         )}
       </TableRow>
       {isOpenableFile && (
-        <TableRow
-          sx={{ bgcolor: disabledFile ? 'grey.400' : '' }}
-          title={disabledFile ? t('registration.files_and_license.disabled_helper_text') : ''}>
+        <TableRow sx={{ bgcolor: disabledFile ? 'grey.400' : '' }} title={disabledFileDescription}>
           <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
             <Collapse in={openCollapsable}>
               <Box sx={{ m: '1rem', display: 'grid', gridTemplateColumns: '1fr auto', gap: '2rem' }}>
