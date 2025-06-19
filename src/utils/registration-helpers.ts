@@ -852,11 +852,8 @@ export const getDisabledCategories = (
     }
   }
 
-  // Do not allow non-curator to select a category that don't support file upload if result has an open (approved) file
-  if (
-    !hasCuratorRole(user) &&
-    registration.associatedArtifacts.some((artifact) => isOpenFile(artifact) || isPendingOpenFile(artifact))
-  ) {
+  // Do not allow non-curator to select a category that don't support file upload if result has a file
+  if (!hasCuratorRole(user) && getAssociatedFiles(registration.associatedArtifacts).length > 0) {
     if (customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
       const categoriesWithoutFileSupport = allPublicationInstanceTypes
         .filter((type) => !customer.allowFileUploadForTypes.includes(type))
