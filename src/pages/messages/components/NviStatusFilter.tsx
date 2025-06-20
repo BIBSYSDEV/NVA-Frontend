@@ -1,4 +1,4 @@
-import { MenuItem, TextField, TextFieldProps } from '@mui/material';
+import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
@@ -7,38 +7,46 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
-export const NviStatusFilter = (props: TextFieldProps) => {
+export const NviStatusFilter = () => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
-  const { filter } = useNviCandidatesParams();
+  const { statusShould } = useNviCandidatesParams();
+
+  const toggleValueFromSearchParams = (key: NviCandidatesSearchParam, value: string) => {
+    setSearchParams((params) => {
+      const syncedParams = syncParamsWithSearchFields(params);
+      const currentValues = syncedParams.get(key)?.split(',') ?? [];
+
+      const updatedValues = currentValues.includes(value)
+        ? currentValues.filter((v) => v !== value)
+        : [...currentValues, value];
+
+      if (updatedValues.length > 0) {
+        syncedParams.set(key, updatedValues.join(','));
+      } else {
+        syncedParams.delete(key);
+      }
+
+      syncedParams.delete(NviCandidatesSearchParam.Offset);
+      return syncedParams;
+    });
+  };
 
   return (
     <TextField
-      {...props}
+      fullWidth
       data-testid={dataTestId.tasksPage.nvi.statusFilter}
       select
       size="small"
       label={t('common.status')}
-      value={filter ?? ''}
+      value={statusShould ?? ''}
       onChange={(event) => {
         const newStatus = event.target.value;
-        setSearchParams((prevParams) => {
-          const syncedParams = syncParamsWithSearchFields(prevParams);
-          if (newStatus) {
-            syncedParams.set(NviCandidatesSearchParam.Filter, newStatus);
-          } else {
-            syncedParams.delete(NviCandidatesSearchParam.Filter);
-          }
-          if (newStatus === 'pending') {
-            syncedParams.delete(NviCandidatesSearchParam.Assignee);
-          }
-          syncedParams.delete(NviCandidatesSearchParam.Visibility);
-          return syncedParams;
-        });
+        toggleValueFromSearchParams(NviCandidatesSearchParam.StatusShould, newStatus);
       }}>
       <MenuItem value={'pending' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.New')}</MenuItem>
-      <MenuItem value={'assigned' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Pending')}</MenuItem>
+      {/* <MenuItem value={'assigned' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Pending')}</MenuItem> */}
       <MenuItem value={'approved' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Approved')}</MenuItem>
       <MenuItem value={'rejected' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Rejected')}</MenuItem>
       <MenuItem value={'dispute' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Dispute')}</MenuItem>
@@ -46,7 +54,7 @@ export const NviStatusFilter = (props: TextFieldProps) => {
   );
 };
 
-export const NviAvailabilityFilter = (props: TextFieldProps) => {
+export const NviAvailabilityFilter = () => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
@@ -54,7 +62,7 @@ export const NviAvailabilityFilter = (props: TextFieldProps) => {
 
   return (
     <TextField
-      {...props}
+      fullWidth
       data-testid={dataTestId.tasksPage.nvi.availabilityFilter}
       select
       slotProps={{ select: { displayEmpty: true }, inputLabel: { shrink: true } }}

@@ -238,11 +238,13 @@ export enum NviCandidatesSearchParam {
   Aggregation = 'aggregation',
   Assignee = 'assignee',
   ExcludeSubUnits = 'excludeSubUnits',
+  GlobalStatusShould = 'globalStatusShould',
   Filter = 'filter',
   Offset = 'offset',
   OrderBy = 'orderBy',
   Query = 'query',
   Size = 'size',
+  StatusShould = 'statusShould',
   SortOrder = 'sortOrder',
   Year = 'year',
   Visibility = 'visibility',
@@ -256,10 +258,12 @@ export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Assignee]?: string | null;
   [NviCandidatesSearchParam.ExcludeSubUnits]?: boolean | null;
   [NviCandidatesSearchParam.Filter]?: NviCandidateSearchStatus | null;
+  [NviCandidatesSearchParam.GlobalStatusShould]?: string[] | null;
   [NviCandidatesSearchParam.Offset]?: number | null;
   [NviCandidatesSearchParam.OrderBy]?: NviCandidateOrderBy | null;
   [NviCandidatesSearchParam.Query]?: string | null;
   [NviCandidatesSearchParam.Size]?: number | null;
+  [NviCandidatesSearchParam.StatusShould]?: string[] | null;
   [NviCandidatesSearchParam.SortOrder]?: SortOrder | null;
   [NviCandidatesSearchParam.Year]?: number | null;
   [NviCandidatesSearchParam.Visibility]?: NviCandidateSearchStatus | null;
@@ -283,13 +287,17 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
   if (params.excludeSubUnits === true || params.excludeSubUnits === false) {
     searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, params.excludeSubUnits.toString());
   }
-
   if (params.visibility) {
     searchParams.set(NviCandidatesSearchParam.Filter, params.visibility);
   } else if (params.filter) {
     searchParams.set(NviCandidatesSearchParam.Filter, params.filter);
   }
-
+  if (params.statusShould?.length) {
+    searchParams.set(NviCandidatesSearchParam.StatusShould, params.statusShould.join(','));
+  }
+  if (params.globalStatusShould?.length) {
+    searchParams.set(NviCandidatesSearchParam.GlobalStatusShould, params.globalStatusShould.join(','));
+  }
   if (params.query) {
     searchParams.set(NviCandidatesSearchParam.Query, params.query);
   }
