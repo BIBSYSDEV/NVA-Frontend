@@ -14,6 +14,7 @@ import {
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { BetaFunctionality } from '../../../../../../components/BetaFunctionality';
 import {
   ArtisticRegistration,
   MusicOutput,
@@ -23,12 +24,9 @@ import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { AudioVisualPublicationModal } from './AudioVisualPublicationModal';
 import { ConcertModal } from './ConcertModal';
+import { ConcertTable } from './ConcertTable';
 import { MusicScoreModal } from './MusicScoreModal';
 import { OtherPerformanceModal } from './OtherPerformanceModal';
-import { BetaFunctionality } from '../../../../../../components/BetaFunctionality';
-import { toDateString } from '../../../../../../utils/date-helpers';
-import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
-import { EditIconButton } from '../../../../../messages/components/EditIconButton';
 
 type ArtisticMusicPerformanceModalType = '' | 'MusicScore' | 'AudioVisualPublication' | 'Concert' | 'OtherPerformance';
 
@@ -40,8 +38,10 @@ export const ArtisticMusicPerformanceForm = () => {
   const [openModal, setOpenModal] = useState<ArtisticMusicPerformanceModalType>('');
   const closeModal = () => setOpenModal('');
 
+  console.log(manifestations.filter((m) => m.type === 'Concert'));
+
   return (
-    <Box sx={{ bgcolor: 'secondary.light', p: '1rem' }}>
+    <div>
       <Typography variant="h2" gutterBottom>
         {t('registration.resource_type.artistic.announcements')}
       </Typography>
@@ -54,56 +54,20 @@ export const ArtisticMusicPerformanceForm = () => {
           return (
             <>
               <BetaFunctionality>
-                <Typography variant="h2">Konsert/forestilling</Typography>
-                <Button
-                  sx={{ textTransform: 'none' }}
-                  onClick={() => setOpenModal('Concert')}
-                  variant="outlined"
-                  startIcon={<AddIcon />}
-                  data-testid={dataTestId.registrationWizard.resourceType.addConcertShowButton}>
-                  {t('registration.resource_type.artistic.add_concert')}
-                </Button>
-                <Table>
-                  <TableHead sx={{ bgcolor: 'secondary.light' }}>
-                    <TableRow>
-                      <TableCell>{t('common.order')}</TableCell>
-                      <TableCell>{t('common.place')}</TableCell>
-                      <TableCell>{t('common.description')}</TableCell>
-                      <TableCell>{t('registration.resource_type.date_from')}</TableCell>
-                      <TableCell>{t('registration.resource_type.date_to')}</TableCell>
-                      <TableCell>{t('registration.resource_type.artistic.extent_in_minutes')}</TableCell>
-                      <TableCell>{t('common.edit')}</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {manifestations
-                      .filter((entry) => entry.type === 'Concert')
-                      .map((concert) => {
-                        return (
-                          <TableRow key={concert.sequence}>
-                            <TableCell>Move</TableCell>
-                            <TableCell>{concert.place?.name}</TableCell>
-                            <TableCell>{concert.concertSeries}</TableCell>
-                            <TableCell>
-                              {concert.time?.type === 'Instant'
-                                ? toDateString(concert.time.value)
-                                : concert.time?.type === 'Period'
-                                  ? toDateString(concert.time.from)
-                                  : null}
-                            </TableCell>
-                            <TableCell>
-                              {concert.time?.type === 'Period' ? toDateString(concert.time.to) : null}
-                            </TableCell>
-                            <TableCell>{concert.extent}</TableCell>
-                            <TableCell sx={{ display: 'flex', gap: '1rem' }}>
-                              <EditIconButton />
-                              <DeleteIconButton />
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                  </TableBody>
-                </Table>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  <Typography variant="h2">Konsert/forestilling</Typography>
+                  <Button
+                    sx={{ textTransform: 'none', width: 'fit-content' }}
+                    onClick={() => setOpenModal('Concert')}
+                    variant="outlined"
+                    startIcon={<AddIcon />}
+                    data-testid={dataTestId.registrationWizard.resourceType.addConcertShowButton}>
+                    {t('registration.resource_type.artistic.add_concert')}
+                  </Button>
+                  <ConcertTable
+                    manifestations={manifestations.filter((manifestation) => manifestation.type === 'Concert')}
+                  />
+                </Box>
               </BetaFunctionality>
               {manifestations.length > 0 && (
                 <Table sx={{ '& th,td': { borderBottom: 1 } }}>
@@ -187,6 +151,6 @@ export const ArtisticMusicPerformanceForm = () => {
           );
         }}
       </FieldArray>
-    </Box>
+    </div>
   );
 };
