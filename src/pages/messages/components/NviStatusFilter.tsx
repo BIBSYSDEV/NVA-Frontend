@@ -1,4 +1,4 @@
-import { MenuItem, TextField, TextFieldProps } from '@mui/material';
+import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
@@ -7,7 +7,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
-export const NviStatusFilter = (props: TextFieldProps) => {
+export const NviStatusFilter = () => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
@@ -35,7 +35,7 @@ export const NviStatusFilter = (props: TextFieldProps) => {
 
   return (
     <TextField
-      {...props}
+      fullWidth
       data-testid={dataTestId.tasksPage.nvi.statusFilter}
       select
       size="small"
@@ -54,7 +54,7 @@ export const NviStatusFilter = (props: TextFieldProps) => {
   );
 };
 
-export const NviAvailabilityFilter = (props: TextFieldProps) => {
+export const NviAvailabilityFilter = () => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
@@ -62,7 +62,7 @@ export const NviAvailabilityFilter = (props: TextFieldProps) => {
 
   return (
     <TextField
-      {...props}
+      fullWidth
       data-testid={dataTestId.tasksPage.nvi.availabilityFilter}
       select
       slotProps={{ select: { displayEmpty: true }, inputLabel: { shrink: true } }}

@@ -1,6 +1,6 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import { Box, Button, List, Typography } from '@mui/material';
+import { Button, Grid, List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -65,35 +65,34 @@ export const NviCandidatesList = () => {
         {t('tasks.nvi.nvi_control')}
       </Typography>
 
-      <Box
-        sx={{
-          mb: '1rem',
-          mx: { xs: '0.5rem', md: 0 },
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-        }}>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-          <NviStatusFilter sx={{ flex: '1 13rem' }} />
+      <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
+        <Grid size={{ xs: 16, sm: 8, md: 4, lg: 4 }}>
+          <NviStatusFilter />
+        </Grid>
+        <Grid size={{ xs: 16, md: 12, lg: 8 }}>
           <SearchForm
-            sx={{ flex: '1 30rem' }}
             placeholder={t('tasks.search_placeholder')}
             paginationOffsetParamName={NviCandidatesSearchParam.Offset}
           />
-          <NviAvailabilityFilter sx={{ flex: '1 13rem' }} />
-        </Box>
+        </Grid>
+        <Grid size={{ xs: 16, sm: 8, md: 4, lg: 4 }}>
+          <NviAvailabilityFilter />
+        </Grid>
 
-        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+        <Grid size={{ xs: 16, sm: 8, md: 6, lg: 4 }}>
           <Button
+            fullWidth
             variant="outlined"
-            sx={{ flex: '1 13rem', textTransform: 'none' }}
+            sx={{ textTransform: 'none' }}
             startIcon={nviParams.statusShould?.includes('new') ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
             onClick={() => {
               toggleValueFromSearchParams(NviCandidatesSearchParam.StatusShould, 'new');
             }}>
             {t('include_candidates_without_curator')}
           </Button>
+        </Grid>
 
+        <Grid size={{ xs: 16, md: 6, lg: 4 }}>
           <CuratorSelector
             selectedUsername={nviParams.assignee}
             onChange={(curator) => {
@@ -120,11 +119,11 @@ export const NviCandidatesList = () => {
               navigate({ search: syncedParams.toString() });
             }}
             roleFilter={[RoleName.NviCurator]}
-            sx={{ flex: '1 15rem' }}
           />
+        </Grid>
 
+        <Grid size={{ xs: 8, md: 5, lg: 4 }}>
           <AreaOfResponsibilitySelector
-            sx={{ flex: '1 15rem' }}
             paramName={NviCandidatesSearchParam.Affiliations}
             resetPagination={(params) => {
               params.delete(NviCandidatesSearchParam.Offset);
@@ -133,16 +132,20 @@ export const NviCandidatesList = () => {
               }
             }}
           />
+        </Grid>
 
+        <Grid size={{ xs: 8, md: 5, lg: 2 }}>
           <ExcludeSubunitsCheckbox
             paramName={NviCandidatesSearchParam.ExcludeSubUnits}
             paginationParamName={NviCandidatesSearchParam.Offset}
             disabled={nviParams.affiliations === null || nviParams.affiliations.length === 0}
           />
+        </Grid>
 
-          <NviYearSelector sx={{ ml: 'auto', height: 'fit-content' }} />
-        </Box>
-      </Box>
+        <Grid size={{ xs: 16, md: 6, lg: 2 }}>
+          <NviYearSelector />
+        </Grid>
+      </Grid>
 
       <ListPagination
         count={nviCandidatesQuery.data?.totalHits ?? 0}
@@ -163,7 +166,7 @@ export const NviCandidatesList = () => {
         {nviCandidatesQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : nviCandidatesQueryResults.length === 0 ? (
-          <Typography>{t('tasks.nvi.no_nvi_candidates')}</Typography>
+          <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('tasks.nvi.no_nvi_candidates')}</Typography>
         ) : (
           <List data-testid={dataTestId.tasksPage.nvi.candidatesList}>
             {nviCandidatesQueryResults.map((nviCandidate, index) => {
