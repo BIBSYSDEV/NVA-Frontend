@@ -38,24 +38,6 @@ export const NviCandidatesList = () => {
 
   const toggleValueFromSearchParams = (key: NviCandidatesSearchParam, value: string) => {
     setSearchParams((params) => {
-      // const syncedParams = syncParamsWithSearchFields(params);
-      // if (syncedParams.has(key)) {
-      //   const currentValues = syncedParams.get(key)?.split(',') ?? [];
-      //   if (currentValues.includes(value)) {
-      //     currentValues.splice(currentValues.indexOf(value), 1);
-      //   } else {
-      //     currentValues.push(value);
-      //   }
-      //   if (currentValues.length === 0) {
-      //     syncedParams.delete(key);
-      //   } else {
-      //     syncedParams.set(key, currentValues.join(','));
-      //   }
-      // } else {
-      //   syncedParams.set(key, value);
-      // }
-      // syncedParams.delete(NviCandidatesSearchParam.Offset);
-      // return syncedParams;
       const syncedParams = syncParamsWithSearchFields(params);
       const currentValues = syncedParams.get(key)?.split(',') ?? [];
 
@@ -104,12 +86,12 @@ export const NviCandidatesList = () => {
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <Button
             variant="outlined"
-            sx={{ textTransform: 'none' }}
+            sx={{ flex: '1 13rem', textTransform: 'none' }}
             startIcon={nviParams.statusShould?.includes('new') ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
             onClick={() => {
               toggleValueFromSearchParams(NviCandidatesSearchParam.StatusShould, 'new');
             }}>
-            Inkluder kandidater uten kurator
+            {t('include_candidates_without_curator')}
           </Button>
 
           <CuratorSelector
