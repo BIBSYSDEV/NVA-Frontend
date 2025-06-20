@@ -65,8 +65,8 @@ export const NviCandidatesList = () => {
         {t('tasks.nvi.nvi_control')}
       </Typography>
 
-      <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
-        <Grid size={{ xs: 16, sm: 8, md: 4, lg: 4 }}>
+      <Grid container columns={16} spacing="1rem" sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
+        <Grid size={{ xs: 16, md: 4 }}>
           <NviStatusFilter />
         </Grid>
         <Grid size={{ xs: 16, md: 12, lg: 8 }}>
@@ -75,7 +75,7 @@ export const NviCandidatesList = () => {
             paginationOffsetParamName={NviCandidatesSearchParam.Offset}
           />
         </Grid>
-        <Grid size={{ xs: 16, sm: 8, md: 4, lg: 4 }}>
+        <Grid size={{ xs: 16, sm: 8, md: 4 }}>
           <NviAvailabilityFilter />
         </Grid>
 
@@ -92,7 +92,7 @@ export const NviCandidatesList = () => {
           </Button>
         </Grid>
 
-        <Grid size={{ xs: 16, md: 6, lg: 4 }}>
+        <Grid size={{ xs: 16, sm: 6, lg: 4 }}>
           <CuratorSelector
             selectedUsername={nviParams.assignee}
             onChange={(curator) => {
@@ -122,7 +122,7 @@ export const NviCandidatesList = () => {
           />
         </Grid>
 
-        <Grid size={{ xs: 8, md: 5, lg: 4 }}>
+        <Grid size={{ xs: 8, sm: 5, lg: 4 }}>
           <AreaOfResponsibilitySelector
             paramName={NviCandidatesSearchParam.Affiliations}
             resetPagination={(params) => {
@@ -134,7 +134,7 @@ export const NviCandidatesList = () => {
           />
         </Grid>
 
-        <Grid size={{ xs: 8, md: 5, lg: 2 }}>
+        <Grid size={{ xs: 8, sm: 5, lg: 2 }}>
           <ExcludeSubunitsCheckbox
             paramName={NviCandidatesSearchParam.ExcludeSubUnits}
             paginationParamName={NviCandidatesSearchParam.Offset}
