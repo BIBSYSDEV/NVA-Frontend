@@ -20,6 +20,14 @@ const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   marginBottom: '0.5rem',
 }));
 
+const StyledTypography = styled(Typography)({
+  display: 'flex',
+});
+
+const StyledSkeleton = styled(Skeleton)({
+  width: '2ch',
+});
+
 const progressLabel = 'progress-label';
 
 export const NviCandidatesNavigationAccordion = () => {
@@ -106,21 +114,22 @@ export const NviCandidatesNavigationAccordion = () => {
 
         <StyledNviStatusBox sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
           <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}:</Typography>
-          <Typography>
-            {t('tasks.nvi.candidates_for_control')} ({nviCandidatesTotal})
-          </Typography>
+          <StyledTypography>
+            {t('tasks.nvi.candidates_for_control')} (
+            {nviAggregationsQuery.isPending ? <StyledSkeleton /> : nviCandidatesTotal})
+          </StyledTypography>
           <Divider sx={{ bgcolor: 'black' }} />
           <Typography fontWeight="bold">{t('tasks.nvi.controlled')}:</Typography>
-          <Typography>
-            {t('tasks.nvi.status.Approved')} ({nviApprovedCount})
-          </Typography>
-          <Typography>
-            {t('tasks.nvi.status.Rejected')} ({nviRejectedCount})
-          </Typography>
+          <StyledTypography>
+            {t('tasks.nvi.status.Approved')} ({nviAggregationsQuery.isPending ? <StyledSkeleton /> : nviApprovedCount})
+          </StyledTypography>
+          <StyledTypography>
+            {t('tasks.nvi.status.Rejected')} ({nviAggregationsQuery.isPending ? <StyledSkeleton /> : nviRejectedCount})
+          </StyledTypography>
           <Divider sx={{ bgcolor: 'black' }} />
-          <Typography>
-            {t('tasks.nvi.status.Dispute')} ({nviDisputeCount})
-          </Typography>
+          <StyledTypography>
+            {t('tasks.nvi.status.Dispute')} ({nviAggregationsQuery.isPending ? <StyledSkeleton /> : nviDisputeCount})
+          </StyledTypography>
         </StyledNviStatusBox>
       </StyledTicketSearchFormGroup>
     </NavigationListAccordion>
