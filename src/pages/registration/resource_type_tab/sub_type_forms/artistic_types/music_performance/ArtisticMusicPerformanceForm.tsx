@@ -104,13 +104,13 @@ export const ArtisticMusicPerformanceForm = () => {
                   </Box>
                 )}
 
-              <MusicScoreModal onSubmit={onAddOutput} open={openModal === 'MusicScore'} closeModal={closeModal} />
+              <ConcertModal onSubmit={onAddOutput} open={openModal === 'Concert'} closeModal={closeModal} />
               <AudioVisualPublicationModal
                 onSubmit={onAddOutput}
                 open={openModal === 'AudioVisualPublication'}
                 closeModal={closeModal}
               />
-              <ConcertModal onSubmit={onAddOutput} open={openModal === 'Concert'} closeModal={closeModal} />
+              <MusicScoreModal onSubmit={onAddOutput} open={openModal === 'MusicScore'} closeModal={closeModal} />
               <OtherPerformanceModal
                 onSubmit={onAddOutput}
                 open={openModal === 'OtherPerformance'}

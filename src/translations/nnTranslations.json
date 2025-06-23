@@ -708,6 +708,8 @@
       "reference_required": "Oppgi referanse på resultat"
     }
   },
+  "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støttar ikkje at registrator kan laste opp filer for denne kategorien. Som kurator kan du leggje til ei fil på vegner av registrator.",
+  "file_upload_disabled_due_to_institution_policy": "Din institusjon støttar ikkje at du som registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte dersom du ønskjer å ha ei fil på dette resultatet.",
   "footer": {
     "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
     "about_nva_text": "Nasjonalt vitenarkiv (NVA) samlar publikasjonar og andre forskingsresultat, og gjer dei opent tilgjengelege i ei felles nasjonal løysing. Dette gjer resultat frå norsk forsking tilgjengeleg i éi teneste.",
@@ -2011,7 +2013,7 @@
       "pages_to": "til",
       "place_for_event": "Stad for arrangement",
       "print_issn": "Print ISSN",
-      "protected_file_type": "Din institusjon har valt å ikkje støtte opplasting av filer for denne kategorien. Kontakt kuratorstøtte dersom du likevel vil leggje til ei opa fil.",
+      "protected_file_type": "Din institusjon har valt å ikkje støtte opplasting av filer for denne kategorien. Kontakt kuratorstøtte dersom du likevel vil leggje til ei fil.",
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",
       "related_results_description": "Søk opp og vel resultat i seøkjefeltet for å knytte relaterte resultat til dette resultatet",
