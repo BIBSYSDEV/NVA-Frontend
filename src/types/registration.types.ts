@@ -83,10 +83,6 @@ export interface Publisher extends PublicationChannel {
   type: 'Publisher';
 }
 
-export interface MyRegistrationsResponse {
-  publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
-}
-
 type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier' | 'HandleIdentifier';
 type ImportSourceName = 'Cristin' | 'Scopus' | 'handle';
 
@@ -107,14 +103,13 @@ interface ImportSource {
 }
 
 export type RegistrationOperation =
-  | 'update'
+  | 'partial-update' // Can edit projects and funding
+  | 'update' // Can update all fields
   | 'delete'
   | 'unpublish'
   | 'republish'
   | 'terminate'
-  | 'update-including-files'
   | 'publishing-request-create'
-  | 'publishing-request-approve'
   | 'doi-request-create'
   | 'doi-request-approve'
   | 'support-request-create'
@@ -136,7 +131,7 @@ interface GeneralPublicationNote {
 type PublicationNote = UnpublishingNote | GeneralPublicationNote;
 
 export interface BaseRegistration {
-  readonly type: 'Publication' | 'ImportCandidate';
+  readonly type: 'Publication' | 'ImportCandidate' | 'PartialUpdatePublicationRequest';
   readonly id: string;
   readonly identifier: string;
   readonly createdDate: string;
@@ -323,21 +318,6 @@ export const emptyRegistrationDate: RegistrationDate = {
   day: '',
 };
 
-export interface RegistrationPreview {
-  abstract: string;
-  contributors: Contributor[];
-  identifier: string;
-  id: string;
-  mainTitle: string;
-  createdDate: string;
-  modifiedDate: string;
-  status: RegistrationStatus;
-  owner: string;
-  publicationInstance?: {
-    type: PublicationInstanceType;
-  };
-}
-
 export interface DoiPreview {
   entityDescription: EntityDescription;
 }
@@ -358,7 +338,7 @@ export const emptyRegistration: Registration = {
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
-  allowedOperations: ['update', 'delete', 'unpublish', 'upload-file'],
+  allowedOperations: ['partial-update', 'update', 'delete', 'unpublish', 'upload-file'],
 };
 
 export interface ContextSeries {

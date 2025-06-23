@@ -8,6 +8,7 @@ import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.t
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { userHasAccessRight } from '../../utils/registration-helpers';
+import { isFileApprovalTicket } from '../../utils/ticketHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
 import { LogPanel } from './log/LogPanel';
@@ -33,9 +34,7 @@ export const ActionPanel = ({
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
 
-  const publishingRequestTickets = tickets.filter(
-    (ticket) => ticket.type === 'PublishingRequest'
-  ) as PublishingTicket[];
+  const publishingRequestTickets = tickets.filter(isFileApprovalTicket) as PublishingTicket[];
   const newestDoiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest');
   const newestSupportTicket = tickets.findLast((ticket) => ticket.type === 'GeneralSupportCase');
 
@@ -47,8 +46,7 @@ export const ActionPanel = ({
   const isNotOnTasksDialoguePage = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   const canCreatePublishingTicket = userHasAccessRight(registration, 'publishing-request-create');
-  const canApprovePublishingTicket =
-    publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'publishing-request-approve');
+  const canHandlePublishingTicket = publishingRequestTickets.some((ticket) => ticket.allowedOperations.length > 0);
   const hasOtherPublishingRights =
     userHasAccessRight(registration, 'unpublish') ||
     userHasAccessRight(registration, 'republish') ||
@@ -65,16 +63,20 @@ export const ActionPanel = ({
   const canApproveSupportTicket = !!newestSupportTicket && userHasAccessRight(registration, 'support-request-approve');
 
   const shouldSeePublishingAccordion =
-    canCreatePublishingTicket || canApprovePublishingTicket || hasOtherPublishingRights;
+    canCreatePublishingTicket || canHandlePublishingTicket || hasOtherPublishingRights || !!publishingRequestTickets;
+
   const shouldSeeDoiAccordion =
     !registration.entityDescription?.reference?.doi &&
     !!customerHasConfiguredDoi &&
-    (canCreateDoiTicket || canApproveDoiTicket);
-  const shouldSeeSupportAccordion = canCreateSupportTicket || canApproveSupportTicket;
+    (canCreateDoiTicket || canApproveDoiTicket || !!newestDoiRequestTicket);
+
+  const shouldSeeSupportAccordion = canCreateSupportTicket || canApproveSupportTicket || !!newestSupportTicket;
 
   const canSeeTasksPanel = shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion;
 
   const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Log);
+
+  const canEditRegistration = userHasAccessRight(registration, 'partial-update');
 
   return (
     <Paper
@@ -98,13 +100,15 @@ export const ActionPanel = ({
             aria-controls="action-panel-tab-panel-0"
           />
         )}
-        <Tab
-          value={TabValue.Log}
-          label={t('common.log')}
-          data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
-          id="action-panel-tab-1"
-          aria-controls="action-panel-tab-panel-1"
-        />
+        {canEditRegistration && (
+          <Tab
+            value={TabValue.Log}
+            label={t('common.log')}
+            data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
+            id="action-panel-tab-1"
+            aria-controls="action-panel-tab-panel-1"
+          />
+        )}
       </Tabs>
       <TabPanel tabValue={tabValue} index={0}>
         <ErrorBoundary>

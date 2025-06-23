@@ -26,7 +26,8 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
   const canEditTicket =
     !!(ticket.type === 'DoiRequest' && user?.isDoiCurator) ||
     !!(ticket.type === 'GeneralSupportCase' && user?.isSupportCurator) ||
-    !!(ticket.type === 'PublishingRequest' && user?.isPublishingCurator);
+    !!(ticket.type === 'PublishingRequest' && user?.isPublishingCurator) ||
+    !!(ticket.type === 'FilesApprovalThesis' && user?.isThesisCurator);
 
   const ticketMutation = useMutation({
     mutationFn: async (assigneeUsername: string) => {
@@ -58,7 +59,9 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
           ? RoleName.PublishingCurator
           : ticket.type === 'DoiRequest'
             ? RoleName.DoiCurator
-            : RoleName.SupportCurator
+            : ticket.type === 'FilesApprovalThesis'
+              ? RoleName.PublishingCurator
+              : RoleName.SupportCurator
       }
     />
   ) : ticket.assignee || isPendingTicket ? (

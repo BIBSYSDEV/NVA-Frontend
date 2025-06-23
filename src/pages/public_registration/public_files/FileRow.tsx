@@ -142,14 +142,19 @@ export const FileRow = ({
           href={licenseData.link}
           target="_blank"
           rel="noopener noreferrer"
-          sx={{ gridArea: 'license', maxHeight: '3rem', maxWidth: '8rem' }}>
-          <Box
-            component="img"
-            alt={licenseTitle}
-            title={licenseTitle}
-            src={licenseData.logo}
-            data-testid={dataTestId.registrationLandingPage.license}
-          />
+          sx={{ gridArea: 'license', maxHeight: '3rem' }}>
+          {licenseData.logo ? (
+            <Box
+              component="img"
+              alt={licenseTitle}
+              title={licenseTitle}
+              src={licenseData.logo}
+              data-testid={dataTestId.registrationLandingPage.license}
+              sx={{ maxWidth: '8rem' }}
+            />
+          ) : (
+            licenseTitle
+          )}
         </Link>
       )}
 

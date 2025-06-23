@@ -1,12 +1,7 @@
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { RegistrationLogResponse } from '../types/log.types';
 import { TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
-import {
-  DoiPreview,
-  MyRegistrationsResponse,
-  Registration,
-  UpdateRegistrationStatusRequest,
-} from '../types/registration.types';
+import { DoiPreview, Registration, UpdateRegistrationStatusRequest } from '../types/registration.types';
 import { makeDoiUrl } from '../utils/general-helpers';
 import { doNotRedirectQueryParam } from '../utils/urlPaths';
 import { PublicationsApiPath } from './apiPaths';
@@ -26,6 +21,14 @@ export const updateRegistration = async (registration: Registration) =>
     method: 'PUT',
     data: registration,
   });
+
+export const partialUpdateRegistration = async (registration: Registration) => {
+  return await authenticatedApiRequest<Registration>({
+    url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
+    method: 'PUT',
+    data: { ...registration, type: 'PartialUpdatePublicationRequest' },
+  });
+};
 
 export const updateRegistrationStatus = async (
   registrationIdentifier: string,
@@ -54,6 +57,12 @@ export const createRegistrationFromDoi = async (doiPreview: Partial<DoiPreview>)
     data: doiPreview,
   });
 
+export const publishRegistration = async (registrationId: string) =>
+  await authenticatedApiRequest2<null>({
+    url: `${registrationId}/publish`,
+    method: 'POST',
+  });
+
 export const deleteRegistration = async (identifier: string) =>
   await authenticatedApiRequest({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
@@ -78,7 +87,13 @@ export const createTicket = async (registrationId: string, type: TicketType, mes
   return authenticatedApiRequest<null>({
     url: `${registrationId}/ticket`,
     method: 'POST',
-    data: message && message.length > 0 ? { type, messages: [{ type: 'Message', text: message }] } : { type },
+    data:
+      message && message.length > 0
+        ? {
+            type,
+            messages: [{ type: 'Message', text: message }],
+          }
+        : { type },
   });
 };
 
@@ -109,12 +124,6 @@ export const fetchRegistrationLog = async (registrationId: string) => {
   return fetchRegistrationLogResponse.data;
 };
 
-export const fetchRegistrationsByOwner = async () => {
-  const fetchRegistrationsByOwnerResponse = await authenticatedApiRequest2<MyRegistrationsResponse>({
-    url: PublicationsApiPath.RegistrationsByOwner,
-  });
-  return fetchRegistrationsByOwnerResponse.data;
-};
 export const fetchRegistrationTickets = async (registrationId: string) => {
   const getTickets = await authenticatedApiRequest2<TicketCollection>({
     url: `${registrationId}/tickets`,
@@ -128,7 +137,13 @@ export interface UpdateTicketData {
   viewStatus?: 'Read' | 'Unread';
 }
 
-export const updateTicket = async (ticketId: string, ticketData: UpdateTicketData) => {
+interface UpdateTicketOwnershipData {
+  type: 'UpdateTicketOwnershipRequest';
+  ownerAffiliation: string;
+  responsibilityArea: string;
+}
+
+export const updateTicket = async (ticketId: string, ticketData: UpdateTicketData | UpdateTicketOwnershipData) => {
   const updateTicket = await authenticatedApiRequest2<null>({
     url: ticketId,
     method: 'PUT',

@@ -1,5 +1,5 @@
 import { Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
@@ -9,11 +9,17 @@ import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
-import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
+import {
+  ExpandedPublishingTicket,
+  ExpandedTicket,
+  TicketTypeColor,
+} from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration, RegistrationStatus } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
 import { getInitials } from '../../../utils/general-helpers';
 import { convertToRegistrationSearchItem } from '../../../utils/registration-helpers';
+import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers';
+import { isFileApprovalTicket } from '../../../utils/ticketHelpers';
 import {
   doNotRedirectQueryParam,
   getMyMessagesRegistrationPath,
@@ -29,10 +35,10 @@ import { SupportMessagesColumn } from './SupportMessagesColumn';
 export const ticketColor = {
   UnpublishRequest: 'publishingRequest.main',
   PublishingRequest: 'publishingRequest.main',
+  FilesApprovalThesis: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
-  Import: 'grey.300',
-};
+} satisfies TicketTypeColor;
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;
@@ -41,6 +47,7 @@ interface TicketListItemProps {
 export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const queryClient = useQueryClient();
 
   const { id, identifier, mainTitle, contributors, publicationInstance, status } = ticket.publication;
   const registrationCopy = {
@@ -96,8 +103,9 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           if (!viewedByUser) {
             // Set ticket to read after some time, to ensure the user will load the ticket with correct read status first
             new Promise<void>((resolve) =>
-              setTimeout(() => {
-                viewStatusMutation.mutate();
+              setTimeout(async () => {
+                await viewStatusMutation.mutateAsync();
+                invalidateQueryKeyDueToReindexing(queryClient, 'dialogueNotifications');
                 resolve();
               }, 3_000)
             );
@@ -111,7 +119,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             gridTemplateColumns: { xs: '1fr', sm: '10fr 4fr 2fr 2fr 1fr' },
           }}>
           <RegistrationListItemContent registration={convertToRegistrationSearchItem(registrationCopy)} ticketView />
-          {ticket.type === 'PublishingRequest' ? (
+          {isFileApprovalTicket(ticket) ? (
             <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
           ) : ticket.type === 'DoiRequest' ? (
             <DoiRequestMessagesColumn ticket={ticket} showLastMessage />

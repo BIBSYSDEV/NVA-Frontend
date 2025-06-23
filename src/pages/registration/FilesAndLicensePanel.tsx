@@ -1,12 +1,13 @@
 import { Box, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import { useEffect, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useContext, useEffect, useMemo, useRef } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { InfoBanner } from '../../components/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
 import { FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
 import { FileFieldNames, ResourceFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
@@ -25,6 +26,8 @@ import {
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
+import { HelperTextModal } from './HelperTextModal';
+import { ClaimedChannelInfoBox } from './resource_type_tab/components/ClaimedChannelInfoBox';
 import { LinkField } from './resource_type_tab/components/LinkField';
 
 const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler/info';
@@ -39,6 +42,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
+
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const { values } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
@@ -79,22 +84,22 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     });
   }, [t, uppy, filesRef]);
 
-  const publisherIdentifier =
-    (publicationContext &&
-      'publisher' in publicationContext &&
-      publicationContext.publisher?.id?.split('/').reverse()[1]) ||
-    '';
-  const seriesIdentifier =
-    (publicationContext && 'series' in publicationContext && publicationContext.series?.id?.split('/').reverse()[1]) ||
-    '';
-  const journalIdentifier =
-    (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
+  const publisherId =
+    (publicationContext && 'publisher' in publicationContext && publicationContext.publisher?.id) || '';
+  const publisherIdentifier = publisherId?.split('/').reverse()[1];
+
+  const seriesId = (publicationContext && 'series' in publicationContext && publicationContext.series?.id) || '';
+  const seriesIdentifier = seriesId?.split('/').reverse()[1];
+
+  const journalId = (publicationContext && 'id' in publicationContext && publicationContext.id) || '';
+  const journalIdentifier = journalId?.split('/').reverse()[1] || '';
 
   const originalDoi = entityDescription?.reference?.doi;
 
-  const canEditFilesAndLinks = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
-  const canUploadFile = userHasAccessRight(values, 'upload-file');
+  const canEditFilesAndLinks =
+    (userHasAccessRight(values, 'partial-update') || userIsValidImporter(user, values)) && !disableChannelClaimsFields;
   const categorySupportsFiles = allowsFileUpload(customer, entityDescription?.reference?.publicationInstance?.type);
+  const canUploadFile = userHasAccessRight(values, 'upload-file') && (categorySupportsFiles || hasCuratorRole(user));
 
   return (
     <FieldArray name={FileFieldNames.AssociatedArtifacts}>
@@ -111,15 +116,24 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   {t('registration.files_and_license.find_journal_in_channel_register')}
                 </OpenInNewLink>
               )}
+              {journalId && (
+                <ClaimedChannelInfoBox channelId={journalId} channelType={t('registration.resource_type.journal')} />
+              )}
+
               {publisherIdentifier && (
                 <OpenInNewLink href={getChannelRegisterPublisherUrl(publisherIdentifier)}>
                   {t('registration.files_and_license.find_publisher_in_channel_register')}
                 </OpenInNewLink>
               )}
+              {publisherId && <ClaimedChannelInfoBox channelId={publisherId} channelType={t('common.publisher')} />}
+
               {seriesIdentifier && (
                 <OpenInNewLink href={getChannelRegisterJournalUrl(seriesIdentifier)}>
                   {t('registration.files_and_license.find_series_in_channel_register')}
                 </OpenInNewLink>
+              )}
+              {seriesId && (
+                <ClaimedChannelInfoBox channelId={seriesId} channelType={t('registration.resource_type.series')} />
               )}
             </Paper>
           )}
@@ -130,13 +144,48 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 elevation={0}
                 component={BackgroundDiv}
                 sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                  <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
+                  <HelperTextModal
+                    modalTitle={t('registration.files_and_license.files')}
+                    modalDataTestId={dataTestId.registrationWizard.files.fileHelpModal}
+                    buttonDataTestId={dataTestId.registrationWizard.files.fileHelpButton}>
+                    <Trans
+                      i18nKey="registration.files_and_license.files_helper_text"
+                      components={{
+                        p: <Typography sx={{ mb: '1rem' }} />,
+                        heading: <Typography variant="h2" />,
+                      }}
+                    />
+                    {customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
+                      <Typography sx={{ mb: '1rem' }}>
+                        {t('registration.files_and_license.files_helper_text_metadata_only')}
+                      </Typography>
+                    ) : (
+                      <Typography sx={{ mb: '1rem' }}>
+                        {t('registration.files_and_license.file_helper_text_metadata_and_files', {
+                          buttonText: t('my_page.messages.get_curator_support'),
+                        })}
+                      </Typography>
+                    )}
+                    <Typography sx={{ mb: '1rem' }}>
+                      {t('registration.files_and_license.files_helper_text_paragraph_2')}
+                    </Typography>
+                    <Trans
+                      i18nKey="registration.files_and_license.file_helper_text_point_list"
+                      components={{
+                        ul: <ul />,
+                        li: <li />,
+                      }}
+                    />
+                  </HelperTextModal>
+                </Box>
                 {!categorySupportsFiles && (
                   <InfoBanner
                     text={
                       hasCuratorRole(user)
-                        ? t('registration.files_and_license.open_files_not_preferred_curator')
-                        : t('registration.files_and_license.open_files_not_preferred_registrator')
+                        ? t('file_upload_disabled_curator_can_upload_on_behalf')
+                        : t('file_upload_disabled_due_to_institution_policy')
                     }
                   />
                 )}

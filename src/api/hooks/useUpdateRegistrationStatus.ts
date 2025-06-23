@@ -8,7 +8,6 @@ import { updateRegistrationStatus } from '../registrationApi';
 interface UpdateRequest {
   registrationIdentifier: string;
   updateStatusRequest: UpdateRegistrationStatusRequest;
-  onSuccess?: () => void;
 }
 
 export const useUpdateRegistrationStatus = () => {
@@ -19,7 +18,7 @@ export const useUpdateRegistrationStatus = () => {
   return useMutation({
     mutationFn: ({ registrationIdentifier, updateStatusRequest }: UpdateRequest) =>
       updateRegistrationStatus(registrationIdentifier, updateStatusRequest),
-    onSuccess: (response, variables) => {
+    onSuccess: (response) => {
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
       if (response.data) {
         const key1 = ['registration', response.data.identifier, true];
@@ -31,7 +30,6 @@ export const useUpdateRegistrationStatus = () => {
           queryClient.setQueryData(key2, response.data);
         }
       }
-      variables.onSuccess?.();
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' })),
   });

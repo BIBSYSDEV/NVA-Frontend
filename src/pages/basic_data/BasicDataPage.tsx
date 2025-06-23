@@ -2,8 +2,9 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AdjustIcon from '@mui/icons-material/Adjust';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
+import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import PeopleIcon from '@mui/icons-material/People';
-import { Divider } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
@@ -21,6 +22,8 @@ import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
+import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
+import { SerialPublicationClaimsSettings } from '../editor/SerialPublicationClaimsSettings';
 import NotFound from '../errorpages/NotFound';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { CentralImportCandidateForm } from './app_admin/central_import/CentralImportCandidateForm';
@@ -148,6 +151,31 @@ const BasicDataPage = () => {
                 title={t('basic_data.nvi.add_reporting_period')}
               />
             </NavigationListAccordion>
+
+            <NavigationListAccordion
+              title={t('editor.institution.channel_claims.channel_claim')}
+              startIcon={<LockOutlineIcon sx={{ bgcolor: 'grey.500' }} />}
+              accordionPath={UrlPathTemplate.BasicDataChannelClaims}
+              defaultPath={UrlPathTemplate.BasicDataPublisherClaims}
+              dataTestId={dataTestId.basicData.channelClaimLink}>
+              <NavigationList aria-label={t('editor.institution.channel_claims.channel_claim')}>
+                <Typography sx={{ mt: '0.5rem' }}>
+                  {t('editor.institution.channel_claims.channel_claims_settings_description')}
+                </Typography>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.BasicDataPublisherClaims}
+                  data-testid={dataTestId.basicData.publisherClaimsLink}
+                  to={UrlPathTemplate.BasicDataPublisherClaims}>
+                  {t('editor.institution.channel_claims.administer_publisher_channel_claim')}
+                </SelectableButton>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.BasicDataSerialPublicationClaims}
+                  data-testid={dataTestId.basicData.serialPublicationClaimsLink}
+                  to={UrlPathTemplate.BasicDataSerialPublicationClaims}>
+                  {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
+                </SelectableButton>
+              </NavigationList>
+            </NavigationListAccordion>
           </>
         )}
 
@@ -214,6 +242,14 @@ const BasicDataPage = () => {
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataNvi, UrlPathTemplate.BasicData, true)}
             element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />}
+          />
+          <Route
+            path={getSubUrl(UrlPathTemplate.BasicDataPublisherClaims, UrlPathTemplate.BasicData)}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<PublisherClaimsSettings />} />}
+          />
+          <Route
+            path={getSubUrl(UrlPathTemplate.BasicDataSerialPublicationClaims, UrlPathTemplate.BasicData)}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<SerialPublicationClaimsSettings />} />}
           />
 
           <Route path={getSubUrl(UrlPathTemplate.BasicData, UrlPathTemplate.BasicData, true)} element={<NotFound />} />

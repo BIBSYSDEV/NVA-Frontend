@@ -12,6 +12,7 @@ const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
+const CopyrightActTerms = lazy(() => import('./pages/infopages/CopyrightActTerms'));
 const CreateProject = lazy(() => import('./pages/project/project_wizard/CreateProject'));
 const EditProject = lazy(() => import('./pages/project/project_wizard/EditProject'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
@@ -46,6 +47,7 @@ export const AppRoutes = () => {
           <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<Dashboard />} />
         </Route>
 
+        <Route path={UrlPathTemplate.CopyrightAct} element={<CopyrightActTerms />} />
         <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
         <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
         <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />

@@ -47,7 +47,7 @@ export const SeriesFilter = () => {
   const selectedSeriesQuery = useQuery({
     enabled: !!seriesParam,
     queryKey: ['channel', seriesParam],
-    queryFn: () => (seriesParam ? fetchSerialPublication(seriesParam) : undefined),
+    queryFn: () => (seriesParam ? fetchSerialPublication(seriesParam) : null),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
