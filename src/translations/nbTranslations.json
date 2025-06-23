@@ -1,4 +1,8 @@
 {
+  "time_format": {
+    "minutes": "MM:SS",
+    "hours": "TT:MM:SS"
+  },
   "about": {
     "availability_statement": "Tilgjengelighetserklæring",
     "copyright_inquiries": "Henvendelser om opphavsrett",
@@ -694,7 +698,9 @@
       "employments_missing_data": "Minst en ansettelse mangler stilling eller startdato",
       "field_not_confirmed": "{{field}} er ikke bekreftet",
       "has_invalid_format": "{{field}} har ugyldig format",
+      "has_invalid_format_example": "{{field}} har ugyldig format. Eksempel: {{example}}",
       "invalid_email": "Ugyldig epost",
+      "invalid_format": "{{field}} må oppgis i formatet {{format}}",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
       "invalid_symbol_in_name": "{{field}} kan ikke inneholde tall eller spesialtegn",
       "is_required": "{{-field}} er obligatorisk",
@@ -1861,7 +1867,9 @@
         },
         "music_score_ensemble": "Besetning",
         "music_score_ismn": "ISMN",
+        "music_score_ismn_helper_text": "Består av 12 tall. Eksempel: 9790260000438",
         "music_score_isrc": "ISRC",
+        "music_score_isrc_helper_text": "Består av 12 alfanumeriske tegn. Eksempel: NO-6Q7-25-00047",
         "music_score_movements": "Satser",
         "musical_work_item": "Verk",
         "musical_works": "Andre fremføringsformer",
