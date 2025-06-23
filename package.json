@@ -98,6 +98,6 @@
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "vite-plugin-eslint": "^1.8.1",
-    "vitest": "^3.2.3"
+    "vitest": "^3.2.4"
   }
 }
