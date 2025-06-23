@@ -14,7 +14,7 @@ interface ChannelClaimTableProps {
 
 const helperTextModalComponents = {
   p: <Typography sx={{ mb: '1rem' }} />,
-  heading: <Typography variant="h2" />,
+  heading: <Typography variant="h2" gutterBottom />,
 };
 
 export const ChannelClaimTable = ({ channelClaimList, canEdit = false }: ChannelClaimTableProps) => {
