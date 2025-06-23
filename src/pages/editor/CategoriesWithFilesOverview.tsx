@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CategorySelector } from '../../components/CategorySelector';
@@ -18,9 +18,9 @@ export const CategoriesWithFilesOverview = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{t('editor.categories_with_files')}</title>
-      </Helmet>
+      </Head>
       <Typography variant="h1" gutterBottom>
         {t('editor.categories_with_files')}
       </Typography>

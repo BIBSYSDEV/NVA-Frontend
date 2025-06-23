@@ -1,8 +1,8 @@
 import { FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { UseQueryResult } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { useEffect, useMemo } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
@@ -98,9 +98,9 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
 
   return (
     <section>
-      <Helmet>
+      <Head>
         <title>{title}</title>
-      </Helmet>
+      </Head>
       <Typography component="h1" sx={visuallyHidden}>
         {title}
       </Typography>

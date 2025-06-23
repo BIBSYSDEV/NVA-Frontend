@@ -10,8 +10,8 @@ import {
   Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchResource } from '../../api/commonApi';
@@ -44,9 +44,9 @@ export const OrganizationOverview = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{t('editor.organization_overview')}</title>
-      </Helmet>
+      </Head>
       <Typography variant="h1" sx={{ mb: '1rem' }}>
         {t('editor.organization_overview')}
       </Typography>

@@ -10,7 +10,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
@@ -76,9 +76,9 @@ export const AdvancedSearchPage = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{t('search.advanced_search.advanced_search')}</title>
-      </Helmet>
+      </Head>
       <Grid container rowGap={2}>
         <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
           <Typography variant="h1">{t('search.advanced_search.advanced_search')}</Typography>

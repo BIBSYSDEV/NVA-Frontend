@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Grid, Link, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
@@ -63,9 +63,9 @@ export const EditorInstitution = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{t('editor.institution.institution_profile')}</title>
-      </Helmet>
+      </Head>
       <Typography variant="h1" gutterBottom>
         {t('editor.institution.institution_profile')}
       </Typography>

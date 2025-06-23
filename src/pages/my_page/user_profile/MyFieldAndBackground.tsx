@@ -1,8 +1,8 @@
 import { Autocomplete, Box, Button, Chip, TextField, Typography } from '@mui/material';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -101,9 +101,9 @@ export const MyFieldAndBackground = () => {
 
   return (
     <Box sx={{ bgcolor: 'secondary.main' }}>
-      <Helmet>
+      <Head>
         <title>{t('my_page.my_profile.field_and_background.field_and_background')}</title>
-      </Helmet>
+      </Head>
 
       <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
         {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (

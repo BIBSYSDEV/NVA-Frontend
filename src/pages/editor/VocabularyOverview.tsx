@@ -1,7 +1,7 @@
 import { Card, CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { TFunction } from 'i18next';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchVocabulary } from '../../api/customerInstitutionsApi';
@@ -32,9 +32,9 @@ export const VocabularyOverview = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title id="vocabulary-label">{t('editor.vocabulary')}</title>
-      </Helmet>
+      </Head>
       <Typography gutterBottom variant="h1">
         {t('editor.vocabulary')}
       </Typography>

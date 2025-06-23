@@ -1,7 +1,7 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, Divider, Link, styled, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -40,9 +40,9 @@ export const PublishingStrategyOverview = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{t('editor.publish_strategy.publish_strategy')}</title>
-      </Helmet>
+      </Head>
 
       {!customer ? (
         <PageSpinner />

@@ -1,6 +1,6 @@
 import { Box, List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
@@ -36,9 +36,9 @@ export const NviCandidatesList = () => {
 
   return (
     <section>
-      <Helmet>
+      <Head>
         <title>{t('tasks.nvi.nvi_control')}</title>
-      </Helmet>
+      </Head>
       <Typography component="h1" sx={visuallyHidden}>
         {t('tasks.nvi.nvi_control')}
       </Typography>

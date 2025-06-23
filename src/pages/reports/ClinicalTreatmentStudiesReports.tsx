@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { useTranslation } from 'react-i18next';
 import { StyledReportIframe } from './NviReports';
 
@@ -9,9 +9,9 @@ export const ClinicalTreatmentStudiesReports = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{t('search.reports.clinical_treatment_studies')}</title>
-      </Helmet>
+      </Head>
 
       <Typography variant="h1" sx={visuallyHidden}>
         {t('search.reports.clinical_treatment_studies')}

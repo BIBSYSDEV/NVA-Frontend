@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
@@ -19,9 +19,9 @@ export const CategoriesWithFiles = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{t('editor.categories_with_files')}</title>
-      </Helmet>
+      </Head>
       <Typography variant="h1" gutterBottom>
         {t('editor.categories_with_files')}
       </Typography>

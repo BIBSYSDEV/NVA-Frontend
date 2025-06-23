@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { deleteRegistration, fetchRegistrationsByOwner } from '../../api/registrationApi';
@@ -82,9 +82,9 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{t('common.result_registrations')}</title>
-      </Helmet>
+      </Head>
       <div>
         {registrationsQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />

@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
+import { Head } from '@unhead/react';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
@@ -78,9 +78,9 @@ export const VocabularySettings = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title id="vocabulary-label">{t('editor.vocabulary')}</title>
-      </Helmet>
+      </Head>
       <Typography gutterBottom variant="h1">
         {t('editor.vocabulary')}
       </Typography>

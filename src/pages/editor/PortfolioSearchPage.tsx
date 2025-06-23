@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { useTranslation } from 'react-i18next';
 import { useCustomerRegistrationSearch } from '../../api/hooks/useFetchCustomerRegistrationSearch';
 import { ResultParam } from '../../api/searchApi';
@@ -18,9 +18,9 @@ export const PortfolioSearchPage = ({ title }: PortfolioSearchPageProps) => {
 
   return (
     <section>
-      <Helmet>
+      <Head>
         <title>{title}</title>
-      </Helmet>
+      </Head>
       <Typography variant="h1" gutterBottom>
         {title}
       </Typography>

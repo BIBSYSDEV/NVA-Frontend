@@ -1,7 +1,7 @@
 import { List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import { Head } from '@unhead/react';
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ImportCandidatesSearchParam } from '../../../../api/searchApi';
@@ -41,9 +41,9 @@ export const CentralImportPage = () => {
 
   return (
     <section>
-      <Helmet>
+      <Head>
         <title>{t('basic_data.central_import.central_import')}</title>
-      </Helmet>
+      </Head>
       <Typography component="h1" sx={visuallyHidden}>
         {t('basic_data.central_import.central_import')}
       </Typography>

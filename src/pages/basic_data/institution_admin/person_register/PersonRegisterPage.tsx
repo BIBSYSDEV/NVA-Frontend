@@ -14,8 +14,8 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchEmployees } from '../../../../api/searchApi';
@@ -57,9 +57,9 @@ export const PersonRegisterPage = () => {
 
   return (
     <BackgroundDiv>
-      <Helmet>
+      <Head>
         <title>{t('basic_data.person_register.person_register')}</title>
-      </Helmet>
+      </Head>
       <Typography component="h1" sx={visuallyHidden}>
         {t('basic_data.person_register.person_register')}
       </Typography>

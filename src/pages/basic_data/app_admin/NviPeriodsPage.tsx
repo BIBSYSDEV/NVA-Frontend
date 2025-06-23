@@ -1,7 +1,7 @@
 import { Box, List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { fetchNviPeriods } from '../../../api/scientificIndexApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -26,9 +26,9 @@ export const NviPeriodsPage = () => {
 
   return (
     <Box component="section">
-      <Helmet>
+      <Head>
         <title>{t('basic_data.nvi.reporting_periods')}</title>
-      </Helmet>
+      </Head>
       <Typography variant="h1" gutterBottom>
         {t('basic_data.nvi.reporting_periods')}
       </Typography>
