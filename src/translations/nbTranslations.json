@@ -476,7 +476,7 @@
         "publisher_claims_overview": "Utgivere med redaktør",
         "publisher_in_channel_registry": "Utgiver i Kanalregisteret",
         "register_access": "Tilgang til å registrere",
-        "register_access_helper_text": "<heading>Alle institusjoner</heading><p>Registratorer fra andre institusjoner kan registrere resultater som er utgitt på institusjonens kanaler. Publiseringsforespørsler blir sendt til filkurator hos eierinstitusjon.</p><heading>Kun eierinstitusjon</heading><p>Bare ansatte ved eierinstitusjon kan registrere resultater som er utgitt på publiseringskanalen.</p><p>Registratorer som ikke er logget inn hos kanaleier, får feilmelding om de velger en av publiseringskanalene og beskjed om å kontake brukerstøtte.</p>",
+        "register_access_helper_text": "<heading>Alle institusjoner</heading><p>Registratorer fra andre institusjoner kan registrere resultater som er utgitt på institusjonens kanaler. Publiseringsforespørsler blir sendt til filkurator hos eierinstitusjon.</p><heading>Kun eierinstitusjon</heading><p>Bare ansatte ved eierinstitusjon kan registrere resultater som er utgitt på publiseringskanalen.</p><p>Registratorer som ikke er logget inn hos eierinstitusjon, får feilmelding om de velger en av publiseringskanalene og beskjed om å kontake brukerstøtte.</p>",
         "serial_publication_claims_overview": "Serier/tidsskrifter med redaktør",
         "serial_publication_in_channel_registry": "Serie/tidsskrift i Kanalregisteret",
         "set_channel_claim": "Sett eierskap",
