@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Button, TableContainer, Typography } from '@mui/material';
+import { Head } from '@unhead/react';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router';
@@ -35,9 +35,9 @@ export const SerialPublicationClaimsSettings = () => {
 
   return (
     <BackgroundDiv>
-      <Helmet>
+      <Head>
         <title>{t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}</title>
-      </Helmet>
+      </Head>
       <Typography variant="h1" gutterBottom>
         {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
       </Typography>

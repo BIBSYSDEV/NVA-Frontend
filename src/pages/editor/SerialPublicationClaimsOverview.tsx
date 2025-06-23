@@ -1,5 +1,5 @@
 import { TableContainer, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router';
@@ -28,9 +28,9 @@ export const SerialPublicationClaimsOverview = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{t('editor.institution.channel_claims.serial_publication_claims_overview')}</title>
-      </Helmet>
+      </Head>
 
       <Typography variant="h1"> {t('editor.institution.channel_claims.serial_publication_claims_overview')}</Typography>
       <ChannelClaimFilter />
