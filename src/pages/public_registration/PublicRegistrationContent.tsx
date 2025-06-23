@@ -64,7 +64,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const userCanEditRegistration = userHasAccessRight(registration, 'update');
+  const userCanEditRegistration = userHasAccessRight(registration, 'partial-update');
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>

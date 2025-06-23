@@ -16,7 +16,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
-import { createTicket } from '../../../api/registrationApi';
+import { publishRegistration } from '../../../api/registrationApi';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -89,8 +89,12 @@ export const PublishingAccordion = ({
     (file) => isOpenFile(file) || file.type === FileType.InternalFile
   );
 
+  const lastPublishingRequest =
+    publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
+    publishingRequestTickets.at(-1);
+
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
-  const userCanApprovePublishingRequest = userHasAccessRight(registration, 'publishing-request-approve');
+  const userCanApprovePublishingRequest = !!lastPublishingRequest?.allowedOperations.includes('approve');
   const userCanHandlePublishingRequest = userCanCreatePublishingRequest || userCanApprovePublishingRequest;
 
   const formErrors = validateRegistrationForm(registration);
@@ -103,20 +107,11 @@ export const PublishingAccordion = ({
       isPublishableForWorkflow2(registration)) ||
       (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' && registrationIsValid));
 
-  const lastPublishingRequest =
-    publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
-    publishingRequestTickets.at(-1);
-
-  const publishRegistration = async () => {
+  const handlePublishRegistration = async () => {
     setIsCreatingPublishingRequest(true);
-    const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
+    const createPublishingRequestTicketResponse = await publishRegistration(registration.id);
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
-      dispatch(
-        setNotification({
-          message: t('feedback.error.publish_registration'),
-          variant: 'error',
-        })
-      );
+      dispatch(setNotification({ message: t('feedback.error.publish_registration'), variant: 'error' }));
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
       const hasFilesWaitingForApproval = registration.associatedArtifacts.some(
         (file) => file.type === FileType.PendingOpenFile || file.type === FileType.PendingInternalFile
@@ -138,7 +133,7 @@ export const PublishingAccordion = ({
   };
 
   const onConfirmNotDuplicate = () => {
-    publishRegistration();
+    handlePublishRegistration();
     toggleDuplicateWarningModal();
   };
 
@@ -168,7 +163,8 @@ export const PublishingAccordion = ({
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
   const defaultExpanded = locationState?.selectedTicketType
-    ? locationState.selectedTicketType === 'PublishingRequest'
+    ? locationState.selectedTicketType === 'PublishingRequest' ||
+      locationState.selectedTicketType === 'FilesApprovalThesis'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
 
   return (
@@ -288,7 +284,7 @@ export const PublishingAccordion = ({
               variant="contained"
               color="info"
               fullWidth
-              onClick={duplicateRegistration ? toggleDuplicateWarningModal : publishRegistration}
+              onClick={duplicateRegistration ? toggleDuplicateWarningModal : handlePublishRegistration}
               loading={isLoadingData || isCreatingPublishingRequest || titleSearchPending}>
               {t('registration.public_page.tasks_panel.publish_registration')}
             </Button>
@@ -320,7 +316,12 @@ export const PublishingAccordion = ({
           onConfirmNotDuplicate={onConfirmNotDuplicate}
         />
 
-        <MoreActionsCollapse registration={registration} registrationIsValid={registrationIsValid} />
+        <MoreActionsCollapse
+          registration={registration}
+          registrationIsValid={registrationIsValid}
+          ticket={lastPublishingRequest}
+          refetchData={refetchData}
+        />
       </AccordionDetails>
     </Accordion>
   );

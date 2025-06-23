@@ -156,6 +156,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   const canApproveCandidate = nviCandidate.allowedOperations.includes('approval/approve-candidate');
   const canRejectCandidate = nviCandidate.allowedOperations.includes('approval/reject-candidate');
   const canResetApproval = nviCandidate.allowedOperations.includes('approval/reset-approval');
+  const canCreateNote = nviCandidate.allowedOperations.includes('note/create-note');
 
   return (
     <>
@@ -275,76 +276,78 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
       <Divider sx={{ gridArea: 'divider2' }} />
 
-      <Box sx={{ gridArea: 'comment' }}>
-        <Typography variant="h3" gutterBottom>
-          {t('tasks.nvi.note')}
-        </Typography>
-        <Typography sx={{ mb: '1rem' }}>{t('tasks.nvi.message_description')}</Typography>
-        <MessageForm
-          hideRequiredAsterisk
-          confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
-          fieldLabel={t('tasks.nvi.note')}
-          buttonTitle={t('tasks.nvi.save_note')}
-        />
+      {canCreateNote && (
+        <Box sx={{ gridArea: 'comment' }}>
+          <Typography variant="h3" gutterBottom>
+            {t('tasks.nvi.note')}
+          </Typography>
+          <Typography sx={{ mb: '1rem' }}>{t('tasks.nvi.message_description')}</Typography>
+          <MessageForm
+            hideRequiredAsterisk
+            confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
+            fieldLabel={t('tasks.nvi.note')}
+            buttonTitle={t('tasks.nvi.save_note')}
+          />
 
-        {sortedNotes.length > 0 && (
-          <Box
-            component="ul"
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              listStyleType: 'none',
-              p: 0,
-              m: 0,
-              gap: '0.25rem',
-            }}>
-            {sortedNotes.map((note) => {
-              let deleteFunction: (() => Promise<void>) | undefined = undefined;
-              const noteIdentifier = note.identifier;
+          {sortedNotes.length > 0 && (
+            <Box
+              component="ul"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                listStyleType: 'none',
+                p: 0,
+                m: 0,
+                gap: '0.25rem',
+              }}>
+              {sortedNotes.map((note) => {
+                let deleteFunction: (() => Promise<void>) | undefined = undefined;
+                const noteIdentifier = note.identifier;
 
-              const isFinalizedNote = note.type === 'FinalizedNote';
+                const isFinalizedNote = note.type === 'FinalizedNote';
 
-              if (isFinalizedNote && canResetApproval && note.institutionId === user?.topOrgCristinId) {
-                deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
-              } else if (note.type === 'GeneralNote' && noteIdentifier && note.username === user?.nvaUsername) {
-                deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
-              }
+                if (isFinalizedNote && canResetApproval && note.institutionId === user?.topOrgCristinId) {
+                  deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
+                } else if (note.type === 'GeneralNote' && noteIdentifier && note.username === user?.nvaUsername) {
+                  deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
+                }
 
-              const isDeleting =
-                (statusMutation.isPending && statusMutation.variables?.status === 'Pending') ||
-                (deleteNoteMutation.isPending && deleteNoteMutation.variables === noteIdentifier);
+                const isDeleting =
+                  (statusMutation.isPending && statusMutation.variables?.status === 'Pending') ||
+                  (deleteNoteMutation.isPending && deleteNoteMutation.variables === noteIdentifier);
 
-              return (
-                <ErrorBoundary key={noteIdentifier ?? note.date}>
-                  <MessageItem
-                    text={note.content}
-                    date={note.date}
-                    username={note.username}
-                    backgroundColor="nvi.main"
-                    showOrganization
-                    menuElement={
-                      !!deleteFunction && (
-                        <NviNoteMenu
-                          onDelete={deleteFunction}
-                          isDeleting={isDeleting}
-                          deleteDialogTitle={
-                            isFinalizedNote ? t('tasks.nvi.reset_approval') : t('tasks.nvi.delete_note')
-                          }
-                          deleteDialogDescription={
-                            isFinalizedNote
-                              ? t('tasks.nvi.reset_approval_description')
-                              : t('tasks.nvi.delete_note_description')
-                          }
-                        />
-                      )
-                    }
-                  />
-                </ErrorBoundary>
-              );
-            })}
-          </Box>
-        )}
-      </Box>
+                return (
+                  <ErrorBoundary key={noteIdentifier ?? note.date}>
+                    <MessageItem
+                      text={note.content}
+                      date={note.date}
+                      username={note.username}
+                      backgroundColor="nvi.main"
+                      showOrganization
+                      menuElement={
+                        !!deleteFunction && (
+                          <NviNoteMenu
+                            onDelete={deleteFunction}
+                            isDeleting={isDeleting}
+                            deleteDialogTitle={
+                              isFinalizedNote ? t('tasks.nvi.reset_approval') : t('tasks.nvi.delete_note')
+                            }
+                            deleteDialogDescription={
+                              isFinalizedNote
+                                ? t('tasks.nvi.reset_approval_description')
+                                : t('tasks.nvi.delete_note_description')
+                            }
+                          />
+                        )
+                      }
+                    />
+                  </ErrorBoundary>
+                );
+              })}
+            </Box>
+          )}
+        </Box>
+      )}
     </>
   );
 };

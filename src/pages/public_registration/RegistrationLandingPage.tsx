@@ -1,20 +1,24 @@
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { useFetchRegistrationTickets } from '../../api/hooks/useFetchRegistrationTickets';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ActionPanelContext } from '../../context/ActionPanelContext';
+import { RootState } from '../../redux/store';
 import { RegistrationStatus } from '../../types/registration.types';
 import { userHasAccessRight } from '../../utils/registration-helpers';
 import { doNotRedirectQueryParam, IdentifierParams } from '../../utils/urlPaths';
+import { hasTicketCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
 import { ActionPanel } from './ActionPanel';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
 
 export const RegistrationLandingPage = () => {
+  const user = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
@@ -31,7 +35,8 @@ export const RegistrationLandingPage = () => {
     navigate(newPath + location.search, { replace: true, state: location.state });
   }
 
-  const canEditRegistration = userHasAccessRight(registration, 'update');
+  const canEditRegistration = userHasAccessRight(registration, 'partial-update');
+  const isTicketCurator = hasTicketCuratorRole(user);
 
   const isAllowedToSeePublicRegistration =
     registration?.status === RegistrationStatus.Published ||
@@ -39,7 +44,9 @@ export const RegistrationLandingPage = () => {
     registration?.status === RegistrationStatus.DraftForDeletion ||
     registration?.status === RegistrationStatus.Unpublished;
 
-  const ticketsQuery = useFetchRegistrationTickets(registrationId, { enabled: canEditRegistration });
+  const ticketsQuery = useFetchRegistrationTickets(registrationId, {
+    enabled: canEditRegistration || isTicketCurator,
+  });
 
   const refetchRegistrationAndTickets = async () => {
     await Promise.all([ticketsQuery.refetch(), registrationQuery.refetch()]);
@@ -61,7 +68,7 @@ export const RegistrationLandingPage = () => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registration} />
 
-            {canEditRegistration && ticketsQuery.isSuccess && (
+            {(canEditRegistration || (ticketsQuery.data && ticketsQuery.data.tickets.length > 0)) && (
               <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
                 <ActionPanel
                   registration={registration}

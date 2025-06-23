@@ -19,6 +19,7 @@ import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
 import { projectSortOptions } from '../../components/ProjectSortSelector';
+import { RegistrationList } from '../../components/RegistrationList';
 import { SortSelectorWithoutParams } from '../../components/SortSelectorWithoutParams';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
@@ -34,7 +35,6 @@ import NotFound from '../errorpages/NotFound';
 import { UserOrcid } from '../my_page/user_profile/UserOrcid';
 import { UserOrcidHelperModal } from '../my_page/user_profile/UserOrcidHelperModal';
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
-import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 import { registrationSortOptions } from '../search/registration_search/RegistrationSortSelector';
 
 const ResearchProfile = () => {
@@ -64,7 +64,6 @@ const ResearchProfile = () => {
     : getIdentifierFromId(currentCristinId); // Page for My Research Profile
 
   const personQuery = useFetchPersonByIdentifier(personIdentifier);
-
   const person = personQuery.data;
 
   const registrationsQueryConfig: FetchResultsParams = {
@@ -130,7 +129,9 @@ const ResearchProfile = () => {
     projectsQuery.isPending ||
     promotedPublicationsQuery.isPending;
 
-  return isPending ? (
+  return personQuery.isError ? (
+    <NotFound />
+  ) : isPending ? (
     <PageSpinner aria-label={t('my_page.research_profile')} />
   ) : !person ? (
     <NotFound />
@@ -307,8 +308,8 @@ const ResearchProfile = () => {
           {registrationsQuery.isFetching ? (
             <ListSkeleton minWidth={100} height={100} />
           ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
-            <RegistrationSearchResults
-              searchResult={registrationsQuery.data.hits}
+            <RegistrationList
+              registrations={registrationsQuery.data.hits}
               promotedPublications={promotedPublications}
             />
           ) : (

@@ -152,7 +152,7 @@ export const SelectInstitutionForm = ({
                       resetForm({ values: initialValuesOrganizationForm });
                       setFieldValue(field.name, value);
                     }}
-                    loading={organizationSearchQuery.isPending}
+                    loading={organizationSearchQuery.isFetching}
                     renderInput={(params) => (
                       <TextField
                         {...params}

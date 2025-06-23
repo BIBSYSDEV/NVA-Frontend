@@ -1,4 +1,4 @@
-import { FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
+import { Button, FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Head } from '@unhead/react';
@@ -25,6 +25,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { TicketDateIntervalFilter } from './TicketDateIntervalFilter';
 import { TicketListItem } from './TicketListItem';
 
@@ -34,6 +35,7 @@ interface TicketListProps {
 }
 
 const viewedByLabelId = 'viewed-by-select';
+const showAllViewedByValue = 'show-all';
 
 export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
   const { t } = useTranslation();
@@ -83,7 +85,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
   );
 
   const searchParams = new URLSearchParams(location.search);
-  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || 'show-all';
+  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || showAllViewedByValue;
   const resultsParam = searchParams.get(TicketSearchParam.Results);
   const fromParam = searchParams.get(TicketSearchParam.From);
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
@@ -108,12 +110,12 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
         <Grid size={{ xs: 16, md: 5, lg: 4 }}>
           <TicketStatusFilter options={ticketStatusOptions} />
         </Grid>
-        <Grid size={{ xs: 16, md: 11, lg: 10 }}>
+        <Grid size={{ xs: 16, md: 11, lg: 9 }}>
           <SearchForm placeholder={t('tasks.search_placeholder')} paginationOffsetParamName={TicketSearchParam.From} />
         </Grid>
 
         {user && (
-          <Grid size={{ xs: 16, md: 5, lg: 2 }}>
+          <Grid size={{ xs: 16, md: 5, lg: 3 }}>
             <FormControl fullWidth>
               <InputLabel id={viewedByLabelId}>{t('tasks.display_options')}</InputLabel>
               <Select
@@ -125,7 +127,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                 onChange={(event) => {
                   const value = event.target.value;
                   const syncedParams = syncParamsWithSearchFields(searchParams);
-                  if (value === 'show-all') {
+                  if (value === showAllViewedByValue) {
                     syncedParams.delete(TicketSearchParam.ViewedByNot);
                   } else {
                     syncedParams.set(TicketSearchParam.ViewedByNot, value);
@@ -133,7 +135,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                   syncedParams.delete(TicketSearchParam.From);
                   navigate({ search: syncedParams.toString() });
                 }}>
-                <MenuItem value={'show-all'}>{t('common.show_all')}</MenuItem>
+                <MenuItem value={showAllViewedByValue}>{t('common.show_all')}</MenuItem>
                 <MenuItem value={user.nvaUsername}>{t('tasks.unread_only')}</MenuItem>
               </Select>
             </FormControl>
@@ -142,10 +144,10 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
 
         {isOnTasksPage && (
           <>
-            <Grid size={{ xs: 16, md: 6, lg: 4 }}>
+            <Grid size={{ xs: 16, sm: 8, md: 6, lg: 4 }}>
               <DialoguesWithoutCuratorButton />
             </Grid>
-            <Grid size={{ xs: 16, md: 4, lg: 4 }}>
+            <Grid size={{ xs: 16, sm: 8, md: 5, lg: 4 }}>
               <CuratorSelector
                 selectedUsername={searchParams.get(TicketSearchParam.Assignee)}
                 onChange={(curator) => {
@@ -162,12 +164,19 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                 roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
               />
             </Grid>
-            <Grid size={{ xs: 16, md: 6, lg: 5 }}>
+            <Grid size={{ xs: 8, lg: 5 }}>
               <AreaOfResponsibilitySelector
                 paramName={TicketSearchParam.OrganizationId}
                 resetPagination={(params) => {
                   params.delete(TicketSearchParam.From);
                 }}
+              />
+            </Grid>
+            <Grid size={{ xs: 8, lg: 3 }}>
+              <ExcludeSubunitsCheckbox
+                paramName={TicketSearchParam.ExcludeSubUnits}
+                paginationParamName={TicketSearchParam.From}
+                disabled={!searchParams.has(TicketSearchParam.OrganizationId)}
               />
             </Grid>
           </>
@@ -193,7 +202,25 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
         {ticketsQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : tickets.length === 0 ? (
-          <Typography>{t('my_page.messages.no_messages')}</Typography>
+          viewedByNotParam === showAllViewedByValue ? (
+            <Typography>{t('my_page.messages.no_dialogues')}</Typography>
+          ) : (
+            <>
+              <Typography gutterBottom>{t('my_page.messages.no_unread_dialogues')}</Typography>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{ textTransform: 'none' }}
+                onClick={() => {
+                  const syncedParams = syncParamsWithSearchFields(searchParams);
+                  syncedParams.delete(TicketSearchParam.ViewedByNot);
+                  syncedParams.delete(TicketSearchParam.From);
+                  navigate({ search: syncedParams.toString() });
+                }}>
+                {t('my_page.messages.show_read_dialogues')}
+              </Button>
+            </>
+          )
         ) : (
           <List disablePadding sx={{ my: '0.5rem' }}>
             {tickets.map((ticket) => (

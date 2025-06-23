@@ -1,4 +1,5 @@
 import { To } from 'react-router';
+import { NviCandidateSearchStatus } from '../types/nvi.types';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
 
@@ -17,6 +18,10 @@ export enum UrlPathTemplate {
   BasicDataNvi = '/basic-data/nvi',
   BasicDataNviNew = '/basic-data/nvi/new',
   BasicDataPersonRegister = '/basic-data/person-register',
+  BasicDataChannelClaims = '/basic-data/channel-claims',
+  BasicDataPublisherClaims = `${BasicDataChannelClaims}/publisher`,
+  BasicDataSerialPublicationClaims = `${BasicDataChannelClaims}/serial-publication`,
+  CopyrightAct = '/license/copyright-act/1.0',
   Root = '/',
   Institution = '/institution',
   InstitutionCurators = '/institution/settings/curators',
@@ -34,6 +39,8 @@ export enum UrlPathTemplate {
   InstitutionVocabularyOverview = '/institution/overview/vocabulary',
   InstitutionCategories = '/institution/settings/categories',
   InstitutionCategoriesOverview = '/institution/overview/categories',
+  InstitutionPublisherClaimsOverview = '/institution/overview/publisher-claims',
+  InstitutionSerialPublicationClaimsOverview = '/institution/overview/serial-publication-claims',
   Login = '/login',
   Logout = '/logout',
   MyPage = '/my-page',
@@ -48,9 +55,8 @@ export enum UrlPathTemplate {
   MyPageResearchProfile = '/my-page/profile/research-profile',
   MyPageResults = '/my-page/profile/results',
   MyPageProjectRegistrations = '/my-page/project-registrations',
-  MyPageRegistrations = '/my-page/registrations',
   MyPageTerms = '/my-page/profile/terms',
-  MyPageMyRegistrations = '/my-page/registrations/my-registrations',
+  MyPageMyRegistrations = '/my-page/registrations',
   MyPageUserRoleAndHelp = '/my-page/profile/user-role-and-help',
   PrivacyPolicy = '/privacy-policy',
   ProjectsRoot = '/projects',
@@ -152,3 +158,18 @@ export const getMyMessagesRegistrationPath = (identifier: string) =>
 
 export const getNviCandidatePath = (identifier: string) =>
   UrlPathTemplate.TasksNviCandidate.replace(':identifier', encodeURIComponent(identifier));
+
+export const getNviCandidatesSearchPath = (currentUsername = '', year?: number) => {
+  // Note: The NviCandidatesSearchParam enum should have been used for search param keys, but this will apparently break the cypress tests.
+  // The problem seems to be due to the import order for some reason.
+  const searchParams = new URLSearchParams({
+    filter: 'assigned' satisfies NviCandidateSearchStatus, // NviCandidatesSearchParam.Filter
+  });
+  if (currentUsername) {
+    searchParams.set('assignee', currentUsername); // NviCandidatesSearchParam.Assignee
+  }
+  if (year) {
+    searchParams.set('year', year.toString()); // NviCandidatesSearchParam.Year
+  }
+  return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
+};

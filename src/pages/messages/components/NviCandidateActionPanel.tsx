@@ -31,7 +31,7 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
   const [tabValue, setTabValue] = useState(TabValue.Dialogue);
 
   const registrationQuery = useFetchRegistration(getIdentifierFromId(nviCandidate.publicationId));
-  const canEditRegistration = userHasAccessRight(registrationQuery.data, 'update');
+  const canEditRegistration = userHasAccessRight(registrationQuery.data, 'partial-update');
 
   const ticketsQuery = useFetchRegistrationTickets(nviCandidate.publicationId, { enabled: canEditRegistration });
   const tickets = ticketsQuery.data?.tickets ?? [];

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../../api/searchApi';
+import { SearchForPublisher } from '../../../../components/SearchForPublisher';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useRegistrationsQueryParams } from '../../../../utils/hooks/useRegistrationSearchParams';
@@ -13,8 +14,7 @@ import { SearchPageProps } from '../../SearchPage';
 import { SearchForPersonFacetItem } from '../../facet_search_fields/SearchForContributorFacetItem';
 import { SearchForFundingSourceFacetItem } from '../../facet_search_fields/SearchForFundingSourceFacetItem';
 import { SearchForInstitutionFacetItem } from '../../facet_search_fields/SearchForInstitutionFacetItem';
-import { SearchForPublisherFacetItem } from '../../facet_search_fields/SearchForPublisherFacetItem';
-import { SearchForSerialPublicationFacetItem } from '../../facet_search_fields/SearchForSerialPublicationFacetItem';
+import { SearchForSerialPublication } from '../../facet_search_fields/SearchForSerialPublication';
 import { SelectCategoryFacetItem } from '../../facet_search_fields/SelectCategoryFacetItem';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
@@ -193,8 +193,21 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           dataTestId={dataTestId.aggregations.publisherFacets}
           renderCustomSelect={
             !searchParams.has(ResultParam.Publisher) && (
-              <SearchForPublisherFacetItem
-                onSelectPublisher={(identifier) => addFacetFilter(ResultParam.Publisher, identifier)}
+              <SearchForPublisher
+                onSelectPublisher={(publisher) => {
+                  if (publisher) {
+                    addFacetFilter(ResultParam.Publisher, publisher.identifier);
+                  }
+                }}
+                autocompleteProps={{
+                  value: null,
+                  size: 'small',
+                  sx: { p: '0.25rem 0.5rem' },
+                }}
+                textFieldProps={{
+                  'data-testid': dataTestId.aggregations.publisherFacetsSearchField,
+                  showSearchIcon: true,
+                }}
               />
             )
           }
@@ -226,9 +239,21 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           dataTestId={dataTestId.aggregations.seriesFacets}
           renderCustomSelect={
             !searchParams.has(ResultParam.Series) && (
-              <SearchForSerialPublicationFacetItem
+              <SearchForSerialPublication
                 searchMode="series"
-                onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Series, identifier)}
+                onSelectSerialPublication={(series) => {
+                  if (series) {
+                    addFacetFilter(ResultParam.Series, series.identifier);
+                  }
+                }}
+                autocompleteProps={{
+                  value: null,
+                  size: 'small',
+                  sx: { p: '0.25rem 0.5rem' },
+                }}
+                textFieldProps={{
+                  showSearchIcon: true,
+                }}
               />
             )
           }
@@ -260,9 +285,21 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           dataTestId={dataTestId.aggregations.journalFacets}
           renderCustomSelect={
             !searchParams.has(ResultParam.Journal) && (
-              <SearchForSerialPublicationFacetItem
+              <SearchForSerialPublication
                 searchMode="journal"
-                onSelectSerialPublication={(identifier) => addFacetFilter(ResultParam.Journal, identifier)}
+                onSelectSerialPublication={(journal) => {
+                  if (journal) {
+                    addFacetFilter(ResultParam.Journal, journal.identifier);
+                  }
+                }}
+                autocompleteProps={{
+                  value: null,
+                  size: 'small',
+                  sx: { p: '0.25rem 0.5rem' },
+                }}
+                textFieldProps={{
+                  showSearchIcon: true,
+                }}
               />
             )
           }

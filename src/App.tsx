@@ -1,6 +1,6 @@
 import { Head } from '@unhead/react';
 import { Amplify } from 'aws-amplify';
-import { Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router';
@@ -15,8 +15,11 @@ import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
+import { getMaintenanceInfo } from './utils/status-message-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
+
+const MaintenanceModeApp = lazy(() => import('./MaintenanceModeApp'));
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -36,9 +39,8 @@ if (
 }
 
 const Root = () => {
-  useMatomoTracking();
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
 
@@ -73,11 +75,6 @@ const Root = () => {
 
   return (
     <>
-      <Head titleTemplate={`%s - ${t('common.page_title')}`}>
-        <html lang={getLanguageTagValue(i18n.language)} />
-        <title>{t('common.page_title')}</title>
-      </Head>
-
       {mustAcceptTerms && <AcceptTermsDialog newTermsUri={user.currentTerms} />}
       {mustCreatePerson && <CreateCristinPersonDialog user={user} />}
       {mustSelectCustomer && <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />}
@@ -87,14 +84,25 @@ const Root = () => {
   );
 };
 
-const router = createBrowserRouter([{ path: '*', element: <Root /> }]);
-
 export const App = () => {
-  const { t } = useTranslation();
+  useMatomoTracking();
+  const { t, i18n } = useTranslation();
+  const maintenanceInfo = getMaintenanceInfo();
 
   return (
-    <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
-      <RouterProvider router={router} />
-    </Suspense>
+    <>
+      <Head titleTemplate={`%s - ${t('common.page_title')}`}>
+        <html lang={getLanguageTagValue(i18n.language)} />
+        <title>{t('common.page_title')}</title>
+      </Head>
+
+      <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
+        {maintenanceInfo ? (
+          <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
+        ) : (
+          <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
+        )}
+      </Suspense>
+    </>
   );
 };

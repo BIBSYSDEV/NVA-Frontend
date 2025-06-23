@@ -25,7 +25,6 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false, dataTestI
             }
             setFieldValue(field.name, date ?? '');
           }}
-          views={['year', 'month', 'day']}
           maxDate={maxDate}
           slotProps={{
             textField: {
