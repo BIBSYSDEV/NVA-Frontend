@@ -104,10 +104,10 @@ export const ArtisticVisualArtForm = () => {
             <>
               {venues.length > 0 && (
                 <Table sx={{ '& th,td': { borderBottom: 1 } }}>
-                  <TableHead>
+                  <TableHead sx={{ bgcolor: '#fefbf4' }}>
                     <TableRow>
-                      <TableCell>{t('common.place')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
+                      <TableCell>{t('common.place')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>

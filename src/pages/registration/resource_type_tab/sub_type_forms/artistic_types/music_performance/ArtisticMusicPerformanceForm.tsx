@@ -98,6 +98,7 @@ export const ArtisticMusicPerformanceForm = () => {
 
               <Box sx={{ mt: '1rem', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   onClick={() => setOpenModal('Concert')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}
@@ -105,6 +106,7 @@ export const ArtisticMusicPerformanceForm = () => {
                   {t('registration.resource_type.artistic.add_concert')}
                 </Button>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   onClick={() => setOpenModal('AudioVisualPublication')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}
@@ -112,6 +114,7 @@ export const ArtisticMusicPerformanceForm = () => {
                   {t('registration.resource_type.artistic.add_audio_visual_publication')}
                 </Button>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   onClick={() => setOpenModal('MusicScore')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}
@@ -119,6 +122,7 @@ export const ArtisticMusicPerformanceForm = () => {
                   {t('registration.resource_type.artistic.add_music_score')}
                 </Button>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   onClick={() => setOpenModal('OtherPerformance')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}
