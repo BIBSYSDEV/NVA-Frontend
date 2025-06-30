@@ -1,4 +1,3 @@
-import AddIcon from '@mui/icons-material/Add';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
   Box,
@@ -14,7 +13,6 @@ import {
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BetaFunctionality } from '../../../../../../components/BetaFunctionality';
 import {
   ArtisticRegistration,
   MusicOutput,
@@ -24,7 +22,6 @@ import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { AudioVisualPublicationModal } from './AudioVisualPublicationModal';
 import { ConcertModal } from './ConcertModal';
-import { ConcertTable } from './ConcertTable';
 import { MusicScoreModal } from './MusicScoreModal';
 import { OtherPerformanceModal } from './OtherPerformanceModal';
 
@@ -37,8 +34,6 @@ export const ArtisticMusicPerformanceForm = () => {
 
   const [openModal, setOpenModal] = useState<ArtisticMusicPerformanceModalType>('');
   const closeModal = () => setOpenModal('');
-
-  console.log(manifestations.filter((m) => m.type === 'Concert'));
 
   return (
     <div>
@@ -53,29 +48,13 @@ export const ArtisticMusicPerformanceForm = () => {
           };
           return (
             <>
-              <BetaFunctionality>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <Typography variant="h2">Konsert/forestilling</Typography>
-                  <Button
-                    sx={{ textTransform: 'none', width: 'fit-content' }}
-                    onClick={() => setOpenModal('Concert')}
-                    variant="outlined"
-                    startIcon={<AddIcon />}
-                    data-testid={dataTestId.registrationWizard.resourceType.addConcertShowButton}>
-                    {t('registration.resource_type.artistic.add_concert')}
-                  </Button>
-                  <ConcertTable
-                    manifestations={manifestations.filter((manifestation) => manifestation.type === 'Concert')}
-                  />
-                </Box>
-              </BetaFunctionality>
               {manifestations.length > 0 && (
                 <Table sx={{ '& th,td': { borderBottom: 1 } }}>
-                  <TableHead>
+                  <TableHead sx={{ bgcolor: '#fefbf4' }}>
                     <TableRow>
+                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('common.description')}</TableCell>
-                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>

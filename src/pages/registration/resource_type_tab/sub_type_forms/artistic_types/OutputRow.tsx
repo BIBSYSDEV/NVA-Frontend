@@ -1,8 +1,4 @@
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import CancelIcon from '@mui/icons-material/Cancel';
-import EditIcon from '@mui/icons-material/Edit';
-import { Box, Button, Skeleton, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
+import { Box, Skeleton, TableCell, TableRow, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchRegistration } from '../../../../../api/hooks/useFetchRegistration';
@@ -33,6 +29,9 @@ import {
 } from '../../../../../types/publication_types/exhibitionContent.types';
 import { getIdentifierFromId } from '../../../../../utils/general-helpers';
 import { getOutputName } from '../../../../../utils/registration-helpers';
+import { DeleteIconButton } from '../../../../messages/components/DeleteIconButton';
+import { EditIconButton } from '../../../../messages/components/EditIconButton';
+import { MusicalWorkMoveButtons } from '../../components/MusicalWorkMoveButtons';
 import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
 import { ExhibitionCatalogModal } from '../exhibition_types/ExhibitionCatalogModal';
 import { AwardModal } from './architecture/AwardModal';
@@ -85,7 +84,12 @@ export const OutputRow = ({
   const title = shouldFetchItem ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle : getOutputName(item);
 
   return (
-    <TableRow>
+    <TableRow sx={{ bgcolor: 'secondary.light' }}>
+      <TableCell>
+        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+          <MusicalWorkMoveButtons index={index} listLength={maxIndex + 1} moveItem={(newIndex) => moveItem(newIndex)} />
+        </Box>
+      </TableCell>
       {showTypeColumn && (
         <TableCell>
           <Typography>{t(`registration.resource_type.artistic.output_type.${item.type}` as any)}</Typography>
@@ -103,37 +107,9 @@ export const OutputRow = ({
         )}
       </TableCell>
       <TableCell>
-        <Box sx={{ display: 'flex' }}>
-          <Tooltip title={t('common.move_down')}>
-            <span>
-              <Button disabled={index === maxIndex} onClick={() => moveItem(index + 1)}>
-                <ArrowDownwardIcon />
-              </Button>
-            </span>
-          </Tooltip>
-
-          <Tooltip title={t('common.move_up')}>
-            <span>
-              <Button disabled={index === 0} onClick={() => moveItem(index - 1)}>
-                <ArrowUpwardIcon />
-              </Button>
-            </span>
-          </Tooltip>
-        </Box>
-      </TableCell>
-      <TableCell>
         <Box sx={{ display: 'flex', gap: '0.5rem 1rem' }}>
-          <Button onClick={() => setOpenEditItem(true)} variant="outlined" size="small" startIcon={<EditIcon />}>
-            {t('common.show')}/{t('common.edit')}
-          </Button>
-          <Button
-            onClick={() => setOpenRemoveItem(true)}
-            variant="outlined"
-            color="error"
-            size="small"
-            startIcon={<CancelIcon />}>
-            {t('common.remove')}
-          </Button>
+          <EditIconButton tooltip={t('common.edit')} onClick={() => setOpenEditItem(true)} />
+          <DeleteIconButton tooltip={t('common.delete')} onClick={() => setOpenRemoveItem(true)} />
         </Box>
       </TableCell>
       {item.type === 'Broadcast' ? (
