@@ -96,7 +96,7 @@
     "prettier": "^3.6.0",
     "start-server-and-test": "^2.0.12",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5",
+    "vite": "^7.0.0",
     "vite-plugin-eslint": "^1.8.1",
     "vitest": "^3.2.4"
   }
