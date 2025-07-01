@@ -63,7 +63,7 @@ export const NviVisibilityFilter = () => {
   return (
     <TextField
       fullWidth
-      data-testid={dataTestId.tasksPage.nvi.availabilityFilter}
+      data-testid={dataTestId.tasksPage.nvi.visibilityFilter}
       select
       slotProps={{ select: { displayEmpty: true }, inputLabel: { shrink: true } }}
       size="small"
