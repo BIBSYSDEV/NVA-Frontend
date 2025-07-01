@@ -1,8 +1,4 @@
 {
-  "time_format": {
-    "minutes": "MM:SS",
-    "hours": "TT:MM:SS"
-  },
   "about": {
     "availability_statement": "Tilgjengelighetserklæring",
     "copyright_inquiries": "Henvendelser om opphavsrett",
@@ -454,7 +450,7 @@
       "channel_claims": {
         "access_policies": {
           "Everyone": "Alle institusjoner",
-          "OwnerOnly": "Kun utgiverinstitusjon"
+          "OwnerOnly": "Kun eierinstitusjon"
         },
         "add_publisher_channel_claim": "Sett eierskap til utgiver",
         "add_publisher_channel_claim_description": "<p>Institusjonen vil bli oppgitt som ansvarlig for resultat og kan få spørsmål via brukerstøttepunkt som angitt på institusjonens brukerstøtte.</p><p>Med å sette eierskap på utgiver så sendes publiseringsforespørsel til angitt institusjon uavhengig av om registrator tilhører en annen institusjon.</p>",
@@ -465,23 +461,23 @@
         "administer_serial_publication_channel_claim": "Administrer eierskap for serie/tidsskrift",
         "administer_serial_publication_channel_claim_description": "<p>På denne siden administrerer du eierskap til serie/tidsskrift som er registrert i Kanalregisteret.</p><button/><heading>Publiseringsrettigheter og -forespørsler</heading><p>Kanaleier bestemmer hvem som kan publisere metadata, fil og lisens i kanalene de eier, for alle resultatkategorier eller bare noen utvalgte.</p><p>Kanaleierskap påvirker hvilken institusjon som mottar publiseringsforespørsler.</p><p>For kategorier og serie/tidsskrift med kanaleier, går det til kanaleier. For alt annet, går det til registrators institusjon.</p>",
         "category_limitations": "Begrensning for kategori",
-        "category_limitations_helper_text": "<p>Kanaleier kan velge om tilgangsbegrensninger skal gjelde for alle resultatkategorier eller bare noen utvalgte.</p><heading>Publiseringsforespørsler</heading><p>For resultatkategorier MED tilgangsbegrensning blir publiseringsforespørsler sendt til filkurator hos kanaleier.</p><p>For resultatkategorier UTEN tilgangsbegrensning, blir publiseringsforespørsler sendt til filkurator ved institusjonen som registrator er logget inn på.</p>",
+        "category_limitations_helper_text": "<p>Tilgangsbegrensninger kan gjelde for alle resultatkategorier eller bare noen utvalgte kategorier.</p><heading>Publiseringsforespørsler</heading><p>For resultatkategorier MED tilgangsbegrensning blir publiseringsforespørsler sendt til filkurator hos kanaleier.</p><p>For resultatkategorier UTEN tilgangsbegrensning, blir publiseringsforespørsler sendt til filkurator ved institusjonen som registrator er logget inn på.</p>",
         "channel_claim": "Kanaleierskap",
         "channel_claims_overview_description": "Kanaler med redaktør",
         "channel_claims_settings_description": "Administrer eierskap og tilganger til kanaler fra Kanalregisteret:",
         "channel_owner": "Kanaleier",
-        "channel_owner_helper_text": "<p>Institusjonen som har tatt det redaksjonelle ansvaret for innholdet utgitt av kanalen.</p><p>Hvis en kanal har feil redaktør, ta kontakt med institusjonen for å få rettet feilen.</p>",
+        "channel_owner_helper_text": "<p>Institusjonen som har tatt det redaksjonelle ansvaret for innholdet utgitt av kanalen.</p><p>Hvis en kanal har feil redaktør, ta kontakt med Sikt for å få rettet feilen: <email/>.</p>",
         "claim_category_restriction": "Kategorier som begrensningen skal gjelde for",
         "delete_channel_claim": "Fjern eierskap til kanal",
         "delete_channel_claim_description": "<p>Er du sikker på at du vil fjerne eierskapet til <span>{{name}}</span>?</p>",
         "editing_access": "Tilgang til å redigere",
-        "editing_access_helper_text": "<p>Kanaleier (utgiverinstitusjon) kan velge om ansatte utenfor egen institusjon kan redigere resultater som er utgitt i sine publikasjonskanaler.</p><heading>Alle institusjoner</heading><p>Ansatte ved andre institusjoner kan redigere resultater som er utgitt på institusjonens kanal.</p><p>Kurator ved andre institusjoner kan redigere og slette filer som allerede er godkjent. For nyopplastede filer, blir publiseringsforespørsel sendt til kurator hos utgiverinstitusjonen (kanaleier).</p><heading>Kun utgiverinstitusjon</heading><p>Bare egne ansatte kan redigere resultater som er utgitt på publiseringskanalen.</p><p>Registrator og kurator som ikke er logget inn hos utgiverinstitusjon, får ikke redigert metadata på resultatet etter at opplastede filer er godkjent.</p><p>Registratorer som ikke er logget inn hos kanaleier, får feilmelding om de velger en av publiseringskanalene og beskjed om å kontake brukerstøtte hos utgiverinstitusjon.</p>",
+        "editing_access_helper_text": "<heading>Alle institusjoner</heading><p>Ansatte ved andre institusjoner kan redigere resultater som er utgitt på eierinstitusjonens kanal.</p><p>Kurator ved andre institusjoner kan redigere og slette filer som allerede er godkjent. For nyopplastede filer, blir publiseringsforespørsel sendt til kurator hos eierinstitusjonen.</p><heading>Kun eierinstitusjon</heading><p>Bare ansatte ved eierinstitusjon kan redigere resultater som er utgitt på publiseringskanalen.</p><p>Registrator og kurator som ikke er logget inn hos eierinstitusjon, får ikke redigert metadata på resultatet etter at opplastede filer er godkjent.</p>",
         "institution_with_editorial_responsibility": "Institusjon med redaksjonsansvar",
-        "publisher_claims_overview": "Oversikt over utgivereierskap",
+        "publisher_claims_overview": "Utgivere med redaktør",
         "publisher_in_channel_registry": "Utgiver i Kanalregisteret",
         "register_access": "Tilgang til å registrere",
-        "register_access_helper_text": "<p>Redaktør bestemmer hvilke personer som kan registrere resultater på kanaler i Kanalregisteret. Redaktør kan velge mellom “Alle institusjoner” og “Kun utgiverinstitusjon”.</p><heading>Alle institusjoner</heading><p>Alle med tilgang til å registrere, som er ansatt ved redaktørs institusjon, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p><heading>Kun redaktørs institusjon</heading><p>Alle med tilgang til å registrere, som er ansatt ved redaktørs institusjon, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p>",
-        "serial_publication_claims_overview": "Oversikt over serie-/tidsskrifteierskap",
+        "register_access_helper_text": "<heading>Alle institusjoner</heading><p>Registratorer fra andre institusjoner kan registrere resultater som er utgitt på institusjonens kanaler. Publiseringsforespørsler blir sendt til filkurator hos eierinstitusjon.</p><heading>Kun eierinstitusjon</heading><p>Bare ansatte ved eierinstitusjon kan registrere resultater som er utgitt på publiseringskanalen.</p><p>Registratorer som ikke er logget inn hos eierinstitusjon, får feilmelding om de velger en av publiseringskanalene og beskjed om å kontake brukerstøtte.</p>",
+        "serial_publication_claims_overview": "Serier/tidsskrifter med redaktør",
         "serial_publication_in_channel_registry": "Serie/tidsskrift i Kanalregisteret",
         "set_channel_claim": "Sett eierskap",
         "show_only_my_institution": "Vis kun min institusjon"
@@ -965,6 +961,7 @@
       "thesis_embargo_curator_description": "Kan se og endre embargofiler på studentoppgaver."
     }
   },
+  "owner_institution": "Eierinstitusjon",
   "privacy": {
     "about": {
       "heading": "Om denne personvernerklæringen",
@@ -2238,6 +2235,10 @@
     "unread_only": "Vis kun uleste",
     "user_dialog": "Brukerdialog",
     "your_tasks": "Oppgaver du behandler: {{count}}"
+  },
+  "time_format": {
+    "hours": "TT:MM:SS",
+    "minutes": "MM:SS"
   },
   "unpublish_actions": {
     "confirm_unpublish": "Jeg bekrefter at informasjonen stemmer, og at resultatet skal avpubliseres.",
