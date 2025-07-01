@@ -1,4 +1,4 @@
-import { MenuItem, Select } from '@mui/material';
+import { MenuItem, Select, SelectProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
@@ -9,7 +9,7 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 const nviYearFilterValues = getNviYearFilterValues(new Date().getFullYear() + 1);
 
-export const NviYearSelector = () => {
+export const NviYearSelector = (props: Partial<SelectProps>) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,7 +21,6 @@ export const NviYearSelector = () => {
     <Select
       data-testid={dataTestId.tasksPage.nvi.yearSelect}
       size="small"
-      fullWidth
       inputProps={{ 'aria-label': t('common.year') }}
       value={year}
       onChange={(event) => {
@@ -32,7 +31,8 @@ export const NviYearSelector = () => {
           syncedParams.delete(NviCandidatesSearchParam.Offset);
         }
         navigate({ search: syncedParams.toString() });
-      }}>
+      }}
+      {...props}>
       {nviYearFilterValues.map((year) => (
         <MenuItem key={year} value={year}>
           {year}

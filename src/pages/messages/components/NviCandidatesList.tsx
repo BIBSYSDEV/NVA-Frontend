@@ -131,7 +131,7 @@ export const NviCandidatesList = () => {
         </Grid>
 
         <Grid size={{ xs: 16, md: 6, lg: 2 }}>
-          <NviYearSelector />
+          <NviYearSelector fullWidth />
         </Grid>
       </Grid>
 
