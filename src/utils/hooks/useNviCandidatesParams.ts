@@ -1,9 +1,11 @@
 import { useLocation } from 'react-router';
 import {
   FetchNviCandidatesParams,
+  NviCandidateFilter,
+  NviCandidateGlobalStatus,
   NviCandidateOrderBy,
   NviCandidatesSearchParam,
-  NviFilter,
+  NviCandidateStatus,
 } from '../../api/searchApi';
 import { NviCandidateSearchStatus } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';
@@ -23,15 +25,13 @@ export const useNviCandidatesParams = () => {
   const aggregation = searchParams.get(NviCandidatesSearchParam.Aggregation) as 'all' | NviCandidateSearchStatus | null;
   const assignee = searchParams.get(NviCandidatesSearchParam.Assignee);
   const excludeSubUnits = searchParams.get(NviCandidatesSearchParam.ExcludeSubUnits) === 'true';
-  const filter = searchParams.get(NviCandidatesSearchParam.Filter) as NviFilter | null;
+  const filter = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateFilter | null;
   const offset = (searchParams.get(NviCandidatesSearchParam.Offset) as number | null) ?? 0;
   const orderBy = searchParams.get(NviCandidatesSearchParam.OrderBy) as NviCandidateOrderBy | null;
   const query = searchParams.get(NviCandidatesSearchParam.Query);
   const size = (searchParams.get(NviCandidatesSearchParam.Size) as number | null) ?? ROWS_PER_PAGE_OPTIONS[0];
-  const status = searchParams.get(NviCandidatesSearchParam.Status) as null | ('pending' | 'approved' | 'rejected');
-  const globalStatus = searchParams.get(NviCandidatesSearchParam.GlobalStatus) as
-    | null
-    | ('pending' | 'approved' | 'rejected' | 'disputed');
+  const status = searchParams.get(NviCandidatesSearchParam.Status) as null | NviCandidateStatus;
+  const globalStatus = searchParams.get(NviCandidatesSearchParam.GlobalStatus) as null | NviCandidateGlobalStatus;
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
   const year = (searchParams.get(NviCandidatesSearchParam.Year) as number | null) ?? getDefaultNviYear();
   const excludeUnassigned = searchParams.get(NviCandidatesSearchParam.ExcludeUnassigned) === 'true';

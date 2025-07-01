@@ -252,20 +252,22 @@ export enum NviCandidatesSearchParam {
 
 export type NviCandidateOrderBy = 'createdDate';
 
-export type NviFilter = 'rejectedByOthers' | 'approvedByOthers' | 'collaboration';
+export type NviCandidateFilter = 'rejectedByOthers' | 'approvedByOthers' | 'collaboration';
+export type NviCandidateGlobalStatus = 'pending' | 'approved' | 'rejected' | 'disputed';
+export type NviCandidateStatus = 'pending' | 'approved' | 'rejected';
 
 export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Affiliations]?: string[] | null;
   [NviCandidatesSearchParam.Aggregation]?: 'all' | NviCandidateSearchStatus | null;
   [NviCandidatesSearchParam.Assignee]?: string | null;
   [NviCandidatesSearchParam.ExcludeSubUnits]?: boolean | null;
-  [NviCandidatesSearchParam.Filter]?: NviFilter | null;
-  [NviCandidatesSearchParam.GlobalStatus]?: string | null;
+  [NviCandidatesSearchParam.Filter]?: NviCandidateFilter | null;
+  [NviCandidatesSearchParam.GlobalStatus]?: NviCandidateGlobalStatus | null;
   [NviCandidatesSearchParam.Offset]?: number | null;
   [NviCandidatesSearchParam.OrderBy]?: NviCandidateOrderBy | null;
   [NviCandidatesSearchParam.Query]?: string | null;
   [NviCandidatesSearchParam.Size]?: number | null;
-  [NviCandidatesSearchParam.Status]?: string | null;
+  [NviCandidatesSearchParam.Status]?: NviCandidateStatus | null;
   [NviCandidatesSearchParam.SortOrder]?: SortOrder | null;
   [NviCandidatesSearchParam.Year]?: number | null;
   [NviCandidatesSearchParam.ExcludeUnassigned]?: boolean | null;
