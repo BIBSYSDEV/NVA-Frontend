@@ -1,5 +1,5 @@
 import { To } from 'react-router';
-import { NviCandidateSearchStatus } from '../types/nvi.types';
+import { NviCandidateStatus } from '../api/searchApi';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
 
@@ -160,10 +160,8 @@ export const getNviCandidatePath = (identifier: string) =>
   UrlPathTemplate.TasksNviCandidate.replace(':identifier', encodeURIComponent(identifier));
 
 export const getNviCandidatesSearchPath = (currentUsername = '', year?: number) => {
-  // Note: The NviCandidatesSearchParam enum should have been used for search param keys, but this will apparently break the cypress tests.
-  // The problem seems to be due to the import order for some reason.
   const searchParams = new URLSearchParams({
-    filter: 'assigned' satisfies NviCandidateSearchStatus, // NviCandidatesSearchParam.Filter
+    status: 'pending' satisfies NviCandidateStatus,
   });
   if (currentUsername) {
     searchParams.set('assignee', currentUsername); // NviCandidatesSearchParam.Assignee

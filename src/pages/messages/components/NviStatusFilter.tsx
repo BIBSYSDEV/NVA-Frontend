@@ -44,7 +44,7 @@ export const NviStatusFilter = () => {
           return syncedParams;
         });
       }}>
-      <MenuItem value={'pending' satisfies NviCandidateStatus}>{t('tasks.nvi.status.New')}</MenuItem>
+      <MenuItem value={'pending' satisfies NviCandidateStatus}>{t('tasks.nvi.candidates_for_control')}</MenuItem>
       <MenuItem value={'approved' satisfies NviCandidateStatus}>{t('tasks.nvi.status.Approved')}</MenuItem>
       <MenuItem value={'rejected' satisfies NviCandidateStatus}>{t('tasks.nvi.status.Rejected')}</MenuItem>
       <MenuItem value={'disputed' satisfies NviCandidateGlobalStatus}>{t('tasks.nvi.status.Dispute')}</MenuItem>
