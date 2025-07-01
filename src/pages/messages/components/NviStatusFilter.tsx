@@ -52,7 +52,7 @@ export const NviStatusFilter = () => {
   );
 };
 
-export const NviAvailabilityFilter = () => {
+export const NviVisibilityFilter = () => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();

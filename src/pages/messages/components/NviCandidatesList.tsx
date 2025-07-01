@@ -21,7 +21,7 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
-import { NviAvailabilityFilter, NviStatusFilter } from './NviStatusFilter';
+import { NviStatusFilter, NviVisibilityFilter } from './NviStatusFilter';
 import { NviYearSelector } from './NviYearSelector';
 
 export const NviCandidatesList = () => {
@@ -56,7 +56,7 @@ export const NviCandidatesList = () => {
           />
         </Grid>
         <Grid size={{ xs: 16, sm: 8, md: 4 }}>
-          <NviAvailabilityFilter />
+          <NviVisibilityFilter />
         </Grid>
 
         <Grid size={{ xs: 16, sm: 8, md: 6, lg: 4 }}>
