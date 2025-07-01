@@ -101,24 +101,24 @@ export const NviAvailabilityFilter = () => {
       )}
 
       {status === 'approved' && (
+        <MenuItem value={'pending' satisfies NviCandidateGlobalStatus}>
+          {t('tasks.nvi.candidates_pending_verification_by_others')}
+        </MenuItem>
+      )}
+      {status === 'approved' && (
         <MenuItem value={'approvedByOthers' satisfies NviCandidateFilter}>
           {t('tasks.nvi.candidates_approved_by_all')}
         </MenuItem>
       )}
-      {status === 'approved' && (
-        <MenuItem value={'pending' satisfies NviCandidateGlobalStatus}>
-          {t('tasks.nvi.candidates_pending_approval_by_others')}
-        </MenuItem>
-      )}
 
-      {status === 'rejected' && (
-        <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>
-          {t('tasks.nvi.candidates_rejected_by_all')}
-        </MenuItem>
-      )}
       {status === 'rejected' && (
         <MenuItem value={'pending' satisfies NviCandidateGlobalStatus}>
           {t('tasks.nvi.candidates_pending_verification_by_others')}
+        </MenuItem>
+      )}
+      {status === 'rejected' && (
+        <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>
+          {t('tasks.nvi.candidates_rejected_by_all')}
         </MenuItem>
       )}
 
