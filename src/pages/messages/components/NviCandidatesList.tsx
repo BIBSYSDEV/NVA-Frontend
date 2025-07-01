@@ -76,7 +76,7 @@ export const NviCandidatesList = () => {
                 return syncedParams;
               });
             }}>
-            {t('include_candidates_without_curator')}
+            {t('tasks.nvi.include_candidates_without_curator')}
           </Button>
         </Grid>
 

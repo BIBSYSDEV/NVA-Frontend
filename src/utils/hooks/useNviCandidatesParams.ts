@@ -30,8 +30,8 @@ export const useNviCandidatesParams = () => {
   const orderBy = searchParams.get(NviCandidatesSearchParam.OrderBy) as NviCandidateOrderBy | null;
   const query = searchParams.get(NviCandidatesSearchParam.Query);
   const size = (searchParams.get(NviCandidatesSearchParam.Size) as number | null) ?? ROWS_PER_PAGE_OPTIONS[0];
-  const status = searchParams.get(NviCandidatesSearchParam.Status) as null | NviCandidateStatus;
-  const globalStatus = searchParams.get(NviCandidatesSearchParam.GlobalStatus) as null | NviCandidateGlobalStatus;
+  const status = searchParams.get(NviCandidatesSearchParam.Status) as NviCandidateStatus | null;
+  const globalStatus = searchParams.get(NviCandidatesSearchParam.GlobalStatus) as NviCandidateGlobalStatus | null;
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
   const year = (searchParams.get(NviCandidatesSearchParam.Year) as number | null) ?? getDefaultNviYear();
   const excludeUnassigned = searchParams.get(NviCandidatesSearchParam.ExcludeUnassigned) === 'true';
