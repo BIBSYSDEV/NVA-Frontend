@@ -288,10 +288,10 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
   if (params.assignee) {
     searchParams.set(NviCandidatesSearchParam.Assignee, params.assignee);
   }
-  if (params.excludeSubUnits === true || params.excludeSubUnits === false) {
+  if (params.excludeSubUnits) {
     searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, params.excludeSubUnits.toString());
   }
-  if (params.excludeUnassigned === true) {
+  if (params.excludeUnassigned) {
     searchParams.set(NviCandidatesSearchParam.ExcludeUnassigned, params.excludeUnassigned.toString());
   }
   if (params.filter) {
