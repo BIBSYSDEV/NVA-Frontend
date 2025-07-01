@@ -36,26 +36,6 @@ export const NviCandidatesList = () => {
 
   const page = Math.floor(nviParams.offset / nviParams.size) + 1;
 
-  const toggleValueFromSearchParams = (key: NviCandidatesSearchParam, value: string) => {
-    setSearchParams((params) => {
-      const syncedParams = syncParamsWithSearchFields(params);
-      const currentValues = syncedParams.get(key)?.split(',') ?? [];
-
-      const updatedValues = currentValues.includes(value)
-        ? currentValues.filter((v) => v !== value)
-        : [...currentValues, value];
-
-      if (updatedValues.length > 0) {
-        syncedParams.set(key, updatedValues.join(','));
-      } else {
-        syncedParams.delete(key);
-      }
-
-      syncedParams.delete(NviCandidatesSearchParam.Offset);
-      return syncedParams;
-    });
-  };
-
   return (
     <section>
       <Helmet>
@@ -84,9 +64,17 @@ export const NviCandidatesList = () => {
             fullWidth
             variant="outlined"
             sx={{ textTransform: 'none' }}
-            startIcon={nviParams.statusShould?.includes('new') ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+            startIcon={!nviParams.excludeUnassigned ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
             onClick={() => {
-              toggleValueFromSearchParams(NviCandidatesSearchParam.StatusShould, 'new');
+              setSearchParams((params) => {
+                const syncedParams = syncParamsWithSearchFields(params);
+                if (nviParams.excludeUnassigned) {
+                  syncedParams.delete(NviCandidatesSearchParam.ExcludeUnassigned);
+                } else {
+                  syncedParams.set(NviCandidatesSearchParam.ExcludeUnassigned, 'true');
+                }
+                return syncedParams;
+              });
             }}>
             {t('include_candidates_without_curator')}
           </Button>

@@ -238,35 +238,37 @@ export enum NviCandidatesSearchParam {
   Aggregation = 'aggregation',
   Assignee = 'assignee',
   ExcludeSubUnits = 'excludeSubUnits',
-  GlobalStatusShould = 'globalStatusShould',
+  ExcludeUnassigned = 'excludeUnassigned',
+  GlobalStatus = 'globalStatus',
   Filter = 'filter',
   Offset = 'offset',
   OrderBy = 'orderBy',
   Query = 'query',
   Size = 'size',
-  StatusShould = 'statusShould',
+  Status = 'status',
   SortOrder = 'sortOrder',
   Year = 'year',
-  Visibility = 'visibility',
 }
 
 export type NviCandidateOrderBy = 'createdDate';
+
+export type NviFilter = 'rejectedByOthers' | 'approvedByOthers' | 'collaboration';
 
 export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Affiliations]?: string[] | null;
   [NviCandidatesSearchParam.Aggregation]?: 'all' | NviCandidateSearchStatus | null;
   [NviCandidatesSearchParam.Assignee]?: string | null;
   [NviCandidatesSearchParam.ExcludeSubUnits]?: boolean | null;
-  [NviCandidatesSearchParam.Filter]?: NviCandidateSearchStatus | null;
-  [NviCandidatesSearchParam.GlobalStatusShould]?: string[] | null;
+  [NviCandidatesSearchParam.Filter]?: NviFilter | null;
+  [NviCandidatesSearchParam.GlobalStatus]?: string | null;
   [NviCandidatesSearchParam.Offset]?: number | null;
   [NviCandidatesSearchParam.OrderBy]?: NviCandidateOrderBy | null;
   [NviCandidatesSearchParam.Query]?: string | null;
   [NviCandidatesSearchParam.Size]?: number | null;
-  [NviCandidatesSearchParam.StatusShould]?: string[] | null;
+  [NviCandidatesSearchParam.Status]?: string | null;
   [NviCandidatesSearchParam.SortOrder]?: SortOrder | null;
   [NviCandidatesSearchParam.Year]?: number | null;
-  [NviCandidatesSearchParam.Visibility]?: NviCandidateSearchStatus | null;
+  [NviCandidatesSearchParam.ExcludeUnassigned]?: boolean | null;
 }
 
 export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
@@ -287,16 +289,17 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
   if (params.excludeSubUnits === true || params.excludeSubUnits === false) {
     searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, params.excludeSubUnits.toString());
   }
-  if (params.visibility) {
-    searchParams.set(NviCandidatesSearchParam.Filter, params.visibility);
-  } else if (params.filter) {
+  if (params.excludeUnassigned === true) {
+    searchParams.set(NviCandidatesSearchParam.ExcludeUnassigned, params.excludeUnassigned.toString());
+  }
+  if (params.filter) {
     searchParams.set(NviCandidatesSearchParam.Filter, params.filter);
   }
-  if (params.statusShould?.length) {
-    searchParams.set(NviCandidatesSearchParam.StatusShould, params.statusShould.join(','));
+  if (params.status) {
+    searchParams.set(NviCandidatesSearchParam.Status, params.status);
   }
-  if (params.globalStatusShould?.length) {
-    searchParams.set(NviCandidatesSearchParam.GlobalStatusShould, params.globalStatusShould.join(','));
+  if (params.globalStatus) {
+    searchParams.set(NviCandidatesSearchParam.GlobalStatus, params.globalStatus);
   }
   if (params.query) {
     searchParams.set(NviCandidatesSearchParam.Query, params.query);

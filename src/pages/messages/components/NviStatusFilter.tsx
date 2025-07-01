@@ -1,7 +1,7 @@
 import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
-import { NviCandidatesSearchParam } from '../../../api/searchApi';
+import { NviCandidatesSearchParam, NviFilter } from '../../../api/searchApi';
 import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
@@ -11,7 +11,7 @@ export const NviStatusFilter = () => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
-  const { statusShould } = useNviCandidatesParams();
+  const { status } = useNviCandidatesParams();
 
   const toggleValueFromSearchParams = (key: NviCandidatesSearchParam, value: string) => {
     setSearchParams((params) => {
@@ -40,10 +40,10 @@ export const NviStatusFilter = () => {
       select
       size="small"
       label={t('common.status')}
-      value={statusShould ?? ''}
+      value={status ?? ''}
       onChange={(event) => {
         const newStatus = event.target.value;
-        toggleValueFromSearchParams(NviCandidatesSearchParam.StatusShould, newStatus);
+        toggleValueFromSearchParams(NviCandidatesSearchParam.Status, newStatus);
       }}>
       <MenuItem value={'pending' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.New')}</MenuItem>
       {/* <MenuItem value={'assigned' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Pending')}</MenuItem> */}
@@ -58,7 +58,7 @@ export const NviAvailabilityFilter = () => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
-  const { filter, visibility } = useNviCandidatesParams();
+  const { filter, globalStatus, status } = useNviCandidatesParams();
 
   return (
     <TextField
@@ -68,36 +68,49 @@ export const NviAvailabilityFilter = () => {
       slotProps={{ select: { displayEmpty: true }, inputLabel: { shrink: true } }}
       size="small"
       label={t('tasks.display_options')}
-      value={visibility ?? ''}
+      value={filter || globalStatus || ''}
       onChange={(event) => {
-        const newVisibility = event.target.value;
+        const newFilter = event.target.value;
+
         setSearchParams((prevParams) => {
           const syncedParams = syncParamsWithSearchFields(prevParams);
-          if (newVisibility) {
-            syncedParams.set(NviCandidatesSearchParam.Visibility, newVisibility);
-          } else {
-            syncedParams.delete(NviCandidatesSearchParam.Visibility);
+          syncedParams.delete(NviCandidatesSearchParam.GlobalStatus);
+          syncedParams.delete(NviCandidatesSearchParam.Filter);
+          syncedParams.delete(NviCandidatesSearchParam.Offset);
+
+          if (
+            newFilter === ('rejectedByOthers' satisfies NviFilter) ||
+            newFilter === ('approvedByOthers' satisfies NviFilter) ||
+            newFilter === ('collaboration' satisfies NviFilter)
+          ) {
+            syncedParams.set(NviCandidatesSearchParam.Filter, newFilter);
           }
+
+          // if (newVisibility) {
+          //   syncedParams.set(NviCandidatesSearchParam.Visibility, newVisibility);
+          // } else {
+          //   syncedParams.delete(NviCandidatesSearchParam.Visibility);
+          // }
           return syncedParams;
         });
       }}>
       <MenuItem value="">{t('common.show_all')}</MenuItem>
-      {filter === 'pending' && (
-        <MenuItem value={'pendingCollaboration' satisfies NviCandidateSearchStatus}>
+      {status === 'pending' && (
+        <MenuItem value={'rejectedByOthers' satisfies NviFilter}>
           {t('tasks.nvi.waiting_for_your_institution')}
         </MenuItem>
       )}
-      {filter === 'assigned' && (
+      {/* {status === 'assigned' && (
         <MenuItem value={'assignedCollaboration' satisfies NviCandidateSearchStatus}>
           {t('tasks.nvi.waiting_for_your_institution')}
         </MenuItem>
-      )}
-      {filter === 'approved' && (
+      )} */}
+      {status === 'approved' && (
         <MenuItem value={'approvedCollaboration' satisfies NviCandidateSearchStatus}>
           {t('tasks.nvi.waiting_for_other_institutions')}
         </MenuItem>
       )}
-      {filter === 'rejected' && (
+      {status === 'rejected' && (
         <MenuItem value={'rejectedCollaboration' satisfies NviCandidateSearchStatus}>
           {t('tasks.nvi.waiting_for_other_institutions')}
         </MenuItem>
