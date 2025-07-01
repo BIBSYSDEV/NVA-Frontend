@@ -95,28 +95,42 @@ export const NviAvailabilityFilter = () => {
       <MenuItem value="">{t('common.show_all')}</MenuItem>
 
       {status === 'pending' && (
-        <MenuItem value={'collaboration' satisfies NviCandidateFilter}>Vis kun sampublikasjoner</MenuItem>
+        <MenuItem value={'collaboration' satisfies NviCandidateFilter}>
+          {t('tasks.nvi.show_only_collaborative_publications')}
+        </MenuItem>
       )}
 
       {status === 'approved' && (
-        <MenuItem value={'approvedByOthers' satisfies NviCandidateFilter}>Kandidater alle har godkjent</MenuItem>
+        <MenuItem value={'approvedByOthers' satisfies NviCandidateFilter}>
+          {t('tasks.nvi.candidates_approved_by_all')}
+        </MenuItem>
       )}
       {status === 'approved' && (
-        <MenuItem value={'pending' satisfies NviCandidateGlobalStatus}>Kandidater andre må godkjenne</MenuItem>
+        <MenuItem value={'pending' satisfies NviCandidateGlobalStatus}>
+          {t('tasks.nvi.candidates_pending_approval_by_others')}
+        </MenuItem>
       )}
 
       {status === 'rejected' && (
-        <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>Kandidater alle har avvist</MenuItem>
+        <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>
+          {t('tasks.nvi.candidates_rejected_by_all')}
+        </MenuItem>
       )}
       {status === 'rejected' && (
-        <MenuItem value={'pending' satisfies NviCandidateGlobalStatus}>Kandidater andre må kontrollere</MenuItem>
+        <MenuItem value={'pending' satisfies NviCandidateGlobalStatus}>
+          {t('tasks.nvi.candidates_pending_verification_by_others')}
+        </MenuItem>
       )}
 
       {globalStatus === 'disputed' && (
-        <MenuItem value={'approvedByOthers' satisfies NviCandidateFilter}>Kandidater andre har godkjent</MenuItem>
+        <MenuItem value={'approvedByOthers' satisfies NviCandidateFilter}>
+          {t('tasks.nvi.candidates_approved_by_others')}
+        </MenuItem>
       )}
       {globalStatus === 'disputed' && (
-        <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>Kandidater andre har avvist</MenuItem>
+        <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>
+          {t('tasks.nvi.candidates_rejected_by_others')}
+        </MenuItem>
       )}
     </TextField>
   );
