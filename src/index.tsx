@@ -1,7 +1,7 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import { createHead, UnheadProvider } from '@unhead/react/client';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { HelmetProvider } from 'react-helmet-async';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as ReduxProvider } from 'react-redux';
 import { App } from './App';
@@ -26,6 +26,8 @@ if ((window as any).Cypress) {
   (window as any).store = store;
 }
 
+const head = createHead();
+
 const container = document.getElementById('root');
 if (container) {
   const root = createRoot(container);
@@ -36,11 +38,11 @@ if (container) {
           <ReduxProvider store={store}>
             <ThemeProvider theme={mainTheme}>
               <CssBaseline />
-              <HelmetProvider>
+              <UnheadProvider head={head}>
                 <QueryProvider>
                   <App />
                 </QueryProvider>
-              </HelmetProvider>
+              </UnheadProvider>
             </ThemeProvider>
           </ReduxProvider>
         </I18nextProvider>

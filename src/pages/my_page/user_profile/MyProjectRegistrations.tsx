@@ -1,7 +1,7 @@
 import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -61,9 +61,9 @@ export const MyProjectRegistrations = () => {
 
   return (
     <div>
-      <Helmet>
+      <Head>
         <title>{t('my_page.project_registrations')}</title>
-      </Helmet>
+      </Head>
       <Typography variant="h1" gutterBottom>
         {t('my_page.project_registrations')}
       </Typography>

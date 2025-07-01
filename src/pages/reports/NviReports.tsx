@@ -1,6 +1,6 @@
 import { styled, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { useTranslation } from 'react-i18next';
 
 export const StyledReportIframe = styled('iframe')({
@@ -15,9 +15,9 @@ export const NviReports = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{t('common.nvi')}</title>
-      </Helmet>
+      </Head>
 
       <Typography variant="h1" sx={visuallyHidden}>
         {t('common.nvi')}

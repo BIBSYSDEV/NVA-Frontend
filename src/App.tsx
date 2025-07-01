@@ -1,6 +1,6 @@
+import { Head } from '@unhead/react';
 import { Amplify } from 'aws-amplify';
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router';
@@ -91,9 +91,10 @@ export const App = () => {
 
   return (
     <>
-      <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`}>
+      <Head titleTemplate={`%s - ${t('common.page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
-      </Helmet>
+        <title>{t('common.page_title')}</title>
+      </Head>
 
       <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
         {maintenanceInfo ? (

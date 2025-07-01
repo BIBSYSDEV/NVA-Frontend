@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { useTranslation } from 'react-i18next';
 import clinicalTreatmentStudiesThumbnail from '../../resources/images/clinical-treatment-studies-thumbnail.png';
 import internationalCooperationThumbnail from '../../resources/images/international-cooperation-report-thumbnail.png';
@@ -15,9 +15,9 @@ const ReportsPage = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{t('search.reports.reports')}</title>
-      </Helmet>
+      </Head>
 
       <Typography id={headingId} variant="h1" sx={visuallyHidden}>
         {t('search.reports.reports')}

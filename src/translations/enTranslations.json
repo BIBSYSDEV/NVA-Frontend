@@ -453,13 +453,13 @@
           "OwnerOnly": "Only publishing institution"
         },
         "add_publisher_channel_claim": "Set ownership for publisher",
-        "add_publisher_channel_claim_description": "<p>Set ownership for the publisher that belongs to your institution.</p><p>Your institution will be designated as responsible for the result and may receive inquiries via the support point specified in the institution's user support.</p><p>By assigning ownership to the publisher, the publication request is sent to your institution regardless of whether the registrant belongs to another institution.</p>",
+        "add_publisher_channel_claim_description": "<p>The institution will be designated as responsible for the result and may receive inquiries via the support point specified as the institution's user support.</p><p>By assigning ownership to the publisher, publication requests are sent to the specified institution regardless of whether the registrant belongs to another institution.</p>",
         "add_serial_publication_channel_claim": "Set ownership to series/journal",
-        "add_serial_publication_channel_claim_description": "<p>Claim ownership to the series/journal that belongs to your institution.</p><p>Your institution will be designated as responsible for the result and may receive inquiries via the support point specified in the institution's support system.</p><p>By assigning ownership to the series/journal, the publication request is sent to your institution regardless of whether the registrant belongs to another institution.</p>",
+        "add_serial_publication_channel_claim_description": "<p>The institution will be designated as responsible for the result and may receive inquiries via the support point specified as the institution's user support.</p><p>By assigning ownership to the series/journal, publication requests are sent to the specified institution regardless of whether the registrant belongs to another institution.</p>",
         "administer_publisher_channel_claim": "Administer ownership for publishers",
-        "administer_publisher_channel_claim_description": "<p>On this page, you manage ownership of publishers registered in the Channel Register.</p><p>Institutions themselves assign ownership to their publishers.</p><p>If a publisher has the wrong channel owner, contact the institution to correct the error.</p><button/><heading>Publishing Rights and Requests</heading><p>The channel owner determines who can publish metadata, files, and licences in the channels they own, for all result categories or just selected ones.</p><p>Channel ownership affects which institution receives publication requests.</p><p>For categories and publishers with a channel owner, the requests go to the channel owner. For everything else, they go to the registrant's institution.</p>",
+        "administer_publisher_channel_claim_description": "<p>On this page, you manage ownership of publishers registered in the Channel Register.</p><button/><heading>Publications rights and requests</heading><p>Channel owners decided who may publish metadata, files and licences in the channels they own, for all result categories or just a selection.</p><p>Channel ownership determines which institution receives publication requests.</p><p>For categories and publishers with a channel owner, the request is sent to channel owner. For everything else, the request is sent to the registrar's institution.</p>",
         "administer_serial_publication_channel_claim": "Administer ownership to series/journal",
-        "administer_serial_publication_channel_claim_description": "<p>On this page, you can manage ownership for series/journals that belong to your institution.</p><p>Ownership is claimed by the institution, so contact the channel owner in case of incorrect registration.</p><button/><p>Ownership determines which institution receives the publication request, regardless of the registrant's affiliation.</p><p>The channel owner decides whether users from other institutions can register results with the series/journal.</p>",
+        "administer_serial_publication_channel_claim_description": "<p>On this page, you manage ownership of series/journals registered in the Channel Register.</p><button/><heading>Publishing Rights and Requests</heading><p>The channel owner determines who can publish metadata, files, and licences in the channels they own, for all result categories or just selected ones.</p><p>Channel ownership affects which institution receives publication requests.</p><p>For categories and series/journals with a channel owner, the requests go to the channel owner. For everything else, the requests go to the registrant's institution.</p>",
         "category_limitations": "Limitations for category",
         "category_limitations_helper_text": "<p>Channel owners can choose whether access restrictions should apply to all result categories or just selected ones.</p><heading>Publication Requests</heading><p>For result categories WITH access restrictions, publication requests are sent to the file curator at the channel owner.</p><p>For result categories WITHOUT access restrictions, publication requests are sent to the file curator at the institution where the registrant is logged in.</p>",
         "channel_claim": "Channel ownership",
@@ -694,7 +694,9 @@
       "employments_missing_data": "At least one affiliation does not have position or start date",
       "field_not_confirmed": "{{field}} is not confirmed",
       "has_invalid_format": "{{field}} has an invalid format",
+      "has_invalid_format_example": "{{field}}has invalid format. For example: {{example}}",
       "invalid_email": "Invalid email",
+      "invalid_format": "{{field}}must be written in the format {{format}}",
       "invalid_number_of_digits": "{{field}} must have {{digits}} digits",
       "invalid_symbol_in_name": "{{field}} cannot contain numbers or special characters",
       "is_required": "{{-field}} is mandatory",
@@ -709,7 +711,7 @@
     }
   },
   "file_upload_disabled_curator_can_upload_on_behalf": "Your institution does not allow the registrar to upload files for this category. As curator, you may add a file on behalf of the registrar.",
-  "file_upload_disabled_due_to_institution_policy": "Your institution does not allow you, as a registrar, to upload files for this category. Contact curator support if you wish to have a file on this result.",
+  "file_upload_disabled_due_to_institution_policy": "Your institution does not allow the registrar to upload files for this category. Contact curator support if you wish to have a file on this result.",
   "footer": {
     "about_nva": "About The Norwegian Research Information Repository (NVA)",
     "about_nva_text": "The Norwegian Research Information Repository (NVA) collects publications and other research results, and makes them openly available in a common national solution. This makes results from Norwegian research available in a single service.",
@@ -735,7 +737,7 @@
       "cc_by_nc_sa": "<p>The user may: copy, share, and modify the work for non-commercial purposes.</p><p>The user must: provide appropriate credit, indicate changes, and use the same licence for the new work.</p>",
       "cc_by_nd": "<p>The user may: copy and share the work for all types of use, including commercial.</p><p>The user may not: modify or adapt the work.</p><p>The user must: provide appropriate credit.</p>",
       "cc_by_sa": "<p>The user may: copy, share, and modify the work for all types of use, including commercial.</p><p>The user must: provide appropriate credit, indicate changes, and use the same licence for the new work.</p>",
-      "copyright_act": "<p>The user may: </p><ul><li>Read and link to the material, and cite from the material in accordance with fair practice and to the extent justified by the purpose.</li><li>Copy the material only for private use.</li></ul><p>The user must: provide appropriate credit.</p>",
+      "copyright_act": "<p>For this material, the following terms apply for professional use:</p><ul><li>You are allowed to read and link to the material.</li><li>You may cite from the material in accordance with fair practice and to the extent justified by the purpose.</li></ul><p>If you wish to use the material in another way, such as for re-publication, you must obtain consent directly from the copyright holder.</p>",
       "older_licenses": "If you need to register an older research result that was published with a previous licence version, click on \"Show all previous versions\" in the dropdown menu to find the correct licence"
     },
     "labels": {
@@ -747,7 +749,7 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "copyright_act": "Terms of Use under the Copyright Act",
+      "copyright_act": "General terms of use for immaterial rights",
       "older_licenses": "Older licences"
     },
     "links": {
@@ -959,6 +961,7 @@
       "thesis_embargo_curator_description": "Can view and edit files with embargo on theses."
     }
   },
+  "owner_institution": "",
   "privacy": {
     "about": {
       "heading": "About this privacy statement",
@@ -1353,7 +1356,7 @@
       "add_affiliation": "Add affiliation",
       "add_contributor": "Add contributor",
       "add_new_affiliation": "Add new affiliation",
-      "add_new_affiliation_helper_text": "<0>Only institutions that the research has been conducted in collaboration with should be added as an affiliation to the contributor.</0> <0>Add affiliation to the contributor by first searching for the institution and possibly the unit.</0> <0>If the contributor belongs to several different units under the same institution, you must add this as a new affiliation.</0>",
+      "add_new_affiliation_helper_text": "<0>Only institutions that the research has been conducted in collaboration with should be added as an affiliation to the contributor.</0> <0>Add affiliation to the contributor by first searching for the institution and possibly the unit.</0> <0>If the contributor belongs to several units under the same institution, you must add this as a new affiliation.</0>",
       "add_new_contributor": "Add new contributor",
       "add_unverified_contributor": "Add a non-identified contributor.",
       "affiliation_is_unidentified": "Affiliation is unidentified",
@@ -1532,8 +1535,6 @@
       "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
       "no_files_or_links_present_in_this_registration": "No file or link has been added for the registration",
       "open_file": "Open file",
-      "open_files_not_preferred_curator": "Your institution does not allow the registrar to upload open files for this category. As curator, you may add an open file on behalf of the registrar.",
-      "open_files_not_preferred_registrator": "Your institution does not allow you, as a registrar, to upload open files for this category. You may still upload internal files. Contact curator support if you wish to have an open file on this result.",
       "opted_out_of_rrs": "You have chosen not to follow the adopted <0>rights policy</0>",
       "public_note": "Public comment",
       "published": "Published",
@@ -1863,7 +1864,9 @@
         },
         "music_score_ensemble": "Ensemble",
         "music_score_ismn": "ISMN",
+        "music_score_ismn_helper_text": "Consists of 12 numbers. For example: 9790260000438",
         "music_score_isrc": "ISRC",
+        "music_score_isrc_helper_text": "Consists of 12 alphanumerical signs. Example: NO-6Q7-25-00047",
         "music_score_movements": "Movements",
         "musical_work_item": "Work",
         "musical_works": "Other performances",
@@ -2232,6 +2235,10 @@
     "unread_only": "Show unread only",
     "user_dialog": "User dialogue",
     "your_tasks": "Tasks you own: {{count}}"
+  },
+  "time_format": {
+    "hours": "HH:MM:SS",
+    "minutes": "MM:SS"
   },
   "unpublish_actions": {
     "confirm_unpublish": "I confirm that the information is correct, and that the result should be unpublished.",

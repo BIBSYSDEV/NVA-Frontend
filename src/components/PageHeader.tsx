@@ -1,5 +1,5 @@
 import { Box, TypographyProps } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { TruncatableTypography } from './TruncatableTypography';
 
 interface PageHeaderProps extends TypographyProps {
@@ -9,9 +9,9 @@ interface PageHeaderProps extends TypographyProps {
 
 export const PageHeader = ({ children, htmlTitle, ...props }: PageHeaderProps) => (
   <Box sx={{ width: '100%', marginBottom: '2rem' }}>
-    <Helmet>
+    <Head>
       <title>{htmlTitle ?? children}</title>
-    </Helmet>
+    </Head>
 
     <Box
       sx={{

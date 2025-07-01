@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { Link, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { ChannelClaimContext } from '../../context/ChannelClaimContext';
@@ -14,7 +14,7 @@ interface ChannelClaimTableProps {
 
 const helperTextModalComponents = {
   p: <Typography sx={{ mb: '1rem' }} />,
-  heading: <Typography variant="h2" />,
+  heading: <Typography variant="h2" gutterBottom />,
 };
 
 export const ChannelClaimTable = ({ channelClaimList, canEdit = false }: ChannelClaimTableProps) => {
@@ -31,13 +31,20 @@ export const ChannelClaimTable = ({ channelClaimList, canEdit = false }: Channel
               : t('editor.institution.channel_claims.serial_publication_in_channel_registry')}
           </TableCell>
           <TableCell>
-            {t('common.institution')}
+            {t('owner_institution')}
             <HelperTextModal
               buttonDataTestId={dataTestId.editor.channelOwnerInfoButton}
               modalTitle={t('editor.institution.channel_claims.institution_with_editorial_responsibility')}>
               <Trans
                 i18nKey="editor.institution.channel_claims.channel_owner_helper_text"
-                components={helperTextModalComponents}
+                components={{
+                  ...helperTextModalComponents,
+                  email: (
+                    <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer">
+                      kontakt@sikt.no
+                    </Link>
+                  ),
+                }}
               />
             </HelperTextModal>
           </TableCell>

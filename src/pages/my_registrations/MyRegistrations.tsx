@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router';
@@ -58,9 +58,9 @@ export const MyRegistrations = () => {
 
   return (
     <section>
-      <Helmet>
+      <Head>
         <title>{t('common.result_registrations')}</title>
-      </Helmet>
+      </Head>
 
       <Box sx={{ mx: { xs: '0.5rem', md: 0 } }}>
         <Typography variant="h1" sx={{ mb: '1rem' }}>

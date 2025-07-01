@@ -1,8 +1,8 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { Form, Formik, FormikProps } from 'formik';
 import { getLanguageByUri } from 'nva-language';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
@@ -125,9 +125,9 @@ export const CentralImportCandidateMerge = () => {
             gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
           }}>
-          <Helmet>
+          <Head>
             <title>{t('basic_data.central_import.merge_candidate.merge')}</title>
-          </Helmet>
+          </Head>
           <Typography variant="h1" gutterBottom>
             {t('basic_data.central_import.merge_candidate.merge')}
           </Typography>

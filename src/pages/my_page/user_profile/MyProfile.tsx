@@ -1,9 +1,9 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Grid, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { Head } from '@unhead/react';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
@@ -79,9 +79,9 @@ export const MyProfile = () => {
 
   return (
     <Box sx={{ bgcolor: 'secondary.main' }}>
-      <Helmet>
+      <Head>
         <title>{t('my_page.my_profile.heading.personalia')}</title>
-      </Helmet>
+      </Head>
       <Typography variant="h1" sx={{ margin: '1rem' }}>
         {t('my_page.my_profile.heading.personalia')}
       </Typography>

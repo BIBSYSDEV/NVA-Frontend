@@ -1,8 +1,8 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button, Divider, Typography } from '@mui/material';
+import { Head } from '@unhead/react';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { addEmployment, createCristinPerson } from '../../../api/cristinApi';
@@ -119,9 +119,9 @@ export const AddEmployeePage = () => {
 
   return (
     <BackgroundDiv>
-      <Helmet>
+      <Head>
         <title>{t('basic_data.add_employee.add_employee')}</title>
-      </Helmet>
+      </Head>
       <Typography variant="h1">{t('basic_data.add_employee.update_person_registry')}</Typography>
       <Formik
         initialValues={initialValues}

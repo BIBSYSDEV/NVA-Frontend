@@ -1,6 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, IconButton, Paper, Tooltip } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+import { Head } from '@unhead/react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
@@ -32,9 +32,9 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
   return (
     <Paper elevation={0}>
-      <Helmet>
+      <Head>
         <title>{project.title}</title>
-      </Helmet>
+      </Head>
       <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'project.main' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <ProjectIconHeader projectStatus={project.status} />

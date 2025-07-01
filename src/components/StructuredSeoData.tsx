@@ -1,5 +1,5 @@
+import { Head } from '@unhead/react';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Registration, RegistrationDate } from '../types/registration.types';
 import { useJournalSeoData } from '../utils/hooks/useJournalSeoData';
 
@@ -57,7 +57,7 @@ export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
   const citationDoi = getDoiCitationString(registration);
 
   return (
-    <Helmet>
+    <Head>
       {seoData && <script type="application/ld+json">{seoData}</script>}
 
       {registration.entityDescription?.mainTitle && (
@@ -72,6 +72,6 @@ export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
       {journalSeoData.journalName && <meta name="citation_journal_title" content={journalSeoData.journalName} />}
       {journalSeoData.printIssn && <meta name="citation_issn" content={journalSeoData.printIssn} />}
       {journalSeoData.onlineIssn && <meta name="citation_issn" content={journalSeoData.onlineIssn} />}
-    </Helmet>
+    </Head>
   );
 };
