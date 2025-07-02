@@ -30,7 +30,7 @@ const getLanguageTagValue = (language: string) => {
   return 'no';
 };
 
-if (document) {
+if (typeof document !== 'undefined') {
   document.documentElement.lang = getLanguageTagValue(i18n.language);
   i18n.on('languageChanged', (newLanguage) => {
     document.documentElement.lang = getLanguageTagValue(newLanguage);
