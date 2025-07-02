@@ -71,6 +71,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
       {registration.status === RegistrationStatus.Published && <StructuredSeoData registration={registration} />}
 
       <DocumentHeadTitle>{mainTitle}</DocumentHeadTitle>
+
       <Box sx={visuallyHidden}>
         <DeletedPublicationInformation registration={registration} />
       </Box>
