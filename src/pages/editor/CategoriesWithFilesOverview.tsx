@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CategorySelector } from '../../components/CategorySelector';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { RootState } from '../../redux/store';
 import { allPublicationInstanceTypes } from '../../types/publicationFieldNames';
 
@@ -18,7 +18,7 @@ export const CategoriesWithFilesOverview = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('editor.categories_with_files')}</DocumentHeadTitle>
+      <HeadTitle>{t('editor.categories_with_files')}</HeadTitle>
       <Typography variant="h1" gutterBottom>
         {t('editor.categories_with_files')}
       </Typography>

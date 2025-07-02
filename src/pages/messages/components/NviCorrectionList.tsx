@@ -5,7 +5,7 @@ import { useLocation } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { FetchResultsParams, ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
-import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { BookType } from '../../../types/publicationFieldNames';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
@@ -106,7 +106,7 @@ export const NviCorrectionList = () => {
 
   return (
     <section>
-      <DocumentHeadTitle>{t('tasks.correction_list')}</DocumentHeadTitle>
+      <HeadTitle>{t('tasks.correction_list')}</HeadTitle>
 
       {listConfig && (
         <>

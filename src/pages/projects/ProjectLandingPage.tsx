@@ -3,7 +3,7 @@ import { Box, IconButton, Paper, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
@@ -32,7 +32,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
   return (
     <Paper elevation={0}>
-      <DocumentHeadTitle>{project.title}</DocumentHeadTitle>
+      <HeadTitle>{project.title}</HeadTitle>
       <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'project.main' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <ProjectIconHeader projectStatus={project.status} />

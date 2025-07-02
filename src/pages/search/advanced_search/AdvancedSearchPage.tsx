@@ -15,7 +15,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
-import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { SearchForm } from '../../../components/SearchForm';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';
@@ -76,7 +76,7 @@ export const AdvancedSearchPage = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('search.advanced_search.advanced_search')}</DocumentHeadTitle>
+      <HeadTitle>{t('search.advanced_search.advanced_search')}</HeadTitle>
       <Grid container rowGap={2}>
         <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
           <Typography variant="h1">{t('search.advanced_search.advanced_search')}</Typography>

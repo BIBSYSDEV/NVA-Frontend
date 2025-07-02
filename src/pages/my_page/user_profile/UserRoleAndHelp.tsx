@@ -3,7 +3,7 @@ import { Box, Divider, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
-import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -20,7 +20,7 @@ export const UserRoleAndHelp = () => {
 
   return (
     <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <DocumentHeadTitle>{t('my_page.my_profile.user_role_and_help.user_role_and_help')}</DocumentHeadTitle>
+      <HeadTitle>{t('my_page.my_profile.user_role_and_help.user_role_and_help')}</HeadTitle>
       <Typography variant="h1">{t('my_page.my_profile.user_role_and_help.user_role_and_help')}</Typography>
       {nvaUser?.viewingScope && hasCuratorRole(user) && (
         <div>

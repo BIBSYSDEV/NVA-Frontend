@@ -1,7 +1,7 @@
 import { styled, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 
 export const StyledReportIframe = styled('iframe')({
   border: 'none',
@@ -15,7 +15,7 @@ export const NviReports = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('common.nvi')}</DocumentHeadTitle>
+      <HeadTitle>{t('common.nvi')}</HeadTitle>
       <Typography variant="h1" sx={visuallyHidden}>
         {t('common.nvi')}
       </Typography>

@@ -6,8 +6,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { App } from './App';
 import { QueryProvider } from './QueryProvider';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
-import { DocumentHeadTitleProvider } from './components/DocumentHeadTitle';
 import { BasicErrorBoundary } from './components/ErrorBoundary';
+import { HeadTitleProvider } from './components/HeadTitle';
 import { store } from './redux/store';
 import { mainTheme } from './themes/mainTheme';
 import i18n from './translations/i18n';
@@ -36,11 +36,11 @@ if (container) {
           <ReduxProvider store={store}>
             <ThemeProvider theme={mainTheme}>
               <CssBaseline />
-              <DocumentHeadTitleProvider>
+              <HeadTitleProvider>
                 <QueryProvider>
                   <App />
                 </QueryProvider>
-              </DocumentHeadTitleProvider>
+              </HeadTitleProvider>
             </ThemeProvider>
           </ReduxProvider>
         </I18nextProvider>

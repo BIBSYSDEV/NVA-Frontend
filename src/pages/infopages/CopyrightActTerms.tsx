@@ -1,7 +1,7 @@
 import { Divider, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 
@@ -22,7 +22,7 @@ const CopyrightActTerms = () => {
 
   return (
     <BackgroundDiv sx={{ maxWidth: '45rem', my: '2rem' }}>
-      <DocumentHeadTitle>{t('licenses.labels.copyright_act')}</DocumentHeadTitle>
+      <HeadTitle>{t('licenses.labels.copyright_act')}</HeadTitle>
       <Trans
         i18nKey="licenses.terms_of_use_under_the_copyright_act"
         components={{

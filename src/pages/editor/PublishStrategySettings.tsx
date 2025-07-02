@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
@@ -55,7 +55,7 @@ export const PublishStrategySettings = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('editor.publish_strategy.publish_strategy')}</DocumentHeadTitle>
+      <HeadTitle>{t('editor.publish_strategy.publish_strategy')}</HeadTitle>
       <Typography variant="h1" gutterBottom id="publish-strategy-label">
         {t('editor.publish_strategy.publish_strategy')}
       </Typography>

@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import clinicalTreatmentStudiesThumbnail from '../../resources/images/clinical-treatment-studies-thumbnail.png';
 import internationalCooperationThumbnail from '../../resources/images/international-cooperation-report-thumbnail.png';
 import nviReportThumbnail from '../../resources/images/nvi-report-thumbnail.png';
@@ -15,7 +15,7 @@ const ReportsPage = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('search.reports.reports')}</DocumentHeadTitle>
+      <HeadTitle>{t('search.reports.reports')}</HeadTitle>
       <Typography id={headingId} variant="h1" sx={visuallyHidden}>
         {t('search.reports.reports')}
       </Typography>

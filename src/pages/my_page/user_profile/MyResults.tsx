@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchPromotedPublicationsById } from '../../../api/preferencesApi';
 import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
-import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { RegistrationList } from '../../../components/RegistrationList';
@@ -50,7 +50,7 @@ export const MyResults = () => {
 
   return (
     <div>
-      <DocumentHeadTitle>{t('my_page.my_profile.my_research_results')}</DocumentHeadTitle>
+      <HeadTitle>{t('my_page.my_profile.my_research_results')}</HeadTitle>
       <Typography variant="h1" gutterBottom>
         {t('my_page.my_profile.my_research_results')}
       </Typography>

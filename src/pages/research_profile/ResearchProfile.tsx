@@ -12,7 +12,7 @@ import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam } from '../../api/searchApi';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -166,7 +166,7 @@ const ResearchProfile = () => {
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
       </Box>
       <BackgroundDiv>
-        <DocumentHeadTitle>{fullName}</DocumentHeadTitle>
+        <HeadTitle>{fullName}</HeadTitle>
 
         {activeAffiliations.length > 0 ? (
           <Box

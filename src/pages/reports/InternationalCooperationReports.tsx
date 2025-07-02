@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { StyledReportIframe } from './NviReports';
 
 export const InternationalCooperationReports = () => {
@@ -9,7 +9,7 @@ export const InternationalCooperationReports = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('search.reports.international_cooperation')}</DocumentHeadTitle>
+      <HeadTitle>{t('search.reports.international_cooperation')}</HeadTitle>
       <Typography variant="h1" sx={visuallyHidden}>
         {t('search.reports.international_cooperation')}
       </Typography>

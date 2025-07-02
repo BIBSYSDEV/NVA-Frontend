@@ -1,14 +1,14 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface DocumentHeadTitleContextType {
+interface HeadTitleContextType {
   setPageTitle: (pageTitle: string) => void;
 }
-const DocumentHeadTitleContext = createContext<DocumentHeadTitleContextType>({
+const HeadTitleContext = createContext<HeadTitleContextType>({
   setPageTitle: () => {},
 });
 
-export const DocumentHeadTitleProvider = ({ children }: { children: ReactNode }) => {
+export const HeadTitleProvider = ({ children }: { children: ReactNode }) => {
   const { t } = useTranslation();
   const [pageTitle, setPageTitle] = useState('');
 
@@ -16,15 +16,15 @@ export const DocumentHeadTitleProvider = ({ children }: { children: ReactNode })
   const fullTitle = pageTitle ? `${pageTitle} - ${appTitle}` : appTitle;
 
   return (
-    <DocumentHeadTitleContext.Provider value={{ setPageTitle }}>
+    <HeadTitleContext.Provider value={{ setPageTitle }}>
       <title>{fullTitle}</title>
       {children}
-    </DocumentHeadTitleContext.Provider>
+    </HeadTitleContext.Provider>
   );
 };
 
-const useDocumentHeadTitle = (pageTitle = '') => {
-  const { setPageTitle } = useContext(DocumentHeadTitleContext);
+const useHeadTitle = (pageTitle = '') => {
+  const { setPageTitle } = useContext(HeadTitleContext);
 
   useEffect(() => {
     setPageTitle(pageTitle);
@@ -36,11 +36,11 @@ const useDocumentHeadTitle = (pageTitle = '') => {
   return null;
 };
 
-interface DocumentHeadTitleProps {
+interface HeadTitleProps {
   children?: string;
 }
 
-export const DocumentHeadTitle = ({ children }: DocumentHeadTitleProps) => {
-  useDocumentHeadTitle(children);
+export const HeadTitle = ({ children }: HeadTitleProps) => {
+  useHeadTitle(children);
   return null;
 };

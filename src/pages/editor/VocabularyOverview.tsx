@@ -4,7 +4,7 @@ import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchVocabulary } from '../../api/customerInstitutionsApi';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { RootState } from '../../redux/store';
 import {
   defaultHrcsActivity,
@@ -32,7 +32,7 @@ export const VocabularyOverview = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('editor.vocabulary')}</DocumentHeadTitle>
+      <HeadTitle>{t('editor.vocabulary')}</HeadTitle>
       <Typography gutterBottom variant="h1">
         {t('editor.vocabulary')}
       </Typography>

@@ -66,6 +66,7 @@ export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
   const citationPublicationDate =
     registration.entityDescription?.publicationDate &&
     getPublicationDateCitationString(registration.entityDescription.publicationDate);
+
   const citationDoi = getDoiCitationString(registration);
 
   return (

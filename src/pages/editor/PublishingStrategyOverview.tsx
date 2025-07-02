@@ -3,7 +3,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, Divider, Link, styled, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RootState } from '../../redux/store';
 import { CustomerRrsType } from '../../types/customerInstitution.types';
@@ -40,7 +40,7 @@ export const PublishingStrategyOverview = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('editor.publish_strategy.publish_strategy')}</DocumentHeadTitle>
+      <HeadTitle>{t('editor.publish_strategy.publish_strategy')}</HeadTitle>
 
       {!customer ? (
         <PageSpinner />

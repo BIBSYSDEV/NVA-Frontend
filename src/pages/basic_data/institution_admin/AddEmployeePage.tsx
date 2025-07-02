@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addEmployment, createCristinPerson } from '../../../api/cristinApi';
 import { createUser } from '../../../api/roleApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
-import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
@@ -119,7 +119,7 @@ export const AddEmployeePage = () => {
 
   return (
     <BackgroundDiv>
-      <DocumentHeadTitle>{t('basic_data.add_employee.add_employee')}</DocumentHeadTitle>
+      <HeadTitle>{t('basic_data.add_employee.add_employee')}</HeadTitle>
       <Typography variant="h1">{t('basic_data.add_employee.add_employee')}</Typography>
       <Formik
         initialValues={initialValues}

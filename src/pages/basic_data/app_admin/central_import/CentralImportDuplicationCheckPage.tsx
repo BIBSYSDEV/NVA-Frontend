@@ -8,7 +8,7 @@ import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration
 import { fetchImportCandidate, updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { fetchImportCandidates, FetchImportCandidatesParams } from '../../../../api/searchApi';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
-import { DocumentHeadTitle } from '../../../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../../../components/HeadTitle';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
@@ -102,7 +102,7 @@ export const CentralImportDuplicationCheckPage = () => {
         gridTemplateAreas: { xs: '"actions" "main"', sm: '"main actions"' },
         gap: '1rem',
       }}>
-      <DocumentHeadTitle>{t('basic_data.central_import.central_import')}</DocumentHeadTitle>
+      <HeadTitle>{t('basic_data.central_import.central_import')}</HeadTitle>
       <BackgroundDiv>
         {importCandidateSearchQuery.isPending || importCandidateQuery.isPending ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />

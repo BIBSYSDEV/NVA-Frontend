@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchNviPeriods } from '../../../api/scientificIndexApi';
-import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { NviPeriod } from '../../../types/nvi.types';
@@ -26,7 +26,7 @@ export const NviPeriodsPage = () => {
 
   return (
     <Box component="section">
-      <DocumentHeadTitle>{t('basic_data.nvi.reporting_periods')}</DocumentHeadTitle>
+      <HeadTitle>{t('basic_data.nvi.reporting_periods')}</HeadTitle>
       <Typography variant="h1" gutterBottom>
         {t('basic_data.nvi.reporting_periods')}
       </Typography>

@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ImportCandidatesSearchParam } from '../../../../api/searchApi';
-import { DocumentHeadTitle } from '../../../../components/DocumentHeadTitle';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
+import { HeadTitle } from '../../../../components/HeadTitle';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { SearchForm } from '../../../../components/SearchForm';
@@ -41,7 +41,7 @@ export const CentralImportPage = () => {
 
   return (
     <section>
-      <DocumentHeadTitle>{t('basic_data.central_import.central_import')}</DocumentHeadTitle>
+      <HeadTitle>{t('basic_data.central_import.central_import')}</HeadTitle>
       <Typography component="h1" sx={visuallyHidden}>
         {t('basic_data.central_import.central_import')}
       </Typography>

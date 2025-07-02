@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate, updateImportCandidateStatus, updateRegistration } from '../../../../api/registrationApi';
-import { DocumentHeadTitle } from '../../../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../../../components/HeadTitle';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { AssociatedLink } from '../../../../types/associatedArtifact.types';
@@ -125,7 +125,7 @@ export const CentralImportCandidateMerge = () => {
             gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
           }}>
-          <DocumentHeadTitle>{t('basic_data.central_import.central_import')}</DocumentHeadTitle>
+          <HeadTitle>{t('basic_data.central_import.central_import')}</HeadTitle>
           <Typography variant="h1" gutterBottom>
             {t('basic_data.central_import.merge_candidate.merge')}
           </Typography>

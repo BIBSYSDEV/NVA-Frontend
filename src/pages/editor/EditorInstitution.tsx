@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
 import { fetchResource } from '../../api/commonApi';
 import { fetchUsersByCustomer } from '../../api/roleApi';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
@@ -62,7 +62,7 @@ export const EditorInstitution = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('editor.institution.institution_profile')}</DocumentHeadTitle>
+      <HeadTitle>{t('editor.institution.institution_profile')}</HeadTitle>
       <Typography variant="h1" gutterBottom>
         {t('editor.institution.institution_profile')}
       </Typography>

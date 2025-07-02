@@ -18,8 +18,8 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchEmployees } from '../../../../api/searchApi';
-import { DocumentHeadTitle } from '../../../../components/DocumentHeadTitle';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
+import { HeadTitle } from '../../../../components/HeadTitle';
 import { ListPagination } from '../../../../components/ListPagination';
 import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
@@ -57,7 +57,7 @@ export const PersonRegisterPage = () => {
 
   return (
     <BackgroundDiv>
-      <DocumentHeadTitle>{t('basic_data.person_register.person_register')}</DocumentHeadTitle>
+      <HeadTitle>{t('basic_data.person_register.person_register')}</HeadTitle>
       <Typography component="h1" sx={visuallyHidden}>
         {t('basic_data.person_register.person_register')}
       </Typography>

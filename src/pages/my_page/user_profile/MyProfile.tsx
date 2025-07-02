@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
-import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
@@ -79,7 +79,7 @@ export const MyProfile = () => {
 
   return (
     <Box sx={{ bgcolor: 'secondary.main' }}>
-      <DocumentHeadTitle>{t('my_page.my_profile.heading.personalia')}</DocumentHeadTitle>
+      <HeadTitle>{t('my_page.my_profile.heading.personalia')}</HeadTitle>
       <Typography variant="h1" sx={{ margin: '1rem' }}>
         {t('my_page.my_profile.heading.personalia')}
       </Typography>

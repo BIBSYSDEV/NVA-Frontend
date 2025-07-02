@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
 import { fetchResults, FetchResultsParams } from '../../api/searchApi';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { RegistrationIconHeader } from '../../components/RegistrationIconHeader';
@@ -70,7 +70,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
       {registration.status === RegistrationStatus.Published && <StructuredSeoData registration={registration} />}
 
-      <DocumentHeadTitle>{mainTitle}</DocumentHeadTitle>
+      <HeadTitle>{mainTitle}</HeadTitle>
 
       <Box sx={visuallyHidden}>
         <DeletedPublicationInformation registration={registration} />

@@ -15,7 +15,7 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
-import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { Keywords, KeywordsOld } from '../../../types/keywords.types';
@@ -101,7 +101,7 @@ export const MyFieldAndBackground = () => {
 
   return (
     <Box sx={{ bgcolor: 'secondary.main' }}>
-      <DocumentHeadTitle>{t('my_page.my_profile.field_and_background.field_and_background')}</DocumentHeadTitle>
+      <HeadTitle>{t('my_page.my_profile.field_and_background.field_and_background')}</HeadTitle>
 
       <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
         {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (

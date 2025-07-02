@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router';
 import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 import { ChannelClaimParams } from '../../api/searchApi';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RootState } from '../../redux/store';
 import { filterChannelClaims } from '../../utils/customer-helpers';
@@ -28,7 +28,7 @@ export const SerialPublicationClaimsOverview = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('editor.institution.channel_claims.serial_publication_claims_overview')}</DocumentHeadTitle>
+      <HeadTitle>{t('editor.institution.channel_claims.serial_publication_claims_overview')}</HeadTitle>
 
       <Typography variant="h1"> {t('editor.institution.channel_claims.serial_publication_claims_overview')}</Typography>
       <ChannelClaimFilter />

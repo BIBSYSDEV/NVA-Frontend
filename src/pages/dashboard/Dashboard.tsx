@@ -3,7 +3,7 @@ import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AboutContent } from '../infopages/AboutContent';
@@ -33,7 +33,7 @@ const Dashboard = () => {
         justifyItems: 'center',
         width: '100%',
       }}>
-      <DocumentHeadTitle>{t('common.start_page')}</DocumentHeadTitle>
+      <HeadTitle>{t('common.start_page')}</HeadTitle>
 
       {showBanner && (
         <Box sx={{ bgcolor: 'secondary.main', p: '1rem 0.5rem', width: '100%' }}>

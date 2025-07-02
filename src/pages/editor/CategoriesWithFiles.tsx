@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { CategorySelector } from '../../components/CategorySelector';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
@@ -19,7 +19,7 @@ export const CategoriesWithFiles = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('editor.categories_with_files')}</DocumentHeadTitle>
+      <HeadTitle>{t('editor.categories_with_files')}</HeadTitle>
       <Typography variant="h1" gutterBottom>
         {t('editor.categories_with_files')}
       </Typography>

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { fetchResource } from '../../../api/commonApi';
 import { fetchUsersByCustomer } from '../../../api/roleApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
-import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
 import { RootState } from '../../../redux/store';
@@ -61,7 +61,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
 
   return (
     <>
-      <DocumentHeadTitle>{heading}</DocumentHeadTitle>
+      <HeadTitle>{heading}</HeadTitle>
       <Typography variant="h1" sx={{ mb: '1rem' }}>
         {heading}
       </Typography>

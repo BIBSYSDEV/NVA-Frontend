@@ -10,7 +10,7 @@ import {
   ProjectsSearchParams,
   searchForProjects,
 } from '../../../api/cristinApi';
-import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ProjectSortSelector } from '../../../components/ProjectSortSelector';
@@ -61,7 +61,7 @@ export const MyProjectRegistrations = () => {
 
   return (
     <div>
-      <DocumentHeadTitle>{t('my_page.project_registrations')}</DocumentHeadTitle>
+      <HeadTitle>{t('my_page.project_registrations')}</HeadTitle>
       <Typography variant="h1" gutterBottom>
         {t('my_page.project_registrations')}
       </Typography>

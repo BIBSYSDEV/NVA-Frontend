@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router';
 import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 import { ChannelClaimParams } from '../../api/searchApi';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { RootState } from '../../redux/store';
@@ -29,7 +29,7 @@ export const PublisherClaimsOverview = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('editor.institution.channel_claims.publisher_claims_overview')}</DocumentHeadTitle>
+      <HeadTitle>{t('editor.institution.channel_claims.publisher_claims_overview')}</HeadTitle>
 
       <Typography variant="h1">{t('editor.institution.channel_claims.publisher_claims_overview')}</Typography>
       <ChannelClaimFilter />

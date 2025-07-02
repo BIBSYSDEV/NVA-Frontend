@@ -5,7 +5,7 @@ import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
@@ -29,7 +29,7 @@ export const InstitutionSupport = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('editor.institution.institution_support')}</DocumentHeadTitle>
+      <HeadTitle>{t('editor.institution.institution_support')}</HeadTitle>
 
       {!customer ? (
         <PageSpinner />

@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Link as MuiLink, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
+import { HeadTitle } from '../../components/HeadTitle';
 import { RootState } from '../../redux/store';
 
 export const EditorDoi = () => {
@@ -10,7 +10,7 @@ export const EditorDoi = () => {
 
   return (
     <>
-      <DocumentHeadTitle>{t('common.doi_long')}</DocumentHeadTitle>
+      <HeadTitle>{t('common.doi_long')}</HeadTitle>
       <Typography id="doi-label" variant="h1" gutterBottom>
         {t('common.doi_long')}
       </Typography>

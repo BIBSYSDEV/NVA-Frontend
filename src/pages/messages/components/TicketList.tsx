@@ -10,8 +10,8 @@ import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsi
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { DialoguesWithoutCuratorButton } from '../../../components/DialoguesWithoutCuratorButton';
-import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
@@ -100,7 +100,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
 
   return (
     <section>
-      <DocumentHeadTitle>{title}</DocumentHeadTitle>
+      <HeadTitle>{title}</HeadTitle>
       <Typography component="h1" sx={visuallyHidden}>
         {title}
       </Typography>
