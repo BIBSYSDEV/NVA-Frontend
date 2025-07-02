@@ -21,13 +21,6 @@ import { UrlPathTemplate } from './utils/urlPaths';
 
 const MaintenanceModeApp = lazy(() => import('./MaintenanceModeApp'));
 
-const getLanguageTagValue = (language: string) => {
-  if (language === 'eng') {
-    return 'en';
-  }
-  return 'no';
-};
-
 if (
   (window.location.pathname === UrlPathTemplate.MyPagePersonalia ||
     window.location.pathname === UrlPathTemplate.MyPageResearchProfile) &&
