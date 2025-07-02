@@ -33,10 +33,10 @@ export const VocabularyOverview = () => {
   return (
     <>
       <DocumentHeadTitle>{t('editor.vocabulary')}</DocumentHeadTitle>
-
-      <Typography gutterBottom fontWeight="600">
-        {t('editor.vocabulary_controlled')}
+      <Typography gutterBottom variant="h1">
+        {t('editor.vocabulary')}
       </Typography>
+
       <Typography>{t('editor.vocabulary_description')}</Typography>
 
       {vocabularyQuery.isPending ? (

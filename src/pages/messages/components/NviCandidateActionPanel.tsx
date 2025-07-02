@@ -7,7 +7,8 @@ import { useFetchRegistrationTickets } from '../../../api/hooks/useFetchRegistra
 import { NviCandidate } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { LogPanel } from '../../public_registration/LogPanel';
+import { userHasAccessRight } from '../../../utils/registration-helpers';
+import { LogPanel } from '../../public_registration/log/LogPanel';
 import { NviDialoguePanel } from './NviDialoguePanel';
 
 interface NviCandidateActionPanelProps {
@@ -22,15 +23,17 @@ enum TabValue {
 
 const StyledTabPanel = styled(TabPanel)({
   padding: 0,
+  paddingBottom: '1rem',
 });
 
 export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: NviCandidateActionPanelProps) => {
   const { t } = useTranslation();
   const [tabValue, setTabValue] = useState(TabValue.Dialogue);
 
-  const ticketsQuery = useFetchRegistrationTickets(nviCandidate.publicationId);
   const registrationQuery = useFetchRegistration(getIdentifierFromId(nviCandidate.publicationId));
+  const canEditRegistration = userHasAccessRight(registrationQuery.data, 'partial-update');
 
+  const ticketsQuery = useFetchRegistrationTickets(nviCandidate.publicationId, { enabled: canEditRegistration });
   const tickets = ticketsQuery.data?.tickets ?? [];
 
   return (
@@ -49,21 +52,25 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
           onChange={(_, newValue: TabValue) => setTabValue(newValue)}
           sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', px: '0.5rem' }}
           textColor="inherit"
-          TabIndicatorProps={{ style: { backgroundColor: 'white', height: '0.4rem' } }}>
+          slotProps={{ indicator: { sx: { backgroundColor: 'white', height: '0.4rem' } } }}>
           <Tab
             label={t('common.dialogue')}
             value={TabValue.Dialogue}
             data-testid={dataTestId.tasksPage.nvi.dialogTabButton}
           />
-          <Tab label={t('common.log')} value={TabValue.Log} data-testid={dataTestId.tasksPage.nvi.logTabButton} />
+          {canEditRegistration && (
+            <Tab label={t('common.log')} value={TabValue.Log} data-testid={dataTestId.tasksPage.nvi.logTabButton} />
+          )}
         </TabList>
 
         <StyledTabPanel value={TabValue.Dialogue}>
           <NviDialoguePanel nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
         </StyledTabPanel>
-        <StyledTabPanel value={TabValue.Log}>
-          {registrationQuery.data && <LogPanel tickets={tickets} registration={registrationQuery.data} />}
-        </StyledTabPanel>
+        {canEditRegistration && (
+          <StyledTabPanel value={TabValue.Log}>
+            {registrationQuery.data && <LogPanel tickets={tickets} registration={registrationQuery.data} />}
+          </StyledTabPanel>
+        )}
       </TabContext>
     </Paper>
   );

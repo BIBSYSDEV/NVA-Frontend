@@ -43,7 +43,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
   const organizationQuery = useQuery({
     queryKey: ['organization', organizationId],
     enabled: !!organizationId,
-    queryFn: organizationId ? () => fetchResource<Organization>(organizationId) : undefined,
+    queryFn: () => (organizationId ? fetchResource<Organization>(organizationId) : null),
     staleTime: Infinity,
     gcTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },
@@ -52,7 +52,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId],
     enabled: !!customerId,
-    queryFn: () => (customerId ? fetchUsersByCustomer(customerId, rolesWithAreaOfResponsibility) : undefined),
+    queryFn: () => (customerId ? fetchUsersByCustomer(customerId, rolesWithAreaOfResponsibility) : null),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 

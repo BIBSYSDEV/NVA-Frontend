@@ -1,6 +1,7 @@
 declare global {
   interface Window {
     _mtm?: Array<Record<string, unknown>>;
+    _paq?: Array<unknown>;
   }
 }
 
@@ -10,6 +11,9 @@ export const initializeMatomo = (matomoContainerUrl: string) => {
     'mtm.startTime': new Date().getTime(),
     event: 'mtm.Start',
   });
+
+  const _paq = (window._paq = window._paq || []);
+  _paq.push(['enableJSErrorTracking']);
 
   const documentRef = document;
   const newScriptElement = documentRef.createElement('script');

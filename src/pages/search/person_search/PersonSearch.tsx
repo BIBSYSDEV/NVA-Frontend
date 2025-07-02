@@ -1,4 +1,4 @@
-import { Box, List, Typography } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { ListSkeleton } from '../../../components/ListSkeleton';
@@ -49,26 +49,22 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
   );
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <CristinSearchPagination
+      totalCount={totalHits}
+      page={page}
+      rowsPerPage={rowsPerPage}
+      sortingComponent={sortingComponent}>
       {personQuery.isFetching ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.length > 0 ? (
-        <div>
-          <CristinSearchPagination
-            totalCount={totalHits}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            sortingComponent={sortingComponent}>
-            <List>
-              {searchResults.map((person) => (
-                <PersonListItem key={person.id} person={person} />
-              ))}
-            </List>
-          </CristinSearchPagination>
-        </div>
+        <List>
+          {searchResults.map((person) => (
+            <PersonListItem key={person.id} person={person} />
+          ))}
+        </List>
       ) : (
-        <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('common.no_hits')}</Typography>
+        <Typography sx={{ mx: { xs: '0.5rem', md: 0 }, mt: '1rem' }}>{t('search.no_persons')}</Typography>
       )}
-    </Box>
+    </CristinSearchPagination>
   );
 };

@@ -12,6 +12,7 @@ const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
+const CopyrightActTerms = lazy(() => import('./pages/infopages/CopyrightActTerms'));
 const CreateProject = lazy(() => import('./pages/project/project_wizard/CreateProject'));
 const EditProject = lazy(() => import('./pages/project/project_wizard/EditProject'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
@@ -20,7 +21,7 @@ const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
 const PublicResearchProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
 const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
 const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
-const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
+const ProjectPage = lazy(() => import('./pages/projects/ProjectPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
 
@@ -46,10 +47,11 @@ export const AppRoutes = () => {
           <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<Dashboard />} />
         </Route>
 
+        <Route path={UrlPathTemplate.CopyrightAct} element={<CopyrightActTerms />} />
         <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
         <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
         <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
-        <Route path={UrlPathTemplate.Projects} element={<ProjectsPage />} />
+        <Route path={UrlPathTemplate.ProjectPage} element={<ProjectPage />} />
         <Route path={UrlPathTemplate.Login} element={<LoginPage />} />
         <Route path={UrlPathTemplate.Logout} element={<Logout />} />
         <Route path={UrlPathTemplate.SignedOut} element={<SignedOutPage />} />

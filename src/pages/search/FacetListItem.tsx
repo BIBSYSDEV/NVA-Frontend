@@ -10,26 +10,16 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
 }));
 
 interface FacetListItemProps {
-  identifier: string;
   dataTestId: string;
-  isLoading: boolean;
   isSelected: boolean;
   onClickFacet: () => void;
   label: string;
   count: number;
 }
 
-export const FacetListItem = ({
-  identifier,
-  dataTestId,
-  isLoading,
-  isSelected,
-  label,
-  count,
-  onClickFacet,
-}: FacetListItemProps) => (
-  <ListItem disablePadding key={identifier} data-testid={dataTestId}>
-    <StyledListItemButton disabled={isLoading} dense selected={isSelected} onClick={onClickFacet}>
+export const FacetListItem = ({ dataTestId, isSelected, label, count, onClickFacet }: FacetListItemProps) => (
+  <ListItem disablePadding data-testid={dataTestId}>
+    <StyledListItemButton dense selected={isSelected} onClick={onClickFacet}>
       <Typography component="span" sx={{ wordBreak: 'break-word' }}>
         {label}
       </Typography>

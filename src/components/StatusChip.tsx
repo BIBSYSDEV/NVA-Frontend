@@ -2,16 +2,16 @@ import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, Typography } from '@mui/material';
-import { StandardCSSProperties } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import { NviCandidateStatus } from '../types/nvi.types';
-import { Ticket } from '../types/publication_types/ticket.types';
+import { Ticket, TicketTypeColor } from '../types/publication_types/ticket.types';
 
 const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
+  FilesApprovalThesis: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
-};
+} satisfies TicketTypeColor;
 
 interface TicketStatusChipProps {
   ticket: Pick<Ticket, 'status' | 'type'>;
@@ -52,21 +52,23 @@ export const NviStatusChip = ({ status }: NviStatusChip) => {
 interface StatusChipProps {
   text: string;
   icon: 'check' | 'block' | 'hourglass';
-  bgcolor?: StandardCSSProperties['backgroundColor'];
+  bgcolor?: string;
+  paddingY?: string | number;
 }
 
-export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon }: StatusChipProps) => {
+export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon, paddingY }: StatusChipProps) => {
   return (
     <Box
       sx={{
         width: 'fit-content',
         height: 'fit-content',
-        bgcolor,
         display: 'flex',
         gap: '0.2rem',
         alignItems: 'center',
         p: '0.25rem 0.75rem 0.25rem 0.5rem',
         borderRadius: '1rem',
+        bgcolor,
+        paddingY,
       }}>
       {icon === 'check' ? (
         <CheckIcon sx={{ fontSize: '1rem' }} />

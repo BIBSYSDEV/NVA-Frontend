@@ -11,10 +11,10 @@ import {
   ProjectSearchOrder,
   ProjectSearchParameter,
   ProjectsSearchParams,
-  searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
+import { useSearchForPerson } from '../../api/hooks/useSearchForPerson';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -64,20 +64,19 @@ const HomePage = () => {
     keepDataWhileLoading: true,
   });
 
-  const personSearchTerm = params.get(PersonSearchParameter.Name) ?? '.';
   const personQueryParams: PersonSearchParams = {
-    name: personSearchTerm,
+    name: params.get(PersonSearchParameter.Name),
     orderBy: params.get(PersonSearchParameter.OrderBy),
     organization: params.get(PersonSearchParameter.Organization),
     sector: params.get(PersonSearchParameter.Sector),
     sort: params.get(PersonSearchParameter.Sort),
+    results: rowsPerPage,
+    page,
   };
-  const personQuery = useQuery({
+  const personQuery = useSearchForPerson({
     enabled: personIsSeleced,
-    queryKey: ['person', rowsPerPage, page, personQueryParams],
-    queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
-    meta: { errorMessage: t('feedback.error.search') },
     placeholderData: keepPreviousData,
+    ...personQueryParams,
   });
 
   const projectSearchTerm = params.get(ProjectSearchParameter.Query);
@@ -127,13 +126,9 @@ const HomePage = () => {
             {resultIsSelected ? (
               <RegistrationFacetsFilter registrationQuery={registrationQuery} />
             ) : personIsSeleced ? (
-              personQuery.data?.aggregations ? (
-                <PersonFacetsFilter personQuery={personQuery} />
-              ) : null
+              <PersonFacetsFilter personQuery={personQuery} />
             ) : projectIsSelected ? (
-              projectQuery.data?.aggregations ? (
-                <ProjectFacetsFilter projectQuery={projectQuery} />
-              ) : null
+              <ProjectFacetsFilter projectQuery={projectQuery} />
             ) : null}
           </Box>
         </NavigationListAccordion>
@@ -143,7 +138,7 @@ const HomePage = () => {
           startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
           accordionPath={UrlPathTemplate.Reports}
           dataTestId={dataTestId.startPage.reportsAccordion}>
-          <NavigationList>
+          <NavigationList aria-label={t('search.reports.reports')}>
             <SelectableButton
               data-testid={dataTestId.startPage.reportsOverviewButton}
               isSelected={currentPath === UrlPathTemplate.Reports}

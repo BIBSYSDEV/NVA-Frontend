@@ -1,15 +1,19 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Autocomplete, Box, Button, TextField } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchOrganization } from '../../../../api/cristinApi';
+import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
 import { OrganizationRenderOption } from '../../../../components/OrganizationRenderOption';
 import { RootState } from '../../../../redux/store';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getSortedSubUnits } from '../../../../utils/institutions-helpers';
+import {
+  getAllChildOrganizations,
+  getOrganizationHierarchy,
+  getSortedSubUnits,
+} from '../../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { ViewingScopeChip } from './ViewingScopeChip';
 
@@ -22,17 +26,12 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
   const { t } = useTranslation();
   const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
   const [addAreaOfResponsibility, setAddAreaOfResponsibility] = useState(false);
+  const [isUpdatingValue, setIsUpdatingValue] = useState(false);
 
   const { isSubmitting } = useFormikContext();
 
-  const organizationQuery = useQuery({
-    enabled: !!topOrgCristinId,
-    queryKey: [topOrgCristinId],
-    queryFn: topOrgCristinId ? () => fetchOrganization(topOrgCristinId) : undefined,
-    meta: { errorMessage: t('feedback.error.get_institution') },
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-  });
+  const organizationQuery = useFetchOrganization(topOrgCristinId ?? '');
+
   const currentOrganization = organizationQuery.data;
   const options = currentOrganization
     ? getSortedSubUnits([currentOrganization]).filter((option) => !viewingScopes.includes(option.id))
@@ -63,19 +62,41 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
           fullWidth
           data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
           options={options}
+          filterOptions={(options, state) =>
+            options.filter((option) => {
+              const input = state.inputValue.toLowerCase();
+              return (
+                Object.values(option.labels).some((label) => label.toLowerCase().includes(input)) ||
+                option.acronym?.toLowerCase().includes(input)
+              );
+            })
+          }
           getOptionLabel={(option) => getLanguageString(option.labels)}
           renderOption={({ key, ...props }, option) => (
             <OrganizationRenderOption key={option.id} props={props} option={option} />
           )}
-          disabled={isSubmitting}
-          onChange={(_, value) => {
+          disabled={isSubmitting || isUpdatingValue}
+          onChange={async (_, value) => {
             if (value) {
-              updateViewingScopes([...viewingScopes, value.id]);
+              setIsUpdatingValue(true);
+              const fetchedUnit = await fetchOrganization(value.id);
+              const allParentIds = getOrganizationHierarchy(fetchedUnit).map((unit) => unit.id);
+              const allChildrenIds = getAllChildOrganizations([value]).map((unit) => unit.id);
+              const organizationIdsToRemove = Array.from(new Set([...allChildrenIds, ...allParentIds]));
+
+              // Remove existing organizations conflicting with the new organization
+              const filteredScopes = viewingScopes.filter(
+                (scope) => !organizationIdsToRemove.includes(scope) && scope !== value?.id
+              );
+
+              const newViewingScopes = Array.from(new Set([...filteredScopes, value.id]));
+              updateViewingScopes(newViewingScopes);
             }
+            setIsUpdatingValue(false);
             setAddAreaOfResponsibility(false);
           }}
           renderInput={(params) => (
-            <TextField {...params} fullWidth placeholder={t('basic_data.person_register.select_unit')} />
+            <TextField {...params} variant="filled" fullWidth label={t('basic_data.person_register.select_unit')} />
           )}
         />
       ) : (

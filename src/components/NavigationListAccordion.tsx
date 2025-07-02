@@ -52,13 +52,10 @@ export const NavigationListAccordion = ({
         sx={{ paddingX: '0.75rem' }}
         expandIcon={!isExpanded ? <ExpandMoreIcon /> : null}
         onClick={() => {
-          if (!isExpanded) {
-            navigate(defaultPath);
-
-            if (!isMobile) {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+          if (!isExpanded && !isMobile) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }
+          navigate(defaultPath);
         }}>
         <Box
           sx={{
@@ -69,7 +66,7 @@ export const NavigationListAccordion = ({
             svg: { padding: '0.2rem' },
           }}>
           {startIcon}
-          <Typography variant="h2" fontWeight={500}>
+          <Typography variant="h3" fontWeight={500}>
             {title}
           </Typography>
         </Box>

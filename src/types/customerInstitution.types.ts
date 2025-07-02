@@ -1,3 +1,4 @@
+import { ChannelPolicy } from '../api/customerInstitutionsApi';
 import { allPublicationInstanceTypes } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
 
@@ -129,7 +130,6 @@ export enum CustomerInstitutionFieldNames {
   DoiPassword = 'doiAgent.password',
   DoiPrefix = 'doiAgent.prefix',
   FeideOrganizationDomain = 'customer.feideOrganizationDomain',
-  Identifier = 'customer.identifier',
   InactiveFrom = 'customer.inactiveFrom',
   Name = 'customer.name',
   RorId = 'customer.rorId',
@@ -148,3 +148,21 @@ export interface VocabularyList {
   id: string;
   vocabularies: CustomerVocabulary[];
 }
+
+export interface ClaimedChannel {
+  id: string;
+  claimedBy: {
+    id: string;
+    organizationId: string;
+  };
+  channelClaim: {
+    channel: string;
+    constraint: {
+      publishingPolicy: ChannelPolicy;
+      editingPolicy: ChannelPolicy;
+      scope: PublicationInstanceType[];
+    };
+  };
+}
+
+export type ChannelClaimType = 'publisher' | 'serial-publication';

@@ -1,35 +1,41 @@
-import { Box, Checkbox, FormControlLabel, Link, Paper, TextField, Typography } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
-import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
-import { useEffect, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import { useContext, useEffect, useMemo, useRef } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { InfoBanner } from '../../components/InfoBanner';
+import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
-import { AssociatedLink, FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
-import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
+import { FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
+import { FileFieldNames, ResourceFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
-  associatedArtifactIsLink,
+  allowsFileUpload,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  getAssociatedLinkRelationTitle,
   isOpenFile,
   isPendingOpenFile,
   userHasAccessRight,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
-
+import { hasCuratorRole } from '../../utils/user-helpers';
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
-import { DoiField } from './resource_type_tab/components/DoiField';
+import { HelperTextModal } from './HelperTextModal';
+import { ClaimedChannelInfoBox } from './resource_type_tab/components/ClaimedChannelInfoBox';
+import { LinkField } from './resource_type_tab/components/LinkField';
 
-const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler';
-const getChannelRegisterJournalUrl = (pid: string) => `${channelRegisterBaseUrl}/KanalTidsskriftInfo.action?pid=${pid}`;
-const getChannelRegisterPublisherUrl = (pid: string) => `${channelRegisterBaseUrl}/KanalForlagInfo.action?pid=${pid}`;
+const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler/info';
+const getChannelRegisterJournalUrl = (pid: string) => `${channelRegisterBaseUrl}/tidsskrift?pid=${pid}`;
+const getChannelRegisterPublisherUrl = (pid: string) => `${channelRegisterBaseUrl}/forlag?pid=${pid}`;
 
 interface FilesAndLicensePanelProps {
-  uppy: Uppy;
+  uppy?: Uppy;
 }
 
 export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
@@ -37,10 +43,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
 
-  const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
+
+  const { values } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
-  const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
 
@@ -49,20 +56,16 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   );
   const pendingFiles = files.filter(
     (file) =>
-      isPendingOpenFile(file) || file.type === FileType.PendingInternalFile || file.type === FileType.RejectedFile
+      isPendingOpenFile(file) ||
+      file.type === FileType.PendingInternalFile ||
+      file.type === FileType.RejectedFile ||
+      file.type === FileType.UpdloadedFile
   );
-
-  const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
-  const associatedLinkHasError =
-    associatedLinkIndex >= 0 &&
-    !!(touched.associatedArtifacts?.[associatedLinkIndex] as FormikTouched<AssociatedLink> | undefined)?.id &&
-    !!(errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink> | undefined)?.id;
 
   const isNullAssociatedArtifact =
     associatedArtifacts.length === 1 && associatedArtifacts.some(associatedArtifactIsNullArtifact);
 
   const filesRef = useRef(files);
-
   useEffect(() => {
     filesRef.current = files;
   }, [files]);
@@ -70,7 +73,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   useEffect(() => {
     // Avoid adding duplicated file names to an existing registration,
     // since files could have been uploaded in another session without being in uppy's current state
-    uppy.setOptions({
+    uppy?.setOptions({
       onBeforeFileAdded: (currentFile) => {
         if (filesRef.current.some((file) => file.name === currentFile.name)) {
           uppy.info(t('registration.files_and_license.no_duplicates', { fileName: currentFile.name }), 'info', 6000);
@@ -81,67 +84,113 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     });
   }, [t, uppy, filesRef]);
 
-  const publisherIdentifier =
-    (publicationContext &&
-      'publisher' in publicationContext &&
-      publicationContext.publisher?.id?.split('/').reverse()[1]) ||
-    '';
-  const seriesIdentifier =
-    (publicationContext && 'series' in publicationContext && publicationContext.series?.id?.split('/').reverse()[1]) ||
-    '';
-  const journalIdentifier =
-    (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
+  const publisherId =
+    (publicationContext && 'publisher' in publicationContext && publicationContext.publisher?.id) || '';
+  const publisherIdentifier = publisherId?.split('/').reverse()[1];
+
+  const seriesId = (publicationContext && 'series' in publicationContext && publicationContext.series?.id) || '';
+  const seriesIdentifier = seriesId?.split('/').reverse()[1];
+
+  const journalId = (publicationContext && 'id' in publicationContext && publicationContext.id) || '';
+  const journalIdentifier = journalId?.split('/').reverse()[1] || '';
 
   const originalDoi = entityDescription?.reference?.doi;
 
-  const canEditFiles = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
-  const canUploadFile = userHasAccessRight(values, 'publishing-request-create') && canEditFiles;
+  const canEditFilesAndLinks =
+    (userHasAccessRight(values, 'partial-update') || userIsValidImporter(user, values)) && !disableChannelClaimsFields;
+  const categorySupportsFiles = allowsFileUpload(customer, entityDescription?.reference?.publicationInstance?.type);
+  const canUploadFile = userHasAccessRight(values, 'upload-file') && (categorySupportsFiles || hasCuratorRole(user));
 
   return (
-    <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      <Typography component="h2" variant="h3">
-        {t('registration.files_and_license.files')}
-      </Typography>
-      {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-        <Paper elevation={5} component={BackgroundDiv}>
-          <Typography variant="h6" component="h2" gutterBottom>
-            {t('registration.files_and_license.info_from_channel_register')}
-          </Typography>
-          {journalIdentifier && (
-            <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
-              <Typography sx={{ mb: '1rem' }}>
-                {t('registration.files_and_license.find_journal_in_channel_register')}
-              </Typography>
-            </Link>
-          )}
-          {publisherIdentifier && (
-            <Link href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
-              <Typography gutterBottom>
-                {t('registration.files_and_license.find_publisher_in_channel_register')}
-              </Typography>
-            </Link>
+    <FieldArray name={FileFieldNames.AssociatedArtifacts}>
+      {({ name, remove, push }: FieldArrayRenderProps) => (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
+            <Paper
+              elevation={0}
+              component={BackgroundDiv}
+              sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <Typography variant="h2">{t('registration.files_and_license.info_from_channel_register')}</Typography>
+              {journalIdentifier && (
+                <OpenInNewLink href={getChannelRegisterJournalUrl(journalIdentifier)}>
+                  {t('registration.files_and_license.find_journal_in_channel_register')}
+                </OpenInNewLink>
+              )}
+              {journalId && (
+                <ClaimedChannelInfoBox channelId={journalId} channelType={t('registration.resource_type.journal')} />
+              )}
+
+              {publisherIdentifier && (
+                <OpenInNewLink href={getChannelRegisterPublisherUrl(publisherIdentifier)}>
+                  {t('registration.files_and_license.find_publisher_in_channel_register')}
+                </OpenInNewLink>
+              )}
+              {publisherId && <ClaimedChannelInfoBox channelId={publisherId} channelType={t('common.publisher')} />}
+
+              {seriesIdentifier && (
+                <OpenInNewLink href={getChannelRegisterJournalUrl(seriesIdentifier)}>
+                  {t('registration.files_and_license.find_series_in_channel_register')}
+                </OpenInNewLink>
+              )}
+              {seriesId && (
+                <ClaimedChannelInfoBox channelId={seriesId} channelType={t('registration.resource_type.series')} />
+              )}
+            </Paper>
           )}
 
-          {seriesIdentifier && (
-            <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
-              <Typography sx={{ mb: '1rem' }}>
-                {t('registration.files_and_license.find_series_in_channel_register')}
-              </Typography>
-            </Link>
-          )}
-        </Paper>
-      )}
+          {!isNullAssociatedArtifact && (
+            <>
+              <Paper
+                elevation={0}
+                component={BackgroundDiv}
+                sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                  <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
+                  <HelperTextModal
+                    modalTitle={t('registration.files_and_license.files')}
+                    modalDataTestId={dataTestId.registrationWizard.files.fileHelpModal}
+                    buttonDataTestId={dataTestId.registrationWizard.files.fileHelpButton}>
+                    <Trans
+                      i18nKey="registration.files_and_license.files_helper_text"
+                      components={{
+                        p: <Typography sx={{ mb: '1rem' }} />,
+                        heading: <Typography variant="h2" />,
+                      }}
+                    />
+                    {customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
+                      <Typography sx={{ mb: '1rem' }}>
+                        {t('registration.files_and_license.files_helper_text_metadata_only')}
+                      </Typography>
+                    ) : (
+                      <Typography sx={{ mb: '1rem' }}>
+                        {t('registration.files_and_license.file_helper_text_metadata_and_files', {
+                          buttonText: t('my_page.messages.get_curator_support'),
+                        })}
+                      </Typography>
+                    )}
+                    <Typography sx={{ mb: '1rem' }}>
+                      {t('registration.files_and_license.files_helper_text_paragraph_2')}
+                    </Typography>
+                    <Trans
+                      i18nKey="registration.files_and_license.file_helper_text_point_list"
+                      components={{
+                        ul: <ul />,
+                        li: <li />,
+                      }}
+                    />
+                  </HelperTextModal>
+                </Box>
+                {!categorySupportsFiles && (
+                  <InfoBanner
+                    text={
+                      hasCuratorRole(user)
+                        ? t('file_upload_disabled_curator_can_upload_on_behalf')
+                        : t('file_upload_disabled_due_to_institution_policy')
+                    }
+                  />
+                )}
 
-      <FieldArray name={FileFieldNames.AssociatedArtifacts}>
-        {({ name, remove, push }: FieldArrayRenderProps) => (
-          <>
-            {!isNullAssociatedArtifact && (
-              <>
-                {customer &&
-                publicationInstanceType &&
-                !customer.allowFileUploadForTypes.includes(publicationInstanceType) ? (
-                  <Typography>{t('registration.resource_type.protected_file_type')}</Typography>
-                ) : (
+                {canUploadFile && (
                   <FileUploader
                     uppy={uppy}
                     addFile={(file) => {
@@ -153,9 +202,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       }
                       push(file);
                     }}
-                    disabled={!canUploadFile}
                   />
                 )}
+
                 {pendingFiles.length > 0 && (
                   <FileList
                     title={t('registration.files_and_license.files_in_progress')}
@@ -175,95 +224,76 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     baseFieldName={name}
                   />
                 )}
-                <Paper elevation={5} component={BackgroundDiv}>
-                  <Typography variant="h2" sx={{ mb: '1rem' }}>
-                    {t('common.link')}
-                  </Typography>
-                  {originalDoi ? (
-                    <DoiField canEditDoi={canEditFiles} />
-                  ) : (
-                    <TextField
-                      fullWidth
-                      variant="filled"
-                      label={t('registration.files_and_license.link_to_resource')}
-                      disabled={!canEditFiles}
-                      value={
-                        associatedLinkIndex >= 0 ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id : ''
-                      }
-                      error={associatedLinkHasError}
-                      helperText={
-                        associatedLinkHasError
-                          ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
-                          : null
-                      }
-                      data-testid={dataTestId.registrationWizard.files.linkToResourceField}
-                      onChange={(event) => {
-                        const inputValue = event.target.value;
-                        if (inputValue) {
-                          if (associatedLinkIndex < 0) {
-                            const newAssociatedLink: AssociatedLink = {
-                              type: 'AssociatedLink',
-                              id: inputValue,
-                            };
-                            push(newAssociatedLink);
-                            const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
-                              associatedArtifactIsNullArtifact
-                            );
-                            if (nullAssociatedArtifactIndex > -1) {
-                              remove(nullAssociatedArtifactIndex);
-                            }
-                          } else {
-                            const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
-                            setFieldValue(fieldName, inputValue);
-                            setFieldTouched(fieldName);
-                          }
-                        } else {
-                          const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                          remove(associatedLinkIndex);
-                          if (associatedArtifactsBeforeRemoval === 1) {
-                            // Ensure field is set to touched even if it's empty
-                            setFieldTouched(name);
-                          }
-                        }
-                      }}
+              </Paper>
+
+              <Paper elevation={0} component={BackgroundDiv}>
+                <Typography variant="h2" sx={{ mb: '1rem' }}>
+                  {t('common.links')}
+                </Typography>
+
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {values.doi && <LinkField fieldName={FileFieldNames.Doi} label={t('common.doi')} />}
+
+                  {(values.entityDescription?.reference?.doi || !values.doi) && (
+                    <LinkField
+                      fieldName={ResourceFieldNames.Doi}
+                      label={t('registration.registration.link_to_resource')}
+                      canEdit={canEditFilesAndLinks}
                     />
                   )}
-                </Paper>
-              </>
-            )}
 
-            {(associatedArtifacts.length === 0 || isNullAssociatedArtifact) && !originalDoi && (
-              <Paper elevation={5} component={BackgroundDiv}>
-                <Typography variant="h2" sx={{ mb: '1rem' }}>
-                  {t('registration.files_and_license.resource_is_a_reference')}
-                </Typography>
-                <Box sx={{ backgroundColor: 'white', width: '100%', p: '0.25rem 1rem' }}>
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    checked={isNullAssociatedArtifact}
-                    onChange={(event, checked) => {
-                      if (!checked) {
-                        const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
-                          associatedArtifactIsNullArtifact
-                        );
-                        if (nullAssociatedArtifactIndex > -1) {
-                          remove(nullAssociatedArtifactIndex);
-                        }
-                      }
-
-                      if (associatedArtifacts.length === 0 && checked) {
-                        const nullAssociatedArtifact: NullAssociatedArtifact = { type: 'NullAssociatedArtifact' };
-                        push(nullAssociatedArtifact);
-                      }
-                    }}
-                    label={t('registration.files_and_license.resource_has_no_files_or_links')}
-                  />
+                  {associatedArtifacts.map((link, index) => {
+                    if (link.type !== 'AssociatedLink') {
+                      return null;
+                    }
+                    return (
+                      <LinkField
+                        key={index}
+                        fieldName={`${FileFieldNames.AssociatedArtifacts}[${index}].${SpecificLinkFieldNames.Id}`}
+                        label={getAssociatedLinkRelationTitle(t, link.relation)}
+                        canEdit={canEditFilesAndLinks}
+                        handleDelete={canEditFilesAndLinks ? () => remove(index) : undefined}
+                      />
+                    );
+                  })}
                 </Box>
               </Paper>
-            )}
-          </>
-        )}
-      </FieldArray>
-    </Paper>
+            </>
+          )}
+
+          {(associatedArtifacts.length === 0 || isNullAssociatedArtifact) && !originalDoi && !values.doi && (
+            <Paper elevation={0} component={BackgroundDiv}>
+              <Typography variant="h2" sx={{ mb: '1rem' }}>
+                {t('registration.files_and_license.resource_is_a_reference')}
+              </Typography>
+              <Box sx={{ backgroundColor: 'white', width: '100%', p: '0.25rem 1rem' }}>
+                <FormControlLabel
+                  control={
+                    <Checkbox data-testid={dataTestId.registrationWizard.files.nullAssociatedArtifactCheckbox} />
+                  }
+                  checked={isNullAssociatedArtifact}
+                  onChange={(_, checked) => {
+                    if (!checked) {
+                      const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
+                        associatedArtifactIsNullArtifact
+                      );
+                      if (nullAssociatedArtifactIndex > -1) {
+                        remove(nullAssociatedArtifactIndex);
+                      }
+                    }
+
+                    if (associatedArtifacts.length === 0 && checked) {
+                      const nullAssociatedArtifact: NullAssociatedArtifact = { type: 'NullAssociatedArtifact' };
+                      push(nullAssociatedArtifact);
+                    }
+                  }}
+                  label={t('registration.files_and_license.resource_has_no_files_or_links')}
+                />
+              </Box>
+            </Paper>
+          )}
+        </Box>
+      )}
+    </FieldArray>
   );
 };

@@ -7,8 +7,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { formatDateStringToISO } from '../../../utils/date-helpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
-const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
-  views: ['year', 'month', 'day'],
+const commonDatepickerProps: Partial<DatePickerProps> = {
   disableHighlightToday: true,
   slotProps: {
     textField: { sx: { maxWidth: '10rem' }, size: 'small' },
@@ -36,6 +35,8 @@ export const TicketDateIntervalFilter = () => {
     } else {
       syncedParams.delete(TicketSearchParam.CreatedDate);
     }
+
+    syncedParams.delete(TicketSearchParam.From);
     navigate({ search: syncedParams.toString() });
   };
 

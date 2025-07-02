@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from '@mui/material';
 import { Link, LinkProps } from 'react-router';
 
-export interface SelectableButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
+export interface SelectableButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to' | 'state'>> {
   isSelected?: boolean;
 }
 

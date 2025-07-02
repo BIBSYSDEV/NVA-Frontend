@@ -15,15 +15,17 @@ import { RequiredDescription } from '../../components/RequiredDescription';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
+import { useFetchChannelClaimsData } from '../../utils/hooks/useFetchChannelClaimsData';
 import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { doNotRedirectQueryParam, UrlPathTemplate } from '../../utils/urlPaths';
 import { Forbidden } from '../errorpages/Forbidden';
+import { ChannelClaimInfoBox } from './ChannelClaimInfoBox';
 import { ContributorsPanel } from './ContributorsPanel';
 import { DescriptionPanel } from './DescriptionPanel';
 import { FilesAndLicensePanel } from './FilesAndLicensePanel';
@@ -39,16 +41,19 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
-  const [uppy] = useState(() => createUppy(i18n.language));
+  const [uppy] = useState(() => createUppy(i18n.language, identifier));
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
   const location = useLocation();
   const locationState = location.state as RegistrationFormLocationState;
 
   const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
-
-  const registrationQuery = useFetchRegistration(identifier);
+  const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
+  const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
+
+  const channelClaimData = useFetchChannelClaimsData(registration);
+
   const canHaveNviCandidate =
     registration?.status === RegistrationStatus.Published ||
     registration?.status === RegistrationStatus.PublishedMetadata;
@@ -63,18 +68,27 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
-  const canEditRegistration = userHasAccessRight(registration, 'update');
+  const canEditRegistration = userHasAccessRight(registration, 'partial-update');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [tabNumber]);
 
-  return registrationQuery.isPending || (canHaveNviCandidate && nviReportedStatus.isPending) ? (
+  const isLoadingChannelClaim =
+    canEditRegistration &&
+    !userHasAccessRight(registration, 'update') &&
+    !channelClaimData.channelClaimQuery.data &&
+    channelClaimData.channelClaimQuery.isPending;
+
+  return registrationQuery.isPending ||
+    isLoadingChannelClaim ||
+    (canHaveNviCandidate && nviReportedStatus.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
-    <NviCandidateContext.Provider value={{ disableNviCriticalFields }}>
+    <RegistrationFormContext.Provider
+      value={{ disableNviCriticalFields, disableChannelClaimsFields: channelClaimData.shouldDisableFields }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
@@ -93,7 +107,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             />
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <RegistrationIconHeader
-                publicationInstanceType={values.entityDescription?.reference?.publicationInstance.type}
+                publicationInstanceType={values.entityDescription?.reference?.publicationInstance?.type}
                 publicationDate={values.entityDescription?.publicationDate}
                 showYearOnly
               />
@@ -103,6 +117,9 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             <RequiredDescription />
             <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
               <Box id="form" mb="2rem">
+                {channelClaimData.channelClaimQuery.data && channelClaimData.shouldDisableFields && (
+                  <ChannelClaimInfoBox channelClaim={channelClaimData.channelClaimQuery.data} />
+                )}
                 {tabNumber === RegistrationTab.Description && (
                   <ErrorBoundary>
                     <DescriptionPanel />
@@ -139,10 +156,10 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         open={isResettableNviStatus && !hasAcceptedNviWarning && !disableNviCriticalFields}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={() => setHasAcceptedNviWarning(true)}
-        onCancel={() => (navigate.length > 1 ? navigate(-1) : navigate(UrlPathTemplate.Root))}>
+        onCancel={() => (!!locationState ? navigate(-1) : navigate(UrlPathTemplate.Root))}>
         <Typography sx={{ mb: '1rem' }}>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>
-    </NviCandidateContext.Provider>
+    </RegistrationFormContext.Provider>
   ) : null;
 };

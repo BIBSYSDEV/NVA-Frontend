@@ -56,6 +56,9 @@ export const PublishStrategySettings = () => {
   return (
     <>
       <DocumentHeadTitle>{t('editor.publish_strategy.publish_strategy')}</DocumentHeadTitle>
+      <Typography variant="h1" gutterBottom id="publish-strategy-label">
+        {t('editor.publish_strategy.publish_strategy')}
+      </Typography>
 
       {!customer ? (
         <PageSpinner />

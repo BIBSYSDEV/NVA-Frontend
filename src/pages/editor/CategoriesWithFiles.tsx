@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -21,11 +20,11 @@ export const CategoriesWithFiles = () => {
   return (
     <>
       <DocumentHeadTitle>{t('editor.categories_with_files')}</DocumentHeadTitle>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         {t('editor.categories_with_files')}
       </Typography>
 
-      <Typography sx={{ my: '2rem' }}>{t('editor.categories_with_files_description')}</Typography>
+      <Typography gutterBottom>{t('editor.categories_with_files_description')}</Typography>
 
       {customer && <CategoriesWithFilesForCustomer customer={customer} />}
     </>
@@ -74,12 +73,9 @@ const CategoriesWithFilesForCustomer = ({ customer }: CategoriesWithFilesForCust
 
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem', mt: '2rem' }}>
         <Button onClick={() => setSelectedCategories(customer.allowFileUploadForTypes)}>{t('common.cancel')}</Button>
-        <LoadingButton
-          variant="contained"
-          onClick={() => customerMutation.mutate()}
-          loading={customerMutation.isPending}>
+        <Button variant="contained" onClick={() => customerMutation.mutate()} loading={customerMutation.isPending}>
           {t('common.save')}
-        </LoadingButton>
+        </Button>
       </Box>
     </>
   );

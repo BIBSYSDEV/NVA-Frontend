@@ -17,10 +17,18 @@ import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames'
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getTitleString, isBook, isReport, isResearchData, userHasAccessRight } from '../../utils/registration-helpers';
-import { getRegistrationWizardPath } from '../../utils/urlPaths';
+import {
+  getAssociatedLinks,
+  getTitleString,
+  isBook,
+  isReport,
+  isResearchData,
+  userHasAccessRight,
+} from '../../utils/registration-helpers';
+import { getWizardPathByRegistration } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
+import { AssociatedLinksLandingPageAccordion } from './public_links/AssociatedLinksLandingPageAccordion';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
 import { ShowRelatedDocuments } from './public_links/ShowRelatedDocuments';
@@ -56,11 +64,11 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const userCanEditRegistration = userHasAccessRight(registration, 'update');
+  const userCanEditRegistration = userHasAccessRight(registration, 'partial-update');
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
-      {registration.status === RegistrationStatus.Published && <StructuredSeoData uri={registration.id} />}
+      {registration.status === RegistrationStatus.Published && <StructuredSeoData registration={registration} />}
 
       <DocumentHeadTitle>{mainTitle}</DocumentHeadTitle>
       <Box sx={visuallyHidden}>
@@ -69,7 +77,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
       <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'registration.main' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <RegistrationIconHeader
-            publicationInstanceType={entityDescription?.reference?.publicationInstance.type}
+            publicationInstanceType={entityDescription?.reference?.publicationInstance?.type}
             publicationDate={entityDescription?.publicationDate}
             showYearOnly
             textColor="primary.contrastText"
@@ -84,7 +92,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <IconButton
               component={RouterLink}
               state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
-              to={getRegistrationWizardPath(identifier)}
+              to={getWizardPathByRegistration(registration)}
               data-testid={dataTestId.registrationLandingPage.editButton}
               sx={{ ml: 'auto', color: 'inherit' }}>
               <EditIcon />
@@ -267,6 +275,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <ListRegistrationRelations registrations={relatedRegistrationsQuery.data.hits} />
           </LandingPageAccordion>
         )}
+
+        <AssociatedLinksLandingPageAccordion associatedLinks={getAssociatedLinks(registration.associatedArtifacts)} />
       </BackgroundDiv>
     </Paper>
   );

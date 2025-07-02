@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ContributorName } from '../../../../components/ContributorName';
 import { SimpleWarning } from '../../../../components/messages/SimpleWarning';
-import { NviCandidateContext } from '../../../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { Contributor, ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { CristinPerson } from '../../../../types/user.types';
@@ -52,7 +52,7 @@ export const ContributorRow = ({
   const [openRemoveContributor, setOpenRemoveContributor] = useState(false);
   const [openVerifyContributor, setOpenVerifyContributor] = useState(false);
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const baseFieldName = `${ContributorFieldNames.Contributors}[${contributorIndex}]`;
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
@@ -71,6 +71,7 @@ export const ContributorRow = ({
         <Box sx={{ display: 'flex', gap: '0.2rem' }}>
           <TextField
             sx={{ width: '3.6rem' }}
+            disabled={disableChannelClaimsFields}
             value={sequenceValue}
             onChange={(event) => setSequenceValue(event.target.value)}
             variant="filled"
@@ -87,6 +88,7 @@ export const ContributorRow = ({
             <Tooltip title={t('common.move_down')}>
               <IconButton
                 size="small"
+                disabled={disableChannelClaimsFields}
                 sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
                 onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
                 <ArrowDownwardIcon color="primary" />
@@ -97,6 +99,7 @@ export const ContributorRow = ({
             <Tooltip title={t('common.move_up')}>
               <IconButton
                 size="small"
+                disabled={disableChannelClaimsFields}
                 sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
                 onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
                 <ArrowUpwardIcon color="primary" />
@@ -116,6 +119,7 @@ export const ContributorRow = ({
             {({ field, meta: { error, touched } }: FieldProps<ContributorRole>) => (
               <TextField
                 {...field}
+                disabled={disableChannelClaimsFields}
                 select
                 variant="filled"
                 label={t('common.select_role')}
@@ -139,10 +143,11 @@ export const ContributorRow = ({
             <Tooltip title={t('registration.contributors.corresponding')}>
               <Checkbox
                 data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
+                disabled={disableChannelClaimsFields}
                 checked={field.value}
                 sx={{ marginTop: '0.3rem' }}
                 {...field}
-                inputProps={{ 'aria-label': t('registration.contributors.corresponding') }}
+                slotProps={{ input: { 'aria-label': t('registration.contributors.corresponding') } }}
               />
             </Tooltip>
           )}
@@ -170,7 +175,7 @@ export const ContributorRow = ({
           />
           {!contributor.identity.id && (
             <Button
-              disabled={disableNviCriticalFields}
+              disabled={disableNviCriticalFields || disableChannelClaimsFields}
               variant="outlined"
               sx={{ padding: '0.1rem 0.75rem' }}
               data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
@@ -183,7 +188,7 @@ export const ContributorRow = ({
           )}
 
           <Button
-            disabled={disableNviCriticalFields}
+            disabled={disableNviCriticalFields || disableChannelClaimsFields}
             size="small"
             data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
             onClick={() => setOpenRemoveContributor(true)}

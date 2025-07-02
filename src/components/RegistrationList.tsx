@@ -5,6 +5,7 @@ import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
@@ -14,8 +15,10 @@ import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
 import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
+import { stringIncludesMathJax, typesetMathJax } from '../utils/mathJaxHelpers';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
+  doNotRedirectQueryParam,
   getRegistrationLandingPagePath,
   getRegistrationWizardPath,
   getResearchProfilePath,
@@ -27,24 +30,36 @@ import { RegistrationIconHeader } from './RegistrationIconHeader';
 import { SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
 
-interface RegistrationListProps extends Pick<LinkProps, 'target'> {
+export interface RegistrationListProps extends Pick<LinkProps, 'target'> {
   registrations: RegistrationSearchItem[];
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: RegistrationSearchItem) => void;
   promotedPublications?: string[];
 }
 
-export const RegistrationList = ({ registrations, ...rest }: RegistrationListProps) => (
-  <List data-testid="search-results">
-    {registrations.map((registration) => (
-      <ErrorBoundary key={registration.id}>
-        <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
-          <RegistrationListItemContent registration={registration} {...rest} />
-        </SearchListItem>
-      </ErrorBoundary>
-    ))}
-  </List>
-);
+export const RegistrationList = ({ registrations, ...rest }: RegistrationListProps) => {
+  useEffect(() => {
+    if (
+      registrations.some(
+        ({ mainTitle, abstract }) => stringIncludesMathJax(mainTitle) || stringIncludesMathJax(abstract)
+      )
+    ) {
+      typesetMathJax();
+    }
+  }, [registrations]);
+
+  return (
+    <List data-testid="search-results">
+      {registrations.map((registration) => (
+        <ErrorBoundary key={registration.id}>
+          <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+            <RegistrationListItemContent registration={registration} {...rest} />
+          </SearchListItem>
+        </ErrorBoundary>
+      ))}
+    </List>
+  );
+};
 
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
   registration: RegistrationSearchItem;
@@ -97,15 +112,23 @@ export const RegistrationListItemContent = ({
       dispatch(setNotification({ message: t('feedback.error.update_promoted_publication'), variant: 'error' })),
   });
 
-  const shouldNotRedirect =
+  const doNotRedirect =
     (location.pathname === UrlPathTemplate.TasksResultRegistrations ||
       location.pathname === UrlPathTemplate.InstitutionPortfolio) &&
-    registration.recordMetadata.status === RegistrationStatus.Unpublished;
+    (registration.recordMetadata.status === RegistrationStatus.Unpublished ||
+      registration.recordMetadata.status === RegistrationStatus.Deleted);
 
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' }, marginBottom: '0.5rem' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            marginBottom: '0.5rem',
+            flexWrap: 'wrap',
+          }}>
           <RegistrationIconHeader
             publicationInstanceType={registration.type}
             publicationDate={registration.publicationDate}
@@ -133,7 +156,7 @@ export const RegistrationListItemContent = ({
               state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
               to={{
                 pathname: getRegistrationLandingPagePath(identifier),
-                search: shouldNotRedirect ? 'shouldNotRedirect' : '',
+                search: doNotRedirect ? `${doNotRedirectQueryParam}=true` : '',
               }}>
               {getTitleString(registration.mainTitle)}
             </MuiLink>
@@ -144,7 +167,6 @@ export const RegistrationListItemContent = ({
             display: 'flex',
             flexWrap: 'wrap',
             columnGap: '1rem',
-            whiteSpace: 'nowrap',
           }}>
           <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
             {focusedContributors.map((contributor, index) => (
@@ -179,7 +201,7 @@ export const RegistrationListItemContent = ({
           </TruncatableTypography>
         )}
       </ListItemText>
-      {location.pathname.includes(UrlPathTemplate.ResearchProfile) && isPromotedPublication && (
+      {location.pathname.includes(UrlPathTemplate.ResearchProfileRoot) && isPromotedPublication && (
         <StarIcon fontSize="small" />
       )}
       {canEditRegistration && (
@@ -187,7 +209,11 @@ export const RegistrationListItemContent = ({
           {location.pathname === UrlPathTemplate.MyPageResults && (
             <IconButton
               title={t('my_page.my_profile.edit_promoted_publication')}
-              data-testid={dataTestId.myPage.addPromotedPublicationButton}
+              data-testid={
+                isPromotedPublication
+                  ? dataTestId.myPage.removePromotedPublicationButton
+                  : dataTestId.myPage.addPromotedPublicationButton
+              }
               disabled={isMutating}
               onClick={() => {
                 if (isPromotedPublication) {

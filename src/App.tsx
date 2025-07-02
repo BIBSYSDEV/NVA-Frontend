@@ -1,9 +1,9 @@
 import { Amplify } from 'aws-amplify';
-import { Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import { getUserAttributes } from './api/authApi';
+import { getCustomUserAttributes } from './api/authApi';
 import { AppRoutes } from './AppRoutes';
 import { AcceptTermsDialog } from './components/AcceptTermsDialog';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
@@ -14,8 +14,11 @@ import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
+import { getMaintenanceInfo } from './utils/status-message-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
+
+const MaintenanceModeApp = lazy(() => import('./MaintenanceModeApp'));
 
 if (
   (window.location.pathname === UrlPathTemplate.MyPagePersonalia ||
@@ -28,7 +31,6 @@ if (
 }
 
 const Root = () => {
-  useMatomoTracking();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -42,11 +44,10 @@ const Root = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch attributes of authenticated user
     const getUser = async () => {
-      const feideUser = await getUserAttributes();
-      if (feideUser) {
-        dispatch(setUser(feideUser));
+      const customUserAttributes = await getCustomUserAttributes();
+      if (customUserAttributes) {
+        dispatch(setUser(customUserAttributes));
       }
       setIsLoadingUserAttributes(false);
     };
@@ -75,14 +76,20 @@ const Root = () => {
   );
 };
 
-const router = createBrowserRouter([{ path: '*', element: <Root /> }]);
-
 export const App = () => {
+  useMatomoTracking();
   const { t } = useTranslation();
+  const maintenanceInfo = getMaintenanceInfo();
 
   return (
-    <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
-      <RouterProvider router={router} />
-    </Suspense>
+    <>
+      <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
+        {maintenanceInfo ? (
+          <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
+        ) : (
+          <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
+        )}
+      </Suspense>
+    </>
   );
 };

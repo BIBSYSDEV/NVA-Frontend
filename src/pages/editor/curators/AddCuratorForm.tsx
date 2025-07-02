@@ -1,6 +1,5 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import { LoadingButton } from '@mui/lab';
 import { Button, DialogActions, FormControl, FormGroup, Typography, styled } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
@@ -161,13 +160,16 @@ export const AddCuratorForm = ({
 
               if (isRemovingRole) {
                 // Remove roles that depend on the removed role
-                if (role === RoleName.PublishingCurator) {
-                  newRoles = newRoles.filter(
-                    (role) =>
-                      role.rolename !== RoleName.CuratorThesis && role.rolename !== RoleName.CuratorThesisEmbargo
-                  );
-                } else if (role === RoleName.CuratorThesis) {
+                if (role === RoleName.CuratorThesis) {
                   newRoles = newRoles.filter((role) => role.rolename !== RoleName.CuratorThesisEmbargo);
+                }
+              } else {
+                if (role === RoleName.CuratorThesisEmbargo) {
+                  newRoles = [
+                    ...values.roles,
+                    { type: 'Role', rolename: RoleName.CuratorThesis },
+                    { type: 'Role', rolename: RoleName.CuratorThesisEmbargo },
+                  ];
                 }
               }
 
@@ -191,18 +193,18 @@ export const AddCuratorForm = ({
                 value={RoleName.PublishingCurator}
               />
               <RoleSelectBox
-                sx={{ bgcolor: 'publishingRequest.main', ml: '1rem' }}
+                sx={{ bgcolor: 'publishingRequest.main' }}
                 label={t('my_page.roles.thesis_curator')}
                 description={t('my_page.roles.thesis_curator_description')}
-                disabled={isSubmitting || !values.roles.some((role) => role.rolename === RoleName.PublishingCurator)}
+                disabled={isSubmitting}
                 checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
                 value={RoleName.CuratorThesis}
               />
               <RoleSelectBox
-                sx={{ bgcolor: 'publishingRequest.main', ml: '2rem' }}
+                sx={{ bgcolor: 'publishingRequest.main', ml: '1rem' }}
                 label={t('my_page.roles.thesis_embargo_curator')}
                 description={t('my_page.roles.thesis_embargo_curator_description')}
-                disabled={isSubmitting || !values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
+                disabled={isSubmitting}
                 checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesisEmbargo)}
                 value={RoleName.CuratorThesisEmbargo}
               />
@@ -228,7 +230,7 @@ export const AddCuratorForm = ({
             <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={closeDialog}>
               {t('common.cancel')}
             </Button>
-            <LoadingButton
+            <Button
               data-testid={dataTestId.confirmDialog.acceptButton}
               loading={isSubmitting}
               type="submit"
@@ -237,7 +239,7 @@ export const AddCuratorForm = ({
                 (!dirty && addedViewingScopes.length === 0) || (!('username' in values) && values.roles.length === 1)
               }>
               {t('editor.curators.add_curator')}
-            </LoadingButton>
+            </Button>
           </DialogActions>
         </Form>
       )}

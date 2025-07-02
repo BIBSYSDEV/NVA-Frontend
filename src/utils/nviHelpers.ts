@@ -1,5 +1,6 @@
 import { fetchOrganization } from '../api/cristinApi';
 import { Contributor } from '../types/contributor.types';
+import { NviCandidateProblem } from '../types/nvi.types';
 import { BookRegistration } from '../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../types/publication_types/chapterRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
@@ -44,7 +45,9 @@ const hasChangedContributorsOrAffiliations = async (
 
   for (const persistedContributor of persistedContributors) {
     const updatedContributor = updatedContributors.find(
-      (contributor) => contributor.identity.id === persistedContributor.identity.id
+      (contributor) =>
+        (contributor.identity.id && contributor.identity.id === persistedContributor.identity.id) ||
+        contributor.identity.name === persistedContributor.identity.name
     );
     if (updatedContributor) {
       const persistedAffiliations = persistedContributor.affiliations ?? [];
@@ -93,8 +96,8 @@ export const willResetNviStatuses = async (persistedRegistration: Registration, 
   }
 
   const hasChangedCategory =
-    persistedRegistration.entityDescription?.reference?.publicationInstance.type !==
-    updatedRegistration.entityDescription?.reference?.publicationInstance.type;
+    persistedRegistration.entityDescription?.reference?.publicationInstance?.type !==
+    updatedRegistration.entityDescription?.reference?.publicationInstance?.type;
   if (hasChangedCategory) {
     return true;
   }
@@ -132,4 +135,12 @@ export const willResetNviStatuses = async (persistedRegistration: Registration, 
   ) {
     return true;
   }
+  return false;
 };
+
+export const hasUnidentifiedContributorProblem = (nviCandidateProblems: NviCandidateProblem[]) =>
+  nviCandidateProblems &&
+  nviCandidateProblems.some(
+    (problem) =>
+      problem.type === 'UnverifiedCreatorExists' || problem.type === 'UnverifiedCreatorFromOrganizationProblem'
+  );

@@ -1,5 +1,4 @@
 import EditIcon from '@mui/icons-material/Edit';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Grid, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
@@ -8,14 +7,12 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
 import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
-import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { personaliaValidationSchema } from '../../../utils/validation/personaliaValidation';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
@@ -83,11 +80,9 @@ export const MyProfile = () => {
   return (
     <Box sx={{ bgcolor: 'secondary.main' }}>
       <DocumentHeadTitle>{t('my_page.my_profile.heading.personalia')}</DocumentHeadTitle>
-
-      <Typography variant="h2" sx={{ margin: '1rem' }}>
+      <Typography variant="h1" sx={{ margin: '1rem' }}>
         {t('my_page.my_profile.heading.personalia')}
       </Typography>
-
       {personQuery.isPending && !person ? (
         <PageSpinner aria-labelledby="personalia-id" />
       ) : (
@@ -111,14 +106,14 @@ export const MyProfile = () => {
                   m: '1rem',
                 }}>
                 <Grid container rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
-                  <Grid item xs={16}>
+                  <Grid size={16}>
                     <ProfileBox>
-                      <Typography fontWeight="bold" sx={{ mb: '0.5rem' }}>
+                      <Typography variant="h2" sx={{ mb: '0.5rem' }}>
                         {t('my_page.my_profile.name')}
                       </Typography>
                       <Typography sx={{ mb: '0.5rem' }}>{t('my_page.my_profile.name_description')}</Typography>
                       <Typography sx={{ mb: '1.5rem' }}>{t('my_page.my_profile.writer_name_description')}</Typography>
-                      <Grid item xs={15}>
+                      <Grid size={15}>
                         <StyledGridBox sx={{ mb: '1rem' }}>
                           <TextField
                             value={user.givenName}
@@ -136,9 +131,9 @@ export const MyProfile = () => {
                           />
                         </StyledGridBox>
                       </Grid>
-                      <Grid item xs={16}>
+                      <Grid size={16}>
                         <Grid container columns={16}>
-                          <Grid item xs={15}>
+                          <Grid size={15}>
                             <StyledGridBox>
                               <Field name={'preferredFirstName'}>
                                 {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -172,7 +167,7 @@ export const MyProfile = () => {
                               </Field>
                             </StyledGridBox>
                           </Grid>
-                          <Grid item xs={1}>
+                          <Grid size={1}>
                             <Tooltip title={t('common.edit')}>
                               <IconButton
                                 data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
@@ -185,42 +180,22 @@ export const MyProfile = () => {
                       </Grid>
                     </ProfileBox>
                   </Grid>
-                  <Grid item xs={16}>
-                    <ProfileBox>
-                      <Typography fontWeight="bold" sx={{ mb: '0.5rem' }}>
-                        {t('my_page.my_profile.identity.identity_numbers')}
-                      </Typography>
-                      <Typography sx={{ mb: '1rem' }}>
-                        {t('my_page.my_profile.identity_numbers_description')}
-                      </Typography>
-                      <StyledGridBox>
-                        <NationalIdNumberField nationalId={user.nationalIdNumber} />
-                        <TextField
-                          value={getIdentifierFromId(personId ?? '')}
-                          disabled
-                          label={t('common.person_id')}
-                          size="small"
-                          variant="filled"
-                        />
-                      </StyledGridBox>
-                    </ProfileBox>
-                  </Grid>
-                  <Grid item xs={16}>
+                  <Grid size={16}>
                     <ProfileBox>
                       <Box sx={{ display: 'flex', alignItems: 'center', mb: '0.5rem' }}>
-                        <Typography fontWeight="bold">{t('common.orcid')}</Typography>
+                        <Typography variant="h2">{t('common.orcid')}</Typography>
                         <UserOrcidHelperModal />
                       </Box>
                       <Trans
                         i18nKey="my_page.my_profile.orcid_is_voluntary"
                         components={[<Typography key="1" gutterBottom />]}
                       />
-                      <UserOrcid user={user} sx={{ mt: '1rem' }} />
+                      <UserOrcid user={user} />
                     </ProfileBox>
                   </Grid>
-                  <Grid item xs={16}>
+                  <Grid size={16}>
                     <ProfileBox>
-                      <Typography sx={{ mb: '0.5rem' }} fontWeight="bold">
+                      <Typography sx={{ mb: '0.5rem' }} variant="h2">
                         {t('my_page.my_profile.contact_information')}
                       </Typography>
                       <Trans
@@ -278,9 +253,9 @@ export const MyProfile = () => {
                     </ProfileBox>
                   </Grid>
                 </Grid>
-                <Grid item>
+                <Grid>
                   <ProfileBox sx={{ gridArea: 'profile-picture', alignItems: 'center' }}>
-                    <Typography variant="h3" sx={{ mb: '1rem' }}>
+                    <Typography variant="h2" sx={{ mb: '1rem' }}>
                       {t('my_page.my_profile.profile_picture')}
                     </Typography>
                     <Trans
@@ -308,14 +283,14 @@ export const MyProfile = () => {
                   }}>
                   {t('common.cancel')}
                 </Button>
-                <LoadingButton
+                <Button
                   data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
                   loading={isSubmitting}
                   disabled={!dirty}
                   variant="contained"
                   type="submit">
                   {t('common.save')}
-                </LoadingButton>
+                </Button>
               </Box>
             </Form>
           )}

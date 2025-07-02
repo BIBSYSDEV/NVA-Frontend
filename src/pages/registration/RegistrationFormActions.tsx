@@ -1,6 +1,5 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, IconButton, SxProps, Tooltip, TooltipProps, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
@@ -8,7 +7,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
-import { updateRegistration } from '../../api/registrationApi';
+import { partialUpdateRegistration, updateRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
@@ -19,7 +18,11 @@ import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { isPublishableForWorkflow2 } from '../../utils/formik-helpers/formik-helpers';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
-import { getFormattedRegistration, userHasAccessRight } from '../../utils/registration-helpers';
+import {
+  getFormattedRegistration,
+  userHasAccessRight,
+  userCanOnlyDoPartialUpdate,
+} from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 
@@ -76,10 +79,17 @@ export const RegistrationFormActions = ({
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
     const formattedValues = getFormattedRegistration(values);
-    const updateRegistrationResponse = await updateRegistration(formattedValues);
+    const updateRegistrationResponse = userCanOnlyDoPartialUpdate(formattedValues)
+      ? await partialUpdateRegistration(formattedValues)
+      : await updateRegistration(formattedValues);
     const isSuccess = isSuccessStatus(updateRegistrationResponse.status);
     if (isErrorStatus(updateRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' }));
+      dispatch(
+        setNotification({
+          message: t('feedback.error.update_registration'),
+          variant: 'error',
+        })
+      );
       const newErrors = validateForm(values);
       setTouched(setNestedObjectValues(newErrors, true));
     } else if (isSuccess) {
@@ -99,7 +109,12 @@ export const RegistrationFormActions = ({
       // Without this we experienced some issues with RouteLeavingGuard on some browsers (NP-47920).
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
+      dispatch(
+        setNotification({
+          message: t('feedback.success.update_registration'),
+          variant: 'success',
+        })
+      );
 
       if (isLastTab) {
         if (locationState?.previousPath) {
@@ -181,14 +196,14 @@ export const RegistrationFormActions = ({
             <>
               <TooltipButtonWrapper
                 title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
-                <LoadingButton
+                <Button
                   variant="outlined"
                   disabled={disableSaving}
                   loading={isSaving}
                   data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
                   onClick={handleSaveClick}>
                   {t('common.save')}
-                </LoadingButton>
+                </Button>
               </TooltipButtonWrapper>
               <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
                 <IconButton
@@ -201,14 +216,14 @@ export const RegistrationFormActions = ({
           ) : (
             <TooltipButtonWrapper
               title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
-              <LoadingButton
+              <Button
                 variant="contained"
                 disabled={disableSaving}
                 loading={isSaving}
                 data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
                 onClick={handleSaveClick}>
                 {t('common.save_and_view')}
-              </LoadingButton>
+              </Button>
             </TooltipButtonWrapper>
           )}
         </Box>
@@ -221,7 +236,7 @@ export const RegistrationFormActions = ({
         onClose={toggleSupportModal}
         headingText={t('registration.support.need_help')}
         dataTestId={dataTestId.registrationWizard.formActions.supportModal}
-        PaperProps={{ sx: { bgcolor: 'generalSupportCase.light', padding: '1rem' } }}>
+        slotProps={{ paper: { sx: { bgcolor: 'generalSupportCase.light' } } }}>
         <SupportModalContent closeModal={toggleSupportModal} registration={values} />
       </Modal>
 

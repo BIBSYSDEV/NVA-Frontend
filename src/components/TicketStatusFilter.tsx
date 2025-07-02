@@ -31,6 +31,8 @@ export const TicketStatusFilter = ({ options }: TicketStatusFilterProps) => {
     } else {
       syncedParams.delete(TicketSearchParam.Status);
     }
+
+    syncedParams.delete(TicketSearchParam.From);
     navigate({ search: syncedParams.toString() });
   };
 

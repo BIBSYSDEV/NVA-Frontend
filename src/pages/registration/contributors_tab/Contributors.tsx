@@ -19,7 +19,7 @@ import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { ListPagination } from '../../../components/ListPagination';
-import { NviCandidateContext } from '../../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../../context/RegistrationFormContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import {
@@ -56,7 +56,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const [currentPage, setCurrentPage] = useState(1);
   const [filterInput, setFilterInput] = useState('');
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const contributors = values.entityDescription?.contributors ?? [];
 
@@ -266,7 +266,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       />
 
       <Button
-        disabled={disableNviCriticalFields}
+        disabled={disableNviCriticalFields || disableChannelClaimsFields}
         sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
         onClick={() => setOpenAddContributor(true)}
         variant="contained"

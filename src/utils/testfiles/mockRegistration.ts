@@ -107,7 +107,7 @@ export const mockRegistration: JournalRegistration = {
       },
     },
   },
-  allowedOperations: ['update', 'delete', 'unpublish'],
+  allowedOperations: ['partial-update', 'update', 'delete', 'unpublish', 'upload-file'],
 };
 
 export const mockTicketCollection: TicketCollection = {
@@ -115,6 +115,7 @@ export const mockTicketCollection: TicketCollection = {
   tickets: [
     {
       owner: 'creator@unit.no',
+      ownerAffiliation: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
       type: 'GeneralSupportCase',
       status: 'Pending',
       viewedBy: [],

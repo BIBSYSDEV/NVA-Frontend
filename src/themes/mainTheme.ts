@@ -1,5 +1,6 @@
 import { createTheme, PaletteColorOptions, SxProps } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
+import type {} from '@mui/x-date-pickers/themeAugmentation';
 import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
@@ -64,6 +65,9 @@ declare module '@mui/material/Button' {
     generalSupportCase: true;
   }
 }
+
+const dialogTitleId = 'dialog-title-id';
+export const dialogDescriptionId = 'dialog-description-id';
 
 export const mainTheme = createTheme(
   {
@@ -197,6 +201,30 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiCssBaseline: {
+        styleOverrides: {
+          fieldset: {
+            border: 'none',
+            padding: 0,
+            margin: 0,
+          },
+          legend: {
+            padding: 0,
+          },
+        },
+      },
+      MuiDatePicker: {
+        defaultProps: {
+          views: ['year', 'month', 'day'],
+          /*
+           * Use fallback to the old DOM structure for DatePicker since the new way introduces
+           * problems to Cypress tests, where they are not able to enter a value to the input
+           * field as it is hidden. The old DOM structure has som accessibility issues.
+           * Documentation: https://mui.com/x/migration/migration-pickers-v7/#new-dom-structure-for-the-field
+           */
+          enableAccessibleFieldDOMStructure: false, // TODO: Remove this when we find a solution to the Cypress issue
+        },
+      },
       MuiMenu: {
         defaultProps: {
           disablePortal: true,
@@ -217,6 +245,23 @@ export const mainTheme = createTheme(
         },
         defaultProps: {
           variant: 'outlined',
+        },
+      },
+      MuiDialog: {
+        defaultProps: {
+          'aria-labelledby': dialogTitleId,
+          'aria-describedby': dialogDescriptionId,
+        },
+      },
+      MuiDialogTitle: {
+        defaultProps: {
+          id: dialogTitleId,
+          component: 'h1',
+        },
+      },
+      MuiDialogContent: {
+        defaultProps: {
+          id: dialogDescriptionId,
         },
       },
       MuiLink: {
@@ -321,6 +366,22 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiPickersFilledInput: {
+        styleOverrides: {
+          root: {
+            backgroundColor: Color.White,
+            '&.Mui-focused': {
+              backgroundColor: Color.White,
+            },
+            '&:hover': {
+              backgroundColor: Color.White,
+            },
+            '&.Mui-disabled': {
+              backgroundColor: Color.White,
+            },
+          },
+        },
+      },
       MuiMenuItem: {
         styleOverrides: {
           root: {
@@ -336,6 +397,11 @@ export const mainTheme = createTheme(
           root: {
             borderRadius: '0.25rem',
           },
+        },
+      },
+      MuiSkeleton: {
+        defaultProps: {
+          animation: 'wave',
         },
       },
     },

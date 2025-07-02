@@ -3,27 +3,35 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Box, Divider, IconButton } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Registration } from '../../../types/registration.types';
+import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { DeleteDraftRegistration } from './DeleteDraftRegistration';
-import { RepublishRegistration } from './RepublishRegistration';
+import { RepublishRegistration, RepublishRegistrationProps } from './RepublishRegistration';
 import { TerminateRegistration } from './TerminateRegistration';
 import { UnpublishRegistration } from './UnpublishRegistration';
+import { UpdateTicketOwnership } from './UpdateTicketOwnership';
 
-interface MoreActionsCollapseProps {
-  registration: Registration;
+interface MoreActionsCollapseProps extends RepublishRegistrationProps {
+  ticket?: PublishingTicket;
+  refetchData: () => Promise<void>;
 }
 
-export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) => {
+export const MoreActionsCollapse = ({
+  registration,
+  registrationIsValid,
+  ticket,
+  refetchData,
+}: MoreActionsCollapseProps) => {
   const { t } = useTranslation();
   const [openMoreActions, setOpenMoreActions] = useState(false);
 
   const isPublished = registration.status === 'PUBLISHED' || registration.status === 'PUBLISHED_METADATA';
   const isUnpublished = registration.status === 'UNPUBLISHED';
   const canDeleteRegistration = userHasAccessRight(registration, 'delete');
+  const canChangeTicketOwnership = ticket && ticket.allowedOperations.includes('transfer');
 
-  if (!(isPublished || isUnpublished || canDeleteRegistration)) {
+  if (!(isPublished || isUnpublished || canDeleteRegistration || canChangeTicketOwnership)) {
     return null;
   }
 
@@ -41,14 +49,19 @@ export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) 
 
       {openMoreActions && (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {isPublished && <UnpublishRegistration registration={registration} />}
+          {isPublished && <UnpublishRegistration registration={registration} refetchData={refetchData} />}
           {isUnpublished && (
             <>
-              <RepublishRegistration registration={registration} />
+              <RepublishRegistration
+                registration={registration}
+                registrationIsValid={registrationIsValid}
+                refetchData={refetchData}
+              />
               <TerminateRegistration registration={registration} />
             </>
           )}
           {canDeleteRegistration && <DeleteDraftRegistration registration={registration} />}
+          {canChangeTicketOwnership && <UpdateTicketOwnership ticket={ticket} refetchData={refetchData} />}
         </Box>
       )}
     </Box>

@@ -6,8 +6,9 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router';
-import { fetchPerson, ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from '../../api/cristinApi';
+import { Link, useLocation, useParams } from 'react-router';
+import { ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from '../../api/cristinApi';
+import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam } from '../../api/searchApi';
@@ -18,6 +19,7 @@ import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
 import { projectSortOptions } from '../../components/ProjectSortSelector';
+import { RegistrationList } from '../../components/RegistrationList';
 import { SortSelectorWithoutParams } from '../../components/SortSelectorWithoutParams';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
@@ -26,18 +28,18 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { SearchParam } from '../../utils/searchHelpers';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { IdentifierParams, UrlPathTemplate } from '../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 import { SearchTypeValue } from '../dashboard/HomePage';
 import NotFound from '../errorpages/NotFound';
 import { UserOrcid } from '../my_page/user_profile/UserOrcid';
 import { UserOrcidHelperModal } from '../my_page/user_profile/UserOrcidHelperModal';
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
-import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 import { registrationSortOptions } from '../search/registration_search/RegistrationSortSelector';
 
 const ResearchProfile = () => {
   const { t } = useTranslation();
+  const { identifier } = useParams<IdentifierParams>();
   const location = useLocation();
   const [registrationsPage, setRegistrationsPage] = useState(1);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -56,24 +58,16 @@ const ResearchProfile = () => {
   const user = useSelector((store: RootState) => store.user);
 
   const currentCristinId = user?.cristinId ?? '';
-  const isPublicPage = location.pathname === UrlPathTemplate.ResearchProfile;
-  const personId = isPublicPage
-    ? (new URLSearchParams(location.search).get('id') ?? '') // Page for Research Profile of anyone
-    : currentCristinId; // Page for My Research Profile
+  const isPublicPage = location.pathname.startsWith(UrlPathTemplate.ResearchProfileRoot) && identifier;
+  const personIdentifier = isPublicPage
+    ? identifier // Page for Research Profile of anyone
+    : getIdentifierFromId(currentCristinId); // Page for My Research Profile
 
-  const personIdNumber = getIdentifierFromId(personId);
-
-  const personQuery = useQuery({
-    enabled: !!personId,
-    queryKey: ['person', personId],
-    queryFn: () => fetchPerson(personId),
-    meta: { errorMessage: t('feedback.error.get_person') },
-  });
-
+  const personQuery = useFetchPersonByIdentifier(personIdentifier);
   const person = personQuery.data;
 
   const registrationsQueryConfig: FetchResultsParams = {
-    contributor: personId,
+    contributor: personIdentifier,
     from: (registrationsPage - 1) * registrationRowsPerPage,
     results: registrationRowsPerPage,
     order: registrationSort.orderBy,
@@ -81,13 +75,13 @@ const ResearchProfile = () => {
   };
 
   const registrationsQuery = useRegistrationSearch({
-    enabled: !!personId,
+    enabled: !!personIdentifier,
     params: registrationsQueryConfig,
     keepDataWhileLoading: true,
   });
 
   const projectsQueryConfig: ProjectsSearchParams = {
-    participant: personIdNumber,
+    participant: personIdentifier,
     orderBy: projectSort.orderBy,
     sort: projectSort.sortOrder,
   };
@@ -100,6 +94,8 @@ const ResearchProfile = () => {
   });
 
   const projects = projectsQuery.data?.hits ?? [];
+
+  const personId = person?.id ?? '';
 
   const promotedPublicationsQuery = useQuery({
     enabled: !!personId,
@@ -133,7 +129,9 @@ const ResearchProfile = () => {
     projectsQuery.isPending ||
     promotedPublicationsQuery.isPending;
 
-  return isPending ? (
+  return personQuery.isError ? (
+    <NotFound />
+  ) : isPending ? (
     <PageSpinner aria-label={t('my_page.research_profile')} />
   ) : !person ? (
     <NotFound />
@@ -248,15 +246,15 @@ const ResearchProfile = () => {
             container
             spacing={1}>
             {user && (
-              <Grid item>
+              <Grid>
                 <UserOrcid user={user} />
               </Grid>
             )}
 
-            <Grid item>
+            <Grid>
               <UserOrcidHelperModal />
             </Grid>
-            <Grid item>
+            <Grid>
               <Typography>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
             </Grid>
           </Grid>
@@ -279,51 +277,50 @@ const ResearchProfile = () => {
         <Typography variant="h2" gutterBottom sx={{ mt: '2rem' }}>
           {registrationsHeading}
         </Typography>
-        {registrationsQuery.data?.totalHits && (
+        {registrationsQuery.data?.totalHits && registrationsQuery.data.totalHits > 0 ? (
           <Typography>
-            <Trans t={t} i18nKey="my_page.my_profile.link_to_results_search">
-              <MuiLink component={Link} to={`/?${ResultParam.Contributor}=${encodeURIComponent(personId)}`} />
+            <Trans i18nKey="my_page.my_profile.link_to_results_search">
+              <MuiLink component={Link} to={`/?${ResultParam.Contributor}=${encodeURIComponent(personIdentifier)}`} />
             </Trans>
           </Typography>
-        )}
-        {registrationsQuery.isFetching ? (
-          <ListSkeleton minWidth={100} height={100} />
-        ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
-          <ListPagination
-            paginationAriaLabel={t('common.pagination_result_search')}
-            count={registrationsQuery.data.totalHits}
-            rowsPerPage={registrationRowsPerPage}
-            page={registrationsPage}
-            onPageChange={(newPage) => setRegistrationsPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRegistrationRowsPerPage(newRowsPerPage);
-              setRegistrationsPage(1);
-            }}
-            sortingComponent={
-              <SortSelectorWithoutParams
-                options={registrationSortOptions}
-                value={registrationSort}
-                setValue={(value) => {
-                  setRegistrationsPage(1);
-                  setRegistrationSort(value);
-                }}
-              />
-            }>
-            <RegistrationSearchResults
-              searchResult={registrationsQuery.data.hits}
+        ) : null}
+        <ListPagination
+          paginationAriaLabel={t('common.pagination_result_search')}
+          count={registrationsQuery.data?.totalHits ?? 0}
+          rowsPerPage={registrationRowsPerPage}
+          page={registrationsPage}
+          onPageChange={(newPage) => setRegistrationsPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRegistrationRowsPerPage(newRowsPerPage);
+            setRegistrationsPage(1);
+          }}
+          sortingComponent={
+            <SortSelectorWithoutParams
+              options={registrationSortOptions}
+              value={registrationSort}
+              setValue={(value) => {
+                setRegistrationsPage(1);
+                setRegistrationSort(value);
+              }}
+            />
+          }>
+          {registrationsQuery.isFetching ? (
+            <ListSkeleton minWidth={100} height={100} />
+          ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
+            <RegistrationList
+              registrations={registrationsQuery.data.hits}
               promotedPublications={promotedPublications}
             />
-          </ListPagination>
-        ) : (
-          <Typography>{t('common.no_hits')}</Typography>
-        )}
-
+          ) : (
+            <Typography>{t('common.no_hits')}</Typography>
+          )}
+        </ListPagination>
         <Divider sx={{ my: '1rem' }} />
 
         <Typography variant="h2" gutterBottom sx={{ mt: '1rem' }}>
           {projectHeading}
         </Typography>
-        {projectsQuery.data?.size && (
+        {projectsQuery.data?.size && projectsQuery.data.size > 0 ? (
           <Typography>
             <Trans t={t} i18nKey="my_page.my_profile.link_to_projects_search">
               <MuiLink
@@ -334,39 +331,39 @@ const ResearchProfile = () => {
               />
             </Trans>
           </Typography>
-        )}
-        {projectsQuery.isFetching ? (
-          <ListSkeleton minWidth={100} height={100} />
-        ) : projects.length > 0 ? (
-          <ListPagination
-            paginationAriaLabel={t('common.pagination_project_search')}
-            count={projectsQuery.data?.size ?? 0}
-            rowsPerPage={projectRowsPerPage}
-            page={projectsPage}
-            onPageChange={(newPage) => setProjectsPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setProjectRowsPerPage(newRowsPerPage);
-              setProjectsPage(1);
-            }}
-            sortingComponent={
-              <SortSelectorWithoutParams
-                options={projectSortOptions}
-                value={projectSort}
-                setValue={(value) => {
-                  setProjectsPage(1);
-                  setProjectSort(value);
-                }}
-              />
-            }>
+        ) : null}
+        <ListPagination
+          paginationAriaLabel={t('common.pagination_project_search')}
+          count={projectsQuery.data?.size ?? 0}
+          rowsPerPage={projectRowsPerPage}
+          page={projectsPage}
+          onPageChange={(newPage) => setProjectsPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setProjectRowsPerPage(newRowsPerPage);
+            setProjectsPage(1);
+          }}
+          sortingComponent={
+            <SortSelectorWithoutParams
+              options={projectSortOptions}
+              value={projectSort}
+              setValue={(value) => {
+                setProjectsPage(1);
+                setProjectSort(value);
+              }}
+            />
+          }>
+          {projectsQuery.isFetching ? (
+            <ListSkeleton minWidth={100} height={100} />
+          ) : projects.length > 0 ? (
             <List>
               {projects.map((project) => (
                 <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />
               ))}
             </List>
-          </ListPagination>
-        ) : (
-          <Typography>{t('common.no_hits')}</Typography>
-        )}
+          ) : (
+            <Typography>{t('common.no_hits')}</Typography>
+          )}
+        </ListPagination>
       </BackgroundDiv>
     </div>
   );

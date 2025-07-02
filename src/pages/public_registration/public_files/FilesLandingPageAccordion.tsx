@@ -7,17 +7,18 @@ import { useSelector } from 'react-redux';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
 import { RootState } from '../../../redux/store';
+import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  isCategoryWithFileVersion,
   isOpenFile,
   isPendingOpenFile,
-  isTypeWithFileVersionField,
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
-import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { getWizardPathByRegistration } from '../../../utils/urlPaths';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
 import { PendingFilesInfo } from './PendingFilesInfo';
@@ -45,7 +46,9 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
 
-  const userCanUpdateRegistration = userHasAccessRight(registration, 'update');
+  const userCanUpdateRegistration = userHasAccessRight(registration, 'partial-update');
+  const userCanUploadFile = userHasAccessRight(registration, 'upload-file');
+
   const [selectedTab, setSelectedTab] = useState(FileTab.OpenFiles);
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
@@ -67,7 +70,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
 
   const totalFiles = openableFilesToShow.length + internalFilesToShow.length;
 
-  const showFileVersionField = isTypeWithFileVersionField(
+  const showFileVersionField = isCategoryWithFileVersion(
     registration.entityDescription?.reference?.publicationInstance?.type
   );
 
@@ -76,7 +79,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     registration.status === RegistrationStatus.PublishedMetadata;
 
   const showLinkToUploadNewFiles =
-    userCanUpdateRegistration &&
+    userCanUploadFile &&
     totalFiles === 0 &&
     !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact) &&
     registration.entityDescription?.reference?.publicationInstance?.type &&
@@ -131,7 +134,8 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <SelectableButton
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
-            to={getRegistrationWizardPath(registration.identifier, RegistrationTab.FilesAndLicenses)}>
+            state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
+            to={getWizardPathByRegistration(registration, { tab: RegistrationTab.FilesAndLicenses })}>
             {t('registration.files_and_license.add_files_or_links')}
           </SelectableButton>
         </Box>

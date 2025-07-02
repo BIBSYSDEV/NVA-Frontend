@@ -28,7 +28,7 @@ export const AddAffiliationSection = () => {
 
   return (
     <section>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {t('common.employment')}
       </Typography>
 
@@ -108,7 +108,6 @@ export const AddAffiliationSection = () => {
                   }
                   setFieldValue(field.name, date ?? '');
                 }}
-                views={['year', 'month', 'day']}
                 minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : undefined}
                 slotProps={{
                   textField: {

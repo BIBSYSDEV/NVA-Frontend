@@ -1,7 +1,6 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { LoadingButton } from '@mui/lab';
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -13,11 +12,12 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { Ticket } from '../../../types/publication_types/ticket.types';
-import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { Registration } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
+import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
@@ -38,6 +38,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   const user = useSelector((store: RootState) => store.user);
   const userIsTicketOwner = user && supportTicket?.owner === user.nvaUsername;
 
+  const queryClient = useQueryClient();
   const ticketMutation = useMutation({
     mutationFn: supportTicket
       ? (newTicketData: UpdateTicketData) => updateTicket(supportTicket.id, newTicketData)
@@ -96,30 +97,23 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
             {userCanCompleteTicket && isOnTasksPage && supportTicket.status !== 'Completed' && (
-              <LoadingButton
+              <Button
                 sx={{ alignSelf: 'center', width: 'fit-content', bgcolor: 'white' }}
                 loading={ticketMutation.isPending}
                 variant="outlined"
-                onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
+                onClick={async () => {
+                  await ticketMutation.mutateAsync({ status: 'Completed' });
+                  invalidateQueryKeyDueToReindexing(queryClient, 'taskNotifications');
+                }}>
                 {t('my_page.messages.mark_as_completed')}
-              </LoadingButton>
+              </Button>
             )}
 
             {isOnTasksPage && tabErrors && (
-              <RegistrationErrorActions
-                tabErrors={tabErrors}
-                registrationIdentifier={registration.identifier}
-                isPublished={registration.status === RegistrationStatus.Published}
-              />
+              <RegistrationErrorActions tabErrors={tabErrors} registration={registration} />
             )}
 
-            {supportTicket.messages.length > 0 && (
-              <TicketMessageList
-                ticket={supportTicket}
-                refetchData={refetchData}
-                canDeleteMessage={userCanCompleteTicket}
-              />
-            )}
+            {supportTicket.messages.length > 0 && <TicketMessageList ticket={supportTicket} />}
           </>
         )}
         <MessageForm
@@ -130,6 +124,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
                 await addMessage(supportTicket.id, message);
                 if (userCanCompleteTicket && !userIsTicketOwner) {
                   await updateTicket(supportTicket.id, { status: 'Completed' });
+                  invalidateQueryKeyDueToReindexing(queryClient, 'taskNotifications');
                 }
               } else {
                 await createSupportTicket(message);

@@ -1,19 +1,19 @@
-import { Query } from '@tanstack/react-query';
+import { FilterOptionsState } from '@mui/material';
+import { Query, QueryClient } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
-import { FetchTicketsParams, ResultParam } from '../api/searchApi';
+import { NavigateFunction } from 'react-router';
+import { FetchTicketsParams, ResultParam, TicketSearchParam } from '../api/searchApi';
+import { FundingSource } from '../types/project.types';
 import { TicketType } from '../types/publication_types/ticket.types';
 import { AggregationFileKeyType } from '../types/registration.types';
 import { User } from '../types/user.types';
 
 export enum SearchParam {
   From = 'from',
-  OrderBy = 'orderBy',
   Query = 'query',
   Results = 'results',
-  SortOrder = 'sortOrder',
   Type = 'type',
   Page = 'page',
-  Name = 'name',
 }
 
 export interface PropertySearch {
@@ -148,6 +148,7 @@ const commonTaskNotificationsParams: FetchTicketsParams = {
 export const getTaskNotificationsParams = (user: User | null): FetchTicketsParams => {
   const typeParam = [
     user?.isPublishingCurator && ('PublishingRequest' satisfies TicketType),
+    user?.isThesisCurator && ('FilesApprovalThesis' satisfies TicketType),
     user?.isDoiCurator && ('DoiRequest' satisfies TicketType),
     user?.isSupportCurator && ('GeneralSupportCase' satisfies TicketType),
   ]
@@ -199,4 +200,29 @@ export const syncParamsWithSearchFields = (params: URLSearchParams) => {
   });
 
   return params;
+};
+
+export const resetPaginationAndNavigate = (params: URLSearchParams, navigate: NavigateFunction) => {
+  const syncedParams = syncParamsWithSearchFields(params);
+  syncedParams.delete(TicketSearchParam.From);
+  navigate({ search: syncedParams.toString() });
+};
+
+export const fundingSourceAutocompleteFilterOptions = (
+  options: FundingSource[],
+  state: FilterOptionsState<FundingSource>
+) => {
+  const filter = state.inputValue.toLocaleLowerCase();
+  return options.filter((option) => {
+    const names = Object.values(option.name).map((name) => name.toLocaleLowerCase());
+    const identifier = option.identifier.toLocaleLowerCase();
+    return identifier.includes(filter) || names.some((name) => name.includes(filter));
+  });
+};
+
+// Note: The waiting time is a bit arbitrary, but it should be enough time for the reindexing to finish in many cases.
+export const invalidateQueryKeyDueToReindexing = (queryClient: QueryClient, key: string, waitMs = 5_000) => {
+  setTimeout(() => {
+    queryClient.invalidateQueries({ queryKey: [key] });
+  }, waitMs);
 };

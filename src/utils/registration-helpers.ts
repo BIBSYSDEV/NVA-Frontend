@@ -55,6 +55,7 @@ import {
   SerialPublication,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
+import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -99,7 +100,7 @@ export const isMediaContribution = (instanceType: any) => Object.values(MediaTyp
 
 export const isResearchData = (instanceType: any) => Object.values(ResearchDataType).includes(instanceType);
 
-export const isPeriodicalMediaContribution = (instanceType: string) =>
+export const isPeriodicalMediaContribution = (instanceType?: string) =>
   instanceType === MediaType.MediaFeatureArticle || instanceType === MediaType.MediaReaderOpinion;
 
 export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
@@ -212,58 +213,121 @@ export const getFormattedRegistration = (registration: Registration) => {
 };
 
 type ContributorConfig = {
-  [type in PublicationInstanceType]: { primaryRoles: ContributorRole[]; secondaryRoles: ContributorRole[] };
+  [type in PublicationInstanceType]: {
+    primaryRoles: ContributorRole[];
+    secondaryRoles: ContributorRole[];
+  };
 };
 
 export const contributorConfig: ContributorConfig = {
   // Journal
   [JournalType.AcademicArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.AcademicLiteratureReview]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Letter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Review]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Leader]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Corrigendum]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Issue]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.ConferenceAbstract]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.CaseReport]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.StudyProtocol]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.ProfessionalArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.PopularScienceArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   // Book
   [BookType.AcademicMonograph]: {
@@ -381,39 +445,84 @@ export const contributorConfig: ContributorConfig = {
   // Chapter
   [ChapterType.AcademicChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.NonFictionChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.PopularScienceChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.TextbookChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.EncyclopediaChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.Introduction]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ExhibitionCatalogChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ReportChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ConferenceAbstract]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   // Presentation
   [PresentationType.ConferenceLecture]: {
@@ -609,17 +718,6 @@ export const getContributorsWithPrimaryRole = (
   });
 };
 
-export const getContributorsWithSecondaryRole = (
-  contributors: PreviewContributor[] | Contributor[],
-  registrationType: PublicationInstanceType
-) => {
-  const { secondaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => {
-    const roleValue = typeof contributor.role === 'string' ? contributor.role : contributor.role.type;
-    return secondaryRoles.includes(roleValue);
-  });
-};
-
 export const getOutputName = (item: OutputItem): string => {
   switch (item.type) {
     case 'Venue':
@@ -646,7 +744,7 @@ export const getOutputName = (item: OutputItem): string => {
     case 'AudioVisualPublication':
       return (item as AudioVisualPublication).publisher.name;
     case 'Concert':
-      return (item as Concert).place.name;
+      return (item as Concert).place?.name ?? i18n.t('registration.resource_type.artistic.output_type.Concert');
     case 'OtherPerformance': {
       const otherMusicPerformance = item as OtherMusicPerformance;
 
@@ -674,6 +772,9 @@ export const getOutputName = (item: OutputItem): string => {
 export const userHasAccessRight = (registration: Registration | undefined, operation: RegistrationOperation) =>
   registration?.allowedOperations?.includes(operation) ?? false;
 
+export const userCanOnlyDoPartialUpdate = (registration: Registration) =>
+  userHasAccessRight(registration, 'partial-update') && !userHasAccessRight(registration, 'update');
+
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
 
@@ -699,11 +800,11 @@ export const isPendingOpenFile = (artifact: AssociatedArtifact) => artifact.type
 
 export const isOpenFile = (artifact: AssociatedArtifact) => artifact.type === FileType.OpenFile;
 
-export const isTypeWithRrs = (publicationInstanceType?: string) =>
+export const isCategoryWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
 
-export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
+export const isCategoryWithFileVersion = (publicationInstanceType?: string) =>
   isJournal(publicationInstanceType) || isBook(publicationInstanceType) || isChapter(publicationInstanceType);
 
 export const isEmbargoed = (embargoDate: Date | null) => {
@@ -731,20 +832,35 @@ export const getDisabledCategories = (
 ) => {
   const disabledCategories: DisabledCategory[] = [];
 
-  if (!user?.isThesisCurator) {
-    Object.values(DegreeType).forEach((type) => {
-      disabledCategories.push({ type, text: t('registration.resource_type.protected_degree_type') });
-    });
+  // Do not allow changing from degree to non-degree (and vice-versa) if result has open (approved) files
+  if (registration.associatedArtifacts.some(isOpenFile)) {
+    if (isDegree(registration.entityDescription?.reference?.publicationInstance?.type)) {
+      const nonDegreeTypes = allPublicationInstanceTypes.filter((type) => !isDegree(type));
+      nonDegreeTypes.forEach((type) => {
+        disabledCategories.push({
+          type,
+          text: t('registration.resource_type.cannot_select_non_degree_when_degree_has_open_file'),
+        });
+      });
+    } else {
+      Object.values(DegreeType).forEach((type) => {
+        disabledCategories.push({
+          type,
+          text: t('registration.resource_type.cannot_select_degree_when_non_degree_has_open_file'),
+        });
+      });
+    }
   }
 
-  const hasFiles = getAssociatedFiles(registration.associatedArtifacts).length > 0;
+  // Do not allow non-curator to select a category that don't support file upload if result has a file
+  if (!hasCuratorRole(user) && getAssociatedFiles(registration.associatedArtifacts).length > 0) {
+    if (customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
+      const categoriesWithoutFileSupport = allPublicationInstanceTypes
+        .filter((type) => !customer.allowFileUploadForTypes.includes(type))
+        .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
 
-  if (hasFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
-    const categoriesWithoutFileSupport = allPublicationInstanceTypes
-      .filter((type) => !customer.allowFileUploadForTypes.includes(type))
-      .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
-
-    disabledCategories.push(...categoriesWithoutFileSupport);
+      disabledCategories.push(...categoriesWithoutFileSupport);
+    }
   }
 
   return disabledCategories;
@@ -852,7 +968,7 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     })) ?? [];
 
   const registrationSearchItem: RegistrationSearchItem = {
-    type: registration.entityDescription?.reference?.publicationInstance.type ?? '',
+    type: registration.entityDescription?.reference?.publicationInstance?.type ?? '',
     id: registration.id,
     identifier: registration.identifier,
     recordMetadata: {
@@ -879,4 +995,27 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     contributorsPreview: contributors,
   };
   return registrationSearchItem;
+};
+
+/**
+ * Checks if the customer allows file upload for the given category.
+ * If 'true' all user roles are allowed to upload open files.
+ * If 'false' only users with curator role can upload open files.
+ */
+export const allowsFileUpload = (customer: CustomerInstitution | null, category?: PublicationInstanceType | '') =>
+  !!category && !!customer?.allowFileUploadForTypes.includes(category);
+
+export const getAssociatedLinkRelationTitle = (t: TFunction, relation: AssociatedLink['relation']) => {
+  switch (relation) {
+    case 'dataset':
+      return t('registration.publication_types.DataSet');
+    case 'mention':
+      return t('common.mention');
+    case 'sameAs':
+      return t('common.full_text');
+    case 'metadataSource':
+      return t('common.metadata_source');
+    default:
+      return t('common.link');
+  }
 };

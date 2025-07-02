@@ -23,7 +23,10 @@ export enum FileType {
   InternalFile = 'InternalFile',
   PendingInternalFile = 'PendingInternalFile',
   HiddenFile = 'HiddenFile',
+  UpdloadedFile = 'UploadedFile',
 }
+
+export type FileAllowedOperation = 'delete' | 'download' | 'write-metadata';
 
 export interface AssociatedFile {
   type: FileType;
@@ -38,9 +41,10 @@ export interface AssociatedFile {
   rightsRetentionStrategy: FileRrs;
   uploadDetails?: UserUploadDetails | ImportUploadDetails;
   publishedDate?: string;
+  allowedOperations?: FileAllowedOperation[];
 }
 
-interface UserUploadDetails {
+export interface UserUploadDetails {
   type: 'UserUploadDetails';
   uploadedBy: string;
   uploadedDate: string;
@@ -65,13 +69,13 @@ export const emptyFile: AssociatedFile = {
   rightsRetentionStrategy: {
     type: 'NullRightsRetentionStrategy',
   },
+  allowedOperations: ['delete', 'download', 'write-metadata'],
 };
 
 export interface AssociatedLink {
   type: 'AssociatedLink';
   id: string;
-  name?: string;
-  description?: string;
+  relation?: 'dataset' | 'mention' | 'sameAs' | 'metadataSource';
 }
 
 export interface NullAssociatedArtifact {

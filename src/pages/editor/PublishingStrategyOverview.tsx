@@ -47,7 +47,7 @@ export const PublishingStrategyOverview = () => {
       ) : (
         <>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: { md: '75%', lg: '50%' } }}>
-            <Typography variant="h2">{t('editor.publish_strategy.publish_strategy')}</Typography>
+            <Typography variant="h1">{t('editor.publish_strategy.publish_strategy')}</Typography>
             <PublishStrategyContainer>
               {currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles' ? (
                 <>
@@ -92,7 +92,7 @@ export const PublishingStrategyOverview = () => {
 
             <Divider />
 
-            <Typography variant="h3">{t('editor.retention_strategy.rrs')}</Typography>
+            <Typography variant="h2">{t('editor.retention_strategy.rrs')}</Typography>
             {isRrs || isOverridableRrs ? (
               <>
                 <Trans

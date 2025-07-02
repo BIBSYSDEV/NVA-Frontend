@@ -451,6 +451,7 @@ const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): Formi
   associatedArtifacts: associatedArtifacts.map((artifact) => {
     if (associatedArtifactIsFile(artifact)) {
       const touched: FormikTouched<AssociatedFile> = {
+        type: true,
         publisherVersion: true,
         embargoDate: true,
         license: true,
@@ -503,7 +504,7 @@ export const validateRegistrationForm = (registration: Registration): FormikErro
 export const isPublishableForWorkflow2 = (registration: Registration) => {
   const isValid = registrationPublishableValidationSchema.isValidSync(registration, {
     context: {
-      publicationInstanceType: registration.entityDescription?.reference?.publicationInstance.type ?? '',
+      publicationInstanceType: registration.entityDescription?.reference?.publicationInstance?.type ?? '',
     } as any,
   });
   return isValid;

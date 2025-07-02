@@ -1,8 +1,8 @@
 import { useLocation } from 'react-router';
 import {
-  CustomerResultParam,
-  FetchCustomerResultsParams,
+  FetchProtectedResultsParams,
   FetchResultsParams,
+  ProtectedResultParam,
   ResultParam,
   ResultSearchOrder,
   SortOrder,
@@ -15,17 +15,18 @@ import { SearchParam } from '../searchHelpers';
 
 const defaultRowsPerPage = ROWS_PER_PAGE_OPTIONS[0];
 
-type SearchParamType = FetchResultsParams & FetchCustomerResultsParams;
+type SearchParamType = FetchResultsParams & FetchProtectedResultsParams;
 
 export const useRegistrationsQueryParams = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
-  const status = searchParams.get(CustomerResultParam.Status);
+  const status = searchParams.get(ProtectedResultParam.Status);
   const categoryShould = searchParams.get(ResultParam.CategoryShould);
 
   const allParams = {
     abstract: searchParams.get(ResultParam.Abstract),
+    allScientificValues: searchParams.get(ResultParam.AllScientificValues),
     category: searchParams.get(ResultParam.Category) as PublicationInstanceType | null,
     categoryShould: categoryShould ? (categoryShould.split(',') as PublicationInstanceType[]) : null,
     contributor: searchParams.get(ResultParam.Contributor),

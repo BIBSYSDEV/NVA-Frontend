@@ -4,21 +4,22 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { defaultChannelSearchSize, searchForPublishers } from '../../../../api/publicationChannelApi';
+import { usePublisherSearch } from '../../../../api/hooks/usePublisherSearch';
+import { defaultChannelSearchSize } from '../../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
 } from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
+import { ClaimedChannelInfoBox } from './ClaimedChannelInfoBox';
 import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -31,9 +32,8 @@ export const PublisherField = () => {
   const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
   const { reference, publicationDate } = values.entityDescription as BookEntityDescription;
   const publisher = reference?.publicationContext.publisher;
-  const year = publicationDate?.year ?? '';
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const [showPublisherForm, setShowPublisherForm] = useState(false);
   const togglePublisherForm = () => setShowPublisherForm(!showPublisherForm);
@@ -45,12 +45,10 @@ export const PublisherField = () => {
   // Reset search size when query changes
   useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
-  const publisherOptionsQuery = useQuery({
-    queryKey: ['publisherSearch', debouncedQuery, year, searchSize],
-    enabled: debouncedQuery.length > 3 && debouncedQuery === query,
-    queryFn: () => searchForPublishers(debouncedQuery, year, searchSize),
-    meta: { errorMessage: t('feedback.error.get_publishers') },
-    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
+  const publisherOptionsQuery = usePublisherSearch({
+    searchTerm: debouncedQuery,
+    year: publicationDate?.year,
+    size: searchSize,
   });
 
   const options = publisherOptionsQuery.data?.hits ?? [];
@@ -85,7 +83,7 @@ export const PublisherField = () => {
       <Field name={ResourceFieldNames.PublicationContextPublisherId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
-            disabled={disableNviCriticalFields}
+            disabled={disableNviCriticalFields || disableChannelClaimsFields}
             fullWidth
             multiple
             id={publisherFieldTestId}
@@ -162,6 +160,9 @@ export const PublisherField = () => {
           />
         )}
       </Field>
+
+      {publisher?.id && <ClaimedChannelInfoBox channelId={publisher.id} channelType={t('common.publisher')} />}
+
       {!publisher?.id && publisherOptionsQuery.isFetched && (
         <>
           <StyledCreateChannelButton variant="outlined" onClick={togglePublisherForm}>

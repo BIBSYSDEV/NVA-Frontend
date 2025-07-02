@@ -178,51 +178,22 @@ interface PublicJournalContentProps {
   errorMessage: string;
 }
 
-const journalIdSubstring = '/journal/';
-const seriesIdSubstring = '/series/';
-
 const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) => {
   const { t } = useTranslation();
-  const [alternativeJournalId, setAlternativeJournalId] = useState('');
 
   const journalQuery = useQuery({
     enabled: !!id,
     queryKey: ['channel', id],
     queryFn: () => fetchResource<SerialPublication>(id),
-    retry: 1,
-    meta: {
-      errorMessage: false,
-      handleError: () => {
-        // Some IDs are mixed with journal and series, so we must retry with the alternative ID
-        // TODO: Consider removing this when NP-31819 is Done
-        const currentId = id?.toLowerCase();
-        if (currentId?.includes(journalIdSubstring)) {
-          const alternativeId = currentId.replace(journalIdSubstring, seriesIdSubstring);
-          setAlternativeJournalId(alternativeId);
-        } else if (currentId?.includes(seriesIdSubstring)) {
-          const alternativeId = currentId.replace(seriesIdSubstring, journalIdSubstring);
-          setAlternativeJournalId(alternativeId);
-        }
-      },
-    },
-  });
-
-  const journalBackupQuery = useQuery({
-    enabled: journalQuery.isError && !!alternativeJournalId,
-    queryKey: ['channel', alternativeJournalId],
-    queryFn: () => fetchResource<SerialPublication>(alternativeJournalId),
-    retry: 1,
     meta: { errorMessage },
   });
-
-  const isLoadingJournal = (!!id && journalQuery.isPending) || (journalQuery.isError && journalBackupQuery.isPending);
-  const journal = journalQuery.data ?? journalBackupQuery.data;
+  const journal = journalQuery.data;
 
   const journalName = journal?.discontinued
     ? `${journal.name} (${t('common.discontinued')}: ${journal.discontinued})`
     : journal?.name;
 
-  return isLoadingJournal ? (
+  return journalQuery.isPending ? (
     <ListSkeleton height={20} />
   ) : !journal ? null : (
     <>
@@ -302,7 +273,9 @@ export const PublicOutputs = ({ outputs, showType = false }: PublicOutputsProps)
         {t('registration.resource_type.artistic.announcements')}
       </Typography>
       {outputs.map((output, index) => (
-        <PublicOutputRow key={index} output={output} showType={showType} />
+        <ErrorBoundary key={index}>
+          <PublicOutputRow output={output} showType={showType} />
+        </ErrorBoundary>
       ))}
     </>
   );
@@ -333,7 +306,7 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
 
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-      <Typography>{rowString}</Typography>
+      <Typography>{rowString?.trim() || <i>{t('common.unknown')}</i>}</Typography>
       <Tooltip title={t('common.show_details')}>
         <IconButton
           size="small"
@@ -344,7 +317,6 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
           <OpenInNewIcon fontSize="small" />
         </IconButton>
       </Tooltip>
-
       <Dialog open={openModal} onClose={toggleModal} fullWidth>
         <DialogTitle>{t('registration.resource_type.artistic.announcement')}</DialogTitle>
         <ErrorBoundary>
@@ -640,7 +612,7 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       <Typography sx={{ mb: '1rem' }}>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
 
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography sx={{ mb: '1rem' }}>{place.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{place?.name ?? '-'}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
       <Typography sx={{ mb: '1rem' }}>{concertSeries ? t('common.yes') : t('common.no')} </Typography>
@@ -652,11 +624,13 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       )}
 
       <Typography variant="h3">{t('common.date')}</Typography>
-      {time.type === 'Instant' ? (
-        <Typography sx={{ mb: '1rem' }}>{toDateString(time.value)}</Typography>
-      ) : (
-        <Typography sx={{ mb: '1rem' }}>{getPeriodString(time.from, time.to)}</Typography>
-      )}
+      <Typography sx={{ mb: '1rem' }}>
+        {time?.type === 'Instant'
+          ? toDateString(time.value)
+          : time?.type === 'Period'
+            ? getPeriodString(time.from, time.to)
+            : '-'}
+      </Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography sx={{ mb: '1rem' }}>{extent}</Typography>
@@ -677,8 +651,8 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
           <TableBody>
             {concertProgramme.map((item, index) => (
               <TableRow key={index}>
-                <TableCell>{item.title}</TableCell>
-                <TableCell>{item.composer}</TableCell>
+                <TableCell>{item.title ?? '-'}</TableCell>
+                <TableCell>{item.composer ?? '-'}</TableCell>
                 <TableCell>{item.premiere ? t('common.yes') : null}</TableCell>
               </TableRow>
             ))}

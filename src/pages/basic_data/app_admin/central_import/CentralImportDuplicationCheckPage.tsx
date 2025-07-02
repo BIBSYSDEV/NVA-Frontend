@@ -150,7 +150,7 @@ export const CentralImportDuplicationCheckPage = () => {
 
       <Paper elevation={0} sx={{ gridArea: 'actions' }}>
         <StyledPaperHeader>
-          <Typography color="inherit" variant="h1">
+          <Typography color="inherit" variant="h2">
             {t('common.dialogue')}
           </Typography>
         </StyledPaperHeader>

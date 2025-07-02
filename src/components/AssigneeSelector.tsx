@@ -1,5 +1,5 @@
 import { Autocomplete } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchUserQuery } from '../api/hooks/useFetchUserQuery';
@@ -7,6 +7,7 @@ import { fetchUsersByCustomer } from '../api/roleApi';
 import { RootState } from '../redux/store';
 import { RoleName } from '../types/user.types';
 import { dataTestId } from '../utils/dataTestIds';
+import { invalidateQueryKeyDueToReindexing } from '../utils/searchHelpers';
 import { getFullName } from '../utils/user-helpers';
 import { AutocompleteTextField } from './AutocompleteTextField';
 
@@ -26,6 +27,7 @@ export const AssigneeSelector = ({
   isUpdating,
 }: AssigneeSelectorProps) => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
 
@@ -60,6 +62,7 @@ export const AssigneeSelector = ({
       )}
       onChange={async (_, value) => {
         await onSelectAssignee(value?.username ?? '');
+        invalidateQueryKeyDueToReindexing(queryClient, 'taskNotifications');
       }}
       renderInput={(params) => (
         <AutocompleteTextField

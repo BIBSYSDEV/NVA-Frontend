@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Box, Button, Chip, TextField, Typography } from '@mui/material';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
@@ -108,9 +107,9 @@ export const MyFieldAndBackground = () => {
         {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (
           <Form>
             <Box sx={{ display: 'flex', flexDirection: 'column', m: '1rem', maxWidth: '60rem', gap: '1rem' }}>
-              <Typography variant="h2">{t('my_page.my_profile.field_and_background.field_and_background')}</Typography>
+              <Typography variant="h1">{t('my_page.my_profile.field_and_background.field_and_background')}</Typography>
               <ProfileBox>
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h2" gutterBottom>
                   {t('my_page.my_profile.field_and_background.field')}
                 </Typography>
                 <Typography sx={{ mb: '1rem' }}>{t('my_page.my_profile.field_and_background.field_text')}</Typography>
@@ -179,7 +178,7 @@ export const MyFieldAndBackground = () => {
                 </Typography>
               </ProfileBox>
               <ProfileBox>
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h2" gutterBottom>
                   {t('my_page.my_profile.background')}
                 </Typography>
                 <Trans
@@ -236,9 +235,9 @@ export const MyFieldAndBackground = () => {
                 }}>
                 {t('common.cancel')}
               </Button>
-              <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
+              <Button loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
                 {t('common.save')}
-              </LoadingButton>
+              </Button>
             </Box>
           </Form>
         )}

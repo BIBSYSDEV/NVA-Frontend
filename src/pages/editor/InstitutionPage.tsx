@@ -1,6 +1,7 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ArchitectureIcon from '@mui/icons-material/Architecture';
 import GavelIcon from '@mui/icons-material/Gavel';
+import { Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -25,8 +26,10 @@ import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PortfolioSearchPage } from './PortfolioSearchPage';
 import { PublishStrategySettings } from './PublishStrategySettings';
+import { PublisherClaimsOverview } from './PublisherClaimsOverview';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
+import { SerialPublicationClaimsOverview } from './SerialPublicationClaimsOverview';
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
 import { OrganizationCurators } from './curators/OrganizationCurators';
@@ -58,16 +61,10 @@ const InstitutionPage = () => {
         <NavigationListAccordion
           dataTestId={dataTestId.editor.overviewAccordion}
           title={t('editor.institution.organizing')}
-          startIcon={
-            <ArchitectureIcon
-              sx={{
-                bgcolor: 'white',
-              }}
-            />
-          }
+          startIcon={<ArchitectureIcon sx={{ bgcolor: 'white' }} />}
           accordionPath={UrlPathTemplate.InstitutionOverview}
           defaultPath={UrlPathTemplate.InstitutionOverviewPage}>
-          <NavigationList>
+          <NavigationList aria-label={t('editor.institution.organizing')}>
             <SelectableButton
               isSelected={currentPath === UrlPathTemplate.InstitutionOverviewPage}
               data-testid={dataTestId.editor.institutionsNameLinkButton}
@@ -110,6 +107,22 @@ const InstitutionPage = () => {
               to={UrlPathTemplate.InstitutionCategoriesOverview}>
               {t('editor.categories_with_files')}
             </SelectableButton>
+
+            <Typography sx={{ mt: '0.5rem' }}>
+              {t('editor.institution.channel_claims.channel_claims_overview_description')}
+            </Typography>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionPublisherClaimsOverview}
+              data-testid={dataTestId.editor.publisherClaimOverviewButton}
+              to={UrlPathTemplate.InstitutionPublisherClaimsOverview}>
+              {t('common.publishers')}
+            </SelectableButton>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}
+              data-testid={dataTestId.editor.serialPublicationClaimOverviewButton}
+              to={UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}>
+              {t('common.serial_publication')}
+            </SelectableButton>
           </NavigationList>
         </NavigationListAccordion>
         {isEditor && (
@@ -120,7 +133,7 @@ const InstitutionPage = () => {
               startIcon={<GavelIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
               accordionPath={UrlPathTemplate.InstitutionSettings}
               defaultPath={UrlPathTemplate.InstitutionCurators}>
-              <NavigationList>
+              <NavigationList aria-label={t('common.settings')}>
                 <SelectableButton
                   isSelected={currentPath === UrlPathTemplate.InstitutionCurators}
                   data-testid={dataTestId.editor.curatorsSettingsLinkButton}
@@ -153,7 +166,6 @@ const InstitutionPage = () => {
                 </SelectableButton>
               </NavigationList>
             </NavigationListAccordion>
-
             <ResultsPortfolioNavigationListAccodion />
           </>
         )}
@@ -225,6 +237,16 @@ const InstitutionPage = () => {
           <Route
             path={getSubUrl(UrlPathTemplate.InstitutionOrganizationOverview, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<OrganizationOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionPublisherClaimsOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<PublisherClaimsOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionSerialPublicationClaimsOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<SerialPublicationClaimsOverview />} isAuthorized={hasCustomer} />}
           />
 
           <Route

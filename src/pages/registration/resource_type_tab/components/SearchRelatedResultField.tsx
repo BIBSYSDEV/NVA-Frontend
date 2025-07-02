@@ -1,11 +1,11 @@
-import { Autocomplete, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResults, FetchResultsParams } from '../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { DegreeRegistration } from '../../../../types/publication_types/degreeRegistration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ConfirmedDocument } from '../../../../types/registration.types';
@@ -16,6 +16,7 @@ import { YearAndContributorsText } from './SearchContainerField';
 
 export const SearchRelatedResultField = () => {
   const { t } = useTranslation();
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
   const { values } = useFormikContext<DegreeRegistration>();
   const related = values.entityDescription.reference?.publicationInstance.related;
   const [relatedRegistrationsQuery, setRelatedRegistrationsQuery] = useState('');
@@ -37,6 +38,7 @@ export const SearchRelatedResultField = () => {
       {({ push }: FieldArrayRenderProps) => (
         <>
           <Autocomplete
+            disabled={disableChannelClaimsFields}
             options={relatedRegistrationsOptionsQuery.data?.hits ?? []}
             value={null}
             onChange={(_, value) => {

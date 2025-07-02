@@ -11,7 +11,7 @@ import {
 } from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
   JournalEntityDescription,
@@ -22,6 +22,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
+import { ClaimedChannelInfoBox } from './ClaimedChannelInfoBox';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -62,7 +63,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const journalId = reference?.publicationContext.id ?? '';
   const year = publicationDate?.year ?? '';
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const [showJournalForm, setShowJournalForm] = useState(false);
   const toggleJournalForm = () => setShowJournalForm(!showJournalForm);
@@ -129,7 +130,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
       <Field name={ResourceFieldNames.PublicationContextId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
-            disabled={disableNviCriticalFields}
+            disabled={disableNviCriticalFields || disableChannelClaimsFields}
             fullWidth
             multiple
             id={journalFieldTestId}
@@ -203,6 +204,11 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
           />
         )}
       </Field>
+
+      {journalId && (
+        <ClaimedChannelInfoBox channelId={journalId} channelType={t('registration.resource_type.journal')} />
+      )}
+
       {!reference?.publicationContext.id && journalOptionsQuery.isFetched && (
         <>
           <StyledCreateChannelButton variant="outlined" onClick={toggleJournalForm}>

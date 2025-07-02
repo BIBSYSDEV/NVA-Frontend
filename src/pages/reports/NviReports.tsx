@@ -1,5 +1,7 @@
-import { styled } from '@mui/material';
+import { styled, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
+import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
 
 export const StyledReportIframe = styled('iframe')({
   border: 'none',
@@ -12,9 +14,15 @@ export const NviReports = () => {
   const { t } = useTranslation();
 
   return (
-    <StyledReportIframe
-      title={t('common.nvi')}
-      src="https://rapport-dv.uhad.no/t/DUCT/views/nettsider_2022_23_04_v9/NVI2011-2023?%3Aembed=y"
-    />
+    <>
+      <DocumentHeadTitle>{t('common.nvi')}</DocumentHeadTitle>
+      <Typography variant="h1" sx={visuallyHidden}>
+        {t('common.nvi')}
+      </Typography>
+      <StyledReportIframe
+        title={t('common.nvi')}
+        src="https://rapport-dv.uhad.no/t/DUCT/views/nettsider_2022_23_04_v9/NVI2011-2023?%3Aembed=y"
+      />
+    </>
   );
 };

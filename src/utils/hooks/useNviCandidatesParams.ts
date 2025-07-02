@@ -3,7 +3,12 @@ import { FetchNviCandidatesParams, NviCandidateOrderBy, NviCandidatesSearchParam
 import { NviCandidateSearchStatus } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';
 
-const defaultNviYear = new Date().getFullYear();
+const getDefaultNviYear = () => {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+  return currentMonth < 4 ? currentYear - 1 : currentYear;
+};
 
 export const useNviCandidatesParams = () => {
   const location = useLocation();
@@ -13,13 +18,14 @@ export const useNviCandidatesParams = () => {
   const aggregation = searchParams.get(NviCandidatesSearchParam.Aggregation) as 'all' | NviCandidateSearchStatus | null;
   const assignee = searchParams.get(NviCandidatesSearchParam.Assignee);
   const excludeSubUnits = searchParams.get(NviCandidatesSearchParam.ExcludeSubUnits) === 'true';
-  const filter = (searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateSearchStatus | null) ?? 'pending';
+  const filter = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateSearchStatus | null;
   const offset = (searchParams.get(NviCandidatesSearchParam.Offset) as number | null) ?? 0;
   const orderBy = searchParams.get(NviCandidatesSearchParam.OrderBy) as NviCandidateOrderBy | null;
   const query = searchParams.get(NviCandidatesSearchParam.Query);
   const size = (searchParams.get(NviCandidatesSearchParam.Size) as number | null) ?? ROWS_PER_PAGE_OPTIONS[0];
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
-  const year = (searchParams.get(NviCandidatesSearchParam.Year) as number | null) ?? defaultNviYear;
+  const year = (searchParams.get(NviCandidatesSearchParam.Year) as number | null) ?? getDefaultNviYear();
+  const visibility = searchParams.get(NviCandidatesSearchParam.Visibility) as NviCandidateSearchStatus | null;
 
   return {
     affiliations,
@@ -33,5 +39,6 @@ export const useNviCandidatesParams = () => {
     size,
     sortOrder,
     year,
+    visibility,
   } satisfies FetchNviCandidatesParams;
 };

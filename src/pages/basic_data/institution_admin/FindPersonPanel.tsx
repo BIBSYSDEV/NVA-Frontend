@@ -6,7 +6,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { RootState } from '../../../redux/store';
-import { FlatCristinPerson, emptyPerson } from '../../../types/user.types';
+import { emptyPerson, FlatCristinPerson } from '../../../types/user.types';
 import { SearchForCristinPerson } from '../SearchForCristinPerson';
 import { AddEmployeeData } from './AddEmployeePage';
 
@@ -27,10 +27,9 @@ export const FindPersonPanel = () => {
 
   return (
     <section>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {t('common.person')}
       </Typography>
-
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <SearchForCristinPerson
           selectedPerson={values.person}
@@ -92,7 +91,10 @@ export const FindPersonPanel = () => {
                       label={t('common.national_id_number')}
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
-                      slotProps={{ htmlInput: { maxLength: 11 } }}
+                      onChange={(event) => {
+                        event.target.value = event.target.value.replace(/\D/g, ''); // Remove all non-digit characters
+                        field.onChange(event);
+                      }}
                     />
                   )}
                 </Field>

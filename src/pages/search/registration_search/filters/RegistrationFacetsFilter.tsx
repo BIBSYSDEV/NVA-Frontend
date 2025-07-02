@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../../api/searchApi';
+import { SearchForPublisher } from '../../../../components/SearchForPublisher';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useRegistrationsQueryParams } from '../../../../utils/hooks/useRegistrationSearchParams';
@@ -10,6 +11,11 @@ import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPageProps } from '../../SearchPage';
+import { SearchForPersonFacetItem } from '../../facet_search_fields/SearchForContributorFacetItem';
+import { SearchForFundingSourceFacetItem } from '../../facet_search_fields/SearchForFundingSourceFacetItem';
+import { SearchForInstitutionFacetItem } from '../../facet_search_fields/SearchForInstitutionFacetItem';
+import { SearchForSerialPublication } from '../../facet_search_fields/SearchForSerialPublication';
+import { SelectCategoryFacetItem } from '../../facet_search_fields/SelectCategoryFacetItem';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
@@ -32,35 +38,45 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const addFacetFilter = (param: string, key: string) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     const currentValues = syncedParams.get(param)?.split(',') ?? [];
-    if (currentValues.length === 0) {
+    if (currentValues.includes(key)) {
+      return;
+    } else if (currentValues.length === 0) {
       syncedParams.set(param, key);
     } else {
       syncedParams.set(param, [...currentValues, key].join(','));
     }
-    syncedParams.set(ResultParam.From, '0');
+    syncedParams.delete(ResultParam.From);
     navigate({ search: syncedParams.toString() });
   };
 
   const removeFacetFilter = (param: string, key: string) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     const newSearchParams = removeSearchParamValue(syncedParams, param, key);
-    newSearchParams.set(ResultParam.From, '0');
+    newSearchParams.delete(ResultParam.From);
     navigate({ search: newSearchParams.toString() });
   };
 
   return (
     <>
-      {typeFacet.length > 0 && (
-        <FacetItem title={t('common.category')} dataTestId={dataTestId.aggregations.typeFacets}>
+      {(registrationQuery.isPending || typeFacet.length > 0) && (
+        <FacetItem
+          title={t('common.category')}
+          dataTestId={dataTestId.aggregations.typeFacets}
+          isPending={registrationQuery.isPending}
+          renderCustomSelect={
+            !searchParams.has(ResultParam.Category) && (
+              <SelectCategoryFacetItem
+                onSelectCategory={(category) => addFacetFilter(ResultParam.Category, category)}
+              />
+            )
+          }>
           {typeFacet.map((facet) => {
             const isSelected = registrationParams.category === facet.key;
 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
                 label={t(`registration.publication_types.${facet.key}`)}
                 count={facet.count}
@@ -75,24 +91,31 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {topLevelOrganizationFacet.length > 0 && (
-        <FacetItem title={t('common.institution')} dataTestId={dataTestId.aggregations.institutionFacets}>
+      {(registrationQuery.isPending || topLevelOrganizationFacet.length > 0) && (
+        <FacetItem
+          title={t('common.institution')}
+          dataTestId={dataTestId.aggregations.institutionFacets}
+          isPending={registrationQuery.isPending}
+          renderCustomSelect={
+            <SearchForInstitutionFacetItem
+              onSelectInstitution={(id) => addFacetFilter(ResultParam.TopLevelOrganization, getIdentifierFromId(id))}
+            />
+          }>
           {topLevelOrganizationFacet.map((facet) => {
-            const isSelected = !!registrationParams.topLevelOrganization?.includes(facet.key);
+            const institutionIdentifier = getIdentifierFromId(facet.key);
+            const isSelected = !!registrationParams.topLevelOrganization?.includes(institutionIdentifier);
 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
-                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
+                dataTestId={dataTestId.aggregations.facetItem(institutionIdentifier)}
                 isSelected={isSelected}
-                label={getLanguageString(facet.labels) || getIdentifierFromId(facet.key)}
+                label={getLanguageString(facet.labels) || institutionIdentifier}
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected
-                    ? removeFacetFilter(ResultParam.TopLevelOrganization, facet.key)
-                    : addFacetFilter(ResultParam.TopLevelOrganization, facet.key)
+                    ? removeFacetFilter(ResultParam.TopLevelOrganization, institutionIdentifier)
+                    : addFacetFilter(ResultParam.TopLevelOrganization, institutionIdentifier)
                 }
               />
             );
@@ -100,26 +123,31 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {contributorFacet.length > 0 && (
+      {(registrationQuery.isPending || contributorFacet.length > 0) && (
         <FacetItem
           title={t('registration.contributors.contributor')}
-          dataTestId={dataTestId.aggregations.contributorFacets}>
+          dataTestId={dataTestId.aggregations.contributorFacets}
+          isPending={registrationQuery.isPending}
+          renderCustomSelect={
+            <SearchForPersonFacetItem
+              onSelectPerson={(identifier) => addFacetFilter(ResultParam.Contributor, identifier)}
+            />
+          }>
           {contributorFacet.map((facet) => {
-            const isSelected = !!registrationParams.contributor?.includes(facet.key);
+            const contributorIdentifier = getIdentifierFromId(facet.key);
+            const isSelected = !!registrationParams.contributor?.includes(contributorIdentifier);
 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
-                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
+                dataTestId={dataTestId.aggregations.facetItem(contributorIdentifier)}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected
-                    ? removeFacetFilter(ResultParam.Contributor, facet.key)
-                    : addFacetFilter(ResultParam.Contributor, facet.key)
+                    ? removeFacetFilter(ResultParam.Contributor, contributorIdentifier)
+                    : addFacetFilter(ResultParam.Contributor, contributorIdentifier)
                 }
               />
             );
@@ -127,42 +155,70 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {fundingFacet.length > 0 && (
-        <FacetItem title={t('common.financier')} dataTestId={dataTestId.aggregations.fundingFacets}>
-          {fundingFacet.map((facet) => {
-            const isSelected = !!registrationParams.fundingSource?.includes(facet.key);
-
-            return (
-              <FacetListItem
-                key={facet.key}
-                identifier={facet.key}
-                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
-                isSelected={isSelected}
-                label={getLanguageString(facet.labels)}
-                count={facet.count}
-                onClickFacet={() =>
-                  isSelected
-                    ? removeFacetFilter(ResultParam.FundingSource, facet.key)
-                    : addFacetFilter(ResultParam.FundingSource, facet.key)
-                }
+      {registrationQuery.isPending ||
+        (fundingFacet.length > 0 && (
+          <FacetItem
+            title={t('common.financier')}
+            dataTestId={dataTestId.aggregations.fundingFacets}
+            isPending={registrationQuery.isPending}
+            renderCustomSelect={
+              <SearchForFundingSourceFacetItem
+                onSelectFunder={(identifier) => addFacetFilter(ResultParam.FundingSource, identifier)}
               />
-            );
-          })}
-        </FacetItem>
-      )}
+            }>
+            {fundingFacet.map((facet) => {
+              const isSelected = !!registrationParams.fundingSource?.includes(facet.key);
 
-      {publisherFacet.length > 0 && (
-        <FacetItem title={t('common.publisher')} dataTestId={dataTestId.aggregations.publisherFacets}>
+              return (
+                <FacetListItem
+                  key={facet.key}
+                  dataTestId={dataTestId.aggregations.facetItem(facet.key)}
+                  isSelected={isSelected}
+                  label={getLanguageString(facet.labels)}
+                  count={facet.count}
+                  onClickFacet={() =>
+                    isSelected
+                      ? removeFacetFilter(ResultParam.FundingSource, facet.key)
+                      : addFacetFilter(ResultParam.FundingSource, facet.key)
+                  }
+                />
+              );
+            })}
+          </FacetItem>
+        ))}
+
+      {(registrationQuery.isPending || publisherFacet.length > 0) && (
+        <FacetItem
+          title={t('common.publisher')}
+          dataTestId={dataTestId.aggregations.publisherFacets}
+          renderCustomSelect={
+            !searchParams.has(ResultParam.Publisher) && (
+              <SearchForPublisher
+                onSelectPublisher={(publisher) => {
+                  if (publisher) {
+                    addFacetFilter(ResultParam.Publisher, publisher.identifier);
+                  }
+                }}
+                autocompleteProps={{
+                  value: null,
+                  size: 'small',
+                  sx: { p: '0.25rem 0.5rem' },
+                }}
+                textFieldProps={{
+                  'data-testid': dataTestId.aggregations.publisherFacetsSearchField,
+                  showSearchIcon: true,
+                }}
+              />
+            )
+          }
+          isPending={registrationQuery.isPending}>
           {publisherFacet.map((facet) => {
             const isSelected = !!registrationParams.publisher?.includes(facet.key);
 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels) || t('registration.missing_name')}
                 count={facet.count}
@@ -177,17 +233,38 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {seriesFacet.length > 0 && (
-        <FacetItem title={t('registration.resource_type.series')} dataTestId={dataTestId.aggregations.seriesFacets}>
+      {(registrationQuery.isPending || seriesFacet.length > 0) && (
+        <FacetItem
+          title={t('registration.resource_type.series')}
+          dataTestId={dataTestId.aggregations.seriesFacets}
+          renderCustomSelect={
+            !searchParams.has(ResultParam.Series) && (
+              <SearchForSerialPublication
+                searchMode="series"
+                onSelectSerialPublication={(series) => {
+                  if (series) {
+                    addFacetFilter(ResultParam.Series, series.identifier);
+                  }
+                }}
+                autocompleteProps={{
+                  value: null,
+                  size: 'small',
+                  sx: { p: '0.25rem 0.5rem' },
+                }}
+                textFieldProps={{
+                  showSearchIcon: true,
+                }}
+              />
+            )
+          }
+          isPending={registrationQuery.isPending}>
           {seriesFacet.map((facet) => {
             const isSelected = !!registrationParams.series?.includes(facet.key);
 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels) || t('registration.missing_name')}
                 count={facet.count}
@@ -202,17 +279,38 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {journalFacet.length > 0 && (
-        <FacetItem title={t('registration.resource_type.journal')} dataTestId={dataTestId.aggregations.journalFacets}>
+      {(registrationQuery.isPending || journalFacet.length > 0) && (
+        <FacetItem
+          title={t('registration.resource_type.journal')}
+          dataTestId={dataTestId.aggregations.journalFacets}
+          renderCustomSelect={
+            !searchParams.has(ResultParam.Journal) && (
+              <SearchForSerialPublication
+                searchMode="journal"
+                onSelectSerialPublication={(journal) => {
+                  if (journal) {
+                    addFacetFilter(ResultParam.Journal, journal.identifier);
+                  }
+                }}
+                autocompleteProps={{
+                  value: null,
+                  size: 'small',
+                  sx: { p: '0.25rem 0.5rem' },
+                }}
+                textFieldProps={{
+                  showSearchIcon: true,
+                }}
+              />
+            )
+          }
+          isPending={registrationQuery.isPending}>
           {journalFacet.map((facet) => {
             const isSelected = !!registrationParams.journal?.includes(facet.key);
 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels) || t('registration.missing_name')}
                 count={facet.count}
@@ -227,10 +325,11 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {scientificIndexFacet.length > 0 && (
+      {(registrationQuery.isPending || scientificIndexFacet.length > 0) && (
         <FacetItem
           title={t('basic_data.nvi.nvi_publication_year')}
-          dataTestId={dataTestId.aggregations.scientificIndexFacet}>
+          dataTestId={dataTestId.aggregations.scientificIndexFacet}
+          isPending={registrationQuery.isPending}>
           {scientificIndexFacet
             .sort((a, b) => +b.key - +a.key)
             .map((facet) => {
@@ -239,9 +338,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
               return (
                 <FacetListItem
                   key={facet.key}
-                  identifier={facet.key}
                   dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                  isLoading={registrationQuery.isPending}
                   isSelected={isSelected}
                   label={facet.key}
                   count={facet.count}
@@ -259,8 +356,11 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {filesFacet.length > 0 && (
-        <FacetItem title={t('registration.files_and_license.files')} dataTestId={dataTestId.aggregations.filesFacets}>
+      {(registrationQuery.isPending || filesFacet.length > 0) && (
+        <FacetItem
+          title={t('registration.files_and_license.files')}
+          dataTestId={dataTestId.aggregations.filesFacets}
+          isPending={registrationQuery.isPending}>
           {filesFacet
             .sort((one) => (one.key === 'hasPublicFiles' ? -1 : 1))
             .map((facet) => {
@@ -269,9 +369,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
               return (
                 <FacetListItem
                   key={facet.key}
-                  identifier={facet.key}
                   dataTestId={dataTestId.aggregations.facetItem(facet.key)}
-                  isLoading={registrationQuery.isPending}
                   isSelected={isSelected}
                   label={getFileFacetText(facet.key, t)}
                   count={facet.count}
