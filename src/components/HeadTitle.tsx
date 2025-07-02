@@ -2,8 +2,9 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import { useTranslation } from 'react-i18next';
 
 interface HeadTitleContextType {
-  setPageTitle: (pageTitle: string) => void;
+  setPageTitle: (value: string) => void;
 }
+
 const HeadTitleContext = createContext<HeadTitleContextType>({
   setPageTitle: () => {},
 });
@@ -23,24 +24,19 @@ export const HeadTitleProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-const useHeadTitle = (pageTitle = '') => {
-  const { setPageTitle } = useContext(HeadTitleContext);
-
-  useEffect(() => {
-    setPageTitle(pageTitle);
-    return () => {
-      setPageTitle('');
-    };
-  }, [pageTitle, setPageTitle]);
-
-  return null;
-};
-
 interface HeadTitleProps {
   children?: string;
 }
 
-export const HeadTitle = ({ children }: HeadTitleProps) => {
-  useHeadTitle(children);
+export const HeadTitle = ({ children = '' }: HeadTitleProps) => {
+  const { setPageTitle } = useContext(HeadTitleContext);
+
+  useEffect(() => {
+    setPageTitle(children);
+    return () => {
+      setPageTitle('');
+    };
+  }, [children, setPageTitle]);
+
   return null;
 };
