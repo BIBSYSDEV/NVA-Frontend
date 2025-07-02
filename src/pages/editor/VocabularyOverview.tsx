@@ -33,14 +33,14 @@ export const VocabularyOverview = () => {
   return (
     <>
       <HeadTitle>{t('editor.vocabulary')}</HeadTitle>
-      <Typography gutterBottom variant="h1">
+      <Typography gutterBottom variant="h1" id="vocabulary-label">
         {t('editor.vocabulary')}
       </Typography>
 
       <Typography>{t('editor.vocabulary_description')}</Typography>
 
       {vocabularyQuery.isPending ? (
-        <CircularProgress aria-label={t('editor.vocabulary')} />
+        <CircularProgress aria-labelledby="vocabulary-label" />
       ) : (
         vocabularyQuery.data?.vocabularies
           .filter((vocabulary) => visibleVocabularyStatuses.includes(vocabulary.status))

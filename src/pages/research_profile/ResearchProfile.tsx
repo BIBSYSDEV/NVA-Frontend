@@ -137,6 +137,7 @@ const ResearchProfile = () => {
     <NotFound />
   ) : (
     <div>
+      <HeadTitle>{fullName}</HeadTitle>
       <Box
         sx={{
           bgcolor: 'primary.main',
@@ -166,8 +167,6 @@ const ResearchProfile = () => {
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
       </Box>
       <BackgroundDiv>
-        <HeadTitle>{fullName}</HeadTitle>
-
         {activeAffiliations.length > 0 ? (
           <Box
             sx={{

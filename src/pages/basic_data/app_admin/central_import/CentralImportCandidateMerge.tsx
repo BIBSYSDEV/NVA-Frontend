@@ -125,7 +125,7 @@ export const CentralImportCandidateMerge = () => {
             gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
           }}>
-          <HeadTitle>{t('basic_data.central_import.central_import')}</HeadTitle>
+          <HeadTitle>{t('basic_data.central_import.merge_candidate.merge')}</HeadTitle>
           <Typography variant="h1" gutterBottom>
             {t('basic_data.central_import.merge_candidate.merge')}
           </Typography>

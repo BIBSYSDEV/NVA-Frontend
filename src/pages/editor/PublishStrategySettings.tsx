@@ -104,7 +104,7 @@ export const PublishStrategySettings = () => {
               </PublishStrategyButton>
               {updateRightsRetentionStrategy.isPending &&
                 customer.publicationWorkflow !== 'RegistratorPublishesMetadataAndFiles' && (
-                  <CircularProgress aria-label={t('editor.publish_strategy.publish_strategy')} />
+                  <CircularProgress aria-labelledby="publish-strategy-label" />
                 )}
             </StyledItemContainer>
 

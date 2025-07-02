@@ -79,14 +79,14 @@ export const VocabularySettings = () => {
   return (
     <>
       <HeadTitle>{t('editor.vocabulary')}</HeadTitle>
-      <Typography gutterBottom variant="h1">
+      <Typography gutterBottom variant="h1" id="vocabulary-label">
         {t('editor.vocabulary')}
       </Typography>
 
       <Typography gutterBottom>{t('editor.select_vocabulary_description')}</Typography>
 
       {isLoadingVocabularyList ? (
-        <CircularProgress aria-label={t('editor.vocabulary')} />
+        <CircularProgress aria-labelledby="vocabulary-label" />
       ) : (
         vocabularyList && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
