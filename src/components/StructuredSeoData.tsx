@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Registration } from '../types/registration.types';
+import { useJournalSeoData } from '../utils/hooks/useJournalSeoData';
 
 // const getPublicationDateCitationString = (publicationDate: RegistrationDate) => {
 //   if (publicationDate.year && publicationDate.month && publicationDate.day) {
@@ -28,7 +29,7 @@ interface StructuredSeoDataProps {
 export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
   const [seoData, setSeoData] = useState('');
 
-  // const journalSeoData = useJournalSeoData(registration);
+  const journalSeoData = useJournalSeoData(registration);
 
   useEffect(() => {
     const fetchSeoData = async () => {

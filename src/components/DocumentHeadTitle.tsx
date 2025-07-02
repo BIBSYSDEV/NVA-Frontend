@@ -28,6 +28,9 @@ const useDocumentHeadTitle = (pageTitle = '') => {
 
   useEffect(() => {
     setPageTitle(pageTitle);
+    return () => {
+      setPageTitle('');
+    };
   }, [pageTitle, setPageTitle]);
 
   return null;
