@@ -23,4 +23,18 @@ i18n.use(LanguageDetector).init({
   debug: false,
 });
 
+const getLanguageTagValue = (language: string) => {
+  if (language === 'eng') {
+    return 'en';
+  }
+  return 'no';
+};
+
+if (document) {
+  document.documentElement.lang = getLanguageTagValue(i18n.language);
+  i18n.on('languageChanged', (newLanguage) => {
+    document.documentElement.lang = getLanguageTagValue(newLanguage);
+  });
+}
+
 export default i18n;

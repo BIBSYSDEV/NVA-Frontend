@@ -86,14 +86,12 @@ const Root = () => {
 
 export const App = () => {
   useMatomoTracking();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const maintenanceInfo = getMaintenanceInfo();
 
   return (
     <>
-      <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`}>
-        <html lang={getLanguageTagValue(i18n.language)} />
-      </Helmet>
+      <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`} />
 
       <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
         {maintenanceInfo ? (
