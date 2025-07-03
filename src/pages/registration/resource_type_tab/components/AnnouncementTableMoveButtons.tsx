@@ -3,13 +3,13 @@ import { Box, IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
-interface MusicalWorkMoveButtonsProps {
+interface AnnouncementTableMoveButtonsProps {
   index: number;
   listLength: number;
   moveItem: (to: number) => void;
 }
 
-export const MusicalWorkMoveButtons = ({ index, listLength, moveItem }: MusicalWorkMoveButtonsProps) => {
+export const AnnouncementTableMoveButtons = ({ index, listLength, moveItem }: AnnouncementTableMoveButtonsProps) => {
   const { t } = useTranslation();
 
   return (
@@ -17,7 +17,7 @@ export const MusicalWorkMoveButtons = ({ index, listLength, moveItem }: MusicalW
       <IconButton
         title={t('common.move_up')}
         data-testid={dataTestId.registrationWizard.moveUpButton(index)}
-        sx={{ visibility: index === 0 ? 'hidden' : 'visible' }}
+        disabled={index === 0}
         onClick={() => {
           moveItem(index - 1);
         }}>
@@ -27,7 +27,7 @@ export const MusicalWorkMoveButtons = ({ index, listLength, moveItem }: MusicalW
       <IconButton
         title={t('common.move_down')}
         data-testid={dataTestId.registrationWizard.moveDownButton(index)}
-        sx={{ visibility: index === listLength - 1 ? 'hidden' : 'visible' }}
+        disabled={index === listLength - 1}
         onClick={() => {
           moveItem(index + 1);
         }}>

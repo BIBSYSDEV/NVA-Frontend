@@ -15,7 +15,7 @@ import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
 import { ExtentField } from '../../../components/ExtentField';
-import { MusicalWorkMoveButtons } from '../../../components/MusicalWorkMoveButtons';
+import { AnnouncementTableMoveButtons } from '../../../components/AnnouncementTableMoveButtons';
 import { OutputModalActions } from '../OutputModalActions';
 import { StyledMusicalWorkListDiv } from './MusicScoreModal';
 
@@ -159,7 +159,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                       return (
                         <StyledMusicalWorkListDiv key={index}>
                           {values.musicalWorks.length > 1 && (
-                            <MusicalWorkMoveButtons
+                            <AnnouncementTableMoveButtons
                               index={index}
                               listLength={values.musicalWorks.length}
                               moveItem={(newIndex) => move(index, newIndex)}

@@ -31,7 +31,7 @@ import { getIdentifierFromId } from '../../../../../utils/general-helpers';
 import { getOutputName } from '../../../../../utils/registration-helpers';
 import { DeleteIconButton } from '../../../../messages/components/DeleteIconButton';
 import { EditIconButton } from '../../../../messages/components/EditIconButton';
-import { MusicalWorkMoveButtons } from '../../components/MusicalWorkMoveButtons';
+import { AnnouncementTableMoveButtons } from '../../components/AnnouncementTableMoveButtons';
 import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
 import { ExhibitionCatalogModal } from '../exhibition_types/ExhibitionCatalogModal';
 import { AwardModal } from './architecture/AwardModal';
@@ -87,7 +87,11 @@ export const OutputRow = ({
     <TableRow sx={{ bgcolor: 'secondary.light' }}>
       <TableCell>
         <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-          <MusicalWorkMoveButtons index={index} listLength={maxIndex + 1} moveItem={(newIndex) => moveItem(newIndex)} />
+          <AnnouncementTableMoveButtons
+            index={index}
+            listLength={maxIndex + 1}
+            moveItem={(newIndex) => moveItem(newIndex)}
+          />
         </Box>
       </TableCell>
       {showTypeColumn && (
