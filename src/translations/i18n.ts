@@ -31,7 +31,6 @@ const getLanguageTagValue = (language: string) => {
 };
 
 if (typeof document !== 'undefined') {
-  // Set lang attribute on html element
   document.documentElement.lang = getLanguageTagValue(i18n.language);
   i18n.on('languageChanged', (newLanguage) => {
     document.documentElement.lang = getLanguageTagValue(newLanguage);

@@ -77,9 +77,7 @@ export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
 
   return publicationContext.id || publicationContext.title ? (
     <>
-      <Typography variant="h3" component="p">
-        {t('registration.resource_type.journal')}
-      </Typography>
+      <Typography variant="h3">{t('registration.resource_type.journal')}</Typography>
       {publicationContext.id ? (
         <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback.error.get_journal')} />
       ) : (
@@ -106,9 +104,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
 
   return publisher?.id || publisher?.name ? (
     <>
-      <Typography variant="h3" component="p">
-        {t('common.publisher')}
-      </Typography>
+      <Typography variant="h3">{t('common.publisher')}</Typography>
 
       {isLoadingPublisher ? (
         <ListSkeleton height={20} />
@@ -130,9 +126,7 @@ export const PublicPublishedInContent = ({ id }: { id: string | null }) => {
 
   return id ? (
     <Box sx={{ mb: '0.5rem' }}>
-      <Typography variant="h3" component="p">
-        {t('registration.resource_type.chapter.published_in')}
-      </Typography>
+      <Typography variant="h3">{t('registration.resource_type.chapter.published_in')}</Typography>
       <RegistrationSummary id={id} />
     </Box>
   ) : null;
@@ -153,7 +147,7 @@ export const PublicSeries = ({
 
   return series?.id || series?.title ? (
     <>
-      <Typography variant="h3" component="p">
+      <Typography variant="h3" sx={{ mt: '0.5rem' }}>
         {t('registration.resource_type.series')}
       </Typography>
       {series.id ? (

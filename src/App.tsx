@@ -82,14 +82,12 @@ export const App = () => {
   const maintenanceInfo = getMaintenanceInfo();
 
   return (
-    <>
-      <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
-        {maintenanceInfo ? (
-          <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
-        ) : (
-          <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
-        )}
-      </Suspense>
-    </>
+    <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
+      {maintenanceInfo ? (
+        <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
+      ) : (
+        <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
+      )}
+    </Suspense>
   );
 };
