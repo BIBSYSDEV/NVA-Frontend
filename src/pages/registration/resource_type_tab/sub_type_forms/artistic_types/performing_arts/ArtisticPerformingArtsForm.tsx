@@ -105,7 +105,7 @@ export const ArtisticPerformingArtsForm = () => {
               {outputs.length > 0 && (
                 <Table sx={alternatingTableRowColor}>
                   <TableHead>
-                    <TableRow>
+                    <TableRow sx={{ '& th': { borderBottom: 1 } }}>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.place')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>

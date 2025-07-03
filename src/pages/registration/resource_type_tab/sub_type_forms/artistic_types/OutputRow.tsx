@@ -84,7 +84,7 @@ export const OutputRow = ({
   const title = shouldFetchItem ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle : getOutputName(item);
 
   return (
-    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
+    <TableRow sx={{ '& td': { borderBottom: 1 } }}>
       <TableCell>
         <AnnouncementTableMoveButtons
           index={index}

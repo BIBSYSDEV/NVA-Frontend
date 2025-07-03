@@ -114,7 +114,7 @@ export const ArtisticArchitectureForm = () => {
               {architectureOutput.length > 0 && (
                 <Table sx={alternatingTableRowColor}>
                   <TableHead>
-                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
+                    <TableRow sx={{ '& th': { borderBottom: 1 } }}>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('registration.resource_type.artistic.name_or_title')}</TableCell>

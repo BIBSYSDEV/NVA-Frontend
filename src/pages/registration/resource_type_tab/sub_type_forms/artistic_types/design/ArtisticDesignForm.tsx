@@ -104,7 +104,7 @@ export const ArtisticDesignForm = () => {
               {venues.length > 0 && (
                 <Table sx={alternatingTableRowColor}>
                   <TableHead>
-                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
+                    <TableRow sx={{ '& th': { borderBottom: 1 } }}>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.place')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
