@@ -1,9 +1,9 @@
-import { Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { NoSearchResults } from '../../../components/NoSearchResults';
 import { RegistrationList, RegistrationListProps } from '../../../components/RegistrationList';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
@@ -53,7 +53,7 @@ export const RegistrationSearch = ({ registrationQuery, sortingComponent, ...res
         ) : registrationQuery.data?.hits && registrationQuery.data.hits.length > 0 ? (
           <RegistrationList registrations={registrations} {...rest} />
         ) : (
-          <Typography sx={{ mx: { xs: '0.5rem', md: 0 }, mt: '1rem' }}>{t('search.no_results')}</Typography>
+          <NoSearchResults />
         )}
       </ListPagination>
     </section>
