@@ -1,5 +1,7 @@
 version: 1
 frontend:
+  environment:
+    NODE_VERSION: 22
   phases:
     preBuild:
       commands:
@@ -20,6 +22,3 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-  build:
-    environment:
-      NODE_VERSION: 22
