@@ -1,6 +1,5 @@
 import { Amplify } from 'aws-amplify';
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router';
@@ -83,16 +82,12 @@ export const App = () => {
   const maintenanceInfo = getMaintenanceInfo();
 
   return (
-    <>
-      <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`} />
-
-      <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
-        {maintenanceInfo ? (
-          <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
-        ) : (
-          <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
-        )}
-      </Suspense>
-    </>
+    <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
+      {maintenanceInfo ? (
+        <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
+      ) : (
+        <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
+      )}
+    </Suspense>
   );
 };

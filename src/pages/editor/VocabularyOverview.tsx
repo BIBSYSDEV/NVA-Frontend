@@ -1,10 +1,10 @@
 import { Card, CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchVocabulary } from '../../api/customerInstitutionsApi';
+import { HeadTitle } from '../../components/HeadTitle';
 import { RootState } from '../../redux/store';
 import {
   defaultHrcsActivity,
@@ -32,10 +32,8 @@ export const VocabularyOverview = () => {
 
   return (
     <>
-      <Helmet>
-        <title id="vocabulary-label">{t('editor.vocabulary')}</title>
-      </Helmet>
-      <Typography gutterBottom variant="h1">
+      <HeadTitle>{t('editor.vocabulary')}</HeadTitle>
+      <Typography gutterBottom variant="h1" id="vocabulary-label">
         {t('editor.vocabulary')}
       </Typography>
 

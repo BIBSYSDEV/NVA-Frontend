@@ -2,10 +2,10 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
+import { HeadTitle } from '../../components/HeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
@@ -55,10 +55,8 @@ export const PublishStrategySettings = () => {
 
   return (
     <>
-      <Helmet>
-        <title id="publish-strategy-label">{t('editor.publish_strategy.publish_strategy')}</title>
-      </Helmet>
-      <Typography variant="h1" gutterBottom>
+      <HeadTitle>{t('editor.publish_strategy.publish_strategy')}</HeadTitle>
+      <Typography variant="h1" gutterBottom id="publish-strategy-label">
         {t('editor.publish_strategy.publish_strategy')}
       </Typography>
 

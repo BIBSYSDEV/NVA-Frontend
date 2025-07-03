@@ -15,11 +15,11 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchEmployees } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
+import { HeadTitle } from '../../../../components/HeadTitle';
 import { ListPagination } from '../../../../components/ListPagination';
 import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
@@ -57,9 +57,7 @@ export const PersonRegisterPage = () => {
 
   return (
     <BackgroundDiv>
-      <Helmet>
-        <title>{t('basic_data.person_register.person_register')}</title>
-      </Helmet>
+      <HeadTitle>{t('basic_data.person_register.person_register')}</HeadTitle>
       <Typography component="h1" sx={visuallyHidden}>
         {t('basic_data.person_register.person_register')}
       </Typography>

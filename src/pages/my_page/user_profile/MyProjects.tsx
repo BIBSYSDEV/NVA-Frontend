@@ -1,10 +1,10 @@
 import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ProjectsSearchParams, searchForProjects } from '../../../api/cristinApi';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { projectSortOptions } from '../../../components/ProjectSortSelector';
@@ -41,9 +41,7 @@ export const MyProjects = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>{t('my_page.my_profile.my_projects')}</title>
-      </Helmet>
+      <HeadTitle>{t('my_page.my_profile.my_projects')}</HeadTitle>
       <Typography variant="h1" gutterBottom>
         {t('my_page.my_profile.my_projects')}
       </Typography>

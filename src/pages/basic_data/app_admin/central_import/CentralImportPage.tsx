@@ -1,11 +1,11 @@
 import { List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ImportCandidatesSearchParam } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
+import { HeadTitle } from '../../../../components/HeadTitle';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { SearchForm } from '../../../../components/SearchForm';
@@ -41,9 +41,7 @@ export const CentralImportPage = () => {
 
   return (
     <section>
-      <Helmet>
-        <title>{t('basic_data.central_import.central_import')}</title>
-      </Helmet>
+      <HeadTitle>{t('basic_data.central_import.central_import')}</HeadTitle>
       <Typography component="h1" sx={visuallyHidden}>
         {t('basic_data.central_import.central_import')}
       </Typography>
