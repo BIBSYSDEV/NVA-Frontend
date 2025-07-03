@@ -254,7 +254,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicJournal publicationContext={publicationContext as JournalPublicationContext} />
               {publicationInstance.type === JournalType.Corrigendum && (
                 <>
-                  <Typography variant="overline" component="p">
+                  <Typography variant="h3" sx={{ mt: '0.5rem' }}>
                     {t('registration.resource_type.original_article')}
                   </Typography>
                   <RegistrationSummary id={journalPublicationInstance.corrigendumFor ?? ''} />
