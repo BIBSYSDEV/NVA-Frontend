@@ -14,16 +14,17 @@ export const NoSearchResults = ({ listKey }: NoSearchResultsProps) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
+        gap: '0.5rem',
         alignItems: 'center',
         mt: '2rem',
         p: '1rem',
       }}>
-      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mb: '0.5rem' }}>
+      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
         <SearchIcon />
         <Typography variant="h2">{t('common.no_hits')}</Typography>
       </Box>
-      <Box>
-        <Typography gutterBottom>{t('no_search_results_found_with_search')}</Typography>
+      <Typography>{t('no_search_results_found_with_search')}</Typography>
+      <div>
         <Typography fontWeight="bold">{t('tips_for_search')}</Typography>
         <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
           <Trans
@@ -33,7 +34,7 @@ export const NoSearchResults = ({ listKey }: NoSearchResultsProps) => {
             }}
           />
         </ul>
-      </Box>
+      </div>
     </Box>
   );
 };
