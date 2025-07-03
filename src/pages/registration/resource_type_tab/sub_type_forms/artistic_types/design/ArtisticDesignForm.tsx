@@ -21,6 +21,7 @@ import { ArtisticRegistration, DesignType } from '../../../../../../types/public
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { VenueModal } from './VenueModal';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 const designTypes = Object.values(DesignType);
 
@@ -101,8 +102,8 @@ export const ArtisticDesignForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {venues.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
-                  <TableHead sx={{ bgcolor: '#fefbf4' }}>
+                <Table sx={alternatingTableRowColor}>
+                  <TableHead>
                     <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.place')}</TableCell>

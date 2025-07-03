@@ -24,6 +24,7 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { VenueModal } from '../design/VenueModal';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 const visualArtTypes = Object.values(VisualArtType);
 
@@ -103,9 +104,9 @@ export const ArtisticVisualArtForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {venues.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
-                  <TableHead sx={{ bgcolor: '#fefbf4' }}>
-                    <TableRow>
+                <Table sx={alternatingTableRowColor}>
+                  <TableHead>
+                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.place')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>

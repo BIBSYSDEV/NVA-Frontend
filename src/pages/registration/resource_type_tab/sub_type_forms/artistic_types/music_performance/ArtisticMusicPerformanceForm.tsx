@@ -24,6 +24,7 @@ import { AudioVisualPublicationModal } from './AudioVisualPublicationModal';
 import { ConcertModal } from './ConcertModal';
 import { MusicScoreModal } from './MusicScoreModal';
 import { OtherPerformanceModal } from './OtherPerformanceModal';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 type ArtisticMusicPerformanceModalType = '' | 'MusicScore' | 'AudioVisualPublication' | 'Concert' | 'OtherPerformance';
 
@@ -49,9 +50,9 @@ export const ArtisticMusicPerformanceForm = () => {
           return (
             <>
               {manifestations.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
-                  <TableHead sx={{ bgcolor: '#fefbf4' }}>
-                    <TableRow>
+                <Table sx={alternatingTableRowColor}>
+                  <TableHead>
+                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('common.description')}</TableCell>

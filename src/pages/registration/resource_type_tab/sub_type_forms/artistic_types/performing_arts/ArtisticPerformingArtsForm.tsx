@@ -24,6 +24,7 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { VenueModal } from '../design/VenueModal';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 const performingArtTypes = Object.values(PerformingArtType);
 
@@ -102,8 +103,8 @@ export const ArtisticPerformingArtsForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {outputs.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
-                  <TableHead sx={{ bgcolor: '#fefbf4' }}>
+                <Table sx={alternatingTableRowColor}>
+                  <TableHead>
                     <TableRow>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.place')}</TableCell>

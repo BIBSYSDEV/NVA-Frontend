@@ -27,6 +27,7 @@ import { OutputRow } from '../OutputRow';
 import { BroadcastModal } from './BroadcastModal';
 import { CinematicReleaseModal } from './CinematicReleaseModal';
 import { OtherReleaseModal } from './OtherReleaseModal';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 const movingPictureTypes = Object.values(MovingPictureType);
 type ArtisticMovingPictureModalType = '' | 'Broadcast' | 'CinematicRelease' | 'OtherRelease';
@@ -115,9 +116,9 @@ export const ArtisticMovingPictureForm = () => {
             return (
               <>
                 {outputs.length > 0 && (
-                  <Table sx={{ '& th,td': { borderBottom: 1 } }}>
-                    <TableHead sx={{ bgcolor: '#fefbf4' }}>
-                      <TableRow>
+                  <Table sx={alternatingTableRowColor}>
+                    <TableHead>
+                      <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
                         <TableCell>{t('common.order')}</TableCell>
                         <TableCell>{t('common.type')}</TableCell>
                         <TableCell>

@@ -28,6 +28,7 @@ import { AwardModal } from './AwardModal';
 import { CompetitionModal } from './CompetitionModal';
 import { ExhibitionModal } from './ExhibitionModal';
 import { PublicationMentionModal } from './PublicationMentionModal';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 const architectureTypes = Object.values(ArchitectureType);
 type ArtisticArchitectureModalType = '' | 'Competition' | 'MentionInPublication' | 'Award' | 'Exhibition';
@@ -111,9 +112,9 @@ export const ArtisticArchitectureForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {architectureOutput.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
-                  <TableHead sx={{ bgcolor: '#fefbf4' }}>
-                    <TableRow>
+                <Table sx={alternatingTableRowColor}>
+                  <TableHead>
+                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('registration.resource_type.artistic.name_or_title')}</TableCell>

@@ -28,6 +28,7 @@ import { LiteraryArtsAudioVisualModal } from './LiteraryArtsAudioVisualModal';
 import { LiteraryArtsMonographModal } from './LiteraryArtsMonographModal';
 import { LiteraryArtsPerformanceModal } from './LiteraryArtsPerformanceModal';
 import { LiteraryArtsWebPublicationModal } from './LiteraryArtsWebPublicationModal';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 const literaryArtTypes = Object.values(LiteraryArtsType);
 type ArtisticArchitectureModalType =
@@ -101,9 +102,9 @@ export const ArtisticLiteraryArtForm = () => {
             return (
               <>
                 {manifestations.length > 0 && (
-                  <Table sx={{ '& th,td': { borderBottom: 1 } }}>
-                    <TableHead sx={{ bgcolor: '#fefbf4' }}>
-                      <TableRow>
+                  <Table sx={alternatingTableRowColor}>
+                    <TableHead>
+                      <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
                         <TableCell>{t('common.order')}</TableCell>
                         <TableCell>{t('common.type')}</TableCell>
                         <TableCell>{t('registration.resource_type.artistic.publisher')}</TableCell>
