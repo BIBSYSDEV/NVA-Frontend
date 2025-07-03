@@ -25,7 +25,7 @@ export const NoSearchResults = ({ listKey }: NoSearchResultsProps) => {
       <Box>
         <Typography gutterBottom>{t('no_search_results_found_with_search')}</Typography>
         <Typography fontWeight="bold">{t('tips_for_search')}</Typography>
-        <ul style={{ margin: 0 }}>
+        <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
           <Trans
             defaults={listKey ?? 'no_search_results_list_default'}
             components={{
