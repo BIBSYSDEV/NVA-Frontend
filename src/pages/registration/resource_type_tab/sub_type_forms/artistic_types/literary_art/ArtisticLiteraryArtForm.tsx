@@ -16,6 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import {
   ArtisticRegistration,
   LiteraryArtsOutput,
@@ -28,7 +29,6 @@ import { LiteraryArtsAudioVisualModal } from './LiteraryArtsAudioVisualModal';
 import { LiteraryArtsMonographModal } from './LiteraryArtsMonographModal';
 import { LiteraryArtsPerformanceModal } from './LiteraryArtsPerformanceModal';
 import { LiteraryArtsWebPublicationModal } from './LiteraryArtsWebPublicationModal';
-import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 const literaryArtTypes = Object.values(LiteraryArtsType);
 type ArtisticArchitectureModalType =

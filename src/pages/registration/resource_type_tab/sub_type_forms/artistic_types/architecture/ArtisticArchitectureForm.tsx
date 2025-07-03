@@ -16,6 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import {
   ArchitectureOutput,
   ArchitectureType,
@@ -28,7 +29,6 @@ import { AwardModal } from './AwardModal';
 import { CompetitionModal } from './CompetitionModal';
 import { ExhibitionModal } from './ExhibitionModal';
 import { PublicationMentionModal } from './PublicationMentionModal';
-import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 const architectureTypes = Object.values(ArchitectureType);
 type ArtisticArchitectureModalType = '' | 'Competition' | 'MentionInPublication' | 'Award' | 'Exhibition';

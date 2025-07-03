@@ -16,12 +16,12 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { ArtisticRegistration, DesignType } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { VenueModal } from './VenueModal';
-import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 const designTypes = Object.values(DesignType);
 

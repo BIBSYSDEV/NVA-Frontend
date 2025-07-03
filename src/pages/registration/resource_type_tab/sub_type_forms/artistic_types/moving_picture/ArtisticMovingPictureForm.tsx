@@ -16,6 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import {
   ArtisticRegistration,
   FilmOutput,
@@ -27,7 +28,6 @@ import { OutputRow } from '../OutputRow';
 import { BroadcastModal } from './BroadcastModal';
 import { CinematicReleaseModal } from './CinematicReleaseModal';
 import { OtherReleaseModal } from './OtherReleaseModal';
-import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 const movingPictureTypes = Object.values(MovingPictureType);
 type ArtisticMovingPictureModalType = '' | 'Broadcast' | 'CinematicRelease' | 'OtherRelease';

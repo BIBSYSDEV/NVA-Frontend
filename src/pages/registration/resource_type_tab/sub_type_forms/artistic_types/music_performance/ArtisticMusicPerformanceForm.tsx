@@ -13,6 +13,7 @@ import {
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import {
   ArtisticRegistration,
   MusicOutput,
@@ -24,7 +25,6 @@ import { AudioVisualPublicationModal } from './AudioVisualPublicationModal';
 import { ConcertModal } from './ConcertModal';
 import { MusicScoreModal } from './MusicScoreModal';
 import { OtherPerformanceModal } from './OtherPerformanceModal';
-import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 type ArtisticMusicPerformanceModalType = '' | 'MusicScore' | 'AudioVisualPublication' | 'Concert' | 'OtherPerformance';
 

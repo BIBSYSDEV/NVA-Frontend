@@ -25,9 +25,9 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
+import { AnnouncementTableMoveButtons } from '../../../components/AnnouncementTableMoveButtons';
 import { ExtentField } from '../../../components/ExtentField';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
-import { AnnouncementTableMoveButtons } from '../../../components/AnnouncementTableMoveButtons';
 import { OutputModalActions } from '../OutputModalActions';
 import { StyledMusicalWorkListDiv } from './MusicScoreModal';
 

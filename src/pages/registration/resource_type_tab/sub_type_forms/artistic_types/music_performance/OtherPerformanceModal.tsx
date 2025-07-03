@@ -14,8 +14,8 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
-import { ExtentField } from '../../../components/ExtentField';
 import { AnnouncementTableMoveButtons } from '../../../components/AnnouncementTableMoveButtons';
+import { ExtentField } from '../../../components/ExtentField';
 import { OutputModalActions } from '../OutputModalActions';
 import { StyledMusicalWorkListDiv } from './MusicScoreModal';
 

@@ -16,6 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import {
   ArtisticRegistration,
@@ -24,7 +25,6 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { VenueModal } from '../design/VenueModal';
-import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 
 const visualArtTypes = Object.values(VisualArtType);
 
