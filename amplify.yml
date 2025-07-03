@@ -20,6 +20,3 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-  build:
-    environment:
-      NODE_VERSION: 22
