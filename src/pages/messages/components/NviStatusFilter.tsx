@@ -73,13 +73,12 @@ const getVisibilityFilterValue = (
     if (filter === 'collaboration') {
       return filter;
     }
-  } else if (status === 'approved') {
+  } else if (status === 'approved' || status === 'rejected') {
     if (globalStatus?.length === 1) {
       return globalStatus[0];
     }
-  } else if (status === 'rejected') {
   } else if (globalStatus?.includes('dispute')) {
-    return '';
+    return filter ?? '';
   }
   return '';
 };
@@ -91,7 +90,7 @@ const handleVisibilityFilterChange = (
   newFilter: NviCandidateFilter | NviCandidateGlobalStatus
 ) => {
   if (status === 'pending') {
-    if (newFilter === 'collaboration') {
+    if (newFilter) {
       params.set(NviCandidatesSearchParam.Filter, newFilter);
     }
   } else if (status === 'approved') {
@@ -104,7 +103,18 @@ const handleVisibilityFilterChange = (
       );
     }
   } else if (status === 'rejected') {
+    if (newFilter === 'rejected' || newFilter === 'pending') {
+      params.set(NviCandidatesSearchParam.GlobalStatus, newFilter);
+    } else {
+      params.set(
+        NviCandidatesSearchParam.GlobalStatus,
+        ['rejected' satisfies NviCandidateGlobalStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
+      );
+    }
   } else if (globalStatus?.includes('dispute')) {
+    if (newFilter) {
+      params.set(NviCandidatesSearchParam.Filter, newFilter);
+    }
   }
   return params;
 };
@@ -133,24 +143,7 @@ export const NviVisibilityFilter = () => {
           const syncedParams = syncParamsWithSearchFields(prevParams);
           syncedParams.delete(NviCandidatesSearchParam.Filter);
           syncedParams.delete(NviCandidatesSearchParam.Offset);
-
           const updatedParams = handleVisibilityFilterChange(syncedParams, status, globalStatus ?? [], newFilter);
-
-          // if (status) {
-          //   syncedParams.delete(NviCandidatesSearchParam.GlobalStatus);
-          // }
-          // syncedParams.delete(NviCandidatesSearchParam.Filter);
-          // syncedParams.delete(NviCandidatesSearchParam.Offset);
-          // if (
-          //   newFilter === ('rejectedByOthers' satisfies NviCandidateFilter) ||
-          //   newFilter === ('approvedByOthers' satisfies NviCandidateFilter) ||
-          //   newFilter === ('collaboration' satisfies NviCandidateFilter)
-          // ) {
-          //   syncedParams.set(NviCandidatesSearchParam.Filter, newFilter);
-          // } else if (newFilter === ('pending' satisfies NviCandidateGlobalStatus)) {
-          //   syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newFilter);
-          // }
-
           return updatedParams;
         });
       }}>
@@ -179,7 +172,7 @@ export const NviVisibilityFilter = () => {
         </MenuItem>
       )}
       {status === 'rejected' && (
-        <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>
+        <MenuItem value={'rejected' satisfies NviCandidateGlobalStatus}>
           {t('tasks.nvi.candidates_rejected_by_all')}
         </MenuItem>
       )}
