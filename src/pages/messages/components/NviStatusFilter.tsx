@@ -33,11 +33,23 @@ export const NviStatusFilter = () => {
           syncedParams.delete(NviCandidatesSearchParam.Filter);
           syncedParams.delete(NviCandidatesSearchParam.Offset);
 
-          if (newStatus === ('dispute' satisfies NviCandidateGlobalStatus)) {
-            syncedParams.delete(NviCandidatesSearchParam.Status);
-            syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus);
-          } else {
+          if (newStatus === ('pending' satisfies NviCandidateStatus)) {
             syncedParams.set(NviCandidatesSearchParam.Status, newStatus);
+            syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus);
+          } else if (newStatus === ('approved' satisfies NviCandidateStatus)) {
+            syncedParams.set(NviCandidatesSearchParam.Status, newStatus);
+            syncedParams.set(
+              NviCandidatesSearchParam.GlobalStatus,
+              [newStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
+            );
+          } else if (newStatus === ('rejected' satisfies NviCandidateStatus)) {
+            syncedParams.set(NviCandidatesSearchParam.Status, newStatus);
+            syncedParams.set(
+              NviCandidatesSearchParam.GlobalStatus,
+              [newStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
+            );
+          } else if (newStatus === ('dispute' satisfies NviCandidateGlobalStatus)) {
+            syncedParams.delete(NviCandidatesSearchParam.Status);
             syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus);
           }
 

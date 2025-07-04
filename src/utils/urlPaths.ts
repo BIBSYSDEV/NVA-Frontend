@@ -1,5 +1,5 @@
 import { To } from 'react-router';
-import { NviCandidateStatus } from '../api/searchApi';
+import { NviCandidateGlobalStatus, NviCandidateStatus } from '../api/searchApi';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
 
@@ -162,6 +162,7 @@ export const getNviCandidatePath = (identifier: string) =>
 export const getNviCandidatesSearchPath = (currentUsername = '', year?: number) => {
   const searchParams = new URLSearchParams({
     status: 'pending' satisfies NviCandidateStatus,
+    globalStatus: 'pending' satisfies NviCandidateGlobalStatus,
   });
   if (currentUsername) {
     searchParams.set('assignee', currentUsername); // NviCandidatesSearchParam.Assignee
