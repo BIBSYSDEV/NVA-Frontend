@@ -36,8 +36,8 @@ import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
+import { AnnouncementTableMoveButtons } from '../../../components/AnnouncementTableMoveButtons';
 import { ExtentField } from '../../../components/ExtentField';
-import { MusicalWorkMoveButtons } from '../../../components/MusicalWorkMoveButtons';
 import { PeriodFields } from '../../../components/PeriodFields';
 import { OutputModalActions } from '../OutputModalActions';
 import { StyledMusicalWorkListDiv } from './MusicScoreModal';
@@ -292,7 +292,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                       return (
                         <StyledMusicalWorkListDiv key={index}>
                           {values.concertProgramme.length > 1 && (
-                            <MusicalWorkMoveButtons
+                            <AnnouncementTableMoveButtons
                               index={index}
                               listLength={values.concertProgramme.length}
                               moveItem={(newIndex) => move(index, newIndex)}

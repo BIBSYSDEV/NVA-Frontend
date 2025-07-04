@@ -25,9 +25,9 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { DeleteIconButton } from '../../../../../messages/components/DeleteIconButton';
+import { AnnouncementTableMoveButtons } from '../../../components/AnnouncementTableMoveButtons';
 import { ExtentField } from '../../../components/ExtentField';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
-import { MusicalWorkMoveButtons } from '../../../components/MusicalWorkMoveButtons';
 import { OutputModalActions } from '../OutputModalActions';
 import { StyledMusicalWorkListDiv } from './MusicScoreModal';
 
@@ -274,7 +274,7 @@ export const AudioVisualPublicationModal = ({
                       return (
                         <StyledMusicalWorkListDiv key={index}>
                           {values.trackList.length > 1 && (
-                            <MusicalWorkMoveButtons
+                            <AnnouncementTableMoveButtons
                               index={index}
                               listLength={values.trackList.length}
                               moveItem={(newIndex) => move(index, newIndex)}

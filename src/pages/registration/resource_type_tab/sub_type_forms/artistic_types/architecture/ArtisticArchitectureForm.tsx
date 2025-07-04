@@ -16,6 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import {
   ArchitectureOutput,
   ArchitectureType,
@@ -111,12 +112,12 @@ export const ArtisticArchitectureForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {architectureOutput.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
+                <Table sx={alternatingTableRowColor}>
                   <TableHead>
-                    <TableRow>
+                    <TableRow sx={{ '& th': { borderBottom: 1 } }}>
+                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('registration.resource_type.artistic.name_or_title')}</TableCell>
-                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
