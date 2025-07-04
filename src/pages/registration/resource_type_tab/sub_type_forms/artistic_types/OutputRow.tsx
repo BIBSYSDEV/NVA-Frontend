@@ -85,7 +85,7 @@ export const OutputRow = ({
 
   return (
     <TableRow sx={{ '& td': { borderBottom: 1 } }}>
-      <TableCell>
+      <TableCell sx={{ width: '10rem' }}>
         <AnnouncementTableMoveButtons
           index={index}
           listLength={maxIndex + 1}
@@ -108,7 +108,7 @@ export const OutputRow = ({
           <Typography>{title}</Typography>
         )}
       </TableCell>
-      <TableCell>
+      <TableCell sx={{ width: '10rem' }}>
         <Box sx={{ display: 'flex', gap: '0.5rem 1rem' }}>
           <EditIconButton tooltip={t('common.edit')} onClick={() => setOpenEditItem(true)} />
           <DeleteIconButton tooltip={t('common.delete')} onClick={() => setOpenRemoveItem(true)} />
