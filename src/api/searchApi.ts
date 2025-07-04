@@ -262,7 +262,7 @@ export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Assignee]?: string | null;
   [NviCandidatesSearchParam.ExcludeSubUnits]?: boolean | null;
   [NviCandidatesSearchParam.Filter]?: NviCandidateFilter | null;
-  [NviCandidatesSearchParam.GlobalStatus]?: NviCandidateGlobalStatus | null;
+  [NviCandidatesSearchParam.GlobalStatus]?: NviCandidateGlobalStatus[] | null;
   [NviCandidatesSearchParam.Offset]?: number | null;
   [NviCandidatesSearchParam.OrderBy]?: NviCandidateOrderBy | null;
   [NviCandidatesSearchParam.Query]?: string | null;
@@ -301,7 +301,7 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
     searchParams.set(NviCandidatesSearchParam.Status, params.status);
   }
   if (params.globalStatus) {
-    searchParams.set(NviCandidatesSearchParam.GlobalStatus, params.globalStatus);
+    searchParams.set(NviCandidatesSearchParam.GlobalStatus, params.globalStatus.join(','));
   }
   if (params.query) {
     searchParams.set(NviCandidatesSearchParam.Query, params.query);

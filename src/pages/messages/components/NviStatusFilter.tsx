@@ -64,13 +64,58 @@ export const NviStatusFilter = () => {
   );
 };
 
+const getVisibilityFilterValue = (
+  status: NviCandidateStatus | null,
+  globalStatus: NviCandidateGlobalStatus[] | null,
+  filter: NviCandidateFilter | null
+) => {
+  if (status === 'pending') {
+    if (filter === 'collaboration') {
+      return filter;
+    }
+  } else if (status === 'approved') {
+    if (globalStatus?.length === 1) {
+      return globalStatus[0];
+    }
+  } else if (status === 'rejected') {
+  } else if (globalStatus?.includes('dispute')) {
+    return '';
+  }
+  return '';
+};
+
+const handleVisibilityFilterChange = (
+  params: URLSearchParams,
+  status: NviCandidateStatus | null,
+  globalStatus: NviCandidateGlobalStatus[],
+  newFilter: NviCandidateFilter | NviCandidateGlobalStatus
+) => {
+  if (status === 'pending') {
+    if (newFilter === 'collaboration') {
+      params.set(NviCandidatesSearchParam.Filter, newFilter);
+    }
+  } else if (status === 'approved') {
+    if (newFilter === 'approved' || newFilter === 'pending') {
+      params.set(NviCandidatesSearchParam.GlobalStatus, newFilter);
+    } else {
+      params.set(
+        NviCandidatesSearchParam.GlobalStatus,
+        ['approved' satisfies NviCandidateGlobalStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
+      );
+    }
+  } else if (status === 'rejected') {
+  } else if (globalStatus?.includes('dispute')) {
+  }
+  return params;
+};
+
 export const NviVisibilityFilter = () => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
   const { filter, globalStatus, status } = useNviCandidatesParams();
 
-  const value = status ? filter || globalStatus || '' : filter || '';
+  const value = getVisibilityFilterValue(status, globalStatus, filter);
 
   return (
     <TextField
@@ -82,26 +127,31 @@ export const NviVisibilityFilter = () => {
       label={t('tasks.display_options')}
       value={value}
       onChange={(event) => {
-        const newFilter = event.target.value;
+        const newFilter = event.target.value as NviCandidateFilter | NviCandidateGlobalStatus;
 
         setSearchParams((prevParams) => {
           const syncedParams = syncParamsWithSearchFields(prevParams);
-          if (status) {
-            syncedParams.delete(NviCandidatesSearchParam.GlobalStatus);
-          }
           syncedParams.delete(NviCandidatesSearchParam.Filter);
           syncedParams.delete(NviCandidatesSearchParam.Offset);
-          if (
-            newFilter === ('rejectedByOthers' satisfies NviCandidateFilter) ||
-            newFilter === ('approvedByOthers' satisfies NviCandidateFilter) ||
-            newFilter === ('collaboration' satisfies NviCandidateFilter)
-          ) {
-            syncedParams.set(NviCandidatesSearchParam.Filter, newFilter);
-          } else if (newFilter === ('pending' satisfies NviCandidateGlobalStatus)) {
-            syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newFilter);
-          }
 
-          return syncedParams;
+          const updatedParams = handleVisibilityFilterChange(syncedParams, status, globalStatus ?? [], newFilter);
+
+          // if (status) {
+          //   syncedParams.delete(NviCandidatesSearchParam.GlobalStatus);
+          // }
+          // syncedParams.delete(NviCandidatesSearchParam.Filter);
+          // syncedParams.delete(NviCandidatesSearchParam.Offset);
+          // if (
+          //   newFilter === ('rejectedByOthers' satisfies NviCandidateFilter) ||
+          //   newFilter === ('approvedByOthers' satisfies NviCandidateFilter) ||
+          //   newFilter === ('collaboration' satisfies NviCandidateFilter)
+          // ) {
+          //   syncedParams.set(NviCandidatesSearchParam.Filter, newFilter);
+          // } else if (newFilter === ('pending' satisfies NviCandidateGlobalStatus)) {
+          //   syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newFilter);
+          // }
+
+          return updatedParams;
         });
       }}>
       <MenuItem value="">{t('common.show_all')}</MenuItem>
@@ -118,7 +168,7 @@ export const NviVisibilityFilter = () => {
         </MenuItem>
       )}
       {status === 'approved' && (
-        <MenuItem value={'approvedByOthers' satisfies NviCandidateFilter}>
+        <MenuItem value={'approved' satisfies NviCandidateGlobalStatus}>
           {t('tasks.nvi.candidates_approved_by_all')}
         </MenuItem>
       )}
@@ -134,12 +184,12 @@ export const NviVisibilityFilter = () => {
         </MenuItem>
       )}
 
-      {globalStatus === 'dispute' && (
+      {globalStatus?.includes('dispute') && (
         <MenuItem value={'approvedByOthers' satisfies NviCandidateFilter}>
           {t('tasks.nvi.candidates_approved_by_others')}
         </MenuItem>
       )}
-      {globalStatus === 'dispute' && (
+      {globalStatus?.includes('dispute') && (
         <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>
           {t('tasks.nvi.candidates_rejected_by_others')}
         </MenuItem>

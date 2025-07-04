@@ -127,7 +127,7 @@ export const NviCandidatesList = () => {
           <ExcludeSubunitsCheckbox
             paramName={NviCandidatesSearchParam.ExcludeSubUnits}
             paginationParamName={NviCandidatesSearchParam.Offset}
-            disabled={nviParams.affiliations === null || nviParams.affiliations.length === 0}
+            disabled={!nviParams.affiliations?.length}
           />
         </Grid>
 

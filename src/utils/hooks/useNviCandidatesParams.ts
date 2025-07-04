@@ -21,7 +21,7 @@ export const useNviCandidatesParams = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
-  const affiliations = searchParams.get(NviCandidatesSearchParam.Affiliations)?.split(',') ?? null;
+  const affiliations = searchParams.get(NviCandidatesSearchParam.Affiliations)?.split(',');
   const aggregation = searchParams.get(NviCandidatesSearchParam.Aggregation) as 'all' | NviCandidateSearchStatus | null;
   const assignee = searchParams.get(NviCandidatesSearchParam.Assignee);
   const excludeSubUnits = searchParams.get(NviCandidatesSearchParam.ExcludeSubUnits) === 'true';
@@ -31,7 +31,9 @@ export const useNviCandidatesParams = () => {
   const query = searchParams.get(NviCandidatesSearchParam.Query);
   const size = (searchParams.get(NviCandidatesSearchParam.Size) as number | null) ?? ROWS_PER_PAGE_OPTIONS[0];
   const status = searchParams.get(NviCandidatesSearchParam.Status) as NviCandidateStatus | null;
-  const globalStatus = searchParams.get(NviCandidatesSearchParam.GlobalStatus) as NviCandidateGlobalStatus | null;
+  const globalStatus = searchParams.get(NviCandidatesSearchParam.GlobalStatus)?.split(',') as
+    | NviCandidateGlobalStatus[]
+    | null;
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
   const year = (searchParams.get(NviCandidatesSearchParam.Year) as number | null) ?? getDefaultNviYear();
   const excludeUnassigned = searchParams.get(NviCandidatesSearchParam.ExcludeUnassigned) === 'true';
