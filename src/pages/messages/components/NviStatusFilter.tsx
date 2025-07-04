@@ -33,24 +33,24 @@ export const NviStatusFilter = () => {
           syncedParams.delete(NviCandidatesSearchParam.Filter);
           syncedParams.delete(NviCandidatesSearchParam.Offset);
 
-          if (newStatus === ('pending' satisfies NviCandidateStatus)) {
-            syncedParams.set(NviCandidatesSearchParam.Status, newStatus);
-            syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus);
-          } else if (newStatus === ('approved' satisfies NviCandidateStatus)) {
-            syncedParams.set(NviCandidatesSearchParam.Status, newStatus);
+          if (newStatus === 'pending') {
+            syncedParams.set(NviCandidatesSearchParam.Status, newStatus satisfies NviCandidateStatus);
+            syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus satisfies NviCandidateGlobalStatus);
+          } else if (newStatus === 'approved') {
+            syncedParams.set(NviCandidatesSearchParam.Status, newStatus satisfies NviCandidateStatus);
             syncedParams.set(
               NviCandidatesSearchParam.GlobalStatus,
-              [newStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
+              ([newStatus, 'pending'] satisfies NviCandidateGlobalStatus[]).join(',')
             );
-          } else if (newStatus === ('rejected' satisfies NviCandidateStatus)) {
-            syncedParams.set(NviCandidatesSearchParam.Status, newStatus);
+          } else if (newStatus === 'rejected') {
+            syncedParams.set(NviCandidatesSearchParam.Status, newStatus satisfies NviCandidateStatus);
             syncedParams.set(
               NviCandidatesSearchParam.GlobalStatus,
-              [newStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
+              ([newStatus, 'pending'] satisfies NviCandidateGlobalStatus[]).join(',')
             );
-          } else if (newStatus === ('dispute' satisfies NviCandidateGlobalStatus)) {
+          } else if (newStatus === 'dispute') {
             syncedParams.delete(NviCandidatesSearchParam.Status);
-            syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus);
+            syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus satisfies NviCandidateGlobalStatus);
           }
 
           return syncedParams;
