@@ -332,10 +332,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -407,7 +403,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -2180,7 +2180,12 @@
       "approve_nvi_candidate": "Godkjenn resultat",
       "approve_nvi_candidate_description": "<p>Kontroll av forskningsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporteres. Se <hyperlink>Rapporteringsinstruksen</hyperlink> for mer informasjon.</p>",
       "approve_rejected_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen skal rapporteres. Da fjernes også begrunnelsen for avvisningen.",
+      "candidates_approved_by_all": "Kandidater alle har godkjent",
+      "candidates_approved_by_others": "Kandidater andre har godkjent",
       "candidates_for_control": "Kandidater til kontroll",
+      "candidates_pending_verification_by_others": "Kandidater andre må kontrollere",
+      "candidates_rejected_by_all": "Kandidater alle har avvist",
+      "candidates_rejected_by_others": "Kandidater andre har avvist",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "controlled": "Kontrollert",
       "correction_list_type": {
@@ -2194,6 +2199,7 @@
       "delete_note": "Slett kommentar",
       "delete_note_description": "Er du sikker på at du vil slette denne kommentaren?",
       "exclude_subunits": "Ekskluder underenheter",
+      "include_candidates_without_curator": "Inkluder kandidater uten kurator",
       "institution_nvi_status": "Status NVI-rapportering",
       "message_description": "Har du relevante opplysninger for kontrollen, legg inn en kommentar. Kommentaren er synlig for andre NVI-kuratorer med redigeringstilgang.",
       "next_candidate": "Gå til neste kandidat",
@@ -2215,6 +2221,7 @@
       "reset_approval_description": "Er du sikker på at du vil nullstille rapporteringsstatusen? Noen på din institusjon må da rapportere denne på nytt.",
       "save_note": "Lagre kommentar",
       "show_candidate_search": "Vis kandidatsøk",
+      "show_only_collaborative_publications": "Vis kun sampublikasjoner",
       "show_reporting_status": "Vis rapporteringsstatus",
       "show_subunits": "Vis underenheter",
       "status": {
@@ -2224,9 +2231,7 @@
         "Pending": "Kontrolleres",
         "Rejected": "Avvist"
       },
-      "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknytning til NVI-institusjon",
-      "waiting_for_other_institutions": "Venter på andre institusjoner",
-      "waiting_for_your_institution": "Venter på din institusjon"
+      "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknytning til NVI-institusjon"
     },
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag eller lignende",
     "select_other_unit_filter": "Velg andre",
