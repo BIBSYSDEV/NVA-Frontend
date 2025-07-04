@@ -1,7 +1,8 @@
-import { List, Typography } from '@mui/material';
+import { List } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { NoSearchResults } from '../../../components/NoSearchResults';
 import { SortSelector } from '../../../components/SortSelector';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
@@ -63,7 +64,7 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
           ))}
         </List>
       ) : (
-        <Typography sx={{ mx: { xs: '0.5rem', md: 0 }, mt: '1rem' }}>{t('search.no_persons')}</Typography>
+        <NoSearchResults listKey="no_search_results_list_person" />
       )}
     </CristinSearchPagination>
   );
