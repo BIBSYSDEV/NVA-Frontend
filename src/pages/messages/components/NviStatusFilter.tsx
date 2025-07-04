@@ -78,7 +78,9 @@ const getVisibilityFilterValue = (
       return globalStatus[0];
     }
   } else if (globalStatus?.includes('dispute')) {
-    return filter ?? '';
+    if (filter === 'approvedByOthers' || filter === 'rejectedByOthers') {
+      return filter;
+    }
   }
   return '';
 };
@@ -90,12 +92,12 @@ const handleVisibilityFilterChange = (
   newFilter: NviCandidateFilter | NviCandidateGlobalStatus
 ) => {
   if (status === 'pending') {
-    if (newFilter) {
-      params.set(NviCandidatesSearchParam.Filter, newFilter);
+    if (newFilter === 'collaboration') {
+      params.set(NviCandidatesSearchParam.Filter, newFilter satisfies NviCandidateFilter);
     }
   } else if (status === 'approved') {
     if (newFilter === 'approved' || newFilter === 'pending') {
-      params.set(NviCandidatesSearchParam.GlobalStatus, newFilter);
+      params.set(NviCandidatesSearchParam.GlobalStatus, newFilter satisfies NviCandidateGlobalStatus);
     } else {
       params.set(
         NviCandidatesSearchParam.GlobalStatus,
@@ -104,7 +106,7 @@ const handleVisibilityFilterChange = (
     }
   } else if (status === 'rejected') {
     if (newFilter === 'rejected' || newFilter === 'pending') {
-      params.set(NviCandidatesSearchParam.GlobalStatus, newFilter);
+      params.set(NviCandidatesSearchParam.GlobalStatus, newFilter satisfies NviCandidateGlobalStatus);
     } else {
       params.set(
         NviCandidatesSearchParam.GlobalStatus,
@@ -112,8 +114,8 @@ const handleVisibilityFilterChange = (
       );
     }
   } else if (globalStatus?.includes('dispute')) {
-    if (newFilter) {
-      params.set(NviCandidatesSearchParam.Filter, newFilter);
+    if (newFilter === 'approvedByOthers' || newFilter === 'rejectedByOthers') {
+      params.set(NviCandidatesSearchParam.Filter, newFilter satisfies NviCandidateFilter);
     }
   }
   return params;
@@ -123,7 +125,7 @@ export const NviVisibilityFilter = () => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
-  const { filter, globalStatus, status } = useNviCandidatesParams();
+  const { status, globalStatus, filter } = useNviCandidatesParams();
 
   const value = getVisibilityFilterValue(status, globalStatus, filter);
 
