@@ -31,14 +31,14 @@ export const NviStatusFilter = () => {
         setSearchParams((params) => {
           const syncedParams = syncParamsWithSearchFields(params);
           syncedParams.delete(NviCandidatesSearchParam.Filter);
-          syncedParams.delete(NviCandidatesSearchParam.GlobalStatus);
           syncedParams.delete(NviCandidatesSearchParam.Offset);
 
-          if (newStatus === ('disputed' satisfies NviCandidateGlobalStatus)) {
+          if (newStatus === ('dispute' satisfies NviCandidateGlobalStatus)) {
             syncedParams.delete(NviCandidatesSearchParam.Status);
             syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus);
           } else {
             syncedParams.set(NviCandidatesSearchParam.Status, newStatus);
+            syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus);
           }
 
           return syncedParams;
@@ -47,7 +47,7 @@ export const NviStatusFilter = () => {
       <MenuItem value={'pending' satisfies NviCandidateStatus}>{t('tasks.nvi.candidates_for_control')}</MenuItem>
       <MenuItem value={'approved' satisfies NviCandidateStatus}>{t('tasks.nvi.status.Approved')}</MenuItem>
       <MenuItem value={'rejected' satisfies NviCandidateStatus}>{t('tasks.nvi.status.Rejected')}</MenuItem>
-      <MenuItem value={'disputed' satisfies NviCandidateGlobalStatus}>{t('tasks.nvi.status.Dispute')}</MenuItem>
+      <MenuItem value={'dispute' satisfies NviCandidateGlobalStatus}>{t('tasks.nvi.status.Dispute')}</MenuItem>
     </TextField>
   );
 };
@@ -122,12 +122,12 @@ export const NviVisibilityFilter = () => {
         </MenuItem>
       )}
 
-      {globalStatus === 'disputed' && (
+      {globalStatus === 'dispute' && (
         <MenuItem value={'approvedByOthers' satisfies NviCandidateFilter}>
           {t('tasks.nvi.candidates_approved_by_others')}
         </MenuItem>
       )}
-      {globalStatus === 'disputed' && (
+      {globalStatus === 'dispute' && (
         <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>
           {t('tasks.nvi.candidates_rejected_by_others')}
         </MenuItem>

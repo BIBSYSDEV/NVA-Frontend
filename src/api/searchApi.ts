@@ -254,7 +254,7 @@ export type NviCandidateOrderBy = 'createdDate';
 
 export type NviCandidateFilter = 'rejectedByOthers' | 'approvedByOthers' | 'collaboration';
 export type NviCandidateStatus = 'pending' | 'approved' | 'rejected';
-export type NviCandidateGlobalStatus = NviCandidateStatus | 'disputed';
+export type NviCandidateGlobalStatus = NviCandidateStatus | 'dispute';
 
 export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Affiliations]?: string[] | null;
