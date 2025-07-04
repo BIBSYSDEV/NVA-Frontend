@@ -18,8 +18,8 @@ const CopyrightActTerms = () => {
         components={{
           h1: <Typography variant="h1" gutterBottom />,
           p: <Typography sx={{ my: '1rem' }} />,
-          bold: <strong />,
-          link: (
+          strong: <strong />,
+          link1: (
             <OpenInNewLink href="https://sikt.no/om-sikt/kontakt-oss?service=e588691c-22eb-49c3-ac50-755f5513a3f5#skjema" />
           ),
           ul: <ul />,
