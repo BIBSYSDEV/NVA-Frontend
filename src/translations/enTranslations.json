@@ -212,7 +212,7 @@
     "initials": "Initials",
     "institution": "Institution",
     "institutions": "Institutions",
-    "justification": "Justification",
+    "justification": "Explanation",
     "language": "Language",
     "last_name": "Last name",
     "link": "Link",
@@ -450,7 +450,7 @@
       "channel_claims": {
         "access_policies": {
           "Everyone": "All institutions",
-          "OwnerOnly": "Only publishing institution"
+          "OwnerOnly": "Only owner institution"
         },
         "add_publisher_channel_claim": "Set ownership for publisher",
         "add_publisher_channel_claim_description": "<p>The institution will be designated as responsible for the result and may receive inquiries via the support point specified as the institution's user support.</p><p>By assigning ownership to the publisher, publication requests are sent to the specified institution regardless of whether the registrant belongs to another institution.</p>",
@@ -461,23 +461,23 @@
         "administer_serial_publication_channel_claim": "Administer ownership to series/journal",
         "administer_serial_publication_channel_claim_description": "<p>On this page, you manage ownership of series/journals registered in the Channel Register.</p><button/><heading>Publishing Rights and Requests</heading><p>The channel owner determines who can publish metadata, files, and licences in the channels they own, for all result categories or just selected ones.</p><p>Channel ownership affects which institution receives publication requests.</p><p>For categories and series/journals with a channel owner, the requests go to the channel owner. For everything else, the requests go to the registrant's institution.</p>",
         "category_limitations": "Limitations for category",
-        "category_limitations_helper_text": "<p>Channel owners can choose whether access restrictions should apply to all result categories or just selected ones.</p><heading>Publication Requests</heading><p>For result categories WITH access restrictions, publication requests are sent to the file curator at the channel owner.</p><p>For result categories WITHOUT access restrictions, publication requests are sent to the file curator at the institution where the registrant is logged in.</p>",
+        "category_limitations_helper_text": "<p>Access restrictions may apply to all result categories or only selected categories.</p><heading>Publication Requests</heading><p>For result categories WITH access restrictions, publication requests are sent to the file curator at the channel owner.</p><p>For result categories WITHOUT access restrictions, publication requests are sent to the file curator at the institution where the registrant is logged in.</p>",
         "channel_claim": "Channel ownership",
         "channel_claims_overview_description": "Channels with editor",
         "channel_claims_settings_description": "Administer ownership and access to channels from the Channel registry:",
         "channel_owner": "Channel owner",
-        "channel_owner_helper_text": "<p>The institution that has taken ownership of the channel (publishing institution).</p><p>If a channel has the wrong channel owner, contact the institution to correct the error.</p>",
+        "channel_owner_helper_text": "<p>The institution that has taken the editorial responsibility for content published by the channel.</p><p>If a channel has the wrong editor, contact Sikt to correct the error: <email/>.</p>",
         "claim_category_restriction": "Categories the limitation should apply to",
         "delete_channel_claim": "Remove ownership to channel",
         "delete_channel_claim_description": "<p>Are you sure you want to remove ownership to <span>{{name}}</span>?</p>",
         "editing_access": "Access to edit",
-        "editing_access_helper_text": "<p>Channel owners (publishing institutions) can choose whether employees outside their institution can edit results published in their publication channels.</p><heading>All Institutions</heading><p>Employees at other institutions can edit results published on the institution's channel.</p><p>Curators at other institutions can edit and delete files that have already been approved. For newly uploaded files, publication requests are sent to the curator at the publishing institution (channel owner).</p><heading>Only Publishing Institution</heading><p>Only own employees can edit results published on the publication channel.</p><p>Registrants and curators not logged in at the publishing institution cannot edit metadata on the result after the uploaded files have been approved.</p><p>Registrants not logged in at the channel owner receive an error message if they select one of the publication channels and are instructed to contact support at the publishing institution.</p>",
+        "editing_access_helper_text": "<heading>All Institutions</heading><p>Employees at other institutions can edit results published on the owner institution's channel.</p><p>Curators at other institutions can edit and delete files that have already been approved. For newly uploaded files, publication requests are sent to the curator at the owner institution.</p><heading>Only Owner Institution</heading><p>Only employees at the owner institution can edit results published on the publication channel.</p><p>Registrants and curators not logged in at the owner institution cannot edit metadata on the result after the uploaded files have been approved.</p>",
         "institution_with_editorial_responsibility": "Institution with editorial responsibility",
-        "publisher_claims_overview": "Overview of publisher ownership",
+        "publisher_claims_overview": "Publishers with editor",
         "publisher_in_channel_registry": "Publisher in the Channel registry",
         "register_access": "Access to register",
-        "register_access_helper_text": "<p>Channel owners can choose whether individuals outside their institution can register results published on the publication channels they own.</p><heading>All Institutions</heading><p>Registrants from other institutions can register results published on the institution's channels. Publication requests are sent to the file curator at the channel owner.</p><heading>Only Publishing Institution</heading><p>Only own employees can edit results published on the publication channel.</p><p>Registrants not logged in at the channel owner receive an error message if they select one of the publication channels and are instructed to contact support at the publishing institution.</p>",
-        "serial_publication_claims_overview": "Overview of series/journal ownership",
+        "register_access_helper_text": "<heading>All Institutions</heading><p>Registrants from other institutions can register results published on the institution's channels. Publication requests are sent to the file curator at the owner institution.</p><heading>Only Owner Institution</heading><p>Only employees at the owner institution can register results published on the publication channel.</p><p>Registrants not logged in at the owner institution will receive an error message if they select one of the publication channels and will be instructed to contact support.</p>",
+        "serial_publication_claims_overview": "Series/journals with editor",
         "serial_publication_in_channel_registry": "Series/journal in the Channel registry",
         "set_channel_claim": "Set ownership",
         "show_only_my_institution": "Show only my institution"
@@ -961,7 +961,7 @@
       "thesis_embargo_curator_description": "Can view and edit files with embargo on theses."
     }
   },
-  "owner_institution": "",
+  "owner_institution": "Owner institution",
   "privacy": {
     "about": {
       "heading": "About this privacy statement",
@@ -1662,7 +1662,7 @@
         "reserve_doi_confirmation": "<0>Only published research results can have a DOI.</0><0>If you need a DOI to correctly cite research results in other research results that are in progress, before it is published, you can reserve a DOI.</0><0>Only you can see the reserved DOI, and it does not lead anywhere until you publish the research result. After publication, your curator is informed that you want a DOI, and must then assign it (or reject it).</0><0>If you are ready to publish, then publish, and select \"$t(registration.public_page.request_doi)\", instead of reserving a DOI.</0><1>Do you still want to reserve a DOI?</1>",
         "reserved": "Reserved",
         "terminate_result": "Delete the result",
-        "terminate_result_confirmation": "<0>All files and most of the metadata are deleted from the result.</0><0>Only the title, authors with affiliations, channel information, category, publication date, and any persistent identifiers such as DOI and handle will be preserved.</0>",
+        "terminate_result_confirmation": "<0>All files and most of the metadata are deleted from the result.</0><0>Only metadata that are necessary to cite the research result will be saved. This includes title, contributors, channel information, category, publication date, and persistent identifiers.</0>",
         "terminate_result_description": "<0>Delete the result if it has been incorrectly registered.</0><0>If the result is deleted, it is not possible to restore the information and files associated with the result.</0>",
         "waiting_for_rejected_doi": "It may take some time before a reserved DOI is removed. Reload the page to check again."
       },
@@ -2207,7 +2207,7 @@
       "reject_nvi_candidate": "Reject result",
       "reject_nvi_candidate_description": "Click \"{{buttonText}}\" if the publication cannot be reported. You must justify the rejection.",
       "reject_nvi_candidate_form_label": "Reason for rejection",
-      "reject_nvi_candidate_modal_text": "<p>Provide a reason for why you are rejecting the publication for Norwegian Publication Indicator (NVI) reporting.</p><p>If you are unsure about the requirements, see the <hyperlink>Reporting Instruction</hyperlink>.</p><p>The reason will be stored in NVA, and will be visible to NVI curators at the co-publishing institutions.</p><p>Provide a reason for why you are rejecting this publication for reporting. The justification must contain at least 10 characters.</p>",
+      "reject_nvi_candidate_modal_text": "<p>Provide a reason for why you are rejecting the publication for Norwegian Publication Indicator (NVI) reporting.</p><p>If you are unsure about the requirements, see the <hyperlink>Reporting Instruction</hyperlink>.</p><p>The reason will be stored in NVA, and will be visible to NVI curators at the co-publishing institutions.</p><p>Provide a reason for why you are rejecting this publication for reporting. The explanation must contain at least 10 characters.</p>",
       "rejection_reason": "Reason for rejection",
       "reporting_period_closed": "The reporting period for this result is closed.",
       "reporting_period_missing": "The reporting period for this result is not open.",
