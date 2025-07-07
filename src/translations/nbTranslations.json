@@ -2236,7 +2236,7 @@
     "user_dialog": "Brukerdialog",
     "your_tasks": "Oppgaver du behandler: {{count}}"
   },
-  "no_search_results_found_with_search": "Vi fannt dessverre ikke noe som passer med søket ditt.",
+  "no_search_results_found_with_search": "<span><icon /><h2>Ingen treff</h2></span><p>Vi fant dessverre ikke noe som passer med søket ditt.</p>",
   "no_search_results_list_default": "<li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li>",
   "no_search_results_list_person": "<li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li>",
   "time_format": {

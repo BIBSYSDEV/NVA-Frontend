@@ -1,5 +1,5 @@
-import { List } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { List, Typography } from '@mui/material';
+import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { NoSearchResults } from '../../../components/NoSearchResults';
@@ -64,7 +64,17 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
           ))}
         </List>
       ) : (
-        <NoSearchResults listKey="no_search_results_list_person" />
+        <NoSearchResults>
+          <Typography fontWeight="bold">{t('tips_for_search')}</Typography>
+          <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
+            <Trans
+              i18nKey={'no_search_results_list_person'}
+              components={{
+                li: <li />,
+              }}
+            />
+          </ul>
+        </NoSearchResults>
       )}
     </CristinSearchPagination>
   );

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
@@ -9,6 +9,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { SearchPageProps } from '../SearchPage';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
+import { Typography } from '@mui/material';
 
 interface RegistrationSearchProps extends Omit<RegistrationListProps, 'registrations'> {
   registrationQuery: SearchPageProps['registrationQuery'];
@@ -53,7 +54,17 @@ export const RegistrationSearch = ({ registrationQuery, sortingComponent, ...res
         ) : registrationQuery.data?.hits && registrationQuery.data.hits.length > 0 ? (
           <RegistrationList registrations={registrations} {...rest} />
         ) : (
-          <NoSearchResults />
+          <NoSearchResults>
+            <Typography fontWeight="bold">{t('tips_for_search')}</Typography>
+            <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
+              <Trans
+                i18nKey={'no_search_results_list_default'}
+                components={{
+                  li: <li />,
+                }}
+              />
+            </ul>
+          </NoSearchResults>
         )}
       </ListPagination>
     </section>
