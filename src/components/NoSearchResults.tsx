@@ -9,14 +9,12 @@ interface NoSearchResultsProps {
 
 export const NoSearchResults = ({ children }: NoSearchResultsProps) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', m: '2rem 0.5rem' }}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           gap: '0.5rem',
-          mt: '2rem',
-          p: '1rem',
         }}>
         <Trans
           i18nKey="no_search_results_found_with_search"
@@ -27,7 +25,7 @@ export const NoSearchResults = ({ children }: NoSearchResultsProps) => {
             p: <Typography />,
           }}
         />
-        <div>{children}</div>
+        {children && <div>{children}</div>}
       </Box>
     </Box>
   );
