@@ -1,23 +1,11 @@
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
 import SearchIcon from '@mui/icons-material/Search';
 import WarningIcon from '@mui/icons-material/Warning';
-import {
-  Box,
-  Button,
-  Checkbox,
-  IconButton,
-  MenuItem,
-  TableCell,
-  TableRow,
-  TextField,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Checkbox, MenuItem, TableCell, TableRow, TextField, Tooltip, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { MoveArrowButton } from '../../../../components/buttons/MoveArrowButton';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ContributorName } from '../../../../components/ContributorName';
 import { SimpleWarning } from '../../../../components/messages/SimpleWarning';
@@ -68,9 +56,15 @@ export const ContributorRow = ({
   return (
     <TableRow sx={{ td: { verticalAlign: 'top' } }}>
       <TableCell width="1">
-        <Box sx={{ display: 'flex', gap: '0.2rem' }}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gridTemplateAreas: '"sequence up down"',
+            gap: '0.2rem',
+          }}>
           <TextField
-            sx={{ width: '3.6rem' }}
+            sx={{ width: '3.6rem', gridArea: 'sequence' }}
             disabled={disableChannelClaimsFields}
             value={sequenceValue}
             onChange={(event) => setSequenceValue(event.target.value)}
@@ -84,27 +78,28 @@ export const ContributorRow = ({
             }}
             onBlur={handleOnMoveContributor}
           />
-          {!isLastElement && (
-            <Tooltip title={t('common.move_down')}>
-              <IconButton
-                size="small"
-                disabled={disableChannelClaimsFields}
-                sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
-                onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
-                <ArrowDownwardIcon color="primary" />
-              </IconButton>
-            </Tooltip>
-          )}
           {contributor.sequence !== 1 && (
-            <Tooltip title={t('common.move_up')}>
-              <IconButton
-                size="small"
-                disabled={disableChannelClaimsFields}
-                sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
-                onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
-                <ArrowUpwardIcon color="primary" />
-              </IconButton>
-            </Tooltip>
+            <MoveArrowButton
+              orientation="up"
+              index={contributorIndex}
+              disabled={disableChannelClaimsFields}
+              sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem', gridArea: 'up' }}
+              onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}
+            />
+          )}
+          {!isLastElement && (
+            <MoveArrowButton
+              orientation="down"
+              index={contributorIndex}
+              disabled={disableChannelClaimsFields}
+              sx={{
+                minWidth: 'auto',
+                height: 'fit-content',
+                marginTop: '0.6rem',
+                gridArea: 'down',
+              }}
+              onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}
+            />
           )}
         </Box>
       </TableCell>
