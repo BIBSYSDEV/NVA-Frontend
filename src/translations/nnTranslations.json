@@ -450,34 +450,34 @@
       "channel_claims": {
         "access_policies": {
           "Everyone": "Alle institusjonar",
-          "OwnerOnly": "Kun utgjevarinstitusjon"
+          "OwnerOnly": "Kun eigarinstitusjon"
         },
         "add_publisher_channel_claim": "Set eigarskap for utgjevar",
-        "add_publisher_channel_claim_description": "<p>Set eigarskap til utgjevar som tilhøyrer din institusjon.</p><p>Din institusjon vil bli oppgitt som ansvarleg for resultat og kan få spørsmål via brukarstøttepunkt som er angitt på institusjonens brukerstøtte.</p><p>Med å setje eigarskap på utgjevar vert publiseringsførespurnaden sendt til din insitusjon uavhengig av om registrator tilhøyrer ein annan institusjon.</p>",
+        "add_publisher_channel_claim_description": "<p>Institusjonen vil bli oppgitt som ansvarleg for resultatet og kan få spørsmål via brukarstøttepunkt som er angjeve som institusjonen si brukarstøtte.</p><p>Ved å sette eigarskap på utgjevar, blir publiseringsførespurnader sendt til den angjevne institusjonen, uavhengig av om registrator høyrer til ein annan institusjon.</p>",
         "add_serial_publication_channel_claim": "Set eigarskap til serie/tidsskrift",
-        "add_serial_publication_channel_claim_description": "<p>Set eigarskap til serie/tidsskrift som høyrer til din institusjon.</p><p>Din institusjon vil bli oppgitt som ansvarleg for resultat og kan få spørsmål via brukarstøttepunkt som angitt på institusjonens brukarstøtte.</p><p>Ved å setje eigarskap på serie/tidsskrift blir publiseringsførespurnad sendt til din institusjon uavhengig av om registrator høyrer til ein annan institusjon.</p>",
+        "add_serial_publication_channel_claim_description": "<p>Institusjonen vil bli oppgitt som ansvarleg for resultatet og kan få spørsmål via brukarstøttepunkt som er angjeve som institusjonen si brukarstøtte.</p><p>Ved å sette eigarskap på serie/tidsskrift, blir publiseringsførespurnader sendt til den angjevne institusjonen, uavhengig av om registrator høyrer til ein annan institusjon.</p>",
         "administer_publisher_channel_claim": "Administrer eigarskap for utgjevarar",
-        "administer_publisher_channel_claim_description": "<p>På denne sida administrerer du eigarskap til utgjevarar som er registrert i Kanalregisteret.</p><p>Institusjonen set sjølv eigarskap til sine utgjevarar.</p><p>Om ein utgjevar har feil kanaleigar, ta kontakt med institusjonen for å få retta feilen.</p><button/><heading>Publiseringsrettar og -førespurnader</heading><p>Kanaleigar bestemmer kven som kan publisere metadata, fil og lisens i kanalane dei eig, for alle resultatkategoriar eller berre nokre utvalde.</p><p>Kanaleigarskap påverkar kva institusjon som mottar publiseringsførespurnader.</p><p>For kategoriar og utgjevarar med kanaleigar, går det til kanaleigar. For alt anna, går det til registrators institusjon.</p>",
+        "administer_publisher_channel_claim_description": "<p>På denne sida administrerer du eigarskap til utgjevarar som er registrerte i Kanalregisteret.</p><button/><heading>Publiseringsrettar og -førespurnader</heading><p>Kanaleigar bestemmer kven som kan publisere metadata, fil og lisens i kanalane dei eig, for alle resultatkategoriar eller berre nokre utvalde.</p><p>Kanaleigarskap påverkar kva institusjon som mottar publiseringsførespurnader.</p><p>For kategoriar og utgjevarar med kanaleigar, går det til kanaleigar. For alt anna, går det til registrators institusjon.</p>",
         "administer_serial_publication_channel_claim": "Administrer eigarskap til serie/tidsskrift",
-        "administer_serial_publication_channel_claim_description": "<p>På denne sida kan du administrere eigarskap for serie/tidsskrift som tilhøyrer din institusjon.</p><p>Eigarskap blir satt av institusjonen, så kontakt kanaleigar ved feilregistrering.</p><button/><p>Eigarskap styrer hvilken institusjon som mottar publiseringsførespurnaden, uavhengig av registrators tilhøyrigheit.</p><p>Kanaleigar avgjer om brukarar frå andre institusjonar kan registrere resultat med serie/tidsskrift.</p>",
+        "administer_serial_publication_channel_claim_description": "<p>På denne sida administrerer du eigarskap til seriar/tidsskrift som er registrerte i Kanalregisteret.</p><button/><heading>Publiseringsrettar og -førespurnader</heading><p>Kanaleigar bestemmer kven som kan publisere metadata, fil og lisens i kanalane dei eig, for alle resultatkategoriar eller berre nokre utvalde.</p><p>Kanaleigarskap påverkar kva institusjon som mottar publiseringsførespurnader.</p><p>For kategoriar og seriar/tidsskrift med kanaleigar, går det til kanaleigar. For alt anna, går det til registrators institusjon.</p>",
         "category_limitations": "Avgrensing for kategori",
-        "category_limitations_helper_text": "<p>Kanaleigar kan velje om tilgangsavgrensingar skal gjelde for alle resultatkategoriar eller berre nokre utvalde.</p><heading>Publiseringsførespurnader</heading><p>For resultatkategoriar MED tilgangsavgrensing blir publiseringsførespurnader sendt til filkurator hos kanaleigar.</p><p>For resultatkategoriar UTAN tilgangsavgrensing, blir publiseringsførespurnader sendt til filkurator ved institusjonen som registrator er logga inn på.</p>",
+        "category_limitations_helper_text": "<p>Tilgangsavgrensingar kan gjelde for alle resultatkategoriar eller berre nokre utvalde kategoriar.</p><heading>Publiseringsførespurnader</heading><p>For resultatkategoriar MED tilgangsavgrensing blir publiseringsførespurnader sendt til filkurator hos kanaleigar.</p><p>For resultatkategoriar UTAN tilgangsavgrensing, blir publiseringsførespurnader sendt til filkurator ved institusjonen som registrator er logga inn på.</p>",
         "channel_claim": "Kanaleigarskap",
         "channel_claims_overview_description": "Kanalar med redaktør",
         "channel_claims_settings_description": "Administrer eigarskap og tilgangar til kanaler frå Kanalregisteret:",
         "channel_owner": "Kanaleigar",
-        "channel_owner_helper_text": "<p>Institusjonen som har tatt eigarskap til kanalen (utgjevarinstitusjon).</p><p>Om ein kanal har feil kanaleigar, ta kontakt med institusjonen for å få retta feilen.</p>",
+        "channel_owner_helper_text": "<p>Institusjonen som har tatt det redaktsjonelle ansvaret for innholdet utgjeven av kanalen.</p><p>Om ein kanal har feil redaktør, ta kontakt med Sikt for å få retta feilen: <email/>.</p>",
         "claim_category_restriction": "Kategoriar som begrensninga skal gjelde for",
         "delete_channel_claim": "Fjern eigarskap til kanal",
         "delete_channel_claim_description": "<p>Er du sikker på at du vil fjerne eigarskapet til <span>{{name}}</span>?</p>",
         "editing_access": "Tilgang til å redigere",
-        "editing_access_helper_text": "<p>Kanaleigar (utgjevarinstitusjon) kan velje om tilsette utanfor eigen institusjon kan redigere resultat som er utgitt i sine publikasjonskanalar.</p><heading>Alle institusjonar</heading><p>Tilsette ved andre institusjonar kan redigere resultat som er utgitt på institusjonens kanal.</p><p>Kurator ved andre institusjonar kan redigere og slette filer som allereie er godkjente. For nyopplasta filer, blir publiseringsførespurnad sendt til kurator hos utgjevarinstitusjonen (kanaleigar).</p><heading>Kun utgjevarinstitusjon</heading><p>Berre eigne tilsette kan redigere resultat som er utgitt på publikasjonskanalen.</p><p>Registrator og kurator som ikkje er logga inn hos utgjevarinstitusjon, får ikkje redigert metadata på resultatet etter at opplasta filer er godkjente.</p><p>Registratorar som ikkje er logga inn hos kanaleigar, får feilmelding om dei vel ein av publikasjonskanalane og beskjed om å kontakte brukarstøtte hos utgjevarinstitusjon.</p>",
+        "editing_access_helper_text": "<heading>Alle institusjonar</heading><p>Tilsette ved andre institusjonar kan redigere resultat som er utgitt på eigarinstitusjonens kanal.</p><p>Kurator ved andre institusjonar kan redigere og slette filer som allereie er godkjente. For nyopplasta filer, blir publiseringsførespurnad sendt til kurator hos eigarinstitusjonen.</p><heading>Kun eigarinstitusjon</heading><p>Berre tilsette ved eigarinstitusjonen kan redigere resultat som er utgitt på publiseringskanalen.</p><p>Registrator og kurator som ikkje er logga inn hos eigarinstitusjonen, får ikkje redigert metadata på resultatet etter at opplasta filer er godkjente.</p>",
         "institution_with_editorial_responsibility": "Institusjon med redaksjonsansvar",
-        "publisher_claims_overview": "Oversikt over utgjevareigarskap",
+        "publisher_claims_overview": "Utgjevarar med redaktør",
         "publisher_in_channel_registry": "Utgjevar i Kanalregisteret",
         "register_access": "Tilgong til å registrere",
-        "register_access_helper_text": "<p>Kanaleigar kan velje om personar utanfor eigen institusjon kan registrere resultat som er utgitt på publiseringskanalar dei eig.</p><heading>Alle institusjonar</heading><p>Registratorar frå andre institusjonar kan registrere resultat som er utgitt på institusjonens kanalar. Publiseringsførespurnader blir sendt til filkurator hos kanaleigar.</p><heading>Kun utgjevarinstitusjon</heading><p>Berre eigne tilsette kan redigere resultat som er utgitt på publiseringskanalen.</p><p>Registratorar som ikkje er logga inn hos kanaleigar, får feilmelding om dei vel ein av publiseringskanalane og beskjed om å kontakte brukarstøtte hos utgjevarinstitusjon.</p>",
-        "serial_publication_claims_overview": "Oversikt over serie-/tidsskrifteigarskap",
+        "register_access_helper_text": "<heading>Alle institusjonar</heading><p>Registratorar frå andre institusjonar kan registrere resultat som er utgitt på institusjonens kanalar. Publiseringsførespurnader blir sendt til filkurator hos eigarinstitusjonen.</p><heading>Kun eigarinstitusjon</heading><p>Berre tilsette ved eigarinstitusjonen kan registrere resultat som er utgitt på publiseringskanalen.</p><p>Registratorar som ikkje er logga inn hos eigarinstitusjonen, får feilmelding om dei vel ein av publiseringskanalane og beskjed om å kontakte brukarstøtte.</p>",
+        "serial_publication_claims_overview": "Serie-/tidsskrift med redaktør",
         "serial_publication_in_channel_registry": "Serie/tidsskrift i Kanalregisteret",
         "set_channel_claim": "Set eigarskap",
         "show_only_my_institution": "Vis berre min institusjon"
@@ -694,7 +694,9 @@
       "employments_missing_data": "Minst ei tilsetjing manglar stilling og startdato.",
       "field_not_confirmed": "{{field}} er ikkje stadfesta",
       "has_invalid_format": "{{field}} har ugyldig format",
+      "has_invalid_format_example": "{{field}} har ugyldig format. For eksempel: {{example}}",
       "invalid_email": "Ugyldig e-post",
+      "invalid_format": "Oppgje {{field}} i formatet {{format}}",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
       "invalid_symbol_in_name": "{{field}} kan ikkje innehalde tal eller spesialteikn",
       "is_required": "{{-field}} er obligatorisk",
@@ -709,7 +711,7 @@
     }
   },
   "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støttar ikkje at registrator kan laste opp filer for denne kategorien. Som kurator kan du leggje til ei fil på vegner av registrator.",
-  "file_upload_disabled_due_to_institution_policy": "Din institusjon støttar ikkje at du som registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte dersom du ønskjer å ha ei fil på dette resultatet.",
+  "file_upload_disabled_due_to_institution_policy": "Din institusjon støttar ikkje at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønskjer å ha ei fil på dette resultatet.",
   "footer": {
     "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
     "about_nva_text": "Nasjonalt vitenarkiv (NVA) samlar publikasjonar og andre forskingsresultat, og gjer dei opent tilgjengelege i ei felles nasjonal løysing. Dette gjer resultat frå norsk forsking tilgjengeleg i éi teneste.",
@@ -735,7 +737,7 @@
       "cc_by_nc_sa": "<p>Brukaren kan: kopiere, dele og endre verket for ikkje-kommersielle formål.</p><p>Brukaren må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
       "cc_by_nd": "<p>Brukaren kan: kopiere og dele verket for alle typar bruk, også kommersielle.</p><p>Brukaren kan ikkje: endre eller tilpasse verket.</p><p>Brukaren må: gi riktig kreditering.</p>",
       "cc_by_sa": "<p>Brukaren kan: kopiere, dele og endre verket for alle typar bruk, også kommersielle.</p><p>Brukaren må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
-      "copyright_act": "<p>Brukaren kan:</p><ul><li>lese og lenke til materialet, og sitere frå materialet i samsvar med god skikk, og i den grad formålet tilseier det</li><li>kopiere materialet kun til privat bruk</li></ul><p>Brukaren må: gi riktig kreditering</p>",
+      "copyright_act": "<p>For dette materialet gjeld følgjande vilkår for bruk til yrkesmessig føremål:</p><ul><li>Du har lov til å lese og lenkje til materialet</li><li>Du kan sitere frå materialet i samsvar med god skikk, og i den grad føremålet tilseier det</li></ul><p>Dersom du ønskjer å bruke materialet på annan måte, til dømes til re-publisering, må du innhente samtykke direkte frå rettshavar.</p>",
       "older_licenses": "Skal du registrere eit eldre forskingsresultat som blei publisert med ein tidlegare lisensversjon, trykk på \"Vis alle tidlegare versjonar\" i nedtrekksmenyen for å finne riktig lisens."
     },
     "labels": {
@@ -747,7 +749,7 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "copyright_act": "Bruksvilkår etter åndsverkslova",
+      "copyright_act": "Generelle bruksvilkår for immaterielle rettar",
       "older_licenses": "Eldre lisensar"
     },
     "links": {
@@ -959,6 +961,7 @@
       "thesis_embargo_curator_description": "Kan sjå og endre embargofiler på studentoppgåver."
     }
   },
+  "owner_institution": "Eigarinstitusjon",
   "privacy": {
     "about": {
       "heading": "Om denne personvernerklæringa",
@@ -1353,7 +1356,7 @@
       "add_affiliation": "Legg til tilknyting",
       "add_contributor": "Legg til bidragsytar",
       "add_new_affiliation": "Legg til ny tilknyting",
-      "add_new_affiliation_helper_text": "<0>Det er berre institusjonar som forskinga er gjennomført i samarbeid med som skal leggjast til som tilknyting til bidragsytaren.</0> <0>Legg til tilknyting til bidragsytaren ved å først søkje opp institusjonen og eventuelt eininga.</0> <0>Tilhøyrer bidragsytaren fleire forskjellige einingar under same institusjon, må du leggje til dette som ny tilknyting.</0>",
+      "add_new_affiliation_helper_text": "<0>Berre institusjonar som forskinga er gjennomført i samarbeid med, skal leggjast til som tilknyting til bidragsytaren.</0> <0>Legg til tilknyting til bidragsytaren ved å først søkje opp institusjonen og eventuelt eining.</0> <0>Tilhøyrer bidragsytaren fleire forskjellige einingar under same institusjon, må du leggje til dette som ny tilknyting.</0>",
       "add_new_contributor": "Legg til ny bidragsytar",
       "add_unverified_contributor": "Legg til ein uidentifisert bidragsytar.",
       "affiliation_is_unidentified": "Tilknyting er uidentifisert",
@@ -1532,8 +1535,6 @@
       "no_duplicates": "Kunne ikkje leggje til \"{{fileName}}\", sidan ei fil med same namn allereie finst",
       "no_files_or_links_present_in_this_registration": "Det er ikkje lagt til fil eller lenkje for registreringa",
       "open_file": "Opne fil",
-      "open_files_not_preferred_curator": "Din institusjon støttar ikkje at registrator kan laste opp opne filer for denne kategorien. Som kurator kan du leggje til ei opa fil på vegner av registrator.",
-      "open_files_not_preferred_registrator": "DIn institusjon støttar ikkje at du som registrator kan laste opp åpne filer for denne kategorien. Du kan framleis laste opp interne filer. Kontakt kuratorstøtte dersom du ønskjer å ha ei opa fil på dette resultatet.",
       "opted_out_of_rrs": "Du har valt å ikkje følgje vedtatt <0>rettigheitspolitikk</0>",
       "public_note": "Offentleg kommentar",
       "published": "Publisert",
@@ -1661,7 +1662,7 @@
         "reserve_doi_confirmation": "<0>Berre publiserte forskingsresultat kan ha ein DOI.</0><0>Om du treng ein DOI for å sitere forskingsresultat korrekt i andre forskingsresultat som er under arbeid, før det er publisert, så kan du reservere ein DOI.</0><0>Berre du ser den reserverte DOI-en, og den fører ikkje til noko stad før du publiserer forskingsresultatet. Etter publisering blir din kurator informert om at du ynskjer ein DOI, og må då tildela den (eller avvise).</0><0>Om du er klar til å publisere, så publiser, og vel \"$t(registration.public_page.request_doi)\", i staden for å reservere ein DOI.</0><1>Ynskjer du framleis å reservere ein DOI?</1>",
         "reserved": "Reservert",
         "terminate_result": "Slett resultatet",
-        "terminate_result_confirmation": "<0>Alle filer og det meste av metadata blir sletta frå resultatet.</0><0>Berre tittel, forfattarar med tilhøyrslar, kanalinformasjon, kategori, publiseringstidspunkt og eventuelt persistente identifikatorar som DOI og handle blir bevart.</0>",
+        "terminate_result_confirmation": "<0>Alle filer og det meste av metadata blir sletta frå resultatet.</0><0>Berre metadata som er naudsynt for å kunne sitere forskingsresultatet vert bevart. Det inkluderar mellom anna tittel, bidragsytarar, kanalinformasjon, kategori, publiseringstidspunkt og persistente identifikatorar.</0>",
         "terminate_result_description": "<0>Slett resultatet om det er feilregistrert.</0><0>Slettar du resultatet er det ikkje mogleg å gjenopprette informasjon og filer på resultatet.</0>",
         "waiting_for_rejected_doi": "Det kan ta litt tid før ein reservert DOI forsvinn. Last innhaldet på nytt for å sjekke igjen."
       },
@@ -1863,7 +1864,9 @@
         },
         "music_score_ensemble": "Besetning",
         "music_score_ismn": "ISMN",
+        "music_score_ismn_helper_text": "Består av 12 tal. Eksempel: 9790260000438",
         "music_score_isrc": "ISRC",
+        "music_score_isrc_helper_text": "Består av 12 alfanumeriske teikn. Eksempel: NO-6Q7-25-00047",
         "music_score_movements": "Satsar",
         "musical_work_item": "Verk",
         "musical_works": "Andre framføringsformer",
@@ -2232,6 +2235,10 @@
     "unread_only": "Vis berre uleste",
     "user_dialog": "Brukardialog",
     "your_tasks": "Oppgåver du behandlar: {{count}}"
+  },
+  "time_format": {
+    "hours": "TT:MM:SS",
+    "minutes": "MM:SS"
   },
   "unpublish_actions": {
     "confirm_unpublish": "Eg bekreftar at informasjonen er korrekt, og at resutatet skal avpubliserast.",

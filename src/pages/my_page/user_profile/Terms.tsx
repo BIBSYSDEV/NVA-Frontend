@@ -1,7 +1,7 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Link, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 
 export const Terms = () => {
@@ -9,9 +9,7 @@ export const Terms = () => {
 
   return (
     <BackgroundDiv>
-      <Helmet>
-        <title>{t('common.terms')}</title>
-      </Helmet>
+      <HeadTitle>{t('common.terms')}</HeadTitle>
       <Typography variant="h1" gutterBottom>
         {t('common.terms')}
       </Typography>

@@ -1,8 +1,4 @@
 {
-  "time_format": {
-    "minutes": "MM:SS",
-    "hours": "TT:MM:SS"
-  },
   "about": {
     "availability_statement": "Tilgjengelighetserklæring",
     "copyright_inquiries": "Henvendelser om opphavsrett",
@@ -58,7 +54,6 @@
       "position": "Stilling",
       "position_percent": "Stillingsprosent",
       "search_for_person": "Søk etter person",
-      "update_person_registry": "Oppdater personregister",
       "without_nin": "Uten nasjonalt identitetsnummer"
     },
     "basic_data": "Grunndata",
@@ -454,7 +449,7 @@
       "channel_claims": {
         "access_policies": {
           "Everyone": "Alle institusjoner",
-          "OwnerOnly": "Kun utgiverinstitusjon"
+          "OwnerOnly": "Kun eierinstitusjon"
         },
         "add_publisher_channel_claim": "Sett eierskap til utgiver",
         "add_publisher_channel_claim_description": "<p>Institusjonen vil bli oppgitt som ansvarlig for resultat og kan få spørsmål via brukerstøttepunkt som angitt på institusjonens brukerstøtte.</p><p>Med å sette eierskap på utgiver så sendes publiseringsforespørsel til angitt institusjon uavhengig av om registrator tilhører en annen institusjon.</p>",
@@ -465,23 +460,23 @@
         "administer_serial_publication_channel_claim": "Administrer eierskap for serie/tidsskrift",
         "administer_serial_publication_channel_claim_description": "<p>På denne siden administrerer du eierskap til serie/tidsskrift som er registrert i Kanalregisteret.</p><button/><heading>Publiseringsrettigheter og -forespørsler</heading><p>Kanaleier bestemmer hvem som kan publisere metadata, fil og lisens i kanalene de eier, for alle resultatkategorier eller bare noen utvalgte.</p><p>Kanaleierskap påvirker hvilken institusjon som mottar publiseringsforespørsler.</p><p>For kategorier og serie/tidsskrift med kanaleier, går det til kanaleier. For alt annet, går det til registrators institusjon.</p>",
         "category_limitations": "Begrensning for kategori",
-        "category_limitations_helper_text": "<p>Kanaleier kan velge om tilgangsbegrensninger skal gjelde for alle resultatkategorier eller bare noen utvalgte.</p><heading>Publiseringsforespørsler</heading><p>For resultatkategorier MED tilgangsbegrensning blir publiseringsforespørsler sendt til filkurator hos kanaleier.</p><p>For resultatkategorier UTEN tilgangsbegrensning, blir publiseringsforespørsler sendt til filkurator ved institusjonen som registrator er logget inn på.</p>",
+        "category_limitations_helper_text": "<p>Tilgangsbegrensninger kan gjelde for alle resultatkategorier eller bare noen utvalgte kategorier.</p><heading>Publiseringsforespørsler</heading><p>For resultatkategorier MED tilgangsbegrensning blir publiseringsforespørsler sendt til filkurator hos kanaleier.</p><p>For resultatkategorier UTEN tilgangsbegrensning, blir publiseringsforespørsler sendt til filkurator ved institusjonen som registrator er logget inn på.</p>",
         "channel_claim": "Kanaleierskap",
         "channel_claims_overview_description": "Kanaler med redaktør",
         "channel_claims_settings_description": "Administrer eierskap og tilganger til kanaler fra Kanalregisteret:",
         "channel_owner": "Kanaleier",
-        "channel_owner_helper_text": "<p>Institusjonen som har tatt det redaksjonelle ansvaret for innholdet utgitt av kanalen.</p><p>Hvis en kanal har feil redaktør, ta kontakt med institusjonen for å få rettet feilen.</p>",
+        "channel_owner_helper_text": "<p>Institusjonen som har tatt det redaksjonelle ansvaret for innholdet utgitt av kanalen.</p><p>Hvis en kanal har feil redaktør, ta kontakt med Sikt for å få rettet feilen: <email/>.</p>",
         "claim_category_restriction": "Kategorier som begrensningen skal gjelde for",
         "delete_channel_claim": "Fjern eierskap til kanal",
         "delete_channel_claim_description": "<p>Er du sikker på at du vil fjerne eierskapet til <span>{{name}}</span>?</p>",
         "editing_access": "Tilgang til å redigere",
-        "editing_access_helper_text": "<p>Kanaleier (utgiverinstitusjon) kan velge om ansatte utenfor egen institusjon kan redigere resultater som er utgitt i sine publikasjonskanaler.</p><heading>Alle institusjoner</heading><p>Ansatte ved andre institusjoner kan redigere resultater som er utgitt på institusjonens kanal.</p><p>Kurator ved andre institusjoner kan redigere og slette filer som allerede er godkjent. For nyopplastede filer, blir publiseringsforespørsel sendt til kurator hos utgiverinstitusjonen (kanaleier).</p><heading>Kun utgiverinstitusjon</heading><p>Bare egne ansatte kan redigere resultater som er utgitt på publiseringskanalen.</p><p>Registrator og kurator som ikke er logget inn hos utgiverinstitusjon, får ikke redigert metadata på resultatet etter at opplastede filer er godkjent.</p><p>Registratorer som ikke er logget inn hos kanaleier, får feilmelding om de velger en av publiseringskanalene og beskjed om å kontake brukerstøtte hos utgiverinstitusjon.</p>",
+        "editing_access_helper_text": "<heading>Alle institusjoner</heading><p>Ansatte ved andre institusjoner kan redigere resultater som er utgitt på eierinstitusjonens kanal.</p><p>Kurator ved andre institusjoner kan redigere og slette filer som allerede er godkjent. For nyopplastede filer, blir publiseringsforespørsel sendt til kurator hos eierinstitusjonen.</p><heading>Kun eierinstitusjon</heading><p>Bare ansatte ved eierinstitusjon kan redigere resultater som er utgitt på publiseringskanalen.</p><p>Registrator og kurator som ikke er logget inn hos eierinstitusjon, får ikke redigert metadata på resultatet etter at opplastede filer er godkjent.</p>",
         "institution_with_editorial_responsibility": "Institusjon med redaksjonsansvar",
-        "publisher_claims_overview": "Oversikt over utgivereierskap",
+        "publisher_claims_overview": "Utgivere med redaktør",
         "publisher_in_channel_registry": "Utgiver i Kanalregisteret",
         "register_access": "Tilgang til å registrere",
-        "register_access_helper_text": "<p>Redaktør bestemmer hvilke personer som kan registrere resultater på kanaler i Kanalregisteret. Redaktør kan velge mellom “Alle institusjoner” og “Kun utgiverinstitusjon”.</p><heading>Alle institusjoner</heading><p>Alle med tilgang til å registrere, som er ansatt ved redaktørs institusjon, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p><heading>Kun redaktørs institusjon</heading><p>Alle med tilgang til å registrere, som er ansatt ved redaktørs institusjon, kan publisere metadata. Alle filer må godkjennes av redaktørs filkuratorer før publisering.</p>",
-        "serial_publication_claims_overview": "Oversikt over serie-/tidsskrifteierskap",
+        "register_access_helper_text": "<heading>Alle institusjoner</heading><p>Registratorer fra andre institusjoner kan registrere resultater som er utgitt på institusjonens kanaler. Publiseringsforespørsler blir sendt til filkurator hos eierinstitusjon.</p><heading>Kun eierinstitusjon</heading><p>Bare ansatte ved eierinstitusjon kan registrere resultater som er utgitt på publiseringskanalen.</p><p>Registratorer som ikke er logget inn hos eierinstitusjon, får feilmelding om de velger en av publiseringskanalene og beskjed om å kontake brukerstøtte.</p>",
+        "serial_publication_claims_overview": "Serier/tidsskrifter med redaktør",
         "serial_publication_in_channel_registry": "Serie/tidsskrift i Kanalregisteret",
         "set_channel_claim": "Sett eierskap",
         "show_only_my_institution": "Vis kun min institusjon"
@@ -767,7 +762,7 @@
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no"
     },
     "read_more_about_license": "Les mer om {{license}}",
-    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Etter <link1>åndsverkloven</link1> gjelder følgende vilkår for bruk av materialet:</p><ul><li>Du har lov til å lese og lenke til materialet, og kan sitere fra materialet i samsvar med god skikk, og i den grad formålet tilsier det</li><li>Du har ikke lov til å publisere materialet på nytt, eller på annen måte kopiere materialet (med mindre det er til privat bruk)</li></ul><p>Dersom du ønsker å bruke materialet på annen måte, må du selv innhente samtykke direkte fra rettighetshaver.</p><hr/><p>Dersom du er rettighetshaver til et åndsverk som har fått denne lisensen og er uenig i at materialet kan brukes som beskrevet over, så må du ta kontakt med utgiveren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikke er mulig å kontakte utgiveren, kan du ta kontakt med tjenestelevandøren for NVA, Sikt: <link2>Henvendelse om opphavsrett</link2>.</p>"
+    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Denne lisensen forklarer hvordan du lovlig kan bruke materiale som er gjort tilgjengelig i Nasjonalt vitenarkiv (NVA).</p><p>Lisensen er ment å dekke bruk til <strong>yrkesmessige formål</strong> – det vil si som en del av arbeidet ditt, for eksempel i forskning, undervisning, veiledning, administrasjon eller formidling.</p><strong>Bruk av materialet forutsetter følgende vilkår: </strong><ul><li><strong>Navngivelse:</strong> Når du siterer, skal du som hovedregel oppgi hvem som er rettighetshaver. Unntak gjelder bare der navngivelse er upraktisk eller lite hensiktsmessig, jf. åndsverkloven. § 5.</li><li><strong>God sitatskikk:</strong> Du må sitere i tråd med god sitatskikk og kun i den grad formålet tilsier det, jf. åndsverkloven. § 29. Det betyr at du kan bruke utdrag i undervisning, faglige presentasjoner eller forskningsartikler – så lenge sitatet er relevant, korrekt kilde oppgis, og materialet ikke forvrenges eller forringes, jf. åndsverkloven §§ 25 og 29.</li><li><strong>Ikke-kommersielt formål:</strong> Du kan ikke bruke materialet til å oppnå økonomisk gevinst. Kommersiell bruk krever særskilt tillatelse fra rettighetshaver.</li><li><strong>Sammenheng og formål:</strong> Sitatet skal som hovedregel inngå i en faglig eller tematisk sammenheng, og bidra til å utfylle verket det settes inn i, jf.åndsverkloven § 25. Korte, løsrevne sitater kan være tillatt som eksempler/illustrasjoner, forutsatt at de ikke skader rettighetshavers økonomiske interesser.</li></ul><p>Dersom du ønsker å bruke materialet på annen måte – for eksempel laste det opp et annet sted, bruke det i nye publikasjoner, eller gjøre det tilgjengelig i fulltekst utenfor NVA – må du ha samtykke fra rettighetshaver. Slik bruk faller inn under opphavsrettens enerett, jf. åndsverkloven § 3.</p><p>Bruken beskrevet her skiller seg fra privat bruk, som betyr bruk for egen interesse i hjemmet eller i en liten privat krets (familie, venner osv.). Kopiering til privat bruk reguleres av egne regler i åndsverkloven § 26, og er ikke regulert gjennom denne lisensen.</p><strong>Er du i tvil?</strong><p>Hvis du er usikker på om den planlagte bruken er tillatt, anbefales det at du kontakter rettighetshaver – eller søker veiledning hos din institusjon.</p><hr/><p>Dersom du er rettighetshaver til et åndsverk som har fått denne lisensen og er uenig i at materialet kan brukes som beskrevet over, så må du ta kontakt med utgiveren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikke er mulig å kontakte utgiveren, kan du ta kontakt med tjenestelevandøren for NVA, Sikt: <link1>Henvendelse om opphavsrett</link1>.</p>"
   },
   "log": {
     "hidden_file_added": "Skjult fil lagt til",
@@ -965,6 +960,7 @@
       "thesis_embargo_curator_description": "Kan se og endre embargofiler på studentoppgaver."
     }
   },
+  "owner_institution": "Eierinstitusjon",
   "privacy": {
     "about": {
       "heading": "Om denne personvernerklæringen",
@@ -1665,7 +1661,7 @@
         "reserve_doi_confirmation": "<0>Kun publiserte forskningsresultater kan ha en DOI.</0><0>Om du trenger en DOI for å sitere forskningsresultater korrekt i andre forskingsresultater som er under arbeid, før det er publisert, så kan du reservere en DOI.</0><0>Kun du ser den reserverte DOI-en, og den leder ikke til noe sted før du publiserer forskningsresultatet. Etter publisering blir din kurator informert om at du ønsker en DOI, og må da tildele den (eller avvise).</0><0>Om du er klar til å publisere, så publiser, og velg \"$t(registration.public_page.request_doi)\", i stedet for å reservere en DOI.</0><1>Ønsker du fortsatt å reservere en DOI?</1>",
         "reserved": "Reservert",
         "terminate_result": "Slett resultat",
-        "terminate_result_confirmation": "<0>Alle filer og det meste av metadata slettes fra resultatet.</0><0>Kun nødvendige metadata for å kunne sitere forskningsresultatet vil bli bevart. Dette inkluderer blant annet tittel, bidragsytere, kanalinformasjon, kategori, publiseringstidspunkt og persistente identifikatorer.</0>",
+        "terminate_result_confirmation": "<0>Alle filer og det meste av metadata slettes fra resultatet.</0><0>Kun tittel, forfattere med tilhørighet, kanalinformasjon, kategori, publiseringstidspunkt og eventuelle persistente identifikatorer som DOI og handle blir bevart.</0>",
         "terminate_result_description": "<0>Slett resultatet om det er feilregistrert.</0><0>Slettes resultatet er det ikke mulig å gjenopprette informasjon og filer på resultatet.</0>",
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen."
       },
@@ -2239,6 +2235,10 @@
     "user_dialog": "Brukerdialog",
     "your_tasks": "Oppgaver du behandler: {{count}}"
   },
+  "time_format": {
+    "hours": "TT:MM:SS",
+    "minutes": "MM:SS"
+  },
   "unpublish_actions": {
     "confirm_unpublish": "Jeg bekrefter at informasjonen stemmer, og at resultatet skal avpubliseres.",
     "duplicate": "Duplikat",
@@ -2246,10 +2246,10 @@
     "search_for_duplicate": "Søk etter forskningsresultat",
     "unpublish": "Avpubliser",
     "unpublish_header": "Avpublisere",
-    "unpublish_info": "Resultatet vil ikke lenger være synlig for andre hvis du velger å avpublisere. Du kan velge å publisere det på nytt senere",
+    "unpublish_info": "Resultatet vil ikke lenger være offentlig synlig hvis du velger å avpublisere. Det vil fortsatt være synlig for alle som har direktelenke. Du kan velge å publisere det på nytt senere.",
     "unpublish_not_allowed": "<0>Du kan ikke avpublisere dette resultatet fordi du mangler rettigheter.</0><0>Ta kontakt med kuratorstøtte om du har du behov for å avpublisere.</0>",
     "unpublish_registration": "Avpubliser forskningsresultat",
-    "unpublish_registration_detail_1": "Etter å ha avpublisert restultatet kan du ikke lengre søke det opp, men det er fortsatt tilgjengelig via direkte oppslag (fra siteringer).",
+    "unpublish_registration_detail_1": "Etter å ha avpublisert resultatet kan du ikke lengre søke det opp, men det er fortsatt tilgjengelig via direkte oppslag (fra siteringer).",
     "unpublish_registration_detail_2": "Kun metadata (ingen filer) vil være synlig ved direkte oppslag.",
     "unpublish_registration_duplicate_citation_information": "Da kan du legge inn en lenke til det andre forskningsresultatet. Alle oppslag på det avpubliserte forskningsresultatet vil da føre til det andre, publiserte forskningsresultatet.",
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",

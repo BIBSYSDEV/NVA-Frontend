@@ -2,10 +2,10 @@ import LinkIcon from '@mui/icons-material/Link';
 import { Button, InputAdornment, TextField, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
+import { HeadTitle } from '../../components/HeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
@@ -29,9 +29,8 @@ export const InstitutionSupport = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('editor.institution.institution_support')}</title>
-      </Helmet>
+      <HeadTitle>{t('editor.institution.institution_support')}</HeadTitle>
+
       {!customer ? (
         <PageSpinner />
       ) : (

@@ -1,6 +1,5 @@
 import { Amplify } from 'aws-amplify';
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router';
@@ -20,13 +19,6 @@ import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
 
 const MaintenanceModeApp = lazy(() => import('./MaintenanceModeApp'));
-
-const getLanguageTagValue = (language: string) => {
-  if (language === 'eng') {
-    return 'en';
-  }
-  return 'no';
-};
 
 if (
   (window.location.pathname === UrlPathTemplate.MyPagePersonalia ||
@@ -86,22 +78,16 @@ const Root = () => {
 
 export const App = () => {
   useMatomoTracking();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const maintenanceInfo = getMaintenanceInfo();
 
   return (
-    <>
-      <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`}>
-        <html lang={getLanguageTagValue(i18n.language)} />
-      </Helmet>
-
-      <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
-        {maintenanceInfo ? (
-          <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
-        ) : (
-          <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
-        )}
-      </Suspense>
-    </>
+    <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
+      {maintenanceInfo ? (
+        <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
+      ) : (
+        <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
+      )}
+    </Suspense>
   );
 };
