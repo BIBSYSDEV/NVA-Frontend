@@ -183,6 +183,7 @@ export const ArtisticArchitectureForm = () => {
         </FieldArray>
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem', mt: '0.5rem' }}>
           <Button
+            sx={{ textTransform: 'none' }}
             data-testid={dataTestId.registrationWizard.resourceType.addCompetitionButton}
             onClick={() => setOpenModal('Competition')}
             variant="outlined"
@@ -190,6 +191,7 @@ export const ArtisticArchitectureForm = () => {
             {t('registration.resource_type.artistic.add_competition')}
           </Button>
           <Button
+            sx={{ textTransform: 'none' }}
             data-testid={dataTestId.registrationWizard.resourceType.addMentionInPublicationButton}
             onClick={() => setOpenModal('MentionInPublication')}
             variant="outlined"
@@ -197,6 +199,7 @@ export const ArtisticArchitectureForm = () => {
             {t('registration.resource_type.artistic.add_publication_mention')}
           </Button>
           <Button
+            sx={{ textTransform: 'none' }}
             data-testid={dataTestId.registrationWizard.resourceType.addAwardButton}
             onClick={() => setOpenModal('Award')}
             variant="outlined"
@@ -204,6 +207,7 @@ export const ArtisticArchitectureForm = () => {
             {t('registration.resource_type.artistic.add_award')}
           </Button>
           <Button
+            sx={{ textTransform: 'none' }}
             data-testid={dataTestId.registrationWizard.resourceType.addExhibitionButton}
             onClick={() => setOpenModal('Exhibition')}
             variant="outlined"

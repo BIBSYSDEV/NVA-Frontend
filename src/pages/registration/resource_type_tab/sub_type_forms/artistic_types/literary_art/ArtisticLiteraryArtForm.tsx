@@ -138,6 +138,7 @@ export const ArtisticLiteraryArtForm = () => {
 
                 <Box sx={{ mt: '1rem', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
                   <Button
+                    sx={{ textTransform: 'none' }}
                     data-testid={dataTestId.registrationWizard.resourceType.addBookButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsMonograph')}
                     variant="outlined"
@@ -145,6 +146,7 @@ export const ArtisticLiteraryArtForm = () => {
                     {t('registration.resource_type.artistic.add_book')}
                   </Button>
                   <Button
+                    sx={{ textTransform: 'none' }}
                     data-testid={dataTestId.registrationWizard.resourceType.addAudioVideoButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsAudioVisual')}
                     variant="outlined"
@@ -152,6 +154,7 @@ export const ArtisticLiteraryArtForm = () => {
                     {t('registration.resource_type.artistic.add_audio_visual_publication')}
                   </Button>
                   <Button
+                    sx={{ textTransform: 'none' }}
                     data-testid={dataTestId.registrationWizard.resourceType.addPerformanceButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsPerformance')}
                     variant="outlined"
@@ -159,6 +162,7 @@ export const ArtisticLiteraryArtForm = () => {
                     {t('registration.resource_type.artistic.add_performance')}
                   </Button>
                   <Button
+                    sx={{ textTransform: 'none' }}
                     data-testid={dataTestId.registrationWizard.resourceType.addWebPublicationButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsWeb')}
                     variant="outlined"
