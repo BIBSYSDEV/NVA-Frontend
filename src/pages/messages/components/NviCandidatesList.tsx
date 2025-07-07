@@ -68,6 +68,7 @@ export const NviCandidatesList = () => {
             onClick={() => {
               setSearchParams((params) => {
                 const syncedParams = syncParamsWithSearchFields(params);
+                syncedParams.delete(NviCandidatesSearchParam.Offset);
                 if (nviParams.excludeUnassigned) {
                   syncedParams.delete(NviCandidatesSearchParam.ExcludeUnassigned);
                 } else {
