@@ -81,7 +81,7 @@
     "@vitejs/plugin-react": "^4.6.0",
     "axe-core": "^4.10.3",
     "axios-mock-adapter": "^2.1.0",
-    "cypress": "^14.5.0",
+    "cypress": "^14.5.1",
     "cypress-axe": "^1.6.0",
     "eslint": "^9.30.0",
     "eslint-config-prettier": "^10.1.5",
