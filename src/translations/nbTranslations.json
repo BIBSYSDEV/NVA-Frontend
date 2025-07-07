@@ -2119,9 +2119,6 @@
     },
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
-    "no_persons": "Ingen personer",
-    "no_projects": "Ingen prosjekt",
-    "no_results": "Ingen resultat",
     "participant": "Deltaker",
     "participating_institution": "Deltakende institusjon",
     "person_search": "Personsøk",
@@ -2237,13 +2234,12 @@
     "your_tasks": "Oppgaver du behandler: {{count}}"
   },
   "no_search_results_found_with_search": "<span><icon /><h2>Ingen treff</h2></span><p>Vi fant dessverre ikke noe som passer med søket ditt.</p>",
-  "no_search_results_list_default": "<li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li>",
-  "no_search_results_list_person": "<li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li>",
+  "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li></ul>",
+  "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li></ul>",
   "time_format": {
     "hours": "TT:MM:SS",
     "minutes": "MM:SS"
   },
-  "tips_for_search": "Tips til søk:",
   "unpublish_actions": {
     "confirm_unpublish": "Jeg bekrefter at informasjonen stemmer, og at resultatet skal avpubliseres.",
     "duplicate": "Duplikat",

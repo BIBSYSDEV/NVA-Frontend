@@ -1,15 +1,13 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 
 interface NoSearchResultsProps {
   children: ReactNode;
 }
 
 export const NoSearchResults = ({ children }: NoSearchResultsProps) => {
-  const { t } = useTranslation();
-
   return (
     <Box
       sx={{

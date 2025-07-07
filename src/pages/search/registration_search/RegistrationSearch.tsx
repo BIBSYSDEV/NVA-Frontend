@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
@@ -9,7 +10,6 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { SearchPageProps } from '../SearchPage';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
-import { Typography } from '@mui/material';
 
 interface RegistrationSearchProps extends Omit<RegistrationListProps, 'registrations'> {
   registrationQuery: SearchPageProps['registrationQuery'];
@@ -55,15 +55,14 @@ export const RegistrationSearch = ({ registrationQuery, sortingComponent, ...res
           <RegistrationList registrations={registrations} {...rest} />
         ) : (
           <NoSearchResults>
-            <Typography fontWeight="bold">{t('tips_for_search')}</Typography>
-            <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
-              <Trans
-                i18nKey={'no_search_results_list_default'}
-                components={{
-                  li: <li />,
-                }}
-              />
-            </ul>
+            <Trans
+              i18nKey="no_search_results_list_default"
+              components={{
+                p: <Typography fontWeight="bold" />,
+                ul: <ul style={{ margin: 0, paddingLeft: '1.5rem' }} />,
+                li: <li />,
+              }}
+            />
           </NoSearchResults>
         )}
       </ListPagination>

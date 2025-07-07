@@ -65,15 +65,14 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
         </List>
       ) : (
         <NoSearchResults>
-          <Typography fontWeight="bold">{t('tips_for_search')}</Typography>
-          <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
-            <Trans
-              i18nKey={'no_search_results_list_person'}
-              components={{
-                li: <li />,
-              }}
-            />
-          </ul>
+          <Trans
+            i18nKey="no_search_results_list_person"
+            components={{
+              p: <Typography fontWeight="bold" />,
+              ul: <ul style={{ margin: 0, paddingLeft: '1.5rem' }} />,
+              li: <li />,
+            }}
+          />
         </NoSearchResults>
       )}
     </CristinSearchPagination>
