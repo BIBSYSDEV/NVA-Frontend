@@ -13,7 +13,6 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
-import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
@@ -86,22 +85,9 @@ export const NviCandidatesList = () => {
             selectedUsername={nviParams.assignee}
             onChange={(curator) => {
               const syncedParams = syncParamsWithSearchFields(searchParams);
+              syncedParams.delete(NviCandidatesSearchParam.Offset);
               if (curator) {
                 syncedParams.set(NviCandidatesSearchParam.Assignee, curator.username);
-                if (nviParams.offset) {
-                  syncedParams.delete(NviCandidatesSearchParam.Offset);
-                }
-
-                const currentStatusFilter = syncedParams.get(
-                  NviCandidatesSearchParam.Filter
-                ) as NviCandidateSearchStatus | null;
-                if (
-                  !currentStatusFilter ||
-                  currentStatusFilter === 'pending' ||
-                  currentStatusFilter === 'pendingCollaboration'
-                ) {
-                  syncedParams.set(NviCandidatesSearchParam.Filter, 'assigned' satisfies NviCandidateSearchStatus);
-                }
               } else {
                 syncedParams.delete(NviCandidatesSearchParam.Assignee);
               }
