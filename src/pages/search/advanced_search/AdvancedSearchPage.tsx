@@ -10,12 +10,12 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { SearchForm } from '../../../components/SearchForm';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';
@@ -76,9 +76,7 @@ export const AdvancedSearchPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('search.advanced_search.advanced_search')}</title>
-      </Helmet>
+      <HeadTitle>{t('search.advanced_search.advanced_search')}</HeadTitle>
       <Grid container rowGap={2}>
         <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
           <Typography variant="h1">{t('search.advanced_search.advanced_search')}</Typography>
