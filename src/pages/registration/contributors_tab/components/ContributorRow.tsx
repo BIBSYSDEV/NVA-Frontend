@@ -58,13 +58,11 @@ export const ContributorRow = ({
       <TableCell width="1">
         <Box
           sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gridTemplateAreas: '"sequence up down"',
+            display: 'flex',
             gap: '0.2rem',
           }}>
           <TextField
-            sx={{ width: '3.6rem', gridArea: 'sequence' }}
+            sx={{ width: '3.6rem' }}
             disabled={disableChannelClaimsFields}
             value={sequenceValue}
             onChange={(event) => setSequenceValue(event.target.value)}
@@ -78,29 +76,24 @@ export const ContributorRow = ({
             }}
             onBlur={handleOnMoveContributor}
           />
-          {contributor.sequence !== 1 && (
-            <MoveArrowButton
-              orientation="up"
-              index={contributorIndex}
-              disabled={disableChannelClaimsFields}
-              sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem', gridArea: 'up' }}
-              onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}
-            />
-          )}
-          {!isLastElement && (
-            <MoveArrowButton
-              orientation="down"
-              index={contributorIndex}
-              disabled={disableChannelClaimsFields}
-              sx={{
-                minWidth: 'auto',
-                height: 'fit-content',
-                marginTop: '0.6rem',
-                gridArea: 'down',
-              }}
-              onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}
-            />
-          )}
+          <MoveArrowButton
+            orientation="up"
+            index={contributorIndex}
+            disabled={disableChannelClaimsFields || contributor.sequence === 1}
+            sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
+            onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}
+          />
+          <MoveArrowButton
+            orientation="down"
+            index={contributorIndex}
+            disabled={disableChannelClaimsFields || isLastElement}
+            sx={{
+              minWidth: 'auto',
+              height: 'fit-content',
+              marginTop: '0.6rem',
+            }}
+            onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}
+          />
         </Box>
       </TableCell>
       <TableCell align="left" width="1">
