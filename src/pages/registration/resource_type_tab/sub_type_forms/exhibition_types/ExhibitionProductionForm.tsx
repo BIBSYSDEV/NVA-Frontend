@@ -89,7 +89,7 @@ export const ExhibitionProductionForm = () => {
               {manifestations.length > 0 && (
                 <Table sx={{ '& th,td': { borderBottom: 1 } }}>
                   <TableHead>
-                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
+                    <TableRow>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('common.description')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
