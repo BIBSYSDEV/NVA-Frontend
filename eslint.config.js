@@ -1,6 +1,6 @@
 import tanstackQuery from '@tanstack/eslint-plugin-query';
-import eslintParserTypeScript from '@typescript-eslint/parser';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
+import prettier from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
@@ -9,7 +9,6 @@ export default [
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      parser: eslintParserTypeScript,
       parserOptions: {
         project: './tsconfig.json',
       },
@@ -26,7 +25,6 @@ export default [
   reactHooks.configs['recommended-latest'],
   ...tanstackQuery.configs['flat/recommended'],
   jsxA11y.flatConfigs.recommended,
-
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
@@ -35,4 +33,5 @@ export default [
       'no-debugger': 'warn',
     },
   },
+  prettier,
 ];
