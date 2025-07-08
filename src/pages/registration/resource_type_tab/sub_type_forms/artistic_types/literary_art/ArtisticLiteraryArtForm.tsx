@@ -104,7 +104,7 @@ export const ArtisticLiteraryArtForm = () => {
                 {manifestations.length > 0 && (
                   <Table sx={alternatingTableRowColor}>
                     <TableHead>
-                      <TableRow sx={{ '& th': { borderBottom: 1 } }}>
+                      <TableRow>
                         <TableCell>{t('common.order')}</TableCell>
                         <TableCell>{t('common.type')}</TableCell>
                         <TableCell>{t('registration.resource_type.artistic.publisher')}</TableCell>
