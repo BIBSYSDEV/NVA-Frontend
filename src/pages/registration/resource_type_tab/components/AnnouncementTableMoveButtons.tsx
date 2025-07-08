@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { MoveArrowButton } from '../../../../components/buttons/MoveArrowButton';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface AnnouncementTableMoveButtonsProps {
   index: number;
@@ -12,7 +13,7 @@ export const AnnouncementTableMoveButtons = ({ index, listLength, moveItem }: An
     <Box sx={{ display: 'flex' }}>
       <MoveArrowButton
         orientation="up"
-        index={index}
+        data-testid={dataTestId.registrationWizard.moveUpButton(index)}
         disabled={index === 0}
         onClick={() => {
           moveItem(index - 1);
@@ -21,7 +22,7 @@ export const AnnouncementTableMoveButtons = ({ index, listLength, moveItem }: An
 
       <MoveArrowButton
         orientation="down"
-        index={index}
+        data-testid={dataTestId.registrationWizard.moveDownButton(index)}
         disabled={index === listLength - 1}
         onClick={() => {
           moveItem(index + 1);

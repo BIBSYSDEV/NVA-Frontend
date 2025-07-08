@@ -74,14 +74,15 @@ export const ContributorRow = ({
           />
           <MoveArrowButton
             orientation="up"
-            index={contributorIndex}
+            data-testid={dataTestId.registrationWizard.moveUpButton(contributor.sequence)}
             disabled={disableChannelClaimsFields || contributor.sequence === 1}
             onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}
           />
           <MoveArrowButton
             orientation="down"
-            index={contributorIndex}
+            data-testid={dataTestId.registrationWizard.moveDownButton(contributor.sequence)}
             disabled={disableChannelClaimsFields || isLastElement}
+            onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}
           />
         </Box>
       </TableCell>
