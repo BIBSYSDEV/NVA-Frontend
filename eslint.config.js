@@ -32,6 +32,7 @@ export default [
       ...eslintPluginReact.configs.recommended.rules,
       ...eslintPluginReact.configs['jsx-runtime'].rules,
       '@typescript-eslint/no-explicit-any': 'off',
+      'react-hooks/react-compiler': 'error',
       '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
       'no-console': 'warn',
       'no-debugger': 'warn',
