@@ -47,6 +47,7 @@ export const NviCandidatesNavigationAccordion = () => {
 
   const nviAggregations = nviAggregationsQuery.data?.aggregations;
 
+  const nviPendingCount = nviAggregations?.pending.docCount.toLocaleString();
   const nviApprovedCount = nviAggregations?.approved.docCount.toLocaleString();
   const nviRejectedCount = nviAggregations?.rejected.docCount.toLocaleString();
   const nviDisputeCount = nviAggregations?.dispute.docCount.toLocaleString();
@@ -116,19 +117,22 @@ export const NviCandidatesNavigationAccordion = () => {
           <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}:</Typography>
           <StyledTypography>
             {t('tasks.nvi.candidates_for_control')} (
-            {nviAggregationsQuery.isPending ? <StyledSkeleton /> : nviCandidatesTotal})
+            {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviPendingCount ?? 0)})
           </StyledTypography>
           <Divider sx={{ bgcolor: 'black' }} />
           <Typography fontWeight="bold">{t('tasks.nvi.controlled')}:</Typography>
           <StyledTypography>
-            {t('tasks.nvi.status.Approved')} ({nviAggregationsQuery.isPending ? <StyledSkeleton /> : nviApprovedCount})
+            {t('tasks.nvi.status.Approved')} (
+            {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviApprovedCount ?? 0)})
           </StyledTypography>
           <StyledTypography>
-            {t('tasks.nvi.status.Rejected')} ({nviAggregationsQuery.isPending ? <StyledSkeleton /> : nviRejectedCount})
+            {t('tasks.nvi.status.Rejected')} (
+            {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviRejectedCount ?? 0)})
           </StyledTypography>
           <Divider sx={{ bgcolor: 'black' }} />
           <StyledTypography>
-            {t('tasks.nvi.status.Dispute')} ({nviAggregationsQuery.isPending ? <StyledSkeleton /> : nviDisputeCount})
+            {t('tasks.nvi.status.Dispute')} (
+            {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
           </StyledTypography>
         </StyledNviStatusBox>
       </StyledTicketSearchFormGroup>
