@@ -48,7 +48,7 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns false when existing result could not be an NVI candidate', async () => {
-    let nonNviRegistration = structuredClone(nviRegistration);
+    const nonNviRegistration = structuredClone(nviRegistration);
     nonNviRegistration.entityDescription.reference!.publicationInstance.type = JournalType.Review;
 
     const result = await willResetNviStatuses(nonNviRegistration, nviRegistration);
@@ -56,10 +56,10 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when year is changed', async () => {
-    let persistedRegistration = structuredClone(nviRegistration);
+    const persistedRegistration = structuredClone(nviRegistration);
     persistedRegistration.entityDescription.publicationDate!.year = '2000';
 
-    let updatedRegistration = structuredClone(persistedRegistration);
+    const updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.publicationDate!.year = '2001';
 
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
@@ -67,12 +67,12 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns false when date is changed within same year', async () => {
-    let persistedRegistration = structuredClone(nviRegistration);
+    const persistedRegistration = structuredClone(nviRegistration);
     persistedRegistration.entityDescription.publicationDate!.day = '1';
     persistedRegistration.entityDescription.publicationDate!.month = '1';
     persistedRegistration.entityDescription.publicationDate!.year = '2000';
 
-    let updatedRegistration = structuredClone(nviRegistration);
+    const updatedRegistration = structuredClone(nviRegistration);
     updatedRegistration.entityDescription.publicationDate!.day = '2';
     updatedRegistration.entityDescription.publicationDate!.month = '2';
     updatedRegistration.entityDescription.publicationDate!.year = '2000';
@@ -82,7 +82,7 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when category is changed', async () => {
-    let updatedRegistration = structuredClone(nviRegistration);
+    const updatedRegistration = structuredClone(nviRegistration);
     updatedRegistration.entityDescription.reference!.publicationInstance.type = JournalType.AcademicLiteratureReview;
 
     const result = await willResetNviStatuses(nviRegistration, updatedRegistration);
@@ -93,10 +93,10 @@ describe('willResetNviStatuses()', () => {
     const channelId1 = 'https://api.com/channel/1';
     const channelId2 = 'https://api.com/channel/2';
 
-    let persistedRegistration = structuredClone(nviRegistration);
+    const persistedRegistration = structuredClone(nviRegistration);
     persistedRegistration.entityDescription.reference!.publicationContext.id = channelId1;
 
-    let updatedRegistration = structuredClone(persistedRegistration);
+    const updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.reference!.publicationContext.id = channelId2;
 
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
@@ -107,7 +107,7 @@ describe('willResetNviStatuses()', () => {
     const seriesId1 = 'https://api.com/channel/1';
     const seriesId2 = 'https://api.com/channel/2';
 
-    let persistedRegistration = structuredClone(nviRegistration) as BookRegistration;
+    const persistedRegistration = structuredClone(nviRegistration) as BookRegistration;
     persistedRegistration.entityDescription.reference!.publicationContext = {
       type: PublicationType.Book,
       isbnList: [],
@@ -118,7 +118,7 @@ describe('willResetNviStatuses()', () => {
       },
     };
 
-    let updatedRegistration = structuredClone(persistedRegistration) as BookRegistration;
+    const updatedRegistration = structuredClone(persistedRegistration) as BookRegistration;
     updatedRegistration.entityDescription.reference!.publicationContext.series!.id = seriesId2;
 
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
@@ -138,10 +138,10 @@ describe('willResetNviStatuses()', () => {
       role: { type: ContributorRole.Creator },
       sequence: 1,
     };
-    let persistedRegistration = structuredClone(nviRegistration);
+    const persistedRegistration = structuredClone(nviRegistration);
     persistedRegistration.entityDescription.contributors = [persistedContributor];
 
-    let updatedRegistration = structuredClone(persistedRegistration);
+    const updatedRegistration = structuredClone(persistedRegistration);
     const newInstitutionAffiliation: Affiliation = { type: 'Organization', id: institutionB.id };
     updatedRegistration.entityDescription.contributors[0].affiliations = [
       ...persistedAffiliations,
@@ -165,10 +165,10 @@ describe('willResetNviStatuses()', () => {
       role: { type: ContributorRole.Creator },
       sequence: 1,
     };
-    let persistedRegistration = structuredClone(nviRegistration);
+    const persistedRegistration = structuredClone(nviRegistration);
     persistedRegistration.entityDescription.contributors = [persistedContributor];
 
-    let updatedRegistration = structuredClone(persistedRegistration);
+    const updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.contributors[0].affiliations = [
       ...persistedAffiliations,
       { type: 'Organization', id: subunitOnInstitutionA.id },
@@ -190,10 +190,10 @@ describe('willResetNviStatuses()', () => {
       role: { type: ContributorRole.Creator },
       sequence: 1,
     };
-    let persistedRegistration = structuredClone(nviRegistration);
+    const persistedRegistration = structuredClone(nviRegistration);
     persistedRegistration.entityDescription.contributors = [persistedContributor];
 
-    let updatedRegistration = structuredClone(persistedRegistration);
+    const updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.contributors[0].affiliations = [
       { type: 'Organization', id: institutionB.id },
     ];
@@ -214,10 +214,10 @@ describe('willResetNviStatuses()', () => {
       role: { type: ContributorRole.Creator },
       sequence: 1,
     };
-    let persistedRegistration = structuredClone(nviRegistration);
+    const persistedRegistration = structuredClone(nviRegistration);
     persistedRegistration.entityDescription.contributors = [persistedContributor];
 
-    let updatedRegistration = structuredClone(persistedRegistration);
+    const updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.contributors[0].affiliations = [
       { type: 'Organization', id: subunitOnInstitutionA.id },
     ];
@@ -239,10 +239,10 @@ describe('willResetNviStatuses()', () => {
       sequence: 1,
     };
 
-    let persistedRegistration = structuredClone(nviRegistration);
+    const persistedRegistration = structuredClone(nviRegistration);
     persistedRegistration.entityDescription.contributors = [persistedContributor];
 
-    let updatedRegistration = structuredClone(persistedRegistration);
+    const updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.contributors[0].affiliations = [];
 
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
@@ -262,7 +262,7 @@ describe('willResetNviStatuses()', () => {
       sequence: 1,
     };
 
-    let persistedRegistration = structuredClone(nviRegistration);
+    const persistedRegistration = structuredClone(nviRegistration);
     persistedRegistration.entityDescription.contributors = [persistedContributor];
 
     const newContributor: Contributor = {
@@ -276,7 +276,7 @@ describe('willResetNviStatuses()', () => {
       role: { type: ContributorRole.Creator },
       sequence: 1,
     };
-    let updatedRegistration = structuredClone(persistedRegistration);
+    const updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.contributors = [persistedContributor, newContributor];
 
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
