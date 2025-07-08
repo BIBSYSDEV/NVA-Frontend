@@ -14,9 +14,11 @@ type UploadedFile = Pick<
   'type' | 'identifier' | 'name' | 'size' | 'mimeType' | 'rightsRetentionStrategy' | 'uploadDetails'
 >;
 
+let hasUploadSuccessEventListener = false;
+
 export const FileUploader = ({ addFile, uppy }: FileUploaderProps) => {
   useEffect(() => {
-    if (uppy && !uppy.opts.meta.hasUploadSuccessEventListener) {
+    if (uppy && !hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file, response) => {
         const uploadedFile = response.body as unknown as UploadedFile;
         const newFile: AssociatedFile = {
@@ -25,8 +27,9 @@ export const FileUploader = ({ addFile, uppy }: FileUploaderProps) => {
         };
         addFile(newFile);
       });
+
       // Avoid duplicating event listener
-      uppy.opts.meta.hasUploadSuccessEventListener = true;
+      hasUploadSuccessEventListener = true;
     }
   }, [addFile, uppy]);
 
