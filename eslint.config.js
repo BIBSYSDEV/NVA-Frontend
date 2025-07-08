@@ -1,4 +1,4 @@
-import eslintPluginTanstackQuery from '@tanstack/eslint-plugin-query';
+import tanstackQuery from '@tanstack/eslint-plugin-query';
 import eslintPluginTypeScript from '@typescript-eslint/eslint-plugin';
 import eslintParserTypeScript from '@typescript-eslint/parser';
 import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
@@ -16,7 +16,6 @@ export default [
     },
     plugins: {
       '@typescript-eslint': eslintPluginTypeScript,
-      '@tanstack/query': eslintPluginTanstackQuery,
       'jsx-a11y': eslintPluginJsxA11y,
     },
     settings: {
@@ -26,7 +25,6 @@ export default [
     },
     rules: {
       ...eslintPluginTypeScript.configs.recommended.rules,
-      ...eslintPluginTanstackQuery.configs.recommended.rules,
       ...eslintPluginJsxA11y.configs.recommended.rules,
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
@@ -34,7 +32,8 @@ export default [
       'no-debugger': 'warn',
     },
   },
-  reactHooks.configs['recommended-latest'],
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
+  reactHooks.configs['recommended-latest'],
+  ...tanstackQuery.configs['flat/recommended'],
 ];
