@@ -2,7 +2,6 @@ import { createTheme, PaletteColorOptions, SxProps } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import i18n from '../translations/i18n';
-import { BorderBottom } from '@mui/icons-material';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {

@@ -56,11 +56,7 @@ export const ContributorRow = ({
   return (
     <TableRow sx={{ td: { verticalAlign: 'top' } }}>
       <TableCell width="1">
-        <Box
-          sx={{
-            display: 'flex',
-            gap: '0.2rem',
-          }}>
+        <Box sx={{ display: 'flex', gap: '0.2rem' }}>
           <TextField
             sx={{ width: '3.6rem' }}
             disabled={disableChannelClaimsFields}

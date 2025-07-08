@@ -10,17 +10,18 @@ interface MoveArrowButtonProps extends IconButtonProps {
 
 export const MoveArrowButton = ({ orientation, index, ...rest }: MoveArrowButtonProps) => {
   const { t } = useTranslation();
+  const facingUp = orientation === 'up';
 
   return (
     <IconButton
-      title={orientation === 'up' ? t('common.move_up') : t('common.move_down')}
+      title={facingUp ? t('common.move_up') : t('common.move_down')}
       data-testid={
-        orientation === 'up'
+        facingUp
           ? dataTestId.registrationWizard.moveUpButton(index)
           : dataTestId.registrationWizard.moveDownButton(index)
       }
       {...rest}>
-      <ArrowRightAltIcon sx={{ transform: orientation === 'up' ? 'rotate(-90deg)' : 'rotate(90deg)' }} />
+      <ArrowRightAltIcon sx={{ transform: facingUp ? 'rotate(-90deg)' : 'rotate(90deg)' }} />
     </IconButton>
   );
 };
