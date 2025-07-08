@@ -2,8 +2,8 @@ import eslintPluginTanstackQuery from '@tanstack/eslint-plugin-query';
 import eslintPluginTypeScript from '@typescript-eslint/eslint-plugin';
 import eslintParserTypeScript from '@typescript-eslint/parser';
 import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
-import eslintPluginReact from 'eslint-plugin-react';
-import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [
   {
@@ -18,8 +18,6 @@ export default [
       '@typescript-eslint': eslintPluginTypeScript,
       '@tanstack/query': eslintPluginTanstackQuery,
       'jsx-a11y': eslintPluginJsxA11y,
-      react: eslintPluginReact,
-      'react-hooks': eslintPluginReactHooks,
     },
     settings: {
       react: {
@@ -30,13 +28,13 @@ export default [
       ...eslintPluginTypeScript.configs.recommended.rules,
       ...eslintPluginTanstackQuery.configs.recommended.rules,
       ...eslintPluginJsxA11y.configs.recommended.rules,
-      ...eslintPluginReact.configs.recommended.rules,
-      ...eslintPluginReact.configs['jsx-runtime'].rules,
-      ...eslintPluginReactHooks.configs.recommended.rules,
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
       'no-console': 'warn',
       'no-debugger': 'warn',
     },
   },
+  reactHooks.configs['recommended-latest'],
+  react.configs.flat.recommended,
+  react.configs.flat['jsx-runtime'],
 ];
