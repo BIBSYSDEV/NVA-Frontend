@@ -76,19 +76,12 @@ export const ContributorRow = ({
             orientation="up"
             index={contributorIndex}
             disabled={disableChannelClaimsFields || contributor.sequence === 1}
-            sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
             onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}
           />
           <MoveArrowButton
             orientation="down"
             index={contributorIndex}
             disabled={disableChannelClaimsFields || isLastElement}
-            sx={{
-              minWidth: 'auto',
-              height: 'fit-content',
-              marginTop: '0.6rem',
-            }}
-            onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}
           />
         </Box>
       </TableCell>

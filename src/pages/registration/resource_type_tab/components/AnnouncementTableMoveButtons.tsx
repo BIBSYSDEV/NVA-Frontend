@@ -9,7 +9,7 @@ interface AnnouncementTableMoveButtonsProps {
 
 export const AnnouncementTableMoveButtons = ({ index, listLength, moveItem }: AnnouncementTableMoveButtonsProps) => {
   return (
-    <Box sx={{ display: 'flex', alignSelf: 'center' }}>
+    <Box sx={{ display: 'flex' }}>
       <MoveArrowButton
         orientation="up"
         index={index}
