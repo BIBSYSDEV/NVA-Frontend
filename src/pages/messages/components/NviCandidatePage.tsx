@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
 import { fetchNviCandidate } from '../../../api/searchApi';
@@ -22,7 +22,6 @@ import { NviCandidateActionPanel } from './NviCandidateActionPanel';
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const navigate = useNavigate();
   const locationState = location.state as NviCandidatePageLocationState;
   const { identifier } = useParams<IdentifierParams>();
 
@@ -45,14 +44,17 @@ export const NviCandidatePage = () => {
 
   const registrationQuery = useFetchRegistration(registrationIdentifier);
 
-  const nviQueryParams = locationState?.candidateOffsetState?.nviQueryParams;
+  let nviQueryParams = locationState?.candidateOffsetState?.nviQueryParams;
   const thisCandidateOffset = locationState?.candidateOffsetState?.currentOffset;
 
   const hasOffset = typeof thisCandidateOffset === 'number';
   const isFirstCandidate = hasOffset && thisCandidateOffset === 0;
 
   if (hasOffset && nviQueryParams) {
-    nviQueryParams.offset = Math.max(thisCandidateOffset - 1, 0);
+    nviQueryParams = {
+      ...nviQueryParams,
+      offset: Math.max(thisCandidateOffset - 1, 0),
+    };
   }
   const navigateCandidateQuery = useFetchNviCandidates({
     enabled: hasOffset && !!nviQueryParams,
