@@ -16,6 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import {
   ArtisticRegistration,
   FilmOutput,
@@ -115,14 +116,14 @@ export const ArtisticMovingPictureForm = () => {
             return (
               <>
                 {outputs.length > 0 && (
-                  <Table sx={{ '& th,td': { borderBottom: 1 } }}>
+                  <Table sx={alternatingTableRowColor}>
                     <TableHead>
                       <TableRow>
+                        <TableCell>{t('common.order')}</TableCell>
                         <TableCell>{t('common.type')}</TableCell>
                         <TableCell>
                           {t('common.publisher')}/{t('common.place')}
                         </TableCell>
-                        <TableCell>{t('common.order')}</TableCell>
                         <TableCell>{t('common.actions')}</TableCell>
                       </TableRow>
                     </TableHead>
@@ -161,6 +162,7 @@ export const ArtisticMovingPictureForm = () => {
 
                 <Box sx={{ mt: '1rem', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
                   <Button
+                    sx={{ textTransform: 'none' }}
                     onClick={() => setOpenModal('Broadcast')}
                     variant="outlined"
                     startIcon={<AddCircleOutlineIcon />}
@@ -168,6 +170,7 @@ export const ArtisticMovingPictureForm = () => {
                     {t('registration.resource_type.artistic.add_broadcast')}
                   </Button>
                   <Button
+                    sx={{ textTransform: 'none' }}
                     onClick={() => setOpenModal('CinematicRelease')}
                     variant="outlined"
                     startIcon={<AddCircleOutlineIcon />}
@@ -175,6 +178,7 @@ export const ArtisticMovingPictureForm = () => {
                     {t('registration.resource_type.artistic.add_cinematic_release')}
                   </Button>
                   <Button
+                    sx={{ textTransform: 'none' }}
                     onClick={() => setOpenModal('OtherRelease')}
                     variant="outlined"
                     startIcon={<AddCircleOutlineIcon />}

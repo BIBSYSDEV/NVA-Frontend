@@ -16,6 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { ArtisticRegistration, DesignType } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
@@ -101,11 +102,11 @@ export const ArtisticDesignForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {venues.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
+                <Table sx={alternatingTableRowColor}>
                   <TableHead>
-                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
-                      <TableCell>{t('common.place')}</TableCell>
+                    <TableRow>
                       <TableCell>{t('common.order')}</TableCell>
+                      <TableCell>{t('common.place')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
@@ -137,7 +138,7 @@ export const ArtisticDesignForm = () => {
                 data-testid={dataTestId.registrationWizard.resourceType.addVenueButton}
                 onClick={() => setOpenNewVenueModal(true)}
                 variant="outlined"
-                sx={{ mt: '1rem' }}
+                sx={{ mt: '1rem', textTransform: 'none' }}
                 startIcon={<AddCircleOutlineIcon />}>
                 {t('registration.resource_type.artistic.add_announcement')}
               </Button>
