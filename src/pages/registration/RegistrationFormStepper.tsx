@@ -1,7 +1,7 @@
 import { Step, StepButton, StepLabel, Stepper, Theme, useMediaQuery } from '@mui/material';
 import deepmerge from 'deepmerge';
 import { useFormikContext } from 'formik';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
@@ -20,7 +20,9 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const location = useLocation();
   const locationState = location.state as RegistrationFormLocationState;
-  const maxVisitedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
+  const [maxVisitedTab, setMaxVisitedTab] = useState(
+    locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses
+  );
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -36,7 +38,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
     const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
     if (tabNumber > highestValidatedTab) {
-      locationState.highestValidatedTab = tabNumber - 1; // Validate up to current tab
+      setMaxVisitedTab(tabNumber - 1); // Validate up to current tab
 
       // Set fields on previous tabs to touched
       const touchedFieldsOnMount = getTouchedTabFields(tabNumber - 1, valuesRef.current);
@@ -46,7 +48,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
     // Set fields on current tab to touched
     return () => {
       if (tabNumber > highestValidatedTab) {
-        locationState.highestValidatedTab = tabNumber; // Validate current tab
+        setMaxVisitedTab(tabNumber); // Update state to current tab
       }
       const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
       setTouched(
