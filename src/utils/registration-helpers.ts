@@ -764,6 +764,8 @@ export const getOutputName = (item: OutputItem): string => {
       return (item as LiteraryArtsWeb).publisher.name;
     case 'ExhibitionBasic':
       return (item as ExhibitionBasic).organization.name;
+    case 'sdfsdf' as any:
+      return 'lsdfsdf';
     default:
       return '';
   }
