@@ -30,6 +30,7 @@
     "expired_token_info": "Din sesjon har utløpt, og du har blitt logget ut. Fortsett som anonym bruker, eller logg inn på nytt.",
     "forbidden": "Du har ikke tilgang",
     "forbidden_description": "<p>Du har ikke tilgang til å se innholdet på denne siden.</p><p>Skal du ha tilgangt til siden må du logge inn på NVA.</p>",
+    "forbidden_description_logged_in": "Skal du ha tilgang til siden så kontakt administrator om dette ikke stemmer.",
     "login": "Logg inn",
     "logout": "Logg ut",
     "registration_not_published": "Denne registreringen er ikke publisert ennå.",
@@ -2237,6 +2238,7 @@
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fant dessverre ikke noe som passer med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li></ul>",
+  "overview_over_administrators": "Oversikt over administratorer",
   "time_format": {
     "hours": "TT:MM:SS",
     "minutes": "MM:SS"
