@@ -1,36 +1,32 @@
-import eslintPluginTanstackQuery from '@tanstack/eslint-plugin-query';
-import eslintPluginTypeScript from '@typescript-eslint/eslint-plugin';
-import eslintParserTypeScript from '@typescript-eslint/parser';
-import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
-import eslintPluginReact from 'eslint-plugin-react';
-import * as reactHooks from 'eslint-plugin-react-hooks';
+import tanstackQuery from '@tanstack/eslint-plugin-query';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import prettier from 'eslint-plugin-prettier/recommended';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import tseslint from 'typescript-eslint';
 
 export default [
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      parser: eslintParserTypeScript,
       parserOptions: {
         project: './tsconfig.json',
       },
-    },
-    plugins: {
-      '@typescript-eslint': eslintPluginTypeScript,
-      '@tanstack/query': eslintPluginTanstackQuery,
-      'jsx-a11y': eslintPluginJsxA11y,
-      react: eslintPluginReact,
     },
     settings: {
       react: {
         version: 'detect',
       },
     },
+  },
+  ...tseslint.configs.recommended,
+  react.configs.flat.recommended,
+  react.configs.flat['jsx-runtime'],
+  reactHooks.configs['recommended-latest'],
+  ...tanstackQuery.configs['flat/recommended'],
+  jsxA11y.flatConfigs.recommended,
+  {
     rules: {
-      ...eslintPluginTypeScript.configs.recommended.rules,
-      ...eslintPluginTanstackQuery.configs.recommended.rules,
-      ...eslintPluginJsxA11y.configs.recommended.rules,
-      ...eslintPluginReact.configs.recommended.rules,
-      ...eslintPluginReact.configs['jsx-runtime'].rules,
       '@typescript-eslint/no-explicit-any': 'off',
       'react-hooks/react-compiler': 'error',
       '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
@@ -38,5 +34,5 @@ export default [
       'no-debugger': 'warn',
     },
   },
-  reactHooks.configs.recommended,
+  prettier,
 ];

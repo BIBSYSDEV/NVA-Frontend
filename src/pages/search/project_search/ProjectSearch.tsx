@@ -1,7 +1,8 @@
 import { List, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { NoSearchResults } from '../../../components/NoSearchResults';
 import { ProjectSortSelector } from '../../../components/ProjectSortSelector';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
@@ -12,8 +13,6 @@ import { ProjectListItem } from './ProjectListItem';
 type ProjectSearchProps = Pick<SearchPageProps, 'projectQuery'>;
 
 export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
-  const { t } = useTranslation();
-
   const projectsSearchResults = projectQuery.data?.hits ?? [];
   const totalHits = projectQuery.data?.size ?? 0;
 
@@ -40,7 +39,16 @@ export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
           ))}
         </List>
       ) : (
-        <Typography sx={{ mx: { xs: '0.5rem', md: 0 }, mt: '1rem' }}>{t('search.no_projects')}</Typography>
+        <NoSearchResults>
+          <Trans
+            i18nKey="no_search_results_list_default"
+            components={{
+              p: <Typography fontWeight="bold" />,
+              ul: <ul style={{ margin: 0, paddingLeft: '1.5rem' }} />,
+              li: <li />,
+            }}
+          />
+        </NoSearchResults>
       )}
     </CristinSearchPagination>
   );
