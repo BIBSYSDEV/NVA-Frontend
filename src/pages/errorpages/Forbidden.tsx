@@ -42,7 +42,7 @@ export const Forbidden = () => {
           sx={{ textTransform: 'none' }}
           endIcon={<LoginIcon />}
           variant="contained"
-          data-testid={dataTestId.header.logInButton}
+          data-testid={`${dataTestId.header.logInButton}-forbidden`}
           onClick={() => {
             const redirectPath = new URLSearchParams(location.search).get(LocalStorageKey.RedirectPath);
             if (redirectPath) {
