@@ -1,14 +1,14 @@
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
+import LoginIcon from '@mui/icons-material/Login';
 import { Box, Button, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router';
+import { RootState } from '../../redux/store';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import LoginIcon from '@mui/icons-material/Login';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
 export const Forbidden = () => {
