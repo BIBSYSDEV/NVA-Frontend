@@ -1,23 +1,11 @@
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
 import SearchIcon from '@mui/icons-material/Search';
 import WarningIcon from '@mui/icons-material/Warning';
-import {
-  Box,
-  Button,
-  Checkbox,
-  IconButton,
-  MenuItem,
-  TableCell,
-  TableRow,
-  TextField,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Checkbox, MenuItem, TableCell, TableRow, TextField, Tooltip, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { MoveArrowButton } from '../../../../components/buttons/MoveArrowButton';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ContributorName } from '../../../../components/ContributorName';
 import { SimpleWarning } from '../../../../components/messages/SimpleWarning';
@@ -84,28 +72,18 @@ export const ContributorRow = ({
             }}
             onBlur={handleOnMoveContributor}
           />
-          {!isLastElement && (
-            <Tooltip title={t('common.move_down')}>
-              <IconButton
-                size="small"
-                disabled={disableChannelClaimsFields}
-                sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
-                onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
-                <ArrowDownwardIcon color="primary" />
-              </IconButton>
-            </Tooltip>
-          )}
-          {contributor.sequence !== 1 && (
-            <Tooltip title={t('common.move_up')}>
-              <IconButton
-                size="small"
-                disabled={disableChannelClaimsFields}
-                sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
-                onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
-                <ArrowUpwardIcon color="primary" />
-              </IconButton>
-            </Tooltip>
-          )}
+          <MoveArrowButton
+            orientation="up"
+            data-testid={dataTestId.registrationWizard.moveUpButton(contributor.sequence)}
+            disabled={disableChannelClaimsFields || contributor.sequence === 1}
+            onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}
+          />
+          <MoveArrowButton
+            orientation="down"
+            data-testid={dataTestId.registrationWizard.moveDownButton(contributor.sequence)}
+            disabled={disableChannelClaimsFields || isLastElement}
+            onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}
+          />
         </Box>
       </TableCell>
       <TableCell align="left" width="1">

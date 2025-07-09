@@ -87,9 +87,9 @@ export const ExhibitionProductionForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {manifestations.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
+                <Table>
                   <TableHead>
-                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
+                    <TableRow>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('common.description')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
