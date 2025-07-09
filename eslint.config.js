@@ -22,7 +22,7 @@ export default [
   ...tseslint.configs.recommended,
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
-  reactHooks.configs['recommended-latest'],
+  reactHooks.configs.recommended,
   ...tanstackQuery.configs['flat/recommended'],
   jsxA11y.flatConfigs.recommended,
   {
