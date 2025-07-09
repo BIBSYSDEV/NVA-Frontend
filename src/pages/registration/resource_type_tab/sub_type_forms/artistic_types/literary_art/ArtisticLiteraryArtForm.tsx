@@ -16,6 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import {
   ArtisticRegistration,
   LiteraryArtsOutput,
@@ -101,12 +102,12 @@ export const ArtisticLiteraryArtForm = () => {
             return (
               <>
                 {manifestations.length > 0 && (
-                  <Table sx={{ '& th,td': { borderBottom: 1 } }}>
+                  <Table sx={alternatingTableRowColor}>
                     <TableHead>
                       <TableRow>
+                        <TableCell>{t('common.order')}</TableCell>
                         <TableCell>{t('common.type')}</TableCell>
                         <TableCell>{t('registration.resource_type.artistic.publisher')}</TableCell>
-                        <TableCell>{t('common.order')}</TableCell>
                         <TableCell>{t('common.actions')}</TableCell>
                       </TableRow>
                     </TableHead>
@@ -137,6 +138,7 @@ export const ArtisticLiteraryArtForm = () => {
 
                 <Box sx={{ mt: '1rem', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
                   <Button
+                    sx={{ textTransform: 'none' }}
                     data-testid={dataTestId.registrationWizard.resourceType.addBookButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsMonograph')}
                     variant="outlined"
@@ -144,6 +146,7 @@ export const ArtisticLiteraryArtForm = () => {
                     {t('registration.resource_type.artistic.add_book')}
                   </Button>
                   <Button
+                    sx={{ textTransform: 'none' }}
                     data-testid={dataTestId.registrationWizard.resourceType.addAudioVideoButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsAudioVisual')}
                     variant="outlined"
@@ -151,6 +154,7 @@ export const ArtisticLiteraryArtForm = () => {
                     {t('registration.resource_type.artistic.add_audio_visual_publication')}
                   </Button>
                   <Button
+                    sx={{ textTransform: 'none' }}
                     data-testid={dataTestId.registrationWizard.resourceType.addPerformanceButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsPerformance')}
                     variant="outlined"
@@ -158,6 +162,7 @@ export const ArtisticLiteraryArtForm = () => {
                     {t('registration.resource_type.artistic.add_performance')}
                   </Button>
                   <Button
+                    sx={{ textTransform: 'none' }}
                     data-testid={dataTestId.registrationWizard.resourceType.addWebPublicationButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsWeb')}
                     variant="outlined"

@@ -25,7 +25,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
   const valuesRef = useRef(values);
   useEffect(() => {
     valuesRef.current = values;
-  }, [values]);
+  }, []);
 
   const touchedRef = useRef(touched);
   useEffect(() => {

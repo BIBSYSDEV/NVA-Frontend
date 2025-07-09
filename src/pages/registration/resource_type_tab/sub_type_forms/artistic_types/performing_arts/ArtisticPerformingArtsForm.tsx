@@ -16,6 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import {
   ArtisticRegistration,
@@ -102,11 +103,11 @@ export const ArtisticPerformingArtsForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {outputs.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
+                <Table sx={alternatingTableRowColor}>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{t('common.place')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
+                      <TableCell>{t('common.place')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
@@ -138,7 +139,7 @@ export const ArtisticPerformingArtsForm = () => {
                 data-testid={dataTestId.registrationWizard.resourceType.addVenueButton}
                 onClick={() => setOpenNewVenueModal(true)}
                 variant="outlined"
-                sx={{ mt: '1rem' }}
+                sx={{ mt: '1rem', textTransform: 'none' }}
                 startIcon={<AddCircleOutlineIcon />}>
                 {t('registration.resource_type.artistic.add_announcement')}
               </Button>
