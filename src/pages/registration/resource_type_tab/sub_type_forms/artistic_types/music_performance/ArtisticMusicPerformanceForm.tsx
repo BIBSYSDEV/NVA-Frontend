@@ -13,6 +13,7 @@ import {
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import {
   ArtisticRegistration,
   MusicOutput,
@@ -37,7 +38,7 @@ export const ArtisticMusicPerformanceForm = () => {
 
   return (
     <div>
-      <Typography variant="h3" component="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {t('registration.resource_type.artistic.announcements')}
       </Typography>
       <FieldArray name={ResourceFieldNames.PublicationInstanceManifestations}>
@@ -49,12 +50,12 @@ export const ArtisticMusicPerformanceForm = () => {
           return (
             <>
               {manifestations.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
+                <Table sx={alternatingTableRowColor}>
                   <TableHead>
                     <TableRow>
+                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('common.description')}</TableCell>
-                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
@@ -98,6 +99,7 @@ export const ArtisticMusicPerformanceForm = () => {
 
               <Box sx={{ mt: '1rem', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   onClick={() => setOpenModal('Concert')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}
@@ -105,6 +107,7 @@ export const ArtisticMusicPerformanceForm = () => {
                   {t('registration.resource_type.artistic.add_concert')}
                 </Button>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   onClick={() => setOpenModal('AudioVisualPublication')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}
@@ -112,6 +115,7 @@ export const ArtisticMusicPerformanceForm = () => {
                   {t('registration.resource_type.artistic.add_audio_visual_publication')}
                 </Button>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   onClick={() => setOpenModal('MusicScore')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}
@@ -119,6 +123,7 @@ export const ArtisticMusicPerformanceForm = () => {
                   {t('registration.resource_type.artistic.add_music_score')}
                 </Button>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   onClick={() => setOpenModal('OtherPerformance')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}
