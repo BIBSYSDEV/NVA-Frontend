@@ -718,59 +718,98 @@ export const getContributorsWithPrimaryRole = (
   });
 };
 
-export const getOutputName = (item: OutputItem): string => {
-  switch (item.type) {
-    case 'Venue':
-    case 'PerformingArtsVenue':
-      return (item as Venue).place?.name ?? '';
-    case 'Competition':
-      return (item as Competition).name;
-    case 'MentionInPublication':
-      return (item as MentionInPublication).title;
-    case 'Award':
-      return (item as Award).name;
-    case 'Exhibition':
-      return (item as Exhibition).name;
-    case 'Broadcast':
-      return (item as Broadcast).publisher.name;
-    case 'CinematicRelease':
-      return (item as CinematicRelease).place.name;
-    case 'OtherRelease': {
-      const otherRelease = item as OtherRelease;
-      return [otherRelease.publisher.name, otherRelease.place.name].filter(Boolean).join('/');
-    }
-    case 'MusicScore':
-      return (item as MusicScore).publisher.name;
-    case 'AudioVisualPublication':
-      return (item as AudioVisualPublication).publisher.name;
-    case 'Concert':
-      return (item as Concert).place?.name ?? i18n.t('registration.resource_type.artistic.output_type.Concert');
-    case 'OtherPerformance': {
-      const otherMusicPerformance = item as OtherMusicPerformance;
+// export const getOutputName = (item: OutputItem): string => {
+//   switch (item.type) {
+//     case 'Venue':
+//     case 'PerformingArtsVenue':
+//       return (item as Venue).place?.name ?? '';
+//     case 'Competition':
+//       return (item as Competition).name;
+//     case 'MentionInPublication':
+//       return (item as MentionInPublication).title;
+//     case 'Award':
+//       return (item as Award).name;
+//     case 'Exhibition':
+//       return (item as Exhibition).name;
+//     case 'Broadcast':
+//       return (item as Broadcast).publisher.name;
+//     case 'CinematicRelease':
+//       return (item as CinematicRelease).place.name;
+//     case 'OtherRelease': {
+//       const otherRelease = item as OtherRelease;
+//       return [otherRelease.publisher.name, otherRelease.place.name].filter(Boolean).join('/');
+//     }
+//     case 'MusicScore':
+//       return (item as MusicScore).publisher.name;
+//     case 'AudioVisualPublication':
+//       return (item as AudioVisualPublication).publisher.name;
+//     case 'Concert':
+//       return (item as Concert).place?.name ?? i18n.t('registration.resource_type.artistic.output_type.Concert');
+//     case 'OtherPerformance': {
+//       const otherMusicPerformance = item as OtherMusicPerformance;
 
-      return (
-        otherMusicPerformance.place?.name ||
-        otherMusicPerformance.performanceType ||
-        i18n.t('registration.resource_type.artistic.output_type.OtherPerformance')
-      );
-    }
-    case 'LiteraryArtsMonograph':
-      return (item as LiteraryArtsMonograph).publisher.name;
-    case 'LiteraryArtsPerformance':
-      return (item as LiteraryArtsPerformance).place.name;
-    case 'LiteraryArtsAudioVisual':
-      return (item as LiteraryArtsAudioVisual).publisher.name;
-    case 'LiteraryArtsWeb':
-      return (item as LiteraryArtsWeb).publisher.name;
-    case 'ExhibitionBasic':
-      return (item as ExhibitionBasic).organization.name;
-    case 'sdfsdf' as any:
-      return 'lsdfsdf';
-    case 'sdfsdfa' as any:
-      return 'lsdfsdfa';
-    default:
-      return '';
-  }
+//       return (
+//         otherMusicPerformance.place?.name ||
+//         otherMusicPerformance.performanceType ||
+//         i18n.t('registration.resource_type.artistic.output_type.OtherPerformance')
+//       );
+//     }
+//     case 'LiteraryArtsMonograph':
+//       return (item as LiteraryArtsMonograph).publisher.name;
+//     case 'LiteraryArtsPerformance':
+//       return (item as LiteraryArtsPerformance).place.name;
+//     case 'LiteraryArtsAudioVisual':
+//       return (item as LiteraryArtsAudioVisual).publisher.name;
+//     case 'LiteraryArtsWeb':
+//       return (item as LiteraryArtsWeb).publisher.name;
+//     case 'ExhibitionBasic':
+//       return (item as ExhibitionBasic).organization.name;
+//     case 'sdfsdf' as any:
+//       return 'lsdfsdf';
+//     case 'sdfsdfa' as any:
+//       return 'lsdfsdfa';
+//     default:
+//       return '';
+//   }
+// };
+
+type OutputNameResolver = (item: OutputItem) => string;
+
+const outputNameResolvers: Record<OutputItem['type'], OutputNameResolver> = {
+  Venue: (item) => (item as Venue).place?.name ?? '',
+  PerformingArtsVenue: (item) => (item as Venue).place?.name ?? '',
+  Competition: (item) => (item as Competition).name,
+  MentionInPublication: (item) => (item as MentionInPublication).title,
+  Award: (item) => (item as Award).name,
+  Exhibition: (item) => (item as Exhibition).name,
+  Broadcast: (item) => (item as Broadcast).publisher.name,
+  CinematicRelease: (item) => (item as CinematicRelease).place.name,
+  OtherRelease: (item) => {
+    const other = item as OtherRelease;
+    return [other.publisher.name, other.place.name].filter(Boolean).join('/');
+  },
+  MusicScore: (item) => (item as MusicScore).publisher.name,
+  AudioVisualPublication: (item) => (item as AudioVisualPublication).publisher.name,
+  Concert: (item) => (item as Concert).place?.name ?? i18n.t('registration.resource_type.artistic.output_type.Concert'),
+  OtherPerformance: (item) => {
+    const other = item as OtherMusicPerformance;
+    return (
+      other.place?.name ||
+      other.performanceType ||
+      i18n.t('registration.resource_type.artistic.output_type.OtherPerformance')
+    );
+  },
+  LiteraryArtsMonograph: (item) => (item as LiteraryArtsMonograph).publisher.name,
+  LiteraryArtsPerformance: (item) => (item as LiteraryArtsPerformance).place.name,
+  LiteraryArtsAudioVisual: (item) => (item as LiteraryArtsAudioVisual).publisher.name,
+  LiteraryArtsWeb: (item) => (item as LiteraryArtsWeb).publisher.name,
+  ExhibitionBasic: (item) => (item as ExhibitionBasic).organization.name,
+  ExhibitionCatalog: () => '',
+};
+
+export const getOutputName = (item: OutputItem): string => {
+  const resolver = outputNameResolvers[item.type];
+  return resolver ? resolver(item) : '';
 };
 
 export const userHasAccessRight = (registration: Registration | undefined, operation: RegistrationOperation) =>
