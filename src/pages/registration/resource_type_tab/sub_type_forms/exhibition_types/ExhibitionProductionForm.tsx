@@ -122,6 +122,7 @@ export const ExhibitionProductionForm = () => {
 
               <Box sx={{ display: 'flex', gap: '1rem', mt: '1rem' }}>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   data-testid={dataTestId.registrationWizard.resourceType.addExhibitionBasicButton}
                   onClick={() => setOpenModal('ExhibitionBasic')}
                   variant="outlined"
@@ -129,6 +130,7 @@ export const ExhibitionProductionForm = () => {
                   {t('registration.resource_type.exhibition_production.add_exhibition_basic')}
                 </Button>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   data-testid={dataTestId.registrationWizard.resourceType.addExhibitionCatalogButton}
                   onClick={() => setOpenModal('ExhibitionCatalog')}
                   variant="outlined"
