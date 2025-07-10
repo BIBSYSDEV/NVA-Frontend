@@ -961,6 +961,9 @@
       "thesis_embargo_curator_description": "Kan sjå og endre embargofiler på studentoppgåver."
     }
   },
+  "no_search_results_found_with_search": "",
+  "no_search_results_list_default": "",
+  "no_search_results_list_person": "",
   "owner_institution": "Eigarinstitusjon",
   "privacy": {
     "about": {
@@ -2119,9 +2122,6 @@
     },
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
-    "no_persons": "Ingen personar",
-    "no_projects": "Ingen prosjekt",
-    "no_results": "Ingen resultat",
     "participant": "Deltakar",
     "participating_institution": "Deltakande institusjon",
     "person_search": "Personsøk",
@@ -2247,10 +2247,10 @@
     "search_for_duplicate": "Søk etter forskingsresultat",
     "unpublish": "Avpubliser",
     "unpublish_header": "Avpublisere",
-    "unpublish_info": "Resultatet vil ikkje lenger vere synleg for andre om du vel å avpublisere. Du kan velje å publisere det på nytt seinare",
+    "unpublish_info": "Resultatet vil ikkje lenger vere offentleg synleg om du vel å avpublisere. Det vil framleis vere synleg for alle som har direktelenke. Du kan velje å publisere det på nytt seinare.",
     "unpublish_not_allowed": "<0>Du kan ikkje avpublisere dette resultatet, fordi det anten har ei opplasta fil med godkjend lisens eller er rapportert til Norsk vitskapsindeks (NVI).</0><0>Ta kontakt med kuratorstøtte om du har behov for å avpublisere</0>",
     "unpublish_registration": "Avpubliser forskingsresultat",
-    "unpublish_registration_detail_1": "Ved avpublisering vil ikkje forskingsresultatet vere søkbare i NVA, men vil framleis vere tilgjengelege ved oppslag av referanse.",
+    "unpublish_registration_detail_1": "Etter å ha avpublisert resultatet kan du ikkje lenger søkje det opp, men det er framleis tilgjengeleg via direkte oppslag (frå siteringar).",
     "unpublish_registration_detail_2": "Berre metadata (ingen filer) vil vere synleg ved direkte oppslag.",
     "unpublish_registration_duplicate_citation_information": "For at alle siteringar skal bli vidareførte, må du søkje opp den andre registreringa. Då vil alle siteringar framleis føre til den andre versjonen.",
     "unpublish_registration_duplicate_question": "Finst det ein annan publisert versjon av same forskingsresultat?",
