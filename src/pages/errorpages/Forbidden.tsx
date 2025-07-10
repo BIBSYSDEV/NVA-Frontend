@@ -20,7 +20,7 @@ export const Forbidden = () => {
     <Box data-testid="forbidden" sx={{ my: '4rem' }}>
       <span style={{ display: 'flex', gap: '0.5rem' }}>
         <LockOutlineIcon />
-        <Typography gutterBottom variant="h2" component="h1">
+        <Typography gutterBottom variant="h1">
           {t('authorization.forbidden')}
         </Typography>
       </span>
@@ -37,7 +37,7 @@ export const Forbidden = () => {
 
       {!user ? (
         <Button
-          sx={{ textTransform: 'none', mt: '0.5rem' }}
+          sx={{ textTransform: 'none', mt: '1rem' }}
           endIcon={<LoginIcon />}
           variant="contained"
           data-testid={`${dataTestId.header.logInButton}-forbidden`}
