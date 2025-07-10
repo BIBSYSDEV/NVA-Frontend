@@ -10,7 +10,7 @@ const NotFound = () => {
         components={{
           span: <span style={{ display: 'flex', gap: '0.5rem' }} />,
           icon: <BlockIcon />,
-          h1: <Typography gutterBottom variant="h2" component="h1" />,
+          h1: <Typography gutterBottom variant="h1" />,
           p: <Typography />,
         }}
       />
