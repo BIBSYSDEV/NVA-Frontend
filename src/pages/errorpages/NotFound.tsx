@@ -4,7 +4,7 @@ import { Trans } from 'react-i18next';
 
 const NotFound = () => {
   return (
-    <Box data-testid="404" sx={{ my: '4rem' }}>
+    <Box data-testid="404" sx={{ m: '4rem 2rem' }}>
       <Trans
         i18nKey="feedback.error.404_page"
         components={{
