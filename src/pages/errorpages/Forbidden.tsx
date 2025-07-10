@@ -19,9 +19,9 @@ export const Forbidden = () => {
 
   return (
     <Box data-testid="forbidden" sx={{ my: '4rem' }}>
-      <span style={{ display: 'flex', gap: '0.2rem' }}>
+      <span style={{ display: 'flex', gap: '0.5rem' }}>
         <LockOutlineIcon />
-        <Typography variant="h2" component="h1" sx={{ mb: '1rem' }}>
+        <Typography gutterBottom variant="h2" component="h1">
           {t('authorization.forbidden')}
         </Typography>
       </span>
