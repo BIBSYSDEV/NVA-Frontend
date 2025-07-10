@@ -25,6 +25,7 @@ import { dataTestId } from '../../../../../utils/dataTestIds';
 import { OutputRow } from '../artistic_types/OutputRow';
 import { ExhibitionBasicModal } from './ExhibitionBasicModal';
 import { ExhibitionCatalogModal } from './ExhibitionCatalogModal';
+import { alternatingTableRowColor } from '../../../../../themes/mainTheme';
 
 const exhibitionSubtypes = Object.values(ExhibitionProductionSubtype);
 type ExhibitionProductioModalType = '' | 'ExhibitionBasic' | 'ExhibitionCatalog';
@@ -87,7 +88,7 @@ export const ExhibitionProductionForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {manifestations.length > 0 && (
-                <Table>
+                <Table sx={alternatingTableRowColor}>
                   <TableHead>
                     <TableRow>
                       <TableCell>{t('common.order')}</TableCell>
