@@ -35,7 +35,7 @@ export const Forbidden = () => {
         <Typography>{t('authorization.forbidden_description_logged_in')}</Typography>
       )}
 
-      {user ? (
+      {!user ? (
         <Button
           sx={{ textTransform: 'none', mt: '0.5rem' }}
           endIcon={<LoginIcon />}
