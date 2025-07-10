@@ -1,14 +1,19 @@
+import BlockIcon from '@mui/icons-material/Block';
 import { Box, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 
 const NotFound = () => {
-  const { t } = useTranslation();
-
   return (
-    <Box data-testid="404" sx={{ mt: '4rem' }}>
-      <Typography variant="h3" component="h1">
-        {t('feedback.error.404_page')}
-      </Typography>
+    <Box data-testid="404" sx={{ my: '4rem' }}>
+      <Trans
+        i18nKey="feedback.error.404_page"
+        components={{
+          span: <span style={{ display: 'flex', gap: '0.5rem' }} />,
+          icon: <BlockIcon />,
+          h1: <Typography gutterBottom variant="h2" component="h1" />,
+          p: <Typography />,
+        }}
+      />
     </Box>
   );
 };
