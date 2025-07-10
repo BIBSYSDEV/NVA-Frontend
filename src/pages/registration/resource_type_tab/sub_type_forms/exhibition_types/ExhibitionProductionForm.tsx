@@ -90,9 +90,9 @@ export const ExhibitionProductionForm = () => {
                 <Table>
                   <TableHead>
                     <TableRow>
+                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('common.description')}</TableCell>
-                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
