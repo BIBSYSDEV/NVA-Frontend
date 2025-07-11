@@ -1,12 +1,12 @@
 import { createContext, ReactNode, useState } from 'react';
 import { RegistrationTab } from '../types/registration.types';
 
-export type HighesVisitedTab = RegistrationTab | -1;
+export type HighestVisitedTab = RegistrationTab | -1;
 
 interface RegistrationFormContextType {
   disableNviCriticalFields: boolean;
   disableChannelClaimsFields: boolean;
-  highestVisitedTab: HighesVisitedTab;
+  highestVisitedTab: HighestVisitedTab;
   setHighestVisitedTab: (tab: RegistrationTab) => void;
 }
 
@@ -23,15 +23,15 @@ interface RegistrationFormContextProviderProps {
 }
 
 export const RegistrationFormContextProvider = ({ children, value }: RegistrationFormContextProviderProps) => {
-  const [validatedTab, setValidatedTab] = useState(value.highestVisitedTab);
+  const [highestVisitedTab, setHighestVisitedTab] = useState(value.highestVisitedTab);
 
   return (
     <RegistrationFormContext.Provider
       value={{
         disableNviCriticalFields: value.disableNviCriticalFields ?? false,
         disableChannelClaimsFields: value.disableChannelClaimsFields ?? false,
-        highestVisitedTab: validatedTab,
-        setHighestVisitedTab: (tab: RegistrationTab) => setValidatedTab(tab),
+        highestVisitedTab,
+        setHighestVisitedTab: (tab: RegistrationTab) => setHighestVisitedTab(tab),
       }}>
       {children}
     </RegistrationFormContext.Provider>

@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn, validateYupSchema, yupToFormErrors } from 'formik';
-import { HighesVisitedTab } from '../../context/RegistrationFormContext';
+import { HighestVisitedTab } from '../../context/RegistrationFormContext';
 import {
   AssociatedArtifact,
   AssociatedFile,
@@ -468,7 +468,7 @@ const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): Formi
 });
 
 export const getTouchedTabFields = (
-  tabToTouch: HighesVisitedTab,
+  tabToTouch: HighestVisitedTab,
   values: Registration
 ): FormikTouched<Registration> => {
   const tabFields = {
