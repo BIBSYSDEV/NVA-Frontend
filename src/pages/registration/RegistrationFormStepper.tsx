@@ -3,9 +3,7 @@ import deepmerge from 'deepmerge';
 import { useFormikContext } from 'formik';
 import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
 import { RegistrationFormContext } from '../../context/RegistrationFormContext';
-import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getTabErrors, getTouchedTabFields } from '../../utils/formik-helpers/formik-helpers';
@@ -19,11 +17,8 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
   const { t } = useTranslation();
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const location = useLocation();
-  const locationState = location.state as RegistrationFormLocationState;
 
   const { highestVisitedTab, setHighestVisitedTab } = useContext(RegistrationFormContext);
-  console.log(`tab: ${tabNumber}, max visited: ${highestVisitedTab}, state max:${locationState?.highestValidatedTab}`);
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -57,7 +52,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
         })
       );
     };
-  }, [setTouched, tabNumber]);
+  }, [setTouched, tabNumber, highestVisitedTab, setHighestVisitedTab]);
 
   const tabErrors = getTabErrors(valuesRef.current, errors, touched);
   const descriptionTabHasError = tabErrors[RegistrationTab.Description].length > 0;

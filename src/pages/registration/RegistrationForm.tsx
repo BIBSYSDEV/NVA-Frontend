@@ -45,11 +45,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
   const location = useLocation();
   const locationState = location.state as RegistrationFormLocationState;
-  const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
-
-  // const [maxVisitedTab, setMaxVisitedTab] = useState(
-  //   locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses
-  // );
+  const skipInitialValidation = locationState?.skipInitialValidation;
 
   const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
   const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
@@ -84,6 +80,8 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     !channelClaimData.channelClaimQuery.data &&
     channelClaimData.channelClaimQuery.isPending;
 
+  const highestVisitedTab = skipInitialValidation ? -1 : RegistrationTab.FilesAndLicenses;
+
   return registrationQuery.isPending ||
     isLoadingChannelClaim ||
     (canHaveNviCandidate && nviReportedStatus.isPending) ? (
@@ -95,14 +93,14 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
       value={{
         disableNviCriticalFields,
         disableChannelClaimsFields: channelClaimData.shouldDisableFields,
-        highestVisitedTab: locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses,
+        highestVisitedTab,
       }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
         validate={validateRegistrationForm}
         initialErrors={validateRegistrationForm(registration)}
-        initialTouched={getTouchedTabFields(highestValidatedTab, registration)}
+        initialTouched={getTouchedTabFields(highestVisitedTab, registration)}
         onSubmit={() => {
           /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
         }}>

@@ -22,6 +22,7 @@ import { deleteRegistrationFile } from '../../../api/fileApi';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';
+import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { createUppy } from '../../../utils/uppy/uppy-config';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
@@ -158,7 +159,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
               ? getRegistrationWizardPath(createRegistrationMutation.data.identifier)
               : ''
           }
-          state={{ highestValidatedTab: -1 }}>
+          state={{ skipInitialValidation: -1 } satisfies RegistrationFormLocationState}>
           {t('registration.registration.start_registration')}
         </Button>
       </AccordionActions>
