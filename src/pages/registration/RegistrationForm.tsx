@@ -15,7 +15,7 @@ import { RequiredDescription } from '../../components/RequiredDescription';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { RegistrationFormContext } from '../../context/RegistrationFormContext';
+import { RegistrationFormContextProvider } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
@@ -45,8 +45,12 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
   const location = useLocation();
   const locationState = location.state as RegistrationFormLocationState;
-
   const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
+
+  // const [maxVisitedTab, setMaxVisitedTab] = useState(
+  //   locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses
+  // );
+
   const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
   const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
   const registration = registrationQuery.data;
@@ -87,8 +91,12 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
-    <RegistrationFormContext.Provider
-      value={{ disableNviCriticalFields, disableChannelClaimsFields: channelClaimData.shouldDisableFields }}>
+    <RegistrationFormContextProvider
+      value={{
+        disableNviCriticalFields,
+        disableChannelClaimsFields: channelClaimData.shouldDisableFields,
+        highestVisitedTab: locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses,
+      }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
@@ -160,6 +168,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         <Typography sx={{ mb: '1rem' }}>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>
-    </RegistrationFormContext.Provider>
+    </RegistrationFormContextProvider>
   ) : null;
 };
