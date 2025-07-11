@@ -159,7 +159,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
               ? getRegistrationWizardPath(createRegistrationMutation.data.identifier)
               : ''
           }
-          state={{ skipInitialValidation: -1 } satisfies RegistrationFormLocationState}>
+          state={{ skipInitialValidation: true } satisfies RegistrationFormLocationState}>
           {t('registration.registration.start_registration')}
         </Button>
       </AccordionActions>

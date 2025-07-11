@@ -29,7 +29,7 @@ export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccor
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
       navigate(getRegistrationWizardPath(createRegistrationResponse.data.identifier), {
-        state: { skipInitialValidation: -1 } satisfies RegistrationFormLocationState,
+        state: { skipInitialValidation: true } satisfies RegistrationFormLocationState,
       });
     }
   };

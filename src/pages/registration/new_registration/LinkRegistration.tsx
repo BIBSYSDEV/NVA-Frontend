@@ -58,7 +58,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
 
   const onCreateRegistrationSuccess = (response: AxiosResponse<Registration, any>) => {
     navigate(getRegistrationWizardPath(response.data.identifier), {
-      state: { skipInitialValidation: -1 } satisfies RegistrationFormLocationState,
+      state: { skipInitialValidation: true } satisfies RegistrationFormLocationState,
     });
   };
 

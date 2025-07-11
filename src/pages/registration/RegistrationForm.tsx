@@ -79,16 +79,24 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     !userHasAccessRight(registration, 'update') &&
     !channelClaimData.channelClaimQuery.data &&
     channelClaimData.channelClaimQuery.isPending;
+  const isLoadingData =
+    registrationQuery.isPending || isLoadingChannelClaim || (canHaveNviCandidate && nviReportedStatus.isPending);
+
+  if (isLoadingData) {
+    return <PageSpinner aria-label={t('common.result')} />;
+  }
+
+  if (!canEditRegistration) {
+    return <Forbidden />;
+  }
+
+  if (!registration) {
+    return null;
+  }
 
   const highestVisitedTab = skipInitialValidation ? -1 : RegistrationTab.FilesAndLicenses;
 
-  return registrationQuery.isPending ||
-    isLoadingChannelClaim ||
-    (canHaveNviCandidate && nviReportedStatus.isPending) ? (
-    <PageSpinner aria-label={t('common.result')} />
-  ) : !canEditRegistration ? (
-    <Forbidden />
-  ) : registration ? (
+  return (
     <RegistrationFormContextProvider
       value={{
         disableNviCriticalFields,
@@ -167,5 +175,5 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>
     </RegistrationFormContextProvider>
-  ) : null;
+  );
 };
