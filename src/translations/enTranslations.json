@@ -961,6 +961,9 @@
       "thesis_embargo_curator_description": "Can view and edit files with embargo on theses."
     }
   },
+  "no_search_results_found_with_search": "",
+  "no_search_results_list_default": "",
+  "no_search_results_list_person": "",
   "owner_institution": "Owner institution",
   "privacy": {
     "about": {
@@ -2119,9 +2122,6 @@
     },
     "hits_one": "{{count}} hit",
     "hits_other": "{{count}} hits",
-    "no_persons": "No persons",
-    "no_projects": "No projects",
-    "no_results": "No results",
     "participant": "Participant",
     "participating_institution": "Participating institution",
     "person_search": "Person search",
@@ -2250,7 +2250,7 @@
     "unpublish_info": "The result will no longer be visible to others if you choose to unpublish it. You may republish it later",
     "unpublish_not_allowed": "<0>You can not unpublish this result, because it has either an uploaded file with an approved licence or has been reported to the Norwegian science index (NVI).</0><0>Please contact curator support if you need to unpublish.</0>",
     "unpublish_registration": "Unpublish the research result",
-    "unpublish_registration_detail_1": "When a result is unpublished it will not be searchable in NVA, but will still be available when looking up the reference.",
+    "unpublish_registration_detail_1": "After unpublishing the result you may no longer search for it, but it is still available via direct links (from citations).",
     "unpublish_registration_detail_2": "Only metadata (no files) will be visible when directly looked up.",
     "unpublish_registration_duplicate_citation_information": "In order for all citations to be continued, you must look up the other registration. Then all citations will still lead to the other version.",
     "unpublish_registration_duplicate_question": "Is there another published version of the same research result?",

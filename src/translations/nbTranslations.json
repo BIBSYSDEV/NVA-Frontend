@@ -544,7 +544,7 @@
   },
   "feedback": {
     "error": {
-      "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
+      "404_page": "<span><icon /><h1>Beklager, men vi kan ikke finne siden du ser etter</h1></span><p>Siden du leter etter finnes ikke, eller nettadressen er feil.</p><p>Endre nettadressen eller bruk menyen for å naviger deg til korrekt side.</p>",
       "accept_terms": "Godkjenning av brukervilkår feilet",
       "add_contributor": "Kunne ikke legge til bidragsyter",
       "add_employment": "Kunne ikke legge til ansettelse",
@@ -963,6 +963,9 @@
       "thesis_embargo_curator_description": "Kan se og endre embargofiler på studentoppgaver."
     }
   },
+  "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fant dessverre ikke noe som passer med søket ditt.</p>",
+  "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li></ul>",
+  "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li></ul>",
   "owner_institution": "Eierinstitusjon",
   "privacy": {
     "about": {
@@ -2235,10 +2238,6 @@
     "user_dialog": "Brukerdialog",
     "your_tasks": "Oppgaver du behandler: {{count}}"
   },
-  "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fant dessverre ikke noe som passer med søket ditt.</p>",
-  "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li></ul>",
-  "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li></ul>",
-  "overview_over_administrators": "Oversikt over administratorer",
   "time_format": {
     "hours": "TT:MM:SS",
     "minutes": "MM:SS"
