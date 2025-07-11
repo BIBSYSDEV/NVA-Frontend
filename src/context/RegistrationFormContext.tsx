@@ -1,11 +1,12 @@
 import { createContext, ReactNode, useState } from 'react';
-import { HighestTouchedTab } from '../types/locationState.types';
 import { RegistrationTab } from '../types/registration.types';
+
+export type HighesVisitedTab = RegistrationTab | -1;
 
 interface RegistrationFormContextType {
   disableNviCriticalFields: boolean;
   disableChannelClaimsFields: boolean;
-  highestVisitedTab: HighestTouchedTab;
+  highestVisitedTab: HighesVisitedTab;
   setHighestVisitedTab: (tab: RegistrationTab) => void;
 }
 

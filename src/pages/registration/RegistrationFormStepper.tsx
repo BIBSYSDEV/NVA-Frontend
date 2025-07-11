@@ -42,7 +42,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
     // Set fields on current tab to touched
     return () => {
       if (tabNumber > highestVisitedTab) {
-        setHighestVisitedTab(tabNumber);
+        setHighestVisitedTab(tabNumber); // Validate current tab
       }
       const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
       setTouched(
