@@ -50,15 +50,10 @@ export type NviCandidateSearchStatus = keyof NviCandidateAggregations;
 
 interface NviCandidateAggregations {
   approved: AggregationCount;
-  approvedCollaboration: AggregationCount;
-  assigned: AggregationCount;
-  assignedCollaboration: AggregationCount;
+  completed: AggregationCount;
   dispute: AggregationCount;
   pending: AggregationCount;
-  pendingCollaboration: AggregationCount;
   rejected: AggregationCount;
-  rejectedCollaboration: AggregationCount;
-  completed: AggregationCount;
   totalCount: AggregationCount;
 }
 
