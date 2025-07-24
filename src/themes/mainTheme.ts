@@ -317,6 +317,7 @@ export const mainTheme = createTheme(
           root: {
             th: {
               fontWeight: 600,
+              borderBottom: '1px solid darkgrey',
             },
           },
         },

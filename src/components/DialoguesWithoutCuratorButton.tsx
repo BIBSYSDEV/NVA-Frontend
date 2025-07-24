@@ -54,7 +54,6 @@ export const DialoguesWithoutCuratorButton = () => {
   return (
     <Button
       fullWidth
-      size="medium"
       variant="outlined"
       color="primary"
       sx={{ textTransform: 'none' }}

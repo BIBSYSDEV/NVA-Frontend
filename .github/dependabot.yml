@@ -21,8 +21,7 @@ updates:
           - '@tanstack/*'
       eslint:
         patterns:
-          - 'eslint*'
-          - '@typescript-eslint/*'
+          - '*eslint*'
       react:
         patterns:
           - 'react'
