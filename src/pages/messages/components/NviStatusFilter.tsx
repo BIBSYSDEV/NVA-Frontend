@@ -1,97 +1,192 @@
-import { MenuItem, TextField, TextFieldProps } from '@mui/material';
+import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
-import { NviCandidatesSearchParam } from '../../../api/searchApi';
-import { NviCandidateSearchStatus } from '../../../types/nvi.types';
+import {
+  NviCandidateFilter,
+  NviCandidateGlobalStatus,
+  NviCandidatesSearchParam,
+  NviCandidateStatus,
+} from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
-export const NviStatusFilter = (props: TextFieldProps) => {
+export const NviStatusFilter = () => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
-  const { filter } = useNviCandidatesParams();
+  const { status, globalStatus } = useNviCandidatesParams();
 
   return (
     <TextField
-      {...props}
+      fullWidth
       data-testid={dataTestId.tasksPage.nvi.statusFilter}
       select
       size="small"
       label={t('common.status')}
-      value={filter ?? ''}
+      value={status || globalStatus || ''}
       onChange={(event) => {
-        const newStatus = event.target.value;
-        setSearchParams((prevParams) => {
-          const syncedParams = syncParamsWithSearchFields(prevParams);
-          if (newStatus) {
-            syncedParams.set(NviCandidatesSearchParam.Filter, newStatus);
-          } else {
-            syncedParams.delete(NviCandidatesSearchParam.Filter);
-          }
+        const newStatus = event.target.value as NviCandidateStatus | NviCandidateGlobalStatus;
+
+        setSearchParams((params) => {
+          const syncedParams = syncParamsWithSearchFields(params);
+          syncedParams.delete(NviCandidatesSearchParam.Filter);
+          syncedParams.delete(NviCandidatesSearchParam.Offset);
+
           if (newStatus === 'pending') {
-            syncedParams.delete(NviCandidatesSearchParam.Assignee);
+            syncedParams.set(NviCandidatesSearchParam.Status, newStatus satisfies NviCandidateStatus);
+            syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus satisfies NviCandidateGlobalStatus);
+          } else if (newStatus === 'approved') {
+            syncedParams.set(NviCandidatesSearchParam.Status, newStatus satisfies NviCandidateStatus);
+            syncedParams.set(
+              NviCandidatesSearchParam.GlobalStatus,
+              ([newStatus, 'pending'] satisfies NviCandidateGlobalStatus[]).join(',')
+            );
+          } else if (newStatus === 'rejected') {
+            syncedParams.set(NviCandidatesSearchParam.Status, newStatus satisfies NviCandidateStatus);
+            syncedParams.set(
+              NviCandidatesSearchParam.GlobalStatus,
+              ([newStatus, 'pending'] satisfies NviCandidateGlobalStatus[]).join(',')
+            );
+          } else if (newStatus === 'dispute') {
+            syncedParams.delete(NviCandidatesSearchParam.Status);
+            syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus satisfies NviCandidateGlobalStatus);
           }
-          syncedParams.delete(NviCandidatesSearchParam.Visibility);
+
           return syncedParams;
         });
       }}>
-      <MenuItem value={'pending' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.New')}</MenuItem>
-      <MenuItem value={'assigned' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Pending')}</MenuItem>
-      <MenuItem value={'approved' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Approved')}</MenuItem>
-      <MenuItem value={'rejected' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Rejected')}</MenuItem>
-      <MenuItem value={'dispute' satisfies NviCandidateSearchStatus}>{t('tasks.nvi.status.Dispute')}</MenuItem>
+      <MenuItem value={'pending' satisfies NviCandidateStatus}>{t('tasks.nvi.candidates_for_control')}</MenuItem>
+      <MenuItem value={'approved' satisfies NviCandidateStatus}>{t('tasks.nvi.status.Approved')}</MenuItem>
+      <MenuItem value={'rejected' satisfies NviCandidateStatus}>{t('tasks.nvi.status.Rejected')}</MenuItem>
+      <MenuItem value={'dispute' satisfies NviCandidateGlobalStatus}>{t('tasks.nvi.status.Dispute')}</MenuItem>
     </TextField>
   );
 };
 
-export const NviAvailabilityFilter = (props: TextFieldProps) => {
+const getVisibilityFilterValue = (
+  status: NviCandidateStatus | null,
+  globalStatus: NviCandidateGlobalStatus[] | null,
+  filter: NviCandidateFilter | null
+) => {
+  if (status === 'pending') {
+    if (filter === 'collaboration') {
+      return filter;
+    }
+  } else if (status === 'approved' || status === 'rejected') {
+    if (globalStatus?.length === 1) {
+      return globalStatus[0];
+    }
+  } else if (globalStatus?.includes('dispute')) {
+    if (filter === 'approvedByOthers' || filter === 'rejectedByOthers') {
+      return filter;
+    }
+  }
+  return '';
+};
+
+const handleVisibilityFilterChange = (
+  params: URLSearchParams,
+  status: NviCandidateStatus | null,
+  globalStatus: NviCandidateGlobalStatus[],
+  newFilter: NviCandidateFilter | NviCandidateGlobalStatus
+) => {
+  if (status === 'pending') {
+    if (newFilter === 'collaboration') {
+      params.set(NviCandidatesSearchParam.Filter, newFilter satisfies NviCandidateFilter);
+    }
+  } else if (status === 'approved') {
+    if (newFilter === 'approved' || newFilter === 'pending') {
+      params.set(NviCandidatesSearchParam.GlobalStatus, newFilter satisfies NviCandidateGlobalStatus);
+    } else {
+      params.set(
+        NviCandidatesSearchParam.GlobalStatus,
+        ['approved' satisfies NviCandidateGlobalStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
+      );
+    }
+  } else if (status === 'rejected') {
+    if (newFilter === 'rejected' || newFilter === 'pending') {
+      params.set(NviCandidatesSearchParam.GlobalStatus, newFilter satisfies NviCandidateGlobalStatus);
+    } else {
+      params.set(
+        NviCandidatesSearchParam.GlobalStatus,
+        ['rejected' satisfies NviCandidateGlobalStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
+      );
+    }
+  } else if (globalStatus?.includes('dispute')) {
+    if (newFilter === 'approvedByOthers' || newFilter === 'rejectedByOthers') {
+      params.set(NviCandidatesSearchParam.Filter, newFilter satisfies NviCandidateFilter);
+    }
+  }
+  return params;
+};
+
+export const NviVisibilityFilter = () => {
   const { t } = useTranslation();
 
   const [, setSearchParams] = useSearchParams();
-  const { filter, visibility } = useNviCandidatesParams();
+  const { status, globalStatus, filter } = useNviCandidatesParams();
+
+  const value = getVisibilityFilterValue(status, globalStatus, filter);
 
   return (
     <TextField
-      {...props}
-      data-testid={dataTestId.tasksPage.nvi.availabilityFilter}
+      fullWidth
+      data-testid={dataTestId.tasksPage.nvi.visibilityFilter}
       select
       slotProps={{ select: { displayEmpty: true }, inputLabel: { shrink: true } }}
       size="small"
       label={t('tasks.display_options')}
-      value={visibility ?? ''}
+      value={value}
       onChange={(event) => {
-        const newVisibility = event.target.value;
+        const newFilter = event.target.value as NviCandidateFilter | NviCandidateGlobalStatus;
+
         setSearchParams((prevParams) => {
           const syncedParams = syncParamsWithSearchFields(prevParams);
-          if (newVisibility) {
-            syncedParams.set(NviCandidatesSearchParam.Visibility, newVisibility);
-          } else {
-            syncedParams.delete(NviCandidatesSearchParam.Visibility);
-          }
-          return syncedParams;
+          syncedParams.delete(NviCandidatesSearchParam.Filter);
+          syncedParams.delete(NviCandidatesSearchParam.Offset);
+          const updatedParams = handleVisibilityFilterChange(syncedParams, status, globalStatus ?? [], newFilter);
+          return updatedParams;
         });
       }}>
       <MenuItem value="">{t('common.show_all')}</MenuItem>
-      {filter === 'pending' && (
-        <MenuItem value={'pendingCollaboration' satisfies NviCandidateSearchStatus}>
-          {t('tasks.nvi.waiting_for_your_institution')}
+
+      {status === 'pending' && (
+        <MenuItem value={'collaboration' satisfies NviCandidateFilter}>
+          {t('tasks.nvi.show_only_collaborative_publications')}
         </MenuItem>
       )}
-      {filter === 'assigned' && (
-        <MenuItem value={'assignedCollaboration' satisfies NviCandidateSearchStatus}>
-          {t('tasks.nvi.waiting_for_your_institution')}
+
+      {status === 'approved' && (
+        <MenuItem value={'pending' satisfies NviCandidateGlobalStatus}>
+          {t('tasks.nvi.candidates_pending_verification_by_others')}
         </MenuItem>
       )}
-      {filter === 'approved' && (
-        <MenuItem value={'approvedCollaboration' satisfies NviCandidateSearchStatus}>
-          {t('tasks.nvi.waiting_for_other_institutions')}
+      {status === 'approved' && (
+        <MenuItem value={'approved' satisfies NviCandidateGlobalStatus}>
+          {t('tasks.nvi.candidates_approved_by_all')}
         </MenuItem>
       )}
-      {filter === 'rejected' && (
-        <MenuItem value={'rejectedCollaboration' satisfies NviCandidateSearchStatus}>
-          {t('tasks.nvi.waiting_for_other_institutions')}
+
+      {status === 'rejected' && (
+        <MenuItem value={'pending' satisfies NviCandidateGlobalStatus}>
+          {t('tasks.nvi.candidates_pending_verification_by_others')}
+        </MenuItem>
+      )}
+      {status === 'rejected' && (
+        <MenuItem value={'rejected' satisfies NviCandidateGlobalStatus}>
+          {t('tasks.nvi.candidates_rejected_by_all')}
+        </MenuItem>
+      )}
+
+      {globalStatus?.includes('dispute') && (
+        <MenuItem value={'approvedByOthers' satisfies NviCandidateFilter}>
+          {t('tasks.nvi.candidates_approved_by_others')}
+        </MenuItem>
+      )}
+      {globalStatus?.includes('dispute') && (
+        <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>
+          {t('tasks.nvi.candidates_rejected_by_others')}
         </MenuItem>
       )}
     </TextField>

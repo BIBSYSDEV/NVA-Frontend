@@ -25,6 +25,7 @@ import { dataTestId } from '../../../../../utils/dataTestIds';
 import { OutputRow } from '../artistic_types/OutputRow';
 import { ExhibitionBasicModal } from './ExhibitionBasicModal';
 import { ExhibitionCatalogModal } from './ExhibitionCatalogModal';
+import { alternatingTableRowColor } from '../../../../../themes/mainTheme';
 
 const exhibitionSubtypes = Object.values(ExhibitionProductionSubtype);
 type ExhibitionProductioModalType = '' | 'ExhibitionBasic' | 'ExhibitionCatalog';
@@ -87,12 +88,12 @@ export const ExhibitionProductionForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {manifestations.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
+                <Table sx={alternatingTableRowColor}>
                   <TableHead>
-                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
+                    <TableRow>
+                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('common.description')}</TableCell>
-                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
@@ -121,6 +122,7 @@ export const ExhibitionProductionForm = () => {
 
               <Box sx={{ display: 'flex', gap: '1rem', mt: '1rem' }}>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   data-testid={dataTestId.registrationWizard.resourceType.addExhibitionBasicButton}
                   onClick={() => setOpenModal('ExhibitionBasic')}
                   variant="outlined"
@@ -128,6 +130,7 @@ export const ExhibitionProductionForm = () => {
                   {t('registration.resource_type.exhibition_production.add_exhibition_basic')}
                 </Button>
                 <Button
+                  sx={{ textTransform: 'none' }}
                   data-testid={dataTestId.registrationWizard.resourceType.addExhibitionCatalogButton}
                   onClick={() => setOpenModal('ExhibitionCatalog')}
                   variant="outlined"
