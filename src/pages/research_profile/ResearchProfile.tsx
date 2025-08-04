@@ -4,7 +4,6 @@ import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router';
@@ -13,6 +12,7 @@ import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam } from '../../api/searchApi';
+import { HeadTitle } from '../../components/HeadTitle';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -137,6 +137,7 @@ const ResearchProfile = () => {
     <NotFound />
   ) : (
     <div>
+      <HeadTitle>{fullName}</HeadTitle>
       <Box
         sx={{
           bgcolor: 'primary.main',
@@ -166,9 +167,6 @@ const ResearchProfile = () => {
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
       </Box>
       <BackgroundDiv>
-        <Helmet>
-          <title>{fullName}</title>
-        </Helmet>
         {activeAffiliations.length > 0 ? (
           <Box
             sx={{

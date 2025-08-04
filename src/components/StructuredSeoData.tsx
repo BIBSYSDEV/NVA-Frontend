@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Registration, RegistrationDate } from '../types/registration.types';
 import { useJournalSeoData } from '../utils/hooks/useJournalSeoData';
 
@@ -50,6 +49,20 @@ export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
     }
   }, [registration.id]);
 
+  useEffect(() => {
+    if (seoData) {
+      const scriptTag = document.createElement('script');
+      scriptTag.type = 'application/ld+json';
+      scriptTag.text = seoData;
+
+      document.head.appendChild(scriptTag);
+
+      return () => {
+        document.head.removeChild(scriptTag);
+      };
+    }
+  }, [seoData]);
+
   const citationPublicationDate =
     registration.entityDescription?.publicationDate &&
     getPublicationDateCitationString(registration.entityDescription.publicationDate);
@@ -57,9 +70,7 @@ export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
   const citationDoi = getDoiCitationString(registration);
 
   return (
-    <Helmet>
-      {seoData && <script type="application/ld+json">{seoData}</script>}
-
+    <>
       {registration.entityDescription?.mainTitle && (
         <meta name="citation_title" content={registration.entityDescription.mainTitle} />
       )}
@@ -72,6 +83,6 @@ export const StructuredSeoData = ({ registration }: StructuredSeoDataProps) => {
       {journalSeoData.journalName && <meta name="citation_journal_title" content={journalSeoData.journalName} />}
       {journalSeoData.printIssn && <meta name="citation_issn" content={journalSeoData.printIssn} />}
       {journalSeoData.onlineIssn && <meta name="citation_issn" content={journalSeoData.onlineIssn} />}
-    </Helmet>
+    </>
   );
 };

@@ -2,7 +2,6 @@ import { Button, FormControl, Grid, InputLabel, List, MenuItem, Select, Typograp
 import { visuallyHidden } from '@mui/utils';
 import { UseQueryResult } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
@@ -12,6 +11,7 @@ import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { DialoguesWithoutCuratorButton } from '../../../components/DialoguesWithoutCuratorButton';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
@@ -100,9 +100,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
 
   return (
     <section>
-      <Helmet>
-        <title>{title}</title>
-      </Helmet>
+      <HeadTitle>{title}</HeadTitle>
       <Typography component="h1" sx={visuallyHidden}>
         {title}
       </Typography>

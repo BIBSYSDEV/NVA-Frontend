@@ -2,7 +2,6 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import { Button, Grid, List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
@@ -10,6 +9,7 @@ import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
@@ -37,9 +37,7 @@ export const NviCandidatesList = () => {
 
   return (
     <section>
-      <Helmet>
-        <title>{t('tasks.nvi.nvi_control')}</title>
-      </Helmet>
+      <HeadTitle>{t('tasks.nvi.nvi_control')}</HeadTitle>
       <Typography component="h1" sx={visuallyHidden}>
         {t('tasks.nvi.nvi_control')}
       </Typography>
