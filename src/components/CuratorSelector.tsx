@@ -1,4 +1,4 @@
-import { Autocomplete, Avatar, Box, SxProps, Typography } from '@mui/material';
+import { Autocomplete, Avatar, Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -14,10 +14,9 @@ interface CuratorSelectorProps {
   roleFilter: RoleName[];
   selectedUsername: string | null;
   onChange: (curator: InstitutionUser | null) => void;
-  sx?: SxProps;
 }
 
-export const CuratorSelector = ({ roleFilter, selectedUsername, onChange, sx }: CuratorSelectorProps) => {
+export const CuratorSelector = ({ roleFilter, selectedUsername, onChange }: CuratorSelectorProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
@@ -44,7 +43,6 @@ export const CuratorSelector = ({ roleFilter, selectedUsername, onChange, sx }: 
 
   return (
     <Autocomplete
-      sx={sx}
       options={curatorOptions}
       value={selectedCurator}
       autoHighlight

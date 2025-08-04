@@ -1,7 +1,6 @@
 import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router';
@@ -9,6 +8,7 @@ import { useMyRegistrationsSearch } from '../../api/hooks/useMyRegistrationsSear
 import { deleteRegistration } from '../../api/registrationApi';
 import { ProtectedResultParam, ResultParam, ResultSearchOrder, SortOrder } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { HeadTitle } from '../../components/HeadTitle';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { SearchForm } from '../../components/SearchForm';
 import { setNotification } from '../../redux/notificationSlice';
@@ -58,9 +58,7 @@ export const MyRegistrations = () => {
 
   return (
     <section>
-      <Helmet>
-        <title>{t('common.result_registrations')}</title>
-      </Helmet>
+      <HeadTitle>{t('common.result_registrations')}</HeadTitle>
 
       <Box sx={{ mx: { xs: '0.5rem', md: 0 } }}>
         <Typography variant="h1" sx={{ mb: '1rem' }}>

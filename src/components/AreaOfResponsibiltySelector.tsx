@@ -1,4 +1,4 @@
-import { Autocomplete, BaseTextFieldProps, Checkbox, Chip, TextField } from '@mui/material';
+import { Autocomplete, Checkbox, Chip, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -25,12 +25,12 @@ function buildOrganizationOption(org: Organization, level: number): Organization
   return [option, ...subOptions];
 }
 
-interface AreaOfResponsibilitySelectorProps extends Pick<BaseTextFieldProps, 'sx'> {
+interface AreaOfResponsibilitySelectorProps {
   paramName: string;
   resetPagination: (params: URLSearchParams) => void;
 }
 
-export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }: AreaOfResponsibilitySelectorProps) => {
+export const AreaOfResponsibilitySelector = ({ paramName, resetPagination }: AreaOfResponsibilitySelectorProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
@@ -58,7 +58,6 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
 
   return onlyOneAreaOfResponsibilitySelectable ? (
     <TextField
-      sx={sx}
       size="small"
       fullWidth
       disabled
@@ -69,7 +68,6 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
     />
   ) : (
     <Autocomplete
-      sx={sx}
       multiple
       autoHighlight
       options={organizationOptions}

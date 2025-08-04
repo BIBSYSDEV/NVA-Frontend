@@ -1,16 +1,16 @@
 import { TableContainer, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router';
 import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 import { ChannelClaimParams } from '../../api/searchApi';
+import { HeadTitle } from '../../components/HeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
+import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 import { RootState } from '../../redux/store';
 import { filterChannelClaims } from '../../utils/customer-helpers';
 import { ChannelClaimFilter } from './ChannelClaimFilter';
 import { ChannelClaimTable } from './ChannelClaimTable';
-import { ChannelClaimContext } from '../../context/ChannelClaimContext';
 
 export const PublisherClaimsOverview = () => {
   const { t } = useTranslation();
@@ -29,9 +29,7 @@ export const PublisherClaimsOverview = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('editor.institution.channel_claims.publisher_claims_overview')}</title>
-      </Helmet>
+      <HeadTitle>{t('editor.institution.channel_claims.publisher_claims_overview')}</HeadTitle>
 
       <Typography variant="h1">{t('editor.institution.channel_claims.publisher_claims_overview')}</Typography>
       <ChannelClaimFilter />
