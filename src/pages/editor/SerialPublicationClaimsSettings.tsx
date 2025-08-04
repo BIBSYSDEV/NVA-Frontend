@@ -1,12 +1,12 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Button, TableContainer, Typography } from '@mui/material';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router';
 import { useFetchChannelClaims } from '../../api/hooks/useFetchChannelClaims';
 import { ChannelClaimParams } from '../../api/searchApi';
+import { HeadTitle } from '../../components/HeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { ChannelClaimContext } from '../../context/ChannelClaimContext';
@@ -35,9 +35,7 @@ export const SerialPublicationClaimsSettings = () => {
 
   return (
     <BackgroundDiv>
-      <Helmet>
-        <title>{t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}</title>
-      </Helmet>
+      <HeadTitle>{t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}</HeadTitle>
       <Typography variant="h1" gutterBottom>
         {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
       </Typography>
