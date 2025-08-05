@@ -32,25 +32,22 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
   useEffect(() => {
     if (tabNumber > highestVisitedTab) {
       setHighestVisitedTab(tabNumber - 1); // Validate up to current tab
-
-      // Set fields on previous tabs to touched
-      const touchedFieldsOnMount = getTouchedTabFields(tabNumber - 1, valuesRef.current);
-      setTouched(touchedFieldsOnMount);
     }
 
-    // Set fields on current tab to touched
+    // Validate previous tab(s)
+    const touchedFieldsOnUnmount = getTouchedTabFields(highestVisitedTab, valuesRef.current);
+    const newTouchedFields = deepmerge.all([touchedRef.current, touchedFieldsOnUnmount], {
+      // associatedArtifacts must keep sourceArray in cases where it contains both files and link
+      arrayMerge: (destinationArray, sourceArray) => sourceArray,
+    });
+    setTouched(newTouchedFields);
+
     return () => {
       if (tabNumber > highestVisitedTab) {
         setHighestVisitedTab(tabNumber); // Validate current tab
-        const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
-        const newTouchedFields = deepmerge.all([touchedRef.current, touchedFieldsOnUnmount], {
-          // associatedArtifacts must keep sourceArray in cases where it contains both files and link
-          arrayMerge: (destinationArray, sourceArray) => sourceArray,
-        });
-        setTouched(newTouchedFields);
       }
     };
-  }, [setTouched, tabNumber, highestVisitedTab, setHighestVisitedTab]);
+  }, [setTouched, setHighestVisitedTab, tabNumber, highestVisitedTab]);
 
   const tabErrors = getTabErrors(valuesRef.current, errors, touched);
   const descriptionTabHasError = tabErrors[RegistrationTab.Description].length > 0;
