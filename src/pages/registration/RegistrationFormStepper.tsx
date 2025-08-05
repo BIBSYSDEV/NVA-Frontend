@@ -17,7 +17,6 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
   const { t } = useTranslation();
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-
   const { highestVisitedTab, setHighestVisitedTab } = useContext(RegistrationFormContext);
 
   const valuesRef = useRef(values);
@@ -43,18 +42,18 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
     return () => {
       if (tabNumber > highestVisitedTab) {
         setHighestVisitedTab(tabNumber); // Validate current tab
-      }
-      const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
-      setTouched(
-        deepmerge.all([touchedRef.current, touchedFieldsOnUnmount], {
+        const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
+        const newTouchedFields = deepmerge.all([touchedRef.current, touchedFieldsOnUnmount], {
           // associatedArtifacts must keep sourceArray in cases where it contains both files and link
           arrayMerge: (destinationArray, sourceArray) => sourceArray,
-        })
-      );
+        });
+        setTouched(newTouchedFields);
+      }
     };
   }, [setTouched, tabNumber, highestVisitedTab, setHighestVisitedTab]);
 
   const tabErrors = getTabErrors(valuesRef.current, errors, touched);
+
   const descriptionTabHasError = tabErrors[RegistrationTab.Description].length > 0;
   const resourceTabHasError = tabErrors[RegistrationTab.ResourceType].length > 0;
   const contributorTabHasError = tabErrors[RegistrationTab.Contributors].length > 0;
