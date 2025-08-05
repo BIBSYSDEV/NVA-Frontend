@@ -1,7 +1,7 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import LoginIcon from '@mui/icons-material/Login';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, SxProps, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
@@ -10,6 +10,8 @@ import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+
+const buttonProps: SxProps = { textTransform: 'none', mt: '1rem', width: 'fit-content' };
 
 export const Forbidden = () => {
   const { t } = useTranslation();
@@ -35,10 +37,10 @@ export const Forbidden = () => {
               }}
             />
             <Button
-              sx={{ textTransform: 'none', mt: '1rem', width: 'fit-content' }}
+              data-testid={`${dataTestId.header.logInButton}-forbidden`}
+              sx={buttonProps}
               endIcon={<LoginIcon />}
               variant="contained"
-              data-testid={`${dataTestId.header.logInButton}-forbidden`}
               onClick={() => {
                 const redirectPath = new URLSearchParams(location.search).get(LocalStorageKey.RedirectPath);
                 if (redirectPath) {
@@ -54,11 +56,11 @@ export const Forbidden = () => {
             <Typography>{t('authorization.forbidden_description_logged_in')}</Typography>
             <Button
               data-testid={dataTestId.authorization.institutionAdminsLink}
-              component={Link}
-              to={UrlPathTemplate.InstitutionOverviewPage}
+              sx={buttonProps}
               endIcon={<ArrowForwardIcon />}
-              sx={{ textTransform: 'none', mt: '1rem', width: 'fit-content' }}
-              variant="contained">
+              variant="contained"
+              component={Link}
+              to={UrlPathTemplate.InstitutionOverviewPage}>
               {t('overview_over_administrators')}
             </Button>
           </>
