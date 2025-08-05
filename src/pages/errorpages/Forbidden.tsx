@@ -19,7 +19,7 @@ export const Forbidden = () => {
   const user = useSelector((store: RootState) => store.user);
 
   return (
-    <Box data-testid="forbidden" sx={{ my: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box data-testid="forbidden" sx={{ m: { xs: '4rem 1rem', sm: '4rem auto' } }}>
       <div>
         <span style={{ display: 'flex', gap: '0.5rem' }}>
           <LockOutlineIcon />
@@ -28,30 +28,7 @@ export const Forbidden = () => {
           </Typography>
         </span>
 
-        {!user ? (
-          <>
-            <Trans
-              i18nKey="authorization.forbidden_description"
-              components={{
-                p: <Typography />,
-              }}
-            />
-            <Button
-              data-testid={`${dataTestId.header.logInButton}-forbidden`}
-              sx={buttonProps}
-              endIcon={<LoginIcon />}
-              variant="contained"
-              onClick={() => {
-                const redirectPath = new URLSearchParams(location.search).get(LocalStorageKey.RedirectPath);
-                if (redirectPath) {
-                  localStorage.setItem(LocalStorageKey.RedirectPath, redirectPath);
-                }
-                handleLogin();
-              }}>
-              {t('authorization.login')}
-            </Button>
-          </>
-        ) : (
+        {user ? (
           <>
             <Typography>{t('authorization.forbidden_description_logged_in')}</Typography>
             <Button
@@ -62,6 +39,25 @@ export const Forbidden = () => {
               component={Link}
               to={UrlPathTemplate.InstitutionOverviewPage}>
               {t('overview_over_administrators')}
+            </Button>
+          </>
+        ) : (
+          <>
+            <Trans
+              i18nKey="authorization.forbidden_description"
+              components={{
+                p: <Typography />,
+              }}
+            />
+            <Button
+              data-testid={dataTestId.authorization.LoginButtonForbidden}
+              sx={buttonProps}
+              endIcon={<LoginIcon />}
+              variant="contained"
+              onClick={() => {
+                handleLogin();
+              }}>
+              {t('authorization.login')}
             </Button>
           </>
         )}

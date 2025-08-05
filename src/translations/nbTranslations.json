@@ -29,7 +29,7 @@
     "create_user_info": "Som bruker blir du tilgjengelig for alle som skal legge til forfatter eller bidragsyter på resultater.",
     "expired_token_info": "Din sesjon har utløpt, og du har blitt logget ut. Fortsett som anonym bruker, eller logg inn på nytt.",
     "forbidden": "Du har ikke tilgang",
-    "forbidden_description": "<p>Du har ikke tilgang til å se innholdet på denne siden.</p><p>Skal du ha tilgangt til siden må du logge inn på NVA.</p>",
+    "forbidden_description": "<p>Du har ikke tilgang til å se innholdet på denne siden.</p><p>Skal du ha tilgang til siden må du logge inn.</p>",
     "forbidden_description_logged_in": "Skal du ha tilgang til siden så kontakt administrator om dette ikke stemmer.",
     "login": "Logg inn",
     "logout": "Logg ut",
