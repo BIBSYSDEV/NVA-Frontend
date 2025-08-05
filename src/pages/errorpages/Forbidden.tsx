@@ -25,6 +25,7 @@ export const Forbidden = () => {
             {t('authorization.forbidden')}
           </Typography>
         </span>
+
         {!user ? (
           <>
             <Trans
@@ -56,7 +57,7 @@ export const Forbidden = () => {
               component={Link}
               to={UrlPathTemplate.InstitutionOverviewPage}
               endIcon={<ArrowForwardIcon />}
-              sx={{ textTransform: 'none', mt: '0.5rem', width: 'fit-content' }}
+              sx={{ textTransform: 'none', mt: '1rem', width: 'fit-content' }}
               variant="contained">
               {t('overview_over_administrators')}
             </Button>
