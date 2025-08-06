@@ -1,6 +1,6 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { Box, IconButton, Step, StepButton, StepLabel, Stepper, Tooltip } from '@mui/material';
+import { Box, IconButton, Step, StepButton, Stepper, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { navigationButtonStyling } from '../../pages/registration/RegistrationFormActions';
@@ -18,26 +18,18 @@ export const MergeResultsWizard = ({}: MergeResultsWizardProps) => {
 
   return (
     <StyledPageContent>
-      <Stepper nonLinear activeStep={tabNumber}>
+      <Stepper nonLinear activeStep={tabNumber} sx={{ display: { xs: 'none', md: 'flex' } }}>
         <Step>
-          <StepButton onClick={() => setTabNumber(0)}>
-            <StepLabel>{t('registration.heading.description')}</StepLabel>
-          </StepButton>
+          <StepButton onClick={() => setTabNumber(0)}>{t('registration.heading.description')}</StepButton>
         </Step>
         <Step>
-          <StepButton onClick={() => setTabNumber(1)}>
-            <StepLabel>{t('registration.heading.resource_type')}</StepLabel>
-          </StepButton>
+          <StepButton onClick={() => setTabNumber(1)}>{t('registration.heading.resource_type')}</StepButton>
         </Step>
         <Step>
-          <StepButton onClick={() => setTabNumber(2)}>
-            <StepLabel>{t('registration.heading.contributors')}</StepLabel>
-          </StepButton>
+          <StepButton onClick={() => setTabNumber(2)}>{t('registration.heading.contributors')}</StepButton>
         </Step>
         <Step>
-          <StepButton onClick={() => setTabNumber(3)}>
-            <StepLabel>{t('registration.heading.files_and_license')}</StepLabel>
-          </StepButton>
+          <StepButton onClick={() => setTabNumber(3)}>{t('registration.heading.files_and_license')}</StepButton>
         </Step>
       </Stepper>
 
