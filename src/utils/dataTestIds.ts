@@ -31,6 +31,7 @@ export const dataTestId = {
     institutionFacetsSearchField: 'institution-facets-search-field',
   },
   authorization: {
+    forbiddenContainer: 'forbidden-container',
     institutionAdminsLink: 'institution-admins-link',
     loginButtonForbidden: 'login-button-forbidden',
   },

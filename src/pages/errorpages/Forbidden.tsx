@@ -18,7 +18,7 @@ export const Forbidden = () => {
   const user = useSelector((store: RootState) => store.user);
 
   return (
-    <Box data-testid="forbidden" sx={{ m: { xs: '4rem 1rem', sm: '4rem auto' } }}>
+    <Box data-testid={dataTestId.authorization.forbiddenContainer} sx={{ m: { xs: '4rem 1rem', sm: '4rem auto' } }}>
       <span style={{ display: 'flex', gap: '0.5rem' }}>
         <LockOutlineIcon />
         <Typography gutterBottom variant="h1">
