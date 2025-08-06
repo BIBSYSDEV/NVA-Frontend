@@ -19,48 +19,44 @@ export const Forbidden = () => {
 
   return (
     <Box data-testid="forbidden" sx={{ m: { xs: '4rem 1rem', sm: '4rem auto' } }}>
-      <div>
-        <span style={{ display: 'flex', gap: '0.5rem' }}>
-          <LockOutlineIcon />
-          <Typography gutterBottom variant="h1">
-            {t('authorization.forbidden')}
-          </Typography>
-        </span>
+      <span style={{ display: 'flex', gap: '0.5rem' }}>
+        <LockOutlineIcon />
+        <Typography gutterBottom variant="h1">
+          {t('authorization.forbidden')}
+        </Typography>
+      </span>
 
-        {user ? (
-          <>
-            <Typography>{t('authorization.forbidden_description_logged_in')}</Typography>
-            <Button
-              data-testid={dataTestId.authorization.institutionAdminsLink}
-              sx={buttonProps}
-              endIcon={<ArrowForwardIcon />}
-              variant="contained"
-              component={Link}
-              to={UrlPathTemplate.InstitutionOverviewPage}>
-              {t('overview_over_administrators')}
-            </Button>
-          </>
-        ) : (
-          <>
-            <Trans
-              i18nKey="authorization.forbidden_description"
-              components={{
-                p: <Typography />,
-              }}
-            />
-            <Button
-              data-testid={dataTestId.authorization.LoginButtonForbidden}
-              sx={buttonProps}
-              endIcon={<LoginIcon />}
-              variant="contained"
-              onClick={() => {
-                handleLogin();
-              }}>
-              {t('authorization.login')}
-            </Button>
-          </>
-        )}
-      </div>
+      {user ? (
+        <>
+          <Typography>{t('authorization.forbidden_description_logged_in')}</Typography>
+          <Button
+            data-testid={dataTestId.authorization.institutionAdminsLink}
+            sx={buttonProps}
+            endIcon={<ArrowForwardIcon />}
+            variant="contained"
+            component={Link}
+            to={UrlPathTemplate.InstitutionOverviewPage}>
+            {t('overview_over_administrators')}
+          </Button>
+        </>
+      ) : (
+        <>
+          <Trans
+            i18nKey="authorization.forbidden_description"
+            components={{
+              p: <Typography />,
+            }}
+          />
+          <Button
+            data-testid={dataTestId.authorization.loginButtonForbidden}
+            sx={buttonProps}
+            endIcon={<LoginIcon />}
+            variant="contained"
+            onClick={handleLogin}>
+            {t('authorization.login')}
+          </Button>
+        </>
+      )}
     </Box>
   );
 };

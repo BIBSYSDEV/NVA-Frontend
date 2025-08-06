@@ -32,7 +32,7 @@ export const dataTestId = {
   },
   authorization: {
     institutionAdminsLink: 'institution-admins-link',
-    LoginButtonForbidden: 'login-button-forbidden',
+    loginButtonForbidden: 'login-button-forbidden',
   },
   basicData: {
     addChannelClaimButton: 'add-channel-claim-button',

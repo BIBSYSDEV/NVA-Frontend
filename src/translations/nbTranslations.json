@@ -30,7 +30,7 @@
     "expired_token_info": "Din sesjon har utløpt, og du har blitt logget ut. Fortsett som anonym bruker, eller logg inn på nytt.",
     "forbidden": "Du har ikke tilgang",
     "forbidden_description": "<p>Du har ikke tilgang til å se innholdet på denne siden.</p><p>Skal du ha tilgang til siden må du logge inn.</p>",
-    "forbidden_description_logged_in": "Skal du ha tilgang til siden så kontakt administrator om dette ikke stemmer.",
+    "forbidden_description_logged_in": "Kontakt administrator om dette ikke stemmer.",
     "login": "Logg inn",
     "logout": "Logg ut",
     "registration_not_published": "Denne registreringen er ikke publisert ennå.",
