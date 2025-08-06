@@ -2,7 +2,7 @@ import { Step, StepButton, StepLabel, Stepper } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Registration } from '../../types/registration.types';
-import { BackgroundDiv } from '../styled/Wrappers';
+import { StyledPageContent } from '../styled/Wrappers';
 
 interface MergeResultsWizardProps {
   sourceResult?: Registration; // Result to replace (left side)
@@ -14,7 +14,7 @@ export const MergeResultsWizard = ({ sourceResult, targetResult }: MergeResultsW
   const [tabNumber, setTabNumber] = useState(0);
 
   return (
-    <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
+    <StyledPageContent>
       <Stepper nonLinear activeStep={tabNumber}>
         <Step>
           <StepButton onClick={() => setTabNumber(0)}>
@@ -47,6 +47,6 @@ export const MergeResultsWizard = ({ sourceResult, targetResult }: MergeResultsW
       ) : tabNumber === 3 ? (
         <p>{t('registration.heading.files_and_license')}</p>
       ) : null}
-    </BackgroundDiv>
+    </StyledPageContent>
   );
 };
