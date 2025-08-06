@@ -43,6 +43,7 @@ const isOnEditOrMergeImportCandidate = (path: string) =>
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
+  const beta = useBetaFlag();
   const user = useSelector((store: RootState) => store.user);
   const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
@@ -50,8 +51,6 @@ const BasicDataPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
-
-  const beta = useBetaFlag();
 
   const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
   const centralImportIsSelected = currentPath.startsWith(UrlPathTemplate.BasicDataCentralImport);
