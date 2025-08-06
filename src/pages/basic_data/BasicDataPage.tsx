@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { MergeResultsWizard } from '../../components/merge_results/MergeResultsWizard';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
   LinkCreateButton,
@@ -20,6 +21,7 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useBetaFlag } from '../../utils/hooks/useBetaFlag';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
@@ -48,6 +50,8 @@ const BasicDataPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
+
+  const beta = useBetaFlag();
 
   const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
   const centralImportIsSelected = currentPath.startsWith(UrlPathTemplate.BasicDataCentralImport);
@@ -229,7 +233,12 @@ const BasicDataPage = () => {
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataCentralImportCandidateMerge, UrlPathTemplate.BasicData)}
-            element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateMerge />} />}
+            element={
+              <PrivateRoute
+                isAuthorized={isInternalImporter}
+                element={beta ? <MergeResultsWizard /> : <CentralImportCandidateMerge />}
+              />
+            }
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataAddEmployee, UrlPathTemplate.BasicData)}
