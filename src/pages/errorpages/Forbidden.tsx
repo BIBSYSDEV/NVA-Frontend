@@ -6,7 +6,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import { RootState } from '../../redux/store';
-import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { UrlPathTemplate } from '../../utils/urlPaths';
