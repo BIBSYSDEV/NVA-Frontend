@@ -17,7 +17,7 @@ export const EnvironmentBanner = () => {
   return hostnameIsTestEnvironment && defaultBannerState !== 'none' ? (
     <Box
       component="aside"
-      sx={{ background: '#ffd45a', p: '0.5rem', cursor: 'pointer' }}
+      sx={{ background: '#b4aeff', p: '0.5rem', cursor: 'pointer' }}
       onClick={() => {
         const newMinimizeBannerState = !minimizeBanner;
         setMinimizeBanner(newMinimizeBannerState);

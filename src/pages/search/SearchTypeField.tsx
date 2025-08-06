@@ -53,6 +53,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
           gap: '0.5rem',
           alignItems: 'center',
           bgcolor: `${paramsSearchType}.main`,
+          color: 'white',
         },
         ...sx,
       }}

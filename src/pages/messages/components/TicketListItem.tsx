@@ -33,11 +33,11 @@ import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColu
 import { SupportMessagesColumn } from './SupportMessagesColumn';
 
 export const ticketColor = {
-  UnpublishRequest: 'publishingRequest.main',
-  PublishingRequest: 'publishingRequest.main',
-  FilesApprovalThesis: 'publishingRequest.main',
-  DoiRequest: 'doiRequest.main',
-  GeneralSupportCase: 'generalSupportCase.main',
+  UnpublishRequest: 'registration.main',
+  PublishingRequest: 'registration.main',
+  FilesApprovalThesis: 'registration.main',
+  DoiRequest: 'registration.main',
+  GeneralSupportCase: 'registration.main',
 } satisfies TicketTypeColor;
 
 interface TicketListItemProps {
@@ -81,7 +81,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       sx={{
         borderLeftColor: ticketColor[ticket.type],
         p: 0,
-        bgcolor: !viewedByUser ? 'secondary.main' : undefined,
+        bgcolor: !viewedByUser ? '#ebe6fe' : undefined,
       }}>
       <MuiLink
         component={Link}

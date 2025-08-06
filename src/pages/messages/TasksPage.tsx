@@ -199,7 +199,7 @@ const TasksPage = () => {
                   endIcon={<Badge badgeContent={doiNotificationsCount} />}
                   showCheckbox
                   isSelected={!!ticketTypes.doiRequest}
-                  color="doiRequest"
+                  color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
@@ -216,7 +216,7 @@ const TasksPage = () => {
                   endIcon={<Badge badgeContent={supportNotificationsCount} />}
                   showCheckbox
                   isSelected={!!ticketTypes.generalSupportCase}
-                  color="generalSupportCase"
+                  color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });
                     resetPaginationAndNavigate(searchParams, navigate);
