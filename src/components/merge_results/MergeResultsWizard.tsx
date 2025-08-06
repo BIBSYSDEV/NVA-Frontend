@@ -5,19 +5,31 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { navigationButtonStyling } from '../../pages/registration/RegistrationFormActions';
 import { Registration } from '../../types/registration.types';
+import { getTitleString } from '../../utils/registration-helpers';
+import { PageHeader } from '../PageHeader';
+import { RegistrationIconHeader } from '../RegistrationIconHeader';
 import { StyledPageContent } from '../styled/Wrappers';
 
 interface MergeResultsWizardProps {
-  sourceResult?: Registration; // Result to replace (left side)
-  targetResult?: Registration; // Result to merge into (right side)
+  sourceResult: Registration; // Result to replace (left side)
+  targetResult: Registration; // Result to merge into (right side)
 }
 
-export const MergeResultsWizard = ({}: MergeResultsWizardProps) => {
+export const MergeResultsWizard = ({ targetResult }: MergeResultsWizardProps) => {
   const { t } = useTranslation();
   const [tabNumber, setTabNumber] = useState(0);
 
   return (
     <StyledPageContent>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <RegistrationIconHeader
+          publicationInstanceType={targetResult.entityDescription?.reference?.publicationInstance?.type}
+          publicationDate={targetResult.entityDescription?.publicationDate}
+          showYearOnly
+        />
+        <PageHeader variant="h1">{getTitleString(targetResult.entityDescription?.mainTitle)}</PageHeader>
+      </Box>
+
       <Stepper nonLinear activeStep={tabNumber} sx={{ display: { xs: 'none', md: 'flex' } }}>
         <Step>
           <StepButton onClick={() => setTabNumber(0)}>{t('registration.heading.description')}</StepButton>

@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { MergeResultsWizard } from '../../components/merge_results/MergeResultsWizard';
+import { MergeImportCandidate } from '../../components/merge_results/MergeImportCandidate';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
   LinkCreateButton,
@@ -235,7 +235,7 @@ const BasicDataPage = () => {
             element={
               <PrivateRoute
                 isAuthorized={isInternalImporter}
-                element={beta ? <MergeResultsWizard /> : <CentralImportCandidateMerge />}
+                element={beta ? <MergeImportCandidate /> : <CentralImportCandidateMerge />}
               />
             }
           />
