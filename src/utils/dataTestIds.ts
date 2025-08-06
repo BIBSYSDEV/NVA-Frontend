@@ -1,5 +1,3 @@
-import { LoginButton } from '../layout/header/LoginButton';
-
 export const dataTestId = {
   aggregations: {
     categoryFacets: 'category-facets',
