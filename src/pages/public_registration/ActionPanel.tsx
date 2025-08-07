@@ -1,4 +1,4 @@
-import { Paper, Tab, Tabs } from '@mui/material';
+import { Paper, Tab, Tabs, Typography } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -17,6 +17,7 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 enum TabValue {
   Tasks,
   Log,
+  Details,
 }
 
 interface ActionPanelProps extends PublicRegistrationContentProps {
@@ -74,7 +75,7 @@ export const ActionPanel = ({
 
   const canSeeTasksPanel = shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion;
 
-  const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Log);
+  const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Details);
 
   const canEditRegistration = userHasAccessRight(registration, 'partial-update');
 
@@ -109,6 +110,12 @@ export const ActionPanel = ({
             aria-controls="action-panel-tab-panel-1"
           />
         )}
+        <Tab
+          value={TabValue.Details}
+          label="Detaljer"
+          id="action-panel-tab-2"
+          aria-controls="action-panel-tab-panel-2"
+        />
       </Tabs>
       <TabPanel tabValue={tabValue} index={0}>
         <ErrorBoundary>
@@ -129,6 +136,9 @@ export const ActionPanel = ({
         <ErrorBoundary>
           <LogPanel registration={registration} tickets={tickets} />
         </ErrorBoundary>
+      </TabPanel>
+      <TabPanel tabValue={tabValue} index={2}>
+        <Typography variant="h2">Kontaktpunkt</Typography>
       </TabPanel>
     </Paper>
   );
