@@ -184,47 +184,47 @@ describe('Menu', () => {
 
   it('Unauthorized user should see Forbidden page when visiting new registration', () => {
     cy.visit(UrlPathTemplate.RegistrationNew);
-    cy.get('[data-testid=forbidden]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.authorization.forbiddenContainer}]`).should('be.visible');
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
-    cy.get('[data-testid=forbidden]').should('not.exist');
+    cy.get(`[data-testid=${dataTestId.authorization.forbiddenContainer}]`).should('not.exist');
     cy.setUserRolesInRedux([]);
-    cy.get('[data-testid=forbidden]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.authorization.forbiddenContainer}]`).should('be.visible');
   });
 
   it('Unauthorized user should see Forbidden page when visiting my registrations', () => {
     cy.visit(UrlPathTemplate.MyPageMyRegistrations);
-    cy.get('[data-testid=forbidden]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.authorization.forbiddenContainer}]`).should('be.visible');
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
-    cy.get('[data-testid=forbidden]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.authorization.forbiddenContainer}]`).should('be.visible');
   });
 
   it('Unauthorized user should see Forbidden page when visiting tasks', () => {
     cy.visit(UrlPathTemplate.Tasks);
-    cy.get('[data-testid=forbidden]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.authorization.forbiddenContainer}]`).should('be.visible');
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
-    cy.get('[data-testid=forbidden]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.authorization.forbiddenContainer}]`).should('be.visible');
   });
 
   it('Unauthorized user should see Forbidden page when visiting basic data', () => {
     cy.visit(UrlPathTemplate.BasicData);
-    cy.get('[data-testid=forbidden]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.authorization.forbiddenContainer}]`).should('be.visible');
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
-    cy.get('[data-testid=forbidden]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.authorization.forbiddenContainer}]`).should('be.visible');
   });
 
   it('Unauthorized user should see Forbidden page when visiting editor page', () => {
     cy.visit(UrlPathTemplate.InstitutionOverviewPage);
-    cy.get('[data-testid=forbidden]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.authorization.forbiddenContainer}]`).should('be.visible');
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.get('[data-testid=forbidden]').should('not.exist');
