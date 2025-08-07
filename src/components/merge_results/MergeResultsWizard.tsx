@@ -7,7 +7,6 @@ import { navigationButtonStyling } from '../../pages/registration/RegistrationFo
 import { getTitleString } from '../../utils/registration-helpers';
 import { PageHeader } from '../PageHeader';
 import { RegistrationIconHeader } from '../RegistrationIconHeader';
-import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizard = () => {
@@ -15,22 +14,22 @@ export const MergeResultsWizard = () => {
   const { activeTab } = useContext(MergeResultsWizardContext);
 
   return (
-    <StyledPageContent sx={{ mx: 'auto' }}>
+    <>
       <MergeResultsWizardHeader />
       <MergeResultsWizardStepper />
 
       {activeTab === 0 ? (
-        <p>{t('registration.heading.description')}</p>
+        <p>{t('registration.heading.description')}: TODO</p>
       ) : activeTab === 1 ? (
-        <p>{t('registration.heading.resource_type')}</p>
+        <p>{t('registration.heading.resource_type')}: TODO</p>
       ) : activeTab === 2 ? (
-        <p>{t('registration.heading.contributors')}</p>
+        <p>{t('registration.heading.contributors')}: TODO</p>
       ) : activeTab === 3 ? (
-        <p>{t('registration.heading.files_and_license')}</p>
+        <p>{t('registration.heading.files_and_license')}: TODO</p>
       ) : null}
 
       <MergeResultsWizardActions />
-    </StyledPageContent>
+    </>
   );
 };
 
