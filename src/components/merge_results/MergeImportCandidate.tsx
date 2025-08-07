@@ -34,7 +34,11 @@ export const MergeImportCandidate = () => {
   }
 
   return (
-    <MergeResultsWizardContextContextProvider>
+    <MergeResultsWizardContextContextProvider
+      value={{
+        sourceResult: importCandidateQuery.data,
+        targetResult: registrationQuery.data,
+      }}>
       <MergeResultsWizard sourceResult={importCandidateQuery.data} targetResult={registrationQuery.data} />
     </MergeResultsWizardContextContextProvider>
   );

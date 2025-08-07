@@ -4,25 +4,19 @@ import { Box, IconButton, Step, StepButton, Stepper, Tooltip } from '@mui/materi
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { navigationButtonStyling } from '../../pages/registration/RegistrationFormActions';
-import { Registration } from '../../types/registration.types';
 import { getTitleString } from '../../utils/registration-helpers';
 import { PageHeader } from '../PageHeader';
 import { RegistrationIconHeader } from '../RegistrationIconHeader';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
-interface MergeResultsWizardProps {
-  sourceResult: Registration; // Result to replace (left side)
-  targetResult: Registration; // Result to merge into (right side)
-}
-
-export const MergeResultsWizard = ({ targetResult }: MergeResultsWizardProps) => {
+export const MergeResultsWizard = () => {
   const { t } = useTranslation();
   const { activeTab } = useContext(MergeResultsWizardContext);
 
   return (
     <StyledPageContent>
-      <MergeResultsWizardHeader targetResult={targetResult} />
+      <MergeResultsWizardHeader />
       <MergeResultsWizardStepper />
 
       {activeTab === 0 ? (
@@ -40,11 +34,9 @@ export const MergeResultsWizard = ({ targetResult }: MergeResultsWizardProps) =>
   );
 };
 
-interface MergeResultsWizardHeaderProps {
-  targetResult: Registration;
-}
+const MergeResultsWizardHeader = () => {
+  const { targetResult } = useContext(MergeResultsWizardContext);
 
-const MergeResultsWizardHeader = ({ targetResult }: MergeResultsWizardHeaderProps) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <RegistrationIconHeader
