@@ -15,7 +15,7 @@ export const MergeResultsWizard = () => {
   const { activeTab } = useContext(MergeResultsWizardContext);
 
   return (
-    <StyledPageContent>
+    <StyledPageContent sx={{ mx: 'auto' }}>
       <MergeResultsWizardHeader />
       <MergeResultsWizardStepper />
 
