@@ -1,4 +1,4 @@
-import { Paper, Tab, Tabs, Typography } from '@mui/material';
+import { Paper, Tab, Tabs } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ import { userHasAccessRight } from '../../utils/registration-helpers';
 import { isFileApprovalTicket } from '../../utils/ticketHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
+import { DetailsPanel } from './log/DetailsPanel';
 import { LogPanel } from './log/LogPanel';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
@@ -138,7 +139,7 @@ export const ActionPanel = ({
         </ErrorBoundary>
       </TabPanel>
       <TabPanel tabValue={tabValue} index={2}>
-        <Typography variant="h2">Kontaktpunkt</Typography>
+        <DetailsPanel />
       </TabPanel>
     </Paper>
   );
