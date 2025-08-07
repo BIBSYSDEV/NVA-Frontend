@@ -5,6 +5,7 @@ import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate } from '../../api/registrationApi';
 import { PageSpinner } from '../PageSpinner';
 import { MergeResultsWizard } from './MergeResultsWizard';
+import { MergeResultsWizardContextContextProvider } from './MergeResultsWizardContext';
 
 interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
@@ -29,8 +30,12 @@ export const MergeImportCandidate = () => {
   }
 
   if (!importCandidateQuery.data || !registrationQuery.data) {
-    return null; // TODO: Handle better?
+    return null;
   }
 
-  return <MergeResultsWizard sourceResult={importCandidateQuery.data} targetResult={registrationQuery.data} />;
+  return (
+    <MergeResultsWizardContextContextProvider>
+      <MergeResultsWizard sourceResult={importCandidateQuery.data} targetResult={registrationQuery.data} />
+    </MergeResultsWizardContextContextProvider>
+  );
 };
