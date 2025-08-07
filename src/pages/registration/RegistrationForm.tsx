@@ -15,7 +15,7 @@ import { RequiredDescription } from '../../components/RequiredDescription';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { RegistrationFormContext } from '../../context/RegistrationFormContext';
+import { RegistrationFormContextProvider } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
@@ -45,8 +45,8 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
   const location = useLocation();
   const locationState = location.state as RegistrationFormLocationState;
+  const skipInitialValidation = locationState?.skipInitialValidation;
 
-  const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
   const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
   const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
   const registration = registrationQuery.data;
@@ -79,22 +79,36 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     !userHasAccessRight(registration, 'update') &&
     !channelClaimData.channelClaimQuery.data &&
     channelClaimData.channelClaimQuery.isPending;
+  const isLoadingData =
+    registrationQuery.isPending || isLoadingChannelClaim || (canHaveNviCandidate && nviReportedStatus.isPending);
 
-  return registrationQuery.isPending ||
-    isLoadingChannelClaim ||
-    (canHaveNviCandidate && nviReportedStatus.isPending) ? (
-    <PageSpinner aria-label={t('common.result')} />
-  ) : !canEditRegistration ? (
-    <Forbidden />
-  ) : registration ? (
-    <RegistrationFormContext.Provider
-      value={{ disableNviCriticalFields, disableChannelClaimsFields: channelClaimData.shouldDisableFields }}>
+  if (isLoadingData) {
+    return <PageSpinner aria-label={t('common.result')} />;
+  }
+
+  if (!canEditRegistration) {
+    return <Forbidden />;
+  }
+
+  if (!registration) {
+    return null;
+  }
+
+  const highestVisitedTab = skipInitialValidation ? -1 : RegistrationTab.FilesAndLicenses;
+
+  return (
+    <RegistrationFormContextProvider
+      value={{
+        disableNviCriticalFields,
+        disableChannelClaimsFields: channelClaimData.shouldDisableFields,
+        highestVisitedTab,
+      }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
         validate={validateRegistrationForm}
         initialErrors={validateRegistrationForm(registration)}
-        initialTouched={getTouchedTabFields(highestValidatedTab, registration)}
+        initialTouched={getTouchedTabFields(highestVisitedTab, registration)}
         onSubmit={() => {
           /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
         }}>
@@ -160,6 +174,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         <Typography sx={{ mb: '1rem' }}>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>
-    </RegistrationFormContext.Provider>
-  ) : null;
+    </RegistrationFormContextProvider>
+  );
 };
