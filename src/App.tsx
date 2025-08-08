@@ -83,7 +83,7 @@ export const App = () => {
 
   return (
     <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
-      {maintenanceInfo ? (
+      {maintenanceInfo?.severity === 'block' ? (
         <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
       ) : (
         <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />

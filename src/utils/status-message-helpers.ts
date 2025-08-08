@@ -46,9 +46,12 @@ export const getMaintenanceInfo = () => {
     message.en = enMessage;
   }
 
+  const severity = import.meta.env.VITE_MAINTENANCE_SEVERITY as 'block' | '' | undefined;
+
   return {
     message,
     startDate,
     endDate,
+    severity,
   };
 };
