@@ -3,13 +3,6 @@ import { LanguageString } from '../types/common.types';
 const queryParamName = 'admin';
 const sessionStorageKey = 'disableMaintenancePage';
 
-export interface MaintenanceInfo {
-  message: LanguageString;
-  startDate?: string;
-  endDate?: string;
-  severity?: 'block';
-}
-
 export const getMaintenanceInfo = () => {
   const statusPageDisabled = sessionStorage.getItem(sessionStorageKey) === 'true';
   if (statusPageDisabled) {
@@ -60,5 +53,5 @@ export const getMaintenanceInfo = () => {
     startDate,
     endDate,
     severity,
-  } satisfies MaintenanceInfo;
+  };
 };
