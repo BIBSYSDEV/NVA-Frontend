@@ -10,13 +10,18 @@ const hostname = window.location.hostname;
 const isTestEnvironment = hostname !== prodHostname;
 const defaultBannerState = localStorage.getItem(LocalStorageKey.EnvironmentBanner);
 
+enum ServiceBannerVisibility {
+  Minimized = 'minimized',
+  Normal = 'normal',
+}
+
 const shouldShowMaintenanceInfo = (maintenanceInfo: MaintenanceInfo | null) => {
   return maintenanceInfo && maintenanceInfo.severity !== 'block';
 };
 
 export const ServiceBanner = () => {
   const { t } = useTranslation();
-  const [minimizeBanner, setMinimizeBanner] = useState(defaultBannerState === 'minimized');
+  const [minimizeBanner, setMinimizeBanner] = useState(defaultBannerState === ServiceBannerVisibility.Minimized);
 
   const maintenanceInfo = getMaintenanceInfo();
 
@@ -37,7 +42,10 @@ export const ServiceBanner = () => {
           : () => {
               const newMinimizeBannerState = !minimizeBanner;
               setMinimizeBanner(newMinimizeBannerState);
-              localStorage.setItem(LocalStorageKey.EnvironmentBanner, newMinimizeBannerState ? 'minimized' : 'normal');
+              localStorage.setItem(
+                LocalStorageKey.EnvironmentBanner,
+                newMinimizeBannerState ? ServiceBannerVisibility.Minimized : ServiceBannerVisibility.Normal
+              );
             }
       }>
       {isTestEnvironment && (!minimizeBanner || showMaintenanceInfo) && (
