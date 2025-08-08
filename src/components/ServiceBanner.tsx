@@ -7,26 +7,22 @@ import { getMaintenanceInfo, MaintenanceInfo } from '../utils/status-message-hel
 
 const prodHostname = 'nva.sikt.no';
 const hostname = window.location.hostname;
+const isTestEnvironment = hostname !== prodHostname;
 const defaultBannerState = localStorage.getItem(LocalStorageKey.EnvironmentBanner);
-
-const isTestEnvironment = () => {
-  return hostname !== prodHostname;
-};
 
 const shouldShowMaintenanceInfo = (maintenanceInfo: MaintenanceInfo | null) => {
   return maintenanceInfo && maintenanceInfo.severity !== 'block';
 };
 
-export const EnvironmentBanner = () => {
+export const ServiceBanner = () => {
   const { t } = useTranslation();
   const [minimizeBanner, setMinimizeBanner] = useState(defaultBannerState === 'minimized');
 
   const maintenanceInfo = getMaintenanceInfo();
 
-  const testEnvironment = isTestEnvironment();
   const showMaintenanceInfo = shouldShowMaintenanceInfo(maintenanceInfo);
 
-  const shouldShowBanner = testEnvironment || showMaintenanceInfo;
+  const shouldShowBanner = isTestEnvironment || showMaintenanceInfo;
   if (!shouldShowBanner) {
     return null;
   }
@@ -44,16 +40,15 @@ export const EnvironmentBanner = () => {
               localStorage.setItem(LocalStorageKey.EnvironmentBanner, newMinimizeBannerState ? 'minimized' : 'normal');
             }
       }>
+      {isTestEnvironment && (!minimizeBanner || showMaintenanceInfo) && (
+        <Typography sx={{ textAlign: 'center' }}>
+          {t('common.test_environment')} ({hostname})
+        </Typography>
+      )}
       {showMaintenanceInfo && (
         <Box sx={{ mx: 'auto', mt: '0.5rem', maxWidth: '50rem' }}>
           <MaintenanceMessageContent message={maintenanceInfo!.message} />
         </Box>
-      )}
-
-      {testEnvironment && (!minimizeBanner || showMaintenanceInfo) && (
-        <Typography sx={{ textAlign: 'center' }}>
-          {t('common.test_environment')} ({hostname})
-        </Typography>
       )}
     </Box>
   );
