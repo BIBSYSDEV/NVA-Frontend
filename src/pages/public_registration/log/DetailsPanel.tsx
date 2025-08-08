@@ -3,7 +3,6 @@ import { Box, Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Modal } from '../../../components/Modal';
-import { Link } from 'react-router';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
 
 export const DetailsPanel = () => {
