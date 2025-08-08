@@ -7,7 +7,7 @@ import { fetchImportCandidate } from '../../api/registrationApi';
 import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
-import { MergeResultsWizardContextContextProvider } from './MergeResultsWizardContext';
+import { MergeResultsWizardContextProvider } from './MergeResultsWizardContext';
 
 export interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
@@ -36,7 +36,7 @@ export const MergeImportCandidate = () => {
   }
 
   return (
-    <MergeResultsWizardContextContextProvider
+    <MergeResultsWizardContextProvider
       value={{ sourceResult: importCandidateQuery.data, targetResult: registrationQuery.data }}>
       <StyledPageContent sx={{ mx: 'auto' }}>
         <Paper sx={{ mb: '1rem', p: '1rem' }}>
@@ -48,6 +48,6 @@ export const MergeImportCandidate = () => {
         </Paper>
         <MergeResultsWizard />
       </StyledPageContent>
-    </MergeResultsWizardContextContextProvider>
+    </MergeResultsWizardContextProvider>
   );
 };
