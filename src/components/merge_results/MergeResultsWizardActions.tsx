@@ -4,6 +4,7 @@ import { Box, IconButton, Tooltip } from '@mui/material';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { navigationButtonStyling } from '../../pages/registration/RegistrationFormActions';
+import { RegistrationTab } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
@@ -13,7 +14,7 @@ export const MergeResultsWizardActions = () => {
 
   return (
     <Box sx={{ display: 'flex', gap: '1rem' }}>
-      {activeTab !== 0 && (
+      {activeTab !== RegistrationTab.Description && (
         <Tooltip title={t('common.previous')}>
           <IconButton
             onClick={() => setActiveTab(activeTab - 1)}
@@ -23,7 +24,7 @@ export const MergeResultsWizardActions = () => {
         </Tooltip>
       )}
 
-      {activeTab !== 3 && (
+      {activeTab !== RegistrationTab.FilesAndLicenses && (
         <Tooltip title={t('common.next')} sx={{ ml: 'auto' }}>
           <IconButton
             onClick={() => setActiveTab(activeTab + 1)}
