@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RegistrationTab } from '../../types/registration.types';
 import { MergeResultsWizardActions } from './MergeResultsWizardActions';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 import { MergeResultsWizardHeader } from './MergeResultsWizardHeader';
@@ -14,13 +15,13 @@ export const MergeResultsWizard = () => {
       <MergeResultsWizardHeader />
       <MergeResultsWizardStepper />
 
-      {activeTab === 0 ? (
+      {activeTab === RegistrationTab.Description ? (
         <p>{t('registration.heading.description')}: TODO</p>
-      ) : activeTab === 1 ? (
+      ) : activeTab === RegistrationTab.ResourceType ? (
         <p>{t('registration.heading.resource_type')}: TODO</p>
-      ) : activeTab === 2 ? (
+      ) : activeTab === RegistrationTab.Contributors ? (
         <p>{t('registration.heading.contributors')}: TODO</p>
-      ) : activeTab === 3 ? (
+      ) : activeTab === RegistrationTab.FilesAndLicenses ? (
         <p>{t('registration.heading.files_and_license')}: TODO</p>
       ) : null}
 
