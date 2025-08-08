@@ -113,7 +113,7 @@ export const ActionPanel = ({
         )}
         <Tab
           value={TabValue.Details}
-          label="Detaljer"
+          label={t('registration.public_page.details_tab.details')}
           id="action-panel-tab-2"
           aria-controls="action-panel-tab-panel-2"
         />

@@ -1575,6 +1575,14 @@
       "about_registration": "Om resultatet",
       "approve_publish_request": "Godkjenn fil",
       "cristin_id": "Cristin-ID",
+      "details_tab": {
+        "details": "Detaljer",
+        "no_contact_point": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
+        "point_of_contact": "Kontaktpunkt",
+        "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
+        "points_of_contact_for_result": "Kontaktpunkt for resultat",
+        "view_contact_info": "Se kontaktinformasjon"
+      },
       "duplicate_warning_modal": {
         "check_duplicate": "Du skal ikke opprette duplikater i NVA. Sjekk om <0>denne publikasjonen <0></0></0> er det samme resultatet som du har registrert.",
         "confirm_not_duplicate": "Kan du bekrefte at dette ikke er en duplikat?",
