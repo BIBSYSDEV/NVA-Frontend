@@ -8,7 +8,7 @@ export const MaintenanceMessagePage = () => {
   const maintenanceInfo = getMaintenanceInfo();
 
   return (
-    <Box sx={{ m: '2rem 0.5rem' }}>
+    <Box sx={{ m: '2rem 0.5rem', maxWidth: '50rem' }}>
       <MaintenanceMessageContent message={maintenanceInfo!.message} />
     </Box>
   );
