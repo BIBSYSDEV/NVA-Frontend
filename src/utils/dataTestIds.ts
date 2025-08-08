@@ -30,6 +30,11 @@ export const dataTestId = {
     institutionFacets: 'institution-facets',
     institutionFacetsSearchField: 'institution-facets-search-field',
   },
+  authorization: {
+    forbiddenContainer: 'forbidden-container',
+    institutionAdminsLink: 'institution-admins-link',
+    loginButtonForbidden: 'login-button-forbidden',
+  },
   basicData: {
     addChannelClaimButton: 'add-channel-claim-button',
     addCustomerLink: 'add-customer-link',
@@ -740,12 +745,13 @@ export const dataTestId = {
     messageSendButton: 'send-note-button',
     nvi: {
       approveButton: 'approve-button',
-      availabilityFilter: 'availability-filter',
+      visibilityFilter: 'visibility-filter',
       candidatesList: 'nvi-candidates-list',
       deleteNoteButton: 'delete-note-button',
       dialogTabButton: 'dialog-tab-button',
       editResultButton: 'edit-result-button',
       excludeSubunitsCheckbox: 'exclude-subunits-checkbox',
+      excludeUnassignedButton: 'exclude-unassigned-button',
       logTabButton: 'log-tab-button',
       nextCandidateButton: 'next-candidate-button',
       noteOptionsButton: 'note-options-button',
