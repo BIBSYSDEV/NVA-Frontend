@@ -1,14 +1,22 @@
 import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import { MaintenanceMessageContent } from '../pages/errorpages/MaintenanceMessagePage';
 import { LocalStorageKey } from '../utils/constants';
-import { getMaintenanceInfo } from '../utils/status-message-helpers';
-import { getLanguageString } from '../utils/translation-helpers';
+import { getMaintenanceInfo, MaintenanceInfo } from '../utils/status-message-helpers';
 
 const prodHostname = 'nva.sikt.no';
 const hostname = window.location.hostname;
-const hostnameIsTestEnvironment = hostname !== prodHostname;
 const defaultBannerState = localStorage.getItem(LocalStorageKey.EnvironmentBanner);
+
+const shouldShowTestEnvironmentInfo = () => {
+  const hostnameIsTestEnvironment = hostname !== prodHostname;
+  return hostnameIsTestEnvironment && defaultBannerState !== 'none';
+};
+
+const shouldShowMaintenanceInfo = (maintenanceInfo: MaintenanceInfo | null) => {
+  return maintenanceInfo && maintenanceInfo.severity !== 'block';
+};
 
 export const EnvironmentBanner = () => {
   const { t } = useTranslation();
@@ -16,8 +24,8 @@ export const EnvironmentBanner = () => {
 
   const maintenanceInfo = getMaintenanceInfo();
 
-  const showTestEnvironmentInfo = hostnameIsTestEnvironment && defaultBannerState !== 'none';
-  const showMaintenanceBanner = maintenanceInfo && maintenanceInfo?.severity !== 'block';
+  const showTestEnvironmentInfo = shouldShowTestEnvironmentInfo();
+  const showMaintenanceBanner = shouldShowMaintenanceInfo(maintenanceInfo);
 
   const shouldShowBanner = showTestEnvironmentInfo || showMaintenanceBanner;
   if (!shouldShowBanner) {
@@ -37,16 +45,9 @@ export const EnvironmentBanner = () => {
               localStorage.setItem(LocalStorageKey.EnvironmentBanner, newMinimizeBannerState ? 'minimized' : 'normal');
             }
       }>
-      {showMaintenanceBanner && (
-        <Box sx={{ m: 'auto', width: 'fit-content', maxWidth: '50rem' }}>
-          <Trans
-            defaults={getLanguageString(maintenanceInfo.message)}
-            components={{
-              h1: <Typography variant="h1" gutterBottom />,
-              h2: <Typography variant="h2" gutterBottom />,
-              p: <Typography gutterBottom />,
-            }}
-          />
+      {maintenanceInfo && showMaintenanceBanner && (
+        <Box sx={{ mx: 'auto', mt: '0.5rem', maxWidth: '50rem' }}>
+          <MaintenanceMessageContent message={maintenanceInfo.message} />
         </Box>
       )}
 
