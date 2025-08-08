@@ -9,9 +9,8 @@ const prodHostname = 'nva.sikt.no';
 const hostname = window.location.hostname;
 const defaultBannerState = localStorage.getItem(LocalStorageKey.EnvironmentBanner);
 
-const shouldShowTestEnvironmentInfo = () => {
-  const hostnameIsTestEnvironment = hostname !== prodHostname;
-  return hostnameIsTestEnvironment && defaultBannerState !== 'none';
+const isTestEnvironment = () => {
+  return hostname !== prodHostname;
 };
 
 const shouldShowMaintenanceInfo = (maintenanceInfo: MaintenanceInfo | null) => {
@@ -24,10 +23,10 @@ export const EnvironmentBanner = () => {
 
   const maintenanceInfo = getMaintenanceInfo();
 
-  const showTestEnvironmentInfo = shouldShowTestEnvironmentInfo();
-  const showMaintenanceBanner = shouldShowMaintenanceInfo(maintenanceInfo);
+  const testEnvironment = isTestEnvironment();
+  const showMaintenanceInfo = shouldShowMaintenanceInfo(maintenanceInfo);
 
-  const shouldShowBanner = showTestEnvironmentInfo || showMaintenanceBanner;
+  const shouldShowBanner = testEnvironment || showMaintenanceInfo;
   if (!shouldShowBanner) {
     return null;
   }
@@ -35,9 +34,9 @@ export const EnvironmentBanner = () => {
   return (
     <Box
       component="aside"
-      sx={{ background: '#ffd45a', p: '0.5rem', cursor: showMaintenanceBanner ? undefined : 'pointer' }}
+      sx={{ background: '#ffd45a', p: '0.5rem', cursor: showMaintenanceInfo ? undefined : 'pointer' }}
       onClick={
-        showMaintenanceBanner
+        showMaintenanceInfo
           ? undefined
           : () => {
               const newMinimizeBannerState = !minimizeBanner;
@@ -45,13 +44,13 @@ export const EnvironmentBanner = () => {
               localStorage.setItem(LocalStorageKey.EnvironmentBanner, newMinimizeBannerState ? 'minimized' : 'normal');
             }
       }>
-      {maintenanceInfo && showMaintenanceBanner && (
+      {showMaintenanceInfo && (
         <Box sx={{ mx: 'auto', mt: '0.5rem', maxWidth: '50rem' }}>
-          <MaintenanceMessageContent message={maintenanceInfo.message} />
+          <MaintenanceMessageContent message={maintenanceInfo!.message} />
         </Box>
       )}
 
-      {!minimizeBanner && (
+      {testEnvironment && (!minimizeBanner || showMaintenanceInfo) && (
         <Typography sx={{ textAlign: 'center' }}>
           {t('common.test_environment')} ({hostname})
         </Typography>
