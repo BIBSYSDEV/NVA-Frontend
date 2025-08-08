@@ -4,6 +4,7 @@ import { Box, IconButton, Step, StepButton, Stepper, Tooltip } from '@mui/materi
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { navigationButtonStyling } from '../../pages/registration/RegistrationFormActions';
+import { dataTestId } from '../../utils/dataTestIds';
 import { getTitleString } from '../../utils/registration-helpers';
 import { PageHeader } from '../PageHeader';
 import { RegistrationIconHeader } from '../RegistrationIconHeader';
@@ -55,16 +56,30 @@ const MergeResultsWizardStepper = () => {
   return (
     <Stepper nonLinear activeStep={activeTab} sx={{ display: { xs: 'none', md: 'flex' } }}>
       <Step>
-        <StepButton onClick={() => setActiveTab(0)}>{t('registration.heading.description')}</StepButton>
+        <StepButton
+          data-testid={dataTestId.registrationWizard.stepper.descriptionStepButton}
+          onClick={() => setActiveTab(0)}>
+          {t('registration.heading.description')}
+        </StepButton>
       </Step>
       <Step>
-        <StepButton onClick={() => setActiveTab(1)}>{t('registration.heading.resource_type')}</StepButton>
+        <StepButton
+          data-testid={dataTestId.registrationWizard.stepper.resourceStepButton}
+          onClick={() => setActiveTab(1)}>
+          {t('registration.heading.resource_type')}
+        </StepButton>
       </Step>
       <Step>
-        <StepButton onClick={() => setActiveTab(2)}>{t('registration.heading.contributors')}</StepButton>
+        <StepButton
+          data-testid={dataTestId.registrationWizard.stepper.contributorsStepButton}
+          onClick={() => setActiveTab(2)}>
+          {t('registration.heading.contributors')}
+        </StepButton>
       </Step>
       <Step>
-        <StepButton onClick={() => setActiveTab(3)}>{t('registration.heading.files_and_license')}</StepButton>
+        <StepButton data-testid={dataTestId.registrationWizard.stepper.filesStepButton} onClick={() => setActiveTab(3)}>
+          {t('registration.heading.files_and_license')}
+        </StepButton>
       </Step>
     </Stepper>
   );
@@ -78,7 +93,9 @@ const MergeResultsWizardActions = () => {
     <Box sx={{ display: 'flex', gap: '1rem' }}>
       {activeTab !== 0 && (
         <Tooltip title={t('common.previous')}>
-          <IconButton onClick={() => setActiveTab(activeTab - 1)}>
+          <IconButton
+            onClick={() => setActiveTab(activeTab - 1)}
+            data-testid={dataTestId.registrationWizard.formActions.previousTabButton}>
             <KeyboardArrowLeftIcon sx={navigationButtonStyling} />
           </IconButton>
         </Tooltip>
@@ -86,7 +103,9 @@ const MergeResultsWizardActions = () => {
 
       {activeTab !== 3 && (
         <Tooltip title={t('common.next')} sx={{ ml: 'auto' }}>
-          <IconButton onClick={() => setActiveTab(activeTab + 1)}>
+          <IconButton
+            onClick={() => setActiveTab(activeTab + 1)}
+            data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
             <KeyboardArrowRightIcon sx={navigationButtonStyling} />
           </IconButton>
         </Tooltip>
