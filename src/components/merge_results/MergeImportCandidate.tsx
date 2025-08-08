@@ -9,7 +9,7 @@ import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
 import { MergeResultsWizardContextContextProvider } from './MergeResultsWizardContext';
 
-interface MergeImportCandidateParams extends Record<string, string | undefined> {
+export interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
   registrationIdentifier: string;
 }

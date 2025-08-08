@@ -8,8 +8,10 @@ interface MergeResultsWizardContextType {
   targetResult: Registration; // Result to merge into (right side)
 }
 
+const defaultTab = RegistrationTab.Description;
+
 export const MergeResultsWizardContext = createContext<MergeResultsWizardContextType>({
-  activeTab: RegistrationTab.Description,
+  activeTab: defaultTab,
   setActiveTab: () => {},
   sourceResult: {} as Registration,
   targetResult: {} as Registration,
@@ -20,8 +22,8 @@ interface RegistrationFormContextProviderProps {
   value: Omit<MergeResultsWizardContextType, 'setActiveTab' | 'activeTab'>;
 }
 
-export const MergeResultsWizardContextContextProvider = ({ children, value }: RegistrationFormContextProviderProps) => {
-  const [activeTab, setActiveTab] = useState(RegistrationTab.Description);
+export const MergeResultsWizardContextProvider = ({ children, value }: RegistrationFormContextProviderProps) => {
+  const [activeTab, setActiveTab] = useState(defaultTab);
 
   return (
     <MergeResultsWizardContext.Provider value={{ activeTab, setActiveTab, ...value }}>
