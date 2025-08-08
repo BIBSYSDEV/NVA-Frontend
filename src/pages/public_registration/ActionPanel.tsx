@@ -112,6 +112,7 @@ export const ActionPanel = ({
           />
         )}
         <Tab
+          data-testid={dataTestId.registrationLandingPage.detailsTab.detailsTab}
           value={TabValue.Details}
           label={t('registration.public_page.details_tab.details')}
           id="action-panel-tab-2"

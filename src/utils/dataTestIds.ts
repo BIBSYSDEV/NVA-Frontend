@@ -341,6 +341,12 @@ export const dataTestId = {
     addLinkOrFilesButton: 'add-link-or-files-button',
     authorLink: (id: string) => `presentation-author-link-${id}`,
     contributors: 'public-registration-contributors',
+    detailsTab: {
+      detailsTab: 'details-tab',
+      contactModal: 'contact-modal',
+      infoLink: 'info-link',
+      viewContactInformationButton: 'view-contact-information-button',
+    },
     dmpAccordion: 'dmp-accordion',
     doiLink: 'doi-link',
     doiMessageField: 'request-doi-message',
