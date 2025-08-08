@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MaintenanceMessageContent } from '../pages/errorpages/MaintenanceMessagePage';
 import { LocalStorageKey } from '../utils/constants';
-import { getMaintenanceInfo, MaintenanceInfo } from '../utils/status-message-helpers';
+import { getMaintenanceInfo } from '../utils/status-message-helpers';
 
 const prodHostname = 'nva.sikt.no';
 const hostname = window.location.hostname;
@@ -15,17 +15,12 @@ enum ServiceBannerVisibility {
   Normal = 'normal',
 }
 
-const shouldShowMaintenanceInfo = (maintenanceInfo: MaintenanceInfo | null) => {
-  return maintenanceInfo && maintenanceInfo.severity !== 'block';
-};
-
 export const ServiceBanner = () => {
   const { t } = useTranslation();
   const [minimizeBanner, setMinimizeBanner] = useState(defaultBannerState === ServiceBannerVisibility.Minimized);
 
   const maintenanceInfo = getMaintenanceInfo();
-
-  const showMaintenanceInfo = shouldShowMaintenanceInfo(maintenanceInfo);
+  const showMaintenanceInfo = maintenanceInfo && maintenanceInfo.severity !== 'block';
 
   const shouldShowBanner = isTestEnvironment || showMaintenanceInfo;
   if (!shouldShowBanner) {
