@@ -24,7 +24,7 @@ export const DetailsPanel = () => {
       <Button
         data-testid={dataTestId.registrationLandingPage.detailsTab.viewContactInformationButton}
         variant="contained"
-        sx={{ textTransform: 'none', mx: 'auto' }}
+        sx={{ textTransform: 'none', width: 'fit-content', mx: { sm: 0, md: 'auto' } }}
         startIcon={<MailOutlineIcon />}
         onClick={() => setOpenModal(true)}>
         {t('registration.public_page.details_tab.view_contact_info')}
