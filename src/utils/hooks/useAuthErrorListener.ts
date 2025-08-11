@@ -9,7 +9,7 @@ export const useAuthErrorListener = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const authErrorListener = Hub.listen('auth', ({ payload }) => {
+    const unsubscribeAuthErrorListener = Hub.listen('auth', ({ payload }) => {
       if (payload.event === 'signInWithRedirect_failure') {
         dispatch(
           setNotification({
@@ -20,8 +20,6 @@ export const useAuthErrorListener = () => {
       }
     });
 
-    return () => {
-      authErrorListener();
-    };
+    return unsubscribeAuthErrorListener;
   }, [dispatch, t]);
 };
