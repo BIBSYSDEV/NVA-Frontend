@@ -343,8 +343,8 @@ export const dataTestId = {
     contributors: 'public-registration-contributors',
     detailsTab: {
       detailsTab: 'details-tab',
-      contactModal: 'contact-modal',
       infoLink: 'info-link',
+      resultContactModal: 'result-contact-modal',
       viewContactInformationButton: 'view-contact-information-button',
     },
     dmpAccordion: 'dmp-accordion',

@@ -1,11 +1,11 @@
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Box, Button, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Modal } from '../../../components/Modal';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { visuallyHidden } from '@mui/utils';
 
 export const DetailsPanel = () => {
   const { t } = useTranslation();
@@ -28,19 +28,19 @@ export const DetailsPanel = () => {
       <Button
         data-testid={dataTestId.registrationLandingPage.detailsTab.viewContactInformationButton}
         variant="contained"
-        sx={{ textTransform: 'none', width: 'fit-content', alignSelf: { sm: 'start', md: 'center' } }}
+        sx={{ textTransform: 'none', alignSelf: { sm: 'start', md: 'center' } }}
         startIcon={<MailOutlineIcon />}
         onClick={() => setOpenModal(true)}>
         {t('view_contact_info')}
       </Button>
       <Modal
-        data-testid={dataTestId.registrationLandingPage.detailsTab.contactModal}
+        data-testid={dataTestId.registrationLandingPage.detailsTab.resultContactModal}
         open={openModal}
         onClose={() => setOpenModal(false)}
         headingText={t('points_of_contact_for_result')}
         maxWidth="sm">
         <Trans
-          i18nKey="no_point_of_contact"
+          i18nKey="default_point_of_contact"
           components={{
             p: <Typography />,
             link1: (
