@@ -605,6 +605,7 @@
       "get_tickets": "Kunne ikke hente saker",
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
+      "login_failed": "Innlogging feilet.",
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "person_search": "Søk etter person feilet",
       "project_search": "Søk på prosjekt feilet",
@@ -634,8 +635,7 @@
       "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
-      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
-      "login_failed": "Innlogging feilet."
+      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
