@@ -17,8 +17,8 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 enum TabValue {
   Tasks,
-  Log,
   Details,
+  Log,
 }
 
 interface ActionPanelProps extends PublicRegistrationContentProps {
@@ -102,22 +102,22 @@ export const ActionPanel = ({
             aria-controls="action-panel-tab-panel-0"
           />
         )}
+        <Tab
+          data-testid={dataTestId.registrationLandingPage.detailsTab.detailsTab}
+          value={TabValue.Details}
+          label={t('details')}
+          id="action-panel-tab-1"
+          aria-controls="action-panel-tab-panel-1"
+        />
         {canEditRegistration && (
           <Tab
             value={TabValue.Log}
             label={t('common.log')}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
-            id="action-panel-tab-1"
-            aria-controls="action-panel-tab-panel-1"
+            id="action-panel-tab-2"
+            aria-controls="action-panel-tab-panel-2"
           />
         )}
-        <Tab
-          data-testid={dataTestId.registrationLandingPage.detailsTab.detailsTab}
-          value={TabValue.Details}
-          label={t('registration.public_page.details_tab.details')}
-          id="action-panel-tab-2"
-          aria-controls="action-panel-tab-panel-2"
-        />
       </Tabs>
       <TabPanel tabValue={tabValue} index={0}>
         <ErrorBoundary>
@@ -135,12 +135,12 @@ export const ActionPanel = ({
         </ErrorBoundary>
       </TabPanel>
       <TabPanel tabValue={tabValue} index={1}>
+        <DetailsPanel />
+      </TabPanel>
+      <TabPanel tabValue={tabValue} index={2}>
         <ErrorBoundary>
           <LogPanel registration={registration} tickets={tickets} />
         </ErrorBoundary>
-      </TabPanel>
-      <TabPanel tabValue={tabValue} index={2}>
-        <DetailsPanel />
       </TabPanel>
     </Paper>
   );

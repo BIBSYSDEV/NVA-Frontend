@@ -5,6 +5,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Modal } from '../../../components/Modal';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { visuallyHidden } from '@mui/utils';
 
 export const DetailsPanel = () => {
   const { t } = useTranslation();
@@ -19,24 +20,27 @@ export const DetailsPanel = () => {
         bgcolor: 'secondary.main',
         gap: '0.5rem',
       }}>
-      <Typography sx={{ fontWeight: 'bold' }}>{t('registration.public_page.details_tab.point_of_contact')}</Typography>
-      <Typography>{t('registration.public_page.details_tab.point_of_contact_description')}</Typography>
+      <Typography variant="h2" sx={visuallyHidden}>
+        {t('details')}
+      </Typography>
+      <Typography variant="h3">{t('point_of_contact')}</Typography>
+      <Typography>{t('point_of_contact_description')}</Typography>
       <Button
         data-testid={dataTestId.registrationLandingPage.detailsTab.viewContactInformationButton}
         variant="contained"
-        sx={{ textTransform: 'none', width: 'fit-content', mx: { sm: 0, md: 'auto' } }}
+        sx={{ textTransform: 'none', width: 'fit-content', alignSelf: { sm: 'start', md: 'center' } }}
         startIcon={<MailOutlineIcon />}
         onClick={() => setOpenModal(true)}>
-        {t('registration.public_page.details_tab.view_contact_info')}
+        {t('view_contact_info')}
       </Button>
       <Modal
         data-testid={dataTestId.registrationLandingPage.detailsTab.contactModal}
         open={openModal}
         onClose={() => setOpenModal(false)}
-        headingText={t('registration.public_page.details_tab.points_of_contact_for_result')}
-        sx={{ minWidth: { sm: 'fit-content', md: '40rem' } }}>
+        headingText={t('points_of_contact_for_result')}
+        maxWidth="sm">
         <Trans
-          i18nKey="registration.public_page.details_tab.no_point_of_contact"
+          i18nKey="no_point_of_contact"
           components={{
             p: <Typography />,
             link1: (
