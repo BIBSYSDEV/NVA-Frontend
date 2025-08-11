@@ -115,6 +115,7 @@ const getLogEntryBackgroundColor = (topic: LogEntry['topic']) => {
     case 'PublicationImported':
     case 'FileImported':
     case 'PublicationMerged':
+    case 'FileTypeUpdatedByImport':
       return 'centralImport.light';
     case 'DoiReserved':
     case 'DoiRequested':
@@ -148,6 +149,7 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
       return <DeleteOutlinedIcon {...logIconProps} />;
     case 'PublicationImported':
     case 'PublicationMerged':
+    case 'FileTypeUpdatedByImport':
       return <CloudOutlinedIcon {...logIconProps} />;
     case 'DoiReserved':
     case 'DoiRequested':
@@ -197,11 +199,12 @@ const getLogEntryTitle = (logEntry: LogEntry, t: TFunction) => {
           return t('log.titles.file_hidden');
       }
       break;
-    case 'FileTypeUpdated': {
+    case 'FileTypeUpdated':
+    case 'FileTypeUpdatedByImport': {
       const newFileTypeString =
-        logEntry.fileType === 'PendingOpenFile'
+        logEntry.fileType === 'PendingOpenFile' || logEntry.fileType === 'OpenFile'
           ? t('registration.files_and_license.file_type.open_file')
-          : logEntry.fileType === 'PendingInternalFile'
+          : logEntry.fileType === 'PendingInternalFile' || logEntry.fileType === 'InternalFile'
             ? t('registration.files_and_license.file_type.internal_file')
             : logEntry.fileType;
       return t('log.titles.file_type_updated', { newFileType: newFileTypeString.toLocaleLowerCase() });

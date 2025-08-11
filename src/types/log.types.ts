@@ -54,7 +54,8 @@ interface FileLogEntry extends BaseLogEntry {
     | 'FileDeleted'
     | 'FileRetracted'
     | 'FileHidden'
-    | 'FileTypeUpdated';
+    | 'FileTypeUpdated'
+    | 'FileTypeUpdatedByImport';
   performedBy: LogEntryPerson;
   filename: string;
   fileType: FileType;
