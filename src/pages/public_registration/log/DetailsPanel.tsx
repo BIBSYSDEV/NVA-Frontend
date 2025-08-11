@@ -15,7 +15,7 @@ export const DetailsPanel = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        p: '0.5rem',
+        p: '1rem',
         bgcolor: 'secondary.main',
         gap: '0.5rem',
       }}>
@@ -24,7 +24,7 @@ export const DetailsPanel = () => {
       <Button
         data-testid={dataTestId.registrationLandingPage.detailsTab.viewContactInformationButton}
         variant="contained"
-        sx={{ textTransform: 'none', width: 'fit-content', mx: 'auto' }}
+        sx={{ textTransform: 'none', mx: 'auto' }}
         startIcon={<MailOutlineIcon />}
         onClick={() => setOpenModal(true)}>
         {t('registration.public_page.details_tab.view_contact_info')}
@@ -34,9 +34,9 @@ export const DetailsPanel = () => {
         open={openModal}
         onClose={() => setOpenModal(false)}
         headingText={t('registration.public_page.details_tab.points_of_contact_for_result')}
-        sx={{ minWidth: '40rem' }}>
+        sx={{ minWidth: { sm: 'fit-content', md: '40rem' } }}>
         <Trans
-          i18nKey="registration.public_page.details_tab.no_contact_point"
+          i18nKey="registration.public_page.details_tab.no_point_of_contact"
           components={{
             p: <Typography />,
             link1: (
