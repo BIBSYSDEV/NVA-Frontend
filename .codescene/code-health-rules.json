@@ -1,0 +1,13 @@
+{
+  "rule_sets": [
+    {
+      "matching_content_path": "**",
+      "thresholds": [
+        {
+          "name": "function_cyclomatic_complexity_warning",
+          "value": 20
+        }
+      ]
+    }
+  ]
+}
