@@ -8,6 +8,7 @@ import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate, updateImportCandidateStatus, updateRegistration } from '../../../../api/registrationApi';
 import { HeadTitle } from '../../../../components/HeadTitle';
+import { MergeImportCandidateParams } from '../../../../components/merge_results/MergeImportCandidate';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { AssociatedLink } from '../../../../types/associatedArtifact.types';
@@ -26,11 +27,6 @@ import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../u
 import { CompareDoiField } from './CompareDoiField';
 import { CompareFields } from './CompareFields';
 import { CompareJournalFields } from './CompareJournalFields';
-
-interface MergeImportCandidateParams extends Record<string, string | undefined> {
-  candidateIdentifier: string;
-  registrationIdentifier: string;
-}
 
 export const CentralImportCandidateMerge = () => {
   const { t } = useTranslation();

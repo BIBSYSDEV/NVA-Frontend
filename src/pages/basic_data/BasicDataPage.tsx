@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { MergeImportCandidate } from '../../components/merge_results/MergeImportCandidate';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
   LinkCreateButton,
@@ -20,6 +21,7 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useBetaFlag } from '../../utils/hooks/useBetaFlag';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
@@ -41,6 +43,7 @@ const isOnEditOrMergeImportCandidate = (path: string) =>
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
+  const beta = useBetaFlag();
   const user = useSelector((store: RootState) => store.user);
   const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
@@ -229,7 +232,12 @@ const BasicDataPage = () => {
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataCentralImportCandidateMerge, UrlPathTemplate.BasicData)}
-            element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateMerge />} />}
+            element={
+              <PrivateRoute
+                isAuthorized={isInternalImporter}
+                element={beta ? <MergeImportCandidate /> : <CentralImportCandidateMerge />}
+              />
+            }
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataAddEmployee, UrlPathTemplate.BasicData)}
