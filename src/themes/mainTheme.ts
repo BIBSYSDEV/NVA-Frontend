@@ -431,5 +431,3 @@ export const alternatingTableRowColor: SxProps = {
     },
   },
 };
-
-console.log(mainTheme.palette.warning);
