@@ -1,5 +1,4 @@
 import { Amplify } from 'aws-amplify';
-import { Hub } from 'aws-amplify/utils';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,11 +10,11 @@ import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialo
 import { PageSpinner } from './components/PageSpinner';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
 import { useMatomoTracking } from './matomo/useMatomoTracking';
-import { setNotification } from './redux/notificationSlice';
 import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
+import { useAuthErrorListener } from './utils/hooks/useAuthErrorListener';
 import { getMaintenanceInfo } from './utils/status-message-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
@@ -33,6 +32,7 @@ if (
 }
 
 const Root = () => {
+  useAuthErrorListener();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -61,24 +61,6 @@ const Root = () => {
       getUser();
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    const unsubscribe = Hub.listen('auth', ({ payload }) => {
-      if (payload.event === 'signInWithRedirect_failure') {
-        dispatch(
-          setNotification({
-            message: t('feedback.error.login_failed'),
-            variant: 'error',
-            detail: payload.data.error?.message,
-          })
-        );
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [dispatch, t]);
 
   const mustAcceptTerms = user && user.currentTerms !== user.acceptedTerms;
   const mustCreatePerson = user && !user.cristinId && !mustAcceptTerms;
