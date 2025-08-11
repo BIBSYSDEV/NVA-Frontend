@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { RegistrationTab } from '../../types/registration.types';
 import { MergeResultsWizardActions } from './MergeResultsWizardActions';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
+import { MergeResultsWizardDescriptionTab } from './MergeResultsWizardDescriptionTab';
 import { MergeResultsWizardHeader } from './MergeResultsWizardHeader';
 import { MergeResultsWizardStepper } from './MergeResultsWizardStepper';
 
@@ -16,7 +17,7 @@ export const MergeResultsWizard = () => {
       <MergeResultsWizardStepper />
 
       {activeTab === RegistrationTab.Description ? (
-        <p>{t('registration.heading.description')}: TODO</p>
+        <MergeResultsWizardDescriptionTab />
       ) : activeTab === RegistrationTab.ResourceType ? (
         <p>{t('registration.heading.resource_type')}: TODO</p>
       ) : activeTab === RegistrationTab.Contributors ? (
