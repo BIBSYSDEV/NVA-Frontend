@@ -30,7 +30,11 @@ export const ServiceBanner = () => {
   return (
     <Box
       component="aside"
-      sx={{ background: '#ffd45a', p: '0.5rem', cursor: showMaintenanceInfo ? undefined : 'pointer' }}
+      sx={{
+        bgcolor: 'warning.light',
+        p: '0.5rem',
+        cursor: showMaintenanceInfo ? undefined : 'pointer',
+      }}
       onClick={
         showMaintenanceInfo
           ? undefined
