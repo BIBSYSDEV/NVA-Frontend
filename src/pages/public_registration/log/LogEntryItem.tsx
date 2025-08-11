@@ -143,13 +143,13 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
     case 'FileRetracted':
     case 'FileHidden':
     case 'FileTypeUpdated':
+    case 'FileTypeUpdatedByImport':
       return <InsertDriveFileOutlinedIcon {...logIconProps} />;
     case 'PublicationDeleted':
     case 'FileDeleted':
       return <DeleteOutlinedIcon {...logIconProps} />;
     case 'PublicationImported':
     case 'PublicationMerged':
-    case 'FileTypeUpdatedByImport':
       return <CloudOutlinedIcon {...logIconProps} />;
     case 'DoiReserved':
     case 'DoiRequested':
