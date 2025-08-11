@@ -45,7 +45,7 @@ interface PublicationImportLogEntry extends Omit<PublicationLogEntry, 'topic' | 
   importSource: ImportSourceLogData;
 }
 
-interface FileLogEntry extends BaseLogEntry {
+export interface FileLogEntry extends BaseLogEntry {
   type: 'FileLogEntry';
   topic:
     | 'FileUploaded'

@@ -9,7 +9,7 @@ import { Avatar, Box, Divider, styled, SvgIconProps, Tooltip, Typography } from 
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { FileType } from '../../../types/associatedArtifact.types';
-import { LogEntry, LogEntryOrganization, LogEntryPerson } from '../../../types/log.types';
+import { FileLogEntry, LogEntry, LogEntryOrganization, LogEntryPerson } from '../../../types/log.types';
 import { Message } from '../../../types/publication_types/ticket.types';
 import { getInitials } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -200,15 +200,8 @@ const getLogEntryTitle = (logEntry: LogEntry, t: TFunction) => {
       }
       break;
     case 'FileTypeUpdated':
-    case 'FileTypeUpdatedByImport': {
-      const newFileTypeString =
-        logEntry.fileType === 'PendingOpenFile' || logEntry.fileType === 'OpenFile'
-          ? t('registration.files_and_license.file_type.open_file')
-          : logEntry.fileType === 'PendingInternalFile' || logEntry.fileType === 'InternalFile'
-            ? t('registration.files_and_license.file_type.internal_file')
-            : logEntry.fileType;
-      return t('log.titles.file_type_updated', { newFileType: newFileTypeString.toLocaleLowerCase() });
-    }
+    case 'FileTypeUpdatedByImport':
+      return getFileTypeUpdatedString(t, logEntry);
     case 'FileRejected':
       return t('log.titles.files_rejected', { count: 1 });
     case 'FileDeleted':
@@ -220,4 +213,15 @@ const getLogEntryTitle = (logEntry: LogEntry, t: TFunction) => {
     default:
       return (logEntry as any).topic;
   }
+};
+
+const getFileTypeUpdatedString = (t: TFunction, logEntry: FileLogEntry) => {
+  const newFileTypeString =
+    logEntry.fileType === 'PendingOpenFile' || logEntry.fileType === 'OpenFile'
+      ? t('registration.files_and_license.file_type.open_file')
+      : logEntry.fileType === 'PendingInternalFile' || logEntry.fileType === 'InternalFile'
+        ? t('registration.files_and_license.file_type.internal_file')
+        : logEntry.fileType;
+
+  return t('log.titles.file_type_updated', { newFileType: newFileTypeString.toLocaleLowerCase() });
 };
