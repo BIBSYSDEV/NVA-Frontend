@@ -67,14 +67,17 @@ export const ActionPanel = ({
   const canApproveSupportTicket = !!newestSupportTicket && userHasAccessRight(registration, 'support-request-approve');
 
   const shouldSeePublishingAccordion =
-    canCreatePublishingTicket || canHandlePublishingTicket || hasOtherPublishingRights || !!publishingRequestTickets;
+    !!user &&
+    (canCreatePublishingTicket || canHandlePublishingTicket || hasOtherPublishingRights || !!publishingRequestTickets);
 
   const shouldSeeDoiAccordion =
+    !!user &&
     !registration.entityDescription?.reference?.doi &&
     !!customerHasConfiguredDoi &&
     (canCreateDoiTicket || canApproveDoiTicket || !!newestDoiRequestTicket);
 
-  const shouldSeeSupportAccordion = canCreateSupportTicket || canApproveSupportTicket || !!newestSupportTicket;
+  const shouldSeeSupportAccordion =
+    !!user && (canCreateSupportTicket || canApproveSupportTicket || !!newestSupportTicket);
 
   const canSeeTasksPanel =
     (shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion) && !!user;
