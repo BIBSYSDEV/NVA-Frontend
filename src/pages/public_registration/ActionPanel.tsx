@@ -35,6 +35,8 @@ export const ActionPanel = ({
 }: ActionPanelProps) => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
+  const contributors = registration.entityDescription?.contributors ?? [];
+  const user = useSelector((store: RootState) => store.user);
 
   const publishingRequestTickets = tickets.filter(isFileApprovalTicket) as PublishingTicket[];
   const newestDoiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest');
@@ -74,7 +76,8 @@ export const ActionPanel = ({
 
   const shouldSeeSupportAccordion = canCreateSupportTicket || canApproveSupportTicket || !!newestSupportTicket;
 
-  const canSeeTasksPanel = shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion;
+  const canSeeTasksPanel =
+    (shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion) && !!user;
 
   const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Details);
 
@@ -93,7 +96,7 @@ export const ActionPanel = ({
         slotProps={{
           indicator: { style: { backgroundColor: 'white', height: '0.4rem' } },
         }}>
-        {canSeeTasksPanel && (
+        {canSeeTasksPanel && !!user && (
           <Tab
             value={TabValue.Tasks}
             label={t('common.tasks')}
@@ -109,7 +112,7 @@ export const ActionPanel = ({
           id="action-panel-tab-1"
           aria-controls="action-panel-tab-panel-1"
         />
-        {canEditRegistration && (
+        {canEditRegistration && !!user && (
           <Tab
             value={TabValue.Log}
             label={t('common.log')}
@@ -135,7 +138,7 @@ export const ActionPanel = ({
         </ErrorBoundary>
       </TabPanel>
       <TabPanel tabValue={tabValue} index={1}>
-        <DetailsPanel />
+        <DetailsPanel contributors={contributors} />
       </TabPanel>
       <TabPanel tabValue={tabValue} index={2}>
         <ErrorBoundary>
