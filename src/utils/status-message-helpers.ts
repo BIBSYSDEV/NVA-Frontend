@@ -1,4 +1,5 @@
 import { LanguageString } from '../types/common.types';
+import { getEnvVariableValue } from './general-helpers';
 
 const queryParamName = 'admin';
 const sessionStorageKey = 'disableMaintenancePage';
@@ -18,13 +19,12 @@ export const getMaintenanceInfo = () => {
     const newUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
     window.location.replace(newUrl);
   }
-
-  const nbMessage = import.meta.env.VITE_MAINTENANCE_MESSAGE_NB as string | undefined;
+  const nbMessage = getEnvVariableValue(import.meta.env.VITE_MAINTENANCE_MESSAGE_NB);
   if (!nbMessage) {
     return null;
   }
 
-  const startDate = import.meta.env.VITE_MAINTENANCE_START as string | undefined;
+  const startDate = getEnvVariableValue(import.meta.env.VITE_MAINTENANCE_START);
   if (startDate) {
     const currentDate = new Date();
     if (new Date(startDate) > currentDate) {
@@ -32,7 +32,7 @@ export const getMaintenanceInfo = () => {
     }
   }
 
-  const endDate = import.meta.env.VITE_MAINTENANCE_END as string | undefined;
+  const endDate = getEnvVariableValue(import.meta.env.VITE_MAINTENANCE_END);
   if (endDate) {
     const currentDate = new Date();
     if (new Date(endDate) < currentDate) {
@@ -41,12 +41,12 @@ export const getMaintenanceInfo = () => {
   }
 
   const message: LanguageString = { nb: nbMessage };
-  const enMessage = import.meta.env.VITE_MAINTENANCE_MESSAGE_EN as string | undefined;
+  const enMessage = getEnvVariableValue(import.meta.env.VITE_MAINTENANCE_MESSAGE_EN);
   if (enMessage) {
     message.en = enMessage;
   }
 
-  const severity = import.meta.env.VITE_MAINTENANCE_SEVERITY as 'block' | undefined;
+  const severity = getEnvVariableValue<'block'>(import.meta.env.VITE_MAINTENANCE_SEVERITY);
 
   return {
     message,
