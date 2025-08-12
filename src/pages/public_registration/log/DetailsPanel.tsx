@@ -1,14 +1,14 @@
+import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import { Box, Button, Divider, Link, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, IconButton, Link, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useFetchPerson } from '../../../api/hooks/useFetchPerson';
-import { Modal } from '../../../components/Modal';
+import { ContributorName } from '../../../components/ContributorName';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { ContributorName } from '../../../components/ContributorName';
 
 interface DetailsPanelProps {
   contributors: Contributor[];
@@ -40,25 +40,41 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         onClick={() => setOpenModal(true)}>
         {t('view_contact_info')}
       </Button>
-      <Modal
+
+      <Dialog
         data-testid={dataTestId.registrationLandingPage.detailsTab.resultContactModal}
         open={openModal}
-        onClose={() => setOpenModal(false)}
-        headingText={t('points_of_contact_for_result')}
-        maxWidth="sm">
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <Typography variant="h2">Kontaktperson</Typography>
-          {contributors
-            .filter((contributor) => contributor.role.type === ContributorRole.ContactPerson)
-            .map((contributor, index) => (
-              <ContactPersonRow key={index} contributor={contributor} />
-            ))}
-          <Typography variant="h2">Korresponderende forfatter</Typography>
-          {contributors
-            .filter((contributor) => contributor.correspondingAuthor === true)
-            .map((contributor, index) => (
-              <ContactPersonRow key={index} contributor={contributor} />
-            ))}
+        onClose={() => setOpenModal(false)}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: '1rem', mx: '1rem' }}>
+          <DialogTitle sx={{ padding: 0 }}>{t('points_of_contact_for_result')}</DialogTitle>
+          <IconButton
+            title={t('common.close')}
+            onClick={() => setOpenModal(false)}
+            data-testid={dataTestId.confirmDialog.cancelButton}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div>
+            <Typography variant="h2" gutterBottom>
+              Kontaktperson
+            </Typography>
+            {contributors
+              .filter((contributor) => contributor.role.type === ContributorRole.ContactPerson)
+              .map((contributor, index) => (
+                <ContactPersonRow key={index} contributor={contributor} />
+              ))}
+          </div>
+          <div>
+            <Typography variant="h2" gutterBottom>
+              Korresponderende forfatter
+            </Typography>
+            {contributors
+              .filter((contributor) => contributor.correspondingAuthor === true)
+              .map((contributor, index) => (
+                <ContactPersonRow key={index} contributor={contributor} />
+              ))}
+          </div>
           <Divider />
           <Trans
             i18nKey="default_point_of_contact"
@@ -72,8 +88,8 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
               ),
             }}
           />
-        </Box>
-      </Modal>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };
@@ -87,7 +103,7 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
   const person = personQuery.data;
 
   return (
-    <span style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+    <span style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginBottom: '0.5rem' }}>
       <ContributorName
         id={contributor.identity.id}
         name={contributor.identity.name}
