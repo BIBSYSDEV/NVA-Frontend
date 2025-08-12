@@ -42,7 +42,7 @@ export const MergeResultsWizardDescriptionTab = () => {
             value={targetResult.entityDescription?.mainTitle}
           />
         }
-        isMatching={sourceResult.entityDescription?.mainTitle !== targetResult.entityDescription?.mainTitle}
+        isMatching={sourceResult.entityDescription?.mainTitle === targetResult.entityDescription?.mainTitle}
       />
     </BackgroundDiv>
   );
