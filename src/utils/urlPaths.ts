@@ -14,6 +14,7 @@ export enum UrlPathTemplate {
   BasicDataCentralImportCandidate = '/basic-data/central-import/:identifier',
   BasicDataCentralImportCandidateWizard = '/basic-data/central-import/:identifier/edit',
   BasicDataCentralImportCandidateMerge = '/basic-data/central-import/:candidateIdentifier/merge/:registrationIdentifier',
+  BasicDataCentralImportCandidateMergeBeta = '/basic-data/central-import/:candidateIdentifier/merge/:registrationIdentifier/beta',
   BasicDataInstitutions = '/basic-data/institutions',
   BasicDataNvi = '/basic-data/nvi',
   BasicDataNviNew = '/basic-data/nvi/new',
@@ -134,6 +135,13 @@ export const getImportCandidateWizardPath = (identifier: string) =>
 
 export const getImportCandidateMergePath = (candidateIdentifier: string, registrationIdentifier: string) =>
   UrlPathTemplate.BasicDataCentralImportCandidateMerge.replace(
+    ':candidateIdentifier',
+    encodeURIComponent(candidateIdentifier)
+  ).replace(':registrationIdentifier', encodeURIComponent(registrationIdentifier));
+
+// TODO: Remove this when new merging is out of beta
+export const getImportCandidateMergeBetaPath = (candidateIdentifier: string, registrationIdentifier: string) =>
+  UrlPathTemplate.BasicDataCentralImportCandidateMergeBeta.replace(
     ':candidateIdentifier',
     encodeURIComponent(candidateIdentifier)
   ).replace(':registrationIdentifier', encodeURIComponent(registrationIdentifier));
