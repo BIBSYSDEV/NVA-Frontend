@@ -35,6 +35,7 @@ export const ActionPanel = ({
 }: ActionPanelProps) => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
+  const user = useSelector((store: RootState) => store.user);
 
   const publishingRequestTickets = tickets.filter(isFileApprovalTicket) as PublishingTicket[];
   const newestDoiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest');
@@ -74,7 +75,8 @@ export const ActionPanel = ({
 
   const shouldSeeSupportAccordion = canCreateSupportTicket || canApproveSupportTicket || !!newestSupportTicket;
 
-  const canSeeTasksPanel = shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion;
+  const canSeeTasksPanel =
+    !!user && (shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion);
 
   const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Details);
 

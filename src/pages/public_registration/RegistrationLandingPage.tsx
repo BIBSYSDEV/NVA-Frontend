@@ -68,16 +68,14 @@ export const RegistrationLandingPage = () => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registration} />
 
-            {(canEditRegistration || (ticketsQuery.data && ticketsQuery.data.tickets.length > 0)) && (
-              <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
-                <ActionPanel
-                  registration={registration}
-                  refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-                  tickets={ticketsQuery.data?.tickets ?? []}
-                  isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
-                />
-              </ActionPanelContext.Provider>
-            )}
+            <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
+              <ActionPanel
+                registration={registration}
+                refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+                tickets={ticketsQuery.data?.tickets ?? []}
+                isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
+              />
+            </ActionPanelContext.Provider>
           </ErrorBoundary>
         ) : (
           <NotPublished />
