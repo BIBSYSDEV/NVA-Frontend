@@ -47,16 +47,14 @@ export const ServiceBanner = () => {
               );
             }
       }>
-      {isTestEnvironment && (!minimizeBanner || showMaintenanceInfo) && (
-        <Typography sx={{ textAlign: 'center' }}>
-          {t('common.test_environment')} ({hostname})
-        </Typography>
-      )}
-      {showMaintenanceInfo && (
-        <Box sx={{ mx: 'auto', mt: '0.5rem', maxWidth: '50rem' }}>
-          <MaintenanceMessageContent message={maintenanceInfo!.message} />
-        </Box>
-      )}
+      <Box sx={{ mx: 'auto', maxWidth: '50rem', textAlign: 'center' }}>
+        {isTestEnvironment && (!minimizeBanner || showMaintenanceInfo) && (
+          <Typography gutterBottom>
+            {t('common.test_environment')} ({hostname})
+          </Typography>
+        )}
+        {showMaintenanceInfo && <MaintenanceMessageContent message={maintenanceInfo.message} />}
+      </Box>
     </Box>
   );
 };

@@ -25,7 +25,7 @@ export const MaintenanceMessageContent = ({ message }: MaintenanceMessageContent
       components={{
         h1: <Typography variant="h1" gutterBottom />,
         h2: <Typography variant="h2" gutterBottom />,
-        p: <Typography gutterBottom />,
+        p: <Typography />,
       }}
     />
   );
