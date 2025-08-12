@@ -15,6 +15,11 @@ const customerErrorMessage = {
 export const customerInstitutionValidationSchema = Yup.object({
   canAssignDoi: Yup.boolean(),
   customer: Yup.object({
+    name: Yup.string().required(
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.institution'),
+      })
+    ),
     feideOrganizationDomain: Yup.string(),
     rorId: Yup.string().matches(/^https?:\/\/ror\.org\/([a-z0-9]{9})/, customerErrorMessage.rorInvalid),
   }),
