@@ -2262,5 +2262,11 @@
     "unpublish_registration_duplicate_citation_information": "Da kan du legge inn en lenke til det andre forskningsresultatet. Alle oppslag på det avpubliserte forskningsresultatet vil da føre til det andre, publiserte forskningsresultatet.",
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
-  }
+  },
+  "details": "Detaljer",
+  "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
+  "point_of_contact": "Kontaktpunkt",
+  "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
+  "points_of_contact_for_result": "Kontaktpunkt for resultat",
+  "view_contact_info": "Se kontaktinformasjon"
 }

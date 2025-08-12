@@ -11,11 +11,13 @@ import { userHasAccessRight } from '../../utils/registration-helpers';
 import { isFileApprovalTicket } from '../../utils/ticketHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
+import { DetailsPanel } from './log/DetailsPanel';
 import { LogPanel } from './log/LogPanel';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 enum TabValue {
   Tasks,
+  Details,
   Log,
 }
 
@@ -74,7 +76,7 @@ export const ActionPanel = ({
 
   const canSeeTasksPanel = shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion;
 
-  const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Log);
+  const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Details);
 
   const canEditRegistration = userHasAccessRight(registration, 'partial-update');
 
@@ -100,13 +102,20 @@ export const ActionPanel = ({
             aria-controls="action-panel-tab-panel-0"
           />
         )}
+        <Tab
+          data-testid={dataTestId.registrationLandingPage.detailsTab.detailsTab}
+          value={TabValue.Details}
+          label={t('details')}
+          id="action-panel-tab-1"
+          aria-controls="action-panel-tab-panel-1"
+        />
         {canEditRegistration && (
           <Tab
             value={TabValue.Log}
             label={t('common.log')}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
-            id="action-panel-tab-1"
-            aria-controls="action-panel-tab-panel-1"
+            id="action-panel-tab-2"
+            aria-controls="action-panel-tab-panel-2"
           />
         )}
       </Tabs>
@@ -126,6 +135,9 @@ export const ActionPanel = ({
         </ErrorBoundary>
       </TabPanel>
       <TabPanel tabValue={tabValue} index={1}>
+        <DetailsPanel />
+      </TabPanel>
+      <TabPanel tabValue={tabValue} index={2}>
         <ErrorBoundary>
           <LogPanel registration={registration} tickets={tickets} />
         </ErrorBoundary>
