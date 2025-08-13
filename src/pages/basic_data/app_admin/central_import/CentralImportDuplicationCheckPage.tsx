@@ -7,6 +7,7 @@ import { Link, useLocation, useParams } from 'react-router';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate, updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { fetchImportCandidates, FetchImportCandidatesParams } from '../../../../api/searchApi';
+import { BetaFunctionality } from '../../../../components/BetaFunctionality';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
 import { HeadTitle } from '../../../../components/HeadTitle';
 import { PageSpinner } from '../../../../components/PageSpinner';
@@ -20,6 +21,7 @@ import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { convertToRegistrationSearchItem } from '../../../../utils/registration-helpers';
 import {
+  getImportCandidateMergeBetaPath,
   getImportCandidateMergePath,
   getImportCandidateWizardPath,
   IdentifierParams,
@@ -208,6 +210,22 @@ export const CentralImportDuplicationCheckPage = () => {
                   {t('basic_data.central_import.merge_candidate.merge')}
                 </Button>
               )}
+
+              <BetaFunctionality sx={{ mt: '1rem' }}>
+                {registrationIdentifier ? (
+                  <Link
+                    to={{ pathname: getImportCandidateMergeBetaPath(identifier ?? '', registrationIdentifier) }}
+                    state={locationState}>
+                    <Button variant="outlined" fullWidth size="small">
+                      {t('basic_data.central_import.merge_candidate.merge')} (BETA)
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button variant="outlined" fullWidth size="small" disabled>
+                    {t('basic_data.central_import.merge_candidate.merge')} (BETA)
+                  </Button>
+                )}
+              </BetaFunctionality>
 
               <Divider sx={{ my: '1rem' }} />
 
