@@ -49,7 +49,7 @@ export const ServiceBanner = () => {
       }>
       <Box sx={{ mx: 'auto', maxWidth: '50rem', textAlign: 'center' }}>
         {isTestEnvironment && (!minimizeBanner || showMaintenanceInfo) && (
-          <Typography gutterBottom>
+          <Typography>
             {t('common.test_environment')} ({hostname})
           </Typography>
         )}
