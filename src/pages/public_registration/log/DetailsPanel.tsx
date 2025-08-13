@@ -17,7 +17,7 @@ interface DetailsPanelProps {
 export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
-  const correspondingAuthors = contributors.filter((contributor) => contributor.correspondingAuthor === true) ?? [];
+  const correspondingAuthors = contributors.filter((contributor) => contributor.correspondingAuthor) ?? [];
   const contactPersons =
     contributors.filter((contributor) => contributor.role.type === ContributorRole.ContactPerson) ?? [];
 
@@ -118,7 +118,6 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
       ) : (
         <>
           <ContributorName
-            data-testid={dataTestId.registrationLandingPage.detailsTab.researchProfileLink(id)}
             id={id}
             name={contributor.identity.name}
             hasVerifiedAffiliation={
@@ -129,7 +128,9 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
           {person?.contactDetails?.email && (
             <Box sx={{ display: 'flex', gap: '0.5rem' }}>
               <MailOutlineIcon />
-              <Link data-testid={'email'} href={`mailto:${person.contactDetails.email}`}>
+              <Link
+                data-testid={dataTestId.registrationLandingPage.detailsTab.emailLink}
+                href={`mailto:${person.contactDetails.email}`}>
                 {person.contactDetails.email}
               </Link>
             </Box>

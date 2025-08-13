@@ -343,8 +343,8 @@ export const dataTestId = {
     contributors: 'public-registration-contributors',
     detailsTab: {
       detailsTab: 'details-tab',
+      emailLink: 'email-link',
       infoLink: 'info-link',
-      researchProfileLink: (id: string) => `research-profile-link-${id}`,
       resultContactModal: 'result-contact-modal',
       viewContactInformationButton: 'view-contact-information-button',
     },
@@ -445,6 +445,7 @@ export const dataTestId = {
       verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
       removeAffiliationButton: 'button-remove-affiliation',
       removeContributorButton: (name: string) => `button-remove-contributor-${name}`,
+      researchProfileLink: (id: string) => `research-profile-link-${id}`,
       searchField: 'search-field',
       selectAffiliationForContributor: 'select-affiliation-for-contributor',
       selectContributorType: 'select-contributor-type',

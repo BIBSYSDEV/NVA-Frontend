@@ -79,8 +79,7 @@ export const ActionPanel = ({
   const shouldSeeSupportAccordion =
     !!user && (canCreateSupportTicket || canApproveSupportTicket || !!newestSupportTicket);
 
-  const canSeeTasksPanel =
-    (shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion) && !!user;
+  const canSeeTasksPanel = shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion;
 
   const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Details);
 
@@ -99,7 +98,7 @@ export const ActionPanel = ({
         slotProps={{
           indicator: { style: { backgroundColor: 'white', height: '0.4rem' } },
         }}>
-        {canSeeTasksPanel && !!user && (
+        {canSeeTasksPanel && (
           <Tab
             value={TabValue.Tasks}
             label={t('common.tasks')}
@@ -115,7 +114,7 @@ export const ActionPanel = ({
           id="action-panel-tab-1"
           aria-controls="action-panel-tab-panel-1"
         />
-        {canEditRegistration && !!user && (
+        {canEditRegistration && (
           <Tab
             value={TabValue.Log}
             label={t('common.log')}
