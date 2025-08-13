@@ -1,5 +1,6 @@
 import deepmerge from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn, validateYupSchema, yupToFormErrors } from 'formik';
+import { HighestVisitedTab } from '../../context/RegistrationFormContext';
 import {
   AssociatedArtifact,
   AssociatedFile,
@@ -8,7 +9,6 @@ import {
   NullAssociatedArtifact,
 } from '../../types/associatedArtifact.types';
 import { Contributor } from '../../types/contributor.types';
-import { HighestTouchedTab } from '../../types/locationState.types';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ExhibitionRegistration } from '../../types/publication_types/exhibitionContent.types';
@@ -468,7 +468,7 @@ const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): Formi
 });
 
 export const getTouchedTabFields = (
-  tabToTouch: HighestTouchedTab,
+  tabToTouch: HighestVisitedTab,
   values: Registration
 ): FormikTouched<Registration> => {
   const tabFields = {

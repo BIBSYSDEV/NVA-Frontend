@@ -69,3 +69,11 @@ export const removeTrailingYearPathFromUrl = (url: string) => {
   const urlWithoutYear = url.replace(/\/\d{4}$/, '');
   return urlWithoutYear;
 };
+
+export const getEnvVariableValue = <T = string>(value: any): T | undefined => {
+  // Ignore 'none' values as they are only used for simplifying overriding env variable in AWS Amplify
+  if (value === 'none') {
+    return undefined;
+  }
+  return value?.trim() as T | undefined;
+};

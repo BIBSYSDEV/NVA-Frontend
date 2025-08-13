@@ -20,8 +20,8 @@ import { isPublishableForWorkflow2 } from '../../utils/formik-helpers/formik-hel
 import { willResetNviStatuses } from '../../utils/nviHelpers';
 import {
   getFormattedRegistration,
-  userHasAccessRight,
   userCanOnlyDoPartialUpdate,
+  userHasAccessRight,
 } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
@@ -34,7 +34,7 @@ interface RegistrationFormActionsProps {
   isResettableNviStatus: boolean;
 }
 
-const navigationButtonStyling: SxProps = {
+export const navigationButtonStyling: SxProps = {
   color: 'white',
   borderRadius: '50%',
   bgcolor: 'primary.main',

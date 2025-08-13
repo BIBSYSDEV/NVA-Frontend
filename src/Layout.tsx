@@ -4,9 +4,9 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router';
-import { EnvironmentBanner } from './components/EnvironmentBanner';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { PageSpinner } from './components/PageSpinner';
+import { ServiceBanner } from './components/ServiceBanner';
 import { SkipLink } from './components/SkipLink';
 import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
@@ -21,7 +21,7 @@ export const Layout = () => {
       <Notifier />
       <SkipLink href="#main-content">{t('common.skip_to_main_content')}</SkipLink>
       <Header />
-      <EnvironmentBanner />
+      <ServiceBanner />
       <Box
         component="main"
         id="main-content"

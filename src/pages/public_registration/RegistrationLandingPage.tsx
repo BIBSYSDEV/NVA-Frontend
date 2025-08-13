@@ -57,8 +57,8 @@ export const RegistrationLandingPage = () => {
       component="section"
       sx={{
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', sm: '4fr 1fr' },
-        gridTemplateAreas: { xs: '"tasks" "registration"', sm: '"registration tasks"' },
+        gridTemplateColumns: { xs: '1fr', md: '4fr 1fr' },
+        gridTemplateAreas: { xs: '"tasks" "registration"', md: '"registration tasks"' },
         gap: '1rem',
       }}>
       {registrationQuery.isPending || (canEditRegistration && ticketsQuery.isPending) ? (
@@ -68,16 +68,14 @@ export const RegistrationLandingPage = () => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registration} />
 
-            {(canEditRegistration || (ticketsQuery.data && ticketsQuery.data.tickets.length > 0)) && (
-              <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
-                <ActionPanel
-                  registration={registration}
-                  refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-                  tickets={ticketsQuery.data?.tickets ?? []}
-                  isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
-                />
-              </ActionPanelContext.Provider>
-            )}
+            <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
+              <ActionPanel
+                registration={registration}
+                refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+                tickets={ticketsQuery.data?.tickets ?? []}
+                isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
+              />
+            </ActionPanelContext.Provider>
           </ErrorBoundary>
         ) : (
           <NotPublished />

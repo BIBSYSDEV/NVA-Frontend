@@ -29,6 +29,8 @@ enum Color {
   PublishingRequestLight = '#FFF0D3',
   NviMain = '#EE95EA',
   NviLight = '#F8D3F6',
+  WarningMain = '#ED6C02',
+  WarningLight = '#FFD45A',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
@@ -100,6 +102,10 @@ export const mainTheme = createTheme(
       info: {
         main: Color.InfoMain,
         light: Color.InfoLight,
+      },
+      warning: {
+        main: Color.WarningMain,
+        light: Color.WarningLight,
       },
       grey: {
         300: '#EEEEEE',

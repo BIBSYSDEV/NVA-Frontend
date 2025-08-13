@@ -30,6 +30,11 @@ export const dataTestId = {
     institutionFacets: 'institution-facets',
     institutionFacetsSearchField: 'institution-facets-search-field',
   },
+  authorization: {
+    forbiddenContainer: 'forbidden-container',
+    institutionAdminsLink: 'institution-admins-link',
+    loginButtonForbidden: 'login-button-forbidden',
+  },
   basicData: {
     addChannelClaimButton: 'add-channel-claim-button',
     addCustomerLink: 'add-customer-link',
@@ -336,6 +341,12 @@ export const dataTestId = {
     addLinkOrFilesButton: 'add-link-or-files-button',
     authorLink: (id: string) => `presentation-author-link-${id}`,
     contributors: 'public-registration-contributors',
+    detailsTab: {
+      detailsTab: 'details-tab',
+      infoLink: 'info-link',
+      resultContactModal: 'result-contact-modal',
+      viewContactInformationButton: 'view-contact-information-button',
+    },
     dmpAccordion: 'dmp-accordion',
     doiLink: 'doi-link',
     doiMessageField: 'request-doi-message',

@@ -1,10 +1,9 @@
 import { Step, StepButton, StepLabel, Stepper, Theme, useMediaQuery } from '@mui/material';
 import deepmerge from 'deepmerge';
 import { useFormikContext } from 'formik';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
-import { RegistrationFormLocationState } from '../../types/locationState.types';
+import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getTabErrors, getTouchedTabFields } from '../../utils/formik-helpers/formik-helpers';
@@ -18,9 +17,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
   const { t } = useTranslation();
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const location = useLocation();
-  const locationState = location.state as RegistrationFormLocationState;
-  const maxVisitedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
+  const { highestVisitedTab, setHighestVisitedTab } = useContext(RegistrationFormContext);
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -33,30 +30,23 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
   }, [touched]);
 
   useEffect(() => {
-    const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
-
-    if (tabNumber > highestValidatedTab) {
-      locationState.highestValidatedTab = tabNumber - 1; // Validate up to current tab
-
-      // Set fields on previous tabs to touched
-      const touchedFieldsOnMount = getTouchedTabFields(tabNumber - 1, valuesRef.current);
-      setTouched(touchedFieldsOnMount);
+    if (tabNumber > highestVisitedTab) {
+      setHighestVisitedTab(tabNumber - 1); // Validate up to current tab
     }
 
-    // Set fields on current tab to touched
+    // Validate previous tab(s)
+    const touchedFieldsOnUnmount = getTouchedTabFields(highestVisitedTab, valuesRef.current);
+    const newTouchedFields = deepmerge.all([touchedRef.current, touchedFieldsOnUnmount], {
+      arrayMerge: (_, sourceArray) => sourceArray, // associatedArtifacts must keep sourceArray in cases where it contains both files and link
+    });
+    setTouched(newTouchedFields);
+
     return () => {
-      if (tabNumber > highestValidatedTab) {
-        locationState.highestValidatedTab = tabNumber; // Validate current tab
+      if (tabNumber > highestVisitedTab) {
+        setHighestVisitedTab(tabNumber); // Validate current tab
       }
-      const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
-      setTouched(
-        deepmerge.all([touchedRef.current, touchedFieldsOnUnmount], {
-          // associatedArtifacts must keep sourceArray in cases where it contains both files and link
-          arrayMerge: (destinationArray, sourceArray) => sourceArray,
-        })
-      );
     };
-  }, [setTouched, tabNumber, locationState]);
+  }, [setTouched, setHighestVisitedTab, tabNumber, highestVisitedTab]);
 
   const tabErrors = getTabErrors(valuesRef.current, errors, touched);
   const descriptionTabHasError = tabErrors[RegistrationTab.Description].length > 0;
@@ -66,7 +56,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
 
   return isMobile ? null : (
     <Stepper nonLinear activeStep={tabNumber}>
-      <Step completed={maxVisitedTab >= RegistrationTab.Description && !descriptionTabHasError}>
+      <Step completed={highestVisitedTab >= RegistrationTab.Description && !descriptionTabHasError}>
         <StepButton
           data-testid={dataTestId.registrationWizard.stepper.descriptionStepButton}
           onClick={() => setTabNumber(RegistrationTab.Description)}>
@@ -77,7 +67,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
           </StepLabel>
         </StepButton>
       </Step>
-      <Step completed={maxVisitedTab >= RegistrationTab.ResourceType && !resourceTabHasError}>
+      <Step completed={highestVisitedTab >= RegistrationTab.ResourceType && !resourceTabHasError}>
         <StepButton
           data-testid={dataTestId.registrationWizard.stepper.resourceStepButton}
           onClick={() => setTabNumber(RegistrationTab.ResourceType)}>
@@ -88,7 +78,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
           </StepLabel>
         </StepButton>
       </Step>
-      <Step completed={maxVisitedTab >= RegistrationTab.Contributors && !contributorTabHasError}>
+      <Step completed={highestVisitedTab >= RegistrationTab.Contributors && !contributorTabHasError}>
         <StepButton
           data-testid={dataTestId.registrationWizard.stepper.contributorsStepButton}
           onClick={() => setTabNumber(RegistrationTab.Contributors)}>
@@ -99,7 +89,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
           </StepLabel>
         </StepButton>
       </Step>
-      <Step completed={maxVisitedTab >= RegistrationTab.FilesAndLicenses && !fileTabHasError}>
+      <Step completed={highestVisitedTab >= RegistrationTab.FilesAndLicenses && !fileTabHasError}>
         <StepButton
           data-testid={dataTestId.registrationWizard.stepper.filesStepButton}
           onClick={() => setTabNumber(RegistrationTab.FilesAndLicenses)}>

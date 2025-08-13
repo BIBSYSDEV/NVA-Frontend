@@ -28,8 +28,9 @@
     "cancel_create_user_title": "Ønskjer du å avbryte?",
     "create_user_info": "Som brukar blir du tilgjengeleg for alle som skal leggje til forfattar eller bidragsytar på resultat.",
     "expired_token_info": "Sesjonen din har gått ut, og du har blitt logga ut. Fortset som anonym brukar, eller logg inn på nytt.",
-    "forbidden": "Forbode",
-    "forbidden_description": "Du er ikkje autorisert til å sjå innhaldet på denne sida. Kontakt administrator om dette ikkje stemmer.",
+    "forbidden": "Du har ikkje tilgong",
+    "forbidden_description": "<p>Du har ikkje tilgong til å sjå innhaldet på denne sida.</p><p>Skal du ha tilgang til sida, må du logge inn.</p>",
+    "forbidden_description_logged_in": "Kontakt administrator om dette ikkje stemmer",
     "login": "Logg inn",
     "logout": "Logg ut",
     "registration_not_published": "Denne registreringa er ikkje publisert enno.",
@@ -54,7 +55,6 @@
       "position": "Stilling",
       "position_percent": "Stillingsprosent",
       "search_for_person": "Søk etter person",
-      "update_person_registry": "Oppdater personregister",
       "without_nin": "Utan nasjonalt identitetsnummer"
     },
     "basic_data": "Grunndata",
@@ -331,6 +331,8 @@
     "year": "År",
     "yes": "Ja"
   },
+  "default_point_of_contact": "",
+  "details": "",
   "disciplines": {
     "0001": "Humaniora",
     "0002": "Samfunnsvitskap",
@@ -542,7 +544,7 @@
   },
   "feedback": {
     "error": {
-      "404_page": "Orsak, men vi kan ikkje finne sida du leitar etter",
+      "404_page": "<span><icon /><h1>Beklagar, men vi kan ikkje finne sida du leitar etter</h1></span><p>Sida du leitar etter eksisterar ikkje, eller nettadressa er feil.</p><p>Endre nettadressa eller bruk menyen for å navigere deg til korrekt side.</p>",
       "accept_terms": "Godkjenning av brukarvilkår feila",
       "add_contributor": "Kunne ikkje leggje til bidragsytar",
       "add_employment": "Kunne ikkje leggje til tilsetjing",
@@ -605,6 +607,7 @@
       "get_tickets": "Kunne ikkje hente saker",
       "get_users_for_institution": "Kunne ikkje hente brukarar",
       "get_vocabularies": "Kunne ikkje hente kontrollerte vokabular",
+      "login_failed": "Innlogging feila.",
       "orcid_login": "Kunne ikkje logge inn på ORCID",
       "person_search": "Søk etter person feila",
       "project_search": "Søk på prosjekt feila",
@@ -763,7 +766,7 @@
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no"
     },
     "read_more_about_license": "Les meir om {{license}}",
-    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Etter <link1>åndsverklova</link1> gjeld følgjande vilkår for bruk av materialet:</p><ul><li>Du har lov til å lese og lenkje til materialet, og kan sitere frå materialet i samsvar med god skikk, og i den grad formålet tilseier det.</li><li>Du har ikkje lov til å publisere materialet på nytt, eller på annan måte kopiere materialet (med mindre det er til privat bruk).</li></ul><p>Dersom du ønskjer å bruke materialet på annan måte, må du sjølv innhente samtykke direkte frå rettshavar.</p><hr/><p>Dersom du er rettshavar til eit åndsverk som har fått denne lisensen og er ueinig i at materialet kan brukast som skildra over, må du ta kontakt med utgjevaren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikkje er mogleg å kontakte utgjevaren, kan du ta kontakt med tenesteleverandøren for NVA, Sikt: <link2>Henvending om opphavsrett</link2>.</p>"
+    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Denne lisensen forklarar korleis du lovleg kan bruke materiale som er gjort tilgjengeleg i Nasjonalt vitenarkiv (NVA).</p><p>Lisensen er meint å dekkje bruk til <strong>yrkesmessige føremål</strong> – det vil seie som ein del av arbeidet ditt, til dømes i forsking, undervisning, rettleiing, administrasjon eller formidling.</p><strong>Bruk av materialet føreset følgjande vilkår: </strong><ul><li><strong>Namngjeving:</strong> Når du siterer, skal du som hovudregel oppgje kven som er rettshavar. Unntak gjeld berre der namngjeving er upraktisk eller lite føremålstenleg, jf. åndsverklova § 5.</li><li><strong>God sitatskikk:</strong> Du må sitere i tråd med god sitatskikk og berre i den grad føremålet tilseier det, jf. åndsverklova § 29. Det betyr at du kan bruke utdrag i undervisning, faglege presentasjonar eller forskingsartiklar – så lenge sitatet er relevant, korrekt kjelde blir oppgjeven, og materialet ikkje blir forvrengt eller forringa, jf. åndsverklova §§ 25 og 29.</li><li><strong>Ikkje-kommersielt føremål:</strong> Du kan ikkje bruke materialet til å oppnå økonomisk vinning. Kommersiell bruk krev særskilt løyve frå rettshavar.</li><li><strong>Samanheng og føremål:</strong> Sitatet skal som hovudregel inngå i ein fagleg eller tematisk samanheng, og bidra til å utfylle verket det blir sett inn i, jf. åndsverklova § 25. Korte, lausreivne sitat kan vere tillatne som døme/illustrasjonar, føresett at dei ikkje skadar rettshavars økonomiske interesser.</li></ul><p>Dersom du ønskjer å bruke materialet på annan måte – til dømes laste det opp ein annan stad, bruke det i nye publikasjonar, eller gjere det tilgjengeleg i fulltekst utanfor NVA – må du ha samtykke frå rettshavar. Slik bruk fell inn under opphavsrettens einerett, jf. åndsverklova § 3.</p><p>Bruken skildra her skil seg frå privat bruk, som betyr bruk for eigen interesse i heimen eller i ein liten privat krins (familie, vener osv.). Kopiering til privat bruk blir regulert av eigne reglar i åndsverklova § 26, og er ikkje regulert gjennom denne lisensen.</p><strong>Er du i tvil?</strong><p>Dersom du er usikker på om den planlagde bruken er tillaten, blir det tilrådd at du kontaktar rettshavar – eller søkjer rettleiing hos institusjonen din.</p><hr/><p>Dersom du er rettshavar til eit åndsverk som har fått denne lisensen og er ueinig i at materialet kan brukast som skildra over, må du ta kontakt med utgjevaren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikkje er mogleg å kontakte utgjevaren, kan du ta kontakt med tenesteleverandøren for NVA, Sikt: <link1>Førespurnad om opphavsrett</link1>.</p>"
   },
   "log": {
     "hidden_file_added": "Skjult fil lagt til",
@@ -961,10 +964,14 @@
       "thesis_embargo_curator_description": "Kan sjå og endre embargofiler på studentoppgåver."
     }
   },
-  "no_search_results_found_with_search": "",
-  "no_search_results_list_default": "",
-  "no_search_results_list_person": "",
+  "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fann dessverre ikkje noko som passar med søket ditt.</p>",
+  "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv ei anna skriveform av søkeordet</li><li>Prøv med eit synonym</li><li>Overset søkeordet til bokmål. nynorsk eller engelsk</li></ul>",
+  "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at namnet er skrevet korrekt</li><li>Prøv ein annan skrivemåte</li><li>Prøv med eller utan mellomnamn</li></ul>",
+  "overview_over_administrators": "Oversyn over administratorar",
   "owner_institution": "Eigarinstitusjon",
+  "point_of_contact": "",
+  "point_of_contact_description": "",
+  "points_of_contact_for_result": "",
   "privacy": {
     "about": {
       "heading": "Om denne personvernerklæringa",
@@ -2180,7 +2187,12 @@
       "approve_nvi_candidate": "Godkjenn resultat",
       "approve_nvi_candidate_description": "<p>Kontroll av forskingsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporterast. Sjå <hyperlink>Rapporteringsinstruksen</hyperlink> for meir informasjon.</p>",
       "approve_rejected_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen skal rapporterast. Då vert også grunngjevinga for avvisinga fjerna.",
+      "candidates_approved_by_all": "Kandidatar alle har godkjend",
+      "candidates_approved_by_others": "Kandidatar andre har godkjend",
       "candidates_for_control": "Kandidatar til kontroll",
+      "candidates_pending_verification_by_others": "Kandidatar andre må kontrollere",
+      "candidates_rejected_by_all": "Kandidatar alle har avvist",
+      "candidates_rejected_by_others": "Kandidatar andre har avvist",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "controlled": "Kontrollert",
       "correction_list_type": {
@@ -2194,6 +2206,7 @@
       "delete_note": "Slett kommentar",
       "delete_note_description": "Er du sikker på at du vil slette denne kommentaren?",
       "exclude_subunits": "Ekskluder undereiningar",
+      "include_candidates_without_curator": "Inkluder kandidatar utan kurator",
       "institution_nvi_status": "Status NVI-rapportering",
       "message_description": "Har du relevante opplysingar for kontrollen, legg inn ein kommentar. Kommentaren er synleg for andre NVI-kuratorar med redigeringstilgang.",
       "next_candidate": "Gå til neste kandidat",
@@ -2215,6 +2228,7 @@
       "reset_approval_description": "Er du sikker på at du vil nullstill rapporteringsstatusen? Nokon på din institusjon må då rapportere denne på nytt.",
       "save_note": "Lagre kommentar",
       "show_candidate_search": "Vis kandidatsøk",
+      "show_only_collaborative_publications": "Vis berre sampublikasjonar",
       "show_reporting_status": "Vis rapporteringsstatus",
       "show_subunits": "Vis undereiningar",
       "status": {
@@ -2224,9 +2238,7 @@
         "Pending": "Blir kontrollert",
         "Rejected": "Avvist"
       },
-      "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknyting til NVI-institusjon",
-      "waiting_for_other_institutions": "Ventar på andre institusjonar",
-      "waiting_for_your_institution": "Ventar på din institusjon"
+      "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknyting til NVI-institusjon"
     },
     "search_placeholder": "Søk etter tittel, bidragsytar, samandrag eller liknande",
     "select_other_unit_filter": "Vel andre",
@@ -2255,5 +2267,6 @@
     "unpublish_registration_duplicate_citation_information": "For at alle siteringar skal bli vidareførte, må du søkje opp den andre registreringa. Då vil alle siteringar framleis føre til den andre versjonen.",
     "unpublish_registration_duplicate_question": "Finst det ein annan publisert versjon av same forskingsresultat?",
     "unpublish_registration_reason": "Legg inn ei kort grunngjeving for at dette forskingsresultatet ikkje lenger skal vere publisert. Grunngjevinga vil vises på forskingsresultatet ved oppslag av referanse til forskingsresultatet."
-  }
+  },
+  "view_contact_info": ""
 }

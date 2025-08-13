@@ -1,18 +1,28 @@
 import { Divider, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { HeadTitle } from '../../components/HeadTitle';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 const CopyrightActTerms = () => {
   const { t } = useTranslation();
 
+  useEffect(() => {
+    document.body.setAttribute('about', window.location.href);
+    document.body.setAttribute('vocab', 'http://creativecommons.org/ns#');
+    document.body.setAttribute('typeof', 'License');
+
+    return () => {
+      document.body.removeAttribute('about');
+      document.body.removeAttribute('vocab');
+      document.body.removeAttribute('typeof');
+    };
+  }, []);
+
   return (
     <BackgroundDiv sx={{ maxWidth: '45rem', my: '2rem' }}>
-      <Helmet
-        bodyAttributes={{ about: window.location.href, vocab: 'http://creativecommons.org/ns#', typeof: 'License' }}>
-        <title>{t('licenses.labels.copyright_act')}</title>
-      </Helmet>
+      <HeadTitle>{t('licenses.labels.copyright_act')}</HeadTitle>
       <Trans
         i18nKey="licenses.terms_of_use_under_the_copyright_act"
         components={{

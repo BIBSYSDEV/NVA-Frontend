@@ -28,8 +28,9 @@
     "cancel_create_user_title": "Ønsker du å avbryte?",
     "create_user_info": "Som bruker blir du tilgjengelig for alle som skal legge til forfatter eller bidragsyter på resultater.",
     "expired_token_info": "Din sesjon har utløpt, og du har blitt logget ut. Fortsett som anonym bruker, eller logg inn på nytt.",
-    "forbidden": "Forbudt",
-    "forbidden_description": "Du er ikke autorisert til å se innholdet på denne siden. Kontakt administrator om dette ikke stemmer.",
+    "forbidden": "Du har ikke tilgang",
+    "forbidden_description": "<p>Du har ikke tilgang til å se innholdet på denne siden.</p><p>Skal du ha tilgang til siden må du logge inn.</p>",
+    "forbidden_description_logged_in": "Kontakt administrator om dette ikke stemmer.",
     "login": "Logg inn",
     "logout": "Logg ut",
     "registration_not_published": "Denne registreringen er ikke publisert ennå.",
@@ -54,7 +55,6 @@
       "position": "Stilling",
       "position_percent": "Stillingsprosent",
       "search_for_person": "Søk etter person",
-      "update_person_registry": "Oppdater personregister",
       "without_nin": "Uten nasjonalt identitetsnummer"
     },
     "basic_data": "Grunndata",
@@ -331,7 +331,13 @@
     "year": "År",
     "yes": "Ja"
   },
+  "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
+  "details": "Detaljer",
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -403,11 +409,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -605,6 +607,7 @@
       "get_tickets": "Kunne ikke hente saker",
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
+      "login_failed": "Innlogging feilet.",
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "person_search": "Søk etter person feilet",
       "project_search": "Søk på prosjekt feilet",
@@ -964,7 +967,11 @@
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fant dessverre ikke noe som passer med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li></ul>",
+  "overview_over_administrators": "Oversikt over administratorer",
   "owner_institution": "Eierinstitusjon",
+  "point_of_contact": "Kontaktpunkt",
+  "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
+  "points_of_contact_for_result": "Kontaktpunkt for resultat",
   "privacy": {
     "about": {
       "heading": "Om denne personvernerklæringen",
@@ -2260,5 +2267,6 @@
     "unpublish_registration_duplicate_citation_information": "Da kan du legge inn en lenke til det andre forskningsresultatet. Alle oppslag på det avpubliserte forskningsresultatet vil da føre til det andre, publiserte forskningsresultatet.",
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
-  }
+  },
+  "view_contact_info": "Se kontaktinformasjon"
 }
