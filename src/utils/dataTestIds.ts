@@ -343,7 +343,7 @@ export const dataTestId = {
     contributors: 'public-registration-contributors',
     detailsTab: {
       detailsTab: 'details-tab',
-      emailLink: 'email-link',
+      emailLink: (id: string) => `email-link-${id}`,
       infoLink: 'info-link',
       resultContactModal: 'result-contact-modal',
       viewContactInformationButton: 'view-contact-information-button',

@@ -140,7 +140,7 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
             <Box sx={{ display: 'flex', gap: '0.5rem' }}>
               <MailOutlineIcon />
               <Link
-                data-testid={dataTestId.registrationLandingPage.detailsTab.emailLink}
+                data-testid={dataTestId.registrationLandingPage.detailsTab.emailLink(id)}
                 href={`mailto:${person.contactDetails.email}`}>
                 {person.contactDetails.email}
               </Link>
