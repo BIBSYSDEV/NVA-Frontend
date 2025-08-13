@@ -28,8 +28,9 @@
     "cancel_create_user_title": "Do you wish to cancel?",
     "create_user_info": "As a user, you will be available to anyone who wants to add an author or contributor to results.",
     "expired_token_info": "Your session has expired and you have been logged out. Continue as an anonymous user or log in again.",
-    "forbidden": "Forbidden",
-    "forbidden_description": "You are not authorized to view the content on this page. Contact the administrator if this is not correct.",
+    "forbidden": "You do not have access",
+    "forbidden_description": "<p>You do not have access to view the content on this page.</p><p>If you want to access the page you need to log in.</p>",
+    "forbidden_description_logged_in": "Contact administrator if this is incorrect.",
     "login": "Log in",
     "logout": "Log out",
     "registration_not_published": "This registration has not been published yet.",
@@ -54,7 +55,6 @@
       "position": "Position",
       "position_percent": "Percentage of full-time equivalent",
       "search_for_person": "Search for person",
-      "update_person_registry": "Update person registry",
       "without_nin": "Without a national identity number"
     },
     "basic_data": "Master data",
@@ -231,7 +231,7 @@
     "new": "New",
     "next": "Next",
     "no": "No",
-    "no_hits": "No hits",
+    "no_hits": "No results",
     "no_search_hits": "No search results",
     "not_decided": "Not decided",
     "number_of_rows_per_page": "Number of rows per page",
@@ -331,6 +331,8 @@
     "year": "Year",
     "yes": "Yes"
   },
+  "default_point_of_contact": "",
+  "details": "",
   "disciplines": {
     "0001": "Humanities",
     "0002": "Social Science",
@@ -542,7 +544,7 @@
   },
   "feedback": {
     "error": {
-      "404_page": "Sorry, we can't find the page you're looking for",
+      "404_page": "<span><icon /><h1>Sorry, we can't find the page you're looking for</h1></span><p>The page your looking for does not exist, or the web address is wrong.</p><p>Change the web address or use the menu to navigate to the correct page.</p>",
       "accept_terms": "Accepting user terms failed",
       "add_contributor": "Failed to add contributor",
       "add_employment": "Failed to add employment",
@@ -605,6 +607,7 @@
       "get_tickets": "Could not get tickets",
       "get_users_for_institution": "Failed to retrieve users",
       "get_vocabularies": "Failed to retrieve controlled vocabularies",
+      "login_failed": "Log in failed.",
       "orcid_login": "ORCID login failed",
       "person_search": "Search for person failed",
       "project_search": "Project search failed",
@@ -763,7 +766,7 @@
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}"
     },
     "read_more_about_license": "Read more about {{license}}",
-    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>According to the <link1>Copyright Act</link1>, the following terms apply for the use of the material:</p><ul><li>You are allowed to read and link to the material and may cite from the material in accordance with fair practice and to the extent justified by the purpose.</li><li>You are not allowed to republish the material or otherwise copy it (unless it is for private use).</li></ul><p>If you wish to use the material in another way, you must obtain permission directly from the copyright holder.</p><hr/><p>If you are the copyright holder of a work that has been assigned this licence and disagree with the described usage, you must contact the publisher (institution or journal) that has published it.</p><p>If it is not possible to contact the publisher, you can contact the service provider for NVA, Sikt: <link2>Copyright Inquiries</link2>.</p>"
+    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>This licence explains how you can legally use material made available in the Norwegian National Research Repository (NVA).</p><p>The licence is intended to cover use for <strong>professional purposes</strong> — that is, as part of your work, for example in research, teaching, supervision, administration, or dissemination.</p><strong>Use of the material is subject to the following conditions: </strong><ul><li><strong>Attribution:</strong> When citing, you must, as a general rule, state who the rights holder is. Exceptions apply only where attribution is impractical or inappropriate, cf. the Copyright Act § 5.</li><li><strong>Proper citation practice:</strong> You must cite in accordance with proper citation practices and only to the extent required by the purpose, cf. the Copyright Act § 29. This means you can use excerpts in teaching, academic presentations, or research articles — as long as the citation is relevant, the correct source is provided, and the material is not distorted or degraded, cf. the Copyright Act §§ 25 and 29.</li><li><strong>Non-commercial purpose:</strong> You may not use the material to achieve financial gain. Commercial use requires special permission from the rights holder.</li><li><strong>Context and purpose:</strong> As a general rule, the citation must be part of an academic or thematic context and contribute to complementing the work it is included in, cf. the Copyright Act § 25. Short, isolated quotes may be allowed as examples/illustrations, provided they do not harm the economic interests of the rights holder.</li></ul><p>If you wish to use the material in another way — for example, upload it elsewhere, use it in new publications, or make it available in full text outside NVA — you must obtain consent from the rights holder. Such use falls under the exclusive rights of copyright, cf. the Copyright Act § 3.</p><p>The use described here differs from private use, which means use for personal interest at home or within a small private circle (family, friends, etc.). Copying for private use is regulated by separate rules in the Copyright Act § 26 and is not governed by this licence.</p><strong>Unsure?</strong><p>If you are uncertain whether the planned use is permitted, it is recommended that you contact the rights holder — or seek guidance from your institution.</p><hr/><p>If you are the rights holder of a copyrighted work that has been assigned this licence and disagree that the material can be used as described above, you must contact the publisher (institution or journal) that has published it.</p><p>If it is not possible to contact the publisher, you can contact the service provider for NVA, Sikt: <link1>Copyright inquiries</link1>.</p>"
   },
   "log": {
     "hidden_file_added": "Hidden file added",
@@ -961,10 +964,14 @@
       "thesis_embargo_curator_description": "Can view and edit files with embargo on theses."
     }
   },
-  "no_search_results_found_with_search": "",
-  "no_search_results_list_default": "",
-  "no_search_results_list_person": "",
+  "no_search_results_found_with_search": "<span><icon /><heading>No results</heading></span><p>Unfortunately, we couldn't find anything that matches your search.</p>",
+  "no_search_results_list_default": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that your search words are spelled correctly</li><li>Try a different spelling</li><li>Try a synonym</li><li>Translate the search word to Norwegian Bokmål (NB), Norwegian Nynorsk (NN), or English</li></ul>",
+  "no_search_results_list_person": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that the name is spelled correctly</li><li>Try a different spelling</li><li>Try with or without the middle name</li></ul>",
+  "overview_over_administrators": "Overview of administrators",
   "owner_institution": "Owner institution",
+  "point_of_contact": "",
+  "point_of_contact_description": "",
+  "points_of_contact_for_result": "",
   "privacy": {
     "about": {
       "heading": "About this privacy statement",
@@ -2180,7 +2187,12 @@
       "approve_nvi_candidate": "Approve result",
       "approve_nvi_candidate_description": "<p>Check of research result for Norwegian Publication Indicator (NVI) reporting.</p><p>Press \"{{buttonText}}\" if the publication can be reported. See the <hyperlink>Reporting Instruction</hyperlink> for more information.</p>",
       "approve_rejected_nvi_candidate_description": "Press \"{{buttonText}}\" if the publication is to be reported. The reason for the rejection will also be removed.",
+      "candidates_approved_by_all": "Candidates everyone has approved",
+      "candidates_approved_by_others": "Candidates others have approved",
       "candidates_for_control": "Candidates for control",
+      "candidates_pending_verification_by_others": "Candidates others need to inspect",
+      "candidates_rejected_by_all": "Candidates everyone has rejected",
+      "candidates_rejected_by_others": "Candidates others have rejected",
       "completed_count": "Finished checking ({{completed}} of {{total}})",
       "controlled": "Controlled",
       "correction_list_type": {
@@ -2194,6 +2206,7 @@
       "delete_note": "Delete comment",
       "delete_note_description": "Are you sure you want to delete this comment?",
       "exclude_subunits": "Exclude subunits",
+      "include_candidates_without_curator": "Include candidates without a curator",
       "institution_nvi_status": "Status NVI reporting",
       "message_description": "If you have relevant information for the check, please add a comment. The comment is visible to other Norwegian Science Index (NVI) curators with editing access.",
       "next_candidate": "Go to the next candidate",
@@ -2207,7 +2220,7 @@
       "reject_nvi_candidate": "Reject result",
       "reject_nvi_candidate_description": "Click \"{{buttonText}}\" if the publication cannot be reported. You must justify the rejection.",
       "reject_nvi_candidate_form_label": "Reason for rejection",
-      "reject_nvi_candidate_modal_text": "<p>Provide a reason for why you are rejecting the publication for Norwegian Publication Indicator (NVI) reporting.</p><p>If you are unsure about the requirements, see the <hyperlink>Reporting Instruction</hyperlink>.</p><p>The reason will be stored in NVA, and will be visible to NVI curators at the co-publishing institutions.</p><p>Provide a reason for why you are rejecting this publication for reporting. The explanation must contain at least 10 characters.</p>",
+      "reject_nvi_candidate_modal_text": "<p>Provide an explanation for why you are rejecting the publication for Norwegian Publication Indicator (NVI) reporting.</p><p>If you are unsure about the requirements, see the <hyperlink>Reporting Instruction</hyperlink>.</p><p>The explanation will be stored in NVA, and will be visible to NVI curators at the co-publishing institutions.</p><p>Provide an explanation for why you are rejecting this publication for reporting. The explanation must contain at least 10 characters.</p>",
       "rejection_reason": "Reason for rejection",
       "reporting_period_closed": "The reporting period for this result is closed.",
       "reporting_period_missing": "The reporting period for this result is not open.",
@@ -2215,6 +2228,7 @@
       "reset_approval_description": "Are you sure you want to reset the reporting status? Someone at your institution will then have to report it again.",
       "save_note": "Save comment",
       "show_candidate_search": "Show candidate search",
+      "show_only_collaborative_publications": "Show only co-publications",
       "show_reporting_status": "Show reporting status",
       "show_subunits": "Show subunits",
       "status": {
@@ -2224,9 +2238,7 @@
         "Pending": "Being checked",
         "Rejected": "Rejected"
       },
-      "unidentified_person_with_nvi_institution": "Unidentified person with a connection to an NVI institution",
-      "waiting_for_other_institutions": "Waiting for other institutions",
-      "waiting_for_your_institution": "Waiting for your institution"
+      "unidentified_person_with_nvi_institution": "Unidentified person with a connection to an NVI institution"
     },
     "search_placeholder": "Search for title, contributor, abstract or similar",
     "select_other_unit_filter": "Select other",
@@ -2247,7 +2259,7 @@
     "search_for_duplicate": "Search for research result",
     "unpublish": "Unpublish",
     "unpublish_header": "Unpublish",
-    "unpublish_info": "The result will no longer be visible to others if you choose to unpublish it. You may republish it later",
+    "unpublish_info": "The result will no longer be visible to others if you choose to unpublish it. It will still be visible to everyone with a direct link. You may choose to republish it later.",
     "unpublish_not_allowed": "<0>You can not unpublish this result, because it has either an uploaded file with an approved licence or has been reported to the Norwegian science index (NVI).</0><0>Please contact curator support if you need to unpublish.</0>",
     "unpublish_registration": "Unpublish the research result",
     "unpublish_registration_detail_1": "After unpublishing the result you may no longer search for it, but it is still available via direct links (from citations).",
@@ -2255,5 +2267,6 @@
     "unpublish_registration_duplicate_citation_information": "In order for all citations to be continued, you must look up the other registration. Then all citations will still lead to the other version.",
     "unpublish_registration_duplicate_question": "Is there another published version of the same research result?",
     "unpublish_registration_reason": "Enter a brief explanation for why this research result should no longer be published. The explanation will be displayed on the research result when looking up the reference to the research result."
-  }
+  },
+  "view_contact_info": ""
 }

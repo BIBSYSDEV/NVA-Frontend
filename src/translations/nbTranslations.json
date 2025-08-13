@@ -331,7 +331,13 @@
     "year": "År",
     "yes": "Ja"
   },
+  "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
+  "details": "Detaljer",
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -403,11 +409,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -967,6 +969,9 @@
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li></ul>",
   "overview_over_administrators": "Oversikt over administratorer",
   "owner_institution": "Eierinstitusjon",
+  "point_of_contact": "Kontaktpunkt",
+  "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
+  "points_of_contact_for_result": "Kontaktpunkt for resultat",
   "privacy": {
     "about": {
       "heading": "Om denne personvernerklæringen",
@@ -2263,10 +2268,5 @@
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   },
-  "details": "Detaljer",
-  "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
-  "point_of_contact": "Kontaktpunkt",
-  "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
-  "points_of_contact_for_result": "Kontaktpunkt for resultat",
   "view_contact_info": "Se kontaktinformasjon"
 }
