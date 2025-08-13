@@ -115,9 +115,9 @@ interface ContactPersonRowProps {
 }
 
 const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
-  const personQuery = useFetchPerson(contributor.identity.id ?? '');
-  const person = personQuery.data;
   const id = contributor.identity.id ?? '';
+  const personQuery = useFetchPerson(id);
+  const person = personQuery.data;
 
   return (
     <span style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginBottom: '0.5rem' }}>
