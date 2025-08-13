@@ -344,6 +344,7 @@ export const dataTestId = {
     detailsTab: {
       detailsTab: 'details-tab',
       infoLink: 'info-link',
+      researchProfileLink: (id: string) => `research-profile-link-${id}`,
       resultContactModal: 'result-contact-modal',
       viewContactInformationButton: 'view-contact-information-button',
     },

@@ -1,6 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, IconButton, Link, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogTitle, Divider, IconButton, Link, Skeleton, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -17,6 +17,9 @@ interface DetailsPanelProps {
 export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
+  const correspondingAuthors = contributors.filter((contributor) => contributor.correspondingAuthor === true) ?? [];
+  const contactPersons =
+    contributors.filter((contributor) => contributor.role.type === ContributorRole.ContactPerson) ?? [];
 
   return (
     <Box
@@ -54,32 +57,34 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
             <CloseIcon />
           </IconButton>
         </Box>
-        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <div>
-            <Typography variant="h2" gutterBottom>
-              Kontaktperson
-            </Typography>
-            {contributors
-              .filter((contributor) => contributor.role.type === ContributorRole.ContactPerson)
-              .map((contributor, index) => (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mx: '1rem' }}>
+          {contactPersons.length > 0 && (
+            <div>
+              <Typography variant="h2" gutterBottom>
+                {t('registration.contributors.types.ContactPerson')}
+              </Typography>
+              {contactPersons.map((contributor, index) => (
                 <ContactPersonRow key={index} contributor={contributor} />
               ))}
-          </div>
-          <div>
-            <Typography variant="h2" gutterBottom>
-              Korresponderende forfatter
-            </Typography>
-            {contributors
-              .filter((contributor) => contributor.correspondingAuthor === true)
-              .map((contributor, index) => (
+            </div>
+          )}
+          {correspondingAuthors.length > 0 && (
+            <div>
+              <Typography variant="h2" gutterBottom>
+                {t('corresponding_author')}
+              </Typography>
+              {correspondingAuthors.map((contributor, index) => (
                 <ContactPersonRow key={index} contributor={contributor} />
               ))}
-          </div>
+            </div>
+          )}
+
           <Divider />
+
           <Trans
             i18nKey="default_point_of_contact"
             components={{
-              p: <Typography />,
+              p: <Typography gutterBottom />,
               link1: (
                 <OpenInNewLink
                   data-testid={dataTestId.registrationLandingPage.detailsTab.infoLink}
@@ -88,7 +93,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
               ),
             }}
           />
-        </DialogContent>
+        </Box>
       </Dialog>
     </Box>
   );
@@ -101,22 +106,35 @@ interface ContactPersonRowProps {
 const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
   const personQuery = useFetchPerson(contributor.identity.id ?? '');
   const person = personQuery.data;
+  const id = contributor.identity.id ?? '';
 
   return (
     <span style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginBottom: '0.5rem' }}>
-      <ContributorName
-        id={contributor.identity.id}
-        name={contributor.identity.name}
-        hasVerifiedAffiliation={
-          !!contributor.affiliations &&
-          contributor.affiliations?.some((affiliation) => affiliation.type === 'Organization')
-        }
-      />
-      {person?.contactDetails?.email && (
-        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-          <MailOutlineIcon />
-          <Link href={`mailto:${person.contactDetails.email}`}>{person.contactDetails.email}</Link>
-        </Box>
+      {personQuery.isFetching ? (
+        <>
+          <Skeleton width="10rem" />
+          <Skeleton width="10rem" />
+        </>
+      ) : (
+        <>
+          <ContributorName
+            data-testid={dataTestId.registrationLandingPage.detailsTab.researchProfileLink(id)}
+            id={id}
+            name={contributor.identity.name}
+            hasVerifiedAffiliation={
+              !!contributor.affiliations &&
+              contributor.affiliations?.some((affiliation) => affiliation.type === 'Organization')
+            }
+          />
+          {person?.contactDetails?.email && (
+            <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+              <MailOutlineIcon />
+              <Link data-testid={'email'} href={`mailto:${person.contactDetails.email}`}>
+                {person.contactDetails.email}
+              </Link>
+            </Box>
+          )}
+        </>
       )}
     </span>
   );
