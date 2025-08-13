@@ -1,6 +1,17 @@
 import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import { Box, Button, Dialog, DialogTitle, Divider, IconButton, Link, Skeleton, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+  Link,
+  Skeleton,
+  Typography,
+} from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -48,8 +59,8 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         data-testid={dataTestId.registrationLandingPage.detailsTab.resultContactModal}
         open={openModal}
         onClose={() => setOpenModal(false)}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: '1rem', mx: '1rem' }}>
-          <DialogTitle sx={{ padding: 0 }}>{t('points_of_contact_for_result')}</DialogTitle>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <DialogTitle>{t('points_of_contact_for_result')}</DialogTitle>
           <IconButton
             title={t('common.close')}
             onClick={() => setOpenModal(false)}
@@ -57,7 +68,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
             <CloseIcon />
           </IconButton>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mx: '1rem' }}>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', pt: 0 }}>
           {contactPersons.length > 0 && (
             <div>
               <Typography variant="h2" gutterBottom>
@@ -93,7 +104,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
               ),
             }}
           />
-        </Box>
+        </DialogContent>
       </Dialog>
     </Box>
   );
