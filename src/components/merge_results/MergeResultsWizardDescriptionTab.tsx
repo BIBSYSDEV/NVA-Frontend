@@ -1,10 +1,8 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
-import CheckIcon from '@mui/icons-material/Check';
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { Box, Button, styled, TextField, Typography } from '@mui/material';
-import { ReactNode, useContext } from 'react';
+import { TextField, Typography } from '@mui/material';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BackgroundDiv } from '../styled/Wrappers';
+import { CompareFields } from './CompareFields';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizardDescriptionTab = () => {
@@ -25,7 +23,7 @@ export const MergeResultsWizardDescriptionTab = () => {
       <Typography variant="h3">Publisert resultat</Typography>
 
       <CompareFields
-        sourceComponent={
+        sourceContent={
           <TextField
             variant="filled"
             label={t('common.title')}
@@ -34,7 +32,7 @@ export const MergeResultsWizardDescriptionTab = () => {
             disabled
           />
         }
-        targetComponent={
+        targetContent={
           <TextField
             variant="filled"
             label={t('common.title')}
@@ -45,48 +43,5 @@ export const MergeResultsWizardDescriptionTab = () => {
         isMatching={sourceResult.entityDescription?.mainTitle === targetResult.entityDescription?.mainTitle}
       />
     </BackgroundDiv>
-  );
-};
-
-interface CompareFieldsProps {
-  sourceComponent: ReactNode;
-  targetComponent: ReactNode;
-  isMatching: boolean;
-}
-
-const StyledBox = styled(Box)({
-  padding: '0.1rem 0.5rem',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.25rem',
-});
-
-export const CompareFields = ({ sourceComponent, targetComponent, isMatching }: CompareFieldsProps) => {
-  return (
-    <>
-      {sourceComponent}
-
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-        {isMatching ? (
-          <StyledBox sx={{ bgcolor: 'secondary.dark' }}>
-            <CheckIcon fontSize="small" />
-            <Typography>Matcher</Typography>
-          </StyledBox>
-        ) : (
-          <>
-            <StyledBox sx={{ bgcolor: 'primary.light' }}>
-              <WarningAmberIcon fontSize="small" sx={{ color: 'white' }} />
-              <Typography sx={{ color: 'white' }}>Matcher ikke</Typography>
-            </StyledBox>
-
-            <Button variant="contained" size="small" endIcon={<ArrowForwardIcon />}>
-              Legg til felt
-            </Button>
-          </>
-        )}
-      </Box>
-
-      {targetComponent}
-    </>
   );
 };
