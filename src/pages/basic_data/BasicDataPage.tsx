@@ -232,13 +232,14 @@ const BasicDataPage = () => {
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataCentralImportCandidateMerge, UrlPathTemplate.BasicData)}
-            element={
-              <PrivateRoute
-                isAuthorized={isInternalImporter}
-                element={beta ? <MergeImportCandidate /> : <CentralImportCandidateMerge />}
-              />
-            }
+            element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateMerge />} />}
           />
+          {beta && (
+            <Route
+              path={getSubUrl(UrlPathTemplate.BasicDataCentralImportCandidateMergeBeta, UrlPathTemplate.BasicData)}
+              element={<PrivateRoute isAuthorized={isInternalImporter} element={<MergeImportCandidate />} />}
+            />
+          )}
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataAddEmployee, UrlPathTemplate.BasicData)}
             element={<PrivateRoute isAuthorized={isInstitutionAdmin} element={<AddEmployeePage />} />}
