@@ -11,11 +11,13 @@ import { userHasAccessRight } from '../../utils/registration-helpers';
 import { isFileApprovalTicket } from '../../utils/ticketHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
+import { DetailsPanel } from './log/DetailsPanel';
 import { LogPanel } from './log/LogPanel';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 enum TabValue {
   Tasks,
+  Details,
   Log,
 }
 
@@ -33,6 +35,7 @@ export const ActionPanel = ({
 }: ActionPanelProps) => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
+  const user = useSelector((store: RootState) => store.user);
 
   const publishingRequestTickets = tickets.filter(isFileApprovalTicket) as PublishingTicket[];
   const newestDoiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest');
@@ -63,18 +66,21 @@ export const ActionPanel = ({
   const canApproveSupportTicket = !!newestSupportTicket && userHasAccessRight(registration, 'support-request-approve');
 
   const shouldSeePublishingAccordion =
-    canCreatePublishingTicket || canHandlePublishingTicket || hasOtherPublishingRights || !!publishingRequestTickets;
+    !!user &&
+    (canCreatePublishingTicket || canHandlePublishingTicket || hasOtherPublishingRights || !!publishingRequestTickets);
 
   const shouldSeeDoiAccordion =
+    !!user &&
     !registration.entityDescription?.reference?.doi &&
     !!customerHasConfiguredDoi &&
     (canCreateDoiTicket || canApproveDoiTicket || !!newestDoiRequestTicket);
 
-  const shouldSeeSupportAccordion = canCreateSupportTicket || canApproveSupportTicket || !!newestSupportTicket;
+  const shouldSeeSupportAccordion =
+    !!user && (canCreateSupportTicket || canApproveSupportTicket || !!newestSupportTicket);
 
   const canSeeTasksPanel = shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion;
 
-  const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Log);
+  const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Details);
 
   const canEditRegistration = userHasAccessRight(registration, 'partial-update');
 
@@ -100,13 +106,20 @@ export const ActionPanel = ({
             aria-controls="action-panel-tab-panel-0"
           />
         )}
+        <Tab
+          data-testid={dataTestId.registrationLandingPage.detailsTab.detailsTab}
+          value={TabValue.Details}
+          label={t('details')}
+          id="action-panel-tab-1"
+          aria-controls="action-panel-tab-panel-1"
+        />
         {canEditRegistration && (
           <Tab
             value={TabValue.Log}
             label={t('common.log')}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
-            id="action-panel-tab-1"
-            aria-controls="action-panel-tab-panel-1"
+            id="action-panel-tab-2"
+            aria-controls="action-panel-tab-panel-2"
           />
         )}
       </Tabs>
@@ -126,6 +139,9 @@ export const ActionPanel = ({
         </ErrorBoundary>
       </TabPanel>
       <TabPanel tabValue={tabValue} index={1}>
+        <DetailsPanel />
+      </TabPanel>
+      <TabPanel tabValue={tabValue} index={2}>
         <ErrorBoundary>
           <LogPanel registration={registration} tickets={tickets} />
         </ErrorBoundary>

@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
+import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
@@ -28,7 +29,7 @@ export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccor
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
       navigate(getRegistrationWizardPath(createRegistrationResponse.data.identifier), {
-        state: { highestValidatedTab: -1 },
+        state: { skipInitialValidation: true } satisfies RegistrationFormLocationState,
       });
     }
   };

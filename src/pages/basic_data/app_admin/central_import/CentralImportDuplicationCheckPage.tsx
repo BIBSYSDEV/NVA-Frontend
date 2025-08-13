@@ -1,14 +1,15 @@
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate, updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { fetchImportCandidates, FetchImportCandidatesParams } from '../../../../api/searchApi';
+import { BetaFunctionality } from '../../../../components/BetaFunctionality';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
+import { HeadTitle } from '../../../../components/HeadTitle';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
@@ -20,6 +21,7 @@ import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { convertToRegistrationSearchItem } from '../../../../utils/registration-helpers';
 import {
+  getImportCandidateMergeBetaPath,
   getImportCandidateMergePath,
   getImportCandidateWizardPath,
   IdentifierParams,
@@ -102,9 +104,7 @@ export const CentralImportDuplicationCheckPage = () => {
         gridTemplateAreas: { xs: '"actions" "main"', sm: '"main actions"' },
         gap: '1rem',
       }}>
-      <Helmet>
-        <title>{t('basic_data.central_import.central_import')}</title>
-      </Helmet>
+      <HeadTitle>{t('basic_data.central_import.central_import')}</HeadTitle>
       <BackgroundDiv>
         {importCandidateSearchQuery.isPending || importCandidateQuery.isPending ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
@@ -210,6 +210,22 @@ export const CentralImportDuplicationCheckPage = () => {
                   {t('basic_data.central_import.merge_candidate.merge')}
                 </Button>
               )}
+
+              <BetaFunctionality sx={{ mt: '1rem' }}>
+                {registrationIdentifier ? (
+                  <Link
+                    to={{ pathname: getImportCandidateMergeBetaPath(identifier ?? '', registrationIdentifier) }}
+                    state={locationState}>
+                    <Button variant="outlined" fullWidth size="small">
+                      {t('basic_data.central_import.merge_candidate.merge')} (BETA)
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button variant="outlined" fullWidth size="small" disabled>
+                    {t('basic_data.central_import.merge_candidate.merge')} (BETA)
+                  </Button>
+                )}
+              </BetaFunctionality>
 
               <Divider sx={{ my: '1rem' }} />
 

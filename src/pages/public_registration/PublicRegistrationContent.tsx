@@ -2,10 +2,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
 import { fetchResults, FetchResultsParams } from '../../api/searchApi';
+import { HeadTitle } from '../../components/HeadTitle';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { RegistrationIconHeader } from '../../components/RegistrationIconHeader';
@@ -68,10 +68,9 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
+      <HeadTitle>{mainTitle}</HeadTitle>
       {registration.status === RegistrationStatus.Published && <StructuredSeoData registration={registration} />}
-      <Helmet>
-        <title>{mainTitle}</title>
-      </Helmet>
+
       <Box sx={visuallyHidden}>
         <DeletedPublicationInformation registration={registration} />
       </Box>

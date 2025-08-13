@@ -1,6 +1,5 @@
 import { Amplify } from 'aws-amplify';
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router';
@@ -15,6 +14,7 @@ import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
+import { useAuthErrorListener } from './utils/hooks/useAuthErrorListener';
 import { getMaintenanceInfo } from './utils/status-message-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
@@ -32,6 +32,7 @@ if (
 }
 
 const Root = () => {
+  useAuthErrorListener();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -83,16 +84,12 @@ export const App = () => {
   const maintenanceInfo = getMaintenanceInfo();
 
   return (
-    <>
-      <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`} />
-
-      <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
-        {maintenanceInfo ? (
-          <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
-        ) : (
-          <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
-        )}
-      </Suspense>
-    </>
+    <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
+      {maintenanceInfo?.severity === 'block' ? (
+        <RouterProvider router={createBrowserRouter([{ path: '*', element: <MaintenanceModeApp /> }])} />
+      ) : (
+        <RouterProvider router={createBrowserRouter([{ path: '*', element: <Root /> }])} />
+      )}
+    </Suspense>
   );
 };

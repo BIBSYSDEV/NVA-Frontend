@@ -2,12 +2,13 @@ import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { getLanguageByUri } from 'nva-language';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate, updateImportCandidateStatus, updateRegistration } from '../../../../api/registrationApi';
+import { HeadTitle } from '../../../../components/HeadTitle';
+import { MergeImportCandidateParams } from '../../../../components/merge_results/MergeImportCandidate';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { AssociatedLink } from '../../../../types/associatedArtifact.types';
@@ -26,11 +27,6 @@ import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../u
 import { CompareDoiField } from './CompareDoiField';
 import { CompareFields } from './CompareFields';
 import { CompareJournalFields } from './CompareJournalFields';
-
-interface MergeImportCandidateParams extends Record<string, string | undefined> {
-  candidateIdentifier: string;
-  registrationIdentifier: string;
-}
 
 export const CentralImportCandidateMerge = () => {
   const { t } = useTranslation();
@@ -125,9 +121,7 @@ export const CentralImportCandidateMerge = () => {
             gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
           }}>
-          <Helmet>
-            <title>{t('basic_data.central_import.merge_candidate.merge')}</title>
-          </Helmet>
+          <HeadTitle>{t('basic_data.central_import.merge_candidate.merge')}</HeadTitle>
           <Typography variant="h1" gutterBottom>
             {t('basic_data.central_import.merge_candidate.merge')}
           </Typography>

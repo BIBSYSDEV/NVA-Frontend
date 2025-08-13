@@ -35,6 +35,7 @@ export const Header = () => {
   const hasCustomer = !!user?.customerId;
 
   const maintenanceInfo = getMaintenanceInfo();
+  const isMaintenanceBlock = maintenanceInfo?.severity === 'block';
 
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
   const organization = organizationQuery.data;
@@ -96,7 +97,7 @@ export const Header = () => {
         }}>
         <Box sx={{ display: 'flex', flex: '1', gap: { sm: '1rem', md: '2rem' } }}>
           <Logo />
-          {!maintenanceInfo && (
+          {!isMaintenanceBlock && (
             <MenuIconButton
               color="inherit"
               title={t('common.search')}
@@ -107,7 +108,7 @@ export const Header = () => {
           )}
         </Box>
 
-        {!maintenanceInfo && (
+        {!isMaintenanceBlock && (
           <>
             {user?.isCreator && (
               <Box sx={{ display: 'flex', flex: '1', justifyContent: 'center' }}>

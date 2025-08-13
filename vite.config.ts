@@ -17,7 +17,7 @@ const largeLibraries = [
 ];
 
 export default defineConfig({
-  plugins: [react(), eslint()],
+  plugins: [react({ babel: { plugins: [['babel-plugin-react-compiler']] } }), eslint()],
   server: {
     open: true,
     port: 3000,

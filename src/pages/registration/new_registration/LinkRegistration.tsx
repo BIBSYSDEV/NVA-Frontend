@@ -21,6 +21,7 @@ import * as Yup from 'yup';
 import { useCreateRegistrationFromDoi } from '../../../api/hooks/useCreateRegistrationFromDoi';
 import { useLookupDoi } from '../../../api/hooks/useLookupDoi';
 import { RegistrationList } from '../../../components/RegistrationList';
+import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { doiUrlBase } from '../../../utils/general-helpers';
@@ -56,7 +57,9 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const [doiQuery, setDoiQuery] = useState('');
 
   const onCreateRegistrationSuccess = (response: AxiosResponse<Registration, any>) => {
-    navigate(getRegistrationWizardPath(response.data.identifier), { state: { highestValidatedTab: -1 } });
+    navigate(getRegistrationWizardPath(response.data.identifier), {
+      state: { skipInitialValidation: true } satisfies RegistrationFormLocationState,
+    });
   };
 
   const { registrationsWithDoi, isLookingUpDoi, noHits, doiPreview } = useLookupDoi(doiQuery);
