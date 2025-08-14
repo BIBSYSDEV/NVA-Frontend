@@ -82,6 +82,7 @@
     "cypress": "^14.5.4",
     "cypress-axe": "^1.6.0",
     "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
