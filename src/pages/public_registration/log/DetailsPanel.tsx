@@ -28,9 +28,8 @@ interface DetailsPanelProps {
 export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
-  const correspondingAuthors = contributors.filter((contributor) => contributor.correspondingAuthor) ?? [];
-  const contactPersons =
-    contributors.filter((contributor) => contributor.role.type === ContributorRole.ContactPerson) ?? [];
+  const correspondingContributors = contributors.filter((contributor) => contributor.correspondingAuthor);
+  const contactPersons = contributors.filter((contributor) => contributor.role.type === ContributorRole.ContactPerson);
 
   return (
     <Box
@@ -62,31 +61,36 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <DialogTitle>{t('points_of_contact_for_result')}</DialogTitle>
           <IconButton
+            sx={{ mr: '1rem' }}
             title={t('common.close')}
             onClick={() => setOpenModal(false)}
             data-testid={dataTestId.confirmDialog.cancelButton}>
             <CloseIcon />
           </IconButton>
         </Box>
-        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', pt: 0 }}>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {contactPersons.length > 0 && (
             <div>
               <Typography variant="h2" gutterBottom>
                 {t('registration.contributors.types.ContactPerson')}
               </Typography>
-              {contactPersons.map((contributor, index) => (
-                <ContactPersonRow key={index} contributor={contributor} />
-              ))}
+              <ul style={{ padding: 0 }}>
+                {contactPersons.map((contributor, index) => (
+                  <ContactPersonRow key={index} contributor={contributor} />
+                ))}
+              </ul>
             </div>
           )}
-          {correspondingAuthors.length > 0 && (
+          {correspondingContributors.length > 0 && (
             <div>
               <Typography variant="h2" gutterBottom>
-                {t('corresponding_author')}
+                {t('corresponding_contributor')}
               </Typography>
-              {correspondingAuthors.map((contributor, index) => (
-                <ContactPersonRow key={index} contributor={contributor} />
-              ))}
+              <ul style={{ padding: 0 }}>
+                {correspondingContributors.map((contributor, index) => (
+                  <ContactPersonRow key={index} contributor={contributor} />
+                ))}
+              </ul>
             </div>
           )}
 
@@ -120,7 +124,14 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
   const person = personQuery.data;
 
   return (
-    <span style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginBottom: '0.5rem' }}>
+    <li
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        marginBottom: '0.5rem',
+        marginLeft: 0,
+        alignItems: 'center',
+      }}>
       {personQuery.isFetching ? (
         <>
           <Skeleton width="10rem" />
@@ -132,12 +143,11 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
             id={id}
             name={contributor.identity.name}
             hasVerifiedAffiliation={
-              !!contributor.affiliations &&
-              contributor.affiliations?.some((affiliation) => affiliation.type === 'Organization')
+              !!contributor.affiliations?.some((affiliation) => affiliation.type === 'Organization')
             }
           />
           {person?.contactDetails?.email && (
-            <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
               <MailOutlineIcon />
               <Link
                 data-testid={dataTestId.registrationLandingPage.detailsTab.emailLink(id)}
@@ -148,6 +158,6 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
           )}
         </>
       )}
-    </span>
+    </li>
   );
 };
