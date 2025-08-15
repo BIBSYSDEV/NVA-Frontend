@@ -11,8 +11,7 @@ export const MergeResultsWizardDescriptionTab = () => {
   const { sourceResult, formMethods } = useContext(MergeResultsWizardContext);
 
   const mainTitleValue = useWatch({ name: 'entityDescription.mainTitle', control: formMethods.control });
-
-  const ref = useRef<HTMLTextAreaElement>(null);
+  const [mainTitleRef, resizeMainTitle] = useAutoResizeTextFieldMultiline();
 
   return (
     <BackgroundDiv
@@ -42,26 +41,36 @@ export const MergeResultsWizardDescriptionTab = () => {
             variant="filled"
             label={t('common.title')}
             multiline
-            inputRef={ref}
+            inputRef={mainTitleRef}
             {...formMethods.register('entityDescription.mainTitle')}
           />
         }
         isMatching={sourceResult.entityDescription?.mainTitle === mainTitleValue}
         onCopyValue={() => {
           formMethods.setValue('entityDescription.mainTitle', sourceResult.entityDescription?.mainTitle ?? '');
-          if (ref.current) {
-            ref.current.style.height = 'auto';
-            ref.current.style.height = `${ref.current.scrollHeight}px`;
-          }
+          resizeMainTitle();
         }}
         onResetValue={() => {
           formMethods.resetField('entityDescription.mainTitle');
-          if (ref.current) {
-            ref.current.style.height = 'auto';
-            ref.current.style.height = `${ref.current.scrollHeight}px`;
-          }
+          resizeMainTitle();
         }}
       />
     </BackgroundDiv>
   );
+};
+
+/**
+ * Automatically resize multiline TextField when a value is set programmatically
+ */
+const useAutoResizeTextFieldMultiline = () => {
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  const resize = () => {
+    if (ref.current) {
+      ref.current.style.height = 'auto';
+      ref.current.style.height = `${ref.current.scrollHeight}px`;
+    }
+  };
+
+  return [ref, resize] as const;
 };
