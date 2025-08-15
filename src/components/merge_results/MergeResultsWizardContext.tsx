@@ -6,8 +6,8 @@ interface MergeResultsWizardContextType {
   activeTab: RegistrationTab;
   setActiveTab: (tab: RegistrationTab) => void;
   sourceResult: Registration; // Result to replace (left side)
-  targetResult: Registration; // Result to merge into (right side)
-  form: UseFormReturn<Registration>;
+  targetResult: Registration; // Initial values for result to merge into (right side)
+  formMethods: UseFormReturn<Registration>;
 }
 
 const defaultTab = RegistrationTab.Description;
@@ -17,7 +17,7 @@ export const MergeResultsWizardContext = createContext<MergeResultsWizardContext
   setActiveTab: () => {},
   sourceResult: {} as Registration,
   targetResult: {} as Registration,
-  form: {} as UseFormReturn<Registration>,
+  formMethods: {} as UseFormReturn<Registration>,
 });
 
 interface RegistrationFormContextProviderProps {

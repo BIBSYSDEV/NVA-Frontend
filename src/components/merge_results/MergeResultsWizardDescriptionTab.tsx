@@ -7,7 +7,7 @@ import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizardDescriptionTab = () => {
   const { t } = useTranslation();
-  const { sourceResult, targetResult, form } = useContext(MergeResultsWizardContext);
+  const { sourceResult, targetResult, formMethods } = useContext(MergeResultsWizardContext);
 
   return (
     <BackgroundDiv
@@ -37,12 +37,12 @@ export const MergeResultsWizardDescriptionTab = () => {
             variant="filled"
             label={t('common.title')}
             multiline
-            {...form.register('entityDescription.mainTitle')}
+            {...formMethods.register('entityDescription.mainTitle')}
           />
         }
         isMatching={sourceResult.entityDescription?.mainTitle === targetResult.entityDescription?.mainTitle}
         onCopyValue={() =>
-          form.setValue('entityDescription.mainTitle', sourceResult.entityDescription?.mainTitle ?? '')
+          formMethods.setValue('entityDescription.mainTitle', sourceResult.entityDescription?.mainTitle ?? '')
         }
       />
     </BackgroundDiv>
