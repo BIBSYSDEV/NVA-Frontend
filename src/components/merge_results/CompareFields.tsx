@@ -4,12 +4,13 @@ import CheckIcon from '@mui/icons-material/Check';
 import RestoreIcon from '@mui/icons-material/Restore';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { Box, Button, Typography } from '@mui/material';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 
 interface CompareFieldsProps {
   sourceContent: ReactNode;
   targetContent: ReactNode;
   isMatching: boolean;
+  isChanged: boolean;
   onCopyValue: () => void;
   onResetValue: () => void;
 }
@@ -25,36 +26,20 @@ export const CompareFields = ({
   sourceContent,
   targetContent,
   isMatching,
+  isChanged,
   onCopyValue,
   onResetValue,
 }: CompareFieldsProps) => {
-  const [isCopied, setIsCopied] = useState(false);
-
   return (
     <>
       {sourceContent}
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
         {isMatching ? (
-          <>
-            <StyledBox sx={{ bgcolor: 'secondary.dark' }}>
-              <CheckIcon fontSize="small" />
-              <Typography>Matcher</Typography>
-            </StyledBox>
-
-            {isCopied && (
-              <Button
-                variant="outlined"
-                size="small"
-                endIcon={<RestoreIcon />}
-                onClick={() => {
-                  onResetValue();
-                  setIsCopied(false);
-                }}>
-                Nullstill
-              </Button>
-            )}
-          </>
+          <StyledBox sx={{ bgcolor: 'secondary.dark' }}>
+            <CheckIcon fontSize="small" />
+            <Typography>Matcher</Typography>
+          </StyledBox>
         ) : (
           <>
             <StyledBox sx={{ bgcolor: 'primary.light' }}>
@@ -62,17 +47,16 @@ export const CompareFields = ({
               <Typography sx={{ color: 'white' }}>Matcher ikke</Typography>
             </StyledBox>
 
-            <Button
-              variant="contained"
-              size="small"
-              endIcon={<ArrowForwardIcon />}
-              onClick={() => {
-                onCopyValue();
-                setIsCopied(true);
-              }}>
-              Legg til felt
+            <Button variant="contained" size="small" endIcon={<ArrowForwardIcon />} onClick={onCopyValue}>
+              Overskriv
             </Button>
           </>
+        )}
+
+        {isChanged && (
+          <Button variant="outlined" size="small" endIcon={<RestoreIcon />} onClick={onResetValue}>
+            Nullstill
+          </Button>
         )}
       </Box>
 
