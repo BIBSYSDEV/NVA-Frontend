@@ -1,7 +1,8 @@
 import { TextField, Typography } from '@mui/material';
-import { useContext, useRef } from 'react';
+import { useContext } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useAutoResizeTextFieldMultiline } from '../../utils/hooks/useAutoResizeTextFieldMultiline';
 import { BackgroundDiv } from '../styled/Wrappers';
 import { CompareFields } from './CompareFields';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
@@ -57,20 +58,4 @@ export const MergeResultsWizardDescriptionTab = () => {
       />
     </BackgroundDiv>
   );
-};
-
-/**
- * Automatically resize multiline TextField when a value is set programmatically
- */
-const useAutoResizeTextFieldMultiline = () => {
-  const ref = useRef<HTMLTextAreaElement>(null);
-
-  const resize = () => {
-    if (ref.current) {
-      ref.current.style.height = 'auto';
-      ref.current.style.height = `${ref.current.scrollHeight}px`;
-    }
-  };
-
-  return [ref, resize] as const;
 };
