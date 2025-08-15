@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useState } from 'react';
+import { UseFormReturn } from 'react-hook-form';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 
 interface MergeResultsWizardContextType {
@@ -6,6 +7,7 @@ interface MergeResultsWizardContextType {
   setActiveTab: (tab: RegistrationTab) => void;
   sourceResult: Registration; // Result to replace (left side)
   targetResult: Registration; // Result to merge into (right side)
+  form: UseFormReturn<Registration>;
 }
 
 const defaultTab = RegistrationTab.Description;
@@ -15,6 +17,7 @@ export const MergeResultsWizardContext = createContext<MergeResultsWizardContext
   setActiveTab: () => {},
   sourceResult: {} as Registration,
   targetResult: {} as Registration,
+  form: {} as UseFormReturn<Registration>,
 });
 
 interface RegistrationFormContextProviderProps {

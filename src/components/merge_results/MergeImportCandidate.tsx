@@ -7,7 +7,6 @@ import { fetchImportCandidate } from '../../api/registrationApi';
 import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
-import { MergeResultsWizardContextProvider } from './MergeResultsWizardContext';
 
 export interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
@@ -36,18 +35,15 @@ export const MergeImportCandidate = () => {
   }
 
   return (
-    <MergeResultsWizardContextProvider
-      value={{ sourceResult: importCandidateQuery.data, targetResult: registrationQuery.data }}>
-      <StyledPageContent sx={{ mx: 'auto' }}>
-        <Paper sx={{ mb: '1rem', p: '1rem' }}>
-          <Typography variant="h1" gutterBottom>
-            {t('basic_data.central_import.merge_candidate.merge')}
-          </Typography>
-          <Typography>{t('basic_data.central_import.merge_candidate.merge_details_1')}</Typography>
-          <Typography>{t('basic_data.central_import.merge_candidate.merge_details_2')}</Typography>
-        </Paper>
-        <MergeResultsWizard />
-      </StyledPageContent>
-    </MergeResultsWizardContextProvider>
+    <StyledPageContent sx={{ mx: 'auto' }}>
+      <Paper sx={{ mb: '1rem', p: '1rem' }}>
+        <Typography variant="h1" gutterBottom>
+          {t('basic_data.central_import.merge_candidate.merge')}
+        </Typography>
+        <Typography>{t('basic_data.central_import.merge_candidate.merge_details_1')}</Typography>
+        <Typography>{t('basic_data.central_import.merge_candidate.merge_details_2')}</Typography>
+      </Paper>
+      <MergeResultsWizard sourceResult={importCandidateQuery.data} targetResult={registrationQuery.data} />
+    </StyledPageContent>
   );
 };
