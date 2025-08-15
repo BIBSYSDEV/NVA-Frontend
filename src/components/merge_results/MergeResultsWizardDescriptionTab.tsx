@@ -23,9 +23,9 @@ export const MergeResultsWizardDescriptionTab = () => {
         mt: '2rem',
         alignItems: 'center',
       }}>
-      <Typography variant="h3">Importkandidat</Typography>
+      <Typography variant="h2">Importkandidat</Typography>
       <span />
-      <Typography variant="h3">Publisert resultat</Typography>
+      <Typography variant="h2">Publisert resultat</Typography>
 
       <CompareFields
         sourceContent={
