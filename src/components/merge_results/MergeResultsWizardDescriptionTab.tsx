@@ -1,5 +1,5 @@
 import { TextField, Typography } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BackgroundDiv } from '../styled/Wrappers';
@@ -11,6 +11,8 @@ export const MergeResultsWizardDescriptionTab = () => {
   const { sourceResult, formMethods } = useContext(MergeResultsWizardContext);
 
   const mainTitleValue = useWatch({ name: 'entityDescription.mainTitle', control: formMethods.control });
+
+  const ref = useRef<HTMLTextAreaElement>(null);
 
   return (
     <BackgroundDiv
@@ -40,14 +42,25 @@ export const MergeResultsWizardDescriptionTab = () => {
             variant="filled"
             label={t('common.title')}
             multiline
+            inputRef={ref}
             {...formMethods.register('entityDescription.mainTitle')}
           />
         }
         isMatching={sourceResult.entityDescription?.mainTitle === mainTitleValue}
-        onCopyValue={() =>
-          formMethods.setValue('entityDescription.mainTitle', sourceResult.entityDescription?.mainTitle ?? '')
-        }
-        onResetValue={() => formMethods.resetField('entityDescription.mainTitle')}
+        onCopyValue={() => {
+          formMethods.setValue('entityDescription.mainTitle', sourceResult.entityDescription?.mainTitle ?? '');
+          if (ref.current) {
+            ref.current.style.height = 'auto';
+            ref.current.style.height = `${ref.current.scrollHeight}px`;
+          }
+        }}
+        onResetValue={() => {
+          formMethods.resetField('entityDescription.mainTitle');
+          if (ref.current) {
+            ref.current.style.height = 'auto';
+            ref.current.style.height = `${ref.current.scrollHeight}px`;
+          }
+        }}
       />
     </BackgroundDiv>
   );
