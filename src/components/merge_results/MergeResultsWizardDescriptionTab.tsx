@@ -1,5 +1,6 @@
 import { TextField, Typography } from '@mui/material';
 import { useContext } from 'react';
+import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BackgroundDiv } from '../styled/Wrappers';
 import { CompareFields } from './CompareFields';
@@ -7,7 +8,9 @@ import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizardDescriptionTab = () => {
   const { t } = useTranslation();
-  const { sourceResult, targetResult, formMethods } = useContext(MergeResultsWizardContext);
+  const { sourceResult, formMethods } = useContext(MergeResultsWizardContext);
+
+  const mainTitleValue = useWatch({ name: 'entityDescription.mainTitle', control: formMethods.control });
 
   return (
     <BackgroundDiv
@@ -40,7 +43,7 @@ export const MergeResultsWizardDescriptionTab = () => {
             {...formMethods.register('entityDescription.mainTitle')}
           />
         }
-        isMatching={sourceResult.entityDescription?.mainTitle === targetResult.entityDescription?.mainTitle}
+        isMatching={sourceResult.entityDescription?.mainTitle === mainTitleValue}
         onCopyValue={() =>
           formMethods.setValue('entityDescription.mainTitle', sourceResult.entityDescription?.mainTitle ?? '')
         }
