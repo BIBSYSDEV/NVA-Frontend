@@ -58,10 +58,10 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         data-testid={dataTestId.registrationLandingPage.detailsTab.resultContactModal}
         open={openModal}
         onClose={() => setOpenModal(false)}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <DialogTitle>{t('points_of_contact_for_result')}</DialogTitle>
           <IconButton
-            sx={{ mr: '1rem' }}
+            sx={{ mr: '1rem', height: 'fit-content' }}
             title={t('common.close')}
             onClick={() => setOpenModal(false)}
             data-testid={dataTestId.confirmDialog.cancelButton}>
