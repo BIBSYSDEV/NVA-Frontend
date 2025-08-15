@@ -16,8 +16,8 @@ export const MergeResultsWizardDescriptionTab = () => {
     <BackgroundDiv
       sx={{
         display: 'grid',
-        gridTemplateColumns: '1fr auto 1fr',
-        gap: '1rem',
+        gridTemplateColumns: '1fr 10rem 1fr',
+        gap: '0.5rem',
         mt: '2rem',
         alignItems: 'center',
       }}>
