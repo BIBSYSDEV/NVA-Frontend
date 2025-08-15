@@ -9,6 +9,7 @@ interface CompareFieldsProps {
   sourceContent: ReactNode;
   targetContent: ReactNode;
   isMatching: boolean;
+  onCopyValue: () => void;
 }
 
 const StyledBox = styled(Box)({
@@ -18,7 +19,7 @@ const StyledBox = styled(Box)({
   gap: '0.25rem',
 });
 
-export const CompareFields = ({ sourceContent, targetContent, isMatching }: CompareFieldsProps) => {
+export const CompareFields = ({ sourceContent, targetContent, isMatching, onCopyValue }: CompareFieldsProps) => {
   return (
     <>
       {sourceContent}
@@ -36,7 +37,7 @@ export const CompareFields = ({ sourceContent, targetContent, isMatching }: Comp
               <Typography sx={{ color: 'white' }}>Matcher ikke</Typography>
             </StyledBox>
 
-            <Button variant="contained" size="small" endIcon={<ArrowForwardIcon />}>
+            <Button variant="contained" size="small" endIcon={<ArrowForwardIcon />} onClick={onCopyValue}>
               Legg til felt
             </Button>
           </>

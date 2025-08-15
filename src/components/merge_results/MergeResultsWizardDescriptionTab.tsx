@@ -1,11 +1,18 @@
 import { TextField, Typography } from '@mui/material';
 import { useContext } from 'react';
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Registration } from '../../types/registration.types';
 import { BackgroundDiv } from '../styled/Wrappers';
 import { CompareFields } from './CompareFields';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
-export const MergeResultsWizardDescriptionTab = () => {
+interface MergeResultsWizardDescriptionTabProps {
+  register: UseFormRegister<Registration>;
+  setValue: UseFormSetValue<Registration>;
+}
+
+export const MergeResultsWizardDescriptionTab = ({ register, setValue }: MergeResultsWizardDescriptionTabProps) => {
   const { t } = useTranslation();
   const { sourceResult, targetResult } = useContext(MergeResultsWizardContext);
 
@@ -37,10 +44,11 @@ export const MergeResultsWizardDescriptionTab = () => {
             variant="filled"
             label={t('common.title')}
             multiline
-            value={targetResult.entityDescription?.mainTitle}
+            {...register('entityDescription.mainTitle')}
           />
         }
         isMatching={sourceResult.entityDescription?.mainTitle === targetResult.entityDescription?.mainTitle}
+        onCopyValue={() => setValue('entityDescription.mainTitle', sourceResult.entityDescription?.mainTitle ?? '')}
       />
     </BackgroundDiv>
   );
