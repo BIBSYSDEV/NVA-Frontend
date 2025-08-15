@@ -47,6 +47,7 @@ export const MergeResultsWizardDescriptionTab = () => {
         onCopyValue={() =>
           formMethods.setValue('entityDescription.mainTitle', sourceResult.entityDescription?.mainTitle ?? '')
         }
+        onResetValue={() => formMethods.resetField('entityDescription.mainTitle')}
       />
     </BackgroundDiv>
   );
