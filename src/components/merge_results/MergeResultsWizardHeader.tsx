@@ -1,16 +1,15 @@
 import { Box } from '@mui/material';
-import { useContext } from 'react';
-import { useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { Registration } from '../../types/registration.types';
 import { getTitleString } from '../../utils/registration-helpers';
 import { PageHeader } from '../PageHeader';
 import { RegistrationIconHeader } from '../RegistrationIconHeader';
-import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizardHeader = () => {
-  const { formMethods } = useContext(MergeResultsWizardContext);
+  const { control } = useFormContext<Registration>();
 
   const [mainTitle, instanceType, publicationDate] = useWatch({
-    control: formMethods.control,
+    control,
     name: [
       'entityDescription.mainTitle',
       'entityDescription.reference.publicationInstance.type',

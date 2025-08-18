@@ -1,16 +1,18 @@
 import { TextField } from '@mui/material';
 import { useContext } from 'react';
-import { useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Registration } from '../../types/registration.types';
 import { useAutoResizeTextFieldMultiline } from '../../utils/hooks/useAutoResizeTextFieldMultiline';
 import { CompareFields } from './CompareFields';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizardDescriptionTab = () => {
   const { t } = useTranslation();
-  const { sourceResult, formMethods } = useContext(MergeResultsWizardContext);
+  const { control, formState, register, setValue, resetField } = useFormContext<Registration>();
+  const { sourceResult } = useContext(MergeResultsWizardContext);
 
-  const mainTitleValue = useWatch({ name: 'entityDescription.mainTitle', control: formMethods.control });
+  const mainTitleValue = useWatch({ name: 'entityDescription.mainTitle', control });
   const [mainTitleRef, resizeMainTitle] = useAutoResizeTextFieldMultiline();
 
   return (
@@ -31,17 +33,17 @@ export const MergeResultsWizardDescriptionTab = () => {
             label={t('common.title')}
             multiline
             inputRef={mainTitleRef}
-            {...formMethods.register('entityDescription.mainTitle')}
+            {...register('entityDescription.mainTitle')}
           />
         }
         isMatching={sourceResult.entityDescription?.mainTitle === mainTitleValue}
-        isChanged={mainTitleValue !== formMethods.formState.defaultValues?.entityDescription?.mainTitle}
+        isChanged={mainTitleValue !== formState.defaultValues?.entityDescription?.mainTitle}
         onCopyValue={() => {
-          formMethods.setValue('entityDescription.mainTitle', sourceResult.entityDescription?.mainTitle ?? '');
+          setValue('entityDescription.mainTitle', sourceResult.entityDescription?.mainTitle ?? '');
           resizeMainTitle();
         }}
         onResetValue={() => {
-          formMethods.resetField('entityDescription.mainTitle');
+          resetField('entityDescription.mainTitle');
           resizeMainTitle();
         }}
       />

@@ -2,14 +2,16 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import { useContext } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { navigationButtonStyling } from '../../pages/registration/RegistrationFormActions';
-import { RegistrationTab } from '../../types/registration.types';
+import { Registration, RegistrationTab } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizardActions = () => {
   const { t } = useTranslation();
+  const { formState } = useFormContext<Registration>();
   const { activeTab, setActiveTab } = useContext(MergeResultsWizardContext);
 
   return (
@@ -24,8 +26,13 @@ export const MergeResultsWizardActions = () => {
         </Tooltip>
       )}
 
-      <Button type="submit" variant="contained" sx={{ ml: 'auto' }}>
-        {t('common.save')}
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ ml: 'auto' }}
+        loading={formState.isSubmitting}
+        data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}>
+        {t('basic_data.central_import.import')}
       </Button>
 
       {activeTab !== RegistrationTab.FilesAndLicenses && (
