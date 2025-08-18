@@ -9,7 +9,7 @@ import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizardDescriptionTab = () => {
   const { t } = useTranslation();
-  const { sourceResult, targetResult, formMethods } = useContext(MergeResultsWizardContext);
+  const { sourceResult, formMethods } = useContext(MergeResultsWizardContext);
 
   const mainTitleValue = useWatch({ name: 'entityDescription.mainTitle', control: formMethods.control });
   const [mainTitleRef, resizeMainTitle] = useAutoResizeTextFieldMultiline();
@@ -47,7 +47,7 @@ export const MergeResultsWizardDescriptionTab = () => {
           />
         }
         isMatching={sourceResult.entityDescription?.mainTitle === mainTitleValue}
-        isChanged={mainTitleValue !== targetResult.entityDescription?.mainTitle}
+        isChanged={mainTitleValue !== formMethods.formState.defaultValues?.entityDescription?.mainTitle}
         onCopyValue={() => {
           formMethods.setValue('entityDescription.mainTitle', sourceResult.entityDescription?.mainTitle ?? '');
           resizeMainTitle();

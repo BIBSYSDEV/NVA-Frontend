@@ -17,7 +17,7 @@ export const MergeResultsWizard = ({ sourceResult, targetResult }: MergeResultsW
   const onSubmit: SubmitHandler<Registration> = (data) => console.log('SUBMIT', data);
 
   return (
-    <MergeResultsWizardContextProvider value={{ sourceResult, targetResult, formMethods }}>
+    <MergeResultsWizardContextProvider value={{ sourceResult, formMethods }}>
       <form onSubmit={formMethods.handleSubmit(onSubmit)}>
         <MergeResultsWizardHeader />
         <MergeResultsWizardStepper />

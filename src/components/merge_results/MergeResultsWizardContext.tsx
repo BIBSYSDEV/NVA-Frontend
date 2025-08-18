@@ -5,8 +5,7 @@ import { Registration, RegistrationTab } from '../../types/registration.types';
 interface MergeResultsWizardContextType {
   activeTab: RegistrationTab;
   setActiveTab: (tab: RegistrationTab) => void;
-  sourceResult: Registration; // Result to replace (left side)
-  targetResult: Registration; // Initial values for result to merge into (right side)
+  sourceResult: Registration;
   formMethods: UseFormReturn<Registration>;
 }
 
@@ -16,7 +15,6 @@ export const MergeResultsWizardContext = createContext<MergeResultsWizardContext
   activeTab: defaultTab,
   setActiveTab: () => {},
   sourceResult: {} as Registration,
-  targetResult: {} as Registration,
   formMethods: {} as UseFormReturn<Registration>,
 });
 
