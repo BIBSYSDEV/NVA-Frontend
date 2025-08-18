@@ -278,7 +278,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     <Typography variant="h2">{t('registration.resource_type.artistic.program')}</Typography>
                     <Button
                       variant="outlined"
-                      sx={{ width: 'fit-content', textTransform: 'none' }}
+                      sx={{ width: 'fit-content' }}
                       onClick={() => push(emptyMusicalWorkPerformance)}
                       startIcon={<AddIcon />}
                       data-testid={dataTestId.registrationWizard.resourceType.concertAddWork}>

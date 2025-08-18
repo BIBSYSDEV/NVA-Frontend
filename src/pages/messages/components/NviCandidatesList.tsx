@@ -61,7 +61,6 @@ export const NviCandidatesList = () => {
             fullWidth
             variant="outlined"
             data-testid={dataTestId.tasksPage.nvi.excludeUnassignedButton}
-            sx={{ textTransform: 'none' }}
             startIcon={!nviParams.excludeUnassigned ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
             onClick={() => {
               setSearchParams((params) => {

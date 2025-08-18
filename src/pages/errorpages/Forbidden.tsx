@@ -10,7 +10,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
-const buttonProps: SxProps = { textTransform: 'none', mt: '1rem', width: 'fit-content' };
+const buttonProps: SxProps = { mt: '1rem', width: 'fit-content' };
 
 export const Forbidden = () => {
   const { t } = useTranslation();

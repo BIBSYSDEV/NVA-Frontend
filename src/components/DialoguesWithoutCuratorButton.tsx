@@ -56,7 +56,6 @@ export const DialoguesWithoutCuratorButton = () => {
       fullWidth
       variant="outlined"
       color="primary"
-      sx={{ textTransform: 'none' }}
       startIcon={newStatusIsSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
       endIcon={
         unassignedNotificationsCount > 0 ? (
