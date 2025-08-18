@@ -1,9 +1,8 @@
-import { TextField, Typography } from '@mui/material';
+import { TextField } from '@mui/material';
 import { useContext } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useAutoResizeTextFieldMultiline } from '../../utils/hooks/useAutoResizeTextFieldMultiline';
-import { BackgroundDiv } from '../styled/Wrappers';
 import { CompareFields } from './CompareFields';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
@@ -15,18 +14,7 @@ export const MergeResultsWizardDescriptionTab = () => {
   const [mainTitleRef, resizeMainTitle] = useAutoResizeTextFieldMultiline();
 
   return (
-    <BackgroundDiv
-      sx={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 10rem 1fr',
-        gap: '0.5rem',
-        mt: '2rem',
-        alignItems: 'center',
-      }}>
-      <Typography variant="h2">Importkandidat</Typography>
-      <span />
-      <Typography variant="h2">Publisert resultat</Typography>
-
+    <>
       <CompareFields
         sourceContent={
           <TextField
@@ -57,6 +45,6 @@ export const MergeResultsWizardDescriptionTab = () => {
           resizeMainTitle();
         }}
       />
-    </BackgroundDiv>
+    </>
   );
 };
