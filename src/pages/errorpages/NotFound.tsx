@@ -8,9 +8,9 @@ const NotFound = () => {
       <Trans
         i18nKey="feedback.error.404_page"
         components={{
-          span: <span style={{ display: 'flex', gap: '0.5rem' }} />,
+          span: <span style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }} />,
           icon: <BlockIcon />,
-          h1: <Typography gutterBottom variant="h1" />,
+          h1: <Typography variant="h1" />,
           p: <Typography />,
         }}
       />
