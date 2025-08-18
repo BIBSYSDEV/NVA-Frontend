@@ -5,6 +5,7 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { Box, Button, Typography } from '@mui/material';
 import { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface CompareFieldsProps {
   sourceContent: ReactNode;
@@ -30,6 +31,8 @@ export const CompareFields = ({
   onCopyValue,
   onResetValue,
 }: CompareFieldsProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
       {sourceContent}
@@ -38,24 +41,24 @@ export const CompareFields = ({
         {isMatching ? (
           <StyledBox sx={{ bgcolor: 'secondary.dark' }}>
             <CheckIcon fontSize="small" />
-            <Typography>Matcher</Typography>
+            <Typography>{t('matches')}</Typography>
           </StyledBox>
         ) : (
           <>
             <StyledBox sx={{ bgcolor: 'primary.light' }}>
               <WarningAmberIcon fontSize="small" sx={{ color: 'white' }} />
-              <Typography sx={{ color: 'white' }}>Matcher ikke</Typography>
+              <Typography sx={{ color: 'white' }}>{t('does_not_match')}</Typography>
             </StyledBox>
 
             <Button variant="contained" size="small" endIcon={<ArrowForwardIcon />} onClick={onCopyValue}>
-              Overskriv
+              {t('overwrite')}
             </Button>
           </>
         )}
 
         {isChanged && (
           <Button variant="outlined" size="small" endIcon={<RestoreIcon />} onClick={onResetValue}>
-            Nullstill
+            {t('reset')}
           </Button>
         )}
       </Box>
