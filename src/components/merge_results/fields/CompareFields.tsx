@@ -2,7 +2,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import CheckIcon from '@mui/icons-material/Check';
 import RestoreIcon from '@mui/icons-material/Restore';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { Box, Button, styled, Typography } from '@mui/material';
+import { Box, Button, Divider, styled, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -65,6 +65,8 @@ export const CompareFields = ({
       </Box>
 
       {targetContent}
+
+      <Divider sx={{ '&:last-child': { display: 'none' }, gridColumn: '1/-1' }} />
     </>
   );
 };
