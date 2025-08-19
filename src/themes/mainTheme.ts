@@ -13,8 +13,6 @@ enum Color {
   SecondaryLight = '#F9F4E6',
   SecondaryMain = '#EDE2C7',
   SecondaryDark = '#D3C9AF',
-  SuccessMain = '#025810',
-  InfoMain = '#0B408F',
   InfoLight = '#C2D3EA',
   PrimaryLight = '#0D4DAD',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
@@ -31,6 +29,25 @@ enum Color {
   NviLight = '#F8D3F6',
   WarningMain = '#ED6C02',
   WarningLight = '#FFD45A',
+  Blue41 = '#004FCF',
+  Blue95 = '#E6F0FF',
+  Green22 = '#096638',
+  Green89 = '#CFF7E2',
+  Neutral35 = '#595959',
+  Neutral40 = '#656565',
+  Neutral46 = '#767676',
+  Neutral87 = '#DEDEDE',
+  Neutral92 = '#EBEBEB',
+  Neutral95 = '#F1F1F1',
+  Neutral97 = '#F7F7F7',
+  Neutral100 = '#FFFFFF',
+  Purple10 = '#0A0132',
+  Purple65 = '#7351FB',
+  Purple90 = '#D1CDFF',
+  Red36 = '#B60203',
+  Red96 = '#FFEAE9',
+  Yellow50 = '#FFB700',
+  Yellow91 = '#FCEED2',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
@@ -45,6 +62,7 @@ declare module '@mui/material/styles' {
     generalSupportCase: PaletteColorOptions;
     centralImport: PaletteColorOptions;
     nvi: PaletteColorOptions;
+    seperator: PaletteColorOptions;
   }
   interface PaletteOptions {
     registration?: PaletteColorOptions;
@@ -55,8 +73,20 @@ declare module '@mui/material/styles' {
     generalSupportCase?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
     nvi?: PaletteColorOptions;
+    seperator?: PaletteColorOptions;
+  }
+  // interface PaletteColor {}
+  // interface SimplePaletteColorOptions {}
+  interface TypeBackground {
+    primary?: string;
+    neutral?: string;
+    info?: string;
+    success?: string;
+    warning?: string;
+    critical?: string;
   }
 }
+
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     registration: true;
@@ -84,28 +114,43 @@ export const mainTheme = createTheme(
     },
     palette: {
       primary: {
-        main: Color.PrimaryMain,
-        light: Color.PrimaryLight,
-        contrastText: Color.White,
+        main: Color.Purple65,
+        light: Color.Purple90,
+        dark: Color.Purple10,
+        contrastText: Color.Neutral100,
       },
       secondary: {
-        light: Color.SecondaryLight,
-        main: Color.SecondaryMain,
-        dark: Color.SecondaryDark,
+        light: Color.Neutral87,
+        main: '#c2bfcb', // TODO: update when design system provides color name
+        dark: Color.Neutral46,
       },
       error: {
-        main: Color.ErrorMain,
+        main: Color.Red36,
+        light: Color.Red96,
       },
       success: {
-        main: Color.SuccessMain,
+        main: Color.Green22,
+        light: Color.Green89,
       },
       info: {
-        main: Color.InfoMain,
-        light: Color.InfoLight,
+        main: Color.Blue41,
+        light: Color.Blue95,
       },
       warning: {
-        main: Color.WarningMain,
-        light: Color.WarningLight,
+        main: Color.Yellow50,
+        light: Color.Yellow91,
+      },
+      background: {
+        default: Color.Neutral100,
+        primary: Color.Neutral95,
+        info: Color.Blue95,
+        success: Color.Green89,
+        warning: Color.Yellow91,
+        critical: Color.Red96,
+      },
+      seperator: {
+        main: Color.Neutral40,
+        light: Color.Neutral87,
       },
       grey: {
         300: '#EEEEEE',
@@ -113,37 +158,36 @@ export const mainTheme = createTheme(
         500: '#CCCCCC',
       },
       registration: {
-        main: Color.Registration,
+        main: '#f70000',
+        light: '#f70000',
       },
       person: {
-        main: Color.Person,
+        main: '#f70000',
+        light: '#f70000',
       },
       project: {
-        main: Color.Project,
+        main: '#f70000',
+        light: '#f70000',
       },
       centralImport: {
-        main: Color.CentralImportMain,
-        light: Color.CentralImportLight,
+        main: '#f70000',
+        light: '#f70000',
       },
       publishingRequest: {
-        main: Color.PublishingRequest,
-        light: Color.PublishingRequestLight,
+        main: '#f70000',
+        light: '#f70000',
       },
       doiRequest: {
-        main: Color.DoiRequest,
-        light: Color.DoiRequestLight,
+        main: '#f70000',
+        light: '#f70000',
       },
       generalSupportCase: {
-        main: Color.GeneralSupportCase,
-        light: Color.InfoLight,
+        main: '#f70000',
+        light: '#f70000',
       },
       nvi: {
-        main: Color.NviMain,
-        light: Color.NviLight,
-      },
-      background: {
-        default: Color.White,
-        paper: Color.SecondaryLight,
+        main: '#f70000',
+        light: '#f70000',
       },
     },
     typography: {
