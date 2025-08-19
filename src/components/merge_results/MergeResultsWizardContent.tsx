@@ -1,4 +1,4 @@
-import { Typography, useMediaQuery } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RegistrationTab } from '../../types/registration.types';
@@ -9,7 +9,6 @@ import { MergeResultsWizardDescriptionTab } from './MergeResultsWizardDescriptio
 export const MergeResultsWizardContent = () => {
   const { t } = useTranslation();
   const { activeTab } = useContext(MergeResultsWizardContext);
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   return (
     <BackgroundDiv
@@ -20,14 +19,12 @@ export const MergeResultsWizardContent = () => {
         mt: '2rem',
         alignItems: 'center',
       }}>
-      {!isMobile && (
-        <>
-          <Typography variant="h2">{t('basic_data.central_import.import_candidate')}</Typography>
-          <Typography variant="h2" sx={{ gridColumn: 3 }}>
-            {t('published_result')}
-          </Typography>
-        </>
-      )}
+      <Typography variant="h2" sx={{ display: { xs: 'none', sm: 'block' } }}>
+        {t('basic_data.central_import.import_candidate')}
+      </Typography>
+      <Typography variant="h2" sx={{ display: { xs: 'none', sm: 'block' }, gridColumn: 3 }}>
+        {t('published_result')}
+      </Typography>
 
       {activeTab === RegistrationTab.Description ? (
         <MergeResultsWizardDescriptionTab />
