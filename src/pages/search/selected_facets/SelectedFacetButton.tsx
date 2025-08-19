@@ -24,7 +24,6 @@ export const SelectedFacetButton = ({ param, value, content }: SelectedFacetButt
         variant="outlined"
         size="small"
         title={t('search.remove_filter')}
-        sx={{ textTransform: 'none' }}
         endIcon={<ClearIcon />}
         onClick={() => {
           const syncedParams = syncParamsWithSearchFields(searchParams);

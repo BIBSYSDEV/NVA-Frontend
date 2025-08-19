@@ -138,7 +138,7 @@ export const ArtisticDesignForm = () => {
                 data-testid={dataTestId.registrationWizard.resourceType.addVenueButton}
                 onClick={() => setOpenNewVenueModal(true)}
                 variant="outlined"
-                sx={{ mt: '1rem', textTransform: 'none' }}
+                sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
                 {t('registration.resource_type.artistic.add_announcement')}
               </Button>

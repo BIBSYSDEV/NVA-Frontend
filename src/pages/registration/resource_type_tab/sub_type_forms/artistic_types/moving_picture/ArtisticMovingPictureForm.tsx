@@ -162,7 +162,6 @@ export const ArtisticMovingPictureForm = () => {
 
                 <Box sx={{ mt: '1rem', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
                   <Button
-                    sx={{ textTransform: 'none' }}
                     onClick={() => setOpenModal('Broadcast')}
                     variant="outlined"
                     startIcon={<AddCircleOutlineIcon />}
@@ -170,7 +169,6 @@ export const ArtisticMovingPictureForm = () => {
                     {t('registration.resource_type.artistic.add_broadcast')}
                   </Button>
                   <Button
-                    sx={{ textTransform: 'none' }}
                     onClick={() => setOpenModal('CinematicRelease')}
                     variant="outlined"
                     startIcon={<AddCircleOutlineIcon />}
@@ -178,7 +176,6 @@ export const ArtisticMovingPictureForm = () => {
                     {t('registration.resource_type.artistic.add_cinematic_release')}
                   </Button>
                   <Button
-                    sx={{ textTransform: 'none' }}
                     onClick={() => setOpenModal('OtherRelease')}
                     variant="outlined"
                     startIcon={<AddCircleOutlineIcon />}
