@@ -1,9 +1,12 @@
 import { Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router';
+import { Navigate, useLocation, useParams } from 'react-router';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate } from '../../api/registrationApi';
+import NotFound from '../../pages/errorpages/NotFound';
+import { BasicDataLocationState } from '../../types/locationState.types';
+import { getImportCandidatePath } from '../../utils/urlPaths';
 import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
@@ -15,6 +18,8 @@ export interface MergeImportCandidateParams extends Record<string, string | unde
 
 export const MergeImportCandidate = () => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const locationState = location.state as BasicDataLocationState;
   const { candidateIdentifier, registrationIdentifier } = useParams<MergeImportCandidateParams>();
 
   const registrationQuery = useFetchRegistration(registrationIdentifier);
@@ -30,8 +35,12 @@ export const MergeImportCandidate = () => {
     return <PageSpinner />;
   }
 
+  if (importCandidateQuery.data?.importStatus.candidateStatus === 'IMPORTED') {
+    return <Navigate to={{ pathname: getImportCandidatePath(candidateIdentifier ?? '') }} state={locationState} />;
+  }
+
   if (!importCandidateQuery.data || !registrationQuery.data) {
-    return null;
+    return <NotFound />;
   }
 
   return (
