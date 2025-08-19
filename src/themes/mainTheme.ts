@@ -402,6 +402,7 @@ export const mainTheme = createTheme(
       MuiButton: {
         styleOverrides: {
           root: {
+            textTransform: 'none',
             borderRadius: '0.25rem',
           },
         },

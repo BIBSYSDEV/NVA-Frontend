@@ -16,6 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../themes/mainTheme';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import {
   ExhibitionProductionSubtype,
@@ -25,7 +26,6 @@ import { dataTestId } from '../../../../../utils/dataTestIds';
 import { OutputRow } from '../artistic_types/OutputRow';
 import { ExhibitionBasicModal } from './ExhibitionBasicModal';
 import { ExhibitionCatalogModal } from './ExhibitionCatalogModal';
-import { alternatingTableRowColor } from '../../../../../themes/mainTheme';
 
 const exhibitionSubtypes = Object.values(ExhibitionProductionSubtype);
 type ExhibitionProductioModalType = '' | 'ExhibitionBasic' | 'ExhibitionCatalog';
@@ -122,7 +122,6 @@ export const ExhibitionProductionForm = () => {
 
               <Box sx={{ display: 'flex', gap: '1rem', mt: '1rem' }}>
                 <Button
-                  sx={{ textTransform: 'none' }}
                   data-testid={dataTestId.registrationWizard.resourceType.addExhibitionBasicButton}
                   onClick={() => setOpenModal('ExhibitionBasic')}
                   variant="outlined"
@@ -130,7 +129,6 @@ export const ExhibitionProductionForm = () => {
                   {t('registration.resource_type.exhibition_production.add_exhibition_basic')}
                 </Button>
                 <Button
-                  sx={{ textTransform: 'none' }}
                   data-testid={dataTestId.registrationWizard.resourceType.addExhibitionCatalogButton}
                   onClick={() => setOpenModal('ExhibitionCatalog')}
                   variant="outlined"

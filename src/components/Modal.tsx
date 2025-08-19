@@ -10,6 +10,10 @@ interface ModalProps extends Partial<DialogProps> {
   onClose?: () => void;
 }
 
+/**
+ * @deprecated Use Dialog instead
+ */
+
 export const Modal = ({ children, dataTestId, headingText, onClose, open, ...props }: ModalProps) => {
   const { t } = useTranslation();
   const handleClose = () => {

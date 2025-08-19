@@ -23,7 +23,6 @@ export const TicketTypeFilterButton = ({
       color: 'common.black',
       bgcolor: isSelected ? undefined : 'background.default',
       borderColor: `${rest.color}.main`,
-      textTransform: 'none',
 
       '.MuiButton-endIcon': {
         ml: 'auto',

@@ -50,8 +50,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           color="inherit"
           data-testid={dataTestId.header.menuButton}
           onClick={handleClickMenuAnchor}
-          startIcon={<AccountCircle />}
-          sx={{ textTransform: 'none' }}>
+          startIcon={<AccountCircle />}>
           <Typography noWrap color="inherit">
             {name}
           </Typography>

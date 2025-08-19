@@ -2273,5 +2273,6 @@
   "reset": "Nullstill",
   "overwrite": "Overskriv",
   "matches": "Matcher",
-  "does_not_match": "Matcher ikke"
+  "does_not_match": "Matcher ikke",
+  "corresponding_contributor": "Korresponderende bidragsyter"
 }
