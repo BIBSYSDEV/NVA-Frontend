@@ -11,7 +11,7 @@ interface CompareFieldsProps {
   targetContent: ReactNode;
   isMatching: boolean;
   isChanged: boolean;
-  onCopyValue: () => void;
+  onCopyValue?: () => void;
   onResetValue: () => void;
 }
 
@@ -49,9 +49,11 @@ export const CompareFields = ({
               <Typography sx={{ color: 'white' }}>{t('does_not_match')}</Typography>
             </StyledBox>
 
-            <Button variant="contained" size="small" endIcon={<ArrowForwardIcon />} onClick={onCopyValue}>
-              {t('overwrite')}
-            </Button>
+            {onCopyValue && (
+              <Button variant="contained" size="small" endIcon={<ArrowForwardIcon />} onClick={onCopyValue}>
+                {t('overwrite')}
+              </Button>
+            )}
           </>
         )}
 

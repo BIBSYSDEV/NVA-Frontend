@@ -2274,5 +2274,6 @@
   "overwrite": "Overskriv",
   "matches": "Matcher",
   "does_not_match": "Matcher ikke",
-  "corresponding_contributor": "Korresponderende bidragsyter"
+  "corresponding_contributor": "Korresponderende bidragsyter",
+  "missing_value": "Mangler verdi"
 }

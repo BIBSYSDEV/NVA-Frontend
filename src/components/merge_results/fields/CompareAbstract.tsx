@@ -32,12 +32,16 @@ export const CompareAbstract = () => {
           {...register('entityDescription.abstract')}
         />
       }
-      isMatching={sourceResult.entityDescription?.abstract === abstractValue}
+      isMatching={(sourceResult.entityDescription?.abstract ?? '') === abstractValue}
       isChanged={abstractValue !== formState.defaultValues?.entityDescription?.abstract}
-      onCopyValue={() => {
-        setValue('entityDescription.abstract', sourceResult.entityDescription?.abstract ?? '');
-        resizeAbstract();
-      }}
+      onCopyValue={
+        sourceResult.entityDescription?.abstract
+          ? () => {
+              setValue('entityDescription.abstract', sourceResult.entityDescription!.abstract);
+              resizeAbstract();
+            }
+          : undefined
+      }
       onResetValue={() => {
         resetField('entityDescription.abstract');
         resizeAbstract();
