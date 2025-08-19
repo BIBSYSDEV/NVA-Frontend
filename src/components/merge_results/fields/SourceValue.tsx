@@ -3,7 +3,7 @@ interface SourceValueProps {
   value: string | undefined;
 }
 
-export const SourceValue = ({ label, value }: SourceValueProps) => {
+export const SourceValue = ({ label, value = '' }: SourceValueProps) => {
   return (
     <dl style={{ margin: 0 }}>
       <dt style={{ fontWeight: 'bold' }}>{label}</dt>

@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Registration } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useAutoResizeTextFieldMultiline } from '../../../utils/hooks/useAutoResizeTextFieldMultiline';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { CompareFields } from './CompareFields';
@@ -21,6 +22,7 @@ export const CompareMainTitle = () => {
       sourceContent={<SourceValue label={t('common.title')} value={sourceResult.entityDescription?.mainTitle} />}
       targetContent={
         <TextField
+          data-testid={dataTestId.registrationWizard.description.titleField}
           variant="filled"
           label={t('common.title')}
           multiline
