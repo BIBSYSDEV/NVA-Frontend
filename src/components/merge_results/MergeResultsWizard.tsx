@@ -17,9 +17,10 @@ import { MergeResultsWizardStepper } from './MergeResultsWizardStepper';
 interface MergeResultsWizardProps {
   sourceResult: Registration;
   targetResult: Registration;
+  onSave: SubmitHandler<Registration>;
 }
 
-export const MergeResultsWizard = ({ sourceResult, targetResult }: MergeResultsWizardProps) => {
+export const MergeResultsWizard = ({ sourceResult, targetResult, onSave }: MergeResultsWizardProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
