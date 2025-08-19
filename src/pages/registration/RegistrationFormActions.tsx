@@ -94,7 +94,7 @@ export const RegistrationFormActions = ({
       setTouched(setNestedObjectValues(newErrors, true));
     } else if (isSuccess) {
       queryClient.setQueryData(
-        ['registration', updateRegistrationResponse.data.identifier],
+        ['registration', updateRegistrationResponse.data.identifier, false],
         updateRegistrationResponse.data
       );
 
