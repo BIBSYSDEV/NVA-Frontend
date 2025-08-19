@@ -1,5 +1,5 @@
 import { Paper, Typography } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
@@ -24,6 +24,7 @@ export const MergeImportCandidate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
   const locationState = location.state as BasicDataLocationState;
   const { candidateIdentifier, registrationIdentifier } = useParams<MergeImportCandidateParams>();
 
@@ -76,9 +77,14 @@ export const MergeImportCandidate = () => {
         sourceResult={importCandidateQuery.data}
         targetResult={registrationQuery.data}
         onSave={async (data) => {
-          await registrationMutation.mutateAsync(data);
+          const updateRegistrationResponse = await registrationMutation.mutateAsync(data);
+          if (updateRegistrationResponse.data) {
+            queryClient.setQueryData(
+              ['registration', updateRegistrationResponse.data.identifier, false],
+              updateRegistrationResponse.data
+            );
+          }
           await importCandidateMutation.mutateAsync();
-          await registrationQuery.refetch();
           dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
           navigate(getRegistrationWizardPath(registrationQuery.data.identifier), {
             state: {
