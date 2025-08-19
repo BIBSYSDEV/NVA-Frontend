@@ -6,6 +6,7 @@ import { Registration } from '../../../types/registration.types';
 import { useAutoResizeTextFieldMultiline } from '../../../utils/hooks/useAutoResizeTextFieldMultiline';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { CompareFields } from './CompareFields';
+import { SourceValue } from './SourceValue';
 
 export const CompareMainTitle = () => {
   const { t } = useTranslation();
@@ -17,15 +18,7 @@ export const CompareMainTitle = () => {
 
   return (
     <CompareFields
-      sourceContent={
-        <TextField
-          variant="filled"
-          label={t('common.title')}
-          multiline
-          value={sourceResult.entityDescription?.mainTitle}
-          disabled
-        />
-      }
+      sourceContent={<SourceValue label={t('common.title')} value={sourceResult.entityDescription?.mainTitle} />}
       targetContent={
         <TextField
           variant="filled"
