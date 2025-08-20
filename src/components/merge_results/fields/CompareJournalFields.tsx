@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { JournalRegistration } from '../../../types/publication_types/journalRegistration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { CompareSimpleTextField } from './CompareSimpleTextField';
+import { CompareTextField } from './CompareTextField';
 
 interface CompareJournalFieldsProps {
   sourceResult: JournalRegistration;
@@ -15,7 +15,7 @@ export const CompareJournalFields = ({ sourceResult }: CompareJournalFieldsProps
 
   return (
     <>
-      <CompareSimpleTextField
+      <CompareTextField
         label={t('registration.resource_type.volume')}
         sourceValue={sourceResult.entityDescription.reference?.publicationInstance.volume}
         originalTargetValue={originalPublicationInstance?.volume}
@@ -23,7 +23,7 @@ export const CompareJournalFields = ({ sourceResult }: CompareJournalFieldsProps
         dataTestId={dataTestId.registrationWizard.resourceType.volumeField}
       />
 
-      <CompareSimpleTextField
+      <CompareTextField
         label={t('registration.resource_type.issue')}
         sourceValue={sourceResult.entityDescription.reference?.publicationInstance.issue}
         originalTargetValue={originalPublicationInstance?.issue}
@@ -31,7 +31,7 @@ export const CompareJournalFields = ({ sourceResult }: CompareJournalFieldsProps
         dataTestId={dataTestId.registrationWizard.resourceType.issueField}
       />
 
-      <CompareSimpleTextField
+      <CompareTextField
         label={t('registration.resource_type.pages_from')}
         sourceValue={sourceResult.entityDescription.reference?.publicationInstance.pages?.begin}
         originalTargetValue={originalPublicationInstance?.pages?.begin}
@@ -39,7 +39,7 @@ export const CompareJournalFields = ({ sourceResult }: CompareJournalFieldsProps
         dataTestId={dataTestId.registrationWizard.resourceType.pagesFromField}
       />
 
-      <CompareSimpleTextField
+      <CompareTextField
         label={t('basic_data.central_import.merge_candidate.page_to')}
         sourceValue={sourceResult.entityDescription.reference?.publicationInstance.pages?.end}
         originalTargetValue={originalPublicationInstance?.pages?.end}
