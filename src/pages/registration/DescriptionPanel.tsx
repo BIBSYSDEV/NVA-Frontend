@@ -21,7 +21,7 @@ import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { DuplicateWarning } from './DuplicateWarning';
 
 export const DescriptionPanel = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<Registration>();
   const debouncedTitle = useDebounce(values.entityDescription?.mainTitle ?? '');
 
