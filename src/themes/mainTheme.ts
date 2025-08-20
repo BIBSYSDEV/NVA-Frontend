@@ -5,49 +5,22 @@ import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
-  Black = '#222',
-  CentralImportMain = '#D9D9D9',
-  CentralImportLight = '#EFEEED',
-  ErrorMain = '#AC0303',
-  PrimaryMain = '#0F0035',
-  SecondaryLight = '#F9F4E6',
-  SecondaryMain = '#EDE2C7',
-  SecondaryDark = '#D3C9AF',
-  InfoLight = '#C2D3EA',
-  PrimaryLight = '#0D4DAD',
-  TextPrimary = 'rgba(0, 0, 0, 0.87)',
-  White = '#fff',
-  DoiRequest = '#FFAA8E',
-  DoiRequestLight = '#FFE2DA',
-  GeneralSupportCase = '#7E9DCC',
-  Registration = '#DAC48E',
-  Person = '#B3D6D9',
-  Project = '#E48F8F',
-  PublishingRequest = '#FFD27B',
-  PublishingRequestLight = '#FFF0D3',
-  NviMain = '#EE95EA',
-  NviLight = '#F8D3F6',
-  WarningMain = '#ED6C02',
-  WarningLight = '#FFD45A',
-  Blue41 = '#004FCF',
-  Blue95 = '#E6F0FF',
-  Green22 = '#096638',
-  Green89 = '#CFF7E2',
-  Neutral35 = '#595959',
-  Neutral40 = '#656565',
-  Neutral46 = '#767676',
-  Neutral87 = '#DEDEDE',
-  Neutral92 = '#EBEBEB',
-  Neutral95 = '#F1F1F1',
-  Neutral97 = '#F7F7F7',
-  Neutral100 = '#FFFFFF',
-  Purple10 = '#0A0132',
-  Purple65 = '#7351FB',
-  Purple90 = '#D1CDFF',
-  Red36 = '#B60203',
-  Red96 = '#FFEAE9',
-  Yellow50 = '#FFB700',
-  Yellow91 = '#FCEED2',
+  PrimaryLight = '#D1CDFF',
+  PrimaryMain = '#7351FB',
+  PrimaryDark = '#0A0132',
+  SecondaryLight = '#FFFFFF',
+  SecondaryMain = '#DEDEDE',
+  SecondaryDark = '#767676',
+  SuccessLight = '#CFF7E2',
+  SuccessMain = '#096638',
+  ErrorLight = '#FFEAE9',
+  ErrorMain = '#B60203',
+  InfoLight = '#E6F0FF',
+  InfoMain = '#004FCF',
+  WarningLight = '#FCEED2',
+  WarningMain = '#FFB700',
+  BackgroundPrimary = '#F7F7F7',
+  BackgroundSecondary = '#F1F1F1',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
@@ -73,17 +46,9 @@ declare module '@mui/material/styles' {
     generalSupportCase?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
     nvi?: PaletteColorOptions;
-    seperator?: PaletteColorOptions;
   }
-  // interface PaletteColor {}
-  // interface SimplePaletteColorOptions {}
   interface TypeBackground {
-    primary?: string;
-    neutral?: string;
-    info?: string;
-    success?: string;
-    warning?: string;
-    critical?: string;
+    secondary?: string;
   }
 }
 
@@ -114,43 +79,35 @@ export const mainTheme = createTheme(
     },
     palette: {
       primary: {
-        main: Color.Purple65,
-        light: Color.Purple90,
-        dark: Color.Purple10,
-        contrastText: Color.Neutral100,
+        main: Color.PrimaryMain,
+        light: Color.PrimaryLight,
+        dark: Color.PrimaryDark,
+        contrastText: Color.SecondaryLight,
       },
       secondary: {
-        light: Color.Neutral87,
-        main: '#c2bfcb', // TODO: update when design system provides color name
-        dark: Color.Neutral46,
+        light: Color.SecondaryLight,
+        main: Color.SecondaryMain,
+        dark: Color.SecondaryDark,
       },
       error: {
-        main: Color.Red36,
-        light: Color.Red96,
+        main: Color.ErrorMain,
+        light: Color.ErrorLight,
       },
       success: {
-        main: Color.Green22,
-        light: Color.Green89,
+        main: Color.SuccessMain,
+        light: Color.SuccessLight,
       },
       info: {
-        main: Color.Blue41,
-        light: Color.Blue95,
+        main: Color.InfoMain,
+        light: Color.InfoLight,
       },
       warning: {
-        main: Color.Yellow50,
-        light: Color.Yellow91,
+        main: Color.WarningMain,
+        light: Color.WarningLight,
       },
       background: {
-        default: Color.Neutral100,
-        primary: Color.Neutral95,
-        info: Color.Blue95,
-        success: Color.Green89,
-        warning: Color.Yellow91,
-        critical: Color.Red96,
-      },
-      seperator: {
-        main: Color.Neutral40,
-        light: Color.Neutral87,
+        default: Color.BackgroundPrimary,
+        secondary: Color.BackgroundSecondary,
       },
       grey: {
         300: '#EEEEEE',
