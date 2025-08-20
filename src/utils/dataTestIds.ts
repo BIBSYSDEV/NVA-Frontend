@@ -505,6 +505,7 @@ export const dataTestId = {
       alternativeTitleField: 'registration-alternative-title-field',
       descriptionField: 'registration-description-field',
       languageField: 'registration-language-field',
+      languageItem: (language: string) => `registration-language-item-${language}`,
       removeProjectButton: 'remove-project-button',
       tagField: 'registration-tag-field',
       titleField: 'registration-title-field',

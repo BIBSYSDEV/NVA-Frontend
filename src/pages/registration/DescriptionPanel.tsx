@@ -1,8 +1,7 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ErrorIcon from '@mui/icons-material/Error';
-import { Autocomplete, Box, Button, CircularProgress, Divider, MenuItem, TextField } from '@mui/material';
+import { Autocomplete, Box, Button, CircularProgress, Divider, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import { getLanguageByIso6393Code } from 'nva-language';
 import { ChangeEvent, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDuplicateRegistrationSearch } from '../../api/hooks/useDuplicateRegistrationSearch';
@@ -12,16 +11,17 @@ import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
-import { registrationLanguageOptions, registrationsHaveSamePublicationYear } from '../../utils/registration-helpers';
+import { registrationsHaveSamePublicationYear } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { DatePickerField } from './description_tab/DatePickerField';
+import { LanguageSelectorField } from './description_tab/LanguageSelectorField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { DuplicateWarning } from './DuplicateWarning';
 
 export const DescriptionPanel = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<Registration>();
   const debouncedTitle = useDebounce(values.entityDescription?.mainTitle ?? '');
 
@@ -209,28 +209,7 @@ export const DescriptionPanel = () => {
 
         <Field name={DescriptionFieldNames.Language}>
           {({ field }: FieldProps<string>) => (
-            <TextField
-              {...field}
-              disabled={disableChannelClaimsFields}
-              value={field.value ?? ''}
-              data-testid={dataTestId.registrationWizard.description.languageField}
-              fullWidth
-              label={t('registration.description.primary_language')}
-              placeholder={t('registration.description.primary_language')}
-              select
-              variant="filled">
-              {!registrationLanguageOptions.some((language) => language.uri === field.value) && (
-                // Show if Registration has a language that's currently not supported
-                <MenuItem value={field.value} disabled>
-                  {i18n.language === 'nob' ? getLanguageByIso6393Code('und').nob : getLanguageByIso6393Code('und').eng}
-                </MenuItem>
-              )}
-              {registrationLanguageOptions.map(({ uri, nob, eng }) => (
-                <MenuItem value={uri} key={uri} data-testid={`registration-language-${uri}`}>
-                  {i18n.language === 'nob' ? nob : eng}
-                </MenuItem>
-              ))}
-            </TextField>
+            <LanguageSelectorField {...field} disabled={disableChannelClaimsFields}></LanguageSelectorField>
           )}
         </Field>
       </Box>

@@ -15,7 +15,7 @@ export const MergeResultsWizardActions = () => {
   const { activeTab, setActiveTab } = useContext(MergeResultsWizardContext);
 
   return (
-    <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+    <Box sx={{ gridColumn: '1/-1', display: 'flex', gap: '1rem', alignItems: 'center' }}>
       {activeTab !== RegistrationTab.Description && (
         <Tooltip title={t('common.previous')}>
           <IconButton

@@ -1,5 +1,6 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Registration } from '../../types/registration.types';
+import { BackgroundDiv } from '../styled/Wrappers';
 import { MergeResultsWizardActions } from './MergeResultsWizardActions';
 import { MergeResultsWizardContent } from './MergeResultsWizardContent';
 import { MergeResultsWizardContextProvider } from './MergeResultsWizardContext';
@@ -21,8 +22,17 @@ export const MergeResultsWizard = ({ sourceResult, targetResult, onSave }: Merge
         <form onSubmit={formMethods.handleSubmit(onSave)}>
           <MergeResultsWizardHeader />
           <MergeResultsWizardStepper />
-          <MergeResultsWizardContent />
-          <MergeResultsWizardActions />
+          <BackgroundDiv
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr auto 1fr' },
+              gap: '1rem 0.5rem',
+              mt: '2rem',
+              alignItems: 'center',
+            }}>
+            <MergeResultsWizardContent />
+            <MergeResultsWizardActions />
+          </BackgroundDiv>
         </form>
       </MergeResultsWizardContextProvider>
     </FormProvider>

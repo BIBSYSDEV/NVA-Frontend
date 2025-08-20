@@ -66,7 +66,7 @@ export const CompareFields = ({
 
       {targetContent}
 
-      <Divider sx={{ '&:last-child': { display: 'none' }, gridColumn: '1/-1' }} />
+      <Divider sx={{ gridColumn: '1/-1', my: '0.5rem' }} />
     </>
   );
 };
