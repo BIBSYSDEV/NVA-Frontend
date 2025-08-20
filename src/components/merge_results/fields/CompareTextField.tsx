@@ -1,18 +1,15 @@
 import { TextField } from '@mui/material';
 import { Path, useFormContext, useWatch } from 'react-hook-form';
-import { JournalRegistration } from '../../../types/publication_types/journalRegistration.types';
 import { Registration } from '../../../types/registration.types';
 import { useAutoResizeTextFieldMultiline } from '../../../utils/hooks/useAutoResizeTextFieldMultiline';
 import { CompareFields } from './CompareFields';
 import { SourceValue } from './SourceValue';
 
-type RegistrationType = Registration | JournalRegistration;
-
 interface CompareTextFieldProps {
   label: string;
   sourceValue: string | null | undefined;
   originalTargetValue: string | null | undefined;
-  fieldName: Path<RegistrationType>;
+  fieldName: Path<Registration>;
   dataTestId: string;
 }
 
@@ -23,7 +20,7 @@ export const CompareTextField = ({
   fieldName,
   dataTestId,
 }: CompareTextFieldProps) => {
-  const { control, register, setValue, resetField } = useFormContext<RegistrationType>();
+  const { control, register, setValue, resetField } = useFormContext<Registration>();
   const currentTargetValue = useWatch({ name: fieldName, control }) ?? '';
 
   return (
@@ -45,7 +42,7 @@ export const CompareMultilineTextField = ({
   fieldName,
   dataTestId,
 }: CompareTextFieldProps) => {
-  const { control, register, setValue, resetField } = useFormContext<RegistrationType>();
+  const { control, register, setValue, resetField } = useFormContext<Registration>();
   const currentTargetValue = useWatch({ name: fieldName, control }) ?? '';
   const [inputRef, resizeField] = useAutoResizeTextFieldMultiline();
 
