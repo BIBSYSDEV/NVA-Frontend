@@ -4,8 +4,7 @@ import { Registration, RegistrationTab } from '../../types/registration.types';
 interface MergeResultsWizardContextType {
   activeTab: RegistrationTab;
   setActiveTab: (tab: RegistrationTab) => void;
-  sourceResult: Registration; // Result to replace (left side)
-  targetResult: Registration; // Result to merge into (right side)
+  sourceResult: Registration;
 }
 
 const defaultTab = RegistrationTab.Description;
@@ -14,12 +13,11 @@ export const MergeResultsWizardContext = createContext<MergeResultsWizardContext
   activeTab: defaultTab,
   setActiveTab: () => {},
   sourceResult: {} as Registration,
-  targetResult: {} as Registration,
 });
 
 interface RegistrationFormContextProviderProps {
   children: ReactNode;
-  value: Omit<MergeResultsWizardContextType, 'setActiveTab' | 'activeTab'>;
+  value: Pick<MergeResultsWizardContextType, 'sourceResult'>;
 }
 
 export const MergeResultsWizardContextProvider = ({ children, value }: RegistrationFormContextProviderProps) => {

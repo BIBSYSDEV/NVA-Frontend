@@ -1,19 +1,21 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { Box, IconButton, Tooltip } from '@mui/material';
+import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import { useContext } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { navigationButtonStyling } from '../../pages/registration/RegistrationFormActions';
-import { RegistrationTab } from '../../types/registration.types';
+import { Registration, RegistrationTab } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizardActions = () => {
   const { t } = useTranslation();
+  const { formState } = useFormContext<Registration>();
   const { activeTab, setActiveTab } = useContext(MergeResultsWizardContext);
 
   return (
-    <Box sx={{ display: 'flex', gap: '1rem' }}>
+    <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
       {activeTab !== RegistrationTab.Description && (
         <Tooltip title={t('common.previous')}>
           <IconButton
@@ -24,8 +26,17 @@ export const MergeResultsWizardActions = () => {
         </Tooltip>
       )}
 
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ ml: 'auto' }}
+        loading={formState.isSubmitting}
+        data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}>
+        {t('basic_data.central_import.import')}
+      </Button>
+
       {activeTab !== RegistrationTab.FilesAndLicenses && (
-        <Tooltip title={t('common.next')} sx={{ ml: 'auto' }}>
+        <Tooltip title={t('common.next')}>
           <IconButton
             onClick={() => setActiveTab(activeTab + 1)}
             data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
