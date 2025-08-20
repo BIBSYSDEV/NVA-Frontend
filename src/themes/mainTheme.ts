@@ -274,10 +274,10 @@ export const mainTheme = createTheme(
       MuiLink: {
         styleOverrides: {
           root: {
-            color: Color.TextPrimary,
+            color: Color.PrimaryDark,
           },
           underlineAlways: {
-            textDecorationColor: Color.PrimaryMain,
+            textDecorationColor: Color.PrimaryDark,
           },
         },
       },
@@ -361,15 +361,15 @@ export const mainTheme = createTheme(
       MuiFilledInput: {
         styleOverrides: {
           root: {
-            backgroundColor: Color.White,
+            backgroundColor: Color.SecondaryLight,
             '&.Mui-focused': {
-              backgroundColor: Color.White,
+              backgroundColor: Color.SecondaryLight,
             },
             '&:hover': {
-              backgroundColor: Color.White,
+              backgroundColor: Color.SecondaryLight,
             },
             '&.Mui-disabled': {
-              backgroundColor: Color.White,
+              backgroundColor: Color.SecondaryLight,
             },
           },
         },
@@ -377,15 +377,15 @@ export const mainTheme = createTheme(
       MuiPickersFilledInput: {
         styleOverrides: {
           root: {
-            backgroundColor: Color.White,
+            backgroundColor: Color.SecondaryLight,
             '&.Mui-focused': {
-              backgroundColor: Color.White,
+              backgroundColor: Color.SecondaryLight,
             },
             '&:hover': {
-              backgroundColor: Color.White,
+              backgroundColor: Color.SecondaryLight,
             },
             '&.Mui-disabled': {
-              backgroundColor: Color.White,
+              backgroundColor: Color.SecondaryLight,
             },
           },
         },
@@ -393,7 +393,7 @@ export const mainTheme = createTheme(
       MuiMenuItem: {
         styleOverrides: {
           root: {
-            color: Color.Black,
+            color: Color.PrimaryDark,
           },
           gutters: {
             paddingRight: '2rem',
