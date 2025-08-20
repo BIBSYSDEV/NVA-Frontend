@@ -15,7 +15,7 @@ export const MergeResultsWizardContent = () => {
       sx={{
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', sm: '1fr auto 1fr' },
-        gap: '0.5rem',
+        gap: '1rem 0.5rem',
         mt: '2rem',
         alignItems: 'center',
       }}>

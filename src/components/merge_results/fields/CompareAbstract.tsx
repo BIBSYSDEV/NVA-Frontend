@@ -9,40 +9,42 @@ import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { CompareFields } from './CompareFields';
 import { SourceValue } from './SourceValue';
 
-export const CompareMainTitle = () => {
+export const CompareAbstract = () => {
   const { t } = useTranslation();
   const { control, formState, register, setValue, resetField } = useFormContext<Registration>();
   const { sourceResult } = useContext(MergeResultsWizardContext);
 
-  const mainTitleValue = useWatch({ name: 'entityDescription.mainTitle', control });
-  const [mainTitleRef, resizeMainTitle] = useAutoResizeTextFieldMultiline();
+  const abstractValue = useWatch({ name: 'entityDescription.abstract', control });
+  const [abstractRef, resizeAbstract] = useAutoResizeTextFieldMultiline();
 
   return (
     <CompareFields
-      sourceContent={<SourceValue label={t('common.title')} value={sourceResult.entityDescription?.mainTitle} />}
+      sourceContent={
+        <SourceValue label={t('registration.description.abstract')} value={sourceResult.entityDescription?.abstract} />
+      }
       targetContent={
         <TextField
-          data-testid={dataTestId.registrationWizard.description.titleField}
+          data-testid={dataTestId.registrationWizard.description.abstractField}
           variant="filled"
-          label={t('common.title')}
+          label={t('registration.description.abstract')}
           multiline
-          inputRef={mainTitleRef}
-          {...register('entityDescription.mainTitle')}
+          inputRef={abstractRef}
+          {...register('entityDescription.abstract')}
         />
       }
-      isMatching={(sourceResult.entityDescription?.mainTitle ?? '') === mainTitleValue}
-      isChanged={mainTitleValue !== formState.defaultValues?.entityDescription?.mainTitle}
+      isMatching={(sourceResult.entityDescription?.abstract ?? '') === abstractValue}
+      isChanged={abstractValue !== formState.defaultValues?.entityDescription?.abstract}
       onCopyValue={
-        sourceResult.entityDescription?.mainTitle
+        sourceResult.entityDescription?.abstract
           ? () => {
-              setValue('entityDescription.mainTitle', sourceResult.entityDescription!.mainTitle);
-              resizeMainTitle();
+              setValue('entityDescription.abstract', sourceResult.entityDescription!.abstract);
+              resizeAbstract();
             }
           : undefined
       }
       onResetValue={() => {
-        resetField('entityDescription.mainTitle');
-        resizeMainTitle();
+        resetField('entityDescription.abstract');
+        resizeAbstract();
       }}
     />
   );
