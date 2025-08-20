@@ -11,15 +11,12 @@ export const MergeResultsWizardCategoryTab = () => {
   const { control } = useFormContext<Registration>();
   const { sourceResult } = useContext(MergeResultsWizardContext);
 
-  const sourceInstanceType = sourceResult?.entityDescription?.reference?.publicationInstance?.type ?? '';
+  const sourceInstanceType = sourceResult.entityDescription?.reference?.publicationInstance?.type ?? '';
   const targetInstanceType = useWatch({ name: 'entityDescription.reference.publicationInstance.type', control }) ?? '';
 
-  const sourceMainType = getMainRegistrationType(sourceInstanceType);
-  const categoryMainType = getMainRegistrationType(targetInstanceType);
-
   const hasJournalFields =
-    sourceMainType === PublicationType.PublicationInJournal &&
-    categoryMainType === PublicationType.PublicationInJournal &&
+    getMainRegistrationType(sourceInstanceType) === PublicationType.PublicationInJournal &&
+    getMainRegistrationType(targetInstanceType) === PublicationType.PublicationInJournal &&
     sourceInstanceType !== JournalType.Corrigendum &&
     targetInstanceType !== JournalType.Corrigendum;
 
