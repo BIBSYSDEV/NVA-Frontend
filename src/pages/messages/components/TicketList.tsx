@@ -208,7 +208,6 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
               <Button
                 variant="outlined"
                 size="small"
-                sx={{ textTransform: 'none' }}
                 onClick={() => {
                   const syncedParams = syncParamsWithSearchFields(searchParams);
                   syncedParams.delete(TicketSearchParam.ViewedByNot);

@@ -1,31 +1,40 @@
-import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
-import { RegistrationTab } from '../../types/registration.types';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { Registration } from '../../types/registration.types';
+import { BackgroundDiv } from '../styled/Wrappers';
 import { MergeResultsWizardActions } from './MergeResultsWizardActions';
-import { MergeResultsWizardContext } from './MergeResultsWizardContext';
+import { MergeResultsWizardContent } from './MergeResultsWizardContent';
+import { MergeResultsWizardContextProvider } from './MergeResultsWizardContext';
 import { MergeResultsWizardHeader } from './MergeResultsWizardHeader';
 import { MergeResultsWizardStepper } from './MergeResultsWizardStepper';
 
-export const MergeResultsWizard = () => {
-  const { t } = useTranslation();
-  const { activeTab } = useContext(MergeResultsWizardContext);
+interface MergeResultsWizardProps {
+  sourceResult: Registration;
+  targetResult: Registration;
+  onSave: SubmitHandler<Registration>;
+}
+
+export const MergeResultsWizard = ({ sourceResult, targetResult, onSave }: MergeResultsWizardProps) => {
+  const formMethods = useForm({ defaultValues: targetResult });
 
   return (
-    <>
-      <MergeResultsWizardHeader />
-      <MergeResultsWizardStepper />
-
-      {activeTab === RegistrationTab.Description ? (
-        <p>{t('registration.heading.description')}: TODO</p>
-      ) : activeTab === RegistrationTab.ResourceType ? (
-        <p>{t('registration.heading.resource_type')}: TODO</p>
-      ) : activeTab === RegistrationTab.Contributors ? (
-        <p>{t('registration.heading.contributors')}: TODO</p>
-      ) : activeTab === RegistrationTab.FilesAndLicenses ? (
-        <p>{t('registration.heading.files_and_license')}: TODO</p>
-      ) : null}
-
-      <MergeResultsWizardActions />
-    </>
+    <FormProvider {...formMethods}>
+      <MergeResultsWizardContextProvider value={{ sourceResult }}>
+        <form onSubmit={formMethods.handleSubmit(onSave)}>
+          <MergeResultsWizardHeader />
+          <MergeResultsWizardStepper />
+          <BackgroundDiv
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr auto 1fr' },
+              gap: '1rem 0.5rem',
+              mt: '2rem',
+              alignItems: 'center',
+            }}>
+            <MergeResultsWizardContent />
+            <MergeResultsWizardActions />
+          </BackgroundDiv>
+        </form>
+      </MergeResultsWizardContextProvider>
+    </FormProvider>
   );
 };

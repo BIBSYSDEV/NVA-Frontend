@@ -49,7 +49,7 @@ export const SerialPublicationClaimsSettings = () => {
               data-testid={dataTestId.basicData.addChannelClaimButton}
               variant="outlined"
               startIcon={<AddIcon />}
-              sx={{ my: '0.5rem', textTransform: 'none' }}
+              sx={{ my: '0.5rem' }}
               onClick={toggleAddChannelClaimDialog}>
               {t('editor.institution.channel_claims.add_serial_publication_channel_claim')}
             </Button>
