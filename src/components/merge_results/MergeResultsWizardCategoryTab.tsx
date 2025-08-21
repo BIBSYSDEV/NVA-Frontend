@@ -15,7 +15,7 @@ import { SourceValue } from './fields/SourceValue';
 
 export const MergeResultsWizardCategoryTab = () => {
   const { t } = useTranslation();
-  const { control, resetField, formState, setValue } = useFormContext<Registration>();
+  const { control, formState, setValue } = useFormContext<Registration>();
   const { sourceResult } = useContext(MergeResultsWizardContext);
 
   const sourceInstanceType = sourceResult.entityDescription?.reference?.publicationInstance?.type ?? '';
@@ -23,6 +23,8 @@ export const MergeResultsWizardCategoryTab = () => {
 
   const targetInstanceType = useWatch({ name: 'entityDescription.reference.publicationInstance.type', control }) ?? '';
   const targetMainType = getMainRegistrationType(targetInstanceType);
+  const targetInitialInstanceType =
+    formState.defaultValues?.entityDescription?.reference?.publicationInstance?.type ?? '';
 
   const isSameMainCategory = sourceMainType === targetMainType;
 
@@ -60,16 +62,13 @@ export const MergeResultsWizardCategoryTab = () => {
           />
         }
         isMatching={sourceInstanceType === targetInstanceType}
-        isChanged={
-          (formState.defaultValues?.entityDescription?.reference?.publicationInstance?.type ?? '') !==
-          targetInstanceType
-        }
+        isChanged={targetInitialInstanceType !== targetInstanceType}
         onCopyValue={
           sourceInstanceType && isSameMainCategory
             ? () => setValue('entityDescription.reference.publicationInstance.type', sourceInstanceType)
             : undefined
         }
-        onResetValue={() => resetField('entityDescription.reference.publicationInstance')} // TODO: Reset only type?
+        onResetValue={() => setValue('entityDescription.reference.publicationInstance.type', targetInitialInstanceType)}
       />
 
       {hasJournalFields && <CompareJournalFields sourceResult={sourceResult as JournalRegistration} />}
