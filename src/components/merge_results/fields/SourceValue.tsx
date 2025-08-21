@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 interface SourceValueProps {
@@ -9,9 +10,9 @@ export const SourceValue = ({ label, value = '' }: SourceValueProps) => {
   const { t } = useTranslation();
 
   return (
-    <dl style={{ margin: 0 }}>
+    <Box component="dl" sx={{ m: 0, p: '0.5rem', bgcolor: '#FEFBF3' }}>
       <dt style={{ fontWeight: 'bold' }}>{label}</dt>
       <dd style={{ margin: 0, fontStyle: value ? 'normal' : 'italic' }}>{value || t('missing_value')}</dd>
-    </dl>
+    </Box>
   );
 };

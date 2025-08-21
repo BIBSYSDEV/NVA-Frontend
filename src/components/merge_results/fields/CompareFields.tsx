@@ -34,7 +34,7 @@ export const CompareFields = ({
 
   return (
     <>
-      <Box sx={{ p: '0.5rem', bgcolor: '#FEFBF3' }}>{sourceContent}</Box>
+      {sourceContent}
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
         {isMatching ? (
