@@ -27,6 +27,10 @@ export const MergeResultsWizardCategoryTab = () => {
     formState.defaultValues?.entityDescription?.reference?.publicationInstance?.type ?? '';
 
   const isSameMainCategory = sourceMainType === targetMainType;
+  const sourceMainTypeString =
+    !isSameMainCategory && sourceMainType ? ` (${t(`registration.publication_types.${sourceMainType}`)})` : '';
+  const targetMainTypeString =
+    !isSameMainCategory && targetMainType ? ` (${t(`registration.publication_types.${targetMainType}`)})` : '';
 
   const hasJournalFields =
     sourceMainType === PublicationType.PublicationInJournal &&
@@ -52,13 +56,17 @@ export const MergeResultsWizardCategoryTab = () => {
         sourceContent={
           <SourceValue
             label={t('common.category')}
-            value={sourceInstanceType ? t(`registration.publication_types.${sourceInstanceType}`) : ''}
+            value={
+              sourceInstanceType ? t(`registration.publication_types.${sourceInstanceType}`) + sourceMainTypeString : ''
+            }
           />
         }
         targetContent={
           <SourceValue
             label={t('common.category')}
-            value={targetInstanceType ? t(`registration.publication_types.${targetInstanceType}`) : ''}
+            value={
+              targetInstanceType ? t(`registration.publication_types.${targetInstanceType}`) + targetMainTypeString : ''
+            }
           />
         }
         isMatching={sourceInstanceType === targetInstanceType}
