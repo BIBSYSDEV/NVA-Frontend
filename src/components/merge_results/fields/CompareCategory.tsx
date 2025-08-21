@@ -26,12 +26,7 @@ export const CompareCategory = ({
 
   const targetInitialInstanceType =
     formState.defaultValues?.entityDescription?.reference?.publicationInstance?.type ?? '';
-
   const isSameMainCategory = sourceMainType === targetMainType;
-  const sourceMainTypeString =
-    !isSameMainCategory && sourceMainType ? ` (${t(`registration.publication_types.${sourceMainType}`)})` : '';
-  const targetMainTypeString =
-    !isSameMainCategory && targetMainType ? ` (${t(`registration.publication_types.${targetMainType}`)})` : '';
 
   return (
     <>
@@ -52,7 +47,10 @@ export const CompareCategory = ({
           <SourceValue
             label={t('common.category')}
             value={
-              sourceInstanceType ? t(`registration.publication_types.${sourceInstanceType}`) + sourceMainTypeString : ''
+              <>
+                {sourceInstanceType && t(`registration.publication_types.${sourceInstanceType}`)}
+                {!isSameMainCategory && sourceMainType && <MainTypeContent type={sourceMainType} />}
+              </>
             }
           />
         }
@@ -60,7 +58,10 @@ export const CompareCategory = ({
           <SourceValue
             label={t('common.category')}
             value={
-              targetInstanceType ? t(`registration.publication_types.${targetInstanceType}`) + targetMainTypeString : ''
+              <>
+                {targetInstanceType && t(`registration.publication_types.${targetInstanceType}`)}
+                {!isSameMainCategory && targetMainType && <MainTypeContent type={targetMainType} />}
+              </>
             }
           />
         }
@@ -75,4 +76,13 @@ export const CompareCategory = ({
       />
     </>
   );
+};
+
+interface MainTypeContent {
+  type: PublicationType;
+}
+
+const MainTypeContent = ({ type }: MainTypeContent) => {
+  const { t } = useTranslation();
+  return <span style={{ marginLeft: '0.25rem' }}>({t(`registration.publication_types.${type}`)})</span>;
 };

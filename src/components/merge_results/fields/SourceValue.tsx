@@ -1,12 +1,13 @@
 import { Box } from '@mui/material';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface SourceValueProps {
   label: string;
-  value: string | null | undefined;
+  value: ReactNode;
 }
 
-export const SourceValue = ({ label, value = '' }: SourceValueProps) => {
+export const SourceValue = ({ label, value }: SourceValueProps) => {
   const { t } = useTranslation();
 
   return (
