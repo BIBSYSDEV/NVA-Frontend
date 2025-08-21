@@ -331,9 +331,14 @@
     "year": "År",
     "yes": "Ja"
   },
+  "corresponding_contributor": "Korresponderende bidragsyter",
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljer",
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -405,12 +410,9 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
+  "does_not_match": "Matcher ikke",
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angi kategoriene hvor din institusjon tillater filopplasting.",
@@ -817,6 +819,8 @@
     },
     "unknown_filename": "Ukjent filnavn"
   },
+  "matches": "Matcher",
+  "missing_value": "Mangler verdi",
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statuser",
@@ -968,6 +972,7 @@
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li></ul>",
   "overview_over_administrators": "Oversikt over administratorer",
+  "overwrite": "Overskriv",
   "owner_institution": "Eierinstitusjon",
   "point_of_contact": "Kontaktpunkt",
   "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
@@ -1357,6 +1362,7 @@
     "verify_contributor": "Identifiser prosjektdeltaker",
     "verify_project_manager": "Identifiser prosjektleder"
   },
+  "published_result": "Publisert resultat",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikke lagre fordi resultatet er publisert og inneholder valideringsfeil",
     "channel_claim_info_heading": "Felt låst for redigering",
@@ -2104,6 +2110,7 @@
     "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål.",
     "year_published": "Publiseringsår"
   },
+  "reset": "Nullstill",
   "search": {
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
@@ -2268,12 +2275,5 @@
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   },
-  "view_contact_info": "Se kontaktinformasjon",
-  "published_result": "Publisert resultat",
-  "reset": "Nullstill",
-  "overwrite": "Overskriv",
-  "matches": "Matcher",
-  "does_not_match": "Matcher ikke",
-  "corresponding_contributor": "Korresponderende bidragsyter",
-  "missing_value": "Mangler verdi"
+  "view_contact_info": "Se kontaktinformasjon"
 }
