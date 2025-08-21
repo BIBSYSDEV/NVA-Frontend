@@ -49,6 +49,7 @@ export const dataTestId = {
       checkboxIssn: 'duplicate-search-issn-checkbox',
       checkboxTitle: 'duplicate-search-title-checkbox',
       checkboxYear: 'duplicate-search-year-checkbox',
+      copyValueButton: 'copy-value-button',
       filter: {
         importedRadio: 'imported-radio',
         notImportedRadio: 'not-imported-radio',
@@ -57,6 +58,7 @@ export const dataTestId = {
       },
       importCandidateButton: 'import-candidate-button',
       resetButton: 'duplicate-search-reset-button',
+      resetValueButton: 'reset-value-button',
       resultItem: 'central-import-result-item',
       searchButton: 'duplicate-search-retry-button',
       textFieldAuthor: 'duplicate-search-author-textfield',
