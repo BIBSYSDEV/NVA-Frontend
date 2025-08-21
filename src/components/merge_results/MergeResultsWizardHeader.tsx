@@ -1,21 +1,26 @@
 import { Box } from '@mui/material';
-import { useContext } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { Registration } from '../../types/registration.types';
 import { getTitleString } from '../../utils/registration-helpers';
 import { PageHeader } from '../PageHeader';
 import { RegistrationIconHeader } from '../RegistrationIconHeader';
-import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizardHeader = () => {
-  const { targetResult } = useContext(MergeResultsWizardContext);
+  const { control } = useFormContext<Registration>();
+
+  const [mainTitle, instanceType, publicationDate] = useWatch({
+    control,
+    name: [
+      'entityDescription.mainTitle',
+      'entityDescription.reference.publicationInstance.type',
+      'entityDescription.publicationDate',
+    ],
+  });
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <RegistrationIconHeader
-        publicationInstanceType={targetResult.entityDescription?.reference?.publicationInstance?.type}
-        publicationDate={targetResult.entityDescription?.publicationDate}
-        showYearOnly
-      />
-      <PageHeader variant="h1">{getTitleString(targetResult.entityDescription?.mainTitle)}</PageHeader>
+      <RegistrationIconHeader publicationInstanceType={instanceType} publicationDate={publicationDate} showYearOnly />
+      <PageHeader variant="h1">{getTitleString(mainTitle)}</PageHeader>
     </Box>
   );
 };

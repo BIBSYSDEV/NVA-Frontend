@@ -4,13 +4,13 @@ import { Trans } from 'react-i18next';
 
 const NotFound = () => {
   return (
-    <Box data-testid="404" sx={{ m: '4rem 2rem' }}>
+    <Box data-testid="404" sx={{ m: { xs: '4rem 1rem', sm: '4rem auto' } }}>
       <Trans
         i18nKey="feedback.error.404_page"
         components={{
-          span: <span style={{ display: 'flex', gap: '0.5rem' }} />,
+          span: <span style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }} />,
           icon: <BlockIcon />,
-          h1: <Typography gutterBottom variant="h1" />,
+          h1: <Typography variant="h1" />,
           p: <Typography />,
         }}
       />

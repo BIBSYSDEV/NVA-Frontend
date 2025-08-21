@@ -35,6 +35,7 @@ export const ActionPanel = ({
 }: ActionPanelProps) => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
+  const contributors = registration.entityDescription?.contributors ?? [];
   const user = useSelector((store: RootState) => store.user);
 
   const publishingRequestTickets = tickets.filter(isFileApprovalTicket) as PublishingTicket[];
@@ -139,7 +140,7 @@ export const ActionPanel = ({
         </ErrorBoundary>
       </TabPanel>
       <TabPanel tabValue={tabValue} index={1}>
-        <DetailsPanel />
+        <DetailsPanel contributors={contributors} />
       </TabPanel>
       <TabPanel tabValue={tabValue} index={2}>
         <ErrorBoundary>

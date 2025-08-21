@@ -145,7 +145,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     <Typography variant="h2">{t('registration.resource_type.artistic.musical_works')}</Typography>
                     <Button
                       variant="outlined"
-                      sx={{ width: 'fit-content', textTransform: 'none' }}
+                      sx={{ width: 'fit-content' }}
                       onClick={() => push(emptyMusicalWork)}
                       data-testid={dataTestId.registrationWizard.resourceType.otherPerfomanceAddWork}
                       startIcon={<AddIcon />}>

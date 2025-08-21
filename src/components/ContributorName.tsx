@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { ContributorIndicator } from '../pages/registration/contributors_tab/ContributorIndicator';
 import OrcidLogo from '../resources/images/orcid_logo.svg';
+import { dataTestId } from '../utils/dataTestIds';
 import { getResearchProfilePath } from '../utils/urlPaths';
 
 interface ContributorNameProps extends Pick<BoxProps, 'sx'> {
@@ -19,7 +20,10 @@ export const ContributorName = ({ name, hasVerifiedAffiliation, id, orcId, sx }:
     <Box sx={{ display: 'flex', gap: '0.4rem', alignItems: 'center', ...sx }}>
       <ContributorIndicator contributorName={name} contributorId={id} hasVerifiedAffiliation={hasVerifiedAffiliation} />
       {id ? (
-        <MuiLink component={Link} to={getResearchProfilePath(id)}>
+        <MuiLink
+          data-testid={dataTestId.registrationWizard.contributors.researchProfileLink(id)}
+          component={Link}
+          to={getResearchProfilePath(id)}>
           {name}
         </MuiLink>
       ) : (

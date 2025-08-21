@@ -260,7 +260,7 @@ export const AudioVisualPublicationModal = ({
                     <Typography variant="h2">{t('registration.resource_type.artistic.content_track')}</Typography>
                     <Button
                       variant="outlined"
-                      sx={{ width: 'fit-content', textTransform: 'none' }}
+                      sx={{ width: 'fit-content' }}
                       onClick={() => push(emptyMusicTrack)}
                       startIcon={<AddIcon />}
                       data-testid={dataTestId.registrationWizard.resourceType.audioVideoAddTrack}>

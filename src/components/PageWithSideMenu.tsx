@@ -70,7 +70,6 @@ export const NavigationList = ({ sx, ...props }: NavigationListProps) => (
       display: 'flex',
       flexDirection: 'column',
       gap: '0.5rem',
-      a: { textTransform: 'none' },
       ...sx,
     }}
     {...props}
@@ -85,7 +84,6 @@ export const LinkCreateButton = ({ sx, title, isSelected, selectedColor, ...rest
   return (
     <SelectableButton
       sx={{
-        textTransform: 'uppercase',
         borderWidth: '1px',
         borderRadius: 0,
         borderColor: isSelected ? 'primary.main' : 'secondary.dark',

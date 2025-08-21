@@ -343,6 +343,7 @@ export const dataTestId = {
     contributors: 'public-registration-contributors',
     detailsTab: {
       detailsTab: 'details-tab',
+      emailLink: (id: string) => `email-link-${id}`,
       infoLink: 'info-link',
       resultContactModal: 'result-contact-modal',
       viewContactInformationButton: 'view-contact-information-button',
@@ -444,6 +445,7 @@ export const dataTestId = {
       verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
       removeAffiliationButton: 'button-remove-affiliation',
       removeContributorButton: (name: string) => `button-remove-contributor-${name}`,
+      researchProfileLink: (id: string) => `research-profile-link-${id}`,
       searchField: 'search-field',
       selectAffiliationForContributor: 'select-affiliation-for-contributor',
       selectContributorType: 'select-contributor-type',
@@ -503,6 +505,7 @@ export const dataTestId = {
       alternativeTitleField: 'registration-alternative-title-field',
       descriptionField: 'registration-description-field',
       languageField: 'registration-language-field',
+      languageItem: (language: string) => `registration-language-item-${language}`,
       removeProjectButton: 'remove-project-button',
       tagField: 'registration-tag-field',
       titleField: 'registration-title-field',
@@ -731,6 +734,9 @@ export const dataTestId = {
       applicationHelpPage: 'application-help-page',
     },
     userRolesAndHelpLink: 'user-roles-and-help-link',
+  },
+  serviceBanner: {
+    serviceInfoLink: 'service-info-link',
   },
   tasksPage: {
     areaOfResponsibilitySelector: 'area-of-responsibility-selector',
