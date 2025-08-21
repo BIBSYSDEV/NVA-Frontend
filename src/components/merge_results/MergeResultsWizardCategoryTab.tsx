@@ -1,10 +1,13 @@
+import WarningIcon from '@mui/icons-material/Warning';
+import { Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { Registration } from '../../types/registration.types';
 import { getMainRegistrationType } from '../../utils/registration-helpers';
+import { StyledInfoBanner } from '../styled/Wrappers';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 import { CompareFields } from './fields/CompareFields';
 import { CompareJournalFields } from './fields/CompareJournalFields';
@@ -19,15 +22,30 @@ export const MergeResultsWizardCategoryTab = () => {
   const sourceMainType = getMainRegistrationType(sourceInstanceType);
 
   const targetInstanceType = useWatch({ name: 'entityDescription.reference.publicationInstance.type', control }) ?? '';
+  const targetMainType = getMainRegistrationType(targetInstanceType);
+
+  const isSameMainCategory = sourceMainType === targetMainType;
 
   const hasJournalFields =
     sourceMainType === PublicationType.PublicationInJournal &&
-    getMainRegistrationType(targetInstanceType) === PublicationType.PublicationInJournal &&
+    targetMainType === PublicationType.PublicationInJournal &&
     sourceInstanceType !== JournalType.Corrigendum &&
     targetInstanceType !== JournalType.Corrigendum;
 
   return (
     <>
+      {!isSameMainCategory && (
+        <StyledInfoBanner sx={{ gridColumn: '1/-1', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <WarningIcon />
+          <div>
+            <Trans
+              i18nKey="cannot_copy_category_from_another_context_type"
+              components={{ p: <Typography color="inherit" /> }}
+            />
+          </div>
+        </StyledInfoBanner>
+      )}
+
       <CompareFields
         sourceContent={
           <SourceValue
@@ -47,14 +65,11 @@ export const MergeResultsWizardCategoryTab = () => {
           targetInstanceType
         }
         onCopyValue={
-          sourceInstanceType
-            ? () => {
-                setValue('entityDescription.reference.publicationContext.type', sourceMainType);
-                setValue('entityDescription.reference.publicationInstance.type', sourceInstanceType);
-              }
+          sourceInstanceType && isSameMainCategory
+            ? () => setValue('entityDescription.reference.publicationInstance.type', sourceInstanceType)
             : undefined
         }
-        onResetValue={() => resetField('entityDescription.reference')}
+        onResetValue={() => resetField('entityDescription.reference.publicationInstance')} // TODO: Reset only type?
       />
 
       {hasJournalFields && <CompareJournalFields sourceResult={sourceResult as JournalRegistration} />}
