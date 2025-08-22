@@ -36,6 +36,14 @@ enum Color {
   Neutral95 = '#F1F1F1',
   Neutral87 = '#DEDEDE',
   Neutral46 = '#767676',
+  Blue = '#004FCF',
+  BlueLight = '#E6F0FF',
+  Green = '#096638',
+  GreenLight = '#CFF7E2',
+  Red = '#B60203',
+  RedLight = '#FFEAE9',
+  Yellow = '#FFB700',
+  YellowLight = '#FCEED2',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
@@ -105,18 +113,18 @@ export const mainTheme = createTheme(
         dark: Color.Outdated,
       },
       error: {
-        main: Color.Outdated,
+        main: Color.Red,
       },
       success: {
-        main: Color.Outdated,
+        main: Color.Green,
       },
       info: {
-        main: Color.Outdated,
-        light: Color.Outdated,
+        main: Color.Blue,
+        light: Color.BlueLight,
       },
       warning: {
-        main: Color.Outdated,
-        light: Color.Outdated,
+        main: Color.Yellow,
+        light: Color.YellowLight,
       },
       grey: {
         300: '#EEEEEE',
