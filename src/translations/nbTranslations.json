@@ -79,11 +79,7 @@
         "merge_description": "Slå sammen importdata med allerede registrert data.",
         "merge_details_1": "Resultatet finnes i NVA. Gå til veiviseren for å endre alle felter etter at du har slått sammen importdata med resultat i NVA. Dette kan være viktig for Norsk vitenskapsindeks (NVI).",
         "merge_details_2": "Data fra NVA vises til høyre. Metadata fra importkandidat vises til venstre og har ofte bedre datagrunnlag. Du kan velge enkeltvis hva du vil ta med.",
-        "metadata_to_import": "Metadata til import",
-        "page_to": "Sidetall til",
-        "result_id": "Resultat-ID",
-        "result_in_nva": "Resultat i NVA",
-        "update_value": "Oppdater verdi"
+        "result_in_nva": "Resultat i NVA"
       },
       "missing_journal": "Mangler tidsskrift",
       "missing_publisher": "Mangler utgiver",
