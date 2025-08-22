@@ -28,7 +28,7 @@ export const MaintenanceMessageContent = ({ message }: MaintenanceMessageContent
         h1: <Typography variant="h1" gutterBottom />,
         h2: <Typography variant="h2" gutterBottom />,
         p: <Typography />,
-        bold: <Typography fontWeight="bold" />,
+        strong: <strong />,
         a: <OpenInNewLink data-testid={dataTestId.serviceBanner.serviceInfoLink} />,
       }}
     />
