@@ -1,4 +1,4 @@
-import { Button, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Link, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
@@ -12,26 +12,20 @@ export const Logo = () => {
   const showShortLogoAnonymous = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
   const showShortLogo = showShortLogoAnonymous || showShortLogoLoggedIn;
+
   return (
-    <Button data-testid="logo" component={RouterLink} to={UrlPathTemplate.Root}>
-      <Typography variant="h5" component="span" sx={{ color: 'white', fontWeight: 900, fontSize: '3rem' }}>
-        NVA
-      </Typography>
+    <Link
+      data-testid="logo"
+      component={RouterLink}
+      to={UrlPathTemplate.Root}
+      sx={{ display: 'flex', alignItems: 'center', gap: '1rem', my: '1rem' }}>
+      <img src="logo.svg" alt={t('sikt_logo')} height="45" />
 
       {!showShortLogo && (
-        <Typography
-          variant="h1"
-          component="span"
-          sx={{
-            ml: '1.2rem',
-            color: 'white',
-            fontWeight: 20,
-            fontSize: '1rem',
-            maxWidth: '6rem',
-          }}>
+        <Typography sx={{ color: 'white', fontSize: '1.2rem', lineHeight: 1.2, maxWidth: '10rem' }}>
           {t('common.page_title')}
         </Typography>
       )}
-    </Button>
+    </Link>
   );
 };
