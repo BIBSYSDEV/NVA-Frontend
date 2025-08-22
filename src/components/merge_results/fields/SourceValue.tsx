@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 interface SourceValueProps {
   label: string;
-  value: string | undefined;
+  value: string | null | undefined;
 }
 
 export const SourceValue = ({ label, value = '' }: SourceValueProps) => {
