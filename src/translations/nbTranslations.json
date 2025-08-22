@@ -79,6 +79,7 @@
         "merge_description": "Slå sammen importdata med allerede registrert data.",
         "merge_details_1": "Resultatet finnes i NVA. Gå til veiviseren for å endre alle felter etter at du har slått sammen importdata med resultat i NVA. Dette kan være viktig for Norsk vitenskapsindeks (NVI).",
         "merge_details_2": "Data fra NVA vises til høyre. Metadata fra importkandidat vises til venstre og har ofte bedre datagrunnlag. Du kan velge enkeltvis hva du vil ta med.",
+        "page_to": "Sidetall til",
         "result_in_nva": "Resultat i NVA"
       },
       "missing_journal": "Mangler tidsskrift",
@@ -331,10 +332,6 @@
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljer",
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -406,7 +403,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "does_not_match": "Matcher ikke",
   "editor": {
