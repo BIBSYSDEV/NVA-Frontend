@@ -5,22 +5,37 @@ import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
-  PrimaryLight = '#D1CDFF',
-  PrimaryMain = '#7351FB',
-  PrimaryDark = '#0A0132',
-  SecondaryLight = '#FFFFFF',
-  SecondaryMain = '#DEDEDE',
-  SecondaryDark = '#767676',
-  SuccessLight = '#CFF7E2',
-  SuccessMain = '#096638',
-  ErrorLight = '#FFEAE9',
-  ErrorMain = '#B60203',
-  InfoLight = '#E6F0FF',
-  InfoMain = '#004FCF',
-  WarningLight = '#FCEED2',
-  WarningMain = '#FFB700',
-  BackgroundPrimary = '#F7F7F7',
-  BackgroundSecondary = '#F1F1F1',
+  Black = '#222222',
+  White = '#FFFFFF',
+  PrimaryMain = '#0A0132',
+  SecondaryMain = '#7351FB',
+  CentralImportMain = '#D9D9D9',
+  CentralImportLight = '#EFEEED',
+  ErrorMain = '#AC0303',
+  SecondaryLight = '#F9F4E6',
+  SecondaryDark = '#D3C9AF',
+  SuccessMain = '#025810',
+  InfoMain = '#0B408F',
+  InfoLight = '#C2D3EA',
+  PrimaryLight = '#0D4DAD',
+  TextPrimary = 'rgba(0, 0, 0, 0.87)',
+  DoiRequest = '#FFAA8E',
+  DoiRequestLight = '#FFE2DA',
+  GeneralSupportCase = '#7E9DCC',
+  Registration = '#DAC48E',
+  Person = '#B3D6D9',
+  Project = '#E48F8F',
+  PublishingRequest = '#FFD27B',
+  PublishingRequestLight = '#FFF0D3',
+  NviMain = '#EE95EA',
+  NviLight = '#F8D3F6',
+  WarningMain = '#ED6C02',
+  WarningLight = '#FFD45A',
+  Outdated = '#fc53db',
+  Neutral97 = '#F7F7F7',
+  Neutral95 = '#F1F1F1',
+  Neutral87 = '#DEDEDE',
+  Neutral46 = '#767676',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
@@ -35,7 +50,6 @@ declare module '@mui/material/styles' {
     generalSupportCase: PaletteColorOptions;
     centralImport: PaletteColorOptions;
     nvi: PaletteColorOptions;
-    seperator: PaletteColorOptions;
   }
   interface PaletteOptions {
     registration?: PaletteColorOptions;
@@ -48,10 +62,12 @@ declare module '@mui/material/styles' {
     nvi?: PaletteColorOptions;
   }
   interface TypeBackground {
-    secondary?: string;
+    neutral97?: string;
+    neutral95?: string;
+    neutral87?: string;
+    neutral46?: string;
   }
 }
-
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     registration: true;
@@ -80,34 +96,27 @@ export const mainTheme = createTheme(
     palette: {
       primary: {
         main: Color.PrimaryMain,
-        light: Color.PrimaryLight,
-        dark: Color.PrimaryDark,
-        contrastText: Color.SecondaryLight,
+        light: Color.Outdated,
+        contrastText: Color.White,
       },
       secondary: {
-        light: Color.SecondaryLight,
+        light: Color.Outdated,
         main: Color.SecondaryMain,
-        dark: Color.SecondaryDark,
+        dark: Color.Outdated,
       },
       error: {
-        main: Color.ErrorMain,
-        light: Color.ErrorLight,
+        main: Color.Outdated,
       },
       success: {
-        main: Color.SuccessMain,
-        light: Color.SuccessLight,
+        main: Color.Outdated,
       },
       info: {
-        main: Color.InfoMain,
-        light: Color.InfoLight,
+        main: Color.Outdated,
+        light: Color.Outdated,
       },
       warning: {
-        main: Color.WarningMain,
-        light: Color.WarningLight,
-      },
-      background: {
-        default: Color.BackgroundPrimary,
-        secondary: Color.BackgroundSecondary,
+        main: Color.Outdated,
+        light: Color.Outdated,
       },
       grey: {
         300: '#EEEEEE',
@@ -115,36 +124,41 @@ export const mainTheme = createTheme(
         500: '#CCCCCC',
       },
       registration: {
-        main: '#f70000',
-        light: '#f70000',
+        main: Color.Outdated,
       },
       person: {
-        main: '#f70000',
-        light: '#f70000',
+        main: Color.Outdated,
       },
       project: {
-        main: '#f70000',
-        light: '#f70000',
+        main: Color.Outdated,
       },
       centralImport: {
-        main: '#f70000',
-        light: '#f70000',
+        main: Color.Outdated,
+        light: Color.Outdated,
       },
       publishingRequest: {
-        main: '#f70000',
-        light: '#f70000',
+        main: Color.Outdated,
+        light: Color.Outdated,
       },
       doiRequest: {
-        main: '#f70000',
-        light: '#f70000',
+        main: Color.Outdated,
+        light: Color.Outdated,
       },
       generalSupportCase: {
-        main: '#f70000',
-        light: '#f70000',
+        main: Color.Outdated,
+        light: Color.Outdated,
       },
       nvi: {
-        main: '#f70000',
-        light: '#f70000',
+        main: Color.Outdated,
+        light: Color.Outdated,
+      },
+      background: {
+        default: Color.White,
+        paper: Color.Outdated,
+        neutral97: Color.Neutral97,
+        neutral95: Color.Neutral95,
+        neutral87: Color.Neutral87,
+        neutral46: Color.Neutral46,
       },
     },
     typography: {
@@ -274,10 +288,10 @@ export const mainTheme = createTheme(
       MuiLink: {
         styleOverrides: {
           root: {
-            color: Color.PrimaryDark,
+            color: Color.TextPrimary,
           },
           underlineAlways: {
-            textDecorationColor: Color.PrimaryDark,
+            textDecorationColor: Color.PrimaryMain,
           },
         },
       },
@@ -361,15 +375,15 @@ export const mainTheme = createTheme(
       MuiFilledInput: {
         styleOverrides: {
           root: {
-            backgroundColor: Color.SecondaryLight,
+            backgroundColor: Color.White,
             '&.Mui-focused': {
-              backgroundColor: Color.SecondaryLight,
+              backgroundColor: Color.White,
             },
             '&:hover': {
-              backgroundColor: Color.SecondaryLight,
+              backgroundColor: Color.White,
             },
             '&.Mui-disabled': {
-              backgroundColor: Color.SecondaryLight,
+              backgroundColor: Color.White,
             },
           },
         },
@@ -377,15 +391,15 @@ export const mainTheme = createTheme(
       MuiPickersFilledInput: {
         styleOverrides: {
           root: {
-            backgroundColor: Color.SecondaryLight,
+            backgroundColor: Color.White,
             '&.Mui-focused': {
-              backgroundColor: Color.SecondaryLight,
+              backgroundColor: Color.White,
             },
             '&:hover': {
-              backgroundColor: Color.SecondaryLight,
+              backgroundColor: Color.White,
             },
             '&.Mui-disabled': {
-              backgroundColor: Color.SecondaryLight,
+              backgroundColor: Color.White,
             },
           },
         },
@@ -393,7 +407,7 @@ export const mainTheme = createTheme(
       MuiMenuItem: {
         styleOverrides: {
           root: {
-            color: Color.PrimaryDark,
+            color: Color.Black,
           },
           gutters: {
             paddingRight: '2rem',
