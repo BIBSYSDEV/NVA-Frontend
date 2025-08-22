@@ -79,11 +79,7 @@
         "merge_description": "Slå sammen importdata med allerede registrert data.",
         "merge_details_1": "Resultatet finnes i NVA. Gå til veiviseren for å endre alle felter etter at du har slått sammen importdata med resultat i NVA. Dette kan være viktig for Norsk vitenskapsindeks (NVI).",
         "merge_details_2": "Data fra NVA vises til høyre. Metadata fra importkandidat vises til venstre og har ofte bedre datagrunnlag. Du kan velge enkeltvis hva du vil ta med.",
-        "metadata_to_import": "Metadata til import",
-        "page_to": "Sidetall til",
-        "result_id": "Resultat-ID",
-        "result_in_nva": "Resultat i NVA",
-        "update_value": "Oppdater verdi"
+        "result_in_nva": "Resultat i NVA"
       },
       "missing_journal": "Mangler tidsskrift",
       "missing_publisher": "Mangler utgiver",
@@ -609,7 +605,7 @@
       "get_tickets": "Kunne ikke hente saker",
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
-      "login_failed": "Innlogging feilet.",
+      "login_failed": "Innlogging feilet",
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "person_search": "Søk etter person feilet",
       "project_search": "Søk på prosjekt feilet",
@@ -2275,5 +2271,6 @@
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   },
-  "view_contact_info": "Se kontaktinformasjon"
+  "view_contact_info": "Se kontaktinformasjon",
+  "cannot_copy_category_from_another_context_type": "<p>Du kan ikke kopiere metadata fra kategorifanen hvis resultatet tilhører en annen hovedkategori.</p><p>Denne informasjonen må registreres manuelt etter at resten av metadata er kopiert.</p>"
 }

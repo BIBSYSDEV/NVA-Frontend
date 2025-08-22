@@ -10,7 +10,10 @@ export const MergeResultsWizardStepper = () => {
   const { activeTab, setActiveTab } = useContext(MergeResultsWizardContext);
 
   return (
-    <Stepper nonLinear activeStep={activeTab} sx={{ display: { xs: 'none', md: 'flex' } }}>
+    <Stepper
+      nonLinear
+      activeStep={activeTab}
+      sx={{ display: { xs: 'none', md: 'flex' }, maxWidth: '40rem', mx: 'auto' }}>
       <Step>
         <StepButton
           data-testid={dataTestId.registrationWizard.stepper.descriptionStepButton}
@@ -25,7 +28,7 @@ export const MergeResultsWizardStepper = () => {
           {t('registration.heading.resource_type')}
         </StepButton>
       </Step>
-      <Step>
+      {/* <Step>
         <StepButton
           data-testid={dataTestId.registrationWizard.stepper.contributorsStepButton}
           onClick={() => setActiveTab(RegistrationTab.Contributors)}>
@@ -38,7 +41,7 @@ export const MergeResultsWizardStepper = () => {
           onClick={() => setActiveTab(RegistrationTab.FilesAndLicenses)}>
           {t('registration.heading.files_and_license')}
         </StepButton>
-      </Step>
+      </Step> */}
     </Stepper>
   );
 };
