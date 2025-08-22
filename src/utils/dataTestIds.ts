@@ -737,6 +737,9 @@ export const dataTestId = {
     },
     userRolesAndHelpLink: 'user-roles-and-help-link',
   },
+  serviceBanner: {
+    serviceInfoLink: 'service-info-link',
+  },
   tasksPage: {
     areaOfResponsibilitySelector: 'area-of-responsibility-selector',
     correctionList: {
