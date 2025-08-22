@@ -23,10 +23,6 @@ export const MergeResultsWizardContent = () => {
         <MergeResultsWizardDescriptionTab />
       ) : activeTab === RegistrationTab.ResourceType ? (
         <MergeResultsWizardCategoryTab />
-      ) : activeTab === RegistrationTab.Contributors ? (
-        <p>{t('registration.heading.contributors')}: TODO</p>
-      ) : activeTab === RegistrationTab.FilesAndLicenses ? (
-        <p>{t('registration.heading.files_and_license')}: TODO</p>
       ) : null}
     </>
   );

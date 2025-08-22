@@ -35,7 +35,7 @@ export const MergeResultsWizardActions = () => {
         {t('basic_data.central_import.import')}
       </Button>
 
-      {activeTab !== RegistrationTab.FilesAndLicenses && (
+      {activeTab !== RegistrationTab.ResourceType && (
         <Tooltip title={t('common.next')}>
           <IconButton
             onClick={() => setActiveTab(activeTab + 1)}
