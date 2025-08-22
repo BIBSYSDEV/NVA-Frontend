@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// import { Header as SiktHeader } from '@sikt/sds-header';
 import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router';
@@ -21,8 +20,6 @@ export const Layout = () => {
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Notifier />
       <SkipLink href="#main-content">{t('common.skip_to_main_content')}</SkipLink>
-
-      {/* <SiktHeader /> */}
       <Header />
       <ServiceBanner />
       <Box
