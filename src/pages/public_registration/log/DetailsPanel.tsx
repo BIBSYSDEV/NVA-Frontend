@@ -51,7 +51,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
     .filter(Boolean) as Organization[];
   const unique = topLevelOrgs.filter((item, index, self) => index === self.findIndex((t) => t.id === item.id));
 
-  const customersData = useFetchCustomers(); // TODO: cache?
+  const customersData = useFetchCustomers({ staleTime: 1_800_000 }); // Cache for 30 minutes
   const customers = customersData.data?.customers ?? [];
 
   return (
