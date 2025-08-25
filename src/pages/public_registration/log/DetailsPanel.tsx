@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useQueries } from '@tanstack/react-query';
+import { useQueries, UseQueryResult } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useFetchCustomers } from '../../../api/hooks/useFetchCustomers';
@@ -44,9 +44,11 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
     queries: confirmedAffiliations.map((affiliation) => ({
       queryKey: ['organization', affiliation.id],
     })),
-  });
+  }) as UseQueryResult<Organization>[];
 
-  const topLevelOrgs = affiliations.map((affiliation) => getTopLevelOrganization(affiliation.data as Organization));
+  const topLevelOrgs = affiliations
+    .map((affiliation) => (affiliation.data ? getTopLevelOrganization(affiliation.data) : null))
+    .filter(Boolean) as Organization[];
   const unique = topLevelOrgs.filter((item, index, self) => index === self.findIndex((t) => t.id === item.id));
 
   const customersData = useFetchCustomers(); // TODO: cache?
