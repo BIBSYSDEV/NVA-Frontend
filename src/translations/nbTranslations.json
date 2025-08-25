@@ -821,7 +821,7 @@
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statuser",
-      "contact_curator_if_you_need_assistance": "Kontakt kurator hvis du trenger hjelp med registreringen.",
+      "contact_curator_if_you_need_assistance": "<p>Kontakt kurator hvis du trenger hjelp med registreringen.</p><p>Meldingen er synlig for kuratorer og redaktører ved din institusjon.</p>",
       "delete_message": "Slette melding",
       "delete_message_description": "Er du sikker på at du vil slette meldingen?",
       "doi_closed": "DOI avvist",
