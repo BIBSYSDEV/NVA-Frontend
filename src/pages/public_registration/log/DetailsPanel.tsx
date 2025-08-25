@@ -91,6 +91,28 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
           </IconButton>
         </Box>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <table>
+            <thead style={{ textAlign: 'left', fontSize: '1.125rem' }}>
+              <tr>
+                <th>{t('contributors_affiliations')}</th>
+                <th style={{ paddingLeft: '1rem' }}>{t('institution_support')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {unique.map((org) => {
+                const serviceCenterUri = customers.find((customer) => customer.cristinId === org.id)?.serviceCenterUri;
+                return (
+                  <tr key={org.id}>
+                    <td>{getLanguageString(org.labels)}</td>
+                    <td style={{ paddingLeft: '1rem' }}>
+                      {serviceCenterUri && <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+
           {contactPersons.length > 0 && (
             <div>
               <Typography variant="h2" gutterBottom>
@@ -115,28 +137,6 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
               </ul>
             </div>
           )}
-
-          <table>
-            <thead>
-              <tr>
-                <th>Bidragsytere sine tilknytninger</th>
-                <th>Institusjonens brukerstøtte</th>
-              </tr>
-            </thead>
-            <tbody>
-              {unique.map((org) => {
-                const serviceCenterUri = customers.find((customer) => customer.cristinId === org.id)?.serviceCenterUri;
-                return (
-                  <tr key={org.id}>
-                    <td>{getLanguageString(org.labels)}</td>
-                    <td>
-                      {serviceCenterUri && <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
 
           <Divider />
 
