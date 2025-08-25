@@ -150,7 +150,7 @@ const TasksPage = () => {
         {isTicketCurator && (
           <NavigationListAccordion
             title={t('tasks.user_dialog')}
-            startIcon={<AssignmentIcon sx={{ bgcolor: 'white' }} />}
+            startIcon={<AssignmentIcon />}
             accordionPath={UrlPathTemplate.TasksDialogue}
             onClick={() => {
               if (!isOnTicketsPage) {
@@ -165,7 +165,6 @@ const TasksPage = () => {
                   endIcon={<Badge badgeContent={publishingNotificationsCount} />}
                   showCheckbox
                   isSelected={!!ticketTypes.publishingRequest}
-                  color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
@@ -182,7 +181,6 @@ const TasksPage = () => {
                   endIcon={<Badge badgeContent={thesisPublishingNotificationsCount} />}
                   showCheckbox
                   isSelected={!!ticketTypes.filesApprovalThesis}
-                  color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, filesApprovalThesis: !ticketTypes.filesApprovalThesis });
                     resetPaginationAndNavigate(searchParams, navigate);
@@ -199,7 +197,6 @@ const TasksPage = () => {
                   endIcon={<Badge badgeContent={doiNotificationsCount} />}
                   showCheckbox
                   isSelected={!!ticketTypes.doiRequest}
-                  color="doiRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
@@ -216,7 +213,6 @@ const TasksPage = () => {
                   endIcon={<Badge badgeContent={supportNotificationsCount} />}
                   showCheckbox
                   isSelected={!!ticketTypes.generalSupportCase}
-                  color="generalSupportCase"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });
                     resetPaginationAndNavigate(searchParams, navigate);

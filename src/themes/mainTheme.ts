@@ -12,7 +12,7 @@ enum Color {
   CentralImportMain = '#D9D9D9',
   CentralImportLight = '#EFEEED',
   ErrorMain = '#AC0303',
-  SecondaryLight = '#F9F4E6',
+  SecondaryLight = '#D1CDFF',
   SecondaryDark = '#D3C9AF',
   SuccessMain = '#025810',
   InfoMain = '#0B408F',
@@ -107,7 +107,7 @@ export const mainTheme = createTheme(
         light: Color.Outdated,
       },
       secondary: {
-        light: Color.Outdated,
+        light: Color.SecondaryLight,
         main: Color.SecondaryMain,
         dark: Color.Outdated,
       },
@@ -241,6 +241,9 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiCheckbox: {
+        defaultProps: { color: 'secondary' },
+      },
       MuiDatePicker: {
         defaultProps: {
           views: ['year', 'month', 'day'],
@@ -259,7 +262,7 @@ export const mainTheme = createTheme(
         },
       },
       MuiBadge: {
-        defaultProps: { color: 'info' },
+        defaultProps: { color: 'secondary' },
       },
       MuiChip: {
         styleOverrides: {
