@@ -13,13 +13,18 @@ import {
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import { useQueries } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useFetchCustomers } from '../../../api/hooks/useFetchCustomers';
 import { useFetchPerson } from '../../../api/hooks/useFetchPerson';
 import { ContributorName } from '../../../components/ContributorName';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
-import { Contributor, ContributorRole } from '../../../types/contributor.types';
+import { ConfirmedAffiliation, Contributor, ContributorRole } from '../../../types/contributor.types';
+import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getTopLevelOrganization } from '../../../utils/institutions-helpers';
+import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface DetailsPanelProps {
   contributors: Contributor[];
@@ -30,6 +35,22 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const [openModal, setOpenModal] = useState(false);
   const correspondingContributors = contributors.filter((contributor) => contributor.correspondingAuthor);
   const contactPersons = contributors.filter((contributor) => contributor.role.type === ContributorRole.ContactPerson);
+
+  const confirmedAffiliations = contributors.flatMap((contributor) =>
+    contributor.affiliations?.filter((affiliation) => affiliation.type === 'Organization' && affiliation.id)
+  ) as ConfirmedAffiliation[];
+
+  const affiliations = useQueries({
+    queries: confirmedAffiliations.map((affiliation) => ({
+      queryKey: ['organization', affiliation.id],
+    })),
+  });
+
+  const topLevelOrgs = affiliations.map((affiliation) => getTopLevelOrganization(affiliation.data as Organization));
+  const unique = topLevelOrgs.filter((item, index, self) => index === self.findIndex((t) => t.id === item.id));
+
+  const customersData = useFetchCustomers(); // TODO: cache?
+  const customers = customersData.data?.customers ?? [];
 
   return (
     <Box
@@ -57,6 +78,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
       <Dialog
         data-testid={dataTestId.registrationLandingPage.detailsTab.resultContactModal}
         open={openModal}
+        maxWidth="md"
         onClose={() => setOpenModal(false)}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <DialogTitle>{t('points_of_contact_for_result')}</DialogTitle>
@@ -93,6 +115,28 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
               </ul>
             </div>
           )}
+
+          <table>
+            <thead>
+              <tr>
+                <th>Bidragsytere sine tilknytninger</th>
+                <th>Institusjonens brukerstøtte</th>
+              </tr>
+            </thead>
+            <tbody>
+              {unique.map((org) => {
+                const serviceCenterUri = customers.find((customer) => customer.cristinId === org.id)?.serviceCenterUri;
+                return (
+                  <tr key={org.id}>
+                    <td>{getLanguageString(org.labels)}</td>
+                    <td>
+                      {serviceCenterUri && <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
 
           <Divider />
 
