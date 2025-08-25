@@ -79,11 +79,8 @@
         "merge_description": "Slå saman importdata med allereie registrert data.",
         "merge_details_1": "Resultatet finst i NVA. Gå til vegvisaren for å endre alle felt etter at du har slått saman importdata med resultat i NVA. Dette kan vere viktig for Norsk Vitskapsindeks (NVI).",
         "merge_details_2": "Data frå NVA blir vist til høgre. Metadata frå importkandidaten blir vist til venstre og har ofte betre datagrunnlag. Du kan velje enkelvis kva du vil ta med.",
-        "metadata_to_import": "Metadata til import",
         "page_to": "Sidetal til",
-        "result_id": "Resultat-ID",
-        "result_in_nva": "Resultat i NVA",
-        "update_value": "Oppdater verdi"
+        "result_in_nva": "Resultat i NVA"
       },
       "missing_journal": "Manglar tiddskrift",
       "missing_publisher": "Manglar utgjevar",
@@ -165,6 +162,7 @@
       "show_full_nin": "Vis personnummer"
     }
   },
+  "cannot_copy_category_from_another_context_type": "",
   "common": {
     "actions": "Handlingar",
     "add": "Legg til",
@@ -824,7 +822,7 @@
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statusar",
-      "contact_curator_if_you_need_assistance": "Kontakt kurator om du treng hjelp med registreringa.",
+      "contact_curator_if_you_need_assistance": "<p>Kontakt kurator om du treng hjelp med registreringa.</p>",
       "delete_message": "Slette melding",
       "delete_message_description": "Er du sikker på at du vil slette meldinga?",
       "doi_closed": "DOI avvist",
@@ -1622,7 +1620,7 @@
       "public_files": "Offentlege filer ({{count}})",
       "publication": "Publisering",
       "publishing_request": "Publiseringsgodkjenning",
-      "publishing_request_message_about": "Har du spørsmål, ta kontakt med kurator via meldingsfeltet.",
+      "publishing_request_message_about": "<p>Har du spørsmål, ta kontakt med kurator via meldingsfeltet.</p>",
       "publishing_request_message_about_curator": "Treng du avklåring, ta kontakt med registrator via meldingsfeltet.",
       "reason_for_rejection": "Grunngjeving for avvising",
       "reject_publish_request": "Avvis fil",

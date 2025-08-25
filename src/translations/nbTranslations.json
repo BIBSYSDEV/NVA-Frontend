@@ -162,6 +162,7 @@
       "show_full_nin": "Vis personnummer"
     }
   },
+  "cannot_copy_category_from_another_context_type": "<p>Du kan ikke kopiere metadata fra kategorifanen hvis resultatet tilhører en annen hovedkategori.</p><p>Denne informasjonen må registreres manuelt etter at resten av metadata er kopiert.</p>",
   "common": {
     "actions": "Handlinger",
     "add": "Legg til",
@@ -332,6 +333,10 @@
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljer",
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -403,11 +408,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "does_not_match": "Matcher ikke",
   "editor": {
@@ -2272,6 +2273,5 @@
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   },
-  "view_contact_info": "Se kontaktinformasjon",
-  "cannot_copy_category_from_another_context_type": "<p>Du kan ikke kopiere metadata fra kategorifanen hvis resultatet tilhører en annen hovedkategori.</p><p>Denne informasjonen må registreres manuelt etter at resten av metadata er kopiert.</p>"
+  "view_contact_info": "Se kontaktinformasjon"
 }
