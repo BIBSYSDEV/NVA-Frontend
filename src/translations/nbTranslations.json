@@ -821,7 +821,7 @@
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statuser",
-      "contact_curator_if_you_need_assistance": "Kontakt kurator hvis du trenger hjelp med registreringen.",
+      "contact_curator_if_you_need_assistance": "<p>Kontakt kurator hvis du trenger hjelp med registreringen.</p><p>Meldingen er synlig for kuratorer og redaktører ved din institusjon.</p>",
       "delete_message": "Slette melding",
       "delete_message_description": "Er du sikker på at du vil slette meldingen?",
       "doi_closed": "DOI avvist",
@@ -895,7 +895,7 @@
         "delete_orcid": "Fjern ORCID-kobling",
         "helper_text_modal": {
           "detailed_paragraph_1": "Om du har en ORCID, så oppfordres du til å kople den til din forskerprofil. Om du ikke har en ORCID, så kan du opprette den samtidig som du kopler den til forskerprofilen din.",
-          "detailed_paragraph_2": "Enkelte forleggere og finansiører krever at du har en ORCID, for å kunne levere inn henholdsvis manuskript og søknader om finansiering. Om de ikke krever det, så bør du som forsker kreve det. Da blir dine forskningsresultat enklere for alle å sitere korrekt og det blir mindre arbeid i etterkant. Kopling av ORCID til din forskerprofil er et tilbud, ikke et krav. Du kan trekke din kobling når du ønsker under MIN SIDE | Personalia.",
+          "detailed_paragraph_2": "Enkelte forleggere og finansiører krever at du har en ORCID, for å kunne levere inn henholdsvis manuskript og søknader om finansiering. Om de ikke krever det, så bør du som forsker kreve det. Da blir dine forskningsresultat enklere for alle å sitere korrekt og det blir mindre arbeid i etterkant. Kopling av ORCID til din forskerprofil er et tilbud, ikke et krav. Du kan trekke din kobling når du ønsker under \"$t(my_page.my_page)\" > \"Personalia\".",
           "introduction": "ORCID gir deg en varig, digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Ved å koble din ORCID til din forskerprofil, vil NVA i fremtiden kunne importere flere av dine publikasjoner, raskere og mer korrekt.",
           "link": "For ytterligere informasjon gå til ORCID",
           "modal_title": "Open Researcher Contributor IDentity (ORCID)"
@@ -1619,7 +1619,7 @@
       "public_files": "Offentlige filer ({{count}})",
       "publication": "Publisering",
       "publishing_request": "Publiseringsgodkjenning",
-      "publishing_request_message_about": "Har du spørsmål, ta kontakt med kurator via meldingsfeltet.",
+      "publishing_request_message_about": "<p>Har du spørsmål, ta kontakt med kurator via meldingsfeltet.</p><p>Meldingen er synlig for alle redaktører og kuratorer som er tilknyttet resultatet i NVA.</p>",
       "publishing_request_message_about_curator": "Trenger du avklaring, ta kontakt med registrator via meldingsfeltet.",
       "reason_for_rejection": "Begrunnelse for avvisning",
       "reject_publish_request": "Avvis fil",
@@ -2093,8 +2093,8 @@
     },
     "support": {
       "curator_help": {
-        "already_in_progress": "Du har allerede en dialog med kurator. Lagre og gå til resultatet via MIN SIDE for å fortsette dialogen der.",
-        "description": "<0>Her kan du sende en melding direkte til kurator ved din institusjon.</0><0>Kurator kan hjelpe deg med å registrere og endre på publiserte og upubliserte forskningsresultat.</0><0>Du vil få svar på MIN SIDE, der ser du hvem som er din(e) kuratorer. Kuratorstøtte kan besvares av ulike kuratorer på din institusjon.</0>",
+        "already_in_progress": "Du har allerede en dialog med kurator. Lagre og gå til resultatet via \"$t(my_page.my_page)\" for å fortsette dialogen der.",
+        "description": "<0>Du kan sende melding til kurator i meldingsfeltet under. Meldingen er synlig for kuratorer og redaktører ved din institusjon.</0><0>Kurator kan hjelpe deg med å registrere og endre på publiserte resultater.</0><0>Du finner dialogen med kurator på \"$t(my_page.my_page)\".</0>",
         "header": "Trenger du hjelp av kurator?"
       },
       "need_help": "Trenger du hjelp?",

@@ -1,7 +1,7 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
@@ -91,7 +91,9 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
         {supportTicket && isOnTasksPage && <TicketStatusChip ticket={supportTicket} />}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        {!isOnTasksPage && <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>}
+        {!isOnTasksPage && (
+          <Trans i18nKey="my_page.messages.contact_curator_if_you_need_assistance" components={{ p: <Typography /> }} />
+        )}
 
         {supportTicket && (
           <>
