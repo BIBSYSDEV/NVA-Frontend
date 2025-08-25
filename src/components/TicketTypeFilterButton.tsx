@@ -27,7 +27,7 @@ export const TicketTypeFilterButton = ({
         mr: '0.5rem',
       },
       '.MuiButton-startIcon': {
-        color: 'secondary.main',
+        color: showCheckbox ? 'secondary.main' : 'primary.main',
       },
     }}>
     {children}
