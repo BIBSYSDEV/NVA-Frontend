@@ -94,8 +94,8 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
           <table>
             <thead style={{ textAlign: 'left', fontSize: '1.125rem' }}>
               <tr>
-                <th>{t('contributors_affiliations')}</th>
-                <th style={{ paddingLeft: '1rem' }}>{t('institution_support')}</th>
+                <th style={{ paddingBottom: '0.5rem' }}>{t('contributors_affiliations')}</th>
+                <th style={{ paddingBottom: '0.5rem', paddingLeft: '1rem' }}>{t('institution_support')}</th>
               </tr>
             </thead>
             <tbody>
@@ -103,8 +103,8 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
                 const serviceCenterUri = customers.find((customer) => customer.cristinId === org.id)?.serviceCenterUri;
                 return (
                   <tr key={org.id}>
-                    <td>{getLanguageString(org.labels)}</td>
-                    <td style={{ paddingLeft: '1rem' }}>
+                    <td style={{ paddingBottom: '0.5rem' }}>{getLanguageString(org.labels)}</td>
+                    <td style={{ paddingBottom: '0.5rem', paddingLeft: '1rem' }}>
                       {serviceCenterUri && <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>}
                     </td>
                   </tr>
@@ -170,9 +170,10 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
   return (
     <li
       style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        marginBottom: '0.5rem',
+        display: 'flex',
+        gap: '0.5rem 1rem',
+        flexWrap: 'wrap',
+        marginBottom: '1rem',
         marginLeft: 0,
         alignItems: 'center',
       }}>
