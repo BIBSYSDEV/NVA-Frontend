@@ -132,11 +132,18 @@ export const PublishingAccordionLastTicketInfo = ({
             {t('common.messages')}
           </Typography>
           {isPendingTicket && (
-            <Typography gutterBottom>
-              {window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue)
-                ? t('registration.public_page.publishing_request_message_about_curator')
-                : t('registration.public_page.publishing_request_message_about')}
-            </Typography>
+            <>
+              {window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) ? (
+                <Typography gutterBottom>
+                  {t('registration.public_page.publishing_request_message_about_curator')}
+                </Typography>
+              ) : (
+                <Trans
+                  i18nKey="registration.public_page.publishing_request_message_about"
+                  components={{ p: <Typography gutterBottom /> }}
+                />
+              )}
+            </>
           )}
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

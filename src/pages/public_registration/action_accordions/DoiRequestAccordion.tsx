@@ -38,6 +38,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getOpenFiles, userHasAccessRight } from '../../../utils/registration-helpers';
 import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
@@ -420,17 +421,32 @@ export const DoiRequestAccordion = ({
         )}
 
         {(isPendingDoiRequest || isClosedDoiRequest) && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
-            {messages.length > 0 ? (
-              <TicketMessageList ticket={doiRequestTicket} />
+          <>
+            <Divider sx={{ my: '1rem' }} />
+            <Typography fontWeight="bold" gutterBottom>
+              {t('common.messages')}
+            </Typography>
+
+            {window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) ? (
+              <Typography gutterBottom>
+                {t('registration.public_page.publishing_request_message_about_curator')}
+              </Typography>
             ) : (
-              <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
+              <Trans
+                i18nKey="registration.public_page.publishing_request_message_about"
+                components={{ p: <Typography gutterBottom /> }}
+              />
             )}
+
             <MessageForm
               confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)}
               hideRequiredAsterisk
             />
-          </Box>
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '0.5rem' }}>
+              {messages.length > 0 && <TicketMessageList ticket={doiRequestTicket} />}
+            </Box>
+          </>
         )}
 
         {isClosedDoiRequest && (

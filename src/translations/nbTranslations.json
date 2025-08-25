@@ -1619,7 +1619,7 @@
       "public_files": "Offentlige filer ({{count}})",
       "publication": "Publisering",
       "publishing_request": "Publiseringsgodkjenning",
-      "publishing_request_message_about": "Har du spørsmål, ta kontakt med kurator via meldingsfeltet.",
+      "publishing_request_message_about": "<p>Har du spørsmål, ta kontakt med kurator via meldingsfeltet.</p><p>Meldingen er synlig for alle redaktører og kuratorer som er tilknyttet resultatet i NVA.</p>",
       "publishing_request_message_about_curator": "Trenger du avklaring, ta kontakt med registrator via meldingsfeltet.",
       "reason_for_rejection": "Begrunnelse for avvisning",
       "reject_publish_request": "Avvis fil",
