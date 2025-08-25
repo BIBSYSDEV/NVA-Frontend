@@ -18,6 +18,7 @@ const StyledExternalLink = styled(MuiLink)(() => ({
   color: 'inherit',
   display: 'flex',
   gap: '0.5rem',
+  textDecorationColor: 'white',
 }));
 
 export const Footer = () => {
@@ -182,6 +183,17 @@ export const Footer = () => {
               rel="noopener noreferrer"
               href={'https://uustatus.no/nb/erklaringer/publisert/bffb4b1d-25eb-4fe0-bac7-2f0b4a8e0fd9'}>
               {t('about.availability_statement')}
+              <OpenInNewIcon fontSize="small" />
+            </StyledExternalLink>
+          </StyledArrowLinkContainer>
+
+          <StyledArrowLinkContainer>
+            <ArrowRightAltIcon />
+            <StyledExternalLink
+              target="_blank"
+              rel="noopener noreferrer"
+              href={'https://sikt.no/om-sikt/kontakt-oss?service=e588691c-22eb-49c3-ac50-755f5513a3f5#skjema'}>
+              {t('about.copyright_inquiries')}
               <OpenInNewIcon fontSize="small" />
             </StyledExternalLink>
           </StyledArrowLinkContainer>

@@ -46,7 +46,7 @@ export const NavigationListAccordion = ({
       elevation={0}
       sx={{
         mb: '0.5rem',
-        bgcolor: 'background.default',
+        bgcolor: 'white',
       }}>
       <AccordionSummary
         sx={{ paddingX: '0.75rem' }}

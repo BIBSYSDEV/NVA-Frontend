@@ -160,10 +160,9 @@ export const mainTheme = createTheme(
         light: Color.Outdated,
       },
       background: {
-        default: Color.White,
+        default: Color.Neutral95,
         paper: Color.Outdated,
         neutral97: Color.Neutral97,
-        neutral95: Color.Neutral95,
         neutral87: Color.Neutral87,
         neutral46: Color.Neutral46,
       },
