@@ -3,6 +3,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import {
   Box,
   Button,
+  CSSProperties,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -30,6 +31,13 @@ interface DetailsPanelProps {
   contributors: Contributor[];
 }
 
+const liStyling: CSSProperties = {
+  marginBottom: '1rem',
+  marginLeft: 0,
+  alignItems: 'center',
+  listStyleType: 'none',
+};
+
 export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
@@ -49,9 +57,9 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const topLevelOrgs = affiliations
     .map((affiliation) => (affiliation.data ? getTopLevelOrganization(affiliation.data) : null))
     .filter(Boolean) as Organization[];
-  const unique = topLevelOrgs.filter((item, index, self) => index === self.findIndex((t) => t.id === item.id));
+  const institutions = topLevelOrgs.filter((item, index, self) => index === self.findIndex((t) => t.id === item.id));
 
-  const customersData = useFetchCustomers({ staleTime: 1_800_000 }); // Cache for 30 minutes
+  const customersData = useFetchCustomers({ enabled: institutions.length > 0, staleTime: 1_800_000 }); // Cache for 30 minutes
   const customers = customersData.data?.customers ?? [];
 
   return (
@@ -92,27 +100,27 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         </IconButton>
 
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <table>
-            <thead style={{ textAlign: 'left', fontSize: '1.125rem' }}>
-              <tr>
-                <th style={{ paddingBottom: '0.5rem' }}>{t('contributors_affiliations')}</th>
-                <th style={{ paddingBottom: '0.5rem', paddingLeft: '1rem' }}>{t('institution_support')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {unique.map((org) => {
-                const serviceCenterUri = customers.find((customer) => customer.cristinId === org.id)?.serviceCenterUri;
-                return (
-                  <tr key={org.id}>
-                    <td style={{ paddingBottom: '0.5rem' }}>{getLanguageString(org.labels)}</td>
-                    <td style={{ paddingBottom: '0.5rem', paddingLeft: '1rem' }}>
+          {institutions.length > 0 && (
+            <div>
+              <Typography variant="h2" gutterBottom>
+                {t('institutions_service_support')}
+              </Typography>
+              <ul style={{ padding: 0 }}>
+                {institutions.map((institution) => {
+                  const serviceCenterUri = customers.find(
+                    (customer) => customer.cristinId === institution.id
+                  )?.serviceCenterUri;
+
+                  return (
+                    <li key={institution.id} style={liStyling}>
+                      <Typography>{getLanguageString(institution.labels)}</Typography>
                       {serviceCenterUri && <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
 
           {contactPersons.length > 0 && (
             <div>
@@ -169,15 +177,7 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
   const person = personQuery.data;
 
   return (
-    <li
-      style={{
-        display: 'flex',
-        gap: '0.5rem 1rem',
-        flexWrap: 'wrap',
-        marginBottom: '1rem',
-        marginLeft: 0,
-        alignItems: 'center',
-      }}>
+    <li style={liStyling}>
       {personQuery.isFetching ? (
         <>
           <Skeleton width="10rem" />
