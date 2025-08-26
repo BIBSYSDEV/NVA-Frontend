@@ -19,7 +19,7 @@ export const Logo = () => {
       component={RouterLink}
       to={UrlPathTemplate.Root}
       sx={{ display: 'flex', alignItems: 'center', gap: '1rem', my: '1rem' }}>
-      <img src="logo.svg" alt="" height="25" />
+      <img src="/logo.svg" alt="" height="25" />
 
       {!showShortLogo && (
         <Typography
