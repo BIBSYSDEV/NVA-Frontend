@@ -24,6 +24,7 @@ const CopyrightActTerms = () => {
     <BackgroundDiv sx={{ maxWidth: '45rem', my: '2rem' }}>
       <HeadTitle>{t('licenses.labels.copyright_act')}</HeadTitle>
       <Trans
+        t={t}
         i18nKey="licenses.terms_of_use_under_the_copyright_act"
         components={{
           h1: <Typography variant="h1" gutterBottom />,
