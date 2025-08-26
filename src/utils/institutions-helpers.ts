@@ -56,3 +56,7 @@ export const getTopLevelOrganization = (organization: Organization): Organizatio
 
 export const sortCustomerInstitutions = <T extends SimpleCustomerInstitution>(customers: T[] = []) =>
   customers.sort((a, b) => (a.displayName?.toLocaleLowerCase() < b.displayName?.toLocaleLowerCase() ? -1 : 1));
+
+export const getUniqueOrganizations = <T extends { id: string }>(organizations: T[]) => {
+  return Array.from(new Map(organizations.map((org) => [org.id, org])).values());
+};

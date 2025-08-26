@@ -37,7 +37,6 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
 
           let errorMessage = typeof queryErrorMessage === 'string' ? queryErrorMessage : '';
           if (!errorMessage) {
-            console.log(error);
             errorMessage = t('feedback.error.an_error_occurred');
           }
           dispatch(setNotification({ message: errorMessage, variant: 'error' }));

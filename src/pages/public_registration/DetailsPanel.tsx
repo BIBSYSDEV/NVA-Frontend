@@ -25,7 +25,7 @@ import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { ConfirmedAffiliation, Contributor, ContributorRole } from '../../types/contributor.types';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getTopLevelOrganization } from '../../utils/institutions-helpers';
+import { getTopLevelOrganization, getUniqueOrganizations } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 
 interface DetailsPanelProps {
@@ -39,10 +39,6 @@ const liStyling: CSSProperties = {
   listStyleType: 'none',
 };
 
-const getUniqueOrganizations = <T extends { id: string }>(organizations: T[]) => {
-  return Array.from(new Map(organizations.map((org) => [org.id, org])).values());
-};
-
 export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
@@ -54,7 +50,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   ) as ConfirmedAffiliation[];
   const uniqueAffiliations = getUniqueOrganizations(confirmedAffiliations);
 
-  const affiliations = useQueries({
+  const affiliationQueries = useQueries({
     queries: uniqueAffiliations.map((affiliation) => ({
       queryKey: ['organization', affiliation.id],
       queryFn: () => fetchOrganization(affiliation.id),
@@ -64,8 +60,8 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
     })),
   });
 
-  const topLevelOrgs = affiliations
-    .map((affiliation) => (affiliation.data ? getTopLevelOrganization(affiliation.data) : null))
+  const topLevelOrgs = affiliationQueries
+    .map((affiliationQuery) => (affiliationQuery.data ? getTopLevelOrganization(affiliationQuery.data) : null))
     .filter(Boolean) as Organization[];
   const institutions = getUniqueOrganizations(topLevelOrgs);
 
