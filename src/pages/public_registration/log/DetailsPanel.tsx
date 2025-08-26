@@ -14,9 +14,10 @@ import {
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useQueries, UseQueryResult } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { fetchOrganization } from '../../../api/cristinApi';
 import { useFetchCustomers } from '../../../api/hooks/useFetchCustomers';
 import { useFetchPerson } from '../../../api/hooks/useFetchPerson';
 import { ContributorName } from '../../../components/ContributorName';
@@ -38,6 +39,12 @@ const liStyling: CSSProperties = {
   listStyleType: 'none',
 };
 
+const getUniqueAffiliations = (affiliations: { id: string }[]) => {
+  return Array.from(new Set(affiliations.map((affiliation) => affiliation.id))).map((id) =>
+    affiliations.find((affiliation) => affiliation.id === id)
+  );
+};
+
 export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
@@ -48,11 +55,17 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
     contributor.affiliations?.filter((affiliation) => affiliation.type === 'Organization' && affiliation.id)
   ) as ConfirmedAffiliation[];
 
+  const uniqueAffiliations = getUniqueAffiliations(confirmedAffiliations) as ConfirmedAffiliation[];
+
   const affiliations = useQueries({
-    queries: confirmedAffiliations.map((affiliation) => ({
+    queries: uniqueAffiliations.map((affiliation) => ({
       queryKey: ['organization', affiliation.id],
+      queryFn: () => fetchOrganization(affiliation.id),
+      meta: { errorMessage: t('feedback.error.get_institution') },
+      staleTime: Infinity,
+      gcTime: 1_800_000,
     })),
-  }) as UseQueryResult<Organization>[];
+  });
 
   const topLevelOrgs = affiliations
     .map((affiliation) => (affiliation.data ? getTopLevelOrganization(affiliation.data) : null))
