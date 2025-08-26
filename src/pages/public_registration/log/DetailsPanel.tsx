@@ -82,16 +82,15 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         open={openModal}
         maxWidth="md"
         onClose={() => setOpenModal(false)}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <DialogTitle>{t('points_of_contact_for_result')}</DialogTitle>
-          <IconButton
-            sx={{ mr: '1rem', height: 'fit-content' }}
-            title={t('common.close')}
-            onClick={() => setOpenModal(false)}
-            data-testid={dataTestId.confirmDialog.cancelButton}>
-            <CloseIcon />
-          </IconButton>
-        </Box>
+        <DialogTitle sx={{ mr: '1rem' }}>{t('points_of_contact_for_result')}</DialogTitle>
+        <IconButton
+          sx={{ position: 'absolute', right: '0.5rem', top: '0.75rem' }}
+          title={t('common.close')}
+          onClick={() => setOpenModal(false)}
+          data-testid={dataTestId.confirmDialog.cancelButton}>
+          <CloseIcon />
+        </IconButton>
+
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <table>
             <thead style={{ textAlign: 'left', fontSize: '1.125rem' }}>
