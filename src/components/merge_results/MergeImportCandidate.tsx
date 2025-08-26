@@ -14,7 +14,7 @@ import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
 
-export interface MergeImportCandidateParams extends Record<string, string | undefined> {
+interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
   registrationIdentifier: string;
 }

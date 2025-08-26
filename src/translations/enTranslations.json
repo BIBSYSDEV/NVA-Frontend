@@ -79,11 +79,8 @@
         "merge_description": "Merge import data with already registered data.",
         "merge_details_1": "The result is already in NVA. Go to the wizard to edit all fields after you have merged import data with the result in NVA. This may be important for the Norwegian Science Index (NVI).",
         "merge_details_2": "Data from NVA is displayed on the right. Metadata from the import candidate is displayed on the left and often has better data quality. You can individually select what you want to include.",
-        "metadata_to_import": "Metadata for import",
         "page_to": "Page number to",
-        "result_id": "Result ID",
-        "result_in_nva": "Result in NVA",
-        "update_value": "Update value"
+        "result_in_nva": "Result in NVA"
       },
       "missing_journal": "Missing journal",
       "missing_publisher": "Missing publisher",
@@ -165,6 +162,7 @@
       "show_full_nin": "Show national identity number"
     }
   },
+  "cannot_copy_category_from_another_context_type": "",
   "common": {
     "actions": "Actions",
     "add": "Add",
@@ -824,7 +822,7 @@
   "my_page": {
     "messages": {
       "all_ticket_types": "All statuses",
-      "contact_curator_if_you_need_assistance": "Contact the curator if you need help with the registration.",
+      "contact_curator_if_you_need_assistance": "<p>Contact the curator if you need help with the registration.</p>",
       "delete_message": "Delete message",
       "delete_message_description": "Are you sure you wish to delete the message?",
       "doi_closed": "DOI rejected",
@@ -1622,7 +1620,7 @@
       "public_files": "Public files ({{count}})",
       "publication": "Publication",
       "publishing_request": "Publication approval",
-      "publishing_request_message_about": "If you have questions, contact the curator via the message field.",
+      "publishing_request_message_about": "<p>If you have questions, contact the curator via the message field.</p>",
       "publishing_request_message_about_curator": "If you need clarification, contact the registrar via the message field.",
       "reason_for_rejection": "Reason for rejection",
       "reject_publish_request": "Reject file",
