@@ -79,11 +79,8 @@
         "merge_description": "Merge import data with already registered data.",
         "merge_details_1": "The result is already in NVA. Go to the wizard to edit all fields after you have merged import data with the result in NVA. This may be important for the Norwegian Science Index (NVI).",
         "merge_details_2": "Data from NVA is displayed on the right. Metadata from the import candidate is displayed on the left and often has better data quality. You can individually select what you want to include.",
-        "metadata_to_import": "Metadata for import",
         "page_to": "Page number to",
-        "result_id": "Result ID",
-        "result_in_nva": "Result in NVA",
-        "update_value": "Update value"
+        "result_in_nva": "Result in NVA"
       },
       "missing_journal": "Missing journal",
       "missing_publisher": "Missing publisher",
@@ -165,6 +162,7 @@
       "show_full_nin": "Show national identity number"
     }
   },
+  "cannot_copy_category_from_another_context_type": "",
   "common": {
     "actions": "Actions",
     "add": "Add",
@@ -331,8 +329,9 @@
     "year": "Year",
     "yes": "Yes"
   },
-  "default_point_of_contact": "",
-  "details": "",
+  "corresponding_contributor": "Corresponding collaborator",
+  "default_point_of_contact": "<p><link1>Contact Sikt</link1> if no other contact has been listed for this result.</p>",
+  "details": "Details",
   "disciplines": {
     "0001": "Humanities",
     "0002": "Social Science",
@@ -411,6 +410,7 @@
     "1168": "History and History of ideas",
     "1170": "Art, Design and Architecture"
   },
+  "does_not_match": "Don't match",
   "editor": {
     "categories_with_files": "Categories with File Upload",
     "categories_with_files_description": "Specify the categories your institution will allow file upload for.",
@@ -817,10 +817,12 @@
     },
     "unknown_filename": "Unknown file name"
   },
+  "matches": "Matches",
+  "missing_value": "Missing value",
   "my_page": {
     "messages": {
       "all_ticket_types": "All statuses",
-      "contact_curator_if_you_need_assistance": "Contact the curator if you need help with the registration.",
+      "contact_curator_if_you_need_assistance": "<p>Contact the curator if you need help with the registration.</p>",
       "delete_message": "Delete message",
       "delete_message_description": "Are you sure you wish to delete the message?",
       "doi_closed": "DOI rejected",
@@ -968,10 +970,11 @@
   "no_search_results_list_default": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that your search words are spelled correctly</li><li>Try a different spelling</li><li>Try a synonym</li><li>Translate the search word to Norwegian Bokmål (NB), Norwegian Nynorsk (NN), or English</li></ul>",
   "no_search_results_list_person": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that the name is spelled correctly</li><li>Try a different spelling</li><li>Try with or without the middle name</li></ul>",
   "overview_over_administrators": "Overview of administrators",
+  "overwrite": "Overwrite",
   "owner_institution": "Owner institution",
-  "point_of_contact": "",
-  "point_of_contact_description": "",
-  "points_of_contact_for_result": "",
+  "point_of_contact": "Contact point",
+  "point_of_contact_description": "Du you have questions about the research result?",
+  "points_of_contact_for_result": "Contact point for the result",
   "privacy": {
     "about": {
       "heading": "About this privacy statement",
@@ -1357,6 +1360,7 @@
     "verify_contributor": "Identify project participant",
     "verify_project_manager": "Identify project manager"
   },
+  "published_result": "Published result",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Cannot save because the result is published and contains validation errors",
     "channel_claim_info_heading": "Fields locked for editing",
@@ -1616,7 +1620,7 @@
       "public_files": "Public files ({{count}})",
       "publication": "Publication",
       "publishing_request": "Publication approval",
-      "publishing_request_message_about": "If you have questions, contact the curator via the message field.",
+      "publishing_request_message_about": "<p>If you have questions, contact the curator via the message field.</p>",
       "publishing_request_message_about_curator": "If you need clarification, contact the registrar via the message field.",
       "reason_for_rejection": "Reason for rejection",
       "reject_publish_request": "Reject file",
@@ -2104,6 +2108,7 @@
     "use_curator_help_button": "Use the \"{{buttonText}}\" button below if you have questions.",
     "year_published": "Publication year"
   },
+  "reset": "Reset",
   "search": {
     "additional_participants_one": "+{{count}} participant",
     "additional_participants_other": "+{{count}} participants",
@@ -2268,5 +2273,5 @@
     "unpublish_registration_duplicate_question": "Is there another published version of the same research result?",
     "unpublish_registration_reason": "Enter a brief explanation for why this research result should no longer be published. The explanation will be displayed on the research result when looking up the reference to the research result."
   },
-  "view_contact_info": ""
+  "view_contact_info": "View contact information"
 }

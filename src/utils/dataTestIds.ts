@@ -49,6 +49,7 @@ export const dataTestId = {
       checkboxIssn: 'duplicate-search-issn-checkbox',
       checkboxTitle: 'duplicate-search-title-checkbox',
       checkboxYear: 'duplicate-search-year-checkbox',
+      copyValueButton: 'copy-value-button',
       filter: {
         importedRadio: 'imported-radio',
         notImportedRadio: 'not-imported-radio',
@@ -57,6 +58,7 @@ export const dataTestId = {
       },
       importCandidateButton: 'import-candidate-button',
       resetButton: 'duplicate-search-reset-button',
+      resetValueButton: 'reset-value-button',
       resultItem: 'central-import-result-item',
       searchButton: 'duplicate-search-retry-button',
       textFieldAuthor: 'duplicate-search-author-textfield',
@@ -505,6 +507,7 @@ export const dataTestId = {
       alternativeTitleField: 'registration-alternative-title-field',
       descriptionField: 'registration-description-field',
       languageField: 'registration-language-field',
+      languageItem: (language: string) => `registration-language-item-${language}`,
       removeProjectButton: 'remove-project-button',
       tagField: 'registration-tag-field',
       titleField: 'registration-title-field',
@@ -733,6 +736,9 @@ export const dataTestId = {
       applicationHelpPage: 'application-help-page',
     },
     userRolesAndHelpLink: 'user-roles-and-help-link',
+  },
+  serviceBanner: {
+    serviceInfoLink: 'service-info-link',
   },
   tasksPage: {
     areaOfResponsibilitySelector: 'area-of-responsibility-selector',

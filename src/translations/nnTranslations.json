@@ -79,11 +79,8 @@
         "merge_description": "Slå saman importdata med allereie registrert data.",
         "merge_details_1": "Resultatet finst i NVA. Gå til vegvisaren for å endre alle felt etter at du har slått saman importdata med resultat i NVA. Dette kan vere viktig for Norsk Vitskapsindeks (NVI).",
         "merge_details_2": "Data frå NVA blir vist til høgre. Metadata frå importkandidaten blir vist til venstre og har ofte betre datagrunnlag. Du kan velje enkelvis kva du vil ta med.",
-        "metadata_to_import": "Metadata til import",
         "page_to": "Sidetal til",
-        "result_id": "Resultat-ID",
-        "result_in_nva": "Resultat i NVA",
-        "update_value": "Oppdater verdi"
+        "result_in_nva": "Resultat i NVA"
       },
       "missing_journal": "Manglar tiddskrift",
       "missing_publisher": "Manglar utgjevar",
@@ -165,6 +162,7 @@
       "show_full_nin": "Vis personnummer"
     }
   },
+  "cannot_copy_category_from_another_context_type": "",
   "common": {
     "actions": "Handlingar",
     "add": "Legg til",
@@ -331,8 +329,9 @@
     "year": "År",
     "yes": "Ja"
   },
-  "default_point_of_contact": "",
-  "details": "",
+  "corresponding_contributor": "Korresponderande bidragsytar",
+  "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> viss ingen er kontaktpunkt for resultatet.</p>",
+  "details": "Detaljar",
   "disciplines": {
     "0001": "Humaniora",
     "0002": "Samfunnsvitskap",
@@ -411,6 +410,7 @@
     "1168": "Historie og idéhistorie",
     "1170": "Kunst, design og arkitektur"
   },
+  "does_not_match": "Matcher ikke",
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angje kategoriane der institusjonen din tillèt filopplasting.",
@@ -817,10 +817,12 @@
     },
     "unknown_filename": "Ukjend filnamn"
   },
+  "matches": "Matcher",
+  "missing_value": "Manglar verdi",
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statusar",
-      "contact_curator_if_you_need_assistance": "Kontakt kurator om du treng hjelp med registreringa.",
+      "contact_curator_if_you_need_assistance": "<p>Kontakt kurator om du treng hjelp med registreringa.</p>",
       "delete_message": "Slette melding",
       "delete_message_description": "Er du sikker på at du vil slette meldinga?",
       "doi_closed": "DOI avvist",
@@ -968,10 +970,11 @@
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv ei anna skriveform av søkeordet</li><li>Prøv med eit synonym</li><li>Overset søkeordet til bokmål. nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at namnet er skrevet korrekt</li><li>Prøv ein annan skrivemåte</li><li>Prøv med eller utan mellomnamn</li></ul>",
   "overview_over_administrators": "Oversyn over administratorar",
+  "overwrite": "Overskriv",
   "owner_institution": "Eigarinstitusjon",
-  "point_of_contact": "",
-  "point_of_contact_description": "",
-  "points_of_contact_for_result": "",
+  "point_of_contact": "Kontaktpunkt",
+  "point_of_contact_description": "Har du spørsmål angåande forskingsresultatet?",
+  "points_of_contact_for_result": "Kontaktpunkt for resultat",
   "privacy": {
     "about": {
       "heading": "Om denne personvernerklæringa",
@@ -1357,6 +1360,7 @@
     "verify_contributor": "Identifiser prosjektdeltakar",
     "verify_project_manager": "Identifiser prosjektleiar"
   },
+  "published_result": "Publisert resultat",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikkje lagre fordi resultatet er publisert og inneheld valideringsfeil",
     "channel_claim_info_heading": "Felt låst for redigering",
@@ -1616,7 +1620,7 @@
       "public_files": "Offentlege filer ({{count}})",
       "publication": "Publisering",
       "publishing_request": "Publiseringsgodkjenning",
-      "publishing_request_message_about": "Har du spørsmål, ta kontakt med kurator via meldingsfeltet.",
+      "publishing_request_message_about": "<p>Har du spørsmål, ta kontakt med kurator via meldingsfeltet.</p>",
       "publishing_request_message_about_curator": "Treng du avklåring, ta kontakt med registrator via meldingsfeltet.",
       "reason_for_rejection": "Grunngjeving for avvising",
       "reject_publish_request": "Avvis fil",
@@ -2104,6 +2108,7 @@
     "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål.",
     "year_published": "Publiseringsår"
   },
+  "reset": "Nullstill",
   "search": {
     "additional_participants_one": "+{{count}} deltakar",
     "additional_participants_other": "+{{count}} deltakarar",
@@ -2268,5 +2273,5 @@
     "unpublish_registration_duplicate_question": "Finst det ein annan publisert versjon av same forskingsresultat?",
     "unpublish_registration_reason": "Legg inn ei kort grunngjeving for at dette forskingsresultatet ikkje lenger skal vere publisert. Grunngjevinga vil vises på forskingsresultatet ved oppslag av referanse til forskingsresultatet."
   },
-  "view_contact_info": ""
+  "view_contact_info": "Sjå kontaktinformasjon"
 }

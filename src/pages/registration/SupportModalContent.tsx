@@ -110,7 +110,6 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
             {t('registration.support.curator_help.header')}
           </Typography>
           <Trans
-            t={t}
             i18nKey="registration.support.curator_help.description"
             components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
