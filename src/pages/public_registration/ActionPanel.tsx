@@ -11,7 +11,7 @@ import { userHasAccessRight } from '../../utils/registration-helpers';
 import { isFileApprovalTicket } from '../../utils/ticketHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
-import { DetailsPanel } from './log/DetailsPanel';
+import { DetailsPanel } from './DetailsPanel';
 import { LogPanel } from './log/LogPanel';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 

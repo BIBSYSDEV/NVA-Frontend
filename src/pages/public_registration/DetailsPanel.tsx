@@ -17,16 +17,16 @@ import { visuallyHidden } from '@mui/utils';
 import { useQueries } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { fetchOrganization } from '../../../api/cristinApi';
-import { useFetchCustomers } from '../../../api/hooks/useFetchCustomers';
-import { useFetchPerson } from '../../../api/hooks/useFetchPerson';
-import { ContributorName } from '../../../components/ContributorName';
-import { OpenInNewLink } from '../../../components/OpenInNewLink';
-import { ConfirmedAffiliation, Contributor, ContributorRole } from '../../../types/contributor.types';
-import { Organization } from '../../../types/organization.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getTopLevelOrganization } from '../../../utils/institutions-helpers';
-import { getLanguageString } from '../../../utils/translation-helpers';
+import { fetchOrganization } from '../../api/cristinApi';
+import { useFetchCustomers } from '../../api/hooks/useFetchCustomers';
+import { useFetchPerson } from '../../api/hooks/useFetchPerson';
+import { ContributorName } from '../../components/ContributorName';
+import { OpenInNewLink } from '../../components/OpenInNewLink';
+import { ConfirmedAffiliation, Contributor, ContributorRole } from '../../types/contributor.types';
+import { Organization } from '../../types/organization.types';
+import { dataTestId } from '../../utils/dataTestIds';
+import { getTopLevelOrganization } from '../../utils/institutions-helpers';
+import { getLanguageString } from '../../utils/translation-helpers';
 
 interface DetailsPanelProps {
   contributors: Contributor[];
