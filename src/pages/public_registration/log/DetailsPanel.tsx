@@ -114,7 +114,11 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
                   return (
                     <li key={institution.id} style={liStyling}>
                       <Typography>{getLanguageString(institution.labels)}</Typography>
-                      {serviceCenterUri && <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>}
+                      {serviceCenterUri ? (
+                        <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>
+                      ) : (
+                        <Typography fontStyle="italic">{t('no_service_center')} </Typography>
+                      )}
                     </li>
                   );
                 })}

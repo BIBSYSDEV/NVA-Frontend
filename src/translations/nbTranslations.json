@@ -2275,5 +2275,6 @@
   },
   "view_contact_info": "Se kontaktinformasjon",
   "institution_support": "Institusjonens brukerstøtte",
-  "institutions_service_support": "Institusjonenes brukerstøtte"
+  "institutions_service_support": "Institusjonenes brukerstøtte",
+  "no_service_center": "Ingen brukerstøttepunkt oppgitt."
 }
