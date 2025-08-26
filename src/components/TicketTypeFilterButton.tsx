@@ -20,13 +20,14 @@ export const TicketTypeFilterButton = ({
     variant={isSelected ? 'contained' : 'outlined'}
     sx={{
       justifyContent: 'start',
-      color: 'common.black',
-      bgcolor: isSelected ? undefined : 'background.default',
-      borderColor: `${rest.color}.main`,
-
+      color: 'primary.main',
+      bgcolor: isSelected ? 'secondary.light' : 'background.default',
       '.MuiButton-endIcon': {
         ml: 'auto',
         mr: '0.5rem',
+      },
+      '.MuiButton-startIcon': {
+        color: showCheckbox ? 'secondary.main' : 'primary.main',
       },
     }}>
     {children}

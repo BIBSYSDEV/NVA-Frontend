@@ -18,7 +18,7 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledPaperHeader = styled(Box)(({ theme }) => ({
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.common.white,
   backgroundColor: theme.palette.primary.main,
   display: 'flex',
   alignItems: 'center',
