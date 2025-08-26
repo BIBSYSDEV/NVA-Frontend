@@ -3,7 +3,6 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import {
   Box,
   Button,
-  CSSProperties,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -11,6 +10,7 @@ import {
   IconButton,
   Link,
   Skeleton,
+  styled,
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
@@ -28,16 +28,19 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { getTopLevelOrganization, getUniqueOrganizations } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 
+const StyledList = styled('ul')({
+  padding: 0,
+});
+
+const StyledListItem = styled('li')({
+  marginBottom: '1rem',
+  marginLeft: 0,
+  listStyleType: 'none',
+});
+
 interface DetailsPanelProps {
   contributors: Contributor[];
 }
-
-const liStyling: CSSProperties = {
-  marginBottom: '1rem',
-  marginLeft: 0,
-  alignItems: 'center',
-  listStyleType: 'none',
-};
 
 export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const { t } = useTranslation();
@@ -111,24 +114,24 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
               <Typography variant="h2" gutterBottom>
                 {t('institutions_service_support')}
               </Typography>
-              <ul style={{ padding: 0 }}>
+              <StyledList>
                 {institutions.map((institution) => {
                   const serviceCenterUri = customers.find(
                     (customer) => customer.cristinId === institution.id
                   )?.serviceCenterUri;
 
                   return (
-                    <li key={institution.id} style={liStyling}>
+                    <StyledListItem key={institution.id}>
                       <Typography>{getLanguageString(institution.labels)}</Typography>
                       {serviceCenterUri ? (
                         <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>
                       ) : (
                         <Typography fontStyle="italic">{t('no_service_center')} </Typography>
                       )}
-                    </li>
+                    </StyledListItem>
                   );
                 })}
-              </ul>
+              </StyledList>
             </div>
           )}
 
@@ -137,11 +140,11 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
               <Typography variant="h2" gutterBottom>
                 {t('registration.contributors.types.ContactPerson')}
               </Typography>
-              <ul style={{ padding: 0 }}>
+              <StyledList>
                 {contactPersons.map((contributor, index) => (
                   <ContactPersonRow key={index} contributor={contributor} />
                 ))}
-              </ul>
+              </StyledList>
             </div>
           )}
           {correspondingContributors.length > 0 && (
@@ -149,11 +152,11 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
               <Typography variant="h2" gutterBottom>
                 {t('corresponding_contributor')}
               </Typography>
-              <ul style={{ padding: 0 }}>
+              <StyledList>
                 {correspondingContributors.map((contributor, index) => (
                   <ContactPersonRow key={index} contributor={contributor} />
                 ))}
-              </ul>
+              </StyledList>
             </div>
           )}
 
@@ -187,7 +190,7 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
   const person = personQuery.data;
 
   return (
-    <li style={liStyling}>
+    <StyledListItem>
       {personQuery.isFetching ? (
         <>
           <Skeleton width="10rem" />
@@ -214,6 +217,6 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
           )}
         </>
       )}
-    </li>
+    </StyledListItem>
   );
 };
