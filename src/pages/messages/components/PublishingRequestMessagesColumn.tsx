@@ -13,19 +13,22 @@ export const StyledMessagesContainer = styled(Box)({
   gap: '0.25rem',
 });
 
-export const StyledStatusMessageBox = styled(Box)({
+export const StyledStatusMessageBox = styled(Box)(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: '1fr auto',
   gap: '0.25rem 0.5rem',
   padding: '0.2rem 0.5rem',
   borderRadius: '4px',
-});
+  backgroundColor: theme.palette.info.main,
+}));
 
-export const StyledIconAndTextWrapper = styled(Box)({
+export const StyledIconAndTextWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '0.2rem',
-});
+  color: 'white',
+  backgroundColor: theme.palette.info.main,
+}));
 
 interface PublishingRequestMessagesColumnProps {
   ticket: ExpandedPublishingTicket | PublishingTicket;
@@ -39,10 +42,10 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
       {ticket.status === 'Pending' || ticket.status === 'New' ? (
         <>
           {ticket.filesForApproval.length > 0 && (
-            <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+            <StyledStatusMessageBox>
               <StyledIconAndTextWrapper>
                 <HourglassEmptyIcon fontSize="small" />
-                <Typography>
+                <Typography sx={{ color: 'inherit' }}>
                   {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
                 </Typography>
               </StyledIconAndTextWrapper>
@@ -50,20 +53,20 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
           )}
         </>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+        <StyledStatusMessageBox>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
-            <Typography>
+            <Typography sx={{ color: 'inherit' }}>
               {ticket.approvedFiles.length
                 ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
                 : t('my_page.messages.metadata_published')}
             </Typography>
           </StyledIconAndTextWrapper>
-          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+          {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
         <>
-          <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+          <StyledStatusMessageBox>
             <StyledIconAndTextWrapper>
               <BlockIcon fontSize="small" />
               <Typography>{t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}</Typography>

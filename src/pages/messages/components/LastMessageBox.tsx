@@ -38,9 +38,11 @@ export const LastMessageBox = ({ ticket }: LastMessageBoxProps) => {
           : undefined;
 
   return (
-    <StyledStatusMessageBox sx={{ bgcolor: ticketColor }}>
-      <Typography noWrap>{senderName}</Typography>
-      <Typography>{toDateString(lastMessage.createdDate)}</Typography>
+    <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
+      <Typography color="white" noWrap>
+        {senderName}
+      </Typography>
+      <Typography color="white">{toDateString(lastMessage.createdDate)}</Typography>
       <Typography
         sx={{
           gridColumn: '1/-1',
@@ -48,6 +50,7 @@ export const LastMessageBox = ({ ticket }: LastMessageBoxProps) => {
           WebkitLineClamp: 3,
           WebkitBoxOrient: 'vertical',
           overflow: 'hidden',
+          color: 'white',
         }}>
         {lastMessage.text}
       </Typography>

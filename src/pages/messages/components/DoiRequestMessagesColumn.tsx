@@ -23,14 +23,14 @@ export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequest
   return (
     <StyledMessagesContainer>
       {ticket.status === 'New' || ticket.status === 'Pending' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+        <StyledStatusMessageBox>
           <StyledIconAndTextWrapper>
             <HourglassEmptyIcon fontSize="small" />
-            <Typography>{t('my_page.messages.doi_pending')}</Typography>
+            <Typography sx={{ color: 'white' }}>{t('my_page.messages.doi_pending')}</Typography>
           </StyledIconAndTextWrapper>
         </StyledStatusMessageBox>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
+        <StyledStatusMessageBox>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_completed')}</Typography>

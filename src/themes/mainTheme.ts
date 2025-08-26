@@ -161,7 +161,7 @@ export const mainTheme = createTheme(
       },
       background: {
         default: Color.Neutral95,
-        paper: Color.Outdated,
+        paper: Color.Neutral97,
         neutral97: Color.Neutral97,
         neutral87: Color.Neutral87,
         neutral46: Color.Neutral46,
@@ -382,6 +382,22 @@ export const mainTheme = createTheme(
         },
       },
       MuiFilledInput: {
+        styleOverrides: {
+          root: {
+            backgroundColor: Color.White,
+            '&.Mui-focused': {
+              backgroundColor: Color.White,
+            },
+            '&:hover': {
+              backgroundColor: Color.White,
+            },
+            '&.Mui-disabled': {
+              backgroundColor: Color.White,
+            },
+          },
+        },
+      },
+      MuiOutlinedInput: {
         styleOverrides: {
           root: {
             backgroundColor: Color.White,

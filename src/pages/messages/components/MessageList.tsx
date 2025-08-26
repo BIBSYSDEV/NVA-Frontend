@@ -12,7 +12,6 @@ import { toDateString } from '../../../utils/date-helpers';
 import { getFullName, userCanDeleteMessage } from '../../../utils/user-helpers';
 import { MessageItemOrganization } from './MessageItemOrganization';
 import { MessageMenu } from './MessageMenu';
-import { ticketColor } from './TicketListItem';
 
 interface MessageListProps {
   ticket: Ticket;
@@ -42,7 +41,7 @@ export const TicketMessageList = ({ ticket }: MessageListProps) => {
               text={message.text}
               date={message.createdDate}
               username={message.sender}
-              backgroundColor={ticketColor[ticket.type]}
+              backgroundColor={'secondary.light'}
               menuElement={canDeleteMessage && <MessageMenu messageId={message.id} />}
             />
           );

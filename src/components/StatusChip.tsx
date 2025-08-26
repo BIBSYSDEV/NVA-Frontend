@@ -27,7 +27,7 @@ export const TicketStatusChip = ({ ticket }: TicketStatusChipProps) => {
   const text = t(`my_page.messages.ticket_types.${ticket.status}`);
 
   if (ticket.status === 'Completed') {
-    return <StatusChip text={text} icon="check" bgcolor={ticketColor[ticket.type]} />;
+    return <StatusChip text={text} icon="check" />;
   }
 
   return <StatusChip text={text} icon={ticket.status === 'Closed' ? 'block' : 'hourglass'} />;
@@ -56,7 +56,7 @@ interface StatusChipProps {
   paddingY?: string | number;
 }
 
-export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon, paddingY }: StatusChipProps) => {
+export const StatusChip = ({ text, bgcolor = 'info.main', icon, paddingY }: StatusChipProps) => {
   return (
     <Box
       sx={{
@@ -69,6 +69,7 @@ export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon, paddingY }:
         borderRadius: '1rem',
         bgcolor,
         paddingY,
+        color: 'white',
       }}>
       {icon === 'check' ? (
         <CheckIcon sx={{ fontSize: '1rem' }} />
@@ -77,7 +78,7 @@ export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon, paddingY }:
       ) : icon === 'hourglass' ? (
         <HourglassEmptyIcon sx={{ fontSize: '1rem' }} />
       ) : null}
-      <Typography>{text}</Typography>
+      <Typography color="white">{text}</Typography>
     </Box>
   );
 };
