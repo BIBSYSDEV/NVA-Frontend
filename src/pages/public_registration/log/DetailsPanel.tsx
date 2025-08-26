@@ -39,10 +39,8 @@ const liStyling: CSSProperties = {
   listStyleType: 'none',
 };
 
-const getUniqueAffiliations = (affiliations: { id: string }[]) => {
-  return Array.from(new Set(affiliations.map((affiliation) => affiliation.id))).map((id) =>
-    affiliations.find((affiliation) => affiliation.id === id)
-  );
+const getUniqueOrganizations = <T extends { id: string }>(organizations: T[]) => {
+  return Array.from(new Map(organizations.map((org) => [org.id, org])).values());
 };
 
 export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
@@ -54,8 +52,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const confirmedAffiliations = contributors.flatMap((contributor) =>
     contributor.affiliations?.filter((affiliation) => affiliation.type === 'Organization' && affiliation.id)
   ) as ConfirmedAffiliation[];
-
-  const uniqueAffiliations = getUniqueAffiliations(confirmedAffiliations) as ConfirmedAffiliation[];
+  const uniqueAffiliations = getUniqueOrganizations(confirmedAffiliations);
 
   const affiliations = useQueries({
     queries: uniqueAffiliations.map((affiliation) => ({
@@ -70,7 +67,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const topLevelOrgs = affiliations
     .map((affiliation) => (affiliation.data ? getTopLevelOrganization(affiliation.data) : null))
     .filter(Boolean) as Organization[];
-  const institutions = topLevelOrgs.filter((item, index, self) => index === self.findIndex((t) => t.id === item.id));
+  const institutions = getUniqueOrganizations(topLevelOrgs);
 
   const customersData = useFetchCustomers({ enabled: institutions.length > 0, staleTime: 1_800_000 }); // Cache for 30 minutes
   const customers = customersData.data?.customers ?? [];
