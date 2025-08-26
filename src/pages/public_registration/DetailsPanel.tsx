@@ -72,14 +72,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const customers = customersData.data?.customers ?? [];
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        p: '1rem',
-        bgcolor: 'secondary.main',
-        gap: '0.5rem',
-      }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'secondary.main', gap: '0.5rem' }}>
       <Typography variant="h2" sx={visuallyHidden}>
         {t('details')}
       </Typography>
