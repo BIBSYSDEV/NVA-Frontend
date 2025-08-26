@@ -5,6 +5,7 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { Box, Button, Divider, styled, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface CompareFieldsProps {
   sourceContent: ReactNode;
@@ -34,7 +35,7 @@ export const CompareFields = ({
 
   return (
     <>
-      <Box sx={{ p: '0.5rem', bgcolor: '#FEFBF3' }}>{sourceContent}</Box>
+      {sourceContent}
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
         {isMatching ? (
@@ -50,7 +51,12 @@ export const CompareFields = ({
             </StyledBox>
 
             {onCopyValue && (
-              <Button variant="contained" size="small" endIcon={<ArrowForwardIcon />} onClick={onCopyValue}>
+              <Button
+                data-testid={dataTestId.basicData.centralImport.copyValueButton}
+                variant="contained"
+                size="small"
+                endIcon={<ArrowForwardIcon />}
+                onClick={onCopyValue}>
                 {t('overwrite')}
               </Button>
             )}
@@ -58,7 +64,12 @@ export const CompareFields = ({
         )}
 
         {isChanged && (
-          <Button variant="outlined" size="small" endIcon={<RestoreIcon />} onClick={onResetValue}>
+          <Button
+            data-testid={dataTestId.basicData.centralImport.resetValueButton}
+            variant="outlined"
+            size="small"
+            endIcon={<RestoreIcon />}
+            onClick={onResetValue}>
             {t('reset')}
           </Button>
         )}

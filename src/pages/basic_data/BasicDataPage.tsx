@@ -21,7 +21,6 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useBetaFlag } from '../../utils/hooks/useBetaFlag';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
@@ -29,7 +28,6 @@ import { SerialPublicationClaimsSettings } from '../editor/SerialPublicationClai
 import NotFound from '../errorpages/NotFound';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { CentralImportCandidateForm } from './app_admin/central_import/CentralImportCandidateForm';
-import { CentralImportCandidateMerge } from './app_admin/central_import/CentralImportCandidateMerge';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
 import { ImportCandidatesMenuFilters } from './app_admin/central_import/ImportCandidatesMenuFilters';
@@ -43,7 +41,6 @@ const isOnEditOrMergeImportCandidate = (path: string) =>
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
-  const beta = useBetaFlag();
   const user = useSelector((store: RootState) => store.user);
   const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
@@ -232,14 +229,8 @@ const BasicDataPage = () => {
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataCentralImportCandidateMerge, UrlPathTemplate.BasicData)}
-            element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateMerge />} />}
+            element={<PrivateRoute isAuthorized={isInternalImporter} element={<MergeImportCandidate />} />}
           />
-          {beta && (
-            <Route
-              path={getSubUrl(UrlPathTemplate.BasicDataCentralImportCandidateMergeBeta, UrlPathTemplate.BasicData)}
-              element={<PrivateRoute isAuthorized={isInternalImporter} element={<MergeImportCandidate />} />}
-            />
-          )}
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataAddEmployee, UrlPathTemplate.BasicData)}
             element={<PrivateRoute isAuthorized={isInstitutionAdmin} element={<AddEmployeePage />} />}
