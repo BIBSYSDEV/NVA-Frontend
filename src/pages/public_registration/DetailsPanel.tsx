@@ -71,6 +71,10 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const customersData = useFetchCustomers({ enabled: institutions.length > 0, staleTime: 1_800_000 }); // Cache for 30 minutes
   const customers = customersData.data?.customers ?? [];
 
+  const institutionsWithServiceCenters = institutions.filter((institution) =>
+    customers.some((customer) => customer.cristinId === institution.id && customer.serviceCenterUri)
+  );
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'secondary.main', gap: '0.5rem' }}>
       <Typography variant="h2" sx={visuallyHidden}>
@@ -102,13 +106,13 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         </IconButton>
 
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {institutions.length > 0 && (
+          {institutionsWithServiceCenters.length > 0 && (
             <div>
               <Typography variant="h2" gutterBottom>
                 {t('institutions_service_support')}
               </Typography>
               <StyledList>
-                {institutions.map((institution) => {
+                {institutionsWithServiceCenters.map((institution) => {
                   const serviceCenterUri = customers.find(
                     (customer) => customer.cristinId === institution.id
                   )?.serviceCenterUri;
@@ -118,9 +122,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
                       <Typography>{getLanguageString(institution.labels)}</Typography>
                       {serviceCenterUri ? (
                         <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>
-                      ) : (
-                        <Typography fontStyle="italic">{t('no_service_center')} </Typography>
-                      )}
+                      ) : null}
                     </StyledListItem>
                   );
                 })}
