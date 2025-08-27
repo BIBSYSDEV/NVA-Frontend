@@ -67,14 +67,6 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const topLevelOrgs = affiliationQueries
     .map((affiliationQuery) => (affiliationQuery.data ? getTopLevelOrganization(affiliationQuery.data) : null))
     .filter(Boolean) as Organization[];
-  const institutions = getUniqueOrganizations(topLevelOrgs);
-
-  const customersData = useFetchCustomers({ enabled: institutions.length > 0, staleTime: 1_800_000 }); // Cache for 30 minutes
-  const customers = customersData.data?.customers ?? [];
-
-  const institutionsWithServiceCenter = institutions.filter((institution) =>
-    customers.some((customer) => customer.cristinId === institution.id && customer.serviceCenterUri)
-  );
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'secondary.main', gap: '0.5rem' }}>
@@ -107,31 +99,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         </IconButton>
 
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {customersData.isPending ? (
-            <PageSpinner aria-label={t('institutions_service_support')} />
-          ) : (
-            institutionsWithServiceCenter.length > 0 && (
-              <div>
-                <Typography variant="h2" gutterBottom>
-                  {t('institutions_service_support')}
-                </Typography>
-                <StyledList>
-                  {institutionsWithServiceCenter.map((institution) => {
-                    const serviceCenterUri = customers.find(
-                      (customer) => customer.cristinId === institution.id
-                    )?.serviceCenterUri;
-
-                    return (
-                      <StyledListItem key={institution.id}>
-                        <Typography>{getLanguageString(institution.labels)}</Typography>
-                        {serviceCenterUri && <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>}
-                      </StyledListItem>
-                    );
-                  })}
-                </StyledList>
-              </div>
-            )
-          )}
+          <InstitutionsServiceCenterOverview institutions={getUniqueOrganizations(topLevelOrgs)} />
 
           {contactPersons.length > 0 && (
             <div>
@@ -216,5 +184,49 @@ const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
         </>
       )}
     </StyledListItem>
+  );
+};
+
+interface InstitutionsServiceCenterOverviewProps {
+  institutions: Organization[];
+}
+
+const InstitutionsServiceCenterOverview = ({ institutions }: InstitutionsServiceCenterOverviewProps) => {
+  const { t } = useTranslation();
+  const customersData = useFetchCustomers({ enabled: institutions.length > 0, staleTime: 1_800_000 }); // Cache for 30 minutes
+  const customers = customersData.data?.customers ?? [];
+
+  const institutionsWithServiceCenter = institutions.filter((institution) =>
+    customers.some((customer) => customer.cristinId === institution.id && customer.serviceCenterUri)
+  );
+
+  if (customersData.isPending) {
+    return <PageSpinner aria-label={t('institutions_service_support')} />;
+  }
+
+  if (institutionsWithServiceCenter.length === 0) {
+    return null;
+  }
+
+  return (
+    <div>
+      <Typography variant="h2" gutterBottom>
+        {t('institutions_service_support')}
+      </Typography>
+      <StyledList>
+        {institutionsWithServiceCenter.map((institution) => {
+          const serviceCenterUri = customers.find(
+            (customer) => customer.cristinId === institution.id
+          )?.serviceCenterUri;
+
+          return (
+            <StyledListItem key={institution.id}>
+              <Typography>{getLanguageString(institution.labels)}</Typography>
+              {serviceCenterUri && <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>}
+            </StyledListItem>
+          );
+        })}
+      </StyledList>
+    </div>
   );
 };
