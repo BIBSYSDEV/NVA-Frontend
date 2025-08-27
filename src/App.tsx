@@ -69,7 +69,7 @@ const Root = () => {
 
   return (
     <>
-      {!mustAcceptTerms && <AcceptTermsDialog newTermsUri={user.currentTerms} />}
+      {mustAcceptTerms && <AcceptTermsDialog newTermsUri={user.currentTerms} />}
       {mustCreatePerson && <CreateCristinPersonDialog user={user} />}
       {mustSelectCustomer && <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />}
 
