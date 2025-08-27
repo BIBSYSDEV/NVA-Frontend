@@ -2276,5 +2276,8 @@
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   },
   "view_contact_info": "Se kontaktinformasjon",
-  "vocabulary_missing": "Institusjonen har ikke lagt til vokabular."
+  "no_service_center": "Ingen brukerstøttepunkt oppgitt.",
+  "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
+  "merge_results": "Slå sammen resultat",
+  "merge_results_description": "<heading>$t(merge_results)</heading><p>Er resultatet en duplikat, men mangler metadata og filer?</p><p>Da kan du slå sammen metadata og samle filer til ett resultat.</p>"
 }
