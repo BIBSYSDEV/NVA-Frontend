@@ -397,9 +397,17 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            color: Color.PrimaryMain,
+          },
+        },
+      },
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
+            color: Color.PrimaryMain,
             backgroundColor: Color.White,
             '&.Mui-focused': {
               backgroundColor: Color.White,
@@ -409,6 +417,9 @@ export const mainTheme = createTheme(
             },
             '&.Mui-disabled': {
               backgroundColor: Color.White,
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: Color.PrimaryMain,
             },
           },
         },
@@ -460,12 +471,12 @@ export const mainTheme = createTheme(
 export const alternatingTableRowColor: SxProps = {
   thead: {
     tr: {
-      bgcolor: '#FEFBF3',
+      bgcolor: Color.White,
     },
   },
   tbody: {
     tr: {
-      bgcolor: 'secondary.light',
+      bgcolor: Color.Neutral97,
       '&:nth-of-type(even)': {
         bgcolor: '#FEFBF3',
       },
