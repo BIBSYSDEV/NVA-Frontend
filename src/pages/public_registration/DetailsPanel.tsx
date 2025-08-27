@@ -22,6 +22,7 @@ import { useFetchCustomers } from '../../api/hooks/useFetchCustomers';
 import { useFetchPerson } from '../../api/hooks/useFetchPerson';
 import { ContributorName } from '../../components/ContributorName';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
+import { PageSpinner } from '../../components/PageSpinner';
 import { ConfirmedAffiliation, Contributor, ContributorRole } from '../../types/contributor.types';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -106,26 +107,30 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         </IconButton>
 
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {institutionsWithServiceCenter.length > 0 && (
-            <div>
-              <Typography variant="h2" gutterBottom>
-                {t('institutions_service_support')}
-              </Typography>
-              <StyledList>
-                {institutionsWithServiceCenter.map((institution) => {
-                  const serviceCenterUri = customers.find(
-                    (customer) => customer.cristinId === institution.id
-                  )?.serviceCenterUri;
+          {customersData.isPending ? (
+            <PageSpinner aria-label={t('institutions_service_support')} />
+          ) : (
+            institutionsWithServiceCenter.length > 0 && (
+              <div>
+                <Typography variant="h2" gutterBottom>
+                  {t('institutions_service_support')}
+                </Typography>
+                <StyledList>
+                  {institutionsWithServiceCenter.map((institution) => {
+                    const serviceCenterUri = customers.find(
+                      (customer) => customer.cristinId === institution.id
+                    )?.serviceCenterUri;
 
-                  return (
-                    <StyledListItem key={institution.id}>
-                      <Typography>{getLanguageString(institution.labels)}</Typography>
-                      {serviceCenterUri && <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>}
-                    </StyledListItem>
-                  );
-                })}
-              </StyledList>
-            </div>
+                    return (
+                      <StyledListItem key={institution.id}>
+                        <Typography>{getLanguageString(institution.labels)}</Typography>
+                        {serviceCenterUri && <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>}
+                      </StyledListItem>
+                    );
+                  })}
+                </StyledList>
+              </div>
+            )
           )}
 
           {contactPersons.length > 0 && (
