@@ -120,9 +120,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
                   return (
                     <StyledListItem key={institution.id}>
                       <Typography>{getLanguageString(institution.labels)}</Typography>
-                      {serviceCenterUri ? (
-                        <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>
-                      ) : null}
+                      {serviceCenterUri && <OpenInNewLink href={serviceCenterUri}>{serviceCenterUri}</OpenInNewLink>}
                     </StyledListItem>
                   );
                 })}
