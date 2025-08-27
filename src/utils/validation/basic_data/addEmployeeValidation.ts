@@ -23,7 +23,7 @@ const employeeErrorMessage = {
     field: i18n.t('basic_data.add_employee.position'),
   }),
   affiliationOrganizationRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('common.institution'),
+    field: i18n.t('registration.contributors.department'),
   }),
   affiliationPercentageMax: i18n.t('feedback.validation.must_be_smaller_than', {
     field: i18n.t('basic_data.add_employee.position_percent'),

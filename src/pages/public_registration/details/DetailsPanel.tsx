@@ -8,18 +8,25 @@ import {
   DialogTitle,
   Divider,
   IconButton,
-  Link,
-  Skeleton,
+  styled,
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import { useQueries } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useFetchPerson } from '../../../api/hooks/useFetchPerson';
-import { ContributorName } from '../../../components/ContributorName';
+import { fetchOrganization } from '../../../api/cristinApi';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
-import { Contributor, ContributorRole } from '../../../types/contributor.types';
+import { ConfirmedAffiliation, Contributor, ContributorRole } from '../../../types/contributor.types';
+import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getTopLevelOrganization, getUniqueOrganizations } from '../../../utils/institutions-helpers';
+import { ContactPersonRow } from './ContactPersonRow';
+import { InstitutionsServiceCenterOverview } from './InstitutionsServiceCenterOverview';
+
+const StyledList = styled('ul')({
+  padding: 0,
+});
 
 interface DetailsPanelProps {
   contributors: Contributor[];
@@ -31,15 +38,27 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const correspondingContributors = contributors.filter((contributor) => contributor.correspondingAuthor);
   const contactPersons = contributors.filter((contributor) => contributor.role.type === ContributorRole.ContactPerson);
 
+  const confirmedAffiliations = contributors.flatMap((contributor) =>
+    contributor.affiliations?.filter((affiliation) => affiliation.type === 'Organization' && affiliation.id)
+  ) as ConfirmedAffiliation[];
+  const uniqueAffiliations = getUniqueOrganizations(confirmedAffiliations);
+
+  const affiliationQueries = useQueries({
+    queries: uniqueAffiliations.map((affiliation) => ({
+      queryKey: ['organization', affiliation.id],
+      queryFn: () => fetchOrganization(affiliation.id),
+      meta: { errorMessage: t('feedback.error.get_institution') },
+      staleTime: Infinity,
+      gcTime: 1_800_000,
+    })),
+  });
+
+  const topLevelOrgs = affiliationQueries
+    .map((affiliationQuery) => (affiliationQuery.data ? getTopLevelOrganization(affiliationQuery.data) : null))
+    .filter(Boolean) as Organization[];
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        p: '1rem',
-        bgcolor: 'secondary.main',
-        gap: '0.5rem',
-      }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'secondary.main', gap: '0.5rem' }}>
       <Typography variant="h2" sx={visuallyHidden}>
         {t('details')}
       </Typography>
@@ -57,28 +76,30 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
       <Dialog
         data-testid={dataTestId.registrationLandingPage.detailsTab.resultContactModal}
         open={openModal}
+        maxWidth="md"
         onClose={() => setOpenModal(false)}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <DialogTitle>{t('points_of_contact_for_result')}</DialogTitle>
-          <IconButton
-            sx={{ mr: '1rem', height: 'fit-content' }}
-            title={t('common.close')}
-            onClick={() => setOpenModal(false)}
-            data-testid={dataTestId.confirmDialog.cancelButton}>
-            <CloseIcon />
-          </IconButton>
-        </Box>
+        <DialogTitle sx={{ mr: '1rem' }}>{t('points_of_contact_for_result')}</DialogTitle>
+        <IconButton
+          sx={{ position: 'absolute', right: '0.5rem', top: '0.75rem' }}
+          title={t('common.close')}
+          onClick={() => setOpenModal(false)}
+          data-testid={dataTestId.confirmDialog.cancelButton}>
+          <CloseIcon />
+        </IconButton>
+
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <InstitutionsServiceCenterOverview institutions={getUniqueOrganizations(topLevelOrgs)} />
+
           {contactPersons.length > 0 && (
             <div>
               <Typography variant="h2" gutterBottom>
                 {t('registration.contributors.types.ContactPerson')}
               </Typography>
-              <ul style={{ padding: 0 }}>
+              <StyledList>
                 {contactPersons.map((contributor, index) => (
                   <ContactPersonRow key={index} contributor={contributor} />
                 ))}
-              </ul>
+              </StyledList>
             </div>
           )}
           {correspondingContributors.length > 0 && (
@@ -86,11 +107,11 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
               <Typography variant="h2" gutterBottom>
                 {t('corresponding_contributor')}
               </Typography>
-              <ul style={{ padding: 0 }}>
+              <StyledList>
                 {correspondingContributors.map((contributor, index) => (
                   <ContactPersonRow key={index} contributor={contributor} />
                 ))}
-              </ul>
+              </StyledList>
             </div>
           )}
 
@@ -111,53 +132,5 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         </DialogContent>
       </Dialog>
     </Box>
-  );
-};
-
-interface ContactPersonRowProps {
-  contributor: Contributor;
-}
-
-const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
-  const id = contributor.identity.id ?? '';
-  const personQuery = useFetchPerson(id);
-  const person = personQuery.data;
-
-  return (
-    <li
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        marginBottom: '0.5rem',
-        marginLeft: 0,
-        alignItems: 'center',
-      }}>
-      {personQuery.isFetching ? (
-        <>
-          <Skeleton width="10rem" />
-          <Skeleton width="10rem" />
-        </>
-      ) : (
-        <>
-          <ContributorName
-            id={id}
-            name={contributor.identity.name}
-            hasVerifiedAffiliation={
-              !!contributor.affiliations?.some((affiliation) => affiliation.type === 'Organization')
-            }
-          />
-          {person?.contactDetails?.email && (
-            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <MailOutlineIcon />
-              <Link
-                data-testid={dataTestId.registrationLandingPage.detailsTab.emailLink(id)}
-                href={`mailto:${person.contactDetails.email}`}>
-                {person.contactDetails.email}
-              </Link>
-            </Box>
-          )}
-        </>
-      )}
-    </li>
   );
 };

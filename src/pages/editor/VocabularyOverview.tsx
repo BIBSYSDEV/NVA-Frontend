@@ -7,6 +7,7 @@ import { fetchVocabulary } from '../../api/customerInstitutionsApi';
 import { HeadTitle } from '../../components/HeadTitle';
 import { RootState } from '../../redux/store';
 import {
+  CustomerVocabulary,
   defaultHrcsActivity,
   defaultHrcsCategory,
   visibleVocabularyStatuses,
@@ -30,6 +31,10 @@ export const VocabularyOverview = () => {
     meta: { errorMessage: t('feedback.error.get_vocabularies') },
   });
 
+  const visibleVocabularies =
+    vocabularyQuery.data?.vocabularies.filter((vocabulary) => visibleVocabularyStatuses.includes(vocabulary.status)) ??
+    [];
+
   return (
     <>
       <HeadTitle>{t('editor.vocabulary')}</HeadTitle>
@@ -37,28 +42,37 @@ export const VocabularyOverview = () => {
         {t('editor.vocabulary')}
       </Typography>
 
-      <Typography>{t('editor.vocabulary_description')}</Typography>
-
       {vocabularyQuery.isPending ? (
         <CircularProgress aria-labelledby="vocabulary-label" />
+      ) : visibleVocabularies.length > 0 ? (
+        <>
+          <Typography>{t('editor.vocabulary_description')}</Typography>
+          {visibleVocabularies.map((vocabulary) => (
+            <VocabularyCard vocabulary={vocabulary} key={vocabulary.id} />
+          ))}
+        </>
       ) : (
-        vocabularyQuery.data?.vocabularies
-          .filter((vocabulary) => visibleVocabularyStatuses.includes(vocabulary.status))
-          .map((vocabulary) => {
-            return (
-              <Card
-                key={vocabulary.id}
-                sx={{
-                  bgcolor: 'white',
-                  maxWidth: '450px',
-                  mt: '1rem',
-                  p: '1.5rem',
-                }}>
-                <Typography fontWeight="600">{getTranslatedVocabularyName(t, vocabulary.id)}</Typography>
-              </Card>
-            );
-          })
+        <Typography>{t('vocabulary_missing')}</Typography>
       )}
     </>
+  );
+};
+
+interface VocabularyCardProps {
+  vocabulary: CustomerVocabulary;
+}
+
+const VocabularyCard = ({ vocabulary }: VocabularyCardProps) => {
+  const { t } = useTranslation();
+  return (
+    <Card
+      sx={{
+        bgcolor: 'white',
+        maxWidth: '450px',
+        mt: '1rem',
+        p: '1.5rem',
+      }}>
+      <Typography fontWeight="600">{getTranslatedVocabularyName(t, vocabulary.id)}</Typography>
+    </Card>
   );
 };
