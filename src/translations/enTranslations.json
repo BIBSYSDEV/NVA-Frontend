@@ -18,10 +18,10 @@
     "short_description": "The Norwegian Research Information Repository (NVA) gathers information about Norwegian research, and makes research results and research information openly accessible."
   },
   "authorization": {
-    "about_terms": "About user terms",
-    "about_terms_description": "<0>In order to use the Norwegian Research Information Repository service, you must accept <0>Sikt's user terms<0></0></0> for the Norwegian Research Information Repository.</0><0>If you enter personal data about other people, you must have their permission or another legal basis. You must ensure that the person concerned is informed that their personal data is published in the Norwegian Research Information Repository.</0><0>You cannot make available/upload copyrighted material/works of art without having permission from all authors.</0><0>You are responsible for ensuring that your use of the Norwegian Research Information Repository is not in violation of applicable law.</0><0>For more information, see <0>Sikt's user terms<0></0></0> in their entirety.</0><1>By pressing \"$t(authorization.accept)\" you accept Sikt's user terms.</1>",
+    "about_terms": "Terms of Use and Privacy Policy for the Norwegian Research Information Repository",
+    "about_terms_description": "<p>To use the service, you must accept Sikt's <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Terms of Use for the Norwegian Research Information Repository</a>, and familiarize yourself with the <a href=\"https://nva.sikt.no/privacy-policy\">Privacy Policy for the Norwegian Research Information Repository.</a></p><p>By clicking on «$t(authorization.accept)», you confirm that you have read and accepted the terms of use. You also consent to the processing of personal data in accordance with the privacy policy.</p>",
     "accept": "Accept",
-    "accept_terms_intro": "Thank you for wanting to make research openly available in the Norwegian Research Information Repository. Together, we will achieve the Government's goal that all Norwegian research funded by public funds becomes openly available to the public.",
+    "accept_terms_intro": "<p>Thank you for registering your research in the Norwegian Research Information Repository.</p><p>This helps ensure that research is documented and that scientific articles funded by public resources are made openly available to the public – which is a national goal.</p>",
     "accept_terms_to_create_user": "I consent to being created as a user in NVA",
     "back_to_home": "Back to the home page",
     "cancel_create_user_text": "You must create a user to proceed. If you cancel, you will be logged out. Do you wish to cancel?",
@@ -728,6 +728,8 @@
     "technical_support_link": "If you need technical support, please contact <0>kontakt@sikt.no</0>",
     "to_top": "To the top"
   },
+  "institution_support": "",
+  "institutions_service_support": "",
   "licenses": {
     "additional_info": {
       "cc0": "<p>See the <link1>Copyright Act</link1> §§3, 8, 11, and 14</p>"
@@ -2273,5 +2275,6 @@
     "unpublish_registration_duplicate_question": "Is there another published version of the same research result?",
     "unpublish_registration_reason": "Enter a brief explanation for why this research result should no longer be published. The explanation will be displayed on the research result when looking up the reference to the research result."
   },
-  "view_contact_info": "View contact information"
+  "view_contact_info": "View contact information",
+  "vocabulary_missing": ""
 }
