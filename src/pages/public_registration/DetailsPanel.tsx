@@ -71,7 +71,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const customersData = useFetchCustomers({ enabled: institutions.length > 0, staleTime: 1_800_000 }); // Cache for 30 minutes
   const customers = customersData.data?.customers ?? [];
 
-  const institutionsWithServiceCenters = institutions.filter((institution) =>
+  const institutionsWithServiceCenter = institutions.filter((institution) =>
     customers.some((customer) => customer.cristinId === institution.id && customer.serviceCenterUri)
   );
 
@@ -106,13 +106,13 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         </IconButton>
 
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {institutionsWithServiceCenters.length > 0 && (
+          {institutionsWithServiceCenter.length > 0 && (
             <div>
               <Typography variant="h2" gutterBottom>
                 {t('institutions_service_support')}
               </Typography>
               <StyledList>
-                {institutionsWithServiceCenters.map((institution) => {
+                {institutionsWithServiceCenter.map((institution) => {
                   const serviceCenterUri = customers.find(
                     (customer) => customer.cristinId === institution.id
                   )?.serviceCenterUri;
