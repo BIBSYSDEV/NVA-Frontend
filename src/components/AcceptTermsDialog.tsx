@@ -10,6 +10,7 @@ import { setNotification } from '../redux/notificationSlice';
 import { setUser } from '../redux/userSlice';
 import { dataTestId } from '../utils/dataTestIds';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
+import { OpenInNewLink } from './OpenInNewLink';
 
 interface AcceptTermsDialogProps {
   newTermsUri: string;
@@ -39,11 +40,26 @@ export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
         {t('authorization.welcome')} <LanguageSelector />
       </DialogTitle>
       <DialogContent>
-        <Typography sx={{ mb: '1rem' }}>{t('authorization.accept_terms_intro')} </Typography>
+        <Trans
+          t={t}
+          i18nKey="authorization.accept_terms_intro"
+          components={{
+            p: <Typography sx={{ mb: '1rem' }} />,
+          }}
+        />
         <Typography variant="h3" gutterBottom>
           {t('authorization.about_terms')}
         </Typography>
-        <Trans i18nKey="authorization.about_terms_description">
+        <Trans
+          t={t}
+          i18nKey="authorization.about_terms_description"
+          components={{
+            p: <Typography sx={{ mb: '1rem' }} />,
+            a1: (
+              <OpenInNewLink href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv" />
+            ),
+            a2: <OpenInNewLink href="https://nva.sikt.no/privacy-policy" />,
+          }}>
           <Typography sx={{ mb: '1rem' }}>
             <Link
               href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv"
