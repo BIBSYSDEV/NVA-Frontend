@@ -54,10 +54,7 @@ export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
           i18nKey="authorization.about_terms_description"
           components={{
             p: <Typography sx={{ mb: '1rem' }} />,
-            a1: (
-              <OpenInNewLink href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv" />
-            ),
-            a2: <OpenInNewLink href="https://nva.sikt.no/privacy-policy" />,
+            a: <OpenInNewLink />,
           }}
         />
       </DialogContent>

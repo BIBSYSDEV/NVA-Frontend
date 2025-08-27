@@ -19,7 +19,7 @@
   },
   "authorization": {
     "about_terms": "Brukervilkår og personvernerklæring for Nasjonalt vitenarkiv",
-    "about_terms_description": "<p>For å bruke tjenesten må du akseptere Sikts <a1>Brukervilkår for Nasjonalt vitenarkiv</a1>, og gjøre deg kjent med <a2>Personvernerklæring for Nasjonalt vitenarkiv.</a2></p><p>Ved å klikke på «Godta», bekrefter du at du har lest og akseptert brukervilkårene. Du samtykker også til behandling av personopplysninger i samsvar med personvernerklæringen.</p>",
+    "about_terms_description": "<p>For å bruke tjenesten må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Brukervilkår for Nasjonalt vitenarkiv</a>, og gjøre deg kjent med <a href=\"https://nva.sikt.no/privacy-policy\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», bekrefter du at du har lest og akseptert brukervilkårene. Du samtykker også til behandling av personopplysninger i samsvar med personvernerklæringen.</p>",
     "accept": "Godta",
     "accept_terms_intro": "<p>Takk for at du ønsker å gjøre forskning åpent tilgjengelig i Nasjonalt vitenarkiv.</p><p>Dette bidrar til at forskningen blir dokumentert, og til at vitenskapelige artikler finansiert av offentlige midler gjøres åpent tilgjengelige for allmennheten – som er et nasjonalt mål.</p>",
     "accept_terms_to_create_user": "Jeg samtykker til å bli opprettet som bruker i NVA",
