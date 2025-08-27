@@ -1,5 +1,4 @@
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, Typography } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -59,18 +58,8 @@ export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
               <OpenInNewLink href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv" />
             ),
             a2: <OpenInNewLink href="https://nva.sikt.no/privacy-policy" />,
-          }}>
-          <Typography sx={{ mb: '1rem' }}>
-            <Link
-              href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv"
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{ display: 'inline-flex', alignItems: 'center' }}>
-              <OpenInNewIcon fontSize="small" />
-            </Link>
-          </Typography>
-          <Typography sx={{ textAlign: 'center' }} />
-        </Trans>
+          }}
+        />
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'center' }}>
         <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={handleLogout}>
