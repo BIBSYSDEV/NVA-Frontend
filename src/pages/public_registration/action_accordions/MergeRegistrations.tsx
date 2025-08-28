@@ -61,6 +61,7 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
               sourceResult={sourceRegistration}
               targetResult={targetRegistrationQuery.data}
               onSave={async (data) => await registrationMutation.mutateAsync(data)}
+              onCancel={() => setOpenDialog(false)}
             />
           )}
         </DialogContent>

@@ -26,7 +26,7 @@ export const MergeImportCandidate = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
-  const locationState = location.state as BasicDataLocationState;
+  const locationState = location.state as BasicDataLocationState | null;
   const { candidateIdentifier, registrationIdentifier } = useParams<MergeImportCandidateParams>();
 
   const registrationQuery = useFetchRegistration(registrationIdentifier);
@@ -91,6 +91,7 @@ export const MergeImportCandidate = () => {
             } satisfies RegistrationFormLocationState,
           });
         }}
+        onCancel={locationState?.previousPath ? () => navigate(-1) : undefined}
       />
     </StyledPageContent>
   );

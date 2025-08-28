@@ -11,9 +11,10 @@ interface MergeResultsWizardProps {
   sourceResult: Registration;
   targetResult: Registration;
   onSave: SubmitHandler<Registration>;
+  onCancel?: () => void;
 }
 
-export const MergeResultsWizard = ({ sourceResult, targetResult, onSave }: MergeResultsWizardProps) => {
+export const MergeResultsWizard = ({ sourceResult, targetResult, onSave, onCancel }: MergeResultsWizardProps) => {
   const formMethods = useForm({ defaultValues: targetResult });
 
   return (
@@ -31,7 +32,7 @@ export const MergeResultsWizard = ({ sourceResult, targetResult, onSave }: Merge
               alignItems: 'center',
             }}>
             <MergeResultsWizardContent />
-            <MergeResultsWizardActions />
+            <MergeResultsWizardActions onCancel={onCancel} />
           </BackgroundDiv>
         </form>
       </MergeResultsWizardContextProvider>
