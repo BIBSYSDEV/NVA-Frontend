@@ -1,8 +1,12 @@
 import { Button, Dialog, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
+import { updateRegistration } from '../../../api/registrationApi';
 import { MergeResultsWizard } from '../../../components/merge_results/MergeResultsWizard';
+import { setNotification } from '../../../redux/notificationSlice';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
@@ -13,10 +17,20 @@ interface MergeRegistrationsProps {
 
 export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
 
   const targetRegistrationId = sourceRegistration.duplicateOf ?? '';
   const targetRegistrationQuery = useFetchRegistration(getIdentifierFromId(targetRegistrationId));
+
+  const registrationMutation = useMutation({
+    mutationFn: (values: Registration) => updateRegistration(values),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' })),
+    onSuccess: () => {
+      dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
+      setOpenDialog(false);
+    },
+  });
 
   return (
     <section>
@@ -41,9 +55,7 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
             <MergeResultsWizard
               sourceResult={sourceRegistration}
               targetResult={targetRegistrationQuery.data}
-              onSave={(data) => {
-                console.log('Save data:', data);
-              }}
+              onSave={async (data) => await registrationMutation.mutateAsync(data)}
             />
           )}
         </DialogContent>
