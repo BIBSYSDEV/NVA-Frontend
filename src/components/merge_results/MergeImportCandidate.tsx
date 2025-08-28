@@ -26,7 +26,7 @@ export const MergeImportCandidate = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
-  const locationState = location.state as BasicDataLocationState | null;
+  const locationState = location.state as BasicDataLocationState;
   const { candidateIdentifier, registrationIdentifier } = useParams<MergeImportCandidateParams>();
 
   const registrationQuery = useFetchRegistration(registrationIdentifier);
