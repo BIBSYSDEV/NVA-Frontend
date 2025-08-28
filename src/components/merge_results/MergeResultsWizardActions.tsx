@@ -17,8 +17,8 @@ const flexStyling: SxProps = {
   flexWrap: 'wrap',
 };
 
-interface MergeResultsWizardActionsProps {
-  onCancel?: () => void;
+export interface MergeResultsWizardActionsProps {
+  onCancel: () => void;
 }
 
 export const MergeResultsWizardActions = ({ onCancel }: MergeResultsWizardActionsProps) => {
