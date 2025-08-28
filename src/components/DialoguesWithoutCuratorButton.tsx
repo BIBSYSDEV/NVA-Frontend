@@ -59,9 +59,9 @@ export const DialoguesWithoutCuratorButton = () => {
       color="primary"
       startIcon={
         newStatusIsSelected ? (
-          <CheckBoxIcon sx={{ color: 'secondary.main' }} />
+          <CheckBoxIcon sx={{ color: 'primary.main' }} />
         ) : (
-          <CheckBoxOutlineBlankIcon sx={{ color: 'secondary.main' }} />
+          <CheckBoxOutlineBlankIcon sx={{ color: 'primary.main' }} />
         )
       }
       endIcon={

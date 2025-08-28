@@ -13,20 +13,19 @@ export const StyledMessagesContainer = styled(Box)({
   gap: '0.25rem',
 });
 
-export const StyledStatusMessageBox = styled(Box)(({ theme }) => ({
+export const StyledStatusMessageBox = styled(Box)({
   display: 'grid',
   gridTemplateColumns: '1fr auto',
   gap: '0.25rem 0.5rem',
   padding: '0.2rem 0.5rem',
   borderRadius: '4px',
-  backgroundColor: theme.palette.info.main,
-}));
+  color: 'white',
+});
 
 export const StyledIconAndTextWrapper = styled(Box)({
   display: 'flex',
   alignItems: 'center',
   gap: '0.2rem',
-  color: 'white',
 });
 
 interface PublishingRequestMessagesColumnProps {
@@ -41,7 +40,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
       {ticket.status === 'Pending' || ticket.status === 'New' ? (
         <>
           {ticket.filesForApproval.length > 0 && (
-            <StyledStatusMessageBox>
+            <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
               <StyledIconAndTextWrapper>
                 <HourglassEmptyIcon fontSize="small" />
                 <Typography sx={{ color: 'inherit' }}>
@@ -52,7 +51,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
           )}
         </>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox>
+        <StyledStatusMessageBox sx={{ bgcolor: 'success.main' }}>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
             <Typography sx={{ color: 'inherit' }}>
@@ -65,12 +64,14 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
         <>
-          <StyledStatusMessageBox>
+          <StyledStatusMessageBox sx={{ bgcolor: 'error.main' }}>
             <StyledIconAndTextWrapper>
               <BlockIcon fontSize="small" />
-              <Typography>{t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}</Typography>
+              <Typography color="white">
+                {t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}
+              </Typography>
             </StyledIconAndTextWrapper>
-            {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+            {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>
         </>
       ) : null}

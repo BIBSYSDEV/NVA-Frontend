@@ -27,10 +27,16 @@ export const TicketStatusChip = ({ ticket }: TicketStatusChipProps) => {
   const text = t(`my_page.messages.ticket_types.${ticket.status}`);
 
   if (ticket.status === 'Completed') {
-    return <StatusChip text={text} icon="check" />;
+    return <StatusChip bgcolor={'success.main'} text={text} icon="check" />;
   }
 
-  return <StatusChip text={text} icon={ticket.status === 'Closed' ? 'block' : 'hourglass'} />;
+  return (
+    <StatusChip
+      bgcolor={ticket.status === 'Closed' ? 'error.main' : undefined}
+      text={text}
+      icon={ticket.status === 'Closed' ? 'block' : 'hourglass'}
+    />
+  );
 };
 
 interface NviStatusChip {

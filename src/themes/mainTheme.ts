@@ -241,7 +241,7 @@ export const mainTheme = createTheme(
         },
       },
       MuiCheckbox: {
-        defaultProps: { color: 'secondary' },
+        defaultProps: { color: 'primary' },
       },
       MuiDatePicker: {
         defaultProps: {

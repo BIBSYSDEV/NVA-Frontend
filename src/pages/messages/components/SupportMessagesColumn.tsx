@@ -19,7 +19,7 @@ export const SupportMessagesColumn = ({ ticket }: SupportMessagesColumnProps) =>
   return (
     <StyledMessagesContainer>
       {(ticket.status === 'New' || ticket.status === 'Pending') && (
-        <StyledStatusMessageBox>
+        <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
           <StyledIconAndTextWrapper>
             <HourglassEmptyIcon fontSize="small" />
             <Typography color="white">{t('my_page.messages.general_support_pending')}</Typography>
