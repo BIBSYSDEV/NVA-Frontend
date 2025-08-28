@@ -14,6 +14,7 @@ const flexStyling: SxProps = {
   display: 'flex',
   gap: '1rem',
   alignItems: 'center',
+  flexWrap: 'wrap',
 };
 
 interface MergeResultsWizardActionsProps {
@@ -38,7 +39,11 @@ export const MergeResultsWizardActions = ({ onCancel }: MergeResultsWizardAction
       )}
 
       <Box sx={{ ...flexStyling, ml: 'auto' }}>
-        {onCancel && <Button onClick={onCancel}>{t('common.cancel')}</Button>}
+        {onCancel && (
+          <Button data-testid={dataTestId.registrationWizard.formActions.cancelEditButton} onClick={onCancel}>
+            {t('common.cancel')}
+          </Button>
+        )}
 
         <Button
           type="submit"
