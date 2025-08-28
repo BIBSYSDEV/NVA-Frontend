@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { toDateString } from '../../../utils/date-helpers';
-import { isFileApprovalTicket } from '../../../utils/ticketHelpers';
 import { StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
 
 interface LastMessageBoxProps {
@@ -27,15 +26,6 @@ export const LastMessageBox = ({ ticket }: LastMessageBoxProps) => {
         lastMessage.sender.preferredLastName || lastMessage.sender.lastName
       }`.trim()
     : '';
-
-  const ticketColor =
-    ticket.type === 'GeneralSupportCase'
-      ? 'generalSupportCase.main'
-      : isFileApprovalTicket(ticket)
-        ? 'publishingRequest.main'
-        : ticket.type === 'DoiRequest'
-          ? 'doiRequest.main'
-          : undefined;
 
   return (
     <StyledStatusMessageBox sx={{ bgcolor: 'background.neutral87' }}>

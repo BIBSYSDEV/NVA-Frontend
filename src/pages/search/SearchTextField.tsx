@@ -18,6 +18,7 @@ export const SearchTextField = ({ clearValue, dataTestId, ...props }: SearchText
         type="search"
         data-testid={dataTestId ?? dataTestIdFile.startPage.searchField}
         fullWidth
+        variant="outlined"
         size="small"
         aria-label={t('common.search')}
         slotProps={{

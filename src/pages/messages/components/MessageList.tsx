@@ -41,7 +41,7 @@ export const TicketMessageList = ({ ticket }: MessageListProps) => {
               text={message.text}
               date={message.createdDate}
               username={message.sender}
-              backgroundColor={'secondary.light'}
+              backgroundColor={'background.neutral87'}
               menuElement={canDeleteMessage && <MessageMenu messageId={message.id} />}
             />
           );

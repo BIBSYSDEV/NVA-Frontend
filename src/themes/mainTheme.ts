@@ -105,7 +105,6 @@ export const mainTheme = createTheme(
       primary: {
         main: Color.PrimaryMain,
         light: Color.Outdated,
-        contrastText: Color.White,
       },
       secondary: {
         light: Color.SecondaryLight,
