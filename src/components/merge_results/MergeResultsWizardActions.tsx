@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { navigationButtonStyling } from '../../pages/registration/RegistrationFormActions';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { isOnImportPage } from '../../utils/urlPaths';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizardActions = () => {
@@ -32,7 +33,7 @@ export const MergeResultsWizardActions = () => {
         sx={{ ml: 'auto' }}
         loading={formState.isSubmitting}
         data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}>
-        {t('basic_data.central_import.import')}
+        {isOnImportPage() ? t('basic_data.central_import.import') : t('merge_results')}
       </Button>
 
       {activeTab !== RegistrationTab.ResourceType && (
