@@ -5,11 +5,12 @@ import { TruncatableTypography } from './TruncatableTypography';
 interface PageHeaderProps extends TypographyProps {
   children: string;
   htmlTitle?: string;
+  omitPageTitle?: boolean;
 }
 
-export const PageHeader = ({ children, htmlTitle, ...props }: PageHeaderProps) => (
+export const PageHeader = ({ children, htmlTitle, omitPageTitle = false, ...props }: PageHeaderProps) => (
   <Box sx={{ width: '100%', marginBottom: '2rem' }}>
-    <HeadTitle>{htmlTitle ?? children}</HeadTitle>
+    {!omitPageTitle && <HeadTitle>{htmlTitle ?? children}</HeadTitle>}
 
     <Box
       sx={{

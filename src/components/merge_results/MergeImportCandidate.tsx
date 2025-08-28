@@ -11,6 +11,7 @@ import { BasicDataLocationState, RegistrationFormLocationState } from '../../typ
 import { Registration } from '../../types/registration.types';
 import { updateRegistrationQueryData } from '../../utils/registration-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../utils/urlPaths';
+import { HeadTitle } from '../HeadTitle';
 import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
@@ -66,9 +67,10 @@ export const MergeImportCandidate = () => {
 
   return (
     <StyledPageContent sx={{ mx: 'auto' }}>
+      <HeadTitle>{t('merge_import_candidate')}</HeadTitle>
       <Paper sx={{ mb: '1rem', p: '1rem' }}>
         <Typography variant="h1" gutterBottom>
-          {t('basic_data.central_import.merge_candidate.merge')}
+          {t('merge_import_candidate')}
         </Typography>
         <Typography>{t('basic_data.central_import.merge_candidate.merge_details_1')}</Typography>
         <Typography>{t('basic_data.central_import.merge_candidate.merge_details_2')}</Typography>
