@@ -22,13 +22,12 @@ export const StyledStatusMessageBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.info.main,
 }));
 
-export const StyledIconAndTextWrapper = styled(Box)(({ theme }) => ({
+export const StyledIconAndTextWrapper = styled(Box)({
   display: 'flex',
   alignItems: 'center',
   gap: '0.2rem',
   color: 'white',
-  backgroundColor: theme.palette.info.main,
-}));
+});
 
 interface PublishingRequestMessagesColumnProps {
   ticket: ExpandedPublishingTicket | PublishingTicket;

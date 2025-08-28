@@ -87,7 +87,7 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
 }));
 
 export const SearchListItem = styled(ListItem)(() => ({
-  borderLeft: '1rem solid',
+  borderLeft: '0.75rem solid',
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
