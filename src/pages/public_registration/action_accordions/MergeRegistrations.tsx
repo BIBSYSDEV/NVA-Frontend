@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogContent, DialogTitle, Typography } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -10,6 +10,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { updateRegistrationQueryData } from '../../../utils/registration-helpers';
 
 interface MergeRegistrationsProps {
   sourceRegistration: Registration;
@@ -18,6 +19,7 @@ interface MergeRegistrationsProps {
 export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const [openDialog, setOpenDialog] = useState(false);
 
   const targetRegistrationId = sourceRegistration.duplicateOf ?? '';
@@ -26,8 +28,11 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
   const registrationMutation = useMutation({
     mutationFn: (values: Registration) => updateRegistration(values),
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' })),
-    onSuccess: () => {
+    onSuccess: (response) => {
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
+      if (response.data) {
+        updateRegistrationQueryData(queryClient, response.data);
+      }
       setOpenDialog(false);
     },
   });
