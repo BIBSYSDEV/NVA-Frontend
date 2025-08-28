@@ -48,7 +48,7 @@ export const NviPeriodsPage = () => {
             return (
               <SearchListItem
                 key={nviPeriod.publishingYear}
-                sx={{ borderLeftColor: 'nvi.main', cursor: 'pointer' }}
+                sx={{ cursor: 'pointer' }}
                 onClick={() => setNviPeriodToEdit(nviPeriod)}>
                 <Typography fontWeight={700} gutterBottom>
                   {nviPeriod.publishingYear}

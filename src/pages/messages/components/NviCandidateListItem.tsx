@@ -46,7 +46,6 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandida
   return (
     <SearchListItem
       sx={{
-        borderLeftColor: 'secondary.main',
         gap: '0.5rem',
         flexDirection: 'row',
         justifyContent: 'space-between',

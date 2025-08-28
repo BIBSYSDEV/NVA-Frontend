@@ -88,7 +88,7 @@ export const FindRegistration = ({
         <>
           <Typography>{t('common.result')}</Typography>
           <ErrorBoundary>
-            <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+            <SearchListItem>
               <RegistrationListItemContent target="_blank" registration={selectedRegistration} />
             </SearchListItem>
           </ErrorBoundary>

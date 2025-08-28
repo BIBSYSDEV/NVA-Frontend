@@ -68,7 +68,6 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       key={ticket.id}
       sx={{
         p: 0,
-        borderLeftColor: 'secondary.main',
         bgcolor: !viewedByUser ? 'secondary.light' : 'white',
       }}>
       <MuiLink

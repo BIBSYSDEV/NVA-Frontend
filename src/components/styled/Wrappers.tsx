@@ -86,13 +86,13 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
   },
 }));
 
-export const SearchListItem = styled(ListItem)({
-  borderLeft: '0.75rem solid',
+export const SearchListItem = styled(ListItem)(({ theme }) => ({
+  borderLeft: `0.75rem solid ${theme.palette.secondary.main}`,
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
   marginBottom: '0.2rem',
-});
+}));
 
 export const SearchListItemDiv = styled('div')(({ theme }) => ({
   border: '2px solid',

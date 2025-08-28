@@ -31,7 +31,6 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
   return (
     <SearchListItem
       sx={{
-        borderLeftColor: 'centralImport.main',
         flexDirection: 'row',
         gap: '1rem',
         justifyContent: 'space-between',

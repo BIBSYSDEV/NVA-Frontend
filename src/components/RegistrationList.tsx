@@ -52,7 +52,7 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
     <List data-testid="search-results">
       {registrations.map((registration) => (
         <ErrorBoundary key={registration.id}>
-          <SearchListItem sx={{ borderLeftColor: 'secondary.main' }}>
+          <SearchListItem>
             <RegistrationListItemContent registration={registration} {...rest} />
           </SearchListItem>
         </ErrorBoundary>
