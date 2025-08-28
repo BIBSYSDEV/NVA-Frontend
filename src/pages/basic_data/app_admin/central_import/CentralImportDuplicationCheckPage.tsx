@@ -195,15 +195,8 @@ export const CentralImportDuplicationCheckPage = () => {
               <Typography gutterBottom>{t('basic_data.central_import.merge_candidate.merge_description')}</Typography>
               {registrationIdentifier ? (
                 <Link
-                  to={{
-                    pathname: getImportCandidateMergePath(identifier ?? '', registrationIdentifier),
-                  }}
-                  state={
-                    {
-                      ...locationState,
-                      previousPath: location.pathname,
-                    } satisfies BasicDataLocationState
-                  }>
+                  to={{ pathname: getImportCandidateMergePath(identifier ?? '', registrationIdentifier) }}
+                  state={{ ...locationState, previousPath: location.pathname } satisfies BasicDataLocationState}>
                   <Button variant="outlined" fullWidth size="small">
                     {t('basic_data.central_import.merge_candidate.merge')}
                   </Button>
