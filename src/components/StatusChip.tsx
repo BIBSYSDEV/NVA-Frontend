@@ -49,10 +49,16 @@ export const NviStatusChip = ({ status }: NviStatusChip) => {
   const text = t(`tasks.nvi.status.${status}`);
 
   if (status === 'Approved') {
-    return <StatusChip text={text} icon="check" bgcolor="nvi.main" />;
+    return <StatusChip text={text} icon="check" bgcolor="success.main" />;
   }
 
-  return <StatusChip text={text} icon={status === 'Rejected' ? 'block' : 'hourglass'} />;
+  return (
+    <StatusChip
+      text={text}
+      icon={status === 'Rejected' ? 'block' : 'hourglass'}
+      bgcolor={status === 'Rejected' ? 'error.main' : 'info.main'}
+    />
+  );
 };
 
 interface StatusChipProps {

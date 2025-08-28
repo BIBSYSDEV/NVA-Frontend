@@ -62,7 +62,7 @@ export const InputContainerBox = styled(Box)({
 
 export const BackgroundDiv = styled(Box)(({ theme }) => ({
   overflowX: 'auto',
-  background: theme.palette.secondary.light,
+  background: theme.palette.background.default,
   [theme.breakpoints.up('md')]: {
     padding: '1rem 2rem',
   },
@@ -86,13 +86,13 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
   },
 }));
 
-export const SearchListItem = styled(ListItem)(() => ({
+export const SearchListItem = styled(ListItem)({
   borderLeft: '0.75rem solid',
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
   marginBottom: '0.2rem',
-}));
+});
 
 export const SearchListItemDiv = styled('div')(({ theme }) => ({
   border: '2px solid',

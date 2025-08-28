@@ -80,7 +80,13 @@ export const NviCandidatesNavigationAccordion = () => {
                   variant="determinate"
                   value={nviCompletedPercentage}
                   color="secondary"
-                  sx={{ flexGrow: '1', my: '0.175rem', height: '1rem', bgcolor: 'white', borderRadius: '0.5rem' }}
+                  sx={{
+                    flexGrow: '1',
+                    my: '0.175rem',
+                    height: '1rem',
+                    bgcolor: 'secondary.light',
+                    borderRadius: '0.5rem',
+                  }}
                 />
                 <Typography>{nviCompletedPercentage}%</Typography>
               </Box>
