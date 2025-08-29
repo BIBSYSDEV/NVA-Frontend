@@ -169,6 +169,7 @@ export const FileRow = ({
         ) : canDownloadFile ? (
           <Button
             data-testid={dataTestId.registrationLandingPage.openFileButton}
+            sx={{ bgcolor: 'secondary.light', color: 'primary.main' }}
             variant="contained"
             fullWidth
             endIcon={<OpenInNewIcon />}
