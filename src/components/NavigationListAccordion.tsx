@@ -46,7 +46,7 @@ export const NavigationListAccordion = ({
       elevation={0}
       sx={{
         mb: '0.5rem',
-        bgcolor: 'secondary.dark',
+        bgcolor: 'white',
       }}>
       <AccordionSummary
         sx={{ paddingX: '0.75rem' }}
@@ -63,7 +63,7 @@ export const NavigationListAccordion = ({
             gap: '1rem',
             alignItems: 'center',
             'svg, img, div': { borderRadius: '50%', height: '25px', width: '25px' },
-            svg: { padding: '0.2rem' },
+            svg: { padding: '0.2rem', bgcolor: 'background.neutral87' },
           }}>
           {startIcon}
           <Typography variant="h3" fontWeight={500}>

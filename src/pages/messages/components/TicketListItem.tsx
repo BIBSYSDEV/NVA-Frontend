@@ -9,11 +9,7 @@ import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
-import {
-  ExpandedPublishingTicket,
-  ExpandedTicket,
-  TicketTypeColor,
-} from '../../../types/publication_types/ticket.types';
+import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration, RegistrationStatus } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
 import { getInitials } from '../../../utils/general-helpers';
@@ -31,14 +27,6 @@ import { StyledVerifiedContributor } from '../../registration/contributors_tab/C
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
 import { SupportMessagesColumn } from './SupportMessagesColumn';
-
-export const ticketColor = {
-  UnpublishRequest: 'publishingRequest.main',
-  PublishingRequest: 'publishingRequest.main',
-  FilesApprovalThesis: 'publishingRequest.main',
-  DoiRequest: 'doiRequest.main',
-  GeneralSupportCase: 'generalSupportCase.main',
-} satisfies TicketTypeColor;
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;
@@ -79,9 +67,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     <SearchListItem
       key={ticket.id}
       sx={{
-        borderLeftColor: ticketColor[ticket.type],
         p: 0,
-        bgcolor: !viewedByUser ? 'secondary.main' : undefined,
+        bgcolor: !viewedByUser ? 'secondary.light' : 'white',
       }}>
       <MuiLink
         component={Link}
@@ -131,7 +118,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
 
           {ticket.type === 'GeneralSupportCase' && isOnMyPageMessages ? (
             viewedByUser ? (
-              <StatusChip text={t('common.read_past_tense')} icon="check" bgcolor="generalSupportCase.main" />
+              <StatusChip text={t('common.read_past_tense')} icon="check" />
             ) : (
               <StatusChip text={t('common.unread')} icon="hourglass" />
             )

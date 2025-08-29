@@ -127,7 +127,7 @@ export const Header = () => {
                     <AddIcon
                       sx={{
                         color: 'white',
-                        bgcolor: 'primary.light',
+                        bgcolor: 'secondary.main',
                         borderRadius: '50%',
                         padding: '0.2rem',
                         width: '2.25rem',

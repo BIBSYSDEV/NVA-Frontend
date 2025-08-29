@@ -50,6 +50,7 @@ export const CategorySearchFilter = ({ searchParam, disabled, hideHeading }: Cat
           />
         ) : (
           <Chip
+            sx={{ bgcolor: 'secondary.light' }}
             data-testid={dataTestId.startPage.advancedSearch.selectCategoryChip}
             disabled={disabled}
             label={t('registration.resource_type.select_resource_type')}

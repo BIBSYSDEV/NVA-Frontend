@@ -216,7 +216,6 @@ const MyPagePage = () => {
                 endIcon={<Badge badgeContent={allUnreadPublishingCount} />}
                 showCheckbox
                 isSelected={!!selectedTypes.publishingRequest}
-                color="publishingRequest"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest });
                   resetPaginationAndNavigate(searchParams, navigate);
@@ -231,7 +230,6 @@ const MyPagePage = () => {
                 endIcon={<Badge badgeContent={unreadDoiCount} />}
                 showCheckbox
                 isSelected={!!selectedTypes.doiRequest}
-                color="doiRequest"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest });
                   resetPaginationAndNavigate(searchParams, navigate);
@@ -246,7 +244,6 @@ const MyPagePage = () => {
                 endIcon={<Badge badgeContent={unreadGeneralSupportCount} />}
                 showCheckbox
                 isSelected={!!selectedTypes.generalSupportCase}
-                color="generalSupportCase"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase });
                   resetPaginationAndNavigate(searchParams, navigate);

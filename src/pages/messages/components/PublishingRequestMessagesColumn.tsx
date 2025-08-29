@@ -19,6 +19,7 @@ export const StyledStatusMessageBox = styled(Box)({
   gap: '0.25rem 0.5rem',
   padding: '0.2rem 0.5rem',
   borderRadius: '4px',
+  color: 'white',
 });
 
 export const StyledIconAndTextWrapper = styled(Box)({
@@ -39,10 +40,10 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
       {ticket.status === 'Pending' || ticket.status === 'New' ? (
         <>
           {ticket.filesForApproval.length > 0 && (
-            <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+            <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
               <StyledIconAndTextWrapper>
                 <HourglassEmptyIcon fontSize="small" />
-                <Typography>
+                <Typography sx={{ color: 'inherit' }}>
                   {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
                 </Typography>
               </StyledIconAndTextWrapper>
@@ -50,25 +51,27 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
           )}
         </>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+        <StyledStatusMessageBox sx={{ bgcolor: 'success.main' }}>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
-            <Typography>
+            <Typography sx={{ color: 'inherit' }}>
               {ticket.approvedFiles.length
                 ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
                 : t('my_page.messages.metadata_published')}
             </Typography>
           </StyledIconAndTextWrapper>
-          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+          {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
         <>
-          <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+          <StyledStatusMessageBox sx={{ bgcolor: 'error.main' }}>
             <StyledIconAndTextWrapper>
               <BlockIcon fontSize="small" />
-              <Typography>{t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}</Typography>
+              <Typography color="white">
+                {t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}
+              </Typography>
             </StyledIconAndTextWrapper>
-            {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+            {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>
         </>
       ) : null}

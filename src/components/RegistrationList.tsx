@@ -52,7 +52,7 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
     <List data-testid="search-results">
       {registrations.map((registration) => (
         <ErrorBoundary key={registration.id}>
-          <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+          <SearchListItem>
             <RegistrationListItemContent registration={registration} {...rest} />
           </SearchListItem>
         </ErrorBoundary>
@@ -139,8 +139,8 @@ export const RegistrationListItemContent = ({
               <Typography
                 sx={{
                   p: '0.1rem 0.75rem',
-                  bgcolor: 'primary.light',
-                  color: 'primary.contrastText',
+                  bgcolor: 'info.main',
+                  color: 'white',
                 }}>
                 {t('registration.public_page.result_not_published')}
               </Typography>

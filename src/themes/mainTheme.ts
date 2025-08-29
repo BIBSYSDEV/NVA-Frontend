@@ -5,20 +5,20 @@ import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
-  Black = '#222',
+  Black = '#222222',
+  White = '#FFFFFF',
+  PrimaryMain = '#0A0132',
+  SecondaryMain = '#7351FB',
   CentralImportMain = '#D9D9D9',
   CentralImportLight = '#EFEEED',
   ErrorMain = '#AC0303',
-  PrimaryMain = '#0F0035',
-  SecondaryLight = '#F9F4E6',
-  SecondaryMain = '#EDE2C7',
+  SecondaryLight = '#D1CDFF',
   SecondaryDark = '#D3C9AF',
   SuccessMain = '#025810',
   InfoMain = '#0B408F',
   InfoLight = '#C2D3EA',
   PrimaryLight = '#0D4DAD',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
-  White = '#fff',
   DoiRequest = '#FFAA8E',
   DoiRequestLight = '#FFE2DA',
   GeneralSupportCase = '#7E9DCC',
@@ -31,6 +31,19 @@ enum Color {
   NviLight = '#F8D3F6',
   WarningMain = '#ED6C02',
   WarningLight = '#FFD45A',
+  Outdated = '#fc53db',
+  Neutral97 = '#F7F7F7',
+  Neutral95 = '#F1F1F1',
+  Neutral87 = '#DEDEDE',
+  Neutral46 = '#767676',
+  Blue = '#004FCF',
+  BlueLight = '#E6F0FF',
+  Green = '#096638',
+  GreenLight = '#CFF7E2',
+  Red = '#B60203',
+  RedLight = '#FFEAE9',
+  Yellow = '#FFB700',
+  YellowLight = '#FCEED2',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
@@ -55,6 +68,12 @@ declare module '@mui/material/styles' {
     generalSupportCase?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
     nvi?: PaletteColorOptions;
+  }
+  interface TypeBackground {
+    neutral97?: string;
+    neutral95?: string;
+    neutral87?: string;
+    neutral46?: string;
   }
 }
 declare module '@mui/material/Button' {
@@ -85,27 +104,26 @@ export const mainTheme = createTheme(
     palette: {
       primary: {
         main: Color.PrimaryMain,
-        light: Color.PrimaryLight,
-        contrastText: Color.White,
+        light: Color.Outdated,
       },
       secondary: {
         light: Color.SecondaryLight,
         main: Color.SecondaryMain,
-        dark: Color.SecondaryDark,
+        dark: Color.Outdated,
       },
       error: {
-        main: Color.ErrorMain,
+        main: Color.Red,
       },
       success: {
-        main: Color.SuccessMain,
+        main: Color.Green,
       },
       info: {
-        main: Color.InfoMain,
-        light: Color.InfoLight,
+        main: Color.Blue,
+        light: Color.BlueLight,
       },
       warning: {
-        main: Color.WarningMain,
-        light: Color.WarningLight,
+        main: Color.Yellow,
+        light: Color.YellowLight,
       },
       grey: {
         300: '#EEEEEE',
@@ -113,37 +131,40 @@ export const mainTheme = createTheme(
         500: '#CCCCCC',
       },
       registration: {
-        main: Color.Registration,
+        main: Color.Outdated,
       },
       person: {
-        main: Color.Person,
+        main: Color.Outdated,
       },
       project: {
-        main: Color.Project,
+        main: Color.Outdated,
       },
       centralImport: {
-        main: Color.CentralImportMain,
-        light: Color.CentralImportLight,
+        main: Color.Outdated,
+        light: Color.Outdated,
       },
       publishingRequest: {
-        main: Color.PublishingRequest,
-        light: Color.PublishingRequestLight,
+        main: Color.Outdated,
+        light: Color.Outdated,
       },
       doiRequest: {
-        main: Color.DoiRequest,
-        light: Color.DoiRequestLight,
+        main: Color.Outdated,
+        light: Color.Outdated,
       },
       generalSupportCase: {
-        main: Color.GeneralSupportCase,
-        light: Color.InfoLight,
+        main: Color.Outdated,
+        light: Color.Outdated,
       },
       nvi: {
-        main: Color.NviMain,
-        light: Color.NviLight,
+        main: Color.Outdated,
+        light: Color.Outdated,
       },
       background: {
-        default: Color.White,
-        paper: Color.SecondaryLight,
+        default: Color.Neutral95,
+        paper: Color.Neutral97,
+        neutral97: Color.Neutral97,
+        neutral87: Color.Neutral87,
+        neutral46: Color.Neutral46,
       },
     },
     typography: {
@@ -219,6 +240,9 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiCheckbox: {
+        defaultProps: { color: 'primary' },
+      },
       MuiDatePicker: {
         defaultProps: {
           views: ['year', 'month', 'day'],
@@ -237,7 +261,7 @@ export const mainTheme = createTheme(
         },
       },
       MuiBadge: {
-        defaultProps: { color: 'info' },
+        defaultProps: { color: 'secondary' },
       },
       MuiChip: {
         styleOverrides: {
@@ -373,6 +397,33 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            color: Color.PrimaryMain,
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            color: Color.PrimaryMain,
+            backgroundColor: Color.White,
+            '&.Mui-focused': {
+              backgroundColor: Color.White,
+            },
+            '&:hover': {
+              backgroundColor: Color.White,
+            },
+            '&.Mui-disabled': {
+              backgroundColor: Color.White,
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: Color.PrimaryMain,
+            },
+          },
+        },
+      },
       MuiPickersFilledInput: {
         styleOverrides: {
           root: {
@@ -420,12 +471,12 @@ export const mainTheme = createTheme(
 export const alternatingTableRowColor: SxProps = {
   thead: {
     tr: {
-      bgcolor: '#FEFBF3',
+      bgcolor: Color.White,
     },
   },
   tbody: {
     tr: {
-      bgcolor: 'secondary.light',
+      bgcolor: Color.Neutral97,
       '&:nth-of-type(even)': {
         bgcolor: '#FEFBF3',
       },
