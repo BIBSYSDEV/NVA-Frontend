@@ -5,6 +5,10 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../api/apiPaths';
 import { searchByNationalIdNumber } from '../../api/cristinApi';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../components/EmphasizeSubstring';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
@@ -24,6 +28,8 @@ interface SearchForCristinPersonProps
   setSelectedPerson: (person: FlatCristinPerson | undefined) => void;
 }
 
+const defaultPersonSearchSize = 10;
+
 export const SearchForCristinPerson = ({
   selectedPerson,
   setSelectedPerson,
@@ -32,6 +38,7 @@ export const SearchForCristinPerson = ({
   const { t } = useTranslation();
   const { resetForm } = useFormikContext<AddEmployeeData>();
 
+  const [searchSize, setSearchSize] = useState(defaultPersonSearchSize);
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
   const searchQueryIsNumber = !!searchQuery && !isNaN(Number(searchQuery));
@@ -41,7 +48,7 @@ export const SearchForCristinPerson = ({
   const [searchByNameResponse, isLoadingSearchByName] = useFetch<SearchResponse<CristinPerson>>({
     url:
       searchQuery && searchQuery === debouncedSearchQuery && !searchQueryIsNumber
-        ? `${CristinApiPath.Person}?results=20&name=${debouncedSearchQuery}`
+        ? `${CristinApiPath.Person}?results=${searchSize}&name=${debouncedSearchQuery}`
         : '',
     withAuthentication: true,
   });
@@ -99,6 +106,16 @@ export const SearchForCristinPerson = ({
               </Box>
             </li>
           )}
+          slotProps={{
+            listbox: {
+              component: AutocompleteListboxWithExpansion,
+              ...({
+                hasMoreHits: !!searchByNameResponse?.size && searchByNameResponse.size > searchSize,
+                onShowMoreHits: () => setSearchSize(searchSize + defaultPersonSearchSize),
+                isLoadingMoreHits: isLoadingSearchByName && searchSize > searchByNameOptions.length,
+              } satisfies AutocompleteListboxWithExpansionProps),
+            },
+          }}
           renderInput={(params) => (
             <AutocompleteTextField
               {...params}

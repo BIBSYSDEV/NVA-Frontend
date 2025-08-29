@@ -5,9 +5,11 @@ import { PublicationInstanceType } from './registration.types';
 export interface SimpleCustomerInstitution {
   active: boolean;
   id: string;
+  cristinId: string;
   createdDate: string;
   displayName: string;
   doiPrefix?: string;
+  serviceCenterUri?: string;
 }
 
 export type PublishStrategy = 'RegistratorPublishesMetadataOnly' | 'RegistratorPublishesMetadataAndFiles';
