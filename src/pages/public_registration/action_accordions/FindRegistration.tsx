@@ -1,5 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, InputAdornment, Radio, RadioGroup, TextField } from '@mui/material';
+import { Box, InputAdornment, Radio, RadioGroup, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -81,18 +81,24 @@ export const FindRegistration = ({
           {searchQuery.isFetching ? (
             <ListSkeleton arrayLength={3} minWidth={40} height={100} />
           ) : searchQuery.data?.hits && searchQuery.data.hits.length > 0 ? (
-            <RadioGroup>
+            <RadioGroup sx={{ my: '0.5rem' }}>
               {searchQuery.data.hits.map((registration) => (
-                <Box key={registration.identifier} sx={{ display: 'flex', gap: '0.5rem' }}>
-                  <Radio key={registration.id} value={registration.id} />
-                  <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+                <Box key={registration.identifier} sx={{ display: 'flex', gap: '0.25rem' }}>
+                  <Radio
+                    value={registration.id}
+                    slotProps={{ input: { 'aria-labelledby': `list-item-${registration.identifier}` } }}
+                  />
+                  <SearchListItem
+                    id={`list-item-${registration.identifier}`}
+                    component="div"
+                    sx={{ borderLeftColor: 'registration.main' }}>
                     <RegistrationListItemContent registration={registration} />
                   </SearchListItem>
                 </Box>
               ))}
             </RadioGroup>
           ) : (
-            <p>INGEN TREFF</p>
+            <Typography>{t('common.no_hits')}</Typography>
           )}
         </ListPagination>
       </section>
