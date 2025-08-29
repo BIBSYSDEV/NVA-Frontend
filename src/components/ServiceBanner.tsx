@@ -31,7 +31,7 @@ export const ServiceBanner = () => {
     <Box
       component="aside"
       sx={{
-        bgcolor: 'warning.light',
+        bgcolor: 'warning.main',
         p: '0.5rem',
         cursor: showMaintenanceInfo ? undefined : 'pointer',
       }}

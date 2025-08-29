@@ -161,7 +161,7 @@ export const mainTheme = createTheme(
       },
       background: {
         default: Color.Neutral95,
-        paper: Color.Outdated,
+        paper: Color.Neutral97,
         neutral97: Color.Neutral97,
         neutral87: Color.Neutral87,
         neutral46: Color.Neutral46,
@@ -241,7 +241,7 @@ export const mainTheme = createTheme(
         },
       },
       MuiCheckbox: {
-        defaultProps: { color: 'secondary' },
+        defaultProps: { color: 'primary' },
       },
       MuiDatePicker: {
         defaultProps: {
@@ -397,6 +397,33 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            color: Color.PrimaryMain,
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            color: Color.PrimaryMain,
+            backgroundColor: Color.White,
+            '&.Mui-focused': {
+              backgroundColor: Color.White,
+            },
+            '&:hover': {
+              backgroundColor: Color.White,
+            },
+            '&.Mui-disabled': {
+              backgroundColor: Color.White,
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: Color.PrimaryMain,
+            },
+          },
+        },
+      },
       MuiPickersFilledInput: {
         styleOverrides: {
           root: {
@@ -444,12 +471,12 @@ export const mainTheme = createTheme(
 export const alternatingTableRowColor: SxProps = {
   thead: {
     tr: {
-      bgcolor: '#FEFBF3',
+      bgcolor: Color.White,
     },
   },
   tbody: {
     tr: {
-      bgcolor: 'secondary.light',
+      bgcolor: Color.Neutral97,
       '&:nth-of-type(even)': {
         bgcolor: '#FEFBF3',
       },

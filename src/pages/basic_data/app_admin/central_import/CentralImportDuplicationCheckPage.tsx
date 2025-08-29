@@ -134,7 +134,7 @@ export const CentralImportDuplicationCheckPage = () => {
                   {t('basic_data.central_import.merge_candidate.result_in_nva')}:
                 </Typography>
                 {importedRegistrationQuery.data && (
-                  <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+                  <SearchListItem>
                     <RegistrationListItemContent
                       registration={convertToRegistrationSearchItem(importedRegistrationQuery.data)}
                     />
