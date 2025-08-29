@@ -9,6 +9,7 @@ import NotFound from '../../pages/errorpages/NotFound';
 import { setNotification } from '../../redux/notificationSlice';
 import { BasicDataLocationState, RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration } from '../../types/registration.types';
+import { updateRegistrationQueryData } from '../../utils/registration-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../utils/urlPaths';
 import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
@@ -79,10 +80,7 @@ export const MergeImportCandidate = () => {
         onSave={async (data) => {
           const updateRegistrationResponse = await registrationMutation.mutateAsync(data);
           if (updateRegistrationResponse.data) {
-            queryClient.setQueryData(
-              ['registration', updateRegistrationResponse.data.identifier, false],
-              updateRegistrationResponse.data
-            );
+            updateRegistrationQueryData(queryClient, updateRegistrationResponse.data);
           }
           await importCandidateMutation.mutateAsync();
           dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
