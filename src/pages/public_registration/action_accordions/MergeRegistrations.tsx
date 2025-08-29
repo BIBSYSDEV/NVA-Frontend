@@ -41,6 +41,7 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
   return (
     <section>
       <Trans
+        t={t}
         i18nKey="merge_results_description"
         components={{ heading: <Typography fontWeight="bold" />, p: <Typography gutterBottom /> }}
       />
