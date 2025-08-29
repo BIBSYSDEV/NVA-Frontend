@@ -22,12 +22,13 @@ export default [
   ...tseslint.configs.recommended,
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
-  reactHooks.configs['recommended-latest'],
+  reactHooks.configs.recommended,
   ...tanstackQuery.configs['flat/recommended'],
   jsxA11y.flatConfigs.recommended,
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      'react-hooks/react-compiler': 'error',
       '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
       'no-console': 'warn',
       'no-debugger': 'warn',
