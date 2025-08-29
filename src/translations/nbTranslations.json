@@ -820,6 +820,7 @@
     "unknown_filename": "Ukjent filnavn"
   },
   "matches": "Matcher",
+  "merge_import_candidate": "Slå sammen importkandidat",
   "merge_results": "Slå sammen resultat",
   "merge_results_description": "<heading>$t(merge_results)</heading><p>Er resultatet en duplikat, men mangler metadata og filer?</p><p>Da kan du slå sammen metadata og samle filer til ett resultat.</p>",
   "missing_value": "Mangler verdi",
