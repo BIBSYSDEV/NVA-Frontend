@@ -1,14 +1,16 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { Autocomplete, Box, TextField, Typography } from '@mui/material';
+import { Box, InputAdornment, Radio, RadioGroup, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
-import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { ListPagination } from '../../../components/ListPagination';
+import { ListSkeleton } from '../../../components/ListSkeleton';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RegistrationSearchItem } from '../../../types/registration.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { RegistrationSortSelector } from '../../search/registration_search/RegistrationSortSelector';
 
 function isDoi(query: string) {
   return query.includes('https://doi.org/');
@@ -28,72 +30,72 @@ export const FindRegistration = ({
   const [searchBeforeDebounce, setSearchBeforeDebounce] = useState('');
   const debouncedSearch = useDebounce(searchBeforeDebounce);
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
   const fetchQuery: FetchResultsParams = {
     doi: isDoi(debouncedSearch) ? debouncedSearch : null,
     query: !isDoi(debouncedSearch) ? debouncedSearch : null,
+    idNot: filteredRegistrationIdentifier,
   };
 
-  const duplicateRegistrationSearch = useQuery({
+  const searchQuery = useQuery({
     enabled: debouncedSearch.length > 0,
-    queryKey: ['duplicateRegistration', fetchQuery],
+    queryKey: ['registrations', fetchQuery],
     queryFn: () => fetchResults(fetchQuery),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
-  const searchResults = duplicateRegistrationSearch.data?.hits ?? [];
-
-  const searchResultNotContainingToBeDeleted = searchResults.filter(
-    (possibleDuplicate) => possibleDuplicate.identifier !== filteredRegistrationIdentifier
-  );
+  const searchResults = searchQuery.data?.hits ?? [];
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Typography variant="h3">{t('unpublish_actions.search_for_duplicate')}</Typography>
-      <Autocomplete
-        options={searchResultNotContainingToBeDeleted}
-        getOptionLabel={(option: RegistrationSearchItem | string) => {
-          if (typeof option === 'string') {
-            return option;
-          }
-          return option.mainTitle ?? '';
+      <TextField
+        placeholder={t('unpublish_actions.search_duplicate_facets')}
+        variant="filled"
+        label={t('unpublish_actions.duplicate')}
+        onChange={(event) => setSearchBeforeDebounce(event.target.value)}
+        slotProps={{
+          input: {
+            type: 'search',
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          },
         }}
-        freeSolo
-        loading={duplicateRegistrationSearch.isPending && debouncedSearch.length > 0}
-        value={selectedRegistration}
-        onChange={(_, newValue) => {
-          if (typeof newValue === 'string') {
-            setSelectedRegistration(undefined);
-          } else {
-            setSelectedRegistration(newValue ?? undefined);
-          }
-        }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            placeholder={t('unpublish_actions.search_duplicate_facets')}
-            variant="filled"
-            label={t('unpublish_actions.duplicate')}
-            onChange={(event) => setSearchBeforeDebounce(event.target.value)}
-            slotProps={{
-              input: {
-                ...params.InputProps,
-                type: 'search',
-                startAdornment: <SearchIcon />,
-              },
-            }}
-          />
-        )}
       />
-      {!!selectedRegistration && (
-        <>
-          <Typography>{t('common.result')}</Typography>
-          <ErrorBoundary>
-            <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
-              <RegistrationListItemContent target="_blank" registration={selectedRegistration} />
-            </SearchListItem>
-          </ErrorBoundary>
-        </>
-      )}
+
+      <section>
+        <ListPagination
+          paginationAriaLabel={t('common.pagination_project_search')}
+          count={searchQuery.data?.totalHits ?? 0}
+          page={page + 1}
+          onPageChange={(newPage) => setPage(newPage - 1)}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={(newRowsPerPage) => setRowsPerPage(newRowsPerPage)}
+          maxHits={10_000}
+          showPaginationTop
+          sortingComponent={<RegistrationSortSelector />}>
+          {searchQuery.isFetching ? (
+            <ListSkeleton arrayLength={3} minWidth={40} height={100} />
+          ) : searchQuery.data?.hits && searchQuery.data.hits.length > 0 ? (
+            <RadioGroup>
+              {searchQuery.data.hits.map((registration) => (
+                <Box key={registration.identifier} sx={{ display: 'flex', gap: '0.5rem' }}>
+                  <Radio key={registration.id} value={registration.id} />
+                  <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+                    <RegistrationListItemContent registration={registration} />
+                  </SearchListItem>
+                </Box>
+              ))}
+            </RadioGroup>
+          ) : (
+            <p>INGEN TREFF</p>
+          )}
+        </ListPagination>
+      </section>
     </Box>
   );
 };

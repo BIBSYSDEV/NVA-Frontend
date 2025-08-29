@@ -11,6 +11,7 @@ import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { updateRegistrationQueryData } from '../../../utils/registration-helpers';
+import { FindRegistration } from './FindRegistration';
 
 interface MergeRegistrationsProps {
   sourceRegistration: Registration;
@@ -24,6 +25,8 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
 
   const targetRegistrationId = sourceRegistration.duplicateOf ?? '';
   const targetRegistrationQuery = useFetchRegistration(getIdentifierFromId(targetRegistrationId));
+
+  const [targetRegistration, setTargetRegistration] = useState(targetRegistrationQuery.data);
 
   const registrationMutation = useMutation({
     mutationFn: (values: Registration) => updateRegistration(values),
@@ -56,12 +59,24 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="lg" fullWidth>
         <DialogTitle>{t('merge_results')}</DialogTitle>
         <DialogContent>
-          {targetRegistrationQuery.data && (
+          {targetRegistration ? (
             <MergeResultsWizard
               sourceResult={sourceRegistration}
-              targetResult={targetRegistrationQuery.data}
+              targetResult={targetRegistration}
               onSave={async (data) => await registrationMutation.mutateAsync(data)}
             />
+          ) : (
+            <>
+              <Trans i18nKey="find_result_to_merge_description" components={{ p: <Typography gutterBottom /> }} />
+
+              <FindRegistration
+                setSelectedRegistration={(registration) => {
+                  // setTargetRegistration(registration);
+                }}
+                selectedRegistration={targetRegistration}
+                filteredRegistrationIdentifier={sourceRegistration.identifier}
+              />
+            </>
           )}
         </DialogContent>
       </Dialog>

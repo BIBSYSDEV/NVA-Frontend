@@ -333,10 +333,6 @@
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljer",
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -408,7 +404,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "does_not_match": "Matcher ikke",
   "editor": {
@@ -2279,5 +2279,6 @@
   },
   "unpublished_result": "Avpublisert resultat",
   "view_contact_info": "Se kontaktinformasjon",
-  "vocabulary_missing": "Institusjonen har ikke lagt til vokabular."
+  "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
+  "find_result_to_merge_description": "<p>Slå sammen to resultater for å unngå to versjoner av samme resultt med forskjellige metadata og filer.</p><p>Er det registrert forskjellig metadata så velger du hvilke data som er gjeldende. Du velger også om filer skal flyttes over til det publiserte resultatet.</p><p>Søk opp, og velg resultatet du ønsker å slå sammen med. Du kan bare slå sammen resultatet der du er registrert som bidragsyter.</p>"
 }
