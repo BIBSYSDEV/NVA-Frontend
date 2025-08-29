@@ -1,6 +1,6 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { Box, Button, IconButton, Tooltip } from '@mui/material';
+import { Box, Button, IconButton, SxProps, Tooltip } from '@mui/material';
 import { useContext } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -10,13 +10,24 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { isOnImportPage } from '../../utils/urlPaths';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
-export const MergeResultsWizardActions = () => {
+const flexStyling: SxProps = {
+  display: 'flex',
+  gap: '1rem',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+};
+
+export interface MergeResultsWizardActionsProps {
+  onCancel: () => void;
+}
+
+export const MergeResultsWizardActions = ({ onCancel }: MergeResultsWizardActionsProps) => {
   const { t } = useTranslation();
   const { formState } = useFormContext<Registration>();
   const { activeTab, setActiveTab } = useContext(MergeResultsWizardContext);
 
   return (
-    <Box sx={{ gridColumn: '1/-1', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+    <Box sx={{ ...flexStyling, gridColumn: '1/-1' }}>
       {activeTab !== RegistrationTab.Description && (
         <Tooltip title={t('common.previous')}>
           <IconButton
@@ -27,14 +38,21 @@ export const MergeResultsWizardActions = () => {
         </Tooltip>
       )}
 
-      <Button
-        type="submit"
-        variant="contained"
-        sx={{ ml: 'auto' }}
-        loading={formState.isSubmitting}
-        data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}>
-        {isOnImportPage() ? t('basic_data.central_import.import') : t('merge_results')}
-      </Button>
+      <Box sx={{ ...flexStyling, ml: 'auto' }}>
+        {onCancel && (
+          <Button data-testid={dataTestId.registrationWizard.formActions.cancelEditButton} onClick={onCancel}>
+            {t('common.cancel')}
+          </Button>
+        )}
+
+        <Button
+          type="submit"
+          variant="contained"
+          loading={formState.isSubmitting}
+          data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}>
+          {isOnImportPage() ? t('basic_data.central_import.import') : t('merge_results')}
+        </Button>
+      </Box>
 
       {activeTab !== RegistrationTab.ResourceType && (
         <Tooltip title={t('common.next')}>

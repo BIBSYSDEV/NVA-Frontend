@@ -21,6 +21,7 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [openDialog, setOpenDialog] = useState(false);
+  const toggleDialog = () => setOpenDialog((prev) => !prev);
 
   const targetRegistrationId = sourceRegistration.duplicateOf ?? '';
   const targetRegistrationQuery = useFetchRegistration(getIdentifierFromId(targetRegistrationId));
@@ -33,7 +34,7 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
       if (response.data) {
         updateRegistrationQueryData(queryClient, response.data);
       }
-      setOpenDialog(false);
+      toggleDialog();
     },
   });
 
@@ -50,11 +51,11 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
         fullWidth
         size="small"
         sx={{ bgcolor: 'white' }}
-        onClick={() => setOpenDialog(true)}>
+        onClick={toggleDialog}>
         {t('merge_results')}
       </Button>
 
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="lg" fullWidth>
+      <Dialog open={openDialog} onClose={toggleDialog} maxWidth="lg" fullWidth>
         <DialogTitle>{t('merge_results')}</DialogTitle>
         <DialogContent>
           {targetRegistrationQuery.data && (
@@ -62,6 +63,7 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
               sourceResult={sourceRegistration}
               targetResult={targetRegistrationQuery.data}
               onSave={async (data) => await registrationMutation.mutateAsync(data)}
+              onCancel={toggleDialog}
             />
           )}
         </DialogContent>

@@ -93,6 +93,13 @@ export const MergeImportCandidate = () => {
             } satisfies RegistrationFormLocationState,
           });
         }}
+        onCancel={() => {
+          if (locationState?.previousPath) {
+            navigate(-1);
+          } else {
+            navigate(getImportCandidatePath(importCandidateQuery.data.identifier));
+          }
+        }}
       />
     </StyledPageContent>
   );
