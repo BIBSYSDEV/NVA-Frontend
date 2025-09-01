@@ -1,18 +1,13 @@
 import { Box, Button, Dialog, DialogContent, DialogTitle, Typography } from '@mui/material';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
-import { updateRegistration } from '../../../../api/registrationApi';
-import { MergeResultsWizard } from '../../../../components/merge_results/MergeResultsWizard';
-import { setNotification } from '../../../../redux/notificationSlice';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import { Registration, RegistrationSearchItem } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { updateRegistrationQueryData } from '../../../../utils/registration-helpers';
 import { FindRegistration } from '../FindRegistration';
+import { MergeSelectedRegistration } from './MergeSelectedRegistration';
 
 interface MergeRegistrationsProps {
   sourceRegistration: Registration;
@@ -20,29 +15,16 @@ interface MergeRegistrationsProps {
 
 export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
-  const queryClient = useQueryClient();
   const [openDialog, setOpenDialog] = useState(false);
-  const toggleDialog = () => setOpenDialog((prev) => !prev); // TODO: reset selected registration
+  const toggleDialog = () => {
+    setOpenDialog((prev) => !prev);
+    setSelectedRegistration(null);
+    setTargetRegistrationId(sourceRegistration.duplicateOf ?? '');
+  };
 
-  const targetRegistrationId = sourceRegistration.duplicateOf ?? '';
-  const targetRegistrationQuery = useFetchRegistration(getIdentifierFromId(targetRegistrationId));
-
+  const [targetRegistrationId, setTargetRegistrationId] = useState(sourceRegistration.duplicateOf ?? '');
   const [selectedRegistration, setSelectedRegistration] = useState<RegistrationSearchItem | null>(null);
-  const [targetRegistration, setTargetRegistration] = useState(targetRegistrationQuery.data);
-
-  const registrationMutation = useMutation({
-    mutationFn: (values: Registration) => updateRegistration(values),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' })),
-    onSuccess: (response) => {
-      dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
-      if (response.data) {
-        updateRegistrationQueryData(queryClient, response.data);
-      }
-      toggleDialog();
-    },
-  });
 
   return (
     <section>
@@ -64,12 +46,11 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="lg" fullWidth>
         <DialogTitle>{t('merge_results')}</DialogTitle>
         <DialogContent>
-          {targetRegistration ? (
-            <MergeResultsWizard
-              sourceResult={sourceRegistration}
-              targetResult={targetRegistration}
-              onSave={async (data) => await registrationMutation.mutateAsync(data)}
-              onCancel={toggleDialog}
+          {targetRegistrationId ? (
+            <MergeSelectedRegistration
+              targetRegistrationId={targetRegistrationId}
+              sourceRegistration={sourceRegistration}
+              toggleDialog={toggleDialog}
             />
           ) : (
             <>
@@ -89,7 +70,10 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
 
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', mt: '1rem' }}>
                 <Button onClick={toggleDialog}>{t('common.cancel')}</Button>
-                <Button variant="contained" disabled={!selectedRegistration}>
+                <Button
+                  variant="contained"
+                  disabled={!selectedRegistration}
+                  onClick={() => setTargetRegistrationId(selectedRegistration?.id ?? '')}>
                   {t('start_merging')}
                 </Button>
               </Box>
