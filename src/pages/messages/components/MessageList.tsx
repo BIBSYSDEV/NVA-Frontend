@@ -60,14 +60,7 @@ interface MessageItemProps {
   showOrganization?: boolean;
 }
 
-export const MessageItem = ({
-  text,
-  date,
-  username,
-  backgroundColor,
-  menuElement,
-  showOrganization = false,
-}: MessageItemProps) => {
+export const MessageItem = ({ text, date, username, menuElement, showOrganization = false }: MessageItemProps) => {
   const { t } = useTranslation();
 
   const senderQuery = useFetchUserQuery(username);

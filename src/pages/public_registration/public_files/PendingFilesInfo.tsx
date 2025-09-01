@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, BoxProps, Typography } from '@mui/material';
 import { ReactNode } from 'react';
