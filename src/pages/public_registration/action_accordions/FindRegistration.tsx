@@ -18,23 +18,24 @@ function isDoi(query: string) {
 }
 
 const defaultRowsPerPage = 5;
-const rowsPerPageOptions = [defaultRowsPerPage, 10, 20];
+const rowsPerPageOptions = [defaultRowsPerPage, defaultRowsPerPage * 2, defaultRowsPerPage * 4];
 
 interface FindRegistrationProps {
-  setSelectedRegistration: (registration?: RegistrationSearchItem) => void;
-  selectedRegistration?: RegistrationSearchItem;
+  setSelectedRegistration: (registration: RegistrationSearchItem) => void;
   filteredRegistrationIdentifier: string;
+  defaultSearchParams?: FetchResultsParams;
 }
+
 export const FindRegistration = ({
   setSelectedRegistration,
-  selectedRegistration,
   filteredRegistrationIdentifier,
+  defaultSearchParams = {},
 }: FindRegistrationProps) => {
   const { t } = useTranslation();
   const [searchBeforeDebounce, setSearchBeforeDebounce] = useState('');
   const debouncedSearch = useDebounce(searchBeforeDebounce);
 
-  const [page, setPage] = useState(defaultRowsPerPage);
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
 
   const fetchQuery: FetchResultsParams = {
@@ -43,6 +44,7 @@ export const FindRegistration = ({
     idNot: filteredRegistrationIdentifier,
     results: rowsPerPage,
     from: page * rowsPerPage,
+    ...defaultSearchParams,
   };
 
   const searchQuery = useQuery({
@@ -60,7 +62,7 @@ export const FindRegistration = ({
         data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationSearchField}
         placeholder={t('unpublish_actions.search_duplicate_facets')}
         variant="filled"
-        label={t('unpublish_actions.duplicate')}
+        label={t('common.result')}
         onChange={(event) => setSearchBeforeDebounce(event.target.value)}
         slotProps={{
           input: {
@@ -101,6 +103,7 @@ export const FindRegistration = ({
                       data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationRadio(
                         registration.identifier
                       )}
+                      onChange={() => setSelectedRegistration(registration)}
                       value={registration.id}
                       slotProps={{ input: { 'aria-labelledby': listItemId } }}
                     />

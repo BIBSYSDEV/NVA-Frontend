@@ -8,7 +8,7 @@ import { PublishingTicket } from '../../../types/publication_types/ticket.types'
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { DeleteDraftRegistration } from './DeleteDraftRegistration';
-import { MergeRegistrations } from './MergeRegistrations';
+import { MergeRegistrations } from './merge_registrations/MergeRegistrations';
 import { RepublishRegistration, RepublishRegistrationProps } from './RepublishRegistration';
 import { TerminateRegistration } from './TerminateRegistration';
 import { UnpublishRegistration } from './UnpublishRegistration';
