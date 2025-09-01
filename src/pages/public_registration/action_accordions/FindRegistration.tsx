@@ -9,6 +9,7 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RegistrationSearchItem } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { RegistrationSortSelector } from '../../search/registration_search/RegistrationSortSelector';
 
@@ -51,6 +52,7 @@ export const FindRegistration = ({
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <TextField
+        data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationSearchField}
         placeholder={t('unpublish_actions.search_duplicate_facets')}
         variant="filled"
         label={t('unpublish_actions.duplicate')}
@@ -80,22 +82,25 @@ export const FindRegistration = ({
           sortingComponent={<RegistrationSortSelector />}>
           {searchQuery.isFetching ? (
             <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-          ) : searchQuery.data?.hits && searchQuery.data.hits.length > 0 ? (
+          ) : searchResults.length > 0 ? (
             <RadioGroup sx={{ my: '0.5rem' }}>
-              {searchQuery.data.hits.map((registration) => (
-                <Box key={registration.identifier} sx={{ display: 'flex', gap: '0.25rem' }}>
-                  <Radio
-                    value={registration.id}
-                    slotProps={{ input: { 'aria-labelledby': `list-item-${registration.identifier}` } }}
-                  />
-                  <SearchListItem
-                    id={`list-item-${registration.identifier}`}
-                    component="div"
-                    sx={{ borderLeftColor: 'registration.main' }}>
-                    <RegistrationListItemContent registration={registration} />
-                  </SearchListItem>
-                </Box>
-              ))}
+              {searchResults.map((registration) => {
+                const listItemId = `list-item-${registration.identifier}`;
+                return (
+                  <Box key={registration.identifier} sx={{ display: 'flex', gap: '0.1rem' }}>
+                    <Radio
+                      data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationRadio(
+                        registration.identifier
+                      )}
+                      value={registration.id}
+                      slotProps={{ input: { 'aria-labelledby': listItemId } }}
+                    />
+                    <SearchListItem id={listItemId} component="div" sx={{ borderLeftColor: 'registration.main' }}>
+                      <RegistrationListItemContent registration={registration} />
+                    </SearchListItem>
+                  </Box>
+                );
+              })}
             </RadioGroup>
           ) : (
             <Typography>{t('common.no_hits')}</Typography>

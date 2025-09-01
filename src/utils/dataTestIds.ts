@@ -400,6 +400,8 @@ export const dataTestId = {
       doiRequestAccordion: 'doi-request-accordion',
       duplicateRegistrationLink: 'duplicate-registration-link',
       mergeRegistrationsButton: 'merge-registrations-button',
+      mergeRegistrationSearchField: 'merge-registration-search-field',
+      mergeRegistrationRadio: (identifier: string) => `merge-registration-radio-${identifier}`,
       messageOptionsButton: 'message-options-button',
       messageSender: 'message-author',
       messageText: 'message-text',
