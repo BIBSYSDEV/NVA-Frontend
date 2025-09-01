@@ -47,10 +47,10 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
           <Typography gutterBottom>{t('unpublish_actions.unpublish_info')}</Typography>
           <Button
             data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
-            variant="outlined"
+            variant="contained"
             fullWidth
             size="small"
-            sx={{ bgcolor: 'white' }}
+            sx={{ bgcolor: 'error.main' }}
             onClick={toggleUnpublishModal}>
             {t('unpublish_actions.unpublish')}
           </Button>

@@ -77,7 +77,7 @@ export const MessageItem = ({
     <Box
       component="li"
       sx={{
-        bgcolor: backgroundColor,
+        bgcolor: 'background.neutral87',
         p: '0.5rem',
         borderRadius: '4px',
         display: 'flex',

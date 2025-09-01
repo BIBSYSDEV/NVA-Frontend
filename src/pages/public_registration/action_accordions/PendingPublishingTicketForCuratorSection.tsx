@@ -68,8 +68,8 @@ export const PendingPublishingTicketForCuratorSection = ({
         components={[<Typography key="1" />]}
       />
       <Button
-        sx={{ bgcolor: 'white', mb: '0.5rem' }}
-        variant="outlined"
+        sx={{ bgcolor: 'secondary.main', mb: '0.5rem' }}
+        variant="contained"
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
         startIcon={<InsertDriveFileIcon />}
         loadingPosition="start"
@@ -85,8 +85,8 @@ export const PendingPublishingTicketForCuratorSection = ({
         components={[<Typography key="1" />]}
       />
       <Button
-        sx={{ bgcolor: 'white', mb: '0.5rem' }}
-        variant="outlined"
+        sx={{ bgcolor: 'error.main', mb: '0.5rem' }}
+        variant="contained"
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
         startIcon={<CloseIcon />}
         loadingPosition="start"
@@ -97,8 +97,8 @@ export const PendingPublishingTicketForCuratorSection = ({
 
       <Typography>{t('registration.public_page.tasks_panel.edit_publishing_request_description')}</Typography>
       <Button
-        sx={{ bgcolor: 'white', mb: '0.5rem' }}
-        variant="outlined"
+        sx={{ bgcolor: 'secondary.light', color: 'primary.main', mb: '0.5rem' }}
+        variant="contained"
         fullWidth
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
         endIcon={<EditIcon />}

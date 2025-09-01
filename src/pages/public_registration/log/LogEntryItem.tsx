@@ -40,7 +40,7 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
         display: 'flex',
         flexDirection: 'column',
         p: '0.5rem',
-        bgcolor: getLogEntryBackgroundColor(logEntry.topic),
+        bgcolor: 'white',
         gap: '0.5rem',
       }}>
       <StyledLogRow>
@@ -110,22 +110,16 @@ const LogEntryOganizationInfo = ({ performedBy }: { performedBy: LogEntryOrganiz
   );
 };
 
-const getLogEntryBackgroundColor = (topic: LogEntry['topic']) => {
-  switch (topic) {
-    case 'PublicationImported':
-    case 'FileImported':
-    case 'PublicationMerged':
-    case 'FileTypeUpdatedByImport':
-      return 'centralImport.light';
-    case 'DoiReserved':
-    case 'DoiRequested':
-    case 'DoiRejected':
-    case 'DoiAssigned':
-      return 'doiRequest.light';
-    default:
-      return 'publishingRequest.light';
-  }
-};
+// const getLogEntryBackgroundColor = (topic: LogEntry['topic']) => {
+//   switch (topic) {
+//     case 'DoiRejected':
+//     case 'FileRejected':
+//     case 'PublicationDeleted':
+//       return 'error.light';
+//     default:
+//       return 'info.light';
+//   }
+// };
 
 const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
   switch (topic) {
