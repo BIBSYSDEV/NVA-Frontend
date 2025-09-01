@@ -17,6 +17,9 @@ function isDoi(query: string) {
   return query.includes('https://doi.org/');
 }
 
+const defaultRowsPerPage = 5;
+const rowsPerPageOptions = [defaultRowsPerPage, 10, 20];
+
 interface FindRegistrationProps {
   setSelectedRegistration: (registration?: RegistrationSearchItem) => void;
   selectedRegistration?: RegistrationSearchItem;
@@ -31,13 +34,15 @@ export const FindRegistration = ({
   const [searchBeforeDebounce, setSearchBeforeDebounce] = useState('');
   const debouncedSearch = useDebounce(searchBeforeDebounce);
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useState(defaultRowsPerPage);
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
 
   const fetchQuery: FetchResultsParams = {
     doi: isDoi(debouncedSearch) ? debouncedSearch : null,
     query: !isDoi(debouncedSearch) ? debouncedSearch : null,
     idNot: filteredRegistrationIdentifier,
+    results: rowsPerPage,
+    from: page * rowsPerPage,
   };
 
   const searchQuery = useQuery({
@@ -76,7 +81,11 @@ export const FindRegistration = ({
           page={page + 1}
           onPageChange={(newPage) => setPage(newPage - 1)}
           rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={(newRowsPerPage) => setRowsPerPage(newRowsPerPage)}
+          rowsPerPageOptions={rowsPerPageOptions}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setPage(0);
+          }}
           maxHits={10_000}
           showPaginationTop
           sortingComponent={<RegistrationSortSelector />}>
