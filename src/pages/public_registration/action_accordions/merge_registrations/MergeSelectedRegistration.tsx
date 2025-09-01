@@ -26,7 +26,6 @@ export const MergeSelectedRegistration = ({
   const queryClient = useQueryClient();
 
   const targetRegistrationQuery = useFetchRegistration(getIdentifierFromId(targetRegistrationId));
-  const targetRegistration = targetRegistrationQuery.data;
 
   const registrationMutation = useMutation({
     mutationFn: (values: Registration) => updateRegistration(values),
@@ -40,16 +39,22 @@ export const MergeSelectedRegistration = ({
     },
   });
 
-  return targetRegistrationQuery.isPending ? (
-    <PageSpinner aria-label={t('merge_results')} />
-  ) : (
-    targetRegistration && (
-      <MergeResultsWizard
-        sourceResult={sourceRegistration}
-        targetResult={targetRegistration}
-        onSave={async (data) => await registrationMutation.mutateAsync(data)}
-        onCancel={toggleDialog}
-      />
-    )
+  if (targetRegistrationQuery.isPending) {
+    return <PageSpinner aria-label={t('merge_results')} />;
+  }
+
+  const targetRegistration = targetRegistrationQuery.data;
+
+  if (!targetRegistration) {
+    return null;
+  }
+
+  return (
+    <MergeResultsWizard
+      sourceResult={sourceRegistration}
+      targetResult={targetRegistration}
+      onSave={async (data) => await registrationMutation.mutateAsync(data)}
+      onCancel={toggleDialog}
+    />
   );
 };
