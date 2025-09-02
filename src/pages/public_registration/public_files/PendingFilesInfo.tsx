@@ -22,7 +22,7 @@ export const PendingFilesInfo = ({ text, sx, ...rest }: PendingFilesInfoProps) =
     {typeof text === 'string' ? (
       <Typography color="white">{text}</Typography>
     ) : (
-      <Box sx={{ color: 'white', '& p': { color: 'inherit' } }}>{text}</Box>
+      <Box sx={{ '& p': { color: 'white' } }}>{text}</Box>
     )}
   </Box>
 );

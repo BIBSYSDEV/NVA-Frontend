@@ -110,17 +110,6 @@ const LogEntryOganizationInfo = ({ performedBy }: { performedBy: LogEntryOrganiz
   );
 };
 
-// const getLogEntryBackgroundColor = (topic: LogEntry['topic']) => {
-//   switch (topic) {
-//     case 'DoiRejected':
-//     case 'FileRejected':
-//     case 'PublicationDeleted':
-//       return 'error.light';
-//     default:
-//       return 'info.light';
-//   }
-// };
-
 const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
   switch (topic) {
     case 'PublicationCreated':

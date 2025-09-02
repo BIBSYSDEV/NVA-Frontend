@@ -21,7 +21,6 @@ export const LandingPageAccordion = ({ heading, children, dataTestId, ...props }
       '&.MuiAccordion-root.Mui-expanded': {
         margin: 0,
       },
-      bgcolor: 'white',
     }}
     data-testid={dataTestId}
     {...props}>

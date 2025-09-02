@@ -43,7 +43,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
             <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
               <StyledIconAndTextWrapper>
                 <HourglassEmptyIcon fontSize="small" />
-                <Typography>
+                <Typography color="white">
                   {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
                 </Typography>
               </StyledIconAndTextWrapper>
@@ -54,13 +54,13 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
         <StyledStatusMessageBox sx={{ bgcolor: 'success.main' }}>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
-            <Typography sx={{ color: 'inherit' }}>
+            <Typography color="white">
               {ticket.approvedFiles.length
                 ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
                 : t('my_page.messages.metadata_published')}
             </Typography>
           </StyledIconAndTextWrapper>
-          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+          {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
         <>
@@ -71,7 +71,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
                 {t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}
               </Typography>
             </StyledIconAndTextWrapper>
-            {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+            {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>
         </>
       ) : null}
