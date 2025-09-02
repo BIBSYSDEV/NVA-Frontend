@@ -20,6 +20,7 @@ import { isPublishableForWorkflow2 } from '../../utils/formik-helpers/formik-hel
 import { willResetNviStatuses } from '../../utils/nviHelpers';
 import {
   getFormattedRegistration,
+  updateRegistrationQueryData,
   userCanOnlyDoPartialUpdate,
   userHasAccessRight,
 } from '../../utils/registration-helpers';
@@ -93,10 +94,7 @@ export const RegistrationFormActions = ({
       const newErrors = validateForm(values);
       setTouched(setNestedObjectValues(newErrors, true));
     } else if (isSuccess) {
-      queryClient.setQueryData(
-        ['registration', updateRegistrationResponse.data.identifier, false],
-        updateRegistrationResponse.data
-      );
+      updateRegistrationQueryData(queryClient, updateRegistrationResponse.data);
 
       const newErrors = validateForm(updateRegistrationResponse.data);
       resetForm({
