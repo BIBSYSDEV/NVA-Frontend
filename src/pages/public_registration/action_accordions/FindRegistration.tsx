@@ -27,7 +27,7 @@ interface FindRegistrationProps {
   setSelectedRegistration: (registration: RegistrationSearchItem) => void;
   filteredRegistrationIdentifier: string;
   defaultQueryString?: string;
-  fieldLabel: string;
+  fieldLabel?: string;
 }
 
 export const FindRegistration = ({

@@ -1,8 +1,6 @@
 import { Box, Button, Dialog, DialogContent, DialogTitle, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../redux/store';
 import { Registration, RegistrationSearchItem } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { FindRegistration } from '../FindRegistration';
@@ -14,7 +12,6 @@ interface MergeRegistrationsProps {
 
 export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsProps) => {
   const { t } = useTranslation();
-  const user = useSelector((state: RootState) => state.user);
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => {
     setOpenDialog((prev) => !prev);
@@ -57,7 +54,7 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
                 i18nKey="find_result_to_merge_description"
                 components={{
                   p: <Typography gutterBottom />,
-                  strong: <Typography component="strong" fontWeight="bold" />,
+                  heading: <Typography variant="h2" gutterBottom sx={{ mt: '1rem' }} />,
                 }}
               />
 
