@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import { Registration, RegistrationSearchItem } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { FindRegistration } from '../FindRegistration';
 import { MergeSelectedRegistration } from './MergeSelectedRegistration';
 
@@ -65,7 +64,6 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
               <FindRegistration
                 setSelectedRegistration={(registration) => setSelectedRegistration(registration)}
                 filteredRegistrationIdentifier={sourceRegistration.identifier}
-                defaultSearchParams={user?.cristinId ? { contributor: getIdentifierFromId(user.cristinId) } : undefined}
               />
 
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', mt: '1rem' }}>

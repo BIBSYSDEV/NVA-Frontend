@@ -64,6 +64,7 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
       <Modal
         headingText={t('registration.delete_registration')}
         open={showUnpublishModal}
+        maxWidth="md"
         onClose={toggleUnpublishModal}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <RequiredDescription />
@@ -116,8 +117,9 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
               </Box>
               <FindRegistration
                 setSelectedRegistration={setSelectedDuplicate}
-                selectedRegistration={selectedDuplicate}
                 filteredRegistrationIdentifier={registration.identifier}
+                defaultQueryString={registration.entityDescription?.mainTitle}
+                fieldLabel={t('unpublish_actions.duplicate')}
               />
               <FormControlLabel
                 sx={{ my: '1rem' }}

@@ -3,13 +3,16 @@ import { Box, InputAdornment, Radio, RadioGroup, TextField, Typography } from '@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
+import { RootState } from '../../../redux/store';
 import { RegistrationSearchItem } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { RegistrationSortSelector } from '../../search/registration_search/RegistrationSortSelector';
 
@@ -23,28 +26,33 @@ const rowsPerPageOptions = [defaultRowsPerPage, defaultRowsPerPage * 2, defaultR
 interface FindRegistrationProps {
   setSelectedRegistration: (registration: RegistrationSearchItem) => void;
   filteredRegistrationIdentifier: string;
-  defaultSearchParams?: FetchResultsParams;
+  defaultQueryString?: string;
+  fieldLabel: string;
 }
 
 export const FindRegistration = ({
   setSelectedRegistration,
   filteredRegistrationIdentifier,
-  defaultSearchParams = {},
+  fieldLabel,
+  defaultQueryString = '',
 }: FindRegistrationProps) => {
   const { t } = useTranslation();
-  const [searchBeforeDebounce, setSearchBeforeDebounce] = useState('');
+  const user = useSelector((state: RootState) => state.user);
+
+  const [searchBeforeDebounce, setSearchBeforeDebounce] = useState(defaultQueryString);
   const debouncedSearch = useDebounce(searchBeforeDebounce);
+  const queryIsDoi = isDoi(debouncedSearch);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
 
   const fetchQuery: FetchResultsParams = {
-    doi: isDoi(debouncedSearch) ? debouncedSearch : null,
-    query: !isDoi(debouncedSearch) ? debouncedSearch : null,
+    contributor: user?.cristinId ? getIdentifierFromId(user.cristinId) : null,
+    doi: queryIsDoi ? debouncedSearch : null,
+    query: !queryIsDoi ? debouncedSearch : null,
     idNot: filteredRegistrationIdentifier,
     results: rowsPerPage,
     from: page * rowsPerPage,
-    ...defaultSearchParams,
   };
 
   const searchQuery = useQuery({
@@ -61,8 +69,9 @@ export const FindRegistration = ({
         data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationSearchField}
         placeholder={t('unpublish_actions.search_duplicate_facets')}
         variant="filled"
-        label={t('common.result')}
+        label={fieldLabel ?? t('common.result')}
         onChange={(event) => setSearchBeforeDebounce(event.target.value)}
+        value={searchBeforeDebounce}
         slotProps={{
           input: {
             type: 'search',
