@@ -21,7 +21,7 @@
     "about_terms": "Bruksvilkår og personvernerklæring for Nasjonalt vitenarkiv",
     "about_terms_description": "<p>For å bruke tenesta må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Bruksvilkår for Nasjonalt vitenarkiv</a>, og gjere deg kjent med <a href=\"https://nva.sikt.no/privacy-policy\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», stadfestar du at du har lese og akseptert bruksvilkåra. Du samtykkjer òg til behandling av personopplysningar i samsvar med personvernerklæringa.</p>",
     "accept": "Godta",
-    "accept_terms_intro": "<p>Takk for at du vil registrere forskinga di i Nasjonalt vitenarkiv.</p><p>Dette bidreg til at forskinga blir dokumentert, og til at vitskaplege artiklar finansierte av offentlege midlar blir gjort ope tilgjengelege for allmenta – som er eit nasjonalt mål.</p>",
+    "accept_terms_intro": "<p>Takk for at du ønsker å gjøre forskning åpent tilgjengelig i Nasjonalt vitenarkiv.</p><p>Dette bidreg til at forskinga blir dokumentert, og til at vitskaplege artiklar finansierte av offentlege midlar blir gjort ope tilgjengelege for allmenta – som er eit nasjonalt mål.</p>",
     "accept_terms_to_create_user": "Eg samtykkjer til å bli oppretta som brukar i NVA",
     "back_to_home": "Tilbake til startsida",
     "cancel_create_user_text": "Du må opprette ein brukar for å gå vidare. Viss du avbryt, blir du logga ut. Ønskjer du å avbryte?",
@@ -162,7 +162,7 @@
       "show_full_nin": "Vis personnummer"
     }
   },
-  "cannot_copy_category_from_another_context_type": "",
+  "cannot_copy_category_from_another_context_type": "<p>Du kan ikkje kopiere metadata frå kategorifana dersom resultatet tilhøyrer ein annan hovudkategori.</p><p>Denne informasjonen må registrerast manuelt etter at resten av metadata er kopiert.</p>",
   "common": {
     "actions": "Handlingar",
     "add": "Legg til",
@@ -607,7 +607,7 @@
       "get_tickets": "Kunne ikkje hente saker",
       "get_users_for_institution": "Kunne ikkje hente brukarar",
       "get_vocabularies": "Kunne ikkje hente kontrollerte vokabular",
-      "login_failed": "Innlogging feila.",
+      "login_failed": "Innlogging feila",
       "orcid_login": "Kunne ikkje logge inn på ORCID",
       "person_search": "Søk etter person feila",
       "project_search": "Søk på prosjekt feila",
@@ -728,8 +728,8 @@
     "technical_support_link": "Ved behov for teknisk støtte kontakt <0>kontakt@sikt.no</0>",
     "to_top": "Til toppen"
   },
-  "institution_support": "",
-  "institutions_service_support": "",
+  "institution_support": "Intitusjonen si brukarstøtte",
+  "institutions_service_support": "Institusjonane si brukarstøtte",
   "licenses": {
     "additional_info": {
       "cc0": "<p>Sjå <link1>Åndsverksloven</link1> §3, §8, §11 og §14</p>"
@@ -742,7 +742,7 @@
       "cc_by_nc_sa": "<p>Brukaren kan: kopiere, dele og endre verket for ikkje-kommersielle formål.</p><p>Brukaren må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
       "cc_by_nd": "<p>Brukaren kan: kopiere og dele verket for alle typar bruk, også kommersielle.</p><p>Brukaren kan ikkje: endre eller tilpasse verket.</p><p>Brukaren må: gi riktig kreditering.</p>",
       "cc_by_sa": "<p>Brukaren kan: kopiere, dele og endre verket for alle typar bruk, også kommersielle.</p><p>Brukaren må: gi riktig kreditering, seie frå om endringar, og bruke same lisens for det nye verket.</p>",
-      "copyright_act": "<p>For dette materialet gjeld følgjande vilkår for bruk til yrkesmessig føremål:</p><ul><li>Du har lov til å lese og lenkje til materialet</li><li>Du kan sitere frå materialet i samsvar med god skikk, og i den grad føremålet tilseier det</li></ul><p>Dersom du ønskjer å bruke materialet på annan måte, til dømes til re-publisering, må du innhente samtykke direkte frå rettshavar.</p>",
+      "copyright_act": "<p>Dette materialet kan kun brukast innanfor dei rammene som lov om opphavsrett til åndsverk (åndsverkslova) gir:</p><ul><li>Brukaren kan lese og lenkje til materialet.</li><li>Brukaren kan sitere frå materialet i samsvar med god skikk, og så langt føremålet tilseier det.</li><li>Brukaren kan kopiere materialet til privat bruk, inkludert deling i privat krins og til personleg yrkesmessig bruk.</li></ul><p>Dersom brukaren ønskjer å nytte materialet på ein annan måte, til dømes til re-publisering, må brukaren innhente samtykke direkte frå rettshavar (den fysiske eller juridiske personen som har immateriell rett til materialet).</p>",
       "older_licenses": "Skal du registrere eit eldre forskingsresultat som blei publisert med ein tidlegare lisensversjon, trykk på \"Vis alle tidlegare versjonar\" i nedtrekksmenyen for å finne riktig lisens."
     },
     "labels": {
@@ -754,7 +754,7 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "copyright_act": "Generelle bruksvilkår for immaterielle rettar",
+      "copyright_act": "Generelle bruksvilkår",
       "older_licenses": "Eldre lisensar"
     },
     "links": {
@@ -768,7 +768,7 @@
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no"
     },
     "read_more_about_license": "Les meir om {{license}}",
-    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Denne lisensen forklarar korleis du lovleg kan bruke materiale som er gjort tilgjengeleg i Nasjonalt vitenarkiv (NVA).</p><p>Lisensen er meint å dekkje bruk til <strong>yrkesmessige føremål</strong> – det vil seie som ein del av arbeidet ditt, til dømes i forsking, undervisning, rettleiing, administrasjon eller formidling.</p><strong>Bruk av materialet føreset følgjande vilkår: </strong><ul><li><strong>Namngjeving:</strong> Når du siterer, skal du som hovudregel oppgje kven som er rettshavar. Unntak gjeld berre der namngjeving er upraktisk eller lite føremålstenleg, jf. åndsverklova § 5.</li><li><strong>God sitatskikk:</strong> Du må sitere i tråd med god sitatskikk og berre i den grad føremålet tilseier det, jf. åndsverklova § 29. Det betyr at du kan bruke utdrag i undervisning, faglege presentasjonar eller forskingsartiklar – så lenge sitatet er relevant, korrekt kjelde blir oppgjeven, og materialet ikkje blir forvrengt eller forringa, jf. åndsverklova §§ 25 og 29.</li><li><strong>Ikkje-kommersielt føremål:</strong> Du kan ikkje bruke materialet til å oppnå økonomisk vinning. Kommersiell bruk krev særskilt løyve frå rettshavar.</li><li><strong>Samanheng og føremål:</strong> Sitatet skal som hovudregel inngå i ein fagleg eller tematisk samanheng, og bidra til å utfylle verket det blir sett inn i, jf. åndsverklova § 25. Korte, lausreivne sitat kan vere tillatne som døme/illustrasjonar, føresett at dei ikkje skadar rettshavars økonomiske interesser.</li></ul><p>Dersom du ønskjer å bruke materialet på annan måte – til dømes laste det opp ein annan stad, bruke det i nye publikasjonar, eller gjere det tilgjengeleg i fulltekst utanfor NVA – må du ha samtykke frå rettshavar. Slik bruk fell inn under opphavsrettens einerett, jf. åndsverklova § 3.</p><p>Bruken skildra her skil seg frå privat bruk, som betyr bruk for eigen interesse i heimen eller i ein liten privat krins (familie, vener osv.). Kopiering til privat bruk blir regulert av eigne reglar i åndsverklova § 26, og er ikkje regulert gjennom denne lisensen.</p><strong>Er du i tvil?</strong><p>Dersom du er usikker på om den planlagde bruken er tillaten, blir det tilrådd at du kontaktar rettshavar – eller søkjer rettleiing hos institusjonen din.</p><hr/><p>Dersom du er rettshavar til eit åndsverk som har fått denne lisensen og er ueinig i at materialet kan brukast som skildra over, må du ta kontakt med utgjevaren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikkje er mogleg å kontakte utgjevaren, kan du ta kontakt med tenesteleverandøren for NVA, Sikt: <link1>Førespurnad om opphavsrett</link1>.</p>"
+    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Desse bruksvilkåra beskriv lovleg bruk av materiale som er gjort tilgjengeleg i Nasjonalt vitenarkiv og som er merka med «generelle bruksvilkår».</p><ul><li>Du kan fritt lese og lenkje til materialet.<ul><li>Du kan fritt lese materialet og dele lenkje til det, til dømes i e-post, eller på ei nettside.</li></ul></li><li>Du kan sitere frå materialet i tråd med god skikk og så langt føremålet tilseier det, jf. åndsverklova § 29.<ul><li>Sitatet må setjast inn i ein relevant samanheng og ikkje endre verkets karakter.</li><li>Oppgi alltid kjelde og opphavar, så langt det er praktisk mogleg, jf. § 5.</li></ul></li><li>Du kan lage kopiar til privat bruk, inkludert deling i nær personkrins og til personleg yrkesmessig bruk. Med «privat bruk» meinast at kopien berre skal brukast i ein avgrensa krins eller av deg sjølv, og altså ikkje delast med allmenta eller brukast kommersielt. Dette kan til dømes vere:<ul><li>Privat bruk: til dømes laste ned ein artikkel for å seinare bruke eller dele han med ein ven eller eit familiemedlem.</li><li>Privat yrkesmessig bruk: til dømes laste ned ein artikkel for å førebu ei førelesing, eller ta med eit dokument heim for sjølvstudium.</li></ul></li></ul><strong>Når må du ha løyve?</strong><p>Dersom du ønskjer å bruke materialet på annan måte – til dømes publisere det ein annan stad, bruke det i nye publikasjonar, eller gjere heile verket tilgjengeleg utanfor NVA – må du innhente løyve frå rettshavar. Slike handlingar er omfatta av opphavspersonens einerett etter åndsverklova § 3.</p><strong>Er du i tvil?</strong><p>Dersom du er usikker på om du har rett til å bruke materialet slik du planlegg, blir det tilrådd å kontakte rettshavar – eller din institusjon for rettleiing.</p><hr/><p>Dersom du er rettshavar til eit åndsverk som har fått denne lisensen og er ueinig i at materialet kan brukast som skildra over, må du ta kontakt med utgjevaren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikkje er mogleg å kontakte utgjevaren, kan du ta kontakt med tenesteleverandøren for NVA, Sikt: <link1>Førespurnad om opphavsrett</link1>.</p>"
   },
   "log": {
     "hidden_file_added": "Skjult fil lagt til",
@@ -820,11 +820,14 @@
     "unknown_filename": "Ukjend filnamn"
   },
   "matches": "Matcher",
+  "merge_import_candidate": "Slå saman importkandidat",
+  "merge_results": "Slå saman resultat",
+  "merge_results_description": "<heading>$t(merge_results)</heading><p>Er resultatet eit duplikat, men manglar metadata og filer?</p><p>Då kan du slå saman metadata og samle filer til eitt resultat.</p>",
   "missing_value": "Manglar verdi",
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statusar",
-      "contact_curator_if_you_need_assistance": "<p>Kontakt kurator om du treng hjelp med registreringa.</p>",
+      "contact_curator_if_you_need_assistance": "<p>Kontakt kurator om du treng hjelp med registreringa.</p><p>Meldinga er synleg for alle kuratorar og redaktører ved din institusjon.</p>",
       "delete_message": "Slette melding",
       "delete_message_description": "Er du sikker på at du vil slette meldinga?",
       "doi_closed": "DOI avvist",
@@ -898,7 +901,7 @@
         "delete_orcid": "Fjern ORCID-kopling",
         "helper_text_modal": {
           "detailed_paragraph_1": "Om du har ein ORCID, oppfordrar vi deg til å kople den til forskarprofilen din. Om du ikkje har ein ORCID, kan du opprette den samstundes som du koplar den til forskarprofilen din.",
-          "detailed_paragraph_2": "Enkelte forleggjarar og finansiørar krev at du har ein ORCID, for å kunne levere inn høvesvis manuskript og søknader om finansiering. Om dei ikkje krev det, bør du som forskar krevje det. Då blir dine forskingsresultat enklare for alle å sitere korrekt og det blir mindre arbeid i etterkant. Kopling av ORCID til forskarprofilen din er eit tilbod, ikkje eit krav. Du kan trekke koplinga di når du ønskjer under MI SIDE | Personalia.",
+          "detailed_paragraph_2": "Enkelte forleggjarar og finansiørar krev at du har ein ORCID, for å kunne levere inn høvesvis manuskript og søknader om finansiering. Om dei ikkje krev det, bør du som forskar krevje det. Då blir dine forskingsresultat enklare for alle å sitere korrekt og det blir mindre arbeid i etterkant. Kopling av ORCID til forskarprofilen din er eit tilbod, ikkje eit krav. Du kan trekke koplinga di når du ønskjer under \"$t(my_page.my_page)\" > \"Personalia\".",
           "introduction": "ORCID gjev deg ein varig, digital identifikator som du sjølv eig og kontrollerer, og som skil deg frå andre forskarar. Ved å kople din ORCID til din forskarprofil, vil NVA i framtida kunne importere fleire av dine publikasjonar, raskare og meir korrekt.",
           "link": "For ytterlegare informasjon, gå til ORCID",
           "modal_title": "Open Researcher Contributor IDentity (ORCID)"
@@ -1622,7 +1625,7 @@
       "public_files": "Offentlege filer ({{count}})",
       "publication": "Publisering",
       "publishing_request": "Publiseringsgodkjenning",
-      "publishing_request_message_about": "<p>Har du spørsmål, ta kontakt med kurator via meldingsfeltet.</p>",
+      "publishing_request_message_about": "<p>Har du spørsmål, ta kontakt med kurator via meldingsfeltet.</p><p>Meldinga er synleg for alle redaktører og kuratorar som er tilknytta resultatet i NVA.</p>",
       "publishing_request_message_about_curator": "Treng du avklåring, ta kontakt med registrator via meldingsfeltet.",
       "reason_for_rejection": "Grunngjeving for avvising",
       "reject_publish_request": "Avvis fil",
@@ -2096,8 +2099,8 @@
     },
     "support": {
       "curator_help": {
-        "already_in_progress": "Du har allereie ein dialog med kurator. Lagre og gå til resultatet via MI SIDE for å halde fram dialogen der.",
-        "description": "<0>Her kan du sende ei melding direkte til kurator ved din institusjon.</0><0>Kurator kan hjelpe deg med å registrere og endre på publiserte og upubliserte forskingsresultat.</0><0>Du vil få svar på MI SIDE, der ser du kven som er din(e) kuratorar. Kuratorstøtte kan bli svart på av ulike kuratorar på din institusjon.</0>",
+        "already_in_progress": "Du har allereie ein dialog med kurator. Lagre og gå til resultatet via \"$t(my_page.my_page)\" for å halde fram dialogen der.",
+        "description": "<0>Her kan du sende ei melding direkte til kurator ved din institusjon. Meldinga er synleg for kuratorar og redaktørar ved din institusjon.</0><0>Kurator kan hjelpe deg med å registrere og endre på publiserte resultat.</0><0>Du finn dialogen med kurator på \"$t(my_page.my_page)\".</0>",
         "header": "Treng du hjelp av kurator?"
       },
       "need_help": "Treng du hjelp?",
@@ -2275,6 +2278,7 @@
     "unpublish_registration_duplicate_question": "Finst det ein annan publisert versjon av same forskingsresultat?",
     "unpublish_registration_reason": "Legg inn ei kort grunngjeving for at dette forskingsresultatet ikkje lenger skal vere publisert. Grunngjevinga vil vises på forskingsresultatet ved oppslag av referanse til forskingsresultatet."
   },
+  "unpublished_result": "Avpublisert resultat",
   "view_contact_info": "Sjå kontaktinformasjon",
-  "vocabulary_missing": ""
+  "vocabulary_missing": "Institusjonen har ikkje lagt til vokabular"
 }
