@@ -21,7 +21,7 @@
     "about_terms": "Terms of Use and Privacy Policy for the Norwegian Research Information Repository",
     "about_terms_description": "<p>To use the service, you must accept Sikt's <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Terms of Use for the Norwegian Research Information Repository</a>, and familiarize yourself with the <a href=\"https://nva.sikt.no/privacy-policy\">Privacy Policy for the Norwegian Research Information Repository.</a></p><p>By clicking on «$t(authorization.accept)», you confirm that you have read and accepted the terms of use. You also consent to the processing of personal data in accordance with the privacy policy.</p>",
     "accept": "Accept",
-    "accept_terms_intro": "<p>Thank you for registering your research in the Norwegian Research Information Repository.</p><p>This helps ensure that research is documented and that scientific articles funded by public resources are made openly available to the public – which is a national goal.</p>",
+    "accept_terms_intro": "<p>Thank you for wanting to make research openly available in the Norwegian Research Information Repository.</p><p>This helps ensure that research is documented and that scientific articles funded by public resources are made openly available to the public — which is a national goal.</p>",
     "accept_terms_to_create_user": "I consent to being created as a user in NVA",
     "back_to_home": "Back to the home page",
     "cancel_create_user_text": "You must create a user to proceed. If you cancel, you will be logged out. Do you wish to cancel?",
@@ -162,7 +162,7 @@
       "show_full_nin": "Show national identity number"
     }
   },
-  "cannot_copy_category_from_another_context_type": "",
+  "cannot_copy_category_from_another_context_type": "<p>You cannot copy metadata from the category tab is the result belongs to a different main category.</p><p>This information must be registered manually after the rest of the metadata has been copied.</p>",
   "common": {
     "actions": "Actions",
     "add": "Add",
@@ -410,7 +410,7 @@
     "1168": "History and History of ideas",
     "1170": "Art, Design and Architecture"
   },
-  "does_not_match": "Don't match",
+  "does_not_match": "No match",
   "editor": {
     "categories_with_files": "Categories with File Upload",
     "categories_with_files_description": "Specify the categories your institution will allow file upload for.",
@@ -607,7 +607,7 @@
       "get_tickets": "Could not get tickets",
       "get_users_for_institution": "Failed to retrieve users",
       "get_vocabularies": "Failed to retrieve controlled vocabularies",
-      "login_failed": "Log in failed.",
+      "login_failed": "Log in failed",
       "orcid_login": "ORCID login failed",
       "person_search": "Search for person failed",
       "project_search": "Project search failed",
@@ -728,8 +728,8 @@
     "technical_support_link": "If you need technical support, please contact <0>kontakt@sikt.no</0>",
     "to_top": "To the top"
   },
-  "institution_support": "",
-  "institutions_service_support": "",
+  "institution_support": "Institution's user support",
+  "institutions_service_support": "Institutions' user support",
   "licenses": {
     "additional_info": {
       "cc0": "<p>See the <link1>Copyright Act</link1> §§3, 8, 11, and 14</p>"
@@ -742,7 +742,7 @@
       "cc_by_nc_sa": "<p>The user may: copy, share, and modify the work for non-commercial purposes.</p><p>The user must: provide appropriate credit, indicate changes, and use the same licence for the new work.</p>",
       "cc_by_nd": "<p>The user may: copy and share the work for all types of use, including commercial.</p><p>The user may not: modify or adapt the work.</p><p>The user must: provide appropriate credit.</p>",
       "cc_by_sa": "<p>The user may: copy, share, and modify the work for all types of use, including commercial.</p><p>The user must: provide appropriate credit, indicate changes, and use the same licence for the new work.</p>",
-      "copyright_act": "<p>For this material, the following terms apply for professional use:</p><ul><li>You are allowed to read and link to the material.</li><li>You may cite from the material in accordance with fair practice and to the extent justified by the purpose.</li></ul><p>If you wish to use the material in another way, such as for re-publication, you must obtain consent directly from the copyright holder.</p>",
+      "copyright_act": "<p>This material can only be used within the framework provided by the Copyright Act (Intellectual Property Rights Act).</p><ul><li>The user is permitted to read and link to the material.</li><li>The user may quote from the material in accordance with fair practice and to the extent required by the purpose.</li><li>The user may copy the material for private use, including sharing within a private circle and for personal professional use.</li></ul><p>If the user wishes to utilize the material in another manner, for example, for re-publication, they must obtain consent directly from the rights holder (the individual or legal entity owning the intellectual property rights to the material).</p>",
       "older_licenses": "If you need to register an older research result that was published with a previous licence version, click on \"Show all previous versions\" in the dropdown menu to find the correct licence"
     },
     "labels": {
@@ -754,7 +754,7 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "copyright_act": "General terms of use for immaterial rights",
+      "copyright_act": "General terms of use",
       "older_licenses": "Older licences"
     },
     "links": {
@@ -768,7 +768,7 @@
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}"
     },
     "read_more_about_license": "Read more about {{license}}",
-    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>This licence explains how you can legally use material made available in the Norwegian National Research Repository (NVA).</p><p>The licence is intended to cover use for <strong>professional purposes</strong> — that is, as part of your work, for example in research, teaching, supervision, administration, or dissemination.</p><strong>Use of the material is subject to the following conditions: </strong><ul><li><strong>Attribution:</strong> When citing, you must, as a general rule, state who the rights holder is. Exceptions apply only where attribution is impractical or inappropriate, cf. the Copyright Act § 5.</li><li><strong>Proper citation practice:</strong> You must cite in accordance with proper citation practices and only to the extent required by the purpose, cf. the Copyright Act § 29. This means you can use excerpts in teaching, academic presentations, or research articles — as long as the citation is relevant, the correct source is provided, and the material is not distorted or degraded, cf. the Copyright Act §§ 25 and 29.</li><li><strong>Non-commercial purpose:</strong> You may not use the material to achieve financial gain. Commercial use requires special permission from the rights holder.</li><li><strong>Context and purpose:</strong> As a general rule, the citation must be part of an academic or thematic context and contribute to complementing the work it is included in, cf. the Copyright Act § 25. Short, isolated quotes may be allowed as examples/illustrations, provided they do not harm the economic interests of the rights holder.</li></ul><p>If you wish to use the material in another way — for example, upload it elsewhere, use it in new publications, or make it available in full text outside NVA — you must obtain consent from the rights holder. Such use falls under the exclusive rights of copyright, cf. the Copyright Act § 3.</p><p>The use described here differs from private use, which means use for personal interest at home or within a small private circle (family, friends, etc.). Copying for private use is regulated by separate rules in the Copyright Act § 26 and is not governed by this licence.</p><strong>Unsure?</strong><p>If you are uncertain whether the planned use is permitted, it is recommended that you contact the rights holder — or seek guidance from your institution.</p><hr/><p>If you are the rights holder of a copyrighted work that has been assigned this licence and disagree that the material can be used as described above, you must contact the publisher (institution or journal) that has published it.</p><p>If it is not possible to contact the publisher, you can contact the service provider for NVA, Sikt: <link1>Copyright inquiries</link1>.</p>"
+    "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>These terms of use describe the lawful use of material made available in the Norwegian Research Information Repository (NVA) and labelled with \"general terms of use\".</p><ul><li>You are free to read and link to the material.<ul><li>You are free to read the material and share links to it, for example in an email or on a website.</li></ul></li><li>You may quote from the material in accordance with fair practice and to the extent required by the purpose, cf. Copyright Act § 29.<ul><li>The quote must be placed in a relevant context and must not alter the character of the work.</li><li>Always provide the source and author, as far as it is practically possible, cf. § 5.</li></ul></li><li>You may make copies for private use, including sharing within a close circle of acquaintances and for personal professional use. By \"private use,\" it is meant that the copy should only be used in a limited circle or by yourself, and therefore not shared with the public or used commercially. This could, for example, include:<ul><li>Private use: for example, downloading an article to later use or share it with a friend or family member.</li><li>Private professional use: for example, downloading an article to prepare a lecture or taking a document home for self-study.</li></ul></li></ul><strong>When do you need permission?</strong><p>If you wish to use the material in another way — for example, publish it elsewhere, use it in new publications, or make the entire work available outside NVA — you must obtain permission from the rights holder. Such actions are covered by the author's exclusive rights under Copyright Act § 3.</p><strong>Are you in doubt?</strong><p>If you are unsure whether you have the right to use the material as you intend, it is recommended to contact the rights holder — or your institution for guidance.</p><hr/><p>If you are the rights holder of an intellectual property work that has been given this licence and you disagree that the material can be used as described above, you must contact the publisher (the institution or journal) that has published it.</p><p>If it is not possible to contact the publisher, you can contact the service provider for NVA, Sikt: <link1>Inquiries about copyright</link1>.</p>"
   },
   "log": {
     "hidden_file_added": "Hidden file added",
@@ -820,11 +820,14 @@
     "unknown_filename": "Unknown file name"
   },
   "matches": "Matches",
+  "merge_import_candidate": "Merge import candidate",
+  "merge_results": "Merge result",
+  "merge_results_description": "<heading>$t(merge_results)</heading><p>Is the result a duplicate, but is missing metadata and files?</p><p>You may merge the metadata and collect files to one result.</p>",
   "missing_value": "Missing value",
   "my_page": {
     "messages": {
       "all_ticket_types": "All statuses",
-      "contact_curator_if_you_need_assistance": "<p>Contact the curator if you need help with the registration.</p>",
+      "contact_curator_if_you_need_assistance": "<p>Contact the curator if you need help with the registration.</p><p>The message is visible to all curators and editors at your institution.</p>",
       "delete_message": "Delete message",
       "delete_message_description": "Are you sure you wish to delete the message?",
       "doi_closed": "DOI rejected",
@@ -898,7 +901,7 @@
         "delete_orcid": "Remove ORCID link",
         "helper_text_modal": {
           "detailed_paragraph_1": "If you have an ORCID, you are encouraged to link it to your researcher profile. If you do not have an ORCID, you can create it at the same time as you link it to your researcher profile.",
-          "detailed_paragraph_2": "Some publishers and funders require you to have an ORCID, in order to submit manuscripts and applications for funding respectively. If they do not require it, you as a researcher should demand it. Your research results will become easier for everyone to cite correctly and there is less work afterwards. Linking ORCID to your researcher profile is an offer, not a requirement. You can withdraw your link whenever you want under MY PAGE | Personal information.",
+          "detailed_paragraph_2": "Some publishers and funders require you to have an ORCID, in order to submit manuscripts and applications for funding respectively. If they do not require it, you as a researcher should demand it. Your research results will become easier for everyone to cite correctly and there is less work afterwards. Linking ORCID to your researcher profile is an offer, not a requirement. You can withdraw your link whenever you want under \"$t(my_page.my_page)\" > \"Personal information\".",
           "introduction": "ORCID provides you with a permanent, digital identifier that you own and control, distinguishing you from other researchers. By linking your ORCID to your researcher profile, the NVA will be able to import more of your publications in the future, faster and more accurately.",
           "link": "For more information go to ORCID",
           "modal_title": "Open Researcher Contributor IDentity (ORCID)"
@@ -1622,7 +1625,7 @@
       "public_files": "Public files ({{count}})",
       "publication": "Publication",
       "publishing_request": "Publication approval",
-      "publishing_request_message_about": "<p>If you have questions, contact the curator via the message field.</p>",
+      "publishing_request_message_about": "<p>If you have questions, contact the curator via the message field.</p><p>The message is visible to all editors and curators connected to the result in NVA.</p>",
       "publishing_request_message_about_curator": "If you need clarification, contact the registrar via the message field.",
       "reason_for_rejection": "Reason for rejection",
       "reject_publish_request": "Reject file",
@@ -2096,8 +2099,8 @@
     },
     "support": {
       "curator_help": {
-        "already_in_progress": "You already have a dialogue with the curator. Save and go to the result via MY PAGE to continue the dialogue there.",
-        "description": "<0>Here you can send a message directly to the curator at your institution.</0><0>The curator can help you register and change published and unpublished research results.</0><0>You will receive a response on MY PAGE, where you can see who your curator(s) are. Curator support can be answered by different curators at your institution.</0>",
+        "already_in_progress": "You already have a dialogue with the curator. Save and go to the result via \"$t(my_page.my_page)\" to continue the dialogue there.",
+        "description": "<0>You can send a message to the curator at your institution. The message is visible to curators and editors at your institution.</0><0>The curator can help you register and change published results.</0><0>You can find the dialogue with the curator at \"$t(my_page.my_page)\".</0>",
         "header": "Do you need help from a curator?"
       },
       "need_help": "Do you need help?",
@@ -2275,6 +2278,7 @@
     "unpublish_registration_duplicate_question": "Is there another published version of the same research result?",
     "unpublish_registration_reason": "Enter a brief explanation for why this research result should no longer be published. The explanation will be displayed on the research result when looking up the reference to the research result."
   },
+  "unpublished_result": "Unpublished result",
   "view_contact_info": "View contact information",
-  "vocabulary_missing": ""
+  "vocabulary_missing": "The institution has not added vocabulary"
 }
