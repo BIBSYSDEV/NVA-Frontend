@@ -3,10 +3,12 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Box, Divider, IconButton } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { DeleteDraftRegistration } from './DeleteDraftRegistration';
+import { MergeRegistrations } from './MergeRegistrations';
 import { RepublishRegistration, RepublishRegistrationProps } from './RepublishRegistration';
 import { TerminateRegistration } from './TerminateRegistration';
 import { UnpublishRegistration } from './UnpublishRegistration';
@@ -58,6 +60,9 @@ export const MoreActionsCollapse = ({
                 refetchData={refetchData}
               />
               <TerminateRegistration registration={registration} />
+              <BetaFunctionality>
+                <MergeRegistrations sourceRegistration={registration} />
+              </BetaFunctionality>
             </>
           )}
           {canDeleteRegistration && <DeleteDraftRegistration registration={registration} />}

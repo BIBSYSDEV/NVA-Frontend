@@ -17,7 +17,9 @@ export const CompareLanguage = () => {
   const { control, formState, register, setValue, resetField } = useFormContext<Registration>();
   const { sourceResult } = useContext(MergeResultsWizardContext);
 
-  const languageValue = useWatch({ name: 'entityDescription.language', control });
+  const languageValue = useWatch({ name: 'entityDescription.language', control }) ?? '';
+  const sourceLanguage = sourceResult.entityDescription?.language ?? '';
+  const initialTargetLanguage = formState.defaultValues?.entityDescription?.language ?? '';
 
   return (
     <CompareFields
@@ -41,12 +43,12 @@ export const CompareLanguage = () => {
           {...register('entityDescription.language')}
         />
       }
-      isMatching={sourceResult.entityDescription?.language === languageValue}
-      isChanged={languageValue !== formState.defaultValues?.entityDescription?.language}
+      isMatching={sourceLanguage === languageValue}
+      isChanged={languageValue !== initialTargetLanguage}
       onCopyValue={
-        sourceResult.entityDescription?.language
+        sourceLanguage
           ? () => {
-              setValue('entityDescription.language', sourceResult.entityDescription!.language);
+              setValue('entityDescription.language', sourceLanguage);
             }
           : undefined
       }
