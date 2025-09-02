@@ -1,7 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, InputAdornment, Radio, RadioGroup, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
@@ -26,6 +26,7 @@ const rowsPerPageOptions = [defaultRowsPerPage, defaultRowsPerPage * 2, defaultR
 interface FindRegistrationProps {
   setSelectedRegistration: (registration: RegistrationSearchItem) => void;
   filteredRegistrationIdentifier: string;
+  noHitsContent: ReactNode;
   defaultQueryString?: string;
   fieldLabel?: string;
 }
@@ -34,6 +35,7 @@ export const FindRegistration = ({
   setSelectedRegistration,
   filteredRegistrationIdentifier,
   fieldLabel,
+  noHitsContent,
   defaultQueryString = '',
 }: FindRegistrationProps) => {
   const { t } = useTranslation();
@@ -85,6 +87,11 @@ export const FindRegistration = ({
       />
 
       <section>
+        {searchQuery.isFetched && (
+          <Typography gutterBottom>
+            <strong>{t('basic_data.central_import.duplicate_search_hits')}</strong>
+          </Typography>
+        )}
         <ListPagination
           paginationAriaLabel={t('common.pagination_project_search')}
           count={searchQuery.data?.totalHits ?? 0}
@@ -124,7 +131,7 @@ export const FindRegistration = ({
                 })}
               </RadioGroup>
             ) : (
-              searchQuery.isFetched && <Typography>{t('common.no_hits')}</Typography>
+              searchQuery.isFetched && noHitsContent
             )}
           </div>
         </ListPagination>

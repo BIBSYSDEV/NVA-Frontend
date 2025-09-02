@@ -91,7 +91,7 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
               toggleUnpublishModal();
             }}>
             <Form noValidate>
-              <Box sx={{ my: '1rem' }}>
+              <Box sx={{ mb: '1rem' }}>
                 <Typography gutterBottom>{t('unpublish_actions.unpublish_registration_reason')}</Typography>
                 <Field name="comment">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
@@ -112,7 +112,7 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
               </Box>
 
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
-                <Typography variant="h3">{t('unpublish_actions.unpublish_registration_duplicate_question')}</Typography>
+                <Typography variant="h2">{t('unpublish_actions.unpublish_registration_duplicate_question')}</Typography>
                 <Typography>{t('unpublish_actions.unpublish_registration_duplicate_citation_information')}</Typography>
               </Box>
               <FindRegistration
@@ -120,6 +120,12 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
                 filteredRegistrationIdentifier={registration.identifier}
                 defaultQueryString={registration.entityDescription?.mainTitle}
                 fieldLabel={t('unpublish_actions.duplicate')}
+                noHitsContent={
+                  <Trans
+                    i18nKey="no_hits_you_must_be_contributor_to_cite"
+                    components={{ p: <Typography gutterBottom /> }}
+                  />
+                }
               />
               <FormControlLabel
                 sx={{ my: '1rem' }}

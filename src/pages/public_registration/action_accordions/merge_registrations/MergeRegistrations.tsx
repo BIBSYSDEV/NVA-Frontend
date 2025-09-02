@@ -61,6 +61,12 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
               <FindRegistration
                 setSelectedRegistration={(registration) => setSelectedRegistration(registration)}
                 filteredRegistrationIdentifier={sourceRegistration.identifier}
+                noHitsContent={
+                  <Trans
+                    i18nKey="no_hits_you_must_be_contributor_to_merge"
+                    components={{ p: <Typography gutterBottom /> }}
+                  />
+                }
               />
 
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', mt: '1rem' }}>
