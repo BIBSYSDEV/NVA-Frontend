@@ -21,7 +21,7 @@ export const useAuthentication = (): UseAuthentication => {
       dispatch(setUser(mockUser));
     } else {
       try {
-        await signInWithRedirect({ provider: { custom: 'Dataporten' } });
+        await signInWithRedirect();
       } catch (error: any) {
         if (error?.name === 'UserAlreadyAuthenticatedException') {
           window.location.reload();
