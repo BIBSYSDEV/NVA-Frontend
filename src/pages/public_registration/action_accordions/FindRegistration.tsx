@@ -48,7 +48,6 @@ export const FindRegistration = ({
   };
 
   const searchQuery = useQuery({
-    enabled: debouncedSearch.length > 0,
     queryKey: ['registrations', fetchQuery],
     queryFn: () => fetchResults(fetchQuery),
     meta: { errorMessage: t('feedback.error.get_registrations') },
@@ -91,32 +90,34 @@ export const FindRegistration = ({
           maxHits={10_000}
           showPaginationTop
           sortingComponent={<RegistrationSortSelector />}>
-          {searchQuery.isFetching ? (
-            <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-          ) : searchResults.length > 0 ? (
-            <RadioGroup sx={{ my: '0.5rem' }}>
-              {searchResults.map((registration) => {
-                const listItemId = `list-item-${registration.identifier}`;
-                return (
-                  <Box key={registration.identifier} sx={{ display: 'flex', gap: '0.1rem' }}>
-                    <Radio
-                      data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationRadio(
-                        registration.identifier
-                      )}
-                      onChange={() => setSelectedRegistration(registration)}
-                      value={registration.id}
-                      slotProps={{ input: { 'aria-labelledby': listItemId } }}
-                    />
-                    <SearchListItem id={listItemId} component="div" sx={{ borderLeftColor: 'registration.main' }}>
-                      <RegistrationListItemContent registration={registration} />
-                    </SearchListItem>
-                  </Box>
-                );
-              })}
-            </RadioGroup>
-          ) : (
-            <Typography>{t('common.no_hits')}</Typography>
-          )}
+          <div aria-live="polite" aria-busy={searchQuery.isFetching}>
+            {searchQuery.isFetching ? (
+              <ListSkeleton arrayLength={3} minWidth={40} height={100} />
+            ) : searchResults.length > 0 ? (
+              <RadioGroup sx={{ my: '0.5rem' }}>
+                {searchResults.map((registration) => {
+                  const listItemId = `list-item-${registration.identifier}`;
+                  return (
+                    <Box key={registration.identifier} sx={{ display: 'flex', gap: '0.1rem' }}>
+                      <Radio
+                        data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationRadio(
+                          registration.identifier
+                        )}
+                        onChange={() => setSelectedRegistration(registration)}
+                        value={registration.id}
+                        slotProps={{ input: { 'aria-labelledby': listItemId } }}
+                      />
+                      <SearchListItem id={listItemId} component="div" sx={{ borderLeftColor: 'registration.main' }}>
+                        <RegistrationListItemContent registration={registration} />
+                      </SearchListItem>
+                    </Box>
+                  );
+                })}
+              </RadioGroup>
+            ) : (
+              searchQuery.isFetched && <Typography>{t('common.no_hits')}</Typography>
+            )}
+          </div>
         </ListPagination>
       </section>
     </Box>
