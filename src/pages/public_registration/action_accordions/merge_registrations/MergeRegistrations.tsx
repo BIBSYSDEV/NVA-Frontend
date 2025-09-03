@@ -40,8 +40,8 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
       </Button>
 
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="lg" fullWidth>
-        <DialogTitle>{t('merge_results')}</DialogTitle>
-        <DialogContent>
+        <DialogTitle sx={{ px: { xs: '0.5rem', sm: '1.5rem' } }}>{t('merge_results')}</DialogTitle>
+        <DialogContent sx={{ px: { xs: '0.5rem', sm: '1.5rem' } }}>
           {targetRegistrationId ? (
             <MergeSelectedRegistration
               targetRegistrationId={targetRegistrationId}

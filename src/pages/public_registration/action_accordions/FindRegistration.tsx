@@ -123,6 +123,7 @@ export const FindRegistration = ({
                         data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationRadio(
                           registration.identifier
                         )}
+                        sx={{ width: { xs: '1.5rem', sm: '2.5rem' } }}
                         onChange={() => setSelectedRegistration(registration)}
                         value={registration.id}
                         slotProps={{ input: { 'aria-labelledby': listItemId } }}
