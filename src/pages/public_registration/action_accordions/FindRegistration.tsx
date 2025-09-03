@@ -109,7 +109,11 @@ export const FindRegistration = ({
           <div aria-live="polite" aria-busy={searchQuery.isFetching}>
             {searchQuery.isFetching ? (
               <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-            ) : searchResults.length > 0 ? (
+            ) : searchResults.length === 0 ? (
+              searchQuery.isFetched ? (
+                noHitsContent
+              ) : null
+            ) : (
               <RadioGroup sx={{ my: '0.5rem' }}>
                 {searchResults.map((registration) => {
                   const listItemId = `list-item-${registration.identifier}`;
@@ -130,8 +134,6 @@ export const FindRegistration = ({
                   );
                 })}
               </RadioGroup>
-            ) : (
-              searchQuery.isFetched && noHitsContent
             )}
           </div>
         </ListPagination>
