@@ -15,7 +15,7 @@ import { RegistrationListItemContent } from '../../../../components/Registration
 import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
-import { PreviousPathLocationState } from '../../../../types/locationState.types';
+import { BasicDataLocationState, PreviousPathLocationState } from '../../../../types/locationState.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { convertToRegistrationSearchItem } from '../../../../utils/registration-helpers';
@@ -195,10 +195,8 @@ export const CentralImportDuplicationCheckPage = () => {
               <Typography gutterBottom>{t('basic_data.central_import.merge_candidate.merge_description')}</Typography>
               {registrationIdentifier ? (
                 <Link
-                  to={{
-                    pathname: getImportCandidateMergePath(identifier ?? '', registrationIdentifier),
-                  }}
-                  state={locationState}>
+                  to={{ pathname: getImportCandidateMergePath(identifier ?? '', registrationIdentifier) }}
+                  state={{ ...locationState, previousPath: location.pathname } satisfies BasicDataLocationState}>
                   <Button variant="outlined" fullWidth size="small">
                     {t('basic_data.central_import.merge_candidate.merge')}
                   </Button>

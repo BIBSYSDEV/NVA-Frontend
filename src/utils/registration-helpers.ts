@@ -1,3 +1,4 @@
+import { QueryClient } from '@tanstack/react-query';
 import { t, TFunction } from 'i18next';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { DisabledCategory } from '../components/CategorySelector';
@@ -1003,5 +1004,16 @@ export const getAssociatedLinkRelationTitle = (t: TFunction, relation: Associate
       return t('common.metadata_source');
     default:
       return t('common.link');
+  }
+};
+
+export const updateRegistrationQueryData = (queryClient: QueryClient, registration: Registration) => {
+  const key1 = ['registration', registration.identifier, true];
+  if (queryClient.getQueryData(key1)) {
+    queryClient.setQueryData(key1, registration);
+  }
+  const key2 = ['registration', registration.identifier, false];
+  if (queryClient.getQueryData(key2)) {
+    queryClient.setQueryData(key2, registration);
   }
 };

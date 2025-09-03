@@ -20,7 +20,9 @@ export const MergeResultsWizardHeader = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <RegistrationIconHeader publicationInstanceType={instanceType} publicationDate={publicationDate} showYearOnly />
-      <PageHeader variant="h1">{getTitleString(mainTitle)}</PageHeader>
+      <PageHeader variant="h2" omitPageTitle>
+        {getTitleString(mainTitle)}
+      </PageHeader>
     </Box>
   );
 };

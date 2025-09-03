@@ -9,7 +9,9 @@ import NotFound from '../../pages/errorpages/NotFound';
 import { setNotification } from '../../redux/notificationSlice';
 import { BasicDataLocationState, RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration } from '../../types/registration.types';
+import { updateRegistrationQueryData } from '../../utils/registration-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../utils/urlPaths';
+import { HeadTitle } from '../HeadTitle';
 import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
@@ -65,9 +67,10 @@ export const MergeImportCandidate = () => {
 
   return (
     <StyledPageContent sx={{ mx: 'auto' }}>
+      <HeadTitle>{t('merge_import_candidate')}</HeadTitle>
       <Paper sx={{ mb: '1rem', p: '1rem' }}>
         <Typography variant="h1" gutterBottom>
-          {t('basic_data.central_import.merge_candidate.merge')}
+          {t('merge_import_candidate')}
         </Typography>
         <Typography>{t('basic_data.central_import.merge_candidate.merge_details_1')}</Typography>
         <Typography>{t('basic_data.central_import.merge_candidate.merge_details_2')}</Typography>
@@ -79,10 +82,7 @@ export const MergeImportCandidate = () => {
         onSave={async (data) => {
           const updateRegistrationResponse = await registrationMutation.mutateAsync(data);
           if (updateRegistrationResponse.data) {
-            queryClient.setQueryData(
-              ['registration', updateRegistrationResponse.data.identifier, false],
-              updateRegistrationResponse.data
-            );
+            updateRegistrationQueryData(queryClient, updateRegistrationResponse.data);
           }
           await importCandidateMutation.mutateAsync();
           dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
@@ -92,6 +92,13 @@ export const MergeImportCandidate = () => {
               previousPath: getImportCandidatePath(importCandidateQuery.data.identifier),
             } satisfies RegistrationFormLocationState,
           });
+        }}
+        onCancel={() => {
+          if (locationState?.previousPath) {
+            navigate(-1);
+          } else {
+            navigate(getImportCandidatePath(importCandidateQuery.data.identifier));
+          }
         }}
       />
     </StyledPageContent>
