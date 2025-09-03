@@ -14,6 +14,7 @@ export const LandingPageAccordion = ({ heading, children, dataTestId, ...props }
     square
     elevation={0}
     sx={{
+      bgcolor: 'white',
       borderTop: '1px solid',
       ':last-child': {
         borderBottom: '1px solid',

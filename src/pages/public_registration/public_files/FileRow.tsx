@@ -185,7 +185,7 @@ export const FileRow = ({
       )}
       {canDownloadFile && (
         <Accordion
-          sx={{ gridArea: 'preview', maxHeight: '35rem', display: { xs: 'none', sm: 'block' } }}
+          sx={{ gridArea: 'preview', maxHeight: '35rem', display: { xs: 'none', sm: 'block' }, bgcolor: 'white' }}
           disableGutters
           variant="outlined"
           square
