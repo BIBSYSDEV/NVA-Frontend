@@ -43,7 +43,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
             <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
               <StyledIconAndTextWrapper>
                 <HourglassEmptyIcon fontSize="small" />
-                <Typography sx={{ color: 'inherit' }}>
+                <Typography color="white">
                   {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
                 </Typography>
               </StyledIconAndTextWrapper>
@@ -54,7 +54,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
         <StyledStatusMessageBox sx={{ bgcolor: 'success.main' }}>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
-            <Typography sx={{ color: 'inherit' }}>
+            <Typography color="white">
               {ticket.approvedFiles.length
                 ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
                 : t('my_page.messages.metadata_published')}

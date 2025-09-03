@@ -113,9 +113,11 @@ export const mainTheme = createTheme(
       },
       error: {
         main: Color.Red,
+        light: Color.RedLight,
       },
       success: {
         main: Color.Green,
+        light: Color.GreenLight,
       },
       info: {
         main: Color.Blue,

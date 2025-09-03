@@ -35,15 +35,15 @@ export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequest
             <CheckIcon fontSize="small" />
             <Typography color="white">{t('my_page.messages.doi_completed')}</Typography>
           </StyledIconAndTextWrapper>
-          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+          {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
+        <StyledStatusMessageBox sx={{ bgcolor: 'error.main' }}>
           <StyledIconAndTextWrapper>
             <BlockIcon fontSize="small" />
-            <Typography>{t('my_page.messages.doi_closed')}</Typography>
+            <Typography color="white">{t('my_page.messages.doi_closed')}</Typography>
           </StyledIconAndTextWrapper>
-          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+          {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : null}
 

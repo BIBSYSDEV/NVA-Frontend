@@ -60,14 +60,7 @@ interface MessageItemProps {
   showOrganization?: boolean;
 }
 
-export const MessageItem = ({
-  text,
-  date,
-  username,
-  backgroundColor,
-  menuElement,
-  showOrganization = false,
-}: MessageItemProps) => {
+export const MessageItem = ({ text, date, username, menuElement, showOrganization = false }: MessageItemProps) => {
   const { t } = useTranslation();
 
   const senderQuery = useFetchUserQuery(username);
@@ -77,7 +70,7 @@ export const MessageItem = ({
     <Box
       component="li"
       sx={{
-        bgcolor: backgroundColor,
+        bgcolor: 'background.neutral87',
         p: '0.5rem',
         borderRadius: '4px',
         display: 'flex',

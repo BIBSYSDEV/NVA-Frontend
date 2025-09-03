@@ -34,7 +34,11 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
               padding: '1rem',
               my: '1rem',
             }}>
+<<<<<<< HEAD
             <Typography variant="h2" component="h1" color="white">
+=======
+            <Typography variant="h2" component="strong">
+>>>>>>> cb329a6245edfe7c7fe57c93d19c83d1974260ea
               {t('registration.result_is_deleted_or_unpublished', {
                 status: t(`registration.status.${registration.status}`).toLowerCase(),
               })}

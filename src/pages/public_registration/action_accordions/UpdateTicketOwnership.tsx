@@ -76,10 +76,10 @@ export const UpdateTicketOwnership = ({ ticket, refetchData }: UpdateTicketOwner
       />
       <Button
         data-testid={dataTestId.registrationLandingPage.tasksPanel.updateTicketOwnershipButton}
-        sx={{ bgcolor: 'white' }}
+        sx={{ bgcolor: 'secondary.light', color: 'primary.main' }}
         size="small"
         fullWidth
-        variant="outlined"
+        variant="contained"
         onClick={toggleUpdateOwnershipDialog}>
         {t('registration.public_page.tasks_panel.move_task')}
       </Button>
