@@ -66,7 +66,7 @@ export const FindRegistration = ({
   const searchResults = searchQuery.data?.hits ?? [];
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <Box component="search" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <TextField
         data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationSearchField}
         placeholder={t('unpublish_actions.search_duplicate_facets')}
