@@ -120,9 +120,7 @@ export const fetchRegistration = async (registrationIdentifier: string, doNotRed
     : await apiRequest2<Registration>({ url });
 
   const etag = fetchRegistrationResponse.headers['content-type']; // TODO: use ETag
-  console.log('GET ETag:', etag);
-
-  return { ...fetchRegistrationResponse.data, etag };
+  return etag ? { ...fetchRegistrationResponse.data, etag } : fetchRegistrationResponse.data;
 };
 
 export const fetchRegistrationLog = async (registrationId: string) => {
