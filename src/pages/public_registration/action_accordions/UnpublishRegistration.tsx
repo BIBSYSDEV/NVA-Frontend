@@ -118,7 +118,7 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
               <FindRegistration
                 setSelectedRegistration={setSelectedDuplicate}
                 filteredRegistrationIdentifier={registration.identifier}
-                defaultQueryString={registration.entityDescription?.mainTitle}
+                initialQueryString={registration.entityDescription?.mainTitle}
                 fieldLabel={t('unpublish_actions.duplicate')}
                 noHitsContent={
                   <Trans

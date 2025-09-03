@@ -27,7 +27,7 @@ interface FindRegistrationProps {
   setSelectedRegistration: (registration: RegistrationSearchItem) => void;
   filteredRegistrationIdentifier: string;
   noHitsContent: ReactNode;
-  defaultQueryString?: string;
+  initialQueryString?: string;
   fieldLabel?: string;
 }
 
@@ -36,12 +36,12 @@ export const FindRegistration = ({
   filteredRegistrationIdentifier,
   fieldLabel,
   noHitsContent,
-  defaultQueryString = '',
+  initialQueryString = '',
 }: FindRegistrationProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
 
-  const [searchBeforeDebounce, setSearchBeforeDebounce] = useState(defaultQueryString);
+  const [searchBeforeDebounce, setSearchBeforeDebounce] = useState(initialQueryString);
   const debouncedSearch = useDebounce(searchBeforeDebounce);
   const queryIsDoi = isDoi(debouncedSearch);
 
