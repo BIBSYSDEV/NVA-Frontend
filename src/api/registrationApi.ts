@@ -15,18 +15,23 @@ export const createRegistration = async (partialRegistration?: Partial<Registrat
     data: partialRegistration,
   });
 
-export const updateRegistration = async (registration: Registration) =>
-  await authenticatedApiRequest<Registration>({
-    url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
-    method: 'PUT',
-    data: registration,
-  });
-
-export const partialUpdateRegistration = async (registration: Registration) => {
+export const updateRegistration = async (registration: Registration) => {
+  const { etag, ...data } = registration;
   return await authenticatedApiRequest<Registration>({
     url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
-    data: { ...registration, type: 'PartialUpdatePublicationRequest' },
+    headers: etag ? { 'If-Match': etag } : undefined,
+    data: data,
+  });
+};
+
+export const partialUpdateRegistration = async (registration: Registration) => {
+  const { etag, ...data } = registration;
+  return await authenticatedApiRequest<Registration>({
+    url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
+    method: 'PUT',
+    headers: etag ? { 'If-Match': etag } : undefined,
+    data: { ...data, type: 'PartialUpdatePublicationRequest' },
   });
 };
 
@@ -114,7 +119,10 @@ export const fetchRegistration = async (registrationIdentifier: string, doNotRed
     ? await authenticatedApiRequest2<Registration>({ url })
     : await apiRequest2<Registration>({ url });
 
-  return fetchRegistrationResponse.data;
+  const etag = fetchRegistrationResponse.headers['content-type']; // TODO: use ETag
+  console.log('GET ETag:', etag);
+
+  return { ...fetchRegistrationResponse.data, etag };
 };
 
 export const fetchRegistrationLog = async (registrationId: string) => {
