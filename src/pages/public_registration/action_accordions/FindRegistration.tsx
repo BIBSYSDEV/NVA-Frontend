@@ -1,7 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, InputAdornment, Radio, RadioGroup, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
@@ -26,7 +26,6 @@ const rowsPerPageOptions = [defaultRowsPerPage, defaultRowsPerPage * 2, defaultR
 interface FindRegistrationProps {
   setSelectedRegistration: (registration: RegistrationSearchItem) => void;
   filteredRegistrationIdentifier: string;
-  noHitsContent: ReactNode;
   initialQueryString?: string;
   fieldLabel?: string;
 }
@@ -35,7 +34,6 @@ export const FindRegistration = ({
   setSelectedRegistration,
   filteredRegistrationIdentifier,
   fieldLabel,
-  noHitsContent,
   initialQueryString = '',
 }: FindRegistrationProps) => {
   const { t } = useTranslation();
@@ -58,6 +56,7 @@ export const FindRegistration = ({
   };
 
   const searchQuery = useQuery({
+    enabled: debouncedSearch.length > 0,
     queryKey: ['registrations', fetchQuery],
     queryFn: () => fetchResults(fetchQuery),
     meta: { errorMessage: t('feedback.error.get_registrations') },
@@ -111,7 +110,7 @@ export const FindRegistration = ({
               <ListSkeleton arrayLength={3} minWidth={40} height={100} />
             ) : searchResults.length === 0 ? (
               searchQuery.isFetched ? (
-                noHitsContent
+                <Typography>{t('common.no_hits')}</Typography>
               ) : null
             ) : (
               <RadioGroup sx={{ my: '0.5rem' }}>

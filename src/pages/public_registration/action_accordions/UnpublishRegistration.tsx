@@ -118,14 +118,12 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
               <FindRegistration
                 setSelectedRegistration={setSelectedDuplicate}
                 filteredRegistrationIdentifier={registration.identifier}
-                initialQueryString={registration.entityDescription?.mainTitle}
-                fieldLabel={t('unpublish_actions.duplicate')}
-                noHitsContent={
-                  <Trans
-                    i18nKey="no_hits_you_must_be_contributor_to_cite"
-                    components={{ p: <Typography gutterBottom /> }}
-                  />
+                initialQueryString={
+                  registration.doi ??
+                  registration.entityDescription?.reference?.doi ??
+                  registration.entityDescription?.mainTitle
                 }
+                fieldLabel={t('unpublish_actions.duplicate')}
               />
               <FormControlLabel
                 sx={{ my: '1rem' }}
