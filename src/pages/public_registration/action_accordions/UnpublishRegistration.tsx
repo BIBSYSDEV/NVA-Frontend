@@ -117,7 +117,7 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
               </Box>
               <FindRegistration
                 setSelectedRegistration={setSelectedDuplicate}
-                filteredRegistrationIdentifier={registration.identifier}
+                idNotParam={registration.identifier}
                 initialQueryString={
                   registration.doi ??
                   registration.entityDescription?.reference?.doi ??

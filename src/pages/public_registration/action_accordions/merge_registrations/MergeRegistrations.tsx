@@ -59,8 +59,8 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
               />
 
               <FindRegistration
-                setSelectedRegistration={(registration) => setSelectedRegistration(registration)}
-                filteredRegistrationIdentifier={sourceRegistration.identifier}
+                setSelectedRegistration={setSelectedRegistration}
+                idNotParam={sourceRegistration.identifier}
                 initialQueryString={
                   sourceRegistration.doi ??
                   sourceRegistration.entityDescription?.reference?.doi ??

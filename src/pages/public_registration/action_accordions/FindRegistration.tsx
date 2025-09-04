@@ -25,14 +25,14 @@ const rowsPerPageOptions = [defaultRowsPerPage, defaultRowsPerPage * 2, defaultR
 
 interface FindRegistrationProps {
   setSelectedRegistration: (registration: RegistrationSearchItem) => void;
-  filteredRegistrationIdentifier: string;
+  idNotParam: string;
   initialQueryString?: string;
   fieldLabel?: string;
 }
 
 export const FindRegistration = ({
   setSelectedRegistration,
-  filteredRegistrationIdentifier,
+  idNotParam,
   fieldLabel,
   initialQueryString = '',
 }: FindRegistrationProps) => {
@@ -50,7 +50,7 @@ export const FindRegistration = ({
     contributor: user?.cristinId ? getIdentifierFromId(user.cristinId) : null,
     doi: queryIsDoi ? debouncedSearch : null,
     query: !queryIsDoi ? debouncedSearch : null,
-    idNot: filteredRegistrationIdentifier,
+    idNot: idNotParam,
     results: rowsPerPage,
     from: page * rowsPerPage,
   };
