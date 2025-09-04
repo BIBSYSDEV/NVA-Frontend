@@ -119,7 +119,8 @@ export const fetchRegistration = async (registrationIdentifier: string, doNotRed
     ? await authenticatedApiRequest2<Registration>({ url })
     : await apiRequest2<Registration>({ url });
 
-  const etag = fetchRegistrationResponse.headers['content-type']; // TODO: use ETag
+  const etag = fetchRegistrationResponse.headers['etag'];
+  console.log(fetchRegistrationResponse.headers.toString());
   return etag ? { ...fetchRegistrationResponse.data, etag } : fetchRegistrationResponse.data;
 };
 
