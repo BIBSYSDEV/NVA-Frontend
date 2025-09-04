@@ -120,7 +120,6 @@ export const fetchRegistration = async (registrationIdentifier: string, doNotRed
     : await apiRequest2<Registration>({ url });
 
   const etag = fetchRegistrationResponse.headers['etag'];
-  console.log(fetchRegistrationResponse.headers.toString());
   return etag ? { ...fetchRegistrationResponse.data, etag } : fetchRegistrationResponse.data;
 };
 
