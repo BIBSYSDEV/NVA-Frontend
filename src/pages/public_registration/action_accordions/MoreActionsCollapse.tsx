@@ -37,7 +37,8 @@ export const MoreActionsCollapse = ({
   const canDeleteRegistration = userHasAccessRight(registration, 'delete');
   const canChangeTicketOwnership = ticket && ticket.allowedOperations.includes('transfer');
 
-  if (!(isPublished || isUnpublished || canDeleteRegistration || canChangeTicketOwnership)) {
+  const canSeeMoreActions = isPublished || isUnpublished || canDeleteRegistration || canChangeTicketOwnership;
+  if (!canSeeMoreActions) {
     return null;
   }
 
