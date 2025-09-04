@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Registration, RegistrationSearchItem } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { FindRegistration } from '../FindRegistration';
+import { FindSimilarRegistration } from '../FindSimilarRegistration';
 import { MergeSelectedRegistration } from './MergeSelectedRegistration';
 
 interface MergeRegistrationsProps {
@@ -58,14 +58,9 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
                 }}
               />
 
-              <FindRegistration
+              <FindSimilarRegistration
                 setSelectedRegistration={setSelectedRegistration}
-                idNotParam={sourceRegistration.identifier}
-                initialQueryString={
-                  sourceRegistration.doi ??
-                  sourceRegistration.entityDescription?.reference?.doi ??
-                  sourceRegistration.entityDescription?.mainTitle
-                }
+                sourceRegistration={sourceRegistration}
               />
 
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', mt: '1rem' }}>

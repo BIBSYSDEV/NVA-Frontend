@@ -10,7 +10,7 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { RegistrationSearchItem } from '../../../types/registration.types';
+import { Registration, RegistrationSearchItem } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
@@ -23,23 +23,26 @@ function isDoi(query: string) {
 const defaultRowsPerPage = 5;
 const rowsPerPageOptions = [defaultRowsPerPage, defaultRowsPerPage * 2, defaultRowsPerPage * 4];
 
-interface FindRegistrationProps {
+interface FindSimilarRegistrationProps {
   setSelectedRegistration: (registration: RegistrationSearchItem) => void;
-  idNotParam: string;
-  initialQueryString?: string;
+  sourceRegistration: Registration;
   fieldLabel?: string;
 }
 
-export const FindRegistration = ({
+export const FindSimilarRegistration = ({
   setSelectedRegistration,
-  idNotParam,
   fieldLabel,
-  initialQueryString = '',
-}: FindRegistrationProps) => {
+  sourceRegistration,
+}: FindSimilarRegistrationProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
 
-  const [searchBeforeDebounce, setSearchBeforeDebounce] = useState(initialQueryString);
+  const [searchBeforeDebounce, setSearchBeforeDebounce] = useState(
+    sourceRegistration.doi ??
+      sourceRegistration.entityDescription?.reference?.doi ??
+      sourceRegistration.entityDescription?.mainTitle ??
+      ''
+  );
   const debouncedSearch = useDebounce(searchBeforeDebounce);
   const queryIsDoi = isDoi(debouncedSearch);
 
@@ -50,7 +53,7 @@ export const FindRegistration = ({
     contributor: user?.cristinId ? getIdentifierFromId(user.cristinId) : null,
     doi: queryIsDoi ? debouncedSearch : null,
     query: !queryIsDoi ? debouncedSearch : null,
-    idNot: idNotParam,
+    idNot: sourceRegistration.identifier,
     results: rowsPerPage,
     from: page * rowsPerPage,
   };
