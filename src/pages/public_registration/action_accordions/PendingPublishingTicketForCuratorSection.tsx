@@ -22,6 +22,8 @@ interface PendingPublishingTicketForCuratorSectionProps {
   registrationIsValid: boolean;
 }
 
+const maxReasonLength = 500;
+
 export const PendingPublishingTicketForCuratorSection = ({
   publishingTicket,
   addMessage,
@@ -125,11 +127,11 @@ export const PendingPublishingTicketForCuratorSection = ({
             fullWidth
             required
             label={t('registration.public_page.reason_for_rejection')}
-            helperText={`${rejectionReason.length}/160`}
+            helperText={`${rejectionReason.length}/${maxReasonLength}`}
             value={rejectionReason}
             onChange={(event) => setRejectionReason(event.target.value)}
             slotProps={{
-              htmlInput: { maxLength: 160 },
+              htmlInput: { maxLength: maxReasonLength },
               formHelperText: { sx: { textAlign: 'end' } },
             }}
           />

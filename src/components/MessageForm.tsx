@@ -21,7 +21,7 @@ const initValues: MessageFormData = {
   message: '',
 };
 
-const maxMessageLength = 160;
+const maxMessageLength = 500;
 
 export const MessageForm = ({
   confirmAction,

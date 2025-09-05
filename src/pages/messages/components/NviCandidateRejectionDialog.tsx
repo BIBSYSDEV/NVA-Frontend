@@ -11,7 +11,7 @@ interface NviCandidateRejectionDialogProps {
   isLoading: boolean;
 }
 
-const maxReasonLength = 160;
+const maxReasonLength = 500;
 const minReasonLength = 10;
 
 export const NviCandidateRejectionDialog = ({
