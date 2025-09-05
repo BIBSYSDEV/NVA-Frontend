@@ -165,7 +165,11 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                   <AffiliationFormSection />
                   <Divider orientation="vertical" />
                   <RolesFormSection
-                    personHasNin={!!values.person?.verified}
+                    personHasNin={
+                      !!values.person.identifiers.some(
+                        (identifier) => identifier.type === 'NationalIdentificationNumber' && identifier.value
+                      )
+                    }
                     roles={values.user?.roles.map((role) => role.rolename) ?? []}
                     updateRoles={(newRoles) => {
                       const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
