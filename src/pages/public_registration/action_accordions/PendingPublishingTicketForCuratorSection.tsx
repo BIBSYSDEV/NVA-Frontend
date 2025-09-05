@@ -12,6 +12,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { RegistrationTab } from '../../../types/registration.types';
+import { MAX_MESSAGE_LENGTH } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 
@@ -21,8 +22,6 @@ interface PendingPublishingTicketForCuratorSectionProps {
   refetchData: () => Promise<void>;
   registrationIsValid: boolean;
 }
-
-const maxReasonLength = 500;
 
 export const PendingPublishingTicketForCuratorSection = ({
   publishingTicket,
@@ -127,11 +126,11 @@ export const PendingPublishingTicketForCuratorSection = ({
             fullWidth
             required
             label={t('registration.public_page.reason_for_rejection')}
-            helperText={`${rejectionReason.length}/${maxReasonLength}`}
+            helperText={`${rejectionReason.length}/${MAX_MESSAGE_LENGTH}`}
             value={rejectionReason}
             onChange={(event) => setRejectionReason(event.target.value)}
             slotProps={{
-              htmlInput: { maxLength: maxReasonLength },
+              htmlInput: { maxLength: MAX_MESSAGE_LENGTH },
               formHelperText: { sx: { textAlign: 'end' } },
             }}
           />
