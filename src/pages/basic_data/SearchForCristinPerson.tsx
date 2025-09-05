@@ -42,13 +42,14 @@ export const SearchForCristinPerson = ({
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
   const searchQueryIsNumber = !!searchQuery && !isNaN(Number(searchQuery));
+  const sortBy = 'score desc';
 
   const [isLoadingSearchByNin, setIsLoadingSearchByNin] = useState(false);
 
   const [searchByNameResponse, isLoadingSearchByName] = useFetch<SearchResponse<CristinPerson>>({
     url:
       searchQuery && searchQuery === debouncedSearchQuery && !searchQueryIsNumber
-        ? `${CristinApiPath.Person}?results=${searchSize}&name=${debouncedSearchQuery}`
+        ? `${CristinApiPath.Person}?results=${searchSize}&name=${debouncedSearchQuery}&sort=${sortBy}`
         : '',
     withAuthentication: true,
   });
