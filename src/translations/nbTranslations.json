@@ -715,6 +715,7 @@
   },
   "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Som kurator kan du legge til en fil på vegne av registrator.",
   "file_upload_disabled_due_to_institution_policy": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønsker å ha en fil på dette resultatet.",
+  "find_result_to_merge_description": "<p>Slå sammen to resultater for å unngå to versjoner av samme resultat med forskjellige metadata og filer.</p><p>Er det registrert forskjellig metadata så velger du hvilke data som er gjeldende. Du velger også om filer skal flyttes over til det publiserte resultatet.</p><heading>Søk etter forskningsresultat</heading><p>Velg resultatet du ønsker å slå sammen med. Du kan bare slå sammen resultatet der du er registrert som bidragsyter.</p>",
   "footer": {
     "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
     "about_nva_text": "Nasjonalt vitenarkiv (NVA) samler publikasjoner og andre forskningsresultater, og gjør dem åpent tilgjengelig i en felles nasjonal løsning. Dette gjør resultater fra norsk forskning tilgjengelig i én tjeneste.",
@@ -2188,6 +2189,7 @@
     "year_from": "Fra år",
     "year_to": "Til år"
   },
+  "start_merging": "Start sammenslåing",
   "tasks": {
     "correction_list": "Retteliste",
     "display_options": "Visningsalternativer",
@@ -2266,7 +2268,6 @@
     "confirm_unpublish": "Jeg bekrefter at informasjonen stemmer, og at resultatet skal avpubliseres.",
     "duplicate": "Duplikat",
     "search_duplicate_facets": "Søk med DOI, handle eller tittel",
-    "search_for_duplicate": "Søk etter forskningsresultat",
     "unpublish": "Avpubliser",
     "unpublish_header": "Avpublisere",
     "unpublish_info": "Resultatet vil ikke lenger være offentlig synlig hvis du velger å avpublisere. Det vil fortsatt være synlig for alle som har direktelenke. Du kan velge å publisere det på nytt senere.",
