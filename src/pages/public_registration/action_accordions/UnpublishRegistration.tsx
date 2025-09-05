@@ -11,7 +11,7 @@ import { Registration, RegistrationSearchItem } from '../../../types/registratio
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { doNotRedirectQueryParam } from '../../../utils/urlPaths';
-import { FindRegistration } from './FindRegistration';
+import { FindSimilarRegistration } from './FindSimilarRegistration';
 
 interface UnpublishRegistrationProps {
   registration: Registration;
@@ -115,17 +115,10 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
                 <Typography variant="h2">{t('unpublish_actions.unpublish_registration_duplicate_question')}</Typography>
                 <Typography>{t('unpublish_actions.unpublish_registration_duplicate_citation_information')}</Typography>
               </Box>
-              <FindRegistration
+              <FindSimilarRegistration
                 setSelectedRegistration={setSelectedDuplicate}
-                filteredRegistrationIdentifier={registration.identifier}
-                initialQueryString={registration.entityDescription?.mainTitle}
+                sourceRegistration={registration}
                 fieldLabel={t('unpublish_actions.duplicate')}
-                noHitsContent={
-                  <Trans
-                    i18nKey="no_hits_you_must_be_contributor_to_cite"
-                    components={{ p: <Typography gutterBottom /> }}
-                  />
-                }
               />
               <FormControlLabel
                 sx={{ my: '1rem' }}

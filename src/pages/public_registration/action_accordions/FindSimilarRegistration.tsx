@@ -1,7 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, InputAdornment, Radio, RadioGroup, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
@@ -10,7 +10,7 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { RegistrationSearchItem } from '../../../types/registration.types';
+import { Registration, RegistrationSearchItem } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
@@ -23,25 +23,26 @@ function isDoi(query: string) {
 const defaultRowsPerPage = 5;
 const rowsPerPageOptions = [defaultRowsPerPage, defaultRowsPerPage * 2, defaultRowsPerPage * 4];
 
-interface FindRegistrationProps {
+interface FindSimilarRegistrationProps {
   setSelectedRegistration: (registration: RegistrationSearchItem) => void;
-  filteredRegistrationIdentifier: string;
-  noHitsContent: ReactNode;
-  initialQueryString?: string;
+  sourceRegistration: Registration;
   fieldLabel?: string;
 }
 
-export const FindRegistration = ({
+export const FindSimilarRegistration = ({
   setSelectedRegistration,
-  filteredRegistrationIdentifier,
   fieldLabel,
-  noHitsContent,
-  initialQueryString = '',
-}: FindRegistrationProps) => {
+  sourceRegistration,
+}: FindSimilarRegistrationProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
 
-  const [searchBeforeDebounce, setSearchBeforeDebounce] = useState(initialQueryString);
+  const [searchBeforeDebounce, setSearchBeforeDebounce] = useState(
+    sourceRegistration.doi ??
+      sourceRegistration.entityDescription?.reference?.doi ??
+      sourceRegistration.entityDescription?.mainTitle ??
+      ''
+  );
   const debouncedSearch = useDebounce(searchBeforeDebounce);
   const queryIsDoi = isDoi(debouncedSearch);
 
@@ -52,12 +53,13 @@ export const FindRegistration = ({
     contributor: user?.cristinId ? getIdentifierFromId(user.cristinId) : null,
     doi: queryIsDoi ? debouncedSearch : null,
     query: !queryIsDoi ? debouncedSearch : null,
-    idNot: filteredRegistrationIdentifier,
+    idNot: sourceRegistration.identifier,
     results: rowsPerPage,
     from: page * rowsPerPage,
   };
 
   const searchQuery = useQuery({
+    enabled: debouncedSearch.length > 0,
     queryKey: ['registrations', fetchQuery],
     queryFn: () => fetchResults(fetchQuery),
     meta: { errorMessage: t('feedback.error.get_registrations') },
@@ -111,7 +113,7 @@ export const FindRegistration = ({
               <ListSkeleton arrayLength={3} minWidth={40} height={100} />
             ) : searchResults.length === 0 ? (
               searchQuery.isFetched ? (
-                noHitsContent
+                <Typography>{t('common.no_hits')}</Typography>
               ) : null
             ) : (
               <RadioGroup sx={{ my: '0.5rem' }}>

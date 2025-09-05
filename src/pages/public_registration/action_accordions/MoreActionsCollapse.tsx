@@ -3,10 +3,13 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Box, Divider, IconButton } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { BetaFunctionality } from '../../../components/BetaFunctionality';
+import { RootState } from '../../../redux/store';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
+import { hasCuratorRole } from '../../../utils/user-helpers';
 import { DeleteDraftRegistration } from './DeleteDraftRegistration';
 import { MergeRegistrations } from './merge_registrations/MergeRegistrations';
 import { RepublishRegistration, RepublishRegistrationProps } from './RepublishRegistration';
@@ -26,6 +29,7 @@ export const MoreActionsCollapse = ({
   refetchData,
 }: MoreActionsCollapseProps) => {
   const { t } = useTranslation();
+  const user = useSelector((state: RootState) => state.user);
   const [openMoreActions, setOpenMoreActions] = useState(false);
 
   const isPublished = registration.status === 'PUBLISHED' || registration.status === 'PUBLISHED_METADATA';
@@ -33,7 +37,8 @@ export const MoreActionsCollapse = ({
   const canDeleteRegistration = userHasAccessRight(registration, 'delete');
   const canChangeTicketOwnership = ticket && ticket.allowedOperations.includes('transfer');
 
-  if (!(isPublished || isUnpublished || canDeleteRegistration || canChangeTicketOwnership)) {
+  const canSeeMoreActions = isPublished || isUnpublished || canDeleteRegistration || canChangeTicketOwnership;
+  if (!canSeeMoreActions) {
     return null;
   }
 
@@ -60,9 +65,11 @@ export const MoreActionsCollapse = ({
                 refetchData={refetchData}
               />
               <TerminateRegistration registration={registration} />
-              <BetaFunctionality>
-                <MergeRegistrations sourceRegistration={registration} />
-              </BetaFunctionality>
+              {hasCuratorRole(user) && (
+                <BetaFunctionality>
+                  <MergeRegistrations sourceRegistration={registration} />
+                </BetaFunctionality>
+              )}
             </>
           )}
           {canDeleteRegistration && <DeleteDraftRegistration registration={registration} />}
