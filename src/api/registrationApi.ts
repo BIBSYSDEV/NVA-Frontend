@@ -21,7 +21,7 @@ export const updateRegistration = async (registration: Registration) => {
     url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
     headers: etag ? { 'If-Match': etag } : undefined,
-    data: data,
+    data,
   });
 };
 
