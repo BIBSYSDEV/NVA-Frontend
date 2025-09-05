@@ -9,7 +9,6 @@ import { HeadTitle } from '../../components/HeadTitle';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { RegistrationIconHeader } from '../../components/RegistrationIconHeader';
-import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { PreviousPathLocationState } from '../../types/locationState.types';
@@ -69,7 +68,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
       <HeadTitle>{mainTitle}</HeadTitle>
-      {registration.status === RegistrationStatus.Published && <StructuredSeoData registration={registration} />}
+      {/* {registration.status === RegistrationStatus.Published && <StructuredSeoData registration={registration} />} */}
 
       <Box sx={visuallyHidden}>
         <DeletedPublicationInformation registration={registration} />
