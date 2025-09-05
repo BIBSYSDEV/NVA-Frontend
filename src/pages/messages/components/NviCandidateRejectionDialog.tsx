@@ -2,6 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, T
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
+import { MAX_MESSAGE_LENGTH } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 interface NviCandidateRejectionDialogProps {
@@ -11,7 +12,6 @@ interface NviCandidateRejectionDialogProps {
   isLoading: boolean;
 }
 
-const maxReasonLength = 160;
 const minReasonLength = 10;
 
 export const NviCandidateRejectionDialog = ({
@@ -58,9 +58,9 @@ export const NviCandidateRejectionDialog = ({
             fullWidth
             required
             label={t('tasks.nvi.reject_nvi_candidate_form_label')}
-            helperText={`${reason.length}/${maxReasonLength}`}
+            helperText={`${reason.length}/${MAX_MESSAGE_LENGTH}`}
             slotProps={{
-              htmlInput: { minLength: minReasonLength, maxLength: maxReasonLength },
+              htmlInput: { minLength: minReasonLength, maxLength: MAX_MESSAGE_LENGTH },
               formHelperText: { sx: { textAlign: 'end' } },
             }}
           />
