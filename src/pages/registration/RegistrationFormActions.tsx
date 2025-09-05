@@ -90,7 +90,7 @@ export const RegistrationFormActions = ({
         updateRegistrationResponse.status === 412
           ? t('feedback.error.registration_update_precondition_failed')
           : undefined;
-      dispatch(setNotification({ message: t('feedback.error.update_registration'), detail: detail, variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.update_registration'), detail, variant: 'error' }));
       const newErrors = validateForm(values);
       setTouched(setNestedObjectValues(newErrors, true));
     } else if (isSuccess) {
