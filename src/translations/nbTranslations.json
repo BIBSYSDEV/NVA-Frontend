@@ -638,7 +638,7 @@
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
-      "registration_update_precondition_failed": "Registreringen har blitt oppdatert etter at du lastet siden. Vennligst last siden på nytt og prøv igjen. Merk at all ulagret data vil gå tapt."
+      "registration_update_precondition_failed": "Registreringen er endret etter at du lastet siden. Last siden på nytt for å prøve igjen. Ulagrede endringer vil gå tapt."
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
