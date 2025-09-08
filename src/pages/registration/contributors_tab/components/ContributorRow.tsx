@@ -147,8 +147,7 @@ export const ContributorRow = ({
             id={contributor.identity.id}
             name={contributor.identity.name}
             hasVerifiedAffiliation={
-              !!contributor.affiliations &&
-              contributor.affiliations?.some((affiliation) => affiliation.type === 'Organization')
+              !!contributor.affiliations?.some((affiliation) => affiliation.type === 'Organization')
             }
           />
           {!contributor.identity.id && (
