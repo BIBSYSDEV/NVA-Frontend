@@ -612,6 +612,7 @@
       "person_search": "Søk etter person feila",
       "project_search": "Søk på prosjekt feila",
       "publish_registration": "Kunne ikkje publisere registrering",
+      "registration_update_precondition_failed": "",
       "reject_doi_request": "Kunne ikkje avvise DOI-førespurnad",
       "remove_role": "Kunne ikkje fjerne rolle",
       "reserve_doi": "Reservasjon av DOI feila",
@@ -715,6 +716,7 @@
   },
   "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støttar ikkje at registrator kan laste opp filer for denne kategorien. Som kurator kan du leggje til ei fil på vegner av registrator.",
   "file_upload_disabled_due_to_institution_policy": "Din institusjon støttar ikkje at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønskjer å ha ei fil på dette resultatet.",
+  "find_result_to_merge_description": "<p>Slå saman to resultat for å unngå to versjonar av same resultat med ulike metadata og filer.</p><p>Er det registrert ulike metadata vel du kva data som skal gjelde. Du vel òg om filer skal flyttast over til det publiserte resultatet.</p><heading>Søk etter forskingsresultat</heading><p>Vel resultatet du ønskjer å slå saman med. Du kan berre slå saman resultat der du er registrert som bidragsytar.</p>",
   "footer": {
     "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
     "about_nva_text": "Nasjonalt vitenarkiv (NVA) samlar publikasjonar og andre forskingsresultat, og gjer dei opent tilgjengelege i ei felles nasjonal løysing. Dette gjer resultat frå norsk forsking tilgjengeleg i éi teneste.",
@@ -2188,6 +2190,7 @@
     "year_from": "Fra år",
     "year_to": "Til år"
   },
+  "start_merging": "Start samanslåing",
   "tasks": {
     "correction_list": "Retteliste",
     "display_options": "Visingsalternativ",
@@ -2266,7 +2269,6 @@
     "confirm_unpublish": "Eg bekreftar at informasjonen er korrekt, og at resutatet skal avpubliserast.",
     "duplicate": "Duplikat",
     "search_duplicate_facets": "Søk med DOI, handle eller tittel",
-    "search_for_duplicate": "Søk etter forskingsresultat",
     "unpublish": "Avpubliser",
     "unpublish_header": "Avpublisere",
     "unpublish_info": "Resultatet vil ikkje lenger vere offentleg synleg om du vel å avpublisere. Det vil framleis vere synleg for alle som har direktelenke. Du kan velje å publisere det på nytt seinare.",

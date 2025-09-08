@@ -612,6 +612,7 @@
       "person_search": "Search for person failed",
       "project_search": "Project search failed",
       "publish_registration": "Could not publish registration",
+      "registration_update_precondition_failed": "",
       "reject_doi_request": "Could not reject DOI request",
       "remove_role": "Failed to remove role",
       "reserve_doi": "Reservation of DOI failed",
@@ -715,6 +716,7 @@
   },
   "file_upload_disabled_curator_can_upload_on_behalf": "Your institution does not allow the registrar to upload files for this category. As curator, you may add a file on behalf of the registrar.",
   "file_upload_disabled_due_to_institution_policy": "Your institution does not allow the registrar to upload files for this category. Contact curator support if you wish to have a file on this result.",
+  "find_result_to_merge_description": "<p>Merge two results to avoid having two versions of the same result with different metadata and files.</p><p>If different metadata is registered, you can choose which data will apply. You also decide whether files should be transferred to the published result.</p><heading>Search for research result</heading><p>Select the result you want to merge with. You can only merge results where you are registered as a contributor.</p>",
   "footer": {
     "about_nva": "About The Norwegian Research Information Repository (NVA)",
     "about_nva_text": "The Norwegian Research Information Repository (NVA) collects publications and other research results, and makes them openly available in a common national solution. This makes results from Norwegian research available in a single service.",
@@ -2188,6 +2190,7 @@
     "year_from": "From year",
     "year_to": "To year"
   },
+  "start_merging": "Start merging",
   "tasks": {
     "correction_list": "Correction list",
     "display_options": "Display options",
@@ -2266,7 +2269,6 @@
     "confirm_unpublish": "I confirm that the information is correct, and that the result should be unpublished.",
     "duplicate": "Duplicate",
     "search_duplicate_facets": "Search with DOI, handle or title",
-    "search_for_duplicate": "Search for research result",
     "unpublish": "Unpublish",
     "unpublish_header": "Unpublish",
     "unpublish_info": "The result will no longer be visible to others if you choose to unpublish it. It will still be visible to everyone with a direct link. You may choose to republish it later.",
