@@ -5,7 +5,7 @@ import { removeNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 
 const autoHideNotificationDuration = {
-  error: 9000,
+  error: 12000,
   info: 6000,
   success: 3000,
   warning: 6000,
