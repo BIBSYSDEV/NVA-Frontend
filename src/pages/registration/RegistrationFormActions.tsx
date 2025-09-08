@@ -84,13 +84,13 @@ export const RegistrationFormActions = ({
       ? await partialUpdateRegistration(formattedValues)
       : await updateRegistration(formattedValues);
     const isSuccess = isSuccessStatus(updateRegistrationResponse.status);
+
     if (isErrorStatus(updateRegistrationResponse.status)) {
-      dispatch(
-        setNotification({
-          message: t('feedback.error.update_registration'),
-          variant: 'error',
-        })
-      );
+      const detail =
+        updateRegistrationResponse.status === 412
+          ? t('feedback.error.registration_update_precondition_failed')
+          : undefined;
+      dispatch(setNotification({ message: t('feedback.error.update_registration'), detail, variant: 'error' }));
       const newErrors = validateForm(values);
       setTouched(setNestedObjectValues(newErrors, true));
     } else if (isSuccess) {
@@ -107,12 +107,7 @@ export const RegistrationFormActions = ({
       // Without this we experienced some issues with RouteLeavingGuard on some browsers (NP-47920).
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      dispatch(
-        setNotification({
-          message: t('feedback.success.update_registration'),
-          variant: 'success',
-        })
-      );
+      dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
 
       if (isLastTab) {
         if (locationState?.previousPath) {

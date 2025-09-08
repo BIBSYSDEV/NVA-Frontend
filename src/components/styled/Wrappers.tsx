@@ -1,4 +1,4 @@
-import { Box, FormGroup, ListItem, styled, Typography, TypographyProps } from '@mui/material';
+import { Box, FormGroup, ListItem, ListItemProps, styled, Typography, TypographyProps } from '@mui/material';
 
 export const StyledRightAlignedFooter = styled(Box)({
   display: 'flex',
@@ -86,7 +86,7 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
   },
 }));
 
-export const SearchListItem = styled(ListItem)(({ theme }) => ({
+export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
   border: '2px solid',
   borderColor: theme.palette.secondary.dark,
   borderLeft: '1.25rem solid',
