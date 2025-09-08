@@ -40,6 +40,8 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
       affiliations.filter((_, thisIndex) => thisIndex !== index)
     );
 
+  console.log('Affiliations før return:', affiliations);
+
   return (
     <Box
       sx={{
@@ -49,37 +51,43 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
         alignItems: 'start',
         gap: '0.75rem',
       }}>
-      {affiliations.map((affiliation, index) => (
-        <Box
-          key={`org-${index}`}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'start',
-            width: '100%',
-            gap: '0.25rem',
-          }}>
-          {affiliation.type === 'Organization' && (
-            <OrganizationBox
-              unitUri={affiliation.id}
-              authorName={authorName}
-              affiliations={affiliations}
-              baseFieldName={baseFieldName}
-              removeAffiliation={disabled ? undefined : () => removeAffiliation(index)}
-              sx={{ width: '100%' }}
-              canEdit={!disabled}
-            />
-          )}
-          {affiliation.type === 'UnconfirmedOrganization' && (
-            <UnconfirmedOrganizationBox
-              name={affiliation.name}
-              onIdentifyAffiliationClick={disabled ? undefined : onIdentifyAffiliationClick}
-              removeAffiliation={() => removeAffiliation(index)}
-              sx={{ width: '100%' }}
-            />
-          )}
-        </Box>
-      ))}
+      {console.log('Affiliations før map:', affiliations)}
+      {affiliations.map((affiliation, index) => {
+        console.log('Affiliation:', affiliation);
+        return (
+          <Box
+            key={`org-${index}`}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'start',
+              width: '100%',
+              gap: '0.25rem',
+            }}>
+            {affiliation.type === 'Organization' && (
+              <OrganizationBox
+                unitUri={affiliation.id}
+                authorName={authorName}
+                affiliations={affiliations}
+                baseFieldName={baseFieldName}
+                removeAffiliation={disabled ? undefined : () => removeAffiliation(index)}
+                sx={{ width: '100%' }}
+                canEdit={!disabled}
+              />
+            )}
+            {affiliation.type === 'UnconfirmedOrganization' && (
+              <UnconfirmedOrganizationBox
+                name={affiliation.name}
+                onIdentifyAffiliationClick={disabled ? undefined : onIdentifyAffiliationClick}
+                removeAffiliation={() => removeAffiliation(index)}
+                sx={{ width: '100%' }}
+              />
+            )}
+          </Box>
+        );
+      })}
+      {console.log('Affiliations etter map:', affiliations)}
+
       <Button
         disabled={disabled}
         variant="outlined"
