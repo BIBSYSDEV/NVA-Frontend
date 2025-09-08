@@ -149,6 +149,7 @@ export interface BaseRegistration {
   readonly allowedOperations?: RegistrationOperation[];
   readonly publicationNotes?: PublicationNote[];
   readonly importDetails?: ImportDetail[];
+  readonly etag?: string;
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
