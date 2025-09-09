@@ -958,7 +958,7 @@
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
       "internal_importer": "Intern importør",
       "internal_importer_description": "Kan behandle importkandidater.",
-      "no_active_employments": "Du har ingen roller fordi du har ingen aktive ansettelser og har ikke tilgang til å registrere.",
+      "no_active_employments": "Du har ingen roller fordi du ikke har noen aktive ansettelser.",
       "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
       "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen",
       "nvi_curator": "NVI-kurator",
