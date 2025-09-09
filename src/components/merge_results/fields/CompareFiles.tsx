@@ -1,10 +1,15 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import RestoreIcon from '@mui/icons-material/Restore';
-import { Button } from '@mui/material';
+import { Button, styled } from '@mui/material';
 import { useFieldArray } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';
 import { FileBox } from './FileBox';
+
+const StyledButton = styled(Button)({
+  width: 'fit-content',
+  margin: '0 auto',
+});
 
 interface CompareFilesProps {
   sourceFile?: AssociatedFile;
@@ -12,36 +17,36 @@ interface CompareFilesProps {
   matchingTargetFileIndex?: number;
 }
 
-export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex }: CompareFilesProps) => {
+export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex = -1 }: CompareFilesProps) => {
   const { t } = useTranslation();
   const { append, remove } = useFieldArray({ name: 'associatedArtifacts' });
 
   const canCopyFile = !!sourceFile && !targetFile;
-  const canRemoveFile = !!sourceFile && !!targetFile && matchingTargetFileIndex !== undefined;
+  const canRemoveFile = !!sourceFile && !!targetFile && matchingTargetFileIndex > -1;
 
   return (
     <>
       <FileBox file={sourceFile} />
+
       {canCopyFile && (
-        <Button
+        <StyledButton
           variant="contained"
           size="small"
-          sx={{ width: 'fit-content', mx: 'auto' }}
           endIcon={<ArrowForwardIcon />}
           onClick={() => append(sourceFile)}>
           {t('add_file')}
-        </Button>
+        </StyledButton>
       )}
       {canRemoveFile && (
-        <Button
+        <StyledButton
           variant="outlined"
           size="small"
-          sx={{ width: 'fit-content', mx: 'auto' }}
           endIcon={<RestoreIcon />}
           onClick={() => remove(matchingTargetFileIndex)}>
           {t('reset')}
-        </Button>
+        </StyledButton>
       )}
+
       <FileBox file={targetFile} sx={{ gridColumn: '3' }} />
     </>
   );
