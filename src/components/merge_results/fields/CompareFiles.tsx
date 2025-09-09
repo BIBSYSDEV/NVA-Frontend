@@ -50,7 +50,7 @@ export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex =
         </StyledButton>
       )}
 
-      <FileBox file={targetFile} sx={{ gridColumn: '3' }} />
+      <FileBox file={targetFile} sx={{ gridColumn: { xs: 1, sm: 3 } }} />
     </>
   );
 };
