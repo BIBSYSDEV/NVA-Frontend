@@ -4,6 +4,7 @@ import { Button, styled } from '@mui/material';
 import { useFieldArray } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { FileBox } from './FileBox';
 
 const StyledButton = styled(Button)({
@@ -30,6 +31,7 @@ export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex =
 
       {canCopyFile && (
         <StyledButton
+          data-testid={dataTestId.basicData.centralImport.copyValueButton}
           variant="contained"
           size="small"
           endIcon={<ArrowForwardIcon />}
@@ -39,6 +41,7 @@ export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex =
       )}
       {canRemoveFile && (
         <StyledButton
+          data-testid={dataTestId.basicData.centralImport.resetValueButton}
           variant="outlined"
           size="small"
           endIcon={<RestoreIcon />}
