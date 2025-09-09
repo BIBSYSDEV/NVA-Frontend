@@ -32,7 +32,7 @@ export const Footer = () => {
         flexDirection: 'column',
         alignItems: 'center',
         padding: '1rem',
-        bgcolor: 'primary.main',
+        bgcolor: 'secondary.main',
         color: 'white',
       }}>
       <Button

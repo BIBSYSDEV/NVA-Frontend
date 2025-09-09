@@ -8,7 +8,7 @@ export interface SelectableButtonProps extends ButtonProps, Partial<Pick<LinkPro
 export const SelectableButton = ({ isSelected, sx, ...rest }: SelectableButtonProps) => (
   <Button
     sx={{
-      bgcolor: isSelected ? 'secondary.main' : 'background.default',
+      bgcolor: isSelected ? 'primary.main' : 'white',
       justifyContent: 'start',
       boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.20)',
       ...sx,

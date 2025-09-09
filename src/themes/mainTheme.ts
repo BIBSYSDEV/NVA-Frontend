@@ -7,12 +7,12 @@ import i18n from '../translations/i18n';
 enum Color {
   Black = '#222222',
   White = '#FFFFFF',
-  PrimaryMain = '#0A0132',
-  SecondaryMain = '#7351FB',
+  PurpleDark = '#0A0132',
+  Purple = '#7351FB',
   CentralImportMain = '#D9D9D9',
   CentralImportLight = '#EFEEED',
   ErrorMain = '#AC0303',
-  SecondaryLight = '#D1CDFF',
+  PurpleLight = '#D1CDFF',
   SecondaryDark = '#D3C9AF',
   SuccessMain = '#025810',
   InfoMain = '#0B408F',
@@ -103,13 +103,12 @@ export const mainTheme = createTheme(
     },
     palette: {
       primary: {
-        main: Color.PrimaryMain,
+        main: Color.Purple,
         light: Color.Outdated,
       },
       secondary: {
-        light: Color.SecondaryLight,
-        main: Color.SecondaryMain,
-        dark: Color.Outdated,
+        light: Color.PurpleLight,
+        main: Color.PurpleDark,
       },
       error: {
         main: Color.Red,
@@ -263,13 +262,17 @@ export const mainTheme = createTheme(
         },
       },
       MuiBadge: {
-        defaultProps: { color: 'secondary' },
+        defaultProps: { color: 'primary' },
       },
       MuiChip: {
         styleOverrides: {
           root: {
             height: '100%',
             padding: '0.4rem 0',
+            '&.MuiChip-outlined': {
+              borderColor: Color.PurpleDark,
+              color: Color.PurpleDark,
+            },
           },
           label: {
             whiteSpace: 'normal', // Allow multiline chips
@@ -277,6 +280,7 @@ export const mainTheme = createTheme(
         },
         defaultProps: {
           variant: 'outlined',
+          color: 'primary',
         },
       },
       MuiDialog: {
@@ -302,7 +306,7 @@ export const mainTheme = createTheme(
             color: Color.TextPrimary,
           },
           underlineAlways: {
-            textDecorationColor: Color.PrimaryMain,
+            textDecorationColor: Color.PurpleDark,
           },
         },
       },
@@ -402,14 +406,14 @@ export const mainTheme = createTheme(
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            color: Color.PrimaryMain,
+            color: Color.PurpleDark,
           },
         },
       },
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            color: Color.PrimaryMain,
+            color: Color.PurpleDark,
             backgroundColor: Color.White,
             '&.Mui-focused': {
               backgroundColor: Color.White,
@@ -421,7 +425,7 @@ export const mainTheme = createTheme(
               backgroundColor: Color.White,
             },
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: Color.PrimaryMain,
+              borderColor: Color.PurpleDark,
             },
           },
         },

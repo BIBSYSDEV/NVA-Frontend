@@ -84,7 +84,7 @@ export const Header = () => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   return (
-    <AppBar position="sticky" elevation={0} sx={{ color: 'white' }}>
+    <AppBar position="sticky" elevation={0} sx={{ color: 'white', bgcolor: 'secondary.main' }}>
       <Box
         aria-label={t('common.main')}
         component="nav"
@@ -127,7 +127,7 @@ export const Header = () => {
                     <AddIcon
                       sx={{
                         color: 'white',
-                        bgcolor: 'secondary.main',
+                        bgcolor: 'primary.main',
                         borderRadius: '50%',
                         padding: '0.2rem',
                         width: '2.25rem',
