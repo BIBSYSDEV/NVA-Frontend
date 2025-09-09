@@ -7,16 +7,16 @@ import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 import { CompareFiles } from './fields/CompareFiles';
 
 export const MergeResultsWizardFilesTab = () => {
+  const { sourceResult } = useContext(MergeResultsWizardContext);
+  const sourceAssociatedArtifacts = sourceResult.associatedArtifacts ?? [];
+  const sourceFiles = getAssociatedFiles(sourceAssociatedArtifacts);
+
   const { formState } = useFormContext<Registration>();
   const targetAssociatedArtifacts = useWatch({ name: 'associatedArtifacts' }) ?? [];
   const targetFiles = getAssociatedFiles(targetAssociatedArtifacts);
 
-  const targetArtifacts = (formState.defaultValues?.associatedArtifacts ?? []) as AssociatedArtifact[];
-  const initialTargetFiles = getAssociatedFiles(targetArtifacts);
-
-  const { sourceResult } = useContext(MergeResultsWizardContext);
-  const sourceAssociatedArtifacts = sourceResult.associatedArtifacts ?? [];
-  const sourceFiles = getAssociatedFiles(sourceAssociatedArtifacts);
+  const initialTargetAssociatedArtifacts = (formState.defaultValues?.associatedArtifacts ?? []) as AssociatedArtifact[];
+  const initialTargetFiles = getAssociatedFiles(initialTargetAssociatedArtifacts);
 
   return (
     <>
