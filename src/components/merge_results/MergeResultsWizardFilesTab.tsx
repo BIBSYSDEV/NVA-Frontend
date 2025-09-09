@@ -1,7 +1,9 @@
-import { Box, BoxProps } from '@mui/material';
+import { Box, BoxProps, Typography } from '@mui/material';
+import prettyBytes from 'pretty-bytes';
 import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { FileUploaderInfo } from '../../pages/public_registration/public_files/FileUploaderInfo';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { Registration } from '../../types/registration.types';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
@@ -35,7 +37,19 @@ interface FileBoxProps extends BoxProps {
 }
 
 const FileBox = ({ file, sx }: FileBoxProps) => {
-  return <Box sx={{ p: '0.5rem', bgcolor: '#FEFBF3', height: '100%', ...sx }}>{file?.name}</Box>;
+  return (
+    <Box sx={{ p: '0.5rem', bgcolor: '#FEFBF3', height: '100%', ...sx }}>
+      {!file ? null : (
+        <>
+          <Typography>
+            <strong>{file.name}</strong>
+          </Typography>
+          <Typography>{prettyBytes(file.size, { locale: true })}</Typography>
+          <FileUploaderInfo uploadDetails={file.uploadDetails} />
+        </>
+      )}
+    </Box>
+  );
 };
 
 interface CompareFilesProps {
