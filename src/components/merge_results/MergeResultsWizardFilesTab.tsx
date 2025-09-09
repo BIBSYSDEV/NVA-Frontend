@@ -1,19 +1,21 @@
-import { Box, BoxProps, Typography } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
+import { Box, BoxProps, Button, Typography } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
 import { useContext } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { FileUploaderInfo } from '../../pages/public_registration/public_files/FileUploaderInfo';
-import { AssociatedFile } from '../../types/associatedArtifact.types';
+import { AssociatedArtifact, AssociatedFile } from '../../types/associatedArtifact.types';
 import { Registration } from '../../types/registration.types';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 export const MergeResultsWizardFilesTab = () => {
-  const { t } = useTranslation();
-  const { control } = useFormContext<Registration>();
-  const targetAssociatedArtifacts = useWatch({ name: 'associatedArtifacts', control }) ?? [];
+  const { formState } = useFormContext<Registration>();
+  const targetAssociatedArtifacts = useWatch({ name: 'associatedArtifacts' }) ?? [];
   const targetFiles = getAssociatedFiles(targetAssociatedArtifacts);
+
+  const targetArtifacts = (formState.defaultValues?.associatedArtifacts ?? []) as AssociatedArtifact[];
+  const initialTargetFiles = getAssociatedFiles(targetArtifacts);
 
   const { sourceResult } = useContext(MergeResultsWizardContext);
   const sourceAssociatedArtifacts = sourceResult.associatedArtifacts ?? [];
@@ -21,13 +23,14 @@ export const MergeResultsWizardFilesTab = () => {
 
   return (
     <>
-      {targetFiles.map((file) => (
-        <CompareFiles key={file.identifier} targetFile={file} />
+      {initialTargetFiles.map((targetFile) => (
+        <CompareFiles key={targetFile.identifier} targetFile={targetFile} />
       ))}
 
-      {sourceFiles.map((file) => (
-        <CompareFiles key={file.identifier} sourceFile={file} />
-      ))}
+      {sourceFiles.map((sourceFile) => {
+        const matchingTargetFile = targetFiles.find((targetFile) => targetFile.identifier === sourceFile.identifier);
+        return <CompareFiles key={sourceFile.identifier} sourceFile={sourceFile} targetFile={matchingTargetFile} />;
+      })}
     </>
   );
 };
@@ -58,9 +61,23 @@ interface CompareFilesProps {
 }
 
 const CompareFiles = ({ sourceFile, targetFile }: CompareFilesProps) => {
+  const { append, remove, insert } = useFieldArray({ name: 'associatedArtifacts' });
+
+  const canCopyFile = !!sourceFile && !targetFile;
+
   return (
     <>
       <FileBox file={sourceFile} />
+      {canCopyFile && (
+        <Button
+          variant="contained"
+          size="small"
+          sx={{ width: 'fit-content', mx: 'auto' }}
+          endIcon={<ArrowForwardIcon />}
+          onClick={() => append(sourceFile)}>
+          Legg til fil
+        </Button>
+      )}
       <FileBox file={targetFile} sx={{ gridColumn: '3' }} />
     </>
   );
