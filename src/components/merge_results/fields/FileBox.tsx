@@ -10,7 +10,7 @@ interface FileBoxProps extends BoxProps {
 export const FileBox = ({ file, sx }: FileBoxProps) => {
   return (
     <Box sx={{ p: '0.5rem', bgcolor: '#FEFBF3', height: '100%', ...sx }}>
-      {!file ? null : (
+      {file && (
         <>
           <Typography>
             <strong>{file.name}</strong>
