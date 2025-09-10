@@ -35,13 +35,14 @@ export const MergeResultsWizardStepper = () => {
           {t('registration.heading.contributors')}
         </StepButton>
       </Step>
+      */}
       <Step>
         <StepButton
           data-testid={dataTestId.registrationWizard.stepper.filesStepButton}
-          onClick={() => setActiveTab(RegistrationTab.FilesAndLicenses)}>
+          onClick={() => setActiveTab(RegistrationTab.Contributors)}>
           {t('registration.heading.files_and_license')}
         </StepButton>
-      </Step> */}
+      </Step>
     </Stepper>
   );
 };
