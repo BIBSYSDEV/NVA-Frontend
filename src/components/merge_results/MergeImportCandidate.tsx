@@ -9,6 +9,7 @@ import NotFound from '../../pages/errorpages/NotFound';
 import { setNotification } from '../../redux/notificationSlice';
 import { BasicDataLocationState, RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration } from '../../types/registration.types';
+import { isErrorStatus } from '../../utils/constants';
 import { updateRegistrationQueryData } from '../../utils/registration-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../utils/urlPaths';
 import { HeadTitle } from '../HeadTitle';
@@ -40,7 +41,13 @@ export const MergeImportCandidate = () => {
   });
 
   const registrationMutation = useMutation({
-    mutationFn: (values: Registration) => updateRegistration(values),
+    mutationFn: async (values: Registration) => {
+      const response = await updateRegistration(values);
+      if (isErrorStatus(response.status)) {
+        throw new Error('Error updating registration');
+      }
+      return response;
+    },
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' })),
   });
 
