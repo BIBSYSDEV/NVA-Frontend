@@ -6,6 +6,7 @@ import { Box, Button, Divider, styled, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { isOnImportPage } from '../../../utils/urlPaths';
 
 interface CompareFieldsProps {
   sourceContent: ReactNode;
@@ -35,6 +36,9 @@ export const CompareFields = ({
 
   return (
     <>
+      <Typography variant="h3" sx={{ display: { xs: 'block', sm: 'none' } }}>
+        {isOnImportPage() ? t('basic_data.central_import.import_candidate') : t('unpublished_result')}
+      </Typography>
       {sourceContent}
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
@@ -75,6 +79,9 @@ export const CompareFields = ({
         )}
       </Box>
 
+      <Typography variant="h3" sx={{ display: { xs: 'block', sm: 'none' } }}>
+        {t('published_result')}
+      </Typography>
       {targetContent}
 
       <Divider sx={{ gridColumn: '1/-1', my: '0.5rem' }} />

@@ -11,7 +11,7 @@ import { Registration, RegistrationSearchItem } from '../../../types/registratio
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { doNotRedirectQueryParam } from '../../../utils/urlPaths';
-import { FindRegistration } from './FindRegistration';
+import { FindSimilarRegistration } from './FindSimilarRegistration';
 
 interface UnpublishRegistrationProps {
   registration: Registration;
@@ -64,6 +64,7 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
       <Modal
         headingText={t('registration.delete_registration')}
         open={showUnpublishModal}
+        maxWidth="md"
         onClose={toggleUnpublishModal}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <RequiredDescription />
@@ -90,7 +91,7 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
               toggleUnpublishModal();
             }}>
             <Form noValidate>
-              <Box sx={{ my: '1rem' }}>
+              <Box sx={{ mb: '1rem' }}>
                 <Typography gutterBottom>{t('unpublish_actions.unpublish_registration_reason')}</Typography>
                 <Field name="comment">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
@@ -111,13 +112,13 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
               </Box>
 
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
-                <Typography variant="h3">{t('unpublish_actions.unpublish_registration_duplicate_question')}</Typography>
+                <Typography variant="h2">{t('unpublish_actions.unpublish_registration_duplicate_question')}</Typography>
                 <Typography>{t('unpublish_actions.unpublish_registration_duplicate_citation_information')}</Typography>
               </Box>
-              <FindRegistration
+              <FindSimilarRegistration
                 setSelectedRegistration={setSelectedDuplicate}
-                selectedRegistration={selectedDuplicate}
-                filteredRegistrationIdentifier={registration.identifier}
+                sourceRegistration={registration}
+                fieldLabel={t('unpublish_actions.duplicate')}
               />
               <FormControlLabel
                 sx={{ my: '1rem' }}

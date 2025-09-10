@@ -86,8 +86,15 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
   },
 }));
 
-export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
+<<<<<<< HEAD
+export const SearchListItem = styled(ListItem)(({ theme }) => ({
   borderLeft: `0.75rem solid ${theme.palette.secondary.main}`,
+=======
+export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
+  border: '2px solid',
+  borderColor: theme.palette.secondary.dark,
+  borderLeft: '1.25rem solid',
+>>>>>>> 8fd68dbd9334720055aa8f6b6ca78bd8ba50d905
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
