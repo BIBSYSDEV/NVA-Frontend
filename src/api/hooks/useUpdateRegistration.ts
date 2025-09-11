@@ -21,12 +21,15 @@ export const useUpdateRegistration = ({ onSuccess, ignoreSuccessMessage = false 
     mutationFn: async (values: Registration) => {
       const response = await updateRegistration(values);
       if (isErrorStatus(response.status)) {
-        // TODO: Remove this check when updateRegistration no longer uses the deprecated apiRequest function
-        throw new Error('Error updating registration');
+        // TODO: Remove this workaround to handle 412 error code when updateRegistration no longer uses the deprecated apiRequest function
+        throw new Error(response.status.toString());
       }
       return response;
     },
-    onError: () => dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' })),
+    onError: (error) => {
+      const detail = error.message === '412' ? t('feedback.error.registration_update_precondition_failed') : undefined;
+      dispatch(setNotification({ message: t('feedback.error.update_registration'), detail, variant: 'error' }));
+    },
     onSuccess: (response) => {
       if (!ignoreSuccessMessage) {
         dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
