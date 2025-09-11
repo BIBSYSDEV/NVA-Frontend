@@ -62,8 +62,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
     },
   } as Registration;
-  const registrationSearchItem = convertToRegistrationSearchItem(registrationCopy);
-  registrationSearchItem.contributorsCount = contributorsCount;
+  const registrationSearchItem = { ...convertToRegistrationSearchItem(registrationCopy), contributorsCount };
 
   const assigneeFullName = ticket.assignee
     ? getFullName(
