@@ -155,7 +155,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       goToLastPage();
     } else {
       const thisContributor = contributors[contributorIndex];
-      const verifiedAffiliations = thisContributor.affiliations ?? [];
+      const verifiedAffiliations = thisContributor.affiliations ? [...thisContributor.affiliations] : [];
       const verifiedOrcid = thisContributor.identity.orcId;
 
       verifiedAffiliations.push(...existingAffiliations);
