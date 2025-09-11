@@ -66,6 +66,7 @@ type TicketPublication = Pick<
 > &
   Pick<BaseEntityDescription, 'contributors' | 'mainTitle'> & {
     publicationInstance: { type: PublicationInstanceType };
+    contributorsCount: number;
   };
 
 type TicketAllowedOperations = 'approve' | 'transfer';
