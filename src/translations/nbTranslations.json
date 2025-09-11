@@ -17,6 +17,7 @@
     "footer_text": "Tjenesten blir levert av Sikt – Kunnskapssektorens tjenesteleverandør. Sikt er leverandør av fellestjenester til norsk kunnskapssektor.",
     "short_description": "Nasjonalt vitenarkiv (NVA) samler informasjon om norsk forskning og gjør forskningsresultater og forskningsinformasjon åpent tilgjengelig."
   },
+  "add_file": "Legg til fil",
   "authorization": {
     "about_terms": "Brukervilkår og personvernerklæring for Nasjonalt vitenarkiv",
     "about_terms_description": "<p>For å bruke tjenesten må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Brukervilkår for Nasjonalt vitenarkiv</a>, og gjøre deg kjent med <a href=\"https://nva.sikt.no/privacy-policy\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», bekrefter du at du har lest og akseptert brukervilkårene. Du samtykker også til behandling av personopplysninger i samsvar med personvernerklæringen.</p>",
@@ -958,7 +959,7 @@
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
       "internal_importer": "Intern importør",
       "internal_importer_description": "Kan behandle importkandidater.",
-      "no_active_employments": "Du har ingen roller fordi du har ingen aktive ansettelser og har ikke tilgang til å registrere.",
+      "no_active_employments": "Du har ingen roller fordi du ikke har noen aktive ansettelser.",
       "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
       "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen",
       "nvi_curator": "NVI-kurator",

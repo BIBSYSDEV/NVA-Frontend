@@ -6,6 +6,7 @@ import { isOnImportPage } from '../../utils/urlPaths';
 import { MergeResultsWizardCategoryTab } from './MergeResultsWizardCategoryTab';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 import { MergeResultsWizardDescriptionTab } from './MergeResultsWizardDescriptionTab';
+import { MergeResultsWizardFilesTab } from './MergeResultsWizardFilesTab';
 
 export const MergeResultsWizardContent = () => {
   const { t } = useTranslation();
@@ -24,6 +25,8 @@ export const MergeResultsWizardContent = () => {
         <MergeResultsWizardDescriptionTab />
       ) : activeTab === RegistrationTab.ResourceType ? (
         <MergeResultsWizardCategoryTab />
+      ) : activeTab === RegistrationTab.Contributors ? (
+        <MergeResultsWizardFilesTab />
       ) : null}
     </>
   );
