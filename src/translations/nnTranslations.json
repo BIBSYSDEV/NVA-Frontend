@@ -17,6 +17,7 @@
     "footer_text": "Tenesta blir levert av Sikt – Kunnskapssektorens tenesteleverandør. Sikt er leverandør av fellesstenester til norsk kunnskapssektor.",
     "short_description": "Nasjonalt vitenarkiv (NVA) samlar informasjon om norsk forsking, og gjer forskingsresultat og forskingsinformasjon opent tilgjengelege."
   },
+  "add_file": "Legg til fil",
   "authorization": {
     "about_terms": "Bruksvilkår og personvernerklæring for Nasjonalt vitenarkiv",
     "about_terms_description": "<p>For å bruke tenesta må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Bruksvilkår for Nasjonalt vitenarkiv</a>, og gjere deg kjent med <a href=\"https://nva.sikt.no/privacy-policy\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», stadfestar du at du har lese og akseptert bruksvilkåra. Du samtykkjer òg til behandling av personopplysningar i samsvar med personvernerklæringa.</p>",
@@ -612,7 +613,7 @@
       "person_search": "Søk etter person feila",
       "project_search": "Søk på prosjekt feila",
       "publish_registration": "Kunne ikkje publisere registrering",
-      "registration_update_precondition_failed": "",
+      "registration_update_precondition_failed": "Registreringa er endra etter at du lasta sida. Last sida på nytt for å prøve igjen. Ulagra endringar vil gå tapt.",
       "reject_doi_request": "Kunne ikkje avvise DOI-førespurnad",
       "remove_role": "Kunne ikkje fjerne rolle",
       "reserve_doi": "Reservasjon av DOI feila",
@@ -958,7 +959,7 @@
       "institution_admin_description": "Vedlikeheld institusjonen sine opplysingar i personregisteret og tildeler roller i tenesta.",
       "internal_importer": "Intern importør",
       "internal_importer_description": "Kan behandle importkandidatar.",
-      "no_active_employments": "Du har ingen rollar fordi du har ingen aktive tilsetjingar og har ikkje tilgang til å registrere.",
+      "no_active_employments": "Du har ingen roller fordi du ikkje har nokre aktive tilsetjingar.",
       "no_roles": "Du har ingen roller fordi du ikkje har fått tildelt roller av administratoren din",
       "not_customer": "Du har ingen roller fordi institusjonen din er ukjend for applikasjonen",
       "nvi_curator": "NVI-kurator",
