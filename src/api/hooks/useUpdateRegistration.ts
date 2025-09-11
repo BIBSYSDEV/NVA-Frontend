@@ -21,6 +21,7 @@ export const useUpdateRegistration = ({ onSuccess, ignoreSuccessMessage = false 
     mutationFn: async (values: Registration) => {
       const response = await updateRegistration(values);
       if (isErrorStatus(response.status)) {
+        // TODO: Remove this check when updateRegistration no longer uses the deprecated apiRequest function
         throw new Error('Error updating registration');
       }
       return response;

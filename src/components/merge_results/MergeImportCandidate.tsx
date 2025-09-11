@@ -1,16 +1,14 @@
 import { Paper, Typography } from '@mui/material';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
-import { fetchImportCandidate, updateImportCandidateStatus, updateRegistration } from '../../api/registrationApi';
+import { useUpdateRegistration } from '../../api/hooks/useUpdateRegistration';
+import { fetchImportCandidate, updateImportCandidateStatus } from '../../api/registrationApi';
 import NotFound from '../../pages/errorpages/NotFound';
 import { setNotification } from '../../redux/notificationSlice';
 import { BasicDataLocationState, RegistrationFormLocationState } from '../../types/locationState.types';
-import { Registration } from '../../types/registration.types';
-import { isErrorStatus } from '../../utils/constants';
-import { updateRegistrationQueryData } from '../../utils/registration-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../utils/urlPaths';
 import { HeadTitle } from '../HeadTitle';
 import { PageSpinner } from '../PageSpinner';
@@ -27,7 +25,6 @@ export const MergeImportCandidate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const queryClient = useQueryClient();
   const locationState = location.state as BasicDataLocationState;
   const { candidateIdentifier, registrationIdentifier } = useParams<MergeImportCandidateParams>();
 
@@ -40,16 +37,7 @@ export const MergeImportCandidate = () => {
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
 
-  const registrationMutation = useMutation({
-    mutationFn: async (values: Registration) => {
-      const response = await updateRegistration(values);
-      if (isErrorStatus(response.status)) {
-        throw new Error('Error updating registration');
-      }
-      return response;
-    },
-    onError: () => dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' })),
-  });
+  const registrationMutation = useUpdateRegistration({ ignoreSuccessMessage: true });
 
   const importCandidateMutation = useMutation({
     mutationFn: () =>
@@ -87,10 +75,7 @@ export const MergeImportCandidate = () => {
         sourceResult={importCandidateQuery.data}
         targetResult={registrationQuery.data}
         onSave={async (data) => {
-          const updateRegistrationResponse = await registrationMutation.mutateAsync(data);
-          if (updateRegistrationResponse.data) {
-            updateRegistrationQueryData(queryClient, updateRegistrationResponse.data);
-          }
+          await registrationMutation.mutateAsync(data);
           await importCandidateMutation.mutateAsync();
           dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
           navigate(getRegistrationWizardPath(registrationQuery.data.identifier), {
