@@ -1,3 +1,4 @@
+import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import { Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -5,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { AssociatedArtifact } from '../../types/associatedArtifact.types';
 import { Registration } from '../../types/registration.types';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
+import { StyledInfoBanner } from '../styled/Wrappers';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 import { CompareFiles } from './fields/CompareFiles';
 
@@ -26,9 +28,12 @@ export const MergeResultsWizardFilesTab = () => {
   return (
     <>
       {!canUploadFileToTarget && (
-        <Typography sx={{ gridColumn: { xs: 1, sm: 3 } }}>
-          <strong>{t('you_cannot_upload_files_to_this_result')}</strong>
-        </Typography>
+        <>
+          <StyledInfoBanner sx={{ gridColumn: { xs: 1, sm: 3 }, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <LockOutlineIcon />
+            <Typography color="white">{t('you_cannot_upload_files_to_this_result')}</Typography>
+          </StyledInfoBanner>
+        </>
       )}
 
       {initialTargetFiles.map((targetFile) => (
