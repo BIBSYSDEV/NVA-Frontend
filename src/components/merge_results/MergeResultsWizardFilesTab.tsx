@@ -31,7 +31,7 @@ export const MergeResultsWizardFilesTab = () => {
         <>
           <StyledInfoBanner sx={{ gridColumn: { xs: 1, sm: 3 }, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <LockOutlineIcon />
-            <Typography color="white">{t('you_cannot_upload_files_to_this_result')}</Typography>
+            <Typography color="inherit">{t('you_cannot_upload_files_to_this_result')}</Typography>
           </StyledInfoBanner>
         </>
       )}
