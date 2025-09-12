@@ -13,12 +13,14 @@ import { updateRegistrationQueryData } from '../../../../utils/registration-help
 interface MergeSelectedRegistrationProps {
   targetRegistrationId: string;
   sourceRegistration: Registration;
+  resetTargetRegistrationId: () => void;
   toggleDialog: () => void;
 }
 
 export const MergeSelectedRegistration = ({
   targetRegistrationId,
   sourceRegistration,
+  resetTargetRegistrationId,
   toggleDialog,
 }: MergeSelectedRegistrationProps) => {
   const { t } = useTranslation();
@@ -47,6 +49,11 @@ export const MergeSelectedRegistration = ({
 
   if (!targetRegistration) {
     return null;
+  }
+
+  if (!targetRegistration.allowedOperations?.includes('update')) {
+    resetTargetRegistrationId();
+    dispatch(setNotification({ message: t('you_do_not_have_permission_to_edit_this_registration'), variant: 'info' }));
   }
 
   return (

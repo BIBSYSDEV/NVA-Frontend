@@ -46,6 +46,7 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
             <MergeSelectedRegistration
               targetRegistrationId={targetRegistrationId}
               sourceRegistration={sourceRegistration}
+              resetTargetRegistrationId={() => setTargetRegistrationId('')}
               toggleDialog={toggleDialog}
             />
           ) : (
