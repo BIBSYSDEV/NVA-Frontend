@@ -1,9 +1,12 @@
+import LockIcon from '@mui/icons-material/Lock';
 import { Box, BoxProps, Typography } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
 import { useTranslation } from 'react-i18next';
 import { FileUploaderInfo } from '../../../pages/public_registration/public_files/FileUploaderInfo';
 import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
+import { toDateString } from '../../../utils/date-helpers';
 import { getLicenseData } from '../../../utils/fileHelpers';
+import { isEmbargoed } from '../../../utils/registration-helpers';
 
 interface FileBoxProps extends BoxProps {
   file?: AssociatedFile;
@@ -47,6 +50,12 @@ export const FileBox = ({ file, sx, shouldShowFileVersion }: FileBoxProps) => {
               </Box>
             )}
           </Box>
+          {file.embargoDate && isEmbargoed(file.embargoDate) && (
+            <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+              <LockIcon />
+              {t('common.will_be_available')} {toDateString(file.embargoDate)}
+            </Typography>
+          )}
         </>
       )}
     </Box>
