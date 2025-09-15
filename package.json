@@ -80,7 +80,7 @@
     "axe-core": "^4.10.3",
     "axios-mock-adapter": "^2.1.0",
     "babel-plugin-react-compiler": "^19.1.0-rc.3",
-    "cypress": "^15.1.0",
+    "cypress": "^15.2.0",
     "cypress-axe": "^1.7.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
