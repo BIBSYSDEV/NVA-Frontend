@@ -6,6 +6,7 @@ import { Box, BoxProps, Typography } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
 import { useTranslation } from 'react-i18next';
 import { FileUploaderInfo } from '../../../pages/public_registration/public_files/FileUploaderInfo';
+import { PendingFilesInfo } from '../../../pages/public_registration/public_files/PendingFilesInfo';
 import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
 import { toDateString } from '../../../utils/date-helpers';
 import { getLicenseData } from '../../../utils/fileHelpers';
@@ -77,6 +78,10 @@ export const FileBox = ({ file, sx, shouldShowFileVersion }: FileBoxProps) => {
               <LockIcon />
               {t('common.will_be_available')} {toDateString(file.embargoDate)}
             </Typography>
+          )}
+
+          {(file.type === 'PendingOpenFile' || file.type === 'PendingInternalFile') && (
+            <PendingFilesInfo sx={{ width: 'fit-content' }} text={t('file_awaits_approval')} />
           )}
         </>
       )}
