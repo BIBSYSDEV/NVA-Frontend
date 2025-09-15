@@ -1,4 +1,7 @@
+import CheckIcon from '@mui/icons-material/Check';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import LockIcon from '@mui/icons-material/Lock';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Box, BoxProps, Typography } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +29,26 @@ export const FileBox = ({ file, sx, shouldShowFileVersion }: FileBoxProps) => {
           </Typography>
           <Typography>{prettyBytes(file.size, { locale: true })}</Typography>
           <FileUploaderInfo uploadDetails={file.uploadDetails} />
-          <Box sx={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', gap: '0.5rem 2rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            {(file.type === 'OpenFile' || file.type === 'PendingOpenFile') && (
+              <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+                <CheckIcon fontSize="small" />
+                {t('registration.files_and_license.file_type.open_file')}
+              </Box>
+            )}
+            {(file.type === 'InternalFile' || file.type === 'PendingInternalFile') && (
+              <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+                <Inventory2OutlinedIcon fontSize="small" />
+                {t('registration.files_and_license.file_type.internal_file')}
+              </Box>
+            )}
+            {file.type === 'HiddenFile' && (
+              <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+                <VisibilityOffOutlinedIcon fontSize="small" />
+                {t('registration.files_and_license.file_type.hidden_file')}
+              </Box>
+            )}
+
             {shouldShowFileVersion && (
               <>
                 {file.publisherVersion === FileVersion.Published ? (
