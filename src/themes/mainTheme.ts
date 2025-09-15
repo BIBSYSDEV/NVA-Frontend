@@ -110,6 +110,7 @@ export const mainTheme = createTheme(
         light: Color.SecondaryLight,
         main: Color.SecondaryMain,
         dark: Color.Outdated,
+        contrastText: Color.White,
       },
       error: {
         main: Color.Red,
@@ -457,6 +458,9 @@ export const mainTheme = createTheme(
           root: {
             textTransform: 'none',
             borderRadius: '0.25rem',
+            '&.MuiButton-contained': {
+              backgroundColor: Color.SecondaryLight,
+            },
           },
         },
       },

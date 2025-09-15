@@ -52,8 +52,13 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
           display: 'flex',
           gap: '0.5rem',
           alignItems: 'center',
-          bgcolor: 'white',
+          bgcolor: 'secondary.main',
+          color: 'white',
         },
+        '.MuiSelect-icon': {
+          color: 'white',
+        },
+
         ...sx,
       }}
       slotProps={{ htmlInput: { 'aria-label': t('common.type') } }}>
