@@ -82,6 +82,7 @@ export enum UrlPathTemplate {
   TasksNviCorrectionList = '/tasks/correction-list',
   TasksNviStatus = '/tasks/nvi/status',
   TasksResultRegistrations = '/tasks/result-registrations',
+  NewFrontPage = '/new-front-page',
   Wildcard = '*',
 }
 
