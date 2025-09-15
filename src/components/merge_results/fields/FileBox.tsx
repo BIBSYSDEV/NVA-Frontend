@@ -22,7 +22,17 @@ export const FileBox = ({ file, sx, shouldShowFileVersion }: FileBoxProps) => {
   const licenseData = file ? getLicenseData(file.license) : null;
 
   return (
-    <Box sx={{ p: '0.5rem', bgcolor: '#FEFBF3', height: '100%', minHeight: '5rem', ...sx }}>
+    <Box
+      sx={{
+        p: '0.5rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.25rem',
+        bgcolor: '#FEFBF3',
+        height: '100%',
+        minHeight: '5rem',
+        ...sx,
+      }}>
       {file && (
         <>
           <Typography>
@@ -62,13 +72,7 @@ export const FileBox = ({ file, sx, shouldShowFileVersion }: FileBoxProps) => {
 
             {licenseData && (
               <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-                <Box
-                  component="img"
-                  alt={licenseData.name}
-                  title={licenseData.name}
-                  src={licenseData.logo}
-                  sx={{ maxWidth: '5rem' }}
-                />
+                <Box component="img" alt={licenseData.name} title={licenseData.name} src={licenseData.logo} />
                 <Typography sx={{ textWrap: 'nowrap' }}>{licenseData.name}</Typography>
               </Box>
             )}
