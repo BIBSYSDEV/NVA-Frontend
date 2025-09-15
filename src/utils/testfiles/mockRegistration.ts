@@ -128,6 +128,7 @@ export const mockTicketCollection: TicketCollection = {
         identifier: mockRegistration.identifier,
         mainTitle: mockRegistration.entityDescription.mainTitle,
         contributors: [],
+        contributorsCount: 0,
         status: RegistrationStatus.Published,
         createdDate: new Date(2020, 1).toISOString(),
         modifiedDate: new Date(2020, 1).toISOString(),

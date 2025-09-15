@@ -37,7 +37,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const user = useSelector((store: RootState) => store.user);
   const queryClient = useQueryClient();
 
-  const { id, identifier, mainTitle, contributors, publicationInstance, status } = ticket.publication;
+  const { id, identifier, mainTitle, contributors, contributorsCount, publicationInstance, status } =
+    ticket.publication;
   const registrationCopy = {
     ...emptyRegistration,
     identifier,
@@ -49,6 +50,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
     },
   } as Registration;
+  const registrationSearchItem = { ...convertToRegistrationSearchItem(registrationCopy), contributorsCount };
 
   const assigneeFullName = ticket.assignee
     ? getFullName(
@@ -105,7 +107,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             gap: '0 1rem',
             gridTemplateColumns: { xs: '1fr', sm: '10fr 4fr 2fr 2fr 1fr' },
           }}>
-          <RegistrationListItemContent registration={convertToRegistrationSearchItem(registrationCopy)} ticketView />
+          <RegistrationListItemContent registration={registrationSearchItem} ticketView />
           {isFileApprovalTicket(ticket) ? (
             <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
           ) : ticket.type === 'DoiRequest' ? (
