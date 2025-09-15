@@ -1,23 +1,17 @@
 import { Box, BoxProps, Typography } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FileUploaderInfo } from '../../../pages/public_registration/public_files/FileUploaderInfo';
 import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
 import { getLicenseData } from '../../../utils/fileHelpers';
-import { isCategoryWithFileVersion } from '../../../utils/registration-helpers';
-import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 
 interface FileBoxProps extends BoxProps {
   file?: AssociatedFile;
+  shouldShowFileVersion: boolean;
 }
 
-export const FileBox = ({ file, sx }: FileBoxProps) => {
+export const FileBox = ({ file, sx, shouldShowFileVersion }: FileBoxProps) => {
   const { t } = useTranslation();
-  const { sourceResult } = useContext(MergeResultsWizardContext);
-  const showFileVersion = isCategoryWithFileVersion(
-    sourceResult.entityDescription?.reference?.publicationInstance?.type // TODO: source vs target?
-  );
   const licenseData = file ? getLicenseData(file.license) : null;
 
   return (
@@ -30,7 +24,7 @@ export const FileBox = ({ file, sx }: FileBoxProps) => {
           <Typography>{prettyBytes(file.size, { locale: true })}</Typography>
           <FileUploaderInfo uploadDetails={file.uploadDetails} />
           <Box sx={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-            {showFileVersion && (
+            {shouldShowFileVersion && (
               <>
                 {file.publisherVersion === FileVersion.Published ? (
                   <Typography>{t('registration.files_and_license.published_version')}</Typography>

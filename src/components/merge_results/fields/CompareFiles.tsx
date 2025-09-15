@@ -1,11 +1,15 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { Button, Divider, styled, Typography } from '@mui/material';
-import { useFieldArray } from 'react-hook-form';
+import { useContext } from 'react';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';
+import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { isCategoryWithFileVersion } from '../../../utils/registration-helpers';
 import { isOnImportPage } from '../../../utils/urlPaths';
+import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { FileBox } from './FileBox';
 
 const StyledButton = styled(Button)({
@@ -21,7 +25,10 @@ interface CompareFilesProps {
 
 export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex = -1 }: CompareFilesProps) => {
   const { t } = useTranslation();
-  const { append, remove } = useFieldArray({ name: 'associatedArtifacts' });
+  const { sourceResult } = useContext(MergeResultsWizardContext);
+  const { control } = useFormContext<Registration>();
+  const currentTargetCategory = useWatch({ name: 'entityDescription.reference.publicationInstance.type', control });
+  const { append, remove } = useFieldArray({ name: 'associatedArtifacts', control });
 
   const canCopyFile = !!sourceFile && !targetFile;
   const canRemoveFile = !!sourceFile && !!targetFile && matchingTargetFileIndex > -1;
@@ -31,7 +38,12 @@ export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex =
       <Typography variant="h3" sx={{ display: { xs: 'block', sm: 'none' } }}>
         {isOnImportPage() ? t('basic_data.central_import.import_candidate') : t('unpublished_result')}
       </Typography>
-      <FileBox file={sourceFile} />
+      <FileBox
+        file={sourceFile}
+        shouldShowFileVersion={isCategoryWithFileVersion(
+          sourceResult.entityDescription?.reference?.publicationInstance?.type
+        )}
+      />
 
       {canCopyFile && (
         <StyledButton
@@ -57,7 +69,11 @@ export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex =
       <Typography variant="h3" sx={{ display: { xs: 'block', sm: 'none' } }}>
         {t('published_result')}
       </Typography>
-      <FileBox file={targetFile} sx={{ gridColumn: { xs: 1, sm: 3 } }} />
+      <FileBox
+        file={targetFile}
+        sx={{ gridColumn: { xs: 1, sm: 3 } }}
+        shouldShowFileVersion={isCategoryWithFileVersion(currentTargetCategory)}
+      />
 
       <Divider sx={{ display: { xs: 'block', sm: 'none' }, my: '0.5rem' }} />
     </>
