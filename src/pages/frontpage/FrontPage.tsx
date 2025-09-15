@@ -37,7 +37,7 @@ const FrontPage = () => {
               color: '#120732',
               marginBottom: '1rem',
             }}>
-            {t('nva_title')}
+            {t('common.page_title')}
           </Typography>
           <Typography
             fontWeight={600}
