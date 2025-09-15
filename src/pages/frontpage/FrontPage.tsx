@@ -40,7 +40,6 @@ const FrontPage = () => {
             {t('common.page_title')}
           </Typography>
           <Typography
-            fontWeight={600}
             sx={{
               fontSize: { xs: '0.9rem', sm: '1rem' },
               fontWeight: 500,
