@@ -70,7 +70,11 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
               <Button
                 variant="contained"
                 disabled={!selectedRegistration}
-                onClick={() => setTargetRegistrationId(selectedRegistration?.id ?? '')}>
+                onClick={() => {
+                  if (selectedRegistration) {
+                    setTargetRegistrationId(selectedRegistration.id);
+                  }
+                }}>
                 {t('start_merging')}
               </Button>
             </Box>
