@@ -45,7 +45,7 @@ const FrontPage = () => {
               fontSize: { xs: '0.9rem', sm: '1rem' },
               fontWeight: 500,
             }}>
-            {t('frontpage_text')}
+            {t('search_in_national_research_publication')}
           </Typography>
         </Box>
       </Box>
