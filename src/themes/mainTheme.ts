@@ -1,4 +1,4 @@
-import { createTheme, PaletteColorOptions, SxProps } from '@mui/material';
+import { createTheme, PaletteColor, PaletteColorOptions, SxProps } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import i18n from '../translations/i18n';
@@ -50,14 +50,14 @@ const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' 
 
 declare module '@mui/material/styles' {
   interface Palette {
-    registration: PaletteColorOptions;
-    person: PaletteColorOptions;
-    project: PaletteColorOptions;
-    publishingRequest: PaletteColorOptions;
-    doiRequest: PaletteColorOptions;
-    generalSupportCase: PaletteColorOptions;
-    centralImport: PaletteColorOptions;
-    nvi: PaletteColorOptions;
+    registration: PaletteColor;
+    person: PaletteColor;
+    project: PaletteColor;
+    publishingRequest: PaletteColor;
+    doiRequest: PaletteColor;
+    generalSupportCase: PaletteColor;
+    centralImport: PaletteColor;
+    nvi: PaletteColor;
   }
   interface PaletteOptions {
     registration?: PaletteColorOptions;
@@ -134,13 +134,13 @@ export const mainTheme = createTheme(
         500: '#CCCCCC',
       },
       registration: {
-        main: Color.Outdated,
+        main: Color.Registration,
       },
       person: {
-        main: Color.Outdated,
+        main: Color.Person,
       },
       project: {
-        main: Color.Outdated,
+        main: Color.Project,
       },
       centralImport: {
         main: Color.Outdated,
@@ -244,7 +244,7 @@ export const mainTheme = createTheme(
         },
       },
       MuiCheckbox: {
-        defaultProps: { color: 'primary' },
+        defaultProps: { color: 'secondary' },
       },
       MuiDatePicker: {
         defaultProps: {
@@ -458,9 +458,6 @@ export const mainTheme = createTheme(
           root: {
             textTransform: 'none',
             borderRadius: '0.25rem',
-            '&.MuiButton-contained': {
-              backgroundColor: Color.SecondaryLight,
-            },
           },
         },
       },

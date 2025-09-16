@@ -21,7 +21,7 @@ export const RegistrationIconHeader = ({
 
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-      <NotesIcon sx={{ bgcolor: 'secondary.main', borderRadius: '0.4rem', color: 'white' }} />
+      <NotesIcon sx={{ bgcolor: 'registration.main', borderRadius: '0.4rem' }} />
 
       <Typography color={textColor}>
         {publicationInstanceType ? t(`registration.publication_types.${publicationInstanceType}`) : t('common.result')}
