@@ -30,7 +30,7 @@ export const FacetItem = ({ title, children, dataTestId, renderCustomSelect, isP
       aria-busy={isPending}
       data-testid={dataTestId}
       sx={{
-        bgcolor: 'background.default',
+        bgcolor: 'white',
         border: '2px solid',
         borderColor: 'primary.main',
         borderRadius: '10px',

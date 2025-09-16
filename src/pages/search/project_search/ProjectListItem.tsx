@@ -30,7 +30,7 @@ export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteToo
   const projectParticipantsLength = getProjectParticipants(project.contributors).length;
 
   return (
-    <SearchListItem sx={{ flexDirection: 'row' }}>
+    <SearchListItem sx={{ flexDirection: 'row', borderColor: 'project.main' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: '1' }}>
         <ProjectIconHeader projectStatus={project.status} />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>

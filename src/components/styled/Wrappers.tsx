@@ -87,7 +87,7 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
 }));
 
 export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
-  borderLeft: `0.75rem solid ${theme.palette.secondary.main}`,
+  borderLeft: `0.75rem solid ${theme.palette.registration.main}`,
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
@@ -95,13 +95,11 @@ export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
 }));
 
 export const SearchListItemDiv = styled('div')(({ theme }) => ({
-  border: '2px solid',
-  borderColor: theme.palette.secondary.dark,
-  borderLeft: '1.25rem solid',
+  borderLeft: `0.75rem solid ${theme.palette.registration.main}`,
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
-  padding: '0.5rem 1rem',
+  marginBottom: '0.2rem',
 }));
 
 export const StyledTicketSearchFormGroup = styled(FormGroup)({
