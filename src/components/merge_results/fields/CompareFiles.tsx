@@ -17,13 +17,19 @@ interface CompareFilesProps {
   sourceFile?: AssociatedFile;
   targetFile?: AssociatedFile;
   matchingTargetFileIndex?: number;
+  canUploadFileToTarget: boolean;
 }
 
-export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex = -1 }: CompareFilesProps) => {
+export const CompareFiles = ({
+  sourceFile,
+  targetFile,
+  matchingTargetFileIndex = -1,
+  canUploadFileToTarget,
+}: CompareFilesProps) => {
   const { t } = useTranslation();
   const { append, remove } = useFieldArray({ name: 'associatedArtifacts' });
 
-  const canCopyFile = !!sourceFile && !targetFile;
+  const canCopyFile = canUploadFileToTarget && !!sourceFile && !targetFile;
   const canRemoveFile = !!sourceFile && !!targetFile && matchingTargetFileIndex > -1;
 
   return (
