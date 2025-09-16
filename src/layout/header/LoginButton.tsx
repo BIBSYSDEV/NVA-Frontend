@@ -2,7 +2,7 @@ import PersonIcon from '@mui/icons-material/PersonOutlineRounded';
 import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { RootState } from '../../redux/store';
 import { PreviousPathLocationState } from '../../types/locationState.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -26,9 +26,9 @@ export const LoginButton = () => {
       sx={{ borderRadius: '1rem', flexDirection: 'row !important', height: 'fit-content', alignSelf: 'center' }}
       data-testid={dataTestId.header.logInButton}
       component={RouterLink}
+      state={{ previousPath: getCurrentPath() } satisfies PreviousPathLocationState}
       to={{
         pathname: UrlPathTemplate.Login,
-        state: { previousPath: getCurrentPath() } satisfies PreviousPathLocationState,
       }}>
       {t('authorization.login')}
     </Button>

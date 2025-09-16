@@ -1,17 +1,18 @@
 import { Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchPromotedPublicationsById } from '../../../api/preferencesApi';
-import { FetchResultsParams, fetchResults } from '../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { RegistrationList } from '../../../components/RegistrationList';
 import { SortSelectorWithoutParams } from '../../../components/SortSelectorWithoutParams';
 import { RootState } from '../../../redux/store';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
-import { RegistrationSearchResults } from '../../search/registration_search/RegistrationSearchResults';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { registrationSortOptions } from '../../search/registration_search/RegistrationSortSelector';
 
 export const MyResults = () => {
@@ -24,7 +25,7 @@ export const MyResults = () => {
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const registrationsQueryConfig: FetchResultsParams = {
-    contributor: personId,
+    contributor: getIdentifierFromId(personId),
     from: rowsPerPage * (page - 1),
     results: rowsPerPage,
     order: registrationSort.orderBy,
@@ -49,41 +50,39 @@ export const MyResults = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>{t('my_page.my_profile.my_research_results')}</title>
-      </Helmet>
-      <Typography variant="h2" gutterBottom>
+      <HeadTitle>{t('my_page.my_profile.my_research_results')}</HeadTitle>
+      <Typography variant="h1" gutterBottom>
         {t('my_page.my_profile.my_research_results')}
       </Typography>
-      {registrationsQuery.isPending ? (
-        <ListSkeleton minWidth={100} height={100} />
-      ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
-        <ListPagination
-          paginationAriaLabel={t('common.pagination_project_search')}
-          count={registrationsQuery.data.totalHits}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={(newPage) => setPage(newPage)}
-          onRowsPerPageChange={(newRowsPerPage) => {
-            setRowsPerPage(newRowsPerPage);
-            setPage(1);
-          }}
-          sortingComponent={
-            <SortSelectorWithoutParams
-              options={registrationSortOptions}
-              value={registrationSort}
-              setValue={(value) => setRegistrationSort(value)}
-            />
-          }>
-          <RegistrationSearchResults
+      <ListPagination
+        paginationAriaLabel={t('common.pagination_project_search')}
+        count={registrationsQuery.data?.totalHits ?? 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(newPage) => setPage(newPage)}
+        onRowsPerPageChange={(newRowsPerPage) => {
+          setRowsPerPage(newRowsPerPage);
+          setPage(1);
+        }}
+        sortingComponent={
+          <SortSelectorWithoutParams
+            options={registrationSortOptions}
+            value={registrationSort}
+            setValue={(value) => setRegistrationSort(value)}
+          />
+        }>
+        {registrationsQuery.isPending ? (
+          <ListSkeleton minWidth={100} height={100} />
+        ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
+          <RegistrationList
             canEditRegistration
-            searchResult={registrationsQuery.data.hits}
+            registrations={registrationsQuery.data.hits}
             promotedPublications={promotedPublications}
           />
-        </ListPagination>
-      ) : (
-        <Typography>{t('common.no_hits')}</Typography>
-      )}
+        ) : (
+          <Typography>{t('common.no_hits')}</Typography>
+        )}
+      </ListPagination>
     </div>
   );
 };

@@ -3,20 +3,38 @@ import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import { SearchParam } from '../../utils/searchHelpers';
+import { useLocation, useNavigate } from 'react-router';
+import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
+import { ResultParam } from '../../api/searchApi';
+import { dataTestId } from '../../utils/dataTestIds';
+import { SearchParam, syncParamsWithSearchFields } from '../../utils/searchHelpers';
 
 export enum SearchTypeValue {
-  Result = 'result',
+  Result = 'registration',
   Person = 'person',
   Project = 'project',
 }
 
+const getSyncedSearchTerm = (params: URLSearchParams, searchType: SearchTypeValue) => {
+  const syncedParams = syncParamsWithSearchFields(params);
+  switch (searchType) {
+    case SearchTypeValue.Result:
+      return syncedParams.get(ResultParam.Query);
+    case SearchTypeValue.Person:
+      return syncedParams.get(PersonSearchParameter.Name);
+    case SearchTypeValue.Project:
+      return syncedParams.get(ProjectSearchParameter.Query);
+    default:
+      return '';
+  }
+};
+
 export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
-  const paramsSearchType = params.get(SearchParam.Type);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const paramsSearchType = (params.get(SearchParam.Type) as SearchTypeValue | null) ?? SearchTypeValue.Result;
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
@@ -27,13 +45,14 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
       select
       value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
       size="small"
+      data-testid={dataTestId.startPage.searchTypeField}
       sx={{
         minWidth: '9rem',
         '.MuiSelect-select': {
           display: 'flex',
           gap: '0.5rem',
           alignItems: 'center',
-          bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
+          bgcolor: `${paramsSearchType}.main`,
         },
         ...sx,
       }}
@@ -44,7 +63,11 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         onClick={() => {
           if (!resultIsSelected) {
             const resultParams = new URLSearchParams();
-            history.push({ search: resultParams.toString() });
+            const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
+            if (searchTerm) {
+              resultParams.set(ResultParam.Query, searchTerm);
+            }
+            navigate({ search: resultParams.toString() });
           }
         }}>
         <NotesIcon fontSize="small" />
@@ -55,9 +78,12 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         value={SearchTypeValue.Person}
         onClick={() => {
           if (!personIsSeleced) {
-            const personParams = new URLSearchParams();
-            personParams.set(SearchParam.Type, SearchTypeValue.Person);
-            history.push({ search: personParams.toString() });
+            const personParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Person });
+            const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
+            if (searchTerm) {
+              personParams.set(PersonSearchParameter.Name, searchTerm);
+            }
+            navigate({ search: personParams.toString() });
           }
         }}>
         <PersonIcon fontSize="small" />
@@ -68,9 +94,12 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         value={SearchTypeValue.Project}
         onClick={() => {
           if (!projectIsSelected) {
-            const projectParams = new URLSearchParams();
-            projectParams.set(SearchParam.Type, SearchTypeValue.Project);
-            history.push({ search: projectParams.toString() });
+            const projectParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Project });
+            const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
+            if (searchTerm) {
+              projectParams.set(ProjectSearchParameter.Query, searchTerm);
+            }
+            navigate({ search: projectParams.toString() });
           }
         }}>
         <ShowChartIcon fontSize="small" />

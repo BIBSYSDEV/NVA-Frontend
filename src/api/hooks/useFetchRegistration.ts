@@ -9,20 +9,20 @@ import { fetchRegistration } from '../registrationApi';
 
 interface FetchRegistrationConfig {
   enabled?: boolean;
-  shouldNotRedirect?: boolean;
+  doNotRedirect?: boolean;
 }
 
 export const useFetchRegistration = (
   identifier = '',
-  { enabled = true, shouldNotRedirect = false }: FetchRegistrationConfig = {}
+  { enabled = true, doNotRedirect = false }: FetchRegistrationConfig = {}
 ) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   return useQuery({
-    queryKey: ['registration', identifier, shouldNotRedirect],
+    queryKey: ['registration', identifier, doNotRedirect],
     enabled: enabled && !!identifier,
-    queryFn: () => fetchRegistration(identifier, shouldNotRedirect),
+    queryFn: () => fetchRegistration(identifier, doNotRedirect),
     retry: (failureCount, error: AxiosError<DeletedRegistrationProblem>) => {
       if (error.response?.status === 410) {
         // Do not retry for 410 Gone response, as this will be handled as an success in the meta.handleError function.

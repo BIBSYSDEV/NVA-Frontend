@@ -1,8 +1,9 @@
 import { TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
-import { forwardRef } from 'react';
+import { forwardRef, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IMaskInput } from 'react-imask';
+import { RegistrationFormContext } from '../../../../../context/RegistrationFormContext';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 
 const isbnFormat = '000-00-000-0000-0';
@@ -32,6 +33,7 @@ interface IsbnFieldProps {
 
 export const IsbnField = ({ fieldName }: IsbnFieldProps) => {
   const { t } = useTranslation();
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   return (
     <FieldArray name={fieldName}>
@@ -42,6 +44,7 @@ export const IsbnField = ({ fieldName }: IsbnFieldProps) => {
             <TextField
               {...field}
               data-testid={dataTestId.registrationWizard.resourceType.isbnField}
+              disabled={disableChannelClaimsFields}
               onChange={(event) => {
                 if (event.target.value) {
                   field.onChange(event);

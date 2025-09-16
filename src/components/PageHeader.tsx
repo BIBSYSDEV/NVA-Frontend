@@ -1,17 +1,16 @@
 import { Box, TypographyProps } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+import { HeadTitle } from './HeadTitle';
 import { TruncatableTypography } from './TruncatableTypography';
 
 interface PageHeaderProps extends TypographyProps {
   children: string;
   htmlTitle?: string;
+  omitPageTitle?: boolean;
 }
 
-export const PageHeader = ({ children, htmlTitle, ...props }: PageHeaderProps) => (
+export const PageHeader = ({ children, htmlTitle, omitPageTitle = false, ...props }: PageHeaderProps) => (
   <Box sx={{ width: '100%', marginBottom: '2rem' }}>
-    <Helmet>
-      <title>{htmlTitle ?? children}</title>
-    </Helmet>
+    {!omitPageTitle && <HeadTitle>{htmlTitle ?? children}</HeadTitle>}
 
     <Box
       sx={{

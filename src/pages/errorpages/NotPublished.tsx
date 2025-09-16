@@ -1,6 +1,6 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
 export const NotPublished = () => {
@@ -11,7 +11,7 @@ export const NotPublished = () => {
       <Typography variant="h2" component="h1" sx={{ mb: '1rem' }}>
         {t('authorization.registration_not_published')}
       </Typography>
-      <MuiLink component={Link} to={UrlPathTemplate.Home}>
+      <MuiLink component={Link} to={UrlPathTemplate.Root}>
         <Typography>{t('authorization.back_to_home')}</Typography>
       </MuiLink>
     </Box>

@@ -154,8 +154,8 @@ export interface MusicalWorkPerformance {
 
 export interface Concert extends ArtisticOutputBase {
   type: 'Concert';
-  place: Place;
-  time: Instant | Period;
+  place?: Place;
+  time?: Instant | Period;
   extent: string;
   concertProgramme: MusicalWorkPerformance[];
   concertSeries: string;

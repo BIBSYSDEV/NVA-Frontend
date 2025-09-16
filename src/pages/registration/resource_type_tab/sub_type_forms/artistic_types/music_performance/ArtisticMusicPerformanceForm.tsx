@@ -13,11 +13,12 @@ import {
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import {
   ArtisticRegistration,
   MusicOutput,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { AudioVisualPublicationModal } from './AudioVisualPublicationModal';
@@ -37,7 +38,7 @@ export const ArtisticMusicPerformanceForm = () => {
 
   return (
     <div>
-      <Typography variant="h3" component="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {t('registration.resource_type.artistic.announcements')}
       </Typography>
       <FieldArray name={ResourceFieldNames.PublicationInstanceManifestations}>
@@ -49,12 +50,12 @@ export const ArtisticMusicPerformanceForm = () => {
           return (
             <>
               {manifestations.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
+                <Table sx={alternatingTableRowColor}>
                   <TableHead>
                     <TableRow>
+                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('common.description')}</TableCell>
-                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
@@ -83,20 +84,20 @@ export const ArtisticMusicPerformanceForm = () => {
                   </Box>
                 )}
 
-              <MusicScoreModal onSubmit={onAddOutput} open={openModal === 'MusicScore'} closeModal={closeModal} />
+              <ConcertModal onSubmit={onAddOutput} open={openModal === 'Concert'} closeModal={closeModal} />
               <AudioVisualPublicationModal
                 onSubmit={onAddOutput}
                 open={openModal === 'AudioVisualPublication'}
                 closeModal={closeModal}
               />
-              <ConcertModal onSubmit={onAddOutput} open={openModal === 'Concert'} closeModal={closeModal} />
+              <MusicScoreModal onSubmit={onAddOutput} open={openModal === 'MusicScore'} closeModal={closeModal} />
               <OtherPerformanceModal
                 onSubmit={onAddOutput}
                 open={openModal === 'OtherPerformance'}
                 closeModal={closeModal}
               />
 
-              <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+              <Box sx={{ mt: '1rem', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
                 <Button
                   onClick={() => setOpenModal('Concert')}
                   variant="outlined"

@@ -1,6 +1,9 @@
-import { RegistrationFormLocationState } from '../types/locationState.types';
+import { To } from 'react-router';
+import { NviCandidateGlobalStatus, NviCandidateStatus } from '../api/searchApi';
+import { Registration, RegistrationStatus } from '../types/registration.types';
+import { getIdentifierFromId } from './general-helpers';
 
-export interface IdentifierParams {
+export interface IdentifierParams extends Record<string, string> {
   identifier: string;
 }
 
@@ -15,7 +18,11 @@ export enum UrlPathTemplate {
   BasicDataNvi = '/basic-data/nvi',
   BasicDataNviNew = '/basic-data/nvi/new',
   BasicDataPersonRegister = '/basic-data/person-register',
-  Home = '/',
+  BasicDataChannelClaims = '/basic-data/channel-claims',
+  BasicDataPublisherClaims = `${BasicDataChannelClaims}/publisher`,
+  BasicDataSerialPublicationClaims = `${BasicDataChannelClaims}/serial-publication`,
+  CopyrightAct = '/license/copyright-act/1.0',
+  Root = '/',
   Institution = '/institution',
   InstitutionCurators = '/institution/settings/curators',
   InstitutionCuratorsOverview = '/institution/overview/curators',
@@ -32,6 +39,8 @@ export enum UrlPathTemplate {
   InstitutionVocabularyOverview = '/institution/overview/vocabulary',
   InstitutionCategories = '/institution/settings/categories',
   InstitutionCategoriesOverview = '/institution/overview/categories',
+  InstitutionPublisherClaimsOverview = '/institution/overview/publisher-claims',
+  InstitutionSerialPublicationClaimsOverview = '/institution/overview/serial-publication-claims',
   Login = '/login',
   Logout = '/logout',
   MyPage = '/my-page',
@@ -46,18 +55,19 @@ export enum UrlPathTemplate {
   MyPageResearchProfile = '/my-page/profile/research-profile',
   MyPageResults = '/my-page/profile/results',
   MyPageProjectRegistrations = '/my-page/project-registrations',
-  MyPageRegistrations = '/my-page/registrations',
   MyPageTerms = '/my-page/profile/terms',
-  MyPageMyRegistrations = '/my-page/registrations/my-registrations',
+  MyPageMyRegistrations = '/my-page/registrations',
   MyPageUserRoleAndHelp = '/my-page/profile/user-role-and-help',
   PrivacyPolicy = '/privacy-policy',
-  Projects = '/projects',
+  ProjectsRoot = '/projects',
   ProjectsNew = '/projects/new',
-  ProjectsEdit = '/project/:identifier/edit',
+  ProjectPage = '/projects/:identifier',
+  ProjectsEdit = '/projects/:identifier/edit',
   RegistrationLandingPage = '/registration/:identifier',
   RegistrationNew = '/registration',
   RegistrationWizard = '/registration/:identifier/edit',
-  ResearchProfile = '/research-profile',
+  ResearchProfile = '/research-profile/:identifier',
+  ResearchProfileRoot = '/research-profile',
   Reports = '/reports',
   ReportsClinicalTreatmentStudies = '/reports/clinical-treatment-studies',
   ReportsInternationalCooperation = '/reports/international-cooperation',
@@ -72,8 +82,13 @@ export enum UrlPathTemplate {
   TasksNviCorrectionList = '/tasks/correction-list',
   TasksNviStatus = '/tasks/nvi/status',
   TasksResultRegistrations = '/tasks/result-registrations',
+  NewFrontPage = '/new-front-page',
   Wildcard = '*',
 }
+
+export const getSubUrl = (path: UrlPathTemplate, basePath: UrlPathTemplate, splashRoute = false) => {
+  return `${path.replace(basePath, '')}${splashRoute ? '/*' : ''}`;
+};
 
 export const getRegistrationLandingPagePath = (identifier: string) =>
   UrlPathTemplate.RegistrationLandingPage.replace(':identifier', encodeURIComponent(identifier));
@@ -81,25 +96,38 @@ export const getRegistrationLandingPagePath = (identifier: string) =>
 export const getImportCandidatePath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportCandidate.replace(':identifier', encodeURIComponent(identifier));
 
-export const getRegistrationWizardPath = (identifier: string) =>
-  UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
-
-interface RegistrationWizardOptions {
-  highestValidatedTab?: number;
+interface RegistrationWizardPathOptions {
   tab?: number;
-  goToLandingPageAfterSaveAndSee?: boolean;
+  doNotRedirect?: boolean;
 }
 
-export const getRegistrationWizardLink = (identifier: string, options: RegistrationWizardOptions = {}) => {
+export const doNotRedirectQueryParam = 'doNotRedirect';
+
+export const getRegistrationWizardPath = (
+  identifier: string,
+  { tab, doNotRedirect }: RegistrationWizardPathOptions = {}
+): To => {
+  const searchParams = new URLSearchParams();
+  if (tab !== undefined) {
+    searchParams.set('tab', tab.toString());
+  }
+  if (doNotRedirect) {
+    searchParams.set(doNotRedirectQueryParam, 'true');
+  }
   return {
     pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
-    state: {
-      highestValidatedTab: options.highestValidatedTab,
-      previousPath: window.location.pathname,
-      goToLandingPageAfterSaveAndSee: options.goToLandingPageAfterSaveAndSee,
-    } satisfies RegistrationFormLocationState,
-    search: options.tab ? `?tab=${options.tab}` : '',
+    search: searchParams.toString(),
   };
+};
+
+export const getWizardPathByRegistration = (
+  registration: Registration,
+  { tab }: Pick<RegistrationWizardPathOptions, 'tab'> = {}
+): To => {
+  return getRegistrationWizardPath(registration.identifier, {
+    tab,
+    doNotRedirect: registration.status === RegistrationStatus.Unpublished && !!registration.duplicateOf,
+  });
 };
 
 export const getImportCandidateWizardPath = (identifier: string) =>
@@ -111,16 +139,17 @@ export const getImportCandidateMergePath = (candidateIdentifier: string, registr
     encodeURIComponent(candidateIdentifier)
   ).replace(':registrationIdentifier', encodeURIComponent(registrationIdentifier));
 
-export const getResearchProfilePath = (userId: string) =>
-  `${UrlPathTemplate.ResearchProfile}?id=${encodeURIComponent(userId)}`;
+export const getResearchProfilePath = (id: string) =>
+  UrlPathTemplate.ResearchProfile.replace(':identifier', encodeURIComponent(getIdentifierFromId(id)));
 
 export const getAdminInstitutionPath = (id: string) =>
   `${UrlPathTemplate.BasicDataInstitutions}?id=${encodeURIComponent(id)}`;
 
-export const getProjectPath = (id: string) => `${UrlPathTemplate.Projects}?id=${encodeURIComponent(id)}`;
+export const getProjectPath = (id: string) =>
+  `${UrlPathTemplate.ProjectPage.replace(':identifier', encodeURIComponent(getIdentifierFromId(id)))}`;
 
 export const getEditProjectPath = (id: string) =>
-  UrlPathTemplate.ProjectsEdit.replace(':identifier', encodeURIComponent(id));
+  UrlPathTemplate.ProjectsEdit.replace(':identifier', encodeURIComponent(getIdentifierFromId(id)));
 
 export const getTasksRegistrationPath = (identifier: string) =>
   UrlPathTemplate.TasksDialogueRegistration.replace(':identifier', encodeURIComponent(identifier));
@@ -130,3 +159,21 @@ export const getMyMessagesRegistrationPath = (identifier: string) =>
 
 export const getNviCandidatePath = (identifier: string) =>
   UrlPathTemplate.TasksNviCandidate.replace(':identifier', encodeURIComponent(identifier));
+
+export const getNviCandidatesSearchPath = (currentUsername = '', year?: number) => {
+  const searchParams = new URLSearchParams({
+    status: 'pending' satisfies NviCandidateStatus,
+    globalStatus: 'pending' satisfies NviCandidateGlobalStatus,
+  });
+  if (currentUsername) {
+    searchParams.set('assignee', currentUsername); // NviCandidatesSearchParam.Assignee
+  }
+  if (year) {
+    searchParams.set('year', year.toString()); // NviCandidatesSearchParam.Year
+  }
+  return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
+};
+
+export const isOnImportPage = () => {
+  return location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
+};

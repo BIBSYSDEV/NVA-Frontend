@@ -1,5 +1,4 @@
-import { Box, Checkbox, FormGroup, ListItem, Typography } from '@mui/material';
-import { styled } from '@mui/system';
+import { Box, FormGroup, ListItem, ListItemProps, styled, Typography, TypographyProps } from '@mui/material';
 
 export const StyledRightAlignedFooter = styled(Box)({
   display: 'flex',
@@ -62,6 +61,7 @@ export const InputContainerBox = styled(Box)({
 });
 
 export const BackgroundDiv = styled(Box)(({ theme }) => ({
+  overflowX: 'auto',
   background: theme.palette.secondary.light,
   [theme.breakpoints.up('md')]: {
     padding: '1rem 2rem',
@@ -86,7 +86,7 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
   },
 }));
 
-export const SearchListItem = styled(ListItem)(({ theme }) => ({
+export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
   border: '2px solid',
   borderColor: theme.palette.secondary.dark,
   borderLeft: '1.25rem solid',
@@ -105,11 +105,6 @@ export const SearchListItemDiv = styled('div')(({ theme }) => ({
   padding: '0.5rem 1rem',
 }));
 
-export const StyledStatusCheckbox = styled(Checkbox)({
-  paddingTop: '0.2rem',
-  paddingBottom: '0.2rem',
-});
-
 export const StyledTicketSearchFormGroup = styled(FormGroup)({
   margin: '1rem',
 });
@@ -127,7 +122,20 @@ export const StyledInfoBanner = styled(Box)(({ theme }) => ({
   color: 'white',
 }));
 
-export const StyledFilterHeading = styled(Typography)({
+export const StyledFilterHeading = styled(Typography)<TypographyProps>({
   marginBottom: '0.2rem',
   fontWeight: 'bold',
 });
+
+export const StyledContributorModalActions = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+  },
+  [theme.breakpoints.up('md')]: {
+    flexDirection: 'row',
+  },
+  justifyContent: 'space-between',
+  marginTop: '2rem',
+  gap: '1rem',
+}));

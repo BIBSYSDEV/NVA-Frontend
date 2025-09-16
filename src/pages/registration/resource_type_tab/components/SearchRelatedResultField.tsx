@@ -1,11 +1,11 @@
-import { Autocomplete, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResults, FetchResultsParams } from '../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { DegreeRegistration } from '../../../../types/publication_types/degreeRegistration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ConfirmedDocument } from '../../../../types/registration.types';
@@ -16,6 +16,7 @@ import { YearAndContributorsText } from './SearchContainerField';
 
 export const SearchRelatedResultField = () => {
   const { t } = useTranslation();
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
   const { values } = useFormikContext<DegreeRegistration>();
   const related = values.entityDescription.reference?.publicationInstance.related;
   const [relatedRegistrationsQuery, setRelatedRegistrationsQuery] = useState('');
@@ -37,6 +38,7 @@ export const SearchRelatedResultField = () => {
       {({ push }: FieldArrayRenderProps) => (
         <>
           <Autocomplete
+            disabled={disableChannelClaimsFields}
             options={relatedRegistrationsOptionsQuery.data?.hits ?? []}
             value={null}
             onChange={(_, value) => {
@@ -56,19 +58,16 @@ export const SearchRelatedResultField = () => {
             blurOnSelect
             loading={relatedRegistrationsOptionsQuery.isPending}
             filterOptions={(options) => options}
-            getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
+            getOptionLabel={(option) => getTitleString(option.mainTitle)}
             renderOption={({ key, ...props }, option, state) => (
               <li {...props} key={option.identifier}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="subtitle1">
-                    <EmphasizeSubstring
-                      text={getTitleString(option.entityDescription?.mainTitle)}
-                      emphasized={state.inputValue}
-                    />
+                    <EmphasizeSubstring text={getTitleString(option.mainTitle)} emphasized={state.inputValue} />
                   </Typography>
                   <YearAndContributorsText
-                    date={option.entityDescription?.publicationDate}
-                    contributors={option.entityDescription?.contributorsPreview ?? []}
+                    date={option.publicationDate}
+                    contributors={option.contributorsPreview ?? []}
                   />
                 </Box>
               </li>

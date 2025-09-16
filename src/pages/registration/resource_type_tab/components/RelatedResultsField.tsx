@@ -1,7 +1,9 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button, List, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, move, useFormikContext } from 'formik';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { DegreeRegistration } from '../../../../types/publication_types/degreeRegistration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ConfirmedDocument, emptyUnconfirmedDocument, UnconfirmedDocument } from '../../../../types/registration.types';
@@ -12,6 +14,7 @@ import { SearchRelatedResultField } from './SearchRelatedResultField';
 export const RelatedResultsField = () => {
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<DegreeRegistration>();
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const related = values.entityDescription.reference?.publicationInstance.related ?? [];
 
@@ -71,6 +74,7 @@ export const RelatedResultsField = () => {
           <Button
             variant="outlined"
             data-testid={dataTestId.registrationWizard.resourceType.addRelatedButton}
+            disabled={disableChannelClaimsFields}
             onClick={() =>
               push({
                 ...emptyUnconfirmedDocument,

@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Box, Button } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -7,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useAddSelfAsContributor } from '../../api/hooks/useAddSelfAsContributor';
 import { CancelButton } from '../../components/buttons/CancelButton';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
-import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
+import { StyledContributorModalActions } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { CristinProject, ProjectContributorType, ProjectFieldName } from '../../types/project.types';
@@ -91,34 +90,39 @@ export const AddProjectContributorForm = ({
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
+      <StyledContributorModalActions>
         <Button
-          sx={{ mr: 'auto' }}
           data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
           disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
           onClick={addUnidentifiedParticipant}
-          size="large">
+          variant="outlined">
           {t('project.add_unidentified_contributor')}
         </Button>
-        <LoadingButton
+        <Button
           data-testid={dataTestId.projectForm.addSelfAsProjectParticipantButton}
           onClick={addSelfAsContributor.addSelf}
           disabled={!!selectedPerson}
+          variant="outlined"
           loading={addSelfAsContributor.isFetching}>
-          {roleType === 'LocalProjectManager'
-            ? t('project.add_self_as_local_project_manager')
-            : t('project.add_self_as_project_participant')}
-        </LoadingButton>
-        <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
-        <Button
-          data-testid={dataTestId.projectForm.selectContributorButton}
-          disabled={!selectedPerson}
-          onClick={() => selectedPerson && addParticipant(selectedPerson)}
-          size="large"
-          variant="contained">
-          {roleType === 'LocalProjectManager' ? t('project.add_local_manager') : t('project.add_contributor')}
+          {t('project.add_self')}
         </Button>
-      </StyledRightAlignedFooter>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '1rem',
+            flexDirection: { xs: 'column', md: 'row', alignItems: 'center' },
+          }}>
+          <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
+          <Button
+            fullWidth
+            data-testid={dataTestId.projectForm.selectContributorButton}
+            disabled={!selectedPerson}
+            onClick={() => selectedPerson && addParticipant(selectedPerson)}
+            variant="outlined">
+            {roleType === 'LocalProjectManager' ? t('project.add_local_manager') : t('project.add_contributor')}
+          </Button>
+        </Box>
+      </StyledContributorModalActions>
     </Box>
   );
 };

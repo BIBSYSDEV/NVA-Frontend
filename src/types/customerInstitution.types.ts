@@ -1,12 +1,15 @@
+import { ChannelPolicy } from '../api/customerInstitutionsApi';
 import { allPublicationInstanceTypes } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
 
 export interface SimpleCustomerInstitution {
   active: boolean;
   id: string;
+  cristinId: string;
   createdDate: string;
   displayName: string;
   doiPrefix?: string;
+  serviceCenterUri?: string;
 }
 
 export type PublishStrategy = 'RegistratorPublishesMetadataOnly' | 'RegistratorPublishesMetadataAndFiles';
@@ -106,7 +109,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   identifier: '',
   name: '',
   vocabularies: [],
-  publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
+  publicationWorkflow: 'RegistratorPublishesMetadataOnly',
   rorId: '',
   sector: Sector.Uhi,
   nviInstitution: false,
@@ -129,7 +132,6 @@ export enum CustomerInstitutionFieldNames {
   DoiPassword = 'doiAgent.password',
   DoiPrefix = 'doiAgent.prefix',
   FeideOrganizationDomain = 'customer.feideOrganizationDomain',
-  Identifier = 'customer.identifier',
   InactiveFrom = 'customer.inactiveFrom',
   Name = 'customer.name',
   RorId = 'customer.rorId',
@@ -148,3 +150,21 @@ export interface VocabularyList {
   id: string;
   vocabularies: CustomerVocabulary[];
 }
+
+export interface ClaimedChannel {
+  id: string;
+  claimedBy: {
+    id: string;
+    organizationId: string;
+  };
+  channelClaim: {
+    channel: string;
+    constraint: {
+      publishingPolicy: ChannelPolicy;
+      editingPolicy: ChannelPolicy;
+      scope: PublicationInstanceType[];
+    };
+  };
+}
+
+export type ChannelClaimType = 'publisher' | 'serial-publication';

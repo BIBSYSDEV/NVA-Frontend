@@ -6,7 +6,7 @@ export const useFetchRegistrationTickets = (registrationId = '', { enabled = !!r
   const { t } = useTranslation();
 
   return useQuery({
-    enabled,
+    enabled: enabled && !!registrationId,
     queryKey: ['registrationTickets', registrationId],
     queryFn: () => fetchRegistrationTickets(registrationId),
     meta: { errorMessage: t('feedback.error.get_tickets') },

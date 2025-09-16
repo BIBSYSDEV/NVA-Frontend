@@ -58,6 +58,7 @@ export const mockCustomerInstitutions: CustomerList = {
       id: mockCustomerInstitution.id,
       createdDate: mockCustomerInstitution.createdDate,
       displayName: mockCustomerInstitution.displayName,
+      cristinId: mockCustomerInstitution.cristinId,
     },
     {
       active: true,
@@ -65,12 +66,14 @@ export const mockCustomerInstitutions: CustomerList = {
       createdDate: '2020-11-01',
       displayName: 'Name 1',
       doiPrefix: '10.12345',
+      cristinId: 'https://api.dev.nva.aws.unit.no/cristin/organization/0.0.0.1',
     },
     {
       active: true,
       id: 'https://api.dev.nva.aws.unit.no/customer/3',
       createdDate: '2020-11-01',
       displayName: 'Name 2',
+      cristinId: 'https://api.dev.nva.aws.unit.no/cristin/organization/0.0.0.2',
     },
     {
       active: true,
@@ -78,12 +81,14 @@ export const mockCustomerInstitutions: CustomerList = {
       createdDate: '2020-01-27',
       displayName: 'Name 3',
       doiPrefix: '10.12347',
+      cristinId: 'https://api.dev.nva.aws.unit.no/cristin/organization/0.0.0.3',
     },
     {
       active: true,
       id: 'https://api.dev.nva.aws.unit.no/customer/5',
       createdDate: '2012-11-11',
       displayName: 'Name 4',
+      cristinId: 'https://api.dev.nva.aws.unit.no/cristin/organization/0.0.0.4',
     },
   ],
 };

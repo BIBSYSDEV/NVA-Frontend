@@ -3,10 +3,11 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { ParseKeys } from 'i18next';
-import { useState } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../../../utils/constants';
@@ -19,7 +20,7 @@ interface VocabularyConfig {
   [key: string]: {
     baseId: string;
     i18nKey: ParseKeys;
-    component: (props: VocabularyComponentProps) => JSX.Element;
+    component: (props: VocabularyComponentProps) => ReactNode;
   };
 }
 
@@ -45,6 +46,7 @@ interface VocabularyFieldsProps {
 
 export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: VocabularyFieldsProps) => {
   const { t } = useTranslation();
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
   const {
     setFieldValue,
     values: { subjects },
@@ -82,13 +84,9 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                 <Box
                   key={vocabulary}
                   data-testid={dataTestId.registrationWizard.description.vocabularyRow(vocabulary)}
-                  sx={{
-                    display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', sm: '4fr auto' },
-                    columnGap: '2rem',
-                    rowGap: '0.5rem',
-                  }}>
+                  sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
                   <VocabularyComponent
+                    disabled={disableChannelClaimsFields}
                     selectedIds={selectedIds}
                     addValue={push}
                     removeValue={(valueToRemove) => remove(subjects.indexOf(valueToRemove))}
@@ -102,7 +100,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                   {!defaultVocabularyKeys.includes(vocabulary) && (
                     <>
                       <Button
-                        sx={{ height: 'fit-content', alignSelf: 'center' }}
+                        sx={{ ml: { xs: '0', sm: '2rem' }, minWidth: 'max-content' }}
                         color="error"
                         startIcon={<RemoveCircleIcon />}
                         onClick={() => setVocabularyToRemove(vocabulary)}>
@@ -158,6 +156,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
 
       {addableVocabularies.length > 0 && (
         <Button
+          disabled={disableChannelClaimsFields}
           data-testid={dataTestId.registrationWizard.description.addVocabularyButton}
           onClick={(event) => setNewVocabularyAnchor(event.currentTarget)}
           startIcon={<AddIcon />}

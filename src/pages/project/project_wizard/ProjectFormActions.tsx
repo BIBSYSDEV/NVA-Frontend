@@ -1,5 +1,4 @@
-import { LoadingButton } from '@mui/lab';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -47,7 +46,7 @@ export const ProjectFormActions = ({
           onClick={() => setOpenCancelConfirmView(true)}
         />
         {isLastTab && (
-          <LoadingButton
+          <Button
             variant="contained"
             type="submit"
             sx={{ mr: '2rem' }}
@@ -55,7 +54,7 @@ export const ProjectFormActions = ({
             disabled={disable}
             data-testid={dataTestId.projectWizard.formActions.saveProjectButton}>
             {openedInModal ? t('project.save_and_close') : t('common.save_and_view')}
-          </LoadingButton>
+          </Button>
         )}
         {!isLastTab && (
           <>

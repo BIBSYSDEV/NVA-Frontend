@@ -1,7 +1,8 @@
-import { LoadingButton } from '@mui/lab';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
+import { OpenInNewLink } from '../../../components/OpenInNewLink';
+import { MAX_MESSAGE_LENGTH } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 interface NviCandidateRejectionDialogProps {
@@ -11,7 +12,6 @@ interface NviCandidateRejectionDialogProps {
   isLoading: boolean;
 }
 
-const maxReasonLength = 160;
 const minReasonLength = 10;
 
 export const NviCandidateRejectionDialog = ({
@@ -38,7 +38,16 @@ export const NviCandidateRejectionDialog = ({
           setReason('');
         }}>
         <DialogContent>
-          <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
+          <Trans
+            i18nKey="tasks.nvi.reject_nvi_candidate_modal_text"
+            components={{
+              p: <Typography sx={{ mb: '1rem' }} />,
+              hyperlink: (
+                <OpenInNewLink href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks" />
+              ),
+            }}
+          />
+
           <TextField
             value={reason}
             onChange={(event) => setReason(event.target.value)}
@@ -49,9 +58,9 @@ export const NviCandidateRejectionDialog = ({
             fullWidth
             required
             label={t('tasks.nvi.reject_nvi_candidate_form_label')}
-            helperText={`${reason.length}/${maxReasonLength}`}
+            helperText={`${reason.length}/${MAX_MESSAGE_LENGTH}`}
             slotProps={{
-              htmlInput: { minLength: minReasonLength, maxLength: maxReasonLength },
+              htmlInput: { minLength: minReasonLength, maxLength: MAX_MESSAGE_LENGTH },
               formHelperText: { sx: { textAlign: 'end' } },
             }}
           />
@@ -61,13 +70,13 @@ export const NviCandidateRejectionDialog = ({
           <Button data-testid={dataTestId.tasksPage.nvi.rejectionModalCancelButton} onClick={handleClose}>
             {t('common.cancel')}
           </Button>
-          <LoadingButton
+          <Button
             data-testid={dataTestId.tasksPage.nvi.rejectionModalRejectButton}
             loading={isLoading}
             variant="contained"
             type="submit">
             {t('common.reject')}
-          </LoadingButton>
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

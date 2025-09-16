@@ -44,13 +44,13 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
       <ConfirmDialog
         open={showTerminateModal}
         title={t('registration.public_page.tasks_panel.terminate_result')}
-        onAccept={() =>
-          updateRegistrationStatusMutation.mutate({
+        onAccept={async () => {
+          await updateRegistrationStatusMutation.mutateAsync({
             registrationIdentifier: registration.identifier,
             updateStatusRequest: { type: 'DeletePublicationRequest' },
-            onSuccess: toggleTerminateModal,
-          })
-        }
+          });
+          toggleTerminateModal();
+        }}
         isLoading={updateRegistrationStatusMutation.isPending}
         confirmButtonLabel={t('common.delete')}
         cancelButtonLabel={t('common.cancel')}

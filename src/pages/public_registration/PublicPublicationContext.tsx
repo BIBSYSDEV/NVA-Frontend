@@ -59,6 +59,7 @@ import {
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { ContextPublisher, Publisher, SerialPublication } from '../../types/registration.types';
+import { getCountries } from '../../utils/countryHelpers';
 import { toDateString } from '../../utils/date-helpers';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
@@ -76,9 +77,7 @@ export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
 
   return publicationContext.id || publicationContext.title ? (
     <>
-      <Typography variant="h3" component="p">
-        {t('registration.resource_type.journal')}
-      </Typography>
+      <Typography variant="h3">{t('registration.resource_type.journal')}</Typography>
       {publicationContext.id ? (
         <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback.error.get_journal')} />
       ) : (
@@ -105,9 +104,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
 
   return publisher?.id || publisher?.name ? (
     <>
-      <Typography variant="h3" component="p">
-        {t('common.publisher')}
-      </Typography>
+      <Typography variant="h3">{t('common.publisher')}</Typography>
 
       {isLoadingPublisher ? (
         <ListSkeleton height={20} />
@@ -115,11 +112,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
         <>
           <Typography>{publisherName}</Typography>
           <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} channelId={fetchedPublisher.id} />
-          {fetchedPublisher.sameAs && (
-            <Typography component={Link} href={fetchedPublisher.sameAs} target="_blank">
-              {t('registration.public_page.find_in_channel_registry')}
-            </Typography>
-          )}
+          {fetchedPublisher.sameAs && <ChannelRegisterLink uri={fetchedPublisher.sameAs} />}
         </>
       ) : (
         <Typography gutterBottom>{publisher.name}</Typography>
@@ -133,9 +126,7 @@ export const PublicPublishedInContent = ({ id }: { id: string | null }) => {
 
   return id ? (
     <Box sx={{ mb: '0.5rem' }}>
-      <Typography variant="h3" component="p">
-        {t('registration.resource_type.chapter.published_in')}
-      </Typography>
+      <Typography variant="h3">{t('registration.resource_type.chapter.published_in')}</Typography>
       <RegistrationSummary id={id} />
     </Box>
   ) : null;
@@ -156,7 +147,7 @@ export const PublicSeries = ({
 
   return series?.id || series?.title ? (
     <>
-      <Typography variant="h3" component="p">
+      <Typography variant="h3" sx={{ mt: '0.5rem' }}>
         {t('registration.resource_type.series')}
       </Typography>
       {series.id ? (
@@ -181,62 +172,47 @@ interface PublicJournalContentProps {
   errorMessage: string;
 }
 
-const journalIdSubstring = '/journal/';
-const seriesIdSubstring = '/series/';
-
 const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) => {
   const { t } = useTranslation();
-  const [alternativeJournalId, setAlternativeJournalId] = useState('');
 
   const journalQuery = useQuery({
     enabled: !!id,
     queryKey: ['channel', id],
     queryFn: () => fetchResource<SerialPublication>(id),
-    retry: 1,
-    meta: {
-      errorMessage: false,
-      handleError: () => {
-        // Some IDs are mixed with journal and series, so we must retry with the alternative ID
-        const currentId = id?.toLowerCase();
-        if (currentId?.includes(journalIdSubstring)) {
-          const alternativeId = currentId.replace(journalIdSubstring, seriesIdSubstring);
-          setAlternativeJournalId(alternativeId);
-        } else if (currentId?.includes(seriesIdSubstring)) {
-          const alternativeId = currentId.replace(seriesIdSubstring, journalIdSubstring);
-          setAlternativeJournalId(alternativeId);
-        }
-      },
-    },
-  });
-
-  const journalBackupQuery = useQuery({
-    enabled: journalQuery.isError && !!alternativeJournalId,
-    queryKey: ['channel', alternativeJournalId],
-    queryFn: () => fetchResource<SerialPublication>(alternativeJournalId),
-    retry: 1,
     meta: { errorMessage },
   });
-
-  const isLoadingJournal = (!!id && journalQuery.isPending) || (journalQuery.isError && journalBackupQuery.isPending);
-  const journal = journalQuery.data ?? journalBackupQuery.data;
+  const journal = journalQuery.data;
 
   const journalName = journal?.discontinued
     ? `${journal.name} (${t('common.discontinued')}: ${journal.discontinued})`
     : journal?.name;
 
-  return isLoadingJournal ? (
+  return journalQuery.isPending ? (
     <ListSkeleton height={20} />
   ) : !journal ? null : (
     <>
       <Typography>{journalName}</Typography>
       <Typography>{getIssnValuesString(journal)}</Typography>
       <NpiLevelTypography scientificValue={journal.scientificValue} channelId={journal.id} />
-      {journal.sameAs && (
-        <Typography component={Link} href={journal.sameAs} target="_blank">
-          {t('registration.public_page.find_in_channel_registry')}
-        </Typography>
-      )}
+      {journal.sameAs && <ChannelRegisterLink uri={journal.sameAs} />}
     </>
+  );
+};
+
+const ChannelRegisterLink = ({ uri }: { uri: string }) => {
+  const { t } = useTranslation();
+  if (!uri) {
+    return null;
+  }
+  return (
+    <Link
+      href={uri}
+      target="_blank"
+      rel="noopener noreferrer"
+      sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem', width: 'fit-content' }}>
+      {t('registration.public_page.find_in_channel_registry')}
+      <OpenInNewIcon fontSize="small" />
+    </Link>
   );
 };
 
@@ -245,7 +221,7 @@ interface PublicPresentationProps {
 }
 
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { type, time, place, name, agent } = publicationContext;
   const periodString = getPeriodString(time?.from, time?.to);
 
@@ -269,7 +245,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
       )}
       {place?.country && (
         <Typography>
-          {t('common.country')}: {place.country}
+          {t('common.country')}: {getCountries(i18n.language)[place.country]}
         </Typography>
       )}
       {periodString && <Typography>{periodString}</Typography>}
@@ -291,7 +267,9 @@ export const PublicOutputs = ({ outputs, showType = false }: PublicOutputsProps)
         {t('registration.resource_type.artistic.announcements')}
       </Typography>
       {outputs.map((output, index) => (
-        <PublicOutputRow key={index} output={output} showType={showType} />
+        <ErrorBoundary key={index}>
+          <PublicOutputRow output={output} showType={showType} />
+        </ErrorBoundary>
       ))}
     </>
   );
@@ -322,7 +300,7 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
 
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-      <Typography>{rowString}</Typography>
+      <Typography>{rowString?.trim() || <i>{t('common.unknown')}</i>}</Typography>
       <Tooltip title={t('common.show_details')}>
         <IconButton
           size="small"
@@ -333,7 +311,6 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
           <OpenInNewIcon fontSize="small" />
         </IconButton>
       </Tooltip>
-
       <Dialog open={openModal} onClose={toggleModal} fullWidth>
         <DialogTitle>{t('registration.resource_type.artistic.announcement')}</DialogTitle>
         <ErrorBoundary>
@@ -629,7 +606,7 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       <Typography sx={{ mb: '1rem' }}>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
 
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography sx={{ mb: '1rem' }}>{place.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{place?.name ?? '-'}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
       <Typography sx={{ mb: '1rem' }}>{concertSeries ? t('common.yes') : t('common.no')} </Typography>
@@ -641,11 +618,13 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       )}
 
       <Typography variant="h3">{t('common.date')}</Typography>
-      {time.type === 'Instant' ? (
-        <Typography sx={{ mb: '1rem' }}>{toDateString(time.value)}</Typography>
-      ) : (
-        <Typography sx={{ mb: '1rem' }}>{getPeriodString(time.from, time.to)}</Typography>
-      )}
+      <Typography sx={{ mb: '1rem' }}>
+        {time?.type === 'Instant'
+          ? toDateString(time.value)
+          : time?.type === 'Period'
+            ? getPeriodString(time.from, time.to)
+            : '-'}
+      </Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography sx={{ mb: '1rem' }}>{extent}</Typography>
@@ -666,8 +645,8 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
           <TableBody>
             {concertProgramme.map((item, index) => (
               <TableRow key={index}>
-                <TableCell>{item.title}</TableCell>
-                <TableCell>{item.composer}</TableCell>
+                <TableCell>{item.title ?? '-'}</TableCell>
+                <TableCell>{item.composer ?? '-'}</TableCell>
                 <TableCell>{item.premiere ? t('common.yes') : null}</TableCell>
               </TableRow>
             ))}

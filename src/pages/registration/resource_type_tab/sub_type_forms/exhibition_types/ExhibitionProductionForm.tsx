@@ -16,6 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
+import { alternatingTableRowColor } from '../../../../../themes/mainTheme';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import {
   ExhibitionProductionSubtype,
@@ -87,12 +88,12 @@ export const ExhibitionProductionForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {manifestations.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
+                <Table sx={alternatingTableRowColor}>
                   <TableHead>
-                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
+                    <TableRow>
+                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('common.description')}</TableCell>
-                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>

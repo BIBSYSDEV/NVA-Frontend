@@ -11,7 +11,7 @@ import {
 } from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { PublicationChannelType, Registration, SerialPublication } from '../../../../types/registration.types';
@@ -19,6 +19,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
+import { ClaimedChannelInfoBox } from './ClaimedChannelInfoBox';
 import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
@@ -33,7 +34,7 @@ export const SeriesField = () => {
   const series = reference?.publicationContext.series;
   const year = publicationDate?.year ?? '';
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(RegistrationFormContext);
 
   const [showSeriesForm, setShowSeriesForm] = useState(false);
   const toggleSeriesForm = () => setShowSeriesForm(!showSeriesForm);
@@ -157,6 +158,11 @@ export const SeriesField = () => {
           />
         )}
       </Field>
+
+      {series?.id && (
+        <ClaimedChannelInfoBox channelId={series.id} channelType={t('registration.resource_type.series')} />
+      )}
+
       {!series?.id && seriesOptionsQuery.isFetched && (
         <>
           <StyledCreateChannelButton variant="outlined" onClick={toggleSeriesForm}>

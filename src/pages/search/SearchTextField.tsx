@@ -22,6 +22,7 @@ export const SearchTextField = ({ clearValue, dataTestId, ...props }: SearchText
         size="small"
         aria-label={t('common.search')}
         slotProps={{
+          ...props.slotProps,
           input: {
             startAdornment: <SearchIcon color="disabled" />,
             endAdornment:

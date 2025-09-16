@@ -20,6 +20,8 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
     isCreator,
     isInternalImporter,
     isNviCurator,
+    isThesisCurator,
+    isEmbargoThesisCurator,
   } = user;
 
   const hasAnyRole =
@@ -31,11 +33,13 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
     isSupportCurator ||
     isCreator ||
     isInternalImporter ||
-    isNviCurator;
+    isNviCurator ||
+    isThesisCurator ||
+    isEmbargoThesisCurator;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <Typography variant="h3">{t('my_page.my_profile.heading.roles')}</Typography>
+      <Typography variant="h2">{t('my_page.my_profile.heading.roles')}</Typography>
       {user.customerId ? (
         !hasAnyRole && (
           <Typography data-testid="no-roles-text" sx={{ color: 'error.main' }}>
@@ -84,6 +88,20 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
           dataTestId="user-role-nvi-curator"
           label={t('my_page.roles.nvi_curator')}
           text={t('my_page.roles.nvi_curator_description')}
+        />
+      )}
+      {isThesisCurator && (
+        <RoleItem
+          dataTestId="user-role-thesis-curator"
+          label={t('my_page.roles.thesis_curator')}
+          text={t('my_page.roles.thesis_curator_description')}
+        />
+      )}
+      {isEmbargoThesisCurator && (
+        <RoleItem
+          dataTestId="user-role-embargo-thesis-curator"
+          label={t('my_page.roles.thesis_embargo_curator')}
+          text={t('my_page.roles.thesis_embargo_curator_description')}
         />
       )}
       {isEditor && (
@@ -135,7 +153,7 @@ const RoleItem = ({ dataTestId, label, text }: IconLabelTextLineProps) => (
       gridTemplateColumns: 'auto 1fr',
       borderRadius: '1px',
     }}>
-    <Typography variant="h4" sx={{ gridArea: 'label' }}>
+    <Typography fontWeight="bold" sx={{ gridArea: 'label' }}>
       {label}
     </Typography>
     <Typography gutterBottom sx={{ gridArea: 'text' }}>

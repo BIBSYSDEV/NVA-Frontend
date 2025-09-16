@@ -1,7 +1,7 @@
 import LinkIcon from '@mui/icons-material/Link';
-import { LoadingButton } from '@mui/lab';
 import {
   Box,
+  Button,
   Checkbox,
   Divider,
   FormControlLabel,
@@ -144,13 +144,13 @@ export const RightsRetentionStrategySettings = () => {
                 </Field>
 
                 <StyledRightAlignedWrapper>
-                  <LoadingButton
+                  <Button
                     data-testid={dataTestId.editor.rrsSaveButton}
                     variant="contained"
                     loading={isSubmitting}
                     type="submit">
                     {t('common.save')}
-                  </LoadingButton>
+                  </Button>
                 </StyledRightAlignedWrapper>
               </Box>
             );

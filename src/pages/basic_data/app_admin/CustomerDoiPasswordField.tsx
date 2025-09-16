@@ -1,6 +1,5 @@
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { LoadingButton } from '@mui/lab';
 import { Button, DialogActions, DialogContent, IconButton, TextField, Tooltip } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
@@ -45,14 +44,14 @@ export const CustomerDoiPasswordField = ({ doiAgentId, disabled }: CustomerDoiPa
 
   return (
     <>
-      <LoadingButton
+      <Button
         disabled={disabled}
         sx={{ height: 'fit-content', minWidth: '7rem', alignSelf: 'center' }}
         variant="outlined"
         loading={doiAgentQuery.isPending && showPasswordInputModal}
         onClick={() => setShowPasswordInputModal(true)}>
         {t('basic_data.institutions.doi_password')}
-      </LoadingButton>
+      </Button>
 
       <Modal
         title={t('basic_data.institutions.doi_password')}

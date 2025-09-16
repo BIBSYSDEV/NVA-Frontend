@@ -3,6 +3,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { Box, CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { MAX_MESSAGE_LENGTH } from '../utils/constants';
 import { dataTestId } from '../utils/dataTestIds';
 
 interface MessageFormProps {
@@ -20,8 +21,6 @@ interface MessageFormData {
 const initValues: MessageFormData = {
   message: '',
 };
-
-const maxMessageLength = 160;
 
 export const MessageForm = ({
   confirmAction,
@@ -47,7 +46,7 @@ export const MessageForm = ({
                 {...field}
                 data-testid={dataTestId.tasksPage.messageField}
                 slotProps={{
-                  htmlInput: { maxLength: maxMessageLength },
+                  htmlInput: { maxLength: MAX_MESSAGE_LENGTH },
                   formHelperText: { sx: { textAlign: 'end' } },
                   input: {
                     endAdornment: (
@@ -76,7 +75,7 @@ export const MessageForm = ({
                 fullWidth
                 required
                 label={fieldLabel ?? t('common.message')}
-                helperText={`${field.value.length}/${maxMessageLength}`}
+                helperText={`${field.value.length}/${MAX_MESSAGE_LENGTH}`}
               />
             )}
           </Field>

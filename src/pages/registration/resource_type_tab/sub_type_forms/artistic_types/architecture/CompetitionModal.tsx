@@ -122,7 +122,6 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                       }
                       setFieldValue(field.name, date ?? '');
                     }}
-                    views={['year', 'month', 'day']}
                     slotProps={{
                       textField: {
                         inputProps: {

@@ -2,10 +2,10 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
+import { HeadTitle } from '../../components/HeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
@@ -30,9 +30,9 @@ interface PublishStrategyButtonProps {
 const PublishStrategyButton = styled(ButtonBase, { shouldForwardProp: (prop) => prop !== 'isSelected' })(
   ({ isSelected }: PublishStrategyButtonProps) => ({
     padding: '0.5rem',
-    border: isSelected ? '2px solid' : '1px solid',
+    border: isSelected ? '3px solid' : '1px solid',
     borderRadius: '0.5rem',
-    opacity: isSelected ? 1 : 0.5,
+    opacity: isSelected ? 1 : 0.7,
   })
 );
 
@@ -55,9 +55,10 @@ export const PublishStrategySettings = () => {
 
   return (
     <>
-      <Helmet>
-        <title id="publish-strategy-label">{t('editor.publish_strategy.publish_strategy')}</title>
-      </Helmet>
+      <HeadTitle>{t('editor.publish_strategy.publish_strategy')}</HeadTitle>
+      <Typography variant="h1" gutterBottom id="publish-strategy-label">
+        {t('editor.publish_strategy.publish_strategy')}
+      </Typography>
 
       {!customer ? (
         <PageSpinner />

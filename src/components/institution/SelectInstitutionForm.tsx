@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import {
   Autocomplete,
   Box,
@@ -153,7 +152,7 @@ export const SelectInstitutionForm = ({
                       resetForm({ values: initialValuesOrganizationForm });
                       setFieldValue(field.name, value);
                     }}
-                    loading={organizationSearchQuery.isPending}
+                    loading={organizationSearchQuery.isFetching}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -234,14 +233,14 @@ export const SelectInstitutionForm = ({
                   {t('common.cancel')}
                 </Button>
               )}
-              <LoadingButton
+              <Button
                 variant="contained"
                 type="submit"
                 loading={isSubmitting}
                 disabled={!values.unit && !values.selectedSuggestedAffiliationId}
                 data-testid={dataTestId.registrationWizard.contributors.addSelectedAffiliationButton}>
                 {t('registration.contributors.add_affiliation')}
-              </LoadingButton>
+              </Button>
             </Box>
           </Box>
         </Form>

@@ -9,18 +9,16 @@ import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
-import { getFullName } from '../../../utils/user-helpers';
+import { getFullName, userCanDeleteMessage } from '../../../utils/user-helpers';
 import { MessageItemOrganization } from './MessageItemOrganization';
 import { MessageMenu } from './MessageMenu';
 import { ticketColor } from './TicketListItem';
 
 interface MessageListProps {
   ticket: Ticket;
-  refetchData?: () => void;
-  canDeleteMessage?: boolean;
 }
 
-export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: MessageListProps) => {
+export const TicketMessageList = ({ ticket }: MessageListProps) => {
   const messages = ticket.messages ?? [];
   const user = useSelector((store: RootState) => store.user);
 
@@ -36,26 +34,19 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
           m: 0,
           gap: '0.25rem',
         }}>
-        {messages.map((message) => (
-          <MessageItem
-            key={message.identifier}
-            text={message.text}
-            date={message.createdDate}
-            username={message.sender}
-            backgroundColor={ticketColor[ticket.type]}
-            menuElement={
-              !!user &&
-              (canDeleteMessage || user.nvaUsername === message.sender) && (
-                <MessageMenu
-                  ticketId={ticket.id}
-                  refetchData={refetchData}
-                  canDeleteMessage={!!message.text}
-                  messageIdentifier={message.identifier}
-                />
-              )
-            }
-          />
-        ))}
+        {messages.map((message) => {
+          const canDeleteMessage = !!user && userCanDeleteMessage(user, message, ticket.type);
+          return (
+            <MessageItem
+              key={message.identifier}
+              text={message.text}
+              date={message.createdDate}
+              username={message.sender}
+              backgroundColor={ticketColor[ticket.type]}
+              menuElement={canDeleteMessage && <MessageMenu messageId={message.id} />}
+            />
+          );
+        })}
       </Box>
     </ErrorBoundary>
   );
@@ -93,7 +84,7 @@ export const MessageItem = ({
         display: 'flex',
         flexDirection: 'column',
       }}>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center' }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center', gap: '0.3rem' }}>
         <Tooltip title={senderName ? senderName : t('common.unknown')}>
           <StyledTruncatableTypography
             data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}
@@ -107,17 +98,20 @@ export const MessageItem = ({
             )}
           </StyledTruncatableTypography>
         </Tooltip>
-        <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
-          {toDateString(date)}
-        </Typography>
+        {showOrganization ? (
+          <MessageItemOrganization organizationId={senderQuery.data?.institutionCristinId ?? ''} />
+        ) : (
+          <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
+            {toDateString(date)}
+          </Typography>
+        )}
         {menuElement}
-
-        {showOrganization && <MessageItemOrganization organizationId={senderQuery.data?.institutionCristinId ?? ''} />}
       </Box>
 
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
       <Box
+        sx={{ color: 'primary.main' }}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
         component={typeof text === 'string' ? Typography : 'div'}>
         {text ? text : <i>{t('my_page.messages.message_deleted')}</i>}

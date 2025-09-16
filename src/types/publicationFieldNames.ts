@@ -51,6 +51,7 @@ export enum DegreeType {
   Bachelor = 'DegreeBachelor',
   Master = 'DegreeMaster',
   Phd = 'DegreePhd',
+  ArtisticPhd = 'ArtisticDegreePhd',
   Licentiate = 'DegreeLicentiate',
   Other = 'OtherStudentWork',
 }
@@ -195,6 +196,7 @@ export enum DescriptionFieldNames {
 
 export enum FileFieldNames {
   AssociatedArtifacts = 'associatedArtifacts',
+  Doi = 'doi',
 }
 
 // The following fields should be present in "associatedArtifacts[index].<KEY> for files"
@@ -220,8 +222,6 @@ export enum ContributorFieldNames {
 export enum SpecificContributorFieldNames {
   Affiliations = 'affiliations',
   Corresponding = 'correspondingAuthor',
-  Id = 'identity.id',
-  Name = 'identity.name',
   RoleType = 'role.type',
   Sequence = 'sequence',
 }

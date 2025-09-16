@@ -2,16 +2,17 @@ import { Box } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
 import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
+import { NviCandidateProblemsContext } from '../../../context/NviCandidateProblemsContext';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
+import { getNviCandidatePath, IdentifierParams } from '../../../utils/urlPaths';
 import { Forbidden } from '../../errorpages/Forbidden';
 import NotFound from '../../errorpages/NotFound';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
@@ -20,14 +21,15 @@ import { NviCandidateActionPanel } from './NviCandidateActionPanel';
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
-  const location = useLocation<NviCandidatePageLocationState>();
+  const location = useLocation();
+  const locationState = location.state as NviCandidatePageLocationState;
   const { identifier } = useParams<IdentifierParams>();
 
-  const nviCandidateQueryKey = ['nviCandidate', identifier];
+  const nviCandidateQueryKey = ['nviCandidate', identifier ?? ''];
   const nviCandidateQuery = useQuery({
     enabled: !!identifier,
     queryKey: nviCandidateQueryKey,
-    queryFn: () => fetchNviCandidate(identifier),
+    queryFn: () => fetchNviCandidate(identifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
     retry(failureCount, error: Pick<AxiosError, 'response'>) {
       if (error.response?.status === 401) {
@@ -43,7 +45,7 @@ export const NviCandidatePage = () => {
   const registrationQuery = useFetchRegistration(registrationIdentifier);
 
   const nviQueryParams = location.state?.candidateOffsetState?.nviQueryParams;
-  const thisCandidateOffset = location.state?.candidateOffsetState?.currentOffset;
+  const thisCandidateOffset = locationState?.candidateOffsetState?.currentOffset;
 
   const hasOffset = typeof thisCandidateOffset === 'number';
   const isFirstCandidate = hasOffset && thisCandidateOffset === 0;
@@ -76,7 +78,7 @@ export const NviCandidatePage = () => {
   const previousCandidateState =
     hasOffset && nviQueryParams
       ? ({
-          ...location.state,
+          ...locationState,
           candidateOffsetState: {
             currentOffset: thisCandidateOffset - 1,
             nviQueryParams,
@@ -106,15 +108,15 @@ export const NviCandidatePage = () => {
       {registrationQuery.data && (
         <ErrorBoundary>
           <ErrorBoundary>
-            <PublicRegistrationContent registration={registrationQuery.data} />
+            <NviCandidateProblemsContext.Provider value={{ problems: nviCandidate?.problems }}>
+              <PublicRegistrationContent registration={registrationQuery.data} />
+            </NviCandidateProblemsContext.Provider>
 
             {previousCandidateIdentifier && (
               <NavigationIconButton
                 data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
-                to={{
-                  pathname: getNviCandidatePath(previousCandidateIdentifier),
-                  state: previousCandidateState,
-                }}
+                to={getNviCandidatePath(previousCandidateIdentifier)}
+                state={previousCandidateState}
                 title={t('tasks.nvi.previous_candidate')}
                 navigateTo={'previous'}
                 sx={{
@@ -127,10 +129,8 @@ export const NviCandidatePage = () => {
             {nextCandidateIdentifier && (
               <NavigationIconButton
                 data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
-                to={{
-                  pathname: getNviCandidatePath(nextCandidateIdentifier),
-                  state: nextCandidateState,
-                }}
+                to={getNviCandidatePath(nextCandidateIdentifier)}
+                state={nextCandidateState}
                 title={t('tasks.nvi.next_candidate')}
                 navigateTo={'next'}
                 sx={{

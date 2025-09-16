@@ -1,10 +1,11 @@
 import { List, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { ImportCandidatesSearchParam } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
+import { HeadTitle } from '../../../../components/HeadTitle';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { SearchForm } from '../../../../components/SearchForm';
@@ -12,12 +13,14 @@ import { SortSelector } from '../../../../components/SortSelector';
 import { useFetchImportCandidatesQuery } from '../../../../utils/hooks/useFetchImportCandidatesQuery';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../../utils/searchHelpers';
+import { SelectedImportCandidateFacetsList } from '../../../search/selected_facets/SelectedImportCandidateFacetsList';
 import { CentralImportResultItem } from './CentralImportResultItem';
 
 export const CentralImportPage = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const { importCandidateQuery, importCandidateParams } = useFetchImportCandidatesQuery();
 
@@ -25,7 +28,7 @@ export const CentralImportPage = () => {
     const syncedParams = syncParamsWithSearchFields(params);
     syncedParams.set(ImportCandidatesSearchParam.From, from);
     syncedParams.set(ImportCandidatesSearchParam.Size, results);
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   useEffect(() => {
@@ -38,41 +41,48 @@ export const CentralImportPage = () => {
 
   return (
     <section>
-      <Helmet>
-        <title>{t('basic_data.central_import.central_import')}</title>
-      </Helmet>
-      <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
+      <HeadTitle>{t('basic_data.central_import.central_import')}</HeadTitle>
+      <Typography component="h1" sx={visuallyHidden}>
+        {t('basic_data.central_import.central_import')}
+      </Typography>
+      <SearchForm
+        sx={{ mb: '1rem' }}
+        placeholder={t('tasks.search_placeholder')}
+        paginationOffsetParamName={ImportCandidatesSearchParam.From}
+      />
 
-      {importCandidateQuery.isPending ? (
-        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-      ) : searchResults.length > 0 ? (
-        <ListPagination
-          count={importCandidateQuery.data?.totalHits ?? 0}
-          rowsPerPage={importCandidateParams.size}
-          page={Math.floor(importCandidateParams.from / importCandidateParams.size) + 1}
-          onPageChange={(newPage) =>
-            updatePath(((newPage - 1) * importCandidateParams.size).toString(), importCandidateParams.size.toString())
-          }
-          onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
-          showPaginationTop
-          sortingComponent={
-            <SortSelector
-              sortKey={ImportCandidatesSearchParam.SortOrder}
-              orderKey={ImportCandidatesSearchParam.OrderBy}
-              paginationKey={ImportCandidatesSearchParam.From}
-              aria-label={t('search.sort_by')}
-              size="small"
-              variant="standard"
-              options={[
-                {
-                  orderBy: 'createdDate',
-                  sortOrder: 'desc',
-                  i18nKey: 'basic_data.central_import.sort_newest_first',
-                },
-                { orderBy: 'createdDate', sortOrder: 'asc', i18nKey: 'basic_data.central_import.sort_oldest_first' },
-              ]}
-            />
-          }>
+      <SelectedImportCandidateFacetsList aggregations={importCandidateQuery.data?.aggregations} />
+
+      <ListPagination
+        count={importCandidateQuery.data?.totalHits ?? 0}
+        rowsPerPage={importCandidateParams.size}
+        page={Math.floor(importCandidateParams.from / importCandidateParams.size) + 1}
+        onPageChange={(newPage) =>
+          updatePath(((newPage - 1) * importCandidateParams.size).toString(), importCandidateParams.size.toString())
+        }
+        onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
+        showPaginationTop
+        sortingComponent={
+          <SortSelector
+            sortKey={ImportCandidatesSearchParam.SortOrder}
+            orderKey={ImportCandidatesSearchParam.OrderBy}
+            paginationKey={ImportCandidatesSearchParam.From}
+            aria-label={t('search.sort_by')}
+            size="small"
+            variant="standard"
+            options={[
+              {
+                orderBy: 'createdDate',
+                sortOrder: 'desc',
+                i18nKey: 'basic_data.central_import.sort_newest_first',
+              },
+              { orderBy: 'createdDate', sortOrder: 'asc', i18nKey: 'basic_data.central_import.sort_oldest_first' },
+            ]}
+          />
+        }>
+        {importCandidateQuery.isPending ? (
+          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+        ) : searchResults.length > 0 ? (
           <List>
             {searchResults.map((importCandidate) => (
               <ErrorBoundary key={importCandidate.id}>
@@ -80,10 +90,10 @@ export const CentralImportPage = () => {
               </ErrorBoundary>
             ))}
           </List>
-        </ListPagination>
-      ) : (
-        <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>
-      )}
+        ) : (
+          <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>
+        )}
+      </ListPagination>
     </section>
   );
 };

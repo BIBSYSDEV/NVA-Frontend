@@ -39,7 +39,7 @@ export const AffiliationFormSection = () => {
 
   return (
     <section>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {t('common.employments')}
       </Typography>
       {employments.length === 0 ? (
@@ -94,7 +94,6 @@ export const AffiliationFormSection = () => {
                   label={t('common.end_date')}
                   value={field.value ? new Date(field.value) : null}
                   onChange={(date: any) => setFieldValue(field.name, date ?? '')}
-                  views={['year', 'month', 'day']}
                   minDate={
                     employments[employmentIndex].startDate
                       ? new Date(employments[employmentIndex].startDate)

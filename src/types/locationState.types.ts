@@ -1,16 +1,12 @@
 import { FetchNviCandidatesParams } from '../api/searchApi';
 import { TicketType } from './publication_types/ticket.types';
-import { RegistrationTab } from './registration.types';
 
 export interface PreviousPathLocationState {
   previousPath?: string;
 }
 
-export type HighestTouchedTab = RegistrationTab | -1;
-
 export interface RegistrationFormLocationState extends PreviousPathLocationState {
-  highestValidatedTab?: HighestTouchedTab;
-  goToLandingPageAfterSaveAndSee?: boolean;
+  skipInitialValidation?: boolean;
 }
 
 export interface PreviousSearchLocationState {
@@ -21,7 +17,7 @@ export interface SelectedTicketTypeLocationState {
   selectedTicketType?: TicketType;
 }
 
-export type BasicDataLocationState = PreviousPathLocationState & PreviousSearchLocationState;
+export type BasicDataLocationState = (PreviousPathLocationState & PreviousSearchLocationState) | null;
 
 export interface NviCandidatePageLocationState extends PreviousSearchLocationState {
   candidateOffsetState?: {

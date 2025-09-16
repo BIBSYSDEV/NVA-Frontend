@@ -1,7 +1,6 @@
 import { Chip, ChipProps, Skeleton } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchOrganization } from '../../../../api/cristinApi';
+import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
 interface ViewingScopeChipProps extends ChipProps {
@@ -11,14 +10,7 @@ interface ViewingScopeChipProps extends ChipProps {
 export const ViewingScopeChip = ({ organizationId, ...props }: ViewingScopeChipProps) => {
   const { t } = useTranslation();
 
-  const organizationQuery = useQuery({
-    enabled: !!organizationId,
-    queryKey: [organizationId],
-    queryFn: organizationId ? () => fetchOrganization(organizationId) : undefined,
-    meta: { errorMessage: t('feedback.error.get_institution') },
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-  });
+  const organizationQuery = useFetchOrganization(organizationId);
 
   return (
     <Chip

@@ -1,9 +1,9 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
+import { HeadTitle } from '../../components/HeadTitle';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AboutContent } from '../infopages/AboutContent';
@@ -11,7 +11,7 @@ import HomePage from './HomePage';
 
 const Dashboard = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [showBanner, setShowBanner] = useState(localStorage.getItem(LocalStorageKey.ShowTagline) !== 'false');
   const [readMore, setReadMore] = useState(false);
 
@@ -21,9 +21,9 @@ const Dashboard = () => {
     const loginPath = localStorage.getItem(LocalStorageKey.RedirectPath);
     if (loginPath) {
       localStorage.removeItem(LocalStorageKey.RedirectPath);
-      history.push(loginPath);
+      navigate(loginPath, { replace: true });
     }
-  }, [history]);
+  }, [navigate]);
 
   return (
     <Box
@@ -33,23 +33,23 @@ const Dashboard = () => {
         justifyItems: 'center',
         width: '100%',
       }}>
-      <Helmet>
-        <title>{t('common.start_page')}</title>
-      </Helmet>
+      <HeadTitle>{t('common.start_page')}</HeadTitle>
+
       {showBanner && (
         <Box sx={{ bgcolor: 'secondary.main', p: '1rem 0.5rem', width: '100%' }}>
           <Box
             sx={{
+              justifyItems: 'center',
               gridArea: 'tagline',
               display: 'grid',
               gridTemplateAreas: {
                 xs: "'text-tagline close-button' 'short-description short-description'",
-                md: "'. text-tagline text-tagline close-button' '. . short-description .'",
+                md: "'. text-tagline close-button' '. short-description .'",
               },
-              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 2.5fr 1fr' },
+              gridTemplateColumns: { xs: '1fr', md: '1fr 2.5fr 1fr' },
             }}>
             <Typography
-              variant="h1"
+              fontWeight={600}
               sx={{
                 gridArea: 'text-tagline',
                 fontSize: { xs: '2rem', sm: '3rem' },
@@ -70,21 +70,27 @@ const Dashboard = () => {
             <Typography
               variant="h3"
               variantMapping={{ h3: 'p' }}
-              sx={{ mt: '1.5rem', maxWidth: '40rem', gridArea: 'short-description', whiteSpace: 'pre-wrap' }}>
+              sx={{
+                mt: '1.5rem',
+                maxWidth: '45rem',
+                gridArea: 'short-description',
+                whiteSpace: 'pre-wrap',
+              }}>
               {t('about.short_description')}
             </Typography>
           </Box>
           <Box
             sx={{
+              justifyItems: 'center',
               gridArea: 'description',
               display: 'grid',
               gridTemplateAreas: {
                 xs: "'button' 'text-description'",
-                md: "'. . button .' '. text-description text-description .'",
+                md: "'. button .' '. text-description .'",
               },
-              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 2.5fr 1fr' },
+              gridTemplateColumns: { xs: '1fr', md: '1fr 2.5fr 1fr' },
             }}>
-            <Collapse in={readMore} sx={{ gridArea: 'text-description', mt: '1rem' }}>
+            <Collapse in={readMore} sx={{ gridArea: 'text-description', mt: '1rem', maxWidth: '45rem' }}>
               <AboutContent />
             </Collapse>
             <Box sx={{ mt: '1rem', gridArea: 'button' }}>

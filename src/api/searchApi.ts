@@ -20,6 +20,7 @@ import {
   RegistrationStatus,
 } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
+import { getDoiValue } from '../utils/general-helpers';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
@@ -42,19 +43,21 @@ export enum TicketSearchParam {
   OrganizationId = 'organizationId',
 }
 
+export type TicketOrderBy = 'createdDate' | 'modifiedDate';
+
 export interface FetchTicketsParams {
   [TicketSearchParam.Aggregation]?: 'all' | null;
   [TicketSearchParam.Assignee]?: string | null;
   [TicketSearchParam.CreatedDate]?: string | null;
   [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
   [TicketSearchParam.From]?: number | null;
-  [TicketSearchParam.OrderBy]?: 'createdDate' | null;
+  [TicketSearchParam.OrderBy]?: TicketOrderBy | null;
   [TicketSearchParam.Owner]?: string | null;
   [TicketSearchParam.PublicationType]?: string | null;
   [TicketSearchParam.Query]?: string | null;
   [TicketSearchParam.Results]?: number | null;
   [TicketSearchParam.Role]?: 'creator';
-  [TicketSearchParam.SortOrder]?: 'desc' | 'asc' | null;
+  [TicketSearchParam.SortOrder]?: SortOrder | null;
   [TicketSearchParam.Status]?: string | null;
   [TicketSearchParam.Type]?: string | null;
   [TicketSearchParam.ViewedByNot]?: string | null;
@@ -114,7 +117,7 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 
   searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());
   searchParams.set(TicketSearchParam.Results, (params.results ?? 10).toString());
-  searchParams.set(TicketSearchParam.OrderBy, params.orderBy || 'createdDate');
+  searchParams.set(TicketSearchParam.OrderBy, params.orderBy || 'modifiedDate');
   searchParams.set(TicketSearchParam.SortOrder, params.sortOrder || 'desc');
 
   const getTickets = await authenticatedApiRequest2<CustomerTicketSearchResponse>({
@@ -219,7 +222,7 @@ export const fetchEmployees = async (
   signal?: AbortSignal
 ) => {
   if (!organizationId) {
-    return;
+    return null;
   }
   const sortQueryParam = 'sort=name';
   const nameQueryParam = nameQuery ? `&name=${nameQuery}` : '';
@@ -235,29 +238,39 @@ export enum NviCandidatesSearchParam {
   Aggregation = 'aggregation',
   Assignee = 'assignee',
   ExcludeSubUnits = 'excludeSubUnits',
+  ExcludeUnassigned = 'excludeUnassigned',
+  GlobalStatus = 'globalStatus',
   Filter = 'filter',
   Offset = 'offset',
   OrderBy = 'orderBy',
   Query = 'query',
   Size = 'size',
+  Status = 'status',
   SortOrder = 'sortOrder',
   Year = 'year',
 }
 
 export type NviCandidateOrderBy = 'createdDate';
 
+export type NviCandidateFilter = 'rejectedByOthers' | 'approvedByOthers' | 'collaboration';
+export type NviCandidateStatus = 'pending' | 'approved' | 'rejected';
+export type NviCandidateGlobalStatus = NviCandidateStatus | 'dispute';
+
 export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Affiliations]?: string[] | null;
   [NviCandidatesSearchParam.Aggregation]?: 'all' | NviCandidateSearchStatus | null;
   [NviCandidatesSearchParam.Assignee]?: string | null;
   [NviCandidatesSearchParam.ExcludeSubUnits]?: boolean | null;
-  [NviCandidatesSearchParam.Filter]?: NviCandidateSearchStatus | null;
+  [NviCandidatesSearchParam.Filter]?: NviCandidateFilter | null;
+  [NviCandidatesSearchParam.GlobalStatus]?: NviCandidateGlobalStatus[] | null;
   [NviCandidatesSearchParam.Offset]?: number | null;
   [NviCandidatesSearchParam.OrderBy]?: NviCandidateOrderBy | null;
   [NviCandidatesSearchParam.Query]?: string | null;
   [NviCandidatesSearchParam.Size]?: number | null;
+  [NviCandidatesSearchParam.Status]?: NviCandidateStatus | null;
   [NviCandidatesSearchParam.SortOrder]?: SortOrder | null;
   [NviCandidatesSearchParam.Year]?: number | null;
+  [NviCandidatesSearchParam.ExcludeUnassigned]?: boolean | null;
 }
 
 export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
@@ -275,11 +288,20 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
   if (params.assignee) {
     searchParams.set(NviCandidatesSearchParam.Assignee, params.assignee);
   }
-  if (params.excludeSubUnits === true || params.excludeSubUnits === false) {
+  if (params.excludeSubUnits) {
     searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, params.excludeSubUnits.toString());
+  }
+  if (params.excludeUnassigned) {
+    searchParams.set(NviCandidatesSearchParam.ExcludeUnassigned, params.excludeUnassigned.toString());
   }
   if (params.filter) {
     searchParams.set(NviCandidatesSearchParam.Filter, params.filter);
+  }
+  if (params.status) {
+    searchParams.set(NviCandidatesSearchParam.Status, params.status);
+  }
+  if (params.globalStatus) {
+    searchParams.set(NviCandidatesSearchParam.GlobalStatus, params.globalStatus.join(','));
   }
   if (params.query) {
     searchParams.set(NviCandidatesSearchParam.Query, params.query);
@@ -304,7 +326,7 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
 
 export const fetchNviCandidate = async (identifier: string) => {
   if (!identifier) {
-    return;
+    return null;
   }
 
   const getNviCandidates = await authenticatedApiRequest2<NviCandidate>({
@@ -314,8 +336,11 @@ export const fetchNviCandidate = async (identifier: string) => {
   return getNviCandidates.data;
 };
 
+export type RegistrationSearchResponse = SearchResponse2<RegistrationSearchItem, RegistrationAggregations>;
+
 export enum ResultParam {
   Abstract = 'abstract',
+  AllScientificValues = 'allScientificValues',
   Aggregation = 'aggregation',
   Category = 'category',
   CategoryNot = 'categoryNot',
@@ -342,9 +367,9 @@ export enum ResultParam {
   Project = 'project',
   PublicationLanguageShould = 'publicationLanguageShould',
   PublicationPages = 'publicationPages',
+  PublicationYear = 'publicationYear',
   PublicationYearBefore = 'publicationYearBefore',
   PublicationYearSince = 'publicationYearSince',
-  PublicationYearShould = 'publicationYearShould',
   Publisher = 'publisher',
   Query = 'query',
   Results = 'results',
@@ -371,6 +396,7 @@ export enum ResultSearchOrder {
 
 export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
+  [ResultParam.AllScientificValues]?: string | null;
   [ResultParam.Aggregation]?: 'all' | 'none' | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
   [ResultParam.CategoryNot]?: PublicationInstanceType | PublicationInstanceType[] | null;
@@ -399,7 +425,7 @@ export interface FetchResultsParams {
   [ResultParam.PublicationPages]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
   [ResultParam.PublicationYearSince]?: string | null;
-  [ResultParam.PublicationYearShould]?: string | null;
+  [ResultParam.PublicationYear]?: string | null;
   [ResultParam.Publisher]?: string | null;
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
@@ -423,6 +449,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
 
   if (params.abstract) {
     searchParams.set(ResultParam.Abstract, encodeURIComponent(params.abstract));
+  }
+  if (params.allScientificValues) {
+    searchParams.set(ResultParam.AllScientificValues, params.allScientificValues);
   }
   if (params.aggregation) {
     searchParams.set(ResultParam.Aggregation, params.aggregation);
@@ -452,7 +481,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.CristinIdentifier, params.cristinIdentifier);
   }
   if (params.doi) {
-    searchParams.set(ResultParam.Doi, params.doi);
+    const formattedDoiValue = getDoiValue(params.doi);
+    searchParams.set(ResultParam.Doi, formattedDoiValue);
   }
   if (params.excludeSubunits) {
     searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());
@@ -499,6 +529,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.publicationPages) {
     searchParams.set(ResultParam.PublicationPages, params.publicationPages);
   }
+  if (params.publicationYear) {
+    searchParams.set(ResultParam.PublicationYear, params.publicationYear);
+  }
   if (params.publicationYearBefore) {
     if (!params.publicationYearSince || +params.publicationYearSince <= +params.publicationYearBefore) {
       searchParams.set(ResultParam.PublicationYearBefore, params.publicationYearBefore);
@@ -508,9 +541,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     if (!params.publicationYearBefore || +params.publicationYearSince <= +params.publicationYearBefore) {
       searchParams.set(ResultParam.PublicationYearSince, params.publicationYearSince);
     }
-  }
-  if (params.publicationYearShould) {
-    searchParams.set(ResultParam.PublicationYearShould, params.publicationYearShould);
   }
   if (params.publisher) {
     searchParams.set(ResultParam.Publisher, params.publisher);
@@ -552,37 +582,39 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
   searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
-  searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
+  searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.ModifiedDate);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  const getResults = await apiRequest2<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>({
+  const getResults = await apiRequest2<RegistrationSearchResponse>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
+    // TODO: Remove version when it becomes default
+    headers: { accept: 'application/json; version=2024-12-01' },
     signal,
   });
 
   return getResults.data;
 };
 
-export enum CustomerResultParam {
+export enum ProtectedResultParam {
   Status = 'status',
 }
 
-export interface FetchCustomerResultsParams
+export interface FetchProtectedResultsParams
   extends Pick<
     FetchResultsParams,
     ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
   > {
-  [CustomerResultParam.Status]?: RegistrationStatus[] | null;
+  [ProtectedResultParam.Status]?: RegistrationStatus[] | null;
 }
 
-export const fetchCustomerResults = async (params: FetchCustomerResultsParams, signal?: AbortSignal) => {
+export const fetchCustomerResults = async (params: FetchProtectedResultsParams, signal?: AbortSignal) => {
   const searchParams = new URLSearchParams();
 
   if (params.status && params.status.length > 0) {
-    searchParams.set(CustomerResultParam.Status, params.status.join(','));
+    searchParams.set(ProtectedResultParam.Status, params.status.join(','));
   }
   if (params.query) {
-    searchParams.set(ResultParam.Title, params.query);
+    searchParams.set(ResultParam.Query, params.query);
   }
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
@@ -590,12 +622,31 @@ export const fetchCustomerResults = async (params: FetchCustomerResultsParams, s
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  const getCustomerResults = await authenticatedApiRequest2<
-    SearchResponse2<RegistrationSearchItem, RegistrationAggregations>
-  >({
+  const getCustomerResults = await authenticatedApiRequest2<RegistrationSearchResponse>({
     url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
+    headers: { accept: 'application/json; version=2024-12-01' },
     signal,
   });
 
   return getCustomerResults.data;
 };
+
+export const fetchMyResults = async (params: FetchProtectedResultsParams, signal?: AbortSignal) => {
+  const getMyResults = await authenticatedApiRequest2<RegistrationSearchResponse>({
+    url: SearchApiPath.MyRegistrations,
+    params: {
+      [ResultParam.Query]: params.query,
+      [ProtectedResultParam.Status]: params.status?.join(','),
+      [ResultParam.From]: params.from || null,
+      [ResultParam.Results]: params.results ?? 10,
+      [ResultParam.Order]: params.order ?? ResultSearchOrder.ModifiedDate,
+      [ResultParam.Sort]: params.sort ?? ('desc' satisfies SortOrder),
+    },
+    signal,
+  });
+  return getMyResults.data;
+};
+
+export enum ChannelClaimParams {
+  ViewingOptions = 'viewingOptions',
+}

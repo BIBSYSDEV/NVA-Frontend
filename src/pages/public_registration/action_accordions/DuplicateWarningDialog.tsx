@@ -1,7 +1,7 @@
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';

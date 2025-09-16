@@ -1,7 +1,5 @@
 # Nasjonalt Vitenarkiv Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Environment variables
 
 To run this app, you need to add a set of environment variables to a `.env` file located at the root of the project folder (`/NVA-Frontend/.env`).
@@ -26,6 +24,10 @@ Info about all environment variables are listed in the table below. Note that yo
 | VITE_DOMAIN                       | `XXXXXXXXX.auth.eu-west-1.amazoncognito.com` | Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify.                                |
 | VITE_ORCID_BASE_URL               | `https://sandbox.orcid.org`                  | Base URL to ORCID integration.                                                                                 |
 | VITE_ORCID_CLIENT_ID              | `APP-XXXXXXXXX`                              | Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify.                                |
+| VITE_MAINTENANCE_MESSAGE          | `<h1>Under maintenance</h1><p>...</p>`       | Information to show users when the service has downtime.                                                       |
+| VITE_MAINTENANCE_SEVERITY         | `block`                                      | Blocks usage of app if `value=block`, otherwise shows the message in banner while app behaves normally         |
+| VITE_MAINTENANCE_START            | `2025-01-01T12:00:00.000Z`                   | If supplied, the `VITE_MAINTENANCE_MESSAGE` will not be shown to users before this time (ISO format).          |
+| VITE_MAINTENANCE_END              | `2025-01-02T12:00:00.000Z`                   | If supplied, the `VITE_MAINTENANCE_MESSAGE` will not be shown to users after this time (ISO format).           |
 | VITE_MATOMO_CONTAINER_URL         | `https://matomo.sikt.no/js/container_XXX`    | Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify.                                |
 
 ## Available Scripts

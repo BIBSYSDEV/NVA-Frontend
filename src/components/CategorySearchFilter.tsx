@@ -1,7 +1,7 @@
 import { Box, Chip } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { ResultParam, TicketSearchParam } from '../api/searchApi';
 import { CategoryFilterDialog } from '../pages/search/advanced_search/CategoryFilterDialog';
 import { PublicationInstanceType } from '../types/registration.types';
@@ -17,8 +17,8 @@ interface CategorySearchFilterProps {
 
 export const CategorySearchFilter = ({ searchParam, disabled, hideHeading }: CategorySearchFilterProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
   const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
 

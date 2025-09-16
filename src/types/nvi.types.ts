@@ -10,7 +10,7 @@ interface NviCandidateContributor {
   name: string;
 }
 
-type NviCandidateStatus = 'New' | 'Pending' | 'Rejected' | 'Approved';
+export type NviCandidateStatus = 'New' | 'Pending' | 'Rejected' | 'Approved';
 
 interface NviCandidateSearchHitApproval {
   institutionId: string;
@@ -50,15 +50,10 @@ export type NviCandidateSearchStatus = keyof NviCandidateAggregations;
 
 interface NviCandidateAggregations {
   approved: AggregationCount;
-  approvedCollaboration: AggregationCount;
-  assigned: AggregationCount;
-  assignedCollaboration: AggregationCount;
+  completed: AggregationCount;
   dispute: AggregationCount;
   pending: AggregationCount;
-  pendingCollaboration: AggregationCount;
   rejected: AggregationCount;
-  rejectedCollaboration: AggregationCount;
-  completed: AggregationCount;
   totalCount: AggregationCount;
 }
 
@@ -87,6 +82,16 @@ export interface RejectedApproval extends FinalizedApproval {
   reason: string;
 }
 
+type NviAllowedOperation =
+  | 'approval/reject-candidate'
+  | 'approval/approve-candidate'
+  | 'approval/reset-approval'
+  | 'note/create-note';
+
+export interface NviCandidateProblem {
+  type: 'UnverifiedCreatorExists' | 'UnverifiedCreatorFromOrganizationProblem';
+}
+
 export interface NviCandidate {
   id: string;
   publicationId: string;
@@ -97,6 +102,8 @@ export interface NviCandidate {
     year?: string;
   };
   status?: 'Reported';
+  allowedOperations: NviAllowedOperation[];
+  problems: NviCandidateProblem[];
 }
 
 export interface Note {

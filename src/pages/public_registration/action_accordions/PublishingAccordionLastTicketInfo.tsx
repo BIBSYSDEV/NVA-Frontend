@@ -1,18 +1,20 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { MessageForm } from '../../../components/MessageForm';
+import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getRegistrationWizardLink, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { PendingPublishingTicketForCuratorSection } from './PendingPublishingTicketForCuratorSection';
 
 interface PublishingAccordionLastTicketInfoProps {
   publishingTicket: PublishingTicket;
   canApprovePublishingRequest: boolean;
+  canCreatePublishingRequest: boolean;
   registrationHasApprovedFile: boolean;
   refetchData: () => Promise<void>;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
@@ -22,6 +24,7 @@ interface PublishingAccordionLastTicketInfoProps {
 export const PublishingAccordionLastTicketInfo = ({
   publishingTicket,
   canApprovePublishingRequest,
+  canCreatePublishingRequest,
   registrationHasApprovedFile,
   registrationIsValid,
   addMessage,
@@ -41,6 +44,10 @@ export const PublishingAccordionLastTicketInfo = ({
 
   const isClosedTicket = publishingTicket.status === 'Closed';
   const isPendingTicket = publishingTicket.status === 'New' || publishingTicket.status === 'Pending';
+
+  const showMessages =
+    (canCreatePublishingRequest || canApprovePublishingRequest) &&
+    (isPendingTicket || (isClosedTicket && publishingTicket.messages.length > 0));
 
   return (
     <>
@@ -86,7 +93,8 @@ export const PublishingAccordionLastTicketInfo = ({
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
                 endIcon={<EditIcon />}
                 component={RouterLink}
-                to={getRegistrationWizardLink(publishingTicket.publicationIdentifier, {
+                state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
+                to={getRegistrationWizardPath(publishingTicket.publicationIdentifier, {
                   tab: RegistrationTab.FilesAndLicenses,
                 })}>
                 {t('registration.edit_registration')}
@@ -117,23 +125,35 @@ export const PublishingAccordionLastTicketInfo = ({
         </>
       )}
 
-      <Divider sx={{ my: '1rem' }} />
-      <Typography fontWeight="bold" gutterBottom>
-        {t('common.messages')}
-      </Typography>
-      <Typography gutterBottom>
-        {window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue)
-          ? t('registration.public_page.publishing_request_message_about_curator')
-          : t('registration.public_page.publishing_request_message_about')}
-      </Typography>
+      {showMessages && (
+        <>
+          <Divider sx={{ my: '1rem' }} />
+          <Typography fontWeight="bold" gutterBottom>
+            {t('common.messages')}
+          </Typography>
+          {isPendingTicket &&
+            (window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) ? (
+              <Typography gutterBottom>
+                {t('registration.public_page.publishing_request_message_about_curator')}
+              </Typography>
+            ) : (
+              <Trans
+                i18nKey="registration.public_page.publishing_request_message_about"
+                components={{ p: <Typography gutterBottom /> }}
+              />
+            ))}
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        <MessageForm
-          confirmAction={async (message) => await addMessage(publishingTicket.id, message)}
-          hideRequiredAsterisk
-        />
-        {publishingTicket.messages.length > 0 && <TicketMessageList ticket={publishingTicket} />}
-      </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            {isPendingTicket && (
+              <MessageForm
+                confirmAction={async (message) => await addMessage(publishingTicket.id, message)}
+                hideRequiredAsterisk
+              />
+            )}
+            {publishingTicket.messages.length > 0 && <TicketMessageList ticket={publishingTicket} />}
+          </Box>
+        </>
+      )}
     </>
   );
 };

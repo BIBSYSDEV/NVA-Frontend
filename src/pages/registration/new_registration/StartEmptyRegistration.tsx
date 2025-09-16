@@ -1,11 +1,12 @@
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import { AccordionSummary, Box, CircularProgress, Typography } from '@mui/material';
+import { AccordionSummary, CircularProgress, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
+import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
@@ -17,7 +18,7 @@ const labelId = 'start-empty-label';
 export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccordionProps, 'onChange'>) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const createEmptyRegistration = async () => {
@@ -27,23 +28,27 @@ export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccor
       dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
-      history.push(getRegistrationWizardPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });
+      navigate(getRegistrationWizardPath(createRegistrationResponse.data.identifier), {
+        state: { skipInitialValidation: true } satisfies RegistrationFormLocationState,
+      });
     }
   };
 
   return (
     <RegistrationAccordion elevation={5} onChange={onChange} onClick={createEmptyRegistration}>
-      <AccordionSummary data-testid={dataTestId.registrationWizard.new.emptyRegistrationAccordion}>
+      <AccordionSummary
+        data-testid={dataTestId.registrationWizard.new.emptyRegistrationAccordion}
+        sx={{ display: 'flex', alignItems: 'center' }}>
         <InsertDriveFileIcon />
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-          <div>
-            <Typography variant="h2" id={labelId}>
-              {t('registration.registration.start_with_empty_registration_title')}
-            </Typography>
-            <Typography>{t('registration.registration.start_with_empty_registration_description')}</Typography>
-          </div>
-          {isLoading && <CircularProgress aria-labelledby={labelId} />}
-        </Box>
+        <span style={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography variant="h2" component="span" id={labelId}>
+            {t('registration.registration.start_with_empty_registration_title')}
+          </Typography>
+          <Typography component="span">
+            {t('registration.registration.start_with_empty_registration_description')}
+          </Typography>
+        </span>
+        {isLoading && <CircularProgress aria-labelledby={labelId} sx={{ marginLeft: 'auto' }} />}
       </AccordionSummary>
     </RegistrationAccordion>
   );

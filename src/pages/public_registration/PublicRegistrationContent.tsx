@@ -2,24 +2,33 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { fetchResults, FetchResultsParams } from '../../api/searchApi';
+import { HeadTitle } from '../../components/HeadTitle';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { RegistrationIconHeader } from '../../components/RegistrationIconHeader';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { PreviousPathLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getTitleString, isBook, isReport, isResearchData, userHasAccessRight } from '../../utils/registration-helpers';
-import { getRegistrationWizardLink } from '../../utils/urlPaths';
+import {
+  getAssociatedLinks,
+  getTitleString,
+  isBook,
+  isReport,
+  isResearchData,
+  userHasAccessRight,
+} from '../../utils/registration-helpers';
+import { getWizardPathByRegistration } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
+import { AssociatedLinksLandingPageAccordion } from './public_links/AssociatedLinksLandingPageAccordion';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
 import { ShowRelatedDocuments } from './public_links/ShowRelatedDocuments';
@@ -55,21 +64,20 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const userCanEditRegistration = userHasAccessRight(registration, 'update');
+  const userCanEditRegistration = userHasAccessRight(registration, 'partial-update');
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
-      {registration.status === RegistrationStatus.Published && <StructuredSeoData uri={registration.id} />}
-      <Helmet>
-        <title>{mainTitle}</title>
-      </Helmet>
+      <HeadTitle>{mainTitle}</HeadTitle>
+      {registration.status === RegistrationStatus.Published && <StructuredSeoData registration={registration} />}
+
       <Box sx={visuallyHidden}>
         <DeletedPublicationInformation registration={registration} />
       </Box>
       <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'registration.main' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <RegistrationIconHeader
-            publicationInstanceType={entityDescription?.reference?.publicationInstance.type}
+            publicationInstanceType={entityDescription?.reference?.publicationInstance?.type}
             publicationDate={entityDescription?.publicationDate}
             showYearOnly
             textColor="primary.contrastText"
@@ -83,7 +91,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <Tooltip title={t('registration.edit_registration')}>
             <IconButton
               component={RouterLink}
-              to={getRegistrationWizardLink(identifier)}
+              state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
+              to={getWizardPathByRegistration(registration)}
               data-testid={dataTestId.registrationLandingPage.editButton}
               sx={{ ml: 'auto', color: 'inherit' }}>
               <EditIcon />
@@ -162,7 +171,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </>
         )}
 
-        {entityDescription?.reference?.publicationInstance?.type === DegreeType.Phd &&
+        {(entityDescription?.reference?.publicationInstance?.type === DegreeType.Phd ||
+          entityDescription?.reference?.publicationInstance?.type === DegreeType.ArtisticPhd) &&
           entityDescription.reference.publicationInstance.related &&
           entityDescription.reference.publicationInstance.related.length > 0 && (
             <LandingPageAccordion
@@ -265,6 +275,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <ListRegistrationRelations registrations={relatedRegistrationsQuery.data.hits} />
           </LandingPageAccordion>
         )}
+
+        <AssociatedLinksLandingPageAccordion associatedLinks={getAssociatedLinks(registration.associatedArtifacts)} />
       </BackgroundDiv>
     </Paper>
   );

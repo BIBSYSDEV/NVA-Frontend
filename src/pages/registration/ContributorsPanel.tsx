@@ -4,7 +4,7 @@ import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTo
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledInfoBanner } from '../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../context/NviCandidateContext';
+import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { EntityDescription, Registration } from '../../types/registration.types';
 import { contributorConfig } from '../../utils/registration-helpers';
@@ -22,7 +22,7 @@ export const ContributorsPanel = () => {
   const contributorsTouched = (touched.entityDescription as unknown as FormikTouched<EntityDescription>)?.contributors;
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(RegistrationFormContext);
 
   const contributorConfigResult = publicationInstanceType ? contributorConfig[publicationInstanceType] : null;
   const primaryRoles = contributorConfigResult?.primaryRoles ?? [];

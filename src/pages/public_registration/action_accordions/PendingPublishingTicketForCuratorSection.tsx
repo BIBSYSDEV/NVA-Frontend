@@ -1,19 +1,20 @@
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
+import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { RegistrationTab } from '../../../types/registration.types';
+import { MAX_MESSAGE_LENGTH } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getRegistrationWizardLink } from '../../../utils/urlPaths';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 
 interface PendingPublishingTicketForCuratorSectionProps {
   publishingTicket: PublishingTicket;
@@ -67,31 +68,33 @@ export const PendingPublishingTicketForCuratorSection = ({
         i18nKey="registration.public_page.tasks_panel.approve_publishing_request_description"
         components={[<Typography key="1" />]}
       />
-      <LoadingButton
+      <Button
         sx={{ bgcolor: 'white', mb: '0.5rem' }}
         variant="outlined"
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
         startIcon={<InsertDriveFileIcon />}
+        loadingPosition="start"
         onClick={() => ticketMutation.mutate({ status: 'Completed' })}
         loading={ticketMutation.isPending && ticketMutation.variables?.status === 'Completed'}
         disabled={isLoadingData || ticketMutation.isPending || !registrationIsValid}>
         {t('registration.public_page.approve_publish_request')} ({publishingTicket.filesForApproval.length})
-      </LoadingButton>
+      </Button>
 
       <Trans
         i18nKey="registration.public_page.tasks_panel.reject_publishing_request_description"
         values={{ count: publishingTicket.filesForApproval.length }}
         components={[<Typography key="1" />]}
       />
-      <LoadingButton
+      <Button
         sx={{ bgcolor: 'white', mb: '0.5rem' }}
         variant="outlined"
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
         startIcon={<CloseIcon />}
+        loadingPosition="start"
         onClick={() => setOpenRejectionDialog(true)}
         disabled={isLoadingData || ticketMutation.isPending}>
         {t('registration.public_page.reject_publish_request')} ({publishingTicket.filesForApproval.length})
-      </LoadingButton>
+      </Button>
 
       <Typography>{t('registration.public_page.tasks_panel.edit_publishing_request_description')}</Typography>
       <Button
@@ -101,7 +104,8 @@ export const PendingPublishingTicketForCuratorSection = ({
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
         endIcon={<EditIcon />}
         component={RouterLink}
-        to={getRegistrationWizardLink(publishingTicket.publicationIdentifier, {
+        state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
+        to={getRegistrationWizardPath(publishingTicket.publicationIdentifier, {
           tab: RegistrationTab.FilesAndLicenses,
         })}>
         {t('registration.edit_registration')}
@@ -122,11 +126,11 @@ export const PendingPublishingTicketForCuratorSection = ({
             fullWidth
             required
             label={t('registration.public_page.reason_for_rejection')}
-            helperText={`${rejectionReason.length}/160`}
+            helperText={`${rejectionReason.length}/${MAX_MESSAGE_LENGTH}`}
             value={rejectionReason}
             onChange={(event) => setRejectionReason(event.target.value)}
             slotProps={{
-              htmlInput: { maxLength: 160 },
+              htmlInput: { maxLength: MAX_MESSAGE_LENGTH },
               formHelperText: { sx: { textAlign: 'end' } },
             }}
           />
@@ -137,14 +141,14 @@ export const PendingPublishingTicketForCuratorSection = ({
             onClick={() => setOpenRejectionDialog(false)}>
             {t('common.cancel')}
           </Button>
-          <LoadingButton
+          <Button
             data-testid={dataTestId.registrationLandingPage.tasksPanel.rejectionDialogConfirmButton}
             disabled={!rejectionReason}
             loading={ticketMutation.isPending && ticketMutation.variables?.status === 'Closed'}
             variant="contained"
             onClick={() => ticketMutation.mutate({ status: 'Closed' })}>
             {t('common.reject')}
-          </LoadingButton>
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>

@@ -1,33 +1,36 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ErrorIcon from '@mui/icons-material/Error';
-import { Autocomplete, Box, Button, CircularProgress, Divider, MenuItem, TextField } from '@mui/material';
+import { Autocomplete, Box, Button, CircularProgress, Divider, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import { getLanguageByIso6393Code } from 'nva-language';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDuplicateRegistrationSearch } from '../../api/hooks/useDuplicateRegistrationSearch';
 import { InputContainerBox } from '../../components/styled/Wrappers';
+import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
-import { registrationLanguageOptions, registrationsHaveSamePublicationYear } from '../../utils/registration-helpers';
+import { registrationsHaveSamePublicationYear } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { DatePickerField } from './description_tab/DatePickerField';
+import { LanguageSelectorField } from './description_tab/LanguageSelectorField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { DuplicateWarning } from './DuplicateWarning';
 
 export const DescriptionPanel = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<Registration>();
-  const [title, setTitle] = useState('');
-  const debouncedTitle = useDebounce(title);
+  const debouncedTitle = useDebounce(values.entityDescription?.mainTitle ?? '');
+
   const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch({
-    title: debouncedTitle || values.entityDescription?.mainTitle,
+    title: debouncedTitle,
     identifier: values.identifier,
   });
+
+  const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   return (
     <InputContainerBox>
@@ -42,14 +45,11 @@ export const DescriptionPanel = () => {
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
+              disabled={disableChannelClaimsFields}
               value={field.value ?? ''}
               required
               data-testid={dataTestId.registrationWizard.description.titleField}
               variant="filled"
-              onChange={(event) => {
-                setTitle(event.target.value);
-                field.onChange(event);
-              }}
               fullWidth
               label={t('common.title')}
               error={touched && !!error}
@@ -68,7 +68,7 @@ export const DescriptionPanel = () => {
         </Field>
         {duplicateRegistration && (
           <DuplicateWarning
-            name={duplicateRegistration.entityDescription?.mainTitle}
+            name={duplicateRegistration.mainTitle}
             linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
             warning={t('registration.description.duplicate_title_warning')}
           />
@@ -79,6 +79,7 @@ export const DescriptionPanel = () => {
               {field.value !== undefined ? (
                 <TextField
                   {...field}
+                  disabled={disableChannelClaimsFields}
                   value={field.value ?? ''}
                   data-testid={dataTestId.registrationWizard.description.alternativeTitleField}
                   variant="filled"
@@ -89,7 +90,7 @@ export const DescriptionPanel = () => {
               {field.value || field.value === '' ? null : (
                 <Button
                   startIcon={<AddCircleOutlineIcon />}
-                  disabled={!values.entityDescription?.mainTitle}
+                  disabled={!values.entityDescription?.mainTitle || disableChannelClaimsFields}
                   onClick={() => setFieldValue(field.name, '')}>
                   {t('common.add_custom', {
                     name: t('registration.description.alternative_title').toLocaleLowerCase(),
@@ -111,6 +112,7 @@ export const DescriptionPanel = () => {
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
+              disabled={disableChannelClaimsFields}
               value={field.value ?? ''}
               data-testid={dataTestId.registrationWizard.description.abstractField}
               variant="filled"
@@ -126,6 +128,7 @@ export const DescriptionPanel = () => {
               {field.value !== undefined ? (
                 <TextField
                   {...field}
+                  disabled={disableChannelClaimsFields}
                   value={field.value ?? ''}
                   data-testid={dataTestId.registrationWizard.description.alternativeAbstractField}
                   variant="filled"
@@ -138,7 +141,7 @@ export const DescriptionPanel = () => {
               {field.value || field.value === '' ? null : (
                 <Button
                   startIcon={<AddCircleOutlineIcon />}
-                  disabled={!values.entityDescription?.abstract}
+                  disabled={!values.entityDescription?.abstract || disableChannelClaimsFields}
                   onClick={() => setFieldValue(field.name, '')}>
                   {t('common.add_custom', {
                     name: t('registration.description.alternative_abstract').toLocaleLowerCase(),
@@ -153,6 +156,7 @@ export const DescriptionPanel = () => {
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
+            disabled={disableChannelClaimsFields}
             value={field.value ?? ''}
             data-testid={dataTestId.registrationWizard.description.descriptionField}
             label={t('registration.description.description_of_content')}
@@ -166,6 +170,7 @@ export const DescriptionPanel = () => {
         {({ field }: FieldProps) => (
           <Autocomplete
             {...field}
+            disabled={disableChannelClaimsFields}
             value={field.value ?? []}
             freeSolo
             multiple
@@ -204,34 +209,13 @@ export const DescriptionPanel = () => {
 
         <Field name={DescriptionFieldNames.Language}>
           {({ field }: FieldProps<string>) => (
-            <TextField
-              {...field}
-              id={field.name}
-              value={field.value ?? ''}
-              data-testid={dataTestId.registrationWizard.description.languageField}
-              fullWidth
-              label={t('registration.description.primary_language')}
-              placeholder={t('registration.description.primary_language')}
-              select
-              variant="filled">
-              {!registrationLanguageOptions.some((language) => language.uri === field.value) && (
-                // Show if Registration has a language that's currently not supported
-                <MenuItem value={field.value} disabled>
-                  {i18n.language === 'nob' ? getLanguageByIso6393Code('und').nob : getLanguageByIso6393Code('und').eng}
-                </MenuItem>
-              )}
-              {registrationLanguageOptions.map(({ uri, nob, eng }) => (
-                <MenuItem value={uri} key={uri} data-testid={`registration-language-${uri}`}>
-                  {i18n.language === 'nob' ? nob : eng}
-                </MenuItem>
-              ))}
-            </TextField>
+            <LanguageSelectorField {...field} disabled={disableChannelClaimsFields}></LanguageSelectorField>
           )}
         </Field>
       </Box>
-      {duplicateRegistration && registrationsHaveSamePublicationYear(duplicateRegistration, values) && (
+      {duplicateRegistration && registrationsHaveSamePublicationYear(values, duplicateRegistration) && (
         <DuplicateWarning
-          name={duplicateRegistration.entityDescription?.mainTitle}
+          name={duplicateRegistration.mainTitle}
           linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
           warning={t('registration.description.duplicate_publication_date_warning')}
         />

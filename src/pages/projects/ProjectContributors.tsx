@@ -1,6 +1,6 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ProjectContributor, ProjectContributorType } from '../../types/project.types';
 import { getResearchProfilePath } from '../../utils/urlPaths';

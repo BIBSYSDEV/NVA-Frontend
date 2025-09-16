@@ -39,9 +39,11 @@ Cypress.Commands.add('setUserRolesInRedux', (roles) => {
           isDoiCurator: roles.includes(RoleName.DoiCurator),
           isPublishingCurator: roles.includes(RoleName.PublishingCurator),
           isSupportCurator: roles.includes(RoleName.SupportCurator),
+          isNviCurator: roles.includes(RoleName.NviCurator),
           isThesisCurator: roles.includes(RoleName.CuratorThesis),
           isEmbargoThesisCurator: roles.includes(RoleName.CuratorThesisEmbargo),
           isEditor: roles.includes(RoleName.Editor),
+          isInternalImporter: roles.includes(RoleName.InternalImporter),
         })
       )
     );

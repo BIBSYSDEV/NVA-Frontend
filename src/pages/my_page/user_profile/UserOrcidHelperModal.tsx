@@ -1,6 +1,6 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import LaunchIcon from '@mui/icons-material/Launch';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, Collapse, Link, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -40,7 +40,7 @@ export const UserOrcidHelperModal = () => {
               rel="noopener noreferrer"
               href="https://orcid.org">
               {t('my_page.my_profile.orcid.helper_text_modal.link')}
-              <LaunchIcon fontSize="small" />
+              <OpenInNewIcon fontSize="small" />
             </Link>
           </Box>
         </Collapse>

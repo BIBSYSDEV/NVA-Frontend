@@ -15,11 +15,11 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchEmployees } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
+import { HeadTitle } from '../../../../components/HeadTitle';
 import { ListPagination } from '../../../../components/ListPagination';
 import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
@@ -57,9 +57,10 @@ export const PersonRegisterPage = () => {
 
   return (
     <BackgroundDiv>
-      <Helmet>
-        <title>{t('basic_data.person_register.person_register')}</title>
-      </Helmet>
+      <HeadTitle>{t('basic_data.person_register.person_register')}</HeadTitle>
+      <Typography component="h1" sx={visuallyHidden}>
+        {t('basic_data.person_register.person_register')}
+      </Typography>
 
       <TextField
         data-testid={dataTestId.basicData.personRegisterSearchBar}
@@ -82,61 +83,61 @@ export const PersonRegisterPage = () => {
         }}
       />
 
-      {employees.length === 0 && !employeeSearchQuery.isPending ? (
-        <Typography>{t('basic_data.person_register.no_employees_found')}</Typography>
-      ) : (
-        <>
-          <ListPagination
-            count={employeeSearchQuery.data?.size ?? 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(newPage) => setPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setPage(1);
-            }}>
-            <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
-              <Table size="small" sx={alternatingTableRowColor}>
-                <caption style={visuallyHidden}>{t('basic_data.person_register.employee_table_caption')}</caption>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>{t('basic_data.person_register.person_id')}</TableCell>
-                    <TableCell>{t('common.national_id_number')}</TableCell>
-                    <TableCell>{t('common.name')}</TableCell>
-                    <TableCell>{t('common.employments')}</TableCell>
-                    <TableCell />
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {employeeSearchQuery.isPending
-                    ? [...Array(5)].map((_, index) => (
-                        <TableRow key={index} sx={{ height: '4rem' }}>
-                          <TableCell>
-                            <Skeleton />
-                          </TableCell>
-                          <TableCell>
-                            <Skeleton />
-                          </TableCell>
-                          <TableCell width="25%">
-                            <Skeleton />
-                          </TableCell>
-                          <TableCell width="60%">
-                            <Skeleton />
-                          </TableCell>
-                          <TableCell></TableCell>
-                        </TableRow>
-                      ))
-                    : employees.map((person) => (
-                        <ErrorBoundary key={person.id}>
-                          <PersonTableRow cristinPerson={person} refetchEmployees={employeeSearchQuery.refetch} />
-                        </ErrorBoundary>
-                      ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </ListPagination>
-        </>
-      )}
+      <ListPagination
+        count={employeeSearchQuery.data?.size ?? 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(newPage) => setPage(newPage)}
+        onRowsPerPageChange={(newRowsPerPage) => {
+          setRowsPerPage(newRowsPerPage);
+          setPage(1);
+        }}>
+        {employees.length === 0 && !employeeSearchQuery.isPending ? (
+          <Typography>{t('basic_data.person_register.no_employees_found')}</Typography>
+        ) : (
+          <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
+            <Table size="small" sx={alternatingTableRowColor}>
+              <caption style={visuallyHidden}>{t('basic_data.person_register.employee_table_caption')}</caption>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t('common.person_id')}</TableCell>
+                  <TableCell>{t('common.national_id_number')}</TableCell>
+                  <TableCell>{t('common.name')}</TableCell>
+                  <TableCell>{t('common.employments')}</TableCell>
+                  <TableCell>
+                    <span style={visuallyHidden}>{t('common.actions')}</span>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {employeeSearchQuery.isPending
+                  ? [...Array(5)].map((_, index) => (
+                      <TableRow key={index} sx={{ height: '4rem' }}>
+                        <TableCell>
+                          <Skeleton />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton />
+                        </TableCell>
+                        <TableCell width="25%">
+                          <Skeleton />
+                        </TableCell>
+                        <TableCell width="60%">
+                          <Skeleton />
+                        </TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                    ))
+                  : employees.map((person) => (
+                      <ErrorBoundary key={person.id}>
+                        <PersonTableRow cristinPerson={person} refetchEmployees={employeeSearchQuery.refetch} />
+                      </ErrorBoundary>
+                    ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </ListPagination>
     </BackgroundDiv>
   );
 };

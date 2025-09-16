@@ -26,17 +26,17 @@ export const useDuplicateRegistrationSearch = ({
     ? undefined
     : registrationsWithSimilarName.find((reg) => {
         const isSameRegistration = reg.identifier === identifier;
-        const hasSameName = reg.entityDescription?.mainTitle.toLowerCase() === title.toLowerCase();
+        const hasSameName = reg.mainTitle.toLowerCase() === title.toLowerCase();
 
         if (!hasSameName || isSameRegistration) {
           return false;
         }
 
-        if (publishedYear && reg.entityDescription?.publicationDate?.year !== publishedYear) {
+        if (publishedYear && reg.publicationDate?.year !== publishedYear) {
           return false;
         }
 
-        if (category && reg.entityDescription?.reference?.publicationInstance?.type !== category) {
+        if (category && reg.type !== category) {
           return false;
         }
 

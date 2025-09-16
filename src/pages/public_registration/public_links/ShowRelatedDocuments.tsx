@@ -10,13 +10,19 @@ interface ShowRelatedDocumentsProps {
 export const ShowRelatedDocuments = ({ related }: ShowRelatedDocumentsProps) => {
   const { t } = useTranslation();
 
-  if (related.length === 0) {
+  const filteredRelated = related.filter(
+    (document) =>
+      (document.type === 'ConfirmedDocument' && document.identifier) ||
+      (document.type === 'UnconfirmedDocument' && document.text)
+  );
+
+  if (filteredRelated.length === 0) {
     return null;
   }
 
   return (
     <List>
-      {related
+      {filteredRelated
         .sort((a, b) => (a.sequence && b.sequence ? a.sequence - b.sequence : 0))
         .map((document, index) => (
           <ListItem key={index} disablePadding>

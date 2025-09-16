@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CategorySelector } from '../../components/CategorySelector';
+import { HeadTitle } from '../../components/HeadTitle';
 import { RootState } from '../../redux/store';
 import { allPublicationInstanceTypes } from '../../types/publicationFieldNames';
 
@@ -18,10 +18,8 @@ export const CategoriesWithFilesOverview = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('editor.categories_with_files')}</title>
-      </Helmet>
-      <Typography variant="h2" gutterBottom>
+      <HeadTitle>{t('editor.categories_with_files')}</HeadTitle>
+      <Typography variant="h1" gutterBottom>
         {t('editor.categories_with_files')}
       </Typography>
       <CategorySelector selectedCategories={selectedCategories} categoriesWithoutFiles={categoriesWithoutFiles} />

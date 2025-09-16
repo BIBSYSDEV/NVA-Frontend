@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Link as MuiLink, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { HeadTitle } from '../../components/HeadTitle';
 import { RootState } from '../../redux/store';
 
 export const EditorDoi = () => {
@@ -10,10 +10,8 @@ export const EditorDoi = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('common.doi_long')}</title>
-      </Helmet>
-      <Typography id="doi-label" variant="h2" sx={{ mb: '2rem' }}>
+      <HeadTitle>{t('common.doi_long')}</HeadTitle>
+      <Typography id="doi-label" variant="h1" gutterBottom>
         {t('common.doi_long')}
       </Typography>
       {!customer ? (
@@ -21,15 +19,13 @@ export const EditorDoi = () => {
       ) : (
         <>
           {!customer.doiAgent.username ? (
-            <Typography sx={{ mb: '1rem' }} fontWeight="bold">
+            <Typography sx={{ mb: '1rem' }}>
               <Trans t={t} i18nKey="editor.doi.institution_cannot_create_doi">
                 <MuiLink href={'mailto:kontakt@sikt.no'} target="_blank" rel="noopener noreferrer" />
               </Trans>
             </Typography>
           ) : (
-            <Typography sx={{ mb: '1rem' }} fontWeight="bold">
-              {t('editor.doi.institution_can_create_doi')}
-            </Typography>
+            <Typography sx={{ mb: '1rem' }}>{t('editor.doi.institution_can_create_doi')}</Typography>
           )}
 
           <Box
@@ -37,7 +33,6 @@ export const EditorDoi = () => {
               display: 'flex',
               columnGap: '1rem',
               width: '100%',
-              'h3, p': { fontWeight: '500' },
             }}>
             <Box
               sx={{
@@ -47,7 +42,7 @@ export const EditorDoi = () => {
                 rowGap: '0.3rem',
                 width: 'max(30%, 250px)',
               }}>
-              <Typography variant="h3">{t('basic_data.institutions.doi_repo_id')}:</Typography>
+              <Typography variant="h2">{t('basic_data.institutions.doi_repo_id')}:</Typography>
               {customer.doiAgent?.username ? (
                 <Typography sx={{ color: 'primary.light', bgcolor: 'grey.400', p: '0.7rem' }}>
                   {customer.doiAgent.username}
@@ -64,7 +59,7 @@ export const EditorDoi = () => {
                 rowGap: '0.3rem',
                 width: 'max(30%, 250px)',
               }}>
-              <Typography variant="h3">{t('basic_data.institutions.institution_doi_prefix')}:</Typography>
+              <Typography variant="h2">{t('basic_data.institutions.institution_doi_prefix')}:</Typography>
               {customer.doiAgent?.prefix ? (
                 <Typography sx={{ color: 'primary.light', bgcolor: 'grey.400', p: '0.7rem' }}>
                   {customer.doiAgent.prefix}

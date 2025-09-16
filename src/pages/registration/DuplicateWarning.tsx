@@ -1,7 +1,7 @@
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import { Box, BoxProps, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { StyledInfoBanner } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
 

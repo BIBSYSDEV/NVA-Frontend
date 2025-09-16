@@ -1,5 +1,6 @@
 import { createTheme, PaletteColorOptions, SxProps } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
+import type {} from '@mui/x-date-pickers/themeAugmentation';
 import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
@@ -28,6 +29,8 @@ enum Color {
   PublishingRequestLight = '#FFF0D3',
   NviMain = '#EE95EA',
   NviLight = '#F8D3F6',
+  WarningMain = '#ED6C02',
+  WarningLight = '#FFD45A',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
@@ -65,6 +68,9 @@ declare module '@mui/material/Button' {
   }
 }
 
+const dialogTitleId = 'dialog-title-id';
+export const dialogDescriptionId = 'dialog-description-id';
+
 export const mainTheme = createTheme(
   {
     breakpoints: {
@@ -96,6 +102,10 @@ export const mainTheme = createTheme(
       info: {
         main: Color.InfoMain,
         light: Color.InfoLight,
+      },
+      warning: {
+        main: Color.WarningMain,
+        light: Color.WarningLight,
       },
       grey: {
         300: '#EEEEEE',
@@ -197,6 +207,30 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiCssBaseline: {
+        styleOverrides: {
+          fieldset: {
+            border: 'none',
+            padding: 0,
+            margin: 0,
+          },
+          legend: {
+            padding: 0,
+          },
+        },
+      },
+      MuiDatePicker: {
+        defaultProps: {
+          views: ['year', 'month', 'day'],
+          /*
+           * Use fallback to the old DOM structure for DatePicker since the new way introduces
+           * problems to Cypress tests, where they are not able to enter a value to the input
+           * field as it is hidden. The old DOM structure has som accessibility issues.
+           * Documentation: https://mui.com/x/migration/migration-pickers-v7/#new-dom-structure-for-the-field
+           */
+          enableAccessibleFieldDOMStructure: false, // TODO: Remove this when we find a solution to the Cypress issue
+        },
+      },
       MuiMenu: {
         defaultProps: {
           disablePortal: true,
@@ -219,6 +253,23 @@ export const mainTheme = createTheme(
           variant: 'outlined',
         },
       },
+      MuiDialog: {
+        defaultProps: {
+          'aria-labelledby': dialogTitleId,
+          'aria-describedby': dialogDescriptionId,
+        },
+      },
+      MuiDialogTitle: {
+        defaultProps: {
+          id: dialogTitleId,
+          component: 'h1',
+        },
+      },
+      MuiDialogContent: {
+        defaultProps: {
+          id: dialogDescriptionId,
+        },
+      },
       MuiLink: {
         styleOverrides: {
           root: {
@@ -233,7 +284,7 @@ export const mainTheme = createTheme(
         styleOverrides: {
           root: {
             fill: Color.PrimaryLight,
-            opacity: 0.6,
+            opacity: 0.7,
             '&.Mui-active': {
               opacity: 1,
             },
@@ -246,7 +297,7 @@ export const mainTheme = createTheme(
       MuiStepLabel: {
         styleOverrides: {
           label: {
-            opacity: 0.6,
+            opacity: 0.7,
             textTransform: 'uppercase',
             fontSize: '1rem',
             color: Color.PrimaryLight,
@@ -272,6 +323,7 @@ export const mainTheme = createTheme(
           root: {
             th: {
               fontWeight: 600,
+              borderBottom: '1px solid darkgrey',
             },
           },
         },
@@ -321,6 +373,22 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiPickersFilledInput: {
+        styleOverrides: {
+          root: {
+            backgroundColor: Color.White,
+            '&.Mui-focused': {
+              backgroundColor: Color.White,
+            },
+            '&:hover': {
+              backgroundColor: Color.White,
+            },
+            '&.Mui-disabled': {
+              backgroundColor: Color.White,
+            },
+          },
+        },
+      },
       MuiMenuItem: {
         styleOverrides: {
           root: {
@@ -334,8 +402,14 @@ export const mainTheme = createTheme(
       MuiButton: {
         styleOverrides: {
           root: {
+            textTransform: 'none',
             borderRadius: '0.25rem',
           },
+        },
+      },
+      MuiSkeleton: {
+        defaultProps: {
+          animation: 'wave',
         },
       },
     },

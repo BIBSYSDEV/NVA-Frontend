@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux';
 import { deleteTicketMessage } from '../../api/registrationApi';
 import { setNotification } from '../../redux/notificationSlice';
 
-export const useDeleteTicketMessage = (ticketId: string, refetchData?: () => void) => {
+export const useDeleteTicketMessage = (messageId: string, refetchData?: () => void) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   return useMutation({
-    mutationFn: (messageId: string) => deleteTicketMessage(ticketId, messageId),
+    mutationFn: () => deleteTicketMessage(messageId),
     onSuccess: () => {
       dispatch(setNotification({ message: t('feedback.success.delete_message'), variant: 'success' }));
       refetchData?.();

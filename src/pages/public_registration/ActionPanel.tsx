@@ -2,18 +2,22 @@ import { Paper, Tab, Tabs } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { userHasAccessRight } from '../../utils/registration-helpers';
+import { isFileApprovalTicket } from '../../utils/ticketHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
-import { LogPanel } from './LogPanel';
+import { DetailsPanel } from './details/DetailsPanel';
+import { LogPanel } from './log/LogPanel';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 enum TabValue {
   Tasks,
+  Details,
   Log,
 }
 
@@ -31,10 +35,10 @@ export const ActionPanel = ({
 }: ActionPanelProps) => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
+  const contributors = registration.entityDescription?.contributors ?? [];
+  const user = useSelector((store: RootState) => store.user);
 
-  const publishingRequestTickets = tickets.filter(
-    (ticket) => ticket.type === 'PublishingRequest'
-  ) as PublishingTicket[];
+  const publishingRequestTickets = tickets.filter(isFileApprovalTicket) as PublishingTicket[];
   const newestDoiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest');
   const newestSupportTicket = tickets.findLast((ticket) => ticket.type === 'GeneralSupportCase');
 
@@ -46,8 +50,7 @@ export const ActionPanel = ({
   const isNotOnTasksDialoguePage = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   const canCreatePublishingTicket = userHasAccessRight(registration, 'publishing-request-create');
-  const canApprovePublishingTicket =
-    publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'publishing-request-approve');
+  const canHandlePublishingTicket = publishingRequestTickets.some((ticket) => ticket.allowedOperations.length > 0);
   const hasOtherPublishingRights =
     userHasAccessRight(registration, 'unpublish') ||
     userHasAccessRight(registration, 'republish') ||
@@ -64,16 +67,23 @@ export const ActionPanel = ({
   const canApproveSupportTicket = !!newestSupportTicket && userHasAccessRight(registration, 'support-request-approve');
 
   const shouldSeePublishingAccordion =
-    canCreatePublishingTicket || canApprovePublishingTicket || hasOtherPublishingRights;
+    !!user &&
+    (canCreatePublishingTicket || canHandlePublishingTicket || hasOtherPublishingRights || !!publishingRequestTickets);
+
   const shouldSeeDoiAccordion =
+    !!user &&
     !registration.entityDescription?.reference?.doi &&
     !!customerHasConfiguredDoi &&
-    (canCreateDoiTicket || canApproveDoiTicket);
-  const shouldSeeSupportAccordion = canCreateSupportTicket || canApproveSupportTicket;
+    (canCreateDoiTicket || canApproveDoiTicket || !!newestDoiRequestTicket);
+
+  const shouldSeeSupportAccordion =
+    !!user && (canCreateSupportTicket || canApproveSupportTicket || !!newestSupportTicket);
 
   const canSeeTasksPanel = shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion;
 
-  const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Log);
+  const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Details);
+
+  const canEditRegistration = userHasAccessRight(registration, 'partial-update');
 
   return (
     <Paper
@@ -85,7 +95,9 @@ export const ActionPanel = ({
         onChange={(_, newValue) => setTabValue(newValue)}
         sx={{ bgcolor: 'primary.main', px: '0.5rem' }}
         textColor="inherit"
-        TabIndicatorProps={{ style: { backgroundColor: 'white', height: '0.4rem' } }}>
+        slotProps={{
+          indicator: { style: { backgroundColor: 'white', height: '0.4rem' } },
+        }}>
         {canSeeTasksPanel && (
           <Tab
             value={TabValue.Tasks}
@@ -96,28 +108,44 @@ export const ActionPanel = ({
           />
         )}
         <Tab
-          value={TabValue.Log}
-          label={t('common.log')}
-          data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
+          data-testid={dataTestId.registrationLandingPage.detailsTab.detailsTab}
+          value={TabValue.Details}
+          label={t('details')}
           id="action-panel-tab-1"
           aria-controls="action-panel-tab-panel-1"
         />
+        {canEditRegistration && (
+          <Tab
+            value={TabValue.Log}
+            label={t('common.log')}
+            data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
+            id="action-panel-tab-2"
+            aria-controls="action-panel-tab-panel-2"
+          />
+        )}
       </Tabs>
       <TabPanel tabValue={tabValue} index={0}>
-        <ActionPanelContent
-          refetchData={refetchRegistrationAndTickets}
-          isLoadingData={isLoadingData}
-          registration={registration}
-          shouldSeePublishingAccordion={shouldSeePublishingAccordion}
-          shouldSeeDoiAccordion={shouldSeeDoiAccordion}
-          shouldSeeSupportAccordion={shouldSeeSupportAccordion}
-          publishingRequestTickets={publishingRequestTickets}
-          newestDoiRequestTicket={newestDoiRequestTicket}
-          newestSupportTicket={newestSupportTicket}
-        />
+        <ErrorBoundary>
+          <ActionPanelContent
+            refetchData={refetchRegistrationAndTickets}
+            isLoadingData={isLoadingData}
+            registration={registration}
+            shouldSeePublishingAccordion={shouldSeePublishingAccordion}
+            shouldSeeDoiAccordion={shouldSeeDoiAccordion}
+            shouldSeeSupportAccordion={shouldSeeSupportAccordion}
+            publishingRequestTickets={publishingRequestTickets}
+            newestDoiRequestTicket={newestDoiRequestTicket}
+            newestSupportTicket={newestSupportTicket}
+          />
+        </ErrorBoundary>
       </TabPanel>
       <TabPanel tabValue={tabValue} index={1}>
-        <LogPanel tickets={tickets} registration={registration} />
+        <DetailsPanel contributors={contributors} />
+      </TabPanel>
+      <TabPanel tabValue={tabValue} index={2}>
+        <ErrorBoundary>
+          <LogPanel registration={registration} tickets={tickets} />
+        </ErrorBoundary>
       </TabPanel>
     </Paper>
   );

@@ -16,12 +16,13 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
-import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
+import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import {
   ArchitectureOutput,
   ArchitectureType,
   ArtisticRegistration,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { AwardModal } from './AwardModal';
@@ -111,12 +112,12 @@ export const ArtisticArchitectureForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {architectureOutput.length > 0 && (
-                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
+                <Table sx={alternatingTableRowColor}>
                   <TableHead>
                     <TableRow>
+                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('registration.resource_type.artistic.name_or_title')}</TableCell>
-                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
@@ -180,7 +181,7 @@ export const ArtisticArchitectureForm = () => {
             </>
           )}
         </FieldArray>
-        <Box sx={{ display: 'flex', gap: '1rem', mt: '0.5rem' }}>
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem', mt: '0.5rem' }}>
           <Button
             data-testid={dataTestId.registrationWizard.resourceType.addCompetitionButton}
             onClick={() => setOpenModal('Competition')}

@@ -1,29 +1,29 @@
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate, updateImportCandidateStatus } from '../../../../api/registrationApi';
-import { FetchImportCandidatesParams, fetchImportCandidates } from '../../../../api/searchApi';
+import { fetchImportCandidates, FetchImportCandidatesParams } from '../../../../api/searchApi';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
+import { HeadTitle } from '../../../../components/HeadTitle';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
 import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
-import { PreviousSearchLocationState } from '../../../../types/locationState.types';
+import { BasicDataLocationState, PreviousPathLocationState } from '../../../../types/locationState.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { convertToRegistrationSearchItem } from '../../../../utils/registration-helpers';
 import {
-  IdentifierParams,
-  UrlPathTemplate,
   getImportCandidateMergePath,
   getImportCandidateWizardPath,
+  IdentifierParams,
+  UrlPathTemplate,
 } from '../../../../utils/urlPaths';
 import NotFound from '../../../errorpages/NotFound';
 import { MessageItem } from '../../../messages/components/MessageList';
@@ -34,7 +34,8 @@ import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const location = useLocation<PreviousSearchLocationState>();
+  const location = useLocation();
+  const locationState = location.state as PreviousPathLocationState;
   const { identifier } = useParams<IdentifierParams>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
   const [registrationIdentifier, setRegistrationIdentifier] = useState('');
@@ -55,15 +56,16 @@ export const CentralImportDuplicationCheckPage = () => {
   const queryClient = useQueryClient();
   const importCandidateQueryKey = ['importCandidate', identifier];
   const importCandidateQuery = useQuery({
+    enabled: !!identifier,
     queryKey: importCandidateQueryKey,
-    queryFn: () => fetchImportCandidate(identifier),
+    queryFn: () => fetchImportCandidate(identifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
   const importCandidate = importCandidateQuery.data;
 
   const importCandidateStatusMutation = useMutation({
     mutationFn: (comment: string) =>
-      updateImportCandidateStatus(identifier, { candidateStatus: 'NOT_APPLICABLE', comment }),
+      updateImportCandidateStatus(identifier ?? '', { candidateStatus: 'NOT_APPLICABLE', comment }),
     onError: () =>
       dispatch(
         setNotification({
@@ -100,9 +102,7 @@ export const CentralImportDuplicationCheckPage = () => {
         gridTemplateAreas: { xs: '"actions" "main"', sm: '"main actions"' },
         gap: '1rem',
       }}>
-      <Helmet>
-        <title>{t('basic_data.central_import.central_import')}</title>
-      </Helmet>
+      <HeadTitle>{t('basic_data.central_import.central_import')}</HeadTitle>
       <BackgroundDiv>
         {importCandidateSearchQuery.isPending || importCandidateQuery.isPending ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
@@ -150,7 +150,7 @@ export const CentralImportDuplicationCheckPage = () => {
 
       <Paper elevation={0} sx={{ gridArea: 'actions' }}>
         <StyledPaperHeader>
-          <Typography color="inherit" variant="h1">
+          <Typography color="inherit" variant="h2">
             {t('common.dialogue')}
           </Typography>
         </StyledPaperHeader>
@@ -184,7 +184,7 @@ export const CentralImportDuplicationCheckPage = () => {
                 {t('basic_data.central_import.create_publication_from_import_candidate')}
               </Typography>
 
-              <Link to={getImportCandidateWizardPath(identifier)}>
+              <Link to={getImportCandidateWizardPath(identifier ?? '')}>
                 <Button variant="outlined" fullWidth size="small">
                   {t('basic_data.central_import.create_new')}
                 </Button>
@@ -195,10 +195,8 @@ export const CentralImportDuplicationCheckPage = () => {
               <Typography gutterBottom>{t('basic_data.central_import.merge_candidate.merge_description')}</Typography>
               {registrationIdentifier ? (
                 <Link
-                  to={{
-                    pathname: getImportCandidateMergePath(identifier, registrationIdentifier),
-                    state: location.state,
-                  }}>
+                  to={{ pathname: getImportCandidateMergePath(identifier ?? '', registrationIdentifier) }}
+                  state={{ ...locationState, previousPath: location.pathname } satisfies BasicDataLocationState}>
                   <Button variant="outlined" fullWidth size="small">
                     {t('basic_data.central_import.merge_candidate.merge')}
                   </Button>

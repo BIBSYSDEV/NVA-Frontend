@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/notificationSlice';
 import { UpdateRegistrationStatusRequest } from '../../types/registration.types';
+import { updateRegistrationQueryData } from '../../utils/registration-helpers';
 import { updateRegistrationStatus } from '../registrationApi';
 
 interface UpdateRequest {
   registrationIdentifier: string;
   updateStatusRequest: UpdateRegistrationStatusRequest;
-  onSuccess?: () => void;
 }
 
 export const useUpdateRegistrationStatus = () => {
@@ -19,19 +19,11 @@ export const useUpdateRegistrationStatus = () => {
   return useMutation({
     mutationFn: ({ registrationIdentifier, updateStatusRequest }: UpdateRequest) =>
       updateRegistrationStatus(registrationIdentifier, updateStatusRequest),
-    onSuccess: (response, variables) => {
+    onSuccess: (response) => {
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
       if (response.data) {
-        const key1 = ['registration', response.data.identifier, true];
-        if (queryClient.getQueryData(key1)) {
-          queryClient.setQueryData(key1, response.data);
-        }
-        const key2 = ['registration', response.data.identifier, false];
-        if (queryClient.getQueryData(key2)) {
-          queryClient.setQueryData(key2, response.data);
-        }
+        updateRegistrationQueryData(queryClient, response.data);
       }
-      variables.onSuccess?.();
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' })),
   });

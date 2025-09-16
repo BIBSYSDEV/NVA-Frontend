@@ -1,5 +1,6 @@
 import deepmerge from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn, validateYupSchema, yupToFormErrors } from 'formik';
+import { HighestVisitedTab } from '../../context/RegistrationFormContext';
 import {
   AssociatedArtifact,
   AssociatedFile,
@@ -8,7 +9,6 @@ import {
   NullAssociatedArtifact,
 } from '../../types/associatedArtifact.types';
 import { Contributor } from '../../types/contributor.types';
-import { HighestTouchedTab } from '../../types/locationState.types';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ExhibitionRegistration } from '../../types/publication_types/exhibitionContent.types';
@@ -115,7 +115,7 @@ const getAllDescriptionFields = (fundings: Funding[]) => {
 const getAllResourceFields = (publicationInstance?: PublicationInstance) => {
   const resourceFieldNames: string[] = Object.values(ResourceFieldNames);
 
-  if (publicationInstance?.type === DegreeType.Phd) {
+  if (publicationInstance?.type === DegreeType.Phd || publicationInstance?.type === DegreeType.ArtisticPhd) {
     publicationInstance.related?.forEach((document, index) => {
       if (document.type === 'UnconfirmedDocument') {
         resourceFieldNames.push(`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`);
@@ -451,6 +451,7 @@ const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): Formi
   associatedArtifacts: associatedArtifacts.map((artifact) => {
     if (associatedArtifactIsFile(artifact)) {
       const touched: FormikTouched<AssociatedFile> = {
+        type: true,
         publisherVersion: true,
         embargoDate: true,
         license: true,
@@ -467,7 +468,7 @@ const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): Formi
 });
 
 export const getTouchedTabFields = (
-  tabToTouch: HighestTouchedTab,
+  tabToTouch: HighestVisitedTab,
   values: Registration
 ): FormikTouched<Registration> => {
   const tabFields = {
@@ -503,7 +504,7 @@ export const validateRegistrationForm = (registration: Registration): FormikErro
 export const isPublishableForWorkflow2 = (registration: Registration) => {
   const isValid = registrationPublishableValidationSchema.isValidSync(registration, {
     context: {
-      publicationInstanceType: registration.entityDescription?.reference?.publicationInstance.type ?? '',
+      publicationInstanceType: registration.entityDescription?.reference?.publicationInstance?.type ?? '',
     } as any,
   });
   return isValid;

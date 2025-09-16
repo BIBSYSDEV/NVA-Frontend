@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import {
   Button,
   Checkbox,
@@ -65,7 +64,6 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
       <Formik
         initialValues={{
           ...emptyPerson,
-          nationalId: user.nationalIdNumber,
           firstName: user.givenName,
           lastName: user.familyName,
         }}
@@ -99,13 +97,18 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
                   />
                 )}
               </Field>
-              <TextField
-                variant="filled"
-                disabled
-                label={t('common.national_id_number')}
-                required
-                value={user.nationalIdNumber}
-              />
+              <Field name="nationalId">
+                {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    label={t('common.national_id_number')}
+                    required
+                    error={!!error && touched}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
               <FormControlLabel
                 label={t('authorization.accept_terms_to_create_user')}
                 control={
@@ -119,9 +122,9 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setShowConfirmCancelDialog(true)}>{t('common.cancel')}</Button>
-              <LoadingButton type="submit" variant="contained" disabled={!acceptedTermsValue} loading={isSubmitting}>
+              <Button type="submit" variant="contained" disabled={!acceptedTermsValue} loading={isSubmitting}>
                 {t('common.create')}
-              </LoadingButton>
+              </Button>
             </DialogActions>
           </Form>
         )}

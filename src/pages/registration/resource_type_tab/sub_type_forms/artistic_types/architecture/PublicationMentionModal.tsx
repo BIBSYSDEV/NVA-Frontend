@@ -117,7 +117,6 @@ export const PublicationMentionModal = ({
                         }
                         setFieldValue(field.name, date ?? '');
                       }}
-                      views={['year', 'month', 'day']}
                       slotProps={{
                         textField: {
                           inputProps: {

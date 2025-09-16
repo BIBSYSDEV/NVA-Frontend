@@ -1,4 +1,4 @@
-import { Box, Link as MuiLink } from '@mui/material';
+import { Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicPageInfoEntry } from './PublicPageInfoEntry';
@@ -21,9 +21,9 @@ export const PublicHandles = ({ registration }: PublicRegistrationContentProps) 
     <PublicPageInfoEntry
       title={t('registration.public_page.handle')}
       content={
-        <Box component="ul" sx={{ p: 0, m: 0, listStyleType: 'none' }}>
+        <>
           {handles.map((handle) => (
-            <li key={handle}>
+            <Typography component="dd" key={handle} gridColumn={2}>
               <MuiLink
                 data-testid={dataTestId.registrationLandingPage.handleLink}
                 href={handle}
@@ -31,9 +31,9 @@ export const PublicHandles = ({ registration }: PublicRegistrationContentProps) 
                 rel="noopener noreferrer">
                 {handle}
               </MuiLink>
-            </li>
+            </Typography>
           ))}
-        </Box>
+        </>
       }
     />
   );

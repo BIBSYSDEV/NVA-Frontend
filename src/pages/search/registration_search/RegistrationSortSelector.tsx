@@ -10,11 +10,15 @@ interface RegistrationSortOption {
 }
 
 export const registrationSortOptions: RegistrationSortOption[] = [
-  { orderBy: ResultSearchOrder.Relevance, sortOrder: 'desc', i18nKey: 'search.sort_by_relevance' },
   {
     orderBy: ResultSearchOrder.ModifiedDate,
     sortOrder: 'desc',
     i18nKey: 'search.sort_by_modified_date',
+  },
+  {
+    orderBy: ResultSearchOrder.Relevance,
+    sortOrder: 'desc',
+    i18nKey: 'search.sort_by_relevance',
   },
   {
     orderBy: ResultSearchOrder.PublicationDate,

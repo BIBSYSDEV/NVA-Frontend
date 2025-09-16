@@ -2,8 +2,9 @@ import { Autocomplete } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
-import { defaultChannelSearchSize, fetchPublisher, searchForPublishers } from '../../../api/publicationChannelApi';
+import { useLocation, useNavigate } from 'react-router';
+import { usePublisherSearch } from '../../../api/hooks/usePublisherSearch';
+import { defaultChannelSearchSize, fetchPublisher } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import {
   AutocompleteListboxWithExpansion,
@@ -14,13 +15,14 @@ import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { Publisher } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { keepSimilarPreviousData, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 export const PublisherFilter = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const publisherParam = searchParams.get(ResultParam.Publisher);
   const [publisherQuery, setPublisherQuery] = useState('');
   const debouncedQuery = useDebounce(publisherQuery);
@@ -29,20 +31,14 @@ export const PublisherFilter = () => {
   // Reset search size when query changes
   useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
-  const publisherOptionsQuery = useQuery({
-    queryKey: ['publisherSearch', debouncedQuery, searchSize],
-    enabled: debouncedQuery.length > 3 && debouncedQuery === publisherQuery,
-    queryFn: () => searchForPublishers(debouncedQuery, '2023', searchSize),
-    meta: { errorMessage: t('feedback.error.get_publishers') },
-    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
-  });
+  const publisherOptionsQuery = usePublisherSearch({ searchTerm: debouncedQuery, size: searchSize });
 
   const options = publisherOptionsQuery.data?.hits ?? [];
 
   const selectedPublisherQuery = useQuery({
     enabled: !!publisherParam,
     queryKey: ['channel', publisherParam],
-    queryFn: () => (publisherParam ? fetchPublisher(publisherParam) : undefined),
+    queryFn: () => (publisherParam ? fetchPublisher(publisherParam) : null),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
   });
@@ -56,7 +52,7 @@ export const PublisherFilter = () => {
     }
     syncedParams.delete(ResultParam.From);
 
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   const isFetching = publisherParam ? selectedPublisherQuery.isPending : publisherOptionsQuery.isFetching;

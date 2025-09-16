@@ -1,13 +1,15 @@
 export enum CustomerInstitutionApiPath {
+  ChannelClaims = '/customer/channel-claims',
+  ChannelClaim = '/customer/channel-claim',
   Customer = '/customer',
 }
 
 export enum FileApiPath {
-  Abort = '/upload/abort',
-  Complete = '/upload/complete',
-  Create = '/upload/create',
-  ListParts = '/upload/listparts',
-  Prepare = '/upload/prepare',
+  Abort = '/file-upload/abort',
+  Complete = '/file-upload/complete',
+  Create = '/file-upload/create',
+  ListParts = '/file-upload/listparts',
+  Prepare = '/file-upload/prepare',
 }
 
 export enum CristinApiPath {
@@ -18,6 +20,7 @@ export enum CristinApiPath {
   PersonIdentityNumber = '/cristin/person/identityNumber',
   Position = '/cristin/position',
   Project = '/cristin/project',
+  ProjectCategories = '/cristin/category/project',
 }
 
 export enum PublicationChannelApiPath {
@@ -27,7 +30,6 @@ export enum PublicationChannelApiPath {
 
 export enum PublicationsApiPath {
   Registration = '/publication',
-  RegistrationsByOwner = '/publication/by-owner',
   DoiLookup = '/doi-fetch/preview',
   ImportCandidate = '/publication/import-candidate',
 }
@@ -44,11 +46,12 @@ export enum RoleApiPath {
 
 export enum SearchApiPath {
   CustomerRegistrations = '/search/customer/resources',
-  Registrations = '/search/resources',
-  RegistrationsExport = '/search/resources/export',
   CustomerTickets = '/search/customer/tickets',
   ImportCandidates = '/search/customer/import-candidates',
+  MyRegistrations = '/search/user/resources',
   NviCandidate = '/scientific-index/candidate',
+  Registrations = '/search/resources',
+  RegistrationsExport = '/search/resources/export',
 }
 
 export enum VerifiedFundingApiPath {
@@ -61,8 +64,8 @@ export enum PersonPreferencesApiPath {
 
 export enum ScientificIndexApiPath {
   Candidate = '/scientific-index/candidate',
-  CandidateForRegistration = '/scientific-index/candidate/publication',
   InstitutionApprovalReport = '/scientific-index/institution-approval-report',
   InstitutionReport = '/scientific-index/institution-report',
   Period = '/scientific-index/period',
+  Publication = '/scientific-index/publication',
 }

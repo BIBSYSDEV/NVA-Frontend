@@ -1,5 +1,5 @@
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import { LoadingButton } from '@mui/lab';
+import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviReportExport } from '../../../api/hooks/useFetchNviReportExport';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -11,13 +11,14 @@ export const ExportNviStatusButton = () => {
   const fetchNviApprovalReportQuery = useFetchNviReportExport(year);
 
   return (
-    <LoadingButton
+    <Button
       data-testid={dataTestId.common.exportButton}
       variant="outlined"
       startIcon={<FileDownloadOutlinedIcon />}
+      loadingPosition="start"
       onClick={() => fetchNviApprovalReportQuery.refetch()}
       loading={fetchNviApprovalReportQuery.isFetching}>
       {t('search.export')}
-    </LoadingButton>
+    </Button>
   );
 };

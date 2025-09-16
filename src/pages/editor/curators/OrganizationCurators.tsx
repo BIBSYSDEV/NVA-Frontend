@@ -3,12 +3,12 @@ import PersonIcon from '@mui/icons-material/Person';
 import { Autocomplete, Box, MenuItem, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchResource } from '../../../api/commonApi';
 import { fetchUsersByCustomer } from '../../../api/roleApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
 import { RootState } from '../../../redux/store';
@@ -43,7 +43,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
   const organizationQuery = useQuery({
     queryKey: ['organization', organizationId],
     enabled: !!organizationId,
-    queryFn: organizationId ? () => fetchResource<Organization>(organizationId) : undefined,
+    queryFn: () => (organizationId ? fetchResource<Organization>(organizationId) : null),
     staleTime: Infinity,
     gcTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },
@@ -52,7 +52,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId],
     enabled: !!customerId,
-    queryFn: () => (customerId ? fetchUsersByCustomer(customerId, rolesWithAreaOfResponsibility) : undefined),
+    queryFn: () => (customerId ? fetchUsersByCustomer(customerId, rolesWithAreaOfResponsibility) : null),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 
@@ -61,9 +61,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
 
   return (
     <>
-      <Helmet>
-        <title>{heading}</title>
-      </Helmet>
+      <HeadTitle>{heading}</HeadTitle>
       <Typography variant="h1" sx={{ mb: '1rem' }}>
         {heading}
       </Typography>

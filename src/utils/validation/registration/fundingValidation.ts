@@ -6,8 +6,8 @@ const fundingErrorMessage = {
   fundingSourceRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.description.funding.funder'),
   }),
-  fundingProjectRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.description.funding.funding_name'),
+  fundingNameOrIdentifierRequired: i18n.t('feedback.validation.is_required', {
+    field: `${i18n.t('registration.description.funding.funding_name')} ${i18n.t('common.or').toLowerCase()} ${i18n.t('registration.description.funding.funding_id')}`,
   }),
   fundingNfrProjectRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.description.funding.nfr_project'),
@@ -19,7 +19,11 @@ const fundingErrorMessage = {
 
 export const fundingValidationSchema = Yup.object({
   type: Yup.string<'ConfirmedFunding' | 'UnconfirmedFunding'>().defined(),
-  identifier: Yup.string().optional(),
+  identifier: Yup.string().when('labels.nb', {
+    is: (label?: string) => !label,
+    then: (schema) => schema.required(fundingErrorMessage.fundingNameOrIdentifierRequired),
+    otherwise: (schema) => schema.optional(),
+  }),
   activeFrom: Yup.string().optional(),
   activeTo: Yup.string().optional(),
   source: Yup.string().required(fundingErrorMessage.fundingSourceRequired),
@@ -31,13 +35,7 @@ export const fundingValidationSchema = Yup.object({
     return true;
   }),
   labels: Yup.object({
-    nb: Yup.string().test('test-labels', fundingErrorMessage.fundingProjectRequired, (value, context) => {
-      const isNfrSource = context.from && context.from.some((item) => fundingSourceIsNfr(item.value.source));
-      if (!isNfrSource && !value) {
-        return false;
-      }
-      return true;
-    }),
+    nb: Yup.string().optional(),
   }),
   fundingAmount: Yup.object().when(['source'], ([source], schema) =>
     fundingSourceIsNfr(source)
@@ -51,6 +49,14 @@ export const fundingValidationSchema = Yup.object({
             .optional(),
         })
   ),
+}).test('test-label', fundingErrorMessage.fundingNameOrIdentifierRequired, (value, context) => {
+  if (!value.labels?.nb && !value.identifier) {
+    return context.createError({
+      path: `${context.path}.labels.nb`,
+      message: fundingErrorMessage.fundingNameOrIdentifierRequired,
+    });
+  }
+  return true;
 });
 
 export const projectFundingValidationSchema = Yup.object({

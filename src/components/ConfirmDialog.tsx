@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -47,16 +46,20 @@ export const ConfirmDialog = ({
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        <Button data-testid={dataTestId.confirmDialog.cancelButton} variant="outlined" onClick={onCancel}>
+        <Button
+          data-testid={dataTestId.confirmDialog.cancelButton}
+          variant="outlined"
+          disabled={isLoading}
+          onClick={onCancel}>
           {cancelButtonLabel || t('common.no')}
         </Button>
-        <LoadingButton
+        <Button
           data-testid={dataTestId.confirmDialog.acceptButton}
           variant="contained"
           loading={isLoading}
           onClick={onAccept}>
           {confirmButtonLabel || t('common.yes')}
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </Dialog>
   );

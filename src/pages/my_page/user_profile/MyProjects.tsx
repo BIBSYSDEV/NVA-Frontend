@@ -1,10 +1,10 @@
 import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ProjectsSearchParams, searchForProjects } from '../../../api/cristinApi';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { projectSortOptions } from '../../../components/ProjectSortSelector';
@@ -41,31 +41,29 @@ export const MyProjects = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>{t('my_page.my_profile.my_projects')}</title>
-      </Helmet>
-      <Typography variant="h2" gutterBottom>
+      <HeadTitle>{t('my_page.my_profile.my_projects')}</HeadTitle>
+      <Typography variant="h1" gutterBottom>
         {t('my_page.my_profile.my_projects')}
       </Typography>
-      {projectsQuery.isPending ? (
-        <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-      ) : projects && projects.length > 0 ? (
-        <ListPagination
-          count={projectsQuery.data?.size ?? 0}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={(newPage) => setPage(newPage)}
-          onRowsPerPageChange={(newRowsPerPage) => {
-            setRowsPerPage(newRowsPerPage);
-            setPage(1);
-          }}
-          sortingComponent={
-            <SortSelectorWithoutParams
-              options={projectSortOptions}
-              value={projectSort}
-              setValue={(value) => setProjectSort(value)}
-            />
-          }>
+      <ListPagination
+        count={projectsQuery.data?.size ?? 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(newPage) => setPage(newPage)}
+        onRowsPerPageChange={(newRowsPerPage) => {
+          setRowsPerPage(newRowsPerPage);
+          setPage(1);
+        }}
+        sortingComponent={
+          <SortSelectorWithoutParams
+            options={projectSortOptions}
+            value={projectSort}
+            setValue={(value) => setProjectSort(value)}
+          />
+        }>
+        {projectsQuery.isPending ? (
+          <ListSkeleton arrayLength={3} minWidth={40} height={100} />
+        ) : projects && projects.length > 0 ? (
           <List>
             {projects.map((project) => (
               <ProjectListItem
@@ -76,10 +74,10 @@ export const MyProjects = () => {
               />
             ))}
           </List>
-        </ListPagination>
-      ) : (
-        <Typography>{t('common.no_hits')}</Typography>
-      )}
+        ) : (
+          <Typography>{t('common.no_hits')}</Typography>
+        )}
+      </ListPagination>
     </div>
   );
 };

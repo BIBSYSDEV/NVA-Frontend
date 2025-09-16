@@ -13,6 +13,6 @@ export const validationSchema = Yup.object().shape({
 });
 
 export interface UserFormData {
-  person?: CristinPerson;
+  person?: CristinPerson | null;
   user?: InstitutionUser;
 }

@@ -1,10 +1,11 @@
+import { QueryClient } from '@tanstack/react-query';
 import { t, TFunction } from 'i18next';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '../types/associatedArtifact.types';
-import { Contributor, ContributorRole } from '../types/contributor.types';
+import { Contributor, ContributorRole, PreviewContributor } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
   AudioVisualPublication,
@@ -55,6 +56,7 @@ import {
   SerialPublication,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
+import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -99,7 +101,7 @@ export const isMediaContribution = (instanceType: any) => Object.values(MediaTyp
 
 export const isResearchData = (instanceType: any) => Object.values(ResearchDataType).includes(instanceType);
 
-export const isPeriodicalMediaContribution = (instanceType: string) =>
+export const isPeriodicalMediaContribution = (instanceType?: string) =>
   instanceType === MediaType.MediaFeatureArticle || instanceType === MediaType.MediaReaderOpinion;
 
 export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
@@ -212,58 +214,121 @@ export const getFormattedRegistration = (registration: Registration) => {
 };
 
 type ContributorConfig = {
-  [type in PublicationInstanceType]: { primaryRoles: ContributorRole[]; secondaryRoles: ContributorRole[] };
+  [type in PublicationInstanceType]: {
+    primaryRoles: ContributorRole[];
+    secondaryRoles: ContributorRole[];
+  };
 };
 
 export const contributorConfig: ContributorConfig = {
   // Journal
   [JournalType.AcademicArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.AcademicLiteratureReview]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Letter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Review]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Leader]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Corrigendum]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.Issue]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.ConferenceAbstract]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.CaseReport]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.StudyProtocol]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.ProfessionalArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [JournalType.PopularScienceArticle]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   // Book
   [BookType.AcademicMonograph]: {
@@ -351,6 +416,15 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.Other,
     ],
   },
+  [DegreeType.ArtisticPhd]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
+  },
   [DegreeType.Licentiate]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [
@@ -372,39 +446,84 @@ export const contributorConfig: ContributorConfig = {
   // Chapter
   [ChapterType.AcademicChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.NonFictionChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.PopularScienceChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.TextbookChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.EncyclopediaChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.Introduction]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ExhibitionCatalogChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ReportChapter]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   [ChapterType.ConferenceAbstract]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
   },
   // Presentation
   [PresentationType.ConferenceLecture]: {
@@ -589,74 +708,59 @@ export const contributorConfig: ContributorConfig = {
 };
 
 export const getContributorsWithPrimaryRole = (
-  contributors: Contributor[],
+  contributors: PreviewContributor[] | Contributor[],
   registrationType: PublicationInstanceType
 ) => {
   const { primaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => primaryRoles.includes(contributor.role.type));
+
+  return contributors.filter((contributor) => {
+    const roleValue = typeof contributor.role === 'string' ? contributor.role : contributor.role.type;
+    return primaryRoles.includes(roleValue);
+  });
 };
 
-export const getContributorsWithSecondaryRole = (
-  contributors: Contributor[],
-  registrationType: PublicationInstanceType
-) => {
-  const { secondaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => secondaryRoles.includes(contributor.role.type));
+const outputNameResolvers: Record<OutputItem['type'], (item: OutputItem) => string> = {
+  Venue: (item) => (item as Venue).place?.name ?? '',
+  PerformingArtsVenue: (item) => (item as Venue).place?.name ?? '',
+  Competition: (item) => (item as Competition).name,
+  MentionInPublication: (item) => (item as MentionInPublication).title,
+  Award: (item) => (item as Award).name,
+  Exhibition: (item) => (item as Exhibition).name,
+  Broadcast: (item) => (item as Broadcast).publisher.name,
+  CinematicRelease: (item) => (item as CinematicRelease).place.name,
+  OtherRelease: (item) => {
+    const other = item as OtherRelease;
+    return [other.publisher.name, other.place.name].filter(Boolean).join('/');
+  },
+  MusicScore: (item) => (item as MusicScore).publisher.name,
+  AudioVisualPublication: (item) => (item as AudioVisualPublication).publisher.name,
+  Concert: (item) => (item as Concert).place?.name ?? i18n.t('registration.resource_type.artistic.output_type.Concert'),
+  OtherPerformance: (item) => {
+    const other = item as OtherMusicPerformance;
+    return (
+      other.place?.name ||
+      other.performanceType ||
+      i18n.t('registration.resource_type.artistic.output_type.OtherPerformance')
+    );
+  },
+  LiteraryArtsMonograph: (item) => (item as LiteraryArtsMonograph).publisher.name,
+  LiteraryArtsPerformance: (item) => (item as LiteraryArtsPerformance).place.name,
+  LiteraryArtsAudioVisual: (item) => (item as LiteraryArtsAudioVisual).publisher.name,
+  LiteraryArtsWeb: (item) => (item as LiteraryArtsWeb).publisher.name,
+  ExhibitionBasic: (item) => (item as ExhibitionBasic).organization.name,
+  ExhibitionCatalog: () => '', // ExhibitionCatalog must be fetched separately with useQuery
 };
 
 export const getOutputName = (item: OutputItem): string => {
-  switch (item.type) {
-    case 'Venue':
-    case 'PerformingArtsVenue':
-      return (item as Venue).place?.name ?? '';
-    case 'Competition':
-      return (item as Competition).name;
-    case 'MentionInPublication':
-      return (item as MentionInPublication).title;
-    case 'Award':
-      return (item as Award).name;
-    case 'Exhibition':
-      return (item as Exhibition).name;
-    case 'Broadcast':
-      return (item as Broadcast).publisher.name;
-    case 'CinematicRelease':
-      return (item as CinematicRelease).place.name;
-    case 'OtherRelease': {
-      const otherRelease = item as OtherRelease;
-      return [otherRelease.publisher.name, otherRelease.place.name].filter(Boolean).join('/');
-    }
-    case 'MusicScore':
-      return (item as MusicScore).publisher.name;
-    case 'AudioVisualPublication':
-      return (item as AudioVisualPublication).publisher.name;
-    case 'Concert':
-      return (item as Concert).place.name;
-    case 'OtherPerformance': {
-      const otherMusicPerformance = item as OtherMusicPerformance;
-
-      return (
-        otherMusicPerformance.place?.name ||
-        otherMusicPerformance.performanceType ||
-        i18n.t('registration.resource_type.artistic.output_type.OtherPerformance')
-      );
-    }
-    case 'LiteraryArtsMonograph':
-      return (item as LiteraryArtsMonograph).publisher.name;
-    case 'LiteraryArtsPerformance':
-      return (item as LiteraryArtsPerformance).place.name;
-    case 'LiteraryArtsAudioVisual':
-      return (item as LiteraryArtsAudioVisual).publisher.name;
-    case 'LiteraryArtsWeb':
-      return (item as LiteraryArtsWeb).publisher.name;
-    case 'ExhibitionBasic':
-      return (item as ExhibitionBasic).organization.name;
-    default:
-      return '';
-  }
+  const nameResolver = outputNameResolvers[item.type];
+  return nameResolver ? nameResolver(item) : '';
 };
 
 export const userHasAccessRight = (registration: Registration | undefined, operation: RegistrationOperation) =>
   registration?.allowedOperations?.includes(operation) ?? false;
+
+export const userCanOnlyDoPartialUpdate = (registration: Registration) =>
+  userHasAccessRight(registration, 'partial-update') && !userHasAccessRight(registration, 'update');
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
@@ -683,11 +787,11 @@ export const isPendingOpenFile = (artifact: AssociatedArtifact) => artifact.type
 
 export const isOpenFile = (artifact: AssociatedArtifact) => artifact.type === FileType.OpenFile;
 
-export const isTypeWithRrs = (publicationInstanceType?: string) =>
+export const isCategoryWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
 
-export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
+export const isCategoryWithFileVersion = (publicationInstanceType?: string) =>
   isJournal(publicationInstanceType) || isBook(publicationInstanceType) || isChapter(publicationInstanceType);
 
 export const isEmbargoed = (embargoDate: Date | null) => {
@@ -715,20 +819,35 @@ export const getDisabledCategories = (
 ) => {
   const disabledCategories: DisabledCategory[] = [];
 
-  if (!user?.isThesisCurator) {
-    Object.values(DegreeType).forEach((type) => {
-      disabledCategories.push({ type, text: t('registration.resource_type.protected_degree_type') });
-    });
+  // Do not allow changing from degree to non-degree (and vice-versa) if result has open (approved) files
+  if (registration.associatedArtifacts.some(isOpenFile)) {
+    if (isDegree(registration.entityDescription?.reference?.publicationInstance?.type)) {
+      const nonDegreeTypes = allPublicationInstanceTypes.filter((type) => !isDegree(type));
+      nonDegreeTypes.forEach((type) => {
+        disabledCategories.push({
+          type,
+          text: t('registration.resource_type.cannot_select_non_degree_when_degree_has_open_file'),
+        });
+      });
+    } else {
+      Object.values(DegreeType).forEach((type) => {
+        disabledCategories.push({
+          type,
+          text: t('registration.resource_type.cannot_select_degree_when_non_degree_has_open_file'),
+        });
+      });
+    }
   }
 
-  const hasFiles = getAssociatedFiles(registration.associatedArtifacts).length > 0;
+  // Do not allow non-curator to select a category that don't support file upload if result has a file
+  if (!hasCuratorRole(user) && getAssociatedFiles(registration.associatedArtifacts).length > 0) {
+    if (customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
+      const categoriesWithoutFileSupport = allPublicationInstanceTypes
+        .filter((type) => !customer.allowFileUploadForTypes.includes(type))
+        .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
 
-  if (hasFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
-    const categoriesWithoutFileSupport = allPublicationInstanceTypes
-      .filter((type) => !customer.allowFileUploadForTypes.includes(type))
-      .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
-
-    disabledCategories.push(...categoriesWithoutFileSupport);
+      disabledCategories.push(...categoriesWithoutFileSupport);
+    }
   }
 
   return disabledCategories;
@@ -761,30 +880,33 @@ export const registrationLanguageOptions = [
 ];
 
 export const registrationsHaveSamePublicationYear = (
-  reg1: Registration | RegistrationSearchItem,
-  reg2: Registration | RegistrationSearchItem
+  registration: Registration,
+  registrationSearchItem: RegistrationSearchItem
 ) => {
-  if (!reg1.entityDescription?.publicationDate || !reg2.entityDescription?.publicationDate) {
+  const registrationPublicationYear = registration.entityDescription?.publicationDate?.year;
+
+  const registrationSearchItemPublicationYear = registrationSearchItem.publicationDate?.year;
+
+  if (registrationPublicationYear === undefined || registrationSearchItemPublicationYear === undefined) {
     return false;
   }
 
-  return reg1.entityDescription.publicationDate.year === reg2.entityDescription.publicationDate.year;
+  return registrationPublicationYear === registrationSearchItemPublicationYear;
 };
 
 export const registrationsHaveSameCategory = (
-  reg1: Registration | RegistrationSearchItem,
-  reg2: Registration | RegistrationSearchItem
+  registration: Registration,
+  registrationSearchItem: RegistrationSearchItem
 ) => {
-  if (
-    reg1.entityDescription?.reference?.publicationInstance?.type &&
-    reg2.entityDescription?.reference?.publicationInstance?.type
-  ) {
-    return (
-      reg1.entityDescription.reference.publicationInstance.type ===
-      reg2.entityDescription.reference.publicationInstance.type
-    );
+  const registrationCategory = registration.entityDescription?.reference?.publicationInstance?.type;
+
+  const registrationSearchItemCategory = registrationSearchItem.type;
+
+  if (!registrationCategory || !registrationSearchItemCategory) {
+    return false;
   }
-  return false;
+
+  return registrationCategory === registrationSearchItemCategory;
 };
 
 export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'onlineIssn' | 'printIssn' | 'issn'>>) => {
@@ -800,7 +922,22 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
   const publisher =
     registration.entityDescription?.reference?.publicationContext &&
     'publisher' in registration.entityDescription.reference.publicationContext
-      ? registration.entityDescription.reference.publicationContext.publisher
+      ? {
+          id: registration.entityDescription.reference.publicationContext.publisher?.id,
+          name: registration.entityDescription.reference.publicationContext.publisher?.name,
+        }
+      : undefined;
+
+  const publishingContextType =
+    registration.entityDescription?.reference?.publicationContext &&
+    'type' in registration.entityDescription.reference.publicationContext
+      ? (registration.entityDescription.reference.publicationContext.type as PublicationType)
+      : undefined;
+
+  const journalId =
+    registration.entityDescription?.reference?.publicationContext &&
+    'id' in registration.entityDescription.reference.publicationContext
+      ? (registration.entityDescription.reference.publicationContext.id ?? undefined)
       : undefined;
 
   const series =
@@ -809,30 +946,74 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
       ? registration.entityDescription.reference.publicationContext.series
       : undefined;
 
+  const contributors =
+    registration.entityDescription?.contributors.map((contributor) => ({
+      affiliation: contributor.affiliations,
+      correspondingAuthor: contributor.correspondingAuthor,
+      identity: contributor.identity,
+      role: contributor.role.type,
+    })) ?? [];
+
   const registrationSearchItem: RegistrationSearchItem = {
+    type: registration.entityDescription?.reference?.publicationInstance?.type ?? '',
     id: registration.id,
     identifier: registration.identifier,
-    createdDate: registration.createdDate,
-    modifiedDate: registration.modifiedDate,
-    publishedDate: registration.publishedDate,
-    status: registration.status,
-    entityDescription: {
-      mainTitle: registration.entityDescription?.mainTitle ?? '',
-      abstract: registration.entityDescription?.abstract ?? '',
-      description: registration.entityDescription?.description ?? '',
-      publicationDate: registration.entityDescription?.publicationDate,
-      contributorsPreview: registration.entityDescription?.contributors ?? [],
-      contributorsCount: (registration.entityDescription?.contributors ?? []).length,
-      reference: {
-        publicationInstance: {
-          type: registration.entityDescription?.reference?.publicationInstance?.type,
-        },
-        publicationContext: {
-          publisher,
-          series,
-        },
-      },
+    recordMetadata: {
+      createdDate: registration.createdDate,
+      modifiedDate: registration.modifiedDate,
+      publishedDate: registration.publishedDate,
+      status: registration.status,
     },
+    mainTitle: registration.entityDescription?.mainTitle ?? '',
+    contributorsCount: contributors.length,
+    abstract: registration.entityDescription?.abstract ?? '',
+    description: registration.entityDescription?.description ?? '',
+    publicationDate: registration.entityDescription?.publicationDate,
+    publishingDetails: {
+      id: journalId,
+      type: publishingContextType,
+      series: {
+        name: series?.title,
+        id: series?.id,
+      },
+      publisher: publisher,
+      doi: registration.entityDescription?.reference?.doi,
+    },
+    contributorsPreview: contributors,
   };
   return registrationSearchItem;
+};
+
+/**
+ * Checks if the customer allows file upload for the given category.
+ * If 'true' all user roles are allowed to upload open files.
+ * If 'false' only users with curator role can upload open files.
+ */
+export const allowsFileUpload = (customer: CustomerInstitution | null, category?: PublicationInstanceType | '') =>
+  !!category && !!customer?.allowFileUploadForTypes.includes(category);
+
+export const getAssociatedLinkRelationTitle = (t: TFunction, relation: AssociatedLink['relation']) => {
+  switch (relation) {
+    case 'dataset':
+      return t('registration.publication_types.DataSet');
+    case 'mention':
+      return t('common.mention');
+    case 'sameAs':
+      return t('common.full_text');
+    case 'metadataSource':
+      return t('common.metadata_source');
+    default:
+      return t('common.link');
+  }
+};
+
+export const updateRegistrationQueryData = (queryClient: QueryClient, registration: Registration) => {
+  const key1 = ['registration', registration.identifier, true];
+  if (queryClient.getQueryData(key1)) {
+    queryClient.setQueryData(key1, registration);
+  }
+  const key2 = ['registration', registration.identifier, false];
+  if (queryClient.getQueryData(key2)) {
+    queryClient.setQueryData(key2, registration);
+  }
 };

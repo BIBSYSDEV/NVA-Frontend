@@ -1,5 +1,6 @@
 import { signInWithRedirect, signOut } from 'aws-amplify/auth';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { logoutSuccess, setUser } from '../../redux/userSlice';
 import { LocalStorageKey, USE_MOCK_DATA } from '../constants';
 import { getCurrentPath } from '../general-helpers';
@@ -13,12 +14,19 @@ interface UseAuthentication {
 
 export const useAuthentication = (): UseAuthentication => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
     } else {
-      await signInWithRedirect({ provider: { custom: 'Dataporten' } });
+      try {
+        await signInWithRedirect({ provider: { custom: 'Dataporten' } });
+      } catch (error: any) {
+        if (error?.name === 'UserAlreadyAuthenticatedException') {
+          window.location.reload();
+        }
+      }
     }
   };
 
@@ -26,7 +34,7 @@ export const useAuthentication = (): UseAuthentication => {
     localStorage.setItem(LocalStorageKey.RedirectPath, getCurrentPath());
     if (USE_MOCK_DATA) {
       dispatch(logoutSuccess());
-      window.location.pathname = UrlPathTemplate.Logout;
+      navigate(UrlPathTemplate.Logout);
     } else {
       await signOut({ global: true });
     }

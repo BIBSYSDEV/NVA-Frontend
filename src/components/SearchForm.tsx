@@ -1,18 +1,26 @@
 import { Box, BoxProps, TextFieldProps } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { ResultParam } from '../api/searchApi';
+import { useLocation, useNavigate } from 'react-router';
 import { SearchTextField } from '../pages/search/SearchTextField';
-import { dataSearchFieldAttributeName, SearchParam, syncParamsWithSearchFields } from '../utils/searchHelpers';
+import { dataSearchFieldAttributeName, syncParamsWithSearchFields } from '../utils/searchHelpers';
 
 interface SearchFormProps extends Pick<BoxProps, 'sx'>, Pick<TextFieldProps, 'label' | 'placeholder'> {
+  paginationOffsetParamName: string;
   paramName?: string;
   dataTestId?: string;
 }
 
-export const SearchForm = ({ sx, label, placeholder, dataTestId, paramName = 'query' }: SearchFormProps) => {
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+export const SearchForm = ({
+  sx,
+  label,
+  placeholder,
+  dataTestId,
+  paramName = 'query',
+  paginationOffsetParamName,
+}: SearchFormProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const currentSearchTerm = searchParams.get(paramName) ?? '';
 
   const [inputValue, setInputValue] = useState(currentSearchTerm);
@@ -35,10 +43,8 @@ export const SearchForm = ({ sx, label, placeholder, dataTestId, paramName = 'qu
           syncedParams.delete(paramName);
         }
 
-        syncedParams.delete(ResultParam.From);
-        syncedParams.delete(SearchParam.Page);
-
-        history.push({ search: searchParams.toString() });
+        syncedParams.delete(paginationOffsetParamName);
+        navigate({ search: searchParams.toString() });
       }}>
       <SearchTextField
         inputProps={{ [dataSearchFieldAttributeName]: paramName }}

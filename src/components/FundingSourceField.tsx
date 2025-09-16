@@ -1,9 +1,9 @@
 import { Autocomplete } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { fetchFundingSources } from '../api/cristinApi';
+import { useFetchFundingSources } from '../api/hooks/useFetchFundingSources';
 import { dataTestId } from '../utils/dataTestIds';
+import { fundingSourceAutocompleteFilterOptions } from '../utils/searchHelpers';
 import { getLanguageString } from '../utils/translation-helpers';
 import { AutocompleteTextField } from './AutocompleteTextField';
 
@@ -14,13 +14,7 @@ interface FundingSourceFieldProps {
 export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
   const { t } = useTranslation();
 
-  const fundingSourcesQuery = useQuery({
-    queryKey: ['fundingSources'],
-    queryFn: fetchFundingSources,
-    meta: { errorMessage: t('feedback.error.get_funding_sources') },
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-  });
+  const fundingSourcesQuery = useFetchFundingSources();
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
   return (
@@ -29,14 +23,7 @@ export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
         <Autocomplete
           value={fundingSourcesList.find((source) => source.id === field.value) ?? null}
           options={fundingSourcesList}
-          filterOptions={(options, state) => {
-            const filter = state.inputValue.toLocaleLowerCase();
-            return options.filter((option) => {
-              const names = Object.values(option.name).map((name) => name.toLocaleLowerCase());
-              const identifier = option.identifier.toLocaleLowerCase();
-              return identifier.includes(filter) || names.some((name) => name.includes(filter));
-            });
-          }}
+          filterOptions={fundingSourceAutocompleteFilterOptions}
           renderOption={({ key, ...props }, option) => (
             <li {...props} key={option.identifier}>
               {getLanguageString(option.name)}

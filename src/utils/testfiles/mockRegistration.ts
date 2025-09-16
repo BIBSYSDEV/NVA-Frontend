@@ -107,17 +107,7 @@ export const mockRegistration: JournalRegistration = {
       },
     },
   },
-  allowedOperations: ['update', 'delete', 'unpublish'],
-};
-
-export const mockMathJaxRegistration: JournalRegistration = {
-  ...mockRegistration,
-  entityDescription: {
-    ...mockRegistration.entityDescription,
-    mainTitle: 'The title \\(\\sqrt{25} = 5~\\hbox{ost}\\) and \\(A_{FB}^{\\mathrm{b}\\overline{\\mathrm{b}}}\\)',
-    abstract:
-      'This is abstract -> \\(\\sqrt{25} = 5~\\hbox{ost}\\) and \\(X_{AB}^{\\mathrm{c}\\overline{\\mathrm{d}}}\\) and so on it goes.',
-  },
+  allowedOperations: ['partial-update', 'update', 'delete', 'unpublish', 'upload-file'],
 };
 
 export const mockTicketCollection: TicketCollection = {
@@ -125,6 +115,7 @@ export const mockTicketCollection: TicketCollection = {
   tickets: [
     {
       owner: 'creator@unit.no',
+      ownerAffiliation: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
       type: 'GeneralSupportCase',
       status: 'Pending',
       viewedBy: [],
@@ -137,6 +128,7 @@ export const mockTicketCollection: TicketCollection = {
         identifier: mockRegistration.identifier,
         mainTitle: mockRegistration.entityDescription.mainTitle,
         contributors: [],
+        contributorsCount: 0,
         status: RegistrationStatus.Published,
         createdDate: new Date(2020, 1).toISOString(),
         modifiedDate: new Date(2020, 1).toISOString(),

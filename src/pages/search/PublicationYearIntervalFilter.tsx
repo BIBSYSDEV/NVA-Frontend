@@ -1,11 +1,11 @@
 import { Box, BoxProps } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../api/searchApi';
 import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 
-const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
+const commonDatepickerProps: Partial<DatePickerProps> = {
   views: ['year'],
   disableHighlightToday: true,
   slotProps: { textField: { sx: { maxWidth: '10rem' }, size: 'small' } },
@@ -13,15 +13,16 @@ const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
 
 interface PublicationDateIntervalFilterProps {
   boxProps?: Pick<BoxProps, 'sx'>;
-  datePickerProps?: Partial<DatePickerProps<Date>>;
+  datePickerProps?: Partial<DatePickerProps>;
 }
 
 const defaultMaxDate = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999);
 
 export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: PublicationDateIntervalFilterProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const selectedYearSinceParam = searchParams.get(ResultParam.PublicationYearSince);
   const selectedYearBeforeParam = searchParams.get(ResultParam.PublicationYearBefore);
@@ -43,12 +44,12 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
           syncedParams.set(param, year.toString());
         }
         syncedParams.delete(ResultParam.From);
-        history.push({ search: syncedParams.toString() });
+        navigate({ search: syncedParams.toString() });
       }
     } else {
       syncedParams.delete(param);
       syncedParams.delete(ResultParam.From);
-      history.push({ search: syncedParams.toString() });
+      navigate({ search: syncedParams.toString() });
     }
   };
 

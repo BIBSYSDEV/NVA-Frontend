@@ -23,7 +23,7 @@ const employeeErrorMessage = {
     field: i18n.t('basic_data.add_employee.position'),
   }),
   affiliationOrganizationRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('common.institution'),
+    field: i18n.t('registration.contributors.department'),
   }),
   affiliationPercentageMax: i18n.t('feedback.validation.must_be_smaller_than', {
     field: i18n.t('basic_data.add_employee.position_percent'),
@@ -46,7 +46,7 @@ const employeeErrorMessage = {
   affiliationEndDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('common.end_date'),
   }),
-  nationalIdInvalid: i18n.t('feedback.validation.is_required', {
+  nationalIdRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('common.national_id_number'),
   }),
   nationalIdInvalidFormat: i18n.t('feedback.validation.invalid_number_of_digits', {
@@ -72,7 +72,7 @@ export const userValidationSchema = Yup.object<YupShape<FlatCristinPerson>>({
     !nvi?.verifiedAt.id
       ? schema
           .matches(/^\d{11}$/, employeeErrorMessage.nationalIdInvalidFormat)
-          .required(employeeErrorMessage.nationalIdInvalid)
+          .required(employeeErrorMessage.nationalIdRequired)
       : schema.optional()
   ),
 });

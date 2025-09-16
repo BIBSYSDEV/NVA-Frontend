@@ -1,7 +1,8 @@
-import { Box, List, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { List, Typography } from '@mui/material';
+import { Trans, useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { NoSearchResults } from '../../../components/NoSearchResults';
 import { SortSelector } from '../../../components/SortSelector';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
@@ -17,8 +18,8 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
   const searchResults = personQuery.data?.hits ?? [];
   const totalHits = personQuery.data?.size ?? 0;
 
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const resultsParam = params.get(SearchParam.Results);
   const pageParam = params.get(SearchParam.Page);
   const page = pageParam ? +pageParam : 1;
@@ -49,26 +50,31 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
   );
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <CristinSearchPagination
+      totalCount={totalHits}
+      page={page}
+      rowsPerPage={rowsPerPage}
+      sortingComponent={sortingComponent}>
       {personQuery.isFetching ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.length > 0 ? (
-        <div>
-          <CristinSearchPagination
-            totalCount={totalHits}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            sortingComponent={sortingComponent}>
-            <List>
-              {searchResults.map((person) => (
-                <PersonListItem key={person.id} person={person} />
-              ))}
-            </List>
-          </CristinSearchPagination>
-        </div>
+        <List>
+          {searchResults.map((person) => (
+            <PersonListItem key={person.id} person={person} />
+          ))}
+        </List>
       ) : (
-        <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('common.no_hits')}</Typography>
+        <NoSearchResults>
+          <Trans
+            i18nKey="no_search_results_list_person"
+            components={{
+              p: <Typography fontWeight="bold" />,
+              ul: <ul style={{ margin: 0, paddingLeft: '1.5rem' }} />,
+              li: <li />,
+            }}
+          />
+        </NoSearchResults>
       )}
-    </Box>
+    </CristinSearchPagination>
   );
 };

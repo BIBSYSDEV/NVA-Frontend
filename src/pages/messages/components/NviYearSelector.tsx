@@ -1,6 +1,6 @@
-import { MenuItem, Select, SelectProps } from '@mui/material';
+import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
@@ -9,34 +9,37 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 const nviYearFilterValues = getNviYearFilterValues(new Date().getFullYear() + 1);
 
-export const NviYearSelector = (props: Partial<SelectProps>) => {
+export const NviYearSelector = (props: Pick<TextFieldProps, 'fullWidth'>) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { year, offset } = useNviCandidatesParams();
 
-  const searchParams = new URLSearchParams(history.location.search);
+  const searchParams = new URLSearchParams(location.search);
 
   return (
-    <Select
+    <TextField
+      select
       data-testid={dataTestId.tasksPage.nvi.yearSelect}
       size="small"
-      inputProps={{ 'aria-label': t('common.year') }}
       value={year}
+      label={t('search.advanced_search.nvi_reported_year')}
       onChange={(event) => {
-        const selectedYear = event.target.value as number;
+        const selectedYear = +event.target.value;
         const syncedParams = syncParamsWithSearchFields(searchParams);
         syncedParams.set(NviCandidatesSearchParam.Year, selectedYear.toString());
         if (offset) {
           syncedParams.delete(NviCandidatesSearchParam.Offset);
         }
-        history.push({ search: syncedParams.toString() });
+        navigate({ search: syncedParams.toString() });
       }}
+      sx={{ minWidth: '10rem' }}
       {...props}>
       {nviYearFilterValues.map((year) => (
         <MenuItem key={year} value={year}>
           {year}
         </MenuItem>
       ))}
-    </Select>
+    </TextField>
   );
 };

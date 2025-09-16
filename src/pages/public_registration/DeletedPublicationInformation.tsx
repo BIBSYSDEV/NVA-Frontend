@@ -1,6 +1,6 @@
 import { Box, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
@@ -34,7 +34,7 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
               padding: '1rem',
               my: '1rem',
             }}>
-            <Typography variant="h2" component="h1">
+            <Typography variant="h2" component="strong">
               {t('registration.result_is_deleted_or_unpublished', {
                 status: t(`registration.status.${registration.status}`).toLowerCase(),
               })}

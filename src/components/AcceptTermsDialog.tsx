@@ -1,16 +1,15 @@
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { LoadingButton } from '@mui/lab';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, Typography } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { getUserAttributes } from '../api/authApi';
+import { getCustomUserAttributes } from '../api/authApi';
 import { acceptTermsAndConditions } from '../api/roleApi';
 import { LanguageSelector } from '../layout/header/LanguageSelector';
 import { setNotification } from '../redux/notificationSlice';
 import { setUser } from '../redux/userSlice';
 import { dataTestId } from '../utils/dataTestIds';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
+import { OpenInNewLink } from './OpenInNewLink';
 
 interface AcceptTermsDialogProps {
   newTermsUri: string;
@@ -25,9 +24,9 @@ export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
     mutationFn: async () => {
       const acceptTermsResponse = await acceptTermsAndConditions(newTermsUri);
       if (acceptTermsResponse.data.termsConditionsUri) {
-        const newUserInfo = await getUserAttributes();
-        if (newUserInfo) {
-          dispatch(setUser(newUserInfo));
+        const newSessionAttributes = await getCustomUserAttributes({ forceRefresh: true });
+        if (newSessionAttributes) {
+          dispatch(setUser(newSessionAttributes));
         }
       }
     },
@@ -40,34 +39,36 @@ export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
         {t('authorization.welcome')} <LanguageSelector />
       </DialogTitle>
       <DialogContent>
-        <Typography sx={{ mb: '1rem' }}>{t('authorization.accept_terms_intro')} </Typography>
+        <Trans
+          t={t}
+          i18nKey="authorization.accept_terms_intro"
+          components={{
+            p: <Typography sx={{ mb: '1rem' }} />,
+          }}
+        />
         <Typography variant="h3" gutterBottom>
           {t('authorization.about_terms')}
         </Typography>
-        <Trans i18nKey="authorization.about_terms_description">
-          <Typography sx={{ mb: '1rem' }}>
-            <Link
-              href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv"
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{ display: 'inline-flex', alignItems: 'center' }}>
-              <OpenInNewIcon fontSize="small" />
-            </Link>
-          </Typography>
-          <Typography sx={{ textAlign: 'center' }} />
-        </Trans>
+        <Trans
+          t={t}
+          i18nKey="authorization.about_terms_description"
+          components={{
+            p: <Typography sx={{ mb: '1rem' }} />,
+            a: <OpenInNewLink />,
+          }}
+        />
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'center' }}>
         <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={handleLogout}>
           {t('authorization.reject')}
         </Button>
-        <LoadingButton
+        <Button
           data-testid={dataTestId.confirmDialog.acceptButton}
           loading={acceptTermsMutation.isPending}
           variant="contained"
           onClick={() => acceptTermsMutation.mutate()}>
           {t('authorization.accept')}
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </Dialog>
   );

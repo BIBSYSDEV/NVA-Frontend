@@ -1,9 +1,8 @@
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Checkbox, Divider, FormControlLabel, FormLabel, MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import {
   createCustomerInstitution,
   updateCustomerInstitution,
@@ -16,9 +15,9 @@ import {
   CustomerInstitutionFieldNames,
   CustomerInstitutionFormData,
   DoiAgent,
-  Sector,
   emptyCustomerInstitution,
   emptyProtectedDoiAgent,
+  Sector,
 } from '../../../types/customerInstitution.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -43,7 +42,7 @@ export const CustomerInstitutionMetadataForm = ({
   editMode,
 }: CustomerInstitutionMetadataFormProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = async ({ customer, doiAgent, canAssignDoi }: CustomerInstitutionFormData) => {
@@ -52,7 +51,7 @@ export const CustomerInstitutionMetadataForm = ({
       if (isErrorStatus(createCustomerResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_customer'), variant: 'error' }));
       } else if (isSuccessStatus(createCustomerResponse.status)) {
-        history.push(getAdminInstitutionPath(createCustomerResponse.data.id));
+        navigate(getAdminInstitutionPath(createCustomerResponse.data.id));
         dispatch(
           setNotification({
             message: t('feedback.success.created_customer'),
@@ -323,17 +322,21 @@ export const CustomerInstitutionMetadataForm = ({
               </>
             )}
             <Divider />
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Button sx={{ marginRight: '1rem' }} onClick={() => resetForm()}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+              <Button
+                onClick={() => {
+                  resetForm();
+                  navigate(-1);
+                }}>
                 {t('common.cancel')}
               </Button>
-              <LoadingButton
+              <Button
                 data-testid={dataTestId.basicData.institutionAdmin.saveButton}
                 variant="contained"
                 loading={isSubmitting}
                 type="submit">
                 {editMode ? t('common.save') : t('common.create')}
-              </LoadingButton>
+              </Button>
             </Box>
           </InputContainerBox>
         </Form>

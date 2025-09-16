@@ -1,6 +1,6 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
 import { AggregationValue, LanguageString } from './common.types';
-import { Contributor } from './contributor.types';
+import { Contributor, PreviewContributor } from './contributor.types';
 import { ResearchProject } from './project.types';
 import { ArtisticEntityDescription, ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
 import { BookEntityDescription, BookPublicationInstance } from './publication_types/bookRegistration.types';
@@ -40,6 +40,7 @@ import {
   MediaType,
   OtherRegistrationType,
   PresentationType,
+  PublicationType,
   ReportType,
   ResearchDataType,
 } from './publicationFieldNames';
@@ -82,10 +83,6 @@ export interface Publisher extends PublicationChannel {
   type: 'Publisher';
 }
 
-export interface MyRegistrationsResponse {
-  publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
-}
-
 type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier' | 'HandleIdentifier';
 type ImportSourceName = 'Cristin' | 'Scopus' | 'handle';
 
@@ -95,7 +92,7 @@ export interface AdditionalIdentifier {
   value: string;
 }
 
-export interface ImportDetail {
+interface ImportDetail {
   importDate: string;
   importSource: ImportSource;
 }
@@ -106,18 +103,18 @@ interface ImportSource {
 }
 
 export type RegistrationOperation =
-  | 'update'
+  | 'partial-update' // Can edit projects and funding
+  | 'update' // Can update all fields
   | 'delete'
   | 'unpublish'
   | 'republish'
   | 'terminate'
-  | 'update-including-files'
   | 'publishing-request-create'
-  | 'publishing-request-approve'
   | 'doi-request-create'
   | 'doi-request-approve'
   | 'support-request-create'
-  | 'support-request-approve';
+  | 'support-request-approve'
+  | 'upload-file';
 
 interface UnpublishingNote {
   type: 'UnpublishingNote';
@@ -134,7 +131,7 @@ interface GeneralPublicationNote {
 type PublicationNote = UnpublishingNote | GeneralPublicationNote;
 
 export interface BaseRegistration {
-  readonly type: 'Publication' | 'ImportCandidate';
+  readonly type: 'Publication' | 'ImportCandidate' | 'PartialUpdatePublicationRequest';
   readonly id: string;
   readonly identifier: string;
   readonly createdDate: string;
@@ -152,9 +149,11 @@ export interface BaseRegistration {
   readonly allowedOperations?: RegistrationOperation[];
   readonly publicationNotes?: PublicationNote[];
   readonly importDetails?: ImportDetail[];
+  readonly etag?: string;
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
+  pendingOpenFileCount?: number;
   fundings: Funding[];
 }
 
@@ -230,7 +229,8 @@ export type PublicationInstance =
   | MediaContributionPeriodicalPublicationInstance
   | ResearchDataPublicationInstance
   | MapPublicationInstance
-  | ExhibitionPublicationInstance;
+  | ExhibitionPublicationInstance
+  | EmptyPublicationInstance;
 
 export enum PublicationChannelType {
   Journal = 'Journal',
@@ -241,6 +241,17 @@ export enum PublicationChannelType {
   UnconfirmedMediaContributionPeriodical = 'UnconfirmedMediaContributionPeriodical',
   UnconfirmedPublisher = 'UnconfirmedPublisher',
   UnconfirmedSeries = 'UnconfirmedSeries',
+}
+
+interface EmptyPublicationInstance {
+  type?: '';
+}
+
+interface EntityDescriptionWithoutCategory extends BaseEntityDescription {
+  reference: BaseReference & {
+    publicationInstance?: EmptyPublicationInstance;
+    publicationContext?: { type?: '' };
+  };
 }
 
 export type EntityDescription =
@@ -254,7 +265,8 @@ export type EntityDescription =
   | MediaContributionEntityDescription
   | ResearchDataEntityDescription
   | MapEntityDescription
-  | ExhibitionEntityDescription;
+  | ExhibitionEntityDescription
+  | EntityDescriptionWithoutCategory;
 
 export interface Registration extends BaseRegistration {
   entityDescription?: EntityDescription;
@@ -263,27 +275,34 @@ export interface Registration extends BaseRegistration {
 export interface RegistrationSearchItem {
   id: string;
   identifier: string;
-  createdDate: string;
-  modifiedDate: string;
-  publishedDate?: string;
-  status: RegistrationStatus;
-  entityDescription: {
-    mainTitle: string;
-    abstract: string;
-    description: string;
-    publicationDate?: RegistrationDate;
-    contributorsPreview: Contributor[];
-    contributorsCount: number;
-    reference: {
-      publicationInstance: {
-        type?: PublicationInstanceType | '';
-      };
-      publicationContext?: {
-        publisher?: ContextPublisher;
-        series?: ContextSeries;
-      };
-    };
+  type: PublicationInstanceType | '';
+  recordMetadata: {
+    status: RegistrationStatus;
+    createdDate: string;
+    modifiedDate: string;
+    publishedDate?: string;
   };
+  mainTitle: string;
+  publicationDate?: RegistrationDate;
+  contributorsPreview: PreviewContributor[];
+  contributorsCount: number;
+  publishingDetails: {
+    id?: string;
+    type?: PublicationType;
+    series?: {
+      name?: string;
+      id?: string;
+      scientificValue?: string;
+    };
+    publisher?: {
+      name?: string;
+      id?: string;
+      scientificValue?: string;
+    };
+    doi?: string;
+  };
+  abstract: string;
+  description: string;
 }
 
 export interface RegistrationDate {
@@ -299,21 +318,6 @@ export const emptyRegistrationDate: RegistrationDate = {
   month: '',
   day: '',
 };
-
-export interface RegistrationPreview {
-  abstract: string;
-  contributors: Contributor[];
-  identifier: string;
-  id: string;
-  mainTitle: string;
-  createdDate: string;
-  modifiedDate: string;
-  status: RegistrationStatus;
-  owner: string;
-  publicationInstance?: {
-    type: PublicationInstanceType;
-  };
-}
 
 export interface DoiPreview {
   entityDescription: EntityDescription;
@@ -335,7 +339,7 @@ export const emptyRegistration: Registration = {
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
-  allowedOperations: ['update', 'delete', 'unpublish'],
+  allowedOperations: ['partial-update', 'update', 'delete', 'unpublish', 'upload-file'],
 };
 
 export interface ContextSeries {

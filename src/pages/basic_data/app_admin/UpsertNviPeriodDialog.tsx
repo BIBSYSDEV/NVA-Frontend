@@ -1,11 +1,10 @@
-import { LoadingButton } from '@mui/lab';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
 import { useMutation } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { createNviPeriod, updateNviPeriod } from '../../../api/scientificIndexApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { NviPeriod } from '../../../types/nvi.types';
@@ -38,7 +37,8 @@ export const UpsertNviPeriodDialog = ({
 }: UpsertNviPeriodDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const nviPeriodMutation = useMutation({
     mutationFn: (data: NviPeriod) => (nviPeriod ? updateNviPeriod(data) : createNviPeriod(data)),
@@ -56,13 +56,13 @@ export const UpsertNviPeriodDialog = ({
     if (nviPeriod) {
       closeEditDialog();
     } else {
-      history.push(UrlPathTemplate.BasicDataNvi);
+      navigate(UrlPathTemplate.BasicDataNvi);
     }
   };
 
   return (
     <Dialog
-      open={history.location.pathname === UrlPathTemplate.BasicDataNviNew || !!nviPeriod}
+      open={location.pathname === UrlPathTemplate.BasicDataNviNew || !!nviPeriod}
       onClose={closeDialog}
       data-testid={dataTestId.basicData.nviPeriod.nviPeriodDialog}>
       <DialogTitle>
@@ -159,9 +159,9 @@ export const UpsertNviPeriodDialog = ({
             </DialogContent>
             <DialogActions sx={{ gap: '0.5rem' }}>
               <Button onClick={closeDialog}>{t('common.cancel')}</Button>
-              <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
+              <Button variant="contained" type="submit" loading={isSubmitting}>
                 {t('common.save')}
-              </LoadingButton>
+              </Button>
             </DialogActions>
           </Form>
         )}

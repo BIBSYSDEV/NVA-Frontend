@@ -1,9 +1,8 @@
-import { LoadingButton } from '@mui/lab';
-import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, DialogActions, FormControlLabel, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import * as Yup from 'yup';
 import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistrationStatus';
 import { Modal } from '../../../components/Modal';
@@ -11,15 +10,17 @@ import { RequiredDescription } from '../../../components/RequiredDescription';
 import { Registration, RegistrationSearchItem } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
-import { FindRegistration } from './FindRegistration';
+import { doNotRedirectQueryParam } from '../../../utils/urlPaths';
+import { FindSimilarRegistration } from './FindSimilarRegistration';
 
 interface UnpublishRegistrationProps {
   registration: Registration;
+  refetchData: () => Promise<void>;
 }
 
-export const UnpublishRegistration = ({ registration }: UnpublishRegistrationProps) => {
+export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRegistrationProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const [, setSearchParams] = useSearchParams();
 
   const [showUnpublishModal, setShowUnpublishModal] = useState(false);
   const toggleUnpublishModal = () => setShowUnpublishModal(!showUnpublishModal);
@@ -27,6 +28,8 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
   const [selectedDuplicate, setSelectedDuplicate] = useState<RegistrationSearchItem>();
 
   const userCanUnpublish = userHasAccessRight(registration, 'unpublish');
+
+  const [confirmedUnpublish, setConfirmedUnpublish] = useState(false);
 
   const unpublishValidationSchema = Yup.object().shape({
     comment: Yup.string()
@@ -53,16 +56,15 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
           </Button>
         </>
       ) : (
-        <Trans
-          t={t}
-          i18nKey="unpublish_actions.unpublish_not_allowed"
-          components={[<Typography gutterBottom key="1" />]}
-        />
+        <Trans i18nKey="unpublish_actions.unpublish_not_allowed">
+          <Typography gutterBottom />
+        </Trans>
       )}
 
       <Modal
         headingText={t('registration.delete_registration')}
         open={showUnpublishModal}
+        maxWidth="md"
         onClose={toggleUnpublishModal}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <RequiredDescription />
@@ -72,27 +74,30 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
           <Formik
             initialValues={{ comment: '' }}
             validationSchema={unpublishValidationSchema}
-            onSubmit={(values) =>
-              updateRegistrationStatusMutation.mutate({
+            onSubmit={async (values) => {
+              await updateRegistrationStatusMutation.mutateAsync({
                 registrationIdentifier: registration.identifier,
                 updateStatusRequest: {
                   type: 'UnpublishPublicationRequest',
                   duplicateOf: selectedDuplicate?.id,
                   comment: values.comment,
                 },
-                onSuccess: () => {
-                  toggleUnpublishModal();
-                  history.push({ search: '?shouldNotRedirect' });
-                },
-              })
-            }>
+              });
+              await refetchData();
+              setSearchParams((params) => {
+                params.set(doNotRedirectQueryParam, 'true');
+                return params;
+              });
+              toggleUnpublishModal();
+            }}>
             <Form noValidate>
-              <Box sx={{ my: '1rem' }}>
+              <Box sx={{ mb: '1rem' }}>
                 <Typography gutterBottom>{t('unpublish_actions.unpublish_registration_reason')}</Typography>
                 <Field name="comment">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
+                      multiline
                       value={field.value ?? ''}
                       required
                       data-testid={dataTestId.unpublishActions.unpublishJustificationTextField}
@@ -107,25 +112,36 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
               </Box>
 
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
-                <Typography variant="h3">{t('unpublish_actions.unpublish_registration_duplicate_question')}</Typography>
+                <Typography variant="h2">{t('unpublish_actions.unpublish_registration_duplicate_question')}</Typography>
                 <Typography>{t('unpublish_actions.unpublish_registration_duplicate_citation_information')}</Typography>
               </Box>
-              <FindRegistration
+              <FindSimilarRegistration
                 setSelectedRegistration={setSelectedDuplicate}
-                selectedRegistration={selectedDuplicate}
-                filteredRegistrationIdentifier={registration.identifier}
+                sourceRegistration={registration}
+                fieldLabel={t('unpublish_actions.duplicate')}
+              />
+              <FormControlLabel
+                sx={{ my: '1rem' }}
+                control={
+                  <Checkbox
+                    data-testid={dataTestId.unpublishActions.confirmUnpublishCheckbox}
+                    onChange={() => setConfirmedUnpublish(!confirmedUnpublish)}
+                  />
+                }
+                label={t('unpublish_actions.confirm_unpublish')}
               />
               <DialogActions>
                 <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={toggleUnpublishModal}>
                   {t('common.cancel')}
                 </Button>
-                <LoadingButton
+                <Button
                   loading={updateRegistrationStatusMutation.isPending}
+                  disabled={!confirmedUnpublish}
                   type="submit"
                   data-testid={dataTestId.confirmDialog.acceptButton}
                   variant="outlined">
                   {t('unpublish_actions.unpublish')}
-                </LoadingButton>
+                </Button>
               </DialogActions>
             </Form>
           </Formik>
