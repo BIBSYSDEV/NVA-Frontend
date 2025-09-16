@@ -27,7 +27,7 @@ export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex =
   const { t } = useTranslation();
   const { sourceResult } = useContext(MergeResultsWizardContext);
   const { control } = useFormContext<Registration>();
-  const currentTargetCategory = useWatch({ name: 'entityDescription.reference.publicationInstance.type', control });
+  const targetResult = useWatch({ control }) as Registration;
   const { append, remove } = useFieldArray({ name: 'associatedArtifacts', control });
 
   const canCopyFile = !!sourceFile && !targetFile;
@@ -43,6 +43,7 @@ export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex =
         shouldShowFileVersion={isCategoryWithFileVersion(
           sourceResult.entityDescription?.reference?.publicationInstance?.type
         )}
+        registrationWithFile={sourceFile ? sourceResult : undefined}
       />
 
       {canCopyFile && (
@@ -72,7 +73,10 @@ export const CompareFiles = ({ sourceFile, targetFile, matchingTargetFileIndex =
       <FileBox
         file={targetFile}
         sx={{ gridColumn: { xs: 1, sm: 3 } }}
-        shouldShowFileVersion={isCategoryWithFileVersion(currentTargetCategory)}
+        shouldShowFileVersion={isCategoryWithFileVersion(
+          targetResult.entityDescription?.reference?.publicationInstance?.type
+        )}
+        registrationWithFile={canRemoveFile ? undefined : targetResult}
       />
 
       <Divider sx={{ display: { xs: 'block', sm: 'none' }, my: '0.5rem' }} />

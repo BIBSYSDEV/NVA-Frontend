@@ -7,7 +7,9 @@ import prettyBytes from 'pretty-bytes';
 import { useTranslation } from 'react-i18next';
 import { FileUploaderInfo } from '../../../pages/public_registration/public_files/FileUploaderInfo';
 import { PendingFilesInfo } from '../../../pages/public_registration/public_files/PendingFilesInfo';
+import { DownloadFileButton } from '../../../pages/registration/files_and_license_tab/DownloadFileButton';
 import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
+import { Registration } from '../../../types/registration.types';
 import { toDateString } from '../../../utils/date-helpers';
 import { getLicenseData } from '../../../utils/fileHelpers';
 import { isEmbargoed } from '../../../utils/registration-helpers';
@@ -15,9 +17,10 @@ import { isEmbargoed } from '../../../utils/registration-helpers';
 interface FileBoxProps extends BoxProps {
   file?: AssociatedFile;
   shouldShowFileVersion: boolean;
+  registrationWithFile?: Registration;
 }
 
-export const FileBox = ({ file, sx, shouldShowFileVersion }: FileBoxProps) => {
+export const FileBox = ({ file, sx, shouldShowFileVersion, registrationWithFile }: FileBoxProps) => {
   const { t } = useTranslation();
   const licenseData = file ? getLicenseData(file.license) : null;
 
@@ -35,9 +38,12 @@ export const FileBox = ({ file, sx, shouldShowFileVersion }: FileBoxProps) => {
       }}>
       {file && (
         <>
-          <Typography>
-            <strong>{file.name}</strong>
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Typography>
+              <strong>{file.name}</strong>
+            </Typography>
+            {registrationWithFile && <DownloadFileButton file={file} registration={registrationWithFile} />}
+          </Box>
           <Typography>{prettyBytes(file.size, { locale: true })}</Typography>
           <FileUploaderInfo uploadDetails={file.uploadDetails} />
           <Box sx={{ display: 'flex', gap: '0.5rem 2rem', alignItems: 'center', flexWrap: 'wrap' }}>
