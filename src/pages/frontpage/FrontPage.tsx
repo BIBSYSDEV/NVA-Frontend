@@ -1,55 +1,27 @@
-import { Box, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { Box, Container } from '@mui/material';
+import FrontPageHeader from './FrontPageHeader';
 
-const FrontPage = () => {
-  const { t } = useTranslation();
-
-  return (
-    <Box
+const FrontPage = () => (
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      bgcolor: '#EFEFEF',
+      minHeight: '100vh',
+      width: '100%',
+    }}>
+    <Container
+      maxWidth="lg"
       sx={{
-        display: 'grid',
-        gridTemplateAreas: "'header' 'search'",
-        justifyItems: 'center',
-        width: '100%',
-        bgcolor: '#EFEFEF',
-        paddingTop: '3rem',
-        marginBottom: '2rem',
-        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        py: { xs: 4, sm: 8 },
       }}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyItems: 'center',
-          gridArea: 'header',
-        }}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyItems: 'center',
-            gridArea: 'header',
-          }}>
-          <Typography
-            fontWeight={600}
-            sx={{
-              fontSize: { xs: '2rem', sm: '2.75rem' },
-              color: '#120732',
-              marginBottom: '1rem',
-            }}>
-            {t('common.page_title')}
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: { xs: '0.9rem', sm: '1rem' },
-              fontWeight: 500,
-            }}>
-            {t('search_in_national_research_publication')}
-          </Typography>
-        </Box>
-      </Box>
-    </Box>
-  );
-};
+      <FrontPageHeader />
+    </Container>
+  </Box>
+);
 
 export default FrontPage;
