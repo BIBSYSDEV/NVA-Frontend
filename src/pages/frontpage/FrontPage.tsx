@@ -1,5 +1,5 @@
 import { Box, Container } from '@mui/material';
-import FrontPageHeader from './FrontPageHeader';
+import FrontPageHeading from './FrontPageHeading';
 
 const FrontPage = () => (
   <Box
@@ -18,7 +18,7 @@ const FrontPage = () => (
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-      <FrontPageHeader />
+      <FrontPageHeading />
     </Container>
   </Box>
 );

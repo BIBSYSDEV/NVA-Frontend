@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import mapUrl from '../../resources/images/map.svg';
 import handUrl from '../../resources/images/hand.svg';
 
-const FrontPageHeader = () => {
+const FrontPageHeading = () => {
   const { t } = useTranslation();
 
   return (
@@ -80,4 +80,4 @@ const FrontPageHeader = () => {
   );
 };
 
-export default FrontPageHeader;
+export default FrontPageHeading;
