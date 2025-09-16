@@ -53,6 +53,7 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
 
           <Box sx={{ display: targetRegistrationId ? 'none' : 'block' }}>
             <Trans
+              t={t}
               i18nKey="find_result_to_merge_description"
               components={{
                 p: <Typography gutterBottom />,
