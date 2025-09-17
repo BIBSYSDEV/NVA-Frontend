@@ -97,15 +97,16 @@ export const CategorySelector = ({
         <TextField
           data-testid={dataTestId.registrationWizard.resourceType.resourceTypeSearchField}
           type="search"
-          variant="filled"
+          variant="outlined"
           label={t('common.search')}
           slotProps={{ input: { endAdornment: <SearchIcon /> } }}
           onChange={(event) => setSearchValue(event.target.value)}
         />
         {setSelectedCategories ? (
           <Chip
+            sx={{ color: highlightNviCategories ? 'white' : 'primary.main' }}
             icon={<NviApplicableIcon />}
-            color="primary"
+            color="secondary"
             title={t('registration.resource_type.nvi.select_all_nvi_categories')}
             onClick={() => {
               if (!highlightNviCategories) {
@@ -210,8 +211,8 @@ export const CategoryChip = ({ category, onClickChip, disabled = !!category.disa
           }
           deleteIcon={category.selected ? <CancelIcon /> : <AddCircleOutlineIcon />}
           variant={category.selected ? 'filled' : 'outlined'}
-          color="primary"
-          sx={{ boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.20)' }}
+          color="secondary"
+          sx={{ boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.20)', color: category.selected ? 'white' : 'primary.main' }}
           onDelete={toggleCategory}
           onClick={toggleCategory}
           label={category.text}

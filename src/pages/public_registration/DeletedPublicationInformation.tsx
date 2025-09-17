@@ -48,7 +48,7 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
-                backgroundColor: 'registration.main',
+                backgroundColor: 'registration.main', // TODO: confirm color with designer
                 padding: '1rem',
                 my: '1rem',
               }}>

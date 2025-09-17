@@ -38,8 +38,8 @@ export const RegistrationErrorActions = ({ tabErrors, registration, ...boxProps 
       </Typography>
       <ErrorList tabErrors={tabErrors} />
       <Button
-        sx={{ bgcolor: 'white', width: '100%' }}
-        variant="outlined"
+        sx={{ bgcolor: 'secondary.light', color: 'primary.main', width: '100%' }}
+        variant="contained"
         component={Link}
         size="small"
         state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}

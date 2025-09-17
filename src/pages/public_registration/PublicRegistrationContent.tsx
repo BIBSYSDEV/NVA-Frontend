@@ -74,7 +74,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
       <Box sx={visuallyHidden}>
         <DeletedPublicationInformation registration={registration} />
       </Box>
-      <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'secondary.main' }}>
+      <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'registration.main' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <RegistrationIconHeader
             publicationInstanceType={entityDescription?.reference?.publicationInstance?.type}
@@ -117,7 +117,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               sx={{
                 py: '0.3rem',
                 px: { xs: '2rem', sm: '3rem' },
-                bgcolor: 'primary.light',
+                bgcolor: 'info.main',
                 color: 'primary.contrastText',
               }}>
               {t('registration.public_page.result_not_published')}

@@ -139,7 +139,8 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
                   disabled={!confirmedUnpublish}
                   type="submit"
                   data-testid={dataTestId.confirmDialog.acceptButton}
-                  variant="outlined">
+                  color="secondary"
+                  variant="contained">
                   {t('unpublish_actions.unpublish')}
                 </Button>
               </DialogActions>
