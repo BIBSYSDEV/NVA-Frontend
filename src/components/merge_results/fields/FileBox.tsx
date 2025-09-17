@@ -78,7 +78,7 @@ export const FileBox = ({ file, sx, shouldShowFileVersion, registrationWithFile 
 
             {licenseData && (
               <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-                <Box component="img" alt={licenseData.name} title={licenseData.name} src={licenseData.logo} />
+                <img alt="" title={licenseData.name} src={licenseData.logo} />
                 <Typography sx={{ textWrap: 'nowrap' }}>{licenseData.name}</Typography>
               </Box>
             )}
@@ -91,7 +91,10 @@ export const FileBox = ({ file, sx, shouldShowFileVersion, registrationWithFile 
           )}
 
           {(file.type === 'PendingOpenFile' || file.type === 'PendingInternalFile') && (
-            <PendingFilesInfo sx={{ width: 'fit-content' }} text={t('file_awaits_approval')} />
+            <PendingFilesInfo
+              sx={{ width: 'fit-content' }}
+              text={t('registration.public_page.files.file_awaits_approval')}
+            />
           )}
         </>
       )}

@@ -716,7 +716,6 @@
       "reference_required": "Oppgi referanse på resultat"
     }
   },
-  "file_awaits_approval": "Fil venter på å bli godkjent",
   "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Som kurator kan du legge til en fil på vegne av registrator.",
   "file_upload_disabled_due_to_institution_policy": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønsker å ha en fil på dette resultatet.",
   "find_result_to_merge_description": "<p>Slå sammen to resultater for å unngå to versjoner av samme resultat med forskjellige metadata og filer.</p><p>Er det registrert forskjellig metadata så velger du hvilke data som er gjeldende. Du velger også om filer skal flyttes over til det publiserte resultatet.</p><heading>Søk etter forskningsresultat</heading><p>Velg resultatet du ønsker å slå sammen med. Du kan bare slå sammen resultatet der du er registrert som bidragsyter.</p>",
