@@ -207,7 +207,7 @@ const MyPagePage = () => {
             key={dataTestId.myPage.messagesAccordion}
             dataTestId={dataTestId.myPage.messagesAccordion}
             title={t('common.dialogue')}
-            startIcon={<ChatBubbleIcon fontSize="small" sx={{ color: 'white', bgcolor: 'primary.main' }} />}
+            startIcon={<ChatBubbleIcon fontSize="small" sx={{ bgcolor: 'primary.main' }} />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
