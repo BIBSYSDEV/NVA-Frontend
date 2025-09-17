@@ -243,6 +243,9 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiRadio: {
+        defaultProps: { color: 'secondary' },
+      },
       MuiCheckbox: {
         defaultProps: { color: 'secondary' },
       },

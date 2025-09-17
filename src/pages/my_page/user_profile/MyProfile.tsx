@@ -78,11 +78,9 @@ export const MyProfile = () => {
   };
 
   return (
-    <Box sx={{ bgcolor: 'secondary.main' }}>
+    <Box>
       <HeadTitle>{t('my_page.my_profile.heading.personalia')}</HeadTitle>
-      <Typography variant="h1" sx={{ margin: '1rem' }}>
-        {t('my_page.my_profile.heading.personalia')}
-      </Typography>
+      <Typography variant="h1">{t('my_page.my_profile.heading.personalia')}</Typography>
       {personQuery.isPending && !person ? (
         <PageSpinner aria-labelledby="personalia-id" />
       ) : (
@@ -103,7 +101,6 @@ export const MyProfile = () => {
                     xs: '"profile-picture" "personalia-details"',
                     lg: '"personalia-details profile-picture"',
                   },
-                  m: '1rem',
                 }}>
                 <Grid container rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
                   <Grid size={16}>
@@ -120,14 +117,14 @@ export const MyProfile = () => {
                             disabled
                             label={t('common.first_name')}
                             size="small"
-                            variant="filled"
+                            variant="outlined"
                           />
                           <TextField
                             value={user.familyName}
                             disabled
                             label={t('common.last_name')}
                             size="small"
-                            variant="filled"
+                            variant="outlined"
                           />
                         </StyledGridBox>
                       </Grid>
@@ -146,7 +143,7 @@ export const MyProfile = () => {
                                     disabled={!editPreferredNames || isSubmitting}
                                     label={t('my_page.my_profile.preferred_first_name')}
                                     size="small"
-                                    variant="filled"
+                                    variant="outlined"
                                   />
                                 )}
                               </Field>
@@ -161,7 +158,7 @@ export const MyProfile = () => {
                                     disabled={!editPreferredNames || isSubmitting}
                                     label={t('my_page.my_profile.preferred_last_name')}
                                     size="small"
-                                    variant="filled"
+                                    variant="outlined"
                                   />
                                 )}
                               </Field>
@@ -172,7 +169,7 @@ export const MyProfile = () => {
                               <IconButton
                                 data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
                                 onClick={() => setEditPreferredNames(!editPreferredNames)}>
-                                <EditIcon sx={{ width: '1.2rem' }} />
+                                <EditIcon color="secondary" sx={{ width: '1.2rem' }} />
                               </IconButton>
                             </Tooltip>
                           </Grid>
@@ -287,6 +284,7 @@ export const MyProfile = () => {
                   data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
                   loading={isSubmitting}
                   disabled={!dirty}
+                  color="secondary"
                   variant="contained"
                   type="submit">
                   {t('common.save')}

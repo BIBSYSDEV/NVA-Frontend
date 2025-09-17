@@ -225,7 +225,7 @@ export const RegistrationListItemContent = ({
                 }
               }}
               size="small"
-              sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+              sx={{ bgcolor: 'secondarly.light', width: '1.5rem', height: '1.5rem' }}>
               {isPromotedPublication ? <StarIcon fontSize="inherit" /> : <StarOutlineIcon fontSize="inherit" />}
             </IconButton>
           )}
@@ -236,7 +236,7 @@ export const RegistrationListItemContent = ({
               to={getRegistrationWizardPath(identifier)}
               data-testid={`edit-registration-${identifier}`}
               size="small"
-              sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+              sx={{ bgcolor: 'secondary.light', width: '1.5rem', height: '1.5rem' }}>
               <EditIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
@@ -246,7 +246,7 @@ export const RegistrationListItemContent = ({
                 data-testid={`delete-registration-${identifier}`}
                 onClick={() => onDeleteDraftRegistration(registration)}
                 size="small"
-                sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+                sx={{ bgcolor: 'secondary.light', width: '1.5rem', height: '1.5rem' }}>
                 <CloseOutlinedIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
