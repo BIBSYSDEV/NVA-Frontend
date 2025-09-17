@@ -16,7 +16,17 @@ export const TicketTypeFilterButton = ({
 }: TicketTypeFilterButtonProps) => (
   <Button
     {...rest}
-    startIcon={showCheckbox ? isSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon /> : startIcon}
+    startIcon={
+      showCheckbox ? (
+        isSelected ? (
+          <CheckBoxIcon color="secondary" />
+        ) : (
+          <CheckBoxOutlineBlankIcon color="secondary" />
+        )
+      ) : (
+        startIcon
+      )
+    }
     variant={isSelected ? 'contained' : 'outlined'}
     sx={{
       justifyContent: 'start',
