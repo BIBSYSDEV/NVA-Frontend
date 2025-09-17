@@ -9,6 +9,7 @@ const FrontPage = () => (
       alignItems: 'center',
       bgcolor: '#EFEFEF',
       width: '100%',
+      height: '100vh',
     }}>
     <Container
       maxWidth="lg"
