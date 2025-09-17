@@ -41,7 +41,7 @@ export const CompareFiles = ({
 
   return (
     <>
-      <Typography variant="h3" sx={{ display: { xs: 'block', sm: 'none' } }}>
+      <Typography variant="h3" sx={{ display: { xs: 'block', md: 'none' } }}>
         {isOnImportPage() ? t('basic_data.central_import.import_candidate') : t('unpublished_result')}
       </Typography>
       <FileBox
@@ -73,19 +73,19 @@ export const CompareFiles = ({
         </StyledButton>
       )}
 
-      <Typography variant="h3" sx={{ display: { xs: 'block', sm: 'none' } }}>
+      <Typography variant="h3" sx={{ display: { xs: 'block', md: 'none' } }}>
         {t('published_result')}
       </Typography>
       <FileBox
         file={targetFile}
-        sx={{ gridColumn: { xs: 1, sm: 3 } }}
+        sx={{ gridColumn: { xs: 1, md: 3 } }}
         shouldShowFileVersion={isCategoryWithFileVersion(
           targetResult.entityDescription?.reference?.publicationInstance?.type
         )}
         registrationWithFile={canRemoveFile ? undefined : targetResult}
       />
 
-      <Divider sx={{ display: { xs: 'block', sm: 'none' }, my: '0.5rem' }} />
+      <Divider sx={{ display: { xs: 'block', md: 'none' }, my: '0.5rem' }} />
     </>
   );
 };

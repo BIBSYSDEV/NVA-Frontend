@@ -14,10 +14,10 @@ export const MergeResultsWizardContent = () => {
 
   return (
     <>
-      <Typography variant="h3" sx={{ display: { xs: 'none', sm: 'block' } }}>
+      <Typography variant="h3" sx={{ display: { xs: 'none', md: 'block' } }}>
         {isOnImportPage() ? t('basic_data.central_import.import_candidate') : t('unpublished_result')}
       </Typography>
-      <Typography variant="h3" sx={{ display: { xs: 'none', sm: 'block' }, gridColumn: 3 }}>
+      <Typography variant="h3" sx={{ display: { xs: 'none', md: 'block' }, gridColumn: 3 }}>
         {t('published_result')}
       </Typography>
 
