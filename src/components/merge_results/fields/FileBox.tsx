@@ -89,8 +89,8 @@ export const FileBox = ({ file, sx, shouldShowFileVersion, registrationWithFile 
 
             {licenseData && (
               <StyledIconLabelContainer>
-                <img alt="" title={licenseData.name} src={licenseData.logo} />
-                <Typography sx={{ textWrap: 'nowrap' }}>{licenseData.name}</Typography>
+                <img alt="" title={licenseData.name} src={licenseData.logo} style={{ height: '1.75rem' }} />
+                <Typography sx={{ whiteSpace: 'nowrap' }}>{licenseData.name}</Typography>
               </StyledIconLabelContainer>
             )}
           </Box>
