@@ -17,6 +17,10 @@ import { isEmbargoed } from '../../../utils/registration-helpers';
 interface FileBoxProps extends BoxProps {
   file?: AssociatedFile;
   shouldShowFileVersion: boolean;
+  /**
+   * Pass the associated registration when the file should be downloadable.
+   * A file can only be downloaded in the context of its registration.
+   */
   registrationWithFile?: Registration;
 }
 
