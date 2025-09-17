@@ -49,7 +49,7 @@ export const FileBox = ({ file, sx, shouldShowFileVersion, registrationWithFile 
       {file && (
         <>
           <StyledIconLabelContainer>
-            <Typography>
+            <Typography sx={{ wordBreak: 'break-word' }}>
               <strong>{file.name}</strong>
             </Typography>
             {registrationWithFile && <DownloadFileButton file={file} registration={registrationWithFile} />}
