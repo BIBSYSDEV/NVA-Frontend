@@ -2,7 +2,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import LockIcon from '@mui/icons-material/Lock';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import { Box, BoxProps, Typography } from '@mui/material';
+import { Box, BoxProps, styled, Typography } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
 import { useTranslation } from 'react-i18next';
 import { FileUploaderInfo } from '../../../pages/public_registration/public_files/FileUploaderInfo';
@@ -13,6 +13,12 @@ import { Registration } from '../../../types/registration.types';
 import { toDateString } from '../../../utils/date-helpers';
 import { getLicenseData } from '../../../utils/fileHelpers';
 import { isEmbargoed } from '../../../utils/registration-helpers';
+
+const StyledIconLabelContainer = styled(Box)({
+  display: 'flex',
+  gap: '0.25rem',
+  alignItems: 'center',
+});
 
 interface FileBoxProps extends BoxProps {
   file?: AssociatedFile;
@@ -42,32 +48,33 @@ export const FileBox = ({ file, sx, shouldShowFileVersion, registrationWithFile 
       }}>
       {file && (
         <>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <StyledIconLabelContainer>
             <Typography>
               <strong>{file.name}</strong>
             </Typography>
             {registrationWithFile && <DownloadFileButton file={file} registration={registrationWithFile} />}
-          </Box>
+          </StyledIconLabelContainer>
           <Typography>{prettyBytes(file.size, { locale: true })}</Typography>
           <FileUploaderInfo uploadDetails={file.uploadDetails} />
+
           <Box sx={{ display: 'flex', gap: '0.5rem 2rem', alignItems: 'center', flexWrap: 'wrap' }}>
             {(file.type === 'OpenFile' || file.type === 'PendingOpenFile') && (
-              <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+              <StyledIconLabelContainer>
                 <CheckIcon fontSize="small" />
-                {t('registration.files_and_license.file_type.open_file')}
-              </Box>
+                <Typography>{t('registration.files_and_license.file_type.open_file')}</Typography>
+              </StyledIconLabelContainer>
             )}
             {(file.type === 'InternalFile' || file.type === 'PendingInternalFile') && (
-              <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+              <StyledIconLabelContainer>
                 <Inventory2OutlinedIcon fontSize="small" />
-                {t('registration.files_and_license.file_type.internal_file')}
-              </Box>
+                <Typography>{t('registration.files_and_license.file_type.internal_file')}</Typography>
+              </StyledIconLabelContainer>
             )}
             {file.type === 'HiddenFile' && (
-              <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+              <StyledIconLabelContainer>
                 <VisibilityOffOutlinedIcon fontSize="small" />
-                {t('registration.files_and_license.file_type.hidden_file')}
-              </Box>
+                <Typography>{t('registration.files_and_license.file_type.hidden_file')}</Typography>
+              </StyledIconLabelContainer>
             )}
 
             {shouldShowFileVersion && (
@@ -81,17 +88,20 @@ export const FileBox = ({ file, sx, shouldShowFileVersion, registrationWithFile 
             )}
 
             {licenseData && (
-              <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+              <StyledIconLabelContainer>
                 <img alt="" title={licenseData.name} src={licenseData.logo} />
                 <Typography sx={{ textWrap: 'nowrap' }}>{licenseData.name}</Typography>
-              </Box>
+              </StyledIconLabelContainer>
             )}
           </Box>
+
           {file.embargoDate && isEmbargoed(file.embargoDate) && (
-            <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+            <StyledIconLabelContainer>
               <LockIcon />
-              {t('common.will_be_available')} {toDateString(file.embargoDate)}
-            </Typography>
+              <Typography>
+                {t('common.will_be_available')} {toDateString(file.embargoDate)}
+              </Typography>
+            </StyledIconLabelContainer>
           )}
 
           {(file.type === 'PendingOpenFile' || file.type === 'PendingInternalFile') && (
