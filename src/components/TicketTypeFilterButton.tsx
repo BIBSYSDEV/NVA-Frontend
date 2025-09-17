@@ -1,6 +1,6 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import { Button, ButtonProps } from '@mui/material';
+import { Box, Button, ButtonProps } from '@mui/material';
 
 interface TicketTypeFilterButtonProps extends ButtonProps {
   isSelected: boolean;
@@ -29,6 +29,6 @@ export const TicketTypeFilterButton = ({
         mr: '0.5rem',
       },
     }}>
-    {children}
+    <Box sx={{ display: 'flex', gap: '0.1rem', alignItems: 'center' }}>{children}</Box>
   </Button>
 );

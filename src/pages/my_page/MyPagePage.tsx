@@ -1,5 +1,8 @@
+import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Badge, Divider, Typography } from '@mui/material';
@@ -221,6 +224,7 @@ const MyPagePage = () => {
                   setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest });
                   resetPaginationAndNavigate(searchParams, navigate);
                 }}>
+                <InsertDriveFileOutlinedIcon fontSize="small" />
                 {selectedTypes.publishingRequest && allPublishingRequestCount
                   ? `${t('my_page.messages.types.PublishingRequest')} (${allPublishingRequestCount})`
                   : t('my_page.messages.types.PublishingRequest')}
@@ -236,6 +240,7 @@ const MyPagePage = () => {
                   setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest });
                   resetPaginationAndNavigate(searchParams, navigate);
                 }}>
+                <AddLinkOutlinedIcon fontSize="small" />
                 {selectedTypes.doiRequest && doiRequestCount
                   ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
                   : t('my_page.messages.types.DoiRequest')}
@@ -251,6 +256,7 @@ const MyPagePage = () => {
                   setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase });
                   resetPaginationAndNavigate(searchParams, navigate);
                 }}>
+                <ChatBubbleOutlineOutlinedIcon fontSize="small" />
                 {selectedTypes.generalSupportCase && generalSupportCaseCount
                   ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                   : t('my_page.messages.types.GeneralSupportCase')}
