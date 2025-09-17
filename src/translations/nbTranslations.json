@@ -2287,5 +2287,6 @@
   "view_contact_info": "Se kontaktinformasjon",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
+  "go_to_advanced_search": "Gå til avansert resulatatsøk"
 }
