@@ -1,5 +1,5 @@
 import { Box, Container } from '@mui/material';
-import FrontPageHeading from './FrontPageHeading';
+import { FrontPageHeading } from './FrontPageHeading';
 
 const FrontPage = () => (
   <Box
@@ -8,11 +8,10 @@ const FrontPage = () => (
       flexDirection: 'column',
       alignItems: 'center',
       bgcolor: '#EFEFEF',
-      minHeight: '100vh',
       width: '100%',
     }}>
     <Container
-      maxWidth="md"
+      maxWidth="lg"
       sx={{
         display: 'flex',
         flexDirection: 'column',
