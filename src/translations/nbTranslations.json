@@ -1359,7 +1359,7 @@
     "scientific_summary": "Vitenskapelig sammendrag",
     "scientific_summary_english": "$t(project.scientific_summary) (engelsk)",
     "scientific_summary_norwegian": "$t(project.scientific_summary) (norsk)",
-    "search_for_institution": "Søk etter institusjon",
+    "search_for_institution": "Søk på institusjon",
     "status": {
       "ACTIVE": "Aktivt",
       "CONCLUDED": "Avsluttet",
@@ -2079,8 +2079,8 @@
       "search_for_channel": "Søk i ISSN-portalen på <0><0></0></0> for å sikre at verdiene du oppgir er riktige.",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",
-      "search_for_publisher_placeholder": "Søk etter navn",
-      "search_for_title_or_issn": "Søk etter tittel eller ISSN",
+      "search_for_publisher_placeholder": "Søk på navn",
+      "search_for_title_or_issn": "Søk på navn eller ISSN",
       "select_resource_type": "Velg kategori",
       "series": "Serie",
       "series_info": "Hvis publikasjonen inngår i en serie",
@@ -2160,7 +2160,7 @@
     "responsible_institution": "Forskningsansvarlig institusjon",
     "result": "Resultat",
     "result_search": "Resultatsøk",
-    "search_for_contributor": "Søk etter bidragsyter",
+    "search_for_contributor": "Søk på identifisert bidragsyter",
     "search_for_coordinating_institution": "Søk etter koordinerende institusjon",
     "search_for_course_code": "Søk etter emnekode",
     "search_for_funder": "Søk etter finansiør",
@@ -2287,5 +2287,6 @@
   "view_contact_info": "Se kontaktinformasjon",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
+  "select_funder": "Velg finansiør"
 }

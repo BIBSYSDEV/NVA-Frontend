@@ -137,7 +137,6 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
               isLoading={isLoading}
               data-testid={dataTestId.organization.searchField}
               placeholder={t('project.search_for_institution')}
-              showSearchIcon
             />
           )}
           slotProps={{
