@@ -814,8 +814,8 @@ export const dataTestId = {
     unpublishJustificationTextField: 'unpublish-registration-justification-textfield',
   },
   frontPage: {
-    searchInputField: 'front-page-search-input-field',
-    searchButton: 'front-page-search-button',
     advancedSearchButton: 'front-page-advanced-search-button',
+    searchButton: 'front-page-search-button',
+    searchInputField: 'front-page-search-input-field',
   },
 };
