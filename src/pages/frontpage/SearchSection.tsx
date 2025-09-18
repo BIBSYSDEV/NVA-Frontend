@@ -8,18 +8,26 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { SearchTextField } from '../search/SearchTextField';
 import { SearchTypeDropdown, SearchTypeValue } from '../search/SearchTypeDropdown';
+import { ResultParam } from '../../api/searchApi';
+import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
+import { SearchParam } from '../../utils/searchHelpers';
 
-const getCorrectParameters = (inputValue: string, searchType: SearchTypeValue) => {
+const getSearchParams = (inputValue: string, searchType: SearchTypeValue) => {
+  const searchParams = new URLSearchParams();
   switch (searchType) {
     case SearchTypeValue.Result:
-      return inputValue ? `query=${inputValue}` : '';
+      if (inputValue) searchParams.set(ResultParam.Query, inputValue);
+      break;
     case SearchTypeValue.Person:
-      return `type=person${inputValue ? `&name=${inputValue}` : ''}`;
+      searchParams.set(SearchParam.Type, SearchTypeValue.Person);
+      if (inputValue) searchParams.set(PersonSearchParameter.Name, inputValue);
+      break;
     case SearchTypeValue.Project:
-      return `type=project${inputValue ? `&multiple=${inputValue}` : ''}`;
-    default:
-      return '';
+      searchParams.set(SearchParam.Type, SearchTypeValue.Project);
+      if (inputValue) searchParams.set(ProjectSearchParameter.Query, inputValue);
+      break;
   }
+  return searchParams;
 };
 
 const getCorrectPlaceholderKey = (searchType: SearchTypeValue) => {
@@ -43,8 +51,8 @@ export const SearchSection = () => {
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const searchTerm = getCorrectParameters(inputValue, selectedSearchType);
-    navigate({ pathname: UrlPathTemplate.Root, search: searchTerm });
+    const searchTerm = getSearchParams(inputValue, selectedSearchType);
+    navigate({ pathname: UrlPathTemplate.Root, search: searchTerm.toString() });
   };
 
   return (
