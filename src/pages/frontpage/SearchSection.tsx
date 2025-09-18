@@ -76,23 +76,17 @@ export const SearchSection = () => {
           {t('common.search').toUpperCase()}
         </Button>
       </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-        }}>
-        <Button
-          variant="text"
-          data-testid={dataTestId.frontPage.advancedSearchButton}
-          sx={{ display: 'flex', gap: '0.25rem' }}
-          onClick={() => {
-            navigate({ pathname: UrlPathTemplate.Search });
-          }}
-          aria-label={t('go_to_advanced_search')}>
-          <Typography sx={{ color: '#120732', textDecoration: 'underline' }}>{t('go_to_advanced_search')}</Typography>
-          <EastIcon sx={{ fontSize: '1.25rem' }} />
-        </Button>
-      </Box>
+      <Button
+        variant="text"
+        data-testid={dataTestId.frontPage.advancedSearchButton}
+        sx={{ display: 'flex', gap: '0.25rem', alignSelf: 'flex-end' }}
+        onClick={() => {
+          navigate({ pathname: UrlPathTemplate.Search });
+        }}
+        aria-label={t('go_to_advanced_search')}>
+        <Typography sx={{ color: '#120732', textDecoration: 'underline' }}>{t('go_to_advanced_search')}</Typography>
+        <EastIcon sx={{ fontSize: '1.25rem' }} />
+      </Button>
     </Box>
   );
 };
