@@ -148,7 +148,7 @@ export const AdvancedSearchPage = () => {
               <StyledFilterHeading>{t('registration.contributors.contributor')}</StyledFilterHeading>
               <SearchForm
                 paramName={ResultParam.ContributorName}
-                placeholder={t('search.search_for_contributor')}
+                placeholder={t('search.person_search_placeholder')}
                 paginationOffsetParamName={ResultParam.From}
               />
             </Grid>
