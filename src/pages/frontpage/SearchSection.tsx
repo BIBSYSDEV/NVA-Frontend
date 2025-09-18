@@ -45,7 +45,10 @@ export const SearchSection = () => {
         borderRadius: '1rem',
         p: '2rem 3rem',
       }}>
-      <Box sx={{ display: 'flex', gap: '0.75rem' }} component="form" onSubmit={onSubmit}>
+      <Box
+        sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '0.75rem' }}
+        component="form"
+        onSubmit={onSubmit}>
         <SearchTypeDropdown
           selectedValue={selectedSearchType}
           onSelectResult={() => setSelectedSearchType(SearchTypeValue.Result)}
