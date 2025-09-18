@@ -35,46 +35,32 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
   const personIsSelected = paramsSearchType === SearchTypeValue.Person;
   const projectIsSelected = paramsSearchType === SearchTypeValue.Project;
 
-  const onSelectResult = () => {
-    if (!resultIsSelected) {
-      const resultParams = new URLSearchParams();
-      const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
-      if (searchTerm) {
-        resultParams.set(ResultParam.Query, searchTerm);
-      }
-      navigate({ search: resultParams.toString() });
-    }
-  };
-
-  const onSelectPerson = () => {
-    if (!personIsSelected) {
-      const personParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Person });
-      const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
-      if (searchTerm) {
-        personParams.set(PersonSearchParameter.Name, searchTerm);
-      }
-      navigate({ search: personParams.toString() });
-    }
-  };
-
-  const onSelectProject = () => {
-    if (!projectIsSelected) {
-      const projectParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Project });
-      const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
-      if (searchTerm) {
-        projectParams.set(ProjectSearchParameter.Query, searchTerm);
-      }
-      navigate({ search: projectParams.toString() });
-    }
-  };
-
   return (
     <SearchTypeDropdown
       sx={sx}
       selectedValue={paramsSearchType}
-      onSelectResult={onSelectResult}
-      onSelectPerson={onSelectPerson}
-      onSelectProject={onSelectProject}
+      onSearchTypeChanged={(searchType) => {
+        const searchParams = new URLSearchParams();
+        if (searchType === SearchTypeValue.Result && !resultIsSelected) {
+          const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
+          if (searchTerm) {
+            searchParams.set(ResultParam.Query, searchTerm);
+          }
+        } else if (searchType === SearchTypeValue.Person && !personIsSelected) {
+          searchParams.set(SearchParam.Type, SearchTypeValue.Person);
+          const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
+          if (searchTerm) {
+            searchParams.set(PersonSearchParameter.Name, searchTerm);
+          }
+        } else if (searchType === SearchTypeValue.Project && !projectIsSelected) {
+          searchParams.set(SearchParam.Type, SearchTypeValue.Project);
+          const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
+          if (searchTerm) {
+            searchParams.set(ProjectSearchParameter.Query, searchTerm);
+          }
+        }
+        navigate({ search: searchParams.toString() });
+      }}
     />
   );
 };

@@ -19,20 +19,11 @@ export enum SearchTypeValue {
 
 interface SearchTypeDropdownProps extends Pick<TextFieldProps, 'sx'> {
   selectedValue: SearchTypeValue;
-  onSelectResult: () => void;
-  onSelectPerson: () => void;
-  onSelectProject: () => void;
+  onSearchTypeChanged: (searchType: SearchTypeValue) => void;
 }
 
-export const SearchTypeDropdown = ({
-  sx = {},
-  selectedValue,
-  onSelectResult,
-  onSelectPerson,
-  onSelectProject,
-}: SearchTypeDropdownProps) => {
+export const SearchTypeDropdown = ({ sx = {}, selectedValue, onSearchTypeChanged }: SearchTypeDropdownProps) => {
   const { t } = useTranslation();
-
   return (
     <TextField
       select
@@ -49,19 +40,20 @@ export const SearchTypeDropdown = ({
         },
         ...sx,
       }}
-      slotProps={{ htmlInput: { 'aria-label': t('common.type') } }}>
-      <StyledMenuItem value={SearchTypeValue.Result} onClick={onSelectResult}>
+      slotProps={{ htmlInput: { 'aria-label': t('common.type') } }}
+      onChange={(event) => onSearchTypeChanged(event.target.value as SearchTypeValue)}>
+      <StyledMenuItem value={SearchTypeValue.Result}>
         <NotesIcon fontSize="small" />
         {t('search.result')}
       </StyledMenuItem>
-      <MenuItem value={SearchTypeValue.Person} onClick={onSelectPerson}>
+      <StyledMenuItem value={SearchTypeValue.Person}>
         <PersonIcon fontSize="small" />
         {t('search.persons')}
-      </MenuItem>
-      <MenuItem value={SearchTypeValue.Project} onClick={onSelectProject}>
+      </StyledMenuItem>
+      <StyledMenuItem value={SearchTypeValue.Project}>
         <ShowChartIcon fontSize="small" />
         {t('project.project')}
-      </MenuItem>
+      </StyledMenuItem>
     </TextField>
   );
 };
