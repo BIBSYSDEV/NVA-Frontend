@@ -4,19 +4,12 @@ import { Box, Button, ButtonProps } from '@mui/material';
 
 interface TicketTypeFilterButtonProps extends ButtonProps {
   isSelected: boolean;
-  showCheckbox?: boolean;
 }
 
-export const TicketTypeFilterButton = ({
-  isSelected,
-  showCheckbox = false,
-  children,
-  startIcon,
-  ...rest
-}: TicketTypeFilterButtonProps) => (
+export const TicketTypeFilterButton = ({ isSelected, children, ...rest }: TicketTypeFilterButtonProps) => (
   <Button
     {...rest}
-    startIcon={showCheckbox ? isSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon /> : startIcon}
+    startIcon={isSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
     variant={isSelected ? 'contained' : 'outlined'}
     sx={{
       justifyContent: 'start',

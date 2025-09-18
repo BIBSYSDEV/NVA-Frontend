@@ -217,7 +217,6 @@ const MyPagePage = () => {
               <TicketTypeFilterButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 endIcon={<Badge badgeContent={allUnreadPublishingCount} />}
-                showCheckbox
                 isSelected={!!selectedTypes.publishingRequest}
                 color="publishingRequest"
                 onClick={() => {
@@ -233,7 +232,6 @@ const MyPagePage = () => {
               <TicketTypeFilterButton
                 data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                 endIcon={<Badge badgeContent={unreadDoiCount} />}
-                showCheckbox
                 isSelected={!!selectedTypes.doiRequest}
                 color="doiRequest"
                 onClick={() => {
@@ -249,7 +247,6 @@ const MyPagePage = () => {
               <TicketTypeFilterButton
                 data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                 endIcon={<Badge badgeContent={unreadGeneralSupportCount} />}
-                showCheckbox
                 isSelected={!!selectedTypes.generalSupportCase}
                 color="generalSupportCase"
                 onClick={() => {

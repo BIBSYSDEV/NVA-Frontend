@@ -167,7 +167,6 @@ const TasksPage = () => {
                 <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                   endIcon={<Badge badgeContent={publishingNotificationsCount} />}
-                  showCheckbox
                   isSelected={!!ticketTypes.publishingRequest}
                   color="publishingRequest"
                   onClick={() => {
@@ -185,7 +184,6 @@ const TasksPage = () => {
                 <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.thesisPublishingRequestsButton}
                   endIcon={<Badge badgeContent={thesisPublishingNotificationsCount} />}
-                  showCheckbox
                   isSelected={!!ticketTypes.filesApprovalThesis}
                   color="publishingRequest"
                   onClick={() => {
@@ -203,7 +201,6 @@ const TasksPage = () => {
                 <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                   endIcon={<Badge badgeContent={doiNotificationsCount} />}
-                  showCheckbox
                   isSelected={!!ticketTypes.doiRequest}
                   color="doiRequest"
                   onClick={() => {
@@ -221,7 +218,6 @@ const TasksPage = () => {
                 <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                   endIcon={<Badge badgeContent={supportNotificationsCount} />}
-                  showCheckbox
                   isSelected={!!ticketTypes.generalSupportCase}
                   color="generalSupportCase"
                   onClick={() => {
