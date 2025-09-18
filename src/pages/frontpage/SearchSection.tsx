@@ -1,6 +1,6 @@
 import EastIcon from '@mui/icons-material/East';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Button, Link, Typography } from '@mui/material';
+import { Box, Button, Link } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router';
@@ -30,33 +30,34 @@ const getSearchParams = (inputValue: string, searchType: SearchTypeValue) => {
   return searchParams;
 };
 
-const getCorrectPlaceholderKey = (searchType: SearchTypeValue) => {
-  switch (searchType) {
-    case SearchTypeValue.Result:
-      return 'search.search_placeholder';
-    case SearchTypeValue.Person:
-      return 'search.person_search_placeholder';
-    case SearchTypeValue.Project:
-      return 'search.search_project_placeholder';
-    default:
-      return 'search.search_placeholder';
-  }
-};
-
 export const SearchSection = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedSearchType, setSelectedSearchType] = useState(SearchTypeValue.Result);
   const [inputValue, setInputValue] = useState('');
 
+  const getCorrectPlaceholderKey = (searchType: SearchTypeValue) => {
+    switch (searchType) {
+      case SearchTypeValue.Result:
+        return t('search.search_placeholder');
+      case SearchTypeValue.Person:
+        return t('search.person_search_placeholder');
+      case SearchTypeValue.Project:
+        return t('search.search_project_placeholder');
+      default:
+        return t('search.search_placeholder');
+    }
+  };
+
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const searchTerm = getSearchParams(inputValue, selectedSearchType);
-    navigate({ pathname: UrlPathTemplate.Root, search: searchTerm.toString() });
+    const searchParams = getSearchParams(inputValue, selectedSearchType);
+    navigate({ pathname: UrlPathTemplate.Root, search: searchParams.toString() });
   };
 
   return (
     <Box
+      component="search"
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -73,8 +74,8 @@ export const SearchSection = () => {
         <SearchTypeDropdown selectedValue={selectedSearchType} onSearchTypeChanged={setSelectedSearchType} />
         <SearchTextField
           dataTestId={dataTestId.frontPage.searchInputField}
-          aria-label={t(getCorrectPlaceholderKey(selectedSearchType))}
-          placeholder={t(getCorrectPlaceholderKey(selectedSearchType))}
+          aria-label={getCorrectPlaceholderKey(selectedSearchType)}
+          placeholder={getCorrectPlaceholderKey(selectedSearchType)}
           value={inputValue}
           onChange={(event) => setInputValue(event.target.value)}
           sx={{ flex: 1, bgcolor: 'white' }}
@@ -88,8 +89,7 @@ export const SearchSection = () => {
             color: '#EFEFEF',
           }}
           data-testid={dataTestId.frontPage.searchButton}
-          startIcon={<SearchIcon />}
-          aria-label={t('common.search')}>
+          startIcon={<SearchIcon />}>
           {t('common.search')}
         </Button>
       </Box>
@@ -98,9 +98,8 @@ export const SearchSection = () => {
           component={RouterLink}
           data-testid={dataTestId.frontPage.advancedSearchLink}
           to={UrlPathTemplate.Search}
-          aria-label={t('go_to_advanced_search')}
           sx={{ display: 'flex', gap: '0.25rem', alignSelf: 'flex-end' }}>
-          <Typography sx={{ color: '#120732', textDecoration: 'underline' }}>{t('go_to_advanced_search')}</Typography>
+          {t('go_to_advanced_search')}
           <EastIcon />
         </Link>
       )}

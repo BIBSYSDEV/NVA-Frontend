@@ -11,7 +11,7 @@ export enum SearchTypeValue {
   Project = 'project',
 }
 
-export const getSyncedSearchTerm = (params: URLSearchParams, searchType: SearchTypeValue) => {
+const getSyncedSearchTerm = (params: URLSearchParams, searchType: SearchTypeValue) => {
   const syncedParams = syncParamsWithSearchFields(params);
   switch (searchType) {
     case SearchTypeValue.Result:
