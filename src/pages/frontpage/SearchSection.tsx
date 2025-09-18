@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Link as RouterLink, useNavigate } from 'react-router';
 import { SearchTypeDropdown, SearchTypeValue } from '../search/SearchTypeDropdown';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { dataTestId } from '../../utils/dataTestIds';
 import { SearchTextField } from '../search/SearchTextField';
@@ -19,6 +19,19 @@ const getCorrectParameters = (inputValue: string, searchType: SearchTypeValue) =
       return `type=project${inputValue ? `&multiple=${inputValue}` : ''}`;
     default:
       return '';
+  }
+};
+
+const getCorrectPlaceholderKey = (searchType: SearchTypeValue) => {
+  switch (searchType) {
+    case SearchTypeValue.Result:
+      return 'search.search_placeholder';
+    case SearchTypeValue.Person:
+      return 'search.person_search_placeholder';
+    case SearchTypeValue.Project:
+      return 'search.search_project_placeholder';
+    default:
+      return 'search.search_placeholder';
   }
 };
 
@@ -57,7 +70,8 @@ export const SearchSection = () => {
         />
         <SearchTextField
           dataTestId={dataTestId.frontPage.searchInputField}
-          placeholder={t('search.search_placeholder')}
+          aria-label={t(getCorrectPlaceholderKey(selectedSearchType))}
+          placeholder={t(getCorrectPlaceholderKey(selectedSearchType))}
           value={inputValue}
           onChange={(event) => setInputValue(event.target.value)}
           sx={{ flex: 1, bgcolor: 'white' }}
@@ -73,20 +87,20 @@ export const SearchSection = () => {
           data-testid={dataTestId.frontPage.searchButton}
           startIcon={<SearchIcon />}
           aria-label={t('common.search')}>
-          {t('common.search').toUpperCase()}
+          {t('common.search')}
         </Button>
       </Box>
-      <Button
-        variant="text"
-        data-testid={dataTestId.frontPage.advancedSearchButton}
-        sx={{ display: 'flex', gap: '0.25rem', alignSelf: 'flex-end' }}
-        onClick={() => {
-          navigate({ pathname: UrlPathTemplate.Search });
-        }}
-        aria-label={t('go_to_advanced_search')}>
-        <Typography sx={{ color: '#120732', textDecoration: 'underline' }}>{t('go_to_advanced_search')}</Typography>
-        <EastIcon sx={{ fontSize: '1.25rem' }} />
-      </Button>
+      {selectedSearchType === SearchTypeValue.Result && (
+        <Link
+          component={RouterLink}
+          data-testid={dataTestId.frontPage.advancedSearchLink}
+          to={UrlPathTemplate.Search}
+          aria-label={t('go_to_advanced_search')}
+          sx={{ display: 'flex', gap: '0.25rem', alignSelf: 'flex-end' }}>
+          <Typography sx={{ color: '#120732', textDecoration: 'underline' }}>{t('go_to_advanced_search')}</Typography>
+          <EastIcon />
+        </Link>
+      )}
     </Box>
   );
 };

@@ -1,9 +1,15 @@
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { MenuItem, TextField, TextFieldProps } from '@mui/material';
+import { MenuItem, styled, TextField, TextFieldProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../utils/dataTestIds';
+
+const StyledMenuItem = styled(MenuItem)({
+  display: 'flex',
+  gap: '0.5rem',
+  alignItems: 'center',
+});
 
 export enum SearchTypeValue {
   Result = 'registration',
@@ -44,24 +50,15 @@ export const SearchTypeDropdown = ({
         ...sx,
       }}
       slotProps={{ htmlInput: { 'aria-label': t('common.type') } }}>
-      <MenuItem
-        sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-        value={SearchTypeValue.Result}
-        onClick={onSelectResult}>
+      <StyledMenuItem value={SearchTypeValue.Result} onClick={onSelectResult}>
         <NotesIcon fontSize="small" />
         {t('search.result')}
-      </MenuItem>
-      <MenuItem
-        sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-        value={SearchTypeValue.Person}
-        onClick={onSelectPerson}>
+      </StyledMenuItem>
+      <MenuItem value={SearchTypeValue.Person} onClick={onSelectPerson}>
         <PersonIcon fontSize="small" />
         {t('search.persons')}
       </MenuItem>
-      <MenuItem
-        sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-        value={SearchTypeValue.Project}
-        onClick={onSelectProject}>
+      <MenuItem value={SearchTypeValue.Project} onClick={onSelectProject}>
         <ShowChartIcon fontSize="small" />
         {t('project.project')}
       </MenuItem>
