@@ -19,10 +19,10 @@ export enum SearchTypeValue {
 
 interface SearchTypeDropdownProps extends Pick<TextFieldProps, 'sx'> {
   selectedValue: SearchTypeValue;
-  setSelectedSearchType: (searchType: SearchTypeValue) => void;
+  onSearchTypeChanged: (searchType: SearchTypeValue) => void;
 }
 
-export const SearchTypeDropdown = ({ sx = {}, selectedValue, setSelectedSearchType }: SearchTypeDropdownProps) => {
+export const SearchTypeDropdown = ({ sx = {}, selectedValue, onSearchTypeChanged }: SearchTypeDropdownProps) => {
   const { t } = useTranslation();
   return (
     <TextField
@@ -41,19 +41,19 @@ export const SearchTypeDropdown = ({ sx = {}, selectedValue, setSelectedSearchTy
         ...sx,
       }}
       slotProps={{ htmlInput: { 'aria-label': t('common.type') } }}
-      onChange={(event) => setSelectedSearchType(event.target.value as SearchTypeValue)}>
+      onChange={(event) => onSearchTypeChanged(event.target.value as SearchTypeValue)}>
       <StyledMenuItem value={SearchTypeValue.Result}>
         <NotesIcon fontSize="small" />
         {t('search.result')}
       </StyledMenuItem>
-      <MenuItem value={SearchTypeValue.Person}>
+      <StyledMenuItem value={SearchTypeValue.Person}>
         <PersonIcon fontSize="small" />
         {t('search.persons')}
-      </MenuItem>
-      <MenuItem value={SearchTypeValue.Project}>
+      </StyledMenuItem>
+      <StyledMenuItem value={SearchTypeValue.Project}>
         <ShowChartIcon fontSize="small" />
         {t('project.project')}
-      </MenuItem>
+      </StyledMenuItem>
     </TextField>
   );
 };

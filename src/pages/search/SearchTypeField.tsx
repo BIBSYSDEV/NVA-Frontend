@@ -39,7 +39,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
     <SearchTypeDropdown
       sx={sx}
       selectedValue={paramsSearchType}
-      setSelectedSearchType={(searchType) => {
+      onSearchTypeChanged={(searchType) => {
         const searchParams = new URLSearchParams();
         if (searchType === SearchTypeValue.Result && !resultIsSelected) {
           const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
