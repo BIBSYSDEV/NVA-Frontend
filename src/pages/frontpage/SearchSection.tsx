@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { dataTestId } from '../../utils/dataTestIds';
 import { SearchTextField } from '../search/SearchTextField';
 import EastIcon from '@mui/icons-material/East';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const getCorrectParameters = (inputValue: string, searchType: SearchTypeValue) => {
   switch (searchType) {
@@ -30,7 +31,7 @@ export const SearchSection = () => {
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     const searchTerm = getCorrectParameters(inputValue, selectedSearchType);
-    navigate({ pathname: '/', search: searchTerm });
+    navigate({ pathname: UrlPathTemplate.Root, search: searchTerm });
   };
 
   return (
@@ -59,6 +60,7 @@ export const SearchSection = () => {
           sx={{ flex: 1, bgcolor: 'white' }}
         />
         <Button
+          type="submit"
           sx={{
             padding: '0.25rem 1.25rem',
             maxWidth: '14rem',
@@ -67,7 +69,7 @@ export const SearchSection = () => {
           }}
           data-testid={dataTestId.frontPage.searchButton}
           startIcon={<SearchIcon />}
-          onClick={onSubmit}>
+          aria-label={t('common.search')}>
           {t('common.search').toUpperCase()}
         </Button>
       </Box>
@@ -75,11 +77,18 @@ export const SearchSection = () => {
         sx={{
           display: 'flex',
           justifyContent: 'flex-end',
-          alignItems: 'center',
-          gap: '0.5rem',
         }}>
-        <Typography sx={{ color: '#120732', textDecoration: 'underline' }}>{t('go_to_advanced_search')}</Typography>
-        <EastIcon />
+        <Button
+          variant="text"
+          data-testid={dataTestId.frontPage.advancedSearchButton}
+          sx={{ display: 'flex', gap: '0.25rem' }}
+          onClick={() => {
+            navigate({ pathname: UrlPathTemplate.Search });
+          }}
+          aria-label={t('go_to_advanced_search')}>
+          <Typography sx={{ color: '#120732', textDecoration: 'underline' }}>{t('go_to_advanced_search')}</Typography>
+          <EastIcon sx={{ fontSize: '1.25rem' }} />
+        </Button>
       </Box>
     </Box>
   );

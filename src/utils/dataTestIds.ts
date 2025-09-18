@@ -816,5 +816,6 @@ export const dataTestId = {
   frontPage: {
     searchInputField: 'front-page-search-input-field',
     searchButton: 'front-page-search-button',
+    advancedSearchButton: 'front-page-advanced-search-button',
   },
 };
