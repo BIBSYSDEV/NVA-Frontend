@@ -42,38 +42,44 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="lg" fullWidth>
         <DialogTitle sx={{ px: { xs: '0.5rem', sm: '1.5rem' } }}>{t('merge_results')}</DialogTitle>
         <DialogContent sx={{ px: { xs: '0.5rem', sm: '1.5rem' } }}>
-          {targetRegistrationId ? (
+          <Box sx={{ display: targetRegistrationId ? 'block' : 'none' }}>
             <MergeSelectedRegistration
               targetRegistrationId={targetRegistrationId}
               sourceRegistration={sourceRegistration}
+              resetTargetRegistrationId={() => setTargetRegistrationId('')}
               toggleDialog={toggleDialog}
             />
-          ) : (
-            <>
-              <Trans
-                i18nKey="find_result_to_merge_description"
-                components={{
-                  p: <Typography gutterBottom />,
-                  heading: <Typography variant="h2" gutterBottom sx={{ mt: '1rem' }} />,
-                }}
-              />
+          </Box>
 
-              <FindSimilarRegistration
-                setSelectedRegistration={setSelectedRegistration}
-                sourceRegistration={sourceRegistration}
-              />
+          <Box sx={{ display: targetRegistrationId ? 'none' : 'block' }}>
+            <Trans
+              t={t}
+              i18nKey="find_result_to_merge_description"
+              components={{
+                p: <Typography gutterBottom />,
+                heading: <Typography variant="h2" gutterBottom sx={{ mt: '1rem' }} />,
+              }}
+            />
 
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', mt: '1rem' }}>
-                <Button onClick={toggleDialog}>{t('common.cancel')}</Button>
-                <Button
-                  variant="contained"
-                  disabled={!selectedRegistration}
-                  onClick={() => setTargetRegistrationId(selectedRegistration?.id ?? '')}>
-                  {t('start_merging')}
-                </Button>
-              </Box>
-            </>
-          )}
+            <FindSimilarRegistration
+              setSelectedRegistration={setSelectedRegistration}
+              sourceRegistration={sourceRegistration}
+            />
+
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', mt: '1rem' }}>
+              <Button onClick={toggleDialog}>{t('common.cancel')}</Button>
+              <Button
+                variant="contained"
+                disabled={!selectedRegistration}
+                onClick={() => {
+                  if (selectedRegistration) {
+                    setTargetRegistrationId(selectedRegistration.id);
+                  }
+                }}>
+                {t('start_merging')}
+              </Button>
+            </Box>
+          </Box>
         </DialogContent>
       </Dialog>
     </section>

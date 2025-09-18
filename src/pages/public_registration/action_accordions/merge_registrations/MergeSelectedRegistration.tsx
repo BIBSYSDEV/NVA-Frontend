@@ -1,23 +1,28 @@
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
 import { useUpdateRegistration } from '../../../../api/hooks/useUpdateRegistration';
 import { MergeResultsWizard } from '../../../../components/merge_results/MergeResultsWizard';
 import { PageSpinner } from '../../../../components/PageSpinner';
+import { setNotification } from '../../../../redux/notificationSlice';
 import { Registration } from '../../../../types/registration.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 
 interface MergeSelectedRegistrationProps {
   targetRegistrationId: string;
   sourceRegistration: Registration;
+  resetTargetRegistrationId: () => void;
   toggleDialog: () => void;
 }
 
 export const MergeSelectedRegistration = ({
   targetRegistrationId,
   sourceRegistration,
+  resetTargetRegistrationId,
   toggleDialog,
 }: MergeSelectedRegistrationProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const targetRegistrationQuery = useFetchRegistration(getIdentifierFromId(targetRegistrationId));
   const registrationMutation = useUpdateRegistration({ onSuccess: toggleDialog });
@@ -30,6 +35,11 @@ export const MergeSelectedRegistration = ({
 
   if (!targetRegistration) {
     return null;
+  }
+
+  if (!targetRegistration.allowedOperations?.includes('update')) {
+    resetTargetRegistrationId();
+    dispatch(setNotification({ message: t('you_do_not_have_permission_to_edit_this_registration'), variant: 'info' }));
   }
 
   return (

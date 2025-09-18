@@ -58,8 +58,13 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       entries.push({
         text: t('log.titles.result_unpublished'),
         date: lastUnpublishingNote.createdDate,
-        bgcolor: 'success.main',
+<<<<<<< HEAD
+        bgcolor: 'success.light',
+        Icon: CheckIcon,
+=======
+        bgcolor: 'publishingRequest.main',
         Icon: BlockIcon,
+>>>>>>> 53a423bbc98994bef4a548c3b6af474852e4b8a7
       });
     }
     return entries;
