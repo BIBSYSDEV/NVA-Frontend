@@ -2163,7 +2163,6 @@
     "search_for_contributor": "Søk på identifisert bidragsyter",
     "search_for_coordinating_institution": "Søk etter koordinerende institusjon",
     "search_for_course_code": "Søk etter emnekode",
-    "search_for_funder": "Søk etter finansiør",
     "search_for_funding_identifier": "Søk på Tilskudds-ID",
     "search_for_journal": "Søk etter tidsskrift",
     "search_for_participant": "Søk etter deltaker",
@@ -2283,10 +2282,10 @@
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   },
+  "select_funder": "Velg finansiør",
   "unpublished_result": "Avpublisert resultat",
   "view_contact_info": "Se kontaktinformasjon",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "select_funder": "Velg finansiør"
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
 }

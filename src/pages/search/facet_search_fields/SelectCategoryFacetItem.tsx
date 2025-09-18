@@ -72,7 +72,6 @@ export const SelectCategoryFacetItem = ({ onSelectCategory }: SelectCategoryFace
           variant="outlined"
           data-testid={dataTestId.aggregations.categoryFacetsSearchField}
           placeholder={t('registration.resource_type.select_resource_type')}
-          showSearchIcon
         />
       )}
     />
