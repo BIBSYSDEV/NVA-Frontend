@@ -49,7 +49,7 @@ export const SearchSection = () => {
         sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '0.75rem' }}
         component="form"
         onSubmit={onSubmit}>
-        <SearchTypeDropdown selectedValue={selectedSearchType} setSelectedSearchType={setSelectedSearchType} />
+        <SearchTypeDropdown selectedValue={selectedSearchType} onSearchTypeChanged={setSelectedSearchType} />
         <SearchTextField
           dataTestId={dataTestId.frontPage.searchInputField}
           placeholder={t('search.search_placeholder')}

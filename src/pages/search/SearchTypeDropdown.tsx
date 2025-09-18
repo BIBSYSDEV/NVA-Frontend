@@ -13,10 +13,10 @@ export enum SearchTypeValue {
 
 interface SearchTypeDropdownProps extends Pick<TextFieldProps, 'sx'> {
   selectedValue: SearchTypeValue;
-  setSelectedSearchType: (searchType: SearchTypeValue) => void;
+  onSearchTypeChanged: (searchType: SearchTypeValue) => void;
 }
 
-export const SearchTypeDropdown = ({ sx = {}, selectedValue, setSelectedSearchType }: SearchTypeDropdownProps) => {
+export const SearchTypeDropdown = ({ sx = {}, selectedValue, onSearchTypeChanged }: SearchTypeDropdownProps) => {
   const { t } = useTranslation();
   return (
     <TextField
@@ -35,7 +35,7 @@ export const SearchTypeDropdown = ({ sx = {}, selectedValue, setSelectedSearchTy
         ...sx,
       }}
       slotProps={{ htmlInput: { 'aria-label': t('common.type') } }}
-      onChange={(event) => setSelectedSearchType(event.target.value as SearchTypeValue)}>
+      onChange={(event) => onSearchTypeChanged(event.target.value as SearchTypeValue)}>
       <MenuItem sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }} value={SearchTypeValue.Result}>
         <NotesIcon fontSize="small" />
         {t('search.result')}
