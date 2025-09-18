@@ -1,13 +1,13 @@
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-import { SearchTypeDropdown, SearchTypeValue } from '../search/SearchTypeDropdown';
-import { Box, Button, Typography } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import { dataTestId } from '../../utils/dataTestIds';
-import { SearchTextField } from '../search/SearchTextField';
 import EastIcon from '@mui/icons-material/East';
+import SearchIcon from '@mui/icons-material/Search';
+import { Box, Button, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
+import { dataTestId } from '../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { SearchTextField } from '../search/SearchTextField';
+import { SearchTypeDropdown, SearchTypeValue } from '../search/SearchTypeDropdown';
 
 const getCorrectParameters = (inputValue: string, searchType: SearchTypeValue) => {
   switch (searchType) {
@@ -49,12 +49,7 @@ export const SearchSection = () => {
         sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '0.75rem' }}
         component="form"
         onSubmit={onSubmit}>
-        <SearchTypeDropdown
-          selectedValue={selectedSearchType}
-          onSelectResult={() => setSelectedSearchType(SearchTypeValue.Result)}
-          onSelectPerson={() => setSelectedSearchType(SearchTypeValue.Person)}
-          onSelectProject={() => setSelectedSearchType(SearchTypeValue.Project)}
-        />
+        <SearchTypeDropdown selectedValue={selectedSearchType} setSelectedSearchType={setSelectedSearchType} />
         <SearchTextField
           dataTestId={dataTestId.frontPage.searchInputField}
           placeholder={t('search.search_placeholder')}

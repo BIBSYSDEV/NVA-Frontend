@@ -13,20 +13,11 @@ export enum SearchTypeValue {
 
 interface SearchTypeDropdownProps extends Pick<TextFieldProps, 'sx'> {
   selectedValue: SearchTypeValue;
-  onSelectResult: () => void;
-  onSelectPerson: () => void;
-  onSelectProject: () => void;
+  setSelectedSearchType: (searchType: SearchTypeValue) => void;
 }
 
-export const SearchTypeDropdown = ({
-  sx = {},
-  selectedValue,
-  onSelectResult,
-  onSelectPerson,
-  onSelectProject,
-}: SearchTypeDropdownProps) => {
+export const SearchTypeDropdown = ({ sx = {}, selectedValue, setSelectedSearchType }: SearchTypeDropdownProps) => {
   const { t } = useTranslation();
-
   return (
     <TextField
       select
@@ -43,25 +34,17 @@ export const SearchTypeDropdown = ({
         },
         ...sx,
       }}
-      slotProps={{ htmlInput: { 'aria-label': t('common.type') } }}>
-      <MenuItem
-        sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-        value={SearchTypeValue.Result}
-        onClick={onSelectResult}>
+      slotProps={{ htmlInput: { 'aria-label': t('common.type') } }}
+      onChange={(event) => setSelectedSearchType(event.target.value as SearchTypeValue)}>
+      <MenuItem sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }} value={SearchTypeValue.Result}>
         <NotesIcon fontSize="small" />
         {t('search.result')}
       </MenuItem>
-      <MenuItem
-        sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-        value={SearchTypeValue.Person}
-        onClick={onSelectPerson}>
+      <MenuItem sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }} value={SearchTypeValue.Person}>
         <PersonIcon fontSize="small" />
         {t('search.persons')}
       </MenuItem>
-      <MenuItem
-        sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-        value={SearchTypeValue.Project}
-        onClick={onSelectProject}>
+      <MenuItem sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }} value={SearchTypeValue.Project}>
         <ShowChartIcon fontSize="small" />
         {t('project.project')}
       </MenuItem>
