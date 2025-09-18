@@ -59,7 +59,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
         text: t('log.titles.result_unpublished'),
         date: lastUnpublishingNote.createdDate,
         bgcolor: 'publishingRequest.main',
-        Icon: CheckIcon,
+        Icon: BlockIcon,
       });
     }
     return entries;

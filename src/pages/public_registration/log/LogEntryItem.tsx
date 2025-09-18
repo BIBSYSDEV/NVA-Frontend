@@ -1,6 +1,7 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
+import BlockIcon from '@mui/icons-material/Block';
 import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
@@ -133,9 +134,10 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
       return <AddCircleOutlineIcon {...logIconProps} />;
     case 'PublicationUpdated':
     case 'PublicationPublished':
-    case 'PublicationUnpublished':
     case 'PublicationRepublished':
       return <LocalOfferOutlinedIcon {...logIconProps} />;
+    case 'PublicationUnpublished':
+      return <BlockIcon {...logIconProps} />;
     case 'FileUploaded':
     case 'FileApproved':
     case 'FileRejected':
