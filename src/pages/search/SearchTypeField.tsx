@@ -40,28 +40,26 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
       sx={sx}
       selectedValue={paramsSearchType}
       setSelectedSearchType={(searchType) => {
+        const searchParams = new URLSearchParams();
         if (searchType === SearchTypeValue.Result && !resultIsSelected) {
-          const resultParams = new URLSearchParams();
           const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
           if (searchTerm) {
-            resultParams.set(ResultParam.Query, searchTerm);
+            searchParams.set(ResultParam.Query, searchTerm);
           }
-          navigate({ search: resultParams.toString() });
         } else if (searchType === SearchTypeValue.Person && !personIsSelected) {
-          const personParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Person });
+          searchParams.set(SearchParam.Type, SearchTypeValue.Person);
           const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
           if (searchTerm) {
-            personParams.set(PersonSearchParameter.Name, searchTerm);
+            searchParams.set(PersonSearchParameter.Name, searchTerm);
           }
-          navigate({ search: personParams.toString() });
         } else if (searchType === SearchTypeValue.Project && !projectIsSelected) {
-          const projectParams = new URLSearchParams({ [SearchParam.Type]: SearchTypeValue.Project });
+          searchParams.set(SearchParam.Type, SearchTypeValue.Project);
           const searchTerm = getSyncedSearchTerm(params, paramsSearchType);
           if (searchTerm) {
-            projectParams.set(ProjectSearchParameter.Query, searchTerm);
+            searchParams.set(ProjectSearchParameter.Query, searchTerm);
           }
-          navigate({ search: projectParams.toString() });
         }
+        navigate({ search: searchParams.toString() });
       }}
     />
   );
