@@ -85,7 +85,7 @@ export const LinkCreateButton = ({ sx, title, isSelected, selectedColor, ...rest
     <SelectableButton
       color="primary"
       sx={{
-        bgcolor: 'secondary.light',
+        bgcolor: isSelected ? selectedColor : 'secondary.light',
         borderWidth: '1px',
         borderRadius: 0,
         width: '100%',

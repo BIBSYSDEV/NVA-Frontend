@@ -100,7 +100,7 @@ export const MyFieldAndBackground = () => {
   const maxMessageLength = 500;
 
   return (
-    <Box>
+    <div>
       <HeadTitle>{t('my_page.my_profile.field_and_background.field_and_background')}</HeadTitle>
 
       <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
@@ -244,6 +244,6 @@ export const MyFieldAndBackground = () => {
           </Form>
         )}
       </Formik>
-    </Box>
+    </div>
   );
 };

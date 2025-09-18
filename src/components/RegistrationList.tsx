@@ -225,7 +225,7 @@ export const RegistrationListItemContent = ({
                 }
               }}
               size="small"
-              sx={{ bgcolor: 'secondarly.light', width: '1.5rem', height: '1.5rem' }}>
+              sx={{ bgcolor: 'secondary.light', width: '1.5rem', height: '1.5rem' }}>
               {isPromotedPublication ? <StarIcon fontSize="inherit" /> : <StarOutlineIcon fontSize="inherit" />}
             </IconButton>
           )}

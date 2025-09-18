@@ -78,7 +78,7 @@ export const MyProfile = () => {
   };
 
   return (
-    <Box>
+    <div>
       <HeadTitle>{t('my_page.my_profile.heading.personalia')}</HeadTitle>
       <Typography variant="h1">{t('my_page.my_profile.heading.personalia')}</Typography>
       {personQuery.isPending && !person ? (
@@ -294,6 +294,6 @@ export const MyProfile = () => {
           )}
         </Formik>
       )}
-    </Box>
+    </div>
   );
 };
