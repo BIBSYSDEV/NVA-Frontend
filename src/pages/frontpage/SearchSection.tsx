@@ -98,7 +98,7 @@ export const SearchSection = () => {
           component={RouterLink}
           data-testid={dataTestId.frontPage.advancedSearchLink}
           to={UrlPathTemplate.Search}
-          sx={{ display: 'flex', gap: '0.25rem', alignSelf: 'flex-end' }}>
+          sx={{ display: 'flex', gap: '0.25rem', alignSelf: 'flex-end', color: '#120732' }}>
           {t('go_to_advanced_search')}
           <EastIcon />
         </Link>
