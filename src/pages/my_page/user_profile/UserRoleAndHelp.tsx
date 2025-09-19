@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
 import { HeadTitle } from '../../../components/HeadTitle';
-import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { hasCuratorRole } from '../../../utils/user-helpers';
@@ -19,7 +18,7 @@ export const UserRoleAndHelp = () => {
   const nvaUser = nvaUserQuery.data;
 
   return (
-    <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <HeadTitle>{t('my_page.my_profile.user_role_and_help.user_role_and_help')}</HeadTitle>
       <Typography variant="h1">{t('my_page.my_profile.user_role_and_help.user_role_and_help')}</Typography>
       {nvaUser?.viewingScope && hasCuratorRole(user) && (
@@ -71,6 +70,6 @@ export const UserRoleAndHelp = () => {
           {t('my_page.my_profile.user_role_and_help.application_help_helper_text')}
         </Typography>
       </div>
-    </BackgroundDiv>
+    </Box>
   );
 };

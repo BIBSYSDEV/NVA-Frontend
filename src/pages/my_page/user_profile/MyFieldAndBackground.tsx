@@ -100,13 +100,13 @@ export const MyFieldAndBackground = () => {
   const maxMessageLength = 500;
 
   return (
-    <Box sx={{ bgcolor: 'secondary.main' }}>
+    <div>
       <HeadTitle>{t('my_page.my_profile.field_and_background.field_and_background')}</HeadTitle>
 
       <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
         {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (
           <Form>
-            <Box sx={{ display: 'flex', flexDirection: 'column', m: '1rem', maxWidth: '60rem', gap: '1rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: '60rem', gap: '1rem' }}>
               <Typography variant="h1">{t('my_page.my_profile.field_and_background.field_and_background')}</Typography>
               <ProfileBox>
                 <Typography variant="h2" gutterBottom>
@@ -134,6 +134,8 @@ export const MyFieldAndBackground = () => {
                       renderTags={(value, getTagProps) =>
                         value.map((option, index) => (
                           <Chip
+                            color="secondary"
+                            variant="filled"
                             {...getTagProps({ index })}
                             key={option.identifier}
                             label={getLanguageString(option.labels)}
@@ -235,13 +237,13 @@ export const MyFieldAndBackground = () => {
                 }}>
                 {t('common.cancel')}
               </Button>
-              <Button loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
+              <Button loading={isSubmitting} disabled={!dirty} color="secondary" variant="contained" type="submit">
                 {t('common.save')}
               </Button>
             </Box>
           </Form>
         )}
       </Formik>
-    </Box>
+    </div>
   );
 };

@@ -14,7 +14,8 @@ export const ViewingScopeChip = ({ organizationId, ...props }: ViewingScopeChipP
 
   return (
     <Chip
-      color="primary"
+      color="secondary"
+      variant="filled"
       {...props}
       label={
         organizationQuery.isPending ? (
