@@ -3,6 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Box, Button, Link } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 import { Link as RouterLink, useNavigate } from 'react-router';
 import { dataTestId } from '../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -30,24 +31,24 @@ const getSearchParams = (inputValue: string, searchType: SearchTypeValue) => {
   return searchParams;
 };
 
+const getCorrectPlaceholder = (searchType: SearchTypeValue, t: TFunction<'translation'>) => {
+  switch (searchType) {
+    case SearchTypeValue.Result:
+      return t('search.search_placeholder');
+    case SearchTypeValue.Person:
+      return t('search.person_search_placeholder');
+    case SearchTypeValue.Project:
+      return t('search.search_project_placeholder');
+    default:
+      return t('search.search_placeholder');
+  }
+};
+
 export const SearchSection = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedSearchType, setSelectedSearchType] = useState(SearchTypeValue.Result);
   const [inputValue, setInputValue] = useState('');
-
-  const getCorrectPlaceholderKey = (searchType: SearchTypeValue) => {
-    switch (searchType) {
-      case SearchTypeValue.Result:
-        return t('search.search_placeholder');
-      case SearchTypeValue.Person:
-        return t('search.person_search_placeholder');
-      case SearchTypeValue.Project:
-        return t('search.search_project_placeholder');
-      default:
-        return t('search.search_placeholder');
-    }
-  };
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -74,8 +75,8 @@ export const SearchSection = () => {
         <SearchTypeDropdown selectedValue={selectedSearchType} onSearchTypeChanged={setSelectedSearchType} />
         <SearchTextField
           dataTestId={dataTestId.frontPage.searchInputField}
-          aria-label={getCorrectPlaceholderKey(selectedSearchType)}
-          placeholder={getCorrectPlaceholderKey(selectedSearchType)}
+          aria-label={getCorrectPlaceholder(selectedSearchType, t)}
+          placeholder={getCorrectPlaceholder(selectedSearchType, t)}
           value={inputValue}
           onChange={(event) => setInputValue(event.target.value)}
           sx={{ flex: 1, bgcolor: 'white' }}
