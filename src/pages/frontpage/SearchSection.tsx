@@ -12,6 +12,7 @@ import { SearchTypeDropdown, SearchTypeValue } from '../search/SearchTypeDropdow
 import { ResultParam } from '../../api/searchApi';
 import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
 import { SearchParam } from '../../utils/searchHelpers';
+import { FrontPageBox } from './styles';
 
 const getSearchParams = (inputValue: string, searchType: SearchTypeValue) => {
   const searchParams = new URLSearchParams();
@@ -57,17 +58,7 @@ export const SearchSection = () => {
   };
 
   return (
-    <Box
-      component="search"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.75rem',
-        width: '100%',
-        bgcolor: '#D9D9D9',
-        borderRadius: '1rem',
-        p: '2rem 3rem',
-      }}>
+    <FrontPageBox component="search" sx={{ bgcolor: '#D9D9D9' }}>
       <Box
         sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '0.75rem' }}
         component="form"
@@ -104,6 +95,6 @@ export const SearchSection = () => {
           <EastIcon />
         </Link>
       )}
-    </Box>
+    </FrontPageBox>
   );
 };
