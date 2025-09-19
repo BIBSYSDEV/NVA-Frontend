@@ -89,7 +89,7 @@ export const FileBox = ({ file, sx, showFileVersion, registrationWithFile }: Fil
 
             {licenseData && (
               <StyledIconLabelContainer>
-                <img alt="" title={licenseData.name} src={licenseData.logo} style={{ height: '1.75rem' }} />
+                <Box component="img" alt="" title={licenseData.name} src={licenseData.logo} sx={{ height: '1.5rem' }} />
                 <Typography sx={{ whiteSpace: 'nowrap' }}>{licenseData.name}</Typography>
               </StyledIconLabelContainer>
             )}
