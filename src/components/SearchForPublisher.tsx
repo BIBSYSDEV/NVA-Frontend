@@ -69,7 +69,7 @@ export const SearchForPublisher = ({
           {...params}
           variant="outlined"
           isLoading={publisherSearchQuery.isLoading}
-          placeholder={t('registration.resource_type.search_for_publisher')}
+          placeholder={t('registration.resource_type.search_for_publisher_placeholder')}
           {...textFieldProps}
         />
       )}
