@@ -99,6 +99,7 @@ export const SearchListItemDiv = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
+  padding: '0.5rem 1rem',
   marginBottom: '0.2rem',
 }));
 

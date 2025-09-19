@@ -202,7 +202,7 @@ export const RegistrationListItemContent = ({
         )}
       </ListItemText>
       {location.pathname.includes(UrlPathTemplate.ResearchProfileRoot) && isPromotedPublication && (
-        <StarIcon fontSize="small" />
+        <StarIcon color="secondary" fontSize="small" />
       )}
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
@@ -225,8 +225,16 @@ export const RegistrationListItemContent = ({
                 }
               }}
               size="small"
-              sx={{ bgcolor: 'secondary.light', width: '1.5rem', height: '1.5rem' }}>
-              {isPromotedPublication ? <StarIcon fontSize="inherit" /> : <StarOutlineIcon fontSize="inherit" />}
+              sx={{
+                bgcolor: isPromotedPublication ? 'secondary.main' : 'tertiary.main',
+                width: '1.5rem',
+                height: '1.5rem',
+              }}>
+              {isPromotedPublication ? (
+                <StarIcon sx={{ color: 'white' }} fontSize="inherit" />
+              ) : (
+                <StarOutlineIcon color="secondary" fontSize="inherit" />
+              )}
             </IconButton>
           )}
           <Tooltip title={t('common.edit')}>
@@ -236,8 +244,8 @@ export const RegistrationListItemContent = ({
               to={getRegistrationWizardPath(identifier)}
               data-testid={`edit-registration-${identifier}`}
               size="small"
-              sx={{ bgcolor: 'secondary.light', width: '1.5rem', height: '1.5rem' }}>
-              <EditIcon fontSize="inherit" />
+              sx={{ bgcolor: 'tertiary.main', width: '1.5rem', height: '1.5rem' }}>
+              <EditIcon color="secondary" fontSize="inherit" />
             </IconButton>
           </Tooltip>
           {registration.recordMetadata.status === RegistrationStatus.Draft && onDeleteDraftRegistration && (
@@ -259,7 +267,7 @@ export const RegistrationListItemContent = ({
             sx={{ alignSelf: 'start' }}
             onClick={onRemoveRelated}
             data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(registration.identifier)}>
-            <CancelIcon color="primary" />
+            <CancelIcon color="error" />
           </IconButton>
         </Tooltip>
       )}
