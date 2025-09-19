@@ -46,7 +46,7 @@ export const CompareFiles = ({
       </Typography>
       <FileBox
         file={sourceFile}
-        shouldShowFileVersion={isCategoryWithFileVersion(
+        showFileVersion={isCategoryWithFileVersion(
           sourceResult.entityDescription?.reference?.publicationInstance?.type
         )}
         registrationWithFile={sourceFile ? sourceResult : undefined}
@@ -79,7 +79,7 @@ export const CompareFiles = ({
       <FileBox
         file={targetFile}
         sx={{ gridColumn: { xs: 1, md: 3 } }}
-        shouldShowFileVersion={isCategoryWithFileVersion(
+        showFileVersion={isCategoryWithFileVersion(
           targetResult.entityDescription?.reference?.publicationInstance?.type
         )}
         registrationWithFile={canRemoveFile ? undefined : targetResult}

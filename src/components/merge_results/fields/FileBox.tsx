@@ -22,7 +22,7 @@ const StyledIconLabelContainer = styled(Box)({
 
 interface FileBoxProps extends BoxProps {
   file?: AssociatedFile;
-  shouldShowFileVersion: boolean;
+  showFileVersion: boolean;
   /**
    * Pass the associated registration when the file should be downloadable.
    * A file can only be downloaded in the context of its registration.
@@ -30,7 +30,7 @@ interface FileBoxProps extends BoxProps {
   registrationWithFile?: Registration;
 }
 
-export const FileBox = ({ file, sx, shouldShowFileVersion, registrationWithFile }: FileBoxProps) => {
+export const FileBox = ({ file, sx, showFileVersion, registrationWithFile }: FileBoxProps) => {
   const { t } = useTranslation();
   const licenseData = file ? getLicenseData(file.license) : null;
 
@@ -77,7 +77,7 @@ export const FileBox = ({ file, sx, shouldShowFileVersion, registrationWithFile 
               </StyledIconLabelContainer>
             )}
 
-            {shouldShowFileVersion && (
+            {showFileVersion && (
               <>
                 {file.publisherVersion === FileVersion.Published ? (
                   <Typography>{t('registration.files_and_license.published_version')}</Typography>
