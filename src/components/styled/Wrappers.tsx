@@ -62,7 +62,7 @@ export const InputContainerBox = styled(Box)({
 
 export const BackgroundDiv = styled(Box)(({ theme }) => ({
   overflowX: 'auto',
-  background: theme.palette.common.white,
+  background: theme.palette.background.default,
   [theme.breakpoints.up('md')]: {
     padding: '1rem 2rem',
   },
@@ -113,10 +113,10 @@ export const StyledTruncatableTypography = styled(Typography)({
 });
 
 export const StyledInfoBanner = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.light,
+  color: 'white',
+  backgroundColor: theme.palette.info.main,
   padding: '0.75rem',
   borderRadius: '0.25rem',
-  color: 'white',
 }));
 
 export const StyledFilterHeading = styled(Typography)<TypographyProps>({

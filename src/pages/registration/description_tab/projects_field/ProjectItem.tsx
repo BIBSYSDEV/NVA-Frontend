@@ -30,7 +30,7 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
         display: 'grid',
         gridTemplateColumns: { sm: '1fr', md: '1fr 1fr auto' },
         gap: '1rem',
-        bgcolor: 'secondary.light',
+        bgcolor: 'background.neutral97',
         p: '1rem',
         border: '1px solid lightgray',
         borderRadius: '8px',
@@ -108,7 +108,7 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
       <IconButton
         size="small"
         sx={{ alignSelf: 'center' }}
-        color="primary"
+        color="error"
         onClick={() => removeProject(projectId)}
         title={t('common.remove')}
         data-testid={dataTestId.registrationWizard.description.removeProjectButton}>

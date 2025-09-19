@@ -71,6 +71,7 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
           </Box>
         )}
         <Button
+          color="secondary"
           variant="contained"
           sx={{ width: 'fit-content', alignSelf: 'end' }}
           disabled={disabled}

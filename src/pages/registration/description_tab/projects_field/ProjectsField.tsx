@@ -1,4 +1,4 @@
-import AddIcon from '@mui/icons-material/Add';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
@@ -156,9 +156,11 @@ export const ProjectsField = () => {
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <Button
+                    color="tertiary"
+                    variant="contained"
                     data-testid={dataTestId.registrationWizard.description.createProjectButton}
                     onClick={toggleOpenNewProject}
-                    startIcon={<AddIcon />}>
+                    startIcon={<AddCircleOutlineIcon />}>
                     {t('project.create_new_project')}
                   </Button>
                 </Box>

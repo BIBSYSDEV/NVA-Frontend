@@ -83,6 +83,7 @@ export const CreateNfrProject = ({
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <NfrProjectSearch selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
         <Button
+          color="secondary"
           variant="contained"
           sx={{ width: 'fit-content', alignSelf: 'end', mt: '1rem' }}
           disabled={!selectedProject}
