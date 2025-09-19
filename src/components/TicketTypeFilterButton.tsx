@@ -22,6 +22,6 @@ export const TicketTypeFilterButton = ({ isSelected, children, ...rest }: Ticket
         mr: '0.5rem',
       },
     }}>
-    <Box sx={{ display: 'flex', gap: '0.1rem', alignItems: 'center' }}>{children}</Box>
+    <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>{children}</Box>
   </Button>
 );
