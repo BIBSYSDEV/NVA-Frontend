@@ -99,7 +99,6 @@ export const JournalFilter = () => {
             variant="outlined"
             isLoading={isFetching}
             placeholder={t('registration.resource_type.search_for_title_or_issn')}
-            showSearchIcon={!journalParam}
             multiline
           />
         )}
