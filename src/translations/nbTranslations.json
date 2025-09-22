@@ -334,6 +334,10 @@
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljer",
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -405,11 +409,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "does_not_match": "Matcher ikke",
   "editor": {
@@ -609,6 +609,7 @@
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
       "login_failed": "Innlogging feilet",
+      "login_failed_try_bankid": "Innlogging feilet. Prøv å logg inn med BankID i stedet.",
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "person_search": "Søk etter person feilet",
       "project_search": "Søk på prosjekt feilet",
@@ -639,8 +640,7 @@
       "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
-      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
-      "login_failed_try_bankid": "Innlogging feilet. Prøv å logg inn med BankID i stedet."
+      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
@@ -1406,7 +1406,7 @@
       "prefilled_affiliation": "Forhåndsutfylt tilknytning",
       "remove_affiliation": "Fjern tilknytning",
       "remove_contributor": "Fjern bidragsyter",
-      "search_for_institution": "Søk etter institusjon",
+      "search_for_institution": "Søk på institusjon",
       "select_affiliation": "Velg tilknytning",
       "select_contributor_type": "Velg type bidragsyter",
       "select_person": "Velg person",
@@ -1511,7 +1511,6 @@
       "project_association": "Prosjekttilknytning",
       "project_helper_text": "<0>Registrerer du finansieringskilde på et prosjekt, vil resultatene du kobler til det prosjektet «arve» informasjon om finansiering. Det gjør at du slipper å registrere alle finansieringskilder på alle resultatene til prosjektet. Søker du på finansieringskilden i NVA får du treff på både prosjektet og resultatene, og rapportering til Forskningsrådet eller andre vil ta med alle resultat.</0> <0>Et resultat kan være koblet til flere prosjekter.</0>",
       "remove_vocabulary": "Fjern vokabular",
-      "search_for_npi_discipline": "Søk etter fagfelt",
       "year_only": "Kun årstall"
     },
     "edit_registration": "Rediger resultat",
@@ -1961,7 +1960,7 @@
         "info_book_of_abstracts": "Abstraktsamlingen hvor abstraktet er publisert i må være publisert først",
         "info_report": "Rapporten hvor kapittelet er publisert i må være publisert først",
         "published_in": "Publisert i",
-        "search_for_anthology": "Søk etter antologien hvor kapittelet er publisert",
+        "search_for_anthology": "Søk på antologien hvor kapittelet er publisert",
         "search_for_book_of_abstracts": "Søk etter abstraktsamlingen hvor abstraktet er publisert",
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
@@ -1982,7 +1981,7 @@
         "edit_exhibition_other_presentation": "Endre formidling",
         "institution_name": "Arrangørens navn",
         "place": "Visningssted",
-        "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
+        "search_for_exhibition_catalog": "Søk på utstillingskatalog",
         "subtype": {
           "AmbulatingExhibition": "Vandreutstilling",
           "BasicExhibition": "Basisutstilling",
@@ -2077,15 +2076,14 @@
       "same_title": "samme tittel",
       "same_title_and_date": "samme tittel og år",
       "search_for_channel": "Søk i ISSN-portalen på <0><0></0></0> for å sikre at verdiene du oppgir er riktige.",
-      "search_for_original_article": "Søk etter original artikkel",
+      "search_for_original_article": "Søk på original artikkel",
       "search_for_publisher": "Søk etter utgiver",
       "search_for_publisher_placeholder": "Søk på navn",
       "search_for_title_or_issn": "Søk på navn eller ISSN",
       "select_resource_type": "Velg kategori",
       "series": "Serie",
-      "series_info": "Hvis publikasjonen inngår i en serie",
+      "series_info": "Hvis publikasjonen inngår i en serie.",
       "series_number": "Serienummer",
-      "series_title": "Serietittel",
       "title_of_event": "Tittel på arrangement",
       "type_work": "Type verk",
       "type_work_specified": "Egendefinert type verk",
@@ -2189,6 +2187,7 @@
     "year_to": "Til år"
   },
   "search_in_national_research_publication": "Søk i over 2 millioner publikasjoner fra forskere fra universiteter, høyskoler og forskningsinstitusjoner over hele landet.",
+  "select_funder": "Velg finansiør",
   "start_merging": "Start sammenslåing",
   "tasks": {
     "correction_list": "Retteliste",
@@ -2279,8 +2278,8 @@
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   },
-  "select_funder": "Velg finansiør",
   "unpublished_result": "Avpublisert resultat",
+  "velg_subject_area": "Velg fagfelt",
   "view_contact_info": "Se kontaktinformasjon",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
