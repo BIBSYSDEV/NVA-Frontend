@@ -56,7 +56,6 @@ export const VocabularSearchField = () => {
           {...params}
           placeholder={t('search.select_vocabulary')}
           variant="outlined"
-          showSearchIcon
         />
       )}
     />
