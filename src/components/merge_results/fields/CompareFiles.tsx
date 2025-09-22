@@ -21,7 +21,8 @@ interface CompareFilesProps {
   sourceFile?: AssociatedFile;
   targetFile?: AssociatedFile;
   matchingTargetFileIndex?: number;
-  canUploadFileToTarget: boolean;
+  canUploadFileToTarget?: boolean;
+  sourceRegistrationIsFileOwner: boolean;
 }
 
 export const CompareFiles = ({
@@ -29,6 +30,7 @@ export const CompareFiles = ({
   targetFile,
   matchingTargetFileIndex = -1,
   canUploadFileToTarget,
+  sourceRegistrationIsFileOwner,
 }: CompareFilesProps) => {
   const { t } = useTranslation();
   const { sourceResult } = useContext(MergeResultsWizardContext);
@@ -49,7 +51,7 @@ export const CompareFiles = ({
         showFileVersion={isCategoryWithFileVersion(
           sourceResult.entityDescription?.reference?.publicationInstance?.type
         )}
-        registrationWithFile={sourceFile ? sourceResult : undefined}
+        registrationWithFile={sourceRegistrationIsFileOwner ? sourceResult : undefined}
       />
 
       {canCopyFile && (
@@ -82,7 +84,7 @@ export const CompareFiles = ({
         showFileVersion={isCategoryWithFileVersion(
           targetResult.entityDescription?.reference?.publicationInstance?.type
         )}
-        registrationWithFile={canRemoveFile ? undefined : targetResult}
+        registrationWithFile={!sourceRegistrationIsFileOwner ? targetResult : undefined}
       />
 
       <Divider sx={{ display: { xs: 'block', md: 'none' }, my: '0.5rem' }} />
