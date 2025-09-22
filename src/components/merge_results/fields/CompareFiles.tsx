@@ -29,7 +29,7 @@ export const CompareFiles = ({
   sourceFile,
   targetFile,
   matchingTargetFileIndex = -1,
-  canUploadFileToTarget,
+  canUploadFileToTarget = false,
   sourceRegistrationIsFileOwner,
 }: CompareFilesProps) => {
   const { t } = useTranslation();
@@ -38,7 +38,7 @@ export const CompareFiles = ({
   const targetResult = useWatch({ control }) as Registration;
   const { append, remove } = useFieldArray({ name: 'associatedArtifacts', control });
 
-  const canCopyFile = !!canUploadFileToTarget && !!sourceFile && !targetFile;
+  const canCopyFile = canUploadFileToTarget && !!sourceFile && !targetFile;
   const canRemoveFile = !!sourceFile && !!targetFile && matchingTargetFileIndex > -1;
 
   return (
