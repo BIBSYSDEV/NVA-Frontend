@@ -82,13 +82,7 @@ export const SearchForSerialPublication = ({
                 ? dataTestId.aggregations.journalFacetsSearchField
                 : dataTestId.editor.channelSearchField
           }
-          placeholder={
-            searchMode === 'series'
-              ? t('search.search_for_series')
-              : searchMode === 'journal'
-                ? t('search.search_for_journal')
-                : t('search.search_for_serial_publication')
-          }
+          placeholder={t('registration.resource_type.search_for_title_or_issn')}
           {...textFieldProps}
         />
       )}
