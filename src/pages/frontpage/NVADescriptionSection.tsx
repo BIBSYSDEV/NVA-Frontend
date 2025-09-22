@@ -17,6 +17,7 @@ export const NVADescriptionSection = () => {
         sx={{
           display: 'flex',
           width: '100%',
+          mt: '1rem',
           gap: { xs: '1rem', sm: '0.5rem', md: '2rem' },
           flexDirection: { xs: 'column', sm: 'row' },
         }}>

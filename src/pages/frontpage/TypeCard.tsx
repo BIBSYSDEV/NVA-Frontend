@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Link, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { FrontPageBox } from './styles';
 import { SearchTypeValue } from '../search/SearchTypeDropdown';
 import { ProjectIcon } from '../../components/atoms/ProjectIcon';
@@ -61,11 +61,15 @@ export const TypeCard = ({ type }: TypeCardProps) => {
       data-testid={dataTestId}
       to={navigationObject}
       sx={{ width: '100%', textDecoration: 'none' }}>
-      <FrontPageBox sx={{ flex: '1', bgcolor: '#EFEFEF', alignItems: 'center', p: '1.5rem', cursor: 'pointer' }}>
-        {icon}
-        <Typography sx={{ fontSize: '1rem', fontWeight: 'bold', textDecoration: 'none' }}>
-          {(47783).toLocaleString('nb-NO')}
-        </Typography>
+      <FrontPageBox
+        sx={{ flex: '1', bgcolor: '#EFEFEF', alignItems: 'center', p: '1.5rem', cursor: 'pointer', height: '8rem' }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            alignContent: 'center',
+          }}>
+          {icon}
+        </Box>
         <Typography sx={{ fontSize: '0.8rem', textDecoration: 'underline' }}>{text}</Typography>
       </FrontPageBox>
     </Link>
