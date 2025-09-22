@@ -204,10 +204,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                   size: 'small',
                   sx: { p: '0.25rem 0.5rem' },
                 }}
-                textFieldProps={{
-                  'data-testid': dataTestId.aggregations.publisherFacetsSearchField,
-                  showSearchIcon: true,
-                }}
+                textFieldProps={{ 'data-testid': dataTestId.aggregations.publisherFacetsSearchField }}
               />
             )
           }
@@ -251,9 +248,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                   size: 'small',
                   sx: { p: '0.25rem 0.5rem' },
                 }}
-                textFieldProps={{
-                  showSearchIcon: true,
-                }}
+                textFieldProps={{ 'data-testid': dataTestId.aggregations.seriesFacetsSearchField }}
               />
             )
           }
@@ -297,9 +292,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                   size: 'small',
                   sx: { p: '0.25rem 0.5rem' },
                 }}
-                textFieldProps={{
-                  showSearchIcon: true,
-                }}
+                textFieldProps={{ 'data-testid': dataTestId.aggregations.journalFacetsSearchField }}
               />
             )
           }
