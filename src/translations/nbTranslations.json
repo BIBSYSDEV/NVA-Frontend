@@ -2289,9 +2289,7 @@
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
   "go_to_advanced_search": "Gå til avansert resultatsøk",
-  "frontpage_box_what_is_in_NVA": "Hva finner du i NVA?",
-  "frontpage_box_NVA_collects_norwegian_science": "Nasjonalt Vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.",
-  "frontpage_box_NVA_explore_publications": "Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.",
+  "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt Vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "projects": "Prosjekter",
   "results": "Forskningsresultater",
   "person_profiles": "Personprofiler"

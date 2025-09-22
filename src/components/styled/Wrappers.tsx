@@ -140,7 +140,7 @@ export const StyledContributorModalActions = styled(Box)(({ theme }) => ({
   gap: '1rem',
 }));
 
-export const VerticalBox = styled(Box)<BoxProps>(() => ({
+export const VerticalBox = styled(Box)<BoxProps>({
   display: 'flex',
   flexDirection: 'column',
-}));
+});
