@@ -20,9 +20,9 @@ export const NVADescriptionSection = () => {
           gap: { xs: '1rem', sm: '0.5rem', md: '2rem' },
           flexDirection: { xs: 'column', sm: 'row' },
         }}>
-        <TypeCard type={SearchTypeValue.Project}></TypeCard>
-        <TypeCard type={SearchTypeValue.Result}></TypeCard>
-        <TypeCard type={SearchTypeValue.Person}></TypeCard>
+        <TypeCard type={SearchTypeValue.Project} />
+        <TypeCard type={SearchTypeValue.Result} />
+        <TypeCard type={SearchTypeValue.Person} />
       </Box>
     </FrontPageBox>
   );

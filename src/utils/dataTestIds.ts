@@ -817,5 +817,8 @@ export const dataTestId = {
     advancedSearchLink: 'front-page-advanced-search-link',
     searchButton: 'front-page-search-button',
     searchInputField: 'front-page-search-input-field',
+    projectsLink: 'front-page-projects-link',
+    personsLink: 'front-page-persons-link',
+    registrationsLink: 'front-page-registrations-link',
   },
 };
