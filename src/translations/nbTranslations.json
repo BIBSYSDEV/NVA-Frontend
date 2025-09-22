@@ -1324,7 +1324,7 @@
     "local_managers": "Lokalt ansvarlige",
     "new_project": {
       "nfr_grant": "NFR-tilskudd",
-      "search_for_project_name_or_placeholder": "Søk etter prosjektnavn eller prosjektleder"
+      "search_for_project_name_or_placeholder": "Søk på prosjektnavn eller prosjektleder"
     },
     "no_affiliation": "Ingen tilknytning",
     "no_duplicate_title": "Ingen prosjekter funnet med samme tittel.",
@@ -1498,7 +1498,7 @@
         "funding_without_project": "Finansiering uten prosjekt",
         "funding_without_project_description": "<0>Mottar forskningen finansiering som ikke er tilknyttet et prosjekt så trykk på \"Legg til finansiering\" og deretter søk etter finansiør.</0> <0>Ikke registrer finansiering som er tilknyttet et prosjekt. Finansiering tilknyttet prosjekt legges til når du legger til prosjekt lengre opp på siden. Hvis ikke informasjonen om finansiering vises så må dette registreres på prosjektet i NVA.</0>",
         "nfr_project": "NFR-prosjekt",
-        "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
+        "nfr_project_search": "Søk på prosjektnavn eller prosjektleder",
         "remove_funding": "Fjern finansiering"
       },
       "hrcs_activities": "HRCS-aktiviteter",
@@ -2170,7 +2170,7 @@
     "search_for_sub_unit": "Søk etter underenhet",
     "search_for_title": "Søk etter tittel",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv.",
-    "search_project_placeholder": "Søk etter tittel, prosjekt-ID, tilskudds-ID eller deltaker",
+    "search_project_placeholder": "Søk på tittel, prosjekt-ID, tilskudds-ID eller deltaker",
     "search_term_label": "Verdi",
     "sector": "Sektor",
     "select_one_or_more_categories": "Velg en eller flere kategorier",
