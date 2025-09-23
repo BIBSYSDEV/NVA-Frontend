@@ -27,10 +27,10 @@ interface FileBoxProps extends BoxProps {
    * Pass the associated registration when the file should be downloadable.
    * A file can only be downloaded in the context of its registration.
    */
-  registrationWithFile?: Registration;
+  associatedRegistration?: Registration;
 }
 
-export const FileBox = ({ file, sx, showFileVersion, registrationWithFile }: FileBoxProps) => {
+export const FileBox = ({ file, sx, showFileVersion, associatedRegistration }: FileBoxProps) => {
   const { t } = useTranslation();
   const licenseData = file ? getLicenseData(file.license) : null;
 
@@ -52,7 +52,7 @@ export const FileBox = ({ file, sx, showFileVersion, registrationWithFile }: Fil
             <Typography sx={{ wordBreak: 'break-word' }}>
               <strong>{file.name}</strong>
             </Typography>
-            {registrationWithFile && <DownloadFileButton file={file} registration={registrationWithFile} />}
+            {associatedRegistration && <DownloadFileButton file={file} registration={associatedRegistration} />}
           </StyledIconLabelContainer>
           <Typography>{prettyBytes(file.size, { locale: true })}</Typography>
           <FileUploaderInfo uploadDetails={file.uploadDetails} />

@@ -51,7 +51,7 @@ export const CompareFiles = ({
         showFileVersion={isCategoryWithFileVersion(
           sourceResult.entityDescription?.reference?.publicationInstance?.type
         )}
-        registrationWithFile={sourceRegistrationIsFileOwner ? sourceResult : undefined}
+        associatedRegistration={sourceRegistrationIsFileOwner ? sourceResult : undefined}
       />
 
       {canCopyFile && (
@@ -84,7 +84,7 @@ export const CompareFiles = ({
         showFileVersion={isCategoryWithFileVersion(
           targetResult.entityDescription?.reference?.publicationInstance?.type
         )}
-        registrationWithFile={!sourceRegistrationIsFileOwner ? targetResult : undefined}
+        associatedRegistration={!sourceRegistrationIsFileOwner ? targetResult : undefined}
       />
 
       <Divider sx={{ display: { xs: 'block', md: 'none' }, my: '0.5rem' }} />
