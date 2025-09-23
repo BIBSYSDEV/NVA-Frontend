@@ -813,4 +813,12 @@ export const dataTestId = {
     openUnpublishModalButton: 'open-unpublish-modal-button',
     unpublishJustificationTextField: 'unpublish-registration-justification-textfield',
   },
+  frontPage: {
+    advancedSearchLink: 'front-page-advanced-search-link',
+    searchButton: 'front-page-search-button',
+    searchInputField: 'front-page-search-input-field',
+    projectsLink: 'front-page-projects-link',
+    personsLink: 'front-page-persons-link',
+    registrationsLink: 'front-page-registrations-link',
+  },
 };

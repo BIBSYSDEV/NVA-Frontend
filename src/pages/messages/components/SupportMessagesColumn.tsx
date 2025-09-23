@@ -1,3 +1,4 @@
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +19,13 @@ export const SupportMessagesColumn = ({ ticket }: SupportMessagesColumnProps) =>
 
   return (
     <StyledMessagesContainer>
+      <StyledStatusMessageBox sx={{ bgcolor: 'generalSupportCase.main' }}>
+        <StyledIconAndTextWrapper>
+          <ChatBubbleOutlineOutlinedIcon fontSize="small" />
+          <Typography>{t('my_page.messages.types.GeneralSupportCase')}</Typography>
+        </StyledIconAndTextWrapper>
+      </StyledStatusMessageBox>
+
       {(ticket.status === 'New' || ticket.status === 'Pending') && (
         <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
           <StyledIconAndTextWrapper>

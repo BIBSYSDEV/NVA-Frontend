@@ -90,7 +90,6 @@ export const PublisherFilter = () => {
             variant="outlined"
             isLoading={isFetching}
             placeholder={t('registration.resource_type.search_for_publisher_placeholder')}
-            showSearchIcon={!publisherParam}
             multiline
           />
         )}

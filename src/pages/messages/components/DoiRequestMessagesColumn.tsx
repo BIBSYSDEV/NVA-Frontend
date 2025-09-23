@@ -1,3 +1,4 @@
+import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
 import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
@@ -14,14 +15,23 @@ import {
 
 interface DoiRequestMessagesColumnProps {
   ticket: ExpandedTicket | Ticket;
-  showLastMessage?: boolean;
+  showDetails?: boolean;
 }
 
-export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequestMessagesColumnProps) => {
+export const DoiRequestMessagesColumn = ({ ticket, showDetails }: DoiRequestMessagesColumnProps) => {
   const { t } = useTranslation();
 
   return (
     <StyledMessagesContainer>
+      {showDetails && (
+        <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
+          <StyledIconAndTextWrapper>
+            <AddLinkOutlinedIcon fontSize="small" />
+            <Typography>{t('my_page.messages.types.DoiRequest')}</Typography>
+          </StyledIconAndTextWrapper>
+        </StyledStatusMessageBox>
+      )}
+
       {ticket.status === 'New' || ticket.status === 'Pending' ? (
         <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
           <StyledIconAndTextWrapper>
@@ -47,7 +57,7 @@ export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequest
         </StyledStatusMessageBox>
       ) : null}
 
-      {showLastMessage && <LastMessageBox ticket={ticket as ExpandedTicket} />}
+      {showDetails && <LastMessageBox ticket={ticket as ExpandedTicket} />}
     </StyledMessagesContainer>
   );
 };

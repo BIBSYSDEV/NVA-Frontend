@@ -1,4 +1,4 @@
-import { Box, FormGroup, ListItem, ListItemProps, styled, Typography, TypographyProps } from '@mui/material';
+import { Box, BoxProps, FormGroup, ListItem, ListItemProps, styled, Typography, TypographyProps } from '@mui/material';
 
 export const StyledRightAlignedFooter = styled(Box)({
   display: 'flex',
@@ -136,3 +136,8 @@ export const StyledContributorModalActions = styled(Box)(({ theme }) => ({
   marginTop: '2rem',
   gap: '1rem',
 }));
+
+export const VerticalBox = styled(Box)<BoxProps>({
+  display: 'flex',
+  flexDirection: 'column',
+});

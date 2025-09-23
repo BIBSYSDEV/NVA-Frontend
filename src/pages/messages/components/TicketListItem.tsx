@@ -67,7 +67,6 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
 
   return (
     <SearchListItem
-      key={ticket.id}
       sx={{
         p: 0,
         bgcolor: !viewedByUser ? 'secondary.light' : 'white',
@@ -111,7 +110,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           {isFileApprovalTicket(ticket) ? (
             <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
           ) : ticket.type === 'DoiRequest' ? (
-            <DoiRequestMessagesColumn ticket={ticket} showLastMessage />
+            <DoiRequestMessagesColumn ticket={ticket} showDetails />
           ) : ticket.type === 'GeneralSupportCase' ? (
             <SupportMessagesColumn ticket={ticket} />
           ) : (
