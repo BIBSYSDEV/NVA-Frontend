@@ -33,7 +33,6 @@ export const NviYearSelector = (props: Pick<TextFieldProps, 'fullWidth'>) => {
         }
         navigate({ search: syncedParams.toString() });
       }}
-      sx={{ minWidth: '10rem' }}
       {...props}>
       {nviYearFilterValues.map((year) => (
         <MenuItem key={year} value={year}>
