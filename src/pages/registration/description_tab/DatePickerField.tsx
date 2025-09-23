@@ -34,7 +34,10 @@ export const DatePickerField = () => {
   const disabled = disableNviCriticalFields || disableChannelClaimsFields;
 
   const syncChannelIdsWithYear = (newYear: string) => {
-    const publicationContext = entityDescription?.reference?.publicationContext ?? {};
+    const publicationContext = entityDescription?.reference?.publicationContext;
+    if (!publicationContext) {
+      return;
+    }
 
     const journalId = 'id' in publicationContext ? publicationContext.id : null;
     if (journalId && !journalId.endsWith(newYear)) {
