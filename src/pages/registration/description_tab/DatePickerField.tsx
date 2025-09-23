@@ -11,6 +11,10 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationDate } from '../../../utils/date-helpers';
 import { LockedNviFieldDescription } from '../LockedNviFieldDescription';
 
+const replaceYearInId = (id: string, newYear: string) => {
+  return id.replace(/\d{4}$/, newYear);
+};
+
 export const DatePickerField = () => {
   const { t } = useTranslation();
   const {
@@ -43,19 +47,19 @@ export const DatePickerField = () => {
 
       const journalId = 'id' in publicationContext ? publicationContext.id : null;
       if (journalId && !journalId.endsWith(updatedDate.year)) {
-        const updatedJournalId = journalId.replace(/\d{4}$/, updatedDate.year);
+        const updatedJournalId = replaceYearInId(journalId, updatedDate.year);
         setFieldValue(ResourceFieldNames.PublicationContextId, updatedJournalId);
       }
 
       const publisherId = 'publisher' in publicationContext ? publicationContext.publisher?.id : null;
       if (publisherId && !publisherId.endsWith(updatedDate.year)) {
-        const updatedPublisherId = publisherId.replace(/\d{4}$/, updatedDate.year);
+        const updatedPublisherId = replaceYearInId(publisherId, updatedDate.year);
         setFieldValue(ResourceFieldNames.PublicationContextPublisherId, updatedPublisherId);
       }
 
       const seriesId = 'series' in publicationContext ? publicationContext.series?.id : null;
       if (seriesId && !seriesId.endsWith(updatedDate.year)) {
-        const updatedSeriesId = seriesId.replace(/\d{4}$/, updatedDate.year);
+        const updatedSeriesId = replaceYearInId(seriesId, updatedDate.year);
         setFieldValue(ResourceFieldNames.SeriesId, updatedSeriesId);
       }
     }
