@@ -216,6 +216,7 @@ export const RegistrationFormActions = ({
             <TooltipButtonWrapper
               title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
               <Button
+                color="secondary"
                 variant="contained"
                 disabled={disableSaving}
                 loading={isSaving}
@@ -235,7 +236,7 @@ export const RegistrationFormActions = ({
         onClose={toggleSupportModal}
         headingText={t('registration.support.need_help')}
         dataTestId={dataTestId.registrationWizard.formActions.supportModal}
-        slotProps={{ paper: { sx: { bgcolor: 'generalSupportCase.light' } } }}>
+        slotProps={{ paper: { sx: { bgcolor: 'white' } } }}>
         <SupportModalContent closeModal={toggleSupportModal} registration={values} />
       </Modal>
 
