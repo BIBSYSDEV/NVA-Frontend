@@ -37,7 +37,7 @@ export const MergeResultsWizardFilesTab = () => {
       )}
 
       {initialTargetFiles.map((targetFile) => (
-        <CompareFiles key={targetFile.identifier} targetFile={targetFile} sourceRegistrationIsFileOwner={false} />
+        <CompareFiles key={targetFile.identifier} targetFile={targetFile} />
       ))}
 
       {sourceFiles.map((sourceFile) => {
@@ -52,7 +52,6 @@ export const MergeResultsWizardFilesTab = () => {
             targetFile={matchingTargetFile}
             matchingTargetFileIndex={matchingTargetFileIndex}
             canUploadFileToTarget={canUploadFileToTarget}
-            sourceRegistrationIsFileOwner={true}
           />
         );
       })}
