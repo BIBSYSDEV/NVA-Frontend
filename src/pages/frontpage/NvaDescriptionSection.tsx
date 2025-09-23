@@ -41,21 +41,19 @@ export const NvaDescriptionSection = () => {
           text={t('projects')}
           icon={<ProjectIcon />}
           dataTestId={dataTestId.frontPage.projectsLink}
-          pathName={UrlPathTemplate.Root}
-          parameters={getUrlParams(SearchTypeValue.Project)}
+          to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchTypeValue.Project) }}
         />
         <TypeCard
           text={t('results')}
           icon={<RegistrationIcon />}
           dataTestId={dataTestId.frontPage.registrationsLink}
-          pathName={UrlPathTemplate.Root}
+          to={{ pathname: UrlPathTemplate.Root }}
         />
         <TypeCard
           text={t('person_profiles')}
           icon={<PersonIcon />}
           dataTestId={dataTestId.frontPage.personsLink}
-          pathName={UrlPathTemplate.Root}
-          parameters={getUrlParams(SearchTypeValue.Person)}
+          to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchTypeValue.Person) }}
         />
       </Box>
     </FrontPageBox>
