@@ -110,7 +110,8 @@ export const CustomerInstitutionList = ({ customerInstitutions }: CustomerInstit
                 </TableCell>
                 <TableCell>
                   <Button
-                    variant="outlined"
+                    color="tertiary"
+                    variant="contained"
                     startIcon={<EditIcon />}
                     component={RouterLink}
                     data-testid={dataTestId.basicData.customers.editInstitutionButton(institution.id)}
