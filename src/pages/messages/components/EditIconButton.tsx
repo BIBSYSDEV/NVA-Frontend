@@ -9,9 +9,9 @@ export const EditIconButton = ({ sx, tooltip, ...rest }: DeleteIconButtonProps) 
   <Tooltip title={tooltip}>
     <IconButton
       sx={{
-        bgcolor: 'secondary.main',
+        bgcolor: 'tertiary.main',
         '&:hover': {
-          bgcolor: 'secondary.dark',
+          bgcolor: 'tertiary.dark',
         },
         height: '1.5rem',
         width: '1.5rem',

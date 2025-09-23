@@ -61,7 +61,11 @@ export const CristinPersonTableRow = ({
             color="primary"
             size="small"
             title={t('registration.contributors.select_person')}>
-            {personIsSelected ? <CheckCircle fontSize="small" color="info" /> : <CircleOutlined fontSize="small" />}
+            {personIsSelected ? (
+              <CheckCircle fontSize="small" color="secondary" />
+            ) : (
+              <CircleOutlined fontSize="small" />
+            )}
           </IconButton>
           <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
         </Box>

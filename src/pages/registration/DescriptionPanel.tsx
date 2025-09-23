@@ -59,7 +59,7 @@ export const DescriptionPanel = () => {
                   endAdornment: titleSearchPending ? (
                     <CircularProgress size={20} />
                   ) : duplicateRegistration ? (
-                    <ErrorIcon color="warning" />
+                    <ErrorIcon color="info" />
                   ) : undefined,
                 },
               }}
@@ -89,6 +89,8 @@ export const DescriptionPanel = () => {
               ) : null}
               {field.value || field.value === '' ? null : (
                 <Button
+                  color="tertiary"
+                  variant="contained"
                   startIcon={<AddCircleOutlineIcon />}
                   disabled={!values.entityDescription?.mainTitle || disableChannelClaimsFields}
                   onClick={() => setFieldValue(field.name, '')}>
@@ -140,6 +142,8 @@ export const DescriptionPanel = () => {
 
               {field.value || field.value === '' ? null : (
                 <Button
+                  color="tertiary"
+                  variant="contained"
                   startIcon={<AddCircleOutlineIcon />}
                   disabled={!values.entityDescription?.abstract || disableChannelClaimsFields}
                   onClick={() => setFieldValue(field.name, '')}>

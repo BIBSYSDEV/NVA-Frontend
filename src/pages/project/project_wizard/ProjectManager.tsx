@@ -36,6 +36,7 @@ export const ProjectManager = ({ suggestedProjectManager }: ProjectContributorsP
               sx={{ borderRadius: '1rem', width: 'fit-content' }}
               onClick={toggleAddProjectManagerView}
               variant="contained"
+              color="secondary"
               startIcon={<AddIcon />}
               disabled={projectManager !== undefined}
               data-testid={dataTestId.projectForm.addProjectManagerButton}>

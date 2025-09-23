@@ -387,7 +387,7 @@ export const SelectRegistrationTypeField = () => {
           ) : undefined
         }
         variant="filled"
-        color="primary"
+        color="secondary"
         label={t(`registration.publication_types.${currentInstanceType}`)}
         onClick={() => setOpenSelectType(true)}
         sx={{ mt: '0.25rem', width: 'max-content' }}

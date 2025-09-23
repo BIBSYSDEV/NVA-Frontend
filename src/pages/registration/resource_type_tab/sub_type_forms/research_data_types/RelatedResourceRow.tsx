@@ -42,7 +42,7 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
           </Link>
           <Button
             size="small"
-            variant="outlined"
+            variant="contained"
             color="error"
             data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(uri)}
             onClick={() => setConfirmRemoveRelation(true)}

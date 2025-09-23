@@ -1,4 +1,4 @@
-import { createTheme, PaletteColor, PaletteColorOptions, SxProps } from '@mui/material';
+import { createTheme, darken, PaletteColor, PaletteColorOptions, SxProps } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import i18n from '../translations/i18n';
@@ -58,6 +58,7 @@ declare module '@mui/material/styles' {
     generalSupportCase: PaletteColor;
     centralImport: PaletteColor;
     nvi: PaletteColor;
+    tertiary: PaletteColor;
   }
   interface PaletteOptions {
     registration?: PaletteColorOptions;
@@ -68,6 +69,7 @@ declare module '@mui/material/styles' {
     generalSupportCase?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
     nvi?: PaletteColorOptions;
+    tertiary: PaletteColorOptions;
   }
   interface TypeBackground {
     neutral97?: string;
@@ -84,6 +86,7 @@ declare module '@mui/material/Button' {
     publishingRequest: true;
     doiRequest: true;
     generalSupportCase: true;
+    tertiary: true;
   }
 }
 
@@ -109,8 +112,12 @@ export const mainTheme = createTheme(
       secondary: {
         light: Color.SecondaryLight,
         main: Color.SecondaryMain,
-        dark: Color.Outdated,
         contrastText: Color.White,
+      },
+      tertiary: {
+        main: Color.SecondaryLight,
+        dark: darken(Color.SecondaryLight, 0.2),
+        contrastText: Color.PrimaryMain,
       },
       error: {
         main: Color.Red,
@@ -164,7 +171,7 @@ export const mainTheme = createTheme(
       },
       background: {
         default: Color.Neutral95,
-        paper: Color.Neutral95,
+        paper: Color.White, //TODO: Check <Paper /> components
         neutral97: Color.Neutral97,
         neutral87: Color.Neutral87,
         neutral46: Color.Neutral46,
@@ -261,6 +268,9 @@ export const mainTheme = createTheme(
           enableAccessibleFieldDOMStructure: false, // TODO: Remove this when we find a solution to the Cypress issue
         },
       },
+      MuiModal: {
+        defaultProps: { color: 'white' },
+      },
       MuiMenu: {
         defaultProps: {
           disablePortal: true,
@@ -313,7 +323,7 @@ export const mainTheme = createTheme(
       MuiStepIcon: {
         styleOverrides: {
           root: {
-            fill: Color.PrimaryLight,
+            fill: Color.SecondaryMain,
             opacity: 0.7,
             '&.Mui-active': {
               opacity: 1,
@@ -330,9 +340,9 @@ export const mainTheme = createTheme(
             opacity: 0.7,
             textTransform: 'uppercase',
             fontSize: '1rem',
-            color: Color.PrimaryLight,
+            color: Color.SecondaryMain,
             '&.Mui-active': {
-              color: Color.PrimaryLight,
+              color: Color.SecondaryMain,
               fontWeight: 600,
               borderBottom: '0.1875rem solid',
               mb: '-0.1875rem', //prevents text from 'popping'
@@ -340,7 +350,7 @@ export const mainTheme = createTheme(
               opacity: 1,
             },
             '&.Mui-completed': {
-              color: Color.PrimaryLight,
+              color: Color.SecondaryMain,
             },
             '&.Mui-error': {
               color: Color.ErrorMain,
