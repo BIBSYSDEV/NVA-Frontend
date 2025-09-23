@@ -82,7 +82,7 @@ export const CompareFiles = ({
         showFileVersion={isCategoryWithFileVersion(
           targetResult.entityDescription?.reference?.publicationInstance?.type
         )}
-        associatedRegistration={canRemoveFile ? undefined : targetResult}
+        associatedRegistration={!sourceFile ? targetResult : undefined}
       />
 
       <Divider sx={{ display: { xs: 'block', md: 'none' }, my: '0.5rem' }} />
