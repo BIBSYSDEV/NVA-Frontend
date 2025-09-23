@@ -33,6 +33,28 @@ export const DatePickerField = () => {
   const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
   const disabled = disableNviCriticalFields || disableChannelClaimsFields;
 
+  const syncChannelIdsWithYear = (newYear: string) => {
+    const publicationContext = entityDescription?.reference?.publicationContext ?? {};
+
+    const journalId = 'id' in publicationContext ? publicationContext.id : null;
+    if (journalId && !journalId.endsWith(newYear)) {
+      const updatedJournalId = replaceYearInId(journalId, newYear);
+      setFieldValue(ResourceFieldNames.PublicationContextId, updatedJournalId);
+    }
+
+    const publisherId = 'publisher' in publicationContext ? publicationContext.publisher?.id : null;
+    if (publisherId && !publisherId.endsWith(newYear)) {
+      const updatedPublisherId = replaceYearInId(publisherId, newYear);
+      setFieldValue(ResourceFieldNames.PublicationContextPublisherId, updatedPublisherId);
+    }
+
+    const seriesId = 'series' in publicationContext ? publicationContext.series?.id : null;
+    if (seriesId && !seriesId.endsWith(newYear)) {
+      const updatedSeriesId = replaceYearInId(seriesId, newYear);
+      setFieldValue(ResourceFieldNames.SeriesId, updatedSeriesId);
+    }
+  };
+
   const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
     const updatedDate: RegistrationDate = {
       type: 'PublicationDate',
@@ -43,25 +65,7 @@ export const DatePickerField = () => {
 
     const yearIsChanged = updatedDate.year !== dateData?.year;
     if (yearIsChanged) {
-      const publicationContext = entityDescription?.reference?.publicationContext ?? {};
-
-      const journalId = 'id' in publicationContext ? publicationContext.id : null;
-      if (journalId && !journalId.endsWith(updatedDate.year)) {
-        const updatedJournalId = replaceYearInId(journalId, updatedDate.year);
-        setFieldValue(ResourceFieldNames.PublicationContextId, updatedJournalId);
-      }
-
-      const publisherId = 'publisher' in publicationContext ? publicationContext.publisher?.id : null;
-      if (publisherId && !publisherId.endsWith(updatedDate.year)) {
-        const updatedPublisherId = replaceYearInId(publisherId, updatedDate.year);
-        setFieldValue(ResourceFieldNames.PublicationContextPublisherId, updatedPublisherId);
-      }
-
-      const seriesId = 'series' in publicationContext ? publicationContext.series?.id : null;
-      if (seriesId && !seriesId.endsWith(updatedDate.year)) {
-        const updatedSeriesId = replaceYearInId(seriesId, updatedDate.year);
-        setFieldValue(ResourceFieldNames.SeriesId, updatedSeriesId);
-      }
+      syncChannelIdsWithYear(updatedDate.year);
     }
 
     setFieldValue(DescriptionFieldNames.PublicationDate, updatedDate);
