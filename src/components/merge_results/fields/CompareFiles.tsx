@@ -36,8 +36,11 @@ export const CompareFiles = ({
   const targetResult = useWatch({ control }) as Registration;
   const { append, remove } = useFieldArray({ name: 'associatedArtifacts', control });
 
-  const canCopyFile = canUploadFileToTarget && !!sourceFile && !targetFile;
-  const canRemoveFile = !!sourceFile && !!targetFile && matchingTargetFileIndex > -1;
+  const fileBelongsToSource = !!sourceFile;
+  const fileBelongsToTarget = !fileBelongsToSource;
+
+  const fileIsCopied = fileBelongsToSource && !!targetFile && matchingTargetFileIndex > -1;
+  const canCopyFile = canUploadFileToTarget && fileBelongsToSource && !fileIsCopied;
 
   return (
     <>
@@ -49,7 +52,7 @@ export const CompareFiles = ({
         showFileVersion={isCategoryWithFileVersion(
           sourceResult.entityDescription?.reference?.publicationInstance?.type
         )}
-        associatedRegistration={sourceFile ? sourceResult : undefined}
+        associatedRegistration={fileBelongsToSource ? sourceResult : undefined}
       />
 
       {canCopyFile && (
@@ -62,7 +65,7 @@ export const CompareFiles = ({
           {t('add_file')}
         </StyledButton>
       )}
-      {canRemoveFile && (
+      {fileIsCopied && (
         <StyledButton
           data-testid={dataTestId.basicData.centralImport.resetValueButton}
           variant="outlined"
@@ -82,7 +85,7 @@ export const CompareFiles = ({
         showFileVersion={isCategoryWithFileVersion(
           targetResult.entityDescription?.reference?.publicationInstance?.type
         )}
-        associatedRegistration={!sourceFile ? targetResult : undefined}
+        associatedRegistration={fileBelongsToTarget ? targetResult : undefined}
       />
 
       <Divider sx={{ display: { xs: 'block', md: 'none' }, my: '0.5rem' }} />
