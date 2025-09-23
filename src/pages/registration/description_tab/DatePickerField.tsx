@@ -5,7 +5,7 @@ import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledInfoBanner } from '../../../components/styled/Wrappers';
 import { RegistrationFormContext } from '../../../context/RegistrationFormContext';
-import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
+import { DescriptionFieldNames, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationDate } from '../../../utils/date-helpers';
@@ -36,6 +36,30 @@ export const DatePickerField = () => {
       month: !isYearOnly && newDate ? (newDate.getMonth() + 1).toString() : '',
       day: !isYearOnly && newDate ? newDate.getDate().toString() : '',
     };
+
+    const yearIsChanged = updatedDate.year !== dateData?.year;
+    if (yearIsChanged) {
+      const publicationContext = entityDescription?.reference?.publicationContext ?? {};
+
+      const journalId = 'id' in publicationContext ? publicationContext.id : null;
+      if (journalId && !journalId.endsWith(updatedDate.year)) {
+        const updatedJournalId = journalId.replace(/\d{4}$/, updatedDate.year);
+        setFieldValue(ResourceFieldNames.PublicationContextId, updatedJournalId);
+      }
+
+      const publisherId = 'publisher' in publicationContext ? publicationContext.publisher?.id : null;
+      if (publisherId && !publisherId.endsWith(updatedDate.year)) {
+        const updatedPublisherId = publisherId.replace(/\d{4}$/, updatedDate.year);
+        setFieldValue(ResourceFieldNames.PublicationContextPublisherId, updatedPublisherId);
+      }
+
+      const seriesId = 'series' in publicationContext ? publicationContext.series?.id : null;
+      if (seriesId && !seriesId.endsWith(updatedDate.year)) {
+        const updatedSeriesId = seriesId.replace(/\d{4}$/, updatedDate.year);
+        setFieldValue(ResourceFieldNames.SeriesId, updatedSeriesId);
+      }
+    }
+
     setFieldValue(DescriptionFieldNames.PublicationDate, updatedDate);
   };
 
