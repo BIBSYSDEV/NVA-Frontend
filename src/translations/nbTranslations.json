@@ -334,6 +334,10 @@
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljer",
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -405,11 +409,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "does_not_match": "Matcher ikke",
   "editor": {
@@ -609,6 +609,7 @@
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
       "login_failed": "Innlogging feilet",
+      "login_failed_try_bankid": "Innlogging feilet. Prøv å logg inn med BankID i stedet.",
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "person_search": "Søk etter person feilet",
       "project_search": "Søk på prosjekt feilet",
@@ -639,8 +640,7 @@
       "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
-      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
-      "login_failed_try_bankid": "Innlogging feilet. Prøv å logg inn med BankID i stedet."
+      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
     },
     "success": {
       "add_employment": "Ansettelse lagt til",

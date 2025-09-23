@@ -1,11 +1,15 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { Button, Divider, styled, Typography } from '@mui/material';
-import { useFieldArray } from 'react-hook-form';
+import { useContext } from 'react';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';
+import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { isCategoryWithFileVersion } from '../../../utils/registration-helpers';
 import { isOnImportPage } from '../../../utils/urlPaths';
+import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { FileBox } from './FileBox';
 
 const StyledButton = styled(Button)({
@@ -17,27 +21,39 @@ interface CompareFilesProps {
   sourceFile?: AssociatedFile;
   targetFile?: AssociatedFile;
   matchingTargetFileIndex?: number;
-  canUploadFileToTarget: boolean;
+  canUploadFileToTarget?: boolean;
 }
 
 export const CompareFiles = ({
   sourceFile,
   targetFile,
   matchingTargetFileIndex = -1,
-  canUploadFileToTarget,
+  canUploadFileToTarget = false,
 }: CompareFilesProps) => {
   const { t } = useTranslation();
-  const { append, remove } = useFieldArray({ name: 'associatedArtifacts' });
+  const { sourceResult } = useContext(MergeResultsWizardContext);
+  const { control } = useFormContext<Registration>();
+  const targetResult = useWatch({ control }) as Registration;
+  const { append, remove } = useFieldArray({ name: 'associatedArtifacts', control });
 
-  const canCopyFile = canUploadFileToTarget && !!sourceFile && !targetFile;
-  const canRemoveFile = !!sourceFile && !!targetFile && matchingTargetFileIndex > -1;
+  const fileBelongsToSource = !!sourceFile;
+  const fileBelongsToTarget = !fileBelongsToSource;
+
+  const fileIsCopied = fileBelongsToSource && !!targetFile && matchingTargetFileIndex > -1;
+  const canCopyFile = canUploadFileToTarget && fileBelongsToSource && !fileIsCopied;
 
   return (
     <>
-      <Typography variant="h3" sx={{ display: { xs: 'block', sm: 'none' } }}>
+      <Typography variant="h3" sx={{ display: { xs: 'block', md: 'none' } }}>
         {isOnImportPage() ? t('basic_data.central_import.import_candidate') : t('unpublished_result')}
       </Typography>
-      <FileBox file={sourceFile} />
+      <FileBox
+        file={sourceFile}
+        showFileVersion={isCategoryWithFileVersion(
+          sourceResult.entityDescription?.reference?.publicationInstance?.type
+        )}
+        associatedRegistration={fileBelongsToSource ? sourceResult : undefined}
+      />
 
       {canCopyFile && (
         <StyledButton
@@ -49,7 +65,7 @@ export const CompareFiles = ({
           {t('add_file')}
         </StyledButton>
       )}
-      {canRemoveFile && (
+      {fileIsCopied && (
         <StyledButton
           data-testid={dataTestId.basicData.centralImport.resetValueButton}
           variant="outlined"
@@ -60,12 +76,19 @@ export const CompareFiles = ({
         </StyledButton>
       )}
 
-      <Typography variant="h3" sx={{ display: { xs: 'block', sm: 'none' } }}>
+      <Typography variant="h3" sx={{ display: { xs: 'block', md: 'none' } }}>
         {t('published_result')}
       </Typography>
-      <FileBox file={targetFile} sx={{ gridColumn: { xs: 1, sm: 3 } }} />
+      <FileBox
+        file={targetFile}
+        sx={{ gridColumn: { xs: 1, md: 3 } }}
+        showFileVersion={isCategoryWithFileVersion(
+          targetResult.entityDescription?.reference?.publicationInstance?.type
+        )}
+        associatedRegistration={fileBelongsToTarget ? targetResult : undefined}
+      />
 
-      <Divider sx={{ display: { xs: 'block', sm: 'none' }, my: '0.5rem' }} />
+      <Divider sx={{ display: { xs: 'block', md: 'none' }, my: '0.5rem' }} />
     </>
   );
 };
