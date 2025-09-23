@@ -1,15 +1,12 @@
 import { Box, Link, Typography } from '@mui/material';
 import { FrontPageBox } from './styles';
-import { Link as RouterLink } from 'react-router';
+import { Link as RouterLink, To } from 'react-router';
 
 interface TypeCardProps {
   text: string;
   icon: React.ReactNode;
   dataTestId: string;
-  to: {
-    pathname: string;
-    search?: string;
-  };
+  to: To;
 }
 
 export const TypeCard = ({ text, icon, dataTestId, to }: TypeCardProps) => {
