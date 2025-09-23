@@ -436,8 +436,7 @@
         "Publishing-Curator": "Filgodkjenning",
         "Support-Curator": "Brukerstøtte"
       },
-      "search_for_curator": "Søk etter kurator",
-      "search_for_unit": "Søk etter enhet"
+      "search_for_curator": "Søk etter kurator"
     },
     "does_not_support_open_files": "Støtter ikke åpne filer",
     "doi": {
