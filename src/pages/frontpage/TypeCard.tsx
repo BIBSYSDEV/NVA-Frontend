@@ -6,22 +6,16 @@ interface TypeCardProps {
   text: string;
   icon: React.ReactNode;
   dataTestId: string;
-  pathName: string;
-  parameters?: string;
+  to: {
+    pathname: string;
+    search?: string;
+  };
 }
 
-export const TypeCard = ({ text, icon, dataTestId, pathName, parameters = '' }: TypeCardProps) => {
+export const TypeCard = ({ text, icon, dataTestId, to }: TypeCardProps) => {
   return (
-    <Link
-      component={RouterLink}
-      data-testid={dataTestId}
-      to={{
-        pathname: pathName,
-        search: parameters,
-      }}
-      sx={{ width: '100%', textDecoration: 'none' }}>
-      <FrontPageBox
-        sx={{ flex: '1', bgcolor: '#EFEFEF', alignItems: 'center', p: '1.5rem', cursor: 'pointer', height: '8rem' }}>
+    <Link component={RouterLink} data-testid={dataTestId} to={to} sx={{ width: '100%' }}>
+      <FrontPageBox sx={{ flex: '1', bgcolor: '#EFEFEF', alignItems: 'center', p: '1.5rem', height: '8rem' }}>
         <Box
           sx={{
             flexGrow: 1,
@@ -29,7 +23,7 @@ export const TypeCard = ({ text, icon, dataTestId, pathName, parameters = '' }: 
           }}>
           {icon}
         </Box>
-        <Typography sx={{ fontSize: '0.8rem', textDecoration: 'underline' }}>{text}</Typography>
+        <Typography sx={{ fontSize: '0.8rem' }}>{text}</Typography>
       </FrontPageBox>
     </Link>
   );
