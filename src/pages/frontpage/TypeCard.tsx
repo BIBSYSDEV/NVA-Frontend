@@ -1,20 +1,28 @@
-import { Box, Link, Typography } from '@mui/material';
+import { Box, BoxProps, Link, Typography } from '@mui/material';
 import { FrontPageBox } from './styles';
 import { Link as RouterLink, To } from 'react-router';
 
-interface TypeCardProps {
+interface TypeCardProps extends Pick<BoxProps, 'sx'> {
   text: string;
   icon: React.ReactNode;
   dataTestId: string;
   to: To;
 }
 
-export const TypeCard = ({ text, icon, dataTestId, to }: TypeCardProps) => {
+export const TypeCard = ({ sx = {}, text, icon, dataTestId, to }: TypeCardProps) => {
   return (
-    <Link component={RouterLink} data-testid={dataTestId} to={to} sx={{ width: '100%' }}>
-      <FrontPageBox sx={{ flex: '1', bgcolor: '#EFEFEF', alignItems: 'center', p: '1.5rem', height: '8rem' }}>
+    <Link component={RouterLink} data-testid={dataTestId} to={to} sx={{ width: '100%', ...sx }}>
+      <FrontPageBox
+        sx={{
+          flex: '1',
+          bgcolor: '#EFEFEF',
+          alignItems: 'center',
+          p: '1.5rem',
+          height: '8rem',
+          borderRadius: '0.5rem',
+        }}>
         <Box sx={{ flexGrow: 1, alignContent: 'center' }}>{icon}</Box>
-        <Typography sx={{ fontSize: '0.8rem' }}>{text}</Typography>
+        <Typography sx={{ fontSize: '0.8rem', color: '#120732' }}>{text}</Typography>
       </FrontPageBox>
     </Link>
   );

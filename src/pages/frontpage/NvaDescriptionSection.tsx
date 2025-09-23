@@ -18,6 +18,7 @@ const getUrlParams = (type: SearchTypeValue) => {
 
 export const NvaDescriptionSection = () => {
   const { t } = useTranslation();
+  const iconStyle = { height: '2rem', width: '2rem' };
 
   return (
     <FrontPageBox sx={{ bgcolor: 'white', alignItems: 'center' }}>
@@ -39,19 +40,19 @@ export const NvaDescriptionSection = () => {
         }}>
         <TypeCard
           text={t('projects')}
-          icon={<ProjectIcon />}
+          icon={<ProjectIcon sx={iconStyle} />}
           dataTestId={dataTestId.frontPage.projectsLink}
           to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchTypeValue.Project) }}
         />
         <TypeCard
           text={t('results')}
-          icon={<RegistrationIcon />}
+          icon={<RegistrationIcon sx={iconStyle} />}
           dataTestId={dataTestId.frontPage.registrationsLink}
           to={{ pathname: UrlPathTemplate.Root }}
         />
         <TypeCard
           text={t('person_profiles')}
-          icon={<PersonIcon />}
+          icon={<PersonIcon sx={iconStyle} />}
           dataTestId={dataTestId.frontPage.personsLink}
           to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchTypeValue.Person) }}
         />

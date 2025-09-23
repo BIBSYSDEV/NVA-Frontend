@@ -820,5 +820,6 @@ export const dataTestId = {
     projectsLink: 'front-page-projects-link',
     personsLink: 'front-page-persons-link',
     registrationsLink: 'front-page-registrations-link',
+    categoryLink: 'front-page-category-link',
   },
 };
