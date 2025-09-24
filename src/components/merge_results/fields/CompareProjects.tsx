@@ -1,5 +1,5 @@
 import { Box, SxProps, Typography } from '@mui/material';
-import { Fragment, useContext } from 'react';
+import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useFetchProject } from '../../../api/hooks/useFetchProject';
@@ -30,18 +30,26 @@ export const CompareProjects = () => {
       </Typography>
 
       {targetProjects.map((project) => (
-        <Fragment key={project.id}>
-          <ProjectBox />
-          <ProjectBox projectId={project.id} sx={{ gridColumn: 3 }} />
-        </Fragment>
+        <CompareFile key={project.id} targetProjectId={project.id} />
       ))}
 
       {sourceProjects.map((project) => (
-        <Fragment key={project.id}>
-          <ProjectBox projectId={project.id} />
-          <ProjectBox sx={{ gridColumn: 3 }} />
-        </Fragment>
+        <CompareFile key={project.id} sourceProjectId={project.id} />
       ))}
+    </>
+  );
+};
+
+interface CompareFileProps {
+  sourceProjectId?: string;
+  targetProjectId?: string;
+}
+
+const CompareFile = ({ sourceProjectId, targetProjectId }: CompareFileProps) => {
+  return (
+    <>
+      <ProjectBox projectId={sourceProjectId} />
+      <ProjectBox projectId={targetProjectId} sx={{ gridColumn: 3 }} />
     </>
   );
 };
@@ -57,7 +65,7 @@ const ProjectBox = ({ projectId, sx }: ProjectBoxProps) => {
 
   if (!project) {
     return <Box sx={{ m: 0, p: '0.5rem', bgcolor: '#FEFBF3', height: '100%', ...sx }} />;
-  } else {
-    return <ProjectListItem project={project} sx={sx} />;
   }
+
+  return <ProjectListItem project={project} sx={sx} />;
 };
