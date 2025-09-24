@@ -43,6 +43,7 @@ export const CompareFiles = ({
         <StyledButton
           data-testid={dataTestId.basicData.centralImport.copyValueButton}
           variant="contained"
+          color="secondary"
           size="small"
           endIcon={<ArrowForwardIcon />}
           onClick={() => append(sourceFile)}>

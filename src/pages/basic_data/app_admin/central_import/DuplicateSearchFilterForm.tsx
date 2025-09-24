@@ -219,8 +219,8 @@ export const DuplicateSearchFilterForm = ({
             <Box sx={{ gridColumn: '1 / span 2', display: 'flex', gap: '1rem' }}>
               <Button
                 data-testid={dataTestId.basicData.centralImport.resetButton}
-                variant="outlined"
-                color="primary"
+                variant="contained"
+                color="tertiary"
                 onClick={() => resetForm()}>
                 {t('basic_data.central_import.reset_search_values')}
               </Button>
@@ -237,7 +237,7 @@ export const DuplicateSearchFilterForm = ({
                     values.isDoiChecked
                   )
                 }
-                color="primary">
+                color="secondary">
                 {t('basic_data.central_import.search_again')}
               </Button>
             </Box>

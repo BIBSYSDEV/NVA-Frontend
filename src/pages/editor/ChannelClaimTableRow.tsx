@@ -102,7 +102,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: C
           color="secondary"
           size="small"
           sx={{
-            bgcolor: publishingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main',
+            bgcolor: publishingPolicy === 'Everyone' ? 'success.main' : 'background.neutral87',
           }}
           label={t(`editor.institution.channel_claims.access_policies.${publishingPolicy}`)}
           icon={
@@ -113,10 +113,9 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: C
       <StyledTableCell>
         <StyledChip
           variant="filled"
-          color="secondary"
           size="small"
           sx={{
-            bgcolor: editingPolicy === 'Everyone' ? 'publishingRequest.main' : 'centralImport.main',
+            bgcolor: editingPolicy === 'Everyone' ? 'success.main' : 'background.neutral87',
           }}
           label={t(`editor.institution.channel_claims.access_policies.${editingPolicy}`)}
           icon={editingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlineIcon fontSize="small" />}
@@ -125,7 +124,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: C
       <StyledTableCell>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
           {claimedChannel.channelClaim.constraint.scope.map((scope) => (
-            <Chip key={scope} variant="filled" color="primary" label={t(`registration.publication_types.${scope}`)} />
+            <Chip key={scope} variant="filled" color="secondary" label={t(`registration.publication_types.${scope}`)} />
           ))}
         </Box>
       </StyledTableCell>
@@ -136,7 +135,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: C
               data-testid={dataTestId.basicData.deleteChannelClaimButton(channelIdentifier)}
               onClick={() => setOpenConfirmDialog(true)}
               size="small"
-              sx={{ width: '1.5rem', height: '1.5rem', bgcolor: 'secondary.main' }}>
+              sx={{ width: '1.5rem', height: '1.5rem', bgcolor: 'error.main', color: 'white' }}>
               <CloseOutlinedIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>

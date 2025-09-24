@@ -37,7 +37,7 @@ export const MinimizedMenuIconButton = ({ children, to, ...props }: CustomIconBu
 export const SideMenu = ({ children, expanded, minimizedMenu }: SideMenuProps) => (
   <Box component="nav" aria-labelledby={sideNavHeaderId}>
     {expanded || !minimizedMenu ? (
-      <Box sx={{ bgcolor: 'background.neutral95', width: { xs: '100%', md: '20rem' }, height: '100%' }}>{children}</Box>
+      <Box sx={{ bgcolor: 'background.default', width: { xs: '100%', md: '20rem' }, height: '100%' }}>{children}</Box>
     ) : (
       minimizedMenu
     )}

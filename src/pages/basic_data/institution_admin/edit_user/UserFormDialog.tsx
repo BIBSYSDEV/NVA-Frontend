@@ -206,6 +206,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
               <Button
                 loading={isSubmitting}
                 disabled={!values.person || internalEmployments.length === 0 || !values.user}
+                color="secondary"
                 variant="contained"
                 type="submit">
                 {t('common.save')}

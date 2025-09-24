@@ -114,7 +114,7 @@ export const AffiliationFormSection = () => {
           <Button
             disabled={isSubmitting}
             color="error"
-            variant="outlined"
+            variant="contained"
             onClick={toggleConfirmDeleteDialog}
             endIcon={<CancelIcon />}
             data-testid={dataTestId.basicData.personAdmin.removeEmployment}>
