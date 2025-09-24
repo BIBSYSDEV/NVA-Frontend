@@ -47,6 +47,7 @@ export const MergeResultsWizardActions = ({ onCancel }: MergeResultsWizardAction
 
         <Button
           type="submit"
+          color="secondary"
           variant="contained"
           loading={formState.isSubmitting}
           data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}>
