@@ -7,14 +7,14 @@ interface ViewingScopeChipProps extends ChipProps {
   organizationId: string;
 }
 
-export const ViewingScopeChip = ({ organizationId, ...props }: ViewingScopeChipProps) => {
+export const ViewingScopeChip = ({ organizationId, color, ...props }: ViewingScopeChipProps) => {
   const { t } = useTranslation();
 
   const organizationQuery = useFetchOrganization(organizationId);
 
   return (
     <Chip
-      color="secondary"
+      color={color ? color : 'secondary'}
       variant="filled"
       {...props}
       label={

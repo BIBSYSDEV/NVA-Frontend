@@ -115,6 +115,7 @@ export const AddCuratorForm = ({
               <StyledViewingScopeChipContainer>
                 {removedViewingScopes.map((organizationId) => (
                   <ViewingScopeChip
+                    color="error"
                     key={organizationId}
                     icon={<ClearIcon />}
                     organizationId={organizationId}
@@ -177,7 +178,6 @@ export const AddCuratorForm = ({
             }}>
             <FormGroup sx={{ gap: '0.25rem', ml: '0.5rem' }}>
               <RoleSelectBox
-                sx={{ bgcolor: 'generalSupportCase.main' }}
                 label={t('my_page.roles.support_curator')}
                 description={t('my_page.roles.support_curator_description')}
                 disabled={isSubmitting}
@@ -185,7 +185,6 @@ export const AddCuratorForm = ({
                 value={RoleName.SupportCurator}
               />
               <RoleSelectBox
-                sx={{ bgcolor: 'publishingRequest.main' }}
                 label={t('my_page.roles.publishing_curator')}
                 description={t('my_page.roles.publishing_curator_description')}
                 disabled={isSubmitting}
@@ -193,7 +192,6 @@ export const AddCuratorForm = ({
                 value={RoleName.PublishingCurator}
               />
               <RoleSelectBox
-                sx={{ bgcolor: 'publishingRequest.main' }}
                 label={t('my_page.roles.thesis_curator')}
                 description={t('my_page.roles.thesis_curator_description')}
                 disabled={isSubmitting}
@@ -201,7 +199,7 @@ export const AddCuratorForm = ({
                 value={RoleName.CuratorThesis}
               />
               <RoleSelectBox
-                sx={{ bgcolor: 'publishingRequest.main', ml: '1rem' }}
+                sx={{ ml: '1rem' }}
                 label={t('my_page.roles.thesis_embargo_curator')}
                 description={t('my_page.roles.thesis_embargo_curator_description')}
                 disabled={isSubmitting}
@@ -209,7 +207,6 @@ export const AddCuratorForm = ({
                 value={RoleName.CuratorThesisEmbargo}
               />
               <RoleSelectBox
-                sx={{ bgcolor: 'doiRequest.main' }}
                 label={t('my_page.roles.doi_curator')}
                 description={t('my_page.roles.doi_curator_description')}
                 disabled={isSubmitting}
@@ -217,7 +214,6 @@ export const AddCuratorForm = ({
                 value={RoleName.DoiCurator}
               />
               <RoleSelectBox
-                sx={{ bgcolor: 'nvi.main' }}
                 label={t('my_page.roles.nvi_curator')}
                 description={t('my_page.roles.nvi_curator_description')}
                 disabled={isSubmitting}
@@ -234,6 +230,7 @@ export const AddCuratorForm = ({
               data-testid={dataTestId.confirmDialog.acceptButton}
               loading={isSubmitting}
               type="submit"
+              color="secondary"
               variant="contained"
               disabled={
                 (!dirty && addedViewingScopes.length === 0) || (!('username' in values) && values.roles.length === 1)

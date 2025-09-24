@@ -66,7 +66,12 @@ export const InstitutionSupport = () => {
                 )}
               </Field>
 
-              <Button variant="contained" type="submit" loading={isSubmitting} sx={{ mt: 'auto', alignSelf: 'center' }}>
+              <Button
+                color="secondary"
+                variant="contained"
+                type="submit"
+                loading={isSubmitting}
+                sx={{ mt: 'auto', alignSelf: 'center' }}>
                 {t('common.save')}
               </Button>
             </Form>
