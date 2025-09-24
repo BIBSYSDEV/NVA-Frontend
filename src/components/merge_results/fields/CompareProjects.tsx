@@ -24,6 +24,11 @@ export const CompareProjects = () => {
         {isOnImportPage() ? t('basic_data.central_import.import_candidate') : t('unpublished_result')}
       </Typography>
 
+      <Typography variant="h4">{t('registration.description.project_association')}</Typography>
+      <Typography variant="h4" sx={{ gridColumn: 3 }}>
+        {t('registration.description.project_association')}
+      </Typography>
+
       {targetProjects.map((project) => (
         <Fragment key={project.id}>
           <ProjectBox />
