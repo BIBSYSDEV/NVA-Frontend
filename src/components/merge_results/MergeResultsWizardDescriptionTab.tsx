@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { CompareLanguage } from './fields/CompareLanguage';
+import { CompareProjects } from './fields/CompareProjects';
 import { CompareMultilineTextField } from './fields/CompareTextField';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
@@ -39,6 +40,8 @@ export const MergeResultsWizardDescriptionTab = () => {
       />
 
       <CompareLanguage />
+
+      <CompareProjects />
     </>
   );
 };
