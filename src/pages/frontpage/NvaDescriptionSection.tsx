@@ -3,18 +3,13 @@ import { Trans, useTranslation } from 'react-i18next';
 import { TypeCard } from './TypeCard';
 import { FrontPageBox } from './styles';
 import { SearchTypeValue } from '../search/SearchTypeDropdown';
-import { SearchParam } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PersonIcon } from '../../components/atoms/PersonIcon';
 import { dataTestId } from '../../utils/dataTestIds';
 import { ProjectIcon } from '../../components/atoms/ProjectIcon';
 import { RegistrationIcon } from '../../components/atoms/RegistrationIcon';
-
-const getUrlParams = (type: SearchTypeValue) => {
-  const searchParams = new URLSearchParams();
-  searchParams.set(SearchParam.Type, type);
-  return searchParams.toString();
-};
+import { getUrlParams } from './utils';
+import { SearchParam } from '../../utils/searchHelpers';
 
 export const NvaDescriptionSection = () => {
   const { t } = useTranslation();
@@ -42,7 +37,7 @@ export const NvaDescriptionSection = () => {
           text={t('projects')}
           icon={<ProjectIcon sx={iconStyle} />}
           dataTestId={dataTestId.frontPage.projectsLink}
-          to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchTypeValue.Project) }}
+          to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchParam.Type, SearchTypeValue.Project) }}
         />
         <TypeCard
           text={t('results')}
@@ -54,7 +49,7 @@ export const NvaDescriptionSection = () => {
           text={t('person_profiles')}
           icon={<PersonIcon sx={iconStyle} />}
           dataTestId={dataTestId.frontPage.personsLink}
-          to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchTypeValue.Person) }}
+          to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchParam.Type, SearchTypeValue.Person) }}
         />
       </Box>
     </FrontPageBox>

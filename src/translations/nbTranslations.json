@@ -2290,5 +2290,6 @@
   "science_categories_front_page": "<heading>Arbeid i ulike kategorier</heading><p>Forskning og formidling omfatter mye mer enn vitenskapelige publikasjoner.</p><p>Alt registreres i ulike kategorier, og du kan søke og gjøre oppslag i alle kategoriene nedenfor.</p>",
   "projects": "Prosjekter",
   "results": "Forskningsresultater",
-  "person_profiles": "Personprofiler"
+  "person_profiles": "Personprofiler",
+  "front_page_category_map": "Kart"
 }
