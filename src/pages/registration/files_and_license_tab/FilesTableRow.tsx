@@ -179,7 +179,7 @@ export const FilesTableRow = ({
             </Box>
             {canDownloadFile && (
               <Box sx={{ minWidth: '1.5rem', ml: 'auto' }}>
-                <DownloadFileButton file={file} />
+                <DownloadFileButton file={file} registration={values} />
               </Box>
             )}
             {canDeleteFile && (

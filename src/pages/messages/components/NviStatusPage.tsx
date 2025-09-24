@@ -42,7 +42,7 @@ export const NviStatusPage = () => {
       <Typography variant="h1">{t('tasks.nvi.institution_nvi_status')}</Typography>
 
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-        <NviYearSelector />
+        <NviYearSelector sx={{ minWidth: '10rem' }} />
         <ExportNviStatusButton />
       </Box>
 
