@@ -436,8 +436,7 @@
         "Publishing-Curator": "Filgodkjenning",
         "Support-Curator": "Brukerstøtte"
       },
-      "search_for_curator": "Søk etter kurator",
-      "search_for_unit": "Søk etter enhet"
+      "search_for_curator": "Søk etter kurator"
     },
     "does_not_support_open_files": "Støtter ikke åpne filer",
     "doi": {
@@ -1324,7 +1323,7 @@
     "local_managers": "Lokalt ansvarlige",
     "new_project": {
       "nfr_grant": "NFR-tilskudd",
-      "search_for_project_name_or_placeholder": "Søk etter prosjektnavn eller prosjektleder"
+      "search_for_project_name_or_placeholder": "Søk på prosjektnavn eller prosjektleder"
     },
     "no_affiliation": "Ingen tilknytning",
     "no_duplicate_title": "Ingen prosjekter funnet med samme tittel.",
@@ -1406,7 +1405,7 @@
       "prefilled_affiliation": "Forhåndsutfylt tilknytning",
       "remove_affiliation": "Fjern tilknytning",
       "remove_contributor": "Fjern bidragsyter",
-      "search_for_institution": "Søk etter institusjon",
+      "search_for_institution": "Søk på institusjon",
       "select_affiliation": "Velg tilknytning",
       "select_contributor_type": "Velg type bidragsyter",
       "select_person": "Velg person",
@@ -1498,7 +1497,7 @@
         "funding_without_project": "Finansiering uten prosjekt",
         "funding_without_project_description": "<0>Mottar forskningen finansiering som ikke er tilknyttet et prosjekt så trykk på \"Legg til finansiering\" og deretter søk etter finansiør.</0> <0>Ikke registrer finansiering som er tilknyttet et prosjekt. Finansiering tilknyttet prosjekt legges til når du legger til prosjekt lengre opp på siden. Hvis ikke informasjonen om finansiering vises så må dette registreres på prosjektet i NVA.</0>",
         "nfr_project": "NFR-prosjekt",
-        "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
+        "nfr_project_search": "Søk på prosjektnavn eller prosjektleder",
         "remove_funding": "Fjern finansiering"
       },
       "hrcs_activities": "HRCS-aktiviteter",
@@ -1511,7 +1510,6 @@
       "project_association": "Prosjekttilknytning",
       "project_helper_text": "<0>Registrerer du finansieringskilde på et prosjekt, vil resultatene du kobler til det prosjektet «arve» informasjon om finansiering. Det gjør at du slipper å registrere alle finansieringskilder på alle resultatene til prosjektet. Søker du på finansieringskilden i NVA får du treff på både prosjektet og resultatene, og rapportering til Forskningsrådet eller andre vil ta med alle resultat.</0> <0>Et resultat kan være koblet til flere prosjekter.</0>",
       "remove_vocabulary": "Fjern vokabular",
-      "search_for_npi_discipline": "Søk etter fagfelt",
       "year_only": "Kun årstall"
     },
     "edit_registration": "Rediger resultat",
@@ -1961,7 +1959,7 @@
         "info_book_of_abstracts": "Abstraktsamlingen hvor abstraktet er publisert i må være publisert først",
         "info_report": "Rapporten hvor kapittelet er publisert i må være publisert først",
         "published_in": "Publisert i",
-        "search_for_anthology": "Søk etter antologien hvor kapittelet er publisert",
+        "search_for_anthology": "Søk på antologien hvor kapittelet er publisert",
         "search_for_book_of_abstracts": "Søk etter abstraktsamlingen hvor abstraktet er publisert",
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
@@ -1982,7 +1980,7 @@
         "edit_exhibition_other_presentation": "Endre formidling",
         "institution_name": "Arrangørens navn",
         "place": "Visningssted",
-        "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
+        "search_for_exhibition_catalog": "Søk på utstillingskatalog",
         "subtype": {
           "AmbulatingExhibition": "Vandreutstilling",
           "BasicExhibition": "Basisutstilling",
@@ -2077,15 +2075,14 @@
       "same_title": "samme tittel",
       "same_title_and_date": "samme tittel og år",
       "search_for_channel": "Søk i ISSN-portalen på <0><0></0></0> for å sikre at verdiene du oppgir er riktige.",
-      "search_for_original_article": "Søk etter original artikkel",
+      "search_for_original_article": "Søk på original artikkel",
       "search_for_publisher": "Søk etter utgiver",
       "search_for_publisher_placeholder": "Søk på navn",
       "search_for_title_or_issn": "Søk på navn eller ISSN",
       "select_resource_type": "Velg kategori",
       "series": "Serie",
-      "series_info": "Hvis publikasjonen inngår i en serie",
+      "series_info": "Hvis publikasjonen inngår i en serie.",
       "series_number": "Serienummer",
-      "series_title": "Serietittel",
       "title_of_event": "Tittel på arrangement",
       "type_work": "Type verk",
       "type_work_specified": "Egendefinert type verk",
@@ -2170,7 +2167,7 @@
     "search_for_sub_unit": "Søk etter underenhet",
     "search_for_title": "Søk etter tittel",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv.",
-    "search_project_placeholder": "Søk etter tittel, prosjekt-ID, tilskudds-ID eller deltaker",
+    "search_project_placeholder": "Søk på tittel, prosjekt-ID, tilskudds-ID eller deltaker",
     "search_term_label": "Verdi",
     "sector": "Sektor",
     "select_one_or_more_categories": "Velg en eller flere kategorier",
@@ -2189,6 +2186,7 @@
     "year_to": "Til år"
   },
   "search_in_national_research_publication": "Søk i over 2 millioner publikasjoner fra forskere fra universiteter, høyskoler og forskningsinstitusjoner over hele landet.",
+  "select_funder": "Velg finansiør",
   "start_merging": "Start sammenslåing",
   "tasks": {
     "correction_list": "Retteliste",
@@ -2281,6 +2279,7 @@
   },
   "select_funder": "Velg finansiør",
   "unpublished_result": "Avpublisert resultat",
+  "velg_subject_area": "Velg fagfelt",
   "view_contact_info": "Se kontaktinformasjon",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",

@@ -158,8 +158,6 @@ export const MyFieldAndBackground = () => {
                           {...params}
                           isLoading={keywordsQuery.isFetching}
                           label={t('registration.description.keywords')}
-                          placeholder={t('common.search')}
-                          showSearchIcon={field.value.length === 0}
                         />
                       )}
                       slotProps={{

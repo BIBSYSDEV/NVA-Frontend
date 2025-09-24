@@ -57,7 +57,6 @@ export const NfrProjectSearch = ({ onSelectProject, errorMessage, ...textFieldPr
           label={t('registration.description.funding.nfr_project')}
           isLoading={isLoadingNfrProjectSearch}
           placeholder={t('registration.description.funding.nfr_project_search')}
-          showSearchIcon
           errorMessage={errorMessage}
         />
       )}
