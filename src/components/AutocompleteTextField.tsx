@@ -3,7 +3,10 @@ import { AutocompleteRenderInputParams, CircularProgress, TextField, TextFieldPr
 
 export interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
-    Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur' | 'multiline' | 'variant'> {
+    Pick<
+      TextFieldProps,
+      'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur' | 'multiline' | 'variant' | 'slotProps'
+    > {
   'data-testid'?: string;
   isLoading?: boolean;
   showSearchIcon?: boolean;
@@ -24,6 +27,7 @@ export const AutocompleteTextField = ({
     error={!!errorMessage}
     helperText={errorMessage}
     slotProps={{
+      ...params.slotProps,
       htmlInput: {
         ...params.inputProps,
         'aria-label': params.label ? undefined : params.placeholder,

@@ -163,7 +163,6 @@ export const SearchContainerField = ({
                 label={label}
                 isLoading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
                 placeholder={!field.value ? placeholder : ''}
-                showSearchIcon={!field.value}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
             )}

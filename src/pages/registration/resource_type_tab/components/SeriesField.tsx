@@ -138,10 +138,9 @@ export const SeriesField = () => {
             renderInput={(params) => (
               <AutocompleteTextField
                 {...params}
-                label={t('registration.resource_type.series_title')}
+                label={t('registration.resource_type.series')}
                 isLoading={seriesOptionsQuery.isFetching || seriesQuery.isFetching}
                 placeholder={!field.value ? t('registration.resource_type.search_for_title_or_issn') : ''}
-                showSearchIcon={!field.value}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
             )}
