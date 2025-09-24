@@ -47,7 +47,8 @@ export const SerialPublicationClaimsSettings = () => {
           button: (
             <Button
               data-testid={dataTestId.basicData.addChannelClaimButton}
-              variant="outlined"
+              color="tertiary"
+              variant="contained"
               startIcon={<AddIcon />}
               sx={{ my: '0.5rem' }}
               onClick={toggleAddChannelClaimDialog}>

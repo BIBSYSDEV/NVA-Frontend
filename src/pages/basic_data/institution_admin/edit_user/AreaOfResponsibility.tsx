@@ -101,6 +101,8 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
         />
       ) : (
         <Button
+          color="tertiary"
+          variant="contained"
           startIcon={<AddCircleOutlineIcon />}
           disabled={isSubmitting}
           onClick={() => setAddAreaOfResponsibility(true)}>

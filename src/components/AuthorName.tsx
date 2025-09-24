@@ -12,7 +12,7 @@ export const AuthorName = ({ description, authorName }: AuthorNameProps) => {
   return (
     <Box
       sx={{
-        bgcolor: 'background.neutral95',
+        bgcolor: 'background.default',
         borderRadius: '0.25rem',
         padding: '0.5rem 0.75rem',
         marginBottom: '2rem',

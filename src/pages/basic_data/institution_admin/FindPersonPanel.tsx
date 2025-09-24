@@ -41,7 +41,8 @@ export const FindPersonPanel = () => {
             <Typography>{t('basic_data.add_employee.no_matching_persons_found')}</Typography>
             {!showCreatePerson ? (
               <Button
-                variant="outlined"
+                color="secondary"
+                variant="contained"
                 startIcon={<PersonAddIcon />}
                 sx={{ width: 'fit-content' }}
                 onClick={() => setShowCreatePerson(true)}>
