@@ -42,7 +42,7 @@ export const CategorySection = () => {
                 pathname: UrlPathTemplate.Search,
                 search: getUrlParams(ResultParam.CategoryShould, searchParams),
               }}
-              sx={{ width: '15rem', borderRadius: '0.5rem' }}
+              sx={{ width: { xs: '100%', sm: '15rem' }, borderRadius: '0.5rem' }}
             />
           );
         })}
