@@ -8,6 +8,9 @@ import { PersonIcon } from '../../components/atoms/PersonIcon';
 import { dataTestId } from '../../utils/dataTestIds';
 import { ProjectIcon } from '../../components/atoms/ProjectIcon';
 import { RegistrationIcon } from '../../components/atoms/RegistrationIcon';
+import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
+import { useSearchForPerson } from '../../api/hooks/useSearchForPerson';
+import { useFetchProjects } from '../../api/hooks/useFetchProjects';
 import { getUrlParams } from './utils';
 import { SearchParam } from '../../utils/searchHelpers';
 
@@ -16,8 +19,16 @@ const iconStyle = { height: '2rem', width: '2rem' };
 export const NvaDescriptionSection = () => {
   const { t } = useTranslation();
 
+  const registrationQuery = useRegistrationSearch({
+    params: { aggregation: 'all' },
+  });
+
+  const personQuery = useSearchForPerson({});
+
+  const projectsQuery = useFetchProjects('', true);
+
   return (
-    <FrontPageBox sx={{ bgcolor: 'white', alignItems: 'center' }}>
+    <FrontPageBox sx={{ bgcolor: 'white', alignItems: 'center', gap: '0.75rem' }}>
       <Trans
         t={t}
         i18nKey="what_you_find_in_nva_description"
@@ -37,18 +48,21 @@ export const NvaDescriptionSection = () => {
         <TypeCard
           text={t('projects')}
           icon={<ProjectIcon sx={iconStyle} />}
+          number={projectsQuery.data?.size}
           dataTestId={dataTestId.frontPage.projectsLink}
           to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchParam.Type, SearchTypeValue.Project) }}
         />
         <TypeCard
           text={t('results')}
           icon={<RegistrationIcon sx={iconStyle} />}
+          number={registrationQuery.data?.totalHits}
           dataTestId={dataTestId.frontPage.registrationsLink}
           to={{ pathname: UrlPathTemplate.Root }}
         />
         <TypeCard
           text={t('person_profiles')}
           icon={<PersonIcon sx={iconStyle} />}
+          number={personQuery.data?.size}
           dataTestId={dataTestId.frontPage.personsLink}
           to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchParam.Type, SearchTypeValue.Person) }}
         />

@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { searchForProjects } from '../cristinApi';
 
-export const useFetchProjects = (searchTerm: string) => {
+export const useFetchProjects = (searchTerm: string, searchEmpty?: boolean) => {
   const { t } = useTranslation();
 
   return useQuery({
-    enabled: searchTerm.length > 0,
+    enabled: searchTerm.length > 0 || searchEmpty,
     queryKey: ['projects', 10, 1, searchTerm],
     queryFn: () => searchForProjects(10, 1, { query: searchTerm }),
     meta: { errorMessage: t('feedback.error.project_search') },
