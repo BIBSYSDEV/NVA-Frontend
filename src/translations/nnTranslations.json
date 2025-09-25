@@ -436,8 +436,7 @@
         "Publishing-Curator": "Filgodkjenning",
         "Support-Curator": "Brukarstøtte"
       },
-      "search_for_curator": "Søk etter kurator",
-      "search_for_unit": "Søk etter eining"
+      "search_for_curator": "Søk etter kurator"
     },
     "does_not_support_open_files": "Støttar ikkje opne filer",
     "doi": {
@@ -609,6 +608,7 @@
       "get_users_for_institution": "Kunne ikkje hente brukarar",
       "get_vocabularies": "Kunne ikkje hente kontrollerte vokabular",
       "login_failed": "Innlogging feila",
+      "login_failed_try_bankid": "Innlogging feila. Prøv å logge inn med BankID i staden.",
       "orcid_login": "Kunne ikkje logge inn på ORCID",
       "person_search": "Søk etter person feila",
       "project_search": "Søk på prosjekt feila",
@@ -731,6 +731,7 @@
     "technical_support_link": "Ved behov for teknisk støtte kontakt <0>kontakt@sikt.no</0>",
     "to_top": "Til toppen"
   },
+  "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Intitusjonen si brukarstøtte",
   "institutions_service_support": "Institusjonane si brukarstøtte",
   "licenses": {
@@ -959,7 +960,7 @@
       "institution_admin_description": "Vedlikeheld institusjonen sine opplysingar i personregisteret og tildeler roller i tenesta.",
       "internal_importer": "Intern importør",
       "internal_importer_description": "Kan behandle importkandidatar.",
-      "no_active_employments": "Du har ingen roller fordi du ikkje har nokre aktive tilsetjingar.",
+      "no_active_employments": "Du har ingen roller. Årsken kan vere at du ikkje har ei aktiv tilsetjing, eller at institusjonen din ikkje er ein aktiv kunde av NVA.",
       "no_roles": "Du har ingen roller fordi du ikkje har fått tildelt roller av administratoren din",
       "not_customer": "Du har ingen roller fordi institusjonen din er ukjend for applikasjonen",
       "nvi_curator": "NVI-kurator",
@@ -980,6 +981,7 @@
   "overview_over_administrators": "Oversyn over administratorar",
   "overwrite": "Overskriv",
   "owner_institution": "Eigarinstitusjon",
+  "person_profiles": "Personprofilar",
   "point_of_contact": "Kontaktpunkt",
   "point_of_contact_description": "Har du spørsmål angåande forskingsresultatet?",
   "points_of_contact_for_result": "Kontaktpunkt for resultat",
@@ -1323,7 +1325,7 @@
     "local_managers": "Lokalt ansvarlege",
     "new_project": {
       "nfr_grant": "NFR-tilskot",
-      "search_for_project_name_or_placeholder": "Søk etter prosjektnamn eller prosjektleiar"
+      "search_for_project_name_or_placeholder": "Søk på prosjektnamn eller prosjektleiar"
     },
     "no_affiliation": "Inga tilknyting",
     "no_duplicate_title": "Ingen prosjekt funne med same tittel.",
@@ -1358,7 +1360,7 @@
     "scientific_summary": "Vitskapleg samandrag",
     "scientific_summary_english": "$t(project.scientific_summary) (engelsk)",
     "scientific_summary_norwegian": "$t(project.scientific_summary) (norsk)",
-    "search_for_institution": "Søk etter institusjon",
+    "search_for_institution": "Søk på institusjon",
     "status": {
       "ACTIVE": "Aktivt",
       "CONCLUDED": "Avslutta",
@@ -1368,6 +1370,7 @@
     "verify_contributor": "Identifiser prosjektdeltakar",
     "verify_project_manager": "Identifiser prosjektleiar"
   },
+  "projects": "Prosjekt",
   "published_result": "Publisert resultat",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikkje lagre fordi resultatet er publisert og inneheld valideringsfeil",
@@ -1405,7 +1408,7 @@
       "prefilled_affiliation": "Førehandsutfylt tilknyting",
       "remove_affiliation": "Fjern tilknyting",
       "remove_contributor": "Fjern bidragsytar",
-      "search_for_institution": "Søk etter institusjon",
+      "search_for_institution": "Søk på institusjon",
       "select_affiliation": "Vel tilknyting",
       "select_contributor_type": "Vel type bidragsytar",
       "select_person": "Vel person",
@@ -1497,7 +1500,7 @@
         "funding_without_project": "Finansiering utan prosjekt",
         "funding_without_project_description": "<0>Mottar forskinga finansiering som ikkje er knytt til eit prosjekt, trykk då på \"Legg til finansiering\" og søk deretter etter finansiør.</0> <0>Registrer ikkje finansiering som er knytt til eit prosjekt. Finansiering knytt til prosjekt legg du til når du legg til prosjekt lenger oppe på sida. Viss ikkje informasjonen om finansiering visast, må dette registrerast på prosjektet i NVA.</0>",
         "nfr_project": "NFR-prosjekt",
-        "nfr_project_search": "Søk etter prosjektnamn eller prosjektleiar",
+        "nfr_project_search": "Søk på prosjektnamn eller prosjektleiar",
         "remove_funding": "Fjern finansiering"
       },
       "hrcs_activities": "HRCS-aktivitetar",
@@ -1510,7 +1513,6 @@
       "project_association": "Prosjekttilknyting",
       "project_helper_text": "<0>Registrerer du finansieringskjelde på eit prosjekt, vil resultata du koplar til det prosjektet «arve» informasjon om finansiering. Det gjer at du slepp å registrere alle finansieringskjelder på alle resultata til prosjektet. Søkjer du på finansieringskjelda i NVA får du treff på både prosjektet og resultata, og rapportering til Forskingsrådet eller andre vil ta med alle resultat.</0> <0>Eit resultat kan vere kopla til fleire prosjekt.</0>",
       "remove_vocabulary": "Fjern vokabular",
-      "search_for_npi_discipline": "Søk etter fagfelt",
       "year_only": "Berre årstal"
     },
     "edit_registration": "Endre registrering",
@@ -1960,7 +1962,7 @@
         "info_book_of_abstracts": "Abstraktsamlinga som abstraktet er publisert i må vere publisert først",
         "info_report": "Rapporten som kapittelet er publisert i må vere publisert først",
         "published_in": "Publisert i",
-        "search_for_anthology": "Søk etter antologien kor kapittelet er publisert",
+        "search_for_anthology": "Søk på antologien kor kapittelet er publisert",
         "search_for_book_of_abstracts": "Søk etter abstraktsamlinga kor abstraktet er publisert",
         "search_for_report": "Søk etter rapporten der kapittelet er publisert"
       },
@@ -1981,7 +1983,7 @@
         "edit_exhibition_other_presentation": "Endre formidling",
         "institution_name": "Arrangøren sitt namn",
         "place": "Visingsstad",
-        "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
+        "search_for_exhibition_catalog": "Søk på utstillingskatalog",
         "subtype": {
           "AmbulatingExhibition": "Vandreutstilling",
           "BasicExhibition": "Basisutstilling",
@@ -2076,15 +2078,14 @@
       "same_title": "same tittel",
       "same_title_and_date": "same tittel og år",
       "search_for_channel": "Søk i ISSN-portalen på <0><0></0></0> for å sikre at verdiane du oppgjev er riktige.",
-      "search_for_original_article": "Søk etter original artikkel",
+      "search_for_original_article": "Søk på original artikkel",
       "search_for_publisher": "Søk etter utgjevar",
-      "search_for_publisher_placeholder": "Søk etter namn",
-      "search_for_title_or_issn": "Søk etter tittel eller ISSN",
+      "search_for_publisher_placeholder": "Søk på namn",
+      "search_for_title_or_issn": "Søk på tittel eller ISSN",
       "select_resource_type": "Vel kategori",
       "series": "Serie",
       "series_info": "Om publikasjonen inngår i ein serie",
       "series_number": "Serienummer",
-      "series_title": "Serietittel",
       "title_of_event": "Tittel på arrangement",
       "type_work": "Type verk",
       "type_work_specified": "Eigendefinert type verk",
@@ -2117,6 +2118,8 @@
     "year_published": "Publiseringsår"
   },
   "reset": "Nullstill",
+  "results": "Forskingsresultat",
+  "science_categories_front_page": "<heading>Arbeid i ulike kategoriar</heading><p>Forsking og formidling omfattar mykje meir enn vitskaplege publikasjonar.</p><p>Alt vert registrert i ulike kategoriar, og du kan søkje og gjere oppslag i alle kategoriar nedanfor.</p>",
   "search": {
     "additional_participants_one": "+{{count}} deltakar",
     "additional_participants_other": "+{{count}} deltakarar",
@@ -2159,21 +2162,17 @@
     "responsible_institution": "Forskingsansvarleg institusjon",
     "result": "Resultat",
     "result_search": "Resultatsøk",
-    "search_for_contributor": "Søk etter bidragsytar",
-    "search_for_coordinating_institution": "Søk etter koordinerande institusjon",
+    "search_for_contributor": "Søk på identifisert bidragsytar",
+    "search_for_coordinating_institution": "Søk på koordinerande institusjon",
     "search_for_course_code": "Søk etter emnekode",
-    "search_for_funder": "Søk etter finansiør",
     "search_for_funding_identifier": "Søk på Tilskots-ID",
-    "search_for_journal": "Søk etter tidsskrift",
-    "search_for_participant": "Søk etter deltakar",
-    "search_for_participating_institution": "Søk etter deltakande institusjon",
-    "search_for_responsible_institution": "Søk etter forskingsansvarleg institusjon",
-    "search_for_serial_publication": "Søk etter serie/tidsskrift",
-    "search_for_series": "Søk etter serie",
+    "search_for_participant": "Søk på deltakar",
+    "search_for_participating_institution": "Søk på deltakande institusjon",
+    "search_for_responsible_institution": "Søk på forskingsansvarleg institusjon",
     "search_for_sub_unit": "Søk etter undereining",
     "search_for_title": "Søk etter tittel",
     "search_placeholder": "Søk etter tittel, bidragsytar, samandrag, osv.",
-    "search_project_placeholder": "Søk etter tittel, prosjekt-ID, tilskot-ID eller deltakar",
+    "search_project_placeholder": "Søk på tittel, prosjekt-ID, tilskot-ID eller deltakar",
     "search_term_label": "Verdi",
     "sector": "Sektor",
     "select_one_or_more_categories": "Vel ein eller fleire kategoriar",
@@ -2191,6 +2190,8 @@
     "year_from": "Fra år",
     "year_to": "Til år"
   },
+  "search_in_national_research_publication": "Søk i over 2 millionar publikasjonar frå forskarar ved universitet, høgskular og forskingsinstitusjonar over heile landet.",
+  "select_funder": "Vel finansiør",
   "start_merging": "Start samanslåing",
   "tasks": {
     "correction_list": "Retteliste",
@@ -2282,6 +2283,10 @@
     "unpublish_registration_reason": "Legg inn ei kort grunngjeving for at dette forskingsresultatet ikkje lenger skal vere publisert. Grunngjevinga vil vises på forskingsresultatet ved oppslag av referanse til forskingsresultatet."
   },
   "unpublished_result": "Avpublisert resultat",
+  "velg_subject_area": "Vel fagfelt",
   "view_contact_info": "Sjå kontaktinformasjon",
-  "vocabulary_missing": "Institusjonen har ikkje lagt til vokabular"
+  "vocabulary_missing": "Institusjonen har ikkje lagt til vokabular",
+  "what_you_find_in_nva_description": "<heading>Kva finn du i NVA?</heading><p>Nasjonalt Vitenarkiv (NVA) samlar og gjer tilgjengeleg informasjon om norsk forsking.</p><p>Her kan du utforske publikasjonar, forskingsprosjekt og forskarar på tvers av universitet, høgskular og forskingsinstitusjonar.</p>",
+  "you_cannot_upload_files_to_this_result": "Du har ikkje tilgang til å laste opp filer for dette resultatet.",
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikkje tilgang til å endre denne registreringa."
 }
