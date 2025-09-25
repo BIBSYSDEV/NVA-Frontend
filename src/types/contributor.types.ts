@@ -88,7 +88,7 @@ export interface Contributor {
   affiliations?: Affiliation[];
   correspondingAuthor?: boolean;
   identity: Identity;
-  role: {
+  role?: {
     type: ContributorRole;
     description?: string;
   };
@@ -99,7 +99,7 @@ export interface PreviewContributor {
   affiliations?: Affiliation[];
   correspondingAuthor?: boolean;
   identity: Identity;
-  role: ContributorRole;
+  role?: ContributorRole;
   sequence?: number;
 }
 
