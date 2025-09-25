@@ -102,7 +102,7 @@ export const ContributorRow = ({
                 variant="filled"
                 label={t('common.select_role')}
                 fullWidth
-                sx={{ minWidth: '5rem' }}
+                sx={{ minWidth: '7rem' }}
                 error={!!error && touched}
                 helperText={<ErrorMessage name={field.name} />}>
                 {contributorRoles.map((role) => (
