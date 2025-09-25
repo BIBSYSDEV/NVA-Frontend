@@ -21,7 +21,7 @@ export const NvaDescriptionSection = () => {
 
   const registrationQuery = useRegistrationSearch({ params: { aggregation: 'all', results: 0 } });
   const personQuery = useSearchForPerson({ results: 1 });
-  const projectsQuery = useFetchProjects({});
+  const projectsQuery = useFetchProjects({ results: 1 });
 
   return (
     <FrontPageBox sx={{ bgcolor: 'white', alignItems: 'center', gap: '0.75rem' }}>
