@@ -10,27 +10,11 @@ enum Color {
   PurpleDark = '#0A0132',
   Purple = '#7351FB',
   CentralImportMain = '#D9D9D9',
-  CentralImportLight = '#EFEEED',
-  ErrorMain = '#AC0303',
   PurpleLight = '#D1CDFF',
-  SecondaryDark = '#D3C9AF',
-  SuccessMain = '#025810',
-  InfoMain = '#0B408F',
-  InfoLight = '#C2D3EA',
-  PrimaryLight = '#0D4DAD',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
-  DoiRequest = '#FFAA8E',
-  DoiRequestLight = '#FFE2DA',
-  GeneralSupportCase = '#7E9DCC',
   Registration = '#EED2AE',
   Person = '#BAD2F7',
   Project = '#E8B8D0',
-  PublishingRequest = '#FFD27B',
-  PublishingRequestLight = '#FFF0D3',
-  NviMain = '#EE95EA',
-  NviLight = '#F8D3F6',
-  WarningMain = '#ED6C02',
-  WarningLight = '#FFD45A',
   Outdated = '#fc53db',
   Neutral97 = '#F7F7F7',
   Neutral95 = '#F1F1F1',
@@ -50,26 +34,18 @@ const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' 
 
 declare module '@mui/material/styles' {
   interface Palette {
+    tertiary: PaletteColor;
     registration: PaletteColor;
     person: PaletteColor;
     project: PaletteColor;
-    publishingRequest: PaletteColor;
-    doiRequest: PaletteColor;
-    generalSupportCase: PaletteColor;
     centralImport: PaletteColor;
-    nvi: PaletteColor;
-    tertiary: PaletteColor;
   }
   interface PaletteOptions {
+    tertiary: PaletteColorOptions;
     registration?: PaletteColorOptions;
     person?: PaletteColorOptions;
     project?: PaletteColorOptions;
-    publishingRequest?: PaletteColorOptions;
-    doiRequest?: PaletteColorOptions;
-    generalSupportCase?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
-    nvi?: PaletteColorOptions;
-    tertiary: PaletteColorOptions;
   }
   interface TypeBackground {
     neutral97?: string;
@@ -80,13 +56,10 @@ declare module '@mui/material/styles' {
 }
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
+    tertiary: true;
     registration: true;
     person: true;
     project: true;
-    publishingRequest: true;
-    doiRequest: true;
-    generalSupportCase: true;
-    tertiary: true;
     white: true;
   }
 }
@@ -116,14 +89,11 @@ export const mainTheme = createTheme(
         light: Color.Outdated,
       },
       secondary: {
-        light: Color.PurpleLight,
         main: Color.Purple,
-        contrastText: Color.White,
       },
       tertiary: {
         main: Color.PurpleLight,
         dark: darken(Color.PurpleLight, 0.2),
-        contrastText: Color.PurpleDark,
       },
       error: {
         main: Color.Red,
@@ -157,23 +127,6 @@ export const mainTheme = createTheme(
       },
       centralImport: {
         main: Color.CentralImportMain,
-        light: Color.Outdated,
-      },
-      publishingRequest: {
-        main: Color.Outdated,
-        light: Color.Outdated,
-      },
-      doiRequest: {
-        main: Color.Outdated,
-        light: Color.Outdated,
-      },
-      generalSupportCase: {
-        main: Color.Outdated,
-        light: Color.Outdated,
-      },
-      nvi: {
-        main: Color.Outdated,
-        light: Color.Outdated,
       },
       background: {
         default: Color.Neutral95,
@@ -335,7 +288,7 @@ export const mainTheme = createTheme(
               opacity: 1,
             },
             '&.Mui-error': {
-              fill: Color.ErrorMain,
+              fill: Color.Red,
             },
           },
         },
@@ -359,7 +312,7 @@ export const mainTheme = createTheme(
               color: Color.Purple,
             },
             '&.Mui-error': {
-              color: Color.ErrorMain,
+              color: Color.Red,
             },
           },
         },
@@ -399,7 +352,7 @@ export const mainTheme = createTheme(
         styleOverrides: {
           asterisk: {
             fontWeight: 'bold',
-            color: Color.ErrorMain,
+            color: Color.Red,
           },
         },
       },

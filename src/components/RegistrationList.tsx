@@ -254,7 +254,7 @@ export const RegistrationListItemContent = ({
                 data-testid={`delete-registration-${identifier}`}
                 onClick={() => onDeleteDraftRegistration(registration)}
                 size="small"
-                sx={{ bgcolor: 'secondary.light', width: '1.5rem', height: '1.5rem' }}>
+                sx={{ bgcolor: 'tertiary.main', width: '1.5rem', height: '1.5rem' }}>
                 <CloseOutlinedIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>

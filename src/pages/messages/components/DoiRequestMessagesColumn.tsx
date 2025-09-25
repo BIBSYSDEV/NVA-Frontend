@@ -12,6 +12,7 @@ import {
   StyledMessagesContainer,
   StyledStatusMessageBox,
 } from './PublishingRequestMessagesColumn';
+import { ticketStatusColor } from './SupportMessagesColumn';
 
 interface DoiRequestMessagesColumnProps {
   ticket: ExpandedTicket | Ticket;
@@ -24,10 +25,10 @@ export const DoiRequestMessagesColumn = ({ ticket, showDetails }: DoiRequestMess
   return (
     <StyledMessagesContainer>
       {showDetails && (
-        <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
+        <StyledStatusMessageBox sx={{ bgcolor: ticketStatusColor[ticket.status], width: 'fit-content' }}>
           <StyledIconAndTextWrapper>
             <AddLinkOutlinedIcon fontSize="small" />
-            <Typography>{t('my_page.messages.types.DoiRequest')}</Typography>
+            <Typography color="white">{t('my_page.messages.types.DoiRequest')}</Typography>
           </StyledIconAndTextWrapper>
         </StyledStatusMessageBox>
       )}

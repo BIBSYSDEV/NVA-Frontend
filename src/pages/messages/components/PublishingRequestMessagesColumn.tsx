@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { ExpandedPublishingTicket, PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { toDateString } from '../../../utils/date-helpers';
 import { LastMessageBox } from './LastMessageBox';
+import { ticketStatusColor } from './SupportMessagesColumn';
 
 export const StyledMessagesContainer = styled(Box)({
   display: 'flex',
@@ -38,10 +39,10 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
 
   return (
     <StyledMessagesContainer>
-      <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+      <StyledStatusMessageBox sx={{ bgcolor: ticketStatusColor[ticket.status], width: 'fit-content' }}>
         <StyledIconAndTextWrapper>
           <InsertDriveFileOutlinedIcon fontSize="small" />
-          <Typography>{t('my_page.messages.types.PublishingRequest')}</Typography>
+          <Typography color="white">{t('my_page.messages.types.PublishingRequest')}</Typography>
         </StyledIconAndTextWrapper>
       </StyledStatusMessageBox>
 
