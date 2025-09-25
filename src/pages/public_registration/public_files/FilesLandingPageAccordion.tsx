@@ -133,7 +133,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           </Typography>
           <SelectableButton
             variant="contained"
-            sx={{ bgcolor: 'secondary.main', color: 'white' }}
+            color="secondary"
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
             state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}

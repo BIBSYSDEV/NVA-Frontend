@@ -176,9 +176,9 @@ export const DoiRequestAccordion = ({
   const requestDoiButton = (
     <Button
       data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
-      sx={{ bgcolor: 'secondary.light', color: 'primary.main' }}
       size="small"
       fullWidth
+      color="tertiary"
       variant="contained"
       endIcon={<LocalOfferIcon />}
       disabled={isLoading !== LoadingState.None}
@@ -392,7 +392,7 @@ export const DoiRequestAccordion = ({
             {assignDoiButton}
 
             <Button
-              sx={{ bgcolor: 'error.main' }}
+              color="error"
               variant="contained"
               size="small"
               data-testid={dataTestId.registrationLandingPage.rejectDoiButton}

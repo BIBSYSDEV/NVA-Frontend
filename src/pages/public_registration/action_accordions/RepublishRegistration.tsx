@@ -47,7 +47,7 @@ export const RepublishRegistration = ({
               {t('registration.public_page.tasks_panel.fix_validation_errors_before_republishing')}
             </Typography>
           )}
-          <Button
+          <Button //TODO: Theme: Check why this doesn't recieve the correct color
             data-testid={dataTestId.registrationLandingPage.tasksPanel.republishRegistrationButton}
             variant="outlined"
             fullWidth

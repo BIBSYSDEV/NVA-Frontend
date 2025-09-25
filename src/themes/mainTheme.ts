@@ -7,12 +7,12 @@ import i18n from '../translations/i18n';
 enum Color {
   Black = '#222222',
   White = '#FFFFFF',
-  PrimaryMain = '#0A0132',
-  SecondaryMain = '#7351FB',
+  PurpleDark = '#0A0132',
+  Purple = '#7351FB',
   CentralImportMain = '#D9D9D9',
   CentralImportLight = '#EFEEED',
   ErrorMain = '#AC0303',
-  SecondaryLight = '#D1CDFF',
+  PurpleLight = '#D1CDFF',
   SecondaryDark = '#D3C9AF',
   SuccessMain = '#025810',
   InfoMain = '#0B408F',
@@ -87,6 +87,12 @@ declare module '@mui/material/Button' {
     doiRequest: true;
     generalSupportCase: true;
     tertiary: true;
+    white: true;
+  }
+}
+declare module '@mui/material/Chip' {
+  interface ChipPropsColorOverrides {
+    tertiary: true;
   }
 }
 
@@ -106,18 +112,18 @@ export const mainTheme = createTheme(
     },
     palette: {
       primary: {
-        main: Color.PrimaryMain,
+        main: Color.PurpleDark,
         light: Color.Outdated,
       },
       secondary: {
-        light: Color.SecondaryLight,
-        main: Color.SecondaryMain,
+        light: Color.PurpleLight,
+        main: Color.Purple,
         contrastText: Color.White,
       },
       tertiary: {
-        main: Color.SecondaryLight,
-        dark: darken(Color.SecondaryLight, 0.2),
-        contrastText: Color.PrimaryMain,
+        main: Color.PurpleLight,
+        dark: darken(Color.PurpleLight, 0.2),
+        contrastText: Color.PurpleDark,
       },
       error: {
         main: Color.Red,
@@ -150,7 +156,7 @@ export const mainTheme = createTheme(
         main: Color.Project,
       },
       centralImport: {
-        main: Color.Outdated,
+        main: Color.CentralImportMain,
         light: Color.Outdated,
       },
       publishingRequest: {
@@ -316,14 +322,14 @@ export const mainTheme = createTheme(
             color: Color.TextPrimary,
           },
           underlineAlways: {
-            textDecorationColor: Color.PrimaryMain,
+            textDecorationColor: Color.PurpleDark,
           },
         },
       },
       MuiStepIcon: {
         styleOverrides: {
           root: {
-            fill: Color.SecondaryMain,
+            fill: Color.Purple,
             opacity: 0.7,
             '&.Mui-active': {
               opacity: 1,
@@ -340,9 +346,9 @@ export const mainTheme = createTheme(
             opacity: 0.7,
             textTransform: 'uppercase',
             fontSize: '1rem',
-            color: Color.SecondaryMain,
+            color: Color.Purple,
             '&.Mui-active': {
-              color: Color.SecondaryMain,
+              color: Color.Purple,
               fontWeight: 600,
               borderBottom: '0.1875rem solid',
               mb: '-0.1875rem', //prevents text from 'popping'
@@ -350,7 +356,7 @@ export const mainTheme = createTheme(
               opacity: 1,
             },
             '&.Mui-completed': {
-              color: Color.SecondaryMain,
+              color: Color.Purple,
             },
             '&.Mui-error': {
               color: Color.ErrorMain,
@@ -416,14 +422,14 @@ export const mainTheme = createTheme(
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            color: Color.PrimaryMain,
+            color: Color.PurpleDark,
           },
         },
       },
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            color: Color.PrimaryMain,
+            color: Color.PurpleDark,
             backgroundColor: Color.White,
             '&.Mui-focused': {
               backgroundColor: Color.White,
@@ -435,7 +441,7 @@ export const mainTheme = createTheme(
               backgroundColor: Color.White,
             },
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: Color.PrimaryMain,
+              borderColor: Color.PurpleDark,
             },
           },
         },

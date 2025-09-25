@@ -84,7 +84,7 @@ export const NviCandidatesNavigationAccordion = () => {
                     flexGrow: '1',
                     my: '0.175rem',
                     height: '1rem',
-                    bgcolor: 'secondary.light',
+                    bgcolor: 'tertiary.main',
                     borderRadius: '0.5rem',
                   }}
                 />

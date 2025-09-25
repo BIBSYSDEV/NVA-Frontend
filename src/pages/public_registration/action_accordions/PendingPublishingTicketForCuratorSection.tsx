@@ -69,7 +69,8 @@ export const PendingPublishingTicketForCuratorSection = ({
         components={[<Typography key="1" />]}
       />
       <Button
-        sx={{ bgcolor: 'secondary.main', mb: '0.5rem' }}
+        sx={{ mb: '0.5rem' }}
+        color="secondary"
         variant="contained"
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
         startIcon={<InsertDriveFileIcon />}
@@ -86,7 +87,8 @@ export const PendingPublishingTicketForCuratorSection = ({
         components={[<Typography key="1" />]}
       />
       <Button
-        sx={{ bgcolor: 'error.main', mb: '0.5rem' }}
+        sx={{ mb: '0.5rem' }}
+        color="error"
         variant="contained"
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
         startIcon={<CloseIcon />}
@@ -98,7 +100,8 @@ export const PendingPublishingTicketForCuratorSection = ({
 
       <Typography>{t('registration.public_page.tasks_panel.edit_publishing_request_description')}</Typography>
       <Button
-        sx={{ bgcolor: 'secondary.light', color: 'primary.main', mb: '0.5rem' }}
+        sx={{ mb: '0.5rem' }}
+        color="tertiary"
         variant="contained"
         fullWidth
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
@@ -145,6 +148,7 @@ export const PendingPublishingTicketForCuratorSection = ({
             data-testid={dataTestId.registrationLandingPage.tasksPanel.rejectionDialogConfirmButton}
             disabled={!rejectionReason}
             loading={ticketMutation.isPending && ticketMutation.variables?.status === 'Closed'}
+            color="secondary"
             variant="contained"
             onClick={() => ticketMutation.mutate({ status: 'Closed' })}>
             {t('common.reject')}

@@ -34,6 +34,7 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
         flexDirection: 'row',
         gap: '1rem',
         justifyContent: 'space-between',
+        borderLeftColor: 'centralImport.main',
       }}
       data-testid={dataTestId.startPage.searchResultItem}>
       <div>

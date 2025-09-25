@@ -18,8 +18,9 @@ export const ExportResultsButton = ({ searchParams }: ExportResultsButtonProps) 
 
   return (
     <Button
-      sx={{ bgcolor: 'secondary.light' }}
       href={`${API_URL.slice(0, -1)}${SearchApiPath.RegistrationsExport}?${searchParams.toString()}`}
+      variant="contained"
+      color="tertiary"
       onClick={() => setIsClicked(true)}
       title={t('search.export')}
       data-testid={dataTestId.startPage.advancedSearch.downloadResultsButton}

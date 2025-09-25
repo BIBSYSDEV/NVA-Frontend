@@ -69,7 +69,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     <SearchListItem
       sx={{
         p: 0,
-        bgcolor: !viewedByUser ? 'secondary.light' : 'white',
+        bgcolor: !viewedByUser ? 'tertiary.main' : 'white',
       }}>
       <MuiLink
         component={Link}

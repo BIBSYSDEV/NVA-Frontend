@@ -67,7 +67,8 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
       <Button
         data-testid={dataTestId.registrationLandingPage.detailsTab.viewContactInformationButton}
         variant="contained"
-        sx={{ alignSelf: { sm: 'start', md: 'center' }, color: 'primary.main', bgcolor: 'secondary.light' }}
+        color="tertiary"
+        sx={{ alignSelf: { sm: 'start', md: 'center' } }}
         startIcon={<MailOutlineIcon />}
         onClick={() => setOpenModal(true)}>
         {t('view_contact_info')}

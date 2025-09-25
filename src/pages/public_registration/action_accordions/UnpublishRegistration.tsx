@@ -48,9 +48,9 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
           <Button
             data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
             variant="contained"
+            color="error"
             fullWidth
             size="small"
-            sx={{ bgcolor: 'error.main' }}
             onClick={toggleUnpublishModal}>
             {t('unpublish_actions.unpublish')}
           </Button>

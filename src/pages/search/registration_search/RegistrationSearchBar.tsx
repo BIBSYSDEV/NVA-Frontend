@@ -214,7 +214,7 @@ const FilterButton = () => {
 
   return (
     <Button
-      sx={{ mr: '0.5rem', color: 'primary.main', bgcolor: 'secondary.light' }}
+      sx={{ mr: '0.5rem', color: 'primary.main', bgcolor: 'tertiary.main' }}
       data-testid={dataTestId.startPage.advancedSearch.activateFilterButton}
       startIcon={<FilterAltIcon />}
       onClick={() => {
@@ -226,7 +226,7 @@ const FilterButton = () => {
           submitForm();
         }
       }}
-      variant={values.properties.length ? 'contained' : 'outlined'}>
+      variant={values.properties.length ? 'outlined' : 'contained'}>
       {t('common.filter')}
     </Button>
   );

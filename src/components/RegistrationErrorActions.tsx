@@ -38,7 +38,8 @@ export const RegistrationErrorActions = ({ tabErrors, registration, ...boxProps 
       </Typography>
       <ErrorList tabErrors={tabErrors} />
       <Button
-        sx={{ bgcolor: 'secondary.light', color: 'primary.main', width: '100%' }}
+        sx={{ width: '100%' }}
+        color="tertiary"
         variant="contained"
         component={Link}
         size="small"
