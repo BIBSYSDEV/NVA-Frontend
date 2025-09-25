@@ -19,13 +19,9 @@ const iconStyle = { height: '2rem', width: '2rem' };
 export const NvaDescriptionSection = () => {
   const { t } = useTranslation();
 
-  const registrationQuery = useRegistrationSearch({
-    params: { aggregation: 'all' },
-  });
-
-  const personQuery = useSearchForPerson({});
-
-  const projectsQuery = useFetchProjects('', true);
+  const registrationQuery = useRegistrationSearch({ params: { aggregation: 'all', results: 0 } });
+  const personQuery = useSearchForPerson({ results: 1 });
+  const projectsQuery = useFetchProjects({});
 
   return (
     <FrontPageBox sx={{ bgcolor: 'white', alignItems: 'center', gap: '0.75rem' }}>
