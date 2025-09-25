@@ -18,6 +18,21 @@ interface TicketAssigneeProps {
   refetchTickets: () => Promise<void>;
 }
 
+const getRoleFilter = (ticketType: Ticket['type']) => {
+  switch (ticketType) {
+    case 'PublishingRequest':
+      return RoleName.PublishingCurator;
+    case 'GeneralSupportCase':
+      return RoleName.SupportCurator;
+    case 'DoiRequest':
+      return RoleName.DoiCurator;
+    case 'FilesApprovalThesis':
+      return RoleName.CuratorThesis;
+    default:
+      return null;
+  }
+};
+
 export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -43,8 +58,9 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
   const isPendingTicket = ticket.status === 'Pending' || ticket.status === 'New';
   const isOnTaskPage = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
   const canSetAssignee = isOnTaskPage && canEditTicket && isPendingTicket;
+  const roleFilter = getRoleFilter(ticket.type);
 
-  return isOnTaskPage ? (
+  return isOnTaskPage && roleFilter ? (
     <AssigneeSelector
       assignee={ticket.assignee}
       canSetAssignee={canSetAssignee}
@@ -54,15 +70,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
         }
       }}
       isUpdating={ticketMutation.isPending}
-      roleFilter={
-        ticket.type === 'PublishingRequest'
-          ? RoleName.PublishingCurator
-          : ticket.type === 'DoiRequest'
-            ? RoleName.DoiCurator
-            : ticket.type === 'FilesApprovalThesis'
-              ? RoleName.PublishingCurator
-              : RoleName.SupportCurator
-      }
+      roleFilter={roleFilter}
     />
   ) : ticket.assignee || isPendingTicket ? (
     <UnselectableAssignee assignee={ticket.assignee} />
