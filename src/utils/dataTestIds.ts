@@ -820,5 +820,18 @@ export const dataTestId = {
     projectsLink: 'front-page-projects-link',
     personsLink: 'front-page-persons-link',
     registrationsLink: 'front-page-registrations-link',
+    frontpageCategory: {
+      Journal: 'frontpage-category-Journal',
+      Book: 'datatestid frontpage-category-Book',
+      Report: 'frontpage-category-Report',
+      Degree: 'frontpage-category-Degree',
+      Anthology: 'frontpage-category-Anthology',
+      Event: 'frontpage-category-Event',
+      Artistic: 'frontpage-category-Artistic',
+      MediaContribution: 'frontpage-category-MediaContribution',
+      ResearchData: 'frontpage-category-ResearchData',
+      ExhibitionContent: 'frontpage-category-ExhibitionContent',
+      GeographicalContent: 'frontpage-category-GeographicalContent',
+    },
   },
 };

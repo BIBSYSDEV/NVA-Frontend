@@ -42,7 +42,7 @@ export interface DisabledCategory {
   text: string;
 }
 
-const registrationRows: RegistrationRowConfig[] = [
+export const registrationRows: RegistrationRowConfig[] = [
   { mainType: PublicationType.PublicationInJournal, registrationTypes: Object.values(JournalType) },
   { mainType: PublicationType.Book, registrationTypes: Object.values(BookType) },
   { mainType: PublicationType.Report, registrationTypes: Object.values(ReportType) },
