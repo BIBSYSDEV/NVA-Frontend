@@ -1,6 +1,6 @@
-import { Box, SxProps, Typography } from '@mui/material';
+import { Box, Button, SxProps, Typography } from '@mui/material';
 import { useContext } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useFetchProject } from '../../../api/hooks/useFetchProject';
 import { ProjectListItem } from '../../../pages/search/project_search/ProjectListItem';
@@ -40,15 +40,37 @@ export const CompareProjects = () => {
   );
 };
 
+import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
+import { dataTestId } from '../../../utils/dataTestIds';
+
 interface CompareFileProps {
   sourceProjectId?: string;
   targetProjectId?: string;
 }
 
 const CompareFile = ({ sourceProjectId, targetProjectId }: CompareFileProps) => {
+  const { t } = useTranslation();
+  const { control } = useFormContext<Registration>();
+  const { append, remove } = useFieldArray({ name: 'projects', control });
+
+  const canCopyProject = !!sourceProjectId && !targetProjectId;
+
   return (
     <>
       <ProjectBox projectId={sourceProjectId} />
+
+      {canCopyProject && (
+        <Button
+          data-testid={dataTestId.basicData.centralImport.copyValueButton}
+          variant="contained"
+          size="small"
+          endIcon={<ArrowForwardIcon />}
+          // onClick={() => append(sourceFile)}
+        >
+          {t('add_file')}
+        </Button>
+      )}
+
       <ProjectBox projectId={targetProjectId} sx={{ gridColumn: 3 }} />
     </>
   );
