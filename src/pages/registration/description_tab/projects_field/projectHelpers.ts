@@ -39,7 +39,7 @@ export const getNfrProjectUrl = (identifier: string) => {
 };
 
 export const canEditProject = (user: User | null, project?: CristinProject) => {
-  if (!user || !project || !user.cristinId) {
+  if (!user?.cristinId || !project) {
     return false;
   }
 
@@ -48,7 +48,7 @@ export const canEditProject = (user: User | null, project?: CristinProject) => {
   );
   const isProjectOwner = project.creator?.identity.id === user.cristinId;
 
-  return isProjectManager || isProjectOwner;
+  return isProjectManager || isProjectOwner || user.isEditor;
 };
 
 export const isRekProject = (project?: CristinProject) => project?.created.sourceShortName === 'REK';

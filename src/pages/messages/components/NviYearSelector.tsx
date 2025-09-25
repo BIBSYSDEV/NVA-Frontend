@@ -9,7 +9,7 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 const nviYearFilterValues = getNviYearFilterValues(new Date().getFullYear() + 1);
 
-export const NviYearSelector = (props: Pick<TextFieldProps, 'fullWidth'>) => {
+export const NviYearSelector = (props: Partial<TextFieldProps>) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,7 +33,6 @@ export const NviYearSelector = (props: Pick<TextFieldProps, 'fullWidth'>) => {
         }
         navigate({ search: syncedParams.toString() });
       }}
-      sx={{ minWidth: '10rem' }}
       {...props}>
       {nviYearFilterValues.map((year) => (
         <MenuItem key={year} value={year}>

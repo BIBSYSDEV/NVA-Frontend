@@ -17,6 +17,7 @@
     "footer_text": "The service is provided by Sikt — Norwegian Agency for Shared Services in Education and Research. Sikt provides shared services to the Norwegian knowledge sector.",
     "short_description": "The Norwegian Research Information Repository (NVA) gathers information about Norwegian research, and makes research results and research information openly accessible."
   },
+  "add_file": "Add file",
   "authorization": {
     "about_terms": "Terms of Use and Privacy Policy for the Norwegian Research Information Repository",
     "about_terms_description": "<p>To use the service, you must accept Sikt's <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Terms of Use for the Norwegian Research Information Repository</a>, and familiarize yourself with the <a href=\"https://nva.sikt.no/privacy-policy\">Privacy Policy for the Norwegian Research Information Repository.</a></p><p>By clicking on «$t(authorization.accept)», you confirm that you have read and accepted the terms of use. You also consent to the processing of personal data in accordance with the privacy policy.</p>",
@@ -435,8 +436,7 @@
         "Publishing-Curator": "File approval",
         "Support-Curator": "User support"
       },
-      "search_for_curator": "Search for curator",
-      "search_for_unit": "Search for unit"
+      "search_for_curator": "Search for curator"
     },
     "does_not_support_open_files": "Does not support open files",
     "doi": {
@@ -608,11 +608,12 @@
       "get_users_for_institution": "Failed to retrieve users",
       "get_vocabularies": "Failed to retrieve controlled vocabularies",
       "login_failed": "Log in failed",
+      "login_failed_try_bankid": "Log in failed. Try logging in with BankID instead.",
       "orcid_login": "ORCID login failed",
       "person_search": "Search for person failed",
       "project_search": "Project search failed",
       "publish_registration": "Could not publish registration",
-      "registration_update_precondition_failed": "",
+      "registration_update_precondition_failed": "The registration was changed after you loaded the page. Reload the page to try again. Unsaved changes will be lost.",
       "reject_doi_request": "Could not reject DOI request",
       "remove_role": "Failed to remove role",
       "reserve_doi": "Reservation of DOI failed",
@@ -730,6 +731,7 @@
     "technical_support_link": "If you need technical support, please contact <0>kontakt@sikt.no</0>",
     "to_top": "To the top"
   },
+  "go_to_advanced_search": "Go to advanced result search",
   "institution_support": "Institution's user support",
   "institutions_service_support": "Institutions' user support",
   "licenses": {
@@ -958,7 +960,7 @@
       "institution_admin_description": "Maintains the institution's information in the person registry and assigns roles in the service.",
       "internal_importer": "Internal importer",
       "internal_importer_description": "Can process import candidates.",
-      "no_active_employments": "You do not have any roles because you have no active employments and do not have access to register.",
+      "no_active_employments": "You have no roles. The reason could be that you do not have an active employment, or that your institution is not an active customer of NVA.",
       "no_roles": "You do not have any roles because your administrator has not assigned any roles to you",
       "not_customer": "You have no roles because your institution is unknown to the application.",
       "nvi_curator": "NVI curator",
@@ -979,6 +981,7 @@
   "overview_over_administrators": "Overview of administrators",
   "overwrite": "Overwrite",
   "owner_institution": "Owner institution",
+  "person_profiles": "Person profiles",
   "point_of_contact": "Contact point",
   "point_of_contact_description": "Du you have questions about the research result?",
   "points_of_contact_for_result": "Contact point for the result",
@@ -1367,6 +1370,7 @@
     "verify_contributor": "Identify project participant",
     "verify_project_manager": "Identify project manager"
   },
+  "projects": "Projects",
   "published_result": "Published result",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Cannot save because the result is published and contains validation errors",
@@ -1509,7 +1513,6 @@
       "project_association": "Project affiliation",
       "project_helper_text": "<0>If you register a funding source on a project, the results you link to that project will \"inherit\" information about funding. This means you don't have to register all funding sources on all the results of the project. If you search for the funding source in NVA, you will get hits on both the project and the results, and reporting to the Research Council or others will include all results.</0> <0>A result can be linked to several projects.</0>",
       "remove_vocabulary": "Remove vocabulary",
-      "search_for_npi_discipline": "Search for scientific field",
       "year_only": "Year only"
     },
     "edit_registration": "Edit registration",
@@ -2083,7 +2086,6 @@
       "series": "Series",
       "series_info": "If the publication is part of a series",
       "series_number": "Series number",
-      "series_title": "Series title",
       "title_of_event": "Event title",
       "type_work": "Type of work",
       "type_work_specified": "Custom work type",
@@ -2116,6 +2118,8 @@
     "year_published": "Publication year"
   },
   "reset": "Reset",
+  "results": "Research results",
+  "science_categories_front_page": "<heading>Work in various categories</heading><p>Research and dissemination encompass much more than scientific publications.</p><p>Everything is registered in different categories, and you can search and look up all the categories below.</p>",
   "search": {
     "additional_participants_one": "+{{count}} participant",
     "additional_participants_other": "+{{count}} participants",
@@ -2158,17 +2162,13 @@
     "responsible_institution": "Institution responsible for research",
     "result": "Result",
     "result_search": "Result search",
-    "search_for_contributor": "Search for contributor",
+    "search_for_contributor": "Search for identified contributor",
     "search_for_coordinating_institution": "Search for coordinating institution",
     "search_for_course_code": "Search for subject code",
-    "search_for_funder": "Search for funder",
     "search_for_funding_identifier": "Search for grant ID",
-    "search_for_journal": "Search for journal",
     "search_for_participant": "Search for participant",
     "search_for_participating_institution": "Search for participating institution",
     "search_for_responsible_institution": "Search for institution responsible for research",
-    "search_for_serial_publication": "Search for series/journal",
-    "search_for_series": "Search for series",
     "search_for_sub_unit": "Search for subunit",
     "search_for_title": "Search for title",
     "search_placeholder": "Search for title, contributor, abstract, etc.",
@@ -2190,6 +2190,8 @@
     "year_from": "From year",
     "year_to": "To year"
   },
+  "search_in_national_research_publication": "Search over 2 million publications from researchers at universities, university colleges, and research institutions across the country.",
+  "select_funder": "Select funder",
   "start_merging": "Start merging",
   "tasks": {
     "correction_list": "Correction list",
@@ -2281,6 +2283,10 @@
     "unpublish_registration_reason": "Enter a brief explanation for why this research result should no longer be published. The explanation will be displayed on the research result when looking up the reference to the research result."
   },
   "unpublished_result": "Unpublished result",
+  "velg_subject_area": "Select subject area",
   "view_contact_info": "View contact information",
-  "vocabulary_missing": "The institution has not added vocabulary"
+  "vocabulary_missing": "The institution has not added vocabulary",
+  "what_you_find_in_nva_description": "<heading>What can you find in NVA?</heading><p>The Norwegian Research Information Repository (NVA) collects and makes information about Norwegian research accessible.</p><p>Here, you can explore publications, research projects, and researchers across universities, university colleges, and research institutions.</p>",
+  "you_cannot_upload_files_to_this_result": "You do not have access to upload files for this result.",
+  "you_do_not_have_permission_to_edit_this_registration": "You do not have access to edit this registration."
 }

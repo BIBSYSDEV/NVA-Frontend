@@ -1,7 +1,6 @@
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import { CircularProgress, IconButton, Tooltip } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { downloadImportCandidateFile, downloadRegistrationFile } from '../../../api/fileApi';
@@ -11,22 +10,22 @@ import { openFileInNewTab } from '../../../utils/registration-helpers';
 
 interface DownloadFileButtonProps {
   file: AssociatedFile;
+  registration: Registration;
 }
 
-export const DownloadFileButton = ({ file }: DownloadFileButtonProps) => {
+export const DownloadFileButton = ({ file, registration }: DownloadFileButtonProps) => {
   const { t } = useTranslation();
-  const { values } = useFormikContext<Registration>();
 
   const [downloadFile, setDownloadFile] = useState(false);
 
   const downloadFileQuery = useQuery({
     enabled: downloadFile,
-    queryKey: ['downloadFile', values.type, values.identifier, file.identifier],
+    queryKey: ['downloadFile', registration.type, registration.identifier, file.identifier],
     queryFn: async () => {
       const downloadFileResponse =
-        values.type === 'Publication'
-          ? await downloadRegistrationFile(values.identifier, file.identifier)
-          : await downloadImportCandidateFile(values.identifier, file.identifier);
+        registration.type === 'Publication'
+          ? await downloadRegistrationFile(registration.identifier, file.identifier)
+          : await downloadImportCandidateFile(registration.identifier, file.identifier);
       if (downloadFileResponse.id) {
         openFileInNewTab(downloadFileResponse.id);
       }
@@ -38,10 +37,10 @@ export const DownloadFileButton = ({ file }: DownloadFileButtonProps) => {
   });
 
   return downloadFileQuery.isFetching ? (
-    <CircularProgress size="1.5rem" />
+    <CircularProgress size="1.5rem" sx={{ m: '0.3rem' }} />
   ) : (
     <Tooltip title={t('registration.files_and_license.open_file')}>
-      <IconButton size="small" style={{ height: '1.5rem', padding: 0 }} onClick={() => setDownloadFile(true)}>
+      <IconButton size="small" onClick={() => setDownloadFile(true)}>
         <OpenInNewOutlinedIcon color="primary" />
       </IconButton>
     </Tooltip>

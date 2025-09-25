@@ -25,7 +25,7 @@ export const MergeResultsWizard = ({ sourceResult, targetResult, onSave, onCance
           <BackgroundDiv
             sx={{
               display: 'grid',
-              gridTemplateColumns: { xs: '1fr', sm: '1fr 10rem 1fr' },
+              gridTemplateColumns: { xs: '1fr', md: '1fr 10rem 1fr' },
               gap: '1rem 0.5rem',
               mt: '2rem',
               alignItems: 'center',

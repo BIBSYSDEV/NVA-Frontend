@@ -63,7 +63,6 @@ export const RelatedProjectsField = () => {
                 label={t('project.form.related_projects')}
                 isLoading={projectsQuery.isFetching}
                 placeholder={t('search.search_project_placeholder')}
-                showSearchIcon={field.value.length === 0}
               />
             )}
           />

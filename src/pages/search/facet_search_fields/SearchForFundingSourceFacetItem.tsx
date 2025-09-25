@@ -53,8 +53,7 @@ export const SearchForFundingSourceFacetItem = ({ onSelectFunder }: SearchForFun
           isLoading={fundingSourcesQuery.isFetching}
           data-testid={dataTestId.aggregations.fundingSourceFacetsSearchField}
           variant="outlined"
-          placeholder={t('search.search_for_funder')}
-          showSearchIcon
+          placeholder={t('select_funder')}
         />
       )}
     />
