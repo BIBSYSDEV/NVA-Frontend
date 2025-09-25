@@ -51,7 +51,6 @@ export const NfrProjectSearch = ({ selectedProject, setSelectedProject }: NfrPro
             label={t('project.new_project.nfr_grant')}
             isLoading={isLoadingNfrProjectSearch}
             placeholder={t('project.new_project.search_for_project_name_or_placeholder')}
-            showSearchIcon={debouncedSearchTerm.length === 0}
           />
         )}
         renderOption={({ key, ...props }, option: NfrProject) => (

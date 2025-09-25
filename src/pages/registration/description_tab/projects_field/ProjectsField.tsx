@@ -134,7 +134,6 @@ export const ProjectsField = () => {
                       label={t('registration.description.project_association')}
                       isLoading={projectsQuery.isLoading}
                       placeholder={t('search.search_project_placeholder')}
-                      showSearchIcon
                     />
                   )}
                   renderTags={() => null}

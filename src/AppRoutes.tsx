@@ -9,6 +9,7 @@ import { UrlPathTemplate } from './utils/urlPaths';
 import { hasCuratorRole } from './utils/user-helpers';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
+const FrontPage = lazy(() => import('./pages/frontpage/FrontPage'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
@@ -47,6 +48,7 @@ export const AppRoutes = () => {
           <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<Dashboard />} />
         </Route>
 
+        <Route path={UrlPathTemplate.NewFrontPage} element={<FrontPage />} />
         <Route path={UrlPathTemplate.CopyrightAct} element={<CopyrightActTerms />} />
         <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
         <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />

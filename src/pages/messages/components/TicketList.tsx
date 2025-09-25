@@ -37,6 +37,18 @@ interface TicketListProps {
 const viewedByLabelId = 'viewed-by-select';
 const showAllViewedByValue = 'show-all';
 
+const relevantRoleFilterOptions = [
+  RoleName.SupportCurator,
+  RoleName.PublishingCurator,
+  RoleName.DoiCurator,
+  RoleName.CuratorThesis,
+  RoleName.CuratorThesisEmbargo,
+];
+const getRoleFilterOptions = (roles: RoleName[]) => {
+  const roleFilterOptions = roles.filter((role) => relevantRoleFilterOptions.includes(role));
+  return roleFilterOptions;
+};
+
 export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -47,7 +59,6 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
   const ticketStatusOptions = isOnTasksPage
     ? ticketStatusValues.filter((status) => status !== 'New')
     : ticketStatusValues;
-
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
 
   useEffect(() => {
@@ -159,7 +170,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                   syncedParams.delete(TicketSearchParam.From);
                   navigate({ search: syncedParams.toString() });
                 }}
-                roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
+                roleFilter={getRoleFilterOptions(user?.roles ?? [])}
               />
             </Grid>
             <Grid size={{ xs: 8, lg: 5 }}>

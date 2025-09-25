@@ -1,12 +1,17 @@
+import LockOutlineIcon from '@mui/icons-material/LockOutline';
+import { Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { AssociatedArtifact } from '../../types/associatedArtifact.types';
 import { Registration } from '../../types/registration.types';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
+import { StyledInfoBanner } from '../styled/Wrappers';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 import { CompareFiles } from './fields/CompareFiles';
 
 export const MergeResultsWizardFilesTab = () => {
+  const { t } = useTranslation();
   const { sourceResult } = useContext(MergeResultsWizardContext);
   const sourceAssociatedArtifacts = sourceResult.associatedArtifacts ?? [];
   const sourceFiles = getAssociatedFiles(sourceAssociatedArtifacts);
@@ -18,8 +23,19 @@ export const MergeResultsWizardFilesTab = () => {
   const initialTargetAssociatedArtifacts = (formState.defaultValues?.associatedArtifacts ?? []) as AssociatedArtifact[];
   const initialTargetFiles = getAssociatedFiles(initialTargetAssociatedArtifacts);
 
+  const canUploadFileToTarget = formState.defaultValues?.allowedOperations?.includes('upload-file') ?? false;
+
   return (
     <>
+      {!canUploadFileToTarget && (
+        <>
+          <StyledInfoBanner sx={{ gridColumn: { xs: 1, md: 3 }, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <LockOutlineIcon />
+            <Typography color="inherit">{t('you_cannot_upload_files_to_this_result')}</Typography>
+          </StyledInfoBanner>
+        </>
+      )}
+
       {initialTargetFiles.map((targetFile) => (
         <CompareFiles key={targetFile.identifier} targetFile={targetFile} />
       ))}
@@ -35,6 +51,7 @@ export const MergeResultsWizardFilesTab = () => {
             sourceFile={sourceFile}
             targetFile={matchingTargetFile}
             matchingTargetFileIndex={matchingTargetFileIndex}
+            canUploadFileToTarget={canUploadFileToTarget}
           />
         );
       })}

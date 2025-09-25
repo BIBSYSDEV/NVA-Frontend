@@ -54,8 +54,7 @@ export const FundingSourceFilter = () => {
           isLoading={fundingSourcesQuery.isPending}
           {...params}
           variant="outlined"
-          placeholder={t('search.search_for_funder')}
-          showSearchIcon={!fundingSourceParam}
+          placeholder={t('select_funder')}
           multiline
         />
       )}

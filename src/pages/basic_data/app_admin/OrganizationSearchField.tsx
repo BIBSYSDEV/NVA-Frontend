@@ -15,7 +15,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
-interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
+interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label' | 'placeholder'> {
   onChange?: (selectedInstitution: Organization | null) => void;
   disabled?: boolean;
   errorMessage?: string;
@@ -32,6 +32,7 @@ export const OrganizationSearchField = ({
   errorMessage,
   fieldInputProps,
   label,
+  placeholder,
   isLoadingDefaultOptions = false,
   defaultOptions = [],
   selectedValue,
@@ -79,10 +80,9 @@ export const OrganizationSearchField = ({
           data-testid={customDataTestId ?? dataTestId.organization.searchField}
           label={label ?? t('common.institution')}
           required
-          placeholder={t('project.search_for_institution')}
+          placeholder={placeholder ?? t('project.search_for_institution')}
           errorMessage={errorMessage}
           isLoading={isLoading}
-          showSearchIcon={!selectedValue?.id}
         />
       )}
       slotProps={{
