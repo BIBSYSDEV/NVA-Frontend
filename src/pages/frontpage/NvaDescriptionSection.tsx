@@ -11,9 +11,10 @@ import { RegistrationIcon } from '../../components/atoms/RegistrationIcon';
 import { getUrlParams } from './utils';
 import { SearchParam } from '../../utils/searchHelpers';
 
+const iconStyle = { height: '2rem', width: '2rem' };
+
 export const NvaDescriptionSection = () => {
   const { t } = useTranslation();
-  const iconStyle = { height: '2rem', width: '2rem' };
 
   return (
     <FrontPageBox sx={{ bgcolor: 'white', alignItems: 'center' }}>

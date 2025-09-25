@@ -19,7 +19,9 @@ export const getUrlParams = (searchParam: SearchParam | ResultParam, value: stri
   return searchParams.toString();
 };
 
-export const selectCategoryIcon = (type: PublicationType, iconStyle = {}) => {
+export const selectCategoryIcon = (type: PublicationType) => {
+  const iconStyle = { height: '2rem', width: '2rem', color: '#120732' };
+
   switch (type) {
     case PublicationType.PublicationInJournal:
       return <FeedOutlinedIcon sx={iconStyle} />;
@@ -42,7 +44,8 @@ export const selectCategoryIcon = (type: PublicationType, iconStyle = {}) => {
     case PublicationType.ExhibitionContent:
       return <TheaterComedyOutlinedIcon sx={iconStyle} />;
     case PublicationType.GeographicalContent:
-    default:
       return <MapOutlinedIcon sx={iconStyle} />;
+    default:
+      return undefined;
   }
 };

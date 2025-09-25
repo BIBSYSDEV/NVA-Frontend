@@ -1,7 +1,7 @@
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { BoxProps } from '@mui/material';
+import { SxProps } from '@mui/material';
 
-export const ProjectIcon = ({ sx = {} }: { sx?: BoxProps['sx'] }) => {
+export const ProjectIcon = ({ sx }: { sx?: SxProps }) => {
   return (
     <ShowChartIcon
       sx={{

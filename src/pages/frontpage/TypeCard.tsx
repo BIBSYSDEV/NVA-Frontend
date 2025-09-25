@@ -1,8 +1,8 @@
-import { Box, BoxProps, Link, Typography } from '@mui/material';
+import { Box, Link, LinkProps, Typography } from '@mui/material';
 import { FrontPageBox } from './styles';
 import { Link as RouterLink, To } from 'react-router';
 
-interface TypeCardProps extends Pick<BoxProps, 'sx'> {
+interface TypeCardProps extends Pick<LinkProps, 'sx'> {
   text: string;
   icon: React.ReactNode;
   dataTestId: string;
