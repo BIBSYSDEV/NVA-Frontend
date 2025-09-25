@@ -9,6 +9,7 @@ import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { isCategoryWithFileVersion } from '../../../utils/registration-helpers';
 import { isOnImportPage } from '../../../utils/urlPaths';
+import { BetaFunctionality } from '../../BetaFunctionality';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { FileBox } from './FileBox';
 
@@ -56,24 +57,28 @@ export const CompareFiles = ({
       />
 
       {canCopyFile && (
-        <StyledButton
-          data-testid={dataTestId.basicData.centralImport.copyValueButton}
-          variant="contained"
-          size="small"
-          endIcon={<ArrowForwardIcon />}
-          onClick={() => append(sourceFile)}>
-          {t('add_file')}
-        </StyledButton>
+        <BetaFunctionality>
+          <StyledButton
+            data-testid={dataTestId.basicData.centralImport.copyValueButton}
+            variant="contained"
+            size="small"
+            endIcon={<ArrowForwardIcon />}
+            onClick={() => append(sourceFile)}>
+            {t('add_file')}
+          </StyledButton>
+        </BetaFunctionality>
       )}
       {fileIsCopied && (
-        <StyledButton
-          data-testid={dataTestId.basicData.centralImport.resetValueButton}
-          variant="outlined"
-          size="small"
-          endIcon={<RestoreIcon />}
-          onClick={() => remove(matchingTargetFileIndex)}>
-          {t('reset')}
-        </StyledButton>
+        <BetaFunctionality>
+          <StyledButton
+            data-testid={dataTestId.basicData.centralImport.resetValueButton}
+            variant="outlined"
+            size="small"
+            endIcon={<RestoreIcon />}
+            onClick={() => remove(matchingTargetFileIndex)}>
+            {t('reset')}
+          </StyledButton>
+        </BetaFunctionality>
       )}
 
       <Typography variant="h3" sx={{ display: { xs: 'block', md: 'none' } }}>
