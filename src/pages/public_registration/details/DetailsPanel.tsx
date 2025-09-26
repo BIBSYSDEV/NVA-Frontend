@@ -36,7 +36,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const correspondingContributors = contributors.filter((contributor) => contributor.correspondingAuthor);
-  const contactPersons = contributors.filter((contributor) => contributor.role.type === ContributorRole.ContactPerson);
+  const contactPersons = contributors.filter((contributor) => contributor.role?.type === ContributorRole.ContactPerson);
 
   const confirmedAffiliations = contributors.flatMap((contributor) =>
     contributor.affiliations?.filter((affiliation) => affiliation.type === 'Organization' && affiliation.id)

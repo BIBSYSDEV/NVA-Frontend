@@ -11,8 +11,10 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationDate } from '../../../utils/date-helpers';
 import { LockedNviFieldDescription } from '../LockedNviFieldDescription';
 
+const validYearRegEx = /\d{4}$/;
+
 const replaceYearInId = (id: string, newYear: string) => {
-  return id.replace(/\d{4}$/, newYear);
+  return id.replace(validYearRegEx, newYear);
 };
 
 export const DatePickerField = () => {
@@ -36,6 +38,10 @@ export const DatePickerField = () => {
   const syncChannelIdsWithYear = (newYear: string) => {
     const publicationContext = entityDescription?.reference?.publicationContext;
     if (!publicationContext) {
+      return;
+    }
+
+    if (!validYearRegEx.test(newYear)) {
       return;
     }
 

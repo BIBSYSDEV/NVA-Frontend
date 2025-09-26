@@ -18,7 +18,7 @@ export const RelatedProjectsField = () => {
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
-  const projectsQuery = useFetchProjects(debouncedSearchTerm);
+  const projectsQuery = useFetchProjects({ searchTerm: debouncedSearchTerm, enabled: debouncedSearchTerm.length > 0 });
   const projects = projectsQuery.data?.hits ?? [];
   const paginatedProjects = values.relatedProjects.slice(rowsPerPage * (page - 1), rowsPerPage * page);
 
