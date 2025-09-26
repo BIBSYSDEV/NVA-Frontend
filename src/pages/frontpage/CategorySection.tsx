@@ -14,7 +14,7 @@ export const CategorySection = () => {
   const { t } = useTranslation();
 
   return (
-    <FrontPageBox sx={{ bgcolor: 'white', alignItems: 'center' }}>
+    <FrontPageBox sx={{ bgcolor: 'white', alignItems: 'center', gap: '0.75rem' }}>
       <Trans
         t={t}
         i18nKey="science_categories_front_page"

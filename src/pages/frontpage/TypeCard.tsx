@@ -1,4 +1,4 @@
-import { Link, LinkProps, Typography } from '@mui/material';
+import { Link, LinkProps, Skeleton, Typography } from '@mui/material';
 import { FrontPageBox } from './styles';
 import { Link as RouterLink, To } from 'react-router';
 import { VerticalBox } from '../../components/styled/Wrappers';
@@ -9,9 +9,10 @@ interface TypeCardProps extends Pick<LinkProps, 'sx'> {
   dataTestId: string;
   to: To;
   number?: number;
+  hasNumber?: boolean;
 }
 
-export const TypeCard = ({ sx, text, icon, dataTestId, to, number }: TypeCardProps) => {
+export const TypeCard = ({ sx, text, icon, dataTestId, to, number, hasNumber }: TypeCardProps) => {
   return (
     <Link component={RouterLink} data-testid={dataTestId} to={to} sx={{ width: '100%', textDecoration: 'none', ...sx }}>
       <FrontPageBox
@@ -31,6 +32,7 @@ export const TypeCard = ({ sx, text, icon, dataTestId, to, number }: TypeCardPro
               {number.toLocaleString('nb-NO')}
             </Typography>
           )}
+          {!number && hasNumber && <Skeleton width={70} height={30} />}
         </VerticalBox>
         <Typography sx={{ fontSize: '0.8rem', textDecoration: 'underline', color: '#120732' }}>{text}</Typography>
       </FrontPageBox>

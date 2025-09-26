@@ -45,6 +45,7 @@ export const NvaDescriptionSection = () => {
           text={t('projects')}
           icon={<ProjectIcon sx={iconStyle} />}
           number={projectsQuery.data?.size}
+          hasNumber={true}
           dataTestId={dataTestId.frontPage.projectsLink}
           to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchParam.Type, SearchTypeValue.Project) }}
         />
@@ -52,6 +53,7 @@ export const NvaDescriptionSection = () => {
           text={t('results')}
           icon={<RegistrationIcon sx={iconStyle} />}
           number={registrationQuery.data?.totalHits}
+          hasNumber={true}
           dataTestId={dataTestId.frontPage.registrationsLink}
           to={{ pathname: UrlPathTemplate.Root }}
         />
@@ -59,6 +61,7 @@ export const NvaDescriptionSection = () => {
           text={t('person_profiles')}
           icon={<PersonIcon sx={iconStyle} />}
           number={personQuery.data?.size}
+          hasNumber={true}
           dataTestId={dataTestId.frontPage.personsLink}
           to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchParam.Type, SearchTypeValue.Person) }}
         />
