@@ -44,14 +44,17 @@ export const NviCandidatePage = () => {
 
   const registrationQuery = useFetchRegistration(registrationIdentifier);
 
-  const nviQueryParams = location.state?.candidateOffsetState?.nviQueryParams;
+  let nviQueryParams = locationState?.candidateOffsetState?.nviQueryParams;
   const thisCandidateOffset = locationState?.candidateOffsetState?.currentOffset;
 
   const hasOffset = typeof thisCandidateOffset === 'number';
   const isFirstCandidate = hasOffset && thisCandidateOffset === 0;
 
   if (hasOffset && nviQueryParams) {
-    nviQueryParams.offset = Math.max(thisCandidateOffset - 1, 0);
+    nviQueryParams = {
+      ...nviQueryParams,
+      offset: Math.max(thisCandidateOffset - 1, 0),
+    };
   }
   const navigateCandidateQuery = useFetchNviCandidates({
     enabled: hasOffset && !!nviQueryParams,
