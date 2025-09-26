@@ -114,10 +114,11 @@ export const fetchRegistration = async (registrationIdentifier: string, doNotRed
   const url = doNotRedirect
     ? `${PublicationsApiPath.Registration}/${registrationIdentifier}?${doNotRedirectQueryParam}=true`
     : `${PublicationsApiPath.Registration}/${registrationIdentifier}`;
+  const headers = { 'Cache-Control': 'no-store' };
 
   const fetchRegistrationResponse = isAuthenticated
-    ? await authenticatedApiRequest2<Registration>({ url })
-    : await apiRequest2<Registration>({ url });
+    ? await authenticatedApiRequest2<Registration>({ url, headers })
+    : await apiRequest2<Registration>({ url, headers });
 
   const etag = fetchRegistrationResponse.headers['etag'];
   return etag ? { ...fetchRegistrationResponse.data, etag } : fetchRegistrationResponse.data;
