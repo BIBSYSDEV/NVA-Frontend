@@ -14,7 +14,7 @@ import { useFetchProjects } from '../../api/hooks/useFetchProjects';
 import { getUrlParams } from './utils';
 import { SearchParam } from '../../utils/searchHelpers';
 
-const iconStyle = { height: '2rem', width: '2rem' };
+const iconStyle = { height: { xs: '1.5rem', sm: '2rem' }, width: { xs: '1.5rem', sm: '2rem' } };
 
 export const NvaDescriptionSection = () => {
   const { t } = useTranslation();
@@ -30,14 +30,14 @@ export const NvaDescriptionSection = () => {
         i18nKey="what_you_find_in_nva_description"
         components={{
           heading: <Typography variant="h2" sx={{ fontSize: '1.5rem', color: '#120732' }} />,
-          p: <Typography sx={{ color: '#120732' }} />,
+          p: <Typography sx={{ color: '#120732', textAlign: 'center' }} />,
         }}
       />
       <Box
         sx={{
           display: 'flex',
           width: '100%',
-          mt: '1rem',
+          mt: { xs: '0.25rem', sm: '1rem' },
           gap: { xs: '1rem', sm: '0.5rem', md: '2rem' },
           flexDirection: { xs: 'column', sm: 'row' },
         }}>
