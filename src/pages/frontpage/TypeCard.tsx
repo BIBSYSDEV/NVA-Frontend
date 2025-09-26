@@ -9,10 +9,10 @@ interface TypeCardProps extends Pick<LinkProps, 'sx'> {
   dataTestId: string;
   to: To;
   number?: number;
-  hasNumber?: boolean;
+  isLoadingNumber?: boolean;
 }
 
-export const TypeCard = ({ sx, text, icon, dataTestId, to, number, hasNumber }: TypeCardProps) => {
+export const TypeCard = ({ sx, text, icon, dataTestId, to, number, isLoadingNumber }: TypeCardProps) => {
   return (
     <Link component={RouterLink} data-testid={dataTestId} to={to} sx={{ width: '100%', textDecoration: 'none', ...sx }}>
       <FrontPageBox
@@ -27,12 +27,13 @@ export const TypeCard = ({ sx, text, icon, dataTestId, to, number, hasNumber }: 
         }}>
         <VerticalBox sx={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
           {icon}
-          {number && (
+          {number ? (
             <Typography sx={{ fontSize: '1.25rem', fontWeight: '900', color: '#120732' }}>
               {number.toLocaleString('nb-NO')}
             </Typography>
-          )}
-          {!number && hasNumber && <Skeleton width={70} height={30} />}
+          ) : isLoadingNumber ? (
+            <Skeleton width={70} height={30} />
+          ) : null}
         </VerticalBox>
         <Typography sx={{ fontSize: '0.8rem', textDecoration: 'underline', color: '#120732' }}>{text}</Typography>
       </FrontPageBox>
