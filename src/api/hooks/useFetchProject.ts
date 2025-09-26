@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { fetchProject } from '../cristinApi';
 
-export const useFetchProject = (projectId: string) => {
+export const useFetchProject = (projectId = '') => {
   const { t } = useTranslation();
 
   const projectIdentifier = isNaN(Number(projectId)) ? getIdentifierFromId(projectId) : projectId;
