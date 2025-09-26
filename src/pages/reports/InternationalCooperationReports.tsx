@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { HeadTitle } from '../../components/HeadTitle';
 import { StyledReportIframe } from './NviReports';
 
-export const InternationalCooperationReports = () => {
+const InternationalCooperationReports = () => {
   const { t } = useTranslation();
 
   return (
@@ -20,3 +20,5 @@ export const InternationalCooperationReports = () => {
     </>
   );
 };
+
+export default InternationalCooperationReports;
