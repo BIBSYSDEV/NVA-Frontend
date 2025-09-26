@@ -77,9 +77,7 @@ export const OrganizationOverview = () => {
             }
             getOptionKey={(option) => option.id}
             onChange={(_, selectedUnit) => setSearchId(selectedUnit?.id ?? '')}
-            renderInput={(params) => (
-              <TextField {...params} variant="outlined" label={t('search.search_for_sub_unit')} />
-            )}
+            renderInput={(params) => <TextField {...params} variant="outlined" label={t('common.select_unit')} />}
           />
 
           {organizationQuery.data?.hasPart?.map((organization) => (

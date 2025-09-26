@@ -714,8 +714,8 @@ export const getContributorsWithPrimaryRole = (
   const { primaryRoles } = contributorConfig[registrationType];
 
   return contributors.filter((contributor) => {
-    const roleValue = typeof contributor.role === 'string' ? contributor.role : contributor.role.type;
-    return primaryRoles.includes(roleValue);
+    const roleValue = typeof contributor.role === 'string' ? contributor.role : contributor.role?.type;
+    return roleValue && primaryRoles.includes(roleValue);
   });
 };
 
@@ -951,7 +951,7 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
       affiliation: contributor.affiliations,
       correspondingAuthor: contributor.correspondingAuthor,
       identity: contributor.identity,
-      role: contributor.role.type,
+      role: contributor.role?.type,
     })) ?? [];
 
   const registrationSearchItem: RegistrationSearchItem = {

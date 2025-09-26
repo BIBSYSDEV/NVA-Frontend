@@ -145,16 +145,16 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
 
-        const hasValidRole = relevantRoles.includes(contributor.role.type);
+        const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
 
         const showRole = relevantRoles.includes(ContributorRole.Creator)
-          ? contributor.role.type !== ContributorRole.Creator
+          ? contributor.role?.type !== ContributorRole.Creator
           : true;
 
         const roleContent = showRole && (
           <Box component="span" sx={{ ml: '0.2rem' }}>
             {hasValidRole ? (
-              <>({t(`registration.contributors.types.${contributor.role.type}`)})</>
+              <>({t(`registration.contributors.types.${contributor.role!.type}`)})</>
             ) : (
               <i>({t('registration.public_page.unknown_role')})</i>
             )}

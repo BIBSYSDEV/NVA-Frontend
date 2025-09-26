@@ -58,7 +58,7 @@ export const SearchSection = () => {
   };
 
   return (
-    <FrontPageBox component="search" sx={{ bgcolor: '#D9D9D9' }}>
+    <FrontPageBox component="search" sx={{ bgcolor: '#D9D9D9', gap: '0.75rem' }}>
       <Box
         sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '0.75rem' }}
         component="form"
@@ -76,7 +76,7 @@ export const SearchSection = () => {
           type="submit"
           sx={{
             padding: '0.25rem 1.25rem',
-            maxWidth: '14rem',
+            maxWidth: { xs: '100%', sm: '14rem' },
             bgcolor: '#5D56F2',
             color: '#EFEFEF',
           }}
@@ -90,9 +90,9 @@ export const SearchSection = () => {
           component={RouterLink}
           data-testid={dataTestId.frontPage.advancedSearchLink}
           to={UrlPathTemplate.Search}
-          sx={{ display: 'flex', gap: '0.25rem', alignSelf: 'flex-end', color: '#120732' }}>
+          sx={{ display: 'flex', gap: '0.25rem', alignSelf: 'flex-end', color: '#120732', alignItems: 'center' }}>
           {t('go_to_advanced_search')}
-          <EastIcon />
+          <EastIcon sx={{ width: '1rem' }} />
         </Link>
       )}
     </FrontPageBox>
