@@ -24,10 +24,9 @@ export const NviStatusFilter = () => {
       select
       size="small"
       label={t('common.status')}
-      value={status || globalStatus || ''}
+      value={status || globalStatus || 'all'}
       onChange={(event) => {
-        const newStatus = event.target.value as NviCandidateStatus | NviCandidateGlobalStatus;
-
+        const newStatus = event.target.value as NviCandidateStatus | NviCandidateGlobalStatus | 'all';
         setSearchParams((params) => {
           const syncedParams = syncParamsWithSearchFields(params);
           syncedParams.delete(NviCandidatesSearchParam.Filter);
@@ -51,6 +50,9 @@ export const NviStatusFilter = () => {
           } else if (newStatus === 'dispute') {
             syncedParams.delete(NviCandidatesSearchParam.Status);
             syncedParams.set(NviCandidatesSearchParam.GlobalStatus, newStatus satisfies NviCandidateGlobalStatus);
+          } else if (newStatus === 'all') {
+            syncedParams.delete(NviCandidatesSearchParam.Status);
+            syncedParams.delete(NviCandidatesSearchParam.GlobalStatus);
           }
 
           return syncedParams;
@@ -60,6 +62,7 @@ export const NviStatusFilter = () => {
       <MenuItem value={'approved' satisfies NviCandidateStatus}>{t('tasks.nvi.status.Approved')}</MenuItem>
       <MenuItem value={'rejected' satisfies NviCandidateStatus}>{t('tasks.nvi.status.Rejected')}</MenuItem>
       <MenuItem value={'dispute' satisfies NviCandidateGlobalStatus}>{t('tasks.nvi.status.Dispute')}</MenuItem>
+      <MenuItem value={'all'}>{t('tasks.nvi.status.all')}</MenuItem>
     </TextField>
   );
 };
