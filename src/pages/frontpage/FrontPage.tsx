@@ -5,7 +5,8 @@ import { NvaDescriptionSection } from './NvaDescriptionSection';
 import { CategorySection } from './CategorySection';
 
 const FrontPage = () => (
-  <StyledPageContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+  <StyledPageContent
+    sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: { xs: '0.75rem', sm: '2rem' } }}>
     <FrontPageHeading />
     <SearchSection />
     <NvaDescriptionSection />

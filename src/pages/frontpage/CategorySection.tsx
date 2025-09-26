@@ -20,7 +20,7 @@ export const CategorySection = () => {
         i18nKey="science_categories_front_page"
         components={{
           heading: <Typography variant="h2" sx={{ fontSize: '1.5rem', color: '#120732' }} />,
-          p: <Typography sx={{ color: '#120732' }} />,
+          p: <Typography sx={{ color: '#120732', textAlign: 'center' }} />,
         }}
       />
       <HorizontalBox sx={{ flexWrap: 'wrap', justifyContent: 'center', width: '100%', mt: '1rem', gap: '1rem' }}>
@@ -43,7 +43,10 @@ export const CategorySection = () => {
                 pathname: UrlPathTemplate.Search,
                 search: getUrlParams(ResultParam.CategoryShould, searchParams),
               }}
-              sx={{ width: { xs: '100%', sm: '15rem' }, borderRadius: '0.5rem' }}
+              sx={{
+                width: { xs: '47%', sm: '31%', md: '23%', lg: '18%' },
+                borderRadius: '0.5rem',
+              }}
             />
           );
         })}

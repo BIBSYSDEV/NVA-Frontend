@@ -50,7 +50,7 @@ export const StyledPageContent = styled(Box)(({ theme }) => ({
     padding: '1rem',
   },
   [theme.breakpoints.down('sm')]: {
-    padding: '0.5rem',
+    padding: '1rem',
   },
 }));
 

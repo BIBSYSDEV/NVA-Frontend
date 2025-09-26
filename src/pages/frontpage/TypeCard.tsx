@@ -20,7 +20,7 @@ export const TypeCard = ({ sx, text, icon, dataTestId, to, number, isLoadingNumb
           flex: '1',
           bgcolor: '#EFEFEF',
           alignItems: 'center',
-          p: '1.5rem',
+          p: '1.25rem 0.75rem',
           height: '9rem',
           gap: '0.25rem',
           borderRadius: '0.5rem',
@@ -35,7 +35,16 @@ export const TypeCard = ({ sx, text, icon, dataTestId, to, number, isLoadingNumb
             <Skeleton width={70} height={30} />
           ) : null}
         </VerticalBox>
-        <Typography sx={{ fontSize: '0.8rem', textDecoration: 'underline', color: '#120732' }}>{text}</Typography>
+        <Typography
+          sx={{
+            fontSize: { xs: '0.75rem', sm: '0.8rem' },
+            color: '#120732',
+            wordBreak: 'break-word',
+            textAlign: 'center',
+            textDecoration: 'underline',
+          }}>
+          {text}
+        </Typography>
       </FrontPageBox>
     </Link>
   );
