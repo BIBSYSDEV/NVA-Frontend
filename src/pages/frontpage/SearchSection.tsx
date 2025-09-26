@@ -58,7 +58,7 @@ export const SearchSection = () => {
   };
 
   return (
-    <FrontPageBox component="search" sx={{ bgcolor: '#D9D9D9' }}>
+    <FrontPageBox component="search" sx={{ bgcolor: '#D9D9D9', gap: '0.75rem' }}>
       <Box
         sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '0.75rem' }}
         component="form"

@@ -2,13 +2,20 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { searchForProjects } from '../cristinApi';
 
-export const useFetchProjects = (searchTerm: string) => {
+interface FetchProjectsOptions {
+  searchTerm?: string;
+  enabled?: boolean;
+  results?: number;
+  page?: number;
+}
+
+export const useFetchProjects = ({ searchTerm = '', enabled = true, results = 10, page = 1 }: FetchProjectsOptions) => {
   const { t } = useTranslation();
 
   return useQuery({
-    enabled: searchTerm.length > 0,
-    queryKey: ['projects', 10, 1, searchTerm],
-    queryFn: () => searchForProjects(10, 1, { query: searchTerm }),
+    enabled,
+    queryKey: ['projects', results, page, searchTerm],
+    queryFn: () => searchForProjects(results, page, { query: searchTerm }),
     meta: { errorMessage: t('feedback.error.project_search') },
   });
 };
