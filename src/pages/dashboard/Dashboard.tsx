@@ -36,7 +36,7 @@ const Dashboard = () => {
       <HeadTitle>{t('common.start_page')}</HeadTitle>
 
       {showBanner && (
-        <Box sx={{ bgcolor: 'secondary.main', p: '1rem 0.5rem', width: '100%' }}>
+        <Box sx={{ bgcolor: 'tertiary.main', p: '1rem 0.5rem', width: '100%' }}>
           <Box
             sx={{
               justifyItems: 'center',

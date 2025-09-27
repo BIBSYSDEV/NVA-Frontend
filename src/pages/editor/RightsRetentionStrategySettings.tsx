@@ -147,6 +147,7 @@ export const RightsRetentionStrategySettings = () => {
                   <Button
                     data-testid={dataTestId.editor.rrsSaveButton}
                     variant="contained"
+                    color="secondary"
                     loading={isSubmitting}
                     type="submit">
                     {t('common.save')}

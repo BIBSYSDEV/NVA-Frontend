@@ -176,10 +176,10 @@ export const DoiRequestAccordion = ({
   const requestDoiButton = (
     <Button
       data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
-      sx={{ bgcolor: 'white' }}
       size="small"
       fullWidth
-      variant="outlined"
+      color="tertiary"
+      variant="contained"
       endIcon={<LocalOfferIcon />}
       disabled={isLoading !== LoadingState.None}
       onClick={toggleRequestDoiModal}>
@@ -189,10 +189,10 @@ export const DoiRequestAccordion = ({
 
   const assignDoiButton = (
     <Button
-      sx={{ bgcolor: 'white' }}
+      sx={{ bgcolor: 'secondary.main' }}
       fullWidth
       size="small"
-      variant="outlined"
+      variant="contained"
       data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
       endIcon={<CheckIcon />}
       loadingPosition="end"
@@ -230,7 +230,7 @@ export const DoiRequestAccordion = ({
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
       sx={{
-        bgcolor: 'doiRequest.light',
+        bgcolor: 'background.neutral97',
         '& .MuiAccordionSummary-content': {
           alignItems: 'center',
           gap: '0.5rem',
@@ -392,8 +392,8 @@ export const DoiRequestAccordion = ({
             {assignDoiButton}
 
             <Button
-              sx={{ bgcolor: 'white' }}
-              variant="outlined"
+              color="error"
+              variant="contained"
               size="small"
               data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
               endIcon={<CloseIcon />}

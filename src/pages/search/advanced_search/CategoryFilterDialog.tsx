@@ -55,7 +55,8 @@ export const CategoryFilterDialog = ({
           {t('search.reset_selection')}
         </Button>
         <Button
-          variant="outlined"
+          variant="contained"
+          color="secondary"
           onClick={() => {
             const params = new URLSearchParams(location.search);
             const syncedParams = syncParamsWithSearchFields(params);

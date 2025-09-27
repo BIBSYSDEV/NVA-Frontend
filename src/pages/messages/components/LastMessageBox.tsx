@@ -1,9 +1,8 @@
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { toDateString } from '../../../utils/date-helpers';
-import { isFileApprovalTicket } from '../../../utils/ticketHelpers';
 import { StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
 
 interface LastMessageBoxProps {
@@ -28,19 +27,11 @@ export const LastMessageBox = ({ ticket }: LastMessageBoxProps) => {
       }`.trim()
     : '';
 
-  const ticketColor =
-    ticket.type === 'GeneralSupportCase'
-      ? 'generalSupportCase.main'
-      : isFileApprovalTicket(ticket)
-        ? 'publishingRequest.main'
-        : ticket.type === 'DoiRequest'
-          ? 'doiRequest.main'
-          : undefined;
-
   return (
-    <StyledStatusMessageBox sx={{ bgcolor: ticketColor }}>
+    <StyledStatusMessageBox sx={{ bgcolor: 'background.neutral87' }}>
       <Typography noWrap>{senderName}</Typography>
       <Typography>{toDateString(lastMessage.createdDate)}</Typography>
+      <Divider sx={{ gridColumn: '1/-1', bgcolor: 'primary.main' }} />
       <Typography
         sx={{
           gridColumn: '1/-1',

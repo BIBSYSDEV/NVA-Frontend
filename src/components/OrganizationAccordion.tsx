@@ -63,7 +63,7 @@ export const OrganizationAccordion = ({
       elevation={2}
       disableGutters
       sx={{
-        bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light',
+        bgcolor: level % 2 === 0 ? 'background.neutral97' : 'background.default',
         ml: { xs: undefined, md: level > 0 ? '1rem' : 0 },
       }}
       expanded={expanded}

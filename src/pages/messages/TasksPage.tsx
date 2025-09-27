@@ -154,7 +154,7 @@ const TasksPage = () => {
         {isTicketCurator && (
           <NavigationListAccordion
             title={t('tasks.user_dialog')}
-            startIcon={<AssignmentIcon sx={{ bgcolor: 'white' }} />}
+            startIcon={<AssignmentIcon />}
             accordionPath={UrlPathTemplate.TasksDialogue}
             onClick={() => {
               if (!isOnTicketsPage) {
@@ -168,7 +168,6 @@ const TasksPage = () => {
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                   endIcon={<Badge badgeContent={publishingNotificationsCount} />}
                   isSelected={!!ticketTypes.publishingRequest}
-                  color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
@@ -185,7 +184,6 @@ const TasksPage = () => {
                   data-testid={dataTestId.tasksPage.typeSearch.thesisPublishingRequestsButton}
                   endIcon={<Badge badgeContent={thesisPublishingNotificationsCount} />}
                   isSelected={!!ticketTypes.filesApprovalThesis}
-                  color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, filesApprovalThesis: !ticketTypes.filesApprovalThesis });
                     resetPaginationAndNavigate(searchParams, navigate);
@@ -202,7 +200,6 @@ const TasksPage = () => {
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                   endIcon={<Badge badgeContent={doiNotificationsCount} />}
                   isSelected={!!ticketTypes.doiRequest}
-                  color="doiRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
@@ -219,7 +216,6 @@ const TasksPage = () => {
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                   endIcon={<Badge badgeContent={supportNotificationsCount} />}
                   isSelected={!!ticketTypes.generalSupportCase}
-                  color="generalSupportCase"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });
                     resetPaginationAndNavigate(searchParams, navigate);

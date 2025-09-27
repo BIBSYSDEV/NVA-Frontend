@@ -20,12 +20,12 @@ interface OrganizationCuratorRowProps extends Pick<OrganizationCuratorsProps, 'c
 }
 
 const curatorRolesConfig = [
-  { rolename: RoleName.SupportCurator, color: 'generalSupportCase.main', SelectedIcon: MarkEmailReadIcon },
-  { rolename: RoleName.PublishingCurator, color: 'publishingRequest.main', SelectedIcon: TaskIcon },
-  { rolename: RoleName.CuratorThesis, color: 'publishingRequest.main', SelectedIcon: SchoolIcon },
-  { rolename: RoleName.CuratorThesisEmbargo, color: 'publishingRequest.main', SelectedIcon: EventIcon },
-  { rolename: RoleName.DoiCurator, color: 'doiRequest.main', SelectedIcon: AddLinkIcon },
-  { rolename: RoleName.NviCurator, color: 'nvi.main', SelectedIcon: AdjustIcon },
+  { rolename: RoleName.SupportCurator, SelectedIcon: MarkEmailReadIcon },
+  { rolename: RoleName.PublishingCurator, SelectedIcon: TaskIcon },
+  { rolename: RoleName.CuratorThesis, SelectedIcon: SchoolIcon },
+  { rolename: RoleName.CuratorThesisEmbargo, SelectedIcon: EventIcon },
+  { rolename: RoleName.DoiCurator, SelectedIcon: AddLinkIcon },
+  { rolename: RoleName.NviCurator, SelectedIcon: AdjustIcon },
 ] satisfies {
   rolename:
     | RoleName.SupportCurator
@@ -34,7 +34,6 @@ const curatorRolesConfig = [
     | RoleName.CuratorThesisEmbargo
     | RoleName.DoiCurator
     | RoleName.NviCurator;
-  color: string;
   SelectedIcon: ComponentType<any>;
 }[];
 
@@ -51,7 +50,7 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators, canEditUsers 
   return (
     <Box
       sx={{
-        bgcolor: 'background.default',
+        bgcolor: 'white',
         display: 'grid',
         gap: '1rem',
         gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
@@ -66,19 +65,19 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators, canEditUsers 
             title={t('editor.curators.edit_user')}
             onClick={toggleDialog}
             size="small"
-            sx={{ bgcolor: 'secondary.light' }}>
+            sx={{ bgcolor: 'tertiary.main' }}>
             <EditIcon fontSize="small" />
           </IconButton>
         )}
       </Box>
 
       <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-        {curatorRolesConfig.map(({ rolename, color, SelectedIcon }) => {
+        {curatorRolesConfig.map(({ rolename, SelectedIcon }) => {
           const isSelected = curator.roles.some((userRole) => userRole.rolename === rolename);
           return (
             <Box key={rolename} sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
               {isSelected ? (
-                <SelectedIcon sx={{ p: '0.125rem', borderRadius: '50%', bgcolor: color }} />
+                <SelectedIcon sx={{ p: '0.125rem', borderRadius: '50%', bgcolor: 'secondary.main', color: 'white' }} />
               ) : (
                 <Box
                   sx={{

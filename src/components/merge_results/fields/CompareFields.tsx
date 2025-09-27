@@ -43,19 +43,20 @@ export const CompareFields = ({
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
         {isMatching ? (
-          <StyledBox sx={{ bgcolor: 'secondary.dark' }}>
-            <CheckIcon fontSize="small" />
-            <Typography>{t('matches')}</Typography>
+          <StyledBox sx={{ bgcolor: 'success.main' }}>
+            <CheckIcon fontSize="small" sx={{ color: 'white' }} />
+            <Typography color="white">{t('matches')}</Typography>
           </StyledBox>
         ) : (
           <>
-            <StyledBox sx={{ bgcolor: 'primary.light' }}>
+            <StyledBox sx={{ bgcolor: 'info.main' }}>
               <WarningAmberIcon fontSize="small" sx={{ color: 'white' }} />
-              <Typography sx={{ color: 'white' }}>{t('does_not_match')}</Typography>
+              <Typography color="white">{t('does_not_match')}</Typography>
             </StyledBox>
 
             {onCopyValue && (
               <Button
+                color="secondary"
                 data-testid={dataTestId.basicData.centralImport.copyValueButton}
                 variant="contained"
                 size="small"

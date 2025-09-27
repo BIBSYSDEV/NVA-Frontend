@@ -12,6 +12,7 @@ import {
   StyledMessagesContainer,
   StyledStatusMessageBox,
 } from './PublishingRequestMessagesColumn';
+import { ticketStatusColor } from './SupportMessagesColumn';
 
 interface DoiRequestMessagesColumnProps {
   ticket: ExpandedTicket | Ticket;
@@ -24,36 +25,36 @@ export const DoiRequestMessagesColumn = ({ ticket, showDetails }: DoiRequestMess
   return (
     <StyledMessagesContainer>
       {showDetails && (
-        <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
+        <StyledStatusMessageBox sx={{ bgcolor: ticketStatusColor[ticket.status], width: 'fit-content' }}>
           <StyledIconAndTextWrapper>
             <AddLinkOutlinedIcon fontSize="small" />
-            <Typography>{t('my_page.messages.types.DoiRequest')}</Typography>
+            <Typography color="white">{t('my_page.messages.types.DoiRequest')}</Typography>
           </StyledIconAndTextWrapper>
         </StyledStatusMessageBox>
       )}
 
       {ticket.status === 'New' || ticket.status === 'Pending' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+        <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
           <StyledIconAndTextWrapper>
             <HourglassEmptyIcon fontSize="small" />
-            <Typography>{t('my_page.messages.doi_pending')}</Typography>
+            <Typography color="white">{t('my_page.messages.doi_pending')}</Typography>
           </StyledIconAndTextWrapper>
         </StyledStatusMessageBox>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
+        <StyledStatusMessageBox sx={{ bgcolor: 'success.main' }}>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
-            <Typography>{t('my_page.messages.doi_completed')}</Typography>
+            <Typography color="white">{t('my_page.messages.doi_completed')}</Typography>
           </StyledIconAndTextWrapper>
-          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+          {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+        <StyledStatusMessageBox sx={{ bgcolor: 'error.main' }}>
           <StyledIconAndTextWrapper>
             <BlockIcon fontSize="small" />
-            <Typography>{t('my_page.messages.doi_closed')}</Typography>
+            <Typography color="white">{t('my_page.messages.doi_closed')}</Typography>
           </StyledIconAndTextWrapper>
-          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+          {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : null}
 

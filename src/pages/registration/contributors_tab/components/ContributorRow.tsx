@@ -154,7 +154,8 @@ export const ContributorRow = ({
           {!contributor.identity.id && (
             <Button
               disabled={disableNviCriticalFields || disableChannelClaimsFields}
-              variant="outlined"
+              variant="contained"
+              color="secondary"
               sx={{ padding: '0.1rem 0.75rem' }}
               data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
                 contributor.identity.name
@@ -166,6 +167,8 @@ export const ContributorRow = ({
           )}
 
           <Button
+            color="error"
+            variant="contained"
             disabled={disableNviCriticalFields || disableChannelClaimsFields}
             size="small"
             data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}

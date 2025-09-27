@@ -101,6 +101,7 @@ export const AddContributorForm = ({
           disabled={!selectedPerson}
           onClick={() => selectedPerson && addContributor(selectedPerson)}
           size="large"
+          color="tertiary"
           variant="contained">
           {initialSearchTerm
             ? t('registration.contributors.verify_contributor')

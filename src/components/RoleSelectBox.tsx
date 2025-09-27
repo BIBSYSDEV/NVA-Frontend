@@ -8,7 +8,7 @@ interface RoleSelectBoxProps
 
 export const RoleSelectBox = ({ label, description, disabled, checked, value, sx }: RoleSelectBoxProps) => (
   <FormControlLabel
-    sx={{ p: '0.25rem', pr: '1rem', borderRadius: '0.5rem', ...sx }}
+    sx={{ bgcolor: 'background.neutral97', p: '0.25rem', pr: '1rem', borderRadius: '0.5rem', ...sx }}
     disabled={disabled}
     control={<Checkbox checked={checked} value={value} />}
     label={

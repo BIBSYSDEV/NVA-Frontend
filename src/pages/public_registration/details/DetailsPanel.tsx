@@ -58,7 +58,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
     .filter(Boolean) as Organization[];
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'secondary.main', gap: '0.5rem' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'background.neutral97', gap: '0.5rem' }}>
       <Typography variant="h2" sx={visuallyHidden}>
         {t('details')}
       </Typography>
@@ -67,6 +67,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
       <Button
         data-testid={dataTestId.registrationLandingPage.detailsTab.viewContactInformationButton}
         variant="contained"
+        color="tertiary"
         sx={{ alignSelf: { sm: 'start', md: 'center' } }}
         startIcon={<MailOutlineIcon />}
         onClick={() => setOpenModal(true)}>

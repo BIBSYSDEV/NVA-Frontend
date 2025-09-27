@@ -59,11 +59,11 @@ export const DeleteDraftRegistration = ({ registration }: DeleteDraftRegistratio
 
       <Button
         data-testid={dataTestId.registrationLandingPage.tasksPanel.deleteRegistrationButton}
-        sx={{ bgcolor: 'white' }}
+        color="error"
         size="small"
         fullWidth
         startIcon={<DeleteIcon />}
-        variant="outlined"
+        variant="contained"
         onClick={() => setShowDeleteModal(true)}>
         {t('common.delete')}
       </Button>

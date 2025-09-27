@@ -16,7 +16,7 @@ export const RelatedProjectItem = ({ projectId, removeProject }: RelatedProjectI
   const project = projectQuery.data;
 
   return projectQuery.isPending ? (
-    <SearchListItem sx={{ borderLeftColor: 'project.main' }}>
+    <SearchListItem>
       <ListSkeleton arrayLength={4} maxWidth={60} height={20} />
     </SearchListItem>
   ) : project ? (

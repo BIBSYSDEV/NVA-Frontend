@@ -36,9 +36,9 @@ interface RegistrationFormActionsProps {
 }
 
 export const navigationButtonStyling: SxProps = {
-  color: 'white',
+  color: 'primary.main',
   borderRadius: '50%',
-  bgcolor: 'primary.main',
+  bgcolor: 'tertiary.main',
   height: '1.875rem',
   width: '1.875rem',
 };
@@ -167,6 +167,7 @@ export const RegistrationFormActions = ({
               width: 'fit-content',
               justifySelf: 'center',
             }}
+            color="tertiary"
             variant="contained"
             size="small"
             data-testid={dataTestId.registrationWizard.formActions.openSupportButton}
@@ -182,7 +183,11 @@ export const RegistrationFormActions = ({
             alignItems: 'center',
             gap: '0.5rem',
           }}>
-          <Button data-testid={dataTestId.registrationWizard.formActions.cancelEditButton} onClick={cancelEdit}>
+          <Button
+            color="tertiary"
+            variant="contained"
+            data-testid={dataTestId.registrationWizard.formActions.cancelEditButton}
+            onClick={cancelEdit}>
             {t('common.cancel')}
           </Button>
           {!isLastTab ? (
@@ -190,7 +195,8 @@ export const RegistrationFormActions = ({
               <TooltipButtonWrapper
                 title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
                 <Button
-                  variant="outlined"
+                  variant="contained"
+                  color="secondary"
                   disabled={disableSaving}
                   loading={isSaving}
                   data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
@@ -210,6 +216,7 @@ export const RegistrationFormActions = ({
             <TooltipButtonWrapper
               title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
               <Button
+                color="secondary"
                 variant="contained"
                 disabled={disableSaving}
                 loading={isSaving}
@@ -229,7 +236,7 @@ export const RegistrationFormActions = ({
         onClose={toggleSupportModal}
         headingText={t('registration.support.need_help')}
         dataTestId={dataTestId.registrationWizard.formActions.supportModal}
-        slotProps={{ paper: { sx: { bgcolor: 'generalSupportCase.light' } } }}>
+        slotProps={{ paper: { sx: { bgcolor: 'white' } } }}>
         <SupportModalContent closeModal={toggleSupportModal} registration={values} />
       </Modal>
 

@@ -23,9 +23,7 @@ export const LogPanel = ({ registration, tickets }: LogPanelProps) => {
     logQuery.data?.logEntries.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()) ?? [];
 
   return (
-    <Box
-      sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', bgcolor: 'secondary.main' }}
-      aria-busy={logQuery.isPending}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }} aria-busy={logQuery.isPending}>
       <Typography variant="h2" sx={visuallyHidden}>
         {t('common.log')}
       </Typography>

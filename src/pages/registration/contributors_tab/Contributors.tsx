@@ -270,6 +270,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
         onClick={() => setOpenAddContributor(true)}
         variant="contained"
+        color="tertiary"
         startIcon={<AddIcon />}
         data-testid={dataTestId.registrationWizard.contributors.addContributorButton}>
         {t('registration.contributors.add_contributor')}

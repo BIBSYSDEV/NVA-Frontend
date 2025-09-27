@@ -3,7 +3,7 @@ import { Box, styled } from '@mui/material';
 export const ProfileBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: theme.palette.secondary.light,
+  backgroundColor: theme.palette.background.neutral97,
   padding: '1.75rem 1.25rem',
   borderRadius: '0.25rem',
   mb: { xs: '1rem', lg: 0 },

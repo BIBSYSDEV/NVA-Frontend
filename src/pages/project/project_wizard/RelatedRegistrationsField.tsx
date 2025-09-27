@@ -42,7 +42,7 @@ export const RelatedRegistrationsField = () => {
               }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', paddingLeft: 0 }} component={'ul'}>
                 {results.hits.map((relatedRegistration) => (
-                  <SearchListItem sx={{ borderLeftColor: 'registration.main' }} key={relatedRegistration.id}>
+                  <SearchListItem key={relatedRegistration.id}>
                     <RegistrationListItemContent registration={relatedRegistration} />
                   </SearchListItem>
                 ))}

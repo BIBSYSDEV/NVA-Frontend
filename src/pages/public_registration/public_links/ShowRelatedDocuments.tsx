@@ -35,7 +35,7 @@ export const ShowRelatedDocuments = ({ related }: ShowRelatedDocumentsProps) => 
               <Box
                 sx={{
                   border: '2px solid',
-                  borderColor: 'secondary.dark',
+                  borderColor: 'registration.main',
                   background: 'white',
                   minHeight: '3rem',
                   width: '100%',

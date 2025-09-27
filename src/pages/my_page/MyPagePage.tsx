@@ -210,7 +210,7 @@ const MyPagePage = () => {
             key={dataTestId.myPage.messagesAccordion}
             dataTestId={dataTestId.myPage.messagesAccordion}
             title={t('common.dialogue')}
-            startIcon={<ChatBubbleIcon fontSize="small" sx={{ color: 'white', bgcolor: 'primary.main' }} />}
+            startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
@@ -218,7 +218,6 @@ const MyPagePage = () => {
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 endIcon={<Badge badgeContent={allUnreadPublishingCount} />}
                 isSelected={!!selectedTypes.publishingRequest}
-                color="publishingRequest"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest });
                   resetPaginationAndNavigate(searchParams, navigate);
@@ -233,7 +232,6 @@ const MyPagePage = () => {
                 data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                 endIcon={<Badge badgeContent={unreadDoiCount} />}
                 isSelected={!!selectedTypes.doiRequest}
-                color="doiRequest"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest });
                   resetPaginationAndNavigate(searchParams, navigate);
@@ -248,7 +246,6 @@ const MyPagePage = () => {
                 data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                 endIcon={<Badge badgeContent={unreadGeneralSupportCount} />}
                 isSelected={!!selectedTypes.generalSupportCase}
-                color="generalSupportCase"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase });
                   resetPaginationAndNavigate(searchParams, navigate);

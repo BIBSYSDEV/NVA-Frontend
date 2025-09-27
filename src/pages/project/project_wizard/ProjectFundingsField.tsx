@@ -60,7 +60,8 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                         />
                         {funding.identifier && (
                           <Button
-                            variant="outlined"
+                            color="tertiary"
+                            variant="contained"
                             endIcon={<OpenInNewIcon />}
                             href={getNfrProjectUrl(funding.identifier)}
                             target="_blank"
@@ -113,12 +114,14 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                     onClick={() => remove(index)}
                     data-testid={dataTestId.projectWizard.detailsPanel.fundingRemoveButton}
                     title={t('registration.description.funding.remove_funding')}>
-                    <CancelIcon color="primary" />
+                    <CancelIcon color="error" />
                   </IconButton>
                 </Box>
               );
             })}
             <Button
+              color="tertiary"
+              variant="contained"
               sx={{ width: 'fit-content' }}
               data-testid={dataTestId.projectWizard.detailsPanel.addFundingButton}
               startIcon={<AddIcon />}

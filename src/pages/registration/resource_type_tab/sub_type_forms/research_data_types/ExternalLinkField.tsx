@@ -45,7 +45,8 @@ export const ExternalLinkField = ({ onAddClick }: ExternalLinkFieldProps) => {
       />
       <Button
         data-testid={dataTestId.registrationWizard.resourceType.externalLinkAddButton}
-        variant="outlined"
+        variant="contained"
+        color="tertiary"
         sx={{ height: 'fit-content', mt: '0.5rem' }}
         disabled={!isValidInput}
         onClick={onClickAdd}
