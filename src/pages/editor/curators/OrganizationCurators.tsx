@@ -82,7 +82,14 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
               }}
               slotProps={{
                 htmlInput: { 'aria-label': t('common.type') },
-                select: { sx: { bgcolor: 'registration.main' } },
+                select: {
+                  sx: {
+                    bgcolor: 'tertiary.main',
+                    ':hover': {
+                      bgcolor: 'tertiary.dark',
+                    },
+                  },
+                },
               }}>
               <MenuItem value={SearchTypeValue.Unit} sx={{ display: 'flex', gap: '0.5rem' }}>
                 <AccountBalanceIcon fontSize="small" />
