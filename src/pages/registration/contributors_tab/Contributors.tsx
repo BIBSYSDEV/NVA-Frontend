@@ -21,7 +21,6 @@ import { useDispatch } from 'react-redux';
 import { ListPagination } from '../../../components/ListPagination';
 import { RegistrationFormContext } from '../../../context/RegistrationFormContext';
 import { setNotification } from '../../../redux/notificationSlice';
-import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import {
   Affiliation,
   Contributor,
