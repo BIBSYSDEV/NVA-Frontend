@@ -97,7 +97,7 @@ export const PublicRegistrationContributors = ({
           <Box
             sx={{
               p: '0.3rem 2rem',
-              bgcolor: 'primary.light',
+              bgcolor: 'error.main',
               color: 'primary.contrastText',
               display: 'flex',
               alignItems: 'center',

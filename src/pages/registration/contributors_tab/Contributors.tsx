@@ -212,7 +212,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
             setCurrentPage(1);
           }}>
           <TableContainer sx={{ mb: '0.5rem' }} component={Paper}>
-            <Table size="small" sx={alternatingTableRowColor}>
+            <Table size="small">
               <TableHead>
                 <TableRow>
                   <TableCell>{t('common.order')}</TableCell>

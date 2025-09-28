@@ -132,8 +132,13 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
             {t('registration.files_and_license.no_files_or_links_present_in_this_registration')}
           </Typography>
           <SelectableButton
-            variant="contained"
-            color="secondary"
+            sx={{
+              bgcolor: 'secondary.main',
+              color: 'white',
+              ':hover': {
+                bgcolor: 'secondary.dark',
+              },
+            }}
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
             state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}

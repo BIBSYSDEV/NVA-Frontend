@@ -109,7 +109,8 @@ export const ContributorRow = ({
           />
           {!contributor.identity.id && (
             <Button
-              variant="outlined"
+              variant="contained"
+              color="secondary"
               sx={{ padding: '0.1rem 0.75rem' }}
               data-testid={dataTestId.projectWizard.contributorsPanel.verifyContributorButton(
                 getFullName(contributor.identity.firstName, contributor.identity.lastName)
@@ -150,7 +151,7 @@ export const ContributorRow = ({
               sx={{ padding: '0.1rem 0.75rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}
               data-testid={dataTestId.projectForm.addAffiliationButton}
               startIcon={<AddIcon />}
-              color={affiliationFieldTouched && affiliationError ? 'error' : 'secondary'}
+              color={affiliationFieldTouched && affiliationError ? 'error' : 'tertiary'}
               onClick={toggleAffiliationModal}>
               {t('project.add_affiliation')}
             </Button>

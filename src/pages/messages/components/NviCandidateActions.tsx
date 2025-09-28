@@ -184,7 +184,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
             />
 
             <Button
-              sx={{ bgcolor: 'primary.light' }}
+              color="tertiary"
               variant="contained"
               fullWidth
               size="small"
@@ -230,10 +230,11 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
             <Button
               data-testid={dataTestId.tasksPage.nvi.approveButton}
-              variant="outlined"
+              color="secondary"
+              variant="contained"
               fullWidth
               size="small"
-              sx={{ mb: '1rem', bgcolor: 'white' }}
+              sx={{ mb: '1rem' }}
               loading={statusMutation.isPending && statusMutation.variables?.status === 'Approved'}
               disabled={!canApproveCandidate || isMutating}
               endIcon={<CheckIcon />}
@@ -251,10 +252,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
             </Typography>
             <Button
               data-testid={dataTestId.tasksPage.nvi.rejectButton}
-              variant="outlined"
+              color="error"
+              variant="contained"
               fullWidth
               size="small"
-              sx={{ bgcolor: 'white' }}
               disabled={!canRejectCandidate || isMutating || hasSelectedRejectCandidate}
               endIcon={<ClearIcon />}
               onClick={() => setHasSelectedRejectCandidate(true)}>

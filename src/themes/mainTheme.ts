@@ -132,7 +132,7 @@ export const mainTheme = createTheme(
       },
       background: {
         default: Color.Neutral95,
-        paper: Color.Neutral95, //TODO: Check <Paper /> components
+        paper: Color.Neutral97, //TODO: Check <Paper /> components
         neutral97: Color.Neutral97,
         neutral87: Color.Neutral87,
         neutral46: Color.Neutral46,
@@ -211,6 +211,7 @@ export const mainTheme = createTheme(
           },
         },
       },
+
       MuiRadio: {
         defaultProps: { color: 'secondary' },
       },
@@ -255,6 +256,11 @@ export const mainTheme = createTheme(
         },
       },
       MuiDialog: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: Color.White,
+          },
+        },
         defaultProps: {
           'aria-labelledby': dialogTitleId,
           'aria-describedby': dialogDescriptionId,
@@ -455,7 +461,7 @@ export const alternatingTableRowColor: SxProps = {
     tr: {
       bgcolor: Color.Neutral97,
       '&:nth-of-type(even)': {
-        bgcolor: '#FEFBF3',
+        bgcolor: 'white',
       },
     },
   },

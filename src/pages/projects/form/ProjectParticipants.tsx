@@ -42,7 +42,7 @@ export const ProjectParticipants = ({ roleType }: ProjectParticipantProps) => {
             <Button
               sx={{ borderRadius: '1rem', width: 'fit-content' }}
               onClick={toggleOpenAddProjectParticipantView}
-              color="secondary"
+              color="tertiary"
               variant="contained"
               startIcon={<AddIcon />}
               data-testid={

@@ -81,8 +81,8 @@ export const AddContributorForm = ({
         {!initialSearchTerm && (
           <Button
             data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
-            variant="outlined"
             disabled={!searchTerm || !!selectedPerson}
+            variant={!searchTerm || !!selectedPerson ? 'contained' : 'outlined'}
             onClick={openAddUnverifiedContributor}>
             {t('registration.contributors.add_new_contributor')}
           </Button>
@@ -91,7 +91,8 @@ export const AddContributorForm = ({
           <Button
             data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
             onClick={addSelfAsContributor}
-            variant="outlined"
+            color="tertiary"
+            variant="contained"
             loading={isAddingSelf}>
             {t('project.add_self')}
           </Button>
@@ -101,7 +102,7 @@ export const AddContributorForm = ({
           disabled={!selectedPerson}
           onClick={() => selectedPerson && addContributor(selectedPerson)}
           size="large"
-          color="tertiary"
+          color="secondary"
           variant="contained">
           {initialSearchTerm
             ? t('registration.contributors.verify_contributor')
