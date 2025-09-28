@@ -2,20 +2,7 @@
   "about": {
     "availability_statement": "Accessibility statement",
     "copyright_inquiries": "Inquires about copyright",
-    "description": {
-      "paragraph0": {
-        "bullet_point0": "Meet the requirement for open access to articles and other research results by depositing in an open research repository",
-        "bullet_point1": "Publish reports, student theses and other material produced at the institution",
-        "intro": "By using NVA, Norwegian research institutions are able to:"
-      },
-      "paragraph1": "NVA is also being developed for use in reporting scientific publishing to the Ministry of Knowledge and the Ministry of Health and Care Services (NVI reporting), and for other research administrative tasks.",
-      "paragraph2": "Sikt is the data processor. The individual institution is the data controller and registers and maintains its own content in the service, and configures distribution rules for published resources (articles, reports, datasets, etc.). The service also receives content from other data sources.",
-      "paragraph3": "NVA supports delayed publication of resources. This means that a registration can be completed so that metadata about the resource is published, while the resource does not become openly accessible until a specified date. The service does not allow the processing of sensitive personal data.",
-      "paragraph4": "NVA will make the institution's open content available via open interfaces, with the intention of making it known and searchable to the outside world, and promoting indexing in search engines and search portals.",
-      "paragraph5": "Although NVA is established and used by several institutions, the service will be in continuous development throughout its lifetime. Institutions that do not have a knowledge archive can contact <0>Sikt</0> to start using NVA as a pilot institution."
-    },
-    "footer_text": "The service is provided by Sikt — Norwegian Agency for Shared Services in Education and Research. Sikt provides shared services to the Norwegian knowledge sector.",
-    "short_description": "The Norwegian Research Information Repository (NVA) gathers information about Norwegian research, and makes research results and research information openly accessible."
+    "footer_text": "The service is provided by Sikt — Norwegian Agency for Shared Services in Education and Research. Sikt provides shared services to the Norwegian knowledge sector."
   },
   "add_file": "Add file",
   "authorization": {
@@ -178,7 +165,6 @@
     "clear": "Clear",
     "click_to_show_all": "Click to show all",
     "close": "Close",
-    "close_forever": "Close and do not show again",
     "consists_of": "Consists of",
     "contributor": "Contributor",
     "contributors": {
@@ -235,7 +221,6 @@
     "not_decided": "Not decided",
     "number_of_rows_per_page": "Number of rows per page",
     "number_short": "No.",
-    "nva_tagline": "Norwegian Research Information Repository (NVA)",
     "nvi": "Norwegian Science Index (NVI)",
     "nvi_short": "NVI",
     "open": "Open",
@@ -264,9 +249,7 @@
     "rbo": "Performance-based funding allocation (RBO)",
     "read": "Read",
     "read_less": "Read less",
-    "read_less_about_nva": "Read less about NVA",
     "read_more": "Read more",
-    "read_more_about_nva": "Read more about NVA",
     "read_past_tense": "Read",
     "reference": "Reference",
     "reject": "Reject",

@@ -2,9 +2,9 @@ import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Route, Routes, useLocation } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import {
   PersonSearchParameter,
   PersonSearchParams,
@@ -25,20 +25,24 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { SearchParam } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { ClinicalTreatmentStudiesReports } from '../reports/ClinicalTreatmentStudiesReports';
-import { InternationalCooperationReports } from '../reports/InternationalCooperationReports';
-import { NviReports } from '../reports/NviReports';
-import ReportsPage from '../reports/ReportsPage';
-import { SearchPage } from '../search/SearchPage';
-import { AdvancedSearchPage } from '../search/advanced_search/AdvancedSearchPage';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
 import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
+import { RegistrationSearchResponse } from '../../api/searchApi';
+import { SearchResponse } from '../../types/common.types';
+import { CristinPerson, PersonAggregations } from '../../types/user.types';
+import { CristinProject, ProjectAggregations } from '../../types/project.types';
 
 export enum SearchTypeValue {
   Result = 'result',
   Person = 'person',
   Project = 'project',
+}
+
+export interface SearchTypes {
+  registrationQuery: UseQueryResult<RegistrationSearchResponse>;
+  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
+  projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
 }
 
 const HomePage = () => {
@@ -49,7 +53,7 @@ const HomePage = () => {
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  const isOnFilterPage = location.pathname === UrlPathTemplate.Root;
+  const isOnFilterPage = location.pathname === UrlPathTemplate.Filter;
   const resultIsSelected = isOnFilterPage && (!paramsSearchType || paramsSearchType === SearchTypeValue.Result);
   const personIsSeleced = isOnFilterPage && paramsSearchType === SearchTypeValue.Person;
   const projectIsSelected = isOnFilterPage && paramsSearchType === SearchTypeValue.Project;
@@ -119,8 +123,8 @@ const HomePage = () => {
         <NavigationListAccordion
           title={t('common.filter')}
           startIcon={<FilterIcon sx={{ bgcolor: 'white' }} />}
-          accordionPath=""
-          expanded={currentPath === ''}
+          accordionPath={UrlPathTemplate.Filter}
+          expanded={currentPath === UrlPathTemplate.Filter}
           dataTestId={dataTestId.startPage.filterAccordion}>
           <Box sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {resultIsSelected ? (
@@ -168,20 +172,9 @@ const HomePage = () => {
       </SideMenu>
 
       <ErrorBoundary>
-        <Routes>
-          <Route
-            index
-            path={UrlPathTemplate.Root}
-            element={
-              <SearchPage registrationQuery={registrationQuery} personQuery={personQuery} projectQuery={projectQuery} />
-            }
-          />
-          <Route path={UrlPathTemplate.Search} element={<AdvancedSearchPage />} />
-          <Route path={UrlPathTemplate.Reports} element={<ReportsPage />} />
-          <Route path={UrlPathTemplate.ReportsNvi} element={<NviReports />} />
-          <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<InternationalCooperationReports />} />
-          <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<ClinicalTreatmentStudiesReports />} />
-        </Routes>
+        <Outlet
+          context={{ registrationQuery: registrationQuery, personQuery: personQuery, projectQuery: projectQuery }}
+        />
       </ErrorBoundary>
     </StyledPageWithSideMenu>
   );
