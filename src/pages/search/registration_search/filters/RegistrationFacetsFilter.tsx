@@ -10,14 +10,14 @@ import { getLanguageString } from '../../../../utils/translation-helpers';
 import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
-import { SearchPageProps } from '../../SearchPage';
+import { SearchPropTypes } from '../../SearchPage';
 import { SearchForPersonFacetItem } from '../../facet_search_fields/SearchForContributorFacetItem';
 import { SearchForFundingSourceFacetItem } from '../../facet_search_fields/SearchForFundingSourceFacetItem';
 import { SearchForInstitutionFacetItem } from '../../facet_search_fields/SearchForInstitutionFacetItem';
 import { SearchForSerialPublication } from '../../facet_search_fields/SearchForSerialPublication';
 import { SelectCategoryFacetItem } from '../../facet_search_fields/SelectCategoryFacetItem';
 
-export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
+export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPropTypes, 'registrationQuery'>) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();

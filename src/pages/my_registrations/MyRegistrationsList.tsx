@@ -12,10 +12,10 @@ import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getTitleString } from '../../utils/registration-helpers';
 import { RegistrationSearch } from '../search/registration_search/RegistrationSearch';
-import { SearchPageProps } from '../search/SearchPage';
+import { SearchPropTypes } from '../search/SearchPage';
 
 interface MyRegistrationsListProps {
-  registrationsQuery: SearchPageProps['registrationQuery'];
+  registrationsQuery: SearchPropTypes['registrationQuery'];
 }
 
 export const MyRegistrationsList = ({ registrationsQuery }: MyRegistrationsListProps) => {

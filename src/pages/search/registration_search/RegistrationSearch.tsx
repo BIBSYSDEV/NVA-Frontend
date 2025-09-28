@@ -8,11 +8,11 @@ import { NoSearchResults } from '../../../components/NoSearchResults';
 import { RegistrationList, RegistrationListProps } from '../../../components/RegistrationList';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { SearchPageProps } from '../SearchPage';
+import { SearchPropTypes } from '../SearchPage';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
 
 interface RegistrationSearchProps extends Omit<RegistrationListProps, 'registrations'> {
-  registrationQuery: SearchPageProps['registrationQuery'];
+  registrationQuery: SearchPropTypes['registrationQuery'];
   sortingComponent?: ReactNode;
 }
 

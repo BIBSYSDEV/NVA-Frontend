@@ -7,10 +7,10 @@ import { SortSelector } from '../../../components/SortSelector';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { CristinSearchPagination } from '../CristinSearchPagination';
-import { SearchPageProps } from '../SearchPage';
+import { SearchPropTypes } from '../SearchPage';
 import { PersonListItem } from './PersonListItem';
 
-type PersonSearchProps = Pick<SearchPageProps, 'personQuery'>;
+type PersonSearchProps = Pick<SearchPropTypes, 'personQuery'>;
 
 export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
   const { t } = useTranslation();

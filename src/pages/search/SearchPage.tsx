@@ -1,9 +1,14 @@
 import { Box, styled, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useOutletContext } from 'react-router';
 import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
+import { RegistrationSearchResponse } from '../../api/searchApi';
 import { SearchForm } from '../../components/SearchForm';
+import { SearchResponse } from '../../types/common.types';
+import { CristinProject, ProjectAggregations } from '../../types/project.types';
+import { CristinPerson, PersonAggregations } from '../../types/user.types';
 import { SearchParam } from '../../utils/searchHelpers';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
@@ -34,6 +39,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
     margin: '0 0.5rem 0.75rem 0.5rem',
   },
 }));
+
+export interface SearchPropTypes {
+  registrationQuery: UseQueryResult<RegistrationSearchResponse>;
+  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
+  projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
+}
 
 const SearchPage = () => {
   const { t } = useTranslation();

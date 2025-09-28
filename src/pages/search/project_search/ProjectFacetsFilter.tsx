@@ -10,10 +10,10 @@ import { SearchForFundingSourceFacetItem } from '../facet_search_fields/SearchFo
 import { SearchForInstitutionFacetItem } from '../facet_search_fields/SearchForInstitutionFacetItem';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
-import { SearchPageProps } from '../SearchPage';
+import { SearchPropTypes } from '../SearchPage';
 import { ProjectStatusFilter } from './ProjectStatusFilter';
 
-type ProjectFacetsFilterProps = Pick<SearchPageProps, 'projectQuery'>;
+type ProjectFacetsFilterProps = Pick<SearchPropTypes, 'projectQuery'>;
 
 export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) => {
   const { t } = useTranslation();
