@@ -21,7 +21,7 @@ export const MinimizedMenuIconButton = ({ children, to, ...props }: CustomIconBu
       to={to}
       {...props}
       sx={(theme) => ({
-        background: theme.palette.secondary.main,
+        background: theme.palette.primary.main,
         ':hover': {
           background: theme.palette.secondary.dark,
         },

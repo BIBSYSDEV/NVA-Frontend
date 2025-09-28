@@ -77,7 +77,8 @@ export const PublicRegistrationContributors = ({
             size="small"
             startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             onClick={toggleShowAll}
-            variant="outlined">
+            color="tertiary"
+            variant="contained">
             {showAll ? t('common.show_fewer') : t('common.show_all')}
           </Button>
         )}
