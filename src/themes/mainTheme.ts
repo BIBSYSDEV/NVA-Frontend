@@ -132,7 +132,7 @@ export const mainTheme = createTheme(
       },
       background: {
         default: Color.Neutral95,
-        paper: Color.White, //TODO: Check <Paper /> components
+        paper: Color.Neutral95, //TODO: Check <Paper /> components
         neutral97: Color.Neutral97,
         neutral87: Color.Neutral87,
         neutral46: Color.Neutral46,
