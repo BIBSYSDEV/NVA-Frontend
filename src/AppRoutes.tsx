@@ -18,7 +18,6 @@ const CreateProject = lazy(() => import('./pages/project/project_wizard/CreatePr
 const EditProject = lazy(() => import('./pages/project/project_wizard/EditProject'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
 const MyPagePage = lazy(() => import('./pages/my_page/MyPagePage'));
-const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
 const PublicResearchProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
 const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
 const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
@@ -57,7 +56,6 @@ export const AppRoutes = () => {
         </Route>
 
         <Route path={UrlPathTemplate.CopyrightAct} element={<CopyrightActTerms />} />
-        <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
         <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
         <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
         <Route path={UrlPathTemplate.ProjectPage} element={<ProjectPage />} />
