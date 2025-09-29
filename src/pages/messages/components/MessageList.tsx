@@ -70,6 +70,7 @@ export const MessageItem = ({ text, date, username, menuElement, showOrganizatio
     <Box
       component="li"
       sx={{
+        bgcolor: 'background.neutral87',
         p: '0.5rem',
         borderRadius: '4px',
         display: 'flex',
