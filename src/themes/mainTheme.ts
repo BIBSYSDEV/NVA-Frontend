@@ -132,7 +132,7 @@ export const mainTheme = createTheme(
       },
       background: {
         default: Color.Neutral95,
-        paper: Color.Neutral97, //TODO: Check <Paper /> components
+        paper: Color.Neutral97,
         neutral97: Color.Neutral97,
         neutral87: Color.Neutral87,
         neutral46: Color.Neutral46,
@@ -219,7 +219,6 @@ export const mainTheme = createTheme(
           },
         },
       },
-
       MuiRadio: {
         defaultProps: { color: 'secondary' },
       },
