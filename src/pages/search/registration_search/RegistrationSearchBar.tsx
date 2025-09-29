@@ -178,7 +178,6 @@ export const RegistrationSearchBar = () => {
                       <IconButton
                         sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
                         size="small"
-                        color="primary"
                         title={t('common.add_custom', { name: t('common.filter').toLocaleLowerCase() })}
                         data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
                         onClick={() => {
@@ -191,6 +190,7 @@ export const RegistrationSearchBar = () => {
                         <AddIcon />
                       </IconButton>
                       <Button
+                        color="secondary"
                         variant="contained"
                         type="submit"
                         data-testid={dataTestId.startPage.advancedSearch.searchButton}>
@@ -214,7 +214,7 @@ const FilterButton = () => {
 
   return (
     <Button
-      sx={{ mr: '0.5rem' }}
+      sx={{ mr: '0.5rem', color: 'primary.main', bgcolor: 'tertiary.main' }}
       data-testid={dataTestId.startPage.advancedSearch.activateFilterButton}
       startIcon={<FilterAltIcon />}
       onClick={() => {
@@ -226,7 +226,7 @@ const FilterButton = () => {
           submitForm();
         }
       }}
-      variant={values.properties.length ? 'contained' : 'outlined'}>
+      variant={values.properties.length ? 'outlined' : 'contained'}>
       {t('common.filter')}
     </Button>
   );

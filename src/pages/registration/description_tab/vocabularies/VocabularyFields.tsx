@@ -1,4 +1,4 @@
-import AddIcon from '@mui/icons-material/Add';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
@@ -156,10 +156,12 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
 
       {addableVocabularies.length > 0 && (
         <Button
+          color="tertiary"
+          variant="contained"
           disabled={disableChannelClaimsFields}
           data-testid={dataTestId.registrationWizard.description.addVocabularyButton}
           onClick={(event) => setNewVocabularyAnchor(event.currentTarget)}
-          startIcon={<AddIcon />}
+          startIcon={<AddCircleOutlineIcon />}
           sx={{ alignSelf: 'flex-start' }}>
           {t('registration.description.add_vocabulary')}
         </Button>

@@ -2,11 +2,13 @@ import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import { Box, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ExpandedPublishingTicket, PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { toDateString } from '../../../utils/date-helpers';
 import { LastMessageBox } from './LastMessageBox';
+import { ticketStatusColor } from './SupportMessagesColumn';
 
 export const StyledMessagesContainer = styled(Box)({
   display: 'flex',
@@ -20,6 +22,7 @@ export const StyledStatusMessageBox = styled(Box)({
   gap: '0.25rem 0.5rem',
   padding: '0.2rem 0.5rem',
   borderRadius: '4px',
+  color: 'white',
 });
 
 export const StyledIconAndTextWrapper = styled(Box)({
@@ -37,20 +40,29 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
 
   return (
     <StyledMessagesContainer>
-      <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+      <StyledStatusMessageBox sx={{ bgcolor: ticketStatusColor[ticket.status], width: 'fit-content' }}>
         <StyledIconAndTextWrapper>
-          <InsertDriveFileOutlinedIcon fontSize="small" />
-          <Typography>{t('my_page.messages.types.PublishingRequest')}</Typography>
+          {ticket.type === 'FilesApprovalThesis' ? (
+            <>
+              <SchoolOutlinedIcon fontSize="small" />
+              <Typography color="white">{t('my_page.messages.types.FilesApprovalThesis')}</Typography>
+            </>
+          ) : (
+            <>
+              <InsertDriveFileOutlinedIcon fontSize="small" />
+              <Typography color="white">{t('my_page.messages.types.PublishingRequest')}</Typography>
+            </>
+          )}
         </StyledIconAndTextWrapper>
       </StyledStatusMessageBox>
 
       {ticket.status === 'Pending' || ticket.status === 'New' ? (
         <>
           {ticket.filesForApproval.length > 0 && (
-            <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+            <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
               <StyledIconAndTextWrapper>
                 <HourglassEmptyIcon fontSize="small" />
-                <Typography>
+                <Typography color="white">
                   {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
                 </Typography>
               </StyledIconAndTextWrapper>
@@ -58,25 +70,27 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
           )}
         </>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+        <StyledStatusMessageBox sx={{ bgcolor: 'success.main' }}>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
-            <Typography>
+            <Typography color="white">
               {ticket.approvedFiles.length
                 ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
                 : t('my_page.messages.metadata_published')}
             </Typography>
           </StyledIconAndTextWrapper>
-          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+          {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
         <>
-          <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+          <StyledStatusMessageBox sx={{ bgcolor: 'error.main' }}>
             <StyledIconAndTextWrapper>
               <BlockIcon fontSize="small" />
-              <Typography>{t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}</Typography>
+              <Typography color="white">
+                {t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}
+              </Typography>
             </StyledIconAndTextWrapper>
-            {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+            {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>
         </>
       ) : null}

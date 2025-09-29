@@ -10,14 +10,19 @@ export const PendingFilesInfo = ({ text, sx, ...rest }: PendingFilesInfoProps) =
   <Box
     {...rest}
     sx={{
-      bgcolor: 'secondary.dark',
+      bgcolor: 'info.main',
       padding: '0.25rem 0.5rem',
       display: 'flex',
       alignItems: 'center',
       gap: '0.5rem',
+      color: 'white',
       ...sx,
     }}>
     <HourglassEmptyIcon fontSize="small" />
-    {typeof text === 'string' ? <Typography>{text}</Typography> : <div>{text}</div>}
+    {typeof text === 'string' ? (
+      <Typography color="white">{text}</Typography>
+    ) : (
+      <Box sx={{ '& p': { color: 'white' } }}>{text}</Box>
+    )}
   </Box>
 );

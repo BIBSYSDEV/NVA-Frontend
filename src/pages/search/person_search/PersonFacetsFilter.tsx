@@ -7,10 +7,10 @@ import { removeSearchParamValue, syncParamsWithSearchFields } from '../../../uti
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
-import { SearchPageProps } from '../SearchPage';
 import { SearchForInstitutionFacetItem } from '../facet_search_fields/SearchForInstitutionFacetItem';
+import { SearchPropTypes } from '../registration_search/RegistrationSearch';
 
-type PersonFacetsFilterProps = Pick<SearchPageProps, 'personQuery'>;
+type PersonFacetsFilterProps = Pick<SearchPropTypes, 'personQuery'>;
 
 export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => {
   const { t } = useTranslation();

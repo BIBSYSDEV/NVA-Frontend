@@ -70,8 +70,7 @@ export const AssigneeSelector = ({
           {...params}
           label={t('my_page.roles.curator')}
           isLoading={isLoading}
-          placeholder={t('common.search')}
-          showSearchIcon
+          placeholder={t('select_curator')}
         />
       )}
     />

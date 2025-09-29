@@ -12,7 +12,6 @@ import { toDateString } from '../../../utils/date-helpers';
 import { getFullName, userCanDeleteMessage } from '../../../utils/user-helpers';
 import { MessageItemOrganization } from './MessageItemOrganization';
 import { MessageMenu } from './MessageMenu';
-import { ticketColor } from './TicketListItem';
 
 interface MessageListProps {
   ticket: Ticket;
@@ -42,7 +41,7 @@ export const TicketMessageList = ({ ticket }: MessageListProps) => {
               text={message.text}
               date={message.createdDate}
               username={message.sender}
-              backgroundColor={ticketColor[ticket.type]}
+              backgroundColor={'background.neutral87'}
               menuElement={canDeleteMessage && <MessageMenu messageId={message.id} />}
             />
           );
@@ -61,14 +60,7 @@ interface MessageItemProps {
   showOrganization?: boolean;
 }
 
-export const MessageItem = ({
-  text,
-  date,
-  username,
-  backgroundColor,
-  menuElement,
-  showOrganization = false,
-}: MessageItemProps) => {
+export const MessageItem = ({ text, date, username, menuElement, showOrganization = false }: MessageItemProps) => {
   const { t } = useTranslation();
 
   const senderQuery = useFetchUserQuery(username);
@@ -78,7 +70,7 @@ export const MessageItem = ({
     <Box
       component="li"
       sx={{
-        bgcolor: backgroundColor,
+        bgcolor: 'background.neutral87',
         p: '0.5rem',
         borderRadius: '4px',
         display: 'flex',

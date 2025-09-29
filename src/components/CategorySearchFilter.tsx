@@ -45,7 +45,7 @@ export const CategorySearchFilter = ({ searchParam, disabled, hideHeading }: Cat
             disabled={disabled}
             label={t('common.x_others', { count: selectedCategories.length - 3 })}
             variant="filled"
-            color="primary"
+            color="secondary"
             onClick={toggleCategoryFilter}
           />
         ) : (
@@ -53,7 +53,8 @@ export const CategorySearchFilter = ({ searchParam, disabled, hideHeading }: Cat
             data-testid={dataTestId.startPage.advancedSearch.selectCategoryChip}
             disabled={disabled}
             label={t('registration.resource_type.select_resource_type')}
-            color="primary"
+            color="tertiary"
+            variant="filled"
             onClick={toggleCategoryFilter}
           />
         )}

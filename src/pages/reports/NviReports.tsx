@@ -10,7 +10,7 @@ export const StyledReportIframe = styled('iframe')({
   maxHeight: '65rem',
 });
 
-export const NviReports = () => {
+const NviReports = () => {
   const { t } = useTranslation();
 
   return (
@@ -26,3 +26,5 @@ export const NviReports = () => {
     </>
   );
 };
+
+export default NviReports;

@@ -46,7 +46,7 @@ const gridRowDivider = (
   </Grid>
 );
 
-export const AdvancedSearchPage = () => {
+const AdvancedSearchPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -223,7 +223,7 @@ export const AdvancedSearchPage = () => {
           </Grid>
 
           <Grid container sx={{ justifyContent: isLargeScreen ? 'end' : 'center' }} size={12}>
-            <Button variant="outlined" onClick={() => navigate(location.pathname)}>
+            <Button variant="contained" color="tertiary" onClick={() => navigate(location.pathname)}>
               {t('search.reset_selection')}
             </Button>
           </Grid>
@@ -235,3 +235,5 @@ export const AdvancedSearchPage = () => {
     </>
   );
 };
+
+export default AdvancedSearchPage;

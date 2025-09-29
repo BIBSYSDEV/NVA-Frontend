@@ -11,9 +11,9 @@ export const DeleteIconButton = ({ sx, tooltip, disabled, ...rest }: DeleteIconB
   <Tooltip title={tooltip}>
     <IconButton
       sx={{
-        bgcolor: disabled ? 'grey.600' : 'primary.main',
+        bgcolor: disabled ? 'grey.600' : 'error.main',
         '&:hover': {
-          bgcolor: disabled ? 'grey.600' : 'primary.main',
+          bgcolor: disabled ? 'grey.600' : 'error.dark',
           opacity: disabled ? 1 : '0.85',
         },
         height: '1.5rem',

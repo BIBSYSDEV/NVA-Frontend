@@ -73,7 +73,11 @@ const CategoriesWithFilesForCustomer = ({ customer }: CategoriesWithFilesForCust
 
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem', mt: '2rem' }}>
         <Button onClick={() => setSelectedCategories(customer.allowFileUploadForTypes)}>{t('common.cancel')}</Button>
-        <Button variant="contained" onClick={() => customerMutation.mutate()} loading={customerMutation.isPending}>
+        <Button
+          color="secondary"
+          variant="contained"
+          onClick={() => customerMutation.mutate()}
+          loading={customerMutation.isPending}>
           {t('common.save')}
         </Button>
       </Box>

@@ -56,6 +56,7 @@ export const ConfirmDialog = ({
         <Button
           data-testid={dataTestId.confirmDialog.acceptButton}
           variant="contained"
+          color="secondary"
           loading={isLoading}
           onClick={onAccept}>
           {confirmButtonLabel || t('common.yes')}

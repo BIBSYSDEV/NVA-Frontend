@@ -153,7 +153,8 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
 
         <Chip
           data-testid={dataTestId.organization.subSearchField}
-          color="primary"
+          color="tertiary"
+          variant="filled"
           onClick={toggleShowUnitSelection}
           label={
             unitId ? (

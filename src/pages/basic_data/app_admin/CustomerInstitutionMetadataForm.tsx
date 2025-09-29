@@ -332,6 +332,7 @@ export const CustomerInstitutionMetadataForm = ({
               </Button>
               <Button
                 data-testid={dataTestId.basicData.institutionAdmin.saveButton}
+                color="secondary"
                 variant="contained"
                 loading={isSubmitting}
                 type="submit">

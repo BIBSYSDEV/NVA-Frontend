@@ -37,6 +37,7 @@ const SignedOutPage = () => {
 
         <Button
           variant="contained"
+          color="secondary"
           data-testid={dataTestId.header.logInButton}
           onClick={() => {
             const redirectPath = new URLSearchParams(location.search).get(LocalStorageKey.RedirectPath);

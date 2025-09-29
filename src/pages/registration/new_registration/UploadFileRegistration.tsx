@@ -80,6 +80,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
           <Button
             data-testid={dataTestId.registrationWizard.new.uploadFileButton}
             variant="contained"
+            color="secondary"
             sx={{ alignSelf: 'center' }}
             endIcon={<UploadIcon />}
             loadingPosition="end"
@@ -111,7 +112,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
                 <Typography sx={{ wordBreak: 'break-all' }}>{file.name}</Typography>
                 <IconButton
                   title={t('registration.files_and_license.delete_file')}
-                  color="primary"
+                  color="error"
                   data-testid={dataTestId.registrationWizard.files.deleteFile}
                   loading={
                     deleteFileMutation.isPending && deleteFileMutation.variables.fileIdentifier === file.identifier
@@ -149,6 +150,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
         <Button
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
+          color="secondary"
           variant="contained"
           disabled={
             !createRegistrationMutation.data?.identifier || uploadedFiles.length === 0 || deleteFileMutation.isPending

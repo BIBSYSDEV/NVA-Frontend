@@ -112,17 +112,19 @@ export const AddProjectManagerForm = ({
       />
       <StyledContributorModalActions>
         <Button
+          color="tertiary"
+          variant="contained"
           data-testid={dataTestId.projectForm.addUnidentifiedProjectManagerButton}
           disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
-          onClick={addUnidentifiedManager}
-          variant="outlined">
+          onClick={addUnidentifiedManager}>
           {t('project.add_unidentified_project_manager')}
         </Button>
         <Button
           data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
           onClick={addSelfAsContributor.addSelf}
           disabled={!!selectedPerson}
-          variant="outlined"
+          color="tertiary"
+          variant="contained"
           loading={addSelfAsContributor.isFetching}>
           {t('project.add_self')}
         </Button>
@@ -138,7 +140,8 @@ export const AddProjectManagerForm = ({
             data-testid={dataTestId.projectForm.addProjectManagerButton}
             disabled={!selectedPerson}
             onClick={() => selectedPerson && addProjectManager(selectedPerson)}
-            variant="outlined">
+            color="secondary"
+            variant="contained">
             {t('project.add_project_manager')}
           </Button>
         </Box>

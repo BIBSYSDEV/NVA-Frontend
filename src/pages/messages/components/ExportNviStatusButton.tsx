@@ -13,7 +13,8 @@ export const ExportNviStatusButton = () => {
   return (
     <Button
       data-testid={dataTestId.common.exportButton}
-      variant="outlined"
+      color="tertiary"
+      variant="contained"
       startIcon={<FileDownloadOutlinedIcon />}
       loadingPosition="start"
       onClick={() => fetchNviApprovalReportQuery.refetch()}

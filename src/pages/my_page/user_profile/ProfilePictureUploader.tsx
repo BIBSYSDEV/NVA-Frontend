@@ -66,7 +66,7 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
                 bgcolor: 'white',
               },
             }}>
-            <CancelIcon color="primary" />
+            <CancelIcon color="error" />
           </IconButton>
 
           <Box
@@ -88,7 +88,7 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
-            bgcolor: 'white',
+            bgcolor: 'tertiary.main',
             width: '100%',
             alignItems: 'center',
             border: 'solid 2px',
@@ -98,6 +98,10 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
           <IconButton
             data-testid={dataTestId.myPage.myProfile.uploadProfilePictureButton}
             sx={{
+              bgcolor: 'white',
+              ':hover': {
+                bgcolor: 'background.neutral87',
+              },
               boxShadow: '0px 10px 10px -8px rgba(0,0,0,0.75)',
               p: '1rem',
             }}
