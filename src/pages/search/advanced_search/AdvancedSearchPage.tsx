@@ -46,7 +46,7 @@ const gridRowDivider = (
   </Grid>
 );
 
-export const AdvancedSearchPage = () => {
+const AdvancedSearchPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -235,3 +235,5 @@ export const AdvancedSearchPage = () => {
     </>
   );
 };
+
+export default AdvancedSearchPage;

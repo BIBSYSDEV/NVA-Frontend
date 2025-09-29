@@ -47,7 +47,7 @@ export const NvaDescriptionSection = () => {
           number={projectsQuery.data?.size}
           isLoadingNumber={projectsQuery.isPending}
           dataTestId={dataTestId.frontPage.projectsLink}
-          to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchParam.Type, SearchTypeValue.Project) }}
+          to={{ pathname: UrlPathTemplate.Filter, search: getUrlParams(SearchParam.Type, SearchTypeValue.Project) }}
         />
         <TypeCard
           text={t('results')}
@@ -55,7 +55,7 @@ export const NvaDescriptionSection = () => {
           number={registrationQuery.data?.totalHits}
           isLoadingNumber={registrationQuery.isPending}
           dataTestId={dataTestId.frontPage.registrationsLink}
-          to={{ pathname: UrlPathTemplate.Root }}
+          to={{ pathname: UrlPathTemplate.Filter }}
         />
         <TypeCard
           text={t('person_profiles')}
@@ -63,7 +63,7 @@ export const NvaDescriptionSection = () => {
           number={personQuery.data?.size}
           isLoadingNumber={personQuery.isPending}
           dataTestId={dataTestId.frontPage.personsLink}
-          to={{ pathname: UrlPathTemplate.Root, search: getUrlParams(SearchParam.Type, SearchTypeValue.Person) }}
+          to={{ pathname: UrlPathTemplate.Filter, search: getUrlParams(SearchParam.Type, SearchTypeValue.Person) }}
         />
       </Box>
     </FrontPageBox>

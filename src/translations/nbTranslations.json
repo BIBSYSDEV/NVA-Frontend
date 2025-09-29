@@ -2,20 +2,7 @@
   "about": {
     "availability_statement": "Tilgjengelighetserklæring",
     "copyright_inquiries": "Henvendelser om opphavsrett",
-    "description": {
-      "paragraph0": {
-        "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent vitenarkiv",
-        "bullet_point1": "Selv publisere rapporter, studentoppgaver og annet materiale produsert ved institusjonen",
-        "intro": "Med NVA får norske forskningsinstitusjoner en tjeneste for å:"
-      },
-      "paragraph1": "NVA utvikles også til bruk ved rapportering av vitenskapelig publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskningsadministrative oppgaver.",
-      "paragraph2": "Sikt er databehandler. Den enkelte Institusjon er behandlingsansvarlig og registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett, osv.). Tjenesten får også overført innhold fra andre datakilder.",
-      "paragraph3": "NVA har støtte for utsatt publisering av ressurser. Det betyr at en registrering kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato. Tjenesten tillater ikke behandling av sensitive personopplysninger.",
-      "paragraph4": "NVA vil tilgjengeliggjøre institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
-      "paragraph5": "Selv om NVA er etablert og i bruk av flere institusjoner, vil tjenesten være i kontinuerlig utvikling i hele sin levetid. Institusjoner som ikke har et vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
-    },
-    "footer_text": "Tjenesten blir levert av Sikt – Kunnskapssektorens tjenesteleverandør. Sikt er leverandør av fellestjenester til norsk kunnskapssektor.",
-    "short_description": "Nasjonalt vitenarkiv (NVA) samler informasjon om norsk forskning og gjør forskningsresultater og forskningsinformasjon åpent tilgjengelig."
+    "footer_text": "Tjenesten blir levert av Sikt – Kunnskapssektorens tjenesteleverandør. Sikt er leverandør av fellestjenester til norsk kunnskapssektor."
   },
   "add_file": "Legg til fil",
   "authorization": {
@@ -178,7 +165,6 @@
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
     "close": "Lukk",
-    "close_forever": "Lukk og ikke vis igjen",
     "consists_of": "Består av",
     "contributor": "Bidragsyter",
     "contributors": {
@@ -235,7 +221,6 @@
     "not_decided": "Ikke bestemt",
     "number_of_rows_per_page": "Antall rader per side",
     "number_short": "Nr.",
-    "nva_tagline": "Nasjonalt vitenarkiv (NVA)",
     "nvi": "Norsk vitenskapsindeks (NVI)",
     "nvi_short": "NVI",
     "open": "Åpne",
@@ -264,9 +249,7 @@
     "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
     "read_less": "Les mindre",
-    "read_less_about_nva": "Les mindre om NVA",
     "read_more": "Les mer",
-    "read_more_about_nva": "Les mer om NVA",
     "read_past_tense": "Lest",
     "reference": "Referanse",
     "reject": "Avvis",

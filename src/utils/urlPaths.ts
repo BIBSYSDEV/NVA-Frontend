@@ -22,6 +22,7 @@ export enum UrlPathTemplate {
   BasicDataPublisherClaims = `${BasicDataChannelClaims}/publisher`,
   BasicDataSerialPublicationClaims = `${BasicDataChannelClaims}/serial-publication`,
   CopyrightAct = '/license/copyright-act/1.0',
+  Filter = '/filter',
   Root = '/',
   Institution = '/institution',
   InstitutionCurators = '/institution/settings/curators',
@@ -82,7 +83,6 @@ export enum UrlPathTemplate {
   TasksNviCorrectionList = '/tasks/correction-list',
   TasksNviStatus = '/tasks/nvi/status',
   TasksResultRegistrations = '/tasks/result-registrations',
-  NewFrontPage = '/new-front-page',
   Wildcard = '*',
 }
 

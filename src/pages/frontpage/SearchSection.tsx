@@ -54,7 +54,7 @@ export const SearchSection = () => {
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     const searchParams = getSearchParams(inputValue, selectedSearchType);
-    navigate({ pathname: UrlPathTemplate.Root, search: searchParams.toString() });
+    navigate({ pathname: UrlPathTemplate.Filter, search: searchParams.toString() });
   };
 
   return (
