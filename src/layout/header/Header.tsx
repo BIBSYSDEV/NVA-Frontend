@@ -101,8 +101,8 @@ export const Header = () => {
             <MenuIconButton
               color="inherit"
               title={t('common.search')}
-              isSelected={location.pathname === UrlPathTemplate.Root || currentPath === UrlPathTemplate.Root}
-              to={UrlPathTemplate.Root}>
+              isSelected={currentPath === UrlPathTemplate.Filter || currentPath === UrlPathTemplate.Search}
+              to={currentPath === UrlPathTemplate.Search ? UrlPathTemplate.Search : UrlPathTemplate.Filter}>
               <SearchIcon fontSize="large" />
             </MenuIconButton>
           )}
