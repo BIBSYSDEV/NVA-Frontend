@@ -7,13 +7,12 @@ import { SearchForm } from '../../components/SearchForm';
 import { SearchParam } from '../../utils/searchHelpers';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
-import { RegistrationSearch } from './registration_search/RegistrationSearch';
+import { RegistrationSearch, SearchPropTypes } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
 import { SelectedPersonFacetsList } from './selected_facets/SelectedPersonFacetsList';
 import { SelectedProjectFacetsList } from './selected_facets/SelectedProjectFacetsList';
 import { SelectedResultFacetsList } from './selected_facets/SelectedResultFacetsList';
-import { SearchPropTypes } from './registration_search/RegistrationSearch.tsx';
 
 const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
   display: 'grid',

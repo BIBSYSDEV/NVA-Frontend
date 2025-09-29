@@ -13,6 +13,7 @@ import { RegistrationSearchResponse } from '../../../api/searchApi';
 import { SearchResponse } from '../../../types/common.types';
 import { CristinPerson, PersonAggregations } from '../../../types/user.types';
 import { CristinProject, ProjectAggregations } from '../../../types/project.types';
+import { UseQueryResult } from '@tanstack/react-query';
 
 export interface SearchPropTypes {
   registrationQuery: UseQueryResult<RegistrationSearchResponse>;
