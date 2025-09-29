@@ -1,4 +1,4 @@
-import { Paper, Tab, Tabs, useTheme } from '@mui/material';
+import { Paper, Tab, Tabs } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -37,8 +37,6 @@ export const ActionPanel = ({
   const customer = useSelector((store: RootState) => store.customer);
   const contributors = registration.entityDescription?.contributors ?? [];
   const user = useSelector((store: RootState) => store.user);
-
-  const theme = useTheme();
 
   const publishingRequestTickets = tickets.filter(isFileApprovalTicket) as PublishingTicket[];
   const newestDoiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest');
