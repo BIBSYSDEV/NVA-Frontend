@@ -3,9 +3,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, Divider, Link as MuiLink, styled, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
 import { dataTestId } from '../utils/dataTestIds';
-import { UrlPathTemplate } from '../utils/urlPaths';
 import { LanguageSelector } from './header/LanguageSelector';
 
 const StyledArrowLinkContainer = styled(Box)({
@@ -14,11 +12,12 @@ const StyledArrowLinkContainer = styled(Box)({
   marginBottom: '0.3rem',
 });
 
-const StyledExternalLink = styled(MuiLink)(({ theme }) => ({
-  color: theme.palette.primary.main,
+const StyledExternalLink = styled(MuiLink)({
+  color: 'inherit',
   display: 'flex',
   gap: '0.5rem',
-}));
+  textDecorationColor: 'white',
+});
 
 export const Footer = () => {
   const { t } = useTranslation();
@@ -31,10 +30,11 @@ export const Footer = () => {
         flexDirection: 'column',
         alignItems: 'center',
         padding: '1rem',
-        bgcolor: 'info.light',
-        color: 'primary.main',
+        bgcolor: 'primary.main',
+        color: 'white',
       }}>
       <Button
+        sx={{ color: 'white' }}
         data-testid={dataTestId.footer.toTopButton}
         onClick={() => window.scroll({ top: 0, behavior: 'smooth' })}
         startIcon={<KeyboardArrowUpIcon />}>
@@ -48,7 +48,7 @@ export const Footer = () => {
         }}>
         <div>
           <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between' }}>
-            <Typography color="primary" variant="h3" component="h2">
+            <Typography color="white" variant="h3" component="h2">
               {t('footer.about_nva')}
             </Typography>
 
@@ -62,12 +62,12 @@ export const Footer = () => {
             </StyledExternalLink>
           </Box>
 
-          <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
+          <Divider sx={{ bgcolor: 'white', mb: '0.5rem' }} />
 
-          <Typography color="primary">{t('footer.about_nva_text')}</Typography>
+          <Typography color="white">{t('footer.about_nva_text')}</Typography>
 
           <Typography
-            color="primary"
+            color="white"
             variant="h3"
             component="h2"
             sx={{
@@ -77,7 +77,7 @@ export const Footer = () => {
             {t('footer.language_selector')}
           </Typography>
 
-          <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
+          <Divider sx={{ bgcolor: 'white', mb: '0.5rem' }} />
 
           <LanguageSelector />
         </div>
@@ -89,7 +89,7 @@ export const Footer = () => {
               justifyContent: 'space-between',
               gap: '0.5rem',
             }}>
-            <Typography color="primary" variant="h3" component="h2">
+            <Typography color="white" variant="h3" component="h2">
               {t('footer.become_customer')}
             </Typography>
 
@@ -103,12 +103,12 @@ export const Footer = () => {
             </StyledExternalLink>
           </Box>
 
-          <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
+          <Divider sx={{ bgcolor: 'white', mb: '0.5rem' }} />
 
-          <Typography color="primary">{t('footer.about_sikt_text')}</Typography>
+          <Typography color="white">{t('footer.about_sikt_text')}</Typography>
 
           <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', mt: '2rem' }}>
-            <Typography color="primary" variant="h3" component="h2">
+            <Typography color="white" variant="h3" component="h2">
               {t('footer.about_sikt')}
             </Typography>
 
@@ -122,9 +122,9 @@ export const Footer = () => {
             </StyledExternalLink>
           </Box>
 
-          <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
+          <Divider sx={{ bgcolor: 'white', mb: '0.5rem' }} />
 
-          <Typography color="primary">{t('about.footer_text')}</Typography>
+          <Typography color="white">{t('about.footer_text')}</Typography>
         </div>
 
         <div>
@@ -148,7 +148,7 @@ export const Footer = () => {
             <OpenInNewIcon fontSize="small" />
           </StyledExternalLink>
 
-          <Divider sx={{ bgcolor: 'primary.main', mb: '0.8rem' }} />
+          <Divider sx={{ bgcolor: 'white', mb: '0.8rem' }} />
 
           <StyledArrowLinkContainer>
             <ArrowRightAltIcon />
@@ -164,13 +164,14 @@ export const Footer = () => {
 
           <StyledArrowLinkContainer>
             <ArrowRightAltIcon />
-            <MuiLink
+            <StyledExternalLink
               data-testid={dataTestId.footer.privacyLink}
-              color={'primary.main'}
-              component={Link}
-              to={UrlPathTemplate.PrivacyPolicy}>
-              {t('privacy.privacy_statement')}
-            </MuiLink>
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva">
+              {t('privacy_statement')}
+              <OpenInNewIcon fontSize="small" />
+            </StyledExternalLink>
           </StyledArrowLinkContainer>
 
           <StyledArrowLinkContainer>
@@ -199,10 +200,10 @@ export const Footer = () => {
           <StyledArrowLinkContainer>
             <ArrowRightAltIcon />
 
-            <Typography color="primary">
+            <Typography color="white">
               <Trans i18nKey="footer.technical_support_link">
                 <MuiLink
-                  sx={{ color: 'primary.main' }}
+                  sx={{ color: 'white' }}
                   href="mailto:kontakt@sikt.no"
                   target="_blank"
                   rel="noopener noreferrer"

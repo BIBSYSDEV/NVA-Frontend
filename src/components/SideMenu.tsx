@@ -23,7 +23,7 @@ export const MinimizedMenuIconButton = ({ children, to, ...props }: CustomIconBu
       sx={(theme) => ({
         background: theme.palette.primary.main,
         ':hover': {
-          background: theme.palette.primary.dark,
+          background: theme.palette.secondary.main,
         },
         color: theme.palette.common.white,
         borderRadius: '0',
@@ -37,7 +37,7 @@ export const MinimizedMenuIconButton = ({ children, to, ...props }: CustomIconBu
 export const SideMenu = ({ children, expanded, minimizedMenu }: SideMenuProps) => (
   <Box component="nav" aria-labelledby={sideNavHeaderId}>
     {expanded || !minimizedMenu ? (
-      <Box sx={{ bgcolor: 'secondary.main', width: { xs: '100%', md: '20rem' }, height: '100%' }}>{children}</Box>
+      <Box sx={{ bgcolor: 'background.default', width: { xs: '100%', md: '20rem' }, height: '100%' }}>{children}</Box>
     ) : (
       minimizedMenu
     )}

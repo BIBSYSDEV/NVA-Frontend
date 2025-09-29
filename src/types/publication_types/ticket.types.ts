@@ -100,10 +100,6 @@ type CustomerTicketAggregations = {
 
 export type CustomerTicketSearchResponse = SearchResponse2<ExpandedTicket, CustomerTicketAggregations>;
 
-export type TicketTypeColor = {
-  [key in TicketType]?: string;
-};
-
 export type TicketTypeSelection = {
   [key in Uncapitalize<TicketType>]?: boolean;
 };

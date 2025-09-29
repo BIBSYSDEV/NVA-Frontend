@@ -33,6 +33,7 @@ export const Forbidden = () => {
             data-testid={dataTestId.authorization.institutionAdminsLink}
             sx={buttonProps}
             endIcon={<ArrowForwardIcon />}
+            color="secondary"
             variant="contained"
             component={Link}
             to={UrlPathTemplate.InstitutionOverviewPage}>
@@ -52,6 +53,7 @@ export const Forbidden = () => {
             sx={buttonProps}
             endIcon={<LoginIcon />}
             variant="contained"
+            color="secondary"
             onClick={handleLogin}>
             {t('authorization.login')}
           </Button>

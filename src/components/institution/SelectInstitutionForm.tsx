@@ -234,6 +234,7 @@ export const SelectInstitutionForm = ({
                 </Button>
               )}
               <Button
+                color="secondary"
                 variant="contained"
                 type="submit"
                 loading={isSubmitting}

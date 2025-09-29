@@ -11,15 +11,15 @@ export const TicketTypeFilterButton = ({ isSelected, children, ...rest }: Ticket
     {...rest}
     startIcon={isSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
     variant={isSelected ? 'contained' : 'outlined'}
+    color={isSelected ? 'tertiary' : 'white'}
     sx={{
       justifyContent: 'start',
-      color: 'common.black',
-      bgcolor: isSelected ? undefined : 'background.default',
-      borderColor: `${rest.color}.main`,
-
       '.MuiButton-endIcon': {
         ml: 'auto',
         mr: '0.5rem',
+      },
+      '.MuiButton-startIcon': {
+        color: 'secondary.main',
       },
     }}>
     <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>{children}</Box>

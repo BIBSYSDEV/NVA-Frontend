@@ -49,10 +49,10 @@ export const RepublishRegistration = ({
           )}
           <Button
             data-testid={dataTestId.registrationLandingPage.tasksPanel.republishRegistrationButton}
-            variant="outlined"
+            variant="contained"
+            color="tertiary"
             fullWidth
             size="small"
-            sx={{ bgcolor: 'white' }}
             disabled={!registrationIsValid}
             onClick={toggleRepublishDialog}>
             {t('common.republish')}

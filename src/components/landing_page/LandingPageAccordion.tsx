@@ -14,6 +14,7 @@ export const LandingPageAccordion = ({ heading, children, dataTestId, ...props }
     square
     elevation={0}
     sx={{
+      bgcolor: 'white',
       borderTop: '1px solid',
       ':last-child': {
         borderBottom: '1px solid',
@@ -21,7 +22,6 @@ export const LandingPageAccordion = ({ heading, children, dataTestId, ...props }
       '&.MuiAccordion-root.Mui-expanded': {
         margin: 0,
       },
-      bgcolor: 'secondary.light',
     }}
     data-testid={dataTestId}
     {...props}>

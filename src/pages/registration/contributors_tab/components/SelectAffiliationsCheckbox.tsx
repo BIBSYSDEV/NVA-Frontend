@@ -53,7 +53,7 @@ export const SelectAffiliationsCheckbox = ({
       size="small"
       title={t('registration.contributors.select_affiliation')}>
       {affiliationIsSelected ? (
-        <CheckBoxIcon fontSize="small" color="info" />
+        <CheckBoxIcon fontSize="small" color="secondary" />
       ) : (
         <CheckBoxOutlineBlankIcon fontSize="small" />
       )}

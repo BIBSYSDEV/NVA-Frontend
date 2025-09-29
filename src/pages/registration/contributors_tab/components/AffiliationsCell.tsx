@@ -82,7 +82,8 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
       ))}
       <Button
         disabled={disabled}
-        variant="outlined"
+        color="tertiary"
+        variant="contained"
         sx={{ padding: '0.1rem 0.75rem' }}
         data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
         startIcon={<AddIcon />}

@@ -166,7 +166,7 @@ const ResearchProfile = () => {
         </Typography>
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
       </Box>
-      <BackgroundDiv>
+      <BackgroundDiv sx={{ bgcolor: 'white' }}>
         {activeAffiliations.length > 0 ? (
           <Box
             sx={{
@@ -236,7 +236,7 @@ const ResearchProfile = () => {
         {!orcidUri && location.pathname.includes(UrlPathTemplate.MyPageResearchProfile) && (
           <Grid
             sx={{
-              backgroundColor: 'secondary.dark',
+              backgroundColor: 'info.light',
               my: '1rem',
               borderRadius: '4px',
               alignItems: 'center',
@@ -266,7 +266,13 @@ const ResearchProfile = () => {
             {personKeywords.length > 0 && (
               <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem', flexWrap: 'wrap' }}>
                 {personKeywords.map((keyword) => (
-                  <Chip color="primary" key={keyword.type} label={getLanguageString(keyword.label)} />
+                  <Chip
+                    color="secondary"
+                    variant="outlined"
+                    sx={{ color: 'primary.main' }}
+                    key={keyword.type}
+                    label={getLanguageString(keyword.label)}
+                  />
                 ))}
               </Box>
             )}

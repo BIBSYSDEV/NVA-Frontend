@@ -87,8 +87,8 @@ export const PublishingAccordionLastTicketInfo = ({
                 <Typography sx={{ mb: '1rem' }} />
               </Trans>
               <Button
-                sx={{ bgcolor: 'white' }}
-                variant="outlined"
+                color="tertiary"
+                variant="contained"
                 fullWidth
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
                 endIcon={<EditIcon />}

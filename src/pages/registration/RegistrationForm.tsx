@@ -129,7 +129,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             </Box>
             <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RequiredDescription />
-            <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
+            <BackgroundDiv sx={{ backgroundColor: 'background.neutral97' }}>
               <Box id="form" mb="2rem">
                 {channelClaimData.channelClaimQuery.data && channelClaimData.shouldDisableFields && (
                   <ChannelClaimInfoBox channelClaim={channelClaimData.channelClaimQuery.data} />

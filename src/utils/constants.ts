@@ -24,6 +24,5 @@ export enum LocalStorageKey {
   AppUpdateTime = 'appUpdateTime',
   Beta = 'beta',
   EnvironmentBanner = 'environmentBanner',
-  ShowTagline = 'showTagline',
   RedirectPath = 'redirectPath',
 }

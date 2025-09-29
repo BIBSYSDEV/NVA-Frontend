@@ -95,14 +95,16 @@ export const AddProjectContributorForm = ({
           data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
           disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
           onClick={addUnidentifiedParticipant}
-          variant="outlined">
+          color="tertiary"
+          variant="contained">
           {t('project.add_unidentified_contributor')}
         </Button>
         <Button
           data-testid={dataTestId.projectForm.addSelfAsProjectParticipantButton}
           onClick={addSelfAsContributor.addSelf}
           disabled={!!selectedPerson}
-          variant="outlined"
+          color="tertiary"
+          variant="contained"
           loading={addSelfAsContributor.isFetching}>
           {t('project.add_self')}
         </Button>
@@ -118,7 +120,8 @@ export const AddProjectContributorForm = ({
             data-testid={dataTestId.projectForm.selectContributorButton}
             disabled={!selectedPerson}
             onClick={() => selectedPerson && addParticipant(selectedPerson)}
-            variant="outlined">
+            color="secondary"
+            variant="contained">
             {roleType === 'LocalProjectManager' ? t('project.add_local_manager') : t('project.add_contributor')}
           </Button>
         </Box>

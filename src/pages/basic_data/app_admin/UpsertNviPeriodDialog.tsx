@@ -159,7 +159,7 @@ export const UpsertNviPeriodDialog = ({
             </DialogContent>
             <DialogActions sx={{ gap: '0.5rem' }}>
               <Button onClick={closeDialog}>{t('common.cancel')}</Button>
-              <Button variant="contained" type="submit" loading={isSubmitting}>
+              <Button variant="contained" color="secondary" type="submit" loading={isSubmitting}>
                 {t('common.save')}
               </Button>
             </DialogActions>

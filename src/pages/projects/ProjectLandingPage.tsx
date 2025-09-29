@@ -52,7 +52,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
           </Tooltip>
         )}
       </StyledPaperHeader>
-      <BackgroundDiv>
+      <BackgroundDiv sx={{ bgcolor: 'white' }}>
         <ProjectGeneralInfo project={project} />
 
         <LandingPageAccordion
