@@ -3,9 +3,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, Divider, Link as MuiLink, styled, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
 import { dataTestId } from '../utils/dataTestIds';
-import { UrlPathTemplate } from '../utils/urlPaths';
 import { LanguageSelector } from './header/LanguageSelector';
 
 const StyledArrowLinkContainer = styled(Box)({
@@ -14,12 +12,12 @@ const StyledArrowLinkContainer = styled(Box)({
   marginBottom: '0.3rem',
 });
 
-const StyledExternalLink = styled(MuiLink)(() => ({
+const StyledExternalLink = styled(MuiLink)({
   color: 'inherit',
   display: 'flex',
   gap: '0.5rem',
   textDecorationColor: 'white',
-}));
+});
 
 export const Footer = () => {
   const { t } = useTranslation();
@@ -166,13 +164,14 @@ export const Footer = () => {
 
           <StyledArrowLinkContainer>
             <ArrowRightAltIcon />
-            <MuiLink
-              sx={{ color: 'white' }}
+            <StyledExternalLink
               data-testid={dataTestId.footer.privacyLink}
-              component={Link}
-              to={UrlPathTemplate.PrivacyPolicy}>
-              {t('privacy.privacy_statement')}
-            </MuiLink>
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva">
+              {t('privacy_statement')}
+              <OpenInNewIcon fontSize="small" />
+            </StyledExternalLink>
           </StyledArrowLinkContainer>
 
           <StyledArrowLinkContainer>
