@@ -2,6 +2,7 @@ import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
 import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import EditIcon from '@mui/icons-material/Edit';
+import EventOutlinedIcon from '@mui/icons-material/EventOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import { Box, IconButton, Typography } from '@mui/material';
@@ -22,7 +23,7 @@ const curatorRolesConfig = [
   { rolename: RoleName.SupportCurator, SelectedIcon: ChatBubbleOutlineOutlinedIcon },
   { rolename: RoleName.PublishingCurator, SelectedIcon: InsertDriveFileOutlinedIcon },
   { rolename: RoleName.CuratorThesis, SelectedIcon: SchoolOutlinedIcon },
-  { rolename: RoleName.CuratorThesisEmbargo, SelectedIcon: SchoolOutlinedIcon },
+  { rolename: RoleName.CuratorThesisEmbargo, SelectedIcon: EventOutlinedIcon },
   { rolename: RoleName.DoiCurator, SelectedIcon: AddLinkOutlinedIcon },
   { rolename: RoleName.NviCurator, SelectedIcon: AdjustOutlinedIcon },
 ] satisfies {
