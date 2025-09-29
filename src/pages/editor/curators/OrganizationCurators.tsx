@@ -146,12 +146,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
                 getOptionKey={(option) => option.username}
                 onChange={(_, selectedUser) => setSearchValue(selectedUser?.username ?? '')}
                 renderInput={(params) => (
-                  <AutocompleteTextField
-                    {...params}
-                    showSearchIcon
-                    variant="outlined"
-                    placeholder={t('editor.curators.search_for_curator')}
-                  />
+                  <AutocompleteTextField {...params} variant="outlined" placeholder={t('select_curator')} />
                 )}
               />
             )}

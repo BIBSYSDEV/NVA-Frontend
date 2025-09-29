@@ -7,10 +7,10 @@ import { ProjectSortSelector } from '../../../components/ProjectSortSelector';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { CristinSearchPagination } from '../CristinSearchPagination';
-import { SearchPageProps } from '../SearchPage';
 import { ProjectListItem } from './ProjectListItem';
+import { SearchPropTypes } from '../registration_search/RegistrationSearch';
 
-type ProjectSearchProps = Pick<SearchPageProps, 'projectQuery'>;
+type ProjectSearchProps = Pick<SearchPropTypes, 'projectQuery'>;
 
 export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
   const projectsSearchResults = projectQuery.data?.hits ?? [];

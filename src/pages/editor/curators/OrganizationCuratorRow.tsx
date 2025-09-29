@@ -1,10 +1,10 @@
-import AddLinkIcon from '@mui/icons-material/AddLink';
-import AdjustIcon from '@mui/icons-material/Adjust';
+import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
+import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import EditIcon from '@mui/icons-material/Edit';
-import EventIcon from '@mui/icons-material/Event';
-import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
-import SchoolIcon from '@mui/icons-material/School';
-import TaskIcon from '@mui/icons-material/Task';
+import EventOutlinedIcon from '@mui/icons-material/EventOutlined';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import { Box, IconButton, Typography } from '@mui/material';
 import { ComponentType, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,12 +20,12 @@ interface OrganizationCuratorRowProps extends Pick<OrganizationCuratorsProps, 'c
 }
 
 const curatorRolesConfig = [
-  { rolename: RoleName.SupportCurator, SelectedIcon: MarkEmailReadIcon },
-  { rolename: RoleName.PublishingCurator, SelectedIcon: TaskIcon },
-  { rolename: RoleName.CuratorThesis, SelectedIcon: SchoolIcon },
-  { rolename: RoleName.CuratorThesisEmbargo, SelectedIcon: EventIcon },
-  { rolename: RoleName.DoiCurator, SelectedIcon: AddLinkIcon },
-  { rolename: RoleName.NviCurator, SelectedIcon: AdjustIcon },
+  { rolename: RoleName.SupportCurator, SelectedIcon: ChatBubbleOutlineOutlinedIcon },
+  { rolename: RoleName.PublishingCurator, SelectedIcon: InsertDriveFileOutlinedIcon },
+  { rolename: RoleName.CuratorThesis, SelectedIcon: SchoolOutlinedIcon },
+  { rolename: RoleName.CuratorThesisEmbargo, SelectedIcon: EventOutlinedIcon },
+  { rolename: RoleName.DoiCurator, SelectedIcon: AddLinkOutlinedIcon },
+  { rolename: RoleName.NviCurator, SelectedIcon: AdjustOutlinedIcon },
 ] satisfies {
   rolename:
     | RoleName.SupportCurator

@@ -2,20 +2,7 @@
   "about": {
     "availability_statement": "Tilgjengelegheitserklæring",
     "copyright_inquiries": "Førespurnad om opphavsrett",
-    "description": {
-      "paragraph0": {
-        "bullet_point0": "Oppfyll krav om open tilgang til artiklar og andre forskingsresultat gjennom deponering i eit ope vitenarkiv",
-        "bullet_point1": "Publisere rapportar sjølv, studentoppgåver og anna materiale produsert ved institusjonen",
-        "intro": "Med NVA får norske forskingsinstitusjonar ei teneste for å:"
-      },
-      "paragraph1": "NVA blir òg utvikla til bruk ved rapportering og vitskapleg publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskingsadministrative oppgåver.",
-      "paragraph2": "Sikt er databehandlar. Den einskilde institusjon er behandlingsansvarleg, og registrerer og vedlikeheld eige innhald i tenesta og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett osv.). Tenesta får òg overført innhald frå andre datakjelder.",
-      "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det innebér at ei registrering kan fullførast slik at metadata om ressursen blir publisert, medan ressursen ikkje blir ope tilgjengeleg før angjeve dato. Tenesta tillèt ikkje behandling av sensitive personopplysingar.",
-      "paragraph4": "NVA vil gjere institusjonen sitt opne innhald tilgjengeleg via opne grensesnitt, med intensjonen om å gjere det kjent og søkbart for omverda og fremje indeksering i søkjemotorar og søkjeportalar.",
-      "paragraph5": "Sjølv om NVA er etablert og i bruk av fleire institusjonar, vil tenesta vere i kontinuerleg utvikling i heile si levetid. Institusjonar som ikkje har eit vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
-    },
-    "footer_text": "Tenesta blir levert av Sikt – Kunnskapssektorens tenesteleverandør. Sikt er leverandør av fellesstenester til norsk kunnskapssektor.",
-    "short_description": "Nasjonalt vitenarkiv (NVA) samlar informasjon om norsk forsking, og gjer forskingsresultat og forskingsinformasjon opent tilgjengelege."
+    "footer_text": "Tenesta blir levert av Sikt – Kunnskapssektorens tenesteleverandør. Sikt er leverandør av fellesstenester til norsk kunnskapssektor."
   },
   "add_file": "Legg til fil",
   "authorization": {
@@ -178,7 +165,6 @@
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
     "close": "Lukk",
-    "close_forever": "Lukk og ikkje vis igjen",
     "consists_of": "Består av",
     "contributor": "Bidragsytar",
     "contributors": {
@@ -235,7 +221,6 @@
     "not_decided": "Ikkje bestemt",
     "number_of_rows_per_page": "Tal på rader per side",
     "number_short": "Nr.",
-    "nva_tagline": "Nasjonalt Vitenarkiv (NVA)",
     "nvi": "Norsk vitskapsindeks (NVI)",
     "nvi_short": "NVI",
     "open": "Opne",
@@ -264,9 +249,7 @@
     "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
     "read_less": "Les mindre",
-    "read_less_about_nva": "Les mindre om NVA",
     "read_more": "Les meir",
-    "read_more_about_nva": "Les meir om NVA",
     "read_past_tense": "Lest",
     "reference": "Referanse",
     "reject": "Avvis",

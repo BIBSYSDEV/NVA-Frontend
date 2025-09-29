@@ -253,7 +253,6 @@ export const dataTestId = {
     reportsOverviewButton: 'reports-overview-button',
     reportsAccordion: 'reports-accordion',
     resultSearchButton: 'result-search-button',
-    readMoreButton: 'button-read-more',
     searchButton: 'search-button',
     searchField: 'search-field',
     searchResultItem: 'result-list-item',
