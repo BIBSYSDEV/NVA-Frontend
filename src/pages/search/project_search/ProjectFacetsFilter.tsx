@@ -10,8 +10,8 @@ import { SearchForFundingSourceFacetItem } from '../facet_search_fields/SearchFo
 import { SearchForInstitutionFacetItem } from '../facet_search_fields/SearchForInstitutionFacetItem';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
-import { SearchPropTypes } from '../SearchPage';
 import { ProjectStatusFilter } from './ProjectStatusFilter';
+import { SearchPropTypes } from '../registration_search/RegistrationSearch';
 
 type ProjectFacetsFilterProps = Pick<SearchPropTypes, 'projectQuery'>;
 

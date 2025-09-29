@@ -11,8 +11,7 @@ import { RegistrationSearchItem } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getTitleString } from '../../utils/registration-helpers';
-import { RegistrationSearch } from '../search/registration_search/RegistrationSearch';
-import { SearchPropTypes } from '../search/SearchPage';
+import { RegistrationSearch, SearchPropTypes } from '../search/registration_search/RegistrationSearch';
 
 interface MyRegistrationsListProps {
   registrationsQuery: SearchPropTypes['registrationQuery'];

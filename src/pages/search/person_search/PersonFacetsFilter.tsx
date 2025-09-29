@@ -7,8 +7,8 @@ import { removeSearchParamValue, syncParamsWithSearchFields } from '../../../uti
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
-import { SearchPropTypes } from '../SearchPage';
 import { SearchForInstitutionFacetItem } from '../facet_search_fields/SearchForInstitutionFacetItem';
+import { SearchPropTypes } from '../registration_search/RegistrationSearch';
 
 type PersonFacetsFilterProps = Pick<SearchPropTypes, 'personQuery'>;
 

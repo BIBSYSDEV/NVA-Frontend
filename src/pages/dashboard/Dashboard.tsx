@@ -14,7 +14,7 @@ const Dashboard = () => {
         justifyItems: 'center',
         width: '100%',
       }}>
-      <HeadTitle>{t('common.start_page')}</HeadTitle>
+      <HeadTitle>{t('common.filter')}</HeadTitle>
       <HomePage />
     </Box>
   );

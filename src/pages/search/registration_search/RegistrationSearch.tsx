@@ -8,8 +8,17 @@ import { NoSearchResults } from '../../../components/NoSearchResults';
 import { RegistrationList, RegistrationListProps } from '../../../components/RegistrationList';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { SearchPropTypes } from '../SearchPage';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
+import { RegistrationSearchResponse } from '../../../api/searchApi';
+import { SearchResponse } from '../../../types/common.types';
+import { CristinPerson, PersonAggregations } from '../../../types/user.types';
+import { CristinProject, ProjectAggregations } from '../../../types/project.types';
+
+export interface SearchPropTypes {
+  registrationQuery: UseQueryResult<RegistrationSearchResponse>;
+  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
+  projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
+}
 
 interface RegistrationSearchProps extends Omit<RegistrationListProps, 'registrations'> {
   registrationQuery: SearchPropTypes['registrationQuery'];

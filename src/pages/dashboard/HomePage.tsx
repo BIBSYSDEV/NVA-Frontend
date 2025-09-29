@@ -2,7 +2,7 @@ import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
-import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Outlet, useLocation } from 'react-router';
 import {
@@ -28,21 +28,11 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
 import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
-import { RegistrationSearchResponse } from '../../api/searchApi';
-import { SearchResponse } from '../../types/common.types';
-import { CristinPerson, PersonAggregations } from '../../types/user.types';
-import { CristinProject, ProjectAggregations } from '../../types/project.types';
 
 export enum SearchTypeValue {
   Result = 'result',
   Person = 'person',
   Project = 'project',
-}
-
-export interface SearchTypes {
-  registrationQuery: UseQueryResult<RegistrationSearchResponse>;
-  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
-  projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
 }
 
 const HomePage = () => {
@@ -172,9 +162,7 @@ const HomePage = () => {
       </SideMenu>
 
       <ErrorBoundary>
-        <Outlet
-          context={{ registrationQuery: registrationQuery, personQuery: personQuery, projectQuery: projectQuery }}
-        />
+        <Outlet context={{ registrationQuery, personQuery, projectQuery }} />
       </ErrorBoundary>
     </StyledPageWithSideMenu>
   );
