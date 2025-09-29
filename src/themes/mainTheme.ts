@@ -198,6 +198,14 @@ export const mainTheme = createTheme(
             marginBottom: '0.4rem',
           },
         },
+        defaultProps: {
+          slotProps: {
+            chip: {
+              color: 'secondary',
+              variant: 'filled',
+            },
+          },
+        },
       },
       MuiCssBaseline: {
         styleOverrides: {
