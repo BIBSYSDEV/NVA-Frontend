@@ -58,7 +58,6 @@ export enum UrlPathTemplate {
   MyPageTerms = '/my-page/profile/terms',
   MyPageMyRegistrations = '/my-page/registrations',
   MyPageUserRoleAndHelp = '/my-page/profile/user-role-and-help',
-  PrivacyPolicy = '/privacy-policy',
   ProjectsRoot = '/projects',
   ProjectsNew = '/projects/new',
   ProjectPage = '/projects/:identifier',
