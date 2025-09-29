@@ -166,7 +166,7 @@ const ResearchProfile = () => {
         </Typography>
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
       </Box>
-      <BackgroundDiv>
+      <BackgroundDiv sx={{ bgcolor: 'white' }}>
         {activeAffiliations.length > 0 ? (
           <Box
             sx={{
