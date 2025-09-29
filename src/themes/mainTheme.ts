@@ -68,6 +68,11 @@ declare module '@mui/material/Chip' {
     tertiary: true;
   }
 }
+declare module '@mui/material/PaginationItem' {
+  interface PaginationItemPropsColorOverrides {
+    tertiary: true;
+  }
+}
 
 const dialogTitleId = 'dialog-title-id';
 export const dialogDescriptionId = 'dialog-description-id';

@@ -179,7 +179,7 @@ export const FileRow = ({
         ) : null}
       </Box>
       {file.legalNote && (
-        <Typography sx={{ gridArea: 'note', bgcolor: 'secondary.main', borderRadius: '5px', p: '0.5rem' }}>
+        <Typography sx={{ gridArea: 'note', bgcolor: 'info.light', borderRadius: '5px', p: '0.5rem' }}>
           {file.legalNote}
         </Typography>
       )}

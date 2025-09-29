@@ -74,7 +74,13 @@ export const ListPaginationBottom = ({
           onPageChange(newPage);
         }}
         renderItem={(item) => (
-          <PaginationItem {...item} variant={item.selected ? 'outlined' : 'text'} page={item.page?.toLocaleString()} />
+          <PaginationItem
+            {...item}
+            color="tertiary"
+            sx={{ border: item.selected ? '1px solid' : 'hidden', borderColor: 'primary.main' }}
+            variant={item.selected ? undefined : 'text'}
+            page={item.page?.toLocaleString()}
+          />
         )}
       />
 
