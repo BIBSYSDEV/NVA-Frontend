@@ -100,7 +100,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </Tooltip>
         )}
       </StyledPaperHeader>
-      <BackgroundDiv>
+      <BackgroundDiv sx={{ bgcolor: 'white' }}>
         {contributors.length > 0 && entityDescription?.reference?.publicationInstance?.type && (
           <PublicRegistrationContributors
             contributors={contributors}

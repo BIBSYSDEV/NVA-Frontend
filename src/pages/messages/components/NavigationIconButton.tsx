@@ -17,10 +17,10 @@ export const NavigationIconButton = ({ navigateTo, sx, ...rest }: NavigationIcon
       height: 'fit-content',
       justifySelf: navigateTo === 'previous' ? 'start' : 'end',
       border: '1px solid',
-      borderColor: 'info.main',
-      bgcolor: 'white',
+      borderColor: 'primary.main',
+      bgcolor: 'tertiary.main',
       '&:hover': {
-        bgcolor: 'white',
+        bgcolor: 'tertiary.dark',
       },
       ...sx,
     }}
@@ -28,7 +28,7 @@ export const NavigationIconButton = ({ navigateTo, sx, ...rest }: NavigationIcon
     {navigateTo === 'previous' ? (
       <ArrowBackIosNewIcon fontSize="small" color="info" />
     ) : (
-      <ArrowForwardIosIcon fontSize="small" color="info" />
+      <ArrowForwardIosIcon fontSize="small" color="primary" />
     )}
   </IconButton>
 );

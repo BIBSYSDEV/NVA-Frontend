@@ -2,7 +2,6 @@ import { createTheme, darken, PaletteColor, PaletteColorOptions, SxProps } from 
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import i18n from '../translations/i18n';
-import '@mui/material/Chip';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
@@ -69,6 +68,11 @@ declare module '@mui/material/Chip' {
     tertiary: true;
   }
 }
+declare module '@mui/material/PaginationItem' {
+  interface PaginationItemPropsColorOverrides {
+    tertiary: true;
+  }
+}
 
 const dialogTitleId = 'dialog-title-id';
 export const dialogDescriptionId = 'dialog-description-id';
@@ -132,7 +136,7 @@ export const mainTheme = createTheme(
       },
       background: {
         default: Color.Neutral95,
-        paper: Color.White, //TODO: Check <Paper /> components
+        paper: Color.Neutral97,
         neutral97: Color.Neutral97,
         neutral87: Color.Neutral87,
         neutral46: Color.Neutral46,
@@ -198,6 +202,14 @@ export const mainTheme = createTheme(
             marginBottom: '0.4rem',
           },
         },
+        defaultProps: {
+          slotProps: {
+            chip: {
+              color: 'secondary',
+              variant: 'filled',
+            },
+          },
+        },
       },
       MuiCssBaseline: {
         styleOverrides: {
@@ -255,6 +267,11 @@ export const mainTheme = createTheme(
         },
       },
       MuiDialog: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: Color.White,
+          },
+        },
         defaultProps: {
           'aria-labelledby': dialogTitleId,
           'aria-describedby': dialogDescriptionId,
@@ -455,7 +472,7 @@ export const alternatingTableRowColor: SxProps = {
     tr: {
       bgcolor: Color.Neutral97,
       '&:nth-of-type(even)': {
-        bgcolor: '#FEFBF3',
+        bgcolor: 'white',
       },
     },
   },

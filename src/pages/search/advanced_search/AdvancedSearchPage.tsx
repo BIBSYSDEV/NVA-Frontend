@@ -223,7 +223,7 @@ const AdvancedSearchPage = () => {
           </Grid>
 
           <Grid container sx={{ justifyContent: isLargeScreen ? 'end' : 'center' }} size={12}>
-            <Button variant="outlined" onClick={() => navigate(location.pathname)}>
+            <Button variant="contained" color="tertiary" onClick={() => navigate(location.pathname)}>
               {t('search.reset_selection')}
             </Button>
           </Grid>

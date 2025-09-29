@@ -14,7 +14,6 @@ export const TicketTypeFilterButton = ({ isSelected, children, ...rest }: Ticket
     color={isSelected ? 'tertiary' : 'white'}
     sx={{
       justifyContent: 'start',
-      color: 'primary.main',
       '.MuiButton-endIcon': {
         ml: 'auto',
         mr: '0.5rem',

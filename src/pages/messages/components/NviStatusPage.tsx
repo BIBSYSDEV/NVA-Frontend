@@ -49,7 +49,7 @@ export const NviStatusPage = () => {
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
-            <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: '#FEFBF3' }}>
+            <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
               <TableCell>{t('registration.contributors.department')}</TableCell>
               <TableCell>{t('tasks.nvi.status.New')}</TableCell>
               <TableCell>{t('tasks.nvi.status.Pending')}</TableCell>

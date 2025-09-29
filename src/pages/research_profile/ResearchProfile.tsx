@@ -166,7 +166,7 @@ const ResearchProfile = () => {
         </Typography>
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
       </Box>
-      <BackgroundDiv>
+      <BackgroundDiv sx={{ bgcolor: 'white' }}>
         {activeAffiliations.length > 0 ? (
           <Box
             sx={{
@@ -268,7 +268,8 @@ const ResearchProfile = () => {
                 {personKeywords.map((keyword) => (
                   <Chip
                     color="secondary"
-                    variant="filled"
+                    variant="outlined"
+                    sx={{ color: 'primary.main' }}
                     key={keyword.type}
                     label={getLanguageString(keyword.label)}
                   />

@@ -212,7 +212,10 @@ export const CategoryChip = ({ category, onClickChip, disabled = !!category.disa
           deleteIcon={category.selected ? <CancelIcon /> : <AddCircleOutlineIcon />}
           variant={category.selected ? 'filled' : 'outlined'}
           color="secondary"
-          sx={{ boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.20)', color: category.selected ? 'white' : 'primary.main' }}
+          sx={{
+            boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.20)',
+            color: category.selected ? 'white' : 'primary.main',
+          }}
           onDelete={toggleCategory}
           onClick={toggleCategory}
           label={category.text}

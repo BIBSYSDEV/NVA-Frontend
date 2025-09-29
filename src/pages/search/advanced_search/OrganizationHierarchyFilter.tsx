@@ -115,6 +115,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
         </Button>
         <Button
           variant="contained"
+          color="secondary"
           disabled={!selectedId}
           onClick={() => {
             params.delete(ResultParam.From);

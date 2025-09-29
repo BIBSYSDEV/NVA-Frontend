@@ -100,9 +100,10 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
             {userCanCompleteTicket && isOnTasksPage && supportTicket.status !== 'Completed' && (
               <Button
-                sx={{ alignSelf: 'center', width: 'fit-content', bgcolor: 'white' }}
+                color="tertiary"
+                variant="contained"
+                sx={{ alignSelf: 'center', width: 'fit-content' }}
                 loading={ticketMutation.isPending}
-                variant="outlined"
                 onClick={async () => {
                   await ticketMutation.mutateAsync({ status: 'Completed' });
                   invalidateQueryKeyDueToReindexing(queryClient, 'taskNotifications');

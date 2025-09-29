@@ -74,7 +74,6 @@ const getTicketTypeFromLogEntryTopic = (topic: LogEntry['topic']): TicketType =>
   }
 };
 
-//TODO:Theme: Check if log messages should have different backgrounds
 const getMessageItemBackgroundColor = (topic: LogEntry['topic']) => {
   switch (topic) {
     case 'DoiRejected':

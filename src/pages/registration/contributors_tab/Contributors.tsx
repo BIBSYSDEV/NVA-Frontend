@@ -21,7 +21,6 @@ import { useDispatch } from 'react-redux';
 import { ListPagination } from '../../../components/ListPagination';
 import { RegistrationFormContext } from '../../../context/RegistrationFormContext';
 import { setNotification } from '../../../redux/notificationSlice';
-import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import {
   Affiliation,
   Contributor,
@@ -212,7 +211,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
             setCurrentPage(1);
           }}>
           <TableContainer sx={{ mb: '0.5rem' }} component={Paper}>
-            <Table size="small" sx={alternatingTableRowColor}>
+            <Table size="small">
               <TableHead>
                 <TableRow>
                   <TableCell>{t('common.order')}</TableCell>
