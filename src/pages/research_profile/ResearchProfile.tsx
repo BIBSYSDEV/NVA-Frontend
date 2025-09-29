@@ -268,7 +268,8 @@ const ResearchProfile = () => {
                 {personKeywords.map((keyword) => (
                   <Chip
                     color="secondary"
-                    variant="filled"
+                    variant="outlined"
+                    sx={{ color: 'primary.main' }}
                     key={keyword.type}
                     label={getLanguageString(keyword.label)}
                   />
