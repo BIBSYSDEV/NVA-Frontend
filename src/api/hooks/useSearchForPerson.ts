@@ -3,12 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { PersonSearchParams, searchForPerson } from '../cristinApi';
 
 type SearchResponseType = Awaited<ReturnType<typeof searchForPerson>>;
+type QueryFunctionType =
+  | Query<SearchResponseType, Error, SearchResponseType, (string | PersonSearchParams)[]>
+  | undefined;
 
 interface PersonSearchOptions extends PersonSearchParams {
   enabled?: boolean;
   placeholderData?:
     | SearchResponseType
-    | ((previousData: SearchResponseType | undefined) => SearchResponseType | undefined);
+    | ((previousData: SearchResponseType | undefined, query: QueryFunctionType) => SearchResponseType | undefined);
 }
 
 export const useSearchForPerson = ({ enabled, placeholderData, ...searchParams }: PersonSearchOptions) => {
@@ -26,7 +29,7 @@ export const useSearchForPerson = ({ enabled, placeholderData, ...searchParams }
 // Keep previous data if query has the same search term
 export const keepSimilarPreviousData = (
   previousData: SearchResponseType | undefined,
-  query: Query<SearchResponseType, Error, SearchResponseType, (string | PersonSearchParams)[]> | undefined,
+  query: QueryFunctionType,
   searchTerm?: string | null
 ) => {
   if (searchTerm && query?.queryKey.some((key) => typeof key === 'object' && key.name === searchTerm)) {
