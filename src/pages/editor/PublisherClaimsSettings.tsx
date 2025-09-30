@@ -46,8 +46,9 @@ export const PublisherClaimsSettings = () => {
           heading: <Typography variant="h2" sx={{ mt: '1rem' }} />,
           button: (
             <Button
+              color="tertiary"
+              variant="contained"
               data-testid={dataTestId.basicData.addChannelClaimButton}
-              variant="outlined"
               startIcon={<AddIcon />}
               sx={{ my: '0.5rem' }}
               onClick={toggleAddChannelClaimDialog}>

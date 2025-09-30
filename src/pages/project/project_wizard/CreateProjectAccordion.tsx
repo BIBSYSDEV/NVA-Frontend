@@ -19,7 +19,7 @@ export const CreateProjectAccordion = ({
   children,
 }: CreateProjectAccordionProps) => {
   return (
-    <Accordion data-testid={testId} elevation={3} sx={{ bgcolor: 'secondary.main' }}>
+    <Accordion data-testid={testId} elevation={3} sx={{ bgcolor: 'background.default' }}>
       <AccordionSummary
         sx={{ px: '1.25rem', py: '0.75rem' }}
         expandIcon={<ExpandMoreIcon sx={{ color: 'primary.dark', height: '2.5rem', width: '2.5rem' }} />}>

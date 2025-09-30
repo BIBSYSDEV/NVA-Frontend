@@ -77,7 +77,8 @@ export const PublicRegistrationContributors = ({
             size="small"
             startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             onClick={toggleShowAll}
-            variant="outlined">
+            color="tertiary"
+            variant="contained">
             {showAll ? t('common.show_fewer') : t('common.show_all')}
           </Button>
         )}
@@ -97,7 +98,7 @@ export const PublicRegistrationContributors = ({
           <Box
             sx={{
               p: '0.3rem 2rem',
-              bgcolor: 'primary.light',
+              bgcolor: 'error.main',
               color: 'primary.contrastText',
               display: 'flex',
               alignItems: 'center',
@@ -145,16 +146,16 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
 
-        const hasValidRole = relevantRoles.includes(contributor.role.type);
+        const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
 
         const showRole = relevantRoles.includes(ContributorRole.Creator)
-          ? contributor.role.type !== ContributorRole.Creator
+          ? contributor.role?.type !== ContributorRole.Creator
           : true;
 
         const roleContent = showRole && (
           <Box component="span" sx={{ ml: '0.2rem' }}>
             {hasValidRole ? (
-              <>({t(`registration.contributors.types.${contributor.role.type}`)})</>
+              <>({t(`registration.contributors.types.${contributor.role!.type}`)})</>
             ) : (
               <i>({t('registration.public_page.unknown_role')})</i>
             )}

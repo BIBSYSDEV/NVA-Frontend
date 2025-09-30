@@ -105,7 +105,11 @@ export const MyRegistrations = () => {
             </FormControl>
 
             {statusValue === RegistrationStatus.Draft && (
-              <Button variant="outlined" onClick={() => setShowDeleteModal(true)} disabled={registrations.length === 0}>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => setShowDeleteModal(true)}
+                disabled={registrations.length === 0}>
                 {t('my_page.registrations.delete_draft_registrations')}
               </Button>
             )}

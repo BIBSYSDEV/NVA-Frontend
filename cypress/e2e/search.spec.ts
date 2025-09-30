@@ -1,9 +1,10 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
+import { UrlPathTemplate } from '../../src/utils/urlPaths';
 import { a11yLogErrors } from '../support/logging';
 
 describe('Search', () => {
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit(UrlPathTemplate.Filter);
   });
 
   it('The user should see a working pagination', () => {

@@ -41,7 +41,7 @@ export const FileBox = ({ file, sx, showFileVersion, associatedRegistration }: F
         display: 'flex',
         flexDirection: 'column',
         gap: '0.25rem',
-        bgcolor: '#FEFBF3',
+        bgcolor: 'background.neutral97',
         height: '100%',
         minHeight: '5rem',
         ...sx,

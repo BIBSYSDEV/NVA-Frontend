@@ -20,8 +20,8 @@ export const SelectedFacetButton = ({ param, value, content }: SelectedFacetButt
   return (
     <li style={{ listStyleType: 'none' }}>
       <Button
+        sx={{ bgcolor: 'secondary.main', color: 'white' }}
         data-testid={dataTestId.startPage.advancedSearch.removeFacetButton}
-        variant="outlined"
         size="small"
         title={t('search.remove_filter')}
         endIcon={<ClearIcon />}

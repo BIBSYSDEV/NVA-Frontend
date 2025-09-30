@@ -88,7 +88,7 @@ export const ContributorRow = ({
       </TableCell>
       <TableCell align="left" width="1">
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-          {!contributorRoles.includes(contributor.role.type) && (
+          {(!contributor.role || !contributorRoles.includes(contributor.role.type)) && (
             <Tooltip title={t('registration.contributors.invalid_role')}>
               <WarningIcon color="warning" />
             </Tooltip>
@@ -102,7 +102,7 @@ export const ContributorRow = ({
                 variant="filled"
                 label={t('common.select_role')}
                 fullWidth
-                sx={{ minWidth: '5rem' }}
+                sx={{ minWidth: '7rem' }}
                 error={!!error && touched}
                 helperText={<ErrorMessage name={field.name} />}>
                 {contributorRoles.map((role) => (
@@ -154,7 +154,8 @@ export const ContributorRow = ({
           {!contributor.identity.id && (
             <Button
               disabled={disableNviCriticalFields || disableChannelClaimsFields}
-              variant="outlined"
+              variant="contained"
+              color="secondary"
               sx={{ padding: '0.1rem 0.75rem' }}
               data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
                 contributor.identity.name
@@ -166,6 +167,8 @@ export const ContributorRow = ({
           )}
 
           <Button
+            color="error"
+            variant="contained"
             disabled={disableNviCriticalFields || disableChannelClaimsFields}
             size="small"
             data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}

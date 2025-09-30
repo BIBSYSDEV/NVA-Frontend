@@ -76,7 +76,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
       sx={{
-        bgcolor: 'generalSupportCase.light',
+        bgcolor: 'background.neutral97',
         '& .MuiAccordionSummary-content': {
           alignItems: 'center',
           gap: '0.5rem',
@@ -100,9 +100,10 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
             {userCanCompleteTicket && isOnTasksPage && supportTicket.status !== 'Completed' && (
               <Button
-                sx={{ alignSelf: 'center', width: 'fit-content', bgcolor: 'white' }}
+                color="tertiary"
+                variant="contained"
+                sx={{ alignSelf: 'center', width: 'fit-content' }}
                 loading={ticketMutation.isPending}
-                variant="outlined"
                 onClick={async () => {
                   await ticketMutation.mutateAsync({ status: 'Completed' });
                   invalidateQueryKeyDueToReindexing(queryClient, 'taskNotifications');

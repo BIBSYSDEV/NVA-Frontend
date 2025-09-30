@@ -187,7 +187,6 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
                 placeholder={
                   !reference?.publicationContext.id ? t('registration.resource_type.search_for_title_or_issn') : ''
                 }
-                showSearchIcon={!reference?.publicationContext.id}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
             )}

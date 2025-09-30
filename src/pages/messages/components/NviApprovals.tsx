@@ -47,9 +47,9 @@ const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalSta
       sx={{
         bgcolor:
           approvalStatus.status === 'Approved'
-            ? 'nvi.light'
+            ? 'success.light'
             : approvalStatus.status === 'Rejected'
-              ? 'secondary.dark'
+              ? 'error.light'
               : 'white',
       }}>
       <TableCell>

@@ -50,7 +50,7 @@ export const StyledPageContent = styled(Box)(({ theme }) => ({
     padding: '1rem',
   },
   [theme.breakpoints.down('sm')]: {
-    padding: '0.5rem',
+    padding: '1rem',
   },
 }));
 
@@ -62,7 +62,7 @@ export const InputContainerBox = styled(Box)({
 
 export const BackgroundDiv = styled(Box)(({ theme }) => ({
   overflowX: 'auto',
-  background: theme.palette.secondary.light,
+  background: theme.palette.background.default,
   [theme.breakpoints.up('md')]: {
     padding: '1rem 2rem',
   },
@@ -87,22 +87,20 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
 }));
 
 export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
-  border: '2px solid',
-  borderColor: theme.palette.secondary.dark,
-  borderLeft: '1.25rem solid',
+  borderLeft: `0.75rem solid ${theme.palette.registration.main}`,
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
+  marginBottom: '0.2rem',
 }));
 
 export const SearchListItemDiv = styled('div')(({ theme }) => ({
-  border: '2px solid',
-  borderColor: theme.palette.secondary.dark,
-  borderLeft: '1.25rem solid',
+  borderLeft: `0.75rem solid ${theme.palette.registration.main}`,
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
   padding: '0.5rem 1rem',
+  marginBottom: '0.2rem',
 }));
 
 export const StyledTicketSearchFormGroup = styled(FormGroup)({
@@ -116,10 +114,10 @@ export const StyledTruncatableTypography = styled(Typography)({
 });
 
 export const StyledInfoBanner = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.light,
+  color: 'white',
+  backgroundColor: theme.palette.info.main,
   padding: '0.75rem',
   borderRadius: '0.25rem',
-  color: 'white',
 }));
 
 export const StyledFilterHeading = styled(Typography)<TypographyProps>({

@@ -36,7 +36,7 @@ export const UnconfirmedOrganizationBox = ({
         <Typography>&quot;{name}&quot;</Typography>
         <Button
           variant="outlined"
-          sx={{ padding: '0.1rem 0.5rem', maxWidth: '14rem', bgcolor: 'secondary.light' }}
+          sx={{ padding: '0.1rem 0.5rem', maxWidth: '14rem' }}
           data-testid={dataTestId.registrationWizard.contributors.verifyAffiliationButton}
           startIcon={<SearchIcon />}
           disabled={!onIdentifyAffiliationClick}

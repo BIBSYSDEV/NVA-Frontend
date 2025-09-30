@@ -82,7 +82,14 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
               }}
               slotProps={{
                 htmlInput: { 'aria-label': t('common.type') },
-                select: { sx: { bgcolor: 'registration.main' } },
+                select: {
+                  sx: {
+                    bgcolor: 'tertiary.main',
+                    ':hover': {
+                      bgcolor: 'tertiary.dark',
+                    },
+                  },
+                },
               }}>
               <MenuItem value={SearchTypeValue.Unit} sx={{ display: 'flex', gap: '0.5rem' }}>
                 <AccountBalanceIcon fontSize="small" />
@@ -117,12 +124,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
                 getOptionKey={(option) => option.id}
                 onChange={(_, selectedUnit) => setSearchValue(selectedUnit?.id ?? '')}
                 renderInput={(params) => (
-                  <AutocompleteTextField
-                    {...params}
-                    showSearchIcon
-                    variant="outlined"
-                    placeholder={t('editor.curators.search_for_unit')}
-                  />
+                  <AutocompleteTextField {...params} variant="outlined" placeholder={t('common.select_unit')} />
                 )}
               />
             ) : (
@@ -144,12 +146,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
                 getOptionKey={(option) => option.username}
                 onChange={(_, selectedUser) => setSearchValue(selectedUser?.username ?? '')}
                 renderInput={(params) => (
-                  <AutocompleteTextField
-                    {...params}
-                    showSearchIcon
-                    variant="outlined"
-                    placeholder={t('editor.curators.search_for_curator')}
-                  />
+                  <AutocompleteTextField {...params} variant="outlined" placeholder={t('select_curator')} />
                 )}
               />
             )}

@@ -57,7 +57,7 @@ export const SelectAffiliationRadioButton = ({
       size="small"
       disabled={disabled}
       title={t('registration.contributors.select_affiliation')}>
-      {affiliationIsSelected ? <CheckCircle fontSize="small" color="info" /> : <CircleOutlined fontSize="small" />}
+      {affiliationIsSelected ? <CheckCircle fontSize="small" color="secondary" /> : <CircleOutlined fontSize="small" />}
     </IconButton>
   );
 };

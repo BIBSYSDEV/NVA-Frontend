@@ -42,7 +42,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, queryParam }: A
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            sx={{ minWidth: '8rem' }}
+            sx={{ minWidth: '8rem', bgcolor: 'white' }}
             select
             variant="standard"
             size="small"
@@ -61,6 +61,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, queryParam }: A
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
+            sx={{ bgcolor: 'white' }}
             variant="standard"
             size="small"
             label={t('search.search_term_label')}

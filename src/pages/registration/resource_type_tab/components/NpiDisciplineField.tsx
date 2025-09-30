@@ -1,4 +1,3 @@
-import SearchIcon from '@mui/icons-material/Search';
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { ErrorMessage, Field, FieldProps } from 'formik';
@@ -52,20 +51,9 @@ export const NpiDisciplineField = ({ required }: NpiDisciplineFieldProps) => {
                 required={required}
                 fullWidth
                 variant="filled"
-                placeholder={!value ? t('registration.description.search_for_npi_discipline') : ''}
+                placeholder={!value ? t('velg_subject_area') : ''}
                 error={!!error && touched}
                 helperText={<ErrorMessage name={name} />}
-                slotProps={{
-                  input: {
-                    ...params.InputProps,
-                    startAdornment: (
-                      <>
-                        {params.InputProps.startAdornment}
-                        {!value && <SearchIcon color="disabled" sx={{ marginLeft: '0.5rem' }} />}
-                      </>
-                    ),
-                  },
-                }}
               />
             )}
           />

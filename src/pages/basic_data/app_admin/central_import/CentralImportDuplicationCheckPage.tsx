@@ -134,7 +134,7 @@ export const CentralImportDuplicationCheckPage = () => {
                   {t('basic_data.central_import.merge_candidate.result_in_nva')}:
                 </Typography>
                 {importedRegistrationQuery.data && (
-                  <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+                  <SearchListItem>
                     <RegistrationListItemContent
                       registration={convertToRegistrationSearchItem(importedRegistrationQuery.data)}
                     />
@@ -185,7 +185,7 @@ export const CentralImportDuplicationCheckPage = () => {
               </Typography>
 
               <Link to={getImportCandidateWizardPath(identifier ?? '')}>
-                <Button variant="outlined" fullWidth size="small">
+                <Button variant="contained" color="tertiary" fullWidth size="small">
                   {t('basic_data.central_import.create_new')}
                 </Button>
               </Link>
@@ -197,12 +197,12 @@ export const CentralImportDuplicationCheckPage = () => {
                 <Link
                   to={{ pathname: getImportCandidateMergePath(identifier ?? '', registrationIdentifier) }}
                   state={{ ...locationState, previousPath: location.pathname } satisfies BasicDataLocationState}>
-                  <Button variant="outlined" fullWidth size="small">
+                  <Button variant="contained" color="secondary" fullWidth size="small">
                     {t('basic_data.central_import.merge_candidate.merge')}
                   </Button>
                 </Link>
               ) : (
-                <Button variant="outlined" fullWidth size="small" disabled>
+                <Button variant="contained" color="secondary" fullWidth size="small" disabled>
                   {t('basic_data.central_import.merge_candidate.merge')}
                 </Button>
               )}
@@ -211,7 +211,8 @@ export const CentralImportDuplicationCheckPage = () => {
 
               <Typography gutterBottom>{t('basic_data.central_import.mark_as_not_applicable')}</Typography>
               <Button
-                variant={showNotApplicableDialog ? 'contained' : 'outlined'}
+                color="tertiary"
+                variant="contained"
                 fullWidth
                 size="small"
                 onClick={() => setShowNotApplicableDialog(true)}>
@@ -237,7 +238,7 @@ export const CentralImportDuplicationCheckPage = () => {
               pathname: UrlPathTemplate.BasicDataCentralImport,
               search: location.state?.previousSearch,
             }}>
-            <Button size="small" fullWidth variant="outlined">
+            <Button size="small" fullWidth variant="contained" color="tertiary">
               {t('common.cancel')}
             </Button>
           </Link>

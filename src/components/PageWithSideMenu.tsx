@@ -18,7 +18,7 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledPaperHeader = styled(Box)(({ theme }) => ({
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.common.white,
   backgroundColor: theme.palette.primary.main,
   display: 'flex',
   alignItems: 'center',
@@ -83,11 +83,12 @@ interface LinkCreateButtonProps extends SelectableButtonProps {
 export const LinkCreateButton = ({ sx, title, isSelected, selectedColor, ...rest }: LinkCreateButtonProps) => {
   return (
     <SelectableButton
+      color="primary"
       sx={{
+        bgcolor: isSelected ? selectedColor : 'tertiary.main',
+        borderColor: isSelected ? selectedColor : 'tertiary.main',
         borderWidth: '1px',
         borderRadius: 0,
-        borderColor: isSelected ? 'primary.main' : 'secondary.dark',
-        bgcolor: isSelected ? selectedColor : 'none',
         width: '100%',
         justifyContent: 'center',
         ...sx,

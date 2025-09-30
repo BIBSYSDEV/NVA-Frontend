@@ -116,6 +116,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                 </Field>
                 <Button
                   data-testid="doi-search-button"
+                  color="secondary"
                   variant="contained"
                   loading={isLookingUpDoi}
                   type="submit"
@@ -133,7 +134,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
             <Divider />
             <Typography
               sx={{
-                bgcolor: 'primary.light',
+                bgcolor: 'info.main',
                 color: 'primary.contrastText',
                 width: 'fit-content',
                 p: '0.5rem',
@@ -161,6 +162,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
           endIcon={<ArrowForwardIcon fontSize="large" />}
           loadingPosition="end"
           variant="contained"
+          color="secondary"
           disabled={isLookingUpDoi || registrationsWithDoi.length > 0 || !doiPreview || !doiQuery}
           loading={createRegistrationFromDoi.isPending}
           onClick={persistRegistration}>

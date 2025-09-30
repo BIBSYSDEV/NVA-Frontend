@@ -63,7 +63,7 @@ export const OrganizationAccordion = ({
       elevation={2}
       disableGutters
       sx={{
-        bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light',
+        bgcolor: level % 2 === 0 ? 'background.neutral97' : 'white',
         ml: { xs: undefined, md: level > 0 ? '1rem' : 0 },
       }}
       expanded={expanded}
@@ -85,7 +85,11 @@ export const OrganizationAccordion = ({
             py: '0.25rem',
             '& > p': { fontWeight: foundBySearch ? 700 : undefined },
           }}>
-          {foundBySelect ? <RadioButtonCheckedIcon fontSize="small" /> : <RadioButtonUncheckedIcon fontSize="small" />}
+          {foundBySelect ? (
+            <RadioButtonCheckedIcon color="secondary" fontSize="small" />
+          ) : (
+            <RadioButtonUncheckedIcon color="secondary" fontSize="small" />
+          )}
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
           <Typography sx={{ gridColumn: { xs: '1/3', lg: '3/4' } }}>{organization.labels['en']}</Typography>
           {displayOrgId && (

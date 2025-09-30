@@ -146,7 +146,7 @@ const RoleItem = ({ dataTestId, label, text }: IconLabelTextLineProps) => (
   <Box
     data-testid={dataTestId}
     sx={{
-      bgcolor: 'secondary.dark',
+      bgcolor: 'background.neutral97',
       p: '0.5rem',
       display: 'grid',
       gridTemplateAreas: "'role label' 'text text'",

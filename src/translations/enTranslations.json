@@ -2,21 +2,9 @@
   "about": {
     "availability_statement": "Accessibility statement",
     "copyright_inquiries": "Inquires about copyright",
-    "description": {
-      "paragraph0": {
-        "bullet_point0": "Meet the requirement for open access to articles and other research results by depositing in an open research repository",
-        "bullet_point1": "Publish reports, student theses and other material produced at the institution",
-        "intro": "By using NVA, Norwegian research institutions are able to:"
-      },
-      "paragraph1": "NVA is also being developed for use in reporting scientific publishing to the Ministry of Knowledge and the Ministry of Health and Care Services (NVI reporting), and for other research administrative tasks.",
-      "paragraph2": "Sikt is the data processor. The individual institution is the data controller and registers and maintains its own content in the service, and configures distribution rules for published resources (articles, reports, datasets, etc.). The service also receives content from other data sources.",
-      "paragraph3": "NVA supports delayed publication of resources. This means that a registration can be completed so that metadata about the resource is published, while the resource does not become openly accessible until a specified date. The service does not allow the processing of sensitive personal data.",
-      "paragraph4": "NVA will make the institution's open content available via open interfaces, with the intention of making it known and searchable to the outside world, and promoting indexing in search engines and search portals.",
-      "paragraph5": "Although NVA is established and used by several institutions, the service will be in continuous development throughout its lifetime. Institutions that do not have a knowledge archive can contact <0>Sikt</0> to start using NVA as a pilot institution."
-    },
-    "footer_text": "The service is provided by Sikt — Norwegian Agency for Shared Services in Education and Research. Sikt provides shared services to the Norwegian knowledge sector.",
-    "short_description": "The Norwegian Research Information Repository (NVA) gathers information about Norwegian research, and makes research results and research information openly accessible."
+    "footer_text": "The service is provided by Sikt — Norwegian Agency for Shared Services in Education and Research. Sikt provides shared services to the Norwegian knowledge sector."
   },
+  "add_file": "Add file",
   "authorization": {
     "about_terms": "Terms of Use and Privacy Policy for the Norwegian Research Information Repository",
     "about_terms_description": "<p>To use the service, you must accept Sikt's <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Terms of Use for the Norwegian Research Information Repository</a>, and familiarize yourself with the <a href=\"https://nva.sikt.no/privacy-policy\">Privacy Policy for the Norwegian Research Information Repository.</a></p><p>By clicking on «$t(authorization.accept)», you confirm that you have read and accepted the terms of use. You also consent to the processing of personal data in accordance with the privacy policy.</p>",
@@ -177,7 +165,6 @@
     "clear": "Clear",
     "click_to_show_all": "Click to show all",
     "close": "Close",
-    "close_forever": "Close and do not show again",
     "consists_of": "Consists of",
     "contributor": "Contributor",
     "contributors": {
@@ -234,7 +221,6 @@
     "not_decided": "Not decided",
     "number_of_rows_per_page": "Number of rows per page",
     "number_short": "No.",
-    "nva_tagline": "Norwegian Research Information Repository (NVA)",
     "nvi": "Norwegian Science Index (NVI)",
     "nvi_short": "NVI",
     "open": "Open",
@@ -263,9 +249,7 @@
     "rbo": "Performance-based funding allocation (RBO)",
     "read": "Read",
     "read_less": "Read less",
-    "read_less_about_nva": "Read less about NVA",
     "read_more": "Read more",
-    "read_more_about_nva": "Read more about NVA",
     "read_past_tense": "Read",
     "reference": "Reference",
     "reject": "Reject",
@@ -434,9 +418,7 @@
         "Nvi-Curator": "NVI",
         "Publishing-Curator": "File approval",
         "Support-Curator": "User support"
-      },
-      "search_for_curator": "Search for curator",
-      "search_for_unit": "Search for unit"
+      }
     },
     "does_not_support_open_files": "Does not support open files",
     "doi": {
@@ -608,11 +590,12 @@
       "get_users_for_institution": "Failed to retrieve users",
       "get_vocabularies": "Failed to retrieve controlled vocabularies",
       "login_failed": "Log in failed",
+      "login_failed_try_bankid": "Log in failed. Try logging in with BankID instead.",
       "orcid_login": "ORCID login failed",
       "person_search": "Search for person failed",
       "project_search": "Project search failed",
       "publish_registration": "Could not publish registration",
-      "registration_update_precondition_failed": "",
+      "registration_update_precondition_failed": "The registration was changed after you loaded the page. Reload the page to try again. Unsaved changes will be lost.",
       "reject_doi_request": "Could not reject DOI request",
       "remove_role": "Failed to remove role",
       "reserve_doi": "Reservation of DOI failed",
@@ -730,6 +713,7 @@
     "technical_support_link": "If you need technical support, please contact <0>kontakt@sikt.no</0>",
     "to_top": "To the top"
   },
+  "go_to_advanced_search": "Go to advanced result search",
   "institution_support": "Institution's user support",
   "institutions_service_support": "Institutions' user support",
   "licenses": {
@@ -958,7 +942,7 @@
       "institution_admin_description": "Maintains the institution's information in the person registry and assigns roles in the service.",
       "internal_importer": "Internal importer",
       "internal_importer_description": "Can process import candidates.",
-      "no_active_employments": "You do not have any roles because you have no active employments and do not have access to register.",
+      "no_active_employments": "You have no roles. The reason could be that you do not have an active employment, or that your institution is not an active customer of NVA.",
       "no_roles": "You do not have any roles because your administrator has not assigned any roles to you",
       "not_customer": "You have no roles because your institution is unknown to the application.",
       "nvi_curator": "NVI curator",
@@ -979,286 +963,11 @@
   "overview_over_administrators": "Overview of administrators",
   "overwrite": "Overwrite",
   "owner_institution": "Owner institution",
+  "person_profiles": "Person profiles",
   "point_of_contact": "Contact point",
   "point_of_contact_description": "Du you have questions about the research result?",
   "points_of_contact_for_result": "Contact point for the result",
-  "privacy": {
-    "about": {
-      "heading": "About this privacy statement",
-      "paragraph": "This privacy statement describes how the data controller handles your personal data in the service. The purpose of this privacy statement is to inform you about what personal data is processed, how it is processed, who is responsible for the processing, what rights you have, and who you can contact."
-    },
-    "automatic_case_processing": {
-      "heading": "Automated case processing",
-      "paragraph0": "The personal data related to system users will not be subject to automated case processing or profiling.",
-      "paragraph1": "Open personal data related to resources registered in the service may be profiled by other services that copy and/or index information in the service, but are not profiled as part of the service."
-    },
-    "contact": {
-      "heading": "Contact",
-      "section0": {
-        "heading": "Data controller",
-        "paragraph": "The institution is the data controller for personal data in the service and is the primary contact point for users."
-      },
-      "section1": {
-        "heading": "Data processor",
-        "paragraph": "Sikt develops and manages the service on behalf of the data controller, and has the role of data processor."
-      },
-      "section2": {
-        "email": "Email: <0><0></0></0>",
-        "intro": "Contact information for Sikt user support:",
-        "telephone": "Telephone: <0><0></0></0>"
-      }
-    },
-    "disclosure_of_data": {
-      "heading": "Disclosure of your personal data to third parties",
-      "paragraph0": "Disclosure or export of data is defined as any release of data other than to one's own system/processing, or to the data subject themselves or someone who receives data on their behalf.",
-      "paragraph1": "Personal data related to users are not transferred to countries outside the EU/EEA.",
-      "paragraph2": "The service is operated on servers in the EU/EEA.",
-      "paragraph3": {
-        "intro": "Your personal data will be disclosed to Sikt, who is the provider of the service, and to its subcontractors:",
-        "table": {
-          "caption": "Overview of subcontractors who may receive personal data",
-          "header": {
-            "col0": "Subcontractor",
-            "col1": "Function"
-          },
-          "row0": {
-            "col0": "Supplier in framework agreement for AWS through the GÉANT collaboration",
-            "col1": "Cloud management and backup for Sikt's direct services"
-          },
-          "row1": {
-            "col0": "Blue Safespring AB",
-            "col1": "Cloud management and backup for Sikt's direct services"
-          },
-          "row2": {
-            "col0": "UNINETT AS",
-            "col1": "Provides Feide, for authenticating users of the services"
-          }
-        }
-      },
-      "paragraph4": "Employees of the subcontractors, with a legitimate need, will have customized access to your personal data in order to provide on-site maintenance, user support and any correction of errors in the service.",
-      "paragraph5": "Open personal data linked to the resources are shared openly with external services. This includes search services such as Oria and OpenAIRE, as well as search engines that index data via the web pages — e.g. Google, Baidu, Bing and others.",
-      "paragraph6": {
-        "intro": "See the following table for the service's integrations:",
-        "table": {
-          "caption": "Overview of integrations",
-          "header": {
-            "col0": "Integration",
-            "col1": "Purpose",
-            "col2": "Service provided by"
-          },
-          "row0": {
-            "col0": "Feide",
-            "col1": "Information for secure user login.",
-            "col2": "UNINETT AS"
-          },
-          "row1": {
-            "col0": "Import of material to NVA from external services",
-            "col1": "Registration and publication in NVA.",
-            "col2": "Sources defined by the data controller"
-          },
-          "row2": {
-            "col0": "Export of metadata from NVA to external service",
-            "col1": "Export of metadata for resources to other services for presentation or cross-registration. For example, Oria to facilitate retrieval.",
-            "col2": "Sikt for Oria. Sources defined by the data controller."
-          },
-          "row3": {
-            "col0": "DOI and DataCite",
-            "col1": "The registrar can request the assignment of a Document Object Identifier (DOI) to a resource in NVA. This will cause selected metadata to be published in DataCite — a source regularly indexed by search engines.",
-            "col2": "DataCite"
-          },
-          "row4": {
-            "col0": "National Authority Registry",
-            "col1": "Establish a link to the authority register for authorization of the author, editor, supervisor and other creator or contributor registered in the service. To facilitate unambiguous registration and retrieval.",
-            "col2": "Sikt"
-          },
-          "row5": {
-            "col0": "$t(common.orcid)",
-            "col1": "Establish a link to ORCID register for authorization of the author, editor, supervisor and other creator or contributor registered in the service. To facilitate unambiguous registration and retrieval.",
-            "col2": "$t(common.orcid)"
-          }
-        }
-      }
-    },
-    "privacy_statement": "Privacy and cookies",
-    "purpose": {
-      "heading": "The purpose of personal data processing in the service",
-      "paragraph": "The service processes various types of persons for the following purposes:",
-      "table": {
-        "header": {
-          "col0": "Types",
-          "col1": "$t(common.description)",
-          "col2": "Purpose of registration and processing"
-        },
-        "row0": {
-          "col0": "Administrative users",
-          "col1": "Archive administrator, editor, curator. Typically, employees of the institution.",
-          "col2": "Administration of the service, including maintenance of content and configuration of access to functions and content. Administrative users must be registered with an identity to get rights in the service."
-        },
-        "row1": {
-          "col0": "Authenticated users",
-          "col1": "Registrar. Persons affiliated with the institution who have logged in to the service.",
-          "col2": "Registration of content in the service. Users must be registered with an identity, and link to the authority register for authors, to get rights in the service."
-        },
-        "row2": {
-          "col0": "Anonymous users",
-          "col1": "Persons or services that access the service without logging in. IP addresses will be logged.",
-          "col2": "Anonymous users are given access to open resources in the service. The service logs necessary information to prevent misuse and to generate aggregated statistics on the use of the resources."
-        },
-        "row3": {
-          "col0": "Bibliographic data — persons linked to the registered resource",
-          "col1": "Author, editor, supervisor or other creator or contributor to a resource registered in the service.",
-          "col2": "Cataloguing, crediting and accountability of the persons behind the resource."
-        },
-        "row4": {
-          "col0": "Bibliographic data — persons referred to in the resource",
-          "col1": "Personal data referred to in the content of the published resource",
-          "col2": "Making the published resource available. The content manager, together with the data controller, must ensure the privacy of the resource before it is published in the service."
-        }
-      }
-    },
-    "registered_personal_data": {
-      "heading": "Registered personal data, legal basis and storage time",
-      "paragraph0": "Personal data related to the user account in the service requires consent as a legal basis, cf. the <0>Act on the Processing of Personal Data (Personal Data Act), GDPR Article 6</0> no. 1 letter a.",
-      "paragraph1": "Registered personal data about authors and other individuals associated with the resource or identified in the resource are covered by the <0>Data Protection Act (Personal Data Act), GDPR Article 6</0> No. 1 letter f — to perform a task of legitimate interest.",
-      "paragraph2": "The service does not allow the processing of sensitive personal data. In cases where the users themselves can enter information in comment fields and the like, the user is obliged to follow the requirements and guidelines of the service. It is not permitted to register sensitive information about oneself or others, or to use the service for defamatory behaviour.",
-      "paragraph3": "The data controller can store information for statistical purposes, if this is in the interest of society, cf. <0>Data Protection Act §8</0> and <1>GDPR Article 6</1> No. 1 letter e.",
-      "paragraph4": "The following personal data is processed in the service:",
-      "paragraph5": "The information about your activity is stored in order to provide you with user support and to gain insight into the general use of the service.",
-      "paragraph6": {
-        "bullet_point0": "User consent is withdrawn",
-        "bullet_point1": "The purpose of processing personal data has been fulfilled",
-        "bullet_point2": "The data controller decides to discontinue the service",
-        "intro": "Personal data is stored until one of the following events occurs:"
-      },
-      "paragraph7": "Logs and backups of system data are stored for up to one year.",
-      "paragraph8": "User information (except logs) is stored for the lifetime of a resource for users who register content in NVA.",
-      "table": {
-        "header": {
-          "col0": "Type of information",
-          "col1": "$t(common.description)",
-          "col2": "Source"
-        },
-        "other_user_data": {
-          "heading": "Other personal data",
-          "row0": {
-            "col0": "Metadata for the resource",
-            "col1": "Full name and role of author, editor, supervisor and other creator or contributor",
-            "col2": "Registered in NVA or transferred from external data source"
-          },
-          "row1": {
-            "col0": "Personal data in the resource itself",
-            "col1": "Persons identified in the resource. The content of the resource must be quality assured by the responsible party before publication.",
-            "col2": "The resource is uploaded to NVA upon registration or transferred from an external source"
-          }
-        },
-        "techincal_user_data": {
-          "heading": "Technical user data",
-          "row0": {
-            "col0": "System identities",
-            "col1": "Identities in the service and integrated systems. Feide ID, Author ID, ORCID iD",
-            "col2": "Feide, National Authority Register, ORCID"
-          },
-          "row1": {
-            "col0": "System roles and affiliation to the institution",
-            "col1": "The user is assigned roles in the system to provide customized functionality and access to the service.",
-            "col2": "Assigned in NVA, Feide"
-          },
-          "row2": {
-            "col0": "Session information and cookies",
-            "col1": "Information related to the user's interaction with the service. Necessary for customizing functionality in the service and for authenticating users.",
-            "col2": "NVA, Feide"
-          },
-          "row3": {
-            "col0": "Log",
-            "col1": "A log of system usage related to the logged-in user and/or IP address. The IP address will be registered for anonymous users, which in some cases can be traced back to an individual. The purpose of the log is to maintain the security and integrity of the system, provide user support, and analyse the use of the service. The information collected includes the time, user ID, IP address, information about the browser and hardware, session information, and other information that the browser normally provides.",
-            "col2": "Created in NVA"
-          }
-        },
-        "user_data": {
-          "heading": "User data",
-          "row0": {
-            "col0": "Basic user data",
-            "col1": "Full name.",
-            "col2": "Feide"
-          },
-          "row1": {
-            "col0": "Contact information",
-            "col1": "E-mail address assigned at your own institution.",
-            "col2": "Feide"
-          },
-          "row2": {
-            "col0": "Profile",
-            "col1": "User's preferences for using the service. Language selection, institutional affiliation.",
-            "col2": "Settings in NVA"
-          }
-        }
-      }
-    },
-    "security_for_personal_data": {
-      "heading": "The security of your personal data.",
-      "paragraph0": "Personal data in the service is secured with several measures. All transfers to and from the service related to user accounts are encrypted. The data processor regularly performs risk and vulnerability analyses, and tests the security of the service to protect your personal data.",
-      "paragraph1": "The data controller is responsible for procedures that safeguard privacy in connection with the publication of content."
-    },
-    "service_in_brief": {
-      "heading": "Brief summary of the service",
-      "paragraph0": "NVA is a service for collecting and making available information about, and results from, Norwegian research. The institution (the data controller) registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, datasets, etc.). The service also receives content belonging to the institution from other data sources. NVA makes the institution's open content available via open interfaces, with the intention of making this known and searchable to the outside world and to promote indexing in search engines and search portals.",
-      "paragraph1": "NVA supports delayed publication of resources. This means that the registration can be completed so that metadata about the resource is published, while the resource does not become openly available until the specified date.",
-      "paragraph2": "The service does not allow processing of sensitive personal data."
-    },
-    "what_are_personal_data": {
-      "heading": "What is personal data?",
-      "paragraph": "Personal data is all forms of data, information, details and assessments that can be linked to you as an individual, cf. <0>the Personal Data Act § 2</0> and <1>GDPR Article 5</1> no. 1. The deciding factor as to what constitutes personal data, is whether the information can be linked to a specific person. Data that can not be linked to an individual may still be personal data in cases where it occurs together with other information."
-    },
-    "your_rights": {
-      "heading": "Your rights",
-      "section0": {
-        "heading": "Right to information and access",
-        "paragraph0": "You have a right to receive information about how your personal data are processed in the service. This privacy statement is intended to give you the information you have a right to receive. You also have the right to see/access your personal data that are registered in the service, and also other personal data that is collected after you have actively logged in. You also have the right to request a copy of your personal data.",
-        "paragraph1": "The right to access is provided through self-service in the service, where you get access to your own information after logging in. If the service does not provide complete information via the self-service solution, a written request must be made to the data controller's user support to acquire access to additional information."
-      },
-      "section1": {
-        "heading": "Right to correction",
-        "paragraph0": "You have the right to have incorrect personal data about you corrected. You also have the right to have incomplete personal data about you supplemented. If you believe the service shows incorrect or incomplete personal data, please contact the data controller and explain why you believe the personal data is incorrect or incomplete.",
-        "paragraph1": "Please note that there is a limited possibility to correct information that is distributed via open interfaces."
-      },
-      "section2": {
-        "heading": "Right to restrict processing",
-        "paragraph0": {
-          "bullet_point0": "Pending the data controller correcting incorrect or incomplete personal data",
-          "bullet_point1": "If you have submitted an objection to the processing (see below for more details)",
-          "bullet_point2": "If the personal data are necessary to establish or defend a legal claim",
-          "intro": "In certain cases, you may have the right to request restrictions on the processing of your personal data. Restricted processing means that the personal data is still stored, but that other processing in the service is restricted. To request restricted processing of personal data, the conditions in the Personal Data Act and <0>GDPR Article 18</0> must be met. You can request restricted processing:"
-        },
-        "paragraph1": "If restricted processing is granted, the data controller will notify you before the restriction is lifted."
-      },
-      "section3": {
-        "heading": "Right to erasure",
-        "paragraph0": "You have the right to demand that we delete personal data about you. If you wish to have your personal data deleted, please contact the data controller. It is important that you explain why you want the personal data to be deleted, and if possible explain which personal data you want to have deleted.",
-        "paragraph1": "Please be aware that in some cases, legislation provides exemptions from the right to erasure. For example, this will be the case when we process personal data to fulfil a legal obligation, or to safeguard important societal interests such as archiving, research, and statistics. We are unable to delete user information where the user themselves have registered content in NVA without also deleting the registered content.",
-        "paragraph2": "Please note that there are also limited possibilities to delete personal data that has been distributed via open interfaces."
-      },
-      "section4": {
-        "heading": "Right to object",
-        "paragraph0": {
-          "bullet_point0": "The legal basis for the processing of personal data is based on legitimate interests, in the public interest, or when exercising public authority.",
-          "bullet_point1": "Processing of personal data involves direct marketing or profiling.",
-          "bullet_point2": "Personal data are processed for scientific/historical research or statistics.",
-          "intro": "You have the right to object to the processing of your personal data under certain conditions, defined in <0>GDPR Article 21</0>. This applies if:"
-        },
-        "paragraph1": "The service generally does not meet these conditions, except the processing of author information and in cases where personal data is used for statistics. When used for statistics, personal data will be anonymized.",
-        "paragraph2": {
-          "bullet_point0": "If you have a legitimate need to stop the processing, we ask you to contact the data controller — e.g. if you have a need for protection, a confidential address, or similar.",
-          "bullet_point1": "When you have consented to the processing of personal data, you have a right to withdraw your consent",
-          "intro": "However, please note the following:"
-        }
-      },
-      "section5": {
-        "heading": "Right to complain about the processing",
-        "paragraph0": "If you believe that we have not processed your personal data in a correct and lawful manner, or that we have not managed to fulfil your rights, you have a right to complain about the processing. See our contact details below.",
-        "paragraph1": "If we do not uphold your complaint, you may file a complaint with the Norwegian Data Protection Authority. The Data Protection Authority is responsible for ensuring that Norwegian enterprises comply with the provisions of the Personal Data Act and GDPR, in the processing of personal data."
-      }
-    }
-  },
+  "privacy_statement": "Privacy policy",
   "project": {
     "add_affiliation": "Add affiliation",
     "add_contributor": "Add project participant",
@@ -1367,6 +1076,7 @@
     "verify_contributor": "Identify project participant",
     "verify_project_manager": "Identify project manager"
   },
+  "projects": "Projects",
   "published_result": "Published result",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Cannot save because the result is published and contains validation errors",
@@ -1509,7 +1219,6 @@
       "project_association": "Project affiliation",
       "project_helper_text": "<0>If you register a funding source on a project, the results you link to that project will \"inherit\" information about funding. This means you don't have to register all funding sources on all the results of the project. If you search for the funding source in NVA, you will get hits on both the project and the results, and reporting to the Research Council or others will include all results.</0> <0>A result can be linked to several projects.</0>",
       "remove_vocabulary": "Remove vocabulary",
-      "search_for_npi_discipline": "Search for scientific field",
       "year_only": "Year only"
     },
     "edit_registration": "Edit registration",
@@ -2083,7 +1792,6 @@
       "series": "Series",
       "series_info": "If the publication is part of a series",
       "series_number": "Series number",
-      "series_title": "Series title",
       "title_of_event": "Event title",
       "type_work": "Type of work",
       "type_work_specified": "Custom work type",
@@ -2116,6 +1824,8 @@
     "year_published": "Publication year"
   },
   "reset": "Reset",
+  "results": "Research results",
+  "science_categories_front_page": "<heading>Work in various categories</heading><p>Research and dissemination encompass much more than scientific publications.</p><p>Everything is registered in different categories, and you can search and look up all the categories below.</p>",
   "search": {
     "additional_participants_one": "+{{count}} participant",
     "additional_participants_other": "+{{count}} participants",
@@ -2158,18 +1868,13 @@
     "responsible_institution": "Institution responsible for research",
     "result": "Result",
     "result_search": "Result search",
-    "search_for_contributor": "Search for contributor",
+    "search_for_contributor": "Search for identified contributor",
     "search_for_coordinating_institution": "Search for coordinating institution",
     "search_for_course_code": "Search for subject code",
-    "search_for_funder": "Search for funder",
     "search_for_funding_identifier": "Search for grant ID",
-    "search_for_journal": "Search for journal",
     "search_for_participant": "Search for participant",
     "search_for_participating_institution": "Search for participating institution",
     "search_for_responsible_institution": "Search for institution responsible for research",
-    "search_for_serial_publication": "Search for series/journal",
-    "search_for_series": "Search for series",
-    "search_for_sub_unit": "Search for subunit",
     "search_for_title": "Search for title",
     "search_placeholder": "Search for title, contributor, abstract, etc.",
     "search_project_placeholder": "Search for title, project ID, grant ID or participant",
@@ -2190,6 +1895,9 @@
     "year_from": "From year",
     "year_to": "To year"
   },
+  "search_in_national_research_publication": "Search over 2 million publications from researchers at universities, university colleges, and research institutions across the country.",
+  "select_curator": "Select curator",
+  "select_funder": "Select funder",
   "start_merging": "Start merging",
   "tasks": {
     "correction_list": "Correction list",
@@ -2281,6 +1989,10 @@
     "unpublish_registration_reason": "Enter a brief explanation for why this research result should no longer be published. The explanation will be displayed on the research result when looking up the reference to the research result."
   },
   "unpublished_result": "Unpublished result",
+  "velg_subject_area": "Select subject area",
   "view_contact_info": "View contact information",
-  "vocabulary_missing": "The institution has not added vocabulary"
+  "vocabulary_missing": "The institution has not added vocabulary",
+  "what_you_find_in_nva_description": "<heading>What can you find in NVA?</heading><p>The Norwegian Research Information Repository (NVA) collects and makes information about Norwegian research accessible.</p><p>Here, you can explore publications, research projects, and researchers across universities, university colleges, and research institutions.</p>",
+  "you_cannot_upload_files_to_this_result": "You do not have access to upload files for this result.",
+  "you_do_not_have_permission_to_edit_this_registration": "You do not have access to edit this registration."
 }

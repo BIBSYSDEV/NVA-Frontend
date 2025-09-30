@@ -79,8 +79,11 @@ export const AddContributorModal = ({
           <AddUnverifiedContributorForm
             searchTerm={searchTerm}
             addUnverifiedContributor={(newContributor) => {
-              newContributor.role.type = selectedContributorRole;
-              addUnverifiedContributor?.(newContributor);
+              const updatedContributor = {
+                ...newContributor,
+                role: { type: selectedContributorRole },
+              };
+              addUnverifiedContributor?.(updatedContributor);
             }}
             handleCloseModal={handleCloseModal}
             handleCancel={() => setOpenAddUnverifiedContributor(false)}

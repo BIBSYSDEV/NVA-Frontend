@@ -1,18 +1,13 @@
 import { Box, styled, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
+import { useLocation, useOutletContext } from 'react-router';
 import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
-import { RegistrationSearchResponse } from '../../api/searchApi';
 import { SearchForm } from '../../components/SearchForm';
-import { SearchResponse } from '../../types/common.types';
-import { CristinProject, ProjectAggregations } from '../../types/project.types';
-import { CristinPerson, PersonAggregations } from '../../types/user.types';
 import { SearchParam } from '../../utils/searchHelpers';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
-import { RegistrationSearch } from './registration_search/RegistrationSearch';
+import { RegistrationSearch, SearchPropTypes } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
 import { SelectedPersonFacetsList } from './selected_facets/SelectedPersonFacetsList';
@@ -39,14 +34,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-export interface SearchPageProps {
-  registrationQuery: UseQueryResult<RegistrationSearchResponse>;
-  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
-  projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
-}
-
-export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: SearchPageProps) => {
+const SearchPage = () => {
   const { t } = useTranslation();
+  const { registrationQuery, personQuery, projectQuery } = useOutletContext<SearchPropTypes>();
+
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const paramsSearchType = params.get(SearchParam.Type);
@@ -112,3 +103,5 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
     </Box>
   );
 };
+
+export default SearchPage;

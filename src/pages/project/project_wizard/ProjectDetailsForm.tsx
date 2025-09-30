@@ -30,6 +30,7 @@ export const ProjectDetailsForm = ({ thisIsRekProject }: ProjectDescriptionFormP
               <OrganizationSearchField
                 disabled={thisIsRekProject}
                 label={t('project.coordinating_institution')}
+                placeholder={t('search.search_for_coordinating_institution')}
                 onChange={(selectedInstitution) => {
                   const selectedCoordinatingInstitution: ProjectOrganization = {
                     type: 'Organization',

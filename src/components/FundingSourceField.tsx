@@ -34,15 +34,15 @@ export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
           onChange={(_, value) => setFieldValue(field.name, value?.id)}
           renderInput={(params) => (
             <AutocompleteTextField
+              {...params}
               data-testid={dataTestId.registrationWizard.description.fundingSourceSearchField}
               name={field.name}
               onBlur={field.onBlur}
-              {...params}
               label={t('registration.description.funding.funder')}
               isLoading={fundingSourcesQuery.isPending}
-              placeholder={t('common.search')}
-              showSearchIcon={!field.value}
+              placeholder={t('select_funder')}
               multiline
+              slotProps={{ inputLabel: { shrink: true } }}
               required
               errorMessage={touched && !!error ? error : undefined}
             />
