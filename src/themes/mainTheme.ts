@@ -38,7 +38,7 @@ declare module '@mui/material/styles' {
     registration: PaletteColor;
     person: PaletteColor;
     project: PaletteColor;
-    centralImport: PaletteColor;
+    neutral87: PaletteColor;
   }
   interface PaletteOptions {
     tertiary: PaletteColorOptions;
@@ -46,6 +46,7 @@ declare module '@mui/material/styles' {
     person?: PaletteColorOptions;
     project?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
+    neutral87?: PaletteColorOptions;
   }
   interface TypeBackground {
     neutral97?: string;
@@ -61,6 +62,7 @@ declare module '@mui/material/Button' {
     person: true;
     project: true;
     white: true;
+    neutral87: true;
   }
 }
 declare module '@mui/material/Chip' {
@@ -99,6 +101,7 @@ export const mainTheme = createTheme(
       tertiary: {
         main: Color.PurpleLight,
         dark: darken(Color.PurpleLight, 0.2),
+        light: '#F6F4FF',
         contrastText: Color.PurpleDark,
       },
       error: {
@@ -140,6 +143,9 @@ export const mainTheme = createTheme(
         neutral97: Color.Neutral97,
         neutral87: Color.Neutral87,
         neutral46: Color.Neutral46,
+      },
+      neutral87: {
+        main: Color.Neutral87,
       },
     },
     typography: {

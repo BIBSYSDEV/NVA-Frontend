@@ -15,10 +15,10 @@ interface SupportMessagesColumnProps {
 }
 
 export const ticketStatusColor: Record<TicketStatus, string | undefined> = {
-  Completed: 'success.main',
-  Closed: 'error.main',
-  Pending: 'info.main',
-  New: 'info.main',
+  Completed: 'success.light',
+  Closed: 'warning.light',
+  Pending: 'info.light',
+  New: 'info.light',
   NotApplicable: undefined,
 };
 
@@ -27,18 +27,18 @@ export const SupportMessagesColumn = ({ ticket }: SupportMessagesColumnProps) =>
 
   return (
     <StyledMessagesContainer>
-      <StyledStatusMessageBox sx={{ bgcolor: ticketStatusColor[ticket.status], width: 'fit-content' }}>
+      <StyledStatusMessageBox>
         <StyledIconAndTextWrapper>
           <ChatBubbleOutlineOutlinedIcon fontSize="small" />
-          <Typography color="white">{t('my_page.messages.types.GeneralSupportCase')}</Typography>
+          <Typography>{t('my_page.messages.types.GeneralSupportCase')}</Typography>
         </StyledIconAndTextWrapper>
       </StyledStatusMessageBox>
 
       {(ticket.status === 'New' || ticket.status === 'Pending') && (
-        <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
+        <StyledStatusMessageBox>
           <StyledIconAndTextWrapper>
             <HourglassEmptyIcon fontSize="small" />
-            <Typography color="white">{t('my_page.messages.general_support_pending')}</Typography>
+            <Typography>{t('my_page.messages.general_support_pending')}</Typography>
           </StyledIconAndTextWrapper>
         </StyledStatusMessageBox>
       )}

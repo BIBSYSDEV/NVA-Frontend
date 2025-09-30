@@ -73,6 +73,7 @@ export const NviCandidateRejectionDialog = ({
           <Button
             data-testid={dataTestId.tasksPage.nvi.rejectionModalRejectButton}
             loading={isLoading}
+            color="secondary"
             variant="contained"
             type="submit">
             {t('common.reject')}

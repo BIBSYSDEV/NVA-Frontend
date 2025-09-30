@@ -167,7 +167,7 @@ export const ContributorRow = ({
           )}
 
           <Button
-            color="error"
+            color="tertiary"
             variant="contained"
             disabled={disableNviCriticalFields || disableChannelClaimsFields}
             size="small"

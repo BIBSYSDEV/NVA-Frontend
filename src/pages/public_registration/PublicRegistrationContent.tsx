@@ -117,8 +117,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               sx={{
                 py: '0.3rem',
                 px: { xs: '2rem', sm: '3rem' },
-                bgcolor: 'info.main',
-                color: 'primary.contrastText',
+                bgcolor: 'warning.light',
               }}>
               {t('registration.public_page.result_not_published')}
             </Typography>
