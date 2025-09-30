@@ -30,48 +30,49 @@ export const CompareProjects = () => {
       </Typography>
 
       {targetProjects.map((project) => (
-        <CompareFile key={project.id} targetProjectId={project.id} />
+        <CompareFile key={project.id} targetProject={project} />
       ))}
 
       {sourceProjects.map((project) => (
-        <CompareFile key={project.id} sourceProjectId={project.id} />
+        <CompareFile key={project.id} sourceProject={project} />
       ))}
     </>
   );
 };
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
+import { ResearchProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 interface CompareFileProps {
-  sourceProjectId?: string;
-  targetProjectId?: string;
+  sourceProject?: ResearchProject;
+  targetProject?: ResearchProject;
 }
 
-const CompareFile = ({ sourceProjectId, targetProjectId }: CompareFileProps) => {
+const CompareFile = ({ sourceProject, targetProject }: CompareFileProps) => {
   const { t } = useTranslation();
   const { control } = useFormContext<Registration>();
   const { append, remove } = useFieldArray({ name: 'projects', control });
 
-  const canCopyProject = !!sourceProjectId && !targetProjectId;
+  const canCopyProject = !!sourceProject && !targetProject;
 
   return (
     <>
-      <ProjectBox projectId={sourceProjectId} />
+      <ProjectBox projectId={sourceProject?.id} />
 
       {canCopyProject && (
         <Button
           data-testid={dataTestId.basicData.centralImport.copyValueButton}
           variant="contained"
+          color="secondary"
           size="small"
           endIcon={<ArrowForwardIcon />}
-          // onClick={() => append(sourceFile)}
-        >
-          {t('add_file')}
+          onClick={() => append(sourceProject)}>
+          {t('add_project')}
         </Button>
       )}
 
-      <ProjectBox projectId={targetProjectId} sx={{ gridColumn: 3 }} />
+      <ProjectBox projectId={targetProject?.id} sx={{ gridColumn: 3 }} />
     </>
   );
 };
