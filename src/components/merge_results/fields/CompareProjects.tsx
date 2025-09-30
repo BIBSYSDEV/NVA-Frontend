@@ -16,7 +16,7 @@ export const CompareProjects = () => {
   const sourceProjects = sourceResult.projects;
 
   const targetProjects = useWatch({ name: 'projects', control });
-  const initialTargetProject = formState.defaultValues?.projects;
+  const initialTargetProject = (formState.defaultValues?.projects ?? []) as ResearchProject[];
 
   return (
     <>
@@ -29,13 +29,16 @@ export const CompareProjects = () => {
         {t('registration.description.project_association')}
       </Typography>
 
-      {targetProjects.map((project) => (
+      {initialTargetProject.map((project) => (
         <CompareFile key={project.id} targetProject={project} />
       ))}
 
-      {sourceProjects.map((project) => (
-        <CompareFile key={project.id} sourceProject={project} />
-      ))}
+      {sourceProjects.map((project) => {
+        const matchingTargetProjectIndex = targetProjects.findIndex((targetProject) => targetProject.id === project.id);
+        const matchingTargetProject =
+          matchingTargetProjectIndex > -1 ? targetProjects[matchingTargetProjectIndex] : undefined;
+        return <CompareFile key={project.id} sourceProject={project} targetProject={matchingTargetProject} />;
+      })}
     </>
   );
 };
