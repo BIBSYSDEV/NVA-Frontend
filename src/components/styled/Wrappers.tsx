@@ -93,7 +93,6 @@ export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
-  marginBottom: '0.2rem',
 }));
 
 export const SearchListItemDiv = styled('div')(({ theme }) => ({
