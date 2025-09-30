@@ -32,7 +32,10 @@ export const keepSimilarPreviousData = (
   query: QueryFunctionType,
   searchTerm?: string | null
 ) => {
-  if (searchTerm && query?.queryKey.some((key) => typeof key === 'object' && key.name === searchTerm)) {
-    return previousData;
+  if (searchTerm && query) {
+    if (query.queryKey.some((key) => typeof key === 'object' && key.name === searchTerm)) {
+      return previousData;
+    }
   }
+  return undefined;
 };
