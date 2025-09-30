@@ -21,7 +21,7 @@ export const useSearchForPerson = ({ enabled, placeholderData, ...searchParams }
   return useQuery({
     enabled,
     queryKey: ['personSearch', searchParams],
-    queryFn: () => searchForPerson(searchParams),
+    queryFn: ({ signal }) => searchForPerson(searchParams, signal),
     meta: { errorMessage: t('feedback.error.person_search') },
     placeholderData,
   });
