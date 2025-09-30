@@ -1,3 +1,4 @@
+import RestoreIcon from '@mui/icons-material/Restore';
 import { Box, Button, SxProps, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
@@ -37,7 +38,14 @@ export const CompareProjects = () => {
         const matchingTargetProjectIndex = targetProjects.findIndex((targetProject) => targetProject.id === project.id);
         const matchingTargetProject =
           matchingTargetProjectIndex > -1 ? targetProjects[matchingTargetProjectIndex] : undefined;
-        return <CompareFile key={project.id} sourceProject={project} targetProject={matchingTargetProject} />;
+        return (
+          <CompareFile
+            key={project.id}
+            sourceProject={project}
+            targetProject={matchingTargetProject}
+            matchingTargetProjectIndex={matchingTargetProjectIndex}
+          />
+        );
       })}
     </>
   );
@@ -50,14 +58,16 @@ import { dataTestId } from '../../../utils/dataTestIds';
 interface CompareFileProps {
   sourceProject?: ResearchProject;
   targetProject?: ResearchProject;
+  matchingTargetProjectIndex?: number;
 }
 
-const CompareFile = ({ sourceProject, targetProject }: CompareFileProps) => {
+const CompareFile = ({ sourceProject, targetProject, matchingTargetProjectIndex = -1 }: CompareFileProps) => {
   const { t } = useTranslation();
   const { control } = useFormContext<Registration>();
   const { append, remove } = useFieldArray({ name: 'projects', control });
 
   const canCopyProject = !!sourceProject && !targetProject;
+  const projectIsCopied = matchingTargetProjectIndex > -1;
 
   return (
     <>
@@ -72,6 +82,17 @@ const CompareFile = ({ sourceProject, targetProject }: CompareFileProps) => {
           endIcon={<ArrowForwardIcon />}
           onClick={() => append(sourceProject)}>
           {t('add_project')}
+        </Button>
+      )}
+      {projectIsCopied && (
+        <Button
+          data-testid={dataTestId.basicData.centralImport.resetValueButton}
+          variant="outlined"
+          color="secondary"
+          size="small"
+          endIcon={<RestoreIcon />}
+          onClick={() => remove(matchingTargetProjectIndex)}>
+          {t('reset')}
         </Button>
       )}
 
@@ -90,7 +111,7 @@ const ProjectBox = ({ projectId, sx }: ProjectBoxProps) => {
   const project = projectQuery.data;
 
   if (!project) {
-    return <Box sx={{ m: 0, p: '0.5rem', bgcolor: '#FEFBF3', height: '100%', ...sx }} />;
+    return <Box sx={{ m: 0, p: '0.5rem', bgcolor: 'white', height: '100%', ...sx }} />;
   }
 
   return <ProjectListItem project={project} sx={sx} />;
