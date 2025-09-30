@@ -19,6 +19,18 @@ export const CompareProjects = () => {
   const targetProjects = useWatch({ name: 'projects', control });
   const initialTargetProject = (formState.defaultValues?.projects ?? []) as ResearchProject[];
 
+  const commonProjects = sourceProjects.filter((sourceProject) =>
+    initialTargetProject.some((targetProject) => targetProject.id === sourceProject.id)
+  );
+
+  const distinctTargetProjects = initialTargetProject.filter(
+    (targetProject) => !commonProjects.some((sourceProject) => sourceProject.id === targetProject.id)
+  );
+
+  const addableSourceProjects = sourceProjects.filter(
+    (sourceProject) => !commonProjects.some((targetProject) => targetProject.id === sourceProject.id)
+  );
+
   return (
     <>
       <Typography variant="h3" sx={{ display: { xs: 'block', md: 'none' } }}>
@@ -30,16 +42,20 @@ export const CompareProjects = () => {
         {t('registration.description.project_association')}
       </Typography>
 
-      {initialTargetProject.map((project) => (
-        <CompareFile key={project.id} targetProject={project} />
+      {distinctTargetProjects.map((project) => (
+        <CompareProject key={project.id} targetProject={project} />
       ))}
 
-      {sourceProjects.map((project) => {
+      {commonProjects.map((project) => (
+        <CompareProject key={project.id} sourceProject={project} targetProject={project} />
+      ))}
+
+      {addableSourceProjects.map((project) => {
         const matchingTargetProjectIndex = targetProjects.findIndex((targetProject) => targetProject.id === project.id);
         const matchingTargetProject =
           matchingTargetProjectIndex > -1 ? targetProjects[matchingTargetProjectIndex] : undefined;
         return (
-          <CompareFile
+          <CompareProject
             key={project.id}
             sourceProject={project}
             targetProject={matchingTargetProject}
@@ -56,13 +72,13 @@ import { ResearchProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { StyledCompareButton } from './CompareFiles';
 
-interface CompareFileProps {
+interface CompareProjectProps {
   sourceProject?: ResearchProject;
   targetProject?: ResearchProject;
   matchingTargetProjectIndex?: number;
 }
 
-const CompareFile = ({ sourceProject, targetProject, matchingTargetProjectIndex = -1 }: CompareFileProps) => {
+const CompareProject = ({ sourceProject, targetProject, matchingTargetProjectIndex = -1 }: CompareProjectProps) => {
   const { t } = useTranslation();
   const { control } = useFormContext<Registration>();
   const { append, remove } = useFieldArray({ name: 'projects', control });
