@@ -38,6 +38,7 @@ declare module '@mui/material/styles' {
     registration: PaletteColor;
     person: PaletteColor;
     project: PaletteColor;
+    centralImport: PaletteColor;
     neutral87: PaletteColor;
   }
   interface PaletteOptions {

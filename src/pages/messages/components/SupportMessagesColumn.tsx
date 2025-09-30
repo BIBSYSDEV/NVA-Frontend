@@ -2,7 +2,7 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ExpandedTicket, TicketStatus } from '../../../types/publication_types/ticket.types';
+import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { LastMessageBox } from './LastMessageBox';
 import {
   StyledIconAndTextWrapper,
@@ -13,14 +13,6 @@ import {
 interface SupportMessagesColumnProps {
   ticket: ExpandedTicket;
 }
-
-export const ticketStatusColor: Record<TicketStatus, string | undefined> = {
-  Completed: 'success.light',
-  Closed: 'warning.light',
-  Pending: 'info.light',
-  New: 'info.light',
-  NotApplicable: undefined,
-};
 
 export const SupportMessagesColumn = ({ ticket }: SupportMessagesColumnProps) => {
   const { t } = useTranslation();
