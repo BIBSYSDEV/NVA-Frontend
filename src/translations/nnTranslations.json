@@ -7,7 +7,7 @@
   "add_file": "Legg til fil",
   "authorization": {
     "about_terms": "Bruksvilkår og personvernerklæring for Nasjonalt vitenarkiv",
-    "about_terms_description": "<p>For å bruke tenesta må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Bruksvilkår for Nasjonalt vitenarkiv</a>, og gjere deg kjent med <a href=\"https://nva.sikt.no/privacy-policy\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», stadfestar du at du har lese og akseptert bruksvilkåra. Du samtykkjer òg til behandling av personopplysningar i samsvar med personvernerklæringa.</p>",
+    "about_terms_description": "<p>For å bruke tenesta må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Bruksvilkår for Nasjonalt vitenarkiv</a>, og gjere deg kjent med <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», stadfestar du at du har lese og akseptert bruksvilkåra. Du samtykkjer òg til behandling av personopplysningar i samsvar med personvernerklæringa.</p>",
     "accept": "Godta",
     "accept_terms_intro": "<p>Takk for at du ønsker å gjøre forskning åpent tilgjengelig i Nasjonalt vitenarkiv.</p><p>Dette bidreg til at forskinga blir dokumentert, og til at vitskaplege artiklar finansierte av offentlege midlar blir gjort ope tilgjengelege for allmenta – som er eit nasjonalt mål.</p>",
     "accept_terms_to_create_user": "Eg samtykkjer til å bli oppretta som brukar i NVA",
