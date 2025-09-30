@@ -87,7 +87,9 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
 }));
 
 export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
-  borderLeft: `0.75rem solid ${theme.palette.registration.main}`,
+  border: '2px solid',
+  borderLeft: '1rem solid',
+  borderColor: theme.palette.registration.main,
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
@@ -95,7 +97,9 @@ export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
 }));
 
 export const SearchListItemDiv = styled('div')(({ theme }) => ({
-  borderLeft: `0.75rem solid ${theme.palette.registration.main}`,
+  border: '2px solid',
+  borderLeft: '1rem solid',
+  borderColor: theme.palette.registration.main,
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
