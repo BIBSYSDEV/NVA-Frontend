@@ -1,5 +1,5 @@
 import RestoreIcon from '@mui/icons-material/Restore';
-import { Box, Button, SxProps, Typography } from '@mui/material';
+import { Box, SxProps, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -54,6 +54,7 @@ export const CompareProjects = () => {
 import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import { ResearchProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { StyledCompareButton } from './CompareFiles';
 
 interface CompareFileProps {
   sourceProject?: ResearchProject;
@@ -74,7 +75,7 @@ const CompareFile = ({ sourceProject, targetProject, matchingTargetProjectIndex 
       <ProjectBox projectId={sourceProject?.id} />
 
       {canCopyProject && (
-        <Button
+        <StyledCompareButton
           data-testid={dataTestId.basicData.centralImport.copyValueButton}
           variant="contained"
           color="secondary"
@@ -82,10 +83,10 @@ const CompareFile = ({ sourceProject, targetProject, matchingTargetProjectIndex 
           endIcon={<ArrowForwardIcon />}
           onClick={() => append(sourceProject)}>
           {t('add_project')}
-        </Button>
+        </StyledCompareButton>
       )}
       {projectIsCopied && (
-        <Button
+        <StyledCompareButton
           data-testid={dataTestId.basicData.centralImport.resetValueButton}
           variant="outlined"
           color="secondary"
@@ -93,7 +94,7 @@ const CompareFile = ({ sourceProject, targetProject, matchingTargetProjectIndex 
           endIcon={<RestoreIcon />}
           onClick={() => remove(matchingTargetProjectIndex)}>
           {t('reset')}
-        </Button>
+        </StyledCompareButton>
       )}
 
       <ProjectBox projectId={targetProject?.id} sx={{ gridColumn: 3 }} />
