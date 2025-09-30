@@ -1,18 +1,14 @@
-import { PlaceholderDataFunction, Query, useQuery } from '@tanstack/react-query';
+import { Query, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { PersonSearchParams, searchForPerson } from '../cristinApi';
 
 type SearchResponseType = Awaited<ReturnType<typeof searchForPerson>>;
-type PlaceholderDataFunctionType = PlaceholderDataFunction<
-  SearchResponseType,
-  Error,
-  SearchResponseType,
-  (string | PersonSearchParams)[]
->;
 
 interface PersonSearchOptions extends PersonSearchParams {
   enabled?: boolean;
-  placeholderData?: PlaceholderDataFunctionType;
+  placeholderData?:
+    | SearchResponseType
+    | ((previousData: SearchResponseType | undefined) => SearchResponseType | undefined);
 }
 
 export const useSearchForPerson = ({ enabled, placeholderData, ...searchParams }: PersonSearchOptions) => {
