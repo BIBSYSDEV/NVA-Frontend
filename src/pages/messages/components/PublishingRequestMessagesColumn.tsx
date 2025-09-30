@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { ExpandedPublishingTicket, PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { toDateString } from '../../../utils/date-helpers';
 import { LastMessageBox } from './LastMessageBox';
-import { ticketStatusColor } from './SupportMessagesColumn';
 
 export const StyledMessagesContainer = styled(Box)({
   display: 'flex',
@@ -22,7 +21,6 @@ export const StyledStatusMessageBox = styled(Box)({
   gap: '0.25rem 0.5rem',
   padding: '0.2rem 0.5rem',
   borderRadius: '4px',
-  color: 'white',
 });
 
 export const StyledIconAndTextWrapper = styled(Box)({
@@ -40,17 +38,17 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
 
   return (
     <StyledMessagesContainer>
-      <StyledStatusMessageBox sx={{ bgcolor: ticketStatusColor[ticket.status], width: 'fit-content' }}>
+      <StyledStatusMessageBox>
         <StyledIconAndTextWrapper>
           {ticket.type === 'FilesApprovalThesis' ? (
             <>
               <SchoolOutlinedIcon fontSize="small" />
-              <Typography color="white">{t('my_page.messages.types.FilesApprovalThesis')}</Typography>
+              <Typography>{t('my_page.messages.types.FilesApprovalThesis')}</Typography>
             </>
           ) : (
             <>
               <InsertDriveFileOutlinedIcon fontSize="small" />
-              <Typography color="white">{t('my_page.messages.types.PublishingRequest')}</Typography>
+              <Typography>{t('my_page.messages.types.PublishingRequest')}</Typography>
             </>
           )}
         </StyledIconAndTextWrapper>
@@ -59,10 +57,10 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
       {ticket.status === 'Pending' || ticket.status === 'New' ? (
         <>
           {ticket.filesForApproval.length > 0 && (
-            <StyledStatusMessageBox sx={{ bgcolor: 'info.main' }}>
+            <StyledStatusMessageBox>
               <StyledIconAndTextWrapper>
                 <HourglassEmptyIcon fontSize="small" />
-                <Typography color="white">
+                <Typography>
                   {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
                 </Typography>
               </StyledIconAndTextWrapper>
@@ -70,27 +68,25 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
           )}
         </>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'success.main' }}>
+        <StyledStatusMessageBox>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
-            <Typography color="white">
+            <Typography>
               {ticket.approvedFiles.length
                 ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
                 : t('my_page.messages.metadata_published')}
             </Typography>
           </StyledIconAndTextWrapper>
-          {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
+          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
         <>
-          <StyledStatusMessageBox sx={{ bgcolor: 'error.main' }}>
+          <StyledStatusMessageBox>
             <StyledIconAndTextWrapper>
               <BlockIcon fontSize="small" />
-              <Typography color="white">
-                {t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}
-              </Typography>
+              <Typography>{t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}</Typography>
             </StyledIconAndTextWrapper>
-            {ticket.modifiedDate && <Typography color="white">{toDateString(ticket.modifiedDate)}</Typography>}
+            {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>
         </>
       ) : null}

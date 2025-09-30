@@ -1,7 +1,7 @@
 import LinkIcon from '@mui/icons-material/Link';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
-import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Chip, Divider, Grid, IconButton, Link as MuiLink, List, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -285,7 +285,10 @@ const ResearchProfile = () => {
         {registrationsQuery.data?.totalHits && registrationsQuery.data.totalHits > 0 ? (
           <Typography>
             <Trans i18nKey="my_page.my_profile.link_to_results_search">
-              <MuiLink component={Link} to={`/?${ResultParam.Contributor}=${encodeURIComponent(personIdentifier)}`} />
+              <MuiLink
+                component={Link}
+                to={`${UrlPathTemplate.Filter}?${ResultParam.Contributor}=${encodeURIComponent(personIdentifier)}`}
+              />
             </Trans>
           </Typography>
         ) : null}
@@ -330,7 +333,7 @@ const ResearchProfile = () => {
             <Trans t={t} i18nKey="my_page.my_profile.link_to_projects_search">
               <MuiLink
                 component={Link}
-                to={`/?${SearchParam.Type}=${SearchTypeValue.Project}&${ProjectSearchParameter.ParticipantFacet}=${encodeURIComponent(
+                to={`${UrlPathTemplate.Filter}?${SearchParam.Type}=${SearchTypeValue.Project}&${ProjectSearchParameter.ParticipantFacet}=${encodeURIComponent(
                   getIdentifierFromId(personId)
                 )}`}
               />

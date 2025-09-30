@@ -30,11 +30,11 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
             sx={{
               display: 'flex',
               justifyContent: 'center',
-              backgroundColor: 'info.main',
+              backgroundColor: 'info.light',
               padding: '1rem',
               my: '1rem',
             }}>
-            <Typography variant="h2" component="strong" color="white">
+            <Typography variant="h2" component="strong">
               {t('registration.result_is_deleted_or_unpublished', {
                 status: t(`registration.status.${registration.status}`).toLowerCase(),
               })}
@@ -48,7 +48,7 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
-                backgroundColor: 'registration.main',
+                backgroundColor: 'info.light',
                 padding: '1rem',
                 my: '1rem',
               }}>

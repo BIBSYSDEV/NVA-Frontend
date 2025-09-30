@@ -29,7 +29,7 @@ export const NvaDescriptionSection = () => {
         t={t}
         i18nKey="what_you_find_in_nva_description"
         components={{
-          heading: <Typography variant="h2" sx={{ fontSize: '1.5rem', color: '#120732' }} />,
+          heading: <Typography variant="h2" sx={{ fontSize: '1.5rem', color: '#120732', mt: '1.25rem' }} />,
           p: <Typography sx={{ color: '#120732', textAlign: 'center' }} />,
         }}
       />

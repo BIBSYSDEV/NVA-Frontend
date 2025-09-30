@@ -79,6 +79,7 @@ export const SearchSection = () => {
             maxWidth: { xs: '100%', sm: '14rem' },
             bgcolor: '#5D56F2',
             color: '#EFEFEF',
+            justifyContent: 'flex-start',
           }}
           data-testid={dataTestId.frontPage.searchButton}
           startIcon={<SearchIcon />}>
