@@ -23,7 +23,7 @@ export const CompareProjects = () => {
     initialTargetProject.some((targetProject) => targetProject.id === sourceProject.id)
   );
 
-  const distinctTargetProjects = initialTargetProject.filter(
+  const targetOnlyProjects = initialTargetProject.filter(
     (targetProject) => !commonProjects.some((sourceProject) => sourceProject.id === targetProject.id)
   );
 
@@ -42,7 +42,7 @@ export const CompareProjects = () => {
         {t('registration.description.project_association')}
       </Typography>
 
-      {distinctTargetProjects.map((project) => (
+      {targetOnlyProjects.map((project) => (
         <CompareProject key={project.id} targetProject={project} />
       ))}
 
