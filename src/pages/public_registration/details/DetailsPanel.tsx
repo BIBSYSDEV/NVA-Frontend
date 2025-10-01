@@ -56,6 +56,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const topLevelOrgs = affiliationQueries
     .map((affiliationQuery) => (affiliationQuery.data ? getTopLevelOrganization(affiliationQuery.data) : null))
     .filter(Boolean) as Organization[];
+  const uniqueInstitutions = getUniqueOrganizations(topLevelOrgs);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'background.neutral97', gap: '0.5rem' }}>
@@ -89,7 +90,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         </IconButton>
 
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <InstitutionsServiceCenterOverview institutions={getUniqueOrganizations(topLevelOrgs)} />
+          {uniqueInstitutions.length > 0 && <InstitutionsServiceCenterOverview institutions={uniqueInstitutions} />}
 
           {contactPersons.length > 0 && (
             <div>
