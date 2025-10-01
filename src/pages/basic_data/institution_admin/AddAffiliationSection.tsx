@@ -58,7 +58,7 @@ export const AddAffiliationSection = () => {
                   {...params}
                   required
                   label={t('registration.contributors.department')}
-                  variant="filled"
+                  variant="outlined"
                   fullWidth
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -78,7 +78,7 @@ export const AddAffiliationSection = () => {
                 disabled={isDisabled}
                 fullWidth
                 type="number"
-                variant="filled"
+                variant="outlined"
                 label={t('basic_data.add_employee.position_percent')}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}

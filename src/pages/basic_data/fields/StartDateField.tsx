@@ -29,7 +29,7 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false, dataTestI
           slotProps={{
             textField: {
               inputProps: { 'data-testid': dataTestId },
-              variant: 'filled',
+              variant: 'outlined',
               error: touched && !!error,
               helperText: <ErrorMessage name={field.name} />,
               required: true,
