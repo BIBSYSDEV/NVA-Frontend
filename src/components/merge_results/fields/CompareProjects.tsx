@@ -38,7 +38,7 @@ export const CompareProjects = () => {
       </Typography>
 
       <Typography variant="h4">{t('registration.description.project_association')}</Typography>
-      <Typography variant="h4" sx={{ gridColumn: 3 }}>
+      <Typography variant="h4" sx={{ gridColumn: { xs: 1, md: 3 } }}>
         {t('registration.description.project_association')}
       </Typography>
 
@@ -47,7 +47,7 @@ export const CompareProjects = () => {
           <StyledEmptyProjectBox>
             <Typography fontStyle="italic">{t('missing_value')}</Typography>
           </StyledEmptyProjectBox>
-          <StyledEmptyProjectBox sx={{ gridColumn: 3 }}>
+          <StyledEmptyProjectBox sx={{ gridColumn: { xs: 1, md: 3 } }}>
             <Typography fontStyle="italic">{t('missing_value')}</Typography>
           </StyledEmptyProjectBox>
         </>

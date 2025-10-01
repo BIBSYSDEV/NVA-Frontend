@@ -53,7 +53,7 @@ export const CompareProject = ({
         </StyledCompareButton>
       )}
 
-      <ProjectBox projectId={targetProject?.id} sx={{ gridColumn: 3 }} />
+      <ProjectBox projectId={targetProject?.id} sx={{ gridColumn: { xs: 1, md: 3 } }} />
     </>
   );
 };
