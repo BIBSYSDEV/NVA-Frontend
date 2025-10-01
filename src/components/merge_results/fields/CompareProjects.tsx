@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,7 @@ import { Registration } from '../../../types/registration.types';
 import { isOnImportPage } from '../../../utils/urlPaths';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { CompareProject } from './CompareProject';
+import { StyledEmptyProjectBox } from './ProjectBox';
 
 export const CompareProjects = () => {
   const { t } = useTranslation();
@@ -16,13 +17,13 @@ export const CompareProjects = () => {
   const sourceProjects = sourceResult.projects;
 
   const targetProjects = useWatch({ name: 'projects', control });
-  const initialTargetProject = (formState.defaultValues?.projects ?? []) as ResearchProject[];
+  const initialTargetProjects = (formState.defaultValues?.projects ?? []) as ResearchProject[];
 
   const commonProjects = sourceProjects.filter((sourceProject) =>
-    initialTargetProject.some((targetProject) => targetProject.id === sourceProject.id)
+    initialTargetProjects.some((targetProject) => targetProject.id === sourceProject.id)
   );
 
-  const targetOnlyProjects = initialTargetProject.filter(
+  const targetOnlyProjects = initialTargetProjects.filter(
     (targetProject) => !commonProjects.some((sourceProject) => sourceProject.id === targetProject.id)
   );
 
@@ -40,6 +41,17 @@ export const CompareProjects = () => {
       <Typography variant="h4" sx={{ gridColumn: 3 }}>
         {t('registration.description.project_association')}
       </Typography>
+
+      {initialTargetProjects.length === 0 && sourceProjects.length === 0 && (
+        <>
+          <StyledEmptyProjectBox>
+            <Typography fontStyle="italic">{t('missing_value')}</Typography>
+          </StyledEmptyProjectBox>
+          <StyledEmptyProjectBox sx={{ gridColumn: 3 }}>
+            <Typography fontStyle="italic">{t('missing_value')}</Typography>
+          </StyledEmptyProjectBox>
+        </>
+      )}
 
       {targetOnlyProjects.map((project) => (
         <CompareProject key={project.id} targetProject={project} />
@@ -62,6 +74,8 @@ export const CompareProjects = () => {
           />
         );
       })}
+
+      <Divider sx={{ gridColumn: '1/-1', my: '0.5rem' }} />
     </>
   );
 };
