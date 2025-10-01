@@ -19,12 +19,12 @@ export const InstitutionsServiceCenterOverview = ({ institutions }: Institutions
     customers.some((customer) => customer.cristinId === institution.id && customer.serviceCenterUri)
   );
 
-  if (customersData.isPending) {
-    return <PageSpinner aria-label={t('institutions_service_support')} />;
+  if (institutions.length === 0 || institutionsWithServiceCenter.length === 0) {
+    return null;
   }
 
-  if (institutionsWithServiceCenter.length === 0) {
-    return null;
+  if (customersData.isEnabled && customersData.isPending) {
+    return <PageSpinner aria-label={t('institutions_service_support')} />;
   }
 
   return (
