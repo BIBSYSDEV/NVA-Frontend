@@ -35,7 +35,7 @@ export const CompareProjects = () => {
       <Typography variant="h4" sx={{ display: { xs: 'none', md: 'block' } }}>
         {t('registration.description.project_association')}
       </Typography>
-      <Typography variant="h4" sx={{ gridColumn: { xs: 1, md: 3 }, display: { xs: 'none', md: 'block' } }}>
+      <Typography variant="h4" sx={{ gridColumn: { xs: 1, md: 3 } }}>
         {t('registration.description.project_association')}
       </Typography>
 
