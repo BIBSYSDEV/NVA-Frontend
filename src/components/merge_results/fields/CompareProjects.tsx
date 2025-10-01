@@ -4,7 +4,6 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ResearchProject } from '../../../types/project.types';
 import { Registration } from '../../../types/registration.types';
-import { isOnImportPage } from '../../../utils/urlPaths';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { CompareProject } from './CompareProject';
 import { StyledEmptyProjectBox } from './ProjectBox';
@@ -33,12 +32,10 @@ export const CompareProjects = () => {
 
   return (
     <>
-      <Typography variant="h3" sx={{ display: { xs: 'block', md: 'none' } }}>
-        {isOnImportPage() ? t('basic_data.central_import.import_candidate') : t('unpublished_result')}
+      <Typography variant="h4" sx={{ display: { xs: 'none', md: 'block' } }}>
+        {t('registration.description.project_association')}
       </Typography>
-
-      <Typography variant="h4">{t('registration.description.project_association')}</Typography>
-      <Typography variant="h4" sx={{ gridColumn: { xs: 1, md: 3 } }}>
+      <Typography variant="h4" sx={{ gridColumn: { xs: 1, md: 3 }, display: { xs: 'none', md: 'block' } }}>
         {t('registration.description.project_association')}
       </Typography>
 
