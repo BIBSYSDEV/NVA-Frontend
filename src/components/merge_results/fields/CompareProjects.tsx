@@ -1,13 +1,12 @@
-import RestoreIcon from '@mui/icons-material/Restore';
-import { Box, SxProps, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useContext } from 'react';
-import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useFetchProject } from '../../../api/hooks/useFetchProject';
-import { ProjectListItem } from '../../../pages/search/project_search/ProjectListItem';
+import { ResearchProject } from '../../../types/project.types';
 import { Registration } from '../../../types/registration.types';
 import { isOnImportPage } from '../../../utils/urlPaths';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
+import { CompareProject } from './CompareProject';
 
 export const CompareProjects = () => {
   const { t } = useTranslation();
@@ -65,71 +64,4 @@ export const CompareProjects = () => {
       })}
     </>
   );
-};
-
-import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
-import { ResearchProject } from '../../../types/project.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { StyledCompareButton } from './CompareFiles';
-
-interface CompareProjectProps {
-  sourceProject?: ResearchProject;
-  targetProject?: ResearchProject;
-  matchingTargetProjectIndex?: number;
-}
-
-const CompareProject = ({ sourceProject, targetProject, matchingTargetProjectIndex = -1 }: CompareProjectProps) => {
-  const { t } = useTranslation();
-  const { control } = useFormContext<Registration>();
-  const { append, remove } = useFieldArray({ name: 'projects', control });
-
-  const canCopyProject = !!sourceProject && !targetProject;
-  const projectIsCopied = matchingTargetProjectIndex > -1;
-
-  return (
-    <>
-      <ProjectBox projectId={sourceProject?.id} />
-
-      {canCopyProject && (
-        <StyledCompareButton
-          data-testid={dataTestId.basicData.centralImport.copyValueButton}
-          variant="contained"
-          color="secondary"
-          size="small"
-          endIcon={<ArrowForwardIcon />}
-          onClick={() => append(sourceProject)}>
-          {t('add_project')}
-        </StyledCompareButton>
-      )}
-      {projectIsCopied && (
-        <StyledCompareButton
-          data-testid={dataTestId.basicData.centralImport.resetValueButton}
-          variant="outlined"
-          color="secondary"
-          size="small"
-          endIcon={<RestoreIcon />}
-          onClick={() => remove(matchingTargetProjectIndex)}>
-          {t('reset')}
-        </StyledCompareButton>
-      )}
-
-      <ProjectBox projectId={targetProject?.id} sx={{ gridColumn: 3 }} />
-    </>
-  );
-};
-
-interface ProjectBoxProps {
-  projectId?: string;
-  sx?: SxProps;
-}
-
-const ProjectBox = ({ projectId, sx }: ProjectBoxProps) => {
-  const projectQuery = useFetchProject(projectId);
-  const project = projectQuery.data;
-
-  if (!project) {
-    return <Box sx={{ m: 0, p: '0.5rem', bgcolor: 'white', height: '100%', ...sx }} />;
-  }
-
-  return <ProjectListItem project={project} sx={sx} />;
 };
