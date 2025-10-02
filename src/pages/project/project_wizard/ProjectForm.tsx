@@ -129,7 +129,7 @@ export const ProjectForm = ({ project, suggestedProjectManager, toggleModal, onP
               <ProjectFormStepper tabNumber={tabNumber} onTabClicked={onTabChange} maxVisitedTab={maxVisitedTab} />
               <RequiredDescription />
               <Box sx={{ padding: '0' }}>
-                <Box id="form" sx={{ bgcolor: 'background.neutral97', mb: '0.5rem', padding: '1.5rem 1.25rem' }}>
+                <Box id="form" sx={{ bgcolor: 'background.paper', mb: '0.5rem', padding: '1.5rem 1.25rem' }}>
                   {tabNumber === ProjectTabs.Description && (
                     <ProjectDescriptionForm thisIsRekProject={thisIsRekProject} />
                   )}

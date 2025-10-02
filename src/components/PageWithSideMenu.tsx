@@ -78,17 +78,9 @@ export const NavigationList = ({ sx, ...props }: NavigationListProps) => (
 
 interface LinkCreateButtonProps extends SelectableButtonProps {
   selectedColor?: string;
-  selectedTextColor?: string;
 }
 
-export const LinkCreateButton = ({
-  sx,
-  title,
-  isSelected,
-  selectedColor,
-  selectedTextColor,
-  ...rest
-}: LinkCreateButtonProps) => {
+export const LinkCreateButton = ({ sx, title, isSelected, selectedColor, ...rest }: LinkCreateButtonProps) => {
   return (
     <SelectableButton
       sx={{

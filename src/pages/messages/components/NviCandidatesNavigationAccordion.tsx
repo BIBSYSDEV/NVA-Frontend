@@ -16,7 +16,7 @@ import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlP
 const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   padding: '0.5rem',
   borderRadius: '0.25rem',
-  backgroundColor: theme.palette.background.neutral97,
+  backgroundColor: theme.palette.background.paper,
   marginBottom: '0.5rem',
 }));
 

@@ -7,15 +7,14 @@ import i18n from '../translations/i18n';
 enum Color {
   Black = '#222222',
   White = '#FFFFFF',
-  PurpleDark = '#0A0132',
   Purple = '#7351FB',
-  CentralImportMain = '#D9D9D9',
   PurpleLight = '#D1CDFF',
+  PurpleDark = '#0A0132',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
+  CentralImportMain = '#D9D9D9',
   Registration = '#EED2AE',
   Person = '#BAD2F7',
   Project = '#E8B8D0',
-  Outdated = '#fc53db',
   Neutral97 = '#F7F7F7',
   Neutral95 = '#F1F1F1',
   Neutral87 = '#DEDEDE',
@@ -94,7 +93,6 @@ export const mainTheme = createTheme(
     palette: {
       primary: {
         main: Color.PurpleDark,
-        light: Color.Outdated,
       },
       secondary: {
         main: Color.Purple,
@@ -141,7 +139,6 @@ export const mainTheme = createTheme(
       background: {
         default: Color.Neutral95,
         paper: Color.Neutral97,
-        neutral97: Color.Neutral97,
         neutral87: Color.Neutral87,
         neutral46: Color.Neutral46,
       },
