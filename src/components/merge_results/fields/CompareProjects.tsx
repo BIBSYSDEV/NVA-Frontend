@@ -44,7 +44,7 @@ export const CompareProjects = () => {
           <StyledEmptyProjectBox>
             <Typography fontStyle="italic">{t('missing_value')}</Typography>
           </StyledEmptyProjectBox>
-          <StyledEmptyProjectBox sx={{ gridColumn: { xs: 1, md: 3 } }}>
+          <StyledEmptyProjectBox sx={{ display: { xs: 'none', md: 'block' }, gridColumn: { xs: 1, md: 3 } }}>
             <Typography fontStyle="italic">{t('missing_value')}</Typography>
           </StyledEmptyProjectBox>
         </>
@@ -72,7 +72,7 @@ export const CompareProjects = () => {
         );
       })}
 
-      <Divider sx={{ gridColumn: '1/-1', my: '0.5rem' }} />
+      <Divider sx={{ gridColumn: '1/-1', my: '0.5rem', display: { xs: 'none', md: 'block' } }} />
     </>
   );
 };

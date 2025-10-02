@@ -3,7 +3,9 @@ import { useFetchProject } from '../../../api/hooks/useFetchProject';
 import { ProjectListItem } from '../../../pages/search/project_search/ProjectListItem';
 
 export const StyledEmptyProjectBox = styled(Box)({
-  minHeight: '5rem',
+  display: 'flex',
+  alignItems: 'center',
+  minHeight: '3rem',
   padding: '0.5rem',
   background: 'white',
   height: '100%',
