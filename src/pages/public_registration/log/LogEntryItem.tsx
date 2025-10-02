@@ -56,7 +56,7 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
         <LogEntryOganizationInfo performedBy={logEntry.performedBy} />
       ) : null}
 
-      {logEntry.type === 'FileLogEntry' ? (
+      {logEntry.type === 'FileLogEntry' && (
         <>
           <Divider />
           <StyledLogRow>
@@ -65,14 +65,15 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
               {logEntry.filename || t('log.unknown_filename')}
             </Typography>
           </StyledLogRow>
-          {logEntry.topic === 'FileImported' && <LogEntryImportSourceInfo importSource={logEntry.importSource} />}
         </>
-      ) : logEntry.topic === 'PublicationImported' || logEntry.topic === 'PublicationMerged' ? (
+      )}
+
+      {logEntry.importSource && (
         <>
           <Divider />
           <LogEntryImportSourceInfo importSource={logEntry.importSource} />
         </>
-      ) : null}
+      )}
 
       {messages && messages.length > 0 && <LogMessageAccordion messages={messages} topic={logEntry.topic} />}
     </Box>

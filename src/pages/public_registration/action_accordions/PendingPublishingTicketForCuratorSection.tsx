@@ -88,7 +88,7 @@ export const PendingPublishingTicketForCuratorSection = ({
       />
       <Button
         sx={{ mb: '0.5rem' }}
-        color="error"
+        color="tertiary"
         variant="contained"
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
         startIcon={<CloseIcon />}

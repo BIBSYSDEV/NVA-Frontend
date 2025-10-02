@@ -252,7 +252,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
             </Typography>
             <Button
               data-testid={dataTestId.tasksPage.nvi.rejectButton}
-              color="error"
+              color="tertiary"
               variant="contained"
               fullWidth
               size="small"

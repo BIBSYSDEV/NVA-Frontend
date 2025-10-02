@@ -392,7 +392,7 @@ export const DoiRequestAccordion = ({
             {assignDoiButton}
 
             <Button
-              color="error"
+              color="tertiary"
               variant="contained"
               size="small"
               data-testid={dataTestId.registrationLandingPage.rejectDoiButton}

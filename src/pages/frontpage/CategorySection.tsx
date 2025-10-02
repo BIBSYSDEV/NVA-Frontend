@@ -19,7 +19,7 @@ export const CategorySection = () => {
         t={t}
         i18nKey="science_categories_front_page"
         components={{
-          heading: <Typography variant="h2" sx={{ fontSize: '1.5rem', color: '#120732' }} />,
+          heading: <Typography variant="h2" sx={{ fontSize: '1.5rem', color: '#120732', mt: '1.25rem' }} />,
           p: <Typography sx={{ color: '#120732', textAlign: 'center' }} />,
         }}
       />

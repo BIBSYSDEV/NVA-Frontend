@@ -139,8 +139,7 @@ export const RegistrationListItemContent = ({
               <Typography
                 sx={{
                   p: '0.1rem 0.75rem',
-                  bgcolor: 'info.main',
-                  color: 'white',
+                  bgcolor: 'warning.light',
                 }}>
                 {t('registration.public_page.result_not_published')}
               </Typography>
