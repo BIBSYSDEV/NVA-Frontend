@@ -64,7 +64,6 @@ export interface FileLogEntry extends BaseLogEntry {
 
 interface FileImportLogEntry extends Omit<FileLogEntry, 'topic'> {
   topic: 'FileImported';
-  importSource: ImportSourceLogData;
 }
 
 export type LogEntry = PublicationLogEntry | FileLogEntry | PublicationImportLogEntry | FileImportLogEntry;
