@@ -166,15 +166,10 @@ export enum PersonSearchParameter {
   Sort = 'sort',
 }
 
-export const searchForPerson = async ({
-  name,
-  orderBy,
-  organization,
-  sector,
-  sort,
-  results,
-  page,
-}: PersonSearchParams) => {
+export const searchForPerson = async (
+  { name, orderBy, organization, sector, sort, results, page }: PersonSearchParams,
+  signal?: AbortSignal
+) => {
   const searchParams = new URLSearchParams();
   if (results) {
     searchParams.set(PersonSearchParameter.Results, results.toString());
@@ -204,6 +199,7 @@ export const searchForPerson = async ({
   const fetchPersonResponse = await apiRequest2<SearchResponse<CristinPerson, PersonAggregations>>({
     headers: { Accept: 'application/json; version=2023-11-03' },
     url: `${CristinApiPath.Person}${queryParams}`,
+    signal,
   });
   return fetchPersonResponse.data;
 };
@@ -248,7 +244,12 @@ export enum ProjectSearchParameter {
   Query = 'multiple',
 }
 
-export const searchForProjects = async (results: number, page: number, params?: ProjectsSearchParams) => {
+export const searchForProjects = async (
+  results: number,
+  page: number,
+  params?: ProjectsSearchParams,
+  signal?: AbortSignal
+) => {
   const searchParams = new URLSearchParams();
   if (results) {
     searchParams.set(ProjectSearchParameter.Results, results.toString());
@@ -304,6 +305,7 @@ export const searchForProjects = async (results: number, page: number, params?: 
   const fetchProjectsResponse = await apiRequest2<SearchResponse<CristinProject, ProjectAggregations>>({
     headers: { Accept: 'application/json; version=2023-11-03' },
     url: `${CristinApiPath.Project}${queryParams}`,
+    signal,
   });
   return fetchProjectsResponse.data;
 };
