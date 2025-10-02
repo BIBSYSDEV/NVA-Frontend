@@ -6,9 +6,10 @@ export const StyledValueBox = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
+  gap: '0.25rem',
   background: 'white',
   height: '100%',
-  minHeight: '3rem',
+  minHeight: '4rem',
 });
 
 export const MissingCompareValues = () => {

@@ -9,7 +9,7 @@ import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { StyledInfoBanner } from '../styled/Wrappers';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 import { CompareFiles } from './fields/CompareFiles';
-import { MissingCompareValues } from './fields/MissingValues';
+import { MissingCompareValues } from './fields/MissingCompareValues';
 
 export const MergeResultsWizardFilesTab = () => {
   const { t } = useTranslation();

@@ -1,15 +1,7 @@
-import { Box, styled, SxProps } from '@mui/material';
+import { SxProps } from '@mui/material';
 import { useFetchProject } from '../../../api/hooks/useFetchProject';
 import { ProjectListItem } from '../../../pages/search/project_search/ProjectListItem';
-
-export const StyledEmptyProjectBox = styled(Box)({
-  display: 'flex',
-  alignItems: 'center',
-  minHeight: '3rem',
-  padding: '0.5rem',
-  background: 'white',
-  height: '100%',
-});
+import { StyledValueBox } from './MissingCompareValues';
 
 interface ProjectBoxProps {
   projectId?: string;
@@ -20,7 +12,7 @@ export const ProjectBox = ({ projectId, sx }: ProjectBoxProps) => {
   const projectQuery = useFetchProject(projectId);
 
   if (!projectQuery.data) {
-    return <StyledEmptyProjectBox sx={sx} />;
+    return <StyledValueBox sx={sx} />;
   }
 
   return <ProjectListItem project={projectQuery.data} sx={sx} />;

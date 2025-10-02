@@ -13,22 +13,12 @@ import { Registration } from '../../../types/registration.types';
 import { toDateString } from '../../../utils/date-helpers';
 import { getLicenseData } from '../../../utils/fileHelpers';
 import { isEmbargoed } from '../../../utils/registration-helpers';
+import { StyledValueBox } from './MissingCompareValues';
 
 const StyledIconLabelContainer = styled(Box)({
   display: 'flex',
   gap: '0.25rem',
   alignItems: 'center',
-});
-
-export const StyledFileBox = styled(Box)({
-  padding: '0.5rem',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  gap: '0.25rem',
-  background: 'white',
-  height: '100%',
-  minHeight: '3rem',
 });
 
 interface FileBoxProps extends BoxProps {
@@ -46,7 +36,7 @@ export const FileBox = ({ file, sx, showFileVersion, associatedRegistration }: F
   const licenseData = file ? getLicenseData(file.license) : null;
 
   return (
-    <StyledFileBox sx={sx}>
+    <StyledValueBox sx={sx}>
       {file && (
         <>
           <StyledIconLabelContainer>
@@ -113,6 +103,6 @@ export const FileBox = ({ file, sx, showFileVersion, associatedRegistration }: F
           )}
         </>
       )}
-    </StyledFileBox>
+    </StyledValueBox>
   );
 };
