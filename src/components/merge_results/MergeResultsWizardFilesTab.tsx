@@ -1,5 +1,5 @@
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { StyledInfoBanner } from '../styled/Wrappers';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 import { CompareFiles } from './fields/CompareFiles';
+import { MissingCompareValues } from './fields/MissingValues';
 
 export const MergeResultsWizardFilesTab = () => {
   const { t } = useTranslation();
@@ -36,6 +37,8 @@ export const MergeResultsWizardFilesTab = () => {
         </>
       )}
 
+      {initialTargetFiles.length === 0 && sourceFiles.length === 0 && <MissingCompareValues />}
+
       {initialTargetFiles.map((targetFile) => (
         <CompareFiles key={targetFile.identifier} targetFile={targetFile} />
       ))}
@@ -55,6 +58,8 @@ export const MergeResultsWizardFilesTab = () => {
           />
         );
       })}
+
+      <Divider sx={{ gridColumn: '1/-1', my: '0.5rem', display: { xs: 'none', md: 'block' } }} />
     </>
   );
 };

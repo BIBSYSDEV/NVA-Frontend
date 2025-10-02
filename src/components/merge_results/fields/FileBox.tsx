@@ -20,6 +20,17 @@ const StyledIconLabelContainer = styled(Box)({
   alignItems: 'center',
 });
 
+export const StyledFileBox = styled(Box)({
+  padding: '0.5rem',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  gap: '0.25rem',
+  background: 'white',
+  height: '100%',
+  minHeight: '3rem',
+});
+
 interface FileBoxProps extends BoxProps {
   file?: AssociatedFile;
   showFileVersion: boolean;
@@ -35,17 +46,7 @@ export const FileBox = ({ file, sx, showFileVersion, associatedRegistration }: F
   const licenseData = file ? getLicenseData(file.license) : null;
 
   return (
-    <Box
-      sx={{
-        p: '0.5rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.25rem',
-        bgcolor: 'white',
-        height: '100%',
-        minHeight: '5rem',
-        ...sx,
-      }}>
+    <StyledFileBox sx={sx}>
       {file && (
         <>
           <StyledIconLabelContainer>
@@ -112,6 +113,6 @@ export const FileBox = ({ file, sx, showFileVersion, associatedRegistration }: F
           )}
         </>
       )}
-    </Box>
+    </StyledFileBox>
   );
 };
