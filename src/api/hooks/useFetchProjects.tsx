@@ -15,7 +15,7 @@ export const useFetchProjects = ({ searchTerm = '', enabled = true, results = 10
   return useQuery({
     enabled,
     queryKey: ['projects', results, page, searchTerm],
-    queryFn: () => searchForProjects(results, page, { query: searchTerm }),
+    queryFn: ({ signal }) => searchForProjects(results, page, { query: searchTerm }, signal),
     meta: { errorMessage: t('feedback.error.project_search') },
   });
 };

@@ -20,12 +20,12 @@ export const TicketStatusChip = ({ ticket }: TicketStatusChipProps) => {
   const text = t(`my_page.messages.ticket_types.${ticket.status}`);
 
   if (ticket.status === 'Completed') {
-    return <StatusChip bgcolor="success.main" text={text} icon="check" />;
+    return <StatusChip bgcolor="success.light" text={text} icon="check" />;
   }
 
   return (
     <StatusChip
-      bgcolor={ticket.status === 'Closed' ? 'error.main' : undefined}
+      bgcolor={ticket.status === 'Closed' ? 'warning.light' : undefined}
       text={text}
       icon={ticket.status === 'Closed' ? 'block' : 'hourglass'}
     />
@@ -42,14 +42,14 @@ export const NviStatusChip = ({ status }: NviStatusChip) => {
   const text = t(`tasks.nvi.status.${status}`);
 
   if (status === 'Approved') {
-    return <StatusChip text={text} icon="check" bgcolor="success.main" />;
+    return <StatusChip text={text} icon="check" bgcolor="success.light" />;
   }
 
   return (
     <StatusChip
       text={text}
       icon={status === 'Rejected' ? 'block' : 'hourglass'}
-      bgcolor={status === 'Rejected' ? 'error.main' : 'info.main'}
+      bgcolor={status === 'Rejected' ? 'warning.light' : 'info.light'}
     />
   );
 };
@@ -61,7 +61,7 @@ interface StatusChipProps {
   paddingY?: string | number;
 }
 
-export const StatusChip = ({ text, bgcolor = 'info.main', icon, paddingY }: StatusChipProps) => {
+export const StatusChip = ({ text, bgcolor = 'info.light', icon, paddingY }: StatusChipProps) => {
   return (
     <Box
       sx={{
@@ -74,7 +74,6 @@ export const StatusChip = ({ text, bgcolor = 'info.main', icon, paddingY }: Stat
         borderRadius: '1rem',
         bgcolor,
         paddingY,
-        color: 'white',
       }}>
       {icon === 'check' ? (
         <CheckIcon sx={{ fontSize: '1rem' }} />
@@ -83,7 +82,7 @@ export const StatusChip = ({ text, bgcolor = 'info.main', icon, paddingY }: Stat
       ) : icon === 'hourglass' ? (
         <HourglassEmptyIcon sx={{ fontSize: '1rem' }} />
       ) : null}
-      <Typography color="white">{text}</Typography>
+      <Typography>{text}</Typography>
     </Box>
   );
 };
