@@ -6,7 +6,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { InfoBanner } from '../../components/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
 import { FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
@@ -137,10 +136,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
           {!isNullAssociatedArtifact && (
             <>
-              <Paper
-                elevation={0}
-                component={BackgroundDiv}
-                sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Paper elevation={0} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                   <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
                   <HelperTextModal
@@ -223,7 +219,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 )}
               </Paper>
 
-              <Paper elevation={0} component={BackgroundDiv}>
+              <Paper elevation={0}>
                 <Typography variant="h2" sx={{ mb: '1rem' }}>
                   {t('common.links')}
                 </Typography>
@@ -259,7 +255,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           )}
 
           {(associatedArtifacts.length === 0 || isNullAssociatedArtifact) && !originalDoi && !values.doi && (
-            <Paper elevation={0} component={BackgroundDiv}>
+            <Paper elevation={0}>
               <Typography variant="h2" sx={{ mb: '1rem' }}>
                 {t('registration.files_and_license.resource_is_a_reference')}
               </Typography>
