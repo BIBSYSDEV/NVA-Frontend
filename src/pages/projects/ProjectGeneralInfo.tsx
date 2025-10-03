@@ -96,9 +96,9 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             {project.projectCategories.map((category, index) => (
               <Chip
                 component="dd"
-                sx={{ m: '0', borderColor: 'secondary.main' }}
+                sx={{ m: '0' }}
                 key={index}
-                color="primary"
+                color="secondary"
                 label={getLanguageString(category.label)}
               />
             ))}
@@ -114,9 +114,9 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             {project.keywords.map((keyword, index) => (
               <Chip
                 component="dd"
-                sx={{ m: '0', borderColor: 'secondary.main' }}
+                sx={{ m: '0' }}
                 key={index}
-                color="primary"
+                color="secondary"
                 label={getLanguageString(keyword.label)}
               />
             ))}

@@ -106,10 +106,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
       {({ name, remove, push }: FieldArrayRenderProps) => (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-            <Paper
-              elevation={0}
-              component={BackgroundDiv}
-              sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <Paper elevation={0} sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', m: 0 }}>
               <Typography variant="h2">{t('registration.files_and_license.info_from_channel_register')}</Typography>
               {journalIdentifier && (
                 <OpenInNewLink href={getChannelRegisterJournalUrl(journalIdentifier)}>
