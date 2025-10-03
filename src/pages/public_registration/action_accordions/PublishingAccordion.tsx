@@ -126,8 +126,8 @@ export const PublishingAccordion = ({
               ? t('feedback.success.published_registration_waiting_for_doi')
               : t('feedback.success.published_registration');
 
-      dispatch(setNotification({ message: successMessage, variant: 'success' }));
       await refetchData();
+      dispatch(setNotification({ message: successMessage, variant: 'success' }));
     }
     setIsCreatingPublishingRequest(false);
   };
