@@ -261,12 +261,12 @@ export const mainTheme = createTheme(
           root: {
             height: '100%',
             padding: '0.4rem 0',
-            '&.MuiChip-outlined': {
-              color: Color.PurpleDark,
-            },
           },
           label: {
             whiteSpace: 'normal', // Allow multiline chips
+          },
+          outlined: {
+            color: Color.PurpleDark,
           },
         },
         defaultProps: {
