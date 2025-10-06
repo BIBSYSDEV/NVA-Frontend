@@ -81,7 +81,7 @@ export const AreaOfResponsibilitySelector = ({ paramName, resetPagination }: Are
         <Chip
           sx={{ py: '0.1rem' }}
           label={t('common.chosen', { count: values.length })}
-          color="primary"
+          color="secondary"
           size="small"
           variant="filled"
           data-testid={dataTestId.registrationWizard.resourceType.journalChip}

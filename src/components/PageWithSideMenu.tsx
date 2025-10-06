@@ -83,7 +83,6 @@ interface LinkCreateButtonProps extends SelectableButtonProps {
 export const LinkCreateButton = ({ sx, title, isSelected, selectedColor, ...rest }: LinkCreateButtonProps) => {
   return (
     <SelectableButton
-      color="primary"
       sx={{
         bgcolor: isSelected ? selectedColor : 'tertiary.main',
         borderColor: isSelected ? selectedColor : 'tertiary.main',

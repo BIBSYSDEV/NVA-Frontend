@@ -230,7 +230,7 @@ export const DoiRequestAccordion = ({
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
       sx={{
-        bgcolor: 'background.neutral97',
+        bgcolor: 'background.paper',
         '& .MuiAccordionSummary-content': {
           alignItems: 'center',
           gap: '0.5rem',

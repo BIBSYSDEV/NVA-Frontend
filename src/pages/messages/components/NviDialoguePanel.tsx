@@ -34,7 +34,7 @@ export const NviDialoguePanel = ({ nviCandidate, nviCandidateQueryKey }: NviDial
           gap: '1rem',
           alignItems: 'center',
           justifyContent: 'space-between',
-          bgcolor: 'background.neutral97',
+          bgcolor: 'background.paper',
         }}>
         <Typography variant="h3" component="h2">
           {t('common.nvi_short')}

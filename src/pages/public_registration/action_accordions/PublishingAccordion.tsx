@@ -171,7 +171,7 @@ export const PublishingAccordion = ({
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
       sx={{
-        bgcolor: 'background.neutral97',
+        bgcolor: 'background.paper',
         '& .MuiAccordionSummary-content': {
           alignItems: 'center',
           gap: '0.5rem',

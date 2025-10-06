@@ -269,7 +269,6 @@ const ResearchProfile = () => {
                   <Chip
                     color="secondary"
                     variant="outlined"
-                    sx={{ color: 'primary.main' }}
                     key={keyword.type}
                     label={getLanguageString(keyword.label)}
                   />
