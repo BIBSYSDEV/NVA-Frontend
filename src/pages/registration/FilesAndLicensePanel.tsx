@@ -175,6 +175,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 </Box>
                 {!categorySupportsFiles && (
                   <InfoBanner
+                    type="info"
                     text={
                       hasCuratorRole(user)
                         ? t('file_upload_disabled_curator_can_upload_on_behalf')

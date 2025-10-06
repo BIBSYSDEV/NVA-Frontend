@@ -157,6 +157,7 @@ const NviStatus = ({ scientificValue }: NviStatusProps) => {
 
   return (
     <InfoBanner
+      type="info"
       text={
         isRated ? t('registration.resource_type.nvi.applicable') : t('registration.resource_type.nvi.channel_not_rated')
       }
