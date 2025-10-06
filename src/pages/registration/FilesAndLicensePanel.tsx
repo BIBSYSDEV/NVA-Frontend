@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useContext, useEffect, useMemo, useRef } from 'react';
