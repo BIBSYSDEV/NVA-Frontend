@@ -17,7 +17,7 @@ export const InfoBanner = ({ text, type, sx, size = 'large', ...props }: InfoBan
         display: 'flex',
         gap: '0.5rem',
         alignItems: 'center',
-        p: size == 'large' ? '1rem' : '0.3rem 2rem',
+        p: size === 'large' ? '1rem' : '0.3rem 2rem',
         bgcolor: `${type}.main`,
         ...sx,
       }}
