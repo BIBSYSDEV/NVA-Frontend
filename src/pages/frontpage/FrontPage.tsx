@@ -25,8 +25,10 @@ const FrontPage = () => {
     <StyledPageContent
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: { xs: '0.75rem', sm: '2rem' } }}>
       <HeadTitle>{t('common.start_page')}</HeadTitle>
-      <FrontPageHeading />
-      <SearchSection />
+      <div>
+        <FrontPageHeading />
+        <SearchSection />
+      </div>
       <NvaDescriptionSection />
       <CategorySection />
     </StyledPageContent>
