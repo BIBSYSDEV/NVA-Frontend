@@ -13,12 +13,11 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { getProjectPath } from '../../../utils/urlPaths';
 import { DuplicateWarning } from '../../registration/DuplicateWarning';
 import { FormBox } from './styles';
+import { DescriptionInput } from './DescriptionInput';
 
 interface ProjectDescriptionFormProps {
   thisIsRekProject: boolean;
 }
-
-const MAX_SUMMARY_LENGTH = 4000;
 
 export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionFormProps) => {
   const { t } = useTranslation();
@@ -66,77 +65,37 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
           )}
           <Field name={ProjectFieldName.AcademicSummaryNo}>
             {({ field }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                value={field.value ?? ''}
-                variant="filled"
-                fullWidth
-                multiline
-                rows="4"
-                data-testid={dataTestId.projectWizard.descriptionPanel.scientificSummaryNorwegianField}
+              <DescriptionInput
+                field={field}
+                dataTestId={dataTestId.projectWizard.descriptionPanel.scientificSummaryNorwegianField}
                 label={t('project.scientific_summary_norwegian')}
-                slotProps={{
-                  htmlInput: { maxLength: MAX_SUMMARY_LENGTH },
-                  formHelperText: { sx: { textAlign: 'end' } },
-                }}
-                helperText={`${field.value?.length ?? 0}/${MAX_SUMMARY_LENGTH}`}
               />
             )}
           </Field>
           <Field name={ProjectFieldName.AcademicSummaryEn}>
             {({ field }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                value={field.value ?? ''}
-                variant="filled"
-                fullWidth
-                multiline
-                rows="4"
-                data-testid={dataTestId.projectWizard.descriptionPanel.scientificSummaryEnglishField}
+              <DescriptionInput
+                field={field}
+                dataTestId={dataTestId.projectWizard.descriptionPanel.scientificSummaryEnglishField}
                 label={t('project.scientific_summary_english')}
-                slotProps={{
-                  htmlInput: { maxLength: MAX_SUMMARY_LENGTH },
-                  formHelperText: { sx: { textAlign: 'end' } },
-                }}
-                helperText={`${field.value?.length ?? 0}/${MAX_SUMMARY_LENGTH}`}
               />
             )}
           </Field>
           <Field name={ProjectFieldName.PopularScientificSummaryNo}>
             {({ field }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                value={field.value ?? ''}
-                variant="filled"
-                fullWidth
-                multiline
-                rows="3"
-                data-testid={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryNorwegianField}
+              <DescriptionInput
+                field={field}
+                dataTestId={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryNorwegianField}
                 label={t('project.popular_science_summary_norwegian')}
-                slotProps={{
-                  htmlInput: { maxLength: MAX_SUMMARY_LENGTH },
-                  formHelperText: { sx: { textAlign: 'end' } },
-                }}
-                helperText={`${field.value?.length ?? 0}/${MAX_SUMMARY_LENGTH}`}
               />
             )}
           </Field>
           <Field name={ProjectFieldName.PopularScientificSummaryEn}>
             {({ field }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                value={field.value ?? ''}
-                variant="filled"
-                fullWidth
-                multiline
-                rows="3"
-                data-testid={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryEnglishField}
+              <DescriptionInput
+                field={field}
+                dataTestId={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryEnglishField}
                 label={t('project.popular_science_summary_english')}
-                slotProps={{
-                  htmlInput: { maxLength: MAX_SUMMARY_LENGTH },
-                  formHelperText: { sx: { textAlign: 'end' } },
-                }}
-                helperText={`${field.value?.length ?? 0}/${MAX_SUMMARY_LENGTH}`}
               />
             )}
           </Field>
