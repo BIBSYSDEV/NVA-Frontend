@@ -6,10 +6,10 @@ import { Paper, PaperProps, Typography } from '@mui/material';
 interface InfoBannerProps extends PaperProps {
   text: string;
   size?: 'small' | 'large';
-  type: 'info' | 'warning' | 'error';
+  type?: 'info' | 'warning' | 'error';
 }
 
-export const InfoBanner = ({ text, type, sx, size = 'large', ...props }: InfoBannerProps) => {
+export const InfoBanner = ({ text, type = 'info', sx, size = 'large', ...props }: InfoBannerProps) => {
   return (
     <Paper
       elevation={5}

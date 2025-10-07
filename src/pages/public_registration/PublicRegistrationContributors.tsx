@@ -95,7 +95,7 @@ export const PublicRegistrationContributors = ({
 
       {problems && hasUnidentifiedContributorProblem(problems) && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem' }}>
-          <InfoBanner size="small" type="info" text={t('tasks.nvi.unidentified_person_with_nvi_institution')} />
+          <InfoBanner size="small" text={t('tasks.nvi.unidentified_person_with_nvi_institution')} />
         </Box>
       )}
     </Box>
