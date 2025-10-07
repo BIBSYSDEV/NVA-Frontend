@@ -13,7 +13,7 @@ export const FrontPageHeading = () => {
         display: 'flex',
         gap: '12rem',
         mt: { xs: '1rem', sm: '3rem' },
-        px: '3rem',
+        px: { sm: '1rem', md: '3rem' },
       }}>
       <VerticalBox sx={{ gap: '1.5rem', mb: '1rem' }}>
         <Typography variant="h1" sx={{ fontSize: { xs: '2.25rem', sm: '3rem' }, color: 'primary.main' }}>
@@ -23,7 +23,7 @@ export const FrontPageHeading = () => {
           {t('search_in_national_research_publication')}
         </Typography>
       </VerticalBox>
-      {!isMobile && <img src={illustration} alt="" height="200" />}
+      {!isMobile && <Box component="img" src={illustration} alt="" sx={{ height: '17rem' }} />}
     </Box>
   );
 };
