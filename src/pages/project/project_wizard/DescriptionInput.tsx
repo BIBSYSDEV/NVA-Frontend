@@ -1,4 +1,5 @@
 import { TextField } from '@mui/material';
+import { FieldInputProps } from 'formik';
 
 interface DescriptionInputProps {
   field: FieldInputProps<string>;
