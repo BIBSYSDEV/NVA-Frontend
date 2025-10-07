@@ -53,28 +53,37 @@ export const ProjectForm = ({ project, suggestedProjectManager, toggleModal, onP
       data: values,
     };
 
-    const updateProjectResponse = await authenticatedApiRequest2<CristinProject>(config);
+    try {
+      const updateProjectResponse = await authenticatedApiRequest2<CristinProject>(config);
 
-    if (isSuccessStatus(updateProjectResponse.status)) {
-      dispatch(
-        setNotification({
-          message: projectWithId ? t('feedback.success.update_project') : t('feedback.success.create_project'),
-          variant: 'success',
-        })
-      );
+      if (isSuccessStatus(updateProjectResponse.status)) {
+        dispatch(
+          setNotification({
+            message: projectWithId ? t('feedback.success.update_project') : t('feedback.success.create_project'),
+            variant: 'success',
+          })
+        );
 
-      const id = projectWithId ? projectWithId.id : updateProjectResponse.data.id;
+        const id = projectWithId ? projectWithId.id : updateProjectResponse.data.id;
 
-      if (toggleModal) {
-        if (onProjectCreated) {
-          if (projectWithId) onProjectCreated(projectWithId);
-          else onProjectCreated(updateProjectResponse.data);
+        if (toggleModal) {
+          if (onProjectCreated) {
+            if (projectWithId) onProjectCreated(projectWithId);
+            else onProjectCreated(updateProjectResponse.data);
+          }
+          toggleModal();
+        } else if (id) {
+          goToLandingPage(id);
         }
-        toggleModal();
-      } else if (id) {
-        goToLandingPage(id);
+      } else if (isErrorStatus(updateProjectResponse.status)) {
+        dispatch(
+          setNotification({
+            message: projectWithId ? t('feedback.error.update_project') : t('feedback.error.create_project'),
+            variant: 'error',
+          })
+        );
       }
-    } else if (isErrorStatus(updateProjectResponse.status)) {
+    } catch {
       dispatch(
         setNotification({
           message: projectWithId ? t('feedback.error.update_project') : t('feedback.error.create_project'),
