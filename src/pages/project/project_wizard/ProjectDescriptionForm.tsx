@@ -18,6 +18,8 @@ interface ProjectDescriptionFormProps {
   thisIsRekProject: boolean;
 }
 
+const MAX_SUMMARY_LENGTH = 4000;
+
 export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<CristinProject>();
@@ -73,6 +75,11 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                 rows="4"
                 data-testid={dataTestId.projectWizard.descriptionPanel.scientificSummaryNorwegianField}
                 label={t('project.scientific_summary_norwegian')}
+                slotProps={{
+                  htmlInput: { maxLength: MAX_SUMMARY_LENGTH },
+                  formHelperText: { sx: { textAlign: 'end' } },
+                }}
+                helperText={`${field.value?.length ?? 0}/${MAX_SUMMARY_LENGTH}`}
               />
             )}
           </Field>
@@ -87,6 +94,11 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                 rows="4"
                 data-testid={dataTestId.projectWizard.descriptionPanel.scientificSummaryEnglishField}
                 label={t('project.scientific_summary_english')}
+                slotProps={{
+                  htmlInput: { maxLength: MAX_SUMMARY_LENGTH },
+                  formHelperText: { sx: { textAlign: 'end' } },
+                }}
+                helperText={`${field.value?.length ?? 0}/${MAX_SUMMARY_LENGTH}`}
               />
             )}
           </Field>
@@ -101,6 +113,11 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                 rows="3"
                 data-testid={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryNorwegianField}
                 label={t('project.popular_science_summary_norwegian')}
+                slotProps={{
+                  htmlInput: { maxLength: MAX_SUMMARY_LENGTH },
+                  formHelperText: { sx: { textAlign: 'end' } },
+                }}
+                helperText={`${field.value?.length ?? 0}/${MAX_SUMMARY_LENGTH}`}
               />
             )}
           </Field>
@@ -115,6 +132,11 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                 rows="3"
                 data-testid={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryEnglishField}
                 label={t('project.popular_science_summary_english')}
+                slotProps={{
+                  htmlInput: { maxLength: MAX_SUMMARY_LENGTH },
+                  formHelperText: { sx: { textAlign: 'end' } },
+                }}
+                helperText={`${field.value?.length ?? 0}/${MAX_SUMMARY_LENGTH}`}
               />
             )}
           </Field>
