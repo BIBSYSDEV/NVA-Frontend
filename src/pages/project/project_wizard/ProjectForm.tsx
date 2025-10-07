@@ -83,7 +83,7 @@ export const ProjectForm = ({ project, suggestedProjectManager, toggleModal, onP
           })
         );
       }
-    } catch (err) {
+    } catch {
       dispatch(
         setNotification({
           message: projectWithId ? t('feedback.error.update_project') : t('feedback.error.create_project'),
