@@ -8,6 +8,7 @@ import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { HeadTitle } from '../../components/HeadTitle';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { ListPagination } from '../../components/ListPagination';
+import { ListSkeleton } from '../../components/ListSkeleton';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { RegistrationIconHeader } from '../../components/RegistrationIconHeader';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
@@ -40,7 +41,6 @@ import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
-import { ListSkeleton } from '../../components/ListSkeleton';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
