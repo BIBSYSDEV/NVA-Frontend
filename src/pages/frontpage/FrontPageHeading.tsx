@@ -11,11 +11,11 @@ export const FrontPageHeading = () => {
     <Box
       sx={{
         display: 'flex',
-        gap: '12rem',
+        gap: '2rem',
         mt: { xs: '1rem', sm: '3rem' },
-        px: { sm: '1rem', md: '3rem' },
       }}>
-      <VerticalBox sx={{ gap: '1.5rem', mb: '1rem' }}>
+      <VerticalBox
+        sx={{ gap: '1.5rem', mb: '1rem', alignSelf: 'center', maxWidth: '35rem', pl: { sm: '1rem', md: '3rem' } }}>
         <Typography variant="h1" sx={{ fontSize: { xs: '2.25rem', sm: '3rem' }, color: 'primary.main' }}>
           {t('common.page_title')}
         </Typography>
