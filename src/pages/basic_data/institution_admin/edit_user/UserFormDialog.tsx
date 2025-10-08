@@ -75,7 +75,6 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
     queryFn: () => fetchUser(username),
     meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
     retry: false,
-    initialData: existingUser,
   });
 
   const personMutation = useMutation({
