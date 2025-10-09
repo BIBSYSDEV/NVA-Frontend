@@ -2,7 +2,7 @@ import { Box, BoxProps, Divider, Skeleton, Tooltip, Typography } from '@mui/mate
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
+import { useFetchInstitutionUser } from '../../../api/hooks/useFetchInstitutionUser';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { StyledTruncatableTypography } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
@@ -63,7 +63,7 @@ interface MessageItemProps {
 export const MessageItem = ({ text, date, username, menuElement, showOrganization = false }: MessageItemProps) => {
   const { t } = useTranslation();
 
-  const senderQuery = useFetchUserQuery(username);
+  const senderQuery = useFetchInstitutionUser(username);
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
   return (

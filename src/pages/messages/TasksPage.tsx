@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
-import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
+import { useFetchInstitutionUser } from '../../api/hooks/useFetchInstitutionUser';
 import {
   fetchCustomerTickets,
   FetchTicketsParams,
@@ -67,7 +67,7 @@ const TasksPage = () => {
   const isOnNviCandidatePage =
     location.pathname.startsWith(UrlPathTemplate.TasksNvi) && !isOnNviCandidatesPage && !isOnNviStatusPage;
 
-  const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
+  const institutionUserQuery = useFetchInstitutionUser(user?.nvaUsername ?? '');
 
   const searchParams = new URLSearchParams(location.search);
 

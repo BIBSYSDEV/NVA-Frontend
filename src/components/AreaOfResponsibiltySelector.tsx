@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { fetchOrganizations } from '../api/cristinApi';
-import { useFetchUserQuery } from '../api/hooks/useFetchUserQuery';
+import { useFetchInstitutionUser } from '../api/hooks/useFetchInstitutionUser';
 import { RootState } from '../redux/store';
 import { Organization } from '../types/organization.types';
 import { dataTestId } from '../utils/dataTestIds';
@@ -37,7 +37,7 @@ export const AreaOfResponsibilitySelector = ({ paramName, resetPagination }: Are
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
+  const institutionUserQuery = useFetchInstitutionUser(user?.nvaUsername ?? '');
   const areasOfResponsibilityIds = institutionUserQuery.data?.viewingScope?.includedUnits ?? [];
 
   const organizationQuery = useQuery({

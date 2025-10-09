@@ -12,7 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { CreateUserPayload, fetchUser } from '../../../api/roleApi';
+import { CreateUserPayload } from '../../../api/roleApi';
 import { fetchEmployees } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { RootState } from '../../../redux/store';
@@ -24,6 +24,7 @@ import { getAllChildOrganizations } from '../../../utils/institutions-helpers';
 import { getFullCristinName, getUsername, getValueByKey } from '../../../utils/user-helpers';
 import { AddCuratorForm } from './AddCuratorForm';
 import { OrganizationCuratorsAccordionProps } from './OrganizationCuratorsAccordion';
+import { useFetchInstitutionUser } from '../../../api/hooks/useFetchInstitutionUser';
 
 interface AddCuratorDialogProps
   extends Pick<DialogProps, 'open'>,
@@ -65,11 +66,9 @@ export const AddCuratorDialog = ({
 
   const username = getUsername(selectedPerson, topOrgCristinId);
 
-  const userQuery = useQuery({
-    enabled: open && !!selectedPerson && !!username,
-    queryKey: ['user', username],
-    queryFn: () => fetchUser(username),
-    meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
+  const userQuery = useFetchInstitutionUser(username, {
+    enabled: open && !!selectedPerson,
+    errorMessage: false, // No error message, since a Cristin Person will lack User if they have not logged in yet
     retry: false,
     gcTime: 0, // Disable caching since this user in many cases will be changed, and the cached data then will be outdated
   });

@@ -1,8 +1,8 @@
 import { Skeleton, Typography, TypographyProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
-import { useFetchPerson } from '../../../api/hooks/useFetchPerson';
-import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
+import { useFetchCristinPerson } from '../../../api/hooks/useFetchCristinPerson';
+import { useFetchInstitutionUser } from '../../../api/hooks/useFetchInstitutionUser';
 import { ImportUploadDetails, UserUploadDetails } from '../../../types/associatedArtifact.types';
 import { getFullCristinName } from '../../../utils/user-helpers';
 
@@ -24,9 +24,12 @@ interface UserUploaderInfoProps extends TypographyProps {
 
 const UserUploaderInfo = ({ uploadDetails, ...typographyProps }: UserUploaderInfoProps) => {
   const { t } = useTranslation();
-  const userQuery = useFetchUserQuery(uploadDetails.uploadedBy, { staleTime: Infinity, gcTime: 1_800_000 });
+  const userQuery = useFetchInstitutionUser(uploadDetails.uploadedBy, { staleTime: Infinity, gcTime: 1_800_000 });
 
-  const personQuery = useFetchPerson(userQuery.data?.cristinId ?? '', { staleTime: Infinity, gcTime: 1_800_000 });
+  const personQuery = useFetchCristinPerson(userQuery.data?.cristinId ?? '', {
+    staleTime: Infinity,
+    gcTime: 1_800_000,
+  });
   const organizationQuery = useFetchOrganization(userQuery.data?.institutionCristinId ?? '');
 
   const fullName = getFullCristinName(personQuery.data?.names);

@@ -8,7 +8,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router';
 import { ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from '../../api/cristinApi';
-import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
+import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchCristinPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam } from '../../api/searchApi';

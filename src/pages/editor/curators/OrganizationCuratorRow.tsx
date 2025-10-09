@@ -98,7 +98,7 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators, canEditUsers 
         <UserFormDialog
           open={openDialog}
           onClose={toggleDialog}
-          existingPerson={curator.cristinId}
+          cristinInformation={curator.cristinId}
           existingUser={curator}
         />
       )}

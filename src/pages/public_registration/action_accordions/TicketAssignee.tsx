@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
+import { useFetchInstitutionUser } from '../../../api/hooks/useFetchInstitutionUser';
 import { updateTicket } from '../../../api/registrationApi';
 import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { Avatar } from '../../../components/Avatar';
@@ -83,7 +83,7 @@ interface UnselectableAssigneeProps {
 
 const UnselectableAssignee = ({ assignee }: UnselectableAssigneeProps) => {
   const { t } = useTranslation();
-  const assigneeQuery = useFetchUserQuery(assignee ?? '');
+  const assigneeQuery = useFetchInstitutionUser(assignee ?? '');
   const assigneeFullName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
 
   return (

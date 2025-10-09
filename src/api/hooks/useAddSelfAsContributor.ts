@@ -1,5 +1,5 @@
 import { CristinPerson } from '../../types/user.types';
-import { useFetchPerson } from './useFetchPerson';
+import { useFetchCristinPerson } from './useFetchCristinPerson';
 
 interface UseAddSelfAsContributorProps {
   cristinId: string;
@@ -7,7 +7,7 @@ interface UseAddSelfAsContributorProps {
 }
 
 export const useAddSelfAsContributor = ({ cristinId, addContributorFn }: UseAddSelfAsContributorProps) => {
-  const personQuery = useFetchPerson(cristinId, { enabled: false });
+  const personQuery = useFetchCristinPerson(cristinId, { enabled: false });
 
   const addSelf = async () => {
     const refetchPerson = await personQuery.refetch();

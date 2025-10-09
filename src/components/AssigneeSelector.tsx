@@ -2,7 +2,7 @@ import { Autocomplete } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useFetchUserQuery } from '../api/hooks/useFetchUserQuery';
+import { useFetchInstitutionUser } from '../api/hooks/useFetchInstitutionUser';
 import { fetchUsersByCustomer } from '../api/roleApi';
 import { RootState } from '../redux/store';
 import { RoleName } from '../types/user.types';
@@ -43,7 +43,7 @@ export const AssigneeSelector = ({
     a.username === user?.nvaUsername ? -1 : b.username === user?.nvaUsername ? 1 : 0
   );
 
-  const assigneeQuery = useFetchUserQuery(assignee ?? '');
+  const assigneeQuery = useFetchInstitutionUser(assignee ?? '');
   const isLoading = isUpdating || assigneeQuery.isFetching;
 
   return (

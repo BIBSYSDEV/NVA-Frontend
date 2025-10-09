@@ -83,7 +83,7 @@ export const PersonTableRow = ({ cristinPerson, refetchEmployees }: PersonTableR
         </TableCell>
       </TableRow>
 
-      <UserFormDialog open={openDialog} onClose={toggleDialog} existingPerson={cristinPerson} />
+      <UserFormDialog open={openDialog} onClose={toggleDialog} cristinInformation={cristinPerson} />
     </>
   );
 };

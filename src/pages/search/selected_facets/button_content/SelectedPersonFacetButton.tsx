@@ -1,6 +1,6 @@
 import { Skeleton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useFetchPersonByIdentifier } from '../../../../api/hooks/useFetchPerson';
+import { useFetchPersonByIdentifier } from '../../../../api/hooks/useFetchCristinPerson';
 import { getFullCristinName } from '../../../../utils/user-helpers';
 
 interface SelectedContributorFacetButtonProps {

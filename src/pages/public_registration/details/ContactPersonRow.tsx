@@ -1,6 +1,6 @@
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Box, Link, Skeleton } from '@mui/material';
-import { useFetchPerson } from '../../../api/hooks/useFetchPerson';
+import { useFetchCristinPerson } from '../../../api/hooks/useFetchCristinPerson';
 import { ContributorName } from '../../../components/ContributorName';
 import { Contributor } from '../../../types/contributor.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -11,7 +11,7 @@ interface ContactPersonRowProps {
 
 export const ContactPersonRow = ({ contributor }: ContactPersonRowProps) => {
   const id = contributor.identity.id ?? '';
-  const personQuery = useFetchPerson(id);
+  const personQuery = useFetchCristinPerson(id);
   const person = personQuery.data;
 
   return (

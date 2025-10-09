@@ -2,7 +2,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Divider, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
+import { useFetchInstitutionUser } from '../../../api/hooks/useFetchInstitutionUser';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -14,7 +14,7 @@ export const UserRoleAndHelp = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
-  const nvaUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
+  const nvaUserQuery = useFetchInstitutionUser(user?.nvaUsername ?? '');
   const nvaUser = nvaUserQuery.data;
 
   return (

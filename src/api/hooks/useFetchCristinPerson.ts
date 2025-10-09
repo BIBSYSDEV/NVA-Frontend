@@ -4,13 +4,13 @@ import { API_URL } from '../../utils/constants';
 import { CristinApiPath } from '../apiPaths';
 import { fetchPerson } from '../cristinApi';
 
-interface UseFetchPersonOptions {
+export interface UseFetchPersonOptions {
   enabled?: boolean;
   staleTime?: number;
   gcTime?: number;
 }
 
-export const useFetchPerson = (cristinId: string, options?: UseFetchPersonOptions) => {
+export const useFetchCristinPerson = (cristinId: string, options?: UseFetchPersonOptions) => {
   const { t } = useTranslation();
 
   return useQuery({
@@ -25,5 +25,5 @@ export const useFetchPerson = (cristinId: string, options?: UseFetchPersonOption
 
 export const useFetchPersonByIdentifier = (identifier: string, options?: UseFetchPersonOptions) => {
   const cristinId = `${API_URL}${CristinApiPath.Person.substring(1)}/${identifier}`;
-  return useFetchPerson(cristinId, options);
+  return useFetchCristinPerson(cristinId, options);
 };

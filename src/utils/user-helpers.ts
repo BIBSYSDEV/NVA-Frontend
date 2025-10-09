@@ -136,3 +136,48 @@ export const userCanDeleteMessage = (user: User, message: Message, ticketType: T
 
   return false;
 };
+
+export const getEmployments = (
+  cristinPerson: CristinPerson | null | undefined,
+  topOrgCristinId: string | undefined
+) => {
+  const internalEmployments: Employment[] = [];
+  const externalEmployments: Employment[] = [];
+
+  const employments = cristinPerson?.employments ?? [];
+  const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
+  const targetOrganizationIdStart = `${topOrgCristinIdentifier.split('.')[0]}.`;
+
+  employments.forEach((employment) => {
+    const organizationIdentifier = employment.organization.split('/').pop();
+    if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
+      internalEmployments.push(employment);
+    } else {
+      externalEmployments.push(employment);
+    }
+  });
+
+  return { internalEmployments, externalEmployments };
+};
+
+export const checkIfValidPersonIdentifier = (username: string) => {
+  const [personCristinIdentifier, topOrgCristinIdentifier] = username.split('@');
+  return (
+    !!personCristinIdentifier && !!topOrgCristinIdentifier && Number.isInteger(Number.parseInt(personCristinIdentifier))
+  );
+};
+
+export const checkIfPersonHasNationalIdentificationNumber = (cristinPerson: CristinPerson) => {
+  return cristinPerson.identifiers.some(
+    (identifier) => identifier.type === 'NationalIdentificationNumber' && Boolean(identifier.value)
+  );
+};
+
+export const findFirstEmploymentThatMatchesAnActiveAffiliation = (
+  employments?: Employment[],
+  affiliations?: CristinPersonAffiliation[]
+) => {
+  return employments?.find((employment) =>
+    affiliations?.some((affiliation) => affiliation.organization === employment.organization && affiliation.active)
+  );
+};
