@@ -285,7 +285,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               {relatedRegistrationsQuery.isFetching ? (
                 <ListSkeleton arrayLength={4} minWidth={100} height={100} />
               ) : (
-                <ListRegistrationRelations registrations={relatedRegistrationsQuery.data.hits} />
+                <ListRegistrationRelations sx={{ mb: '1rem' }} registrations={relatedRegistrationsQuery.data.hits} />
               )}
             </ListPagination>
           </LandingPageAccordion>
