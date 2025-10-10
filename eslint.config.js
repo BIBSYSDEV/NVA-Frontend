@@ -1,6 +1,7 @@
 import tanstackQuery from '@tanstack/eslint-plugin-query';
+import prettierConfig from 'eslint-config-prettier';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
-import prettier from 'eslint-plugin-prettier/recommended';
+import prettierPlugin from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
@@ -20,18 +21,25 @@ export default [
     },
   },
   ...tseslint.configs.recommended,
+  ...tanstackQuery.configs['flat/recommended'],
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
-  reactHooks.configs['recommended-latest'],
-  ...tanstackQuery.configs['flat/recommended'],
   jsxA11y.flatConfigs.recommended,
+  prettierConfig,
   {
+    plugins: {
+      'react-hooks': reactHooks,
+      prettier: prettierPlugin,
+      '@typescript-eslint': tseslint.plugin,
+    },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
       'no-console': 'warn',
       'no-debugger': 'warn',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+      'prettier/prettier': 'error',
     },
   },
-  prettier,
 ];
