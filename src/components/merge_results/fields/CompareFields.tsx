@@ -71,7 +71,8 @@ export const CompareFields = ({
         {isChanged && (
           <Button
             data-testid={dataTestId.basicData.centralImport.resetValueButton}
-            variant="outlined"
+            variant="contained"
+            color="tertiary"
             size="small"
             endIcon={<RestoreIcon />}
             onClick={onResetValue}>

@@ -79,7 +79,7 @@ export const PositionField = ({
               {...params}
               required
               label={t('basic_data.add_employee.position')}
-              variant="filled"
+              variant="outlined"
               error={touched && !!error}
               helperText={touched && error}
               data-testid={dataTestId.basicData.personAdmin.position}
