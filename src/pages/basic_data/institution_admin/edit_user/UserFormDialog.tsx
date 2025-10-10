@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProtectedResource } from '../../../../api/commonApi';
 import { updateCristinPerson } from '../../../../api/cristinApi';
-import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
+import { createUser, updateUser } from '../../../../api/roleApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
@@ -27,6 +27,7 @@ import { PersonFormSection } from './PersonFormSection';
 import { RolesFormSection } from './RolesFormSection';
 import { rolesWithAreaOfResponsibility, TasksFormSection } from './TasksFormSection';
 import { UserFormData, UserFormFieldName, validationSchema } from './userFormHelpers';
+import { useFetchUserQuery } from '../../../../api/hooks/useFetchUserQuery';
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
   existingPerson: CristinPerson | string;
@@ -69,13 +70,13 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
 
   const username = getUsername(person, topOrgCristinId);
 
-  const institutionUserQuery = useQuery({
-    enabled: open && !existingUser && !!username,
-    queryKey: ['user', username],
-    queryFn: () => fetchUser(username),
-    meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
+  const institutionUserQuery = useFetchUserQuery(username, {
+    enabled: open && !existingUser,
+    errorMessage: false, // No error message, since a Cristin Person will lack User if they have not logged in yet
     retry: false,
   });
+
+  const institutionUser = existingUser ?? institutionUserQuery.data;
 
   const personMutation = useMutation({
     mutationFn: async (person: CristinPerson) => {
@@ -120,7 +121,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
           username: username,
           viewingScope: { type: 'ViewingScope', includedUnits: [] },
         }
-      : institutionUserQuery.data,
+      : institutionUser,
   };
 
   return (
