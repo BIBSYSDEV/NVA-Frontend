@@ -75,8 +75,9 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
     queryFn: () => fetchUser(username),
     meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
     retry: false,
-    initialData: existingUser,
   });
+
+  const institutionUser = existingUser ?? institutionUserQuery.data;
 
   const personMutation = useMutation({
     mutationFn: async (person: CristinPerson) => {
@@ -121,7 +122,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
           username: username,
           viewingScope: { type: 'ViewingScope', includedUnits: [] },
         }
-      : institutionUserQuery.data,
+      : institutionUser,
   };
 
   return (
