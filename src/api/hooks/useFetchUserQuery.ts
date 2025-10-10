@@ -3,29 +3,23 @@ import { useTranslation } from 'react-i18next';
 import { fetchUser } from '../roleApi';
 
 interface UseFetchUserOptions {
-  retry?: number | boolean;
+  retry?: number;
   staleTime?: number;
   gcTime?: number;
-  enabled?: boolean;
-  errorMessage?: boolean;
 }
 
-export const useFetchUserQuery = (
-  username: string,
-  { enabled, errorMessage, ...options }: UseFetchUserOptions = {}
-) => {
+export const useFetchUserQuery = (username: string, options: UseFetchUserOptions = {}) => {
   const { t } = useTranslation();
-  const [cristinPersonIdentifier, topOrgCristinIdentifier] = username.split('@');
+
+  const usernameIdentifiers = username.split('@');
   const isValidPersonIdentifier =
-    !!cristinPersonIdentifier &&
-    !!topOrgCristinIdentifier &&
-    Number.isInteger(Number.parseInt(cristinPersonIdentifier));
+    usernameIdentifiers.length === 2 && Number.isInteger(Number.parseInt(usernameIdentifiers[0]));
 
   return useQuery({
-    enabled: enabled && isValidPersonIdentifier,
+    enabled: isValidPersonIdentifier,
     queryKey: ['user', username],
     queryFn: () => fetchUser(username),
-    meta: { errorMessage: errorMessage === true && t('feedback.error.get_person') },
+    meta: { errorMessage: t('feedback.error.get_person') },
     ...options,
   });
 };
