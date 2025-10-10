@@ -76,7 +76,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
       sx={{
-        bgcolor: 'background.neutral97',
+        bgcolor: 'background.paper',
         '& .MuiAccordionSummary-content': {
           alignItems: 'center',
           gap: '0.5rem',

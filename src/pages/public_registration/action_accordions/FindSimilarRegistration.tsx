@@ -67,7 +67,7 @@ export const FindSimilarRegistration = ({
       <TextField
         data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationSearchField}
         placeholder={t('unpublish_actions.search_duplicate_facets')}
-        variant="filled"
+        variant="outlined"
         label={fieldLabel ?? t('common.result')}
         onChange={(event) => setSearchBeforeDebounce(event.target.value)}
         value={searchBeforeDebounce}

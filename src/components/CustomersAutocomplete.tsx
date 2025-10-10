@@ -17,7 +17,7 @@ export const CustomersAutocomplete = (
       options={customers}
       loading={customersQuery.isPending}
       getOptionLabel={(option) => option.displayName}
-      renderInput={(params) => <TextField {...params} variant="filled" required label={t('common.institution')} />}
+      renderInput={(params) => <TextField {...params} variant="outlined" required label={t('common.institution')} />}
       {...props}
     />
   );

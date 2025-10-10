@@ -97,7 +97,7 @@ const BasicDataPage = () => {
               data-testid={dataTestId.basicData.addEmployeeLink}
               variant="outlined"
               isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
-              selectedColor="person.main"
+              selectedColor="tertiary.dark"
               to={UrlPathTemplate.BasicDataAddEmployee}
               title={t('basic_data.add_employee.add_employee')}
             />

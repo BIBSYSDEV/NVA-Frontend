@@ -13,6 +13,7 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { getProjectPath } from '../../../utils/urlPaths';
 import { DuplicateWarning } from '../../registration/DuplicateWarning';
 import { FormBox } from './styles';
+import { DescriptionInput } from './DescriptionInput';
 
 interface ProjectDescriptionFormProps {
   thisIsRekProject: boolean;
@@ -64,56 +65,36 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
           )}
           <Field name={ProjectFieldName.AcademicSummaryNo}>
             {({ field }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                value={field.value ?? ''}
-                variant="filled"
-                fullWidth
-                multiline
-                rows="4"
-                data-testid={dataTestId.projectWizard.descriptionPanel.scientificSummaryNorwegianField}
+              <DescriptionInput
+                field={field}
+                dataTestId={dataTestId.projectWizard.descriptionPanel.scientificSummaryNorwegianField}
                 label={t('project.scientific_summary_norwegian')}
               />
             )}
           </Field>
           <Field name={ProjectFieldName.AcademicSummaryEn}>
             {({ field }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                value={field.value ?? ''}
-                variant="filled"
-                fullWidth
-                multiline
-                rows="4"
-                data-testid={dataTestId.projectWizard.descriptionPanel.scientificSummaryEnglishField}
+              <DescriptionInput
+                field={field}
+                dataTestId={dataTestId.projectWizard.descriptionPanel.scientificSummaryEnglishField}
                 label={t('project.scientific_summary_english')}
               />
             )}
           </Field>
           <Field name={ProjectFieldName.PopularScientificSummaryNo}>
             {({ field }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                value={field.value ?? ''}
-                variant="filled"
-                fullWidth
-                multiline
-                rows="3"
-                data-testid={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryNorwegianField}
+              <DescriptionInput
+                field={field}
+                dataTestId={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryNorwegianField}
                 label={t('project.popular_science_summary_norwegian')}
               />
             )}
           </Field>
           <Field name={ProjectFieldName.PopularScientificSummaryEn}>
             {({ field }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                value={field.value ?? ''}
-                variant="filled"
-                fullWidth
-                multiline
-                rows="3"
-                data-testid={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryEnglishField}
+              <DescriptionInput
+                field={field}
+                dataTestId={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryEnglishField}
                 label={t('project.popular_science_summary_english')}
               />
             )}

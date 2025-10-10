@@ -1,12 +1,14 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
-import { fetchResults, FetchResultsParams } from '../../api/searchApi';
+import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { HeadTitle } from '../../components/HeadTitle';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
+import { ListPagination } from '../../components/ListPagination';
+import { ListSkeleton } from '../../components/ListSkeleton';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { RegistrationIconHeader } from '../../components/RegistrationIconHeader';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
@@ -15,7 +17,7 @@ import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { PreviousPathLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
-import { API_URL } from '../../utils/constants';
+import { API_URL, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   getAssociatedLinks,
@@ -46,6 +48,8 @@ export interface PublicRegistrationContentProps {
 
 export const PublicRegistrationContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const [page, setPage] = useState(1);
 
   const { identifier, entityDescription, projects, subjects, fundings } = registration;
   const contributors = entityDescription?.contributors ?? [];
@@ -53,15 +57,13 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
 
-  const relatedRegistrationsQueryConfig: FetchResultsParams = {
-    query: identifier,
-    idNot: identifier,
-    results: 20,
-  };
-  const relatedRegistrationsQuery = useQuery({
-    queryKey: ['registrations', relatedRegistrationsQueryConfig],
-    queryFn: ({ signal }) => fetchResults(relatedRegistrationsQueryConfig, signal),
-    meta: { errorMessage: t('feedback.error.search') },
+  const relatedRegistrationsQuery = useRegistrationSearch({
+    params: {
+      query: identifier,
+      idNot: identifier,
+      results: rowsPerPage,
+      from: (page - 1) * rowsPerPage,
+    },
   });
 
   const userCanEditRegistration = userHasAccessRight(registration, 'partial-update');
@@ -271,7 +273,21 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
                 ? t('common.chapters')
                 : t('registration.public_page.other_related_registrations')
             } (${relatedRegistrationsQuery.data.totalHits})`}>
-            <ListRegistrationRelations registrations={relatedRegistrationsQuery.data.hits} />
+            <ListPagination
+              count={relatedRegistrationsQuery.data.totalHits}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={setPage}
+              onRowsPerPageChange={(newRowsPerPage) => {
+                setRowsPerPage(newRowsPerPage);
+                setPage(1);
+              }}>
+              {relatedRegistrationsQuery.isFetching ? (
+                <ListSkeleton arrayLength={4} minWidth={100} height={100} />
+              ) : (
+                <ListRegistrationRelations sx={{ mb: '1rem' }} registrations={relatedRegistrationsQuery.data.hits} />
+              )}
+            </ListPagination>
           </LandingPageAccordion>
         )}
 

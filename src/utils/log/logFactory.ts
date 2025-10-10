@@ -155,7 +155,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
         entries.push({
           text: t('log.titles.files_rejected_count', { count: rejectedFilesCount }),
           date: ticket.finalizedDate ?? ticket.modifiedDate,
-          bgcolor: 'error.light',
+          bgcolor: 'warning.light',
           Icon: BlockIcon,
         });
       }

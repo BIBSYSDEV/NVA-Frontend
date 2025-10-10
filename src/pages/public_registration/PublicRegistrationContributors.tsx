@@ -1,11 +1,11 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import WarningIcon from '@mui/icons-material/Warning';
 import { Box, Button, Link, Typography } from '@mui/material';
 import { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
 import { ContributorIndicators } from '../../components/ContributorIndicators';
+import { InfoBanner } from '../../components/InfoBanner';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { NviCandidateProblemsContext } from '../../context/NviCandidateProblemsContext';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
@@ -95,18 +95,7 @@ export const PublicRegistrationContributors = ({
 
       {problems && hasUnidentifiedContributorProblem(problems) && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem' }}>
-          <Box
-            sx={{
-              p: '0.3rem 2rem',
-              bgcolor: 'error.main',
-              color: 'primary.contrastText',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-            }}>
-            <WarningIcon fontSize="small" />
-            <Typography color="inherit">{t('tasks.nvi.unidentified_person_with_nvi_institution')}</Typography>
-          </Box>
+          <InfoBanner size="small" text={t('tasks.nvi.unidentified_person_with_nvi_institution')} />
         </Box>
       )}
     </Box>

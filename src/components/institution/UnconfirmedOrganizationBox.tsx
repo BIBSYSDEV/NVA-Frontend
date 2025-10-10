@@ -46,7 +46,6 @@ export const UnconfirmedOrganizationBox = ({
       </Box>
       {removeAffiliation && (
         <DeleteIconButton
-          sx={{ bgcolor: 'tertiary.main' }}
           data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
           onClick={removeAffiliation}
           tooltip={t('registration.contributors.remove_affiliation')}
