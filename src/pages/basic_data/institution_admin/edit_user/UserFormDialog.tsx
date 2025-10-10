@@ -9,13 +9,12 @@ import {
   Divider,
   Typography,
 } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProtectedResource } from '../../../../api/commonApi';
 import { updateCristinPerson } from '../../../../api/cristinApi';
-import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
+import { createUser, updateUser } from '../../../../api/roleApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
@@ -27,6 +26,8 @@ import { PersonFormSection } from './PersonFormSection';
 import { RolesFormSection } from './RolesFormSection';
 import { rolesWithAreaOfResponsibility, TasksFormSection } from './TasksFormSection';
 import { UserFormData, UserFormFieldName, validationSchema } from './userFormHelpers';
+import { useFetchProtectedPerson } from '../../../../api/hooks/useFetchProtectedPerson';
+import { useFetchUserQuery } from '../../../../api/hooks/useFetchUserQuery';
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
   existingPerson: CristinPerson | string;
@@ -44,12 +45,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
   const personId = typeof existingPerson === 'string' ? existingPerson : existingPerson.id;
   const existingPersonObject = typeof existingPerson === 'object' ? existingPerson : undefined;
 
-  const personQuery = useQuery({
-    enabled: open && !existingPersonObject && !!personId,
-    queryKey: [personId],
-    queryFn: () => fetchProtectedResource<CristinPerson>(personId),
-    meta: { errorMessage: t('feedback.error.get_person') },
-  });
+  const personQuery = useFetchProtectedPerson(personId, { enabled: open && !existingPersonObject });
   const person = existingPersonObject ?? personQuery.data;
   const personEmployments = person?.employments ?? [];
 
@@ -69,11 +65,9 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
 
   const username = getUsername(person, topOrgCristinId);
 
-  const institutionUserQuery = useQuery({
-    enabled: open && !existingUser && !!username,
-    queryKey: ['user', username],
-    queryFn: () => fetchUser(username),
-    meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
+  const institutionUserQuery = useFetchUserQuery(username, {
+    enabled: open && !existingUser,
+    showErrorMessage: false, // No error message, since a Cristin Person will lack User if they have not logged in yet
     retry: false,
   });
 
