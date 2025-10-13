@@ -41,6 +41,8 @@ export const RightsRetentionStrategySettings = () => {
       dispatch(setNotification({ message: t('feedback.error.update_rights_retention_strategy'), variant: 'error' })),
   });
 
+  console.log(customer);
+
   return (
     <>
       <Divider sx={{ my: '2.5rem' }} />
@@ -156,10 +158,22 @@ export const RightsRetentionStrategySettings = () => {
                       p: <Typography gutterBottom />,
                     }}
                   />
-                  <RadioGroup row defaultValue={'1'}>
-                    <FormControlLabel value="1" control={<Radio />} label={t('fileimport_create_ticket')} />
-                    <FormControlLabel value="2" control={<Radio />} label={t('fileimport_automatic_import')} />
-                  </RadioGroup>
+                  <Field name={'autoPublishScopusImportFiles'}>
+                    {({ field }: FieldProps) => (
+                      <RadioGroup row defaultValue={field.value}>
+                        <FormControlLabel
+                          value={false}
+                          control={<Radio onChange={() => setFieldValue(field.name, false)} />}
+                          label={t('fileimport_create_ticket')}
+                        />
+                        <FormControlLabel
+                          value={true}
+                          control={<Radio onChange={() => setFieldValue(field.name, true)} />}
+                          label={t('fileimport_automatic_import')}
+                        />
+                      </RadioGroup>
+                    )}
+                  </Field>
                 </Box>
 
                 <StyledRightAlignedWrapper>
