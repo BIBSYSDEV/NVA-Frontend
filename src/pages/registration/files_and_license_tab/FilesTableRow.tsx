@@ -114,8 +114,6 @@ export const FilesTableRow = ({
   const fileHasCustomerRrs = file.rightsRetentionStrategy.type === 'CustomerRightsRetentionStrategy';
   const fileHasOverriddenRrs = file.rightsRetentionStrategy.type === 'OverriddenRightsRetentionStrategy';
 
-  const canOverrideRrs = isAcceptedFile && (isOverridableRrs || (isCustomerRrs && user?.isPublishingCurator));
-
   const rrsPolicyLink = customer?.rightsRetentionStrategy.id ? (
     <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
   ) : null;
@@ -154,6 +152,7 @@ export const FilesTableRow = ({
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
 
   const isRegistrationFileCurator = isFileCuratorForRegistration(user, values);
+  const canOverrideRrs = isAcceptedFile && (isOverridableRrs || (isCustomerRrs && isRegistrationFileCurator));
 
   const disabledFileDescription =
     disabledFile && file.type === 'OpenFile' ? t('registration.files_and_license.disabled_helper_text') : '';
