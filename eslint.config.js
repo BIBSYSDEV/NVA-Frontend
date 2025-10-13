@@ -1,12 +1,12 @@
 import tanstackQuery from '@tanstack/eslint-plugin-query';
-import prettierConfig from 'eslint-config-prettier';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
-import prettierPlugin from 'eslint-plugin-prettier';
+import prettier from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
+import { defineConfig } from 'eslint/config';
 
-export default [
+export default defineConfig([
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -21,25 +21,21 @@ export default [
     },
   },
   ...tseslint.configs.recommended,
-  ...tanstackQuery.configs['flat/recommended'],
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
+  reactHooks.configs.flat.recommended,
+  ...tanstackQuery.configs['flat/recommended'],
   jsxA11y.flatConfigs.recommended,
-  prettierConfig,
   {
-    plugins: {
-      'react-hooks': reactHooks,
-      prettier: prettierPlugin,
-      '@typescript-eslint': tseslint.plugin,
-    },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
       'no-console': 'warn',
       'no-debugger': 'warn',
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
-      'prettier/prettier': 'error',
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/immutability': 'off',
+      'react-hooks/refs': 'off',
     },
   },
-];
+  prettier,
+]);
