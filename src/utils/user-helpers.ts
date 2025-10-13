@@ -140,11 +140,11 @@ export const userCanDeleteMessage = (user: User, message: Message, ticketType: T
 };
 
 export const isFileCuratorForRegistration = (user: User | null, registration?: Registration) => {
-  if (!user || !registration) {
+  if (!user || !registration?.entityDescription?.reference?.publicationInstance?.type) {
     return false;
   }
 
-  if (isDegree(registration.entityDescription?.reference?.publicationInstance?.type)) {
+  if (isDegree(registration.entityDescription.reference.publicationInstance.type)) {
     return user.isThesisCurator;
   }
 
