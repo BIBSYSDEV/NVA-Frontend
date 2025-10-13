@@ -7,12 +7,14 @@ import {
   FormControlLabel,
   FormLabel,
   InputAdornment,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
@@ -142,6 +144,23 @@ export const RightsRetentionStrategySettings = () => {
                     />
                   )}
                 </Field>
+
+                <Divider sx={{ my: '2.5rem' }} />
+
+                <Box sx={{ mb: '2.5rem' }}>
+                  <Typography variant="h2">{t('fileimport')}</Typography>
+                  <Trans
+                    t={t}
+                    i18nKey={'fileimport_description'}
+                    components={{
+                      p: <Typography gutterBottom />,
+                    }}
+                  />
+                  <RadioGroup row defaultValue={'1'}>
+                    <FormControlLabel value="1" control={<Radio />} label={t('fileimport_create_ticket')} />
+                    <FormControlLabel value="2" control={<Radio />} label={t('fileimport_automatic_import')} />
+                  </RadioGroup>
+                </Box>
 
                 <StyledRightAlignedWrapper>
                   <Button

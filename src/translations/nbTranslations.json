@@ -1994,5 +1994,9 @@
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
+  "fileimport": "Filimport",
+  "fileimport_description": "<p>Sentral import av data fra eksterne datakilder.<br>Importør hos Sikt kontrollerer og eventuelt slår sammen med andre resultat for å unngå duplikater.</p><p>Institutsjonen kan bestemme om filene automatisk skal godkjennes eller om disse skal først manuelt kontrolleres av filkurator før de blir publisert i NVA.</p>",
+  "fileimport_automatic_import": "Automatisk publisert i NVA",
+  "fileimport_create_ticket": "Filforespørsel blir sendt til filkurator"
 }
