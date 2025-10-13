@@ -98,7 +98,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
                 component="dd"
                 sx={{ m: '0' }}
                 key={index}
-                color="primary"
+                color="secondary"
                 label={getLanguageString(category.label)}
               />
             ))}
@@ -116,7 +116,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
                 component="dd"
                 sx={{ m: '0' }}
                 key={index}
-                color="primary"
+                color="secondary"
                 label={getLanguageString(keyword.label)}
               />
             ))}

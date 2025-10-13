@@ -74,7 +74,7 @@ export const LanguageFilter = () => {
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', maxWidth: { lg: '25rem' } }}>
         {selectedLanguages.map((language) => (
           <Chip
-            color="tertiary"
+            color="secondary"
             variant="filled"
             sx={{ mb: '0.25rem' }}
             key={language.uri}

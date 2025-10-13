@@ -73,7 +73,8 @@ export const CompareFiles = ({
         <BetaFunctionality>
           <StyledCompareButton
             data-testid={dataTestId.basicData.centralImport.resetValueButton}
-            variant="outlined"
+            variant="contained"
+            color="tertiary"
             size="small"
             endIcon={<RestoreIcon />}
             onClick={() => remove(matchingTargetFileIndex)}>

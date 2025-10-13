@@ -59,7 +59,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const uniqueInstitutions = getUniqueOrganizations(topLevelOrgs);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'background.neutral97', gap: '0.5rem' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'background.paper', gap: '0.5rem' }}>
       <Typography variant="h2" sx={visuallyHidden}>
         {t('details')}
       </Typography>

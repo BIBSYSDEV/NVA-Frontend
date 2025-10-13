@@ -101,7 +101,7 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
                       value={field.value ?? ''}
                       required
                       data-testid={dataTestId.unpublishActions.unpublishJustificationTextField}
-                      variant="filled"
+                      variant="outlined"
                       fullWidth
                       label={t('common.justification')}
                       error={touched && !!error}

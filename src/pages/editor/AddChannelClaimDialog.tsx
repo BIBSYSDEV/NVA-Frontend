@@ -139,7 +139,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
               }}
               textFieldProps={{
                 'data-testid': dataTestId.editor.channelSearchField,
-                variant: 'filled',
+                variant: 'outlined',
                 label: t('common.publisher'),
                 required: true,
               }}

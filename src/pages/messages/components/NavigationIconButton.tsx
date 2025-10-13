@@ -26,7 +26,7 @@ export const NavigationIconButton = ({ navigateTo, sx, ...rest }: NavigationIcon
     }}
     {...rest}>
     {navigateTo === 'previous' ? (
-      <ArrowBackIosNewIcon fontSize="small" color="info" />
+      <ArrowBackIosNewIcon fontSize="small" color="primary" />
     ) : (
       <ArrowForwardIosIcon fontSize="small" color="primary" />
     )}
