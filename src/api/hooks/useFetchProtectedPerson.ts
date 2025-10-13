@@ -7,7 +7,7 @@ interface ProtectedPersonOptions {
   enabled?: boolean;
 }
 
-export const useFetchProtectedPerson = (personId: string, { enabled }: ProtectedPersonOptions = {}) => {
+export const useFetchProtectedPerson = (personId: string, { enabled = true }: ProtectedPersonOptions = {}) => {
   const { t } = useTranslation();
 
   return useQuery({
