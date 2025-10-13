@@ -6,7 +6,7 @@ import { ResearchProject } from '../../../types/project.types';
 import { Registration } from '../../../types/registration.types';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { CompareProject } from './CompareProject';
-import { StyledEmptyProjectBox } from './ProjectBox';
+import { MissingCompareValues } from './MissingCompareValues';
 
 export const CompareProjects = () => {
   const { t } = useTranslation();
@@ -39,17 +39,7 @@ export const CompareProjects = () => {
         {t('registration.description.project_association')}
       </Typography>
 
-      {initialTargetProjects.length === 0 && sourceProjects.length === 0 && (
-        <>
-          <StyledEmptyProjectBox>
-            <Typography fontStyle="italic">{t('missing_value')}</Typography>
-          </StyledEmptyProjectBox>
-          <StyledEmptyProjectBox sx={{ display: { xs: 'none', md: 'block' }, gridColumn: { xs: 1, md: 3 } }}>
-            <Typography fontStyle="italic">{t('missing_value')}</Typography>
-          </StyledEmptyProjectBox>
-          <Divider sx={{ display: { xs: 'block', md: 'none' }, my: '0.5rem' }} />
-        </>
-      )}
+      {initialTargetProjects.length === 0 && sourceProjects.length === 0 && <MissingCompareValues />}
 
       {targetOnlyProjects.map((project) => (
         <CompareProject key={project.id} targetProject={project} />
