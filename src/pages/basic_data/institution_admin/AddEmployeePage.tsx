@@ -164,6 +164,7 @@ export const AddEmployeePage = () => {
               <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'center' }}>
                 <Button
                   variant="contained"
+                  color="secondary"
                   size="large"
                   loading={isSubmitting}
                   loadingPosition="start"

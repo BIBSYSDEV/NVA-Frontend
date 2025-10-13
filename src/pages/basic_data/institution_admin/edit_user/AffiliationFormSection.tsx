@@ -67,7 +67,7 @@ export const AffiliationFormSection = () => {
                   disabled={isSubmitting}
                   fullWidth
                   type="number"
-                  variant="filled"
+                  variant="outlined"
                   label={t('basic_data.add_employee.position_percent')}
                   error={touched && !!error}
                   helperText={touched && error}
@@ -102,7 +102,7 @@ export const AffiliationFormSection = () => {
                   slotProps={{
                     textField: {
                       inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
-                      variant: 'filled',
+                      variant: 'outlined',
                       error: touched && !!error,
                       helperText: <ErrorMessage name={field.name} />,
                     },

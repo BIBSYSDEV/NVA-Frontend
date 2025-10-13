@@ -109,6 +109,7 @@ export const AddAdminDialog = ({ open, toggleOpen, refetchUsers, cristinInstitut
               <Button
                 type="submit"
                 variant="contained"
+                color="secondary"
                 loading={isSubmitting}
                 startIcon={<AddIcon />}
                 loadingPosition="start"
