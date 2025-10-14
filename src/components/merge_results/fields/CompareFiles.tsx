@@ -13,7 +13,7 @@ import { BetaFunctionality } from '../../BetaFunctionality';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { FileBox } from './FileBox';
 
-const StyledButton = styled(Button)({
+export const StyledCompareButton = styled(Button)({
   width: 'fit-content',
   margin: '0 auto',
 });
@@ -58,7 +58,7 @@ export const CompareFiles = ({
 
       {canCopyFile && (
         <BetaFunctionality>
-          <StyledButton
+          <StyledCompareButton
             data-testid={dataTestId.basicData.centralImport.copyValueButton}
             variant="contained"
             color="secondary"
@@ -66,12 +66,12 @@ export const CompareFiles = ({
             endIcon={<ArrowForwardIcon />}
             onClick={() => append(sourceFile)}>
             {t('add_file')}
-          </StyledButton>
+          </StyledCompareButton>
         </BetaFunctionality>
       )}
       {fileIsCopied && (
         <BetaFunctionality>
-          <StyledButton
+          <StyledCompareButton
             data-testid={dataTestId.basicData.centralImport.resetValueButton}
             variant="contained"
             color="tertiary"
@@ -79,7 +79,7 @@ export const CompareFiles = ({
             endIcon={<RestoreIcon />}
             onClick={() => remove(matchingTargetFileIndex)}>
             {t('reset')}
-          </StyledButton>
+          </StyledCompareButton>
         </BetaFunctionality>
       )}
 
