@@ -13,9 +13,8 @@ reviews:
     ignore_title_keywords:
       - 'WIP'
       - 'DO NOT MERGE'
-    drafts: ture
+    drafts: true
     base_branches:
-      - main
       - develop
   path_instructions:
     - path: '*'
