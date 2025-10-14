@@ -1,5 +1,6 @@
 import { VerificationStatus } from '../types/contributor.types';
 import { Message, TicketType } from '../types/publication_types/ticket.types';
+import { Registration } from '../types/registration.types';
 import {
   CreateCristinPerson,
   CristinArrayValue,
@@ -14,6 +15,7 @@ import {
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
 import { getIdentifierFromId } from './general-helpers';
+import { isDegree } from './registration-helpers';
 
 export const getValueByKey = (
   key: CristinPersonIdentifierType | CristinPersonNameType,
@@ -135,4 +137,16 @@ export const userCanDeleteMessage = (user: User, message: Message, ticketType: T
   }
 
   return false;
+};
+
+export const isFileCuratorForRegistration = (user: User | null, registration?: Registration) => {
+  if (!user || !registration?.entityDescription?.reference?.publicationInstance?.type) {
+    return false;
+  }
+
+  if (isDegree(registration.entityDescription.reference.publicationInstance.type)) {
+    return user.isThesisCurator;
+  }
+
+  return user.isPublishingCurator;
 };
