@@ -29,19 +29,15 @@ export const RightsRetentionStrategySettings = () => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
 
-  const updateRightsRetentionStrategy = useMutation({
+  const updatePublishStrategy = useMutation({
     mutationFn: (customer: CustomerInstitution) => updateCustomerInstitution(customer),
     onSuccess: (response) => {
       dispatch(setCustomer(response.data));
-      dispatch(
-        setNotification({ message: t('feedback.success.update_rights_retention_strategy'), variant: 'success' })
-      );
+      dispatch(setNotification({ message: t('feedback.success.update_publish_strategy'), variant: 'success' }));
     },
     onError: () =>
-      dispatch(setNotification({ message: t('feedback.error.update_rights_retention_strategy'), variant: 'error' })),
+      dispatch(setNotification({ message: t('feedback.error.update_publish_strategy'), variant: 'error' })),
   });
-
-  console.log(customer);
 
   return (
     <>
@@ -53,7 +49,7 @@ export const RightsRetentionStrategySettings = () => {
         <Formik
           enableReinitialize
           initialValues={customer}
-          onSubmit={async (values) => await updateRightsRetentionStrategy.mutateAsync(values)}>
+          onSubmit={async (values) => await updatePublishStrategy.mutateAsync(values)}>
           {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => {
             const isRrs = values.rightsRetentionStrategy?.type === CustomerRrsType.RightsRetentionStrategy;
             const isOverridableRrs =
@@ -153,14 +149,14 @@ export const RightsRetentionStrategySettings = () => {
                   <Typography variant="h2">{t('fileimport')}</Typography>
                   <Trans
                     t={t}
-                    i18nKey={'fileimport_description'}
+                    i18nKey="fileimport_description"
                     components={{
                       p: <Typography gutterBottom />,
                     }}
                   />
                   <Field name={'autoPublishScopusImportFiles'}>
                     {({ field }: FieldProps) => (
-                      <RadioGroup row defaultValue={field.value}>
+                      <RadioGroup row value={field.value}>
                         <FormControlLabel
                           value={false}
                           control={<Radio onChange={() => setFieldValue(field.name, false)} />}
