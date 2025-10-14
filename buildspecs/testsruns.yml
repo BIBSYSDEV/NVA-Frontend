@@ -17,5 +17,7 @@ phases:
       - npm ci
   build:
     commands:
+      - npm run build
       - npm run test:vitest
-      - npm run test:cypress
+      - npm run preview &
+      - npx cypress run
