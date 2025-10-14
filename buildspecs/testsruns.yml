@@ -17,8 +17,8 @@ phases:
       - npm ci
   build:
     commands:
-      - npm run test:vitest
       - npm run build
+      - npm run test:vitest
       - npm run preview &
       - sleep 5
       - npx cypress run
