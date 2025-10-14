@@ -4,17 +4,42 @@ import enTranslations from './enTranslations.json';
 import nbTranslations from './nbTranslations.json';
 import nnTranslations from './nnTranslations.json';
 
-const supportedLanguages = ['nob', 'eng', 'nno', 'sme', 'sma', 'smj', 'smn', 'sms', 'sje', 'sju', 'sjd', 'sjt'];
+const supportedLanguages = [
+  'nob', // Norwegian Bokmål,
+  'nb', // Norwegian Bokmål, other language code
+  'nn', // Norwegian Nynorsk
+  'eng', // English
+  'en', // English, other language code
+  'nno', // Norwegian Nynorsk, other language code
+  'sme', // All below arw different sami languages
+  'sma',
+  'smj',
+  'smn',
+  'sms',
+  'sje',
+  'sju',
+  'sjd',
+  'sjt',
+];
 
 i18n.use(LanguageDetector).init({
   resources: {
     eng: {
       translation: enTranslations,
     },
+    en: {
+      translation: enTranslations,
+    },
     nob: {
       translation: nbTranslations,
     },
     nno: {
+      translation: nnTranslations,
+    },
+    nb: {
+      translation: nbTranslations,
+    },
+    nn: {
       translation: nnTranslations,
     },
     sme: {
@@ -68,7 +93,6 @@ i18n.use(LanguageDetector).init({
     return [langCode];
   },
   returnEmptyString: false,
-  supportedLngs: supportedLanguages,
   debug: false,
 });
 
