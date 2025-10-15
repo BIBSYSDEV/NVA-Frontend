@@ -24,7 +24,7 @@ export const useFetchUserQuery = (
     enabled: enabled && isValidPersonIdentifier,
     queryKey: ['user', username],
     queryFn: () => fetchUser(username),
-    meta: { errorMessage: showErrorMessage === true && t('feedback.error.get_person') },
+    meta: { errorMessage: showErrorMessage && t('feedback.error.get_person') },
     ...options,
   });
 };

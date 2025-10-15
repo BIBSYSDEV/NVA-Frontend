@@ -11,8 +11,8 @@ export const useFetchProtectedPerson = (personId: string, { enabled = true }: Pr
   const { t } = useTranslation();
 
   return useQuery({
-    enabled: enabled === true && !!personId,
-    queryKey: [personId],
+    enabled: enabled && !!personId,
+    queryKey: ['protectedPerson', personId],
     queryFn: () => fetchProtectedResource<CristinPerson>(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
