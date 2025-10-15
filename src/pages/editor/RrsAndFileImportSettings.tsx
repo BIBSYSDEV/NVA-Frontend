@@ -88,7 +88,6 @@ export const RrsAndFileImportSettings = () => {
                   {({ field }: FieldProps<string>) => (
                     <FormLabel component="legend" sx={{ color: 'primary.main', fontWeight: 'bold', marginTop: '1rem' }}>
                       {t('editor.retention_strategy.rrs_info_page')}
-
                       <TextField
                         type="url"
                         data-testid={dataTestId.editor.rrsLink}
@@ -160,14 +159,24 @@ export const RrsAndFileImportSettings = () => {
                         <FormControlLabel
                           value={false}
                           control={
-                            <Radio checked={field.value === false} onChange={() => setFieldValue(field.name, false)} />
+                            <Radio
+                              data-testid={dataTestId.editor.fileImportCreatesTicketRadioButton}
+                              {...field}
+                              checked={field.value === false}
+                              onChange={() => setFieldValue(field.name, false)}
+                            />
                           }
                           label={t('fileimport_create_ticket')}
                         />
                         <FormControlLabel
                           value={true}
                           control={
-                            <Radio checked={field.value === true} onChange={() => setFieldValue(field.name, true)} />
+                            <Radio
+                              data-testid={dataTestId.editor.automaticFileImportRadioButton}
+                              {...field}
+                              checked={field.value === true}
+                              onChange={() => setFieldValue(field.name, true)}
+                            />
                           }
                           label={t('fileimport_automatic_import')}
                         />
