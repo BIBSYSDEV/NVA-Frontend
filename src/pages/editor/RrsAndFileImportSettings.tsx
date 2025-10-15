@@ -154,27 +154,18 @@ export const RrsAndFileImportSettings = () => {
                   />
                   <Field name={'autoPublishScopusImportFiles'}>
                     {({ field }: FieldProps<boolean>) => (
-                      <RadioGroup row value={field.value}>
+                      <RadioGroup
+                        {...field}
+                        row
+                        onChange={(event) => setFieldValue(field.name, event.target.value === 'true')}>
                         <FormControlLabel
                           value={false}
-                          control={
-                            <Radio
-                              data-testid={dataTestId.editor.fileImportCreatesTicketRadioButton}
-                              {...field}
-                              onChange={() => setFieldValue(field.name, false)}
-                            />
-                          }
+                          control={<Radio data-testid={dataTestId.editor.fileImportCreatesTicketRadioButton} />}
                           label={t('fileimport_create_ticket')}
                         />
                         <FormControlLabel
                           value={true}
-                          control={
-                            <Radio
-                              data-testid={dataTestId.editor.automaticFileImportRadioButton}
-                              {...field}
-                              onChange={() => setFieldValue(field.name, true)}
-                            />
-                          }
+                          control={<Radio data-testid={dataTestId.editor.automaticFileImportRadioButton} />}
                           label={t('fileimport_automatic_import')}
                         />
                       </RadioGroup>
