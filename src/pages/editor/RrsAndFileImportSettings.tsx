@@ -24,7 +24,7 @@ import { RootState } from '../../redux/store';
 import { CustomerInstitution, CustomerRrsType } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
 
-export const RightsRetentionStrategySettings = () => {
+export const RrsAndFileImportSettings = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
@@ -155,16 +155,20 @@ export const RightsRetentionStrategySettings = () => {
                     }}
                   />
                   <Field name={'autoPublishScopusImportFiles'}>
-                    {({ field }: FieldProps) => (
+                    {({ field }: FieldProps<boolean>) => (
                       <RadioGroup row value={field.value}>
                         <FormControlLabel
                           value={false}
-                          control={<Radio onChange={() => setFieldValue(field.name, false)} />}
+                          control={
+                            <Radio checked={field.value === false} onChange={() => setFieldValue(field.name, false)} />
+                          }
                           label={t('fileimport_create_ticket')}
                         />
                         <FormControlLabel
                           value={true}
-                          control={<Radio onChange={() => setFieldValue(field.name, true)} />}
+                          control={
+                            <Radio checked={field.value === true} onChange={() => setFieldValue(field.name, true)} />
+                          }
                           label={t('fileimport_automatic_import')}
                         />
                       </RadioGroup>
