@@ -78,7 +78,11 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
     }
   };
 
-  const updateRoles = (newRoles: RoleName[]) => {
+  const updateRoles = (
+    newRoles: RoleName[],
+    values: UserFormData,
+    setFieldValue: (field: string, value: any, shouldValidate?: boolean) => Promise<void | FormikErrors<UserFormData>>
+  ) => {
     setFieldValue(
       UserFormFieldName.Roles,
       newRoles.map((role) => ({ type: 'Role', rolename: role }))
@@ -125,7 +129,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                   <RolesFormSection
                     personHasNin={checkIfPersonHasNationalIdentificationNumber(values.person)}
                     roles={values.user?.roles?.map((role) => role.rolename) || []}
-                    updateRoles={updateRoles}
+                    updateRoles={(newRoles) => updateRoles(newRoles, values, setFieldValue)}
                   />
                   <Divider orientation="vertical" />
                   <TasksFormSection
