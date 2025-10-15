@@ -28,14 +28,14 @@ export const RrsAndFileImportSettings = () => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
 
-  const updatePublishStrategy = useMutation({
+  const updateCustomer = useMutation({
     mutationFn: (customer: CustomerInstitution) => updateCustomerInstitution(customer),
     onSuccess: (response) => {
       dispatch(setCustomer(response.data));
-      dispatch(setNotification({ message: t('feedback.success.update_publish_strategy'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.update_rrs_and_file_import'), variant: 'success' }));
     },
     onError: () =>
-      dispatch(setNotification({ message: t('feedback.error.update_publish_strategy'), variant: 'error' })),
+      dispatch(setNotification({ message: t('feedback.error.update_rrs_and_file_import'), variant: 'error' })),
   });
 
   return (
@@ -48,7 +48,7 @@ export const RrsAndFileImportSettings = () => {
         <Formik
           enableReinitialize
           initialValues={customer}
-          onSubmit={async (values) => await updatePublishStrategy.mutateAsync(values)}>
+          onSubmit={async (values) => await updateCustomer.mutateAsync(values)}>
           {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => {
             const isRrs = values.rightsRetentionStrategy?.type === CustomerRrsType.RightsRetentionStrategy;
             const isOverridableRrs =
@@ -144,10 +144,10 @@ export const RrsAndFileImportSettings = () => {
                 <Divider sx={{ my: '2.5rem' }} />
 
                 <Box sx={{ mb: '2.5rem' }}>
-                  <Typography variant="h2">{t('fileimport')}</Typography>
+                  <Typography variant="h2">{t('file_import')}</Typography>
                   <Trans
                     t={t}
-                    i18nKey="fileimport_description"
+                    i18nKey="file_import_description"
                     components={{
                       p: <Typography gutterBottom />,
                     }}
@@ -161,12 +161,12 @@ export const RrsAndFileImportSettings = () => {
                         <FormControlLabel
                           value={false}
                           control={<Radio data-testid={dataTestId.editor.fileImportCreatesTicketRadioButton} />}
-                          label={t('fileimport_create_ticket')}
+                          label={t('file_import_create_ticket')}
                         />
                         <FormControlLabel
                           value={true}
                           control={<Radio data-testid={dataTestId.editor.automaticFileImportRadioButton} />}
-                          label={t('fileimport_automatic_import')}
+                          label={t('file_import_automatic_import')}
                         />
                       </RadioGroup>
                     )}
