@@ -4,13 +4,9 @@ import enTranslations from './enTranslations.json';
 import nbTranslations from './nbTranslations.json';
 import nnTranslations from './nnTranslations.json';
 
-const handledLanguages = [
-  'nob', // Norwegian Bokmål,
-  'nb', // Norwegian Bokmål
-  'eng', // English
-  'en', // English
-  'nn', // Norwegian Nynorsk
-  'nno', // Norwegian Nynorsk
+export const samiLanguageCodes = [
+  'smi', // General for all sami languages
+  'se', // Northern Sami
   'sme', // Northern Sami
   'sma', // Southern Sami
   'smj', // Lule Sami
@@ -19,8 +15,30 @@ const handledLanguages = [
   'sje', // Pite Sami
   'sju', // Ume Sami
   'sjd', // Kildin Sami
-  'sjt', // Ter Sami
+  'sjt', // Ter Sami];
 ];
+
+const handledLanguages = [
+  'nob', // Norwegian Bokmål,
+  'nb', // Norwegian Bokmål
+  'eng', // English
+  'en', // English
+  'nn', // Norwegian Nynorsk
+  'nno', // Norwegian Nynorsk
+  ...samiLanguageCodes,
+];
+
+export const selectDisplayLanguage = (langCode: string) => {
+  if (langCode === 'undefined' || langCode === 'null' || langCode === undefined || langCode === null) {
+    return 'nob'; // When the user's language is not specified, then the service should display in Bokmål
+  } else if (langCode === 'en' || langCode === 'eng' || !handledLanguages.includes(langCode)) {
+    // When the selected language is not Norwegian (Bokmål, Nynorsk, or any Sami variant), then the service should display in English by default
+    return 'eng';
+  } else if (langCode === 'nn' || langCode === 'nno') {
+    return 'nno';
+  }
+  return 'nob';
+};
 
 i18n.use(LanguageDetector).init({
   resources: {
@@ -35,15 +53,7 @@ i18n.use(LanguageDetector).init({
     },
   },
   contextSeparator: '__',
-  fallbackLng: (langCode) => {
-    if (!handledLanguages.includes(langCode) || langCode === 'en' || langCode === 'eng') {
-      // When the user's browser language is not Norwegian (Bokmål, Nynorsk, or any Sami variant), then the service should display in English by default
-      return ['eng'];
-    } else if (langCode === 'nn' || langCode === 'nno') {
-      return ['nno'];
-    }
-    return ['nob']; // When the user's browser language is not specified, and when Bokmål is selected, then the service should display in Bokmål
-  },
+  fallbackLng: (langCode) => [selectDisplayLanguage(langCode)],
   returnEmptyString: false,
   debug: false,
 });
@@ -51,12 +61,14 @@ i18n.use(LanguageDetector).init({
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
     return 'en';
+  } else if (language === 'nn') {
+    return 'nn';
   }
   return 'no';
 };
 
 if (typeof document !== 'undefined') {
-  document.documentElement.lang = getLanguageTagValue(i18n.language);
+  document.documentElement.lang = getLanguageTagValue(selectDisplayLanguage(i18n.language));
   i18n.on('languageChanged', (newLanguage) => {
     document.documentElement.lang = getLanguageTagValue(newLanguage);
   });
