@@ -185,7 +185,7 @@ export const RrsAndFileImportSettings = () => {
                   </Field>
                 </Box>
 
-                <StyledRightAlignedWrapper>
+                <Box sx={{ display: 'flex', justifyContent: { xs: 'center', lg: 'flex-end' } }}>
                   <Button
                     data-testid={dataTestId.editor.rrsSaveButton}
                     variant="contained"
@@ -194,7 +194,7 @@ export const RrsAndFileImportSettings = () => {
                     type="submit">
                     {t('common.save')}
                   </Button>
-                </StyledRightAlignedWrapper>
+                </Box>
               </Box>
             );
           }}
