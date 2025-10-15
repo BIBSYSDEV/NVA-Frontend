@@ -11,21 +11,24 @@ import {
 } from '@mui/material';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { PageSpinner } from '../../../../components/PageSpinner';
-import { RootState } from '../../../../redux/store';
-import { CristinPerson, Employment, InstitutionUser, RoleName, UserRole } from '../../../../types/user.types';
-import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { getUsername } from '../../../../utils/user-helpers';
+import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
+import {
+  checkIfPersonHasNationalIdentificationNumber,
+  findFirstEmploymentThatMatchesAnActiveAffiliation,
+  getEmployments,
+  getUsername,
+} from '../../../../utils/user-helpers';
 import { AffiliationFormSection } from './AffiliationFormSection';
 import { PersonFormSection } from './PersonFormSection';
 import { RolesFormSection } from './RolesFormSection';
 import { rolesWithAreaOfResponsibility, TasksFormSection } from './TasksFormSection';
 import { UserFormData, UserFormFieldName, validationSchema } from './userFormHelpers';
-import { useFetchProtectedPerson } from '../../../../api/hooks/useFetchProtectedPerson';
-import { useFetchUserQuery } from '../../../../api/hooks/useFetchUserQuery';
 import { useUpdateCristinPerson } from '../../../../api/hooks/useUpdateCristinPerson';
 import { useUpdateInstitutionUser } from '../../../../api/hooks/useUpdateInstitutionUser';
+import { useLoggedinUser } from '../../../../utils/hooks/useLoggedinUser';
+import { useProtectedPerson } from '../../../../utils/hooks/useProtectedPerson';
+import { useInstitutionUser } from '../../../../utils/hooks/useInstitutionUser';
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
   existingPerson: CristinPerson | string;
@@ -35,44 +38,13 @@ interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
 
 export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: UserFormDialogProps) => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
-  const topOrgCristinId = user?.topOrgCristinId;
-  const customerId = user?.customerId ?? '';
-
-  const personId = typeof existingPerson === 'string' ? existingPerson : existingPerson.id;
-  const existingPersonObject = typeof existingPerson === 'object' ? existingPerson : undefined;
-
-  const personQuery = useFetchProtectedPerson(personId, { enabled: open && !existingPersonObject });
-  const person = existingPersonObject ?? personQuery.data;
-  const personEmployments = person?.employments ?? [];
-
-  const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
-  const internalEmployments: Employment[] = [];
-  const externalEmployments: Employment[] = [];
-  const targetOrganizationIdStart = `${topOrgCristinIdentifier.split('.')[0]}.`;
-
-  personEmployments.forEach((employment) => {
-    const organizationIdentifier = employment.organization.split('/').pop();
-    if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
-      internalEmployments.push(employment);
-    } else {
-      externalEmployments.push(employment);
-    }
-  });
-
+  const { topOrgCristinId, customerId } = useLoggedinUser();
+  const { person, personQuery } = useProtectedPerson(existingPerson, open);
   const username = getUsername(person, topOrgCristinId);
-
-  const institutionUserQuery = useFetchUserQuery(username, {
-    enabled: open && !existingUser,
-    showErrorMessage: false, // No error message, since a Cristin Person will lack User if they have not logged in yet
-    retry: false,
-  });
-
-  const institutionUser = existingUser ?? institutionUserQuery.data;
-
-  // Mutations
+  const { institutionUser, institutionUserQuery } = useInstitutionUser(existingUser, username, open);
   const personMutation = useUpdateCristinPerson();
   const userMutation = useUpdateInstitutionUser();
+  const { internalEmployments, externalEmployments } = getEmployments(person, topOrgCristinId);
 
   const initialValues: UserFormData = {
     person: person ? { ...person, employments: internalEmployments } : person,
@@ -86,32 +58,51 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
       : institutionUser,
   };
 
+  const onSubmitForm = async (values: UserFormData) => {
+    if (!values.person || !values.user) {
+      return;
+    }
+
+    try {
+      await personMutation.mutateAsync(values.person);
+      await userMutation.mutateAsync({
+        institutionUser: values.user,
+        customerId,
+        cristinPerson: person,
+        institutionUserQuery,
+      });
+      await institutionUserQuery.refetch();
+      onClose();
+    } catch {
+      return;
+    }
+  };
+
+  const updateRoles = (newRoles: RoleName[]) => {
+    setFieldValue(
+      UserFormFieldName.Roles,
+      newRoles.map((role) => ({ type: 'Role', rolename: role }))
+    );
+    const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
+    const hasNoIncludedUnits = !values.user?.viewingScope.includedUnits.length;
+
+    if (hasCuratorRole && hasNoIncludedUnits && topOrgCristinId) {
+      const defaultViewingScope =
+        findFirstEmploymentThatMatchesAnActiveAffiliation(values.person?.employments, values.person?.affiliations)
+          ?.organization ?? topOrgCristinId;
+      setFieldValue(UserFormFieldName.ViewingScope, [defaultViewingScope]);
+    } else if (!hasCuratorRole) {
+      setFieldValue(UserFormFieldName.ViewingScope, []);
+    }
+  };
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth transitionDuration={{ exit: 0 }}>
       <DialogTitle id="edit-user-heading">{t('basic_data.person_register.edit_person')}</DialogTitle>
-
       <Formik
         initialValues={initialValues}
         enableReinitialize // Needed to update user values when institutionUser is fetched
-        onSubmit={async (values) => {
-          if (!values.person || !values.user) {
-            return;
-          }
-
-          try {
-            await personMutation.mutateAsync(values.person);
-            await userMutation.mutateAsync({
-              institutionUser: values.user,
-              customerId,
-              cristinPerson: person,
-              institutionUserQuery,
-            });
-            await institutionUserQuery.refetch();
-            onClose();
-          } catch {
-            return;
-          }
-        }}
+        onSubmit={onSubmitForm}
         validationSchema={validationSchema}>
         {({ isSubmitting, values, setFieldValue }: FormikProps<UserFormData>) => (
           <Form noValidate>
@@ -132,30 +123,9 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                   <AffiliationFormSection />
                   <Divider orientation="vertical" />
                   <RolesFormSection
-                    personHasNin={
-                      !!values.person.identifiers.some(
-                        (identifier) => identifier.type === 'NationalIdentificationNumber' && identifier.value
-                      )
-                    }
-                    roles={values.user?.roles.map((role) => role.rolename) ?? []}
-                    updateRoles={(newRoles) => {
-                      const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
-                      setFieldValue(UserFormFieldName.Roles, newUserRoles);
-
-                      const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
-                      if (hasCuratorRole && !values.user?.viewingScope.includedUnits.length && topOrgCristinId) {
-                        const defaultViewingScope =
-                          values.person?.employments.find((employment) =>
-                            values.person?.affiliations.some(
-                              (affiliation) =>
-                                affiliation.organization === employment.organization && affiliation.active
-                            )
-                          )?.organization ?? topOrgCristinId;
-                        setFieldValue(UserFormFieldName.ViewingScope, [defaultViewingScope]);
-                      } else if (!hasCuratorRole) {
-                        setFieldValue(UserFormFieldName.ViewingScope, []);
-                      }
-                    }}
+                    personHasNin={checkIfPersonHasNationalIdentificationNumber(values.person)}
+                    roles={values.user?.roles?.map((role) => role.rolename) || []}
+                    updateRoles={updateRoles}
                   />
                   <Divider orientation="vertical" />
                   <TasksFormSection
