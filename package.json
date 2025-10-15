@@ -73,7 +73,7 @@
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.1",
-    "@vitejs/plugin-react": "^4.7.0",
+    "@vitejs/plugin-react": "^5.0.4",
     "axe-core": "^4.11.0",
     "axios-mock-adapter": "^2.1.0",
     "babel-plugin-react-compiler": "^19.1.0-rc.3",
@@ -94,7 +94,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.0",
     "vite": "^7.1.9",
-    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-checker": "^0.11.0",
     "vitest": "^3.2.4"
   }
 }

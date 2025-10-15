@@ -17,5 +17,8 @@ phases:
       - npm ci
   build:
     commands:
+      - npm run build
       - npm run test:vitest
-      - npm run test:cypress
+      - npm run preview &
+      - npx wait-on http://localhost:3000 --timeout 60000
+      - npx cypress run
