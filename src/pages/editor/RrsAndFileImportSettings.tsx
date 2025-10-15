@@ -17,7 +17,6 @@ import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
@@ -155,14 +154,13 @@ export const RrsAndFileImportSettings = () => {
                   />
                   <Field name={'autoPublishScopusImportFiles'}>
                     {({ field }: FieldProps<boolean>) => (
-                      <RadioGroup row value={field.value}>
+                      <RadioGroup row value={field.value} onChange={field.onChange}>
                         <FormControlLabel
                           value={false}
                           control={
                             <Radio
                               data-testid={dataTestId.editor.fileImportCreatesTicketRadioButton}
                               {...field}
-                              checked={field.value === false}
                               onChange={() => setFieldValue(field.name, false)}
                             />
                           }
@@ -174,7 +172,6 @@ export const RrsAndFileImportSettings = () => {
                             <Radio
                               data-testid={dataTestId.editor.automaticFileImportRadioButton}
                               {...field}
-                              checked={field.value === true}
                               onChange={() => setFieldValue(field.name, true)}
                             />
                           }
