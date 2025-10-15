@@ -3,8 +3,8 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import prettier from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import tseslint from 'typescript-eslint';
 import { defineConfig } from 'eslint/config';
+import tseslint from 'typescript-eslint';
 
 export default defineConfig([
   {
