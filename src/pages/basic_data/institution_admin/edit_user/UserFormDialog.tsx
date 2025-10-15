@@ -9,18 +9,14 @@ import {
   Divider,
   Typography,
 } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateCristinPerson } from '../../../../api/cristinApi';
-import { createUser, updateUser } from '../../../../api/roleApi';
+import { useSelector } from 'react-redux';
 import { PageSpinner } from '../../../../components/PageSpinner';
-import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
 import { CristinPerson, Employment, InstitutionUser, RoleName, UserRole } from '../../../../types/user.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { getUsername, getValueByKey } from '../../../../utils/user-helpers';
+import { getUsername } from '../../../../utils/user-helpers';
 import { AffiliationFormSection } from './AffiliationFormSection';
 import { PersonFormSection } from './PersonFormSection';
 import { RolesFormSection } from './RolesFormSection';
@@ -28,6 +24,8 @@ import { rolesWithAreaOfResponsibility, TasksFormSection } from './TasksFormSect
 import { UserFormData, UserFormFieldName, validationSchema } from './userFormHelpers';
 import { useFetchProtectedPerson } from '../../../../api/hooks/useFetchProtectedPerson';
 import { useFetchUserQuery } from '../../../../api/hooks/useFetchUserQuery';
+import { useUpdateCristinPerson } from '../../../../api/hooks/useUpdateCristinPerson';
+import { useUpdateInstitutionUser } from '../../../../api/hooks/useUpdateInstitutionUser';
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
   existingPerson: CristinPerson | string;
@@ -37,7 +35,6 @@ interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
 
 export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: UserFormDialogProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId;
   const customerId = user?.customerId ?? '';
@@ -73,39 +70,9 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
 
   const institutionUser = existingUser ?? institutionUserQuery.data;
 
-  const personMutation = useMutation({
-    mutationFn: async (person: CristinPerson) => {
-      if (!person.verified) {
-        person.keywords = undefined; // Person must be verified to have keywords
-      }
-
-      return await updateCristinPerson(person.id, person);
-    },
-    onError: () => dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' })),
-  });
-
-  const userMutation = useMutation({
-    mutationFn: async (user: InstitutionUser) => {
-      const filteredRoles = !user.roles.some((role) => role.rolename === RoleName.CuratorThesis)
-        ? user.roles.filter((role) => role.rolename !== RoleName.CuratorThesisEmbargo)
-        : user.roles;
-      user.roles = filteredRoles;
-      if (institutionUserQuery.isSuccess) {
-        return await updateUser(user.username, user);
-      } else {
-        return await createUser({
-          customerId,
-          roles: user.roles,
-          cristinIdentifier: getValueByKey('CristinIdentifier', person?.identifiers),
-          viewingScope: user.viewingScope,
-        });
-      }
-    },
-    onError: () =>
-      dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' })),
-    onSuccess: () =>
-      dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' })),
-  });
+  // Mutations
+  const personMutation = useUpdateCristinPerson();
+  const userMutation = useUpdateInstitutionUser();
 
   const initialValues: UserFormData = {
     person: person ? { ...person, employments: internalEmployments } : person,
@@ -133,7 +100,12 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
 
           try {
             await personMutation.mutateAsync(values.person);
-            await userMutation.mutateAsync(values.user);
+            await userMutation.mutateAsync({
+              institutionUser: values.user,
+              customerId,
+              cristinPerson: person,
+              institutionUserQuery,
+            });
             await institutionUserQuery.refetch();
             onClose();
           } catch {

@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/coderabbit-overrides.v2.json
+
+language: 'en-GB'
+early_access: true
+reviews:
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    ignore_title_keywords:
+      - 'WIP'
+      - 'DO NOT MERGE'
+    drafts: true
+    base_branches:
+      - develop
+  path_instructions:
+    - path: '*'
+      instructions: "
+        Trim all trailing whitespaces.\n
+        Ensure that lines align visually.\n
+        Maximum line length must be 120 characters.\n
+        Indents on empty lines should not be maintained.\n
+        Leftover TODOs in the code should be handled.\n
+        Remove any console.log statements.\n
+        Ensure Self-Documenting Code: Aim to make your code self-explanatory through clear naming and
+        structure. The less time a developer has to spend understanding the code, the better.\n
+        Follow the YAGNI Principle: 'You aren't gonna need it' is a principle that prevents developers from
+        adding functionality until it is necessary. This can help keep your codebase lean and simple.\n"
+
+chat:
+  auto_reply: true
