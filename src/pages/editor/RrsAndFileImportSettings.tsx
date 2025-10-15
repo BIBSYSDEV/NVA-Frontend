@@ -154,7 +154,7 @@ export const RrsAndFileImportSettings = () => {
                   />
                   <Field name={'autoPublishScopusImportFiles'}>
                     {({ field }: FieldProps<boolean>) => (
-                      <RadioGroup {...field} row value={field.value}>
+                      <RadioGroup row value={field.value}>
                         <FormControlLabel
                           value={false}
                           control={
