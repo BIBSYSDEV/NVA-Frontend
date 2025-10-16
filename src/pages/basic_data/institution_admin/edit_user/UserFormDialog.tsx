@@ -76,14 +76,12 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
 
   const initialValues: UserFormData = {
     person: person ? { ...person, employments: internalEmployments } : person,
-    user: institutionUserQuery.isError
-      ? {
-          institution: customerId,
-          roles: [{ type: 'Role', rolename: RoleName.Creator }],
-          username: username,
-          viewingScope: { type: 'ViewingScope', includedUnits: [] },
-        }
-      : institutionUser,
+    user: institutionUser ?? {
+      institution: customerId,
+      roles: [{ type: 'Role', rolename: RoleName.Creator }],
+      username: username,
+      viewingScope: { type: 'ViewingScope', includedUnits: [] },
+    },
   };
 
   return (
@@ -104,7 +102,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
               institutionUser: values.user,
               customerId,
               cristinPerson: person,
-              institutionUserQuery,
+              userExists: !!institutionUser,
             });
             await institutionUserQuery.refetch();
             onClose();
@@ -116,7 +114,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
         {({ isSubmitting, values, setFieldValue }: FormikProps<UserFormData>) => (
           <Form noValidate>
             <DialogContent sx={{ minHeight: '30vh' }}>
-              {(!values.person && personQuery.isPending) || (!values.user && institutionUserQuery.isPending) ? (
+              {(!values.person && personQuery.isPending) || (!institutionUser && institutionUserQuery.isPending) ? (
                 <PageSpinner aria-labelledby="edit-user-heading" />
               ) : !values.person ? (
                 <Typography>{t('feedback.error.get_person')}</Typography>
