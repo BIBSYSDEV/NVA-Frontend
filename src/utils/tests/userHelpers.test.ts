@@ -1,10 +1,10 @@
-import { CristinPerson, CristinPersonAffiliation, Employment } from '../types/user.types';
 import { describe, expect, it } from 'vitest';
 import {
   checkIfPersonHasNationalIdentificationNumber,
   findFirstEmploymentThatMatchesAnActiveAffiliation,
   getEmployments,
 } from '../user-helpers';
+import { CristinPerson, CristinPersonAffiliation, Employment } from '../../types/user.types';
 
 describe('getEmployments', () => {
   const topOrgCristinId = '123.0.0.0';
@@ -13,17 +13,19 @@ describe('getEmployments', () => {
   const externalOrg = 'org/456.0.0.0';
 
   const internalEmployment: Employment = {
+    type: 'Temporary',
     organization: internalOrg,
     startDate: '2020-01-01',
-    endDate: undefined,
-    active: true,
+    endDate: '',
+    fullTimeEquivalentPercentage: '100',
   };
 
   const externalEmployment: Employment = {
+    type: 'Temporary',
     organization: externalOrg,
     startDate: '2021-01-01',
-    endDate: undefined,
-    active: true,
+    endDate: '',
+    fullTimeEquivalentPercentage: '100',
   };
 
   it('returns internal employments', () => {
@@ -33,7 +35,7 @@ describe('getEmployments', () => {
       identifiers: [],
       names: [],
       id: '',
-      background: '',
+      background: {},
       keywords: [],
       nvi: undefined,
     };
@@ -49,7 +51,7 @@ describe('getEmployments', () => {
       identifiers: [],
       names: [],
       id: '',
-      background: '',
+      background: {},
       keywords: [],
       nvi: undefined,
     };
@@ -65,7 +67,7 @@ describe('getEmployments', () => {
       identifiers: [],
       names: [],
       id: '',
-      background: '',
+      background: {},
       keywords: [],
       nvi: undefined,
     };
@@ -81,7 +83,7 @@ describe('getEmployments', () => {
       identifiers: [],
       names: [],
       id: '',
-      background: '',
+      background: {},
       keywords: [],
       nvi: undefined,
     };
@@ -103,7 +105,7 @@ describe('getEmployments', () => {
       identifiers: [],
       names: [],
       id: '',
-      background: '',
+      background: {},
       keywords: [],
       nvi: undefined,
     };
@@ -118,13 +120,13 @@ describe('checkIfPersonHasNationalIdentificationNumber', () => {
     const person: CristinPerson = {
       identifiers: [
         { type: 'NationalIdentificationNumber', value: '12345678901' },
-        { type: 'OtherType', value: 'abc' },
+        { type: 'CristinIdentifier', value: 'abc' },
       ],
       names: [],
       employments: [],
       affiliations: [],
       id: '',
-      background: '',
+      background: {},
       keywords: [],
       nvi: undefined,
     };
@@ -133,12 +135,12 @@ describe('checkIfPersonHasNationalIdentificationNumber', () => {
 
   it('returns false if person does not have a national identification number', () => {
     const person: CristinPerson = {
-      identifiers: [{ type: 'OtherType', value: 'abc' }],
+      identifiers: [{ type: 'CristinIdentifier', value: 'abc' }],
       names: [],
       employments: [],
       affiliations: [],
       id: '',
-      background: '',
+      background: {},
       keywords: [],
       nvi: undefined,
     };
@@ -152,7 +154,7 @@ describe('checkIfPersonHasNationalIdentificationNumber', () => {
       employments: [],
       affiliations: [],
       id: '',
-      background: '',
+      background: {},
       keywords: [],
       nvi: undefined,
     };
@@ -166,7 +168,7 @@ describe('checkIfPersonHasNationalIdentificationNumber', () => {
       employments: [],
       affiliations: [],
       id: '',
-      background: '',
+      background: {},
       keywords: [],
       nvi: undefined,
     };
@@ -176,29 +178,40 @@ describe('checkIfPersonHasNationalIdentificationNumber', () => {
 
 describe('findFirstEmploymentThatMatchesAnActiveAffiliation', () => {
   const employment1: Employment = {
+    type: 'Temporary',
     organization: 'org/123',
     startDate: '2020-01-01',
-    endDate: undefined,
-    active: true,
+    endDate: '',
+    fullTimeEquivalentPercentage: '100',
   };
   const employment2: Employment = {
+    type: 'Temporary',
     organization: 'org/456',
     startDate: '2021-01-01',
-    endDate: undefined,
-    active: true,
+    endDate: '',
+    fullTimeEquivalentPercentage: '100',
   };
 
   const affiliation1: CristinPersonAffiliation = {
     organization: 'org/123',
     active: true,
+    role: {
+      labels: { no: 'Ansatt', en: 'Employee' },
+    },
   };
   const affiliation2: CristinPersonAffiliation = {
     organization: 'org/789',
     active: true,
+    role: {
+      labels: { no: 'Ansatt', en: 'Employee' },
+    },
   };
   const inactiveAffiliation: CristinPersonAffiliation = {
     organization: 'org/456',
     active: false,
+    role: {
+      labels: { no: 'Ansatt', en: 'Employee' },
+    },
   };
 
   it('returns the first employment that matches an active affiliation', () => {

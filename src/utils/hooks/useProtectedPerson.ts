@@ -12,7 +12,7 @@ export const useProtectedPerson = (existingPerson: CristinPerson | string, searc
   const personId = typeof existingPerson === 'string' ? existingPerson : existingPerson.id;
   const existingPersonObject = typeof existingPerson === 'object' ? existingPerson : undefined;
   const personQuery = useFetchProtectedPerson(personId, { enabled: searchEnabled && !existingPersonObject });
-  const person = existingPersonObject ?? personQuery.data;
+  const resolvedPerson = existingPersonObject ?? personQuery.data;
 
-  return { person, personQuery };
+  return { person: resolvedPerson, personQuery };
 };

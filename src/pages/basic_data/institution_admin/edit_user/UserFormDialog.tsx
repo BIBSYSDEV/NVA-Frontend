@@ -12,10 +12,9 @@ import {
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { PageSpinner } from '../../../../components/PageSpinner';
-import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
+import { CristinPerson, InstitutionUser, RoleName, UserRole } from '../../../../types/user.types';
 import {
   checkIfPersonHasNationalIdentificationNumber,
-  findFirstEmploymentThatMatchesAnActiveAffiliation,
   getEmployments,
   getUsername,
 } from '../../../../utils/user-helpers';
@@ -58,55 +57,32 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
       : institutionUser,
   };
 
-  const onSubmitForm = async (values: UserFormData) => {
-    if (!values.person || !values.user) {
-      return;
-    }
-
-    try {
-      await personMutation.mutateAsync(values.person);
-      await userMutation.mutateAsync({
-        institutionUser: values.user,
-        customerId,
-        cristinPerson: person,
-        institutionUserQuery,
-      });
-      await institutionUserQuery.refetch();
-      onClose();
-    } catch {
-      return;
-    }
-  };
-
-  const updateRoles = (
-    newRoles: RoleName[],
-    values: UserFormData,
-    setFieldValue: (field: string, value: any, shouldValidate?: boolean) => Promise<void | FormikErrors<UserFormData>>
-  ) => {
-    setFieldValue(
-      UserFormFieldName.Roles,
-      newRoles.map((role) => ({ type: 'Role', rolename: role }))
-    );
-    const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
-    const hasNoIncludedUnits = !values.user?.viewingScope.includedUnits.length;
-
-    if (hasCuratorRole && hasNoIncludedUnits && topOrgCristinId) {
-      const defaultViewingScope =
-        findFirstEmploymentThatMatchesAnActiveAffiliation(values.person?.employments, values.person?.affiliations)
-          ?.organization ?? topOrgCristinId;
-      setFieldValue(UserFormFieldName.ViewingScope, [defaultViewingScope]);
-    } else if (!hasCuratorRole) {
-      setFieldValue(UserFormFieldName.ViewingScope, []);
-    }
-  };
-
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth transitionDuration={{ exit: 0 }}>
       <DialogTitle id="edit-user-heading">{t('basic_data.person_register.edit_person')}</DialogTitle>
+
       <Formik
         initialValues={initialValues}
         enableReinitialize // Needed to update user values when institutionUser is fetched
-        onSubmit={onSubmitForm}
+        onSubmit={async (values) => {
+          if (!values.person || !values.user) {
+            return;
+          }
+
+          try {
+            await personMutation.mutateAsync(values.person);
+            await userMutation.mutateAsync({
+              institutionUser: values.user,
+              customerId,
+              cristinPerson: person,
+              institutionUserQuery,
+            });
+            await institutionUserQuery.refetch();
+            onClose();
+          } catch {
+            return;
+          }
+        }}
         validationSchema={validationSchema}>
         {({ isSubmitting, values, setFieldValue }: FormikProps<UserFormData>) => (
           <Form noValidate>
@@ -129,7 +105,24 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                   <RolesFormSection
                     personHasNin={checkIfPersonHasNationalIdentificationNumber(values.person)}
                     roles={values.user?.roles?.map((role) => role.rolename) || []}
-                    updateRoles={(newRoles) => updateRoles(newRoles, values, setFieldValue)}
+                    updateRoles={(newRoles) => {
+                      const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
+                      setFieldValue(UserFormFieldName.Roles, newUserRoles);
+
+                      const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
+                      if (hasCuratorRole && !values.user?.viewingScope.includedUnits.length && topOrgCristinId) {
+                        const defaultViewingScope =
+                          values.person?.employments.find((employment) =>
+                            values.person?.affiliations.some(
+                              (affiliation) =>
+                                affiliation.organization === employment.organization && affiliation.active
+                            )
+                          )?.organization ?? topOrgCristinId;
+                        setFieldValue(UserFormFieldName.ViewingScope, [defaultViewingScope]);
+                      } else if (!hasCuratorRole) {
+                        setFieldValue(UserFormFieldName.ViewingScope, []);
+                      }
+                    }}
                   />
                   <Divider orientation="vertical" />
                   <TasksFormSection
