@@ -49,8 +49,8 @@ export const CompareProject = ({
       {projectIsCopied && (
         <StyledCompareButton
           data-testid={dataTestId.basicData.centralImport.resetValueButton}
-          variant="outlined"
-          color="secondary"
+          variant="contained"
+          color="tertiary"
           size="small"
           endIcon={<RestoreIcon />}
           onClick={() => remove(matchingTargetProjectIndex)}>
