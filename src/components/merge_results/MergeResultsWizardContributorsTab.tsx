@@ -28,6 +28,7 @@ export const MergeResultsWizardContributorsTab = () => {
         sx={{ gridColumn: '1/-1', display: 'grid', gridTemplateColumns: 'subgrid' }}
         defaultValue={ContributorMergeOption.TargetOnly}>
         <FormControlLabel
+          data-testid="LOFF"
           value={ContributorMergeOption.SourceOnly}
           control={<Radio />}
           onChange={() => setValue('entityDescription.contributors', sourceContributors)}

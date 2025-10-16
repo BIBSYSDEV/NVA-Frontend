@@ -57,6 +57,8 @@ export const dataTestId = {
         publicationYearSelect: 'publication-year-select',
       },
       importCandidateButton: 'import-candidate-button',
+      keepContributorsFromSourceRadio: 'keep-contributors-from-source-radio',
+      keepContributorsFromTargetRadio: 'keep-contributors-from-target-radio',
       resetButton: 'duplicate-search-reset-button',
       resetValueButton: 'reset-value-button',
       resultItem: 'central-import-result-item',
