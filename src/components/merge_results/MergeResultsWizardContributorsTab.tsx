@@ -4,6 +4,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Contributor } from '../../types/contributor.types';
 import { Registration } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { isOnImportPage } from '../../utils/urlPaths';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 import { CompareContributor } from './fields/CompareContributor';
@@ -28,7 +29,7 @@ export const MergeResultsWizardContributorsTab = () => {
         sx={{ gridColumn: '1/-1', display: 'grid', gridTemplateColumns: 'subgrid' }}
         defaultValue={ContributorMergeOption.TargetOnly}>
         <FormControlLabel
-          data-testid="LOFF"
+          data-testid={dataTestId.basicData.centralImport.keepContributorsFromSourceRadio}
           value={ContributorMergeOption.SourceOnly}
           control={<Radio />}
           onChange={() => setValue('entityDescription.contributors', sourceContributors)}
@@ -39,6 +40,7 @@ export const MergeResultsWizardContributorsTab = () => {
           })}
         />
         <FormControlLabel
+          data-testid={dataTestId.basicData.centralImport.keepContributorsFromTargetRadio}
           value={ContributorMergeOption.TargetOnly}
           control={<Radio />}
           onChange={() => setValue('entityDescription.contributors', initialTargetContributors)}
