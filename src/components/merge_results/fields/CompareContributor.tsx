@@ -1,5 +1,5 @@
 import { Contributor } from '../../../types/contributor.types';
-import { ContributorBox } from './ContirbutorBox';
+import { ContributorBox } from './ContributorBox';
 
 interface CompareContributorProps {
   sourceContributor?: Contributor;
