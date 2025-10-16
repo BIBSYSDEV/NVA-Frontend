@@ -15,6 +15,7 @@ import { PageSpinner } from '../../../../components/PageSpinner';
 import { CristinPerson, InstitutionUser, RoleName, UserRole } from '../../../../types/user.types';
 import {
   checkIfPersonHasNationalIdentificationNumber,
+  findFirstEmploymentThatMatchesAnActiveAffiliation,
   getEmployments,
   getUsername,
 } from '../../../../utils/user-helpers';
@@ -40,7 +41,12 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
   const { topOrgCristinId, customerId } = useLoggedinUser();
   const { person, personQuery } = useProtectedPerson(existingPerson, open);
   const username = getUsername(person, topOrgCristinId);
-  const { institutionUser, institutionUserQuery } = useInstitutionUser(existingUser, username, open);
+  const { institutionUser, institutionUserQuery } = useInstitutionUser({
+    existingUser,
+    username,
+    enabled: open, // Only fetch when dialog is open
+    showErrorMessage: false, // No error message, since a Cristin Person will lack User if they have not logged in yet
+  });
   const personMutation = useUpdateCristinPerson();
   const userMutation = useUpdateInstitutionUser();
   const { internalEmployments, externalEmployments } = getEmployments(person, topOrgCristinId);
@@ -104,7 +110,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                   <Divider orientation="vertical" />
                   <RolesFormSection
                     personHasNin={checkIfPersonHasNationalIdentificationNumber(values.person)}
-                    roles={values.user?.roles?.map((role) => role.rolename) || []}
+                    roles={values.user?.roles.map((role) => role.rolename) ?? []}
                     updateRoles={(newRoles) => {
                       const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
                       setFieldValue(UserFormFieldName.Roles, newUserRoles);
@@ -112,11 +118,9 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                       const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
                       if (hasCuratorRole && !values.user?.viewingScope.includedUnits.length && topOrgCristinId) {
                         const defaultViewingScope =
-                          values.person?.employments.find((employment) =>
-                            values.person?.affiliations.some(
-                              (affiliation) =>
-                                affiliation.organization === employment.organization && affiliation.active
-                            )
+                          findFirstEmploymentThatMatchesAnActiveAffiliation(
+                            values.person?.employments,
+                            values.person?.affiliations
                           )?.organization ?? topOrgCristinId;
                         setFieldValue(UserFormFieldName.ViewingScope, [defaultViewingScope]);
                       } else if (!hasCuratorRole) {
