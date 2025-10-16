@@ -1,10 +1,10 @@
-import { Box } from '@mui/material';
 import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Contributor } from '../../types/contributor.types';
 import { Registration } from '../../types/registration.types';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
+import { CompareContributor } from './fields/CompareContributor';
 
 export const MergeResultsWizardContributorsTab = () => {
   const { t } = useTranslation();
@@ -27,15 +27,11 @@ export const MergeResultsWizardContributorsTab = () => {
   return (
     <>
       {targetContributors.map((contributor, index) => (
-        <Box key={`${contributor.identity.name}${index}`} sx={{ gridColumn: { xs: 1, md: 3 } }}>
-          {contributor.identity.name}
-        </Box>
+        <CompareContributor key={`${contributor.identity.name}${index}`} targetContributor={contributor} />
       ))}
 
       {sourceContributors.map((contributor, index) => (
-        <Box key={`${contributor.identity.name}${index}`} sx={{ gridColumn: 1 }}>
-          {contributor.identity.name}
-        </Box>
+        <CompareContributor key={`${contributor.identity.name}${index}`} sourceContributor={contributor} />
       ))}
     </>
   );
