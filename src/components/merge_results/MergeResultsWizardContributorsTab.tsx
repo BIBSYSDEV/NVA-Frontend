@@ -14,11 +14,17 @@ export const MergeResultsWizardContributorsTab = () => {
   return (
     <>
       {targetContributors.map((contributor, index) => (
-        <CompareContributor key={`${contributor.identity.name}${index}`} targetContributor={contributor} />
+        <CompareContributor
+          key={contributor.identity.id || `${contributor.identity.name}${index}`}
+          targetContributor={contributor}
+        />
       ))}
 
       {sourceContributors.map((contributor, index) => (
-        <CompareContributor key={`${contributor.identity.name}${index}`} sourceContributor={contributor} />
+        <CompareContributor
+          key={contributor.identity.id || `${contributor.identity.name}${index}`}
+          sourceContributor={contributor}
+        />
       ))}
     </>
   );

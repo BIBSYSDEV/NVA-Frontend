@@ -27,7 +27,7 @@ export const ContributorBox = ({ contributor, sx }: ContributorBoxProps) => {
             affiliation.type === 'Organization' ? (
               <OrganizationBox key={affiliation.id} unitUri={affiliation.id} />
             ) : (
-              <UnconfirmedOrganizationBox key={affiliation.name + index} name={affiliation.name} />
+              <UnconfirmedOrganizationBox key={`${affiliation.name}${index}`} name={affiliation.name} />
             )
           )}
         </>
