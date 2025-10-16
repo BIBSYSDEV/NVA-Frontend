@@ -172,7 +172,3 @@ export const getNviCandidatesSearchPath = (currentUsername = '', year?: number) 
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
 };
-
-export const isOnImportPage = () => {
-  return location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
-};

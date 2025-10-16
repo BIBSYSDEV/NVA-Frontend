@@ -1,5 +1,7 @@
+import { TFunction } from 'i18next';
 import i18n from '../translations/i18n';
 import { LanguageString } from '../types/common.types';
+import { UrlPathTemplate } from './urlPaths';
 
 // Map from three letter language to two ("nob" -> "no")
 export const getPreferredLanguageCode = (language?: string) => {
@@ -47,4 +49,11 @@ export const getLanguageString = (labels?: LanguageString, preferredLanguageCode
   }
 
   return translatedString;
+};
+
+export const getSourceRegistrationHeading = (t: TFunction) => {
+  if (location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport)) {
+    return t('basic_data.central_import.import_candidate');
+  }
+  return t('unpublished_result');
 };
