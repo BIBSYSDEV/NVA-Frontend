@@ -180,7 +180,7 @@ export const DoiRequestAccordion = ({
       fullWidth
       color="tertiary"
       variant="contained"
-      endIcon={<LocalOfferIcon />}
+      startIcon={<LocalOfferIcon />}
       disabled={isLoading !== LoadingState.None}
       onClick={toggleRequestDoiModal}>
       {t('registration.public_page.request_doi')}
@@ -194,7 +194,7 @@ export const DoiRequestAccordion = ({
       size="small"
       variant="contained"
       data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
-      endIcon={<CheckIcon />}
+      startIcon={<CheckIcon />}
       loadingPosition="end"
       onClick={() => {
         if (openFilesOnRegistration.length > 0) {
@@ -313,7 +313,7 @@ export const DoiRequestAccordion = ({
                   size="small"
                   fullWidth
                   variant="outlined"
-                  endIcon={<LocalOfferIcon />}
+                  startIcon={<LocalOfferIcon />}
                   disabled={isLoading !== LoadingState.None}
                   onClick={toggleReserveDoiDialog}>
                   {t('registration.public_page.reserve_doi')}
@@ -396,7 +396,7 @@ export const DoiRequestAccordion = ({
               variant="contained"
               size="small"
               data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
-              endIcon={<CloseIcon />}
+              startIcon={<CloseIcon />}
               onClick={toggleRejectDoiDialog}
               disabled={isLoadingData || approveTicketMutation.isPending}>
               {t('common.reject_doi')}
