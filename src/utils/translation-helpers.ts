@@ -51,6 +51,11 @@ export const getLanguageString = (labels?: LanguageString, preferredLanguageCode
   return translatedString;
 };
 
+/**
+ * Returns the appropriate heading for the source registration based on the current context.
+ * @param t - Translation function from i18next
+ * @returns Localized string for either "Import candidate" or "Unpublished result"
+ */
 export const getSourceRegistrationHeading = (t: TFunction) => {
   if (location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport)) {
     return t('basic_data.central_import.import_candidate');
