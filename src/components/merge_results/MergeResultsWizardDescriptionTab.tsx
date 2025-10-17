@@ -7,7 +7,7 @@ import { CompareLanguage } from './fields/CompareLanguage';
 import { CompareProjects } from './fields/CompareProjects';
 import { CompareMultilineTextField } from './fields/CompareTextField';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
-import { ComapreFundings } from './fields/CompareFundings';
+import { CompareFundings } from './fields/CompareFundings';
 
 export const MergeResultsWizardDescriptionTab = () => {
   const { t } = useTranslation();
@@ -44,7 +44,7 @@ export const MergeResultsWizardDescriptionTab = () => {
 
       <CompareProjects />
 
-      <ComapreFundings />
+      <CompareFundings />
     </>
   );
 };

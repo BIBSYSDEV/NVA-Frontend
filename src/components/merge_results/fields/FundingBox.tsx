@@ -9,10 +9,10 @@ import {
 import { Funding } from '../../../types/registration.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
-interface FundigBoxProps {
+interface FundingBoxProps {
   funding: Funding;
 }
-export const FundingBox = ({ funding }: FundigBoxProps) => {
+export const FundingBox = ({ funding }: FundingBoxProps) => {
   const { t } = useTranslation();
   const fundingSourcesQuery = useFetchFundingSources();
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];

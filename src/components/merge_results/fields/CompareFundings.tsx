@@ -6,14 +6,14 @@ import { Registration } from '../../../types/registration.types';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { FundingBox } from './FundingBox';
 
-export const ComapreFundings = () => {
+export const CompareFundings = () => {
   const { t } = useTranslation();
 
   const { control } = useFormContext<Registration>();
   const { sourceResult } = useContext(MergeResultsWizardContext);
-  const sourceFundings = sourceResult.fundings;
+  const sourceFundings = sourceResult.fundings ?? [];
 
-  const targetFundings = useWatch({ name: 'fundings', control });
+  const targetFundings = useWatch({ name: 'fundings', control }) ?? [];
 
   return (
     <>
@@ -26,7 +26,7 @@ export const ComapreFundings = () => {
 
       <div>
         {sourceFundings.map((funding) => {
-          return <FundingBox key={funding.identifier} funding={funding} />;
+          return <FundingBox key={`${funding.identifier}-${funding.id}`} funding={funding} />;
         })}
       </div>
 
