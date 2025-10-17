@@ -59,9 +59,9 @@ i18n.use(LanguageDetector).init({
 });
 
 const getLanguageTagValue = (language: string) => {
-  if (language === 'eng') {
+  if (language === 'eng' || language === 'en') {
     return 'en';
-  } else if (language === 'nn') {
+  } else if (language === 'nn' || language === 'nno') {
     return 'nn';
   }
   return 'no';
