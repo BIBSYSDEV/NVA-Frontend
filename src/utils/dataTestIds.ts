@@ -146,6 +146,7 @@ export const dataTestId = {
   },
   editor: {
     addCuratorButton: (id: string) => `add-curator-button-${id}`,
+    automaticFileImportRadioButton: 'automatic-file-import-radio-button',
     categoriesLinkButton: 'categories-link-button',
     categoryLimitationsInfoButton: 'category-limitations-info-button',
     channelSearchField: 'channel-search-field',
@@ -156,6 +157,7 @@ export const dataTestId = {
     curatorsSearchForPersonField: 'curators-search-for-person-field',
     editingAccessInfoButton: 'editing-access-info-button',
     editUserButton: 'edit-user-button',
+    fileImportCreatesTicketRadioButton: 'file-import-creates-ticket-radio-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
     institutionSupportInputField: 'institution-support-input-field',
     doiLinkButton: 'doi-link-button',
