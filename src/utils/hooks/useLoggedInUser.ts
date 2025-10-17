@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
  */
 export const useLoggedInUser = () => {
   const user = useSelector((store: RootState) => store.user);
+  const topOrgCristinId = user?.topOrgCristinId;
+  const customerId = user?.customerId ?? '';
 
-  return { topOrgCristinId: user?.topOrgCristinId ?? '', customerId: user?.customerId ?? '' };
+  return { topOrgCristinId, customerId };
 };

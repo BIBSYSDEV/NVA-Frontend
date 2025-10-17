@@ -5,89 +5,50 @@ import {
   getEmployments,
   sanitizeRolesForEmbargoConstraint,
 } from '../user-helpers';
-import { CristinPerson, CristinPersonAffiliation, Employment, RoleName, UserRole } from '../../types/user.types';
+import { RoleName, UserRole } from '../../types/user.types';
+import { buildAffiliation, buildCristinPerson, buildEmployment } from './testHelpers';
 
 describe('getEmployments', () => {
   const topOrgCristinId = '123.0.0.0';
 
-  const internalOrg = 'org/123.0.0.0'; // matches expected prefix
-  const externalOrg = 'org/456.0.0.0';
+  const internalEmployment = buildEmployment({
+    organization: `org/${topOrgCristinId}`,
+  });
 
-  const internalEmployment: Employment = {
-    type: 'Temporary',
-    organization: internalOrg,
-    startDate: '2020-01-01',
-    endDate: '',
-    fullTimeEquivalentPercentage: '100',
-  };
-
-  const externalEmployment: Employment = {
-    type: 'Temporary',
-    organization: externalOrg,
-    startDate: '2021-01-01',
-    endDate: '',
-    fullTimeEquivalentPercentage: '100',
-  };
+  const externalEmployment = buildEmployment({
+    organization: 'org/456.0.0.0',
+  });
 
   it('returns internal employments', () => {
-    const person: CristinPerson = {
+    const person = buildCristinPerson({
       employments: [internalEmployment],
-      affiliations: [],
-      identifiers: [],
-      names: [],
-      id: '',
-      background: {},
-      keywords: [],
-      nvi: undefined,
-    };
+    });
+
     const result = getEmployments(person, topOrgCristinId);
     expect(result.internalEmployments).toEqual([internalEmployment]);
     expect(result.externalEmployments).toEqual([]);
   });
 
   it('returns external employments', () => {
-    const person: CristinPerson = {
+    const person = buildCristinPerson({
       employments: [externalEmployment],
-      affiliations: [],
-      identifiers: [],
-      names: [],
-      id: '',
-      background: {},
-      keywords: [],
-      nvi: undefined,
-    };
+    });
     const result = getEmployments(person, topOrgCristinId);
     expect(result.internalEmployments).toEqual([]);
     expect(result.externalEmployments).toEqual([externalEmployment]);
   });
 
   it('returns both internal and external employments', () => {
-    const person: CristinPerson = {
+    const person = buildCristinPerson({
       employments: [internalEmployment, externalEmployment],
-      affiliations: [],
-      identifiers: [],
-      names: [],
-      id: '',
-      background: {},
-      keywords: [],
-      nvi: undefined,
-    };
+    });
     const result = getEmployments(person, topOrgCristinId);
     expect(result.internalEmployments).toEqual([internalEmployment]);
     expect(result.externalEmployments).toEqual([externalEmployment]);
   });
 
   it('returns empty arrays if no employments', () => {
-    const person: CristinPerson = {
-      employments: [],
-      affiliations: [],
-      identifiers: [],
-      names: [],
-      id: '',
-      background: {},
-      keywords: [],
-      nvi: undefined,
-    };
+    const person = buildCristinPerson();
     const result = getEmployments(person, topOrgCristinId);
     expect(result.internalEmployments).toEqual([]);
     expect(result.externalEmployments).toEqual([]);
@@ -100,16 +61,9 @@ describe('getEmployments', () => {
   });
 
   it('handles undefined topOrgCristinId', () => {
-    const person: CristinPerson = {
+    const person = buildCristinPerson({
       employments: [internalEmployment, externalEmployment],
-      affiliations: [],
-      identifiers: [],
-      names: [],
-      id: '',
-      background: {},
-      keywords: [],
-      nvi: undefined,
-    };
+    });
     const result = getEmployments(person, undefined);
     expect(result.internalEmployments).toEqual([]);
     expect(result.externalEmployments).toEqual([internalEmployment, externalEmployment]);
@@ -118,123 +72,65 @@ describe('getEmployments', () => {
 
 describe('checkIfPersonHasNationalIdentificationNumber', () => {
   it('returns true if person has a national identification number', () => {
-    const person: CristinPerson = {
+    const person = buildCristinPerson({
       identifiers: [
         { type: 'NationalIdentificationNumber', value: '12345678901' },
         { type: 'CristinIdentifier', value: 'abc' },
       ],
-      names: [],
-      employments: [],
-      affiliations: [],
-      id: '',
-      background: {},
-      keywords: [],
-      nvi: undefined,
-    };
+    });
+
     expect(checkIfPersonHasNationalIdentificationNumber(person)).toBe(true);
   });
 
   it('returns false if person does not have a national identification number', () => {
-    const person: CristinPerson = {
-      identifiers: [{ type: 'CristinIdentifier', value: 'abc' }],
-      names: [],
-      employments: [],
-      affiliations: [],
-      id: '',
-      background: {},
-      keywords: [],
-      nvi: undefined,
-    };
+    const person = buildCristinPerson({ identifiers: [{ type: 'CristinIdentifier', value: 'abc' }] });
     expect(checkIfPersonHasNationalIdentificationNumber(person)).toBe(false);
   });
 
   it('returns false if national identification number value is empty', () => {
-    const person: CristinPerson = {
-      identifiers: [{ type: 'NationalIdentificationNumber', value: '' }],
-      names: [],
-      employments: [],
-      affiliations: [],
-      id: '',
-      background: {},
-      keywords: [],
-      nvi: undefined,
-    };
+    const person = buildCristinPerson({ identifiers: [{ type: 'NationalIdentificationNumber', value: '' }] });
     expect(checkIfPersonHasNationalIdentificationNumber(person)).toBe(false);
   });
 
   it('returns false if identifiers array is empty', () => {
-    const person: CristinPerson = {
-      identifiers: [],
-      names: [],
-      employments: [],
-      affiliations: [],
-      id: '',
-      background: {},
-      keywords: [],
-      nvi: undefined,
-    };
+    const person = buildCristinPerson();
     expect(checkIfPersonHasNationalIdentificationNumber(person)).toBe(false);
   });
 });
 
 describe('findFirstEmploymentThatMatchesAnActiveAffiliation', () => {
-  const employment1: Employment = {
-    type: 'Temporary',
+  const employment1 = buildEmployment({
     organization: 'org/123',
-    startDate: '2020-01-01',
-    endDate: '',
-    fullTimeEquivalentPercentage: '100',
-  };
-  const employment2: Employment = {
-    type: 'Temporary',
-    organization: 'org/456',
-    startDate: '2021-01-01',
-    endDate: '',
-    fullTimeEquivalentPercentage: '100',
-  };
+  });
 
-  const affiliation1: CristinPersonAffiliation = {
-    organization: 'org/123',
-    active: true,
-    role: {
-      labels: { no: 'Ansatt', en: 'Employee' },
-    },
-  };
-  const affiliation2: CristinPersonAffiliation = {
-    organization: 'org/789',
-    active: true,
-    role: {
-      labels: { no: 'Ansatt', en: 'Employee' },
-    },
-  };
-  const inactiveAffiliation: CristinPersonAffiliation = {
+  const employment2 = buildEmployment({
     organization: 'org/456',
-    active: false,
-    role: {
-      labels: { no: 'Ansatt', en: 'Employee' },
-    },
-  };
+  });
+
+  const activeAffiliationWithOrg1 = buildAffiliation({ organization: 'org/123', active: true });
+  const activeAffiliationWithOrg3 = buildAffiliation({ organization: 'org/789', active: true });
+  const inactiveAffiliationWithOrg2 = buildAffiliation({ organization: 'org/456', active: false });
 
   it('returns the first employment that matches an active affiliation', () => {
     const result = findFirstEmploymentThatMatchesAnActiveAffiliation(
       [employment1, employment2],
-      [affiliation1, affiliation2]
+      [activeAffiliationWithOrg1, activeAffiliationWithOrg3]
     );
     expect(result).toEqual(employment1);
   });
 
   it('returns undefined if no employment matches an active affiliation', () => {
-    const result = findFirstEmploymentThatMatchesAnActiveAffiliation([employment2], [affiliation2]);
+    const result = findFirstEmploymentThatMatchesAnActiveAffiliation([employment2], [activeAffiliationWithOrg3]);
     expect(result).toBeUndefined();
   });
 
   it('ignores inactive affiliations', () => {
-    const result = findFirstEmploymentThatMatchesAnActiveAffiliation([employment2], [inactiveAffiliation]);
+    const result = findFirstEmploymentThatMatchesAnActiveAffiliation([employment2], [inactiveAffiliationWithOrg2]);
     expect(result).toBeUndefined();
   });
 
   it('returns undefined if employments is empty', () => {
-    const result = findFirstEmploymentThatMatchesAnActiveAffiliation([], [affiliation1]);
+    const result = findFirstEmploymentThatMatchesAnActiveAffiliation([], [activeAffiliationWithOrg1]);
     expect(result).toBeUndefined();
   });
 

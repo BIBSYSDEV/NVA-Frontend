@@ -3,27 +3,27 @@ import { InstitutionUser } from '../../types/user.types';
 
 interface UseInstitutionUserProps {
   existingUser?: InstitutionUser;
-  username: string;
-  enabled: boolean;
-  showErrorMessage: boolean;
+  username?: string;
+  enabled?: boolean;
+  showErrorMessage?: boolean;
 }
 
 /**
  * Returns an InstitutionUser, either by returning the provided user, or by fetching it using the username if the provided user is undefined.
  * @param existingUser - InstitutionUser that might be undefined.
- * @param username - string used for user lookup.
+ * @param username - string used for user lookup when needed.
  * @param enabled - Optionally prevent the lookup (default: true).
- * @param showErrorMessage - Show error message if an API fetch is done and fails.
+ * @param showErrorMessage - Show error message if an API fetch is done and fails (default: true).
  * @returns The InstitutionUser and the query object.
  */
 export const useInstitutionUser = ({
   existingUser,
-  username,
+  username = '',
   enabled = true,
   showErrorMessage = true,
 }: UseInstitutionUserProps) => {
   const institutionUserQuery = useFetchUserQuery(username, {
-    enabled: enabled && !existingUser,
+    enabled: enabled && !existingUser && !!username,
     showErrorMessage: showErrorMessage,
     retry: false,
   });

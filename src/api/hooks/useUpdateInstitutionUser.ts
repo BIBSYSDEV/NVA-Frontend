@@ -26,6 +26,9 @@ export const useUpdateInstitutionUser = () => {
       if (userExists) {
         return await updateUser(updatedInstitutionUser.username, updatedInstitutionUser);
       } else {
+        if (!customerId) {
+          throw new Error('Missing customerId for user creation');
+        }
         const cristinIdentifier = getValueByKey('CristinIdentifier', cristinPerson?.identifiers);
         if (!cristinIdentifier) {
           throw new Error('Missing CristinIdentifier for user creation');

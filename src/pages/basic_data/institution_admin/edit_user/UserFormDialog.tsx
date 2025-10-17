@@ -78,7 +78,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
             await userMutation.mutateAsync({
               institutionUser: values.user,
               customerId,
-              cristinPerson: person,
+              cristinPerson: values.person,
               userExists: !!institutionUser,
             });
             await institutionUserQuery.refetch();
@@ -88,68 +88,71 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
           }
         }}
         validationSchema={validationSchema}>
-        {({ isSubmitting, values, setFieldValue }: FormikProps<UserFormData>) => (
-          <Form noValidate>
-            <DialogContent sx={{ minHeight: '30vh' }}>
-              {(!values.person && personQuery.isPending) || (!institutionUser && institutionUserQuery.isPending) ? (
-                <PageSpinner aria-labelledby="edit-user-heading" />
-              ) : !values.person ? (
-                <Typography>{t('feedback.error.get_person')}</Typography>
-              ) : (
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', lg: '1fr auto 1fr auto 1fr auto 1fr' },
-                    gap: '1rem',
-                  }}>
-                  <PersonFormSection externalEmployments={externalEmployments} />
-                  <Divider orientation="vertical" />
-                  <AffiliationFormSection />
-                  <Divider orientation="vertical" />
-                  <RolesFormSection
-                    personHasNin={checkIfPersonHasNationalIdentificationNumber(values.person)}
-                    roles={values.user?.roles.map((role) => role.rolename) ?? []}
-                    updateRoles={(newRoles) => {
-                      const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
-                      setFieldValue(UserFormFieldName.Roles, newUserRoles);
+        {({ isSubmitting, values, setFieldValue }: FormikProps<UserFormData>) => {
+          const { internalEmployments: currentInternal } = getEmployments(values.person, topOrgCristinId);
+          return (
+            <Form noValidate>
+              <DialogContent sx={{ minHeight: '30vh' }}>
+                {(!values.person && personQuery.isPending) || (!institutionUser && institutionUserQuery.isPending) ? (
+                  <PageSpinner aria-labelledby="edit-user-heading" />
+                ) : !values.person ? (
+                  <Typography>{t('feedback.error.get_person')}</Typography>
+                ) : (
+                  <Box
+                    sx={{
+                      display: 'grid',
+                      gridTemplateColumns: { xs: '1fr', lg: '1fr auto 1fr auto 1fr auto 1fr' },
+                      gap: '1rem',
+                    }}>
+                    <PersonFormSection externalEmployments={externalEmployments} />
+                    <Divider orientation="vertical" />
+                    <AffiliationFormSection />
+                    <Divider orientation="vertical" />
+                    <RolesFormSection
+                      personHasNin={checkIfPersonHasNationalIdentificationNumber(values.person)}
+                      roles={values.user?.roles.map((role) => role.rolename) ?? []}
+                      updateRoles={(newRoles) => {
+                        const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
+                        setFieldValue(UserFormFieldName.Roles, newUserRoles);
 
-                      const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
-                      if (hasCuratorRole && !values.user?.viewingScope.includedUnits.length && topOrgCristinId) {
-                        const defaultViewingScope =
-                          findFirstEmploymentThatMatchesAnActiveAffiliation(
-                            values.person?.employments,
-                            values.person?.affiliations
-                          )?.organization ?? topOrgCristinId;
-                        setFieldValue(UserFormFieldName.ViewingScope, [defaultViewingScope]);
-                      } else if (!hasCuratorRole) {
-                        setFieldValue(UserFormFieldName.ViewingScope, []);
+                        const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
+                        if (hasCuratorRole && !values.user?.viewingScope.includedUnits.length && topOrgCristinId) {
+                          const defaultViewingScope =
+                            findFirstEmploymentThatMatchesAnActiveAffiliation(
+                              values.person?.employments,
+                              values.person?.affiliations
+                            )?.organization ?? topOrgCristinId;
+                          setFieldValue(UserFormFieldName.ViewingScope, [defaultViewingScope]);
+                        } else if (!hasCuratorRole) {
+                          setFieldValue(UserFormFieldName.ViewingScope, []);
+                        }
+                      }}
+                    />
+                    <Divider orientation="vertical" />
+                    <TasksFormSection
+                      roles={values.user?.roles.map((role) => role.rolename)}
+                      viewingScopes={values.user?.viewingScope.includedUnits ?? []}
+                      updateViewingScopes={(newViewingScopes) =>
+                        setFieldValue(UserFormFieldName.ViewingScope, newViewingScopes)
                       }
-                    }}
-                  />
-                  <Divider orientation="vertical" />
-                  <TasksFormSection
-                    roles={values.user?.roles.map((role) => role.rolename)}
-                    viewingScopes={values.user?.viewingScope.includedUnits ?? []}
-                    updateViewingScopes={(newViewingScopes) =>
-                      setFieldValue(UserFormFieldName.ViewingScope, newViewingScopes)
-                    }
-                  />
-                </Box>
-              )}
-            </DialogContent>
-            <DialogActions sx={{ justifyContent: 'center' }}>
-              <Button onClick={onClose}>{t('common.cancel')}</Button>
-              <Button
-                loading={isSubmitting}
-                disabled={!values.person || internalEmployments.length === 0 || !values.user}
-                color="secondary"
-                variant="contained"
-                type="submit">
-                {t('common.save')}
-              </Button>
-            </DialogActions>
-          </Form>
-        )}
+                    />
+                  </Box>
+                )}
+              </DialogContent>
+              <DialogActions sx={{ justifyContent: 'center' }}>
+                <Button onClick={onClose}>{t('common.cancel')}</Button>
+                <Button
+                  loading={isSubmitting}
+                  disabled={!values.person || currentInternal.length === 0 || !values.user}
+                  color="secondary"
+                  variant="contained"
+                  type="submit">
+                  {t('common.save')}
+                </Button>
+              </DialogActions>
+            </Form>
+          );
+        }}
       </Formik>
     </Dialog>
   );
