@@ -26,9 +26,9 @@ import { rolesWithAreaOfResponsibility, TasksFormSection } from './TasksFormSect
 import { UserFormData, UserFormFieldName, validationSchema } from './userFormHelpers';
 import { useUpdateCristinPerson } from '../../../../api/hooks/useUpdateCristinPerson';
 import { useUpdateInstitutionUser } from '../../../../api/hooks/useUpdateInstitutionUser';
-import { useLoggedinUser } from '../../../../utils/hooks/useLoggedinUser';
 import { useProtectedPerson } from '../../../../utils/hooks/useProtectedPerson';
 import { useInstitutionUser } from '../../../../utils/hooks/useInstitutionUser';
+import { useLoggedInUser } from '../../../../utils/hooks/useLoggedInUser';
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
   existingPerson: CristinPerson | string;
@@ -38,7 +38,7 @@ interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
 
 export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: UserFormDialogProps) => {
   const { t } = useTranslation();
-  const { topOrgCristinId, customerId } = useLoggedinUser();
+  const { topOrgCristinId, customerId } = useLoggedInUser();
   const { person, personQuery } = useProtectedPerson(existingPerson, open);
   const username = getUsername(person, topOrgCristinId);
   const { institutionUser, institutionUserQuery } = useInstitutionUser({

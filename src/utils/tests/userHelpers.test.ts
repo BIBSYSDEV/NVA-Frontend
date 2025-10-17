@@ -3,8 +3,9 @@ import {
   checkIfPersonHasNationalIdentificationNumber,
   findFirstEmploymentThatMatchesAnActiveAffiliation,
   getEmployments,
+  sanitizeRolesForEmbargoConstraint,
 } from '../user-helpers';
-import { CristinPerson, CristinPersonAffiliation, Employment } from '../../types/user.types';
+import { CristinPerson, CristinPersonAffiliation, Employment, RoleName, UserRole } from '../../types/user.types';
 
 describe('getEmployments', () => {
   const topOrgCristinId = '123.0.0.0';
@@ -240,5 +241,37 @@ describe('findFirstEmploymentThatMatchesAnActiveAffiliation', () => {
   it('returns undefined if affiliations is empty', () => {
     const result = findFirstEmploymentThatMatchesAnActiveAffiliation([employment1], []);
     expect(result).toBeUndefined();
+  });
+});
+
+describe('sanitizeRolesForEmbargoConstraint', () => {
+  it('removes CuratorThesisEmbargo if CuratorThesis is NOT present', () => {
+    const roles: UserRole[] = [
+      { type: 'Role', rolename: RoleName.CuratorThesisEmbargo },
+      { type: 'Role', rolename: RoleName.NviCurator },
+    ];
+    const result = sanitizeRolesForEmbargoConstraint(roles);
+    expect(result).toEqual([{ type: 'Role', rolename: RoleName.NviCurator }]);
+  });
+
+  it('returns roles unchanged if CuratorThesis is present', () => {
+    const roles: UserRole[] = [
+      { type: 'Role', rolename: RoleName.CuratorThesis },
+      { type: 'Role', rolename: RoleName.CuratorThesisEmbargo },
+    ];
+    const result = sanitizeRolesForEmbargoConstraint(roles);
+    expect(result).toEqual(roles);
+  });
+
+  it('returns roles unchanged if CuratorThesisEmbargo is not present', () => {
+    const roles: UserRole[] = [{ type: 'Role', rolename: RoleName.NviCurator }];
+    const result = sanitizeRolesForEmbargoConstraint(roles);
+    expect(result).toEqual(roles);
+  });
+
+  it('returns empty array if only CuratorThesisEmbargo is present', () => {
+    const roles: UserRole[] = [{ type: 'Role', rolename: RoleName.CuratorThesisEmbargo }];
+    const result = sanitizeRolesForEmbargoConstraint(roles);
+    expect(result).toEqual([]);
   });
 });

@@ -11,7 +11,9 @@ import {
   CristinPersonNameType,
   Employment,
   FlatCristinPerson,
+  RoleName,
   User,
+  UserRole,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
 import { getIdentifierFromId } from './general-helpers';
@@ -204,4 +206,15 @@ export const findFirstEmploymentThatMatchesAnActiveAffiliation = (
   return employments?.find((employment) =>
     affiliations?.some((affiliation) => affiliation.organization === employment.organization && affiliation.active)
   );
+};
+
+/**
+ * Removes the `CuratorThesisEmbargo` role from the array if the user does not have the `CuratorThesis` role, because
+ * you cannot have the CuratorThesisEmbargo role without having the CuratorThesis role.
+ * If `CuratorThesis` is present, returns the roles unchanged.
+ */
+export const sanitizeRolesForEmbargoConstraint = (roles: UserRole[]) => {
+  return !roles.some((role) => role.rolename === RoleName.CuratorThesis)
+    ? roles.filter((role) => role.rolename !== RoleName.CuratorThesisEmbargo)
+    : roles;
 };
