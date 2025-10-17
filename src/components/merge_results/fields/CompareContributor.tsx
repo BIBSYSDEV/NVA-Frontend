@@ -1,7 +1,8 @@
 import { Divider, Typography } from '@mui/material';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Contributor } from '../../../types/contributor.types';
-import { isOnImportPage } from '../../../utils/urlPaths';
+import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { ContributorBox } from './ContributorBox';
 
 interface CompareContributorProps {
@@ -11,11 +12,12 @@ interface CompareContributorProps {
 
 export const CompareContributor = ({ sourceContributor, targetContributor }: CompareContributorProps) => {
   const { t } = useTranslation();
+  const { sourceHeading } = useContext(MergeResultsWizardContext);
 
   return (
     <>
       <Typography variant="h3" sx={{ display: { xs: 'block', md: 'none' } }}>
-        {isOnImportPage() ? t('basic_data.central_import.import_candidate') : t('unpublished_result')}
+        {sourceHeading}
       </Typography>
       <ContributorBox sx={{ gridColumn: 1 }} contributor={sourceContributor} />
 

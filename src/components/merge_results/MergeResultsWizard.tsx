@@ -1,5 +1,7 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Registration } from '../../types/registration.types';
+import { getSourceRegistrationHeading } from '../../utils/translation-helpers';
 import { BackgroundDiv } from '../styled/Wrappers';
 import { MergeResultsWizardActions, MergeResultsWizardActionsProps } from './MergeResultsWizardActions';
 import { MergeResultsWizardContent } from './MergeResultsWizardContent';
@@ -14,11 +16,16 @@ interface MergeResultsWizardProps extends MergeResultsWizardActionsProps {
 }
 
 export const MergeResultsWizard = ({ sourceResult, targetResult, onSave, onCancel }: MergeResultsWizardProps) => {
+  const { t } = useTranslation();
   const formMethods = useForm({ defaultValues: targetResult });
 
   return (
     <FormProvider {...formMethods}>
-      <MergeResultsWizardContextProvider value={{ sourceResult }}>
+      <MergeResultsWizardContextProvider
+        value={{
+          sourceResult,
+          sourceHeading: getSourceRegistrationHeading(t),
+        }}>
         <form onSubmit={formMethods.handleSubmit(onSave)}>
           <MergeResultsWizardHeader />
           <MergeResultsWizardStepper />

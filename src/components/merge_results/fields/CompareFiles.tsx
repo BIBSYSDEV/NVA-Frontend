@@ -8,7 +8,6 @@ import { AssociatedFile } from '../../../types/associatedArtifact.types';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { isCategoryWithFileVersion } from '../../../utils/registration-helpers';
-import { isOnImportPage } from '../../../utils/urlPaths';
 import { BetaFunctionality } from '../../BetaFunctionality';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { FileBox } from './FileBox';
@@ -32,7 +31,7 @@ export const CompareFiles = ({
   canUploadFileToTarget = false,
 }: CompareFilesProps) => {
   const { t } = useTranslation();
-  const { sourceResult } = useContext(MergeResultsWizardContext);
+  const { sourceResult, sourceHeading } = useContext(MergeResultsWizardContext);
   const { control } = useFormContext<Registration>();
   const targetResult = useWatch({ control }) as Registration;
   const { append, remove } = useFieldArray({ name: 'associatedArtifacts', control });
@@ -46,7 +45,7 @@ export const CompareFiles = ({
   return (
     <>
       <Typography variant="h3" sx={{ display: { xs: 'block', md: 'none' } }}>
-        {isOnImportPage() ? t('basic_data.central_import.import_candidate') : t('unpublished_result')}
+        {sourceHeading}
       </Typography>
       <FileBox
         file={sourceFile}
