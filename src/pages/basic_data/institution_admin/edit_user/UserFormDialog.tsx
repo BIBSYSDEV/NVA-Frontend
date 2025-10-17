@@ -49,7 +49,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
   });
   const personMutation = useUpdateCristinPerson();
   const userMutation = useUpdateInstitutionUser();
-  const { internalEmployments, externalEmployments } = getEmployments(person, topOrgCristinId);
+  const { internalEmployments } = getEmployments(person, topOrgCristinId);
 
   const initialValues: UserFormData = {
     person: person ? { ...person, employments: internalEmployments } : person,
@@ -89,7 +89,8 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
         }}
         validationSchema={validationSchema}>
         {({ isSubmitting, values, setFieldValue }: FormikProps<UserFormData>) => {
-          const { internalEmployments: currentInternal } = getEmployments(values.person, topOrgCristinId);
+          const { internalEmployments: formInternalEmployments, externalEmployments: formExternalEmployments } =
+            getEmployments(values.person, topOrgCristinId);
           return (
             <Form noValidate>
               <DialogContent sx={{ minHeight: '30vh' }}>
@@ -104,7 +105,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                       gridTemplateColumns: { xs: '1fr', lg: '1fr auto 1fr auto 1fr auto 1fr' },
                       gap: '1rem',
                     }}>
-                    <PersonFormSection externalEmployments={externalEmployments} />
+                    <PersonFormSection externalEmployments={formExternalEmployments} />
                     <Divider orientation="vertical" />
                     <AffiliationFormSection />
                     <Divider orientation="vertical" />
@@ -143,7 +144,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                 <Button onClick={onClose}>{t('common.cancel')}</Button>
                 <Button
                   loading={isSubmitting}
-                  disabled={!values.person || currentInternal.length === 0 || !values.user}
+                  disabled={!values.person || formInternalEmployments.length === 0 || !values.user}
                   color="secondary"
                   variant="contained"
                   type="submit">
