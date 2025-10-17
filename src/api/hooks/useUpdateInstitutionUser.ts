@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useMutation, UseQueryResult } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { CristinPerson, InstitutionUser, RoleName } from '../../types/user.types';
 import { setNotification } from '../../redux/notificationSlice';
 import { createUser, updateUser } from '../roleApi';
@@ -10,7 +10,7 @@ interface UpdateInstitutionUserProps {
   institutionUser: InstitutionUser;
   customerId: string;
   cristinPerson: CristinPerson | null | undefined;
-  institutionUserQuery: UseQueryResult<InstitutionUser, Error>;
+  userExists: boolean;
 }
 
 export const useUpdateInstitutionUser = () => {
@@ -18,12 +18,7 @@ export const useUpdateInstitutionUser = () => {
   const dispatch = useDispatch();
 
   return useMutation({
-    mutationFn: async ({
-      institutionUser,
-      customerId,
-      cristinPerson,
-      institutionUserQuery,
-    }: UpdateInstitutionUserProps) => {
+    mutationFn: async ({ institutionUser, customerId, cristinPerson, userExists }: UpdateInstitutionUserProps) => {
       // You cannot have the CuratorThesisEmbargo role without having the CuratorThesis role.
       // This is a new constraint, so we need to remove the Embargo role if the CuratorThesis role is not present whenever we update a user.
       const filteredRoles = !institutionUser.roles.some((role) => role.rolename === RoleName.CuratorThesis)
@@ -31,7 +26,7 @@ export const useUpdateInstitutionUser = () => {
         : institutionUser.roles;
       const updatedInstitutionUser = { ...institutionUser, roles: filteredRoles };
 
-      if (institutionUserQuery.isSuccess) {
+      if (userExists) {
         return await updateUser(updatedInstitutionUser.username, updatedInstitutionUser);
       } else {
         return await createUser({
