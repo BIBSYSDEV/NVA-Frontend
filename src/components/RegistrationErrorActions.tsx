@@ -45,7 +45,7 @@ export const RegistrationErrorActions = ({ tabErrors, registration, ...boxProps 
         size="small"
         state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
         to={getWizardPathByRegistration(registration, { tab: firstErrorTab })}
-        endIcon={<EditIcon />}
+        startIcon={<EditIcon />}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
         {t('registration.public_page.go_back_to_wizard')}
       </Button>

@@ -54,7 +54,7 @@ export const MergeResultsWizardActions = ({ onCancel }: MergeResultsWizardAction
         </Button>
       </Box>
 
-      {activeTab !== RegistrationTab.Contributors && (
+      {activeTab !== RegistrationTab.FilesAndLicenses && (
         <Tooltip title={t('common.next')}>
           <IconButton
             onClick={() => setActiveTab(activeTab + 1)}

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { RegistrationTab } from '../../types/registration.types';
 import { MergeResultsWizardCategoryTab } from './MergeResultsWizardCategoryTab';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
+import { MergeResultsWizardContributorsTab } from './MergeResultsWizardContributorsTab';
 import { MergeResultsWizardDescriptionTab } from './MergeResultsWizardDescriptionTab';
 import { MergeResultsWizardFilesTab } from './MergeResultsWizardFilesTab';
 
@@ -25,6 +26,8 @@ export const MergeResultsWizardContent = () => {
       ) : activeTab === RegistrationTab.ResourceType ? (
         <MergeResultsWizardCategoryTab />
       ) : activeTab === RegistrationTab.Contributors ? (
+        <MergeResultsWizardContributorsTab />
+      ) : activeTab === RegistrationTab.FilesAndLicenses ? (
         <MergeResultsWizardFilesTab />
       ) : null}
     </>

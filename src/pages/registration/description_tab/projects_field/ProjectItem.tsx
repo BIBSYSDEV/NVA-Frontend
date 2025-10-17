@@ -108,7 +108,7 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
       <IconButton
         size="small"
         sx={{ alignSelf: 'center' }}
-        color="error"
+        color="primary"
         onClick={() => removeProject(projectId)}
         title={t('common.remove')}
         data-testid={dataTestId.registrationWizard.description.removeProjectButton}>

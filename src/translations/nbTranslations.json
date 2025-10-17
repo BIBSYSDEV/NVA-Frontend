@@ -619,7 +619,7 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
-      "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
+      "update_rrs_and_file_import": "Kunne ikke oppdatere rettighetspolitikk og filimport",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
@@ -667,7 +667,7 @@
       "update_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
-      "update_rights_retention_strategy": "Rettighetspolitikk ble oppdatert",
+      "update_rrs_and_file_import": "Rettighetspolitikk og filimport ble oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
     },
@@ -717,6 +717,8 @@
   "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
+  "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
+  "keep_contributors_from_source_result": "Behold kun bidragsytere fra {{sourceType}}",
   "licenses": {
     "additional_info": {
       "cc0": "<p>Se <link1>åndsverksloven</link1> §3, §8, §11 og §14</p>"
@@ -1995,5 +1997,9 @@
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
+  "file_import": "Filimport",
+  "file_import_description": "<p>Sentralimport av data fra eksterne datakilder.<br>Importør hos Sikt kontrollerer og slår eventuelt sammen med andre resultater for å unngå duplikater.</p><p>Institusjonen kan bestemme om filene automatisk skal godkjennes, eller om de først skal kontrolleres manuelt av en filkurator før de blir publisert i NVA.</p>",
+  "file_import_automatic_import": "Automatisk publisert i NVA",
+  "file_import_create_ticket": "Filforespørsel blir sendt til filkurator"
 }
