@@ -1,4 +1,4 @@
-import CancelIcon from '@mui/icons-material/Cancel';
+import RemoveIcon from '@mui/icons-material/HighlightOff';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
@@ -113,10 +113,10 @@ export const AffiliationFormSection = () => {
           </Box>
           <Button
             disabled={isSubmitting}
-            color="error"
+            color="tertiary"
             variant="contained"
             onClick={toggleConfirmDeleteDialog}
-            endIcon={<CancelIcon />}
+            endIcon={<RemoveIcon />}
             data-testid={dataTestId.basicData.personAdmin.removeEmployment}>
             {t('basic_data.person_register.remove_employment')}
           </Button>

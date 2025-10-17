@@ -76,7 +76,7 @@ export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteToo
               sx={{ alignSelf: 'start' }}
               onClick={onDelete}
               data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(project.id)}>
-              <CancelIcon color="error" />
+              <CancelIcon color="primary" />
             </IconButton>
           </Tooltip>
         )}

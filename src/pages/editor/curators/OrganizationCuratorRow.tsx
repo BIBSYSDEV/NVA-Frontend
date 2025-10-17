@@ -66,7 +66,7 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators, canEditUsers 
             onClick={toggleDialog}
             size="small"
             sx={{ bgcolor: 'tertiary.main' }}>
-            <EditIcon fontSize="small" />
+            <EditIcon color="primary" fontSize="small" />
           </IconButton>
         )}
       </Box>
