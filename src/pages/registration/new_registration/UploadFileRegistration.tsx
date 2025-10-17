@@ -82,7 +82,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
             variant="contained"
             color="secondary"
             sx={{ alignSelf: 'center' }}
-            endIcon={<UploadIcon />}
+            startIcon={<UploadIcon />}
             loadingPosition="end"
             loading={createRegistrationMutation.isPending}
             onClick={() => fileInputRef.current?.click()}>

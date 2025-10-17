@@ -116,7 +116,7 @@ export const AffiliationFormSection = () => {
             color="tertiary"
             variant="contained"
             onClick={toggleConfirmDeleteDialog}
-            endIcon={<RemoveIcon />}
+            startIcon={<RemoveIcon />}
             data-testid={dataTestId.basicData.personAdmin.removeEmployment}>
             {t('basic_data.person_register.remove_employment')}
           </Button>

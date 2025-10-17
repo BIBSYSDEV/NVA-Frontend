@@ -189,7 +189,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               fullWidth
               size="small"
               data-testid={dataTestId.tasksPage.nvi.editResultButton}
-              endIcon={<EditIcon />}
+              startIcon={<EditIcon />}
               component={RouterLink}
               state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
               to={getRegistrationWizardPath(getIdentifierFromId(nviCandidate.publicationId), {
@@ -237,7 +237,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               sx={{ mb: '1rem' }}
               loading={statusMutation.isPending && statusMutation.variables?.status === 'Approved'}
               disabled={!canApproveCandidate || isMutating}
-              endIcon={<CheckIcon />}
+              startIcon={<CheckIcon />}
               loadingPosition="end"
               onClick={() => statusMutation.mutate({ status: 'Approved' })}>
               {t('tasks.nvi.approve_nvi_candidate')}
@@ -257,7 +257,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               fullWidth
               size="small"
               disabled={!canRejectCandidate || isMutating || hasSelectedRejectCandidate}
-              endIcon={<ClearIcon />}
+              startIcon={<ClearIcon />}
               onClick={() => setHasSelectedRejectCandidate(true)}>
               {t('tasks.nvi.reject_nvi_candidate')}
             </Button>
