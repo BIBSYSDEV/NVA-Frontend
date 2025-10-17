@@ -65,7 +65,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   const userHasReadTicket = !!user?.nvaUsername && !!supportTicket?.viewedBy.includes(user.nvaUsername);
   const isOnTasksPage = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
-  const userCanCompleteTicket = !!supportTicket?.allowedOperations?.includes('approve');
+  const userCanCompleteTicket = !!supportTicket?.allowedOperations.includes('approve');
 
   const defaultExpanded = locationState?.selectedTicketType
     ? locationState.selectedTicketType === 'GeneralSupportCase'

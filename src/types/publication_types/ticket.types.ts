@@ -53,7 +53,7 @@ export interface Ticket extends BaseTicket {
   finalizedBy?: string;
   finalizedDate?: string;
   availableInstitutions?: string[];
-  allowedOperations?: TicketAllowedOperations[];
+  allowedOperations: TicketAllowedOperations[];
 }
 
 export interface ExpandedTicket extends BaseTicket {
