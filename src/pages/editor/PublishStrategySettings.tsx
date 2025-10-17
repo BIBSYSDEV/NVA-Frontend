@@ -13,7 +13,7 @@ import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { StyledAccessRight, StyledAccessRightsContainer } from './PublishingStrategyOverview';
-import { RightsRetentionStrategySettings } from './RightsRetentionStrategySettings';
+import { RrsAndFileImportSettings } from './RrsAndFileImportSettings';
 
 const StyledItemContainer = styled('div')({
   display: 'grid',
@@ -151,7 +151,7 @@ export const PublishStrategySettings = () => {
                 )}
             </StyledItemContainer>
           </Box>
-          <RightsRetentionStrategySettings />
+          <RrsAndFileImportSettings />
         </>
       )}
     </>
