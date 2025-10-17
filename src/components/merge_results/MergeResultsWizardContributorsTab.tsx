@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { Contributor } from '../../types/contributor.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { isOnImportPage } from '../../utils/urlPaths';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 import { CompareContributor } from './fields/CompareContributor';
 
@@ -17,7 +16,7 @@ enum ContributorMergeOption {
 export const MergeResultsWizardContributorsTab = () => {
   const { t } = useTranslation();
   const { control, formState, setValue } = useFormContext<Registration>();
-  const { sourceResult } = useContext(MergeResultsWizardContext);
+  const { sourceResult, sourceHeading } = useContext(MergeResultsWizardContext);
   const sourceContributors = sourceResult.entityDescription?.contributors ?? [];
 
   const targetContributors = useWatch({ name: 'entityDescription.contributors', control }) ?? [];
@@ -33,11 +32,7 @@ export const MergeResultsWizardContributorsTab = () => {
           value={ContributorMergeOption.SourceOnly}
           control={<Radio />}
           onChange={() => setValue('entityDescription.contributors', sourceContributors)}
-          label={t('keep_contributors_from_source_result', {
-            sourceType: isOnImportPage()
-              ? t('basic_data.central_import.import_candidate').toLocaleLowerCase()
-              : t('unpublished_result').toLocaleLowerCase(),
-          })}
+          label={t('keep_contributors_from_source_result', { sourceType: sourceHeading.toLocaleLowerCase() })}
         />
         <FormControlLabel
           data-testid={dataTestId.basicData.centralImport.keepContributorsFromTargetRadio}
