@@ -16,7 +16,6 @@ import { Registration } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
-import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
@@ -66,7 +65,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   const userHasReadTicket = !!user?.nvaUsername && !!supportTicket?.viewedBy.includes(user.nvaUsername);
   const isOnTasksPage = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
-  const userCanCompleteTicket = userHasAccessRight(registration, 'support-request-approve');
+  const userCanCompleteTicket = !!supportTicket?.allowedOperations?.includes('approve');
 
   const defaultExpanded = locationState?.selectedTicketType
     ? locationState.selectedTicketType === 'GeneralSupportCase'
