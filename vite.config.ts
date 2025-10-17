@@ -1,6 +1,6 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import eslint from 'vite-plugin-eslint';
+import checker from 'vite-plugin-checker';
 
 const largeLibraries = [
   '@mui',
@@ -17,7 +17,16 @@ const largeLibraries = [
 ];
 
 export default defineConfig({
-  plugins: [react({ babel: { plugins: [['babel-plugin-react-compiler']] } }), eslint()],
+  plugins: [
+    react({ babel: { plugins: [['babel-plugin-react-compiler']] } }),
+    checker({
+      typescript: true,
+      eslint: {
+        useFlatConfig: true,
+        lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
+      },
+    }),
+  ],
   server: {
     open: true,
     port: 3000,
@@ -28,12 +37,6 @@ export default defineConfig({
   build: {
     outDir: 'build',
     rollupOptions: {
-      onwarn: ({ message }) => {
-        console.warn(message); // eslint-disable-line no-console
-        if (message.startsWith('[plugin vite-plugin-eslint]')) {
-          throw new Error(message);
-        }
-      },
       output: {
         experimentalMinChunkSize: 10_000,
         manualChunks: (id) => {
