@@ -72,11 +72,10 @@ type TicketPublication = Pick<
     contributorsCount: number;
   };
 
-export interface PublishingTicket extends Omit<Ticket, 'allowedOperations'> {
+export interface PublishingTicket extends Ticket {
   approvedFiles: AssociatedFile[];
   filesForApproval: AssociatedFile[];
   workflow: PublishStrategy;
-  allowedOperations: TicketAllowedOperations[];
 }
 
 export interface ExpandedPublishingTicket extends ExpandedTicket {
