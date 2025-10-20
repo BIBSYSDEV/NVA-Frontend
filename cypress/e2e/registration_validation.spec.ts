@@ -10,6 +10,7 @@ import {
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
 import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
+import { selectDisplayLanguage } from '../../src/translations/i18n';
 
 describe('User opens registration form and can see validation errors', () => {
   beforeEach('Given that the user is logged in as Creator:', () => {
@@ -138,21 +139,8 @@ describe('User opens registration form and can see validation errors', () => {
 
     // NPI Subject
     cy.getCookie('i18nextLng').then((lang) => {
-      const langValue = lang?.value;
-      console.log('langValue', langValue);
-      if (
-        langValue === 'nob' ||
-        langValue === 'nb' ||
-        langValue === 'nb-NO' ||
-        langValue === 'nn-NO' ||
-        langValue === 'nn' ||
-        langValue === 'nno' ||
-        langValue === undefined ||
-        langValue === null ||
-        langValue === 'null' ||
-        langValue === 'undefined' ||
-        langValue === 'smi'
-      ) {
+      const langValue = selectDisplayLanguage(lang?.value);
+      if (langValue === 'nob' || langValue === 'nno') {
         cy.selectNpiDiscipline('Lingvistikk');
       } else {
         cy.selectNpiDiscipline('Linguistics');

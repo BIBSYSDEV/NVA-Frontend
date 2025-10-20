@@ -29,7 +29,7 @@ const handledLanguages = [
   ...samiLanguageCodes,
 ];
 
-export const selectDisplayLanguage = (langCode: string) => {
+export const selectDisplayLanguage = (langCode: string | undefined | null) => {
   // Might be a string because it might come from a cookie
   if (langCode === 'undefined' || langCode === 'null' || langCode === undefined || langCode === null) {
     return 'nob'; // When the user's language is not specified, then the service should display in Bokmål
