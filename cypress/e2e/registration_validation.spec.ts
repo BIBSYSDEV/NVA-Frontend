@@ -137,7 +137,20 @@ describe('User opens registration form and can see validation errors', () => {
     );
 
     // NPI Subject
-    cy.selectNpiDiscipline('Lingvistikk');
+    cy.getCookie('i18nextLng').then((lang) => {
+      if (
+        lang === 'eng' ||
+        lang === 'en' ||
+        lang === 'en-US' ||
+        lang === 'en-GB' ||
+        lang === 'en-CA' ||
+        lang === 'en-AU'
+      ) {
+        cy.selectNpiDiscipline('Linguistics');
+      } else {
+        cy.selectNpiDiscipline('Lingvistikk');
+      }
+    });
 
     // ISBN
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.isbnField}]`).within(() => {
