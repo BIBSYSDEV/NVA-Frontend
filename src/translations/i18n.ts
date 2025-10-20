@@ -55,15 +55,15 @@ i18n.use(LanguageDetector).init({
     },
   },
   contextSeparator: '__',
-  fallbackLng: (langCode) => [selectDisplayLanguage(langCode)],
+  fallbackLng: (langCode) => selectDisplayLanguage(langCode),
   returnEmptyString: false,
   debug: false,
 });
 
-const getLanguageTagValue = (language: string) => {
-  if (language === 'eng' || language === 'en') {
+const getLanguageTagValue = (language: 'eng' | 'nob' | 'nno') => {
+  if (language === 'eng') {
     return 'en';
-  } else if (language === 'nn' || language === 'nno') {
+  } else if (language === 'nno') {
     return 'nn';
   }
   return 'no';

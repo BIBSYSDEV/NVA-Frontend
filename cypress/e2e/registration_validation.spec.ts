@@ -10,7 +10,6 @@ import {
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
 import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
-import { selectDisplayLanguage } from '../../src/translations/i18n';
 
 describe('User opens registration form and can see validation errors', () => {
   beforeEach('Given that the user is logged in as Creator:', () => {
@@ -138,12 +137,7 @@ describe('User opens registration form and can see validation errors', () => {
     );
 
     // NPI Subject
-    cy.getCookie('i18nextLng').then((cookie) => {
-      console.log('cookie?.value', cookie?.value);
-      const displayLang = selectDisplayLanguage(cookie?.value);
-      console.log('displayLang', displayLang);
-      cy.selectNpiDiscipline(displayLang === 'eng' ? 'Linguistics' : 'Lingvistikk');
-    });
+    cy.selectNpiDiscipline(document.documentElement.lang === 'en' ? 'Linguistics' : 'Lingvistikk');
 
     // ISBN
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.isbnField}]`).within(() => {
