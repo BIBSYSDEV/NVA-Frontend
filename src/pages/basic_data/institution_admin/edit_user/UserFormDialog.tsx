@@ -38,13 +38,16 @@ interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
 
 export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: UserFormDialogProps) => {
   const { t } = useTranslation();
-  const { topOrgCristinId, customerId } = useLoggedInUser();
+  const user = useLoggedInUser();
+  const topOrgCristinId = user?.topOrgCristinId;
+  const customerId = user?.customerId ?? '';
+
   const { person, personQuery } = useProtectedPerson(existingPerson, open);
   const username = getUsername(person, topOrgCristinId);
   const { institutionUser, institutionUserQuery } = useInstitutionUser({
     existingUser,
     username,
-    enabled: open, // Only fetch when dialog is open
+    enabled: open,
     showErrorMessage: false, // No error message, since a Cristin Person will lack User if they have not logged in yet
   });
   const personMutation = useUpdateCristinPerson();

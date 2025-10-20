@@ -2,13 +2,9 @@ import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 
 /**
- * React hook that retrieves the logged-in user's top organization Cristin ID and customer ID from the Redux store.
- * @returns An object containing `topOrgCristinId` and `customerId` for the current logged in user.
+ * React hook that retrieves the logged-in user from the Redux store.
+ * @returns the logged-in user from the Redux store.
  */
 export const useLoggedInUser = () => {
-  const user = useSelector((store: RootState) => store.user);
-  const topOrgCristinId = user?.topOrgCristinId;
-  const customerId = user?.customerId ?? '';
-
-  return { topOrgCristinId, customerId };
+  return useSelector((store: RootState) => store.user);
 };
