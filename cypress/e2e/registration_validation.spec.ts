@@ -138,17 +138,24 @@ describe('User opens registration form and can see validation errors', () => {
 
     // NPI Subject
     cy.getCookie('i18nextLng').then((lang) => {
+      const langValue = lang?.value;
+      console.log('langValue', langValue);
       if (
-        lang === 'eng' ||
-        lang === 'en' ||
-        lang === 'en-US' ||
-        lang === 'en-GB' ||
-        lang === 'en-CA' ||
-        lang === 'en-AU'
+        langValue === 'nob' ||
+        langValue === 'nb' ||
+        langValue === 'nb-NO' ||
+        langValue === 'nn-NO' ||
+        langValue === 'nn' ||
+        langValue === 'nno' ||
+        langValue === undefined ||
+        langValue === null ||
+        langValue === 'null' ||
+        langValue === 'undefined' ||
+        langValue === 'smi'
       ) {
-        cy.selectNpiDiscipline('Linguistics');
-      } else {
         cy.selectNpiDiscipline('Lingvistikk');
+      } else {
+        cy.selectNpiDiscipline('Linguistics');
       }
     });
 
