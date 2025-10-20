@@ -15,26 +15,28 @@ export const samiLanguageCodes = [
   'sje', // Pite Sami
   'sju', // Ume Sami
   'sjd', // Kildin Sami
-  'sjt', // Ter Sami;
+  'sjt', // Ter Sami
 ];
 
+const norwegianBokmaalLanguages = ['nob', 'nb', 'nb-NO'];
+const norwegianNynorskLanguages = ['nn', 'nno', 'nn-NO'];
+const englishLanguages = ['eng', 'en'];
+
 const handledLanguages = [
-  'nob', // Norwegian Bokmål,
-  'nb', // Norwegian Bokmål
-  'eng', // English
-  'en', // English
-  'nn', // Norwegian Nynorsk
-  'nno', // Norwegian Nynorsk
+  ...englishLanguages,
+  ...norwegianBokmaalLanguages,
+  ...norwegianNynorskLanguages,
   ...samiLanguageCodes,
 ];
 
 export const selectDisplayLanguage = (langCode: string) => {
+  // Might be a string because it might come from a cookie
   if (langCode === 'undefined' || langCode === 'null' || langCode === undefined || langCode === null) {
     return 'nob'; // When the user's language is not specified, then the service should display in Bokmål
   } else if (langCode === 'en' || langCode === 'eng' || !handledLanguages.includes(langCode)) {
     // When the selected language is not Norwegian (Bokmål, Nynorsk, or any Sami variant), then the service should display in English by default
     return 'eng';
-  } else if (langCode === 'nn' || langCode === 'nno') {
+  } else if (langCode === 'nn' || langCode === 'nno' || langCode === 'nn-NO') {
     return 'nno';
   }
   return 'nob';
@@ -70,7 +72,7 @@ const getLanguageTagValue = (language: string) => {
 if (typeof document !== 'undefined') {
   document.documentElement.lang = getLanguageTagValue(selectDisplayLanguage(i18n.language));
   i18n.on('languageChanged', (newLanguage) => {
-    document.documentElement.lang = getLanguageTagValue(newLanguage);
+    document.documentElement.lang = getLanguageTagValue(selectDisplayLanguage(newLanguage));
   });
 }
 
