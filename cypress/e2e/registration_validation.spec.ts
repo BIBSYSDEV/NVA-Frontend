@@ -138,13 +138,11 @@ describe('User opens registration form and can see validation errors', () => {
     );
 
     // NPI Subject
-    cy.getCookie('i18nextLng').then((lang) => {
-      const langValue = selectDisplayLanguage(lang?.value);
-      if (langValue === 'nob' || langValue === 'nno') {
-        cy.selectNpiDiscipline('Lingvistikk');
-      } else {
-        cy.selectNpiDiscipline('Linguistics');
-      }
+    cy.getCookie('i18nextLng').then((cookie) => {
+      console.log('cookie?.value', cookie?.value);
+      const displayLang = selectDisplayLanguage(cookie?.value);
+      console.log('displayLang', displayLang);
+      cy.selectNpiDiscipline(displayLang === 'eng' ? 'Linguistics' : 'Lingvistikk');
     });
 
     // ISBN

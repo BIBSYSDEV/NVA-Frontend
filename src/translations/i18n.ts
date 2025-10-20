@@ -18,9 +18,9 @@ export const samiLanguageCodes = [
   'sjt', // Ter Sami
 ];
 
-const norwegianBokmaalLanguages = ['nob', 'nb', 'nb-NO'];
+const norwegianBokmaalLanguages = ['nob', 'nb', 'nb-NO', 'no', 'no-NO'];
 const norwegianNynorskLanguages = ['nn', 'nno', 'nn-NO'];
-const englishLanguages = ['eng', 'en'];
+const englishLanguages = ['eng', 'en', 'en-US', 'en-GB'];
 
 const handledLanguages = [
   ...englishLanguages,
@@ -33,10 +33,10 @@ export const selectDisplayLanguage = (langCode: string | undefined | null) => {
   // Might be a string because it might come from a cookie
   if (langCode === 'undefined' || langCode === 'null' || langCode === undefined || langCode === null) {
     return 'nob'; // When the user's language is not specified, then the service should display in Bokmål
-  } else if (langCode === 'en' || langCode === 'eng' || !handledLanguages.includes(langCode)) {
-    // When the selected language is not Norwegian (Bokmål, Nynorsk, or any Sami variant), then the service should display in English by default
+  } else if (englishLanguages.includes(langCode) || !handledLanguages.includes(langCode)) {
+    // When the selected language is english or a language that is not handled, then the service should display in English by default
     return 'eng';
-  } else if (langCode === 'nn' || langCode === 'nno' || langCode === 'nn-NO') {
+  } else if (norwegianNynorskLanguages.includes(langCode)) {
     return 'nno';
   }
   return 'nob';
