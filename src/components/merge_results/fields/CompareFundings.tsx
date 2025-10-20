@@ -41,7 +41,7 @@ export const CompareFundings = () => {
 
       <div>
         {targetFundings.length > 0 ? (
-          targetFundings.map((funding) => <FundingBox key={funding.identifier} funding={funding} />)
+          targetFundings.map((funding) => <FundingBox key={`${funding.identifier}-${funding.id}`} funding={funding} />)
         ) : (
           <StyledValueBox>
             <Typography fontStyle="italic">{t('missing_value')}</Typography>
