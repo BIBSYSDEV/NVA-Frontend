@@ -717,6 +717,8 @@
   "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
+  "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
+  "keep_contributors_from_source_result": "Behold kun bidragsytere fra {{sourceType}}",
   "licenses": {
     "additional_info": {
       "cc0": "<p>Se <link1>åndsverksloven</link1> §3, §8, §11 og §14</p>"

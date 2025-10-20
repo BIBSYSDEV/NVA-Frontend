@@ -59,7 +59,7 @@ export const DeleteDraftRegistration = ({ registration }: DeleteDraftRegistratio
 
       <Button
         data-testid={dataTestId.registrationLandingPage.tasksPanel.deleteRegistrationButton}
-        color="error"
+        color="tertiary"
         size="small"
         fullWidth
         startIcon={<DeleteIcon />}
