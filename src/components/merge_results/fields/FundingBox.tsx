@@ -1,5 +1,4 @@
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Box, Link, Skeleton, Typography } from '@mui/material';
+import { Box, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchFundingSources } from '../../../api/hooks/useFetchFundingSources';
 import {
@@ -8,6 +7,7 @@ import {
 } from '../../../pages/registration/description_tab/projects_field/projectHelpers';
 import { Funding } from '../../../types/registration.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { OpenInNewLink } from '../../OpenInNewLink';
 
 interface FundingBoxProps {
   funding: Funding;
@@ -22,7 +22,7 @@ export const FundingBox = ({ funding }: FundingBoxProps) => {
       sx={{
         display: 'grid',
         gridTemplateColumns: '1fr 3fr',
-        rowGap: '0.5rem',
+        gap: '0.5rem',
         border: '1px solid grey',
         borderRadius: '4px',
         my: '0.5rem',
@@ -34,24 +34,13 @@ export const FundingBox = ({ funding }: FundingBoxProps) => {
         <Skeleton />
       ) : (
         <Typography>
-          {getLanguageString(fundingSourcesList?.find((fundingSource) => fundingSource.id === funding.source)?.name)}
+          {getLanguageString(fundingSourcesList.find((fundingSource) => fundingSource.id === funding.source)?.name)}
         </Typography>
       )}
 
       <Typography fontWeight="bold">{t('registration.description.funding.funding_id')}:</Typography>
       {fundingSourceIsNfr(funding.source) && funding.identifier ? (
-        <Link
-          href={getNfrProjectUrl(funding.identifier)}
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.25rem',
-          }}>
-          {funding.identifier}
-          <OpenInNewIcon fontSize="small" />
-        </Link>
+        <OpenInNewLink href={getNfrProjectUrl(funding.identifier)}>{funding.identifier}</OpenInNewLink>
       ) : (
         <Typography>{funding.identifier}</Typography>
       )}
@@ -62,7 +51,9 @@ export const FundingBox = ({ funding }: FundingBoxProps) => {
       {funding.fundingAmount && (
         <>
           <Typography fontWeight="bold">{t('registration.description.funding.funding_sum')}:</Typography>
-          <Typography>{`${funding.fundingAmount.currency} ${funding.fundingAmount.amount}`}</Typography>
+          <Typography>
+            {funding.fundingAmount.currency} {funding.fundingAmount.amount}
+          </Typography>
         </>
       )}
     </Box>

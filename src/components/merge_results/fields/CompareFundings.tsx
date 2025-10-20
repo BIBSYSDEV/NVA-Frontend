@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Registration } from '../../../types/registration.types';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { FundingBox } from './FundingBox';
+import { StyledValueBox } from './MissingCompareValues';
 
 export const CompareFundings = () => {
   const { t } = useTranslation();
@@ -25,17 +26,27 @@ export const CompareFundings = () => {
       </Typography>
 
       <div>
-        {sourceFundings.map((funding) => {
-          return <FundingBox key={`${funding.identifier}-${funding.id}`} funding={funding} />;
-        })}
+        {sourceFundings.length > 0 ? (
+          sourceFundings.map((funding) => {
+            return <FundingBox key={`${funding.identifier}-${funding.id}`} funding={funding} />;
+          })
+        ) : (
+          <StyledValueBox>
+            <Typography fontStyle="italic">{t('missing_value')}</Typography>
+          </StyledValueBox>
+        )}
       </div>
 
       <div />
 
       <div>
-        {targetFundings.map((funding) => {
-          return <FundingBox key={funding.identifier} funding={funding} />;
-        })}
+        {targetFundings.length > 0 ? (
+          targetFundings.map((funding) => <FundingBox key={funding.identifier} funding={funding} />)
+        ) : (
+          <StyledValueBox>
+            <Typography fontStyle="italic">{t('missing_value')}</Typography>
+          </StyledValueBox>
+        )}
       </div>
     </>
   );
