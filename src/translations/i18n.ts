@@ -31,7 +31,7 @@ const handledLanguages = [
 
 export const selectDisplayLanguage = (langCode: string | undefined | null) => {
   // Might be a string because it might come from a cookie
-  if (langCode === 'undefined' || langCode === 'null' || langCode === undefined || langCode === null) {
+  if (langCode === 'undefined' || langCode === 'null' || !langCode) {
     return 'nob'; // When the user's language is not specified, then the service should display in Bokmål
   } else if (englishLanguages.includes(langCode) || !handledLanguages.includes(langCode)) {
     // When the selected language is english or a language that is not handled, then the service should display in English by default
