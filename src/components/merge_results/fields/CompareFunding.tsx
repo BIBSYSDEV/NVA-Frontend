@@ -1,3 +1,8 @@
+import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+
 export const CompareFunding = () => {
-  return;
+  const { t } = useTranslation();
+
+  return <Typography>{t('lokalise')}</Typography>;
 };

@@ -2001,5 +2001,6 @@
   "file_import": "Filimport",
   "file_import_description": "<p>Sentralimport av data fra eksterne datakilder.<br>Importør hos Sikt kontrollerer og slår eventuelt sammen med andre resultater for å unngå duplikater.</p><p>Institusjonen kan bestemme om filene automatisk skal godkjennes, eller om de først skal kontrolleres manuelt av en filkurator før de blir publisert i NVA.</p>",
   "file_import_automatic_import": "Automatisk publisert i NVA",
-  "file_import_create_ticket": "Filforespørsel blir sendt til filkurator"
+  "file_import_create_ticket": "Filforespørsel blir sendt til filkurator",
+  "lokalise": "Lokalise"
 }
