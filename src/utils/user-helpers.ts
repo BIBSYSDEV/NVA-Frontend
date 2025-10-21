@@ -11,7 +11,9 @@ import {
   CristinPersonNameType,
   Employment,
   FlatCristinPerson,
+  RoleName,
   User,
+  UserRole,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
 import { getIdentifierFromId } from './general-helpers';
@@ -149,4 +151,70 @@ export const isFileCuratorForRegistration = (user: User | null, registration?: R
   }
 
   return user.isPublishingCurator;
+};
+
+/**
+ * Splits a CristinPerson's employments into internal and external based on the top organization Cristin ID.
+ * @param cristinPerson - The CristinPerson object containing employments.
+ * @param topOrgCristinId - The top organization Cristin ID used to determine internal employments.
+ * @returns An object with arrays of `internalEmployments` and `externalEmployments`.
+ */
+export const getEmployments = (
+  cristinPerson: CristinPerson | null | undefined,
+  topOrgCristinId: string | undefined
+) => {
+  const internalEmployments: Employment[] = [];
+  const externalEmployments: Employment[] = [];
+
+  const employments = cristinPerson?.employments ?? [];
+  const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
+  const targetOrganizationIdStart = `${topOrgCristinIdentifier.split('.')[0]}.`;
+
+  employments.forEach((employment) => {
+    const organizationIdentifier = employment.organization.split('/').pop();
+    if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
+      internalEmployments.push(employment);
+    } else {
+      externalEmployments.push(employment);
+    }
+  });
+
+  return { internalEmployments, externalEmployments };
+};
+
+/**
+ * Checks if a CristinPerson has a national identification number in their identifiers.
+ * @param cristinPerson - The CristinPerson object to check.
+ * @returns `true` if the person has a national identification number, otherwise `false`.
+ */
+export const checkIfPersonHasNationalIdentificationNumber = (cristinPerson: CristinPerson) => {
+  return cristinPerson.identifiers.some(
+    (identifier) => identifier.type === 'NationalIdentificationNumber' && Boolean(identifier.value)
+  );
+};
+
+/**
+ * Finds the first employment that matches an active affiliation by organization.
+ * @param employments - Array of Employment objects to search.
+ * @param affiliations - Array of CristinPersonAffiliation objects to match against.
+ * @returns The first Employment object that matches an active affiliation, or `undefined` if none found.
+ */
+export const findFirstEmploymentThatMatchesAnActiveAffiliation = (
+  employments?: Employment[],
+  affiliations?: CristinPersonAffiliation[]
+) => {
+  return employments?.find((employment) =>
+    affiliations?.some((affiliation) => affiliation.organization === employment.organization && affiliation.active)
+  );
+};
+
+/**
+ * Removes the `CuratorThesisEmbargo` role from the array if the user does not have the `CuratorThesis` role, because
+ * you cannot have the CuratorThesisEmbargo role without having the CuratorThesis role.
+ * If `CuratorThesis` is present, returns the roles unchanged.
+ */
+export const sanitizeRolesForEmbargoConstraint = (roles: UserRole[]) => {
+  return !roles.some((role) => role.rolename === RoleName.CuratorThesis)
+    ? roles.filter((role) => role.rolename !== RoleName.CuratorThesisEmbargo)
+    : roles;
 };
