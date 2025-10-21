@@ -50,8 +50,9 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { activeLicenses, getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
-import { isDegree, isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
+import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
+import { isFileCuratorForRegistration } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { FileUploaderInfo } from '../../public_registration/public_files/FileUploaderInfo';
 import { DownloadFileButton } from './DownloadFileButton';
@@ -113,8 +114,6 @@ export const FilesTableRow = ({
   const fileHasCustomerRrs = file.rightsRetentionStrategy.type === 'CustomerRightsRetentionStrategy';
   const fileHasOverriddenRrs = file.rightsRetentionStrategy.type === 'OverriddenRightsRetentionStrategy';
 
-  const canOverrideRrs = isAcceptedFile && (isOverridableRrs || (isCustomerRrs && user?.isPublishingCurator));
-
   const rrsPolicyLink = customer?.rightsRetentionStrategy.id ? (
     <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
   ) : null;
@@ -152,8 +151,8 @@ export const FilesTableRow = ({
   const canDeleteFile = hasFileAccessRight(file, 'delete') || canEditImportCandidateFile;
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
 
-  const category = values.entityDescription?.reference?.publicationInstance?.type;
-  const canUploadHiddenFile = isDegree(category) ? user?.isThesisCurator : user?.isPublishingCurator;
+  const isRegistrationFileCurator = isFileCuratorForRegistration(user, values);
+  const canOverrideRrs = isAcceptedFile && (isOverridableRrs || (isCustomerRrs && isRegistrationFileCurator));
 
   const disabledFileDescription =
     disabledFile && file.type === 'OpenFile' ? t('registration.files_and_license.disabled_helper_text') : '';
@@ -247,7 +246,7 @@ export const FilesTableRow = ({
                     {t('registration.files_and_license.file_type.internal_file')}
                   </StyledFileTypeMenuItemContent>
                 </MenuItem>
-                {(canUploadHiddenFile || field.value === FileType.HiddenFile) && (
+                {(isRegistrationFileCurator || field.value === FileType.HiddenFile) && (
                   <MenuItem value={FileType.HiddenFile}>
                     <StyledFileTypeMenuItemContent>
                       <VisibilityOffOutlinedIcon fontSize="small" />
@@ -531,7 +530,7 @@ export const FilesTableRow = ({
                     </>
                   )}
 
-                  {user?.isPublishingCurator && (
+                  {isRegistrationFileCurator && (
                     <Field name={legalNoteFieldName}>
                       {({ field }: FieldProps<string>) => (
                         <TextField

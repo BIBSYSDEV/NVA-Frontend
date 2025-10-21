@@ -114,7 +114,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                     onClick={() => remove(index)}
                     data-testid={dataTestId.projectWizard.detailsPanel.fundingRemoveButton}
                     title={t('registration.description.funding.remove_funding')}>
-                    <CancelIcon color="error" />
+                    <CancelIcon color="primary" />
                   </IconButton>
                 </Box>
               );

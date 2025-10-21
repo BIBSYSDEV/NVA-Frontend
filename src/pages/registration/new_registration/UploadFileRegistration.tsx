@@ -82,7 +82,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
             variant="contained"
             color="secondary"
             sx={{ alignSelf: 'center' }}
-            endIcon={<UploadIcon />}
+            startIcon={<UploadIcon />}
             loadingPosition="end"
             loading={createRegistrationMutation.isPending}
             onClick={() => fileInputRef.current?.click()}>
@@ -112,7 +112,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
                 <Typography sx={{ wordBreak: 'break-all' }}>{file.name}</Typography>
                 <IconButton
                   title={t('registration.files_and_license.delete_file')}
-                  color="error"
+                  color="primary"
                   data-testid={dataTestId.registrationWizard.files.deleteFile}
                   loading={
                     deleteFileMutation.isPending && deleteFileMutation.variables.fileIdentifier === file.identifier
