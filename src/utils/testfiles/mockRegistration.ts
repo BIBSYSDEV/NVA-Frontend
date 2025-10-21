@@ -159,6 +159,7 @@ export const mockTicketCollection: TicketCollection = {
           identifier: '3',
         },
       ],
+      allowedOperations: ['read', 'approve'],
     },
   ],
 };

@@ -42,6 +42,8 @@ interface BaseTicket {
   publication: TicketPublication;
 }
 
+type TicketAllowedOperations = 'read' | 'approve' | 'transfer';
+
 export interface Ticket extends BaseTicket {
   assignee?: string;
   owner: string;
@@ -51,6 +53,7 @@ export interface Ticket extends BaseTicket {
   finalizedBy?: string;
   finalizedDate?: string;
   availableInstitutions?: string[];
+  allowedOperations: TicketAllowedOperations[];
 }
 
 export interface ExpandedTicket extends BaseTicket {
@@ -69,13 +72,10 @@ type TicketPublication = Pick<
     contributorsCount: number;
   };
 
-type TicketAllowedOperations = 'approve' | 'transfer';
-
 export interface PublishingTicket extends Ticket {
   approvedFiles: AssociatedFile[];
   filesForApproval: AssociatedFile[];
   workflow: PublishStrategy;
-  allowedOperations: TicketAllowedOperations[];
 }
 
 export interface ExpandedPublishingTicket extends ExpandedTicket {
