@@ -19,7 +19,7 @@ const isAffiliationMissing = (sourceAffiliation: Affiliation, targetAffiliations
 };
 
 export const mergeContributors = (sourceContributors: Contributor[], targetContributors: Contributor[]) => {
-  return sourceContributors.reduce((acc, sourceContributor) => {
+  const mergedContributors = sourceContributors.reduce((acc, sourceContributor) => {
     const matchingTargetContributor = findMatchingContributor(sourceContributor, acc);
 
     if (!matchingTargetContributor) {
@@ -38,4 +38,6 @@ export const mergeContributors = (sourceContributors: Contributor[], targetContr
         : contributor
     );
   }, targetContributors);
+
+  return mergedContributors;
 };
