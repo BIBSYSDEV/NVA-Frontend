@@ -31,7 +31,7 @@ export const MergeResultsWizardContributorsTab = () => {
         defaultValue={ContributorMergeOption.TargetOnly}>
         <div>
           <FormControlLabel
-            data-testid={dataTestId.basicData.centralImport.mergeAllContributorsRadio}
+            data-testid={dataTestId.basicData.centralImport.mergeContributorsRadioButtons.mergeAllContributors}
             value={ContributorMergeOption.MergeBoth}
             control={<Radio />}
             onChange={() => {
@@ -41,7 +41,7 @@ export const MergeResultsWizardContributorsTab = () => {
             label={t('keep_all_contributors', { sourceType: sourceHeading.toLocaleLowerCase() })}
           />
           <FormControlLabel
-            data-testid={dataTestId.basicData.centralImport.keepContributorsFromSourceRadio}
+            data-testid={dataTestId.basicData.centralImport.mergeContributorsRadioButtons.keepContributorsFromSource}
             value={ContributorMergeOption.SourceOnly}
             control={<Radio />}
             onChange={() => setValue('entityDescription.contributors', sourceContributors)}
@@ -49,7 +49,7 @@ export const MergeResultsWizardContributorsTab = () => {
           />
         </div>
         <FormControlLabel
-          data-testid={dataTestId.basicData.centralImport.keepContributorsFromTargetRadio}
+          data-testid={dataTestId.basicData.centralImport.mergeContributorsRadioButtons.keepContributorsFromTarget}
           value={ContributorMergeOption.TargetOnly}
           control={<Radio />}
           onChange={() => setValue('entityDescription.contributors', initialTargetContributors)}
