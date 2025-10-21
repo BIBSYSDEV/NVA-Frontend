@@ -72,7 +72,7 @@ export const MergeResultsWizardContributorsTab = () => {
                       }
                     : contributor
                 );
-              }, targetContributors);
+              }, initialTargetContributors);
 
               setValue('entityDescription.contributors', mergedContributors);
             }}
