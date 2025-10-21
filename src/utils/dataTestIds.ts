@@ -58,9 +58,9 @@ export const dataTestId = {
       },
       importCandidateButton: 'import-candidate-button',
       mergeContributorsRadioButtons: {
-        mergeAllContributors: 'merge-all-contributors-radio',
         keepContributorsFromSource: 'keep-contributors-from-source-radio',
         keepContributorsFromTarget: 'keep-contributors-from-target-radio',
+        mergeAllContributors: 'merge-all-contributors-radio',
       },
       resetButton: 'duplicate-search-reset-button',
       resetValueButton: 'reset-value-button',
