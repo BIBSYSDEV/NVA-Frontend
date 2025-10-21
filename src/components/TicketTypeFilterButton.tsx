@@ -21,7 +21,8 @@ export const TicketTypeFilterButton = ({ isSelected, children, ...rest }: Ticket
       '.MuiButton-startIcon': {
         color: 'secondary.main',
       },
-      border: '1px solid #D9D9D9',
+      border: '1px solid',
+      borderColor: 'grey.400',
     }}>
     <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>{children}</Box>
   </Button>

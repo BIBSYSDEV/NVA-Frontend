@@ -97,10 +97,9 @@ export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
 
 export const TaskListItem = styled(SearchListItem)<ListItemProps>(({ theme }) => ({
   border: '1px solid',
-  borderColor: theme.palette.centralImport.main,
+  borderColor: theme.palette.grey[400],
   borderLeft: '0.5rem solid',
-  borderLeftColor: theme.palette.taskType.publishingRequest.main,
-  p: 0,
+  padding: 0,
 }));
 
 export const SearchListItemDiv = styled('div')(({ theme }) => ({

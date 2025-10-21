@@ -43,7 +43,6 @@ import { NviCorrectionListNavigationAccordion } from './components/NviCorrection
 import { NviStatusPage } from './components/NviStatusPage';
 import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
 import { TicketList } from './components/TicketList';
-import { mainTheme } from '../../themes/mainTheme';
 import { TaskFilter } from './styles';
 
 const TasksPage = () => {
@@ -174,7 +173,7 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <TaskFilter sx={{ backgroundColor: mainTheme.palette.taskType.publishingRequest.main }}>
+                  <TaskFilter sx={{ backgroundColor: 'taskType.publishingRequest.main' }}>
                     <InsertDriveFileOutlinedIcon fontSize="small" />
                     {ticketTypes.publishingRequest && publishingRequestCount
                       ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
@@ -192,7 +191,7 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, filesApprovalThesis: !ticketTypes.filesApprovalThesis });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <TaskFilter sx={{ backgroundColor: mainTheme.palette.taskType.filesApprovalThesis.main }}>
+                  <TaskFilter sx={{ backgroundColor: 'taskType.filesApprovalThesis.main' }}>
                     <SchoolOutlinedIcon fontSize="small" />
                     {ticketTypes.filesApprovalThesis && thesisPublishingRequestCount
                       ? `${t('my_page.messages.types.FilesApprovalThesis')} (${thesisPublishingRequestCount})`
@@ -210,7 +209,7 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <TaskFilter sx={{ backgroundColor: mainTheme.palette.taskType.doiRequest.main }}>
+                  <TaskFilter sx={{ backgroundColor: 'taskType.doiRequest.main' }}>
                     <AddLinkOutlinedIcon fontSize="small" />
                     {ticketTypes.doiRequest && doiRequestCount
                       ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
@@ -228,7 +227,7 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <TaskFilter sx={{ backgroundColor: mainTheme.palette.taskType.generalSupportCase.main }}>
+                  <TaskFilter sx={{ backgroundColor: 'taskType.generalSupportCase.main' }}>
                     <ChatBubbleOutlineOutlinedIcon fontSize="small" />
                     {ticketTypes.generalSupportCase && generalSupportCaseCount
                       ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
