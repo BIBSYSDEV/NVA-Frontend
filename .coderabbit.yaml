@@ -9,13 +9,7 @@ reviews:
   review_status: true
   collapse_walkthrough: false
   auto_review:
-    enabled: true
-    ignore_title_keywords:
-      - 'WIP'
-      - 'DO NOT MERGE'
-    drafts: true
-    base_branches:
-      - develop
+    enabled: false
   path_instructions:
     - path: '*'
       instructions: "
