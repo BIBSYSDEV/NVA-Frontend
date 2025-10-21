@@ -1,6 +1,5 @@
 import { createTheme, darken, PaletteColor, PaletteColorOptions, SxProps } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
-import type {} from '@mui/x-date-pickers/themeAugmentation';
 import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
@@ -27,6 +26,9 @@ enum Color {
   RedLight = '#FFEAE9',
   Yellow = '#FFB700',
   YellowLight = '#FCEED2',
+  YellowNew = '#FBE774',
+  Orange = '#FFAC70',
+  BlueNew = '#75C7F0',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
@@ -39,6 +41,13 @@ declare module '@mui/material/styles' {
     project: PaletteColor;
     centralImport: PaletteColor;
     neutral87: PaletteColor;
+    taskType: {
+      publishingRequest: PaletteColor;
+      filesApprovalThesis: PaletteColor;
+      doiRequest: PaletteColor;
+      generalSupportCase: PaletteColor;
+      unpublishRequest: PaletteColor;
+    };
   }
   interface PaletteOptions {
     tertiary: PaletteColorOptions;
@@ -47,6 +56,13 @@ declare module '@mui/material/styles' {
     project?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
     neutral87?: PaletteColorOptions;
+    taskType?: {
+      publishingRequest?: PaletteColorOptions;
+      filesApprovalThesis?: PaletteColorOptions;
+      doiRequest?: PaletteColorOptions;
+      generalSupportCase?: PaletteColorOptions;
+      unpublishRequest?: PaletteColorOptions;
+    };
   }
   interface TypeBackground {
     neutral97?: string;
@@ -126,6 +142,23 @@ export const mainTheme = createTheme(
       },
       registration: {
         main: Color.Registration,
+      },
+      taskType: {
+        publishingRequest: {
+          main: Color.YellowNew,
+        },
+        filesApprovalThesis: {
+          main: Color.YellowNew,
+        },
+        doiRequest: {
+          main: Color.Orange,
+        },
+        generalSupportCase: {
+          main: Color.BlueNew,
+        },
+        unpublishRequest: {
+          main: Color.Purple,
+        },
       },
       person: {
         main: Color.Person,

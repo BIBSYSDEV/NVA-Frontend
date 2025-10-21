@@ -230,12 +230,15 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
             </>
           )
         ) : (
-          <List disablePadding sx={{ my: '0.5rem' }}>
-            {tickets.map((ticket) => (
-              <ErrorBoundary key={ticket.id}>
-                <TicketListItem ticket={ticket} />
-              </ErrorBoundary>
-            ))}
+          <List disablePadding sx={{ my: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            {tickets.map((ticket) => {
+              console.log('ticket', ticket);
+              return (
+                <ErrorBoundary key={ticket.id}>
+                  <TicketListItem ticket={ticket} />
+                </ErrorBoundary>
+              );
+            })}
           </List>
         )}
       </ListPagination>

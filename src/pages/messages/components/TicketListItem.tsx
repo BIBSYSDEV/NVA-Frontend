@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import { updateTicket } from '../../../api/registrationApi';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
-import { SearchListItem } from '../../../components/styled/Wrappers';
+import { TaskListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
@@ -27,6 +27,7 @@ import { StyledVerifiedContributor } from '../../registration/contributors_tab/C
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
 import { SupportMessagesColumn } from './SupportMessagesColumn';
+import { getTicketColor } from '../utils';
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;
@@ -66,11 +67,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const isOnMyPageMessages = window.location.pathname === UrlPathTemplate.MyPageMyMessages;
 
   return (
-    <SearchListItem
-      sx={{
-        p: 0,
-        bgcolor: !viewedByUser ? 'tertiary.light' : 'white',
-      }}>
+    <TaskListItem
+      sx={{ bgcolor: !viewedByUser ? 'tertiary.light' : 'white', borderLeftColor: getTicketColor(ticket.type) }}>
       <MuiLink
         component={Link}
         state={
@@ -140,6 +138,6 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           )}
         </Box>
       </MuiLink>
-    </SearchListItem>
+    </TaskListItem>
   );
 };
