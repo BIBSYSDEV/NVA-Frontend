@@ -1,42 +1,41 @@
-import { Contributor } from '../../types/contributor.types';
+import { Affiliation, Contributor } from '../../types/contributor.types';
+
+const findMatchingContributor = (sourceContributor: Contributor, targetContributors: Contributor[]) => {
+  return sourceContributor.identity.id
+    ? targetContributors.find((c) => c.identity.id === sourceContributor.identity.id)
+    : targetContributors.find((c) => c.identity.name === sourceContributor.identity.name);
+};
+
+const isAffiliationMissing = (sourceAffiliation: Affiliation, targetAffiliations: Affiliation[]) => {
+  if (sourceAffiliation.type === 'Organization' && sourceAffiliation.id) {
+    return !targetAffiliations.some((target) => target.type === 'Organization' && target.id === sourceAffiliation.id);
+  }
+  if (sourceAffiliation.type === 'UnconfirmedOrganization' && sourceAffiliation.name) {
+    return !targetAffiliations.some(
+      (target) => target.type === 'UnconfirmedOrganization' && target.name === sourceAffiliation.name
+    );
+  }
+  return false;
+};
 
 export const mergeContributors = (sourceContributors: Contributor[], targetContributors: Contributor[]) => {
-  const mergedContributors = sourceContributors.reduce((acc, sourceContributor) => {
-    const correspondingTargetContributor = sourceContributor.identity.id
-      ? acc.find((targetContributor) => targetContributor.identity.id === sourceContributor.identity.id)
-      : acc.find((targetContributor) => targetContributor.identity.name === sourceContributor.identity.name);
+  return sourceContributors.reduce((acc, sourceContributor) => {
+    const matchingTargetContributor = findMatchingContributor(sourceContributor, acc);
 
-    if (!correspondingTargetContributor) {
+    if (!matchingTargetContributor) {
       return [...acc, sourceContributor];
     }
 
-    // Find affiliations from source that are not in target
-    const allSourceAffiliations = sourceContributor.affiliations ?? [];
-    const affiliationsToAdd = allSourceAffiliations.filter((sourceAffiliation) => {
-      if (sourceAffiliation.type === 'Organization' && sourceAffiliation.id) {
-        return !correspondingTargetContributor.affiliations?.some(
-          (targetAffiliation) =>
-            targetAffiliation.type === 'Organization' && targetAffiliation.id === sourceAffiliation.id
-        );
-      } else if (sourceAffiliation.type === 'UnconfirmedOrganization' && sourceAffiliation.name) {
-        return !correspondingTargetContributor.affiliations?.some(
-          (targetAffiliation) =>
-            targetAffiliation.type === 'UnconfirmedOrganization' && targetAffiliation.name === sourceAffiliation.name
-        );
-      }
-      return false;
-    });
+    const sourceAffiliations = sourceContributor.affiliations ?? [];
+    const targetAffiliations = matchingTargetContributor.affiliations ?? [];
+    const missingAffiliations = sourceAffiliations.filter((sourceAffiliation) =>
+      isAffiliationMissing(sourceAffiliation, targetAffiliations)
+    );
 
-    // Update the corresponding target contributor with merged affiliations
     return acc.map((contributor) =>
-      contributor === correspondingTargetContributor
-        ? {
-            ...contributor,
-            affiliations: [...(contributor.affiliations ?? []), ...affiliationsToAdd],
-          }
+      contributor === matchingTargetContributor
+        ? { ...contributor, affiliations: [...targetAffiliations, ...missingAffiliations] }
         : contributor
     );
   }, targetContributors);
-
-  return mergedContributors;
 };
