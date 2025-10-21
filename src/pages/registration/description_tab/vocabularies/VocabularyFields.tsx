@@ -1,5 +1,5 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import RemoveIcon from '@mui/icons-material/HighlightOff';
 import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { ParseKeys } from 'i18next';
@@ -84,7 +84,13 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                 <Box
                   key={vocabulary}
                   data-testid={dataTestId.registrationWizard.description.vocabularyRow(vocabulary)}
-                  sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
+                  sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    gap: '1rem',
+                    alignItems: 'center',
+                    mb: '1rem',
+                  }}>
                   <VocabularyComponent
                     disabled={disableChannelClaimsFields}
                     selectedIds={selectedIds}
@@ -100,9 +106,10 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                   {!defaultVocabularyKeys.includes(vocabulary) && (
                     <>
                       <Button
-                        sx={{ ml: { xs: '0', sm: '2rem' }, minWidth: 'max-content' }}
-                        color="error"
-                        startIcon={<RemoveCircleIcon />}
+                        sx={{ minWidth: 'max-content', height: 'fit-content' }}
+                        color="tertiary"
+                        variant="contained"
+                        startIcon={<RemoveIcon color="primary" />}
                         onClick={() => setVocabularyToRemove(vocabulary)}>
                         {t('registration.description.remove_vocabulary')}
                       </Button>

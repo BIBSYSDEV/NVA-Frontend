@@ -66,7 +66,7 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
                 bgcolor: 'white',
               },
             }}>
-            <CancelIcon color="error" />
+            <CancelIcon color="primary" />
           </IconButton>
 
           <Box

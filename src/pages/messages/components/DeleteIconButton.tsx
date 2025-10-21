@@ -23,6 +23,7 @@ export const DeleteIconButton = ({ sx, tooltip, disabled, ...rest }: DeleteIconB
       }}
       {...rest}>
       <DeleteIcon
+        color="primary"
         sx={{
           height: '1rem',
           width: '1rem',

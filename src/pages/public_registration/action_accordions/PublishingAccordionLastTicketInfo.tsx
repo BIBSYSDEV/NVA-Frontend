@@ -91,7 +91,7 @@ export const PublishingAccordionLastTicketInfo = ({
                 variant="contained"
                 fullWidth
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
-                endIcon={<EditIcon />}
+                startIcon={<EditIcon />}
                 component={RouterLink}
                 state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
                 to={getRegistrationWizardPath(publishingTicket.publicationIdentifier, {

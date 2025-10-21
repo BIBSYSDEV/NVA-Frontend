@@ -1,5 +1,5 @@
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, IconButton, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Link as MuiLink, SxProps, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router';
 import { SearchListItem } from '../../../components/styled/Wrappers';
@@ -21,16 +21,17 @@ interface ProjectListItemProps {
   refetchProjects?: () => void;
   deleteTooltip?: string;
   onDelete?: () => void;
+  sx?: SxProps;
 }
 
-export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteTooltip }: ProjectListItemProps) => {
+export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteTooltip, sx }: ProjectListItemProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const projectManagers = getProjectManagers(project.contributors);
   const projectParticipantsLength = getProjectParticipants(project.contributors).length;
 
   return (
-    <SearchListItem sx={{ flexDirection: 'row', borderColor: 'project.main' }}>
+    <SearchListItem sx={{ flexDirection: 'row', borderColor: 'project.main', ...sx }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: '1' }}>
         <ProjectIconHeader projectStatus={project.status} />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
@@ -75,7 +76,7 @@ export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteToo
               sx={{ alignSelf: 'start' }}
               onClick={onDelete}
               data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(project.id)}>
-              <CancelIcon color="error" />
+              <CancelIcon color="primary" />
             </IconButton>
           </Tooltip>
         )}

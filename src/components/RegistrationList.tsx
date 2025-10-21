@@ -232,7 +232,7 @@ export const RegistrationListItemContent = ({
               {isPromotedPublication ? (
                 <StarIcon sx={{ color: 'white' }} fontSize="inherit" />
               ) : (
-                <StarOutlineIcon color="secondary" fontSize="inherit" />
+                <StarOutlineIcon color="primary" fontSize="inherit" />
               )}
             </IconButton>
           )}
@@ -244,7 +244,7 @@ export const RegistrationListItemContent = ({
               data-testid={`edit-registration-${identifier}`}
               size="small"
               sx={{ bgcolor: 'tertiary.main', width: '1.5rem', height: '1.5rem' }}>
-              <EditIcon color="secondary" fontSize="inherit" />
+              <EditIcon color="primary" fontSize="inherit" />
             </IconButton>
           </Tooltip>
           {registration.recordMetadata.status === RegistrationStatus.Draft && onDeleteDraftRegistration && (
@@ -254,7 +254,7 @@ export const RegistrationListItemContent = ({
                 onClick={() => onDeleteDraftRegistration(registration)}
                 size="small"
                 sx={{ bgcolor: 'tertiary.main', width: '1.5rem', height: '1.5rem' }}>
-                <CloseOutlinedIcon fontSize="inherit" />
+                <CloseOutlinedIcon color="primary" fontSize="inherit" />
               </IconButton>
             </Tooltip>
           )}
@@ -266,7 +266,7 @@ export const RegistrationListItemContent = ({
             sx={{ alignSelf: 'start' }}
             onClick={onRemoveRelated}
             data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(registration.identifier)}>
-            <CancelIcon color="error" />
+            <CancelIcon color="primary" />
           </IconButton>
         </Tooltip>
       )}
