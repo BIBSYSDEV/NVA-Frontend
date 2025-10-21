@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { navigationButtonStyling } from '../../pages/registration/RegistrationFormActions';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { isOnImportPage } from '../../utils/urlPaths';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 
 const flexStyling: SxProps = {
@@ -24,7 +23,7 @@ export interface MergeResultsWizardActionsProps {
 export const MergeResultsWizardActions = ({ onCancel }: MergeResultsWizardActionsProps) => {
   const { t } = useTranslation();
   const { formState } = useFormContext<Registration>();
-  const { activeTab, setActiveTab } = useContext(MergeResultsWizardContext);
+  const { activeTab, setActiveTab, sourceHeading } = useContext(MergeResultsWizardContext);
 
   return (
     <Box sx={{ ...flexStyling, gridColumn: '1/-1' }}>
@@ -51,11 +50,11 @@ export const MergeResultsWizardActions = ({ onCancel }: MergeResultsWizardAction
           variant="contained"
           loading={formState.isSubmitting}
           data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}>
-          {isOnImportPage() ? t('basic_data.central_import.import') : t('merge_results')}
+          {sourceHeading}
         </Button>
       </Box>
 
-      {activeTab !== RegistrationTab.Contributors && (
+      {activeTab !== RegistrationTab.FilesAndLicenses && (
         <Tooltip title={t('common.next')}>
           <IconButton
             onClick={() => setActiveTab(activeTab + 1)}

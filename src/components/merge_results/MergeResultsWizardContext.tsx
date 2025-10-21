@@ -5,6 +5,7 @@ interface MergeResultsWizardContextType {
   activeTab: RegistrationTab;
   setActiveTab: (tab: RegistrationTab) => void;
   sourceResult: Registration;
+  sourceHeading: string;
 }
 
 const defaultTab = RegistrationTab.Description;
@@ -13,11 +14,12 @@ export const MergeResultsWizardContext = createContext<MergeResultsWizardContext
   activeTab: defaultTab,
   setActiveTab: () => {},
   sourceResult: {} as Registration,
+  sourceHeading: '',
 });
 
 interface RegistrationFormContextProviderProps {
   children: ReactNode;
-  value: Pick<MergeResultsWizardContextType, 'sourceResult'>;
+  value: Pick<MergeResultsWizardContextType, 'sourceResult' | 'sourceHeading'>;
 }
 
 export const MergeResultsWizardContextProvider = ({ children, value }: RegistrationFormContextProviderProps) => {

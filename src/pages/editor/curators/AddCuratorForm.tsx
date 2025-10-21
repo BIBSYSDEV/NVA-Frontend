@@ -115,7 +115,7 @@ export const AddCuratorForm = ({
               <StyledViewingScopeChipContainer>
                 {removedViewingScopes.map((organizationId) => (
                   <ViewingScopeChip
-                    color="error"
+                    color="tertiary"
                     key={organizationId}
                     icon={<ClearIcon />}
                     organizationId={organizationId}

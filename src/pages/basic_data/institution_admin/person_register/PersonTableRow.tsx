@@ -77,7 +77,7 @@ export const PersonTableRow = ({ cristinPerson, refetchEmployees }: PersonTableR
             <IconButton
               sx={{ bgcolor: 'tertiary.main' }}
               data-testid={dataTestId.basicData.editPersonButton(cristinIdentifier)}>
-              <EditIcon fontSize="small" />
+              <EditIcon color="primary" fontSize="small" />
             </IconButton>
           </Tooltip>
         </TableCell>
