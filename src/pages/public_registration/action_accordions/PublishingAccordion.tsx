@@ -1,16 +1,7 @@
 import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  Divider,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Accordion, AccordionDetails, Box, Button, Divider, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,7 +14,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
-import { PublishingTicket } from '../../../types/publication_types/ticket.types';
+import { PublishingTicket, TicketTypeEnum } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -45,6 +36,10 @@ import { MoreActionsCollapse } from './MoreActionsCollapse';
 import { PublishingAccordionLastTicketInfo } from './PublishingAccordionLastTicketInfo';
 import { RefreshPublishingRequestButton } from './RefreshPublishingRequestButton';
 import { TicketAssignee } from './TicketAssignee';
+import { getTicketColor } from '../../messages/utils';
+import { HorizontalBox } from '../../../components/styled/Wrappers';
+import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
+import { TaskAccordionSummary } from './styles';
 
 interface PublishingAccordionProps {
   registration: Registration;
@@ -179,12 +174,17 @@ export const PublishingAccordion = ({
       }}
       elevation={3}
       defaultExpanded={defaultExpanded}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
-          {isUnpublishedOrDeletedRegistration
-            ? t(`registration.status.${registration.status}`)
-            : t('registration.public_page.publication')}
-        </Typography>
+      <TaskAccordionSummary
+        sx={{ borderLeftColor: getTicketColor(TicketTypeEnum.PublishingRequest) }}
+        expandIcon={<ExpandMoreIcon fontSize="large" />}>
+        <HorizontalBox sx={{ width: '100%', gap: '0.5rem' }}>
+          <TicketTypeTag type={TicketTypeEnum.PublishingRequest} noText />
+          <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
+            {isUnpublishedOrDeletedRegistration
+              ? t(`registration.status.${registration.status}`)
+              : t('registration.public_page.publication')}
+          </Typography>
+        </HorizontalBox>
 
         {lastPublishingRequest && !isUnpublishedOrDeletedRegistration && (
           <TicketStatusChip ticket={lastPublishingRequest} />
@@ -200,7 +200,7 @@ export const PublishingAccordion = ({
             <ErrorIcon color="warning" sx={{ ml: '0.2rem' }} />
           </Tooltip>
         )}
-      </AccordionSummary>
+      </TaskAccordionSummary>
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 

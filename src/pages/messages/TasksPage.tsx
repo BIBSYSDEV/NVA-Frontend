@@ -22,7 +22,7 @@ import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefau
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
-import { TicketTypeSelection } from '../../types/publication_types/ticket.types';
+import { TicketTypeEnum, TicketTypeSelection } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -39,10 +39,7 @@ import { NviCorrectionListNavigationAccordion } from './components/NviCorrection
 import { NviStatusPage } from './components/NviStatusPage';
 import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
 import { TicketList } from './components/TicketList';
-import { PublishingRequestTag } from './components/TicketTypeTags/PublishingRequestTag';
-import { DoiRequestTag } from './components/TicketTypeTags/DoiRequestTag';
-import { FilesApprovalThesisTag } from './components/TicketTypeTags/FilesApprovalThesisTag';
-import { GeneralSupportCaseTag } from './components/TicketTypeTags/GeneralSupportCaseTag';
+import { TicketTypeTag } from './components/TicketTypeTag';
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -172,12 +169,9 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <PublishingRequestTag
-                    count={
-                      ticketTypes.publishingRequest && publishingRequestCount
-                        ? { count: publishingRequestCount }
-                        : undefined
-                    }
+                  <TicketTypeTag
+                    count={ticketTypes.publishingRequest && publishingRequestCount ? publishingRequestCount : undefined}
+                    type={TicketTypeEnum.PublishingRequest}
                   />
                 </TicketTypeFilterButton>
               )}
@@ -191,12 +185,13 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, filesApprovalThesis: !ticketTypes.filesApprovalThesis });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <FilesApprovalThesisTag
+                  <TicketTypeTag
                     count={
                       ticketTypes.filesApprovalThesis && thesisPublishingRequestCount
-                        ? { count: thesisPublishingRequestCount }
+                        ? thesisPublishingRequestCount
                         : undefined
                     }
+                    type={TicketTypeEnum.FilesApprovalThesis}
                   />
                 </TicketTypeFilterButton>
               )}
@@ -210,8 +205,9 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <DoiRequestTag
-                    count={ticketTypes.doiRequest && doiRequestCount ? { count: doiRequestCount } : undefined}
+                  <TicketTypeTag
+                    count={ticketTypes.doiRequest && doiRequestCount ? doiRequestCount : undefined}
+                    type={TicketTypeEnum.DoiRequest}
                   />
                 </TicketTypeFilterButton>
               )}
@@ -225,12 +221,11 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <GeneralSupportCaseTag
+                  <TicketTypeTag
                     count={
-                      ticketTypes.generalSupportCase && generalSupportCaseCount
-                        ? { count: generalSupportCaseCount }
-                        : undefined
+                      ticketTypes.generalSupportCase && generalSupportCaseCount ? generalSupportCaseCount : undefined
                     }
+                    type={TicketTypeEnum.GeneralSupportCase}
                   />
                 </TicketTypeFilterButton>
               )}

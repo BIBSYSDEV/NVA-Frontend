@@ -1,8 +1,8 @@
 import { TicketType, TicketTypeEnum } from '../../types/publication_types/ticket.types';
-import { PublishingRequestTag } from './components/TicketTypeTags/PublishingRequestTag';
-import { DoiRequestTag } from './components/TicketTypeTags/DoiRequestTag';
-import { FilesApprovalThesisTag } from './components/TicketTypeTags/FilesApprovalThesisTag';
-import { GeneralSupportCaseTag } from './components/TicketTypeTags/GeneralSupportCaseTag';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
 
 export const getTicketColor = (ticketType: TicketType) => {
   switch (ticketType) {
@@ -21,18 +21,33 @@ export const getTicketColor = (ticketType: TicketType) => {
   }
 };
 
-export const selectTicketTypeTag = (ticketType: TicketType) => {
+export const getTicketTypeIcon = (ticketType: TicketType) => {
   switch (ticketType) {
     case TicketTypeEnum.PublishingRequest:
-      return <PublishingRequestTag />;
+      return <InsertDriveFileOutlinedIcon fontSize="small" />;
     case TicketTypeEnum.DoiRequest:
-      return <DoiRequestTag />;
+      return <AddLinkOutlinedIcon fontSize="small" />;
     case TicketTypeEnum.GeneralSupportCase:
-      return <GeneralSupportCaseTag />;
+      return <ChatBubbleOutlineOutlinedIcon fontSize="small" />;
     case TicketTypeEnum.FilesApprovalThesis:
-      return <FilesApprovalThesisTag />;
+      return <SchoolOutlinedIcon fontSize="small" />;
     case TicketTypeEnum.UnpublishRequest:
+    default:
       return null;
+  }
+};
+
+export const getTicketTypeTextKey = (ticketType: TicketType) => {
+  switch (ticketType) {
+    case TicketTypeEnum.PublishingRequest:
+      return 'my_page.messages.types.PublishingRequest';
+    case TicketTypeEnum.DoiRequest:
+      return <AddLinkOutlinedIcon fontSize="small" />;
+    case TicketTypeEnum.GeneralSupportCase:
+      return <ChatBubbleOutlineOutlinedIcon fontSize="small" />;
+    case TicketTypeEnum.FilesApprovalThesis:
+      return <SchoolOutlinedIcon fontSize="small" />;
+    case TicketTypeEnum.UnpublishRequest:
     default:
       return null;
   }

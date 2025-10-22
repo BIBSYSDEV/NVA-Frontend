@@ -33,7 +33,7 @@ import { NotPublishedTag } from './atoms/tags/NotPublishedTag';
 import { PublicationInstanceText } from './RegistrationListItem/components/PublicationInstanceText';
 import { DateText } from './RegistrationListItem/components/DateText';
 import { TicketType } from '../types/publication_types/ticket.types';
-import { selectTicketTypeTag } from '../pages/messages/utils';
+import { TicketTypeTag } from '../pages/messages/components/TicketTypeTag';
 
 export interface RegistrationListProps extends Pick<LinkProps, 'target'> {
   registrations: RegistrationSearchItem[];
@@ -144,11 +144,11 @@ export const RegistrationListItemContent = ({
           )}
           {ticketView && (
             <HorizontalBox sx={{ gap: '1rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
-              {ticketType && selectTicketTypeTag(ticketType)}
+              {ticketType && <TicketTypeTag type={ticketType} />}
               <PublicationInstanceText publicationInstanceType={registration.type} />
               {registration.publicationDate?.year && <DateText publicationDate={registration.publicationDate} />}
-              {registration.recordMetadata.status === RegistrationStatus.Draft ||
-                (registration.recordMetadata.status === RegistrationStatus.New && <NotPublishedTag />)}
+              {(registration.recordMetadata.status === RegistrationStatus.Draft ||
+                registration.recordMetadata.status === RegistrationStatus.New) && <NotPublishedTag />}
             </HorizontalBox>
           )}
         </Box>
