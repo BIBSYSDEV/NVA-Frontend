@@ -1,12 +1,11 @@
 import { Affiliation, Contributor } from '../../types/contributor.types';
 
-const findMatchingContributor = (sourceContributor: Contributor, targetContributors: Contributor[]) => {
-  return sourceContributor.identity.id
-    ? targetContributors.find((c) => c.identity.id === sourceContributor.identity.id)
-    : targetContributors.find((c) => c.identity.name === sourceContributor.identity.name);
-};
+const findMatchingContributor = (sourceContributor: Contributor, targetContributors: Contributor[]) =>
+  sourceContributor.identity.id
+    ? targetContributors.find((contributor) => contributor.identity.id === sourceContributor.identity.id)
+    : targetContributors.find((contributor) => contributor.identity.name === sourceContributor.identity.name);
 
-const isAffiliationMissing = (sourceAffiliation: Affiliation, targetAffiliations: Affiliation[]) => {
+const isMissingAffiliation = (sourceAffiliation: Affiliation, targetAffiliations: Affiliation[]) => {
   if (sourceAffiliation.type === 'Organization' && sourceAffiliation.id) {
     return !targetAffiliations.some((target) => target.type === 'Organization' && target.id === sourceAffiliation.id);
   }
@@ -29,7 +28,7 @@ export const mergeContributors = (sourceContributors: Contributor[], targetContr
     const sourceAffiliations = sourceContributor.affiliations ?? [];
     const targetAffiliations = matchingTargetContributor.affiliations ?? [];
     const missingAffiliations = sourceAffiliations.filter((sourceAffiliation) =>
-      isAffiliationMissing(sourceAffiliation, targetAffiliations)
+      isMissingAffiliation(sourceAffiliation, targetAffiliations)
     );
 
     return acc.map((contributor) =>
