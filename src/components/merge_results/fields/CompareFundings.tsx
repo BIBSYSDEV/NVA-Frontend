@@ -2,19 +2,51 @@ import { Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Registration } from '../../../types/registration.types';
+import { Funding, Registration } from '../../../types/registration.types';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
-import { FundingBox } from './FundingBox';
-import { StyledValueBox } from './MissingCompareValues';
+import { MissingCompareValues } from './MissingCompareValues';
+import { fundingSourceIsNfr } from '../../../pages/registration/description_tab/projects_field/projectHelpers';
+import { CompareFunding } from './CompareFunding';
+
+const isMatchingFundings = (sourceFunding: Funding, targetFunding: Funding) => {
+  if (fundingSourceIsNfr(sourceFunding.source) && fundingSourceIsNfr(targetFunding.source)) {
+    if (sourceFunding.id === targetFunding.id) {
+      return true;
+    }
+
+    if (
+      sourceFunding.source === targetFunding.source &&
+      sourceFunding.identifier === targetFunding.identifier &&
+      sourceFunding.fundingAmount?.amount === targetFunding.fundingAmount?.amount
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+};
 
 export const CompareFundings = () => {
   const { t } = useTranslation();
 
-  const { control } = useFormContext<Registration>();
+  const { control, formState } = useFormContext<Registration>();
   const { sourceResult } = useContext(MergeResultsWizardContext);
   const sourceFundings = sourceResult.fundings ?? [];
 
   const targetFundings = useWatch({ name: 'fundings', control }) ?? [];
+  const initiaTargetFundings = (formState.defaultValues?.fundings ?? []) as Funding[];
+
+  const commonFundings = sourceFundings.filter((sourceFunding) =>
+    initiaTargetFundings.some((targetFunding) => isMatchingFundings(sourceFunding, targetFunding))
+  );
+
+  const targetOnlyFundings = targetFundings.filter(
+    (targetFunding) => !commonFundings.some((commonFunding) => isMatchingFundings(targetFunding, commonFunding))
+  );
+
+  const addableSourceFundings = sourceFundings.filter(
+    (sourceFunding) => !commonFundings.some((commonFunding) => isMatchingFundings(sourceFunding, commonFunding))
+  );
 
   return (
     <>
@@ -25,27 +57,15 @@ export const CompareFundings = () => {
         {t('common.funding')}
       </Typography>
 
-      <div>
-        {sourceFundings.length > 0 ? (
-          sourceFundings.map((funding) => <FundingBox key={`${funding.identifier}-${funding.id}`} funding={funding} />)
-        ) : (
-          <StyledValueBox>
-            <Typography fontStyle="italic">{t('missing_value')}</Typography>
-          </StyledValueBox>
-        )}
-      </div>
+      {initiaTargetFundings.length === 0 && sourceFundings.length === 0 && <MissingCompareValues />}
 
-      <div />
+      {targetOnlyFundings.map((funding) => (
+        <CompareFunding targetFunding={funding} key="1" />
+      ))}
 
-      <div>
-        {targetFundings.length > 0 ? (
-          targetFundings.map((funding) => <FundingBox key={`${funding.identifier}-${funding.id}`} funding={funding} />)
-        ) : (
-          <StyledValueBox>
-            <Typography fontStyle="italic">{t('missing_value')}</Typography>
-          </StyledValueBox>
-        )}
-      </div>
+      {commonFundings.map((funding) => (
+        <CompareFunding key="2" sourceFunding={funding} targetFunding={funding} />
+      ))}
     </>
   );
 };

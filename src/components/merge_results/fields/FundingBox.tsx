@@ -10,12 +10,16 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { OpenInNewLink } from '../../OpenInNewLink';
 
 interface FundingBoxProps {
-  funding: Funding;
+  funding?: Funding;
 }
 export const FundingBox = ({ funding }: FundingBoxProps) => {
   const { t } = useTranslation();
   const fundingSourcesQuery = useFetchFundingSources();
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
+
+  if (!funding) {
+    return null;
+  }
 
   return (
     <Box
