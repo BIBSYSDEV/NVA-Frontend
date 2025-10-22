@@ -1,4 +1,4 @@
-import { TicketType } from '../../types/publication_types/ticket.types';
+import { TicketType, TicketTypeEnum } from '../../types/publication_types/ticket.types';
 import { PublishingRequestTag } from './components/TicketTypeTags/PublishingRequestTag';
 import { DoiRequestTag } from './components/TicketTypeTags/DoiRequestTag';
 import { FilesApprovalThesisTag } from './components/TicketTypeTags/FilesApprovalThesisTag';
@@ -6,15 +6,15 @@ import { GeneralSupportCaseTag } from './components/TicketTypeTags/GeneralSuppor
 
 export const getTicketColor = (ticketType: TicketType) => {
   switch (ticketType) {
-    case 'PublishingRequest':
+    case TicketTypeEnum.PublishingRequest:
       return 'taskType.publishingRequest.main';
-    case 'DoiRequest':
+    case TicketTypeEnum.DoiRequest:
       return 'taskType.doiRequest.main';
-    case 'GeneralSupportCase':
+    case TicketTypeEnum.GeneralSupportCase:
       return 'taskType.generalSupportCase.main';
-    case 'FilesApprovalThesis':
+    case TicketTypeEnum.FilesApprovalThesis:
       return 'taskType.filesApprovalThesis.main';
-    case 'UnpublishRequest':
+    case TicketTypeEnum.UnpublishRequest:
       return 'taskType.unpublishRequest.main';
     default:
       return 'grey.500';
@@ -23,16 +23,16 @@ export const getTicketColor = (ticketType: TicketType) => {
 
 export const selectTicketTypeTag = (ticketType: TicketType) => {
   switch (ticketType) {
-    case 'PublishingRequest':
+    case TicketTypeEnum.PublishingRequest:
       return <PublishingRequestTag />;
-    case 'DoiRequest':
+    case TicketTypeEnum.DoiRequest:
       return <DoiRequestTag />;
-    case 'GeneralSupportCase':
+    case TicketTypeEnum.GeneralSupportCase:
       return <GeneralSupportCaseTag />;
-    case 'FilesApprovalThesis':
+    case TicketTypeEnum.FilesApprovalThesis:
       return <FilesApprovalThesisTag />;
-    case 'UnpublishRequest':
-      return <PublishingRequestTag />;
+    case TicketTypeEnum.UnpublishRequest:
+      return null;
     default:
       return null;
   }
