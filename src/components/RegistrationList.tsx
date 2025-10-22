@@ -3,7 +3,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Link as MuiLink, LinkProps, List, ListItemText, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,8 +27,13 @@ import {
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
 import { RegistrationIconHeader } from './RegistrationIconHeader';
-import { SearchListItem } from './styled/Wrappers';
+import { HorizontalBox, SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
+import { NotPublishedTag } from './atoms/tags/NotPublishedTag';
+import { PublicationInstanceText } from './RegistrationListItem/components/PublicationInstanceText';
+import { DateText } from './RegistrationListItem/components/DateText';
+import { TicketType } from '../types/publication_types/ticket.types';
+import { selectTicketTypeTag } from '../pages/messages/utils';
 
 export interface RegistrationListProps extends Pick<LinkProps, 'target'> {
   registrations: RegistrationSearchItem[];
@@ -65,6 +70,7 @@ interface RegistrationListItemContentProps extends Omit<RegistrationListProps, '
   registration: RegistrationSearchItem;
   ticketView?: boolean;
   onRemoveRelated?: () => void;
+  ticketType?: TicketType;
 }
 
 export const RegistrationListItemContent = ({
@@ -75,6 +81,7 @@ export const RegistrationListItemContent = ({
   promotedPublications = [],
   target,
   onRemoveRelated,
+  ticketType,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { id, identifier } = registration;
@@ -129,21 +136,21 @@ export const RegistrationListItemContent = ({
             marginBottom: '0.5rem',
             flexWrap: 'wrap',
           }}>
-          <RegistrationIconHeader
-            publicationInstanceType={registration.type}
-            publicationDate={registration.publicationDate}
-          />
-          {ticketView &&
-            (registration.recordMetadata.status === RegistrationStatus.Draft ||
-              registration.recordMetadata.status === RegistrationStatus.New) && (
-              <Typography
-                sx={{
-                  p: '0.1rem 0.75rem',
-                  bgcolor: 'warning.light',
-                }}>
-                {t('registration.public_page.result_not_published')}
-              </Typography>
-            )}
+          {!ticketView && (
+            <RegistrationIconHeader
+              publicationInstanceType={registration.type}
+              publicationDate={registration.publicationDate}
+            />
+          )}
+          {ticketView && (
+            <HorizontalBox sx={{ gap: '1rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
+              {ticketType && selectTicketTypeTag(ticketType)}
+              <PublicationInstanceText publicationInstanceType={registration.type} />
+              {registration.publicationDate?.year && <DateText publicationDate={registration.publicationDate} />}
+              {registration.recordMetadata.status === RegistrationStatus.Draft ||
+                (registration.recordMetadata.status === RegistrationStatus.New && <NotPublishedTag />)}
+            </HorizontalBox>
+          )}
         </Box>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
           {ticketView ? (

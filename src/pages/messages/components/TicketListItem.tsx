@@ -104,7 +104,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             gap: '0 1rem',
             gridTemplateColumns: { xs: '1fr', sm: '10fr 4fr 2fr 2fr 1fr' },
           }}>
-          <RegistrationListItemContent registration={registrationSearchItem} ticketView />
+          <RegistrationListItemContent registration={registrationSearchItem} ticketView ticketType={ticket.type} />
           {isFileApprovalTicket(ticket) ? (
             <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
           ) : ticket.type === 'DoiRequest' ? (
