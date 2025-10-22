@@ -1,8 +1,4 @@
-import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import { Badge } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -43,7 +39,10 @@ import { NviCorrectionListNavigationAccordion } from './components/NviCorrection
 import { NviStatusPage } from './components/NviStatusPage';
 import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
 import { TicketList } from './components/TicketList';
-import { TaskFilter } from './styles';
+import { PublishingRequestTag } from './components/TicketTypeTags/PublishingRequestTag';
+import { DoiRequestTag } from './components/TicketTypeTags/DoiRequestTag';
+import { FilesApprovalThesisTag } from './components/TicketTypeTags/FilesApprovalThesisTag';
+import { GeneralSupportCaseTag } from './components/TicketTypeTags/GeneralSupportCaseTag';
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -173,12 +172,13 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <TaskFilter sx={{ backgroundColor: 'taskType.publishingRequest.main' }}>
-                    <InsertDriveFileOutlinedIcon fontSize="small" />
-                    {ticketTypes.publishingRequest && publishingRequestCount
-                      ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
-                      : t('my_page.messages.types.PublishingRequest')}
-                  </TaskFilter>
+                  <PublishingRequestTag
+                    count={
+                      ticketTypes.publishingRequest && publishingRequestCount
+                        ? { count: publishingRequestCount }
+                        : undefined
+                    }
+                  />
                 </TicketTypeFilterButton>
               )}
 
@@ -191,12 +191,13 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, filesApprovalThesis: !ticketTypes.filesApprovalThesis });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <TaskFilter sx={{ backgroundColor: 'taskType.filesApprovalThesis.main' }}>
-                    <SchoolOutlinedIcon fontSize="small" />
-                    {ticketTypes.filesApprovalThesis && thesisPublishingRequestCount
-                      ? `${t('my_page.messages.types.FilesApprovalThesis')} (${thesisPublishingRequestCount})`
-                      : t('my_page.messages.types.FilesApprovalThesis')}
-                  </TaskFilter>
+                  <FilesApprovalThesisTag
+                    count={
+                      ticketTypes.filesApprovalThesis && thesisPublishingRequestCount
+                        ? { count: thesisPublishingRequestCount }
+                        : undefined
+                    }
+                  />
                 </TicketTypeFilterButton>
               )}
 
@@ -209,12 +210,9 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <TaskFilter sx={{ backgroundColor: 'taskType.doiRequest.main' }}>
-                    <AddLinkOutlinedIcon fontSize="small" />
-                    {ticketTypes.doiRequest && doiRequestCount
-                      ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
-                      : t('my_page.messages.types.DoiRequest')}
-                  </TaskFilter>
+                  <DoiRequestTag
+                    count={ticketTypes.doiRequest && doiRequestCount ? { count: doiRequestCount } : undefined}
+                  />
                 </TicketTypeFilterButton>
               )}
 
@@ -227,12 +225,13 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <TaskFilter sx={{ backgroundColor: 'taskType.generalSupportCase.main' }}>
-                    <ChatBubbleOutlineOutlinedIcon fontSize="small" />
-                    {ticketTypes.generalSupportCase && generalSupportCaseCount
-                      ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
-                      : t('my_page.messages.types.GeneralSupportCase')}
-                  </TaskFilter>
+                  <GeneralSupportCaseTag
+                    count={
+                      ticketTypes.generalSupportCase && generalSupportCaseCount
+                        ? { count: generalSupportCaseCount }
+                        : undefined
+                    }
+                  />
                 </TicketTypeFilterButton>
               )}
             </StyledTicketSearchFormGroup>
