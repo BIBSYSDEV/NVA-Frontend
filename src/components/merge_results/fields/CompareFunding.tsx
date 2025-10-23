@@ -1,10 +1,12 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import RestoreIcon from '@mui/icons-material/Restore';
-import { Divider } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
+import { useContext } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Funding, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { StyledCompareButton } from './CompareFiles';
 import { FundingBox } from './FundingBox';
 
@@ -19,6 +21,7 @@ export const CompareFunding = ({
   matchingTargetFundingIndex = -1,
 }: CompareFundingProps) => {
   const { t } = useTranslation();
+  const { sourceHeading } = useContext(MergeResultsWizardContext);
 
   const { control } = useFormContext<Registration>();
   const { append, remove } = useFieldArray({ name: 'fundings', control });
@@ -28,6 +31,9 @@ export const CompareFunding = ({
 
   return (
     <>
+      <Typography variant="h3" sx={{ display: { xs: 'block', md: 'none' } }}>
+        {sourceHeading}
+      </Typography>
       <FundingBox funding={sourceFunding} />
 
       {canCopyFunding && (
@@ -54,7 +60,10 @@ export const CompareFunding = ({
         </StyledCompareButton>
       )}
 
-      <FundingBox funding={targetFunding} />
+      <Typography variant="h3" sx={{ display: { xs: 'block', md: 'none' } }}>
+        {t('published_result')}
+      </Typography>
+      <FundingBox funding={targetFunding} sx={{ gridColumn: { xs: 1, md: 3 } }} />
 
       <Divider sx={{ display: { xs: 'block', md: 'none' }, my: '0.5rem' }} />
     </>

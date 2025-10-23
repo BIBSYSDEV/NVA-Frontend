@@ -13,14 +13,14 @@ const isMatchingFundings = (sourceFunding: Funding, targetFunding: Funding) => {
     if (sourceFunding.id === targetFunding.id) {
       return true;
     }
+  }
 
-    if (
-      sourceFunding.source === targetFunding.source &&
-      sourceFunding.identifier === targetFunding.identifier &&
-      sourceFunding.fundingAmount?.amount === targetFunding.fundingAmount?.amount
-    ) {
-      return true;
-    }
+  if (
+    sourceFunding.source === targetFunding.source &&
+    sourceFunding.identifier === targetFunding.identifier &&
+    sourceFunding.fundingAmount?.amount === targetFunding.fundingAmount?.amount
+  ) {
+    return true;
   }
 
   return false;
@@ -40,12 +40,12 @@ export const CompareFundings = () => {
     initiaTargetFundings.some((targetFunding) => isMatchingFundings(sourceFunding, targetFunding))
   );
 
-  const targetOnlyFundings = targetFundings.filter(
-    (targetFunding) => !commonFundings.some((commonFunding) => isMatchingFundings(targetFunding, commonFunding))
+  const targetOnlyFundings = initiaTargetFundings.filter(
+    (targetFunding) => !commonFundings.some((sourceFunding) => isMatchingFundings(targetFunding, sourceFunding))
   );
 
   const addableSourceFundings = sourceFundings.filter(
-    (sourceFunding) => !commonFundings.some((commonFunding) => isMatchingFundings(sourceFunding, commonFunding))
+    (sourceFunding) => !commonFundings.some((targetFunding) => isMatchingFundings(sourceFunding, targetFunding))
   );
 
   return (
@@ -60,11 +60,11 @@ export const CompareFundings = () => {
       {initiaTargetFundings.length === 0 && sourceFundings.length === 0 && <MissingCompareValues />}
 
       {targetOnlyFundings.map((funding) => (
-        <CompareFunding key="1" targetFunding={funding} />
+        <CompareFunding key={funding.source + funding.identifier} targetFunding={funding} />
       ))}
 
       {commonFundings.map((funding) => (
-        <CompareFunding key="2" sourceFunding={funding} targetFunding={funding} />
+        <CompareFunding key={funding.source + funding.identifier} sourceFunding={funding} targetFunding={funding} />
       ))}
 
       {addableSourceFundings.map((funding) => {
@@ -75,7 +75,7 @@ export const CompareFundings = () => {
           matchingTargetFundingIndex > -1 ? targetFundings[matchingTargetFundingIndex] : undefined;
         return (
           <CompareFunding
-            key={funding.identifier}
+            key={funding.source + funding.identifier}
             sourceFunding={funding}
             targetFunding={matchingTargetFunding}
             matchingTargetFundingIndex={matchingTargetFundingIndex}

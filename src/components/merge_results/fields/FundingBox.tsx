@@ -1,4 +1,4 @@
-import { Box, Skeleton, Typography } from '@mui/material';
+import { Box, Skeleton, SxProps, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchFundingSources } from '../../../api/hooks/useFetchFundingSources';
 import {
@@ -8,17 +8,19 @@ import {
 import { Funding } from '../../../types/registration.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { OpenInNewLink } from '../../OpenInNewLink';
+import { StyledValueBox } from './MissingCompareValues';
 
 interface FundingBoxProps {
   funding?: Funding;
+  sx?: SxProps;
 }
-export const FundingBox = ({ funding }: FundingBoxProps) => {
+export const FundingBox = ({ funding, sx }: FundingBoxProps) => {
   const { t } = useTranslation();
   const fundingSourcesQuery = useFetchFundingSources();
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
   if (!funding) {
-    return null;
+    return <StyledValueBox sx={sx} />;
   }
 
   return (
@@ -32,6 +34,7 @@ export const FundingBox = ({ funding }: FundingBoxProps) => {
         my: '0.5rem',
         p: '0.5rem',
         bgcolor: 'white',
+        ...sx,
       }}>
       <Typography fontWeight="bold">{t('registration.description.funding.funder')}:</Typography>
       {fundingSourcesQuery.isPending ? (
