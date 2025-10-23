@@ -1,5 +1,5 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, Button, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ import { TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
-import { Ticket } from '../../../types/publication_types/ticket.types';
+import { Ticket, TicketTypeEnum } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -20,6 +20,9 @@ import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers'
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
+import { TaskAccordionSummary } from './styles';
+import { getTicketColor } from '../../messages/utils';
+import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
 
 interface SupportAccordionProps {
   registration: Registration;
@@ -83,12 +86,15 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
       }}
       elevation={3}
       defaultExpanded={defaultExpanded}>
-      <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+      <TaskAccordionSummary
+        sx={{ borderLeftColor: getTicketColor(TicketTypeEnum.GeneralSupportCase) }}
+        expandIcon={<ExpandMoreIcon fontSize="large" />}>
+        <TicketTypeTag type={TicketTypeEnum.GeneralSupportCase} showText={false} />
         <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
           {t('my_page.messages.types.GeneralSupportCase')}
         </Typography>
         {supportTicket && isOnTasksPage && <TicketStatusChip ticket={supportTicket} />}
-      </AccordionSummary>
+      </TaskAccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {!isOnTasksPage && (
           <Trans i18nKey="my_page.messages.contact_curator_if_you_need_assistance" components={{ p: <Typography /> }} />
