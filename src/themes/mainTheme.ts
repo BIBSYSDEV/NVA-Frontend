@@ -46,7 +46,6 @@ declare module '@mui/material/styles' {
       filesApprovalThesis: PaletteColor;
       doiRequest: PaletteColor;
       generalSupportCase: PaletteColor;
-      unpublishRequest: PaletteColor;
     };
   }
   interface PaletteOptions {
@@ -61,7 +60,6 @@ declare module '@mui/material/styles' {
       filesApprovalThesis?: PaletteColorOptions;
       doiRequest?: PaletteColorOptions;
       generalSupportCase?: PaletteColorOptions;
-      unpublishRequest?: PaletteColorOptions;
     };
   }
   interface TypeBackground {
@@ -155,9 +153,6 @@ export const mainTheme = createTheme(
         },
         generalSupportCase: {
           main: Color.BlueClear,
-        },
-        unpublishRequest: {
-          main: Color.Purple,
         },
       },
       person: {

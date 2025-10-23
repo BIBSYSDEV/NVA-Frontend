@@ -15,7 +15,6 @@ export const getTicketColor = (ticketType: TicketType) => {
     case TicketTypeEnum.FilesApprovalThesis:
       return 'taskType.filesApprovalThesis.main';
     case TicketTypeEnum.UnpublishRequest:
-      return 'taskType.unpublishRequest.main';
     default:
       return 'grey.500';
   }
