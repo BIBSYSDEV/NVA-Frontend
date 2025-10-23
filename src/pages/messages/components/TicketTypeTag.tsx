@@ -9,15 +9,16 @@ interface TicketTypeTagProps {
   count?: number;
 }
 
-export const TicketTypeTag = ({ type, noText = false, count = -1 }: TicketTypeTagProps) => {
+export const TicketTypeTag = ({ type, noText = false, count }: TicketTypeTagProps) => {
   const text = useTicketTypeText(type);
   const showText = !noText;
 
   return (
     <HorizontalBox
+      aria-label={text}
       sx={{ bgcolor: getTicketColor(type), gap: '0.25rem', padding: '0rem 0.2rem', borderRadius: '0.25rem' }}>
       {getTicketTypeIcon(type)}
-      {showText && count > -1 ? `${text} (${count})` : showText ? text : null}
+      {showText && count !== undefined ? `${text} (${count})` : showText ? text : null}
     </HorizontalBox>
   );
 };
