@@ -16,14 +16,14 @@ export const CompareFundings = () => {
   const sourceFundings = sourceResult.fundings ?? [];
 
   const targetFundings = useWatch({ name: 'fundings', control }) ?? [];
-  const initiaTargetFundings = (formState.defaultValues?.fundings ?? []) as Funding[];
+  const initialTargetFundings = (formState.defaultValues?.fundings ?? []) as Funding[];
 
   const commonFundings = sourceFundings.filter((sourceFunding) =>
-    initiaTargetFundings.some((targetFunding) => isMatchingFundings(sourceFunding, targetFunding))
+    initialTargetFundings.some((targetFunding) => isMatchingFundings(sourceFunding, targetFunding))
   );
 
-  const targetOnlyFundings = initiaTargetFundings.filter(
-    (targetFunding) => !commonFundings.some((sourceFunding) => isMatchingFundings(targetFunding, sourceFunding))
+  const targetOnlyFundings = initialTargetFundings.filter(
+    (targetFunding) => !commonFundings.some((sourceFunding) => isMatchingFundings(sourceFunding, targetFunding))
   );
 
   const addableSourceFundings = sourceFundings.filter(
@@ -39,7 +39,7 @@ export const CompareFundings = () => {
         {t('common.funding')}
       </Typography>
 
-      {initiaTargetFundings.length === 0 && sourceFundings.length === 0 && <MissingCompareValues />}
+      {initialTargetFundings.length === 0 && sourceFundings.length === 0 && <MissingCompareValues />}
 
       {targetOnlyFundings.map((funding) => (
         <CompareFunding key={funding.source + funding.identifier} targetFunding={funding} />
