@@ -1,7 +1,7 @@
-import { Box } from '@mui/material';
 import { TicketType } from '../../../types/publication_types/ticket.types';
 import { getTicketColor, getTicketTypeIcon } from '../utils';
 import { useTicketTypeText } from '../../../utils/hooks/useTicketTypeText';
+import { HorizontalBox } from '../../../components/styled/Wrappers';
 
 interface TicketTypeTagProps {
   type: TicketType;
@@ -14,17 +14,10 @@ export const TicketTypeTag = ({ type, noText = false, count = -1 }: TicketTypeTa
   const showText = !noText;
 
   return (
-    <Box
-      sx={{
-        bgcolor: getTicketColor(type),
-        display: 'flex',
-        gap: '0.25rem',
-        alignItems: 'center',
-        padding: '0rem 0.2rem',
-        borderRadius: '0.25rem',
-      }}>
+    <HorizontalBox
+      sx={{ bgcolor: getTicketColor(type), gap: '0.25rem', padding: '0rem 0.2rem', borderRadius: '0.25rem' }}>
       {getTicketTypeIcon(type)}
       {showText && count > -1 ? `${text} (${count})` : showText ? text : null}
-    </Box>
+    </HorizontalBox>
   );
 };
