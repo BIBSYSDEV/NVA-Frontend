@@ -1,4 +1,6 @@
+import { fundingSourceIsNfr } from '../../pages/registration/description_tab/projects_field/projectHelpers';
 import { Affiliation, Contributor } from '../../types/contributor.types';
+import { Funding } from '../../types/registration.types';
 
 const findMatchingContributor = (sourceContributor: Contributor, targetContributors: Contributor[]) =>
   sourceContributor.identity.id
@@ -39,4 +41,24 @@ export const mergeContributors = (sourceContributors: Contributor[], targetContr
   }, targetContributors);
 
   return mergedContributors;
+};
+
+export const isMatchingFundings = (sourceFunding: Funding, targetFunding: Funding) => {
+  if (
+    fundingSourceIsNfr(sourceFunding.source) &&
+    fundingSourceIsNfr(targetFunding.source) &&
+    sourceFunding.id === targetFunding.id
+  ) {
+    return true;
+  }
+
+  if (
+    sourceFunding.source === targetFunding.source &&
+    sourceFunding.identifier === targetFunding.identifier &&
+    sourceFunding.fundingAmount?.amount === targetFunding.fundingAmount?.amount
+  ) {
+    return true;
+  }
+
+  return false;
 };

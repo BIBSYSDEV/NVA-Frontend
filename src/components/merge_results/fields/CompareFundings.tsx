@@ -3,28 +3,10 @@ import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Funding, Registration } from '../../../types/registration.types';
+import { isMatchingFundings } from '../merge-results-helpers';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
-import { MissingCompareValues } from './MissingCompareValues';
-import { fundingSourceIsNfr } from '../../../pages/registration/description_tab/projects_field/projectHelpers';
 import { CompareFunding } from './CompareFunding';
-
-const isMatchingFundings = (sourceFunding: Funding, targetFunding: Funding) => {
-  if (fundingSourceIsNfr(sourceFunding.source) && fundingSourceIsNfr(targetFunding.source)) {
-    if (sourceFunding.id === targetFunding.id) {
-      return true;
-    }
-  }
-
-  if (
-    sourceFunding.source === targetFunding.source &&
-    sourceFunding.identifier === targetFunding.identifier &&
-    sourceFunding.fundingAmount?.amount === targetFunding.fundingAmount?.amount
-  ) {
-    return true;
-  }
-
-  return false;
-};
+import { MissingCompareValues } from './MissingCompareValues';
 
 export const CompareFundings = () => {
   const { t } = useTranslation();
