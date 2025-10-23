@@ -1,8 +1,8 @@
 import NotesIcon from '@mui/icons-material/Notes';
-import { Box, Typography, TypographyProps } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { Box, TypographyProps } from '@mui/material';
 import { PublicationInstanceType, RegistrationDate } from '../types/registration.types';
-import { displayDate } from '../utils/date-helpers';
+import { DateText } from './RegistrationListItem/components/DateText';
+import { PublicationInstanceText } from './RegistrationListItem/components/PublicationInstanceText';
 
 interface RegistrationIconHeaderProps {
   publicationInstanceType?: PublicationInstanceType | '';
@@ -17,20 +17,12 @@ export const RegistrationIconHeader = ({
   showYearOnly = false,
   textColor,
 }: RegistrationIconHeaderProps) => {
-  const { t } = useTranslation();
-
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
       <NotesIcon sx={{ bgcolor: 'registration.main', color: 'primary.main', borderRadius: '0.4rem' }} />
-
-      <Typography color={textColor}>
-        {publicationInstanceType ? t(`registration.publication_types.${publicationInstanceType}`) : t('common.result')}
-      </Typography>
-
+      <PublicationInstanceText publicationInstanceType={publicationInstanceType} textColor={textColor} />
       {publicationDate?.year && (
-        <Typography sx={{ fontWeight: 'bold', color: textColor }}>
-          {showYearOnly ? publicationDate.year : displayDate(publicationDate)}
-        </Typography>
+        <DateText publicationDate={publicationDate} showYearOnly={showYearOnly} textColor={textColor} />
       )}
     </Box>
   );
