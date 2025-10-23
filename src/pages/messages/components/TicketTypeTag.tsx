@@ -1,17 +1,16 @@
 import { TicketType } from '../../../types/publication_types/ticket.types';
-import { getTicketColor, getTicketTypeIcon } from '../utils';
 import { useTicketTypeText } from '../../../utils/hooks/useTicketTypeText';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
+import { getTicketColor, getTicketTypeIcon } from '../utils';
 
 interface TicketTypeTagProps {
   type: TicketType;
-  noText?: boolean;
+  showText?: boolean;
   count?: number;
 }
 
-export const TicketTypeTag = ({ type, noText = false, count }: TicketTypeTagProps) => {
+export const TicketTypeTag = ({ type, showText = true, count }: TicketTypeTagProps) => {
   const text = useTicketTypeText(type);
-  const showText = !noText;
 
   return (
     <HorizontalBox
