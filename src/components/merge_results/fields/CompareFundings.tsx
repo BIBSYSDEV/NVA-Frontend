@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -60,12 +60,30 @@ export const CompareFundings = () => {
       {initiaTargetFundings.length === 0 && sourceFundings.length === 0 && <MissingCompareValues />}
 
       {targetOnlyFundings.map((funding) => (
-        <CompareFunding targetFunding={funding} key="1" />
+        <CompareFunding key="1" targetFunding={funding} />
       ))}
 
       {commonFundings.map((funding) => (
         <CompareFunding key="2" sourceFunding={funding} targetFunding={funding} />
       ))}
+
+      {addableSourceFundings.map((funding) => {
+        const matchingTargetFundingIndex = targetFundings.findIndex((targetFunding) =>
+          isMatchingFundings(targetFunding, funding)
+        );
+        const matchingTargetFunding =
+          matchingTargetFundingIndex > -1 ? targetFundings[matchingTargetFundingIndex] : undefined;
+        return (
+          <CompareFunding
+            key={funding.identifier}
+            sourceFunding={funding}
+            targetFunding={matchingTargetFunding}
+            matchingTargetFundingIndex={matchingTargetFundingIndex}
+          />
+        );
+      })}
+
+      <Divider sx={{ gridColumn: '1/-1', my: '0.5rem', display: { xs: 'none', md: 'block' } }} />
     </>
   );
 };
