@@ -27,13 +27,8 @@ import {
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
 import { RegistrationIconHeader } from './RegistrationIconHeader';
-import { HorizontalBox, SearchListItem } from './styled/Wrappers';
+import { SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
-import { NotPublishedTag } from './atoms/tags/NotPublishedTag';
-import { PublicationInstanceText } from './RegistrationListItem/components/PublicationInstanceText';
-import { DateText } from './RegistrationListItem/components/DateText';
-import { TicketType } from '../types/publication_types/ticket.types';
-import { TicketTypeTag } from '../pages/messages/components/TicketTypeTag';
 
 export interface RegistrationListProps extends Pick<LinkProps, 'target'> {
   registrations: RegistrationSearchItem[];
@@ -68,20 +63,22 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
   registration: RegistrationSearchItem;
-  ticketView?: boolean;
   onRemoveRelated?: () => void;
-  ticketType?: TicketType;
 }
 
+// TODO: Rather than expanding on the complexity of this component, we are currently in a process of using the composition pattern
+// to put together several similar but different versions of this component using common building blocks to avoid code duplication.
+// What was previously a part of this component using ticketView-boolean-prop has now become the TicketInformation-component.
+// If your use case for using this component goes into some of the if-conditionals in this component, please consider
+// whether you can create a new component using the composition pattern (see example in TicketInformation) with
+// new or existing building blocks (in the RegistrationListItem/components-folder)
 export const RegistrationListItemContent = ({
   registration,
-  ticketView = false,
   canEditRegistration,
   onDeleteDraftRegistration,
   promotedPublications = [],
   target,
   onRemoveRelated,
-  ticketType,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { id, identifier } = registration;
@@ -136,37 +133,22 @@ export const RegistrationListItemContent = ({
             marginBottom: '0.5rem',
             flexWrap: 'wrap',
           }}>
-          {!ticketView && (
-            <RegistrationIconHeader
-              publicationInstanceType={registration.type}
-              publicationDate={registration.publicationDate}
-            />
-          )}
-          {ticketView && (
-            <HorizontalBox sx={{ gap: '1rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
-              {ticketType && <TicketTypeTag type={ticketType} />}
-              <PublicationInstanceText publicationInstanceType={registration.type} />
-              {registration.publicationDate?.year && <DateText publicationDate={registration.publicationDate} />}
-              {(registration.recordMetadata.status === RegistrationStatus.Draft ||
-                registration.recordMetadata.status === RegistrationStatus.New) && <NotPublishedTag />}
-            </HorizontalBox>
-          )}
+          <RegistrationIconHeader
+            publicationInstanceType={registration.type}
+            publicationDate={registration.publicationDate}
+          />
         </Box>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
-          {ticketView ? (
-            getTitleString(registration.mainTitle)
-          ) : (
-            <MuiLink
-              target={target}
-              component={Link}
-              state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
-              to={{
-                pathname: getRegistrationLandingPagePath(identifier),
-                search: doNotRedirect ? `${doNotRedirectQueryParam}=true` : '',
-              }}>
-              {getTitleString(registration.mainTitle)}
-            </MuiLink>
-          )}
+          <MuiLink
+            target={target}
+            component={Link}
+            state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
+            to={{
+              pathname: getRegistrationLandingPagePath(identifier),
+              search: doNotRedirect ? `${doNotRedirectQueryParam}=true` : '',
+            }}>
+            {getTitleString(registration.mainTitle)}
+          </MuiLink>
         </Typography>
         <Box
           sx={{
@@ -180,7 +162,7 @@ export const RegistrationListItemContent = ({
                 key={index}
                 sx={{ display: 'flex', alignItems: 'center', '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
                 <Typography variant="body2">
-                  {contributor.identity.id && !ticketView ? (
+                  {contributor.identity.id ? (
                     <MuiLink target={target} component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                       {contributor.identity.name}
                     </MuiLink>
@@ -191,7 +173,6 @@ export const RegistrationListItemContent = ({
                 <ContributorIndicators
                   orcId={contributor.identity.orcId}
                   correspondingAuthor={contributor.correspondingAuthor}
-                  ticketView={ticketView}
                 />
               </Box>
             ))}
