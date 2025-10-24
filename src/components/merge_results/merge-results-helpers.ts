@@ -43,7 +43,7 @@ export const mergeContributors = (sourceContributors: Contributor[], targetContr
   return mergedContributors;
 };
 
-export const isMatchingFundings = (sourceFunding: Funding, targetFunding: Funding) => {
+export const checkIfFundingsAreIdentical = (sourceFunding: Funding, targetFunding: Funding) => {
   if (
     fundingSourceIsNfr(sourceFunding.source) &&
     fundingSourceIsNfr(targetFunding.source) &&

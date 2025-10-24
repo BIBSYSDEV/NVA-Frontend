@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Funding, Registration } from '../../../types/registration.types';
-import { isMatchingFundings } from '../merge-results-helpers';
+import { checkIfFundingsAreIdentical } from '../merge-results-helpers';
 import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 import { CompareFunding } from './CompareFunding';
 import { MissingCompareValues } from './MissingCompareValues';
@@ -19,15 +19,17 @@ export const CompareFundings = () => {
   const initialTargetFundings = (formState.defaultValues?.fundings ?? []) as Funding[];
 
   const commonFundings = sourceFundings.filter((sourceFunding) =>
-    initialTargetFundings.some((targetFunding) => isMatchingFundings(sourceFunding, targetFunding))
+    initialTargetFundings.some((targetFunding) => checkIfFundingsAreIdentical(sourceFunding, targetFunding))
   );
 
   const targetOnlyFundings = initialTargetFundings.filter(
-    (targetFunding) => !commonFundings.some((sourceFunding) => isMatchingFundings(sourceFunding, targetFunding))
+    (targetFunding) =>
+      !commonFundings.some((sourceFunding) => checkIfFundingsAreIdentical(sourceFunding, targetFunding))
   );
 
   const addableSourceFundings = sourceFundings.filter(
-    (sourceFunding) => !commonFundings.some((targetFunding) => isMatchingFundings(sourceFunding, targetFunding))
+    (sourceFunding) =>
+      !commonFundings.some((targetFunding) => checkIfFundingsAreIdentical(sourceFunding, targetFunding))
   );
 
   return (
@@ -51,7 +53,7 @@ export const CompareFundings = () => {
 
       {addableSourceFundings.map((funding) => {
         const matchingTargetFundingIndex = targetFundings.findIndex((targetFunding) =>
-          isMatchingFundings(targetFunding, funding)
+          checkIfFundingsAreIdentical(targetFunding, funding)
         );
         const matchingTargetFunding =
           matchingTargetFundingIndex > -1 ? targetFundings[matchingTargetFundingIndex] : undefined;
