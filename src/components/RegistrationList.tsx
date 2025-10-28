@@ -136,13 +136,7 @@ export const RegistrationListItemContent = ({
             marginBottom: '0.5rem',
             flexWrap: 'wrap',
           }}>
-          {!ticketView && (
-            <RegistrationIconHeader
-              publicationInstanceType={registration.type}
-              publicationDate={registration.publicationDate}
-            />
-          )}
-          {ticketView && (
+          {ticketView ? (
             <HorizontalBox sx={{ gap: '1rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
               {ticketType && <TicketTypeTag type={ticketType} />}
               <PublicationInstanceText publicationInstanceType={registration.type} />
@@ -150,6 +144,11 @@ export const RegistrationListItemContent = ({
               {(registration.recordMetadata.status === RegistrationStatus.Draft ||
                 registration.recordMetadata.status === RegistrationStatus.New) && <NotPublishedTag />}
             </HorizontalBox>
+          ) : (
+            <RegistrationIconHeader
+              publicationInstanceType={registration.type}
+              publicationDate={registration.publicationDate}
+            />
           )}
         </Box>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
