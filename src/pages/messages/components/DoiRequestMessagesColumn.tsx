@@ -1,4 +1,3 @@
-import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
 import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
@@ -23,15 +22,6 @@ export const DoiRequestMessagesColumn = ({ ticket, showDetails }: DoiRequestMess
 
   return (
     <StyledMessagesContainer>
-      {showDetails && (
-        <StyledStatusMessageBox>
-          <StyledIconAndTextWrapper>
-            <AddLinkOutlinedIcon fontSize="small" />
-            <Typography>{t('my_page.messages.types.DoiRequest')}</Typography>
-          </StyledIconAndTextWrapper>
-        </StyledStatusMessageBox>
-      )}
-
       {ticket.status === 'New' || ticket.status === 'Pending' ? (
         <StyledStatusMessageBox>
           <StyledIconAndTextWrapper>
