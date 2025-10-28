@@ -7,6 +7,7 @@ import { FetchResultsParams, ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { BookType } from '../../../types/publicationFieldNames';
+import { useLoggedInUser } from '../../../utils/hooks/useLoggedInUser';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
@@ -24,7 +25,7 @@ export type CorrectionListId =
   | 'BooksWithLessThan50Pages'
   | 'UnidentifiedContributorWithIdentifiedAffiliation';
 
-type CorrectionListSearchConfig = {
+export type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
     i18nKey: ParseKeys;
     queryParams: FetchResultsParams;
@@ -32,55 +33,68 @@ type CorrectionListSearchConfig = {
   };
 };
 
-export const correctionListConfig: CorrectionListSearchConfig = {
-  ApplicableCategoriesWithNonApplicableChannel: {
-    i18nKey: 'tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel',
-    queryParams: {
-      categoryShould: nviApplicableTypes,
-      allScientificValues: ScientificValueLevels.LevelZero,
+export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
+  const user = useLoggedInUser();
+  const userTopLevelOrg = user?.topOrgCristinId;
+
+  const correctionListConfig: CorrectionListSearchConfig = {
+    ApplicableCategoriesWithNonApplicableChannel: {
+      i18nKey: 'tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel',
+      queryParams: {
+        categoryShould: nviApplicableTypes,
+        allScientificValues: ScientificValueLevels.LevelZero,
+        topLevelOrganization: userTopLevelOrg,
+      },
+      disabledFilters: [],
     },
-    disabledFilters: [],
-  },
-  NonApplicableCategoriesWithApplicableChannel: {
-    i18nKey: 'tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel',
-    queryParams: {
-      categoryNot: nviApplicableTypes,
-      scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+    NonApplicableCategoriesWithApplicableChannel: {
+      i18nKey: 'tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel',
+      queryParams: {
+        categoryNot: nviApplicableTypes,
+        scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+        topLevelOrganization: userTopLevelOrg,
+      },
+      disabledFilters: [ResultParam.CategoryShould],
     },
-    disabledFilters: [ResultParam.CategoryShould],
-  },
-  AnthologyWithoutChapter: {
-    i18nKey: 'tasks.nvi.correction_list_type.anthology_without_chapter',
-    queryParams: {
-      categoryShould: [BookType.Anthology],
-      hasNoChildren: false,
+    AnthologyWithoutChapter: {
+      i18nKey: 'tasks.nvi.correction_list_type.anthology_without_chapter',
+      queryParams: {
+        categoryShould: [BookType.Anthology],
+        hasNoChildren: false,
+        topLevelOrganization: userTopLevelOrg,
+      },
+      disabledFilters: [],
     },
-    disabledFilters: [],
-  },
-  BooksWithLessThan50Pages: {
-    i18nKey: 'tasks.nvi.correction_list_type.book_with_less_than_50_pages',
-    queryParams: {
-      categoryShould: Object.values(BookType),
-      publicationPages: '0,50',
+    BooksWithLessThan50Pages: {
+      i18nKey: 'tasks.nvi.correction_list_type.book_with_less_than_50_pages',
+      queryParams: {
+        categoryShould: Object.values(BookType),
+        publicationPages: '0,50',
+        topLevelOrganization: userTopLevelOrg,
+      },
+      disabledFilters: [],
     },
-    disabledFilters: [],
-  },
-  AnthologyWithApplicableChapter: {
-    i18nKey: 'tasks.nvi.correction_list_type.anthology_with_applicable_chapter',
-    queryParams: {
-      categoryShould: [BookType.Anthology],
-      hasChildren: true,
-      scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+    AnthologyWithApplicableChapter: {
+      i18nKey: 'tasks.nvi.correction_list_type.anthology_with_applicable_chapter',
+      queryParams: {
+        categoryShould: [BookType.Anthology],
+        hasChildren: true,
+        scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+        topLevelOrganization: userTopLevelOrg,
+      },
+      disabledFilters: [],
     },
-    disabledFilters: [],
-  },
-  UnidentifiedContributorWithIdentifiedAffiliation: {
-    i18nKey: 'tasks.nvi.correction_list_type.unidentified_contributor_with_identified_affiliation',
-    queryParams: {
-      unidentifiedNorwegian: true,
+    UnidentifiedContributorWithIdentifiedAffiliation: {
+      i18nKey: 'tasks.nvi.correction_list_type.unidentified_contributor_with_identified_affiliation',
+      queryParams: {
+        unidentifiedNorwegian: true,
+        topLevelOrganization: userTopLevelOrg,
+      },
+      disabledFilters: [],
     },
-    disabledFilters: [],
-  },
+  };
+
+  return correctionListConfig;
 };
 
 export const nviCorrectionListQueryKey = 'list';
@@ -90,6 +104,7 @@ export const NviCorrectionList = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
+  const correctionListConfig = useCorrectionListConfig();
   const listConfig = listId && correctionListConfig[listId];
 
   const registrationParams = useRegistrationsQueryParams();

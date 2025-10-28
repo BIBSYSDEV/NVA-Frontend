@@ -40,7 +40,6 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const topLevelOrgParam = params.get(ResultParam.TopLevelOrganization);
   const [showUnitSelection, setShowUnitSelection] = useState(false);
   const toggleShowUnitSelection = () => setShowUnitSelection(!showUnitSelection);
-  const isOnNviCorrectionListPage = location.pathname == UrlPathTemplate.TasksNviCorrectionList;
 
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
   const userOrganization = organizationQuery.data;
@@ -126,7 +125,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
           }}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           disabled={topLevelOrganizationQuery.isFetching}
-          value={isOnNviCorrectionListPage ? organizationQuery.data : (topLevelOrganizationQuery.data ?? null)}
+          value={topLevelOrganizationQuery.data ?? null}
           loading={isLoading}
           renderOption={({ key, ...props }, option) => (
             <OrganizationRenderOption key={option.id} props={props} option={option} />
