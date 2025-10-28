@@ -5,6 +5,7 @@
     "footer_text": "The service is provided by Sikt — Norwegian Agency for Shared Services in Education and Research. Sikt provides shared services to the Norwegian knowledge sector."
   },
   "add_file": "Add file",
+  "add_project": "",
   "authorization": {
     "about_terms": "Terms of Use and Privacy Policy for the Norwegian Research Information Repository",
     "about_terms_description": "<p>To use the service, you must accept Sikt's <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Terms of Use for the Norwegian Research Information Repository</a>, and familiarize yourself with the <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva\">Privacy Policy for the Norwegian Research Information Repository.</a></p><p>By clicking on «$t(authorization.accept)», you confirm that you have read and accepted the terms of use. You also consent to the processing of personal data in accordance with the privacy policy.</p>",
@@ -619,6 +620,7 @@
       "update_publishing_request": "Failed to update publishing request",
       "update_registration": "Failed to update registration",
       "update_rights_retention_strategy": "Failed to update rights policy",
+      "update_rrs_and_file_import": "",
       "update_ticket_assignee": "Failed to set curator",
       "update_ticket_status": "Failed to update status",
       "update_vocabulary": "Failed to update {{vocabulary}}"
@@ -667,6 +669,7 @@
       "update_publish_strategy": "Publishing strategy updated successfully",
       "update_registration": "Registration updated successfully",
       "update_rights_retention_strategy": "Rights retention policy was updated",
+      "update_rrs_and_file_import": "",
       "update_ticket_assignee": "Curator was updated",
       "update_vocabulary": "{{vocabulary}} is now {{status}}"
     },
@@ -697,6 +700,10 @@
       "reference_required": "Reference required"
     }
   },
+  "file_import": "",
+  "file_import_automatic_import": "",
+  "file_import_create_ticket": "",
+  "file_import_description": "",
   "file_upload_disabled_curator_can_upload_on_behalf": "Your institution does not allow the registrar to upload files for this category. As curator, you may add a file on behalf of the registrar.",
   "file_upload_disabled_due_to_institution_policy": "Your institution does not allow the registrar to upload files for this category. Contact curator support if you wish to have a file on this result.",
   "find_result_to_merge_description": "<p>Merge two results to avoid having two versions of the same result with different metadata and files.</p><p>If different metadata is registered, you can choose which data will apply. You also decide whether files should be transferred to the published result.</p><heading>Search for research result</heading><p>Select the result you want to merge with. You can only merge results where you are registered as a contributor.</p>",
@@ -716,6 +723,9 @@
   "go_to_advanced_search": "Go to advanced result search",
   "institution_support": "Institution's user support",
   "institutions_service_support": "Institutions' user support",
+  "keep_all_contributors": "",
+  "keep_contributors_from_published_result": "",
+  "keep_contributors_from_source_result": "",
   "licenses": {
     "additional_info": {
       "cc0": "<p>See the <link1>Copyright Act</link1> §§3, 8, 11, and 14</p>"

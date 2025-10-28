@@ -7,10 +7,12 @@ import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
 import { CompareContributor } from './fields/CompareContributor';
+import { mergeContributors } from './merge-results-helpers';
 
 enum ContributorMergeOption {
   SourceOnly,
   TargetOnly,
+  MergeBoth,
 }
 
 export const MergeResultsWizardContributorsTab = () => {
@@ -27,15 +29,27 @@ export const MergeResultsWizardContributorsTab = () => {
       <RadioGroup
         sx={{ gridColumn: '1/-1', display: 'grid', gridTemplateColumns: 'subgrid' }}
         defaultValue={ContributorMergeOption.TargetOnly}>
+        <div>
+          <FormControlLabel
+            data-testid={dataTestId.basicData.centralImport.mergeContributorsRadioButtons.mergeAllContributors}
+            value={ContributorMergeOption.MergeBoth}
+            control={<Radio />}
+            onChange={() => {
+              const mergedContributors = mergeContributors(sourceContributors, initialTargetContributors);
+              setValue('entityDescription.contributors', mergedContributors);
+            }}
+            label={t('keep_all_contributors', { sourceType: sourceHeading.toLocaleLowerCase() })}
+          />
+          <FormControlLabel
+            data-testid={dataTestId.basicData.centralImport.mergeContributorsRadioButtons.keepContributorsFromSource}
+            value={ContributorMergeOption.SourceOnly}
+            control={<Radio />}
+            onChange={() => setValue('entityDescription.contributors', sourceContributors)}
+            label={t('keep_contributors_from_source_result', { sourceType: sourceHeading.toLocaleLowerCase() })}
+          />
+        </div>
         <FormControlLabel
-          data-testid={dataTestId.basicData.centralImport.keepContributorsFromSourceRadio}
-          value={ContributorMergeOption.SourceOnly}
-          control={<Radio />}
-          onChange={() => setValue('entityDescription.contributors', sourceContributors)}
-          label={t('keep_contributors_from_source_result', { sourceType: sourceHeading.toLocaleLowerCase() })}
-        />
-        <FormControlLabel
-          data-testid={dataTestId.basicData.centralImport.keepContributorsFromTargetRadio}
+          data-testid={dataTestId.basicData.centralImport.mergeContributorsRadioButtons.keepContributorsFromTarget}
           value={ContributorMergeOption.TargetOnly}
           control={<Radio />}
           onChange={() => setValue('entityDescription.contributors', initialTargetContributors)}

@@ -19,14 +19,17 @@ enum Color {
   Neutral95 = '#F1F1F1',
   Neutral87 = '#DEDEDE',
   Neutral46 = '#767676',
-  Blue = '#004FCF',
   BlueLight = '#E6F0FF',
+  BlueClear = '#75C7F0',
+  Blue = '#004FCF',
   Green = '#096638',
   GreenLight = '#CFF7E2',
   Red = '#B60203',
   RedLight = '#FFEAE9',
-  Yellow = '#FFB700',
   YellowLight = '#FCEED2',
+  YellowClear = '#FBE774',
+  Yellow = '#FFB700',
+  Orange = '#FFAC70',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
@@ -39,6 +42,12 @@ declare module '@mui/material/styles' {
     project: PaletteColor;
     centralImport: PaletteColor;
     neutral87: PaletteColor;
+    taskType: {
+      publishingRequest: PaletteColor;
+      filesApprovalThesis: PaletteColor;
+      doiRequest: PaletteColor;
+      generalSupportCase: PaletteColor;
+    };
   }
   interface PaletteOptions {
     tertiary: PaletteColorOptions;
@@ -47,6 +56,12 @@ declare module '@mui/material/styles' {
     project?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
     neutral87?: PaletteColorOptions;
+    taskType?: {
+      publishingRequest?: PaletteColorOptions;
+      filesApprovalThesis?: PaletteColorOptions;
+      doiRequest?: PaletteColorOptions;
+      generalSupportCase?: PaletteColorOptions;
+    };
   }
   interface TypeBackground {
     neutral97?: string;
@@ -126,6 +141,20 @@ export const mainTheme = createTheme(
       },
       registration: {
         main: Color.Registration,
+      },
+      taskType: {
+        publishingRequest: {
+          main: Color.YellowClear,
+        },
+        filesApprovalThesis: {
+          main: Color.YellowClear,
+        },
+        doiRequest: {
+          main: Color.Orange,
+        },
+        generalSupportCase: {
+          main: Color.BlueClear,
+        },
       },
       person: {
         main: Color.Person,

@@ -57,8 +57,11 @@ export const dataTestId = {
         publicationYearSelect: 'publication-year-select',
       },
       importCandidateButton: 'import-candidate-button',
-      keepContributorsFromSourceRadio: 'keep-contributors-from-source-radio',
-      keepContributorsFromTargetRadio: 'keep-contributors-from-target-radio',
+      mergeContributorsRadioButtons: {
+        keepContributorsFromSource: 'keep-contributors-from-source-radio',
+        keepContributorsFromTarget: 'keep-contributors-from-target-radio',
+        mergeAllContributors: 'merge-all-contributors-radio',
+      },
       resetButton: 'duplicate-search-reset-button',
       resetValueButton: 'reset-value-button',
       resultItem: 'central-import-result-item',
