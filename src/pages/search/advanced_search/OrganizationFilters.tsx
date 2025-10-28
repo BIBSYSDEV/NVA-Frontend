@@ -20,6 +20,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { OrganizationHierarchyFilter } from './OrganizationHierarchyFilter';
 
 interface OrganizationFiltersProps {
@@ -39,6 +40,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const topLevelOrgParam = params.get(ResultParam.TopLevelOrganization);
   const [showUnitSelection, setShowUnitSelection] = useState(false);
   const toggleShowUnitSelection = () => setShowUnitSelection(!showUnitSelection);
+  const isOnNviCorrectionListPage = location.pathname == UrlPathTemplate.TasksNviCorrectionList;
 
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
   const userOrganization = organizationQuery.data;
@@ -124,7 +126,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
           }}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           disabled={topLevelOrganizationQuery.isFetching}
-          value={topLevelOrganizationQuery.data ?? null}
+          value={isOnNviCorrectionListPage ? organizationQuery.data : (topLevelOrganizationQuery.data ?? null)}
           loading={isLoading}
           renderOption={({ key, ...props }, option) => (
             <OrganizationRenderOption key={option.id} props={props} option={option} />
