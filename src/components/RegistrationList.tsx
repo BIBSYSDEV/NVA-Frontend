@@ -89,6 +89,8 @@ export const RegistrationListItemContent = ({
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
+  console.log(registration);
+
   const user = useSelector((store: RootState) => store.user);
   const userCristinId = user?.cristinId ?? '';
   const mutationKey = ['person-preferences', userCristinId];
@@ -104,6 +106,8 @@ export const RegistrationListItemContent = ({
   const countRestContributors = registration.contributorsCount - focusedContributors.length;
 
   const isPromotedPublication = promotedPublications.includes(id);
+
+  const publicationChannelName = registration.publishingDetails.publisher?.name ?? '';
 
   const isMutating = useIsMutating({ mutationKey }) > 0;
 
@@ -148,6 +152,7 @@ export const RegistrationListItemContent = ({
             <RegistrationIconHeader
               publicationInstanceType={registration.type}
               publicationDate={registration.publicationDate}
+              publicationChannelName={publicationChannelName}
             />
           )}
         </Box>
