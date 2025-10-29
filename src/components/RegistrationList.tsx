@@ -89,8 +89,6 @@ export const RegistrationListItemContent = ({
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
-  console.log(registration);
-
   const user = useSelector((store: RootState) => store.user);
   const userCristinId = user?.cristinId ?? '';
   const mutationKey = ['person-preferences', userCristinId];

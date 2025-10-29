@@ -9,7 +9,7 @@ interface RegistrationIconHeaderProps {
   publicationDate?: Omit<RegistrationDate, 'type'>;
   showYearOnly?: boolean;
   textColor?: TypographyProps['color'];
-  publicationChannelName: string;
+  publicationChannelName?: string;
 }
 
 export const RegistrationIconHeader = ({
