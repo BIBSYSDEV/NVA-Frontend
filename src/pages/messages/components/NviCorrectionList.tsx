@@ -15,6 +15,7 @@ import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
+import { NviYearSelector } from './NviYearSelector';
 
 export type CorrectionListId =
   | 'ApplicableCategoriesWithNonApplicableChannel'
@@ -134,6 +135,7 @@ export const NviCorrectionList = () => {
               <JournalFilter />
               <SeriesFilter />
             </Box>
+            <NviYearSelector />
           </Box>
 
           <RegistrationSearch registrationQuery={registrationQuery} />
