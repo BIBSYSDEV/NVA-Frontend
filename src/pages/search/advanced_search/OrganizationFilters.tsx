@@ -20,7 +20,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { OrganizationHierarchyFilter } from './OrganizationHierarchyFilter';
 
 interface OrganizationFiltersProps {
