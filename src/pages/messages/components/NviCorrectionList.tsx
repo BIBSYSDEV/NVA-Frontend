@@ -78,6 +78,7 @@ export const correctionListConfig: CorrectionListSearchConfig = {
     i18nKey: 'tasks.nvi.correction_list_type.unidentified_contributor_with_identified_affiliation',
     queryParams: {
       unidentifiedNorwegian: true,
+      categoryShould: nviApplicableTypes,
     },
     disabledFilters: [],
   },
