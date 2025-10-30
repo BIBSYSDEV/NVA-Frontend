@@ -1,21 +1,25 @@
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Divider, MenuItem, TextField, Typography } from '@mui/material';
 import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
-import { FetchResultsParams, ResultParam } from '../../../api/searchApi';
+import { FetchResultsParams, NviCandidatesSearchParam, ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { HeadTitle } from '../../../components/HeadTitle';
+import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { BookType } from '../../../types/publicationFieldNames';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
+import { getNviYearFilterValues } from '../../../utils/nviHelpers';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
-import { NviYearSelector } from './NviYearSelector';
 
 export type CorrectionListId =
   | 'ApplicableCategoriesWithNonApplicableChannel'
@@ -86,22 +90,25 @@ export const correctionListConfig: CorrectionListSearchConfig = {
 };
 
 export const nviCorrectionListQueryKey = 'list';
+const nviYearFilterValues = getNviYearFilterValues(new Date().getFullYear() + 1);
 
 export const NviCorrectionList = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
   const listConfig = listId && correctionListConfig[listId];
 
   const registrationParams = useRegistrationsQueryParams();
+  const { year, offset } = useNviCandidatesParams();
 
   const registrationQuery = useRegistrationSearch({
     enabled: !!listConfig,
     params: {
       ...listConfig?.queryParams,
       ...registrationParams,
-      publicationYearSince: (new Date().getFullYear() - 1).toString(),
+      publicationYear: year.toString(),
       unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
     },
   });
@@ -134,8 +141,37 @@ export const NviCorrectionList = () => {
               <PublisherFilter />
               <JournalFilter />
               <SeriesFilter />
+              <Divider orientation="vertical" flexItem sx={{ bgcolor: 'primary.main' }} />
+              <Box>
+                <StyledFilterHeading>{t('registration.year_published')}</StyledFilterHeading>
+                <TextField
+                  sx={{ minWidth: '6rem' }}
+                  select
+                  data-testid={dataTestId.tasksPage.nvi.yearSelect}
+                  size="small"
+                  value={year}
+                  slotProps={{
+                    htmlInput: {
+                      'aria-label': t('registration.year_published'),
+                    },
+                  }}
+                  onChange={(event) => {
+                    const selectedYear = +event.target.value;
+                    const syncedParams = syncParamsWithSearchFields(searchParams);
+                    syncedParams.set(NviCandidatesSearchParam.Year, selectedYear.toString());
+                    if (offset) {
+                      syncedParams.delete(NviCandidatesSearchParam.Offset);
+                    }
+                    navigate({ search: syncedParams.toString() });
+                  }}>
+                  {nviYearFilterValues.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Box>{' '}
             </Box>
-            <NviYearSelector />
           </Box>
 
           <RegistrationSearch registrationQuery={registrationQuery} />
