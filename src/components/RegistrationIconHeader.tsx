@@ -26,7 +26,7 @@ export const RegistrationIconHeader = ({
       {publicationDate?.year && (
         <DateText publicationDate={publicationDate} showYearOnly={showYearOnly} textColor={textColor} />
       )}
-      {!!publicationChannelName && <Typography>| {publicationChannelName}</Typography>}
+      {!!publicationChannelName && <Typography color={textColor}>| {publicationChannelName}</Typography>}
     </Box>
   );
 };
