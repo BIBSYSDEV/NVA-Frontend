@@ -5,36 +5,12 @@ import { ResultParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NavigationList } from '../../../components/PageWithSideMenu';
 import { SelectableButton } from '../../../components/SelectableButton';
+import { CorrectionListId } from '../../../types/nvi.types';
+import { getAccordionDefaultPath, getCorrectionListSearchParams } from '../../../utils/correctionListHelpers';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { useCorrectionListConfig } from '../../../utils/nviHelpers';
+import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { nviCorrectionListQueryKey } from './NviCorrectionList';
-import { CorrectionListSearchConfig, CorrectionListId } from '../../../types/nvi.types';
-
-const getCorrectionListSearchParams = (
-  correctionListConfig: CorrectionListSearchConfig,
-  newCorrectionListId: CorrectionListId
-) => {
-  const newSearchParams = new URLSearchParams();
-  newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
-  const correctionListCategoryFilter = correctionListConfig[newCorrectionListId].queryParams.categoryShould;
-  const correctionListTopLevelOrgFilter = correctionListConfig[newCorrectionListId].topLevelOrganization;
-  if (correctionListCategoryFilter && correctionListCategoryFilter.length > 0) {
-    newSearchParams.set(ResultParam.CategoryShould, correctionListCategoryFilter.join(','));
-  }
-
-  if (correctionListTopLevelOrgFilter) {
-    newSearchParams.set(ResultParam.TopLevelOrganization, correctionListTopLevelOrgFilter);
-  }
-  return newSearchParams;
-};
-
-const getAccordionDefaultPath = (correctionListConfig: CorrectionListSearchConfig): string => {
-  return `${UrlPathTemplate.TasksNviCorrectionList}?${getCorrectionListSearchParams(
-    correctionListConfig,
-    'ApplicableCategoriesWithNonApplicableChannel'
-  ).toString()}`;
-};
 
 export const NviCorrectionListNavigationAccordion = () => {
   const { t } = useTranslation();
