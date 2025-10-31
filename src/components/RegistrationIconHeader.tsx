@@ -1,5 +1,5 @@
 import NotesIcon from '@mui/icons-material/Notes';
-import { Box, TypographyProps } from '@mui/material';
+import { Box, Typography, TypographyProps } from '@mui/material';
 import { PublicationInstanceType, RegistrationDate } from '../types/registration.types';
 import { DateText } from './RegistrationListItem/components/DateText';
 import { PublicationInstanceText } from './RegistrationListItem/components/PublicationInstanceText';
@@ -9,6 +9,7 @@ interface RegistrationIconHeaderProps {
   publicationDate?: Omit<RegistrationDate, 'type'>;
   showYearOnly?: boolean;
   textColor?: TypographyProps['color'];
+  publicationChannelName?: string;
 }
 
 export const RegistrationIconHeader = ({
@@ -16,6 +17,7 @@ export const RegistrationIconHeader = ({
   publicationDate,
   showYearOnly = false,
   textColor,
+  publicationChannelName,
 }: RegistrationIconHeaderProps) => {
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
@@ -24,6 +26,7 @@ export const RegistrationIconHeader = ({
       {publicationDate?.year && (
         <DateText publicationDate={publicationDate} showYearOnly={showYearOnly} textColor={textColor} />
       )}
+      {!!publicationChannelName && <Typography color={textColor}>| {publicationChannelName}</Typography>}
     </Box>
   );
 };
