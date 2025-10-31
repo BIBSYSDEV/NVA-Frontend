@@ -16,7 +16,7 @@ export const TicketTopLine = () => {
     registrationStatus === RegistrationStatus.Draft || registrationStatus === RegistrationStatus.New;
 
   return (
-    <HorizontalBox sx={{ gap: '1rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
+    <HorizontalBox sx={{ gap: '1rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
       <TicketTypeTag type={ticketType} />
       <PublicationInstanceText publicationInstanceType={registration.type} />
       {registration.publicationDate?.year && <DateText publicationDate={registration.publicationDate} />}
