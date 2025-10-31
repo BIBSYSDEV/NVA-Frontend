@@ -105,6 +105,8 @@ export const RegistrationListItemContent = ({
 
   const isPromotedPublication = promotedPublications.includes(id);
 
+  const publicationChannelName = registration.publishingDetails.publisher?.name ?? '';
+
   const isMutating = useIsMutating({ mutationKey }) > 0;
 
   const mutatePromotedPublications = useMutation({
@@ -148,6 +150,7 @@ export const RegistrationListItemContent = ({
             <RegistrationIconHeader
               publicationInstanceType={registration.type}
               publicationDate={registration.publicationDate}
+              publicationChannelName={publicationChannelName}
             />
           )}
         </Box>
