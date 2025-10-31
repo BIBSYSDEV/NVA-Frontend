@@ -2,12 +2,12 @@ import { RegistrationSearchItem } from '../../types/registration.types';
 import RegistrationListItem from './RegistrationListItem';
 import { TicketType } from '../../types/publication_types/ticket.types';
 
-interface RegistrationInformationProps {
+interface TicketInformationProps {
   registration: RegistrationSearchItem;
   ticketType: TicketType;
 }
 
-export const TicketInformation = ({ registration, ticketType }: RegistrationInformationProps) => {
+export const TicketInformation = ({ registration, ticketType }: TicketInformationProps) => {
   return (
     <RegistrationListItem registration={registration} ticketType={ticketType}>
       <RegistrationListItem.TicketTopLine />

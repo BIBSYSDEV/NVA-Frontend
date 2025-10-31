@@ -10,7 +10,7 @@ interface ContributorsProps {
   ticketView?: boolean;
 }
 
-export const Contributors = ({ ticketView = true }: ContributorsProps) => {
+export const RegistrationContributors = ({ ticketView = true }: ContributorsProps) => {
   const { t } = useTranslation();
   const { registration } = useContext(RegistrationListItemContext) ?? {};
   if (!registration) return null;
