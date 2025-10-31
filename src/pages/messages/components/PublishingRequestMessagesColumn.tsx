@@ -1,8 +1,6 @@
 import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
-import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import { Box, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ExpandedPublishingTicket, PublishingTicket } from '../../../types/publication_types/ticket.types';
@@ -38,22 +36,6 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
 
   return (
     <StyledMessagesContainer>
-      <StyledStatusMessageBox>
-        <StyledIconAndTextWrapper>
-          {ticket.type === 'FilesApprovalThesis' ? (
-            <>
-              <SchoolOutlinedIcon fontSize="small" />
-              <Typography>{t('my_page.messages.types.FilesApprovalThesis')}</Typography>
-            </>
-          ) : (
-            <>
-              <InsertDriveFileOutlinedIcon fontSize="small" />
-              <Typography>{t('my_page.messages.types.PublishingRequest')}</Typography>
-            </>
-          )}
-        </StyledIconAndTextWrapper>
-      </StyledStatusMessageBox>
-
       {ticket.status === 'Pending' || ticket.status === 'New' ? (
         <>
           {ticket.filesForApproval.length > 0 && (

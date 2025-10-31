@@ -63,13 +63,17 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
   registration: RegistrationSearchItem;
-  ticketView?: boolean;
   onRemoveRelated?: () => void;
 }
 
+// TODO: Rather than expanding on the complexity of this component, we are currently in a process of using the composition pattern
+// to put together several similar but different versions of this component using common building blocks to avoid code duplication.
+// What was previously a part of this component using ticketView-boolean-prop has now become the TicketInformation-component.
+// If your use case for using this component goes into some of the if-conditionals in this component, please consider
+// whether you can create a new component using the composition pattern (see example in TicketInformation) with
+// new or existing building blocks (in the RegistrationListItem/components-folder)
 export const RegistrationListItemContent = ({
   registration,
-  ticketView = false,
   canEditRegistration,
   onDeleteDraftRegistration,
   promotedPublications = [],
@@ -97,6 +101,8 @@ export const RegistrationListItemContent = ({
   const countRestContributors = registration.contributorsCount - focusedContributors.length;
 
   const isPromotedPublication = promotedPublications.includes(id);
+
+  const publicationChannelName = registration.publishingDetails.publisher?.name ?? '';
 
   const isMutating = useIsMutating({ mutationKey }) > 0;
 
@@ -132,34 +138,20 @@ export const RegistrationListItemContent = ({
           <RegistrationIconHeader
             publicationInstanceType={registration.type}
             publicationDate={registration.publicationDate}
+            publicationChannelName={publicationChannelName}
           />
-          {ticketView &&
-            (registration.recordMetadata.status === RegistrationStatus.Draft ||
-              registration.recordMetadata.status === RegistrationStatus.New) && (
-              <Typography
-                sx={{
-                  p: '0.1rem 0.75rem',
-                  bgcolor: 'warning.light',
-                }}>
-                {t('registration.public_page.result_not_published')}
-              </Typography>
-            )}
         </Box>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
-          {ticketView ? (
-            getTitleString(registration.mainTitle)
-          ) : (
-            <MuiLink
-              target={target}
-              component={Link}
-              state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
-              to={{
-                pathname: getRegistrationLandingPagePath(identifier),
-                search: doNotRedirect ? `${doNotRedirectQueryParam}=true` : '',
-              }}>
-              {getTitleString(registration.mainTitle)}
-            </MuiLink>
-          )}
+          <MuiLink
+            target={target}
+            component={Link}
+            state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
+            to={{
+              pathname: getRegistrationLandingPagePath(identifier),
+              search: doNotRedirect ? `${doNotRedirectQueryParam}=true` : '',
+            }}>
+            {getTitleString(registration.mainTitle)}
+          </MuiLink>
         </Typography>
         <Box
           sx={{
@@ -173,7 +165,7 @@ export const RegistrationListItemContent = ({
                 key={index}
                 sx={{ display: 'flex', alignItems: 'center', '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
                 <Typography variant="body2">
-                  {contributor.identity.id && !ticketView ? (
+                  {contributor.identity.id ? (
                     <MuiLink target={target} component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                       {contributor.identity.name}
                     </MuiLink>
@@ -184,7 +176,6 @@ export const RegistrationListItemContent = ({
                 <ContributorIndicators
                   orcId={contributor.identity.orcId}
                   correspondingAuthor={contributor.correspondingAuthor}
-                  ticketView={ticketView}
                 />
               </Box>
             ))}

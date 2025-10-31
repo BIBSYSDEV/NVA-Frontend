@@ -4,9 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import { updateTicket } from '../../../api/registrationApi';
-import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
-import { SearchListItem } from '../../../components/styled/Wrappers';
+import { TaskListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
@@ -27,6 +26,8 @@ import { StyledVerifiedContributor } from '../../registration/contributors_tab/C
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
 import { SupportMessagesColumn } from './SupportMessagesColumn';
+import { getTicketColor } from '../utils';
+import { TicketInformation } from '../../../components/RegistrationListItem/TicketInformation';
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;
@@ -66,11 +67,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const isOnMyPageMessages = window.location.pathname === UrlPathTemplate.MyPageMyMessages;
 
   return (
-    <SearchListItem
-      sx={{
-        p: 0,
-        bgcolor: !viewedByUser ? 'tertiary.light' : 'white',
-      }}>
+    <TaskListItem
+      sx={{ bgcolor: !viewedByUser ? 'tertiary.light' : 'white', borderLeftColor: getTicketColor(ticket.type) }}>
       <MuiLink
         component={Link}
         state={
@@ -106,7 +104,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             gap: '0 1rem',
             gridTemplateColumns: { xs: '1fr', sm: '10fr 4fr 2fr 2fr 1fr' },
           }}>
-          <RegistrationListItemContent registration={registrationSearchItem} ticketView />
+          <TicketInformation registration={registrationSearchItem} ticketType={ticket.type} />
           {isFileApprovalTicket(ticket) ? (
             <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
           ) : ticket.type === 'DoiRequest' ? (
@@ -140,6 +138,6 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           )}
         </Box>
       </MuiLink>
-    </SearchListItem>
+    </TaskListItem>
   );
 };

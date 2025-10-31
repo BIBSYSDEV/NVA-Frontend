@@ -518,10 +518,10 @@
     "vocabulary_description": "Kontrollerte emneord (vokabular) som kan benyttes ved registrering av nytt resultat.",
     "vocabulary_status": {
       "Allowed": "Tillatt",
-      "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
       "Default": "Standard",
-      "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
       "Disabled": "Ikke tillatt",
+      "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
+      "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
     }
   },
@@ -619,6 +619,7 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
+      "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
       "update_rrs_and_file_import": "Kunne ikke oppdatere rettighetspolitikk og filimport",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
@@ -667,6 +668,7 @@
       "update_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
+      "update_rights_retention_strategy": "Rettighetspolitikk ble oppdatert",
       "update_rrs_and_file_import": "Rettighetspolitikk og filimport ble oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
@@ -698,6 +700,10 @@
       "reference_required": "Oppgi referanse på resultat"
     }
   },
+  "file_import": "Filimport",
+  "file_import_automatic_import": "Automatisk publisert i NVA",
+  "file_import_create_ticket": "Filforespørsel blir sendt til filkurator",
+  "file_import_description": "<p>Sentralimport av data fra eksterne datakilder.<br>Importør hos Sikt kontrollerer og slår eventuelt sammen med andre resultater for å unngå duplikater.</p><p>Institusjonen kan bestemme om filene automatisk skal godkjennes, eller om de først skal kontrolleres manuelt av en filkurator før de blir publisert i NVA.</p>",
   "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Som kurator kan du legge til en fil på vegne av registrator.",
   "file_upload_disabled_due_to_institution_policy": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønsker å ha en fil på dette resultatet.",
   "find_result_to_merge_description": "<p>Slå sammen to resultater for å unngå to versjoner av samme resultat med forskjellige metadata og filer.</p><p>Er det registrert forskjellig metadata så velger du hvilke data som er gjeldende. Du velger også om filer skal flyttes over til det publiserte resultatet.</p><heading>Søk etter forskningsresultat</heading><p>Velg resultatet du ønsker å slå sammen med. Du kan bare slå sammen resultatet der du er registrert som bidragsyter.</p>",
@@ -717,6 +723,7 @@
   "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
+  "keep_all_contributors": "Behold bidragsytere fra både {{sourceType}} og publisert resultat",
   "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
   "keep_contributors_from_source_result": "Behold kun bidragsytere fra {{sourceType}}",
   "licenses": {
@@ -724,17 +731,18 @@
       "cc0": "<p>Se <link1>åndsverksloven</link1> §3, §8, §11 og §14</p>"
     },
     "description": {
+      "cc0": "<p>Verket er frigitt til offentlig bruk, uten opphavsrettigheter, så langt loven tillater.</p><p>Brukes denne lisensen, last opp et dokument der du begrunner hvorfor.</p>",
       "cc_by": "<p>Brukeren kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p><p>Brukeren må: gi riktig kreditering og si fra om endringer.</p>",
       "cc_by_nc": "<p>Brukeren kan: kopiere, dele og endre verket, men kun for ikke-kommersielle formål.</p><p>Brukeren må: gi riktig kreditering og si fra om endringer.</p>",
       "cc_by_nc_nd": "<p>Brukeren kan: kopiere og dele verket for ikke-kommersielle formål</p><p>Brukeren kan ikke: endre eller tilpasse verket.</p><p>Brukeren må: gi riktig kreditering.</p>",
       "cc_by_nc_sa": "<p>Brukeren kan: kopiere, dele og endre verket for ikke-kommersielle formål.</p><p>Brukeren må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
       "cc_by_nd": "<p>Brukeren kan: kopiere og dele verket for alle typer bruk, også kommersielle.</p><p>Brukeren kan ikke: endre eller tilpasse verket.</p><p>Brukeren må: gi riktig kreditering.</p>",
       "cc_by_sa": "<p>Brukeren kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p><p>Brukeren må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
-      "cc0": "<p>Verket er frigitt til offentlig bruk, uten opphavsrettigheter, så langt loven tillater.</p><p>Brukes denne lisensen, last opp et dokument der du begrunner hvorfor.</p>",
       "copyright_act": "<p>Dette materialet kan kun brukes innenfor de rammene som lov om opphavsrett til åndsverk (åndsverksloven) gir:</p><ul><li>Brukeren kan lese og lenke til materialet.</li><li>Brukeren kan sitere fra materialet i samsvar med god skikk, og så langt formålet tilsier det.</li><li>Brukeren kan kopiere materialet til privat bruk, inkludert deling i privat krets og til personlig yrkesmessig bruk.</li></ul><p>Dersom brukeren ønsker å benytte materialet på en annen måte, for eksempel til re-publisering, må brukeren innhente samtykke direkte fra rettighetshaver (den fysiske eller juridiske personen som har immateriell rettighet til materiale).</p>",
       "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens"
     },
     "labels": {
+      "cc0": "CC0 ({{version}})",
       "cc_by": "CC BY ({{version}})",
       "cc_by_nc": "CC BY-NC ({{version}})",
       "cc_by_nc_nd": "CC BY-NC-ND ({{version}})",
@@ -742,19 +750,18 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "cc0": "CC0 ({{version}})",
       "copyright_act": "Generelle bruksvilkår",
       "older_licenses": "Eldre lisenser"
     },
     "links": {
+      "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
       "cc_by": "https://creativecommons.org/licenses/by/{{version}}/deed.no",
       "cc_by_nc": "https://creativecommons.org/licenses/by-nc/{{version}}/deed.no",
       "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/{{version}}/deed.no",
       "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/{{version}}/deed.no",
       "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}/deed.no",
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no",
-      "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no"
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no"
     },
     "read_more_about_license": "Les mer om {{license}}",
     "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Disse bruksvilkårene beskriver lovlig bruk av materiale som er gjort tilgjengelig i Nasjonalt vitenarkiv og som er merket med «generelle bruksvilkår».</p><ul><li>Du kan fritt lese og lenke til materialet.<ul><li>Du kan fritt lese materialet og dele lenke til det, for eksempel i e-post, eller på en nettside.</li></ul></li><li>Du kan sitere fra materialet i tråd med god skikk og så langt formålet tilsier det, jf. åndsverkloven § 29.<ul><li>Sitatet må settes inn i en relevant sammenheng og ikke endre verkets karakter.</li><li>Oppgi alltid kilde og opphaver, så langt det er praktisk mulig, jf. § 5.</li></ul></li><li>Du kan lage kopier til privat bruk, inkludert deling i nær personkrets og til personlig yrkesmessig bruk.  Med «privat bruk» menes at kopien kun skal brukes i en begrenset krets eller av deg selv, og altså ikke deles med allmennheten eller brukes kommersielt. Dette kan for eksempel være:<ul><li>Privat bruk: for eksempel laste ned en artikkel for å senere bruke eller dele den med en venn eller et familiemedlem.</li><li>Privat yrkesmessig bruk: for eksempel laste ned en artikkel for å forberede en forelesning, eller ta med et dokument hjem for selvstudium.</li></ul></li></ul><strong>Når må du ha tillatelse?</strong><p>Dersom du ønsker å bruke materialet på annen måte – for eksempel publisere det et annet sted, bruke det i nye publikasjoner, eller gjøre hele verket tilgjengelig utenfor NVA – må du innhente tillatelse fra rettighetshaver. Slike handlinger omfattes av opphavspersonens enerett etter åndsverkloven § 3.</p><strong>Er du i tvil?</strong><p>Hvis du er usikker på om du har rett til å bruke materialet slik du planlegger, anbefales det å kontakte rettighetshaver – eller din institusjon for veiledning.</p><hr/><p>Dersom du er rettighetshaver til et åndsverk som har fått denne lisensen og er uenig i at materialet kan brukes som beskrevet over, så må du ta kontakt med utgiveren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikke er mulig å kontakte utgiveren, kan du ta kontakt med tjenestelevandøren for NVA, Sikt: <link1>Henvendelse om opphavsrett</link1>.</p>"
@@ -788,10 +795,10 @@
       "file_type_updated": "Fil endret til {{newFileType}}",
       "files_published_one": "Fil publisert",
       "files_published_other": "Filer publisert",
-      "files_rejected_count_one": "{{count}} fil avvist",
-      "files_rejected_count_other": "{{count}} filer avvist",
       "files_rejected_one": "Fil avvist",
       "files_rejected_other": "Filer avvist",
+      "files_rejected_count_one": "{{count}} fil avvist",
+      "files_rejected_count_other": "{{count}} filer avvist",
       "files_uploaded_one": "Fil lastet opp",
       "files_uploaded_other": "Filer lastet opp",
       "internal_file_awaiting_approval_one": "{{count}} intern fil venter på godkjenning",
@@ -1589,8 +1596,8 @@
         },
         "music_media_type": {
           "CompactDisc": "CD",
-          "DigitalFile": "Nedlasting",
           "DVD": "DVD",
+          "DigitalFile": "Nedlasting",
           "MusicMediaOther": "Annet",
           "Streaming": "Strømming",
           "Vinyl": "LP/EP"
@@ -1997,9 +2004,5 @@
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "file_import": "Filimport",
-  "file_import_description": "<p>Sentralimport av data fra eksterne datakilder.<br>Importør hos Sikt kontrollerer og slår eventuelt sammen med andre resultater for å unngå duplikater.</p><p>Institusjonen kan bestemme om filene automatisk skal godkjennes, eller om de først skal kontrolleres manuelt av en filkurator før de blir publisert i NVA.</p>",
-  "file_import_automatic_import": "Automatisk publisert i NVA",
-  "file_import_create_ticket": "Filforespørsel blir sendt til filkurator"
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
 }

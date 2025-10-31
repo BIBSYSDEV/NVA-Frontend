@@ -20,7 +20,7 @@ export const TicketStatusChip = ({ ticket }: TicketStatusChipProps) => {
   const text = t(`my_page.messages.ticket_types.${ticket.status}`);
 
   if (ticket.status === 'Completed') {
-    return <StatusChip bgcolor="success.light" text={text} icon="check" />;
+    return <StatusChip bgcolor="neutral87.main" text={text} icon="check" />;
   }
 
   return (
