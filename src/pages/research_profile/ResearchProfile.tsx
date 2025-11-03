@@ -11,7 +11,7 @@ import { ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from 
 import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
-import { FetchResultsParams, ResultParam } from '../../api/searchApi';
+import { FetchResultsParams, ResultParam, ResultSearchOrder } from '../../api/searchApi';
 import { HeadTitle } from '../../components/HeadTitle';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
@@ -35,7 +35,35 @@ import NotFound from '../errorpages/NotFound';
 import { UserOrcid } from '../my_page/user_profile/UserOrcid';
 import { UserOrcidHelperModal } from '../my_page/user_profile/UserOrcidHelperModal';
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
-import { registrationSortOptions } from '../search/registration_search/RegistrationSortSelector';
+import { RegistrationSortOption } from '../search/registration_search/RegistrationSortSelector';
+
+const researchProfileSortOptions: RegistrationSortOption[] = [
+  {
+    orderBy: ResultSearchOrder.PublicationDate,
+    sortOrder: 'desc',
+    i18nKey: 'search.sort_by_published_date_desc',
+  },
+  {
+    orderBy: ResultSearchOrder.PublicationDate,
+    sortOrder: 'asc',
+    i18nKey: 'search.sort_by_published_date_asc',
+  },
+  {
+    orderBy: ResultSearchOrder.Title,
+    sortOrder: 'asc',
+    i18nKey: 'search.sort_alphabetically_asc',
+  },
+  {
+    orderBy: ResultSearchOrder.Title,
+    sortOrder: 'desc',
+    i18nKey: 'search.sort_alphabetically_desc',
+  },
+  {
+    orderBy: ResultSearchOrder.ModifiedDate,
+    sortOrder: 'desc',
+    i18nKey: 'search.sort_by_modified_date',
+  },
+];
 
 const ResearchProfile = () => {
   const { t } = useTranslation();
@@ -43,7 +71,7 @@ const ResearchProfile = () => {
   const location = useLocation();
   const [registrationsPage, setRegistrationsPage] = useState(1);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-  const [registrationSort, setRegistrationSort] = useState(registrationSortOptions[0]);
+  const [registrationSort, setRegistrationSort] = useState(researchProfileSortOptions[0]);
 
   const [projectsPage, setProjectsPage] = useState(1);
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -166,7 +194,7 @@ const ResearchProfile = () => {
         </Typography>
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
       </Box>
-      <BackgroundDiv>
+      <BackgroundDiv sx={{ bgcolor: 'white' }}>
         {activeAffiliations.length > 0 ? (
           <Box
             sx={{
@@ -236,7 +264,7 @@ const ResearchProfile = () => {
         {!orcidUri && location.pathname.includes(UrlPathTemplate.MyPageResearchProfile) && (
           <Grid
             sx={{
-              backgroundColor: 'secondary.dark',
+              backgroundColor: 'info.light',
               my: '1rem',
               borderRadius: '4px',
               alignItems: 'center',
@@ -266,7 +294,12 @@ const ResearchProfile = () => {
             {personKeywords.length > 0 && (
               <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem', flexWrap: 'wrap' }}>
                 {personKeywords.map((keyword) => (
-                  <Chip color="primary" key={keyword.type} label={getLanguageString(keyword.label)} />
+                  <Chip
+                    color="secondary"
+                    variant="outlined"
+                    key={keyword.type}
+                    label={getLanguageString(keyword.label)}
+                  />
                 ))}
               </Box>
             )}
@@ -279,7 +312,10 @@ const ResearchProfile = () => {
         {registrationsQuery.data?.totalHits && registrationsQuery.data.totalHits > 0 ? (
           <Typography>
             <Trans i18nKey="my_page.my_profile.link_to_results_search">
-              <MuiLink component={Link} to={`/?${ResultParam.Contributor}=${encodeURIComponent(personIdentifier)}`} />
+              <MuiLink
+                component={Link}
+                to={`${UrlPathTemplate.Filter}?${ResultParam.Contributor}=${encodeURIComponent(personIdentifier)}`}
+              />
             </Trans>
           </Typography>
         ) : null}
@@ -295,7 +331,7 @@ const ResearchProfile = () => {
           }}
           sortingComponent={
             <SortSelectorWithoutParams
-              options={registrationSortOptions}
+              options={researchProfileSortOptions}
               value={registrationSort}
               setValue={(value) => {
                 setRegistrationsPage(1);
@@ -324,7 +360,7 @@ const ResearchProfile = () => {
             <Trans t={t} i18nKey="my_page.my_profile.link_to_projects_search">
               <MuiLink
                 component={Link}
-                to={`/?${SearchParam.Type}=${SearchTypeValue.Project}&${ProjectSearchParameter.ParticipantFacet}=${encodeURIComponent(
+                to={`${UrlPathTemplate.Filter}?${SearchParam.Type}=${SearchTypeValue.Project}&${ProjectSearchParameter.ParticipantFacet}=${encodeURIComponent(
                   getIdentifierFromId(personId)
                 )}`}
               />

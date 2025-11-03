@@ -1,70 +1,93 @@
-import { createTheme, PaletteColorOptions, SxProps } from '@mui/material';
+import { createTheme, darken, PaletteColor, PaletteColorOptions, SxProps } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
-  Black = '#222',
-  CentralImportMain = '#D9D9D9',
-  CentralImportLight = '#EFEEED',
-  ErrorMain = '#AC0303',
-  PrimaryMain = '#0F0035',
-  SecondaryLight = '#F9F4E6',
-  SecondaryMain = '#EDE2C7',
-  SecondaryDark = '#D3C9AF',
-  SuccessMain = '#025810',
-  InfoMain = '#0B408F',
-  InfoLight = '#C2D3EA',
-  PrimaryLight = '#0D4DAD',
+  Black = '#222222',
+  White = '#FFFFFF',
+  Purple = '#7351FB',
+  PurpleLight = '#D1CDFF',
+  PurpleDark = '#0A0132',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
-  White = '#fff',
-  DoiRequest = '#FFAA8E',
-  DoiRequestLight = '#FFE2DA',
-  GeneralSupportCase = '#7E9DCC',
-  Registration = '#DAC48E',
-  Person = '#B3D6D9',
-  Project = '#E48F8F',
-  PublishingRequest = '#FFD27B',
-  PublishingRequestLight = '#FFF0D3',
-  NviMain = '#EE95EA',
-  NviLight = '#F8D3F6',
-  WarningMain = '#ED6C02',
-  WarningLight = '#FFD45A',
+  CentralImportMain = '#D9D9D9',
+  Registration = '#EED2AE',
+  Person = '#BAD2F7',
+  Project = '#E8B8D0',
+  Neutral97 = '#F7F7F7',
+  Neutral95 = '#F1F1F1',
+  Neutral87 = '#DEDEDE',
+  Neutral46 = '#767676',
+  BlueLight = '#E6F0FF',
+  BlueClear = '#75C7F0',
+  Blue = '#004FCF',
+  Green = '#096638',
+  GreenLight = '#CFF7E2',
+  Red = '#B60203',
+  RedLight = '#FFEAE9',
+  YellowLight = '#FCEED2',
+  YellowClear = '#FBE774',
+  Yellow = '#FFB700',
+  Orange = '#FFAC70',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
 
 declare module '@mui/material/styles' {
   interface Palette {
-    registration: PaletteColorOptions;
-    person: PaletteColorOptions;
-    project: PaletteColorOptions;
-    publishingRequest: PaletteColorOptions;
-    doiRequest: PaletteColorOptions;
-    generalSupportCase: PaletteColorOptions;
-    centralImport: PaletteColorOptions;
-    nvi: PaletteColorOptions;
+    tertiary: PaletteColor;
+    registration: PaletteColor;
+    person: PaletteColor;
+    project: PaletteColor;
+    centralImport: PaletteColor;
+    neutral87: PaletteColor;
+    taskType: {
+      publishingRequest: PaletteColor;
+      filesApprovalThesis: PaletteColor;
+      doiRequest: PaletteColor;
+      generalSupportCase: PaletteColor;
+    };
   }
   interface PaletteOptions {
+    tertiary: PaletteColorOptions;
     registration?: PaletteColorOptions;
     person?: PaletteColorOptions;
     project?: PaletteColorOptions;
-    publishingRequest?: PaletteColorOptions;
-    doiRequest?: PaletteColorOptions;
-    generalSupportCase?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
-    nvi?: PaletteColorOptions;
+    neutral87?: PaletteColorOptions;
+    taskType?: {
+      publishingRequest?: PaletteColorOptions;
+      filesApprovalThesis?: PaletteColorOptions;
+      doiRequest?: PaletteColorOptions;
+      generalSupportCase?: PaletteColorOptions;
+    };
+  }
+  interface TypeBackground {
+    neutral97?: string;
+    neutral95?: string;
+    neutral87?: string;
+    neutral46?: string;
   }
 }
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
+    tertiary: true;
     registration: true;
     person: true;
     project: true;
-    publishingRequest: true;
-    doiRequest: true;
-    generalSupportCase: true;
+    white: true;
+    neutral87: true;
+  }
+}
+declare module '@mui/material/Chip' {
+  interface ChipPropsColorOverrides {
+    tertiary: true;
+  }
+}
+declare module '@mui/material/PaginationItem' {
+  interface PaginationItemPropsColorOverrides {
+    tertiary: true;
   }
 }
 
@@ -84,28 +107,32 @@ export const mainTheme = createTheme(
     },
     palette: {
       primary: {
-        main: Color.PrimaryMain,
-        light: Color.PrimaryLight,
-        contrastText: Color.White,
+        main: Color.PurpleDark,
       },
       secondary: {
-        light: Color.SecondaryLight,
-        main: Color.SecondaryMain,
-        dark: Color.SecondaryDark,
+        main: Color.Purple,
+      },
+      tertiary: {
+        main: Color.PurpleLight,
+        dark: darken(Color.PurpleLight, 0.2),
+        light: '#F6F4FF',
+        contrastText: Color.PurpleDark,
       },
       error: {
-        main: Color.ErrorMain,
+        main: Color.Red,
+        light: Color.RedLight,
       },
       success: {
-        main: Color.SuccessMain,
+        main: Color.Green,
+        light: Color.GreenLight,
       },
       info: {
-        main: Color.InfoMain,
-        light: Color.InfoLight,
+        main: Color.Blue,
+        light: Color.BlueLight,
       },
       warning: {
-        main: Color.WarningMain,
-        light: Color.WarningLight,
+        main: Color.Yellow,
+        light: Color.YellowLight,
       },
       grey: {
         300: '#EEEEEE',
@@ -115,6 +142,20 @@ export const mainTheme = createTheme(
       registration: {
         main: Color.Registration,
       },
+      taskType: {
+        publishingRequest: {
+          main: Color.YellowClear,
+        },
+        filesApprovalThesis: {
+          main: Color.YellowClear,
+        },
+        doiRequest: {
+          main: Color.Orange,
+        },
+        generalSupportCase: {
+          main: Color.BlueClear,
+        },
+      },
       person: {
         main: Color.Person,
       },
@@ -123,27 +164,15 @@ export const mainTheme = createTheme(
       },
       centralImport: {
         main: Color.CentralImportMain,
-        light: Color.CentralImportLight,
-      },
-      publishingRequest: {
-        main: Color.PublishingRequest,
-        light: Color.PublishingRequestLight,
-      },
-      doiRequest: {
-        main: Color.DoiRequest,
-        light: Color.DoiRequestLight,
-      },
-      generalSupportCase: {
-        main: Color.GeneralSupportCase,
-        light: Color.InfoLight,
-      },
-      nvi: {
-        main: Color.NviMain,
-        light: Color.NviLight,
       },
       background: {
-        default: Color.White,
-        paper: Color.SecondaryLight,
+        default: Color.Neutral95,
+        paper: Color.Neutral97,
+        neutral87: Color.Neutral87,
+        neutral46: Color.Neutral46,
+      },
+      neutral87: {
+        main: Color.Neutral87,
       },
     },
     typography: {
@@ -206,6 +235,14 @@ export const mainTheme = createTheme(
             marginBottom: '0.4rem',
           },
         },
+        defaultProps: {
+          slotProps: {
+            chip: {
+              color: 'secondary',
+              variant: 'filled',
+            },
+          },
+        },
       },
       MuiCssBaseline: {
         styleOverrides: {
@@ -219,6 +256,12 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiRadio: {
+        defaultProps: { color: 'secondary' },
+      },
+      MuiCheckbox: {
+        defaultProps: { color: 'secondary' },
+      },
       MuiDatePicker: {
         defaultProps: {
           views: ['year', 'month', 'day'],
@@ -231,13 +274,16 @@ export const mainTheme = createTheme(
           enableAccessibleFieldDOMStructure: false, // TODO: Remove this when we find a solution to the Cypress issue
         },
       },
+      MuiModal: {
+        defaultProps: { color: 'white' },
+      },
       MuiMenu: {
         defaultProps: {
           disablePortal: true,
         },
       },
       MuiBadge: {
-        defaultProps: { color: 'info' },
+        defaultProps: { color: 'secondary' },
       },
       MuiChip: {
         styleOverrides: {
@@ -248,12 +294,20 @@ export const mainTheme = createTheme(
           label: {
             whiteSpace: 'normal', // Allow multiline chips
           },
+          outlined: {
+            color: Color.PurpleDark,
+          },
         },
         defaultProps: {
           variant: 'outlined',
         },
       },
       MuiDialog: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: Color.White,
+          },
+        },
         defaultProps: {
           'aria-labelledby': dialogTitleId,
           'aria-describedby': dialogDescriptionId,
@@ -276,20 +330,20 @@ export const mainTheme = createTheme(
             color: Color.TextPrimary,
           },
           underlineAlways: {
-            textDecorationColor: Color.PrimaryMain,
+            textDecorationColor: Color.PurpleDark,
           },
         },
       },
       MuiStepIcon: {
         styleOverrides: {
           root: {
-            fill: Color.PrimaryLight,
+            fill: Color.Purple,
             opacity: 0.7,
             '&.Mui-active': {
               opacity: 1,
             },
             '&.Mui-error': {
-              fill: Color.ErrorMain,
+              fill: Color.Red,
             },
           },
         },
@@ -300,9 +354,9 @@ export const mainTheme = createTheme(
             opacity: 0.7,
             textTransform: 'uppercase',
             fontSize: '1rem',
-            color: Color.PrimaryLight,
+            color: Color.Purple,
             '&.Mui-active': {
-              color: Color.PrimaryLight,
+              color: Color.Purple,
               fontWeight: 600,
               borderBottom: '0.1875rem solid',
               mb: '-0.1875rem', //prevents text from 'popping'
@@ -310,10 +364,10 @@ export const mainTheme = createTheme(
               opacity: 1,
             },
             '&.Mui-completed': {
-              color: Color.PrimaryLight,
+              color: Color.Purple,
             },
             '&.Mui-error': {
-              color: Color.ErrorMain,
+              color: Color.Red,
             },
           },
         },
@@ -353,7 +407,7 @@ export const mainTheme = createTheme(
         styleOverrides: {
           asterisk: {
             fontWeight: 'bold',
-            color: Color.ErrorMain,
+            color: Color.Red,
           },
         },
       },
@@ -369,6 +423,33 @@ export const mainTheme = createTheme(
             },
             '&.Mui-disabled': {
               backgroundColor: Color.White,
+            },
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            color: Color.PurpleDark,
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            color: Color.PurpleDark,
+            backgroundColor: Color.White,
+            '&.Mui-focused': {
+              backgroundColor: Color.White,
+            },
+            '&:hover': {
+              backgroundColor: Color.White,
+            },
+            '&.Mui-disabled': {
+              backgroundColor: Color.White,
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: Color.PurpleDark,
             },
           },
         },
@@ -420,14 +501,14 @@ export const mainTheme = createTheme(
 export const alternatingTableRowColor: SxProps = {
   thead: {
     tr: {
-      bgcolor: '#FEFBF3',
+      bgcolor: Color.White,
     },
   },
   tbody: {
     tr: {
-      bgcolor: 'secondary.light',
+      bgcolor: Color.Neutral97,
       '&:nth-of-type(even)': {
-        bgcolor: '#FEFBF3',
+        bgcolor: 'white',
       },
     },
   },

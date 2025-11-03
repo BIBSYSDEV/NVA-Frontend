@@ -39,7 +39,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
       {ticket.status === 'Pending' || ticket.status === 'New' ? (
         <>
           {ticket.filesForApproval.length > 0 && (
-            <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+            <StyledStatusMessageBox>
               <StyledIconAndTextWrapper>
                 <HourglassEmptyIcon fontSize="small" />
                 <Typography>
@@ -50,7 +50,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
           )}
         </>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+        <StyledStatusMessageBox>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
             <Typography>
@@ -63,7 +63,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
         <>
-          <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+          <StyledStatusMessageBox>
             <StyledIconAndTextWrapper>
               <BlockIcon fontSize="small" />
               <Typography>{t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}</Typography>

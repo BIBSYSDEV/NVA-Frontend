@@ -25,7 +25,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0 }: Nvi
 
   return (
     <>
-      <TableRow sx={{ bgcolor: level % 2 === 0 ? undefined : '#FEFBF3' }}>
+      <TableRow sx={{ bgcolor: level % 2 === 0 ? undefined : 'white' }}>
         <TableCell sx={{ pl: `${1 + level * 1.5}rem`, py: '1rem' }}>{getLanguageString(organization.labels)}</TableCell>
         <TableCell align="center">
           {aggregations ? (orgAggregations?.status.New?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}

@@ -30,7 +30,7 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
         display: 'grid',
         gridTemplateColumns: { sm: '1fr', md: '1fr 1fr auto' },
         gap: '1rem',
-        bgcolor: 'secondary.light',
+        bgcolor: 'background.paper',
         p: '1rem',
         border: '1px solid lightgray',
         borderRadius: '8px',

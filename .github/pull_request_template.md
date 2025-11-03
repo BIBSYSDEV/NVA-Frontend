@@ -2,7 +2,13 @@
 
 Link to Jira issue: TODO
 
-[TODO: Describe what this PR solves]
+[TODO: Describe what this PR solves - how it was before, why this is being changed, and how it is after the change. Add pictures to clarify if necessary.]
+
+# How to test
+
+Affected part of the application: [Insert URL]
+
+[TODO: Assume the code reviewer have never seen this part of NVA, and provide step-by-step instructions on how to access the changes (with URLs), what to look for and how to test them if it requires user action. Add pictures to clarify if necessary.]
 
 # Checklist
 

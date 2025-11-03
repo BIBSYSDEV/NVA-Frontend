@@ -9,6 +9,7 @@ import { UrlPathTemplate } from './utils/urlPaths';
 import { hasCuratorRole } from './utils/user-helpers';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
+const FrontPage = lazy(() => import('./pages/frontpage/FrontPage'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
@@ -17,13 +18,18 @@ const CreateProject = lazy(() => import('./pages/project/project_wizard/CreatePr
 const EditProject = lazy(() => import('./pages/project/project_wizard/EditProject'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
 const MyPagePage = lazy(() => import('./pages/my_page/MyPagePage'));
-const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
 const PublicResearchProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
 const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
 const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
 const ProjectPage = lazy(() => import('./pages/projects/ProjectPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
+const SearchPage = lazy(() => import('./pages/search/SearchPage'));
+const AdvancedSearchPage = lazy(() => import('./pages/search/advanced_search/AdvancedSearchPage'));
+const ReportsPage = lazy(() => import('./pages/reports/ReportsPage'));
+const NviReports = lazy(() => import('./pages/reports/NviReports'));
+const InternationalCooperationReports = lazy(() => import('./pages/reports/InternationalCooperationReports'));
+const ClinicalTreatmentStudiesReports = lazy(() => import('./pages/reports/ClinicalTreatmentStudiesReports'));
 
 export const AppRoutes = () => {
   const user = useSelector((store: RootState) => store.user);
@@ -39,16 +45,17 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path={UrlPathTemplate.Root} element={<Dashboard />}>
-          <Route path={UrlPathTemplate.Search} element={<Dashboard />} />
-          <Route path={UrlPathTemplate.Reports} element={<Dashboard />} />
-          <Route path={UrlPathTemplate.ReportsNvi} element={<Dashboard />} />
-          <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<Dashboard />} />
-          <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<Dashboard />} />
+        <Route path={UrlPathTemplate.Root} element={<FrontPage />} />
+        <Route element={<Dashboard />}>
+          <Route path={UrlPathTemplate.Filter} element={<SearchPage />} />
+          <Route path={UrlPathTemplate.Search} element={<AdvancedSearchPage />} />
+          <Route path={UrlPathTemplate.Reports} element={<ReportsPage />} />
+          <Route path={UrlPathTemplate.ReportsNvi} element={<NviReports />} />
+          <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<InternationalCooperationReports />} />
+          <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<ClinicalTreatmentStudiesReports />} />
         </Route>
 
         <Route path={UrlPathTemplate.CopyrightAct} element={<CopyrightActTerms />} />
-        <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
         <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
         <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
         <Route path={UrlPathTemplate.ProjectPage} element={<ProjectPage />} />

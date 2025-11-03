@@ -14,23 +14,23 @@ import {
 
 interface DoiRequestMessagesColumnProps {
   ticket: ExpandedTicket | Ticket;
-  showLastMessage?: boolean;
+  showDetails?: boolean;
 }
 
-export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequestMessagesColumnProps) => {
+export const DoiRequestMessagesColumn = ({ ticket, showDetails }: DoiRequestMessagesColumnProps) => {
   const { t } = useTranslation();
 
   return (
     <StyledMessagesContainer>
       {ticket.status === 'New' || ticket.status === 'Pending' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+        <StyledStatusMessageBox>
           <StyledIconAndTextWrapper>
             <HourglassEmptyIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_pending')}</Typography>
           </StyledIconAndTextWrapper>
         </StyledStatusMessageBox>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
+        <StyledStatusMessageBox>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_completed')}</Typography>
@@ -38,7 +38,7 @@ export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequest
           {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+        <StyledStatusMessageBox>
           <StyledIconAndTextWrapper>
             <BlockIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_closed')}</Typography>
@@ -47,7 +47,7 @@ export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequest
         </StyledStatusMessageBox>
       ) : null}
 
-      {showLastMessage && <LastMessageBox ticket={ticket as ExpandedTicket} />}
+      {showDetails && <LastMessageBox ticket={ticket as ExpandedTicket} />}
     </StyledMessagesContainer>
   );
 };

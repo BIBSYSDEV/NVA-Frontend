@@ -3,12 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { fetchUser } from '../roleApi';
 
 interface UseFetchUserOptions {
-  retry?: number;
+  enabled?: boolean;
+  showErrorMessage?: boolean;
+  retry?: number | boolean;
   staleTime?: number;
   gcTime?: number;
 }
 
-export const useFetchUserQuery = (username: string, options: UseFetchUserOptions = {}) => {
+export const useFetchUserQuery = (
+  username: string,
+  { enabled = true, showErrorMessage = true, ...options }: UseFetchUserOptions = {}
+) => {
   const { t } = useTranslation();
 
   const usernameIdentifiers = username.split('@');
@@ -16,10 +21,10 @@ export const useFetchUserQuery = (username: string, options: UseFetchUserOptions
     usernameIdentifiers.length === 2 && Number.isInteger(Number.parseInt(usernameIdentifiers[0]));
 
   return useQuery({
-    enabled: isValidPersonIdentifier,
+    enabled: enabled && isValidPersonIdentifier,
     queryKey: ['user', username],
     queryFn: () => fetchUser(username),
-    meta: { errorMessage: t('feedback.error.get_person') },
+    meta: { errorMessage: showErrorMessage && t('feedback.error.get_person') },
     ...options,
   });
 };

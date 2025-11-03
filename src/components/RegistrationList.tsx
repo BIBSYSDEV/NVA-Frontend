@@ -52,7 +52,7 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
     <List data-testid="search-results">
       {registrations.map((registration) => (
         <ErrorBoundary key={registration.id}>
-          <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+          <SearchListItem>
             <RegistrationListItemContent registration={registration} {...rest} />
           </SearchListItem>
         </ErrorBoundary>
@@ -63,13 +63,17 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
   registration: RegistrationSearchItem;
-  ticketView?: boolean;
   onRemoveRelated?: () => void;
 }
 
+// TODO: Rather than expanding on the complexity of this component, we are currently in a process of using the composition pattern
+// to put together several similar but different versions of this component using common building blocks to avoid code duplication.
+// What was previously a part of this component using ticketView-boolean-prop has now become the TicketInformation-component.
+// If your use case for using this component goes into some of the if-conditionals in this component, please consider
+// whether you can create a new component using the composition pattern (see example in TicketInformation) with
+// new or existing building blocks (in the RegistrationListItem/components-folder)
 export const RegistrationListItemContent = ({
   registration,
-  ticketView = false,
   canEditRegistration,
   onDeleteDraftRegistration,
   promotedPublications = [],
@@ -97,6 +101,8 @@ export const RegistrationListItemContent = ({
   const countRestContributors = registration.contributorsCount - focusedContributors.length;
 
   const isPromotedPublication = promotedPublications.includes(id);
+
+  const publicationChannelName = registration.publishingDetails.publisher?.name ?? '';
 
   const isMutating = useIsMutating({ mutationKey }) > 0;
 
@@ -132,35 +138,20 @@ export const RegistrationListItemContent = ({
           <RegistrationIconHeader
             publicationInstanceType={registration.type}
             publicationDate={registration.publicationDate}
+            publicationChannelName={publicationChannelName}
           />
-          {ticketView &&
-            (registration.recordMetadata.status === RegistrationStatus.Draft ||
-              registration.recordMetadata.status === RegistrationStatus.New) && (
-              <Typography
-                sx={{
-                  p: '0.1rem 0.75rem',
-                  bgcolor: 'primary.light',
-                  color: 'primary.contrastText',
-                }}>
-                {t('registration.public_page.result_not_published')}
-              </Typography>
-            )}
         </Box>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
-          {ticketView ? (
-            getTitleString(registration.mainTitle)
-          ) : (
-            <MuiLink
-              target={target}
-              component={Link}
-              state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
-              to={{
-                pathname: getRegistrationLandingPagePath(identifier),
-                search: doNotRedirect ? `${doNotRedirectQueryParam}=true` : '',
-              }}>
-              {getTitleString(registration.mainTitle)}
-            </MuiLink>
-          )}
+          <MuiLink
+            target={target}
+            component={Link}
+            state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
+            to={{
+              pathname: getRegistrationLandingPagePath(identifier),
+              search: doNotRedirect ? `${doNotRedirectQueryParam}=true` : '',
+            }}>
+            {getTitleString(registration.mainTitle)}
+          </MuiLink>
         </Typography>
         <Box
           sx={{
@@ -174,7 +165,7 @@ export const RegistrationListItemContent = ({
                 key={index}
                 sx={{ display: 'flex', alignItems: 'center', '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
                 <Typography variant="body2">
-                  {contributor.identity.id && !ticketView ? (
+                  {contributor.identity.id ? (
                     <MuiLink target={target} component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                       {contributor.identity.name}
                     </MuiLink>
@@ -185,7 +176,6 @@ export const RegistrationListItemContent = ({
                 <ContributorIndicators
                   orcId={contributor.identity.orcId}
                   correspondingAuthor={contributor.correspondingAuthor}
-                  ticketView={ticketView}
                 />
               </Box>
             ))}
@@ -202,7 +192,7 @@ export const RegistrationListItemContent = ({
         )}
       </ListItemText>
       {location.pathname.includes(UrlPathTemplate.ResearchProfileRoot) && isPromotedPublication && (
-        <StarIcon fontSize="small" />
+        <StarIcon color="secondary" fontSize="small" />
       )}
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
@@ -225,8 +215,16 @@ export const RegistrationListItemContent = ({
                 }
               }}
               size="small"
-              sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
-              {isPromotedPublication ? <StarIcon fontSize="inherit" /> : <StarOutlineIcon fontSize="inherit" />}
+              sx={{
+                bgcolor: isPromotedPublication ? 'secondary.main' : 'tertiary.main',
+                width: '1.5rem',
+                height: '1.5rem',
+              }}>
+              {isPromotedPublication ? (
+                <StarIcon sx={{ color: 'white' }} fontSize="inherit" />
+              ) : (
+                <StarOutlineIcon color="primary" fontSize="inherit" />
+              )}
             </IconButton>
           )}
           <Tooltip title={t('common.edit')}>
@@ -236,8 +234,8 @@ export const RegistrationListItemContent = ({
               to={getRegistrationWizardPath(identifier)}
               data-testid={`edit-registration-${identifier}`}
               size="small"
-              sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
-              <EditIcon fontSize="inherit" />
+              sx={{ bgcolor: 'tertiary.main', width: '1.5rem', height: '1.5rem' }}>
+              <EditIcon color="primary" fontSize="inherit" />
             </IconButton>
           </Tooltip>
           {registration.recordMetadata.status === RegistrationStatus.Draft && onDeleteDraftRegistration && (
@@ -246,8 +244,8 @@ export const RegistrationListItemContent = ({
                 data-testid={`delete-registration-${identifier}`}
                 onClick={() => onDeleteDraftRegistration(registration)}
                 size="small"
-                sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
-                <CloseOutlinedIcon fontSize="inherit" />
+                sx={{ bgcolor: 'tertiary.main', width: '1.5rem', height: '1.5rem' }}>
+                <CloseOutlinedIcon color="primary" fontSize="inherit" />
               </IconButton>
             </Tooltip>
           )}

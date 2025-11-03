@@ -1,6 +1,7 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
+import BlockIcon from '@mui/icons-material/Block';
 import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
@@ -40,7 +41,7 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
         display: 'flex',
         flexDirection: 'column',
         p: '0.5rem',
-        bgcolor: getLogEntryBackgroundColor(logEntry.topic),
+        bgcolor: 'white',
         gap: '0.5rem',
       }}>
       <StyledLogRow>
@@ -55,7 +56,7 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
         <LogEntryOganizationInfo performedBy={logEntry.performedBy} />
       ) : null}
 
-      {logEntry.type === 'FileLogEntry' ? (
+      {logEntry.type === 'FileLogEntry' && (
         <>
           <Divider />
           <StyledLogRow>
@@ -64,14 +65,15 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
               {logEntry.filename || t('log.unknown_filename')}
             </Typography>
           </StyledLogRow>
-          {logEntry.topic === 'FileImported' && <LogEntryImportSourceInfo importSource={logEntry.importSource} />}
         </>
-      ) : logEntry.topic === 'PublicationImported' || logEntry.topic === 'PublicationMerged' ? (
+      )}
+
+      {logEntry.importSource && (
         <>
           <Divider />
           <LogEntryImportSourceInfo importSource={logEntry.importSource} />
         </>
-      ) : null}
+      )}
 
       {messages && messages.length > 0 && <LogMessageAccordion messages={messages} topic={logEntry.topic} />}
     </Box>
@@ -110,32 +112,16 @@ const LogEntryOganizationInfo = ({ performedBy }: { performedBy: LogEntryOrganiz
   );
 };
 
-const getLogEntryBackgroundColor = (topic: LogEntry['topic']) => {
-  switch (topic) {
-    case 'PublicationImported':
-    case 'FileImported':
-    case 'PublicationMerged':
-    case 'FileTypeUpdatedByImport':
-      return 'centralImport.light';
-    case 'DoiReserved':
-    case 'DoiRequested':
-    case 'DoiRejected':
-    case 'DoiAssigned':
-      return 'doiRequest.light';
-    default:
-      return 'publishingRequest.light';
-  }
-};
-
 const LogHeaderIcon = ({ topic }: Pick<LogEntry, 'topic'>) => {
   switch (topic) {
     case 'PublicationCreated':
       return <AddCircleOutlineIcon {...logIconProps} />;
     case 'PublicationUpdated':
     case 'PublicationPublished':
-    case 'PublicationUnpublished':
     case 'PublicationRepublished':
       return <LocalOfferOutlinedIcon {...logIconProps} />;
+    case 'PublicationUnpublished':
+      return <BlockIcon {...logIconProps} />;
     case 'FileUploaded':
     case 'FileApproved':
     case 'FileRejected':

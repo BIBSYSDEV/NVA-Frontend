@@ -3,7 +3,5 @@ version: 0.2
 batch:
   fast-fail: true
   build-list:
-    - identifier: build
-      buildspec: buildspecs/production_build.yml
     - identifier: tests
       buildspec: buildspecs/testsruns.yml

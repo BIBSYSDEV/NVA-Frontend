@@ -60,8 +60,15 @@ export const NviCandidatesList = () => {
           <Button
             fullWidth
             variant="outlined"
+            sx={{ bgcolor: 'white' }}
             data-testid={dataTestId.tasksPage.nvi.excludeUnassignedButton}
-            startIcon={!nviParams.excludeUnassigned ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+            startIcon={
+              !nviParams.excludeUnassigned ? (
+                <CheckBoxIcon color="secondary" />
+              ) : (
+                <CheckBoxOutlineBlankIcon color="secondary" />
+              )
+            }
             onClick={() => {
               setSearchParams((params) => {
                 const syncedParams = syncParamsWithSearchFields(params);

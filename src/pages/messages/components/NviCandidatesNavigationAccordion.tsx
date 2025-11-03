@@ -16,7 +16,7 @@ import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlP
 const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   padding: '0.5rem',
   borderRadius: '0.25rem',
-  backgroundColor: theme.palette.secondary.main,
+  backgroundColor: theme.palette.background.paper,
   marginBottom: '0.5rem',
 }));
 
@@ -60,7 +60,7 @@ export const NviCandidatesNavigationAccordion = () => {
   return (
     <NavigationListAccordion
       title={t('tasks.nvi.nvi_control')}
-      startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
+      startIcon={<AdjustIcon />}
       accordionPath={UrlPathTemplate.TasksNvi}
       defaultPath={getNviCandidatesSearchPath(user?.nvaUsername)}
       dataTestId={dataTestId.tasksPage.nviAccordion}>
@@ -79,8 +79,14 @@ export const NviCandidatesNavigationAccordion = () => {
                   aria-labelledby={progressLabel}
                   variant="determinate"
                   value={nviCompletedPercentage}
-                  color="info"
-                  sx={{ flexGrow: '1', my: '0.175rem', height: '1rem', bgcolor: 'white', borderRadius: '0.5rem' }}
+                  color="secondary"
+                  sx={{
+                    flexGrow: '1',
+                    my: '0.175rem',
+                    height: '1rem',
+                    bgcolor: 'tertiary.main',
+                    borderRadius: '0.5rem',
+                  }}
                 />
                 <Typography>{nviCompletedPercentage}%</Typography>
               </Box>

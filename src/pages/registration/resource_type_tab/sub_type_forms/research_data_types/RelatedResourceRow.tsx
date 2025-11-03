@@ -1,4 +1,4 @@
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import RemoveIcon from '@mui/icons-material/HighlightOff';
 import { Box, Button, Link, ListItem, Skeleton, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -36,17 +36,17 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
           />
         </SearchListItemDiv>
       ) : (
-        <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <Link data-testid={dataTestId.registrationWizard.resourceType.externalLink} href={uri}>
             {uri}
           </Link>
           <Button
             size="small"
-            variant="outlined"
-            color="error"
+            variant="contained"
+            color="tertiary"
             data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(uri)}
             onClick={() => setConfirmRemoveRelation(true)}
-            startIcon={<RemoveCircleOutlineIcon />}>
+            startIcon={<RemoveIcon color="primary" />}>
             {t('registration.resource_type.research_data.remove_relation')}
           </Button>
         </Box>

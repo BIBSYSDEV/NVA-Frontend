@@ -4,14 +4,7 @@ import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { NviCandidateStatus } from '../types/nvi.types';
-import { Ticket, TicketTypeColor } from '../types/publication_types/ticket.types';
-
-const ticketColor = {
-  PublishingRequest: 'publishingRequest.main',
-  FilesApprovalThesis: 'publishingRequest.main',
-  DoiRequest: 'doiRequest.main',
-  GeneralSupportCase: 'generalSupportCase.main',
-} satisfies TicketTypeColor;
+import { Ticket } from '../types/publication_types/ticket.types';
 
 interface TicketStatusChipProps {
   ticket: Pick<Ticket, 'status' | 'type'>;
@@ -27,10 +20,16 @@ export const TicketStatusChip = ({ ticket }: TicketStatusChipProps) => {
   const text = t(`my_page.messages.ticket_types.${ticket.status}`);
 
   if (ticket.status === 'Completed') {
-    return <StatusChip text={text} icon="check" bgcolor={ticketColor[ticket.type]} />;
+    return <StatusChip bgcolor="neutral87.main" text={text} icon="check" />;
   }
 
-  return <StatusChip text={text} icon={ticket.status === 'Closed' ? 'block' : 'hourglass'} />;
+  return (
+    <StatusChip
+      bgcolor={ticket.status === 'Closed' ? 'warning.light' : undefined}
+      text={text}
+      icon={ticket.status === 'Closed' ? 'block' : 'hourglass'}
+    />
+  );
 };
 
 interface NviStatusChip {
@@ -43,10 +42,16 @@ export const NviStatusChip = ({ status }: NviStatusChip) => {
   const text = t(`tasks.nvi.status.${status}`);
 
   if (status === 'Approved') {
-    return <StatusChip text={text} icon="check" bgcolor="nvi.main" />;
+    return <StatusChip text={text} icon="check" bgcolor="success.light" />;
   }
 
-  return <StatusChip text={text} icon={status === 'Rejected' ? 'block' : 'hourglass'} />;
+  return (
+    <StatusChip
+      text={text}
+      icon={status === 'Rejected' ? 'block' : 'hourglass'}
+      bgcolor={status === 'Rejected' ? 'warning.light' : 'info.light'}
+    />
+  );
 };
 
 interface StatusChipProps {
@@ -56,7 +61,7 @@ interface StatusChipProps {
   paddingY?: string | number;
 }
 
-export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon, paddingY }: StatusChipProps) => {
+export const StatusChip = ({ text, bgcolor = 'info.light', icon, paddingY }: StatusChipProps) => {
   return (
     <Box
       sx={{

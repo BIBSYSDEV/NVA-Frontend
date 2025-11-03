@@ -22,6 +22,7 @@ export enum UrlPathTemplate {
   BasicDataPublisherClaims = `${BasicDataChannelClaims}/publisher`,
   BasicDataSerialPublicationClaims = `${BasicDataChannelClaims}/serial-publication`,
   CopyrightAct = '/license/copyright-act/1.0',
+  Filter = '/filter',
   Root = '/',
   Institution = '/institution',
   InstitutionCurators = '/institution/settings/curators',
@@ -58,7 +59,6 @@ export enum UrlPathTemplate {
   MyPageTerms = '/my-page/profile/terms',
   MyPageMyRegistrations = '/my-page/registrations',
   MyPageUserRoleAndHelp = '/my-page/profile/user-role-and-help',
-  PrivacyPolicy = '/privacy-policy',
   ProjectsRoot = '/projects',
   ProjectsNew = '/projects/new',
   ProjectPage = '/projects/:identifier',
@@ -171,8 +171,4 @@ export const getNviCandidatesSearchPath = (currentUsername = '', year?: number) 
     searchParams.set('year', year.toString()); // NviCandidatesSearchParam.Year
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
-};
-
-export const isOnImportPage = () => {
-  return location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
 };

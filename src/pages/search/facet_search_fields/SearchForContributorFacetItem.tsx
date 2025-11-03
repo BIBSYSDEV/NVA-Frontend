@@ -87,7 +87,6 @@ export const SearchForPersonFacetItem = ({ onSelectPerson, placeholder }: Search
           isLoading={personSearchQuery.isLoading}
           data-testid={dataTestId.aggregations.contributorFacetsSearchField}
           placeholder={placeholder || t('search.search_for_contributor')}
-          showSearchIcon
         />
       )}
       slotProps={{

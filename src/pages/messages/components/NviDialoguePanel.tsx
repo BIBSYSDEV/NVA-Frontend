@@ -27,7 +27,15 @@ export const NviDialoguePanel = ({ nviCandidate, nviCandidateQueryKey }: NviDial
 
   return (
     <>
-      <Box sx={{ m: '1rem', display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'space-between' }}>
+      <Box
+        sx={{
+          m: '1rem',
+          display: 'flex',
+          gap: '1rem',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          bgcolor: 'background.paper',
+        }}>
         <Typography variant="h3" component="h2">
           {t('common.nvi_short')}
         </Typography>

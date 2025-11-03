@@ -54,8 +54,8 @@ import {
   ReportType,
   ResearchDataType,
 } from '../../../types/publicationFieldNames';
-import { ContextPublisher, PublicationChannelType } from '../../../types/registration.types';
-import { isPeriodicalMediaContribution } from '../../registration-helpers';
+import { ContextPublisher, PublicationChannelType, PublicationInstanceType } from '../../../types/registration.types';
+import { isBook, isPeriodicalMediaContribution, isReport } from '../../registration-helpers';
 import { YupShape } from '../validationHelpers';
 
 const resourceErrorMessage = {
@@ -219,11 +219,18 @@ const publisherField: Yup.ObjectSchema<ContextPublisher> = Yup.object({
   ),
 });
 
+const categoryHasSeries = (category: PublicationInstanceType) =>
+  isBook(category) || isReport(category) || category === DegreeType.Licentiate || category === DegreeType.Phd;
+
 const seriesField = Yup.object().shape({
-  id: Yup.string().test(
-    'series-test',
-    resourceErrorMessage.seriesNotSelected,
-    (idValue, context) => !context.parent.title || !!idValue
+  id: Yup.string().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+    categoryHasSeries(publicationInstanceType)
+      ? schema.test(
+          'series-test',
+          resourceErrorMessage.seriesNotSelected,
+          (idValue, context) => !context.parent.title || !!idValue
+        )
+      : schema
   ),
 });
 

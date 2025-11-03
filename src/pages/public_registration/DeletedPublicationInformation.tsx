@@ -30,7 +30,7 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
             sx={{
               display: 'flex',
               justifyContent: 'center',
-              backgroundColor: 'registration.main',
+              backgroundColor: 'info.light',
               padding: '1rem',
               my: '1rem',
             }}>
@@ -48,7 +48,7 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
-                backgroundColor: 'registration.main',
+                backgroundColor: 'info.light',
                 padding: '1rem',
                 my: '1rem',
               }}>

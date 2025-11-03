@@ -139,7 +139,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
               }}
               textFieldProps={{
                 'data-testid': dataTestId.editor.channelSearchField,
-                variant: 'filled',
+                variant: 'outlined',
                 label: t('common.publisher'),
                 required: true,
               }}
@@ -168,7 +168,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
                 <Chip
                   key={category}
                   variant="filled"
-                  color="primary"
+                  color="secondary"
                   label={t(`registration.publication_types.${category}`)}
                 />
               ))}
@@ -183,6 +183,7 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
             data-testid={dataTestId.confirmDialog.acceptButton}
             type="submit"
             loading={addChannelClaimMutation.isPending}
+            color="secondary"
             variant="contained"
             disabled={(!selectedPublisher && !selectedSerialPublication) || !selectedCustomerId}>
             {t('editor.institution.channel_claims.set_channel_claim')}

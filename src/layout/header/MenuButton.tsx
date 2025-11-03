@@ -7,10 +7,10 @@ interface StyledMenuButtonContainerProps {
 
 const StyledMenuButtonContainer = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'isSelected',
-})<StyledMenuButtonContainerProps>(({ isSelected }) => ({
+})<StyledMenuButtonContainerProps>(({ isSelected, theme }) => ({
   display: 'flex',
-  borderBottom: isSelected ? '0.375rem solid white' : 'none',
-  boxShadow: isSelected ? '-1px 7px 4px -3px rgba(0,0,0,0.3)' : 'none',
+  borderBottom: isSelected ? '0.375rem solid' : 'none',
+  borderBottomColor: theme.palette.secondary.main,
 
   a: {
     marginBottom: isSelected ? '-0.375rem' : 0,

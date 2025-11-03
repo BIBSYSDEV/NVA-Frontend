@@ -46,7 +46,7 @@ const gridRowDivider = (
   </Grid>
 );
 
-export const AdvancedSearchPage = () => {
+const AdvancedSearchPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -148,7 +148,7 @@ export const AdvancedSearchPage = () => {
               <StyledFilterHeading>{t('registration.contributors.contributor')}</StyledFilterHeading>
               <SearchForm
                 paramName={ResultParam.ContributorName}
-                placeholder={t('search.search_for_contributor')}
+                placeholder={t('search.person_search_placeholder')}
                 paginationOffsetParamName={ResultParam.From}
               />
             </Grid>
@@ -223,7 +223,7 @@ export const AdvancedSearchPage = () => {
           </Grid>
 
           <Grid container sx={{ justifyContent: isLargeScreen ? 'end' : 'center' }} size={12}>
-            <Button variant="outlined" onClick={() => navigate(location.pathname)}>
+            <Button variant="contained" color="tertiary" onClick={() => navigate(location.pathname)}>
               {t('search.reset_selection')}
             </Button>
           </Grid>
@@ -235,3 +235,5 @@ export const AdvancedSearchPage = () => {
     </>
   );
 };
+
+export default AdvancedSearchPage;

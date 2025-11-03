@@ -1,4 +1,4 @@
-import { Box, FormGroup, ListItem, ListItemProps, styled, Typography, TypographyProps } from '@mui/material';
+import { Box, BoxProps, FormGroup, ListItem, ListItemProps, styled, Typography, TypographyProps } from '@mui/material';
 
 export const StyledRightAlignedFooter = styled(Box)({
   display: 'flex',
@@ -50,7 +50,7 @@ export const StyledPageContent = styled(Box)(({ theme }) => ({
     padding: '1rem',
   },
   [theme.breakpoints.down('sm')]: {
-    padding: '0.5rem',
+    padding: '1rem',
   },
 }));
 
@@ -62,7 +62,7 @@ export const InputContainerBox = styled(Box)({
 
 export const BackgroundDiv = styled(Box)(({ theme }) => ({
   overflowX: 'auto',
-  background: theme.palette.secondary.light,
+  background: theme.palette.background.default,
   [theme.breakpoints.up('md')]: {
     padding: '1rem 2rem',
   },
@@ -88,21 +88,29 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
 
 export const SearchListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
   border: '2px solid',
-  borderColor: theme.palette.secondary.dark,
-  borderLeft: '1.25rem solid',
+  borderLeft: '1rem solid',
+  borderColor: theme.palette.registration.main,
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
 }));
 
+export const TaskListItem = styled(SearchListItem)<ListItemProps>(({ theme }) => ({
+  border: '1px solid',
+  borderColor: theme.palette.background.neutral87,
+  borderLeft: '0.5rem solid',
+  padding: 0,
+}));
+
 export const SearchListItemDiv = styled('div')(({ theme }) => ({
   border: '2px solid',
-  borderColor: theme.palette.secondary.dark,
-  borderLeft: '1.25rem solid',
+  borderLeft: '1rem solid',
+  borderColor: theme.palette.registration.main,
   flexDirection: 'column',
   alignItems: 'start',
   background: 'white',
   padding: '0.5rem 1rem',
+  marginBottom: '0.2rem',
 }));
 
 export const StyledTicketSearchFormGroup = styled(FormGroup)({
@@ -116,10 +124,10 @@ export const StyledTruncatableTypography = styled(Typography)({
 });
 
 export const StyledInfoBanner = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.light,
+  color: 'white',
+  backgroundColor: theme.palette.info.main,
   padding: '0.75rem',
   borderRadius: '0.25rem',
-  color: 'white',
 }));
 
 export const StyledFilterHeading = styled(Typography)<TypographyProps>({
@@ -139,3 +147,8 @@ export const StyledContributorModalActions = styled(Box)(({ theme }) => ({
   marginTop: '2rem',
   gap: '1rem',
 }));
+
+export const VerticalBox = styled(Box)<BoxProps>({
+  display: 'flex',
+  flexDirection: 'column',
+});

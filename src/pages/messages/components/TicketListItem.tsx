@@ -4,16 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import { updateTicket } from '../../../api/registrationApi';
-import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
-import { SearchListItem } from '../../../components/styled/Wrappers';
+import { TaskListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
-import {
-  ExpandedPublishingTicket,
-  ExpandedTicket,
-  TicketTypeColor,
-} from '../../../types/publication_types/ticket.types';
+import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration, RegistrationStatus } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
 import { getInitials } from '../../../utils/general-helpers';
@@ -31,14 +26,8 @@ import { StyledVerifiedContributor } from '../../registration/contributors_tab/C
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
 import { SupportMessagesColumn } from './SupportMessagesColumn';
-
-export const ticketColor = {
-  UnpublishRequest: 'publishingRequest.main',
-  PublishingRequest: 'publishingRequest.main',
-  FilesApprovalThesis: 'publishingRequest.main',
-  DoiRequest: 'doiRequest.main',
-  GeneralSupportCase: 'generalSupportCase.main',
-} satisfies TicketTypeColor;
+import { getTicketColor } from '../utils';
+import { TicketInformation } from '../../../components/RegistrationListItem/TicketInformation';
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;
@@ -49,7 +38,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const user = useSelector((store: RootState) => store.user);
   const queryClient = useQueryClient();
 
-  const { id, identifier, mainTitle, contributors, publicationInstance, status } = ticket.publication;
+  const { id, identifier, mainTitle, contributors, contributorsCount, publicationInstance, status } =
+    ticket.publication;
   const registrationCopy = {
     ...emptyRegistration,
     identifier,
@@ -61,6 +51,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
     },
   } as Registration;
+  const registrationSearchItem = { ...convertToRegistrationSearchItem(registrationCopy), contributorsCount };
 
   const assigneeFullName = ticket.assignee
     ? getFullName(
@@ -76,13 +67,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const isOnMyPageMessages = window.location.pathname === UrlPathTemplate.MyPageMyMessages;
 
   return (
-    <SearchListItem
-      key={ticket.id}
-      sx={{
-        borderLeftColor: ticketColor[ticket.type],
-        p: 0,
-        bgcolor: !viewedByUser ? 'secondary.main' : undefined,
-      }}>
+    <TaskListItem
+      sx={{ bgcolor: !viewedByUser ? 'tertiary.light' : 'white', borderLeftColor: getTicketColor(ticket.type) }}>
       <MuiLink
         component={Link}
         state={
@@ -118,11 +104,11 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             gap: '0 1rem',
             gridTemplateColumns: { xs: '1fr', sm: '10fr 4fr 2fr 2fr 1fr' },
           }}>
-          <RegistrationListItemContent registration={convertToRegistrationSearchItem(registrationCopy)} ticketView />
+          <TicketInformation registration={registrationSearchItem} ticketType={ticket.type} />
           {isFileApprovalTicket(ticket) ? (
             <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
           ) : ticket.type === 'DoiRequest' ? (
-            <DoiRequestMessagesColumn ticket={ticket} showLastMessage />
+            <DoiRequestMessagesColumn ticket={ticket} showDetails />
           ) : ticket.type === 'GeneralSupportCase' ? (
             <SupportMessagesColumn ticket={ticket} />
           ) : (
@@ -131,7 +117,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
 
           {ticket.type === 'GeneralSupportCase' && isOnMyPageMessages ? (
             viewedByUser ? (
-              <StatusChip text={t('common.read_past_tense')} icon="check" bgcolor="generalSupportCase.main" />
+              <StatusChip text={t('common.read_past_tense')} icon="check" />
             ) : (
               <StatusChip text={t('common.unread')} icon="hourglass" />
             )
@@ -152,6 +138,6 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           )}
         </Box>
       </MuiLink>
-    </SearchListItem>
+    </TaskListItem>
   );
 };

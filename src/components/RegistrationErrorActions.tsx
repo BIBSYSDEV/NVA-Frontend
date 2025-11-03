@@ -38,13 +38,14 @@ export const RegistrationErrorActions = ({ tabErrors, registration, ...boxProps 
       </Typography>
       <ErrorList tabErrors={tabErrors} />
       <Button
-        sx={{ bgcolor: 'white', width: '100%' }}
-        variant="outlined"
+        sx={{ width: '100%' }}
+        color="tertiary"
+        variant="contained"
         component={Link}
         size="small"
         state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
         to={getWizardPathByRegistration(registration, { tab: firstErrorTab })}
-        endIcon={<EditIcon />}
+        startIcon={<EditIcon />}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
         {t('registration.public_page.go_back_to_wizard')}
       </Button>

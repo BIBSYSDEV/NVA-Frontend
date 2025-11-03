@@ -158,7 +158,7 @@ export const SelectInstitutionForm = ({
                         {...params}
                         data-testid={dataTestId.organization.searchField}
                         label={t('registration.contributors.search_for_institution')}
-                        variant="filled"
+                        variant="outlined"
                         fullWidth
                       />
                     )}
@@ -207,7 +207,7 @@ export const SelectInstitutionForm = ({
                             {...params}
                             data-testid={dataTestId.organization.subSearchField}
                             label={t('registration.contributors.department')}
-                            variant="filled"
+                            variant="outlined"
                             fullWidth
                           />
                         )}
@@ -234,6 +234,7 @@ export const SelectInstitutionForm = ({
                 </Button>
               )}
               <Button
+                color="secondary"
                 variant="contained"
                 type="submit"
                 loading={isSubmitting}

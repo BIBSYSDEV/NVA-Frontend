@@ -2,24 +2,13 @@
   "about": {
     "availability_statement": "Tilgjengelighetserklæring",
     "copyright_inquiries": "Henvendelser om opphavsrett",
-    "description": {
-      "paragraph0": {
-        "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent vitenarkiv",
-        "bullet_point1": "Selv publisere rapporter, studentoppgaver og annet materiale produsert ved institusjonen",
-        "intro": "Med NVA får norske forskningsinstitusjoner en tjeneste for å:"
-      },
-      "paragraph1": "NVA utvikles også til bruk ved rapportering av vitenskapelig publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskningsadministrative oppgaver.",
-      "paragraph2": "Sikt er databehandler. Den enkelte Institusjon er behandlingsansvarlig og registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett, osv.). Tjenesten får også overført innhold fra andre datakilder.",
-      "paragraph3": "NVA har støtte for utsatt publisering av ressurser. Det betyr at en registrering kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato. Tjenesten tillater ikke behandling av sensitive personopplysninger.",
-      "paragraph4": "NVA vil tilgjengeliggjøre institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
-      "paragraph5": "Selv om NVA er etablert og i bruk av flere institusjoner, vil tjenesten være i kontinuerlig utvikling i hele sin levetid. Institusjoner som ikke har et vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
-    },
-    "footer_text": "Tjenesten blir levert av Sikt – Kunnskapssektorens tjenesteleverandør. Sikt er leverandør av fellestjenester til norsk kunnskapssektor.",
-    "short_description": "Nasjonalt vitenarkiv (NVA) samler informasjon om norsk forskning og gjør forskningsresultater og forskningsinformasjon åpent tilgjengelig."
+    "footer_text": "Tjenesten blir levert av Sikt – Kunnskapssektorens tjenesteleverandør. Sikt er leverandør av fellestjenester til norsk kunnskapssektor."
   },
+  "add_file": "Legg til fil",
+  "add_project": "Legg til prosjekt",
   "authorization": {
     "about_terms": "Brukervilkår og personvernerklæring for Nasjonalt vitenarkiv",
-    "about_terms_description": "<p>For å bruke tjenesten må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Brukervilkår for Nasjonalt vitenarkiv</a>, og gjøre deg kjent med <a href=\"https://nva.sikt.no/privacy-policy\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», bekrefter du at du har lest og akseptert brukervilkårene. Du samtykker også til behandling av personopplysninger i samsvar med personvernerklæringen.</p>",
+    "about_terms_description": "<p>For å bruke tjenesten må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Brukervilkår for Nasjonalt vitenarkiv</a>, og gjøre deg kjent med <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», bekrefter du at du har lest og akseptert brukervilkårene. Du samtykker også til behandling av personopplysninger i samsvar med personvernerklæringen.</p>",
     "accept": "Godta",
     "accept_terms_intro": "<p>Takk for at du ønsker å gjøre forskning åpent tilgjengelig i Nasjonalt vitenarkiv.</p><p>Dette bidrar til at forskningen blir dokumentert, og til at vitenskapelige artikler finansiert av offentlige midler gjøres åpent tilgjengelige for allmennheten – som er et nasjonalt mål.</p>",
     "accept_terms_to_create_user": "Jeg samtykker til å bli opprettet som bruker i NVA",
@@ -177,7 +166,6 @@
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
     "close": "Lukk",
-    "close_forever": "Lukk og ikke vis igjen",
     "consists_of": "Består av",
     "contributor": "Bidragsyter",
     "contributors": {
@@ -234,7 +222,6 @@
     "not_decided": "Ikke bestemt",
     "number_of_rows_per_page": "Antall rader per side",
     "number_short": "Nr.",
-    "nva_tagline": "Nasjonalt vitenarkiv (NVA)",
     "nvi": "Norsk vitenskapsindeks (NVI)",
     "nvi_short": "NVI",
     "open": "Åpne",
@@ -263,9 +250,7 @@
     "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
     "read_less": "Les mindre",
-    "read_less_about_nva": "Les mindre om NVA",
     "read_more": "Les mer",
-    "read_more_about_nva": "Les mer om NVA",
     "read_past_tense": "Lest",
     "reference": "Referanse",
     "reject": "Avvis",
@@ -333,6 +318,10 @@
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljer",
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -404,11 +393,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "does_not_match": "Matcher ikke",
   "editor": {
@@ -434,9 +419,7 @@
         "Nvi-Curator": "NVI",
         "Publishing-Curator": "Filgodkjenning",
         "Support-Curator": "Brukerstøtte"
-      },
-      "search_for_curator": "Søk etter kurator",
-      "search_for_unit": "Søk etter enhet"
+      }
     },
     "does_not_support_open_files": "Støtter ikke åpne filer",
     "doi": {
@@ -608,10 +591,12 @@
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
       "login_failed": "Innlogging feilet",
+      "login_failed_try_bankid": "Innlogging feilet. Prøv å logg inn med BankID i stedet.",
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "person_search": "Søk etter person feilet",
       "project_search": "Søk på prosjekt feilet",
       "publish_registration": "Kunne ikke publisere registrering",
+      "registration_update_precondition_failed": "Registreringen er endret etter at du lastet siden. Last siden på nytt for å prøve igjen. Ulagrede endringer vil gå tapt.",
       "reject_doi_request": "Kunne ikke avvise DOI-forespørsel",
       "remove_role": "Kunne ikke fjerne rolle",
       "reserve_doi": "Reservasjon av DOI feilet",
@@ -635,10 +620,10 @@
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
       "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
+      "update_rrs_and_file_import": "Kunne ikke oppdatere rettighetspolitikk og filimport",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
-      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
-      "registration_update_precondition_failed": "Registreringen er endret etter at du lastet siden. Last siden på nytt for å prøve igjen. Ulagrede endringer vil gå tapt."
+      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
@@ -684,6 +669,7 @@
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
       "update_rights_retention_strategy": "Rettighetspolitikk ble oppdatert",
+      "update_rrs_and_file_import": "Rettighetspolitikk og filimport ble oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
     },
@@ -714,6 +700,10 @@
       "reference_required": "Oppgi referanse på resultat"
     }
   },
+  "file_import": "Filimport",
+  "file_import_automatic_import": "Automatisk publisert i NVA",
+  "file_import_create_ticket": "Filforespørsel blir sendt til filkurator",
+  "file_import_description": "<p>Sentralimport av data fra eksterne datakilder.<br>Importør hos Sikt kontrollerer og slår eventuelt sammen med andre resultater for å unngå duplikater.</p><p>Institusjonen kan bestemme om filene automatisk skal godkjennes, eller om de først skal kontrolleres manuelt av en filkurator før de blir publisert i NVA.</p>",
   "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Som kurator kan du legge til en fil på vegne av registrator.",
   "file_upload_disabled_due_to_institution_policy": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønsker å ha en fil på dette resultatet.",
   "find_result_to_merge_description": "<p>Slå sammen to resultater for å unngå to versjoner av samme resultat med forskjellige metadata og filer.</p><p>Er det registrert forskjellig metadata så velger du hvilke data som er gjeldende. Du velger også om filer skal flyttes over til det publiserte resultatet.</p><heading>Søk etter forskningsresultat</heading><p>Velg resultatet du ønsker å slå sammen med. Du kan bare slå sammen resultatet der du er registrert som bidragsyter.</p>",
@@ -730,8 +720,12 @@
     "technical_support_link": "Ved behov for teknisk støtte kontakt <0>kontakt@sikt.no</0>",
     "to_top": "Til toppen"
   },
+  "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
+  "keep_all_contributors": "Behold bidragsytere fra både {{sourceType}} og publisert resultat",
+  "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
+  "keep_contributors_from_source_result": "Behold kun bidragsytere fra {{sourceType}}",
   "licenses": {
     "additional_info": {
       "cc0": "<p>Se <link1>åndsverksloven</link1> §3, §8, §11 og §14</p>"
@@ -958,7 +952,7 @@
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
       "internal_importer": "Intern importør",
       "internal_importer_description": "Kan behandle importkandidater.",
-      "no_active_employments": "Du har ingen roller fordi du har ingen aktive ansettelser og har ikke tilgang til å registrere.",
+      "no_active_employments": "Du har ingen roller. Årsaken kan være at du ikke har en aktiv ansettelse, eller at institusjonen din ikke er en aktiv kunde av NVA.",
       "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
       "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen",
       "nvi_curator": "NVI-kurator",
@@ -979,286 +973,11 @@
   "overview_over_administrators": "Oversikt over administratorer",
   "overwrite": "Overskriv",
   "owner_institution": "Eierinstitusjon",
+  "person_profiles": "Personprofiler",
   "point_of_contact": "Kontaktpunkt",
   "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
   "points_of_contact_for_result": "Kontaktpunkt for resultat",
-  "privacy": {
-    "about": {
-      "heading": "Om denne personvernerklæringen",
-      "paragraph": "Denne personvernerklæringen beskriver hvordan behandlingsansvarlig håndterer dine personopplysninger i tjenesten. Formålet med denne personvernerklæringen er å informere deg om hvilke personopplysninger som behandles, hvordan de behandles, hvem som er ansvarlig for behandlingen, hvilke rettigheter du har og hvem du kan kontakte."
-    },
-    "automatic_case_processing": {
-      "heading": "Automatisk saksbehandling",
-      "paragraph0": "Personopplysningene knyttet til systembrukere vil ikke være gjenstand for automatisert saksbehandling eller profilering.",
-      "paragraph1": "Åpne personopplysninger knyttet til ressurser registrert i tjenesten kan utsettes for profilering av andre tjenester som kopierer og/eller indekserer opplysninger i tjenesten, men profileres ikke som en del av tjenesten."
-    },
-    "contact": {
-      "heading": "Kontakt",
-      "section0": {
-        "heading": "Behandlingsansvarlig",
-        "paragraph": "Institusjonen er behandlingsansvarlig for personopplysninger i tjenesten og er primært kontaktpunkt for brukere."
-      },
-      "section1": {
-        "heading": "Databehandler",
-        "paragraph": "Sikt utvikler og forvalter tjenesten på vegne av behandlingsansvarlig, og har rollen som databehandler."
-      },
-      "section2": {
-        "email": "Epost: <0><0></0></0>",
-        "intro": "Kontaktinformasjon til Sikt brukerstøtte:",
-        "telephone": "Telefon: <0><0></0></0>"
-      }
-    },
-    "disclosure_of_data": {
-      "heading": "Utlevering av dine personopplysninger til andre",
-      "paragraph0": "Utlevering eller eksport av data defineres som enhver avgivelse av data foruten til eget system/behandling eller til den registrerte selv eller noen som mottar data på dennes vegne.",
-      "paragraph1": "Personopplysninger knyttet til brukere overføres ikke til land utenfor EU/EØS.",
-      "paragraph2": "Tjenesten er driftet på servere innenfor EU/EØS.",
-      "paragraph3": {
-        "intro": "Dine personopplysninger blir utlevert til Sikt som er leverandør av tjenesten, og til dennes underleverandører:",
-        "table": {
-          "caption": "Oversikt over underleverandører som kan motta personopplysninger",
-          "header": {
-            "col0": "Underleverandør",
-            "col1": "Funksjon"
-          },
-          "row0": {
-            "col0": "Leverandør i rammeavtale for AWS gjennom GÉANT-samarbeidet",
-            "col1": "Skydrift og backup for Sikts direkte tjenester"
-          },
-          "row1": {
-            "col0": "Blue Safespring AB",
-            "col1": "Skydrift og backup for Sikts direkte tjenester"
-          },
-          "row2": {
-            "col0": "UNINETT AS",
-            "col1": "Leverer Feide, for autentisering av brukere mot tjenestene"
-          }
-        }
-      },
-      "paragraph4": "Ansatte hos underleverandørene, som har behov for det i sin jobb, vil ha tilpasset tilgang til dine persondata for å kunne utføre stedlig vedlikehold, brukerstøtte og eventuell feilretting i tjenesten.",
-      "paragraph5": "Åpne personopplysninger knyttet til ressursene deles åpent med eksterne tjenester. Dette inkluderer søketjenester som Oria og OpenAIRE, samt søkemotorer som indekserer data via websidene - eksempelvis Google, Baidu, Bing med flere.",
-      "paragraph6": {
-        "intro": "Se følgende tabell for tjenestens integrasjoner:",
-        "table": {
-          "caption": "Oversikt over integrasjoner",
-          "header": {
-            "col0": "Integrasjon",
-            "col1": "Formål",
-            "col2": "Tjeneste levert av"
-          },
-          "row0": {
-            "col0": "Feide",
-            "col1": "Informasjon for sikker innlogging av brukere.",
-            "col2": "UNINETT AS"
-          },
-          "row1": {
-            "col0": "Import av materiale til NVA fra eksterne tjenester",
-            "col1": "Registrering og publisering i NVA.",
-            "col2": "Kilder definert av behandlingsansvarlig"
-          },
-          "row2": {
-            "col0": "Eksport av metadata fra NVA til ekstern tjeneste",
-            "col1": "Eksport av metadata for ressurser til andre tjenester for presentasjon eller kryssregistrering. Eksempelvis Oria for å tilrettelegge for gjenfinning.",
-            "col2": "Sikt for Oria. Kilder definert av behandlingsansvarlig."
-          },
-          "row3": {
-            "col0": "DOI og DataCite",
-            "col1": "Registrator kan be om tildeling av en Document Object Identifier (DOI) til en ressurs i NVA. Dette vil føre til at utvalgte metadata publiseres i DataCite - en kilde som regelmessig indekseres av søkemotorer.",
-            "col2": "DataCite"
-          },
-          "row4": {
-            "col0": "Felles autoritetsregister",
-            "col1": "Etablere kobling til autoritetsregister for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
-            "col2": "Sikt"
-          },
-          "row5": {
-            "col0": "$t(common.orcid)",
-            "col1": "Etablere kobling til ORCID for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
-            "col2": "$t(common.orcid)"
-          }
-        }
-      }
-    },
-    "privacy_statement": "Personvern og informasjonskapsler",
-    "purpose": {
-      "heading": "Formålet med behandling av personopplysninger i tjenesten",
-      "paragraph": "Tjenesten behandler ulike persontyper med følgende formål:",
-      "table": {
-        "header": {
-          "col0": "Typer",
-          "col1": "$t(common.description)",
-          "col2": "Formål med registrering og behandling"
-        },
-        "row0": {
-          "col0": "Administrative brukere",
-          "col1": "Arkivadministrator, redaktør, kurator. Typisk ansatte ved institusjonen.",
-          "col2": "Administrasjon av tjenesten herunder vedlikehold av innhold og konfigurering av tilgang til funksjoner og til innhold. Administrative brukere må være registrert med identitet for å få rettigheter i tjenesten."
-        },
-        "row1": {
-          "col0": "Autentiserte brukere",
-          "col1": "Registrator. Personer med tilknytning til institusjonen som har logget på tjenesten.",
-          "col2": "Registrering av innhold i tjenesten. Brukere må være registrert med identitet og kobling til autoritetsregister for forfatter for å få rettigheter i tjenesten."
-        },
-        "row2": {
-          "col0": "Anonyme brukere",
-          "col1": "Personer eller tjenester som aksesserer tjenesten uten å logge på. IP-adresser vil registreres i logg.",
-          "col2": "Anonyme brukere gis tilgang til åpne ressurser i tjenesten. Tjenesten loggfører nødvendig informasjon for å hindre misbruk samt for å generere aggregert statistikk over bruk av ressursene."
-        },
-        "row3": {
-          "col0": "Bibliografiske data - personer knyttet til registrert ressurs",
-          "col1": "Forfatter, redaktør, veileder eller annen opphavsperson eller bidragsyter til ressurs registrert i tjenesten.",
-          "col2": "Katalogisering, kreditering og ansvarliggjøring av personene bak ressursen."
-        },
-        "row4": {
-          "col0": "Bibliografiske data – personer referert i ressursen",
-          "col1": "Personopplysninger referert gjennom innhold i publisert ressurs",
-          "col2": "Tilgjengeliggjøring av publisert ressurs. Innholdsansvarlig må sammen med behandlingsansvarlig sikre personvernet i ressursen før publisering i tjenesten."
-        }
-      }
-    },
-    "registered_personal_data": {
-      "heading": "Registrerte personopplysninger, rettslig grunnlag og lagringstid",
-      "paragraph0": "Personopplysninger knyttet til brukerkonto i tjenesten krever samtykke som rettslig grunnlag, jamfør <0>Lov om behandling av personopplysninger (personopplysningsloven), GDPR artikkel 6</0> nr. 1 bokstav a.",
-      "paragraph1": "Registrerte personopplysninger om forfattere og andre personer knyttet til ressurs eller identifisert i ressurs dekkes av <0>Lov om behandling av personopplysninger (personopplysningsloven), GDPR artikkel 6</0> nr. 1 bokstav f - å utføre en oppgave av berettiget interesse.",
-      "paragraph2": "Tjenesten tillater ikke behandling av sensitive personopplysninger. I de tilfeller brukere selv kan legge inn opplysninger i kommentarfelt og lignende, plikter brukeren å følge krav og retningslinjer for tjenesten. Det er ikke tillatt å registrere sensitive opplysninger om seg selv eller andre, eller å benytte tjenesten til injurierende adferd.",
-      "paragraph3": "Behandlingsansvarlig kan lagre opplysninger for statistiske formål, dersom dette er i samfunnets interesse, jf <0>Personopplysningsloven §8</0> og <1>GDPR artikkel 6</1> nr. 1 bokstav e.",
-      "paragraph4": "Følgende persondata behandles i tjenesten:",
-      "paragraph5": "Informasjonen om din aktivitet lagres for å kunne gi deg brukerstøtte og for å kunne si noe om den generelle bruken av tjenesten.",
-      "paragraph6": {
-        "bullet_point0": "Brukersamtykket trekkes tilbake",
-        "bullet_point1": "Formålet med behandling av personopplysninger er oppfylt",
-        "bullet_point2": "Behandlingsansvarlig beslutter å legge ned tjenesten",
-        "intro": "Persondata blir lagret inntil en av følgende hendelser inntreffer:"
-      },
-      "paragraph7": "Logg og backup av systemdata lagres inntil ett år.",
-      "paragraph8": "Brukerinformasjon (unntatt logg) blir lagret i levetiden til en ressurs for brukere som registrerer innhold i NVA.",
-      "table": {
-        "header": {
-          "col0": "Opplysningstype",
-          "col1": "$t(common.description)",
-          "col2": "Kilde"
-        },
-        "other_user_data": {
-          "heading": "Andre persondata",
-          "row0": {
-            "col0": "Metadata for ressurs",
-            "col1": "Fullt navn og rolle for forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter",
-            "col2": "Opprettet i NVA ved registrering eller overført fra ekstern datakilde"
-          },
-          "row1": {
-            "col0": "Persondata i selve ressursen",
-            "col1": "Personer identifisert i ressursen. Innhold i ressursen må kvalitetssikres av ansvarlig før publisering.",
-            "col2": "Ressursen er lastet opp i NVA ved registrering eller overført fra ekstern kilde"
-          }
-        },
-        "techincal_user_data": {
-          "heading": "Brukerdata av teknisk karakter",
-          "row0": {
-            "col0": "Systemidentiteter",
-            "col1": "Identiteter i tjenesten og integrerte systemer. Feide-id, Forfatter-id, ORCID iD",
-            "col2": "Feide, Felles autoritetsregister, ORCID"
-          },
-          "row1": {
-            "col0": "Systemroller og tilknytning til institusjon",
-            "col1": "Bruker tildeles roller i systemet for å gi tilpasset funksjonalitet og tilgang til tjenesten.",
-            "col2": "Tildelt i NVA, Feide"
-          },
-          "row2": {
-            "col0": "Sesjonsinformasjon og informasjonskapsler",
-            "col1": "Informasjon knyttet til brukers dialog med tjenesten. Nødvendig for å tilpasse funksjonalitet i tjenesten og for autentisering av brukere.",
-            "col2": "NVA, Feide"
-          },
-          "row3": {
-            "col0": "Logg",
-            "col1": "Logg over bruk av systemet knyttet til innlogget bruker og/eller ip-adresse. IP-adresse vil være registrert for anonyme brukere, noe som i enkelte tilfeller kan spores tilbake til en person. Formålet med logg er å ivareta sikkerhet og integritet i systemet, yte brukerstøtte, samt å analysere bruk av tjenesten. Opplysningene som samles inn inkluderer tidspunkt, bruker-id, ip-adresse, informasjon om nettleser og maskinvare, sesjonsinformasjon og annen informasjon som nettleser normalt avleverer.",
-            "col2": "Opprettet i NVA"
-          }
-        },
-        "user_data": {
-          "heading": "Brukerdata",
-          "row0": {
-            "col0": "Grunnleggende brukerdata",
-            "col1": "Fullt navn.",
-            "col2": "Feide"
-          },
-          "row1": {
-            "col0": "Kontaktinformasjon",
-            "col1": "E-postadresse tildelt ved egen institusjon.",
-            "col2": "Feide"
-          },
-          "row2": {
-            "col0": "Profil",
-            "col1": "Brukers preferanser for bruk av tjenesten. Språkvalg, Institusjonstilknytning",
-            "col2": "Innstillinger i NVA"
-          }
-        }
-      }
-    },
-    "security_for_personal_data": {
-      "heading": "Sikkerheten rundt dine personopplysninger",
-      "paragraph0": "Personopplysninger i tjenesten er sikret med flere tiltak. Alle overføringer til og fra tjenesten knyttet til brukerkonti er kryptert. Databehandler utfører regelmessig risiko- og sårbarhetsanalyser, og tester sikkerheten i tjenesten for å sikre dine personopplysninger.",
-      "paragraph1": "Behandlingsansvarlig er ansvarlig for rutiner som ivaretar personvernet i forbindelse med publisering av innhold."
-    },
-    "service_in_brief": {
-      "heading": "Kort om tjenesten",
-      "paragraph0": "NVA er en tjeneste for å samle og gjøre tilgjengelig informasjon om, og resultater fra, norsk forskning. Institusjonen (den behandlingsansvarlige) registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett, osv.). Tjenesten får også overført innhold tilhørende institusjonen fra andre datakilder. NVA tilgjengeliggjør institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
-      "paragraph1": "NVA har støtte for utsatt publisering av ressurser. Det betyr at registreringen kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato.",
-      "paragraph2": "Tjenesten tillater ikke behandling av sensitive personopplysninger."
-    },
-    "what_are_personal_data": {
-      "heading": "Hva er personopplysninger?",
-      "paragraph": "Personopplysninger er alle former for data, informasjon, opplysninger og vurderinger som kan knyttes til deg som enkeltperson, jf. <0>personopplysningsloven § 2</0> og <1>GDPR artikkel 5</1> nr. 1. Det avgjørende for om en opplysning er en personopplysning er om opplysningene kan knyttes til en konkret person. Opplysninger, som alene ikke kan knyttes til en enkeltperson, kan i tilfeller hvor opplysningen forekommer sammen med andre data utgjøre en personopplysning."
-    },
-    "your_rights": {
-      "heading": "Dine rettigheter",
-      "section0": {
-        "heading": "Rett til informasjon og innsyn",
-        "paragraph0": "Du har krav på å få informasjon om hvordan dine personopplysninger blir behandlet i tjenesten. Denne personvernerklæringen er ment å inneholde den informasjonen du har rett til å få. Du har også rett til å se/få innsyn i dine personopplysninger som er registrert i tjenesten, og også andre personopplysninger som blir innhentet etter aktiv pålogging fra deg. Du har også rett til å få utlevert en kopi av personopplysninger om deg, dersom du ønsker det.",
-        "paragraph1": "Retten til innsyn ivaretas gjennom selvbetjening i tjenesten, hvor du etter pålogging får innsyn i egne opplysninger. Hvis tjenesten ikke gir fullstendige opplysninger via selvbetjeningsløsningen, må det rettes en skriftlig henvendelse til behandlingsansvarliges brukerstøtte for å få tilgang til utfyllende opplysninger."
-      },
-      "section1": {
-        "heading": "Rett til korrigering",
-        "paragraph0": "Du har rett til å få uriktige personopplysninger om deg korrigert. Du har også rett til å få ufullstendige personopplysninger om deg supplert. Dersom du mener tjenesten viser feil eller mangelfulle personopplysninger, ber vi deg om å ta kontakt med behandlingsansvarlig og at du begrunner hvorfor du mener personopplysningene er feil eller mangelfulle.",
-        "paragraph1": "Vær oppmerksom på at det er begrensede muligheter til å korrigere opplysninger som er distribuert via åpne grensesnitt."
-      },
-      "section2": {
-        "heading": "Rett til å begrense behandlingen",
-        "paragraph0": {
-          "bullet_point0": "I påvente av at behandlingsansvarlig korrigerer feil eller mangelfulle personopplysninger",
-          "bullet_point1": "Dersom du har fremmet en innsigelse mot behandlingen (se mer om dette under)",
-          "bullet_point2": "Dersom personopplysningene er nødvendig for å opprette eller forsvare et rettslig krav",
-          "intro": "I enkelte tilfeller kan du ha rett til å kreve at behandlingen av dine personopplysninger blir begrenset. Begrenset behandling vil si at personopplysningene fortsatt blir lagret, men at annen behandling i tjenesten begrenses. For å kunne kreve begrenset behandling av personopplysninger, må vilkårene i personopplysningsloven og <0>GDPR artikkel 18</0> være oppfylt. Du kan kreve begrenset behandling:"
-        },
-        "paragraph1": "Blir begrenset behandling iverksatt, vil du varsles av behandlingsansvarlig før begrensningen oppheves."
-      },
-      "section3": {
-        "heading": "Rett til sletting",
-        "paragraph0": "Du har rett til å kreve at vi sletter personopplysninger om deg. Dersom du ønsker å få slettet dine personopplysninger, ber vi deg om å ta kontakt med behandlingsansvarlig. Det er viktig at du begrunner hvorfor du ønsker at personopplysningene blir slettet, og om mulig også opplyser hvilke personopplysninger du ønsker å få slettet.",
-        "paragraph1": "Vær oppmerksom på at lovverket i enkelte tilfeller gir oss anledning til å gjøre unntak fra retten til sletting. For eksempel vil dette være tilfelle når vi behandler personopplysningene for å oppfylle en lovpålagt oppgave, eller for å ivareta viktige samfunnsinteresser som arkivering, forskning og statistikk. Vi har ikke mulighet til å slette brukerinformasjon hvor brukeren selv har registrert innhold i NVA uten samtidig å slette det registrerte innholdet.",
-        "paragraph2": "Vær også oppmerksom på at det er begrensede muligheter til å slette personopplysninger som er distribuert via åpne grensesnitt."
-      },
-      "section4": {
-        "heading": "Rett til å fremme innsigelse",
-        "paragraph0": {
-          "bullet_point0": "Rettslig grunnlag for behandling av personopplysninger er basert på legitime interesser, i allmenn interesse, eller ved utøvelse av offentlig myndighet.",
-          "bullet_point1": "Behandling av personopplysninger innebærer direkte markedsføring eller profilering",
-          "bullet_point2": "Behandling av personopplysninger skjer med tanke på vitenskapelig/historisk forskning eller statistikk.",
-          "intro": "Du har rett til å fremme innsigelse mot behandling av dine personopplysninger under visse vilkår, definert i <0>GDPR artikkel 21</0>. Dette gjelder dersom;"
-        },
-        "paragraph1": "Tjenesten tilfredsstiller generelt ikke disse vilkårene, med unntak for behandling av forfatteropplysninger og i de tilfeller hvor personopplysninger anvendes for statistikk. Ved bruk til statistikk vil persondata være anonymisert.",
-        "paragraph2": {
-          "bullet_point0": "Dersom du har et særskilt behov for å få stanset behandlingen ber vi deg om å ta kontakt med behandlingsansvarlig - eksempelvis hvis du har et beskyttelsesbehov, fortrolig adresse, eller lignende.",
-          "bullet_point1": "Når det er gitt samtykke for behandling av personopplysninger, har du rett til å trekke samtykket.",
-          "intro": "Vær imidlertid oppmerksom på følgende:"
-        }
-      },
-      "section5": {
-        "heading": "Rett til å klage over behandlingen",
-        "paragraph0": "Dersom du mener vi ikke har behandlet personopplysningene på en korrekt og lovlig måte, eller hvis du mener at vi ikke har klart å oppfylle dine rettigheter, har du mulighet til å klage over behandlingen. Se nederst for informasjon om hvordan du kan kontakte oss.",
-        "paragraph1": "Dersom vi ikke tar klagen din til følge, har du mulighet til å fremme klagen for Datatilsynet. Datatilsynet er ansvarlig for å kontrollere at norske virksomheter overholder bestemmelsene i personopplysningsloven og GDPR, ved behandling av personopplysninger."
-      }
-    }
-  },
+  "privacy_statement": "Personvernerklæring",
   "project": {
     "add_affiliation": "Legg til tilknytning",
     "add_contributor": "Legg til prosjektdeltaker",
@@ -1322,7 +1041,7 @@
     "local_managers": "Lokalt ansvarlige",
     "new_project": {
       "nfr_grant": "NFR-tilskudd",
-      "search_for_project_name_or_placeholder": "Søk etter prosjektnavn eller prosjektleder"
+      "search_for_project_name_or_placeholder": "Søk på prosjektnavn eller prosjektleder"
     },
     "no_affiliation": "Ingen tilknytning",
     "no_duplicate_title": "Ingen prosjekter funnet med samme tittel.",
@@ -1357,7 +1076,7 @@
     "scientific_summary": "Vitenskapelig sammendrag",
     "scientific_summary_english": "$t(project.scientific_summary) (engelsk)",
     "scientific_summary_norwegian": "$t(project.scientific_summary) (norsk)",
-    "search_for_institution": "Søk etter institusjon",
+    "search_for_institution": "Søk på institusjon",
     "status": {
       "ACTIVE": "Aktivt",
       "CONCLUDED": "Avsluttet",
@@ -1367,6 +1086,7 @@
     "verify_contributor": "Identifiser prosjektdeltaker",
     "verify_project_manager": "Identifiser prosjektleder"
   },
+  "projects": "Prosjekter",
   "published_result": "Publisert resultat",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikke lagre fordi resultatet er publisert og inneholder valideringsfeil",
@@ -1404,7 +1124,7 @@
       "prefilled_affiliation": "Forhåndsutfylt tilknytning",
       "remove_affiliation": "Fjern tilknytning",
       "remove_contributor": "Fjern bidragsyter",
-      "search_for_institution": "Søk etter institusjon",
+      "search_for_institution": "Søk på institusjon",
       "select_affiliation": "Velg tilknytning",
       "select_contributor_type": "Velg type bidragsyter",
       "select_person": "Velg person",
@@ -1496,7 +1216,7 @@
         "funding_without_project": "Finansiering uten prosjekt",
         "funding_without_project_description": "<0>Mottar forskningen finansiering som ikke er tilknyttet et prosjekt så trykk på \"Legg til finansiering\" og deretter søk etter finansiør.</0> <0>Ikke registrer finansiering som er tilknyttet et prosjekt. Finansiering tilknyttet prosjekt legges til når du legger til prosjekt lengre opp på siden. Hvis ikke informasjonen om finansiering vises så må dette registreres på prosjektet i NVA.</0>",
         "nfr_project": "NFR-prosjekt",
-        "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
+        "nfr_project_search": "Søk på prosjektnavn eller prosjektleder",
         "remove_funding": "Fjern finansiering"
       },
       "hrcs_activities": "HRCS-aktiviteter",
@@ -1509,7 +1229,6 @@
       "project_association": "Prosjekttilknytning",
       "project_helper_text": "<0>Registrerer du finansieringskilde på et prosjekt, vil resultatene du kobler til det prosjektet «arve» informasjon om finansiering. Det gjør at du slipper å registrere alle finansieringskilder på alle resultatene til prosjektet. Søker du på finansieringskilden i NVA får du treff på både prosjektet og resultatene, og rapportering til Forskningsrådet eller andre vil ta med alle resultat.</0> <0>Et resultat kan være koblet til flere prosjekter.</0>",
       "remove_vocabulary": "Fjern vokabular",
-      "search_for_npi_discipline": "Søk etter fagfelt",
       "year_only": "Kun årstall"
     },
     "edit_registration": "Rediger resultat",
@@ -1959,7 +1678,7 @@
         "info_book_of_abstracts": "Abstraktsamlingen hvor abstraktet er publisert i må være publisert først",
         "info_report": "Rapporten hvor kapittelet er publisert i må være publisert først",
         "published_in": "Publisert i",
-        "search_for_anthology": "Søk etter antologien hvor kapittelet er publisert",
+        "search_for_anthology": "Søk på antologien hvor kapittelet er publisert",
         "search_for_book_of_abstracts": "Søk etter abstraktsamlingen hvor abstraktet er publisert",
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
@@ -1980,7 +1699,7 @@
         "edit_exhibition_other_presentation": "Endre formidling",
         "institution_name": "Arrangørens navn",
         "place": "Visningssted",
-        "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
+        "search_for_exhibition_catalog": "Søk på utstillingskatalog",
         "subtype": {
           "AmbulatingExhibition": "Vandreutstilling",
           "BasicExhibition": "Basisutstilling",
@@ -2075,15 +1794,14 @@
       "same_title": "samme tittel",
       "same_title_and_date": "samme tittel og år",
       "search_for_channel": "Søk i ISSN-portalen på <0><0></0></0> for å sikre at verdiene du oppgir er riktige.",
-      "search_for_original_article": "Søk etter original artikkel",
+      "search_for_original_article": "Søk på original artikkel",
       "search_for_publisher": "Søk etter utgiver",
-      "search_for_publisher_placeholder": "Søk etter navn",
-      "search_for_title_or_issn": "Søk etter tittel eller ISSN",
+      "search_for_publisher_placeholder": "Søk på navn",
+      "search_for_title_or_issn": "Søk på navn eller ISSN",
       "select_resource_type": "Velg kategori",
       "series": "Serie",
-      "series_info": "Hvis publikasjonen inngår i en serie",
+      "series_info": "Hvis publikasjonen inngår i en serie.",
       "series_number": "Serienummer",
-      "series_title": "Serietittel",
       "title_of_event": "Tittel på arrangement",
       "type_work": "Type verk",
       "type_work_specified": "Egendefinert type verk",
@@ -2116,6 +1834,8 @@
     "year_published": "Publiseringsår"
   },
   "reset": "Nullstill",
+  "results": "Forskningsresultater",
+  "science_categories_front_page": "<heading>Arbeid i ulike kategorier</heading><p>Forskning og formidling omfatter mye mer enn vitenskapelige publikasjoner.</p><p>Alt registreres i ulike kategorier, og du kan søke og gjøre oppslag i alle kategoriene nedenfor.</p>",
   "search": {
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
@@ -2158,21 +1878,16 @@
     "responsible_institution": "Forskningsansvarlig institusjon",
     "result": "Resultat",
     "result_search": "Resultatsøk",
-    "search_for_contributor": "Søk etter bidragsyter",
-    "search_for_coordinating_institution": "Søk etter koordinerende institusjon",
+    "search_for_contributor": "Søk på identifisert bidragsyter",
+    "search_for_coordinating_institution": "Søk på koordinerende institusjon",
     "search_for_course_code": "Søk etter emnekode",
-    "search_for_funder": "Søk etter finansiør",
     "search_for_funding_identifier": "Søk på Tilskudds-ID",
-    "search_for_journal": "Søk etter tidsskrift",
-    "search_for_participant": "Søk etter deltaker",
-    "search_for_participating_institution": "Søk etter deltakende institusjon",
-    "search_for_responsible_institution": "Søk etter forskningsansvarlig institusjon",
-    "search_for_serial_publication": "Søk etter serie/tidsskrift",
-    "search_for_series": "Søk etter serie",
-    "search_for_sub_unit": "Søk etter underenhet",
+    "search_for_participant": "Søk på deltaker",
+    "search_for_participating_institution": "Søk på deltakende institusjon",
+    "search_for_responsible_institution": "Søk på forskningsansvarlig institusjon",
     "search_for_title": "Søk etter tittel",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv.",
-    "search_project_placeholder": "Søk etter tittel, prosjekt-ID, tilskudds-ID eller deltaker",
+    "search_project_placeholder": "Søk på tittel, prosjekt-ID, tilskudds-ID eller deltaker",
     "search_term_label": "Verdi",
     "sector": "Sektor",
     "select_one_or_more_categories": "Velg en eller flere kategorier",
@@ -2190,6 +1905,9 @@
     "year_from": "Fra år",
     "year_to": "Til år"
   },
+  "search_in_national_research_publication": "Søk i over 2 millioner publikasjoner fra forskere fra universiteter, høyskoler og forskningsinstitusjoner over hele landet.",
+  "select_curator": "Velg kurator",
+  "select_funder": "Velg finansiør",
   "start_merging": "Start sammenslåing",
   "tasks": {
     "correction_list": "Retteliste",
@@ -2282,6 +2000,10 @@
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   },
   "unpublished_result": "Avpublisert resultat",
+  "velg_subject_area": "Velg fagfelt",
   "view_contact_info": "Se kontaktinformasjon",
-  "vocabulary_missing": "Institusjonen har ikke lagt til vokabular."
+  "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
+  "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
+  "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
 }

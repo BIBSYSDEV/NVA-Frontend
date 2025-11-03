@@ -22,7 +22,7 @@ import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefau
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
-import { TicketTypeSelection } from '../../types/publication_types/ticket.types';
+import { TicketTypeEnum, TicketTypeSelection } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -39,6 +39,7 @@ import { NviCorrectionListNavigationAccordion } from './components/NviCorrection
 import { NviStatusPage } from './components/NviStatusPage';
 import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
 import { TicketList } from './components/TicketList';
+import { TicketTypeTag } from './components/TicketTypeTag';
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -150,7 +151,7 @@ const TasksPage = () => {
         {isTicketCurator && (
           <NavigationListAccordion
             title={t('tasks.user_dialog')}
-            startIcon={<AssignmentIcon sx={{ bgcolor: 'white' }} />}
+            startIcon={<AssignmentIcon />}
             accordionPath={UrlPathTemplate.TasksDialogue}
             onClick={() => {
               if (!isOnTicketsPage) {
@@ -158,21 +159,20 @@ const TasksPage = () => {
               }
             }}
             dataTestId={dataTestId.tasksPage.userDialogAccordion}>
-            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
+            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', mt: 0 }}>
               {isPublishingCurator && (
                 <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                   endIcon={<Badge badgeContent={publishingNotificationsCount} />}
-                  showCheckbox
                   isSelected={!!ticketTypes.publishingRequest}
-                  color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  {ticketTypes.publishingRequest && publishingRequestCount
-                    ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
-                    : t('my_page.messages.types.PublishingRequest')}
+                  <TicketTypeTag
+                    count={ticketTypes.publishingRequest && publishingRequestCount ? publishingRequestCount : undefined}
+                    type={TicketTypeEnum.PublishingRequest}
+                  />
                 </TicketTypeFilterButton>
               )}
 
@@ -180,16 +180,19 @@ const TasksPage = () => {
                 <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.thesisPublishingRequestsButton}
                   endIcon={<Badge badgeContent={thesisPublishingNotificationsCount} />}
-                  showCheckbox
                   isSelected={!!ticketTypes.filesApprovalThesis}
-                  color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, filesApprovalThesis: !ticketTypes.filesApprovalThesis });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  {ticketTypes.filesApprovalThesis && thesisPublishingRequestCount
-                    ? `${t('my_page.messages.types.FilesApprovalThesis')} (${thesisPublishingRequestCount})`
-                    : t('my_page.messages.types.FilesApprovalThesis')}
+                  <TicketTypeTag
+                    count={
+                      ticketTypes.filesApprovalThesis && thesisPublishingRequestCount
+                        ? thesisPublishingRequestCount
+                        : undefined
+                    }
+                    type={TicketTypeEnum.FilesApprovalThesis}
+                  />
                 </TicketTypeFilterButton>
               )}
 
@@ -197,16 +200,15 @@ const TasksPage = () => {
                 <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                   endIcon={<Badge badgeContent={doiNotificationsCount} />}
-                  showCheckbox
                   isSelected={!!ticketTypes.doiRequest}
-                  color="doiRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  {ticketTypes.doiRequest && doiRequestCount
-                    ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
-                    : t('my_page.messages.types.DoiRequest')}
+                  <TicketTypeTag
+                    count={ticketTypes.doiRequest && doiRequestCount ? doiRequestCount : undefined}
+                    type={TicketTypeEnum.DoiRequest}
+                  />
                 </TicketTypeFilterButton>
               )}
 
@@ -214,16 +216,17 @@ const TasksPage = () => {
                 <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                   endIcon={<Badge badgeContent={supportNotificationsCount} />}
-                  showCheckbox
                   isSelected={!!ticketTypes.generalSupportCase}
-                  color="generalSupportCase"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  {ticketTypes.generalSupportCase && generalSupportCaseCount
-                    ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
-                    : t('my_page.messages.types.GeneralSupportCase')}
+                  <TicketTypeTag
+                    count={
+                      ticketTypes.generalSupportCase && generalSupportCaseCount ? generalSupportCaseCount : undefined
+                    }
+                    type={TicketTypeEnum.GeneralSupportCase}
+                  />
                 </TicketTypeFilterButton>
               )}
             </StyledTicketSearchFormGroup>

@@ -10,14 +10,14 @@ import { getLanguageString } from '../../../../utils/translation-helpers';
 import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
-import { SearchPageProps } from '../../SearchPage';
 import { SearchForPersonFacetItem } from '../../facet_search_fields/SearchForContributorFacetItem';
 import { SearchForFundingSourceFacetItem } from '../../facet_search_fields/SearchForFundingSourceFacetItem';
 import { SearchForInstitutionFacetItem } from '../../facet_search_fields/SearchForInstitutionFacetItem';
 import { SearchForSerialPublication } from '../../facet_search_fields/SearchForSerialPublication';
 import { SelectCategoryFacetItem } from '../../facet_search_fields/SelectCategoryFacetItem';
+import { SearchPropTypes } from '../RegistrationSearch';
 
-export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
+export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPropTypes, 'registrationQuery'>) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -204,10 +204,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                   size: 'small',
                   sx: { p: '0.25rem 0.5rem' },
                 }}
-                textFieldProps={{
-                  'data-testid': dataTestId.aggregations.publisherFacetsSearchField,
-                  showSearchIcon: true,
-                }}
+                textFieldProps={{ 'data-testid': dataTestId.aggregations.publisherFacetsSearchField }}
               />
             )
           }
@@ -251,9 +248,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                   size: 'small',
                   sx: { p: '0.25rem 0.5rem' },
                 }}
-                textFieldProps={{
-                  showSearchIcon: true,
-                }}
+                textFieldProps={{ 'data-testid': dataTestId.aggregations.seriesFacetsSearchField }}
               />
             )
           }
@@ -297,9 +292,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                   size: 'small',
                   sx: { p: '0.25rem 0.5rem' },
                 }}
-                textFieldProps={{
-                  showSearchIcon: true,
-                }}
+                textFieldProps={{ 'data-testid': dataTestId.aggregations.journalFacetsSearchField }}
               />
             )
           }

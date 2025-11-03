@@ -24,18 +24,17 @@ export const StyledBaseContributorIndicator = ({ sx, ...props }: BoxProps) => {
 };
 
 export const StyledVerifiedContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
-  background: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
+  background: theme.palette.background.neutral87,
 }));
 
 const StyledVerifiedContributorWithoutAffiliation = styled(StyledBaseContributorIndicator)(({ theme }) => ({
   border: '1px solid',
-  borderColor: theme.palette.primary.light,
-  color: theme.palette.primary.light,
+  borderColor: theme.palette.secondary.main,
+  color: theme.palette.secondary.main,
 }));
 
 const StyledUnknownContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
-  background: theme.palette.secondary.dark,
+  background: theme.palette.background.neutral87,
 }));
 
 interface ContributorIndicatorProps {

@@ -1,43 +1,31 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
-import { updateRegistration } from '../../../../api/registrationApi';
+import { useUpdateRegistration } from '../../../../api/hooks/useUpdateRegistration';
 import { MergeResultsWizard } from '../../../../components/merge_results/MergeResultsWizard';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { Registration } from '../../../../types/registration.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { updateRegistrationQueryData } from '../../../../utils/registration-helpers';
 
 interface MergeSelectedRegistrationProps {
   targetRegistrationId: string;
   sourceRegistration: Registration;
+  resetTargetRegistrationId: () => void;
   toggleDialog: () => void;
 }
 
 export const MergeSelectedRegistration = ({
   targetRegistrationId,
   sourceRegistration,
+  resetTargetRegistrationId,
   toggleDialog,
 }: MergeSelectedRegistrationProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const queryClient = useQueryClient();
 
   const targetRegistrationQuery = useFetchRegistration(getIdentifierFromId(targetRegistrationId));
-
-  const registrationMutation = useMutation({
-    mutationFn: (values: Registration) => updateRegistration(values),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' })),
-    onSuccess: (response) => {
-      dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
-      if (response.data) {
-        updateRegistrationQueryData(queryClient, response.data);
-      }
-      toggleDialog();
-    },
-  });
+  const registrationMutation = useUpdateRegistration({ onSuccess: toggleDialog });
 
   if (targetRegistrationQuery.isPending) {
     return <PageSpinner aria-label={t('merge_results')} />;
@@ -47,6 +35,11 @@ export const MergeSelectedRegistration = ({
 
   if (!targetRegistration) {
     return null;
+  }
+
+  if (!targetRegistration.allowedOperations?.includes('update')) {
+    resetTargetRegistrationId();
+    dispatch(setNotification({ message: t('you_do_not_have_permission_to_edit_this_registration'), variant: 'info' }));
   }
 
   return (

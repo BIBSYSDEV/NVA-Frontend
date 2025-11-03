@@ -2,21 +2,22 @@ import { Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RegistrationTab } from '../../types/registration.types';
-import { isOnImportPage } from '../../utils/urlPaths';
 import { MergeResultsWizardCategoryTab } from './MergeResultsWizardCategoryTab';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
+import { MergeResultsWizardContributorsTab } from './MergeResultsWizardContributorsTab';
 import { MergeResultsWizardDescriptionTab } from './MergeResultsWizardDescriptionTab';
+import { MergeResultsWizardFilesTab } from './MergeResultsWizardFilesTab';
 
 export const MergeResultsWizardContent = () => {
   const { t } = useTranslation();
-  const { activeTab } = useContext(MergeResultsWizardContext);
+  const { activeTab, sourceHeading } = useContext(MergeResultsWizardContext);
 
   return (
     <>
-      <Typography variant="h3" sx={{ display: { xs: 'none', sm: 'block' } }}>
-        {isOnImportPage() ? t('basic_data.central_import.import_candidate') : t('unpublished_result')}
+      <Typography variant="h3" sx={{ display: { xs: 'none', md: 'block' } }}>
+        {sourceHeading}
       </Typography>
-      <Typography variant="h3" sx={{ display: { xs: 'none', sm: 'block' }, gridColumn: 3 }}>
+      <Typography variant="h3" sx={{ display: { xs: 'none', md: 'block' }, gridColumn: 3 }}>
         {t('published_result')}
       </Typography>
 
@@ -24,6 +25,10 @@ export const MergeResultsWizardContent = () => {
         <MergeResultsWizardDescriptionTab />
       ) : activeTab === RegistrationTab.ResourceType ? (
         <MergeResultsWizardCategoryTab />
+      ) : activeTab === RegistrationTab.Contributors ? (
+        <MergeResultsWizardContributorsTab />
+      ) : activeTab === RegistrationTab.FilesAndLicenses ? (
+        <MergeResultsWizardFilesTab />
       ) : null}
     </>
   );

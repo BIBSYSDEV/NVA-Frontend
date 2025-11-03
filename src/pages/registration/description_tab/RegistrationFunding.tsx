@@ -1,4 +1,4 @@
-import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, IconButton, InputAdornment, SxProps, TextField, Typography } from '@mui/material';
@@ -99,7 +99,8 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                         />
                         {funding.identifier && (
                           <Button
-                            variant="outlined"
+                            color="tertiary"
+                            variant="contained"
                             endIcon={<OpenInNewIcon />}
                             href={getNfrProjectUrl(funding.identifier)}
                             target="_blank"
@@ -196,18 +197,18 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                     onClick={() => remove(index)}
                     data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
                     title={t('registration.description.funding.remove_funding')}
-                    sx={{
-                      width: 'fit-content',
-                    }}>
+                    sx={{ width: 'fit-content' }}>
                     <CancelIcon color="primary" />
                   </IconButton>
                 </Box>
               );
             })}
             <Button
+              color="tertiary"
+              variant="contained"
               sx={{ width: 'fit-content' }}
               data-testid={dataTestId.registrationWizard.description.addFundingButton}
-              startIcon={<AddIcon />}
+              startIcon={<AddCircleOutlineIcon />}
               onClick={() => push(emptyFunding)}>
               {t('common.add_custom', { name: t('common.funding').toLocaleLowerCase() })}
             </Button>

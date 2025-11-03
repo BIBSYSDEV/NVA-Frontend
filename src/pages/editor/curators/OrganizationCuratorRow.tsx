@@ -1,10 +1,10 @@
-import AddLinkIcon from '@mui/icons-material/AddLink';
-import AdjustIcon from '@mui/icons-material/Adjust';
+import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
+import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import EditIcon from '@mui/icons-material/Edit';
-import EventIcon from '@mui/icons-material/Event';
-import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
-import SchoolIcon from '@mui/icons-material/School';
-import TaskIcon from '@mui/icons-material/Task';
+import EventOutlinedIcon from '@mui/icons-material/EventOutlined';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import { Box, IconButton, Typography } from '@mui/material';
 import { ComponentType, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,12 +20,12 @@ interface OrganizationCuratorRowProps extends Pick<OrganizationCuratorsProps, 'c
 }
 
 const curatorRolesConfig = [
-  { rolename: RoleName.SupportCurator, color: 'generalSupportCase.main', SelectedIcon: MarkEmailReadIcon },
-  { rolename: RoleName.PublishingCurator, color: 'publishingRequest.main', SelectedIcon: TaskIcon },
-  { rolename: RoleName.CuratorThesis, color: 'publishingRequest.main', SelectedIcon: SchoolIcon },
-  { rolename: RoleName.CuratorThesisEmbargo, color: 'publishingRequest.main', SelectedIcon: EventIcon },
-  { rolename: RoleName.DoiCurator, color: 'doiRequest.main', SelectedIcon: AddLinkIcon },
-  { rolename: RoleName.NviCurator, color: 'nvi.main', SelectedIcon: AdjustIcon },
+  { rolename: RoleName.SupportCurator, SelectedIcon: ChatBubbleOutlineOutlinedIcon },
+  { rolename: RoleName.PublishingCurator, SelectedIcon: InsertDriveFileOutlinedIcon },
+  { rolename: RoleName.CuratorThesis, SelectedIcon: SchoolOutlinedIcon },
+  { rolename: RoleName.CuratorThesisEmbargo, SelectedIcon: EventOutlinedIcon },
+  { rolename: RoleName.DoiCurator, SelectedIcon: AddLinkOutlinedIcon },
+  { rolename: RoleName.NviCurator, SelectedIcon: AdjustOutlinedIcon },
 ] satisfies {
   rolename:
     | RoleName.SupportCurator
@@ -34,7 +34,6 @@ const curatorRolesConfig = [
     | RoleName.CuratorThesisEmbargo
     | RoleName.DoiCurator
     | RoleName.NviCurator;
-  color: string;
   SelectedIcon: ComponentType<any>;
 }[];
 
@@ -51,7 +50,7 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators, canEditUsers 
   return (
     <Box
       sx={{
-        bgcolor: 'background.default',
+        bgcolor: 'white',
         display: 'grid',
         gap: '1rem',
         gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
@@ -66,19 +65,19 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators, canEditUsers 
             title={t('editor.curators.edit_user')}
             onClick={toggleDialog}
             size="small"
-            sx={{ bgcolor: 'secondary.light' }}>
-            <EditIcon fontSize="small" />
+            sx={{ bgcolor: 'tertiary.main' }}>
+            <EditIcon color="primary" fontSize="small" />
           </IconButton>
         )}
       </Box>
 
       <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-        {curatorRolesConfig.map(({ rolename, color, SelectedIcon }) => {
+        {curatorRolesConfig.map(({ rolename, SelectedIcon }) => {
           const isSelected = curator.roles.some((userRole) => userRole.rolename === rolename);
           return (
             <Box key={rolename} sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
               {isSelected ? (
-                <SelectedIcon sx={{ p: '0.125rem', borderRadius: '50%', bgcolor: color }} />
+                <SelectedIcon sx={{ p: '0.125rem', borderRadius: '50%', bgcolor: 'secondary.main', color: 'white' }} />
               ) : (
                 <Box
                   sx={{

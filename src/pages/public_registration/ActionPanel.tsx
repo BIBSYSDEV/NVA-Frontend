@@ -88,7 +88,7 @@ export const ActionPanel = ({
   return (
     <Paper
       elevation={0}
-      sx={{ color: 'primary.contrastText' }}
+      sx={{ color: 'primary.contrastText', bgcolor: 'background.default' }}
       data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
       <Tabs
         value={tabValue}
@@ -96,7 +96,7 @@ export const ActionPanel = ({
         sx={{ bgcolor: 'primary.main', px: '0.5rem' }}
         textColor="inherit"
         slotProps={{
-          indicator: { style: { backgroundColor: 'white', height: '0.4rem' } },
+          indicator: { sx: { bgcolor: 'secondary.main', height: '0.4rem' } },
         }}>
         {canSeeTasksPanel && (
           <Tab

@@ -65,6 +65,7 @@ export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
         <Button
           data-testid={dataTestId.confirmDialog.acceptButton}
           loading={acceptTermsMutation.isPending}
+          color="secondary"
           variant="contained"
           onClick={() => acceptTermsMutation.mutate()}>
           {t('authorization.accept')}

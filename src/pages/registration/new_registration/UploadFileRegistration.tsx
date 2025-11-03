@@ -80,8 +80,9 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
           <Button
             data-testid={dataTestId.registrationWizard.new.uploadFileButton}
             variant="contained"
+            color="secondary"
             sx={{ alignSelf: 'center' }}
-            endIcon={<UploadIcon />}
+            startIcon={<UploadIcon />}
             loadingPosition="end"
             loading={createRegistrationMutation.isPending}
             onClick={() => fileInputRef.current?.click()}>
@@ -149,6 +150,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
         <Button
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
+          color="secondary"
           variant="contained"
           disabled={
             !createRegistrationMutation.data?.identifier || uploadedFiles.length === 0 || deleteFileMutation.isPending

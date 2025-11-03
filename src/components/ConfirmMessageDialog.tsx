@@ -58,6 +58,7 @@ export const ConfirmMessageDialog = ({
             {t('common.cancel')}
           </Button>
           <Button
+            color="secondary"
             type="submit"
             data-testid={dataTestId.confirmDialog.acceptButton}
             variant="contained"

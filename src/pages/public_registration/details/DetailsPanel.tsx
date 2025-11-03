@@ -36,7 +36,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const correspondingContributors = contributors.filter((contributor) => contributor.correspondingAuthor);
-  const contactPersons = contributors.filter((contributor) => contributor.role.type === ContributorRole.ContactPerson);
+  const contactPersons = contributors.filter((contributor) => contributor.role?.type === ContributorRole.ContactPerson);
 
   const confirmedAffiliations = contributors.flatMap((contributor) =>
     contributor.affiliations?.filter((affiliation) => affiliation.type === 'Organization' && affiliation.id)
@@ -56,9 +56,10 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
   const topLevelOrgs = affiliationQueries
     .map((affiliationQuery) => (affiliationQuery.data ? getTopLevelOrganization(affiliationQuery.data) : null))
     .filter(Boolean) as Organization[];
+  const uniqueInstitutions = getUniqueOrganizations(topLevelOrgs);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'secondary.main', gap: '0.5rem' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'background.paper', gap: '0.5rem' }}>
       <Typography variant="h2" sx={visuallyHidden}>
         {t('details')}
       </Typography>
@@ -67,6 +68,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
       <Button
         data-testid={dataTestId.registrationLandingPage.detailsTab.viewContactInformationButton}
         variant="contained"
+        color="tertiary"
         sx={{ alignSelf: { sm: 'start', md: 'center' } }}
         startIcon={<MailOutlineIcon />}
         onClick={() => setOpenModal(true)}>
@@ -88,7 +90,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
         </IconButton>
 
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <InstitutionsServiceCenterOverview institutions={getUniqueOrganizations(topLevelOrgs)} />
+          {uniqueInstitutions.length > 0 && <InstitutionsServiceCenterOverview institutions={uniqueInstitutions} />}
 
           {contactPersons.length > 0 && (
             <div>

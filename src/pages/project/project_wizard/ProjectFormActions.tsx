@@ -47,6 +47,7 @@ export const ProjectFormActions = ({
         />
         {isLastTab && (
           <Button
+            color="secondary"
             variant="contained"
             type="submit"
             sx={{ mr: '2rem' }}

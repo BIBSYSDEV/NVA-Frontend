@@ -1,11 +1,11 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import WarningIcon from '@mui/icons-material/Warning';
 import { Box, Button, Link, Typography } from '@mui/material';
 import { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
 import { ContributorIndicators } from '../../components/ContributorIndicators';
+import { InfoBanner } from '../../components/InfoBanner';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { NviCandidateProblemsContext } from '../../context/NviCandidateProblemsContext';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
@@ -77,7 +77,8 @@ export const PublicRegistrationContributors = ({
             size="small"
             startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             onClick={toggleShowAll}
-            variant="outlined">
+            color="tertiary"
+            variant="contained">
             {showAll ? t('common.show_fewer') : t('common.show_all')}
           </Button>
         )}
@@ -94,18 +95,7 @@ export const PublicRegistrationContributors = ({
 
       {problems && hasUnidentifiedContributorProblem(problems) && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem' }}>
-          <Box
-            sx={{
-              p: '0.3rem 2rem',
-              bgcolor: 'primary.light',
-              color: 'primary.contrastText',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-            }}>
-            <WarningIcon fontSize="small" />
-            <Typography color="inherit">{t('tasks.nvi.unidentified_person_with_nvi_institution')}</Typography>
-          </Box>
+          <InfoBanner size="small" text={t('tasks.nvi.unidentified_person_with_nvi_institution')} />
         </Box>
       )}
     </Box>
@@ -145,16 +135,16 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
 
-        const hasValidRole = relevantRoles.includes(contributor.role.type);
+        const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
 
         const showRole = relevantRoles.includes(ContributorRole.Creator)
-          ? contributor.role.type !== ContributorRole.Creator
+          ? contributor.role?.type !== ContributorRole.Creator
           : true;
 
         const roleContent = showRole && (
           <Box component="span" sx={{ ml: '0.2rem' }}>
             {hasValidRole ? (
-              <>({t(`registration.contributors.types.${contributor.role.type}`)})</>
+              <>({t(`registration.contributors.types.${contributor.role!.type}`)})</>
             ) : (
               <i>({t('registration.public_page.unknown_role')})</i>
             )}

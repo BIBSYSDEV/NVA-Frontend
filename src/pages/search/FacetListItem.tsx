@@ -5,7 +5,7 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
   gap: '1rem',
   justifyContent: 'space-between',
   '&.Mui-selected': {
-    background: theme.palette.info.light,
+    background: theme.palette.tertiary.main,
   },
 }));
 

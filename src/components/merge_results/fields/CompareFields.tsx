@@ -3,9 +3,10 @@ import CheckIcon from '@mui/icons-material/Check';
 import RestoreIcon from '@mui/icons-material/Restore';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { Box, Button, Divider, styled, Typography } from '@mui/material';
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 
 interface CompareFieldsProps {
   sourceContent: ReactNode;
@@ -32,26 +33,31 @@ export const CompareFields = ({
   onResetValue,
 }: CompareFieldsProps) => {
   const { t } = useTranslation();
+  const { sourceHeading } = useContext(MergeResultsWizardContext);
 
   return (
     <>
+      <Typography variant="h3" sx={{ display: { xs: 'block', sm: 'none' } }}>
+        {sourceHeading}
+      </Typography>
       {sourceContent}
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
         {isMatching ? (
-          <StyledBox sx={{ bgcolor: 'secondary.dark' }}>
-            <CheckIcon fontSize="small" />
-            <Typography>{t('matches')}</Typography>
+          <StyledBox sx={{ bgcolor: 'success.main' }}>
+            <CheckIcon fontSize="small" sx={{ color: 'white' }} />
+            <Typography color="white">{t('matches')}</Typography>
           </StyledBox>
         ) : (
           <>
-            <StyledBox sx={{ bgcolor: 'primary.light' }}>
+            <StyledBox sx={{ bgcolor: 'info.main' }}>
               <WarningAmberIcon fontSize="small" sx={{ color: 'white' }} />
-              <Typography sx={{ color: 'white' }}>{t('does_not_match')}</Typography>
+              <Typography color="white">{t('does_not_match')}</Typography>
             </StyledBox>
 
             {onCopyValue && (
               <Button
+                color="secondary"
                 data-testid={dataTestId.basicData.centralImport.copyValueButton}
                 variant="contained"
                 size="small"
@@ -66,7 +72,8 @@ export const CompareFields = ({
         {isChanged && (
           <Button
             data-testid={dataTestId.basicData.centralImport.resetValueButton}
-            variant="outlined"
+            variant="contained"
+            color="tertiary"
             size="small"
             endIcon={<RestoreIcon />}
             onClick={onResetValue}>
@@ -75,6 +82,9 @@ export const CompareFields = ({
         )}
       </Box>
 
+      <Typography variant="h3" sx={{ display: { xs: 'block', sm: 'none' } }}>
+        {t('published_result')}
+      </Typography>
       {targetContent}
 
       <Divider sx={{ gridColumn: '1/-1', my: '0.5rem' }} />

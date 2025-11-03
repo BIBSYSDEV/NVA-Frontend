@@ -17,7 +17,7 @@ export const DuplicateWarning = ({ name, listHeader, linkTo, warning, sx }: Dupl
   return (
     <Box
       sx={{
-        bgcolor: 'secondary.light',
+        bgcolor: 'info.light',
         borderRadius: '0.25rem',
         width: '100%',
         padding: '0.75rem',

@@ -21,7 +21,6 @@ import { useDispatch } from 'react-redux';
 import { ListPagination } from '../../../components/ListPagination';
 import { RegistrationFormContext } from '../../../context/RegistrationFormContext';
 import { setNotification } from '../../../redux/notificationSlice';
-import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import {
   Affiliation,
   Contributor,
@@ -155,7 +154,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       goToLastPage();
     } else {
       const thisContributor = contributors[contributorIndex];
-      const verifiedAffiliations = thisContributor.affiliations ?? [];
+      const verifiedAffiliations = thisContributor.affiliations ? [...thisContributor.affiliations] : [];
       const verifiedOrcid = thisContributor.identity.orcId;
 
       verifiedAffiliations.push(...existingAffiliations);
@@ -212,7 +211,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
             setCurrentPage(1);
           }}>
           <TableContainer sx={{ mb: '0.5rem' }} component={Paper}>
-            <Table size="small" sx={alternatingTableRowColor}>
+            <Table size="small">
               <TableHead>
                 <TableRow>
                   <TableCell>{t('common.order')}</TableCell>
@@ -270,6 +269,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
         onClick={() => setOpenAddContributor(true)}
         variant="contained"
+        color="tertiary"
         startIcon={<AddIcon />}
         data-testid={dataTestId.registrationWizard.contributors.addContributorButton}>
         {t('registration.contributors.add_contributor')}

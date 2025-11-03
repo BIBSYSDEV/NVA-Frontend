@@ -89,7 +89,7 @@ export const AddAffiliationModal = ({
       />
       <Box
         sx={{
-          bgcolor: 'secondary.main',
+          bgcolor: 'background.default',
           borderRadius: '0.25rem',
           padding: '0.5rem 0.75rem',
           marginBottom: '2rem',

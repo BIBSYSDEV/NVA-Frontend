@@ -16,6 +16,7 @@ export interface LogEntryPerson {
 
 interface BaseLogEntry {
   timestamp: string;
+  importSource?: ImportSourceLogData;
 }
 
 interface PublicationLogEntry extends BaseLogEntry {
@@ -42,7 +43,6 @@ export interface ImportSourceLogData {
 interface PublicationImportLogEntry extends Omit<PublicationLogEntry, 'topic' | 'performedBy'> {
   topic: 'PublicationImported' | 'PublicationMerged';
   performedBy: LogEntryOrganization;
-  importSource: ImportSourceLogData;
 }
 
 export interface FileLogEntry extends BaseLogEntry {
@@ -64,7 +64,6 @@ export interface FileLogEntry extends BaseLogEntry {
 
 interface FileImportLogEntry extends Omit<FileLogEntry, 'topic'> {
   topic: 'FileImported';
-  importSource: ImportSourceLogData;
 }
 
 export type LogEntry = PublicationLogEntry | FileLogEntry | PublicationImportLogEntry | FileImportLogEntry;

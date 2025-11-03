@@ -7,36 +7,35 @@ import {
   FormControlLabel,
   FormLabel,
   InputAdornment,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution, CustomerRrsType } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
 
-export const RightsRetentionStrategySettings = () => {
+export const RrsAndFileImportSettings = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
 
-  const updateRightsRetentionStrategy = useMutation({
+  const updateCustomer = useMutation({
     mutationFn: (customer: CustomerInstitution) => updateCustomerInstitution(customer),
     onSuccess: (response) => {
       dispatch(setCustomer(response.data));
-      dispatch(
-        setNotification({ message: t('feedback.success.update_rights_retention_strategy'), variant: 'success' })
-      );
+      dispatch(setNotification({ message: t('feedback.success.update_rrs_and_file_import'), variant: 'success' }));
     },
     onError: () =>
-      dispatch(setNotification({ message: t('feedback.error.update_rights_retention_strategy'), variant: 'error' })),
+      dispatch(setNotification({ message: t('feedback.error.update_rrs_and_file_import'), variant: 'error' })),
   });
 
   return (
@@ -49,7 +48,7 @@ export const RightsRetentionStrategySettings = () => {
         <Formik
           enableReinitialize
           initialValues={customer}
-          onSubmit={async (values) => await updateRightsRetentionStrategy.mutateAsync(values)}>
+          onSubmit={async (values) => await updateCustomer.mutateAsync(values)}>
           {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => {
             const isRrs = values.rightsRetentionStrategy?.type === CustomerRrsType.RightsRetentionStrategy;
             const isOverridableRrs =
@@ -88,7 +87,6 @@ export const RightsRetentionStrategySettings = () => {
                   {({ field }: FieldProps<string>) => (
                     <FormLabel component="legend" sx={{ color: 'primary.main', fontWeight: 'bold', marginTop: '1rem' }}>
                       {t('editor.retention_strategy.rrs_info_page')}
-
                       <TextField
                         type="url"
                         data-testid={dataTestId.editor.rrsLink}
@@ -143,15 +141,48 @@ export const RightsRetentionStrategySettings = () => {
                   )}
                 </Field>
 
-                <StyledRightAlignedWrapper>
+                <Divider sx={{ my: '2.5rem' }} />
+
+                <Box sx={{ mb: '2.5rem' }}>
+                  <Typography variant="h2">{t('file_import')}</Typography>
+                  <Trans
+                    t={t}
+                    i18nKey="file_import_description"
+                    components={{
+                      p: <Typography gutterBottom />,
+                    }}
+                  />
+                  <Field name={'autoPublishScopusImportFiles'}>
+                    {({ field }: FieldProps<boolean>) => (
+                      <RadioGroup
+                        {...field}
+                        row
+                        onChange={(event) => setFieldValue(field.name, event.target.value === 'true')}>
+                        <FormControlLabel
+                          value={false}
+                          control={<Radio data-testid={dataTestId.editor.fileImportCreatesTicketRadioButton} />}
+                          label={t('file_import_create_ticket')}
+                        />
+                        <FormControlLabel
+                          value={true}
+                          control={<Radio data-testid={dataTestId.editor.automaticFileImportRadioButton} />}
+                          label={t('file_import_automatic_import')}
+                        />
+                      </RadioGroup>
+                    )}
+                  </Field>
+                </Box>
+
+                <Box sx={{ display: 'flex', justifyContent: { xs: 'center', lg: 'flex-end' } }}>
                   <Button
                     data-testid={dataTestId.editor.rrsSaveButton}
                     variant="contained"
+                    color="secondary"
                     loading={isSubmitting}
                     type="submit">
                     {t('common.save')}
                   </Button>
-                </StyledRightAlignedWrapper>
+                </Box>
               </Box>
             );
           }}

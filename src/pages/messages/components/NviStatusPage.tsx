@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
-import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { ExportNviStatusButton } from './ExportNviStatusButton';
@@ -33,18 +32,24 @@ export const NviStatusPage = () => {
   const nviStatusQuery = useFetchNviInstitutionStatus(year);
 
   return (
-    <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'start' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+        alignItems: 'start',
+      }}>
       <Typography variant="h1">{t('tasks.nvi.institution_nvi_status')}</Typography>
 
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-        <NviYearSelector />
+        <NviYearSelector sx={{ minWidth: '10rem' }} />
         <ExportNviStatusButton />
       </Box>
 
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
-            <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: '#FEFBF3' }}>
+            <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
               <TableCell>{t('registration.contributors.department')}</TableCell>
               <TableCell>{t('tasks.nvi.status.New')}</TableCell>
               <TableCell>{t('tasks.nvi.status.Pending')}</TableCell>
@@ -65,6 +70,6 @@ export const NviStatusPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </BackgroundDiv>
+    </Box>
   );
 };

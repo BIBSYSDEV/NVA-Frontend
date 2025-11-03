@@ -59,7 +59,6 @@ export const RelatedResultsField = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: '0.5rem',
-        bgcolor: 'secondary.light',
         borderRadius: '0.25rem',
         p: '1rem',
       }}>

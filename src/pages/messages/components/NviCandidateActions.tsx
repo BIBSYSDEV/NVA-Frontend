@@ -184,12 +184,12 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
             />
 
             <Button
-              sx={{ bgcolor: 'primary.light' }}
+              color="tertiary"
               variant="contained"
               fullWidth
               size="small"
               data-testid={dataTestId.tasksPage.nvi.editResultButton}
-              endIcon={<EditIcon />}
+              startIcon={<EditIcon />}
               component={RouterLink}
               state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
               to={getRegistrationWizardPath(getIdentifierFromId(nviCandidate.publicationId), {
@@ -230,13 +230,14 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
             <Button
               data-testid={dataTestId.tasksPage.nvi.approveButton}
-              variant="outlined"
+              color="secondary"
+              variant="contained"
               fullWidth
               size="small"
-              sx={{ mb: '1rem', bgcolor: 'white' }}
+              sx={{ mb: '1rem' }}
               loading={statusMutation.isPending && statusMutation.variables?.status === 'Approved'}
               disabled={!canApproveCandidate || isMutating}
-              endIcon={<CheckIcon />}
+              startIcon={<CheckIcon />}
               loadingPosition="end"
               onClick={() => statusMutation.mutate({ status: 'Approved' })}>
               {t('tasks.nvi.approve_nvi_candidate')}
@@ -251,12 +252,12 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
             </Typography>
             <Button
               data-testid={dataTestId.tasksPage.nvi.rejectButton}
-              variant="outlined"
+              color="tertiary"
+              variant="contained"
               fullWidth
               size="small"
-              sx={{ bgcolor: 'white' }}
               disabled={!canRejectCandidate || isMutating || hasSelectedRejectCandidate}
-              endIcon={<ClearIcon />}
+              startIcon={<ClearIcon />}
               onClick={() => setHasSelectedRejectCandidate(true)}>
               {t('tasks.nvi.reject_nvi_candidate')}
             </Button>

@@ -71,7 +71,7 @@ export const OrganizationCuratorsAccordion = ({
       elevation={2}
       disableGutters
       sx={{
-        bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light',
+        bgcolor: level % 2 === 0 ? 'background.paper' : 'white',
         ml: { xs: undefined, md: level > 0 ? '1rem' : 0 },
       }}
       expanded={expanded}
@@ -105,6 +105,7 @@ export const OrganizationCuratorsAccordion = ({
 
         {canEditUsers && !curatorSearch && (
           <Button
+            color="secondary"
             variant="contained"
             data-testid={dataTestId.editor.addCuratorButton(organization.id)}
             sx={{ mb: '1rem' }}

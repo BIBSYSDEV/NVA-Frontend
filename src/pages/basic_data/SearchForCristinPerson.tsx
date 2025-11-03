@@ -119,6 +119,7 @@ export const SearchForCristinPerson = ({
           }}
           renderInput={(params) => (
             <AutocompleteTextField
+              variant="outlined"
               {...params}
               value={searchQuery}
               label={t('basic_data.add_employee.search_for_person')}
@@ -196,7 +197,8 @@ export const SearchForCristinPerson = ({
             )}
           </div>
           <Button
-            variant="outlined"
+            variant="contained"
+            color="tertiary"
             onClick={() => {
               setSelectedPerson(undefined);
               resetForm();

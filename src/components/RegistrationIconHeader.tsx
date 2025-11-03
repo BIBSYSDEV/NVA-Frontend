@@ -1,14 +1,15 @@
 import NotesIcon from '@mui/icons-material/Notes';
 import { Box, Typography, TypographyProps } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import { PublicationInstanceType, RegistrationDate } from '../types/registration.types';
-import { displayDate } from '../utils/date-helpers';
+import { DateText } from './RegistrationListItem/components/DateText';
+import { PublicationInstanceText } from './RegistrationListItem/components/PublicationInstanceText';
 
 interface RegistrationIconHeaderProps {
   publicationInstanceType?: PublicationInstanceType | '';
   publicationDate?: Omit<RegistrationDate, 'type'>;
   showYearOnly?: boolean;
   textColor?: TypographyProps['color'];
+  publicationChannelName?: string;
 }
 
 export const RegistrationIconHeader = ({
@@ -16,22 +17,16 @@ export const RegistrationIconHeader = ({
   publicationDate,
   showYearOnly = false,
   textColor,
+  publicationChannelName,
 }: RegistrationIconHeaderProps) => {
-  const { t } = useTranslation();
-
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-      <NotesIcon sx={{ bgcolor: 'registration.main', borderRadius: '0.4rem', color: 'black' }} />
-
-      <Typography color={textColor}>
-        {publicationInstanceType ? t(`registration.publication_types.${publicationInstanceType}`) : t('common.result')}
-      </Typography>
-
+      <NotesIcon sx={{ bgcolor: 'registration.main', color: 'primary.main', borderRadius: '0.4rem' }} />
+      <PublicationInstanceText publicationInstanceType={publicationInstanceType} textColor={textColor} />
       {publicationDate?.year && (
-        <Typography sx={{ fontWeight: 'bold', color: textColor }}>
-          {showYearOnly ? publicationDate.year : displayDate(publicationDate)}
-        </Typography>
+        <DateText publicationDate={publicationDate} showYearOnly={showYearOnly} textColor={textColor} />
       )}
+      {!!publicationChannelName && <Typography color={textColor}>| {publicationChannelName}</Typography>}
     </Box>
   );
 };

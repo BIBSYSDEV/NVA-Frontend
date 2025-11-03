@@ -77,9 +77,7 @@ export const OrganizationOverview = () => {
             }
             getOptionKey={(option) => option.id}
             onChange={(_, selectedUnit) => setSearchId(selectedUnit?.id ?? '')}
-            renderInput={(params) => (
-              <TextField {...params} variant="outlined" label={t('search.search_for_sub_unit')} />
-            )}
+            renderInput={(params) => <TextField {...params} variant="outlined" label={t('common.select_unit')} />}
           />
 
           {organizationQuery.data?.hasPart?.map((organization) => (
@@ -125,7 +123,7 @@ const OrganizationAccordion = ({
       elevation={2}
       disableGutters
       sx={{
-        bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light',
+        bgcolor: level % 2 === 0 ? 'background.paper' : 'background.default',
         ml: { xs: undefined, md: level > 0 ? '1rem' : 0 },
       }}
       expanded={expanded}

@@ -71,7 +71,6 @@ export const SearchForInstitutionFacetItem = ({
           isLoading={institutionSearchQuery.isLoading}
           data-testid={dataTestId ?? dataTestIdEnum.aggregations.institutionFacetsSearchField}
           placeholder={placeholder || t('project.search_for_institution')}
-          showSearchIcon
         />
       )}
       slotProps={{
