@@ -23,14 +23,14 @@ export const DoiRequestMessagesColumn = ({ ticket, showDetails }: DoiRequestMess
   return (
     <StyledMessagesContainer>
       {ticket.status === 'New' || ticket.status === 'Pending' ? (
-        <StyledStatusMessageBox>
+        <StyledStatusMessageBox sx={{ bgcolor: 'info.light' }}>
           <StyledIconAndTextWrapper>
             <HourglassEmptyIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_pending')}</Typography>
           </StyledIconAndTextWrapper>
         </StyledStatusMessageBox>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox>
+        <StyledStatusMessageBox sx={{ bgcolor: 'neutral87.main' }}>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_completed')}</Typography>
@@ -38,7 +38,7 @@ export const DoiRequestMessagesColumn = ({ ticket, showDetails }: DoiRequestMess
           {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
-        <StyledStatusMessageBox>
+        <StyledStatusMessageBox sx={{ bgcolor: 'warning.light' }}>
           <StyledIconAndTextWrapper>
             <BlockIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_closed')}</Typography>
