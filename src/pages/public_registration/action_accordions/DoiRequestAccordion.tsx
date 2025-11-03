@@ -314,10 +314,10 @@ export const DoiRequestAccordion = ({
 
                 <Button
                   data-testid={dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton}
-                  sx={{ bgcolor: 'white' }}
                   size="small"
                   fullWidth
-                  variant="outlined"
+                  variant="contained"
+                  color="tertiary"
                   startIcon={<LocalOfferIcon />}
                   disabled={isLoading !== LoadingState.None}
                   onClick={toggleReserveDoiDialog}>
