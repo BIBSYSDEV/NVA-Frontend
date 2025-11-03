@@ -180,7 +180,7 @@ export const DoiRequestAccordion = ({
       data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
       size="small"
       fullWidth
-      color="tertiary"
+      color="secondary"
       variant="contained"
       startIcon={<LocalOfferIcon />}
       disabled={isLoading !== LoadingState.None}
