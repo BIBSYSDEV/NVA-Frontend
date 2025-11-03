@@ -1,3 +1,5 @@
+import { ParseKeys } from 'i18next';
+import { FetchResultsParams, ResultParam } from '../api/searchApi';
 import { LanguageString, SearchResponse } from './common.types';
 import { PublicationInstanceType, RegistrationDate } from './registration.types';
 
@@ -123,3 +125,20 @@ export interface NviPeriod {
 export interface NviPeriodResponse {
   periods: NviPeriod[];
 }
+
+export type CorrectionListId =
+  | 'ApplicableCategoriesWithNonApplicableChannel'
+  | 'NonApplicableCategoriesWithApplicableChannel'
+  | 'AnthologyWithoutChapter'
+  | 'AnthologyWithApplicableChapter'
+  | 'BooksWithLessThan50Pages'
+  | 'UnidentifiedContributorWithIdentifiedAffiliation';
+
+export type CorrectionListSearchConfig = {
+  [key in CorrectionListId]: {
+    i18nKey: ParseKeys;
+    queryParams: FetchResultsParams;
+    disabledFilters: ResultParam[];
+    topLevelOrganization: string | undefined;
+  };
+};

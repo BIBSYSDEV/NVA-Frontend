@@ -1,18 +1,32 @@
+<<<<<<< HEAD
 import { Box, Divider, MenuItem, TextField, Typography } from '@mui/material';
+import { ParseKeys } from 'i18next';
+=======
+import { Box, Divider, Typography } from '@mui/material';
+>>>>>>> 13dd1c49b6b9317dc9319a19060dd34e43e5081a
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
-import { NviCandidatesSearchParam, ResultParam } from '../../../api/searchApi';
+<<<<<<< HEAD
+import { FetchResultsParams, NviCandidatesSearchParam, ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
+import { BookType } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { getNviYearFilterValues } from '../../../utils/nviHelpers';
+import { nviApplicableTypes } from '../../../utils/registration-helpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+=======
+import { ResultParam } from '../../../api/searchApi';
+import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
+import { HeadTitle } from '../../../components/HeadTitle';
 import { CorrectionListId } from '../../../types/nvi.types';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
+>>>>>>> 13dd1c49b6b9317dc9319a19060dd34e43e5081a
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
