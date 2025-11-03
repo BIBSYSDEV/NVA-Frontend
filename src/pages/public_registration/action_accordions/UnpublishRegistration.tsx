@@ -62,7 +62,7 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
       )}
 
       <Modal
-        headingText={t('registration.delete_registration')}
+        headingText={t('unpublish_actions.unpublish_registration')}
         open={showUnpublishModal}
         maxWidth="md"
         onClose={toggleUnpublishModal}>
