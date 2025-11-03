@@ -25,8 +25,6 @@ export const JournalForm = () => {
   const { values } = useFormikContext<JournalRegistration>();
   const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
-  console.log(values.entityDescription.reference?.publicationInstance.corrigendumFor);
-
   return (
     <>
       <InputContainerBox>
