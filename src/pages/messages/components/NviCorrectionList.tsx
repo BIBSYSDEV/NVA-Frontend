@@ -1,32 +1,21 @@
-import { Box, Divider, MenuItem, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
+import { Box, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { HeadTitle } from '../../../components/HeadTitle';
-import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { CorrectionListId } from '../../../types/nvi.types';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
+import { CorrectionListYearFilter } from './CorrectionListYearFilter';
 
 export const nviCorrectionListQueryKey = 'list';
-
-const currentYear = new Date().getFullYear();
-
-const options = [
-  { value: (currentYear + 1).toString(), label: `${currentYear + 1}` },
-  { value: currentYear.toString(), label: `${currentYear}` },
-  { value: 'showAll', label: `Show All` },
-];
 
 export const NviCorrectionList = () => {
   const { t } = useTranslation();
@@ -37,7 +26,6 @@ export const NviCorrectionList = () => {
   const listConfig = listId && correctionListConfig[listId];
 
   const registrationParams = useRegistrationsQueryParams();
-  const [selectedValue, setSelectedValue] = useState<string>(registrationParams.publicationYear ?? '');
 
   const registrationQuery = useRegistrationSearch({
     enabled: !!listConfig,
@@ -47,8 +35,6 @@ export const NviCorrectionList = () => {
       unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
     },
   });
-
-  const navigate = useNavigate();
 
   return (
     <section>
@@ -79,39 +65,7 @@ export const NviCorrectionList = () => {
               <JournalFilter />
               <SeriesFilter />
               <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
-              <Box>
-                <StyledFilterHeading>{t('basic_data.nvi.period_year')}</StyledFilterHeading>
-                <TextField
-                  sx={{ minWidth: '7rem' }}
-                  select
-                  data-testid={dataTestId.tasksPage.nvi.yearSelect}
-                  size="small"
-                  value={selectedValue}
-                  onChange={(event) => {
-                    const selectedValue = event.target.value;
-                    setSelectedValue(selectedValue);
-                    const syncedParams = syncParamsWithSearchFields(searchParams);
-                    if (selectedValue !== 'showAll') {
-                      syncedParams.set(ResultParam.PublicationYear, selectedValue.toString());
-                    } else {
-                      syncedParams.delete(ResultParam.PublicationYear);
-                    }
-                    navigate({ search: syncedParams.toString() });
-                  }}
-                  slotProps={{
-                    htmlInput: {
-                      'aria-label': t('basic_data.nvi.period_year'),
-                    },
-                  }}>
-                  {options.map((option) => {
-                    return (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    );
-                  })}
-                </TextField>
-              </Box>
+              <CorrectionListYearFilter />
             </Box>
           </Box>
 
