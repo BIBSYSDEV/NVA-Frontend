@@ -306,7 +306,7 @@ const TasksPage = () => {
             path={getSubUrl(UrlPathTemplate.TasksResultRegistrations, UrlPathTemplate.Tasks)}
             element={
               <PrivateRoute
-                element={<PortfolioSearchPage title={t('common.result_registrations')} />}
+                element={<PortfolioSearchPage title={t('common.result_portfolio')} />}
                 isAuthorized={isAnyCurator}
               />
             }

@@ -23,7 +23,7 @@ export const ResultRegistrationsNavigationListAccordion = () => {
   return (
     <NavigationListAccordion
       dataTestId={dataTestId.tasksPage.resultRegistrationsAccordion}
-      title={t('common.result_registrations')}
+      title={t('common.result_portfolio')}
       startIcon={<NotesIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
       accordionPath={UrlPathTemplate.TasksResultRegistrations}
       defaultPath={`${UrlPathTemplate.TasksResultRegistrations}?${ProtectedResultParam.Status}=${RegistrationStatus.Published}`}>
