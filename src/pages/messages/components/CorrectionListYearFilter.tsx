@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 const currentYear = new Date().getFullYear();
 
@@ -13,7 +12,7 @@ export const CorrectionListYearFilter = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const selectedValue = searchParams.get(ResultParam.PublicationYear) || 'showAll';
+  const selectedYear = searchParams.get(ResultParam.PublicationYear) || 'showAll';
 
   const options = [
     { value: (currentYear + 1).toString(), label: `${currentYear + 1}` },
@@ -29,16 +28,15 @@ export const CorrectionListYearFilter = () => {
         select
         data-testid={dataTestId.tasksPage.nvi.yearSelect}
         size="small"
-        value={selectedValue}
+        value={selectedYear}
         onChange={(event) => {
           const selectedValue = event.target.value;
-          const syncedParams = syncParamsWithSearchFields(searchParams);
           if (selectedValue !== 'showAll') {
-            syncedParams.set(ResultParam.PublicationYear, selectedValue.toString());
+            searchParams.set(ResultParam.PublicationYear, selectedValue);
           } else {
-            syncedParams.delete(ResultParam.PublicationYear);
+            searchParams.delete(ResultParam.PublicationYear);
           }
-          navigate({ search: syncedParams.toString() });
+          navigate({ search: searchParams.toString() });
         }}
         slotProps={{
           htmlInput: {
