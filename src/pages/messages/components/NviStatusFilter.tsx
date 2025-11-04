@@ -62,7 +62,7 @@ export const NviStatusFilter = () => {
       <MenuItem value={'approved' satisfies NviCandidateStatus}>{t('tasks.nvi.status.Approved')}</MenuItem>
       <MenuItem value={'rejected' satisfies NviCandidateStatus}>{t('tasks.nvi.status.Rejected')}</MenuItem>
       <MenuItem value={'dispute' satisfies NviCandidateGlobalStatus}>{t('tasks.nvi.status.Dispute')}</MenuItem>
-      <MenuItem value={'all'}>{t('tasks.nvi.status.all')}</MenuItem>
+      <MenuItem value={'all'}>{t('common.show_all')}</MenuItem>
     </TextField>
   );
 };
