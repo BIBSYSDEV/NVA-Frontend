@@ -58,7 +58,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       entries.push({
         text: t('log.titles.result_unpublished'),
         date: lastUnpublishingNote.createdDate,
-        bgcolor: 'error.light',
+        bgcolor: 'warning.light',
         Icon: BlockIcon,
       });
     }
@@ -119,7 +119,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
         entries.push({
           text: t('log.internal_file_approved_count', { count: internalFilesCount }),
           date: ticket.finalizedDate ?? ticket.modifiedDate,
-          bgcolor: 'success.light',
+          bgcolor: 'neutral87.main',
           Icon: CheckIcon,
         });
       }
