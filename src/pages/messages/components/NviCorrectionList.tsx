@@ -97,6 +97,11 @@ export const NviCorrectionList = () => {
                       syncedParams.delete(ResultParam.PublicationYear);
                     }
                     navigate({ search: syncedParams.toString() });
+                  }}
+                  slotProps={{
+                    htmlInput: {
+                      'aria-label': t('basic_data.nvi.period_year'),
+                    },
                   }}>
                   {options.map((option) => {
                     return (
