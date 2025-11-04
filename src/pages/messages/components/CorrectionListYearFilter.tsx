@@ -1,24 +1,25 @@
 import { Box, MenuItem, TextField } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { t } from 'i18next';
 
 const currentYear = new Date().getFullYear();
 
-const options = [
-  { value: (currentYear + 1).toString(), label: `${currentYear + 1}` },
-  { value: currentYear.toString(), label: `${currentYear}` },
-  { value: 'showAll', label: t('common.show_all') },
-];
-
 export const CorrectionListYearFilter = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const selectedValue = searchParams.get(ResultParam.PublicationYear) || 'showAll';
+
+  const options = [
+    { value: (currentYear + 1).toString(), label: `${currentYear + 1}` },
+    { value: currentYear.toString(), label: `${currentYear}` },
+    { value: 'showAll', label: t('common.show_all') },
+  ];
 
   return (
     <Box>
