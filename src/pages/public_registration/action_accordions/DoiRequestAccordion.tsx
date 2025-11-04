@@ -257,7 +257,7 @@ export const DoiRequestAccordion = ({
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
 
-        {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} />}
+        {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} withColor />}
 
         {hasReservedDoi && (
           <Trans

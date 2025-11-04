@@ -14,23 +14,24 @@ import {
 
 interface DoiRequestMessagesColumnProps {
   ticket: ExpandedTicket | Ticket;
+  withColor?: boolean;
   showDetails?: boolean;
 }
 
-export const DoiRequestMessagesColumn = ({ ticket, showDetails }: DoiRequestMessagesColumnProps) => {
+export const DoiRequestMessagesColumn = ({ ticket, showDetails, withColor }: DoiRequestMessagesColumnProps) => {
   const { t } = useTranslation();
 
   return (
     <StyledMessagesContainer>
       {ticket.status === 'New' || ticket.status === 'Pending' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'info.light' }}>
+        <StyledStatusMessageBox sx={withColor ? { bgcolor: 'info.light' } : {}}>
           <StyledIconAndTextWrapper>
             <HourglassEmptyIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_pending')}</Typography>
           </StyledIconAndTextWrapper>
         </StyledStatusMessageBox>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'neutral87.main' }}>
+        <StyledStatusMessageBox sx={withColor ? { bgcolor: 'neutral87.main' } : {}}>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_completed')}</Typography>
@@ -38,7 +39,7 @@ export const DoiRequestMessagesColumn = ({ ticket, showDetails }: DoiRequestMess
           {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'warning.light' }}>
+        <StyledStatusMessageBox sx={withColor ? { bgcolor: 'warning.light' } : {}}>
           <StyledIconAndTextWrapper>
             <BlockIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_closed')}</Typography>
