@@ -36,61 +36,77 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
       <TableRow sx={{ bgcolor: level % 2 === 0 ? undefined : 'white' }}>
         <TableCell sx={{ pl: `${1 + level * 1.5}rem`, py: '1rem' }}>{getLanguageString(organization.labels)}</TableCell>
         <TableCell align="center">
-          <Link
-            component={RouterLink}
-            data-testid={dataTestId.nviStatusTableRow.candidateLink}
-            to={getNviCandidatesSearchPath({
-              username: user?.nvaUsername,
-              year: year,
-              orgNumber: getIdentifierFromId(organization.id),
-              status: NviCandidateStatusEnum.Pending,
-              globalStatus: NviCandidateGlobalStatusEnum.Pending,
-            })}>
-            {aggregations ? (orgAggregations?.status.New?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
-          </Link>
+          {aggregations ? (
+            <Link
+              component={RouterLink}
+              data-testid={dataTestId.nviStatusTableRow.candidateLink}
+              to={getNviCandidatesSearchPath({
+                username: user?.nvaUsername,
+                year: year,
+                orgNumber: getIdentifierFromId(organization.id),
+                status: NviCandidateStatusEnum.Pending,
+                globalStatus: NviCandidateGlobalStatusEnum.Pending,
+              })}>
+              {orgAggregations?.status.New?.docCount.toLocaleString() ?? 0}
+            </Link>
+          ) : (
+            <StyledSkeleton />
+          )}
         </TableCell>
         <TableCell align="center">
           {aggregations ? (orgAggregations?.status.Pending?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
         </TableCell>
         <TableCell align="center">
-          <Link
-            component={RouterLink}
-            data-testid={dataTestId.nviStatusTableRow.approvedLink}
-            to={getNviCandidatesSearchPath({
-              username: user?.nvaUsername,
-              year: year,
-              orgNumber: getIdentifierFromId(organization.id),
-              status: NviCandidateStatusEnum.Approved,
-              globalStatus: NviCandidateGlobalStatusEnum.Approved,
-            })}>
-            {aggregations ? (orgAggregations?.status.Approved?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
-          </Link>
+          {aggregations ? (
+            <Link
+              component={RouterLink}
+              data-testid={dataTestId.nviStatusTableRow.approvedLink}
+              to={getNviCandidatesSearchPath({
+                username: user?.nvaUsername,
+                year: year,
+                orgNumber: getIdentifierFromId(organization.id),
+                status: NviCandidateStatusEnum.Approved,
+                globalStatus: NviCandidateGlobalStatusEnum.Approved,
+              })}>
+              {orgAggregations?.status.Approved?.docCount.toLocaleString() ?? 0}
+            </Link>
+          ) : (
+            <StyledSkeleton />
+          )}
         </TableCell>
         <TableCell align="center">
-          <Link
-            component={RouterLink}
-            data-testid={dataTestId.nviStatusTableRow.rejectedLink}
-            to={getNviCandidatesSearchPath({
-              username: user?.nvaUsername,
-              year: year,
-              orgNumber: getIdentifierFromId(organization.id),
-              status: NviCandidateStatusEnum.Rejected,
-              globalStatus: NviCandidateGlobalStatusEnum.Rejected,
-            })}>
-            {aggregations ? (orgAggregations?.status.Rejected?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
-          </Link>
+          {aggregations ? (
+            <Link
+              component={RouterLink}
+              data-testid={dataTestId.nviStatusTableRow.rejectedLink}
+              to={getNviCandidatesSearchPath({
+                username: user?.nvaUsername,
+                year: year,
+                orgNumber: getIdentifierFromId(organization.id),
+                status: NviCandidateStatusEnum.Rejected,
+                globalStatus: NviCandidateGlobalStatusEnum.Rejected,
+              })}>
+              {orgAggregations?.status.Rejected?.docCount.toLocaleString() ?? 0}
+            </Link>
+          ) : (
+            <StyledSkeleton />
+          )}
         </TableCell>
         <TableCell align="center">
-          <Link
-            component={RouterLink}
-            data-testid={dataTestId.nviStatusTableRow.totalAmountLink}
-            to={getNviCandidatesSearchPath({
-              username: user?.nvaUsername,
-              year: year,
-              orgNumber: getIdentifierFromId(organization.id),
-            })}>
-            {aggregations ? (orgAggregations?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
-          </Link>
+          {aggregations ? (
+            <Link
+              component={RouterLink}
+              data-testid={dataTestId.nviStatusTableRow.totalAmountLink}
+              to={getNviCandidatesSearchPath({
+                username: user?.nvaUsername,
+                year: year,
+                orgNumber: getIdentifierFromId(organization.id),
+              })}>
+              {orgAggregations?.docCount.toLocaleString() ?? 0}
+            </Link>
+          ) : (
+            <StyledSkeleton />
+          )}
         </TableCell>
         <TableCell align="center">
           {aggregations ? (
@@ -100,17 +116,21 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
           )}
         </TableCell>
         <TableCell align="center">
-          <Link
-            component={RouterLink}
-            data-testid={dataTestId.nviStatusTableRow.disputeLink}
-            to={getNviCandidatesSearchPath({
-              username: user?.nvaUsername,
-              year: year,
-              orgNumber: getIdentifierFromId(organization.id),
-              globalStatus: NviCandidateGlobalStatusEnum.Dispute,
-            })}>
-            {aggregations ? (orgAggregations?.dispute?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
-          </Link>
+          {aggregations ? (
+            <Link
+              component={RouterLink}
+              data-testid={dataTestId.nviStatusTableRow.disputeLink}
+              to={getNviCandidatesSearchPath({
+                username: user?.nvaUsername,
+                year: year,
+                orgNumber: getIdentifierFromId(organization.id),
+                globalStatus: NviCandidateGlobalStatusEnum.Dispute,
+              })}>
+              {orgAggregations?.dispute?.docCount.toLocaleString() ?? 0}
+            </Link>
+          ) : (
+            <StyledSkeleton />
+          )}
         </TableCell>
         <TableCell>
           {level !== 0 && organization.hasPart && organization.hasPart.length > 0 && (

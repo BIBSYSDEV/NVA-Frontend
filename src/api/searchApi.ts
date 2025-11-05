@@ -260,7 +260,7 @@ export enum NviCandidateStatusEnum {
   Rejected = 'rejected',
 }
 
-export type NviCandidateStatus = keyof typeof NviCandidateStatusEnum;
+export type NviCandidateStatus = `${NviCandidateStatusEnum}`;
 
 export enum NviCandidateGlobalStatusEnum {
   Pending = 'pending',
@@ -269,7 +269,7 @@ export enum NviCandidateGlobalStatusEnum {
   Dispute = 'dispute',
 }
 
-export type NviCandidateGlobalStatus = keyof typeof NviCandidateGlobalStatusEnum;
+export type NviCandidateGlobalStatus = `${NviCandidateGlobalStatusEnum}`;
 
 export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Affiliations]?: string[] | null;
