@@ -791,7 +791,7 @@
       "file_archived_other": "Files archived",
       "file_deleted": "File deleted",
       "file_hidden": "File hidden",
-      "file_retracted": "File redacted",
+      "file_retracted": "File retracted",
       "file_type_updated": "File changed to {{newFileType}}",
       "files_published_one": "File published",
       "files_published_other": "Files published",
