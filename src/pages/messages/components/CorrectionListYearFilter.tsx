@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 const currentYear = new Date().getFullYear();
 
@@ -31,10 +32,11 @@ export const CorrectionListYearFilter = () => {
         value={selectedYear}
         onChange={(event) => {
           const selectedValue = event.target.value;
+          const syncedParams = syncParamsWithSearchFields(searchParams);
           if (selectedValue !== 'showAll') {
-            searchParams.set(ResultParam.PublicationYear, selectedValue);
+            syncedParams.set(ResultParam.PublicationYear, selectedValue);
           } else {
-            searchParams.delete(ResultParam.PublicationYear);
+            syncedParams.delete(ResultParam.PublicationYear);
           }
           navigate({ search: searchParams.toString() });
         }}
