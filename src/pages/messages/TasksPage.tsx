@@ -9,6 +9,8 @@ import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import {
   fetchCustomerTickets,
   FetchTicketsParams,
+  NviCandidateGlobalStatusEnum,
+  NviCandidateStatusEnum,
   SortOrder,
   TicketOrderBy,
   TicketSearchParam,
@@ -256,7 +258,14 @@ const TasksPage = () => {
                   isTicketCurator ? (
                     <Navigate to={UrlPathTemplate.TasksDialogue} replace />
                   ) : (
-                    <Navigate to={getNviCandidatesSearchPath(user?.nvaUsername)} replace />
+                    <Navigate
+                      to={getNviCandidatesSearchPath({
+                        username: user?.nvaUsername,
+                        status: NviCandidateStatusEnum.Pending,
+                        globalStatus: NviCandidateGlobalStatusEnum.Pending,
+                      })}
+                      replace
+                    />
                   )
                 }
               />

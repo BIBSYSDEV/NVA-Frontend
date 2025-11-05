@@ -1,5 +1,5 @@
 import { To } from 'react-router';
-import { NviCandidateGlobalStatus, NviCandidateStatus } from '../api/searchApi';
+import { NviCandidateGlobalStatusEnum, NviCandidatesSearchParam, NviCandidateStatusEnum } from '../api/searchApi';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
 
@@ -159,16 +159,39 @@ export const getMyMessagesRegistrationPath = (identifier: string) =>
 export const getNviCandidatePath = (identifier: string) =>
   UrlPathTemplate.TasksNviCandidate.replace(':identifier', encodeURIComponent(identifier));
 
-export const getNviCandidatesSearchPath = (currentUsername = '', year?: number) => {
-  const searchParams = new URLSearchParams({
-    status: 'pending' satisfies NviCandidateStatus,
-    globalStatus: 'pending' satisfies NviCandidateGlobalStatus,
-  });
-  if (currentUsername) {
-    searchParams.set('assignee', currentUsername); // NviCandidatesSearchParam.Assignee
+export interface NviCandidatesSearchParams {
+  username?: string;
+  year?: number;
+  orgNumber?: string;
+  status?: NviCandidateStatusEnum;
+  globalStatus?: NviCandidateGlobalStatusEnum;
+}
+
+export const getNviCandidatesSearchPath = ({
+  username,
+  year,
+  orgNumber,
+  status,
+  globalStatus,
+}: NviCandidatesSearchParams) => {
+  const searchParams = new URLSearchParams();
+
+  if (status) {
+    searchParams.set(NviCandidatesSearchParam.Status, status);
+  }
+
+  if (globalStatus) {
+    searchParams.set(NviCandidatesSearchParam.GlobalStatus, globalStatus);
+  }
+
+  if (username) {
+    searchParams.set(NviCandidatesSearchParam.Assignee, username);
   }
   if (year) {
-    searchParams.set('year', year.toString()); // NviCandidatesSearchParam.Year
+    searchParams.set(NviCandidatesSearchParam.Year, year.toString());
+  }
+  if (orgNumber) {
+    searchParams.set(NviCandidatesSearchParam.Affiliations, orgNumber);
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
 };

@@ -253,8 +253,23 @@ export enum NviCandidatesSearchParam {
 export type NviCandidateOrderBy = 'createdDate';
 
 export type NviCandidateFilter = 'rejectedByOthers' | 'approvedByOthers' | 'collaboration';
-export type NviCandidateStatus = 'pending' | 'approved' | 'rejected';
-export type NviCandidateGlobalStatus = NviCandidateStatus | 'dispute';
+
+export enum NviCandidateStatusEnum {
+  Pending = 'pending',
+  Approved = 'approved',
+  Rejected = 'rejected',
+}
+
+export type NviCandidateStatus = keyof typeof NviCandidateStatusEnum;
+
+export enum NviCandidateGlobalStatusEnum {
+  Pending = 'pending',
+  Approved = 'approved',
+  Rejected = 'rejected',
+  Dispute = 'dispute',
+}
+
+export type NviCandidateGlobalStatus = keyof typeof NviCandidateGlobalStatusEnum;
 
 export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Affiliations]?: string[] | null;

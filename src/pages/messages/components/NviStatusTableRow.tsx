@@ -1,16 +1,24 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { IconButton, Skeleton, styled, TableCell, TableRow } from '@mui/material';
+import { IconButton, Skeleton, styled, TableCell, TableRow, Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
+import { User } from '../../../types/user.types';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
 
 interface NviStatusTableRowProps {
   organization: Organization;
   aggregations?: NviInstitutionStatusResponse;
   level?: number;
+  user?: User | null;
+  year?: number;
 }
 
 const StyledSkeleton = styled(Skeleton)({
@@ -18,7 +26,7 @@ const StyledSkeleton = styled(Skeleton)({
   margin: 'auto',
 });
 
-export const NviStatusTableRow = ({ organization, aggregations, level = 0 }: NviStatusTableRowProps) => {
+export const NviStatusTableRow = ({ organization, aggregations, level = 0, user, year }: NviStatusTableRowProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(level === 0);
   const orgAggregations = aggregations?.[organization.id];
@@ -28,19 +36,61 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0 }: Nvi
       <TableRow sx={{ bgcolor: level % 2 === 0 ? undefined : 'white' }}>
         <TableCell sx={{ pl: `${1 + level * 1.5}rem`, py: '1rem' }}>{getLanguageString(organization.labels)}</TableCell>
         <TableCell align="center">
-          {aggregations ? (orgAggregations?.status.New?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
+          <Link
+            component={RouterLink}
+            data-testid={dataTestId.nviStatusTableRow.candidateLink}
+            to={getNviCandidatesSearchPath({
+              username: user?.nvaUsername,
+              year: year,
+              orgNumber: getIdentifierFromId(organization.id),
+              status: NviCandidateStatusEnum.Pending,
+              globalStatus: NviCandidateGlobalStatusEnum.Pending,
+            })}>
+            {aggregations ? (orgAggregations?.status.New?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
+          </Link>
         </TableCell>
         <TableCell align="center">
           {aggregations ? (orgAggregations?.status.Pending?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
         </TableCell>
         <TableCell align="center">
-          {aggregations ? (orgAggregations?.status.Approved?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
+          <Link
+            component={RouterLink}
+            data-testid={dataTestId.nviStatusTableRow.approvedLink}
+            to={getNviCandidatesSearchPath({
+              username: user?.nvaUsername,
+              year: year,
+              orgNumber: getIdentifierFromId(organization.id),
+              status: NviCandidateStatusEnum.Approved,
+              globalStatus: NviCandidateGlobalStatusEnum.Approved,
+            })}>
+            {aggregations ? (orgAggregations?.status.Approved?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
+          </Link>
         </TableCell>
         <TableCell align="center">
-          {aggregations ? (orgAggregations?.status.Rejected?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
+          <Link
+            component={RouterLink}
+            data-testid={dataTestId.nviStatusTableRow.rejectedLink}
+            to={getNviCandidatesSearchPath({
+              username: user?.nvaUsername,
+              year: year,
+              orgNumber: getIdentifierFromId(organization.id),
+              status: NviCandidateStatusEnum.Rejected,
+              globalStatus: NviCandidateGlobalStatusEnum.Rejected,
+            })}>
+            {aggregations ? (orgAggregations?.status.Rejected?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
+          </Link>
         </TableCell>
         <TableCell align="center">
-          {aggregations ? (orgAggregations?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
+          <Link
+            component={RouterLink}
+            data-testid={dataTestId.nviStatusTableRow.totalAmountLink}
+            to={getNviCandidatesSearchPath({
+              username: user?.nvaUsername,
+              year: year,
+              orgNumber: getIdentifierFromId(organization.id),
+            })}>
+            {aggregations ? (orgAggregations?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
+          </Link>
         </TableCell>
         <TableCell align="center">
           {aggregations ? (
@@ -50,7 +100,17 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0 }: Nvi
           )}
         </TableCell>
         <TableCell align="center">
-          {aggregations ? (orgAggregations?.dispute?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
+          <Link
+            component={RouterLink}
+            data-testid={dataTestId.nviStatusTableRow.disputeLink}
+            to={getNviCandidatesSearchPath({
+              username: user?.nvaUsername,
+              year: year,
+              orgNumber: getIdentifierFromId(organization.id),
+              globalStatus: NviCandidateGlobalStatusEnum.Dispute,
+            })}>
+            {aggregations ? (orgAggregations?.dispute?.docCount.toLocaleString() ?? 0) : <StyledSkeleton />}
+          </Link>
         </TableCell>
         <TableCell>
           {level !== 0 && organization.hasPart && organization.hasPart.length > 0 && (
@@ -63,7 +123,14 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0 }: Nvi
 
       {expanded &&
         organization.hasPart?.map((subUnit) => (
-          <NviStatusTableRow key={subUnit.id} organization={subUnit} aggregations={aggregations} level={level + 1} />
+          <NviStatusTableRow
+            key={subUnit.id}
+            organization={subUnit}
+            aggregations={aggregations}
+            level={level + 1}
+            user={user}
+            year={year}
+          />
         ))}
     </>
   );
