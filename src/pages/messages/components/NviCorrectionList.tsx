@@ -8,6 +8,7 @@ import { HeadTitle } from '../../../components/HeadTitle';
 import { CorrectionListId } from '../../../types/nvi.types';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
+import { sanitizeSearchParams } from '../../../utils/searchHelpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
@@ -26,6 +27,7 @@ export const NviCorrectionList = () => {
   const listConfig = listId && correctionListConfig[listId];
 
   const registrationParams = useRegistrationsQueryParams();
+  const exportParams = new URLSearchParams(sanitizeSearchParams({ ...listConfig?.queryParams, ...registrationParams }));
 
   const registrationQuery = useRegistrationSearch({
     enabled: !!listConfig,
@@ -36,20 +38,6 @@ export const NviCorrectionList = () => {
       unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
     },
   });
-
-  const test = { ...listConfig?.queryParams, ...registrationParams };
-
-  const sanitizedTest: Record<string, string> = Object.entries(test).reduce(
-    (acc, [key, value]) => {
-      if (value !== null && value !== undefined) {
-        acc[key] = Array.isArray(value) ? value.join(',') : String(value);
-      }
-      return acc;
-    },
-    {} as Record<string, string>
-  );
-
-  const exportParams = new URLSearchParams(sanitizedTest);
 
   return (
     <section>
