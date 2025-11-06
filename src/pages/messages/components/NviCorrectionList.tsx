@@ -12,6 +12,7 @@ import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
+import { ExportResultsButton } from '../../search/ExportResultsButton';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
 
 export const nviCorrectionListQueryKey = 'list';
@@ -36,6 +37,20 @@ export const NviCorrectionList = () => {
     },
   });
 
+  const test = { ...listConfig?.queryParams, ...registrationParams };
+
+  const sanitizedTest: Record<string, string> = Object.entries(test).reduce(
+    (acc, [key, value]) => {
+      if (value !== null && value !== undefined) {
+        acc[key] = Array.isArray(value) ? value.join(',') : String(value);
+      }
+      return acc;
+    },
+    {} as Record<string, string>
+  );
+
+  const exportParams = new URLSearchParams(sanitizedTest);
+
   return (
     <section>
       <HeadTitle>{t('tasks.correction_list')}</HeadTitle>
@@ -47,24 +62,34 @@ export const NviCorrectionList = () => {
           </Typography>
 
           <Box
-            sx={{ px: { xs: '0.5rem', md: 0 }, display: 'flex', flexDirection: 'column', gap: '0.5rem', mb: '1rem' }}>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-              <OrganizationFilters
-                topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
-                unitId={registrationParams.unit ?? null}
-              />
-              <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
-              <CategorySearchFilter
-                searchParam={ResultParam.CategoryShould}
-                disabled={listConfig.disabledFilters.includes(ResultParam.CategoryShould)}
-              />
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: '1fr auto',
+              mb: '1rem',
+            }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', px: { xs: '0.5rem', md: 0 }, gap: '0.5rem' }}>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                <OrganizationFilters
+                  topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
+                  unitId={registrationParams.unit ?? null}
+                />
+                <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
+                <CategorySearchFilter
+                  searchParam={ResultParam.CategoryShould}
+                  disabled={listConfig.disabledFilters.includes(ResultParam.CategoryShould)}
+                />
+              </Box>
+
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
+                <PublisherFilter />
+                <JournalFilter />
+                <SeriesFilter />
+              </Box>
             </Box>
 
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
-              <PublisherFilter />
-              <JournalFilter />
-              <SeriesFilter />
-            </Box>
+            <div>
+              <ExportResultsButton searchParams={exportParams} />
+            </div>
           </Box>
 
           <RegistrationSearch registrationQuery={registrationQuery} />
