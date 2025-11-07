@@ -15,6 +15,7 @@ import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
 import { ExportResultsButton } from '../../search/ExportResultsButton';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
+import { CorrectionListYearFilter } from './CorrectionListYearFilter';
 
 export const nviCorrectionListQueryKey = 'list';
 
@@ -34,7 +35,6 @@ export const NviCorrectionList = () => {
     params: {
       ...listConfig?.queryParams,
       ...registrationParams,
-      publicationYearSince: (new Date().getFullYear() - 1).toString(),
       unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
     },
   });
@@ -72,11 +72,12 @@ export const NviCorrectionList = () => {
                 <PublisherFilter />
                 <JournalFilter />
                 <SeriesFilter />
+                <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
+                <CorrectionListYearFilter />
               </Box>
-            </Box>
-
-            <Box sx={{ m: '0.5rem', alignSelf: 'top' }}>
-              <ExportResultsButton showText searchParams={exportParams} />
+              <Box sx={{ m: '0.5rem', alignSelf: 'top' }}>
+                <ExportResultsButton showText searchParams={exportParams} />
+              </Box>
             </Box>
           </Box>
 
