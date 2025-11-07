@@ -256,7 +256,14 @@ const TasksPage = () => {
                   isTicketCurator ? (
                     <Navigate to={UrlPathTemplate.TasksDialogue} replace />
                   ) : (
-                    <Navigate to={getNviCandidatesSearchPath(user?.nvaUsername)} replace />
+                    <Navigate
+                      to={getNviCandidatesSearchPath({
+                        username: user?.nvaUsername,
+                        status: 'pending',
+                        globalStatus: 'pending',
+                      })}
+                      replace
+                    />
                   )
                 }
               />

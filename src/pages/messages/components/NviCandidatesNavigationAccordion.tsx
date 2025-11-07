@@ -62,7 +62,7 @@ export const NviCandidatesNavigationAccordion = () => {
       title={t('tasks.nvi.nvi_control')}
       startIcon={<AdjustIcon />}
       accordionPath={UrlPathTemplate.TasksNvi}
-      defaultPath={getNviCandidatesSearchPath(user?.nvaUsername)}
+      defaultPath={getNviCandidatesSearchPath({ username: user?.nvaUsername })}
       dataTestId={dataTestId.tasksPage.nviAccordion}>
       <StyledTicketSearchFormGroup>
         <StyledNviStatusBox>
@@ -103,7 +103,7 @@ export const NviCandidatesNavigationAccordion = () => {
               data-testid={dataTestId.tasksPage.nvi.showCandidateSearchButton}
               sx={{ justifyContent: 'center' }}
               isSelected={isOnNviCandidatesPage}
-              to={getNviCandidatesSearchPath(user?.nvaUsername, nviParams.year)}>
+              to={getNviCandidatesSearchPath({ username: user?.nvaUsername, year: nviParams.year })}>
               {t('tasks.nvi.show_candidate_search')}
             </SelectableButton>
             <SelectableButton
