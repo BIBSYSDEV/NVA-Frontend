@@ -16,6 +16,7 @@ import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../a
 interface NviStatusTableRowProps {
   organization: Organization;
   aggregations?: NviInstitutionStatusResponse;
+  hideEmptyRows?: boolean;
   level?: number;
   user?: User | null;
   year?: number;
@@ -26,10 +27,21 @@ const StyledSkeleton = styled(Skeleton)({
   margin: 'auto',
 });
 
-export const NviStatusTableRow = ({ organization, aggregations, level = 0, user, year }: NviStatusTableRowProps) => {
+export const NviStatusTableRow = ({
+  organization,
+  aggregations,
+  hideEmptyRows = false,
+  level = 0,
+  user,
+  year,
+}: NviStatusTableRowProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(level === 0);
   const orgAggregations = aggregations?.[organization.id];
+
+  if (hideEmptyRows && (!orgAggregations || orgAggregations?.docCount === 0)) {
+    return null;
+  }
 
   return (
     <>
@@ -165,6 +177,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
             level={level + 1}
             user={user}
             year={year}
+            hideEmptyRows={hideEmptyRows}
           />
         ))}
     </>
