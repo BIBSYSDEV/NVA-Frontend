@@ -66,7 +66,14 @@ export const NviStatusPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {institution && <NviStatusTableRow organization={institution} aggregations={nviStatusQuery.data} />}
+            {institution && (
+              <NviStatusTableRow
+                organization={institution}
+                aggregations={nviStatusQuery.data}
+                user={user}
+                year={year}
+              />
+            )}
           </TableBody>
         </Table>
       </TableContainer>
