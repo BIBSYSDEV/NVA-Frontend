@@ -1,7 +1,7 @@
 import { To } from 'react-router';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
-import { NviCandidatesSearchParam, NviCandidateStatus, NviCandidateGlobalStatus } from '../api/searchApi';
+import { NviCandidateStatus, NviCandidateGlobalStatus } from '../api/searchApi';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;
@@ -179,25 +179,25 @@ export const getNviCandidatesSearchPath = ({
   const searchParams = new URLSearchParams();
 
   if (status) {
-    searchParams.set(NviCandidatesSearchParam.Status, status);
+    searchParams.set('status', status);
   }
 
   if (globalStatus) {
     const value = Array.isArray(globalStatus) ? globalStatus.join(',') : globalStatus;
-    searchParams.set(NviCandidatesSearchParam.GlobalStatus, value);
+    searchParams.set('globalStatus', value);
   }
 
   if (username) {
-    searchParams.set(NviCandidatesSearchParam.Assignee, username);
+    searchParams.set('assignee', username);
   }
   if (year) {
-    searchParams.set(NviCandidatesSearchParam.Year, year.toString());
+    searchParams.set('year', year.toString());
   }
   if (orgNumber) {
-    searchParams.set(NviCandidatesSearchParam.Affiliations, orgNumber);
+    searchParams.set('affiliations', orgNumber);
   }
   if (excludeUnassigned !== undefined) {
-    searchParams.set(NviCandidatesSearchParam.ExcludeUnassigned, excludeUnassigned.toString());
+    searchParams.set('excludeUnassigned', excludeUnassigned.toString());
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
 };
