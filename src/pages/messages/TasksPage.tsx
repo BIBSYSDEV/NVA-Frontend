@@ -9,6 +9,8 @@ import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import {
   fetchCustomerTickets,
   FetchTicketsParams,
+  NviCandidateGlobalStatusEnum,
+  NviCandidateStatusEnum,
   SortOrder,
   TicketOrderBy,
   TicketSearchParam,
@@ -259,8 +261,8 @@ const TasksPage = () => {
                     <Navigate
                       to={getNviCandidatesSearchPath({
                         username: user?.nvaUsername,
-                        status: 'pending',
-                        globalStatus: 'pending',
+                        status: NviCandidateStatusEnum.Pending,
+                        globalStatus: NviCandidateGlobalStatusEnum.Pending,
                       })}
                       replace
                     />
