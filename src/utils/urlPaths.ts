@@ -1,6 +1,7 @@
 import { To } from 'react-router';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
+import { NviCandidatesSearchParam, NviCandidateStatus, NviCandidateGlobalStatus } from '../api/searchApi';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;
@@ -162,8 +163,8 @@ export interface NviCandidatesSearchParams {
   username?: string;
   year?: number;
   orgNumber?: string;
-  status?: 'pending' | 'approved' | 'rejected';
-  globalStatus?: 'pending' | 'approved' | 'rejected' | 'dispute' | ('pending' | 'approved' | 'rejected' | 'dispute')[];
+  status?: NviCandidateStatus;
+  globalStatus?: NviCandidateGlobalStatus | NviCandidateGlobalStatus[];
   excludeUnassigned?: boolean;
 }
 
@@ -178,25 +179,25 @@ export const getNviCandidatesSearchPath = ({
   const searchParams = new URLSearchParams();
 
   if (status) {
-    searchParams.set('status', status);
+    searchParams.set(NviCandidatesSearchParam.Status, status);
   }
 
   if (globalStatus) {
     const value = Array.isArray(globalStatus) ? globalStatus.join(',') : globalStatus;
-    searchParams.set('globalStatus', value);
+    searchParams.set(NviCandidatesSearchParam.GlobalStatus, value);
   }
 
   if (username) {
-    searchParams.set('assignee', username);
+    searchParams.set(NviCandidatesSearchParam.Assignee, username);
   }
   if (year) {
-    searchParams.set('year', year.toString());
+    searchParams.set(NviCandidatesSearchParam.Year, year.toString());
   }
   if (orgNumber) {
-    searchParams.set('affiliations', orgNumber);
+    searchParams.set(NviCandidatesSearchParam.Affiliations, orgNumber);
   }
   if (excludeUnassigned !== undefined) {
-    searchParams.set('excludeUnassigned', excludeUnassigned.toString());
+    searchParams.set(NviCandidatesSearchParam.ExcludeUnassigned, excludeUnassigned.toString());
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
 };
