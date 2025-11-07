@@ -52,7 +52,7 @@ export const NviCorrectionList = () => {
           <Box
             sx={{
               display: 'grid',
-              gridTemplateColumns: { md: '1fr', lg: '1fr auto' },
+              gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
               mb: '1rem',
             }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', px: { xs: '0.5rem', md: 0 }, gap: '0.5rem' }}>
@@ -75,9 +75,9 @@ export const NviCorrectionList = () => {
                 <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
                 <CorrectionListYearFilter />
               </Box>
-              <Box sx={{ m: '0.5rem', alignSelf: 'top' }}>
-                <ExportResultsButton showText searchParams={exportParams} />
-              </Box>
+            </Box>
+            <Box sx={{ m: '0.5rem', alignSelf: 'top' }}>
+              <ExportResultsButton showText searchParams={exportParams} />
             </Box>
           </Box>
 
