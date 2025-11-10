@@ -9,7 +9,6 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -24,7 +23,6 @@ import { NviVisibilitySelector } from './NviVisibilitySelector';
 
 export const NviStatusPage = () => {
   const { t } = useTranslation();
-  const [hideEmptyRows, setHideEmptyRows] = useState(false);
   const user = useSelector((store: RootState) => store.user);
 
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
@@ -47,11 +45,7 @@ export const NviStatusPage = () => {
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
         <Box sx={{ display: 'flex', gap: '1rem' }}>
           <NviYearSelector sx={{ minWidth: '10rem' }} />
-          <NviVisibilitySelector
-            sx={{ minWidth: '15rem' }}
-            hideEmptyRows={hideEmptyRows}
-            setHideEmptyRows={setHideEmptyRows}
-          />
+          <NviVisibilitySelector sx={{ minWidth: '15rem' }} />
         </Box>
         <ExportNviStatusButton />
       </Box>
@@ -80,7 +74,6 @@ export const NviStatusPage = () => {
               <NviStatusTableRow
                 organization={institution}
                 aggregations={nviStatusQuery.data}
-                hideEmptyRows={hideEmptyRows}
                 user={user}
                 year={year}
               />

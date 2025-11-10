@@ -2007,5 +2007,5 @@
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
   "visibility": "Visning av enheter",
   "show_all_units": "Vis alle enheter",
-  "show_all_units_with_candidates": "Vis alle enheter med kandidater"
+  "show_only_units_with_candidates": "Vis kun enheter med kandidater"
 }

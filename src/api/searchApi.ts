@@ -248,6 +248,7 @@ export enum NviCandidatesSearchParam {
   Status = 'status',
   SortOrder = 'sortOrder',
   Year = 'year',
+  ExcludeEmptyRows = 'excludeEmptyRows',
 }
 
 export type NviCandidateOrderBy = 'createdDate';
@@ -286,6 +287,7 @@ export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.SortOrder]?: SortOrder | null;
   [NviCandidatesSearchParam.Year]?: number | null;
   [NviCandidatesSearchParam.ExcludeUnassigned]?: boolean | null;
+  [NviCandidatesSearchParam.ExcludeEmptyRows]?: boolean | null;
 }
 
 export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {

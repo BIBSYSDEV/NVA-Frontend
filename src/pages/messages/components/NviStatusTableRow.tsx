@@ -12,11 +12,11 @@ import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
 import { User } from '../../../types/user.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
 interface NviStatusTableRowProps {
   organization: Organization;
   aggregations?: NviInstitutionStatusResponse;
-  hideEmptyRows?: boolean;
   level?: number;
   user?: User | null;
   year?: number;
@@ -27,19 +27,13 @@ const StyledSkeleton = styled(Skeleton)({
   margin: 'auto',
 });
 
-export const NviStatusTableRow = ({
-  organization,
-  aggregations,
-  hideEmptyRows = false,
-  level = 0,
-  user,
-  year,
-}: NviStatusTableRowProps) => {
+export const NviStatusTableRow = ({ organization, aggregations, level = 0, user, year }: NviStatusTableRowProps) => {
   const { t } = useTranslation();
+  const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
   const orgAggregations = aggregations?.[organization.id];
 
-  if (hideEmptyRows && (!orgAggregations || orgAggregations?.docCount === 0)) {
+  if (excludeEmptyRows && (!orgAggregations || orgAggregations.docCount === 0)) {
     return null;
   }
 
@@ -177,7 +171,6 @@ export const NviStatusTableRow = ({
             level={level + 1}
             user={user}
             year={year}
-            hideEmptyRows={hideEmptyRows}
           />
         ))}
     </>
