@@ -88,7 +88,7 @@
     "husky": "^9.1.7",
     "i18n-unused": "^0.19.0",
     "lint-staged": "^16.2.6",
-    "msw": "^2.11.6",
+    "msw": "^2.12.1",
     "prettier": "^3.6.2",
     "start-server-and-test": "^2.1.2",
     "typescript": "^5.9.3",
