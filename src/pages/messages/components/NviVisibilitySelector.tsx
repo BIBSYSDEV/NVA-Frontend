@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 
 enum DisplayOptions {
@@ -37,12 +38,13 @@ export const NviVisibilitySelector = (props: Partial<TextFieldProps>) => {
       label={t('visibility')}
       onChange={(event) => {
         const excludeEmptyRows = event.target.value === DisplayOptions.ShowOnlyUnitsWithCandidates;
+        const syncedParams = syncParamsWithSearchFields(searchParams);
         if (excludeEmptyRows) {
-          searchParams.set(NviCandidatesSearchParam.ExcludeEmptyRows, excludeEmptyRows.toString());
+          syncedParams.set(NviCandidatesSearchParam.ExcludeEmptyRows, excludeEmptyRows.toString());
         } else {
-          searchParams.delete(NviCandidatesSearchParam.ExcludeEmptyRows);
+          syncedParams.delete(NviCandidatesSearchParam.ExcludeEmptyRows);
         }
-        navigate({ search: searchParams.toString() });
+        navigate({ search: syncedParams.toString() });
       }}
       {...props}>
       {options.map((option) => (
