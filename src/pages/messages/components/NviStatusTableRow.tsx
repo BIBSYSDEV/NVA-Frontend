@@ -34,10 +34,8 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
   const orgAggregations = aggregations?.[organization.id];
   const shouldHideEmptyRow = excludeEmptyRows && (!orgAggregations || orgAggregations.docCount === 0);
 
-  if (excludeEmptyRows && (!orgAggregations || orgAggregations.docCount === 0)) {
-    if (shouldHideEmptyRow) {
-      return null;
-    }
+  if (shouldHideEmptyRow) {
+    return null;
   }
 
   return (

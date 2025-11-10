@@ -35,7 +35,7 @@ export const NviVisibilitySelector = (props: Partial<TextFieldProps>) => {
       data-testid={dataTestId.tasksPage.nvi.visibilitySelect}
       size="small"
       value={selectedValue}
-      label={t('visibility')}
+      label={t('visibility_of_units')}
       onChange={(event) => {
         const excludeEmptyRows = event.target.value === DisplayOptions.ShowOnlyUnitsWithCandidates;
         const syncedParams = syncParamsWithSearchFields(searchParams);
