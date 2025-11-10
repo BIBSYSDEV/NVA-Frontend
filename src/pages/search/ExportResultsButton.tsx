@@ -8,9 +8,10 @@ import { useEffect, useState } from 'react';
 
 interface ExportResultsButtonProps {
   searchParams: URLSearchParams;
+  showText?: boolean;
 }
 
-export const ExportResultsButton = ({ searchParams }: ExportResultsButtonProps) => {
+export const ExportResultsButton = ({ searchParams, showText = false }: ExportResultsButtonProps) => {
   const { t } = useTranslation();
   const [isClicked, setIsClicked] = useState(false);
 
@@ -21,12 +22,13 @@ export const ExportResultsButton = ({ searchParams }: ExportResultsButtonProps) 
       href={`${API_URL.slice(0, -1)}${SearchApiPath.RegistrationsExport}?${searchParams.toString()}`}
       variant="contained"
       color="tertiary"
+      startIcon={showText ? <FileDownloadOutlinedIcon /> : undefined}
       onClick={() => setIsClicked(true)}
       title={t('search.export')}
       data-testid={dataTestId.startPage.advancedSearch.downloadResultsButton}
       disabled={isClicked}
       download>
-      <FileDownloadOutlinedIcon />
+      {showText ? t('search.export') : <FileDownloadOutlinedIcon />}
     </Button>
   );
 };

@@ -8,10 +8,12 @@ import { HeadTitle } from '../../../components/HeadTitle';
 import { CorrectionListId } from '../../../types/nvi.types';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
+import { sanitizeSearchParams } from '../../../utils/searchHelpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
+import { ExportResultsButton } from '../../search/ExportResultsButton';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
 import { CorrectionListYearFilter } from './CorrectionListYearFilter';
 
@@ -26,6 +28,7 @@ export const NviCorrectionList = () => {
   const listConfig = listId && correctionListConfig[listId];
 
   const registrationParams = useRegistrationsQueryParams();
+  const exportParams = new URLSearchParams(sanitizeSearchParams({ ...listConfig?.queryParams, ...registrationParams }));
 
   const registrationQuery = useRegistrationSearch({
     enabled: !!listConfig,
@@ -47,25 +50,34 @@ export const NviCorrectionList = () => {
           </Typography>
 
           <Box
-            sx={{ px: { xs: '0.5rem', md: 0 }, display: 'flex', flexDirection: 'column', gap: '0.5rem', mb: '1rem' }}>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-              <OrganizationFilters
-                topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
-                unitId={registrationParams.unit ?? null}
-              />
-              <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
-              <CategorySearchFilter
-                searchParam={ResultParam.CategoryShould}
-                disabled={listConfig.disabledFilters.includes(ResultParam.CategoryShould)}
-              />
-            </Box>
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
+              mb: '1rem',
+            }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', px: { xs: '0.5rem', md: 0 }, gap: '0.5rem' }}>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                <OrganizationFilters
+                  topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
+                  unitId={registrationParams.unit ?? null}
+                />
+                <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
+                <CategorySearchFilter
+                  searchParam={ResultParam.CategoryShould}
+                  disabled={listConfig.disabledFilters.includes(ResultParam.CategoryShould)}
+                />
+              </Box>
 
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
-              <PublisherFilter />
-              <JournalFilter />
-              <SeriesFilter />
-              <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
-              <CorrectionListYearFilter />
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
+                <PublisherFilter />
+                <JournalFilter />
+                <SeriesFilter />
+                <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
+                <CorrectionListYearFilter />
+              </Box>
+            </Box>
+            <Box sx={{ m: '0.5rem', alignSelf: 'top' }}>
+              <ExportResultsButton showText searchParams={exportParams} />
             </Box>
           </Box>
 
