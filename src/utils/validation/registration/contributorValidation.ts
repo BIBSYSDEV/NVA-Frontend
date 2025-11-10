@@ -7,6 +7,7 @@ import {
   isBook,
   isDegree,
   isExhibitionContent,
+  isJournalIssue,
   isMediaContribution,
   isOtherRegistration,
   isPresentation,
@@ -60,6 +61,16 @@ export const contributorsValidationSchema = Yup.array().when(
         .of(contributorValidationSchema)
         .min(1, contributorErrorMessage.contributorRequired)
         .required(contributorErrorMessage.contributorRequired);
+    } else if (isJournalIssue(publicationInstanceType)) {
+      return Yup.array()
+        .of(contributorValidationSchema)
+        .test(
+          'role-test',
+          contributorErrorMessage.authorOrEditorRequired,
+          (contributors) =>
+            hasRole(contributors, ContributorRole.Editor) || hasRole(contributors, ContributorRole.Creator)
+        )
+        .required(contributorErrorMessage.authorOrEditorRequired);
     } else {
       return Yup.array()
         .of(contributorValidationSchema)
