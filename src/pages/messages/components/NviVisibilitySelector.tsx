@@ -1,27 +1,27 @@
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 
 enum DisplayOptions {
-  ShowAllUnits = 'show_all_units',
-  ShowOnlyUnitsWithCandidates = 'show_only_units_with_candidates',
+  ShowAllUnits = 'showAllUnits',
+  ShowOnlyUnitsWithCandidates = 'showOnlyUnitsWithCandidates',
 }
 
 export const NviVisibilitySelector = (props: Partial<TextFieldProps>) => {
   const { t } = useTranslation();
+  const location = useLocation();
   const navigate = useNavigate();
   const options = [
     {
       value: DisplayOptions.ShowAllUnits,
-      label: t(DisplayOptions.ShowAllUnits),
+      label: t('show_all_units'),
     },
     {
       value: DisplayOptions.ShowOnlyUnitsWithCandidates,
-      label: t(DisplayOptions.ShowOnlyUnitsWithCandidates),
+      label: t('show_only_units_with_candidates'),
     },
   ];
   const { excludeEmptyRows } = useNviCandidatesParams();
@@ -37,13 +37,12 @@ export const NviVisibilitySelector = (props: Partial<TextFieldProps>) => {
       label={t('visibility')}
       onChange={(event) => {
         const excludeEmptyRows = event.target.value === DisplayOptions.ShowOnlyUnitsWithCandidates;
-        const syncedParams = syncParamsWithSearchFields(searchParams);
         if (excludeEmptyRows) {
-          syncedParams.set(NviCandidatesSearchParam.ExcludeEmptyRows, excludeEmptyRows.toString());
+          searchParams.set(NviCandidatesSearchParam.ExcludeEmptyRows, excludeEmptyRows.toString());
         } else {
-          syncedParams.delete(NviCandidatesSearchParam.ExcludeEmptyRows);
+          searchParams.delete(NviCandidatesSearchParam.ExcludeEmptyRows);
         }
-        navigate({ search: syncedParams.toString() });
+        navigate({ search: searchParams.toString() });
       }}
       {...props}>
       {options.map((option) => (

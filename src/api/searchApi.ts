@@ -248,6 +248,7 @@ export enum NviCandidatesSearchParam {
   Status = 'status',
   SortOrder = 'sortOrder',
   Year = 'year',
+  /** UI-only parameter for client-side filtering of empty rows; not sent to API */
   ExcludeEmptyRows = 'excludeEmptyRows',
 }
 
