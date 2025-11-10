@@ -18,6 +18,7 @@ export const getCorrectionListSearchParams = (
   if (correctionListTopLevelOrgFilter) {
     newSearchParams.set(ResultParam.TopLevelOrganization, correctionListTopLevelOrgFilter);
   }
+  newSearchParams.set(ResultParam.PublicationYear, new Date().getFullYear().toString());
   return newSearchParams;
 };
 

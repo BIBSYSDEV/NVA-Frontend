@@ -787,6 +787,7 @@ export const dataTestId = {
       showCandidateSearchButton: 'show-candidate-search-button',
       showReportingStatusButton: 'show-reporting-status-button',
       yearSelect: 'year-select',
+      visibilitySelect: 'visibility-select',
     },
     nviAccordion: 'nvi-accordion',
     resultRegistrationsAccordion: 'result-registrations-accordion',
@@ -839,5 +840,13 @@ export const dataTestId = {
       ExhibitionContent: 'frontpage-category-ExhibitionContent',
       GeographicalContent: 'frontpage-category-GeographicalContent',
     },
+  },
+  nviStatusTableRow: {
+    candidateLink: 'nvi-aggregations-candidate-link',
+    controlLink: 'nvi-aggregations-control-link',
+    approvedLink: 'nvi-aggregations-approved-link',
+    rejectedLink: 'nvi-aggregations-rejected-link',
+    totalAmountLink: 'nvi-aggregations-total-amount-link',
+    disputeLink: 'nvi-aggregations-dispute-link',
   },
 };

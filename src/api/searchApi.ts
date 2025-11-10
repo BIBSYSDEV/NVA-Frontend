@@ -248,13 +248,30 @@ export enum NviCandidatesSearchParam {
   Status = 'status',
   SortOrder = 'sortOrder',
   Year = 'year',
+  /** UI-only parameter for client-side filtering of empty rows; not sent to API */
+  ExcludeEmptyRows = 'excludeEmptyRows',
 }
 
 export type NviCandidateOrderBy = 'createdDate';
 
 export type NviCandidateFilter = 'rejectedByOthers' | 'approvedByOthers' | 'collaboration';
-export type NviCandidateStatus = 'pending' | 'approved' | 'rejected';
-export type NviCandidateGlobalStatus = NviCandidateStatus | 'dispute';
+
+export enum NviCandidateStatusEnum {
+  Pending = 'pending',
+  Approved = 'approved',
+  Rejected = 'rejected',
+}
+
+export type NviCandidateStatus = `${NviCandidateStatusEnum}`;
+
+export enum NviCandidateGlobalStatusEnum {
+  Pending = 'pending',
+  Approved = 'approved',
+  Rejected = 'rejected',
+  Dispute = 'dispute',
+}
+
+export type NviCandidateGlobalStatus = `${NviCandidateGlobalStatusEnum}`;
 
 export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Affiliations]?: string[] | null;
@@ -271,6 +288,7 @@ export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.SortOrder]?: SortOrder | null;
   [NviCandidatesSearchParam.Year]?: number | null;
   [NviCandidatesSearchParam.ExcludeUnassigned]?: boolean | null;
+  [NviCandidatesSearchParam.ExcludeEmptyRows]?: boolean | null;
 }
 
 export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
