@@ -787,6 +787,7 @@ export const dataTestId = {
       showCandidateSearchButton: 'show-candidate-search-button',
       showReportingStatusButton: 'show-reporting-status-button',
       yearSelect: 'year-select',
+      visibilitySelect: 'visibility-select',
     },
     nviAccordion: 'nvi-accordion',
     resultRegistrationsAccordion: 'result-registrations-accordion',

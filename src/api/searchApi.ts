@@ -248,6 +248,8 @@ export enum NviCandidatesSearchParam {
   Status = 'status',
   SortOrder = 'sortOrder',
   Year = 'year',
+  /** UI-only parameter for client-side filtering of empty rows; not sent to API */
+  ExcludeEmptyRows = 'excludeEmptyRows',
 }
 
 export type NviCandidateOrderBy = 'createdDate';
@@ -286,6 +288,7 @@ export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.SortOrder]?: SortOrder | null;
   [NviCandidatesSearchParam.Year]?: number | null;
   [NviCandidatesSearchParam.ExcludeUnassigned]?: boolean | null;
+  [NviCandidatesSearchParam.ExcludeEmptyRows]?: boolean | null;
 }
 
 export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
