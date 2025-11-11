@@ -147,7 +147,10 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
       }
     />
   ) : (
-    <InfoBanner text={'Publikasjonen kan ikke inngå i Norsk vitenskapsindeks.'} />
+    <InfoBanner
+      text={t('registration.resource_type.nvi.not_applicable_isbn')}
+      data-testid={dataTestId.registrationWizard.resourceType.nviFailed}
+    />
   );
 };
 
