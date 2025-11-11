@@ -4,11 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { useFetchNviReportExport } from '../../../api/hooks/useFetchNviReportExport';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { Organization } from '../../../types/organization.types';
 
-export const ExportNviStatusButton = () => {
+interface ExportNviStatusButtonProps {
+  organization: Organization | undefined;
+}
+
+export const ExportNviStatusButton = ({ organization }: ExportNviStatusButtonProps) => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
-  const fetchNviApprovalReportQuery = useFetchNviReportExport(year);
+  const fetchNviApprovalReportQuery = useFetchNviReportExport(year, organization?.acronym || '');
 
   return (
     <Button
