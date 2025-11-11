@@ -128,6 +128,9 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
     staleTime: Infinity,
   });
 
+  const containerHasIsbn =
+    (containerQuery.data?.entityDescription.reference?.publicationContext.isbnList ?? []).length > 0;
+
   if (!containerId) {
     return null;
   }
@@ -135,7 +138,7 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
   const publisherScientificValue = publisherQuery.data?.scientificValue;
   const seriesScientificValue = seriesQuery.data?.scientificValue;
 
-  return (
+  return publisherQuery.data && containerHasIsbn ? (
     <NviStatus
       scientificValue={
         seriesScientificValue && seriesScientificValue !== 'Unassigned'
@@ -143,6 +146,8 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
           : publisherScientificValue
       }
     />
+  ) : (
+    <InfoBanner text={'Publikasjonen kan ikke inngå i Norsk vitenskapsindeks.'} />
   );
 };
 
