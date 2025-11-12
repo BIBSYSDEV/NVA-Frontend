@@ -47,7 +47,7 @@ export const NviStatusPage = () => {
           <NviYearSelector sx={{ minWidth: '10rem' }} />
           <NviVisibilitySelector sx={{ minWidth: '15rem' }} />
         </Box>
-        <ExportNviStatusButton organization={organizationQuery.data} />
+        <ExportNviStatusButton acronym={organizationQuery.data?.acronym ?? ''} />
       </Box>
 
       <TableContainer component={Paper} variant="outlined">
