@@ -49,6 +49,7 @@ export const NviStatusFilter = () => {
     const selectedValues = event.target.value as NviSearchStatus[];
     setSearchParams((params) => {
       const syncedParams = syncParamsWithSearchFields(params);
+      syncedParams.delete(NviCandidatesSearchParam.Filter);
       const { newStatuses, newGlobalStatuses } = computeParamsFromDropdownStatus(selectedValues);
 
       if (newStatuses.length === 0) {

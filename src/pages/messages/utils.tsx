@@ -82,7 +82,7 @@ export const computeDropdownStatusFromParams = (
  * */
 export const computeParamsFromDropdownStatus = (dropdownStatus: NviSearchStatus[]) => {
   const newStatus = new Set<NviCandidateStatus>([]);
-  const newGlobalStatus = new Set<NviCandidateStatus>([]);
+  const newGlobalStatus = new Set<NviCandidateGlobalStatus>([]);
 
   dropdownStatus.forEach((value) => {
     if (value === NviSearchStatusEnum.CandidatesForControl) {
