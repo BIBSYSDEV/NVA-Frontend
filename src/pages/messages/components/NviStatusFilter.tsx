@@ -106,17 +106,15 @@ const getVisibilityFilterValue = (
   globalStatus: NviCandidateGlobalStatus[] | null,
   filter: NviCandidateFilter | null
 ) => {
-  if (status?.includes('pending')) {
-    if (filter === 'collaboration') {
-      return filter;
-    }
-  } else if (status?.includes('approved') || status?.includes('rejected')) {
-    if (globalStatus?.length === 1) {
-      return globalStatus[0];
-    }
-  } else if (globalStatus?.includes('dispute')) {
-    if (filter === 'approvedByOthers' || filter === 'rejectedByOthers') {
-      return filter;
+  if (status?.length === 1) {
+    if (status?.includes('pending')) {
+      if (filter === 'collaboration') {
+        return filter;
+      }
+    } else if (status?.includes('approved') || status?.includes('rejected')) {
+      if (globalStatus?.length === 1) {
+        return globalStatus[0];
+      }
     }
   }
   return '';
@@ -128,32 +126,37 @@ const handleVisibilityFilterChange = (
   globalStatus: NviCandidateGlobalStatus[],
   newFilter: NviCandidateFilter | NviCandidateGlobalStatus
 ) => {
-  if (status?.includes('pending')) {
-    if (newFilter === 'collaboration') {
-      params.set(NviCandidatesSearchParam.Filter, newFilter satisfies NviCandidateFilter);
+  // Ensure most options are only available with one status selected
+  if (status?.length === 1) {
+    if (status?.includes('pending')) {
+      if (newFilter === 'collaboration') {
+        params.set(NviCandidatesSearchParam.Filter, newFilter satisfies NviCandidateFilter);
+      }
+    } else if (status?.includes('approved')) {
+      if (newFilter === 'approved' || newFilter === 'pending') {
+        params.set(NviCandidatesSearchParam.GlobalStatus, newFilter satisfies NviCandidateGlobalStatus);
+      } else {
+        params.set(
+          NviCandidatesSearchParam.GlobalStatus,
+          ['approved' satisfies NviCandidateGlobalStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
+        );
+      }
+    } else if (status?.includes('rejected')) {
+      if (newFilter === 'rejected' || newFilter === 'pending') {
+        params.set(NviCandidatesSearchParam.GlobalStatus, newFilter satisfies NviCandidateGlobalStatus);
+      } else {
+        params.set(
+          NviCandidatesSearchParam.GlobalStatus,
+          ['rejected' satisfies NviCandidateGlobalStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
+        );
+      }
+    } else if (globalStatus?.includes('dispute')) {
+      if (newFilter === 'approvedByOthers' || newFilter === 'rejectedByOthers') {
+        params.set(NviCandidatesSearchParam.Filter, newFilter satisfies NviCandidateFilter);
+      }
     }
-  } else if (status?.includes('approved')) {
-    if (newFilter === 'approved' || newFilter === 'pending') {
-      params.set(NviCandidatesSearchParam.GlobalStatus, newFilter satisfies NviCandidateGlobalStatus);
-    } else {
-      params.set(
-        NviCandidatesSearchParam.GlobalStatus,
-        ['approved' satisfies NviCandidateGlobalStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
-      );
-    }
-  } else if (status?.includes('rejected')) {
-    if (newFilter === 'rejected' || newFilter === 'pending') {
-      params.set(NviCandidatesSearchParam.GlobalStatus, newFilter satisfies NviCandidateGlobalStatus);
-    } else {
-      params.set(
-        NviCandidatesSearchParam.GlobalStatus,
-        ['rejected' satisfies NviCandidateGlobalStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
-      );
-    }
-  } else if (globalStatus?.includes('dispute')) {
-    if (newFilter === 'approvedByOthers' || newFilter === 'rejectedByOthers') {
-      params.set(NviCandidatesSearchParam.Filter, newFilter satisfies NviCandidateFilter);
-    }
+  } else if (status?.length && status.length > 1 && newFilter === 'collaboration') {
+    params.set(NviCandidatesSearchParam.Filter, newFilter satisfies NviCandidateFilter);
   }
   return params;
 };
