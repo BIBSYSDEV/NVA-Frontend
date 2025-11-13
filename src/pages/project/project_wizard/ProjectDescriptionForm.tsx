@@ -91,6 +91,7 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
           </Field>
           <Field name={ProjectFieldName.PopularScientificSummaryNb}>
             {({ field }: FieldProps<string>) => {
+              // NOTE: This functionality should be removed when the db is cleaned
               const popularScientificSummaryNb = values.popularScientificSummary.nb;
               const popularScientificSummaryNo = values.popularScientificSummary.no;
 
