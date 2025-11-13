@@ -65,6 +65,7 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
           )}
           <Field name={ProjectFieldName.AcademicSummaryNb}>
             {({ field }: FieldProps<string>) => {
+              // NOTE: This functionality should be removed when the db is cleaned
               const academicSummaryNb = values.academicSummary.nb;
               const academicSummaryNo = values.academicSummary.no;
 
