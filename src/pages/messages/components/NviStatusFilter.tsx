@@ -168,6 +168,7 @@ export const NviVisibilityFilter = () => {
   const { status, globalStatus, filter } = useNviCandidatesParams();
 
   const value = getVisibilityFilterValue(status, globalStatus, filter);
+  const oneStatusSelected = status?.length === 1;
 
   return (
     <TextField
@@ -191,42 +192,31 @@ export const NviVisibilityFilter = () => {
       }}>
       <MenuItem value="">{t('common.show_all')}</MenuItem>
 
-      {status?.includes('pending') && (
+      {oneStatusSelected && status?.includes('pending') && (
         <MenuItem value={'collaboration' satisfies NviCandidateFilter}>
           {t('tasks.nvi.show_only_collaborative_publications')}
         </MenuItem>
       )}
 
-      {status?.includes('approved') && (
+      {oneStatusSelected && status?.includes('approved') && (
         <MenuItem value={'pending' satisfies NviCandidateGlobalStatus}>
           {t('tasks.nvi.candidates_pending_verification_by_others')}
         </MenuItem>
       )}
-      {status?.includes('approved') && (
+      {oneStatusSelected && status?.includes('approved') && (
         <MenuItem value={'approved' satisfies NviCandidateGlobalStatus}>
           {t('tasks.nvi.candidates_approved_by_all')}
         </MenuItem>
       )}
 
-      {status?.includes('rejected') && (
+      {oneStatusSelected && status?.includes('rejected') && (
         <MenuItem value={'pending' satisfies NviCandidateGlobalStatus}>
           {t('tasks.nvi.candidates_pending_verification_by_others')}
         </MenuItem>
       )}
-      {status?.includes('rejected') && (
+      {oneStatusSelected && status?.includes('rejected') && (
         <MenuItem value={'rejected' satisfies NviCandidateGlobalStatus}>
           {t('tasks.nvi.candidates_rejected_by_all')}
-        </MenuItem>
-      )}
-
-      {globalStatus?.includes('dispute') && (
-        <MenuItem value={'approvedByOthers' satisfies NviCandidateFilter}>
-          {t('tasks.nvi.candidates_approved_by_others')}
-        </MenuItem>
-      )}
-      {globalStatus?.includes('dispute') && (
-        <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>
-          {t('tasks.nvi.candidates_rejected_by_others')}
         </MenuItem>
       )}
     </TextField>
