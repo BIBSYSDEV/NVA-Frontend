@@ -41,6 +41,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
       </Box>
 
       <Trans
+        t={t}
         i18nKey="registration.description.funding.funding_without_project_description"
         components={[<Typography gutterBottom key="1" />]}
       />
