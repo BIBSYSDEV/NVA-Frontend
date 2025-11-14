@@ -5,8 +5,8 @@ import { UrlPathTemplate } from './urlPaths';
 import { LanguageCode } from '../layout/header/LanguageSelector';
 import { useTranslation } from 'react-i18next';
 
-/* The internal i18n system seems to operate with a two letter code which will be returned if you only use i18n.language.
- * This hook runs it through a converter before its returned */
+/* The language code can be on different formats depending on where it is originally fetched from.
+ * This hook runs it through a converter before its returned to ensure its on our chosen format with three letters */
 export const useThreeLetterLanguageCode = (): LanguageCode => {
   const { i18n } = useTranslation();
   return selectThreeLetterLanguageCode(i18n.language) as LanguageCode;
