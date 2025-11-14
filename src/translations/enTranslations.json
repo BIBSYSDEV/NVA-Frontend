@@ -2008,5 +2008,5 @@
   "what_you_find_in_nva_description": "<heading>What can you find in NVA?</heading><p>The Norwegian Research Information Repository (NVA) collects and makes information about Norwegian research accessible.</p><p>Here, you can explore publications, research projects, and researchers across universities, university colleges, and research institutions.</p>",
   "you_cannot_upload_files_to_this_result": "You do not have access to upload files for this result.",
   "you_do_not_have_permission_to_edit_this_registration": "You do not have access to edit this registration.",
-  "use_rerender": "{{string}}"
+  "use_rerender": "{{value}}"
 }
