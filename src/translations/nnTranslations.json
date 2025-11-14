@@ -2007,5 +2007,6 @@
   "vocabulary_missing": "Institusjonen har ikkje lagt til vokabular",
   "what_you_find_in_nva_description": "<heading>Kva finn du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samlar og gjer tilgjengeleg informasjon om norsk forsking.</p><p>Her kan du utforske publikasjonar, forskingsprosjekt og forskarar på tvers av universitet, høgskular og forskingsinstitusjonar.</p>",
   "you_cannot_upload_files_to_this_result": "Du har ikkje tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikkje tilgang til å endre denne registreringa."
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikkje tilgang til å endre denne registreringa.",
+  "use_rerender": "{{string}}"
 }

@@ -62,3 +62,7 @@ export const getSourceRegistrationHeading = (t: TFunction) => {
   }
   return t('unpublished_result');
 };
+
+export const triggerLanguageRerender = (t: TFunction, value: string) => {
+  return t('use_rerender', { string: value });
+};

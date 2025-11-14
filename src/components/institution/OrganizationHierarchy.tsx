@@ -1,9 +1,8 @@
 import { Box, Typography } from '@mui/material';
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Organization } from '../../types/organization.types';
 import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
-import { getLanguageString } from '../../utils/translation-helpers';
+import { getLanguageString, triggerLanguageRerender } from '../../utils/translation-helpers';
 
 interface OrganizationHierarchyProps {
   organization: Organization;
@@ -27,12 +26,11 @@ export const OrganizationHierarchy = ({ organization }: OrganizationHierarchyPro
               {organization.country}
             </Typography>
             <Typography sx={{ fontWeight: 'bold' }}>
-              {/* TODO: Make this into a hook */}
-              {t('use_rerender', { value: getLanguageString(unit.labels) })}
+              {triggerLanguageRerender(t, getLanguageString(unit.labels))}
             </Typography>
           </Box>
         ) : (
-          <Typography key={unit.id}>| {getLanguageString(unit.labels)}</Typography>
+          <Typography key={unit.id}>| {triggerLanguageRerender(t, getLanguageString(unit.labels))}</Typography>
         )
       )}
     </Box>
