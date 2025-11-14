@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { registrationLanguageOptions } from '../../../utils/registration-helpers';
 import { useThreeLetterLanguageCode } from '../../../utils/translation-helpers';
+import { LanguageCode } from '../../../layout/header/LanguageSelector';
 
 interface LanguageSelectorProps extends Omit<TextFieldProps, 'value'> {
   value?: string;
@@ -11,7 +12,7 @@ interface LanguageSelectorProps extends Omit<TextFieldProps, 'value'> {
 
 export const LanguageSelectorField = (props: LanguageSelectorProps) => {
   const { t } = useTranslation();
-  const languageCode = useThreeLetterLanguageCode();
+  const languageCode: LanguageCode = useThreeLetterLanguageCode();
 
   return (
     <TextField

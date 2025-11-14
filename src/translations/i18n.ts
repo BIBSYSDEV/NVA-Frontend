@@ -55,7 +55,7 @@ i18n.use(LanguageDetector).init({
     },
   },
   contextSeparator: '__',
-  fallbackLng: (langCode) => selectThreeLetterLanguageCode(langCode), // The internal i18n-system seems to use a two letter code, so this helper points the two letters to the correct language file
+  fallbackLng: (langCode) => selectThreeLetterLanguageCode(langCode), // Regardless of language code we want to map it to one of our three language files
   returnEmptyString: false,
   debug: false,
 });
@@ -69,7 +69,7 @@ const convertToTwoLetterLanguageCode = (language: 'eng' | 'nob' | 'nno') => {
   return 'no';
 };
 
-/* This code sets the local storage and language in the html. The internal language code used inside i18n is independent from this (and seems to use a two letter code) */
+/* This code sets the local storage and language in the html */
 if (typeof document !== 'undefined') {
   const displayLanguage = selectThreeLetterLanguageCode(i18n.language);
 
