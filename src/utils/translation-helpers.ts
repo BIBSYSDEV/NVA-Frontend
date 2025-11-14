@@ -63,6 +63,10 @@ export const getSourceRegistrationHeading = (t: TFunction) => {
   return t('unpublished_result');
 };
 
+/**
+ * Wrap a dynamic label so the component re-renders on language change.
+ * Note: relies on translation key 'use_rerender' which should remain exactly '{{string}}' in all locales.
+ */
 export const triggerLanguageRerender = (t: TFunction, value: string) => {
   return t('use_rerender', { string: value });
 };
