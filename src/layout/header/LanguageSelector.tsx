@@ -1,6 +1,6 @@
 import { Box, Button, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { selectDisplayLanguage } from '../../translations/i18n';
+import { selectThreeLetterLanguageCode } from '../../translations/i18n';
 
 export type LanguageCode = 'nob' | 'eng' | 'nno';
 
@@ -11,7 +11,7 @@ export const LanguageSelector = () => {
     i18n.changeLanguage(languageCode);
   };
 
-  const displayLanguage = selectDisplayLanguage(i18n.language);
+  const displayLanguage = selectThreeLetterLanguageCode(i18n.language);
 
   return (
     <Box
