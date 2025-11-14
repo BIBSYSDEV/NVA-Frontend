@@ -191,6 +191,7 @@ export const AddEmployeePage = () => {
                 onCancel={() => setOpenConfirmationDialog(false)}
                 dialogDataTestId={dataTestId.basicData.addEmployeeConfirmWindow}>
                 <Trans
+                  t={t}
                   i18nKey="basic_data.add_employee.have_you_informed_description"
                   components={[<Typography key="1" gutterBottom />]}
                 />

@@ -311,7 +311,7 @@ const ResearchProfile = () => {
         </Typography>
         {registrationsQuery.data?.totalHits && registrationsQuery.data.totalHits > 0 ? (
           <Typography>
-            <Trans i18nKey="my_page.my_profile.link_to_results_search">
+            <Trans t={t} i18nKey="my_page.my_profile.link_to_results_search">
               <MuiLink
                 component={Link}
                 to={`${UrlPathTemplate.Filter}?${ResultParam.Contributor}=${encodeURIComponent(personIdentifier)}`}

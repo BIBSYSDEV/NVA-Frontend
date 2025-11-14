@@ -34,6 +34,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
           modalTitle={t('common.funding')}
           modalDataTestId={dataTestId.registrationWizard.description.fundingModal}>
           <Trans
+            t={t}
             i18nKey="registration.description.funding.funding_helper_text"
             components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />

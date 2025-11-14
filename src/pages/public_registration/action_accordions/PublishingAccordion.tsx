@@ -253,6 +253,7 @@ export const PublishingAccordion = ({
               </Box>
             </Link>
             <Trans
+              t={t}
               i18nKey="registration.public_page.tasks_panel.duplicate_title_description_details"
               components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
             />
@@ -264,11 +265,11 @@ export const PublishingAccordion = ({
         {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && canPublishMetadata && (
           <>
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
-              <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow1">
+              <Trans t={t} i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow1">
                 <Typography sx={{ mb: '1rem' }} />
               </Trans>
             ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
-              <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow2">
+              <Trans t={t} i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow2">
                 <Typography sx={{ mb: '1rem' }} />
               </Trans>
             ) : null}

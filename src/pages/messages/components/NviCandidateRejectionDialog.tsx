@@ -39,6 +39,7 @@ export const NviCandidateRejectionDialog = ({
         }}>
         <DialogContent>
           <Trans
+            t={t}
             i18nKey="tasks.nvi.reject_nvi_candidate_modal_text"
             components={{
               p: <Typography sx={{ mb: '1rem' }} />,

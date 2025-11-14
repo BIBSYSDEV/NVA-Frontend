@@ -80,7 +80,7 @@ export const ProjectDetailsForm = ({ thisIsRekProject }: ProjectDescriptionFormP
           <Typography variant="h2" sx={{ marginBottom: '1rem' }}>
             {t('project.form.add_financing')}
           </Typography>
-          <Trans i18nKey="project.form.add_financing_description" components={[<Typography key="1" />]} />
+          <Trans t={t} i18nKey="project.form.add_financing_description" components={[<Typography key="1" />]} />
           <ProjectFundingsField currentFundings={values.funding} />
         </FormBox>
       </Box>
