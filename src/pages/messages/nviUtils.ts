@@ -141,3 +141,58 @@ export const updateParamsFromStatusAndFilterValues = (
   }
   return newParams;
 };
+
+export const isOnlyPendingSelected = (
+  status: NviCandidateStatus[] | null,
+  globalStatus: NviCandidateGlobalStatus[] | null
+) => {
+  return (
+    (status?.length === 1 &&
+      status[0] === NviCandidateStatusEnum.Pending &&
+      globalStatus?.length === 1 &&
+      globalStatus[0] === NviCandidateGlobalStatusEnum.Pending) ??
+    false
+  );
+};
+
+export const isOnlyApprovedSelected = (
+  status: NviCandidateStatus[] | null,
+  globalStatus: NviCandidateGlobalStatus[] | null
+) => {
+  return (
+    (status?.length === 1 &&
+      status[0] === NviCandidateStatusEnum.Approved &&
+      globalStatus &&
+      globalStatus.length < 3 &&
+      (globalStatus.includes(NviCandidateGlobalStatusEnum.Approved) ||
+        globalStatus.includes(NviCandidateGlobalStatusEnum.Pending))) ??
+    false
+  );
+};
+
+export const isOnlyRejectedSelected = (
+  status: NviCandidateStatus[] | null,
+  globalStatus: NviCandidateGlobalStatus[] | null
+) => {
+  return (
+    (status?.length === 1 &&
+      status[0] === NviCandidateStatusEnum.Rejected &&
+      globalStatus &&
+      globalStatus.length < 3 &&
+      (globalStatus.includes(NviCandidateGlobalStatusEnum.Rejected) ||
+        globalStatus.includes(NviCandidateGlobalStatusEnum.Pending))) ??
+    false
+  );
+};
+
+export const isOnlyDisputeSelected = (
+  status: NviCandidateStatus[] | null,
+  globalStatus: NviCandidateGlobalStatus[] | null
+) => {
+  return (
+    ((!status || status.length === 0) &&
+      globalStatus?.length === 1 &&
+      globalStatus[0] === NviCandidateGlobalStatusEnum.Dispute) ??
+    false
+  );
+};

@@ -5,7 +5,14 @@ import { NviCandidateFilter, NviCandidateGlobalStatus, NviCandidatesSearchParam 
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { updateParamsFromStatusAndFilterValues, getVisibilityFilterValue } from '../nviUtils';
+import {
+  updateParamsFromStatusAndFilterValues,
+  getVisibilityFilterValue,
+  isOnlyPendingSelected,
+  isOnlyApprovedSelected,
+  isOnlyRejectedSelected,
+  isOnlyDisputeSelected,
+} from '../nviUtils';
 
 /* NOTE: This filter is dependent on the Status filter - whenever a change is made there is influences which options are available here */
 export const NviVisibilityFilter = () => {
@@ -14,24 +21,12 @@ export const NviVisibilityFilter = () => {
   const [, setSearchParams] = useSearchParams();
   const { status, globalStatus, filter } = useNviCandidatesParams();
 
-  const value = getVisibilityFilterValue(status, globalStatus, filter);
+  const onlyPendingSelected = isOnlyPendingSelected(status, globalStatus);
+  const onlyApprovedSelected = isOnlyApprovedSelected(status, globalStatus);
+  const onlyRejectedSelected = isOnlyRejectedSelected(status, globalStatus);
+  const onlyDisputeSelected = isOnlyDisputeSelected(status, globalStatus);
 
-  const onlyPendingSelected =
-    status?.length === 1 && status[0] === 'pending' && globalStatus?.length === 1 && globalStatus[0] === 'pending';
-  const onlyApprovedSelected =
-    status?.length === 1 &&
-    status[0] === 'approved' &&
-    globalStatus &&
-    globalStatus.length < 3 &&
-    (globalStatus.includes('approved') || globalStatus.includes('pending'));
-  const onlyRejectedSelected =
-    status?.length === 1 &&
-    status[0] === 'rejected' &&
-    globalStatus &&
-    globalStatus.length < 3 &&
-    (globalStatus.includes('rejected') || globalStatus.includes('pending'));
-  const onlyDisputeSelected =
-    (!status || status.length === 0) && globalStatus?.length === 1 && globalStatus[0] === 'dispute';
+  const value = getVisibilityFilterValue(status, globalStatus, filter);
 
   return (
     <TextField

@@ -3,6 +3,10 @@ import {
   getVisibilityFilterValue,
   computeParamsFromDropdownStatus,
   computeDropdownStatusFromParams,
+  isOnlyPendingSelected,
+  isOnlyApprovedSelected,
+  isOnlyRejectedSelected,
+  isOnlyDisputeSelected,
 } from './nviUtils';
 import { describe, expect, it } from 'vitest';
 import { NviCandidateStatusEnum, NviCandidateGlobalStatusEnum, NviCandidateFilter } from '../../api/searchApi';
@@ -656,5 +660,139 @@ describe('updateParamsFromStatusAndFilterValues', () => {
       );
       expect(newParams.toString()).toBe('filter=rejectedByOthers');
     });
+  });
+});
+
+describe('isOnlyPendingSelected', () => {
+  it('returns true when only pending is selected', () => {
+    const status = [NviCandidateStatusEnum.Pending];
+    const globalStatus = [NviCandidateGlobalStatusEnum.Pending];
+    expect(isOnlyPendingSelected(status, globalStatus)).toBe(true);
+  });
+
+  it('returns false when pending and approved is selected', () => {
+    const status = [NviCandidateStatusEnum.Pending];
+    const globalStatus = [NviCandidateGlobalStatusEnum.Pending, NviCandidateGlobalStatusEnum.Approved];
+    expect(isOnlyPendingSelected(status, globalStatus)).toBe(false);
+  });
+
+  it('returns false when pending, dispute and approved are selected', () => {
+    const status = [NviCandidateStatusEnum.Pending, NviCandidateStatusEnum.Approved];
+    const globalStatus = [
+      NviCandidateGlobalStatusEnum.Pending,
+      NviCandidateGlobalStatusEnum.Approved,
+      NviCandidateGlobalStatusEnum.Dispute,
+    ];
+    expect(isOnlyPendingSelected(status, globalStatus)).toBe(false);
+  });
+
+  it('returns false when status is null', () => {
+    expect(isOnlyPendingSelected(null, [NviCandidateGlobalStatusEnum.Pending])).toBe(false);
+  });
+
+  it('returns false when globalStatus is null', () => {
+    expect(isOnlyPendingSelected([NviCandidateStatusEnum.Pending], null)).toBe(false);
+  });
+});
+
+describe('isOnlyApprovedSelected', () => {
+  it('returns true when only approved is selected', () => {
+    const status = [NviCandidateStatusEnum.Approved];
+    const globalStatus = [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending];
+    expect(isOnlyApprovedSelected(status, globalStatus)).toBe(true);
+  });
+
+  it('returns true when global status is pending (used for filtering)', () => {
+    const status = [NviCandidateStatusEnum.Approved];
+    const globalStatus = [NviCandidateGlobalStatusEnum.Pending];
+    expect(isOnlyApprovedSelected(status, globalStatus)).toBe(true);
+  });
+
+  it('returns true when when global status is only approved (used for filtering)', () => {
+    const status = [NviCandidateStatusEnum.Approved];
+    const globalStatus = [NviCandidateGlobalStatusEnum.Approved];
+    expect(isOnlyApprovedSelected(status, globalStatus)).toBe(true);
+  });
+
+  it('returns false when when more statuses are selected', () => {
+    const status = [NviCandidateStatusEnum.Approved, NviCandidateStatusEnum.Rejected];
+    const globalStatus = [
+      NviCandidateGlobalStatusEnum.Approved,
+      NviCandidateGlobalStatusEnum.Pending,
+      NviCandidateGlobalStatusEnum.Rejected,
+    ];
+    expect(isOnlyApprovedSelected(status, globalStatus)).toBe(false);
+  });
+
+  it('returns false when status is null', () => {
+    expect(isOnlyApprovedSelected(null, [NviCandidateGlobalStatusEnum.Approved])).toBe(false);
+  });
+
+  it('returns false when globalStatus is null', () => {
+    expect(isOnlyApprovedSelected([NviCandidateStatusEnum.Approved], null)).toBe(false);
+  });
+});
+
+describe('isOnlyRejectedSelected', () => {
+  it('returns true when only rejected is selected', () => {
+    const status = [NviCandidateStatusEnum.Rejected];
+    const globalStatus = [NviCandidateGlobalStatusEnum.Rejected, NviCandidateGlobalStatusEnum.Pending];
+    expect(isOnlyRejectedSelected(status, globalStatus)).toBe(true);
+  });
+
+  it('returns true when global status is pending (used for filtering)', () => {
+    const status = [NviCandidateStatusEnum.Rejected];
+    const globalStatus = [NviCandidateGlobalStatusEnum.Pending];
+    expect(isOnlyRejectedSelected(status, globalStatus)).toBe(true);
+  });
+
+  it('returns true when when global status is only approved (used for filtering)', () => {
+    const status = [NviCandidateStatusEnum.Rejected];
+    const globalStatus = [NviCandidateGlobalStatusEnum.Rejected];
+    expect(isOnlyRejectedSelected(status, globalStatus)).toBe(true);
+  });
+
+  it('returns false when when more statuses are selected', () => {
+    const status = [NviCandidateStatusEnum.Rejected];
+    const globalStatus = [
+      NviCandidateGlobalStatusEnum.Rejected,
+      NviCandidateGlobalStatusEnum.Pending,
+      NviCandidateGlobalStatusEnum.Dispute,
+    ];
+    expect(isOnlyRejectedSelected(status, globalStatus)).toBe(false);
+  });
+
+  it('returns false when status is null', () => {
+    expect(isOnlyRejectedSelected(null, [NviCandidateGlobalStatusEnum.Rejected])).toBe(false);
+  });
+
+  it('returns false when globalStatus is null', () => {
+    expect(isOnlyRejectedSelected([NviCandidateStatusEnum.Rejected], null)).toBe(false);
+  });
+});
+
+describe('isOnlyDisputeSelected', () => {
+  it('returns true when only dispute is selected', () => {
+    const globalStatus = [NviCandidateGlobalStatusEnum.Dispute];
+    expect(isOnlyDisputeSelected(null, globalStatus)).toBe(true);
+  });
+
+  it('returns true when only dispute is selected', () => {
+    const globalStatus = [NviCandidateGlobalStatusEnum.Dispute];
+    expect(isOnlyDisputeSelected([], globalStatus)).toBe(true);
+  });
+
+  it('returns false when when more statuses are selected', () => {
+    const status = [NviCandidateStatusEnum.Rejected];
+    const globalStatus = [
+      NviCandidateGlobalStatusEnum.Dispute,
+      NviCandidateGlobalStatusEnum.Rejected,
+      NviCandidateGlobalStatusEnum.Pending,
+    ];
+    expect(isOnlyDisputeSelected(status, globalStatus)).toBe(false);
+  });
+
+  it('returns false when globalStatus is null', () => {
+    expect(isOnlyDisputeSelected(null, null)).toBe(false);
   });
 });
