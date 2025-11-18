@@ -147,6 +147,7 @@ export enum NviSearchStatusEnum {
   CandidatesForControl = 'candidates_for_control',
   Approved = 'Approved',
   Rejected = 'Rejected',
+  Dispute = 'Dispute',
 }
 
 export type NviSearchStatus = `${NviSearchStatusEnum}`;
