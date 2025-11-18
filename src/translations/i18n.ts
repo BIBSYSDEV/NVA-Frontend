@@ -74,9 +74,11 @@ if (typeof document !== 'undefined') {
   const displayLanguage = selectThreeLetterLanguageCode(i18n.language);
 
   // We want a three letter language code in local storage (i.e. "nob" instead of "no")
-  if (localStorage.getItem('i18nextLng') !== displayLanguage) {
-    localStorage.setItem('i18nextLng', displayLanguage);
-  }
+  try {
+    if (localStorage.getItem('i18nextLng') !== displayLanguage) {
+      localStorage.setItem('i18nextLng', displayLanguage);
+    }
+  } catch {}
 
   // We need the two letter standard for the html
   document.documentElement.lang = convertToTwoLetterLanguageCode(displayLanguage);
@@ -84,7 +86,10 @@ if (typeof document !== 'undefined') {
   i18n.on('languageChanged', (newLanguage) => {
     const newDisplayLanguage = selectThreeLetterLanguageCode(newLanguage);
     document.documentElement.lang = convertToTwoLetterLanguageCode(newDisplayLanguage);
-    localStorage.setItem('i18nextLng', newDisplayLanguage);
+
+    try {
+      localStorage.setItem('i18nextLng', newDisplayLanguage);
+    } catch {}
   });
 }
 
