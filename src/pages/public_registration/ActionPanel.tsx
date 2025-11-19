@@ -88,7 +88,7 @@ export const ActionPanel = ({
   return (
     <Paper
       elevation={0}
-      sx={{ color: 'primary.contrastText' }}
+      sx={{ color: 'primary.contrastText', bgcolor: 'background.default' }}
       data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
       <Tabs
         value={tabValue}

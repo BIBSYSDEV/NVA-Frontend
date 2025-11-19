@@ -1,8 +1,4 @@
-import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import { Badge } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -13,6 +9,8 @@ import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import {
   fetchCustomerTickets,
   FetchTicketsParams,
+  NviCandidateGlobalStatusEnum,
+  NviCandidateStatusEnum,
   SortOrder,
   TicketOrderBy,
   TicketSearchParam,
@@ -26,7 +24,7 @@ import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefau
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
-import { TicketTypeSelection } from '../../types/publication_types/ticket.types';
+import { TicketTypeEnum, TicketTypeSelection } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -43,6 +41,7 @@ import { NviCorrectionListNavigationAccordion } from './components/NviCorrection
 import { NviStatusPage } from './components/NviStatusPage';
 import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
 import { TicketList } from './components/TicketList';
+import { TicketTypeTag } from './components/TicketTypeTag';
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -162,7 +161,7 @@ const TasksPage = () => {
               }
             }}
             dataTestId={dataTestId.tasksPage.userDialogAccordion}>
-            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
+            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', mt: 0 }}>
               {isPublishingCurator && (
                 <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
@@ -172,10 +171,10 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <InsertDriveFileOutlinedIcon fontSize="small" />
-                  {ticketTypes.publishingRequest && publishingRequestCount
-                    ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
-                    : t('my_page.messages.types.PublishingRequest')}
+                  <TicketTypeTag
+                    count={ticketTypes.publishingRequest && publishingRequestCount ? publishingRequestCount : undefined}
+                    type={TicketTypeEnum.PublishingRequest}
+                  />
                 </TicketTypeFilterButton>
               )}
 
@@ -188,10 +187,14 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, filesApprovalThesis: !ticketTypes.filesApprovalThesis });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <SchoolOutlinedIcon fontSize="small" />
-                  {ticketTypes.filesApprovalThesis && thesisPublishingRequestCount
-                    ? `${t('my_page.messages.types.FilesApprovalThesis')} (${thesisPublishingRequestCount})`
-                    : t('my_page.messages.types.FilesApprovalThesis')}
+                  <TicketTypeTag
+                    count={
+                      ticketTypes.filesApprovalThesis && thesisPublishingRequestCount
+                        ? thesisPublishingRequestCount
+                        : undefined
+                    }
+                    type={TicketTypeEnum.FilesApprovalThesis}
+                  />
                 </TicketTypeFilterButton>
               )}
 
@@ -204,10 +207,10 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <AddLinkOutlinedIcon fontSize="small" />
-                  {ticketTypes.doiRequest && doiRequestCount
-                    ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
-                    : t('my_page.messages.types.DoiRequest')}
+                  <TicketTypeTag
+                    count={ticketTypes.doiRequest && doiRequestCount ? doiRequestCount : undefined}
+                    type={TicketTypeEnum.DoiRequest}
+                  />
                 </TicketTypeFilterButton>
               )}
 
@@ -220,10 +223,12 @@ const TasksPage = () => {
                     setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });
                     resetPaginationAndNavigate(searchParams, navigate);
                   }}>
-                  <ChatBubbleOutlineOutlinedIcon fontSize="small" />
-                  {ticketTypes.generalSupportCase && generalSupportCaseCount
-                    ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
-                    : t('my_page.messages.types.GeneralSupportCase')}
+                  <TicketTypeTag
+                    count={
+                      ticketTypes.generalSupportCase && generalSupportCaseCount ? generalSupportCaseCount : undefined
+                    }
+                    type={TicketTypeEnum.GeneralSupportCase}
+                  />
                 </TicketTypeFilterButton>
               )}
             </StyledTicketSearchFormGroup>
@@ -253,7 +258,14 @@ const TasksPage = () => {
                   isTicketCurator ? (
                     <Navigate to={UrlPathTemplate.TasksDialogue} replace />
                   ) : (
-                    <Navigate to={getNviCandidatesSearchPath(user?.nvaUsername)} replace />
+                    <Navigate
+                      to={getNviCandidatesSearchPath({
+                        username: user?.nvaUsername,
+                        status: NviCandidateStatusEnum.Pending,
+                        globalStatus: NviCandidateGlobalStatusEnum.Pending,
+                      })}
+                      replace
+                    />
                   )
                 }
               />
@@ -303,7 +315,7 @@ const TasksPage = () => {
             path={getSubUrl(UrlPathTemplate.TasksResultRegistrations, UrlPathTemplate.Tasks)}
             element={
               <PrivateRoute
-                element={<PortfolioSearchPage title={t('common.result_registrations')} />}
+                element={<PortfolioSearchPage title={t('common.result_portfolio')} />}
                 isAuthorized={isAnyCurator}
               />
             }

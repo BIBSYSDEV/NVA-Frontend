@@ -230,7 +230,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
             </>
           )
         ) : (
-          <List disablePadding sx={{ my: '0.5rem' }}>
+          <List disablePadding sx={{ my: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {tickets.map((ticket) => (
               <ErrorBoundary key={ticket.id}>
                 <TicketListItem ticket={ticket} />

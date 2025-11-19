@@ -31,10 +31,10 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
       />
       <Button
         data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationsButton}
-        variant="outlined"
+        variant="contained"
+        color="tertiary"
         fullWidth
         size="small"
-        sx={{ bgcolor: 'white' }}
         onClick={toggleDialog}>
         {t('merge_results')}
       </Button>
@@ -70,6 +70,7 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
               <Button onClick={toggleDialog}>{t('common.cancel')}</Button>
               <Button
                 variant="contained"
+                color="secondary"
                 disabled={!selectedRegistration}
                 onClick={() => {
                   if (selectedRegistration) {

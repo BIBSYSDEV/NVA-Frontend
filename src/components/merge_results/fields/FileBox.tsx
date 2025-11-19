@@ -13,6 +13,7 @@ import { Registration } from '../../../types/registration.types';
 import { toDateString } from '../../../utils/date-helpers';
 import { getLicenseData } from '../../../utils/fileHelpers';
 import { isEmbargoed } from '../../../utils/registration-helpers';
+import { StyledValueBox } from './MissingCompareValues';
 
 const StyledIconLabelContainer = styled(Box)({
   display: 'flex',
@@ -35,17 +36,7 @@ export const FileBox = ({ file, sx, showFileVersion, associatedRegistration }: F
   const licenseData = file ? getLicenseData(file.license) : null;
 
   return (
-    <Box
-      sx={{
-        p: '0.5rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.25rem',
-        bgcolor: 'background.neutral97',
-        height: '100%',
-        minHeight: '5rem',
-        ...sx,
-      }}>
+    <StyledValueBox sx={sx}>
       {file && (
         <>
           <StyledIconLabelContainer>
@@ -112,6 +103,6 @@ export const FileBox = ({ file, sx, showFileVersion, associatedRegistration }: F
           )}
         </>
       )}
-    </Box>
+    </StyledValueBox>
   );
 };

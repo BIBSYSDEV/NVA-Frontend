@@ -1,4 +1,3 @@
-import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
 import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
@@ -15,32 +14,24 @@ import {
 
 interface DoiRequestMessagesColumnProps {
   ticket: ExpandedTicket | Ticket;
+  withColor?: boolean;
   showDetails?: boolean;
 }
 
-export const DoiRequestMessagesColumn = ({ ticket, showDetails }: DoiRequestMessagesColumnProps) => {
+export const DoiRequestMessagesColumn = ({ ticket, showDetails, withColor }: DoiRequestMessagesColumnProps) => {
   const { t } = useTranslation();
 
   return (
     <StyledMessagesContainer>
-      {showDetails && (
-        <StyledStatusMessageBox>
-          <StyledIconAndTextWrapper>
-            <AddLinkOutlinedIcon fontSize="small" />
-            <Typography>{t('my_page.messages.types.DoiRequest')}</Typography>
-          </StyledIconAndTextWrapper>
-        </StyledStatusMessageBox>
-      )}
-
       {ticket.status === 'New' || ticket.status === 'Pending' ? (
-        <StyledStatusMessageBox>
+        <StyledStatusMessageBox sx={{ bgcolor: withColor ? 'info.light' : 'none' }}>
           <StyledIconAndTextWrapper>
             <HourglassEmptyIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_pending')}</Typography>
           </StyledIconAndTextWrapper>
         </StyledStatusMessageBox>
       ) : ticket.status === 'Completed' ? (
-        <StyledStatusMessageBox>
+        <StyledStatusMessageBox sx={{ bgcolor: withColor ? 'neutral87.main' : 'none' }}>
           <StyledIconAndTextWrapper>
             <CheckIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_completed')}</Typography>
@@ -48,7 +39,7 @@ export const DoiRequestMessagesColumn = ({ ticket, showDetails }: DoiRequestMess
           {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       ) : ticket.status === 'Closed' ? (
-        <StyledStatusMessageBox>
+        <StyledStatusMessageBox sx={{ bgcolor: withColor ? 'warning.light' : 'none' }}>
           <StyledIconAndTextWrapper>
             <BlockIcon fontSize="small" />
             <Typography>{t('my_page.messages.doi_closed')}</Typography>

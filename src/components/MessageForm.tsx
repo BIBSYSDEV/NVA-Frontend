@@ -68,7 +68,7 @@ export const MessageForm = ({
                 }}
                 sx={hideRequiredAsterisk ? { '& .MuiInputLabel-asterisk': { display: 'none' } } : undefined}
                 disabled={isSubmitting}
-                variant="filled"
+                variant="outlined"
                 multiline
                 minRows={3}
                 maxRows={Infinity}

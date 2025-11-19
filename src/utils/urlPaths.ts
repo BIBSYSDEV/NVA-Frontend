@@ -1,7 +1,7 @@
 import { To } from 'react-router';
-import { NviCandidateGlobalStatus, NviCandidateStatus } from '../api/searchApi';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
+import { NviCandidateStatus, NviCandidateGlobalStatus } from '../api/searchApi';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;
@@ -159,20 +159,45 @@ export const getMyMessagesRegistrationPath = (identifier: string) =>
 export const getNviCandidatePath = (identifier: string) =>
   UrlPathTemplate.TasksNviCandidate.replace(':identifier', encodeURIComponent(identifier));
 
-export const getNviCandidatesSearchPath = (currentUsername = '', year?: number) => {
-  const searchParams = new URLSearchParams({
-    status: 'pending' satisfies NviCandidateStatus,
-    globalStatus: 'pending' satisfies NviCandidateGlobalStatus,
-  });
-  if (currentUsername) {
-    searchParams.set('assignee', currentUsername); // NviCandidatesSearchParam.Assignee
+export interface NviCandidatesSearchParams {
+  username?: string;
+  year?: number;
+  orgNumber?: string;
+  status?: NviCandidateStatus;
+  globalStatus?: NviCandidateGlobalStatus | NviCandidateGlobalStatus[];
+  excludeUnassigned?: boolean;
+}
+
+export const getNviCandidatesSearchPath = ({
+  username,
+  year,
+  orgNumber,
+  status,
+  globalStatus,
+  excludeUnassigned,
+}: NviCandidatesSearchParams) => {
+  const searchParams = new URLSearchParams();
+
+  if (status) {
+    searchParams.set('status', status);
+  }
+
+  if (globalStatus) {
+    const value = Array.isArray(globalStatus) ? globalStatus.join(',') : globalStatus;
+    searchParams.set('globalStatus', value);
+  }
+
+  if (username) {
+    searchParams.set('assignee', username);
   }
   if (year) {
-    searchParams.set('year', year.toString()); // NviCandidatesSearchParam.Year
+    searchParams.set('year', year.toString());
+  }
+  if (orgNumber) {
+    searchParams.set('affiliations', orgNumber);
+  }
+  if (excludeUnassigned !== undefined) {
+    searchParams.set('excludeUnassigned', excludeUnassigned.toString());
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
-};
-
-export const isOnImportPage = () => {
-  return location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
 };

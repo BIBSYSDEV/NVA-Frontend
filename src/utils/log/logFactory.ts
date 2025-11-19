@@ -46,7 +46,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
     entries.push({
       text: t('log.titles.result_published'),
       date: registration.publishedDate,
-      bgcolor: 'success.light',
+      bgcolor: 'neutral87.main',
       Icon: CheckIcon,
     });
   }
@@ -58,7 +58,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       entries.push({
         text: t('log.titles.result_unpublished'),
         date: lastUnpublishingNote.createdDate,
-        bgcolor: 'error.light',
+        bgcolor: 'warning.light',
         Icon: BlockIcon,
       });
     }
@@ -69,7 +69,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
     entries.push({
       text: t('log.titles.result_deleted'),
       date: registration.modifiedDate,
-      bgcolor: 'success.light',
+      bgcolor: 'neutral87.main',
       Icon: CheckIcon,
     });
     return entries;
@@ -82,7 +82,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
     entries.push({
       text: t('log.hidden_file_added'),
       date: file.uploadDetails?.uploadedDate,
-      bgcolor: 'success.light',
+      bgcolor: 'neutral87.main',
       Icon: CheckIcon,
     });
   });
@@ -105,7 +105,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
         entries.push({
           text: t('log.open_file_published_count', { count: openFilesCount }),
           date: ticket.finalizedDate ?? ticket.modifiedDate,
-          bgcolor: 'success.light',
+          bgcolor: 'neutral87.main',
           Icon: CheckIcon,
         });
       }
@@ -119,7 +119,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
         entries.push({
           text: t('log.internal_file_approved_count', { count: internalFilesCount }),
           date: ticket.finalizedDate ?? ticket.modifiedDate,
-          bgcolor: 'success.light',
+          bgcolor: 'neutral87.main',
           Icon: CheckIcon,
         });
       }
@@ -155,7 +155,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
         entries.push({
           text: t('log.titles.files_rejected_count', { count: rejectedFilesCount }),
           date: ticket.finalizedDate ?? ticket.modifiedDate,
-          bgcolor: 'error.light',
+          bgcolor: 'warning.light',
           Icon: BlockIcon,
         });
       }

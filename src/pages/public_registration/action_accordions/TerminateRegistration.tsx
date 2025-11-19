@@ -28,13 +28,14 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
     <section>
       <Typography fontWeight="bold">{t('common.delete')}</Typography>
       <Trans
+        t={t}
         i18nKey="registration.public_page.tasks_panel.terminate_result_description"
         components={[<Typography gutterBottom key="1" />]}
       />
       <Button
         data-testid={dataTestId.registrationLandingPage.tasksPanel.terminateRegistrationButton}
         variant="contained"
-        color="error"
+        color="tertiary"
         fullWidth
         size="small"
         onClick={toggleTerminateModal}>

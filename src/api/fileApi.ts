@@ -70,9 +70,9 @@ export const completeMultipartUpload = async (
 export const createMultipartUpload = async (registrationIdentifier: string, file: UppyFile<Meta, Body>) => {
   const payload = {
     filename: file.name,
-    size: file.data.size,
+    size: file.data?.size,
     lastmodified: (file.data as File).lastModified,
-    mimetype: file.data.type,
+    mimetype: file.data && 'type' in file.data ? file.data.type : '',
   };
 
   const createResponse = await authenticatedApiRequest2<any>({

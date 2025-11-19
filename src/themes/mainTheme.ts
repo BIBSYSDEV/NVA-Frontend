@@ -7,27 +7,29 @@ import i18n from '../translations/i18n';
 enum Color {
   Black = '#222222',
   White = '#FFFFFF',
-  PurpleDark = '#0A0132',
   Purple = '#7351FB',
-  CentralImportMain = '#D9D9D9',
   PurpleLight = '#D1CDFF',
+  PurpleDark = '#0A0132',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
+  CentralImportMain = '#D9D9D9',
   Registration = '#EED2AE',
   Person = '#BAD2F7',
   Project = '#E8B8D0',
-  Outdated = '#fc53db',
   Neutral97 = '#F7F7F7',
   Neutral95 = '#F1F1F1',
   Neutral87 = '#DEDEDE',
   Neutral46 = '#767676',
-  Blue = '#004FCF',
   BlueLight = '#E6F0FF',
+  BlueClear = '#75C7F0',
+  Blue = '#004FCF',
   Green = '#096638',
   GreenLight = '#CFF7E2',
   Red = '#B60203',
   RedLight = '#FFEAE9',
-  Yellow = '#FFB700',
   YellowLight = '#FCEED2',
+  YellowClear = '#FBE774',
+  Yellow = '#FFB700',
+  Orange = '#FFAC70',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
@@ -40,6 +42,12 @@ declare module '@mui/material/styles' {
     project: PaletteColor;
     centralImport: PaletteColor;
     neutral87: PaletteColor;
+    taskType: {
+      publishingRequest: PaletteColor;
+      filesApprovalThesis: PaletteColor;
+      doiRequest: PaletteColor;
+      generalSupportCase: PaletteColor;
+    };
   }
   interface PaletteOptions {
     tertiary: PaletteColorOptions;
@@ -48,6 +56,12 @@ declare module '@mui/material/styles' {
     project?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
     neutral87?: PaletteColorOptions;
+    taskType?: {
+      publishingRequest?: PaletteColorOptions;
+      filesApprovalThesis?: PaletteColorOptions;
+      doiRequest?: PaletteColorOptions;
+      generalSupportCase?: PaletteColorOptions;
+    };
   }
   interface TypeBackground {
     neutral97?: string;
@@ -94,7 +108,6 @@ export const mainTheme = createTheme(
     palette: {
       primary: {
         main: Color.PurpleDark,
-        light: Color.Outdated,
       },
       secondary: {
         main: Color.Purple,
@@ -129,6 +142,20 @@ export const mainTheme = createTheme(
       registration: {
         main: Color.Registration,
       },
+      taskType: {
+        publishingRequest: {
+          main: Color.YellowClear,
+        },
+        filesApprovalThesis: {
+          main: Color.YellowClear,
+        },
+        doiRequest: {
+          main: Color.Orange,
+        },
+        generalSupportCase: {
+          main: Color.BlueClear,
+        },
+      },
       person: {
         main: Color.Person,
       },
@@ -141,7 +168,6 @@ export const mainTheme = createTheme(
       background: {
         default: Color.Neutral95,
         paper: Color.Neutral97,
-        neutral97: Color.Neutral97,
         neutral87: Color.Neutral87,
         neutral46: Color.Neutral46,
       },
@@ -267,6 +293,9 @@ export const mainTheme = createTheme(
           },
           label: {
             whiteSpace: 'normal', // Allow multiline chips
+          },
+          outlined: {
+            color: Color.PurpleDark,
           },
         },
         defaultProps: {

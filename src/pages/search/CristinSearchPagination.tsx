@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { ListPagination } from '../../components/ListPagination';
 import { SearchParam } from '../../utils/searchHelpers';
 
@@ -19,6 +19,7 @@ export const CristinSearchPagination = ({
   sortingComponent,
 }: CristinSearchPaginationProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const params = new URLSearchParams(location.search);
 
   const updatePath = (page: string, results: string) => {

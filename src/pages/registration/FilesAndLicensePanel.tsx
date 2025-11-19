@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, Paper, Typography } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useContext, useEffect, useMemo, useRef } from 'react';
@@ -6,7 +6,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { InfoBanner } from '../../components/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
 import { FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
@@ -106,10 +105,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
       {({ name, remove, push }: FieldArrayRenderProps) => (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-            <Paper
-              elevation={0}
-              component={BackgroundDiv}
-              sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', m: 0 }}>
               <Typography variant="h2">{t('registration.files_and_license.info_from_channel_register')}</Typography>
               {journalIdentifier && (
                 <OpenInNewLink href={getChannelRegisterJournalUrl(journalIdentifier)}>
@@ -135,15 +131,12 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
               {seriesId && (
                 <ClaimedChannelInfoBox channelId={seriesId} channelType={t('registration.resource_type.series')} />
               )}
-            </Paper>
+            </Box>
           )}
 
           {!isNullAssociatedArtifact && (
             <>
-              <Paper
-                elevation={0}
-                component={BackgroundDiv}
-                sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                   <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
                   <HelperTextModal
@@ -224,9 +217,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     baseFieldName={name}
                   />
                 )}
-              </Paper>
+              </Box>
 
-              <Paper elevation={0} component={BackgroundDiv}>
+              <div>
                 <Typography variant="h2" sx={{ mb: '1rem' }}>
                   {t('common.links')}
                 </Typography>
@@ -257,12 +250,12 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     );
                   })}
                 </Box>
-              </Paper>
+              </div>
             </>
           )}
 
           {(associatedArtifacts.length === 0 || isNullAssociatedArtifact) && !originalDoi && !values.doi && (
-            <Paper elevation={0} component={BackgroundDiv}>
+            <div>
               <Typography variant="h2" sx={{ mb: '1rem' }}>
                 {t('registration.files_and_license.resource_is_a_reference')}
               </Typography>
@@ -290,7 +283,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   label={t('registration.files_and_license.resource_has_no_files_or_links')}
                 />
               </Box>
-            </Paper>
+            </div>
           )}
         </Box>
       )}

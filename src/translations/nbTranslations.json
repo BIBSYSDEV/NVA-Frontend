@@ -5,6 +5,7 @@
     "footer_text": "Tjenesten blir levert av Sikt – Kunnskapssektorens tjenesteleverandør. Sikt er leverandør av fellestjenester til norsk kunnskapssektor."
   },
   "add_file": "Legg til fil",
+  "add_project": "Legg til prosjekt",
   "authorization": {
     "about_terms": "Brukervilkår og personvernerklæring for Nasjonalt vitenarkiv",
     "about_terms_description": "<p>For å bruke tjenesten må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Brukervilkår for Nasjonalt vitenarkiv</a>, og gjøre deg kjent med <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», bekrefter du at du har lest og akseptert brukervilkårene. Du samtykker også til behandling av personopplysninger i samsvar med personvernerklæringen.</p>",
@@ -619,6 +620,7 @@
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
       "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
+      "update_rrs_and_file_import": "Kunne ikke oppdatere rettighetspolitikk og filimport",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
@@ -667,6 +669,7 @@
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
       "update_rights_retention_strategy": "Rettighetspolitikk ble oppdatert",
+      "update_rrs_and_file_import": "Rettighetspolitikk og filimport ble oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
     },
@@ -697,6 +700,10 @@
       "reference_required": "Oppgi referanse på resultat"
     }
   },
+  "file_import": "Filimport",
+  "file_import_automatic_import": "Automatisk publisert i NVA",
+  "file_import_create_ticket": "Filforespørsel blir sendt til filkurator",
+  "file_import_description": "<p>Sentralimport av data fra eksterne datakilder.<br>Importør hos Sikt kontrollerer og slår eventuelt sammen med andre resultater for å unngå duplikater.</p><p>Institusjonen kan bestemme om filene automatisk skal godkjennes, eller om de først skal kontrolleres manuelt av en filkurator før de blir publisert i NVA.</p>",
   "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Som kurator kan du legge til en fil på vegne av registrator.",
   "file_upload_disabled_due_to_institution_policy": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønsker å ha en fil på dette resultatet.",
   "find_result_to_merge_description": "<p>Slå sammen to resultater for å unngå to versjoner av samme resultat med forskjellige metadata og filer.</p><p>Er det registrert forskjellig metadata så velger du hvilke data som er gjeldende. Du velger også om filer skal flyttes over til det publiserte resultatet.</p><heading>Søk etter forskningsresultat</heading><p>Velg resultatet du ønsker å slå sammen med. Du kan bare slå sammen resultatet der du er registrert som bidragsyter.</p>",
@@ -716,6 +723,9 @@
   "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
+  "keep_all_contributors": "Behold bidragsytere fra både {{sourceType}} og publisert resultat",
+  "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
+  "keep_contributors_from_source_result": "Behold kun bidragsytere fra {{sourceType}}",
   "licenses": {
     "additional_info": {
       "cc0": "<p>Se <link1>åndsverksloven</link1> §3, §8, §11 og §14</p>"
@@ -1898,6 +1908,8 @@
   "search_in_national_research_publication": "Søk i over 2 millioner publikasjoner fra forskere fra universiteter, høyskoler og forskningsinstitusjoner over hele landet.",
   "select_curator": "Velg kurator",
   "select_funder": "Velg finansiør",
+  "show_all_units": "Vis alle enheter",
+  "show_only_units_with_candidates": "Vis kun enheter med kandidater",
   "start_merging": "Start sammenslåing",
   "tasks": {
     "correction_list": "Retteliste",
@@ -1991,6 +2003,7 @@
   "unpublished_result": "Avpublisert resultat",
   "velg_subject_area": "Velg fagfelt",
   "view_contact_info": "Se kontaktinformasjon",
+  "visibility_of_units": "Visning av enheter",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",

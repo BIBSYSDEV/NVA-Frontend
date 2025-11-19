@@ -192,7 +192,7 @@ export const UserOrcid = ({ user, sx }: UserOrcidProps) => {
         </Box>
       ) : (
         <SelectableButton
-          endIcon={<img src={orcidIcon} height="20" alt="" />}
+          startIcon={<img src={orcidIcon} height="20" alt="" />}
           data-testid="button-create-connect-orcid"
           href={`${ORCID_BASE_URL}/signin?oauth&client_id=${import.meta.env.VITE_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${window.location.href}`}
           size="small">

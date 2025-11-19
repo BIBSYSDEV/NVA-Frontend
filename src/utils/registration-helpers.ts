@@ -85,6 +85,12 @@ export const getMainRegistrationType = (instanceType: string) =>
 
 export const isJournal = (instanceType: any) => Object.values(JournalType).includes(instanceType);
 
+export const isJournalIssue = (instanceType: any) => instanceType === JournalType.Issue;
+
+export const isJournalLeader = (instanceType: any) => instanceType === JournalType.Leader;
+
+export const isJournalLetter = (instanceType: any) => instanceType === JournalType.Letter;
+
 export const isBook = (instanceType: any) => Object.values(BookType).includes(instanceType);
 
 export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
-import { NviCandidatesSearchParam } from '../../../api/searchApi';
+import { NviCandidateGlobalStatusEnum, NviCandidatesSearchParam, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
 import { StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers';
@@ -16,7 +16,7 @@ import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlP
 const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   padding: '0.5rem',
   borderRadius: '0.25rem',
-  backgroundColor: theme.palette.background.neutral97,
+  backgroundColor: theme.palette.background.paper,
   marginBottom: '0.5rem',
 }));
 
@@ -62,7 +62,11 @@ export const NviCandidatesNavigationAccordion = () => {
       title={t('tasks.nvi.nvi_control')}
       startIcon={<AdjustIcon />}
       accordionPath={UrlPathTemplate.TasksNvi}
-      defaultPath={getNviCandidatesSearchPath(user?.nvaUsername)}
+      defaultPath={getNviCandidatesSearchPath({
+        username: user?.nvaUsername,
+        status: NviCandidateStatusEnum.Pending,
+        globalStatus: NviCandidateGlobalStatusEnum.Pending,
+      })}
       dataTestId={dataTestId.tasksPage.nviAccordion}>
       <StyledTicketSearchFormGroup>
         <StyledNviStatusBox>
@@ -103,7 +107,12 @@ export const NviCandidatesNavigationAccordion = () => {
               data-testid={dataTestId.tasksPage.nvi.showCandidateSearchButton}
               sx={{ justifyContent: 'center' }}
               isSelected={isOnNviCandidatesPage}
-              to={getNviCandidatesSearchPath(user?.nvaUsername, nviParams.year)}>
+              to={getNviCandidatesSearchPath({
+                username: user?.nvaUsername,
+                year: nviParams.year,
+                status: NviCandidateStatusEnum.Pending,
+                globalStatus: NviCandidateGlobalStatusEnum.Pending,
+              })}>
               {t('tasks.nvi.show_candidate_search')}
             </SelectableButton>
             <SelectableButton

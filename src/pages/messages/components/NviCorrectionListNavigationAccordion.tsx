@@ -5,32 +5,23 @@ import { ResultParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NavigationList } from '../../../components/PageWithSideMenu';
 import { SelectableButton } from '../../../components/SelectableButton';
+import { CorrectionListId } from '../../../types/nvi.types';
+import { getAccordionDefaultPath, getCorrectionListSearchParams } from '../../../utils/correctionListHelpers';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
-import { correctionListConfig, CorrectionListId, nviCorrectionListQueryKey } from './NviCorrectionList';
-
-const getCorrectionListSearchParams = (newCorrectionListId: CorrectionListId) => {
-  const newSearchParams = new URLSearchParams();
-  newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
-  const correctionListCategoryFilter = correctionListConfig[newCorrectionListId].queryParams.categoryShould;
-  if (correctionListCategoryFilter && correctionListCategoryFilter.length > 0) {
-    newSearchParams.set(ResultParam.CategoryShould, correctionListCategoryFilter.join(','));
-  }
-  return newSearchParams;
-};
-
-const accordionDefaultPath = `${UrlPathTemplate.TasksNviCorrectionList}?${getCorrectionListSearchParams(
-  'ApplicableCategoriesWithNonApplicableChannel'
-).toString()}`;
+import { nviCorrectionListQueryKey } from './NviCorrectionList';
 
 export const NviCorrectionListNavigationAccordion = () => {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedNviList = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
+  const correctionListConfig = useCorrectionListConfig();
+  const accordionDefaultPath = getAccordionDefaultPath(correctionListConfig);
 
   const openNewCorrectionList = (newCorrectionListId: CorrectionListId) => {
     if (selectedNviList !== newCorrectionListId) {
-      const correctionListSearchParams = getCorrectionListSearchParams(newCorrectionListId);
+      const correctionListSearchParams = getCorrectionListSearchParams(correctionListConfig, newCorrectionListId);
       const currentSearchSize = searchParams.get(ResultParam.Results);
       if (currentSearchSize) {
         correctionListSearchParams.set(ResultParam.Results, currentSearchSize);

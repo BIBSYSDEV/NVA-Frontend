@@ -1,7 +1,7 @@
 import LinkIcon from '@mui/icons-material/Link';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
-import { Box, Chip, Divider, Grid, IconButton, Link as MuiLink, List, Typography } from '@mui/material';
+import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -11,7 +11,7 @@ import { ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from 
 import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
-import { FetchResultsParams, ResultParam } from '../../api/searchApi';
+import { FetchResultsParams, ResultParam, ResultSearchOrder } from '../../api/searchApi';
 import { HeadTitle } from '../../components/HeadTitle';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
@@ -35,7 +35,35 @@ import NotFound from '../errorpages/NotFound';
 import { UserOrcid } from '../my_page/user_profile/UserOrcid';
 import { UserOrcidHelperModal } from '../my_page/user_profile/UserOrcidHelperModal';
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
-import { registrationSortOptions } from '../search/registration_search/RegistrationSortSelector';
+import { RegistrationSortOption } from '../search/registration_search/RegistrationSortSelector';
+
+const researchProfileSortOptions: RegistrationSortOption[] = [
+  {
+    orderBy: ResultSearchOrder.PublicationDate,
+    sortOrder: 'desc',
+    i18nKey: 'search.sort_by_published_date_desc',
+  },
+  {
+    orderBy: ResultSearchOrder.PublicationDate,
+    sortOrder: 'asc',
+    i18nKey: 'search.sort_by_published_date_asc',
+  },
+  {
+    orderBy: ResultSearchOrder.Title,
+    sortOrder: 'asc',
+    i18nKey: 'search.sort_alphabetically_asc',
+  },
+  {
+    orderBy: ResultSearchOrder.Title,
+    sortOrder: 'desc',
+    i18nKey: 'search.sort_alphabetically_desc',
+  },
+  {
+    orderBy: ResultSearchOrder.ModifiedDate,
+    sortOrder: 'desc',
+    i18nKey: 'search.sort_by_modified_date',
+  },
+];
 
 const ResearchProfile = () => {
   const { t } = useTranslation();
@@ -43,7 +71,7 @@ const ResearchProfile = () => {
   const location = useLocation();
   const [registrationsPage, setRegistrationsPage] = useState(1);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-  const [registrationSort, setRegistrationSort] = useState(registrationSortOptions[0]);
+  const [registrationSort, setRegistrationSort] = useState(researchProfileSortOptions[0]);
 
   const [projectsPage, setProjectsPage] = useState(1);
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -269,7 +297,6 @@ const ResearchProfile = () => {
                   <Chip
                     color="secondary"
                     variant="outlined"
-                    sx={{ color: 'primary.main' }}
                     key={keyword.type}
                     label={getLanguageString(keyword.label)}
                   />
@@ -304,7 +331,7 @@ const ResearchProfile = () => {
           }}
           sortingComponent={
             <SortSelectorWithoutParams
-              options={registrationSortOptions}
+              options={researchProfileSortOptions}
               value={registrationSort}
               setValue={(value) => {
                 setRegistrationsPage(1);

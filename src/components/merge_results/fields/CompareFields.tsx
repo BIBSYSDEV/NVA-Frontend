@@ -3,10 +3,10 @@ import CheckIcon from '@mui/icons-material/Check';
 import RestoreIcon from '@mui/icons-material/Restore';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { Box, Button, Divider, styled, Typography } from '@mui/material';
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { isOnImportPage } from '../../../utils/urlPaths';
+import { MergeResultsWizardContext } from '../MergeResultsWizardContext';
 
 interface CompareFieldsProps {
   sourceContent: ReactNode;
@@ -33,11 +33,12 @@ export const CompareFields = ({
   onResetValue,
 }: CompareFieldsProps) => {
   const { t } = useTranslation();
+  const { sourceHeading } = useContext(MergeResultsWizardContext);
 
   return (
     <>
       <Typography variant="h3" sx={{ display: { xs: 'block', sm: 'none' } }}>
-        {isOnImportPage() ? t('basic_data.central_import.import_candidate') : t('unpublished_result')}
+        {sourceHeading}
       </Typography>
       {sourceContent}
 
@@ -71,7 +72,8 @@ export const CompareFields = ({
         {isChanged && (
           <Button
             data-testid={dataTestId.basicData.centralImport.resetValueButton}
-            variant="outlined"
+            variant="contained"
+            color="tertiary"
             size="small"
             endIcon={<RestoreIcon />}
             onClick={onResetValue}>

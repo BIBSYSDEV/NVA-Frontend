@@ -8,7 +8,6 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import {
   Accordion,
   AccordionDetails,
-  AccordionSummary,
   Box,
   Button,
   Collapse,
@@ -32,7 +31,7 @@ import { Modal } from '../../../components/Modal';
 import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
-import { Ticket } from '../../../types/publication_types/ticket.types';
+import { Ticket, TicketTypeEnum } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -42,6 +41,9 @@ import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
+import { getTicketColor } from '../../messages/utils';
+import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
+import { TaskAccordionSummary } from './styles';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
@@ -180,7 +182,7 @@ export const DoiRequestAccordion = ({
       fullWidth
       color="tertiary"
       variant="contained"
-      endIcon={<LocalOfferIcon />}
+      startIcon={<LocalOfferIcon />}
       disabled={isLoading !== LoadingState.None}
       onClick={toggleRequestDoiModal}>
       {t('registration.public_page.request_doi')}
@@ -194,7 +196,7 @@ export const DoiRequestAccordion = ({
       size="small"
       variant="contained"
       data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
-      endIcon={<CheckIcon />}
+      startIcon={<CheckIcon />}
       loadingPosition="end"
       onClick={() => {
         if (openFilesOnRegistration.length > 0) {
@@ -230,7 +232,7 @@ export const DoiRequestAccordion = ({
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
       sx={{
-        bgcolor: 'background.neutral97',
+        bgcolor: 'background.paper',
         '& .MuiAccordionSummary-content': {
           alignItems: 'center',
           gap: '0.5rem',
@@ -239,7 +241,10 @@ export const DoiRequestAccordion = ({
       elevation={3}
       expanded={openAccordion}
       onChange={() => setOpenAccordion((open) => !open)}>
-      <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+      <TaskAccordionSummary
+        sx={{ borderLeftColor: getTicketColor(TicketTypeEnum.DoiRequest) }}
+        expandIcon={<ExpandMoreIcon fontSize="large" />}>
+        <TicketTypeTag type={TicketTypeEnum.DoiRequest} showText={false} />
         <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
           {t('common.doi')}
         </Typography>
@@ -248,11 +253,11 @@ export const DoiRequestAccordion = ({
         ) : hasReservedDoi ? (
           <StatusChip text={t('registration.public_page.tasks_panel.reserved')} icon="hourglass" />
         ) : null}
-      </AccordionSummary>
+      </TaskAccordionSummary>
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
 
-        {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} />}
+        {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} withColor />}
 
         {hasReservedDoi && (
           <Trans
@@ -309,11 +314,11 @@ export const DoiRequestAccordion = ({
 
                 <Button
                   data-testid={dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton}
-                  sx={{ bgcolor: 'white' }}
                   size="small"
                   fullWidth
-                  variant="outlined"
-                  endIcon={<LocalOfferIcon />}
+                  variant="contained"
+                  color="tertiary"
+                  startIcon={<LocalOfferIcon />}
                   disabled={isLoading !== LoadingState.None}
                   onClick={toggleReserveDoiDialog}>
                   {t('registration.public_page.reserve_doi')}
@@ -396,7 +401,7 @@ export const DoiRequestAccordion = ({
               variant="contained"
               size="small"
               data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
-              endIcon={<CloseIcon />}
+              startIcon={<CloseIcon />}
               onClick={toggleRejectDoiDialog}
               disabled={isLoadingData || approveTicketMutation.isPending}>
               {t('common.reject_doi')}
