@@ -14,6 +14,7 @@ import { NviDialoguePanel } from './NviDialoguePanel';
 interface NviCandidateActionPanelProps {
   nviCandidate: NviCandidate;
   nviCandidateQueryKey: string[];
+  isUpdatingNviCandidateInfo: boolean;
 }
 
 enum TabValue {
@@ -26,7 +27,11 @@ const StyledTabPanel = styled(TabPanel)({
   paddingBottom: '1rem',
 });
 
-export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: NviCandidateActionPanelProps) => {
+export const NviCandidateActionPanel = ({
+  nviCandidate,
+  nviCandidateQueryKey,
+  isUpdatingNviCandidateInfo,
+}: NviCandidateActionPanelProps) => {
   const { t } = useTranslation();
   const [tabValue, setTabValue] = useState(TabValue.Dialogue);
 
@@ -64,7 +69,11 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
         </TabList>
 
         <StyledTabPanel value={TabValue.Dialogue}>
-          <NviDialoguePanel nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
+          <NviDialoguePanel
+            nviCandidate={nviCandidate}
+            nviCandidateQueryKey={nviCandidateQueryKey}
+            isUpdatingNviCandidateInfo={isUpdatingNviCandidateInfo}
+          />
         </StyledTabPanel>
         {canEditRegistration && (
           <StyledTabPanel value={TabValue.Log}>
