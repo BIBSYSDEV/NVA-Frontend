@@ -220,9 +220,21 @@ export const fundingSourceAutocompleteFilterOptions = (
   });
 };
 
-// Note: The waiting time is a bit arbitrary, but it should be enough time for the reindexing to finish in many cases.
+// NOTE: The waiting time is a bit arbitrary, but it should be enough time for the reindexing to finish in many cases.
 export const invalidateQueryKeyDueToReindexing = (queryClient: QueryClient, key: string, waitMs = 5_000) => {
   setTimeout(() => {
     queryClient.invalidateQueries({ queryKey: [key] });
   }, waitMs);
+};
+
+export const sanitizeSearchParams = (params: Record<string, any>): Record<string, string> => {
+  return Object.entries(params).reduce(
+    (acc, [key, value]) => {
+      if (value !== null && value !== undefined) {
+        acc[key] = Array.isArray(value) ? value.join(',') : String(value);
+      }
+      return acc;
+    },
+    {} as Record<string, string>
+  );
 };

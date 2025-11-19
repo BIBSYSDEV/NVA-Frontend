@@ -46,6 +46,7 @@ export const useRegistrationsQueryParams = () => {
     journal: searchParams.get(ResultParam.Journal),
     order: searchParams.get(ResultParam.Order) as ResultSearchOrder | null,
     publicationLanguageShould: searchParams.get(ResultParam.PublicationLanguageShould),
+    publicationYear: searchParams.get(ResultParam.PublicationYear),
     publicationYearSince: searchParams.get(ResultParam.PublicationYearSince),
     publicationYearBefore: searchParams.get(ResultParam.PublicationYearBefore),
     publisher: searchParams.get(ResultParam.Publisher),

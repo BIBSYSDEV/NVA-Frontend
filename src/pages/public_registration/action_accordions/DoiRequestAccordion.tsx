@@ -257,7 +257,7 @@ export const DoiRequestAccordion = ({
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
 
-        {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} />}
+        {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} withColor />}
 
         {hasReservedDoi && (
           <Trans
@@ -314,10 +314,10 @@ export const DoiRequestAccordion = ({
 
                 <Button
                   data-testid={dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton}
-                  sx={{ bgcolor: 'white' }}
                   size="small"
                   fullWidth
-                  variant="outlined"
+                  variant="contained"
+                  color="tertiary"
                   startIcon={<LocalOfferIcon />}
                   disabled={isLoading !== LoadingState.None}
                   onClick={toggleReserveDoiDialog}>

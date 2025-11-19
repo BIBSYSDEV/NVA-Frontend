@@ -37,6 +37,7 @@ export const useNviCandidatesParams = () => {
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
   const year = (searchParams.get(NviCandidatesSearchParam.Year) as number | null) ?? getDefaultNviYear();
   const excludeUnassigned = searchParams.get(NviCandidatesSearchParam.ExcludeUnassigned) === 'true';
+  const excludeEmptyRows = searchParams.get(NviCandidatesSearchParam.ExcludeEmptyRows) === 'true';
 
   return {
     affiliations,
@@ -53,5 +54,6 @@ export const useNviCandidatesParams = () => {
     sortOrder,
     status,
     year,
+    excludeEmptyRows,
   } satisfies FetchNviCandidatesParams;
 };

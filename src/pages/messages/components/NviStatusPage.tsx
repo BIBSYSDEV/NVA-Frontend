@@ -19,6 +19,7 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 import { ExportNviStatusButton } from './ExportNviStatusButton';
 import { NviStatusTableRow } from './NviStatusTableRow';
 import { NviYearSelector } from './NviYearSelector';
+import { NviVisibilitySelector } from './NviVisibilitySelector';
 
 export const NviStatusPage = () => {
   const { t } = useTranslation();
@@ -42,7 +43,10 @@ export const NviStatusPage = () => {
       <Typography variant="h1">{t('tasks.nvi.institution_nvi_status')}</Typography>
 
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-        <NviYearSelector sx={{ minWidth: '10rem' }} />
+        <Box sx={{ display: 'flex', gap: '1rem' }}>
+          <NviYearSelector sx={{ minWidth: '10rem' }} />
+          <NviVisibilitySelector sx={{ minWidth: '15rem' }} />
+        </Box>
         <ExportNviStatusButton />
       </Box>
 
@@ -66,7 +70,14 @@ export const NviStatusPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {institution && <NviStatusTableRow organization={institution} aggregations={nviStatusQuery.data} />}
+            {institution && (
+              <NviStatusTableRow
+                organization={institution}
+                aggregations={nviStatusQuery.data}
+                user={user}
+                year={year}
+              />
+            )}
           </TableBody>
         </Table>
       </TableContainer>

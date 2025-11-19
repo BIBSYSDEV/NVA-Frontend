@@ -20,7 +20,7 @@ export const RefreshPublishingRequestButton = ({
     <Button
       {...buttonProps}
       variant="contained"
-      color="info"
+      color="tertiary"
       size="small"
       fullWidth
       onClick={async () => {

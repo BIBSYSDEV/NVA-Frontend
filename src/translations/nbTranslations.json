@@ -1908,6 +1908,8 @@
   "search_in_national_research_publication": "Søk i over 2 millioner publikasjoner fra forskere fra universiteter, høyskoler og forskningsinstitusjoner over hele landet.",
   "select_curator": "Velg kurator",
   "select_funder": "Velg finansiør",
+  "show_all_units": "Vis alle enheter",
+  "show_only_units_with_candidates": "Vis kun enheter med kandidater",
   "start_merging": "Start sammenslåing",
   "tasks": {
     "correction_list": "Retteliste",
@@ -2001,6 +2003,7 @@
   "unpublished_result": "Avpublisert resultat",
   "velg_subject_area": "Velg fagfelt",
   "view_contact_info": "Se kontaktinformasjon",
+  "visibility_of_units": "Visning av enheter",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
