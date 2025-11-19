@@ -32,7 +32,7 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       i18nKey: 'tasks.nvi.correction_list_type.anthology_without_chapter',
       queryParams: {
         categoryShould: [BookType.Anthology],
-        hasNoChildren: false,
+        hasChildren: false,
       },
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
