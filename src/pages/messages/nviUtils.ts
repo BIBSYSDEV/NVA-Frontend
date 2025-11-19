@@ -38,9 +38,6 @@ export const computeDropdownStatusFromParams = (
   ) {
     selectedOptions.push(NviSearchStatusEnum.Rejected);
   }
-  if (globalStatus?.includes(NviCandidateGlobalStatusEnum.Dispute)) {
-    selectedOptions.push(NviSearchStatusEnum.Dispute);
-  }
   return selectedOptions;
 };
 
@@ -64,8 +61,6 @@ export const computeParamsFromDropdownStatus = (dropdownStatus: NviSearchStatus[
       newStatus.add(NviCandidateStatusEnum.Rejected);
       newGlobalStatus.add(NviCandidateGlobalStatusEnum.Rejected);
       newGlobalStatus.add(NviCandidateGlobalStatusEnum.Pending);
-    } else if (value === NviSearchStatusEnum.Dispute) {
-      newGlobalStatus.add(NviCandidateGlobalStatusEnum.Dispute);
     }
   });
 
@@ -90,11 +85,6 @@ export const getVisibilityFilterValue = (
       if (globalStatus?.length === 1) {
         return globalStatus[0];
       }
-    }
-    /* One of the possible statuses is based on only the globalStatus-attribute, so we have to support that as well */
-  } else if (globalStatus?.length === 1 && globalStatus[0] === 'dispute') {
-    if (filter === 'approvedByOthers' || filter === 'rejectedByOthers') {
-      return filter;
     }
   }
   return '';
@@ -133,10 +123,6 @@ export const updateParamsFromStatusAndFilterValues = (
           ['rejected' satisfies NviCandidateGlobalStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
         );
       }
-    }
-  } else if ((!status || status.length === 0) && globalStatus?.length === 1 && globalStatus?.includes('dispute')) {
-    if (newFilter === 'approvedByOthers' || newFilter === 'rejectedByOthers') {
-      newParams.set(NviCandidatesSearchParam.Filter, newFilter satisfies NviCandidateFilter);
     }
   }
   return newParams;
@@ -181,18 +167,6 @@ export const isOnlyRejectedSelected = (
       globalStatus.length < 3 &&
       (globalStatus.includes(NviCandidateGlobalStatusEnum.Rejected) ||
         globalStatus.includes(NviCandidateGlobalStatusEnum.Pending))) ??
-    false
-  );
-};
-
-export const isOnlyDisputeSelected = (
-  status: NviCandidateStatus[] | null,
-  globalStatus: NviCandidateGlobalStatus[] | null
-) => {
-  return (
-    ((!status || status.length === 0) &&
-      globalStatus?.length === 1 &&
-      globalStatus[0] === NviCandidateGlobalStatusEnum.Dispute) ??
     false
   );
 };

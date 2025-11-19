@@ -11,7 +11,6 @@ import {
   isOnlyPendingSelected,
   isOnlyApprovedSelected,
   isOnlyRejectedSelected,
-  isOnlyDisputeSelected,
 } from '../nviUtils';
 
 /* NOTE: This filter is dependent on the Status filter - whenever a change is made there is influences which options are available here */
@@ -24,7 +23,6 @@ export const NviVisibilityFilter = () => {
   const onlyPendingSelected = isOnlyPendingSelected(status, globalStatus);
   const onlyApprovedSelected = isOnlyApprovedSelected(status, globalStatus);
   const onlyRejectedSelected = isOnlyRejectedSelected(status, globalStatus);
-  const onlyDisputeSelected = isOnlyDisputeSelected(status, globalStatus);
 
   const value = getVisibilityFilterValue(status, globalStatus, filter);
 
@@ -75,16 +73,6 @@ export const NviVisibilityFilter = () => {
       {onlyRejectedSelected && (
         <MenuItem value={'rejected' satisfies NviCandidateGlobalStatus}>
           {t('tasks.nvi.candidates_rejected_by_all')}
-        </MenuItem>
-      )}
-      {onlyDisputeSelected && (
-        <MenuItem value={'approvedByOthers' satisfies NviCandidateFilter}>
-          {t('tasks.nvi.candidates_approved_by_others')}
-        </MenuItem>
-      )}
-      {onlyDisputeSelected && (
-        <MenuItem value={'rejectedByOthers' satisfies NviCandidateFilter}>
-          {t('tasks.nvi.candidates_rejected_by_others')}
         </MenuItem>
       )}
     </TextField>

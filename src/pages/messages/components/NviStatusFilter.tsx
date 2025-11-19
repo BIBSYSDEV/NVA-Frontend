@@ -21,10 +21,6 @@ const nviStatusOptions = [
     value: NviSearchStatusEnum.Rejected,
     labelKey: 'tasks.nvi.status.Rejected',
   },
-  {
-    value: NviSearchStatusEnum.Dispute,
-    labelKey: 'tasks.nvi.status.Dispute',
-  },
 ] as const;
 
 const labelId = 'nvi-status-filter-select';
