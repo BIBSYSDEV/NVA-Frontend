@@ -25,6 +25,7 @@ export const NviCandidatePage = () => {
   const locationState = location.state as NviCandidatePageLocationState;
   const { identifier } = useParams<IdentifierParams>();
   const nviCandidateQuery = useFetchNviCandidate(identifier);
+  const { refetch } = nviCandidateQuery;
   const nviCandidate = nviCandidateQuery.data;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
@@ -32,12 +33,12 @@ export const NviCandidatePage = () => {
    * panel for a few seconds before refetching to ensure it shows the correct data (NP-49727) */
   useEffect(() => {
     const timer = setTimeout(() => {
-      nviCandidateQuery.refetch().finally(() => {
+      refetch().finally(() => {
         setIsUpdatingNviCandidateInfo(false);
       });
     }, 2000);
     return () => clearTimeout(timer);
-  }, [nviCandidateQuery, identifier]);
+  }, [identifier, refetch]);
 
   const registrationQuery = useFetchRegistration(registrationIdentifier);
 

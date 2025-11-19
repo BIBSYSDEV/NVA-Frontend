@@ -7,6 +7,7 @@ import { NviCandidate } from '../../../types/nvi.types';
 import { hasUnidentifiedContributorProblem } from '../../../utils/nviHelpers';
 import { NviApprovals } from './NviApprovals';
 import { NviCandidateActions } from './NviCandidateActions';
+import { NviDialoguePanelSkeleton } from './NviDialogPanelSkeleton';
 
 interface NviDialoguePanelProps {
   nviCandidate: NviCandidate;
@@ -74,17 +75,7 @@ export const NviDialoguePanel = ({
           <NviApprovals approvals={nviCandidate?.approvals ?? []} />
         </Box>
       ) : (
-        <Box sx={{ mx: '1rem', display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <Skeleton width="100%" height={80} />
-          <Skeleton width="100%" height={150} />
-          <Skeleton width="100%" height={60} />
-          <Skeleton width="100%" height={100} />
-          <Skeleton width="100%" height={40} />
-          <Skeleton width="100%" height={80} />
-          <Skeleton width="100%" height={40} />
-          <Skeleton width="100%" height={100} />
-          <Skeleton width="100%" height={150} />
-        </Box>
+        <NviDialoguePanelSkeleton />
       )}
     </>
   );
