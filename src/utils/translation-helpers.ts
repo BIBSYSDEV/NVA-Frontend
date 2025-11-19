@@ -1,7 +1,16 @@
 import { TFunction } from 'i18next';
-import i18n from '../translations/i18n';
+import i18n, { selectIso6392LanguageCode } from '../translations/i18n';
 import { LanguageString } from '../types/common.types';
 import { UrlPathTemplate } from './urlPaths';
+import { LanguageCode } from '../layout/header/LanguageSelector';
+import { useTranslation } from 'react-i18next';
+
+/* The language code can be on different formats depending on where it is originally fetched from.
+ * This hook runs it through a converter before its returned to ensure its on our chosen format (ISO 639-2) */
+export const useThreeLetterLanguageCode = (): LanguageCode => {
+  const { i18n } = useTranslation();
+  return selectIso6392LanguageCode(i18n.language) as LanguageCode;
+};
 
 // Map from three letter language to two ("nob" -> "no")
 export const getPreferredLanguageCode = (language?: string) => {
