@@ -79,6 +79,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                           modalDataTestId={dataTestId.registrationWizard.files.versionModal}
                           buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
                           <Trans
+                            t={t}
                             i18nKey="registration.files_and_license.version_helper_text"
                             components={{
                               heading: <Typography variant="h2" />,
@@ -100,6 +101,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                         modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
                         buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
                         <Trans
+                          t={t}
                           i18nKey="registration.files_and_license.file_and_license_info"
                           components={{
                             p: <Typography gutterBottom />,
@@ -122,6 +124,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                                 </Typography>
                               </Box>
                               <Trans
+                                t={t}
                                 defaults={license.description}
                                 components={{
                                   p: <Typography gutterBottom />,
@@ -136,6 +139,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                               )}
                               {license.additionalInformation && (
                                 <Trans
+                                  t={t}
                                   defaults={license.additionalInformation}
                                   components={{
                                     p: <Typography sx={{ mt: '1rem' }} />,
