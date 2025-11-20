@@ -62,8 +62,6 @@ export const NviCandidatesNavigationAccordion = () => {
   const nviCompletedPercentage =
     nviCandidatesTotal > 0 ? Math.round((nviCandidatesCompleted / nviCandidatesTotal) * 100) : 100;
 
-  const pending = true;
-
   return (
     <NavigationListAccordion
       title={t('tasks.nvi.nvi_control')}
@@ -115,21 +113,36 @@ export const NviCandidatesNavigationAccordion = () => {
                 <HourglassEmptyIcon sx={{ fontSize: 'medium' }} />
                 <MediumTypography>
                   {t('tasks.nvi.candidates_for_control')} (
-                  {pending ? <StyledSkeleton sx={{ display: 'inline-flex' }} /> : (nviPendingCount ?? 0)})
+                  {nviAggregationsQuery.isPending ? (
+                    <StyledSkeleton sx={{ display: 'inline-flex' }} />
+                  ) : (
+                    (nviPendingCount ?? 0)
+                  )}
+                  )
                 </MediumTypography>
               </HorizontalBox>
               <HorizontalBox sx={{ gap: '0.25rem' }}>
                 <CheckIcon sx={{ fontSize: 'medium' }} />
                 <MediumTypography>
                   {t('tasks.nvi.status.Approved')} (
-                  {pending ? <StyledSkeleton sx={{ display: 'inline-flex' }} /> : (nviApprovedCount ?? 0)})
+                  {nviAggregationsQuery.isPending ? (
+                    <StyledSkeleton sx={{ display: 'inline-flex' }} />
+                  ) : (
+                    (nviApprovedCount ?? 0)
+                  )}
+                  )
                 </MediumTypography>
               </HorizontalBox>
               <HorizontalBox sx={{ gap: '0.25rem' }}>
                 <CloseIcon sx={{ fontSize: 'medium' }} />
                 <MediumTypography>
                   {t('tasks.nvi.status.Rejected')} (
-                  {pending ? <StyledSkeleton sx={{ display: 'inline-flex' }} /> : (nviRejectedCount ?? 0)})
+                  {nviAggregationsQuery.isPending ? (
+                    <StyledSkeleton sx={{ display: 'inline-flex' }} />
+                  ) : (
+                    (nviRejectedCount ?? 0)
+                  )}
+                  )
                 </MediumTypography>
               </HorizontalBox>
             </VerticalBox>
