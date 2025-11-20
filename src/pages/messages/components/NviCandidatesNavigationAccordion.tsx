@@ -110,21 +110,21 @@ export const NviCandidatesNavigationAccordion = () => {
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
             <VerticalBox sx={{ my: '0.5rem', gap: '0.15rem' }}>
               <HorizontalBox sx={{ gap: '0.25rem' }}>
-                <HourglassEmptyIcon sx={{ fontSize: '1.1rem' }} />
+                <HourglassEmptyIcon sx={{ fontSize: 'medium' }} />
                 <MediumTypography>
                   {t('tasks.nvi.candidates_for_control')} (
                   {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviPendingCount ?? 0)})
                 </MediumTypography>
               </HorizontalBox>
               <HorizontalBox sx={{ gap: '0.25rem' }}>
-                <CheckIcon sx={{ fontSize: '1.1rem' }} />
+                <CheckIcon sx={{ fontSize: 'medium' }} />
                 <MediumTypography>
                   {t('tasks.nvi.status.Approved')} (
                   {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviApprovedCount ?? 0)})
                 </MediumTypography>
               </HorizontalBox>
               <HorizontalBox sx={{ gap: '0.25rem' }}>
-                <CloseIcon sx={{ fontSize: '1.1rem' }} />
+                <CloseIcon sx={{ fontSize: 'medium' }} />
                 <MediumTypography>
                   {t('tasks.nvi.status.Rejected')} (
                   {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviRejectedCount ?? 0)})
@@ -161,7 +161,8 @@ export const NviCandidatesNavigationAccordion = () => {
                 pathname: UrlPathTemplate.TasksNviDisputes,
                 search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
               }}>
-              {`${t('tasks.nvi.show_disputes')} (${nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})`}
+              {t('tasks.nvi.show_disputes')} (
+              {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
             </SelectableButton>
           </Box>
         </StyledNviStatusBox>
