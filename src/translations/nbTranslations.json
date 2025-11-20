@@ -1940,6 +1940,7 @@
       },
       "delete_note": "Slett kommentar",
       "delete_note_description": "Er du sikker på at du vil slette denne kommentaren?",
+      "disputes_divided_on_units": "Tvister fordelt på enheter",
       "exclude_subunits": "Ekskluder underenheter",
       "include_candidates_without_curator": "Inkluder kandidater uten kurator",
       "institution_nvi_status": "Status NVI-rapportering",
@@ -1974,6 +1975,7 @@
         "Pending": "Kontrolleres",
         "Rejected": "Avvist"
       },
+      "total_amount_of_disputes": "Totalt antall tvister",
       "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknytning til NVI-institusjon"
     },
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag eller lignende",
