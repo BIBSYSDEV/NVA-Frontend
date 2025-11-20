@@ -56,12 +56,13 @@ export const NviCorrectionListNavigationAccordion = () => {
           onClick={() => openNewCorrectionList('AnthologyWithoutChapter')}>
           {t('tasks.nvi.correction_list_type.anthology_without_chapter')}
         </SelectableButton>
-        <SelectableButton
-          data-testid={dataTestId.tasksPage.correctionList.anthologyWithApplicableChapterButton}
-          isSelected={selectedNviList === 'AnthologyWithApplicableChapter'}
-          onClick={() => openNewCorrectionList('AnthologyWithApplicableChapter')}>
-          {t('tasks.nvi.correction_list_type.anthology_with_applicable_chapter')}
-        </SelectableButton>
+        {/* NOTE:Only removed temporarily for NVI release */}
+        {/* <SelectableButton */}
+        {/*   data-testid={dataTestId.tasksPage.correctionList.anthologyWithApplicableChapterButton} */}
+        {/*   isSelected={selectedNviList === 'AnthologyWithApplicableChapter'} */}
+        {/*   onClick={() => openNewCorrectionList('AnthologyWithApplicableChapter')}> */}
+        {/*   {t('tasks.nvi.correction_list_type.anthology_with_applicable_chapter')} */}
+        {/* </SelectableButton> */}
         <SelectableButton
           data-testid={dataTestId.tasksPage.correctionList.booksWithLessThan50PagesButton}
           isSelected={selectedNviList === 'BooksWithLessThan50Pages'}
