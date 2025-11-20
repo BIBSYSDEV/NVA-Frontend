@@ -1743,6 +1743,8 @@
         "applicable": "The publication can be included in the Norwegian Science Index",
         "can_give_publication_points": "Can give publication points",
         "channel_not_rated": "The publication cannot be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (The level may be changed before the year's reporting deadline so that the publication can be included in the Norwegian Science Index)",
+        "not_applicable_isbn": "",
+        "not_applicable_revision": "",
         "select_all_nvi_categories": "Select all"
       },
       "online_issn": "Online ISSN",
@@ -2001,12 +2003,12 @@
     "unpublish_registration_reason": "Enter a brief explanation for why this research result should no longer be published. The explanation will be displayed on the research result when looking up the reference to the research result."
   },
   "unpublished_result": "Unpublished result",
+  "use_rerender": "{{value}}",
   "velg_subject_area": "Select subject area",
   "view_contact_info": "View contact information",
   "visibility_of_units": "",
   "vocabulary_missing": "The institution has not added vocabulary",
   "what_you_find_in_nva_description": "<heading>What can you find in NVA?</heading><p>The Norwegian Research Information Repository (NVA) collects and makes information about Norwegian research accessible.</p><p>Here, you can explore publications, research projects, and researchers across universities, university colleges, and research institutions.</p>",
   "you_cannot_upload_files_to_this_result": "You do not have access to upload files for this result.",
-  "you_do_not_have_permission_to_edit_this_registration": "You do not have access to edit this registration.",
-  "use_rerender": "{{value}}"
+  "you_do_not_have_permission_to_edit_this_registration": "You do not have access to edit this registration."
 }
