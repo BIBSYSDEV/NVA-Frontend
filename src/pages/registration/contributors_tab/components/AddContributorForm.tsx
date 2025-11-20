@@ -62,6 +62,7 @@ export const AddContributorForm = ({
     <>
       {initialSearchTerm && (
         <Trans
+          t={t}
           i18nKey="registration.contributors.identify_contributor_description"
           components={{
             p: <Typography sx={{ mb: '1rem' }} />,

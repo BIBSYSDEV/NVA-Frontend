@@ -7,6 +7,9 @@ import {
   isBook,
   isDegree,
   isExhibitionContent,
+  isJournalIssue,
+  isJournalLeader,
+  isJournalLetter,
   isMediaContribution,
   isOtherRegistration,
   isPresentation,
@@ -36,7 +39,12 @@ export const contributorsValidationSchema = Yup.array().when(
           hasRole(contributors, ContributorRole.Creator)
         )
         .required(contributorErrorMessage.authorRequired);
-    } else if (isBook(publicationInstanceType)) {
+    } else if (
+      isBook(publicationInstanceType) ||
+      isJournalIssue(publicationInstanceType) ||
+      isJournalLeader(publicationInstanceType) ||
+      isJournalLetter(publicationInstanceType)
+    ) {
       return Yup.array()
         .of(contributorValidationSchema)
         .test(

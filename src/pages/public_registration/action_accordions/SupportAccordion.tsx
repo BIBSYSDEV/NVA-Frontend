@@ -97,7 +97,11 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
       </TaskAccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {!isOnTasksPage && (
-          <Trans i18nKey="my_page.messages.contact_curator_if_you_need_assistance" components={{ p: <Typography /> }} />
+          <Trans
+            t={t}
+            i18nKey="my_page.messages.contact_curator_if_you_need_assistance"
+            components={{ p: <Typography /> }}
+          />
         )}
 
         {supportTicket && (
