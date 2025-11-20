@@ -40,6 +40,8 @@ export const NviCandidatesNavigationAccordion = () => {
 
   const nviParams = useNviCandidatesParams();
 
+  console.log('test');
+
   const nviAggregationsQuery = useFetchNviCandidates({
     enabled: isOnNviCandidatesPage || isOnNviStatusPage,
     params: { year: nviParams.year, size: 0, aggregation: 'all' },
