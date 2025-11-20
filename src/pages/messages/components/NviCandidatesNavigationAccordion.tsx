@@ -75,7 +75,7 @@ export const NviCandidatesNavigationAccordion = () => {
       dataTestId={dataTestId.tasksPage.nviAccordion}>
       <StyledTicketSearchFormGroup>
         <StyledNviStatusBox>
-          <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}</Typography>
+          <Typography fontWeight="bold">{t('tasks.nvi.progress_nvi_reporting')}</Typography>
           {nviAggregationsQuery.isPending ? (
             <>
               <Skeleton />
