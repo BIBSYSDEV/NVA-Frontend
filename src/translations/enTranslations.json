@@ -1948,7 +1948,6 @@
       "no_nvi_candidates": "You have no NVI candidates for this search.",
       "note": "Comment",
       "nvi_control": "NVI control (Norwegian Science Index)",
-      "nvi_reporting_status": "Status NVI reporting",
       "previous_candidate": "Go to previous candidate",
       "problem_description": "<p>The NVI candidate lacks required information:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identify the person before approving by editing the result. Control statuses are reset when an unidentified person is identified.</p>",
       "publication_points": "Publication points",
