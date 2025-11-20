@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { fetchProtectedResource, fetchResource } from '../../../../api/commonApi';
 import { InfoBanner } from '../../../../components/InfoBanner';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
-import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
+import { BookRegistration, Revision } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
 import { Publisher, Registration, ScientificValue, SerialPublication } from '../../../../types/registration.types';
@@ -63,6 +63,7 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
   const { t } = useTranslation();
   const publisherId = registration.entityDescription.reference?.publicationContext.publisher?.id ?? '';
   const seriesId = registration.entityDescription.reference?.publicationContext.series?.id ?? '';
+  const isRevision = registration.entityDescription.reference?.publicationContext.revision === Revision.Revised;
 
   const publisherQuery = useQuery({
     queryKey: ['channel', publisherId],
@@ -87,7 +88,12 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
   const publisherScientificValue = publisherQuery.data?.scientificValue;
   const seriesScientificValue = seriesQuery.data?.scientificValue;
 
-  return (
+  return isRevision ? (
+    <InfoBanner
+      text={t('registration.resource_type.nvi.not_applicable_revision')}
+      data-testid={dataTestId.registrationWizard.resourceType.nviFailed}
+    />
+  ) : (
     <NviStatus
       scientificValue={
         seriesScientificValue && seriesScientificValue !== 'Unassigned'
@@ -128,6 +134,9 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
     staleTime: Infinity,
   });
 
+  const containerHasIsbn =
+    (containerQuery.data?.entityDescription.reference?.publicationContext.isbnList ?? []).length > 0;
+
   if (!containerId) {
     return null;
   }
@@ -135,13 +144,18 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
   const publisherScientificValue = publisherQuery.data?.scientificValue;
   const seriesScientificValue = seriesQuery.data?.scientificValue;
 
-  return (
+  return publisherQuery.data && containerHasIsbn ? (
     <NviStatus
       scientificValue={
         seriesScientificValue && seriesScientificValue !== 'Unassigned'
           ? seriesScientificValue
           : publisherScientificValue
       }
+    />
+  ) : (
+    <InfoBanner
+      text={t('registration.resource_type.nvi.not_applicable_isbn')}
+      data-testid={dataTestId.registrationWizard.resourceType.nviFailed}
     />
   );
 };
