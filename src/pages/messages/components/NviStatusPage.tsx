@@ -61,7 +61,6 @@ export const NviStatusPage = () => {
               <TableCell>{t('tasks.nvi.status.Rejected')}</TableCell>
               <TableCell>{t('common.total_number')}</TableCell>
               <TableCell>{t('tasks.nvi.publication_points')}</TableCell>
-              <TableCell>{t('tasks.nvi.status.Dispute')}</TableCell>
               <TableCell>
                 <Box component="span" sx={visuallyHidden}>
                   {t('tasks.nvi.show_subunits')}
