@@ -55,7 +55,7 @@ i18n.use(LanguageDetector).init({
     },
   },
   contextSeparator: '__',
-  fallbackLng: 'nob',
+  fallbackLng: (langCode) => [selectIso6392LanguageCode(langCode), 'nob'], // Regardless of language code we want to map it to one of our three language files
   returnEmptyString: false,
   debug: false,
 });
