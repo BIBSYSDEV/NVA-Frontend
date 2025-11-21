@@ -30,7 +30,7 @@ export const useNviCandidatesParams = () => {
   const orderBy = searchParams.get(NviCandidatesSearchParam.OrderBy) as NviCandidateOrderBy | null;
   const query = searchParams.get(NviCandidatesSearchParam.Query);
   const size = (searchParams.get(NviCandidatesSearchParam.Size) as number | null) ?? ROWS_PER_PAGE_OPTIONS[0];
-  const status = searchParams.get(NviCandidatesSearchParam.Status) as NviCandidateStatus | null;
+  const status = searchParams.get(NviCandidatesSearchParam.Status)?.split(',') as NviCandidateStatus[] | null;
   const globalStatus = searchParams.get(NviCandidatesSearchParam.GlobalStatus)?.split(',') as
     | NviCandidateGlobalStatus[]
     | null;
