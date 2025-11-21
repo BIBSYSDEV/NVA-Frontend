@@ -81,6 +81,7 @@ import {
 } from './PublicPublicationInstance';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
+import { ExhibitionAnnouncementsFields } from './ExhibitionAnnouncementsFields';
 
 const prioritiseIdentifiersFromCristin = (a: AdditionalIdentifier, b: AdditionalIdentifier): number => {
   if (a.sourceName === 'Cristin') {
@@ -315,9 +316,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           ) : isResearchData(publicationInstance.type) ? (
             <PublicPublisher publisher={(publicationContext as ResearchDataPublicationContext).publisher} />
           ) : isExhibitionContent(publicationInstance.type) ? (
-            <PublicOutputs
-              outputs={(publicationInstance as ExhibitionPublicationInstance).manifestations ?? []}
-              showType
+            <ExhibitionAnnouncementsFields
+              manifestations={(publicationInstance as ExhibitionPublicationInstance).manifestations}
             />
           ) : isOtherRegistration(publicationInstance.type) ? (
             <PublicPublisher publisher={(publicationContext as MapPublicationContext).publisher} />
