@@ -40,8 +40,9 @@ export const getIdentifierFromId = (id: string) => id.split('/').pop() ?? '';
 
 export const getInitials = (name: string) => {
   if (!name) return '';
-
-  const splittedNames = name.split(' ');
+  const cleanedName = name.trim().replace(/\s+/g, ' '); // Ensure single spaces between names
+  if (!cleanedName) return ''; // Handle when name is just a string of spaces
+  const splittedNames = cleanedName.split(' ');
   const firstNameInitial = splittedNames[0][0];
   const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
   return `${firstNameInitial}${lastNameInitial}`.toUpperCase();
