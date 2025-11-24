@@ -67,7 +67,7 @@ import { getIssnValuesString, getOutputName, hyphenateIsrc } from '../../utils/r
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { OutputItem } from '../registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import { RegistrationSummary } from './RegistrationSummary';
-import { AnnouncementsFieldsWrapper } from './AnnoucementsFieldsWrapper';
+import { AnnouncementsFieldsHeadline } from './AnnoucementsFieldsHeadline';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
@@ -261,13 +261,14 @@ interface PublicOutputsProps {
 
 export const PublicOutputs = ({ outputs, showType = false }: PublicOutputsProps) => {
   return (
-    <AnnouncementsFieldsWrapper>
+    <>
+      <AnnouncementsFieldsHeadline />
       {outputs.map((output, index) => (
         <ErrorBoundary key={index}>
           <PublicOutputRow output={output} showType={showType} />
         </ErrorBoundary>
       ))}
-    </AnnouncementsFieldsWrapper>
+    </>
   );
 };
 
@@ -357,7 +358,7 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
   );
 };
 
-const PublicExhibitionBasicDialogContent = ({ exhibitionBasic }: { exhibitionBasic: ExhibitionBasic }) => {
+export const PublicExhibitionBasicDialogContent = ({ exhibitionBasic }: { exhibitionBasic: ExhibitionBasic }) => {
   const { t } = useTranslation();
   return (
     <DialogContent>

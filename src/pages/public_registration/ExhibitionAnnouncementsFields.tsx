@@ -1,7 +1,7 @@
 import { ExhibitionBasic, ExhibitionManifestation } from '../../types/publication_types/exhibitionContent.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { AnnouncementsFieldsWrapper } from './AnnoucementsFieldsWrapper';
-import { ExhibitionBasicRow } from './ExhibitionBasicRow';
+import { AnnouncementsFieldsHeadline } from './AnnoucementsFieldsHeadline';
+import { ExhibitionRow } from './ExhibitionRow';
 
 interface ExhibitionFieldsProps {
   manifestations: ExhibitionManifestation[];
@@ -9,14 +9,15 @@ interface ExhibitionFieldsProps {
 
 export const ExhibitionAnnouncementsFields = ({ manifestations }: ExhibitionFieldsProps) => {
   return (
-    <AnnouncementsFieldsWrapper>
+    <>
+      <AnnouncementsFieldsHeadline />
       {manifestations.map((exhibitManifestation, index) => {
         return (
           <ErrorBoundary key={index}>
-            <ExhibitionBasicRow exhibitManifestation={exhibitManifestation as ExhibitionBasic} />
+            <ExhibitionRow exhibitManifestation={exhibitManifestation as ExhibitionBasic} />
           </ErrorBoundary>
         );
       })}
-    </AnnouncementsFieldsWrapper>
+    </>
   );
 };

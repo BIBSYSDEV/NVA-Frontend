@@ -317,7 +317,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <PublicPublisher publisher={(publicationContext as ResearchDataPublicationContext).publisher} />
           ) : isExhibitionContent(publicationInstance.type) ? (
             <ExhibitionAnnouncementsFields
-              manifestations={(publicationInstance as ExhibitionPublicationInstance).manifestations}
+              manifestations={(publicationInstance as ExhibitionPublicationInstance).manifestations ?? []}
             />
           ) : isOtherRegistration(publicationInstance.type) ? (
             <PublicPublisher publisher={(publicationContext as MapPublicationContext).publisher} />
