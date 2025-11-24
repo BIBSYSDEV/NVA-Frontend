@@ -40,8 +40,8 @@ export const getIdentifierFromId = (id: string) => id.split('/').pop() ?? '';
 
 export const getInitials = (name: string) => {
   if (!name) return '';
-  const cleanedName = name.trim().replace(/\s+/g, ' '); // Ensure single spaces between names
-  if (!cleanedName) return ''; // Handle when name is just a string of spaces
+  const cleanedName = name.trim().replace(/\s+/g, ' ');
+  if (!cleanedName) return '';
   const splittedNames = cleanedName.split(' ');
   const firstNameInitial = splittedNames[0][0];
   const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
