@@ -40,6 +40,7 @@ export const getIdentifierFromId = (id: string) => id.split('/').pop() ?? '';
 
 export const getInitials = (name: string) => {
   if (!name) return '';
+
   const splittedNames = name.split(' ');
   const firstNameInitial = splittedNames[0][0];
   const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';

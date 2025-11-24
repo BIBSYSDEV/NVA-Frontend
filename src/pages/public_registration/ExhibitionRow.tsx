@@ -33,7 +33,7 @@ export const ExhibitionRow = ({ exhibitManifestation }: ExhibitionRowProps) => {
   const rowString =
     exhibitManifestation.type === 'ExhibitionBasic' && exhibitManifestation.place?.name
       ? `${nameString} (${exhibitManifestation.place.name})`
-      : nameString;
+      : `${nameString} (${t(`registration.resource_type.artistic.output_type.${exhibitManifestation.type}` as any)})`;
 
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
@@ -55,7 +55,6 @@ export const ExhibitionRow = ({ exhibitManifestation }: ExhibitionRowProps) => {
             <PublicExhibitionBasicDialogContent exhibitionBasic={exhibitManifestation as ExhibitionBasic} />
           ) : null}
         </ErrorBoundary>
-
         <DialogActions>
           <Button variant="outlined" onClick={toggleModal}>
             {t('common.close')}
