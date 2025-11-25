@@ -142,3 +142,11 @@ export type CorrectionListSearchConfig = {
     topLevelOrganization: string | undefined;
   };
 };
+
+export enum NviSearchStatusEnum {
+  CandidatesForControl = 'candidates_for_control',
+  Approved = 'Approved',
+  Rejected = 'Rejected',
+}
+
+export type NviSearchStatus = `${NviSearchStatusEnum}`;

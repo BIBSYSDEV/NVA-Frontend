@@ -163,7 +163,7 @@ export interface NviCandidatesSearchParams {
   username?: string;
   year?: number;
   orgNumber?: string;
-  status?: NviCandidateStatus;
+  status?: NviCandidateStatus | NviCandidateStatus[];
   globalStatus?: NviCandidateGlobalStatus | NviCandidateGlobalStatus[];
   excludeUnassigned?: boolean;
 }
@@ -179,7 +179,8 @@ export const getNviCandidatesSearchPath = ({
   const searchParams = new URLSearchParams();
 
   if (status) {
-    searchParams.set('status', status);
+    const value = Array.isArray(status) ? status.join(',') : status;
+    searchParams.set('status', value);
   }
 
   if (globalStatus) {
