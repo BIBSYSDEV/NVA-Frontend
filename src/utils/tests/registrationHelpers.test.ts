@@ -19,21 +19,6 @@ import {
 import { MediaMedium } from '../../types/publication_types/mediaContributionRegistration.types';
 import { ExhibitionProductionSubtype } from '../../types/publication_types/exhibitionContent.types';
 
-const publicationType = [
-  PublicationType.PublicationInJournal,
-  PublicationType.Book,
-  PublicationType.Report,
-  PublicationType.Degree,
-  PublicationType.Anthology,
-  PublicationType.Presentation,
-  PublicationType.Artistic,
-  PublicationType.MediaContribution,
-  PublicationType.ResearchData,
-  PublicationType.ExhibitionContent,
-  PublicationType.GeographicalContent,
-];
-
-// TODO: Test for other aspects of getFormattedRegistration when needed
 describe('getFormattedRegistration', () => {
   it('adds missing entityDescription.type and reference.type', () => {
     const registration = {
@@ -49,496 +34,251 @@ describe('getFormattedRegistration', () => {
   });
 
   describe('when category has pages attribute', () => {
-    [PublicationChannelType.UnconfirmedJournal, PublicationChannelType.Journal].forEach((journalContextType) => {
-      describe(`category is ${journalContextType}`, () => {
-        [
-          JournalType.AcademicArticle,
-          JournalType.AcademicLiteratureReview,
-          JournalType.Letter,
-          JournalType.Review,
-          JournalType.Leader,
-          JournalType.Corrigendum,
-          JournalType.Issue,
-          JournalType.ConferenceAbstract,
-          JournalType.CaseReport,
-          JournalType.StudyProtocol,
-          JournalType.ProfessionalArticle,
-          JournalType.PopularScienceArticle,
-        ].forEach((journalType) => {
-          describe(`publication instance type is ${journalType}`, () => {
-            it('returns registration unchanged if pages is missing', () => {
-              const registrationWithoutPages = {
-                ...mockRegistration,
-                entityDescription: {
-                  ...mockRegistration.entityDescription,
-                  reference: {
-                    publicationContext: { type: journalContextType },
-                    publicationInstance: {
-                      type: journalType,
-                    },
-                  },
-                },
-              } as unknown as Registration;
-              const result = getFormattedRegistration(registrationWithoutPages);
-              expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-              const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-              expect(pages).toBeFalsy();
-            });
+    describe.each(journalContextTypes)('category is %s', (journalContextType) => {
+      describe.each(journalTypes)('publication instance type is %s', (journalType) => {
+        it('returns registration unchanged if pages is missing', () => {
+          const registration = createRegistration({ contextType: journalContextType, instanceType: journalType });
+          const result = getFormattedRegistration(registration);
+          expect(getPages(result)).toBeFalsy();
+        });
 
-            it('returns registration unchanged if if pages.type is "Range', () => {
-              const registrationWithPages = {
-                ...mockRegistration,
-                entityDescription: {
-                  ...mockRegistration.entityDescription,
-                  reference: {
-                    publicationContext: { type: journalContextType },
-                    publicationInstance: {
-                      type: journalType,
-                      pages: { type: 'Range', from: '1', to: '10' },
-                    },
-                  },
-                },
-              } as unknown as Registration;
-              const result = getFormattedRegistration(registrationWithPages);
-              expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-              const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-              expect(pages).toBeDefined();
-              expect((pages as any).type).toBe('Range');
-              expect((pages as any).from).toBe('1');
-              expect((pages as any).to).toBe('10');
-            });
-
-            it('updates pages.type to "Range" if type is missing', () => {
-              const registrationWithoutRange = {
-                ...mockRegistration,
-                entityDescription: {
-                  ...mockRegistration.entityDescription,
-                  reference: {
-                    publicationContext: { type: journalContextType },
-                    publicationInstance: {
-                      type: journalType,
-                      pages: { from: '1', to: '10' },
-                    },
-                  },
-                },
-              } as unknown as Registration;
-              const result = getFormattedRegistration(registrationWithoutRange);
-              expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-              const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-              expect(pages).toBeDefined();
-              expect((pages as any).type).toBe('Range');
-              expect((pages as any).from).toBe('1');
-              expect((pages as any).to).toBe('10');
-            });
-
-            it('updates pages.type to "Range" if type is not "Range"', () => {
-              const registrationWithOtherRange = {
-                ...mockRegistration,
-                entityDescription: {
-                  ...mockRegistration.entityDescription,
-                  reference: {
-                    publicationContext: { type: journalContextType },
-                    publicationInstance: {
-                      type: journalType,
-                      pages: { type: 'Other', from: '1', to: '10' },
-                    },
-                  },
-                },
-              } as unknown as Registration;
-              const result = getFormattedRegistration(registrationWithOtherRange);
-              expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-              const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-              expect(pages).toBeDefined();
-              expect((pages as any).type).toBe('Range');
-              expect((pages as any).from).toBe('1');
-              expect((pages as any).to).toBe('10');
-            });
+        it('returns registration unchanged if pages.type is "Range"', () => {
+          const registration = createRegistration({
+            contextType: journalContextType,
+            instanceType: journalType,
+            pages: { type: 'Range', from: '1', to: '10' },
           });
+          const result = getFormattedRegistration(registration);
+          const pages = getPages(result);
+          expect(pages).toBeDefined();
+          expect((pages as any).type).toBe('Range');
+          expect((pages as any).from).toBe('1');
+          expect((pages as any).to).toBe('10');
+        });
+
+        it('updates pages.type to "Range" if type is missing', () => {
+          const registration = createRegistration({
+            contextType: journalContextType,
+            instanceType: journalType,
+            pages: { from: '1', to: '10' },
+          });
+          const result = getFormattedRegistration(registration);
+          const pages = getPages(result);
+          expect(pages).toBeDefined();
+          expect((pages as any).type).toBe('Range');
+        });
+
+        it('updates pages.type to "Range" if type is not "Range"', () => {
+          const registration = createRegistration({
+            contextType: journalContextType,
+            instanceType: journalType,
+            pages: { type: 'Other', from: '1', to: '10' },
+          });
+          const result = getFormattedRegistration(registration);
+          const pages = getPages(result);
+          expect(pages).toBeDefined();
+          expect((pages as any).type).toBe('Range');
         });
       });
     });
 
     describe('category is of Anthology-type', () => {
-      [
-        ChapterType.AcademicChapter,
-        ChapterType.NonFictionChapter,
-        ChapterType.PopularScienceChapter,
-        ChapterType.TextbookChapter,
-        ChapterType.EncyclopediaChapter,
-        ChapterType.Introduction,
-        ChapterType.ExhibitionCatalogChapter,
-        ChapterType.ReportChapter,
-        ChapterType.ConferenceAbstract,
-      ].forEach((chapterType) => {
-        describe(`publication instance is is ${chapterType}`, () => {
+      describe.each(chapterTypes)('publication instance is %s', (chapterType) => {
+        it('returns registration unchanged if pages is missing', () => {
+          const registration = createRegistration({
+            contextType: PublicationType.Anthology,
+            instanceType: chapterType,
+          });
+          const result = getFormattedRegistration(registration);
+          expect(getPages(result)).toBeFalsy();
+        });
+
+        it('returns registration unchanged if pages.type is "Range"', () => {
+          const registration = createRegistration({
+            contextType: PublicationType.Anthology,
+            instanceType: chapterType,
+            pages: { type: 'Range', from: '1', to: '10' },
+          });
+          const result = getFormattedRegistration(registration);
+          const pages = getPages(result);
+          expect(pages).toBeDefined();
+          expect((pages as any).type).toBe('Range');
+        });
+
+        it('updates pages.type to "Range" if type is missing', () => {
+          const registration = createRegistration({
+            contextType: PublicationType.Anthology,
+            instanceType: chapterType,
+            pages: { from: '1', to: '10' },
+          });
+          const result = getFormattedRegistration(registration);
+          const pages = getPages(result);
+          expect(pages).toBeDefined();
+          expect((pages as any).type).toBe('Range');
+        });
+
+        it('updates pages.type to "Range" if type is not "Range"', () => {
+          const registration = createRegistration({
+            contextType: PublicationType.Anthology,
+            instanceType: chapterType,
+            pages: { type: 'Other', from: '1', to: '10' },
+          });
+          const result = getFormattedRegistration(registration);
+          const pages = getPages(result);
+          expect(pages).toBeDefined();
+          expect((pages as any).type).toBe('Range');
+        });
+      });
+    });
+
+    describe.each(mediaContributionPeriodicalTypes)(
+      'category is of type Media Contribution Periodical (%s)',
+      (publicationContext) => {
+        describe.each(mediaFeatureTypes)('publication instance is %s', (mediaType) => {
           it('returns registration unchanged if pages is missing', () => {
-            const registration = {
-              ...mockRegistration,
-              entityDescription: {
-                ...mockRegistration.entityDescription,
-                reference: {
-                  publicationContext: { type: PublicationType.Anthology },
-                  publicationInstance: { type: chapterType },
-                },
-              },
-            } as unknown as Registration;
+            const registration = createRegistration({
+              contextType: publicationContext,
+              instanceType: mediaType,
+            });
             const result = getFormattedRegistration(registration);
-            expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-            const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-            expect(pages).toBeFalsy();
+            expect(getPages(result)).toBeFalsy();
           });
 
-          it('returns registration unchanged if if pages.type is "Range', () => {
-            const registration = {
-              ...mockRegistration,
-              entityDescription: {
-                ...mockRegistration.entityDescription,
-                reference: {
-                  publicationContext: { type: PublicationType.Anthology },
-                  publicationInstance: { type: chapterType, pages: { type: 'Range', from: '1', to: '10' } },
-                },
-              },
-            } as unknown as Registration;
+          it('returns registration unchanged if pages.type is "Range"', () => {
+            const registration = createRegistration({
+              contextType: publicationContext,
+              instanceType: mediaType,
+              pages: { type: 'Range', from: '1', to: '10' },
+            });
             const result = getFormattedRegistration(registration);
-            expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-            const pages = result.entityDescription!.reference!.publicationInstance!.pages;
+            const pages = getPages(result);
             expect(pages).toBeDefined();
             expect((pages as any).type).toBe('Range');
-            expect((pages as any).from).toBe('1');
-            expect((pages as any).to).toBe('10');
           });
 
           it('updates pages.type to "Range" if type is missing', () => {
-            const registration = {
-              ...mockRegistration,
-              entityDescription: {
-                ...mockRegistration.entityDescription,
-                reference: {
-                  publicationContext: { type: PublicationType.Anthology },
-                  publicationInstance: { type: chapterType, pages: { from: '1', to: '10' } },
-                },
-              },
-            } as unknown as Registration;
+            const registration = createRegistration({
+              contextType: publicationContext,
+              instanceType: mediaType,
+              pages: { from: '1', to: '10' },
+            });
             const result = getFormattedRegistration(registration);
-            expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-            const pages = result.entityDescription!.reference!.publicationInstance!.pages;
+            const pages = getPages(result);
             expect(pages).toBeDefined();
             expect((pages as any).type).toBe('Range');
-            expect((pages as any).from).toBe('1');
-            expect((pages as any).to).toBe('10');
           });
 
           it('updates pages.type to "Range" if type is not "Range"', () => {
-            const registration = {
-              ...mockRegistration,
-              entityDescription: {
-                ...mockRegistration.entityDescription,
-                reference: {
-                  publicationContext: { type: PublicationType.Anthology },
-                  publicationInstance: { type: chapterType, pages: { type: 'Other', from: '1', to: '10' } },
-                },
-              },
-            } as unknown as Registration;
+            const registration = createRegistration({
+              contextType: publicationContext,
+              instanceType: mediaType,
+              pages: { type: 'Other', from: '1', to: '10' },
+            });
             const result = getFormattedRegistration(registration);
-            expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-            const pages = result.entityDescription!.reference!.publicationInstance!.pages;
+            const pages = getPages(result);
             expect(pages).toBeDefined();
             expect((pages as any).type).toBe('Range');
-            expect((pages as any).from).toBe('1');
-            expect((pages as any).to).toBe('10');
           });
         });
-      });
-    });
-
-    [
-      PublicationChannelType.MediaContributionPeriodical,
-      PublicationChannelType.UnconfirmedMediaContributionPeriodical,
-    ].forEach((publicationContext) => {
-      describe('category is of type Media Contribution Periodical', () => {
-        [MediaType.MediaFeatureArticle, MediaType.MediaReaderOpinion].forEach((mediaType) => {
-          describe(`publication instance is ${mediaType}`, () => {
-            it('returns registration unchanged if pages is missing', () => {
-              const registration = {
-                ...mockRegistration,
-                entityDescription: {
-                  ...mockRegistration.entityDescription,
-                  reference: {
-                    publicationContext: { type: publicationContext },
-                    publicationInstance: { type: mediaType },
-                  },
-                },
-              } as unknown as Registration;
-              const result = getFormattedRegistration(registration);
-              expect(result).not.toBe(registration);
-              expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-              const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-              expect(pages).toBeFalsy();
-            });
-
-            it('returns registration unchanged if if pages.type is "Range', () => {
-              const registration = {
-                ...mockRegistration,
-                entityDescription: {
-                  ...mockRegistration.entityDescription,
-                  reference: {
-                    publicationContext: { type: publicationContext },
-                    publicationInstance: { type: mediaType, pages: { type: 'Range', from: '1', to: '10' } },
-                  },
-                },
-              } as unknown as Registration;
-              const result = getFormattedRegistration(registration);
-              expect(result).not.toBe(registration);
-              expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-              const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-              expect(pages).toBeDefined();
-              expect((pages as any).type).toBe('Range');
-              expect((pages as any).from).toBe('1');
-              expect((pages as any).to).toBe('10');
-            });
-
-            it('updates pages.type to "Range" if type is missing', () => {
-              const registration = {
-                ...mockRegistration,
-                entityDescription: {
-                  ...mockRegistration.entityDescription,
-                  reference: {
-                    publicationContext: { type: publicationContext },
-                    publicationInstance: { type: mediaType, pages: { from: '1', to: '10' } },
-                  },
-                },
-              } as unknown as Registration;
-              const result = getFormattedRegistration(registration);
-              expect(result).not.toBe(registration);
-              expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-              const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-              expect(pages).toBeDefined();
-              expect((pages as any).type).toBe('Range');
-              expect((pages as any).from).toBe('1');
-              expect((pages as any).to).toBe('10');
-            });
-
-            it('updates pages.type to "Range" if type is not "Range"', () => {
-              const registration = {
-                ...mockRegistration,
-                entityDescription: {
-                  ...mockRegistration.entityDescription,
-                  reference: {
-                    publicationContext: { type: publicationContext },
-                    publicationInstance: { type: mediaType, pages: { type: 'Other', from: '1', to: '10' } },
-                  },
-                },
-              } as unknown as Registration;
-              const result = getFormattedRegistration(registration);
-              expect(result).not.toBe(registration);
-              expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-              const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-              expect(pages).toBeDefined();
-              expect((pages as any).type).toBe('Range');
-              expect((pages as any).from).toBe('1');
-              expect((pages as any).to).toBe('10');
-            });
-          });
-        });
-      });
-    });
+      }
+    );
   });
 
   it('does not update pages.type to "Range" in any Degree', () => {
-    publicationType.forEach((publicationChannel) => {
-      [
-        DegreeType.Bachelor,
-        DegreeType.Master,
-        DegreeType.Phd,
-        DegreeType.ArtisticPhd,
-        DegreeType.Licentiate,
-        DegreeType.Other,
-      ].forEach((degreeType) => {
-        const registration = {
-          ...mockRegistration,
-          entityDescription: {
-            ...mockRegistration.entityDescription,
-            reference: {
-              publicationContext: { type: publicationChannel, isbnList: [], seriesNumber: '' },
-              publicationInstance: { type: degreeType, pages: { type: 'MonographPages', pages: '10' } },
-            },
-          },
-        } as unknown as Registration;
+    publicationTypes.forEach((publicationChannel) => {
+      degreeTypes.forEach((degreeType) => {
+        const registration = createRegistration({
+          contextType: publicationChannel,
+          instanceType: degreeType,
+          pages: { type: 'MonographPages', pages: '10' },
+        });
         const result = getFormattedRegistration(registration);
-        expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-        const pages = result.entityDescription!.reference!.publicationInstance!.pages;
+        const pages = getPages(result);
         expect(pages).toBeDefined();
         expect((pages as any).type).toBe('MonographPages');
-        expect((pages as any).pages).toBe('10');
       });
     });
   });
 
   it('does not update pages.type to "Range" in any Book', () => {
-    publicationType.forEach((publicationType) => {
-      [
-        BookType.AcademicMonograph,
-        BookType.AcademicCommentary,
-        BookType.NonFictionMonograph,
-        BookType.PopularScienceMonograph,
-        BookType.Textbook,
-        BookType.Encyclopedia,
-        BookType.ExhibitionCatalog,
-        BookType.Anthology,
-      ].forEach((bookType) => {
-        const registration = {
-          ...mockRegistration,
-          entityDescription: {
-            ...mockRegistration.entityDescription,
-            reference: {
-              publicationContext: { type: publicationType, isbnList: [], seriesNumber: '' },
-              publicationInstance: { type: bookType, pages: { type: 'MonographPages', pages: '10' } },
-            },
-          },
-        } as unknown as Registration;
+    publicationTypes.forEach((publicationType) => {
+      bookTypes.forEach((bookType) => {
+        const registration = createRegistration({
+          contextType: publicationType,
+          instanceType: bookType,
+          pages: { type: 'MonographPages', pages: '10' },
+        });
         const result = getFormattedRegistration(registration);
-        expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-        const pages = result.entityDescription!.reference!.publicationInstance!.pages;
+        const pages = getPages(result);
         expect(pages).toBeDefined();
         expect((pages as any).type).toBe('MonographPages');
-        expect((pages as any).pages).toBe('10');
       });
     });
   });
 
   it('does not update pages.type to "Range" in any Report', () => {
-    publicationType.forEach((publicationType) => {
-      [
-        ReportType.Research,
-        ReportType.Policy,
-        ReportType.WorkingPaper,
-        ReportType.BookOfAbstracts,
-        ReportType.ConferenceReport,
-        ReportType.Report,
-      ].forEach((reportType) => {
-        const registration = {
-          ...mockRegistration,
-          entityDescription: {
-            ...mockRegistration.entityDescription,
-            reference: {
-              publicationContext: {
-                type: publicationType,
-                isbnList: [],
-                publisher: { type: PublicationChannelType.Publisher },
-                seriesNumber: '',
-                onlineIssn: '123',
-                printIssn: '1225',
-              },
-              publicationInstance: { type: reportType, pages: { type: 'MonographPages', pages: '10' } },
-            },
-          },
-        } as unknown as Registration;
+    publicationTypes.forEach((publicationType) => {
+      reportTypes.forEach((reportType) => {
+        const registration = createRegistration({
+          contextType: publicationType,
+          instanceType: reportType,
+          pages: { type: 'MonographPages', pages: '10' },
+        });
         const result = getFormattedRegistration(registration);
-        expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-        const pages = result.entityDescription!.reference!.publicationInstance!.pages;
+        const pages = getPages(result);
         expect(pages).toBeDefined();
         expect((pages as any).type).toBe('MonographPages');
-        expect((pages as any).pages).toBe('10');
       });
     });
   });
 
   it('does not update pages.type to "Range" in any Presentation', () => {
-    [
-      PresentationType.ConferenceLecture,
-      PresentationType.ConferencePoster,
-      PresentationType.Lecture,
-      PresentationType.OtherPresentation,
-    ].forEach((presentationType) => {
-      const registration = {
-        ...mockRegistration,
-        entityDescription: {
-          ...mockRegistration.entityDescription,
-          reference: {
-            publicationContext: {
-              type: PublicationType.Presentation,
-              name: '',
-            },
-            publicationInstance: { type: presentationType },
-          },
-        },
-      } as unknown as Registration;
+    presentationTypes.forEach((presentationType) => {
+      const registration = createRegistration({
+        contextType: PublicationType.Presentation,
+        instanceType: presentationType,
+      });
       const result = getFormattedRegistration(registration);
-      expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-      const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-      expect(pages).not.toBeDefined();
+      expect(getPages(result)).not.toBeDefined();
     });
   });
 
   it('does not update pages.type to "Range" in any Artistic reference', () => {
-    [
-      ArtisticType.MusicPerformance,
-      ArtisticType.ArtisticDesign,
-      ArtisticType.ArtisticArchitecture,
-      ArtisticType.VisualArts,
-      ArtisticType.PerformingArts,
-      ArtisticType.MovingPicture,
-      ArtisticType.LiteraryArts,
-    ].forEach((artisticType) => {
-      const registration = {
-        ...mockRegistration,
-        entityDescription: {
-          ...mockRegistration.entityDescription,
-          reference: {
-            publicationContext: {
-              type: PublicationType.Artistic,
-            },
-            publicationInstance: { type: artisticType, description: 'aaa' },
-          },
-        },
-      } as unknown as Registration;
+    artisticTypes.forEach((artisticType) => {
+      const registration = createRegistration({
+        contextType: PublicationType.Artistic,
+        extra: { publicationInstance: { type: artisticType, description: 'aaa' } },
+      });
       const result = getFormattedRegistration(registration);
-      expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-      const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-      expect(pages).not.toBeDefined();
+      expect(getPages(result)).not.toBeDefined();
     });
   });
 
   it('does not update pages.type to "Range" if missing from any Media Contribution Reference', () => {
-    publicationType.forEach((publicationType) => {
-      [MediaMedium.Journal, MediaMedium.Radio, MediaMedium.TV, MediaMedium.Internet, MediaMedium.Other].forEach(
-        (mediaMedium) => {
-          [
-            MediaType.MediaFeatureArticle,
-            MediaType.MediaReaderOpinion,
-            MediaType.MediaInterview,
-            MediaType.MediaBlogPost,
-            MediaType.MediaPodcast,
-            MediaType.MediaParticipationInRadioOrTv,
-          ].forEach((mediaType) => {
-            const registration = {
-              ...mockRegistration,
-              entityDescription: {
-                ...mockRegistration.entityDescription,
-                reference: {
-                  publicationContext: {
-                    type: publicationType,
-                    format: '',
-                    medium: { type: mediaMedium },
-                    disseminationChannel: '',
-                  },
-                  publicationInstance: { type: mediaType },
-                },
+    publicationTypes.forEach((publicationType) => {
+      mediaMediums.forEach((mediaMedium) => {
+        mediaTypes.forEach((mediaType) => {
+          const registration = createRegistration({
+            contextType: publicationType,
+            instanceType: mediaType,
+            extra: {
+              publicationContext: {
+                type: publicationType,
+                format: '',
+                medium: { type: mediaMedium },
+                disseminationChannel: '',
               },
-            } as unknown as Registration;
-            const result = getFormattedRegistration(registration);
-            expect(result).not.toBe(registration);
-            expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-            const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-            expect(pages).toBeFalsy();
+            },
           });
-        }
-      );
+          const result = getFormattedRegistration(registration);
+          expect(getPages(result)).toBeFalsy();
+        });
+      });
     });
   });
 
   it('does not update pages.type to "Range" in any Research Data', () => {
-    [ResearchDataType.DataManagementPlan, ResearchDataType.Dataset].forEach((dataType) => {
+    researchDataTypes.forEach((dataType) => {
       const registration = {
         ...mockRegistration,
         entityDescription: {
@@ -560,66 +300,40 @@ describe('getFormattedRegistration', () => {
         },
       } as unknown as Registration;
       const result = getFormattedRegistration(registration);
-      expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-      const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-      expect(pages).not.toBeDefined();
+      expect(getPages(result)).not.toBeDefined();
     });
   });
 
   it('does not update pages.type to "Range" in any Map', () => {
     [PublicationChannelType.UnconfirmedPublisher, PublicationChannelType.Publisher].forEach((publisher) => {
-      const registration = {
-        ...mockRegistration,
-        entityDescription: {
-          ...mockRegistration.entityDescription,
-          reference: {
-            publicationContext: {
-              type: PublicationType.GeographicalContent,
-              publisher: { type: publisher },
-            },
-            publicationInstance: {
-              type: OtherRegistrationType.Map,
-            },
+      const registration = createRegistration({
+        instanceType: OtherRegistrationType.Map,
+        extra: {
+          publicationContext: {
+            type: PublicationType.GeographicalContent,
+            publisher: { type: publisher },
           },
         },
-      } as unknown as Registration;
+      });
       const result = getFormattedRegistration(registration);
-      expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-      const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-      expect(pages).not.toBeDefined();
+      expect(getPages(result)).not.toBeDefined();
     });
   });
 
   it('does not update pages.type to "Range" in any Exhibition', () => {
-    [
-      ExhibitionProductionSubtype.BasicExhibition,
-      ExhibitionProductionSubtype.TemporaryExhibition,
-      ExhibitionProductionSubtype.PopupExhibition,
-      ExhibitionProductionSubtype.AmbulatingExhibition,
-      ExhibitionProductionSubtype.DigitalExhibition,
-      ExhibitionProductionSubtype.HistoricalInterior,
-      ExhibitionProductionSubtype.Other,
-    ].forEach((exhibitionSubtype) => {
-      const registration = {
-        ...mockRegistration,
-        entityDescription: {
-          ...mockRegistration.entityDescription,
-          reference: {
-            publicationContext: {
-              type: PublicationType.ExhibitionContent,
-            },
-            publicationInstance: {
-              type: ExhibitionContentType.ExhibitionProduction,
-              subtype: { type: exhibitionSubtype },
-              manifestations: [],
-            },
+    exhibitionProductionSubtypes.forEach((exhibitionSubtype) => {
+      const registration = createRegistration({
+        contextType: PublicationType.ExhibitionContent,
+        extra: {
+          publicationInstance: {
+            type: ExhibitionContentType.ExhibitionProduction,
+            subtype: { type: exhibitionSubtype },
+            manifestations: [],
           },
         },
-      } as unknown as Registration;
+      });
       const result = getFormattedRegistration(registration);
-      expect(result.entityDescription?.reference?.publicationInstance).toBeDefined();
-      const pages = result.entityDescription!.reference!.publicationInstance!.pages;
-      expect(pages).not.toBeDefined();
+      expect(getPages(result)).not.toBeDefined();
     });
   });
 
@@ -638,3 +352,52 @@ describe('getFormattedRegistration', () => {
     expect(result.entityDescription?.reference?.publicationInstance).not.toBeDefined();
   });
 });
+
+// Type arrays
+const publicationTypes = Object.values(PublicationType);
+const journalContextTypes = [PublicationChannelType.UnconfirmedJournal, PublicationChannelType.Journal];
+const journalTypes = Object.values(JournalType);
+const chapterTypes = Object.values(ChapterType);
+const mediaContributionPeriodicalTypes = [
+  PublicationChannelType.MediaContributionPeriodical,
+  PublicationChannelType.UnconfirmedMediaContributionPeriodical,
+];
+const mediaTypes = Object.values(MediaType);
+const mediaFeatureTypes = [MediaType.MediaFeatureArticle, MediaType.MediaReaderOpinion];
+const degreeTypes = Object.values(DegreeType);
+const bookTypes = Object.values(BookType);
+const reportTypes = Object.values(ReportType);
+const presentationTypes = Object.values(PresentationType);
+const artisticTypes = Object.values(ArtisticType);
+const mediaMediums = Object.values(MediaMedium);
+const researchDataTypes = Object.values(ResearchDataType);
+const exhibitionProductionSubtypes = Object.values(ExhibitionProductionSubtype);
+
+// Helpers
+const createRegistration = ({
+  contextType,
+  instanceType,
+  pages,
+  extra = {},
+}: {
+  contextType?: any;
+  instanceType?: any;
+  pages?: any;
+  extra?: any;
+} = {}) =>
+  ({
+    ...mockRegistration,
+    entityDescription: {
+      ...mockRegistration.entityDescription,
+      reference: {
+        ...(contextType ? { publicationContext: { type: contextType } } : {}),
+        ...(instanceType ? { publicationInstance: { type: instanceType, ...(pages ? { pages } : {}) } } : {}),
+        ...extra,
+      },
+    },
+  }) as unknown as Registration;
+
+const getPages = (result: Registration) => {
+  const instance = result.entityDescription?.reference?.publicationInstance as { pages?: unknown } | undefined;
+  return instance?.pages;
+};
