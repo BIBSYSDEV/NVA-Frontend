@@ -150,7 +150,7 @@ export const getPublicationChannelString = (channel: SerialPublication | SerialP
 // Ensure Registration has correct type values, etc
 export const getFormattedRegistration = (registration: Registration) => {
   const type = registration.entityDescription?.reference?.publicationInstance?.type ?? '';
-  let formattedRegistration = registration;
+  let formattedRegistration = JSON.parse(JSON.stringify(registration));
 
   if (formattedRegistration.entityDescription && !formattedRegistration.entityDescription.type) {
     formattedRegistration.entityDescription.type = 'EntityDescription';
@@ -159,7 +159,7 @@ export const getFormattedRegistration = (registration: Registration) => {
     formattedRegistration.entityDescription.reference.type = 'Reference';
   }
 
-  if (isJournal(type)) {
+  if (isJournal(type) || isChapter(type) || isPeriodicalMediaContribution(type)) {
     const journalRegistration = formattedRegistration as JournalRegistration;
     if (journalRegistration.entityDescription.reference) {
       const { pages } = journalRegistration.entityDescription.reference.publicationInstance;
