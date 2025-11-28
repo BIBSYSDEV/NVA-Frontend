@@ -131,29 +131,6 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
             <StyledSkeleton />
           )}
         </TableCell>
-        <TableCell align="center">
-          {aggregations ? (
-            (orgAggregations?.points.total.value.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0)
-          ) : (
-            <StyledSkeleton />
-          )}
-        </TableCell>
-        <TableCell align="center">
-          {aggregations ? (
-            <Link
-              component={RouterLink}
-              data-testid={dataTestId.nviStatusTableRow.disputeLink}
-              to={getNviCandidatesSearchPath({
-                year: year,
-                orgNumber: getIdentifierFromId(organization.id),
-                globalStatus: NviCandidateGlobalStatusEnum.Dispute,
-              })}>
-              {orgAggregations?.dispute?.docCount.toLocaleString() ?? 0}
-            </Link>
-          ) : (
-            <StyledSkeleton />
-          )}
-        </TableCell>
         <TableCell>
           {level !== 0 && organization.hasPart && organization.hasPart.length > 0 && (
             <IconButton onClick={() => setExpanded(!expanded)} title={t('tasks.nvi.show_subunits')}>
