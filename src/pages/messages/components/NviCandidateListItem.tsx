@@ -12,16 +12,19 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { FetchNviCandidatesParams } from '../../../api/searchApi';
 
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
   currentOffset: number;
+  nviParams?: FetchNviCandidatesParams;
 }
 
-export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandidateListItemProps) => {
+export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }: NviCandidateListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const nviParams = useNviCandidatesParams();
+  const nviParamsFromUrl = useNviCandidatesParams();
+  const nviQueryParams = nviParams ?? nviParamsFromUrl;
 
   const contributors = nviCandidate.publicationDetails.nviContributors;
   const focusedContributors = contributors.slice(0, 5);
@@ -39,7 +42,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandida
   const myApproval = nviCandidate.approvals.find((approval) => approval.institutionId === user?.topOrgCristinId);
 
   const candidateLinkState = {
-    candidateOffsetState: { currentOffset, nviQueryParams: nviParams },
+    candidateOffsetState: { currentOffset, nviQueryParams },
     previousSearch: window.location.search,
   } satisfies NviCandidatePageLocationState;
 
