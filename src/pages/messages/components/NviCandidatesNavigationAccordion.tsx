@@ -42,16 +42,18 @@ export const NviCandidatesNavigationAccordion = () => {
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
   const isOnNviDisputePage = location.pathname === UrlPathTemplate.TasksNviDisputes;
+  const isOnPublicationPointsPage = location.pathname === UrlPathTemplate.TasksPublicationPoints;
 
   const nviParams = useNviCandidatesParams();
 
   const nviAggregationsQuery = useFetchNviCandidates({
-    enabled: isOnNviCandidatesPage || isOnNviStatusPage || isOnNviDisputePage,
+    enabled: isOnNviCandidatesPage || isOnNviStatusPage || isOnNviDisputePage || isOnPublicationPointsPage,
     params: { year: nviParams.year, size: 0, aggregation: 'all' },
   });
 
   const nviAggregations = nviAggregationsQuery.data?.aggregations;
 
+  const nviNewCount = nviAggregations?.pending.docCount.toLocaleString(); // TODO change to new when API is ready
   const nviPendingCount = nviAggregations?.pending.docCount.toLocaleString();
   const nviApprovedCount = nviAggregations?.approved.docCount.toLocaleString();
   const nviRejectedCount = nviAggregations?.rejected.docCount.toLocaleString();
@@ -112,7 +114,19 @@ export const NviCandidatesNavigationAccordion = () => {
               <HorizontalBox sx={{ gap: '0.25rem' }}>
                 <HourglassEmptyIcon sx={{ fontSize: 'medium' }} />
                 <MediumTypography>
-                  {t('tasks.nvi.candidates_for_control')} (
+                  {t('tasks.nvi.status.New')} (
+                  {nviAggregationsQuery.isPending ? (
+                    <StyledSkeleton sx={{ display: 'inline-flex' }} />
+                  ) : (
+                    (nviNewCount ?? 0)
+                  )}
+                  )
+                </MediumTypography>
+              </HorizontalBox>
+              <HorizontalBox sx={{ gap: '0.25rem' }}>
+                <HourglassEmptyIcon sx={{ fontSize: 'medium' }} />
+                <MediumTypography>
+                  {t('tasks.nvi.status.Pending')} (
                   {nviAggregationsQuery.isPending ? (
                     <StyledSkeleton sx={{ display: 'inline-flex' }} />
                   ) : (
@@ -178,6 +192,16 @@ export const NviCandidatesNavigationAccordion = () => {
               }}>
               {t('tasks.nvi.show_disputes')} (
               {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
+            </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
+              sx={{ justifyContent: 'center' }}
+              isSelected={isOnPublicationPointsPage}
+              to={{
+                pathname: UrlPathTemplate.TasksPublicationPoints,
+                search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
+              }}>
+              {t('tasks.nvi.show_status_for_publication_points')}
             </SelectableButton>
           </Box>
         </StyledNviStatusBox>
