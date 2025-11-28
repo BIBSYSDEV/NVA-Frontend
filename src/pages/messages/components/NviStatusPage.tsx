@@ -54,13 +54,12 @@ export const NviStatusPage = () => {
         <Table size="small">
           <TableHead>
             <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
-              <TableCell>{t('registration.contributors.department')}</TableCell>
+              <TableCell sx={{ width: '60%' }}>{t('registration.contributors.department')}</TableCell>
               <TableCell>{t('tasks.nvi.status.New')}</TableCell>
               <TableCell>{t('tasks.nvi.status.Pending')}</TableCell>
               <TableCell>{t('tasks.nvi.status.Approved')}</TableCell>
               <TableCell>{t('tasks.nvi.status.Rejected')}</TableCell>
               <TableCell>{t('common.total_number')}</TableCell>
-              <TableCell>{t('tasks.nvi.publication_points')}</TableCell>
               <TableCell>
                 <Box component="span" sx={visuallyHidden}>
                   {t('tasks.nvi.show_subunits')}

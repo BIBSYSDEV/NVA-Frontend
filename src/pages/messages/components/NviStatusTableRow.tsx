@@ -131,13 +131,6 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
             <StyledSkeleton />
           )}
         </TableCell>
-        <TableCell align="center">
-          {aggregations ? (
-            (orgAggregations?.points.total.value.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0)
-          ) : (
-            <StyledSkeleton />
-          )}
-        </TableCell>
         <TableCell>
           {level !== 0 && organization.hasPart && organization.hasPart.length > 0 && (
             <IconButton onClick={() => setExpanded(!expanded)} title={t('tasks.nvi.show_subunits')}>
