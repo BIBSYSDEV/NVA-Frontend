@@ -81,6 +81,8 @@ export enum UrlPathTemplate {
   TasksNviCandidate = '/tasks/nvi/:identifier',
   TasksNviCorrectionList = '/tasks/correction-list',
   TasksNviStatus = '/tasks/nvi/status',
+  TasksNviDisputes = '/tasks/nvi/disputes',
+  TasksPublicationPoints = '/tasks/nvi/publication-points',
   TasksResultRegistrations = '/tasks/result-registrations',
   Wildcard = '*',
 }

@@ -42,6 +42,8 @@ import { NviStatusPage } from './components/NviStatusPage';
 import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
 import { TicketList } from './components/TicketList';
 import { TicketTypeTag } from './components/TicketTypeTag';
+import { NviDisputePage } from './components/NviDisputePage';
+import { NviPublicationPointsPage } from './components/NviPublicationPointsPage';
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -63,8 +65,14 @@ const TasksPage = () => {
 
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
+  const isOnNviDisputesPage = location.pathname === UrlPathTemplate.TasksNviDisputes;
+  const isOnNviPublicationPointsPage = location.pathname === UrlPathTemplate.TasksPublicationPoints;
   const isOnNviCandidatePage =
-    location.pathname.startsWith(UrlPathTemplate.TasksNvi) && !isOnNviCandidatesPage && !isOnNviStatusPage;
+    location.pathname.startsWith(UrlPathTemplate.TasksNvi) &&
+    !isOnNviCandidatesPage &&
+    !isOnNviStatusPage &&
+    !isOnNviDisputesPage &&
+    !isOnNviPublicationPointsPage;
 
   const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
 
@@ -299,6 +307,16 @@ const TasksPage = () => {
           <Route
             path={getSubUrl(UrlPathTemplate.TasksNviStatus, UrlPathTemplate.Tasks)}
             element={<PrivateRoute element={<NviStatusPage />} isAuthorized={isNviCurator} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.TasksNviDisputes, UrlPathTemplate.Tasks)}
+            element={<PrivateRoute element={<NviDisputePage />} isAuthorized={isNviCurator} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.TasksPublicationPoints, UrlPathTemplate.Tasks)}
+            element={<PrivateRoute element={<NviPublicationPointsPage />} isAuthorized={isNviCurator} />}
           />
 
           <Route
