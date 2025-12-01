@@ -38,14 +38,34 @@ interface AggregationCount {
   docCount: number;
 }
 
-interface OrganizationDetail extends AggregationCount {
-  dispute: AggregationCount;
-  points: { total: { value: number } };
-  status: { [status in NviCandidateStatus]?: AggregationCount };
+interface ApprovalStatusAggregation {
+  New: number;
+  Approved: number;
+  Rejected: number;
+  Pending: number;
+}
+
+interface GlobalApprovalStatusAggregation {
+  Approved: number;
+  Dispute: number;
+  Rejected: number;
+  Pending: number;
+}
+
+interface OrganizationAggregation {
+  approvalStatus: ApprovalStatusAggregation;
+  globalApprovalStatus: GlobalApprovalStatusAggregation;
+  candidateCount: number;
+  points: number;
 }
 
 export interface NviInstitutionStatusResponse {
-  [organizationId: string]: OrganizationDetail;
+  year: string;
+  topLevelOrganizationId: string;
+  totals: OrganizationAggregation;
+  byOrganization: {
+    [organizationId: string]: OrganizationAggregation;
+  };
 }
 
 export type NviCandidateSearchStatus = keyof NviCandidateAggregations;
