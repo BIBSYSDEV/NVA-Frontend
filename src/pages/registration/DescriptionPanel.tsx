@@ -17,8 +17,8 @@ import { DatePickerField } from './description_tab/DatePickerField';
 import { LanguageSelectorField } from './description_tab/LanguageSelectorField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
-import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { DuplicateWarning } from './DuplicateWarning';
+import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 
 export const DescriptionPanel = () => {
   const { t } = useTranslation();

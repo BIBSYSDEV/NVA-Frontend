@@ -25,6 +25,7 @@ import { FilesAndLicensePanel } from '../../../registration/FilesAndLicensePanel
 import { RegistrationFormStepper } from '../../../registration/RegistrationFormStepper';
 import { ResourceTypePanel } from '../../../registration/ResourceTypePanel';
 import { CentralImportCandidateFormActions } from './CentralImportCandidateFormActions';
+import { convertImportCandidateToSomething } from '../../../../utils/central-import-helpers';
 
 export const CentralImportCandidateForm = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ export const CentralImportCandidateForm = () => {
     queryFn: () => fetchImportCandidate(identifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
-  const importCandidate = importCandidateQuery.data;
+  const importCandidate = convertImportCandidateToSomething(importCandidateQuery.data);
 
   const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
@@ -99,7 +100,7 @@ export const CentralImportCandidateForm = () => {
                 <PageHeader variant="h1">{getTitleString(values.entityDescription?.mainTitle)}</PageHeader>
                 <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
                 <RequiredDescription />
-                <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
+                <BackgroundDiv sx={{ bgcolor: 'background.paper' }}>
                   <Box id="form" mb="2rem">
                     {tabNumber === RegistrationTab.Description && (
                       <ErrorBoundary>
