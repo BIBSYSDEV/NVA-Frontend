@@ -30,7 +30,8 @@ import { MessageItem } from '../../../messages/components/MessageList';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import { CentralImportResultItem } from './CentralImportResultItem';
 import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
-import { convertImportCandidateToSomething } from '../../../../utils/central-import-helpers';
+import { expandImportCandidate } from '../../../../utils/central-import-helpers';
+import { ExpandedImportCandidate } from '../../../../types/importCandidate.types';
 
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation();
@@ -63,7 +64,9 @@ export const CentralImportDuplicationCheckPage = () => {
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
 
-  const importCandidate = convertImportCandidateToSomething(importCandidateQuery.data);
+  const importCandidate: ExpandedImportCandidate | undefined = importCandidateQuery.data
+    ? expandImportCandidate(importCandidateQuery.data)
+    : undefined;
 
   const importCandidateStatusMutation = useMutation({
     mutationFn: (comment: string) =>

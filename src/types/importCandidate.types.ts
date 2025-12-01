@@ -41,18 +41,18 @@ interface SourceOrganization {
   };
 }
 
-interface ImportAffiliation {
+export interface ImportAffiliation {
   type: 'Affiliation';
   sourceOrganization?: SourceOrganization;
   targetOrganization?: Organization | UnconfirmedOrganization;
 }
 
-interface ImportContributor extends Omit<Contributor, 'type' | 'affiliations'> {
+export interface ImportContributor extends Omit<Contributor, 'type' | 'affiliations'> {
   type: 'ImportContributor';
   affiliations: ImportAffiliation[];
 }
 
-interface ImportEntityDescription extends Omit<EntityDescription, 'type' | 'contributors'> {
+export interface ImportEntityDescription extends Omit<EntityDescription, 'type' | 'contributors'> {
   type: 'ImportEntityDescription';
   contributors: ImportContributor[];
 }
@@ -96,3 +96,7 @@ export interface ImportCandidateSummary {
   printIssn?: string;
   onlineIssn?: string;
 }
+export type ExpandedImportCandidate = Omit<Registration, keyof ImportCandidate | 'entityDescription'> &
+  Omit<ImportCandidate, 'entityDescription'> & {
+    entityDescription: EntityDescription;
+  };

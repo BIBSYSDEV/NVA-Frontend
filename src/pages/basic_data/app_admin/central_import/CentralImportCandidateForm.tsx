@@ -13,8 +13,9 @@ import { RequiredDescription } from '../../../../components/RequiredDescription'
 import { SkipLink } from '../../../../components/SkipLink';
 import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
-import { ImportCandidate } from '../../../../types/importCandidate.types';
+import { ExpandedImportCandidate, ImportCandidate } from '../../../../types/importCandidate.types';
 import { RegistrationTab } from '../../../../types/registration.types';
+import { expandImportCandidate } from '../../../../utils/central-import-helpers';
 import { getTouchedTabFields } from '../../../../utils/formik-helpers/formik-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { getImportCandidatePath, IdentifierParams } from '../../../../utils/urlPaths';
@@ -25,7 +26,6 @@ import { FilesAndLicensePanel } from '../../../registration/FilesAndLicensePanel
 import { RegistrationFormStepper } from '../../../registration/RegistrationFormStepper';
 import { ResourceTypePanel } from '../../../registration/ResourceTypePanel';
 import { CentralImportCandidateFormActions } from './CentralImportCandidateFormActions';
-import { convertImportCandidateToSomething } from '../../../../utils/central-import-helpers';
 
 export const CentralImportCandidateForm = () => {
   const dispatch = useDispatch();
@@ -39,7 +39,11 @@ export const CentralImportCandidateForm = () => {
     queryFn: () => fetchImportCandidate(identifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
-  const importCandidate = convertImportCandidateToSomething(importCandidateQuery.data);
+  const importCandidate: ExpandedImportCandidate | undefined = importCandidateQuery.data
+    ? expandImportCandidate(importCandidateQuery.data)
+    : undefined;
+
+  console.log(importCandidateQuery.data);
 
   const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
@@ -95,7 +99,7 @@ export const CentralImportCandidateForm = () => {
             initialErrors={validateForm(importCandidate)}
             initialTouched={getTouchedTabFields(RegistrationTab.FilesAndLicenses, importCandidate)}
             onSubmit={(values) => importCandidateMutation.mutate(values)}>
-            {({ values }: FormikProps<ImportCandidate>) => (
+            {({ values }: FormikProps<ExpandedImportCandidate>) => (
               <Form noValidate>
                 <PageHeader variant="h1">{getTitleString(values.entityDescription?.mainTitle)}</PageHeader>
                 <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
