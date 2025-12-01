@@ -1,4 +1,4 @@
-import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
+import { ExpandedImportCandidate, ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { RegistrationLogResponse } from '../types/log.types';
 import { TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import { DoiPreview, Registration, UpdateRegistrationStatusRequest } from '../types/registration.types';
@@ -165,7 +165,7 @@ export const fetchImportCandidate = async (importCandidateIdentifier: string) =>
   return fetchImportCandidateResponse.data;
 };
 
-export const createRegistrationFromImportCandidate = async (importCandidate: ImportCandidate) => {
+export const createRegistrationFromImportCandidate = async (importCandidate: ExpandedImportCandidate) => {
   const createRegistrationResponse = await authenticatedApiRequest2<Registration>({
     url: `${PublicationsApiPath.ImportCandidate}/${importCandidate.identifier}`,
     method: 'POST',

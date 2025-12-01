@@ -29,8 +29,6 @@ export const RegistrationLandingPage = () => {
   const registration = registrationQuery.data;
   const registrationId = registration?.id;
 
-  console.log(registration);
-
   if (identifier && !!registration?.identifier && identifier !== registration.identifier) {
     // Update URL with the correct identifier if the original result yields an redirect due to being unpublished
     const newPath = location.pathname.replace(identifier, registration.identifier);
