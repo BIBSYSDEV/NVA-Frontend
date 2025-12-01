@@ -186,10 +186,7 @@ export const NviCandidatesNavigationAccordion = () => {
               data-testid={dataTestId.tasksPage.nvi.showDisputesButton}
               sx={{ justifyContent: 'center' }}
               isSelected={isOnNviDisputePage}
-              to={{
-                pathname: UrlPathTemplate.TasksNviDisputes,
-                search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-              }}>
+              to={{ pathname: UrlPathTemplate.TasksNviDisputes }}>
               {t('tasks.nvi.show_disputes')} (
               {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
             </SelectableButton>
@@ -197,10 +194,7 @@ export const NviCandidatesNavigationAccordion = () => {
               data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
               sx={{ justifyContent: 'center' }}
               isSelected={isOnPublicationPointsPage}
-              to={{
-                pathname: UrlPathTemplate.TasksPublicationPoints,
-                search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-              }}>
+              to={{ pathname: UrlPathTemplate.TasksPublicationPoints }}>
               {t('tasks.nvi.show_status_for_publication_points')}
             </SelectableButton>
           </Box>
