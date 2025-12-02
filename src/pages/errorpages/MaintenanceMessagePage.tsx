@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { LanguageString } from '../../types/common.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -21,8 +21,11 @@ interface MaintenanceMessageContentProps {
 }
 
 export const MaintenanceMessageContent = ({ message }: MaintenanceMessageContentProps) => {
+  const { t } = useTranslation();
+
   return (
     <Trans
+      t={t}
       defaults={getLanguageString(message)}
       components={{
         h1: <Typography variant="h1" gutterBottom />,

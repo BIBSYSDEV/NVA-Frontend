@@ -74,6 +74,7 @@ export const ProjectEditAffiliationModal = ({
       fullWidth
       headingText={t('project.affiliation_modal.edit_affiliation')}>
       <Trans
+        t={t}
         i18nKey="project.affiliation_modal.add_new_affiliation_helper_text"
         components={[<Typography key="1" sx={{ mb: '1rem' }} />]}
       />
