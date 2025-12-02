@@ -96,7 +96,8 @@ export interface ImportCandidateSummary {
   printIssn?: string;
   onlineIssn?: string;
 }
-export type ExpandedImportCandidate = Omit<Registration, keyof ImportCandidate | 'entityDescription'> &
-  Omit<ImportCandidate, 'entityDescription'> & {
-    entityDescription: EntityDescription;
-  };
+
+export interface ExpandedImportCandidate extends Registration {
+  type: 'ImportCandidate';
+  importStatus: ImportStatus;
+}
