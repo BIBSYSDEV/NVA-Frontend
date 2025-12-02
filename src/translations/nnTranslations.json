@@ -1948,7 +1948,6 @@
       "no_nvi_candidates": "Du har ingen NVI-kandidatar for dette søket.",
       "note": "Kommentar",
       "nvi_control": "NVI-kontroll (Norsk vitskapsindeks)",
-      "nvi_reporting_status": "Status NVI-rapportering",
       "previous_candidate": "Gå til førre kandidat",
       "problem_description": "<p>NVI-kandidaten har følgjande manglar:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatusar blir oppheva når ein uidentifisert person blir identifisert.</p>",
       "publication_points": "Publiseringspoeng",

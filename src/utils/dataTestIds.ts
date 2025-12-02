@@ -786,6 +786,8 @@ export const dataTestId = {
       statusFilter: 'status-filter',
       showCandidateSearchButton: 'show-candidate-search-button',
       showReportingStatusButton: 'show-reporting-status-button',
+      showDisputesButton: 'show-disputes-button',
+      showPublicationPointsButton: 'show-publication-points-button',
       yearSelect: 'year-select',
       visibilitySelect: 'visibility-select',
     },
