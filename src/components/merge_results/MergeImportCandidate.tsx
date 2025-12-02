@@ -14,6 +14,7 @@ import { HeadTitle } from '../HeadTitle';
 import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
+import { expandImportCandidate } from '../../utils/central-import-helpers';
 
 interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
@@ -60,6 +61,8 @@ export const MergeImportCandidate = () => {
     return <NotFound />;
   }
 
+  const importCandidate = expandImportCandidate(importCandidateQuery.data);
+
   return (
     <StyledPageContent sx={{ mx: 'auto' }}>
       <HeadTitle>{t('merge_import_candidate')}</HeadTitle>
@@ -72,7 +75,7 @@ export const MergeImportCandidate = () => {
       </Paper>
 
       <MergeResultsWizard
-        sourceResult={importCandidateQuery.data}
+        sourceResult={importCandidate}
         targetResult={registrationQuery.data}
         onSave={async (data) => {
           await registrationMutation.mutateAsync(data);
