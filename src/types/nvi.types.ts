@@ -52,19 +52,27 @@ interface GlobalApprovalStatusAggregation {
   Pending: number;
 }
 
-interface OrganizationAggregation {
-  approvalStatus: ApprovalStatusAggregation;
-  globalApprovalStatus: GlobalApprovalStatusAggregation;
+interface BaseAggregation {
   candidateCount: number;
   points: number;
+  approvalStatus: ApprovalStatusAggregation;
+  globalApprovalStatus: GlobalApprovalStatusAggregation;
+}
+
+interface TopLevelAggregation extends BaseAggregation {
+  type: 'TopLevelAggregation';
+}
+
+interface DirectAffiliationAggregation extends BaseAggregation {
+  type: 'DirectAffiliationAggregation';
 }
 
 export interface NviInstitutionStatusResponse {
   year: string;
   topLevelOrganizationId: string;
-  totals: OrganizationAggregation;
+  totals: TopLevelAggregation;
   byOrganization: {
-    [organizationId: string]: OrganizationAggregation;
+    [organizationId: string]: DirectAffiliationAggregation;
   };
 }
 
