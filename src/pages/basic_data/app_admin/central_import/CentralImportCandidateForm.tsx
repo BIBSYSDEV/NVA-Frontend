@@ -43,8 +43,6 @@ export const CentralImportCandidateForm = () => {
     ? expandImportCandidate(importCandidateQuery.data)
     : undefined;
 
-  console.log(importCandidateQuery.data);
-
   const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 

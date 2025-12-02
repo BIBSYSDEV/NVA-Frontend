@@ -60,7 +60,7 @@ export interface ImportEntityDescription extends Omit<EntityDescription, 'type' 
 export interface ImportCandidate {
   type: 'ImportCandidate';
   importStatus: ImportStatus;
-  additionalIdentifiers: AdditionalIdentifier[];
+  additionalIdentifiers?: AdditionalIdentifier[];
   associatedArtifacts: AssociatedArtifact[];
   associatedCustomers: string[];
   identifier: string;
