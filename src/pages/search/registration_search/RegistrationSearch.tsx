@@ -66,6 +66,7 @@ export const RegistrationSearch = ({ registrationQuery, sortingComponent, ...res
         ) : (
           <NoSearchResults>
             <Trans
+              t={t}
               i18nKey="no_search_results_list_default"
               components={{
                 p: <Typography fontWeight="bold" />,

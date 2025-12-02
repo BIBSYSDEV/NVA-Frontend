@@ -31,8 +31,8 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
   const { t } = useTranslation();
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
-  const orgAggregations = aggregations?.[organization.id];
-  const shouldHideEmptyRow = excludeEmptyRows && (!orgAggregations || orgAggregations.docCount === 0);
+  const orgAggregations = aggregations?.byOrganization[organization.id];
+  const shouldHideEmptyRow = excludeEmptyRows && (!orgAggregations || orgAggregations.candidateCount === 0);
 
   if (shouldHideEmptyRow) {
     return null;
@@ -54,7 +54,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 status: NviCandidateStatusEnum.Pending,
                 globalStatus: NviCandidateGlobalStatusEnum.Pending,
               })}>
-              {orgAggregations?.status.New?.docCount.toLocaleString() ?? 0}
+              {orgAggregations?.approvalStatus.New ?? 0}
             </Link>
           ) : (
             <StyledSkeleton />
@@ -72,7 +72,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 globalStatus: NviCandidateGlobalStatusEnum.Pending,
                 excludeUnassigned: true,
               })}>
-              {orgAggregations?.status.Pending?.docCount.toLocaleString() ?? 0}
+              {orgAggregations?.approvalStatus.Pending ?? 0}
             </Link>
           ) : (
             <StyledSkeleton />
@@ -93,7 +93,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                   NviCandidateGlobalStatusEnum.Dispute,
                 ],
               })}>
-              {orgAggregations?.status.Approved?.docCount.toLocaleString() ?? 0}
+              {orgAggregations?.approvalStatus.Approved ?? 0}
             </Link>
           ) : (
             <StyledSkeleton />
@@ -110,7 +110,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 status: NviCandidateStatusEnum.Rejected,
                 globalStatus: NviCandidateGlobalStatusEnum.Rejected,
               })}>
-              {orgAggregations?.status.Rejected?.docCount.toLocaleString() ?? 0}
+              {orgAggregations?.approvalStatus.Rejected ?? 0}
             </Link>
           ) : (
             <StyledSkeleton />
@@ -125,7 +125,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
               })}>
-              {orgAggregations?.docCount.toLocaleString() ?? 0}
+              {orgAggregations?.candidateCount ?? 0}
             </Link>
           ) : (
             <StyledSkeleton />
@@ -133,7 +133,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
         </TableCell>
         <TableCell align="center">
           {aggregations ? (
-            (orgAggregations?.points.total.value.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0)
+            (orgAggregations?.points.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0)
           ) : (
             <StyledSkeleton />
           )}
@@ -148,7 +148,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 orgNumber: getIdentifierFromId(organization.id),
                 globalStatus: NviCandidateGlobalStatusEnum.Dispute,
               })}>
-              {orgAggregations?.dispute?.docCount.toLocaleString() ?? 0}
+              {orgAggregations?.globalApprovalStatus.Dispute ?? 0}
             </Link>
           ) : (
             <StyledSkeleton />

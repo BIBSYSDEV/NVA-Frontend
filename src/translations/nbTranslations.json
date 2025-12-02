@@ -2005,6 +2005,7 @@
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   },
   "unpublished_result": "Avpublisert resultat",
+  "use_rerender": "{{value}}",
   "velg_subject_area": "Velg fagfelt",
   "view_contact_info": "Se kontaktinformasjon",
   "visibility_of_units": "Visning av enheter",

@@ -1743,6 +1743,8 @@
         "applicable": "Publikasjonen kan inngå i Norsk vitskapsindeks",
         "can_give_publication_points": "Kan gje publiseringspoeng",
         "channel_not_rated": "Publikasjonen kan ikkje inngå i Norsk vitskapsindeks sidan publiseringskanalen ikkje er på nivå 1 eller 2. (Nivå kan blir endra før årets rapporteringsfrist sånn at publikasjonen kan inngå i Norsk vitskapsindeks)",
+        "not_applicable_isbn": "",
+        "not_applicable_revision": "",
         "select_all_nvi_categories": "Vel alle"
       },
       "online_issn": "Online ISSN",
@@ -2000,6 +2002,7 @@
     "unpublish_registration_reason": "Legg inn ei kort grunngjeving for at dette forskingsresultatet ikkje lenger skal vere publisert. Grunngjevinga vil vises på forskingsresultatet ved oppslag av referanse til forskingsresultatet."
   },
   "unpublished_result": "Avpublisert resultat",
+  "use_rerender": "{{value}}",
   "velg_subject_area": "Vel fagfelt",
   "view_contact_info": "Sjå kontaktinformasjon",
   "visibility_of_units": "",

@@ -36,6 +36,7 @@ export const ChannelClaimTable = ({ channelClaimList, canEdit = false }: Channel
               buttonDataTestId={dataTestId.editor.channelOwnerInfoButton}
               modalTitle={t('editor.institution.channel_claims.institution_with_editorial_responsibility')}>
               <Trans
+                t={t}
                 i18nKey="editor.institution.channel_claims.channel_owner_helper_text"
                 components={{
                   ...helperTextModalComponents,
@@ -54,6 +55,7 @@ export const ChannelClaimTable = ({ channelClaimList, canEdit = false }: Channel
               buttonDataTestId={dataTestId.editor.registerAccessInfoButton}
               modalTitle={t('editor.institution.channel_claims.register_access')}>
               <Trans
+                t={t}
                 i18nKey="editor.institution.channel_claims.register_access_helper_text"
                 components={helperTextModalComponents}
               />
@@ -65,6 +67,7 @@ export const ChannelClaimTable = ({ channelClaimList, canEdit = false }: Channel
               buttonDataTestId={dataTestId.editor.editingAccessInfoButton}
               modalTitle={t('editor.institution.channel_claims.editing_access')}>
               <Trans
+                t={t}
                 i18nKey="editor.institution.channel_claims.editing_access_helper_text"
                 components={helperTextModalComponents}
               />
@@ -76,6 +79,7 @@ export const ChannelClaimTable = ({ channelClaimList, canEdit = false }: Channel
               buttonDataTestId={dataTestId.editor.categoryLimitationsInfoButton}
               modalTitle={t('editor.institution.channel_claims.category_limitations')}>
               <Trans
+                t={t}
                 i18nKey="editor.institution.channel_claims.category_limitations_helper_text"
                 components={helperTextModalComponents}
               />
