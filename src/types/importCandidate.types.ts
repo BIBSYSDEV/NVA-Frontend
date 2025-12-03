@@ -69,6 +69,11 @@ export interface ImportCandidate {
   entityDescription: ImportEntityDescription;
 }
 
+export interface ExpandedImportCandidate extends Registration {
+  type: 'ImportCandidate';
+  importStatus: ImportStatus;
+}
+
 export type CollaborationType = 'Collaborative' | 'NonCollaborative';
 
 export interface ImportCandidateAggregations
@@ -95,9 +100,4 @@ export interface ImportCandidateSummary {
   contributors: Contributor[];
   printIssn?: string;
   onlineIssn?: string;
-}
-
-export interface ExpandedImportCandidate extends Registration {
-  type: 'ImportCandidate';
-  importStatus: ImportStatus;
 }

@@ -39,9 +39,7 @@ export const CentralImportCandidateForm = () => {
     queryFn: () => fetchImportCandidate(identifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
-  const importCandidate: ExpandedImportCandidate | undefined = importCandidateQuery.data
-    ? expandImportCandidate(importCandidateQuery.data)
-    : undefined;
+  const importCandidate = importCandidateQuery.data && expandImportCandidate(importCandidateQuery.data);
 
   const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);

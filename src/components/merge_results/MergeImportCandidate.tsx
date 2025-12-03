@@ -61,8 +61,6 @@ export const MergeImportCandidate = () => {
     return <NotFound />;
   }
 
-  const importCandidate = expandImportCandidate(importCandidateQuery.data);
-
   return (
     <StyledPageContent sx={{ mx: 'auto' }}>
       <HeadTitle>{t('merge_import_candidate')}</HeadTitle>
@@ -75,7 +73,7 @@ export const MergeImportCandidate = () => {
       </Paper>
 
       <MergeResultsWizard
-        sourceResult={importCandidate}
+        sourceResult={expandImportCandidate(importCandidateQuery.data)}
         targetResult={registrationQuery.data}
         onSave={async (data) => {
           await registrationMutation.mutateAsync(data);

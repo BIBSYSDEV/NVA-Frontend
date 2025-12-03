@@ -16,6 +16,7 @@ import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wra
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 import { BasicDataLocationState, PreviousPathLocationState } from '../../../../types/locationState.types';
+import { expandImportCandidate } from '../../../../utils/central-import-helpers';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { convertToRegistrationSearchItem } from '../../../../utils/registration-helpers';
@@ -30,8 +31,6 @@ import { MessageItem } from '../../../messages/components/MessageList';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import { CentralImportResultItem } from './CentralImportResultItem';
 import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
-import { expandImportCandidate } from '../../../../utils/central-import-helpers';
-import { ExpandedImportCandidate } from '../../../../types/importCandidate.types';
 
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation();
@@ -64,9 +63,7 @@ export const CentralImportDuplicationCheckPage = () => {
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
 
-  const importCandidate: ExpandedImportCandidate | undefined = importCandidateQuery.data
-    ? expandImportCandidate(importCandidateQuery.data)
-    : undefined;
+  const importCandidate = importCandidateQuery.data && expandImportCandidate(importCandidateQuery.data);
 
   const importCandidateStatusMutation = useMutation({
     mutationFn: (comment: string) =>

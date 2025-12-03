@@ -37,7 +37,6 @@ import {
   registrationPublishableValidationSchema,
   registrationValidationSchema,
 } from '../validation/registration/registrationValidation';
-import { ExpandedImportCandidate } from '../../types/importCandidate.types';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -463,7 +462,7 @@ const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): Formi
       return touched;
     } else {
       const touched: FormikTouched<NullAssociatedArtifact> = { type: true };
-      return touched as FormikTouched<ExpandedImportCandidate>;
+      return touched;
     }
   }),
 });

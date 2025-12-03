@@ -6,10 +6,10 @@ import {
   ImportContributor,
   ImportEntityDescription,
 } from '../types/importCandidate.types';
-import { BaseReference, emptyRegistration, EntityDescription } from '../types/registration.types';
+import { emptyReference, emptyRegistration, EntityDescription } from '../types/registration.types';
 
 const convertImportAffiliation = (importAffiliation: ImportAffiliation): Affiliation => {
-  const targetOrg = importAffiliation.targetOrganization!;
+  const targetOrg = importAffiliation.targetOrganization!; // NOTE: This will always be true because of the filtering in convertImportCandidate
   if (targetOrg.type === 'Organization') {
     return {
       type: targetOrg.type,
@@ -32,29 +32,15 @@ const convertImportContributor = (importContributor: ImportContributor): Contrib
     .map((aff) => convertImportAffiliation(aff)),
 });
 
-interface EmptyPublicationInstance {
-  type?: '';
-}
-
-export const emptyReference: BaseReference & {
-  publicationInstance?: EmptyPublicationInstance;
-  publicationContext?: { type?: '' };
-} = {
-  type: 'Reference',
-  doi: '',
-  publicationInstance: { type: '' },
-  publicationContext: { type: '' },
-};
-
-const convertImportEntityDescription = (importDesc: ImportEntityDescription): EntityDescription => ({
-  ...importDesc,
+const convertImportEntityDescription = (importEntityDescription: ImportEntityDescription): EntityDescription => ({
+  ...importEntityDescription,
   type: 'EntityDescription',
-  contributors: importDesc.contributors.map(convertImportContributor),
-  reference: importDesc.reference
+  contributors: importEntityDescription.contributors.map(convertImportContributor),
+  reference: importEntityDescription.reference
     ? {
-        ...importDesc.reference,
-        publicationInstance: (importDesc.reference as any).publicationInstance ?? { type: '' },
-        publicationContext: (importDesc.reference as any).publicationContext ?? { type: '' },
+        ...importEntityDescription.reference,
+        publicationInstance: (importEntityDescription.reference as any).publicationInstance ?? { type: '' },
+        publicationContext: (importEntityDescription.reference as any).publicationContext ?? { type: '' },
       }
     : emptyReference,
 });
