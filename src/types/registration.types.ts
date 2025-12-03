@@ -204,10 +204,6 @@ export interface BaseReference {
   doi: string;
 }
 
-interface EmptyPublicationInstance {
-  type?: '';
-}
-
 export const emptyReference: BaseReference & {
   publicationInstance?: EmptyPublicationInstance;
   publicationContext?: { type?: '' };
