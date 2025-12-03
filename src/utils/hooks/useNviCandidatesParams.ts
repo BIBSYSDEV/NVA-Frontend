@@ -22,10 +22,12 @@ const getCommonNviCandidatesParams = (searchParams: URLSearchParams) => {
   const affiliations = searchParams.get(NviCandidatesSearchParam.Affiliations)?.split(',');
   const assignee = searchParams.get(NviCandidatesSearchParam.Assignee);
   const excludeSubUnits = searchParams.get(NviCandidatesSearchParam.ExcludeSubUnits) === 'true';
-  const offset = (searchParams.get(NviCandidatesSearchParam.Offset) as number | null) ?? 0;
+  const offsetParam = searchParams.get(NviCandidatesSearchParam.Offset);
+  const offset = offsetParam ? Number(offsetParam) : 0;
   const orderBy = searchParams.get(NviCandidatesSearchParam.OrderBy) as NviCandidateOrderBy | null;
   const query = searchParams.get(NviCandidatesSearchParam.Query);
-  const size = (searchParams.get(NviCandidatesSearchParam.Size) as number | null) ?? ROWS_PER_PAGE_OPTIONS[0];
+  const sizeParam = searchParams.get(NviCandidatesSearchParam.Size);
+  const size = sizeParam ? Number(sizeParam) : ROWS_PER_PAGE_OPTIONS[0];
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
 
   return { affiliations, assignee, excludeSubUnits, offset, orderBy, query, size, sortOrder };
