@@ -68,8 +68,8 @@ export const NviCandidatePage = () => {
           ...location.state,
           candidateOffsetState: {
             currentOffset: thisCandidateOffset + 1,
+            nviQueryParams,
           },
-          nviQueryParams: nviQueryParams,
         } satisfies NviCandidatePageLocationState)
       : undefined;
 
@@ -79,8 +79,8 @@ export const NviCandidatePage = () => {
           ...locationState,
           candidateOffsetState: {
             currentOffset: thisCandidateOffset - 1,
+            nviQueryParams,
           },
-          nviQueryParams: nviQueryParams,
         } satisfies NviCandidatePageLocationState)
       : undefined;
 

@@ -22,7 +22,7 @@ export type BasicDataLocationState = (PreviousPathLocationState & PreviousSearch
 export interface NviCandidatePageLocationState extends PreviousSearchLocationState {
   candidateOffsetState?: {
     currentOffset: number;
+    nviQueryParams: FetchNviCandidatesParams;
   };
-  nviQueryParams?: FetchNviCandidatesParams;
   isOnDisputePage?: boolean;
 }

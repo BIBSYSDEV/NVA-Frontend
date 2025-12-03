@@ -43,8 +43,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
   const myApproval = nviCandidate.approvals.find((approval) => approval.institutionId === user?.topOrgCristinId);
 
   const candidateLinkState = {
-    candidateOffsetState: { currentOffset },
-    nviQueryParams: nviQueryParams,
+    candidateOffsetState: { currentOffset, nviQueryParams: nviQueryParams },
     previousSearch: window.location.search,
     isOnDisputePage: location.pathname === UrlPathTemplate.TasksNviDisputes,
   } satisfies NviCandidatePageLocationState;
