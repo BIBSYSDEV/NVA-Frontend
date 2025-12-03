@@ -174,10 +174,7 @@ export const NviCandidatesNavigationAccordion = () => {
               data-testid={dataTestId.tasksPage.nvi.showDisputesButton}
               sx={{ justifyContent: 'center' }}
               isSelected={isOnNviDisputePage}
-              to={{
-                pathname: UrlPathTemplate.TasksNviDisputes,
-                search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-              }}>
+              to={{ pathname: UrlPathTemplate.TasksNviDisputes }}>
               {t('tasks.nvi.show_disputes')} (
               {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
             </SelectableButton>

@@ -42,7 +42,7 @@ export const NviCandidatePage = () => {
 
   const registrationQuery = useFetchRegistration(registrationIdentifier);
 
-  const nviQueryParams = location.state?.candidateOffsetState?.nviQueryParams;
+  const nviQueryParams = location.state?.nviQueryParams;
   const thisCandidateOffset = locationState?.candidateOffsetState?.currentOffset;
 
   const hasOffset = typeof thisCandidateOffset === 'number';
@@ -68,8 +68,8 @@ export const NviCandidatePage = () => {
           ...location.state,
           candidateOffsetState: {
             currentOffset: thisCandidateOffset + 1,
-            nviQueryParams,
           },
+          nviQueryParams: nviQueryParams,
         } satisfies NviCandidatePageLocationState)
       : undefined;
 
@@ -79,8 +79,8 @@ export const NviCandidatePage = () => {
           ...locationState,
           candidateOffsetState: {
             currentOffset: thisCandidateOffset - 1,
-            nviQueryParams,
           },
+          nviQueryParams: nviQueryParams,
         } satisfies NviCandidatePageLocationState)
       : undefined;
 
