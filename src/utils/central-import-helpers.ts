@@ -9,7 +9,12 @@ import {
 import { emptyReference, emptyRegistration, EntityDescription } from '../types/registration.types';
 
 const convertImportAffiliation = (importAffiliation: ImportAffiliation): Affiliation => {
-  const targetOrg = importAffiliation.targetOrganization!; // NOTE: This will always be true because of the filtering in convertImportCandidate
+  // NOTE:  Filtering happens in convertImportContributor.
+  const targetOrg = importAffiliation.targetOrganization;
+  if (!targetOrg) {
+    throw new Error('targetOrganization is missing in importAffiliation');
+  }
+
   if (targetOrg.type === 'Organization') {
     return {
       type: targetOrg.type,
