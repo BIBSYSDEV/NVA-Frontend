@@ -42,7 +42,7 @@ export const NviCandidatePage = () => {
 
   const registrationQuery = useFetchRegistration(registrationIdentifier);
 
-  const nviQueryParams = location.state?.nviQueryParams;
+  const nviQueryParams = location.state?.candidateOffsetState?.nviQueryParams;
   const thisCandidateOffset = locationState?.candidateOffsetState?.currentOffset;
 
   const hasOffset = typeof thisCandidateOffset === 'number';
