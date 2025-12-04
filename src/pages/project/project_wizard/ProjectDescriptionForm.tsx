@@ -63,14 +63,22 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
               listHeader={t('project.duplicate_project_heading')}
             />
           )}
-          <Field name={ProjectFieldName.AcademicSummaryNo}>
-            {({ field }: FieldProps<string>) => (
-              <DescriptionInput
-                field={field}
-                dataTestId={dataTestId.projectWizard.descriptionPanel.scientificSummaryNorwegianField}
-                label={t('project.scientific_summary_norwegian')}
-              />
-            )}
+          <Field name={ProjectFieldName.AcademicSummaryNb}>
+            {({ field }: FieldProps<string>) => {
+              // NOTE: This functionality should be removed when the db is cleaned
+              const academicSummaryNb = values.academicSummary.nb;
+              const academicSummaryNo = values.academicSummary.no;
+
+              const fieldValue = academicSummaryNb ?? academicSummaryNo;
+
+              return (
+                <DescriptionInput
+                  field={{ ...field, value: fieldValue }}
+                  dataTestId={dataTestId.projectWizard.descriptionPanel.scientificSummaryNorwegianField}
+                  label={t('project.scientific_summary_norwegian')}
+                />
+              );
+            }}
           </Field>
           <Field name={ProjectFieldName.AcademicSummaryEn}>
             {({ field }: FieldProps<string>) => (
@@ -81,14 +89,22 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
               />
             )}
           </Field>
-          <Field name={ProjectFieldName.PopularScientificSummaryNo}>
-            {({ field }: FieldProps<string>) => (
-              <DescriptionInput
-                field={field}
-                dataTestId={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryNorwegianField}
-                label={t('project.popular_science_summary_norwegian')}
-              />
-            )}
+          <Field name={ProjectFieldName.PopularScientificSummaryNb}>
+            {({ field }: FieldProps<string>) => {
+              // NOTE: This functionality should be removed when the db is cleaned
+              const popularScientificSummaryNb = values.popularScientificSummary.nb;
+              const popularScientificSummaryNo = values.popularScientificSummary.no;
+
+              const fieldValue = popularScientificSummaryNb ?? popularScientificSummaryNo;
+
+              return (
+                <DescriptionInput
+                  field={{ ...field, value: fieldValue }}
+                  dataTestId={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryNorwegianField}
+                  label={t('project.popular_science_summary_norwegian')}
+                />
+              );
+            }}
           </Field>
           <Field name={ProjectFieldName.PopularScientificSummaryEn}>
             {({ field }: FieldProps<string>) => (

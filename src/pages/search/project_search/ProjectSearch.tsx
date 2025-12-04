@@ -1,5 +1,5 @@
 import { List, Typography } from '@mui/material';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { NoSearchResults } from '../../../components/NoSearchResults';
@@ -13,6 +13,7 @@ import { SearchPropTypes } from '../registration_search/RegistrationSearch';
 type ProjectSearchProps = Pick<SearchPropTypes, 'projectQuery'>;
 
 export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
+  const { t } = useTranslation();
   const projectsSearchResults = projectQuery.data?.hits ?? [];
   const totalHits = projectQuery.data?.size ?? 0;
 
@@ -41,6 +42,7 @@ export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
       ) : (
         <NoSearchResults>
           <Trans
+            t={t}
             i18nKey="no_search_results_list_default"
             components={{
               p: <Typography fontWeight="bold" />,

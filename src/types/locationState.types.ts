@@ -24,4 +24,5 @@ export interface NviCandidatePageLocationState extends PreviousSearchLocationSta
     currentOffset: number;
     nviQueryParams: FetchNviCandidatesParams;
   };
+  isOnDisputePage?: boolean;
 }

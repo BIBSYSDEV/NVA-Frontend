@@ -66,6 +66,7 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
       ) : (
         <NoSearchResults>
           <Trans
+            t={t}
             i18nKey="no_search_results_list_person"
             components={{
               p: <Typography fontWeight="bold" />,

@@ -261,6 +261,7 @@ export const DoiRequestAccordion = ({
 
         {hasReservedDoi && (
           <Trans
+            t={t}
             i18nKey="registration.public_page.tasks_panel.has_reserved_doi"
             components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
@@ -286,6 +287,7 @@ export const DoiRequestAccordion = ({
             {isPublishedRegistration && userCanRequestDoi && (
               <>
                 <Trans
+                  t={t}
                   i18nKey="registration.public_page.tasks_panel.request_doi_description"
                   values={{ buttonText: t('registration.public_page.request_doi') }}
                   components={[
@@ -302,6 +304,7 @@ export const DoiRequestAccordion = ({
             {isDraftRegistration && (
               <>
                 <Trans
+                  t={t}
                   i18nKey="registration.public_page.tasks_panel.draft_doi_description"
                   values={{ buttonText: t('registration.public_page.reserve_doi') }}
                   components={[
@@ -331,6 +334,7 @@ export const DoiRequestAccordion = ({
                   onAccept={addDraftDoi}
                   onCancel={toggleReserveDoiDialog}>
                   <Trans
+                    t={t}
                     i18nKey="registration.public_page.tasks_panel.reserve_doi_confirmation"
                     components={[
                       <Typography sx={{ mb: '1rem' }} key="1" />,
@@ -349,6 +353,7 @@ export const DoiRequestAccordion = ({
           headingText={t('registration.public_page.request_doi')}
           dataTestId={dataTestId.registrationLandingPage.tasksPanel.requestDoiModal}>
           <Trans
+            t={t}
             i18nKey="registration.public_page.request_doi_description"
             components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
@@ -385,6 +390,7 @@ export const DoiRequestAccordion = ({
           isLoading={isLoadingData || approveTicketMutation.isPending}
           onCancel={toggleConfirmDialogAssignDoi}>
           <Trans
+            t={t}
             i18nKey="registration.public_page.tasks_panel.no_published_files_on_registration_description"
             components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
@@ -438,6 +444,7 @@ export const DoiRequestAccordion = ({
               </Typography>
             ) : (
               <Trans
+                t={t}
                 i18nKey="registration.public_page.publishing_request_message_about"
                 components={{ p: <Typography gutterBottom /> }}
               />

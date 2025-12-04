@@ -23,7 +23,6 @@ import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
-import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { TicketTypeEnum, TicketTypeSelection } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -42,11 +41,13 @@ import { NviStatusPage } from './components/NviStatusPage';
 import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
 import { TicketList } from './components/TicketList';
 import { TicketTypeTag } from './components/TicketTypeTag';
+import { NviDisputePage } from './components/NviDisputePage';
+import { NviPublicationPointsPage } from './components/NviPublicationPointsPage';
 
 const TasksPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const locationState = location.state as PreviousSearchLocationState;
+  const locationState = location.state;
   const navigate = useNavigate();
 
   const user = useSelector((store: RootState) => store.user);
@@ -63,8 +64,14 @@ const TasksPage = () => {
 
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
+  const isOnNviDisputesPage = location.pathname === UrlPathTemplate.TasksNviDisputes;
+  const isOnNviPublicationPointsPage = location.pathname === UrlPathTemplate.TasksPublicationPoints;
   const isOnNviCandidatePage =
-    location.pathname.startsWith(UrlPathTemplate.TasksNvi) && !isOnNviCandidatesPage && !isOnNviStatusPage;
+    location.pathname.startsWith(UrlPathTemplate.TasksNvi) &&
+    !isOnNviCandidatesPage &&
+    !isOnNviStatusPage &&
+    !isOnNviDisputesPage &&
+    !isOnNviPublicationPointsPage;
 
   const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
 
@@ -142,7 +149,11 @@ const TasksPage = () => {
           <MinimizedMenuIconButton
             title={t('common.tasks')}
             to={{
-              pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
+              pathname: isOnTicketPage
+                ? UrlPathTemplate.TasksDialogue
+                : locationState?.isOnDisputePage
+                  ? UrlPathTemplate.TasksNviDisputes
+                  : UrlPathTemplate.TasksNvi,
               search: locationState?.previousSearch,
             }}>
             <AssignmentIcon />
@@ -299,6 +310,16 @@ const TasksPage = () => {
           <Route
             path={getSubUrl(UrlPathTemplate.TasksNviStatus, UrlPathTemplate.Tasks)}
             element={<PrivateRoute element={<NviStatusPage />} isAuthorized={isNviCurator} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.TasksNviDisputes, UrlPathTemplate.Tasks)}
+            element={<PrivateRoute element={<NviDisputePage />} isAuthorized={isNviCurator} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.TasksPublicationPoints, UrlPathTemplate.Tasks)}
+            element={<PrivateRoute element={<NviPublicationPointsPage />} isAuthorized={isNviCurator} />}
           />
 
           <Route

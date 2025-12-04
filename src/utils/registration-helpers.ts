@@ -87,6 +87,10 @@ export const isJournal = (instanceType: any) => Object.values(JournalType).inclu
 
 export const isJournalIssue = (instanceType: any) => instanceType === JournalType.Issue;
 
+export const isJournalLeader = (instanceType: any) => instanceType === JournalType.Leader;
+
+export const isJournalLetter = (instanceType: any) => instanceType === JournalType.Letter;
+
 export const isBook = (instanceType: any) => Object.values(BookType).includes(instanceType);
 
 export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);
@@ -146,7 +150,7 @@ export const getPublicationChannelString = (channel: SerialPublication | SerialP
 // Ensure Registration has correct type values, etc
 export const getFormattedRegistration = (registration: Registration) => {
   const type = registration.entityDescription?.reference?.publicationInstance?.type ?? '';
-  let formattedRegistration = registration;
+  let formattedRegistration = JSON.parse(JSON.stringify(registration));
 
   if (formattedRegistration.entityDescription && !formattedRegistration.entityDescription.type) {
     formattedRegistration.entityDescription.type = 'EntityDescription';
@@ -155,7 +159,7 @@ export const getFormattedRegistration = (registration: Registration) => {
     formattedRegistration.entityDescription.reference.type = 'Reference';
   }
 
-  if (isJournal(type)) {
+  if (isJournal(type) || isChapter(type) || isPeriodicalMediaContribution(type)) {
     const journalRegistration = formattedRegistration as JournalRegistration;
     if (journalRegistration.entityDescription.reference) {
       const { pages } = journalRegistration.entityDescription.reference.publicationInstance;

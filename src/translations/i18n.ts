@@ -29,8 +29,8 @@ const handledLanguages = [
   ...samiLanguageCodes,
 ];
 
-export const selectDisplayLanguage = (langCode: string | undefined | null) => {
-  // Might be a string because it might come from a cookie
+export const selectIso6392LanguageCode = (langCode: string | undefined | null) => {
+  // Might be a string because it might come from local storage
   if (langCode === 'undefined' || langCode === 'null' || !langCode) {
     return 'nob'; // When the user's language is not specified, then the service should display in Bokmål
   } else if (englishLanguages.includes(langCode) || !handledLanguages.includes(langCode)) {
@@ -55,12 +55,12 @@ i18n.use(LanguageDetector).init({
     },
   },
   contextSeparator: '__',
-  fallbackLng: (langCode) => selectDisplayLanguage(langCode),
+  fallbackLng: (langCode) => [selectIso6392LanguageCode(langCode), 'nob'], // Regardless of language code we want to map it to one of our three language files
   returnEmptyString: false,
   debug: false,
 });
 
-const getLanguageTagValue = (language: 'eng' | 'nob' | 'nno') => {
+const convertToIso6391LanguageCode = (language: 'eng' | 'nob' | 'nno') => {
   if (language === 'eng') {
     return 'en';
   } else if (language === 'nno') {
@@ -69,10 +69,27 @@ const getLanguageTagValue = (language: 'eng' | 'nob' | 'nno') => {
   return 'no';
 };
 
+/* This code sets the local storage and language in the html */
 if (typeof document !== 'undefined') {
-  document.documentElement.lang = getLanguageTagValue(selectDisplayLanguage(i18n.language));
+  const displayLanguage = selectIso6392LanguageCode(i18n.language);
+
+  // We want a three letter language code in local storage (i.e. "nob" instead of "no")
+  try {
+    if (localStorage.getItem('i18nextLng') !== displayLanguage) {
+      localStorage.setItem('i18nextLng', displayLanguage);
+    }
+  } catch {}
+
+  // We need the two letter standard for the html
+  document.documentElement.lang = convertToIso6391LanguageCode(displayLanguage);
+
   i18n.on('languageChanged', (newLanguage) => {
-    document.documentElement.lang = getLanguageTagValue(selectDisplayLanguage(newLanguage));
+    const newDisplayLanguage = selectIso6392LanguageCode(newLanguage);
+    document.documentElement.lang = convertToIso6391LanguageCode(newDisplayLanguage);
+
+    try {
+      localStorage.setItem('i18nextLng', newDisplayLanguage);
+    } catch {}
   });
 }
 
