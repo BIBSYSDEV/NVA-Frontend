@@ -56,7 +56,7 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
           </Button>
         </>
       ) : (
-        <Trans i18nKey="unpublish_actions.unpublish_not_allowed">
+        <Trans t={t} i18nKey="unpublish_actions.unpublish_not_allowed">
           <Typography gutterBottom />
         </Trans>
       )}

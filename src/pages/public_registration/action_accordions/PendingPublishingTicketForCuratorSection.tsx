@@ -65,6 +65,7 @@ export const PendingPublishingTicketForCuratorSection = ({
   return (
     <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <Trans
+        t={t}
         i18nKey="registration.public_page.tasks_panel.approve_publishing_request_description"
         components={[<Typography key="1" />]}
       />
@@ -82,6 +83,7 @@ export const PendingPublishingTicketForCuratorSection = ({
       </Button>
 
       <Trans
+        t={t}
         i18nKey="registration.public_page.tasks_panel.reject_publishing_request_description"
         values={{ count: publishingTicket.filesForApproval.length }}
         components={[<Typography key="1" />]}
@@ -118,6 +120,7 @@ export const PendingPublishingTicketForCuratorSection = ({
         <DialogTitle fontWeight="bold">{t('registration.public_page.reject_publish_request')}</DialogTitle>
         <DialogContent>
           <Trans
+            t={t}
             i18nKey="registration.public_page.reject_publish_request_description"
             components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />

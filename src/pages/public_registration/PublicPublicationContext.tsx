@@ -295,7 +295,9 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
     : getOutputName(output);
 
   const rowString = showType
-    ? `${nameString} (${t(`registration.resource_type.artistic.output_type.${output.type}` as any)})`
+    ? output.type === 'ExhibitionBasic' && output.place?.name
+      ? `${nameString} (${output.place.name})`
+      : `${nameString} (${t(`registration.resource_type.artistic.output_type.${output.type}` as any)})`
     : nameString;
 
   return (

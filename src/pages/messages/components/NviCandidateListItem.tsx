@@ -1,7 +1,7 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { NviStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
@@ -11,7 +11,7 @@ import { displayDate } from '../../../utils/date-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { getNviCandidatePath, getResearchProfilePath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { FetchNviCandidatesParams } from '../../../api/searchApi';
 
 interface NviCandidateListItemProps {
@@ -22,6 +22,7 @@ interface NviCandidateListItemProps {
 
 export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }: NviCandidateListItemProps) => {
   const { t } = useTranslation();
+  const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
   const nviParamsFromUrl = useNviCandidatesParams();
   const nviQueryParams = nviParams ?? nviParamsFromUrl;
@@ -42,8 +43,9 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
   const myApproval = nviCandidate.approvals.find((approval) => approval.institutionId === user?.topOrgCristinId);
 
   const candidateLinkState = {
-    candidateOffsetState: { currentOffset, nviQueryParams },
+    candidateOffsetState: { currentOffset, nviQueryParams: nviQueryParams },
     previousSearch: window.location.search,
+    isOnDisputePage: location.pathname === UrlPathTemplate.TasksNviDisputes,
   } satisfies NviCandidatePageLocationState;
 
   return (

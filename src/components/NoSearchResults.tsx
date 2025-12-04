@@ -1,13 +1,14 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 interface NoSearchResultsProps {
   children: ReactNode;
 }
 
 export const NoSearchResults = ({ children }: NoSearchResultsProps) => {
+  const { t } = useTranslation();
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', m: '2rem 0.5rem' }}>
       <Box
@@ -17,6 +18,7 @@ export const NoSearchResults = ({ children }: NoSearchResultsProps) => {
           gap: '0.5rem',
         }}>
         <Trans
+          t={t}
           i18nKey="no_search_results_found_with_search"
           components={{
             icon: <SearchIcon />,
