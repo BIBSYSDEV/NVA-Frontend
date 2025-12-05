@@ -170,18 +170,15 @@ export const NviCandidatesNavigationAccordion = () => {
               }}>
               {t('tasks.nvi.show_reporting_status')}
             </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.tasksPage.nvi.showDisputesButton}
+              sx={{ justifyContent: 'center' }}
+              isSelected={isOnNviDisputePage}
+              to={{ pathname: UrlPathTemplate.TasksNviDisputes }}>
+              {t('tasks.nvi.show_disputes')} (
+              {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
+            </SelectableButton>
             <BetaFunctionality sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <SelectableButton
-                data-testid={dataTestId.tasksPage.nvi.showDisputesButton}
-                sx={{ justifyContent: 'center' }}
-                isSelected={isOnNviDisputePage}
-                to={{
-                  pathname: UrlPathTemplate.TasksNviDisputes,
-                  search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-                }}>
-                {t('tasks.nvi.show_disputes')} (
-                {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
-              </SelectableButton>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
                 sx={{ justifyContent: 'center' }}

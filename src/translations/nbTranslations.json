@@ -1948,6 +1948,7 @@
       "no_nvi_candidates": "Du har ingen kandidater for dette søket.",
       "note": "Kommentar",
       "nvi_control": "NVI-kontroll (Norsk vitenskapsindeks)",
+      "status_dispute_for": "Status tvister for {{year}}",
       "nvi_reporting_status": "Status NVI-rapportering",
       "previous_candidate": "Gå til forrige kandidat",
       "problem_description": "<p>NVI-kandidaten har følgende mangler:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatuser blir opphevet når en uidentifisert person blir identifisert.</p>",
