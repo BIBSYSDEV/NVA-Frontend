@@ -40,7 +40,7 @@ export const useNviCandidatesParams = () => {
 
   const aggregation = searchParams.get(NviCandidatesSearchParam.Aggregation) as 'all' | NviCandidateSearchStatus | null;
   const filter = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateFilter | null;
-  const status = searchParams.get(NviCandidatesSearchParam.Status) as NviCandidateStatus | null;
+  const status = searchParams.get(NviCandidatesSearchParam.Status)?.split(',') as NviCandidateStatus[] | null;
   const globalStatus = searchParams.get(NviCandidatesSearchParam.GlobalStatus)?.split(',') as
     | NviCandidateGlobalStatus[]
     | null;
