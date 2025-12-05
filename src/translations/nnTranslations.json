@@ -1951,6 +1951,7 @@
       "nvi_reporting_status": "Status NVI-rapportering",
       "previous_candidate": "Gå til førre kandidat",
       "problem_description": "<p>NVI-kandidaten har følgjande manglar:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatusar blir oppheva når ein uidentifisert person blir identifisert.</p>",
+      "progress_nvi_reporting": "",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
       "reject_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen ikkje kan rapporterast. Du må grunngje avvisinga.",
@@ -1963,8 +1964,10 @@
       "reset_approval_description": "Er du sikker på at du vil nullstill rapporteringsstatusen? Nokon på din institusjon må då rapportere denne på nytt.",
       "save_note": "Lagre kommentar",
       "show_candidate_search": "Vis kandidatsøk",
+      "show_disputes": "",
       "show_only_collaborative_publications": "Vis berre sampublikasjonar",
       "show_reporting_status": "Vis rapporteringsstatus",
+      "show_status_for_publication_points": "",
       "show_subunits": "Vis undereiningar",
       "status": {
         "Approved": "Godkjend",
