@@ -45,7 +45,7 @@ const emptyPublicationContext: JournalPublicationContext = {
   type: '',
 };
 
-const emptyJournalReference: JournalReference = {
+export const emptyJournalReference: JournalReference = {
   type: 'Reference',
   doi: '',
   publicationContext: emptyPublicationContext,

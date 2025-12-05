@@ -13,8 +13,9 @@ import { RequiredDescription } from '../../../../components/RequiredDescription'
 import { SkipLink } from '../../../../components/SkipLink';
 import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
-import { ImportCandidate } from '../../../../types/importCandidate.types';
+import { ExpandedImportCandidate } from '../../../../types/importCandidate.types';
 import { RegistrationTab } from '../../../../types/registration.types';
+import { expandImportCandidate } from '../../../../utils/central-import-helpers';
 import { getTouchedTabFields } from '../../../../utils/formik-helpers/formik-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { getImportCandidatePath, IdentifierParams } from '../../../../utils/urlPaths';
@@ -38,13 +39,13 @@ export const CentralImportCandidateForm = () => {
     queryFn: () => fetchImportCandidate(identifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
-  const importCandidate = importCandidateQuery.data;
+  const importCandidate = importCandidateQuery.data && expandImportCandidate(importCandidateQuery.data);
 
   const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
   const importCandidateMutation = useMutation({
-    mutationFn: async (values: ImportCandidate) => await createRegistrationFromImportCandidate(values),
+    mutationFn: async (values: ExpandedImportCandidate) => await createRegistrationFromImportCandidate(values),
     onSuccess: () => {
       dispatch(
         setNotification({
@@ -67,11 +68,11 @@ export const CentralImportCandidateForm = () => {
     return <Navigate to={getImportCandidatePath(identifier)} />;
   }
 
-  const validateForm = (values: ImportCandidate): FormikErrors<ImportCandidate> => {
+  const validateForm = (values: ExpandedImportCandidate): FormikErrors<ExpandedImportCandidate> => {
     const publicationInstance = values.entityDescription?.reference?.publicationInstance;
 
     try {
-      validateYupSchema<ImportCandidate>(values, registrationValidationSchema, true, {
+      validateYupSchema<ExpandedImportCandidate>(values, registrationValidationSchema, true, {
         publicationInstanceType: publicationInstance?.type ?? '',
         publicationStatus: importCandidate?.status,
       });
@@ -94,12 +95,12 @@ export const CentralImportCandidateForm = () => {
             initialErrors={validateForm(importCandidate)}
             initialTouched={getTouchedTabFields(RegistrationTab.FilesAndLicenses, importCandidate)}
             onSubmit={(values) => importCandidateMutation.mutate(values)}>
-            {({ values }: FormikProps<ImportCandidate>) => (
+            {({ values }: FormikProps<ExpandedImportCandidate>) => (
               <Form noValidate>
                 <PageHeader variant="h1">{getTitleString(values.entityDescription?.mainTitle)}</PageHeader>
                 <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
                 <RequiredDescription />
-                <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
+                <BackgroundDiv sx={{ bgcolor: 'background.paper' }}>
                   <Box id="form" mb="2rem">
                     {tabNumber === RegistrationTab.Description && (
                       <ErrorBoundary>
