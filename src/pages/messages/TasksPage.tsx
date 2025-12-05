@@ -23,7 +23,6 @@ import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
-import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { TicketTypeEnum, TicketTypeSelection } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -48,7 +47,7 @@ import { NviPublicationPointsPage } from './components/NviPublicationPointsPage'
 const TasksPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const locationState = location.state as PreviousSearchLocationState;
+  const locationState = location.state;
   const navigate = useNavigate();
 
   const user = useSelector((store: RootState) => store.user);
@@ -150,7 +149,11 @@ const TasksPage = () => {
           <MinimizedMenuIconButton
             title={t('common.tasks')}
             to={{
-              pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
+              pathname: isOnTicketPage
+                ? UrlPathTemplate.TasksDialogue
+                : locationState?.isOnDisputePage
+                  ? UrlPathTemplate.TasksNviDisputes
+                  : UrlPathTemplate.TasksNvi,
               search: locationState?.previousSearch,
             }}>
             <AssignmentIcon />

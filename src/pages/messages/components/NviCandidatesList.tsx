@@ -20,8 +20,9 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
-import { NviStatusFilter, NviVisibilityFilter } from './NviStatusFilter';
+import { NviStatusFilter } from './NviStatusFilter';
 import { NviYearSelector } from './NviYearSelector';
+import { NviVisibilityFilter } from './NviVisibilityFilter';
 
 export const NviCandidatesList = () => {
   const { t } = useTranslation();
