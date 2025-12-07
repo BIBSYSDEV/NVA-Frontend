@@ -15,7 +15,7 @@ import { RegistrationSearchItem } from '../../types/registration.types';
 import { BibTeXEntry, BibTeXType } from 'bibtex-generator';
 
 /*
- * The return type of registrationsSearch does not currently include all information we need.
+ * The return type of registrationSearch does not currently include all information we need.
  * If we use non-versioned accept-header, we do get all info we need, but versioning should be made
  * mandatory in the future. Backend might have to adjust the search response to include all required
  * fields for BibTex.
@@ -42,11 +42,11 @@ export function generateBibTexEntry(hit: RegistrationSearchItem, entryIdentifier
         year: hit.publicationDate?.year ?? 'unknown',
         doi: hit.publishingDetails.doi ?? 'unknown',
         url: hit.id,
-        month: undefined,
-        issn: undefined,
-        number: undefined,
-        pages: undefined,
-        volume: undefined,
+        // month: undefined,
+        // issn: undefined,
+        // number: undefined,
+        // pages: undefined,
+        // volume: undefined,
         note: generateContextAndInstanceNote(hit),
       });
     case BookType.AcademicMonograph:
