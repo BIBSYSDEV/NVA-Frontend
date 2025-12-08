@@ -204,6 +204,16 @@ export interface BaseReference {
   doi: string;
 }
 
+export const emptyReference: BaseReference & {
+  publicationInstance?: EmptyPublicationInstance;
+  publicationContext?: { type?: '' };
+} = {
+  type: 'Reference',
+  doi: '',
+  publicationInstance: { type: '' },
+  publicationContext: { type: '' },
+};
+
 export type PublicationInstanceType =
   | JournalType
   | BookType

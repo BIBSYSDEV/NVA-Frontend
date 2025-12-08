@@ -1976,6 +1976,7 @@
         "Pending": "Being checked",
         "Rejected": "Rejected"
       },
+      "status_dispute_for": "",
       "unidentified_person_with_nvi_institution": "Unidentified person with a connection to an NVI institution"
     },
     "search_placeholder": "Search for title, contributor, abstract or similar",

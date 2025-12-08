@@ -14,6 +14,7 @@ import { HeadTitle } from '../HeadTitle';
 import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
+import { expandImportCandidate } from '../../utils/central-import-helpers';
 
 interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
@@ -72,7 +73,7 @@ export const MergeImportCandidate = () => {
       </Paper>
 
       <MergeResultsWizard
-        sourceResult={importCandidateQuery.data}
+        sourceResult={expandImportCandidate(importCandidateQuery.data)}
         targetResult={registrationQuery.data}
         onSave={async (data) => {
           await registrationMutation.mutateAsync(data);

@@ -1976,6 +1976,7 @@
         "Pending": "Blir kontrollert",
         "Rejected": "Avvist"
       },
+      "status_dispute_for": "",
       "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknyting til NVI-institusjon"
     },
     "search_placeholder": "Søk etter tittel, bidragsytar, samandrag eller liknande",
