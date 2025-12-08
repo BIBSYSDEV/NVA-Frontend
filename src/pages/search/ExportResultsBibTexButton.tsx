@@ -1,19 +1,15 @@
-import { fetchResults, FetchResultsParams, ResultParam } from '../../api/searchApi';
+import FormatBoldIcon from '@mui/icons-material/FormatBold';
+import { Button } from '@mui/material';
+import { useSearchParams } from 'react-router';
+import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
+import { FetchResultsParams, ResultParam } from '../../api/searchApi';
 import { PublicationInstanceType } from '../../types/registration.types';
 import { exportToBibTex } from '../../utils/bibtex/BibTexFactory';
 import { dataTestId } from '../../utils/dataTestIds';
-import FormatBoldIcon from '@mui/icons-material/FormatBold';
-import { Button } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
 
-interface ExportResultsBibTexButtonProps {
-  searchParams: URLSearchParams;
-}
-
-export const ExportResultsBibTexButton = ({ searchParams }: ExportResultsBibTexButtonProps) => {
-  const { t } = useTranslation();
+export const ExportResultsBibTexButton = () => {
   const maxNumberOfCitations = 500;
+  const [searchParams] = useSearchParams();
 
   const registrationsQueryConfig: FetchResultsParams = {
     query: searchParams.get(ResultParam.Query),
@@ -32,18 +28,13 @@ export const ExportResultsBibTexButton = ({ searchParams }: ExportResultsBibTexB
     results: maxNumberOfCitations,
   };
 
-  const registrationsQuery = useQuery({
-    enabled: false,
-    queryKey: ['registrations', registrationsQueryConfig],
-    queryFn: async () => {
-      return await fetchResults(registrationsQueryConfig);
-    },
-    meta: { errorMessage: t('feedback.error.search') },
+  const registrationsQuery = useRegistrationSearch({
+    params: registrationsQueryConfig,
   });
 
   const exportBibTex = async () => {
     const { data } = await registrationsQuery.refetch();
-    if (data !== undefined) {
+    if (!!data) {
       exportToBibTex(data.hits, data.totalHits);
     }
   };
@@ -56,7 +47,7 @@ export const ExportResultsBibTexButton = ({ searchParams }: ExportResultsBibTexB
       onClick={exportBibTex}
       title={'Export BibTex'}
       data-testid={dataTestId.startPage.advancedSearch.downloadBibTexButton}
-      disabled={registrationsQuery.isFetching}>
+      disabled={registrationsQuery.isFetching || registrationsQuery.data?.hits.length === 0}>
       <FormatBoldIcon />
     </Button>
   );
