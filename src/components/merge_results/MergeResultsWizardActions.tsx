@@ -23,7 +23,7 @@ export interface MergeResultsWizardActionsProps {
 export const MergeResultsWizardActions = ({ onCancel }: MergeResultsWizardActionsProps) => {
   const { t } = useTranslation();
   const { formState } = useFormContext<Registration>();
-  const { activeTab, setActiveTab, sourceHeading } = useContext(MergeResultsWizardContext);
+  const { activeTab, setActiveTab } = useContext(MergeResultsWizardContext);
 
   return (
     <Box sx={{ ...flexStyling, gridColumn: '1/-1' }}>
@@ -44,14 +44,16 @@ export const MergeResultsWizardActions = ({ onCancel }: MergeResultsWizardAction
           </Button>
         )}
 
-        <Button
-          type="submit"
-          color="secondary"
-          variant="contained"
-          loading={formState.isSubmitting}
-          data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}>
-          {sourceHeading}
-        </Button>
+        {activeTab === RegistrationTab.FilesAndLicenses && (
+          <Button
+            type="submit"
+            color="secondary"
+            variant="contained"
+            loading={formState.isSubmitting}
+            data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}>
+            {t('common.import_and_view')}
+          </Button>
+        )}
       </Box>
 
       {activeTab !== RegistrationTab.FilesAndLicenses && (
