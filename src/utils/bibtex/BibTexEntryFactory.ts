@@ -28,7 +28,7 @@ const getDoiOrUrl = (pid: string): { doi?: string; url?: string } => {
   if (pid.includes('handle')) {
     return { url: pid };
   }
-  return {};
+  return { doi: 'unknown', url: 'unknown' };
 };
 
 export const generateBibTexEntry = (registration: RegistrationSearchItem, entryIdentifier: string) => {
@@ -169,7 +169,6 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
     case JournalType.ConferenceAbstract:
     default:
       return new BibTeXEntry(BibTeXType.Misc, {
-        // Why no doi in Misc?
         key: entryIdentifier,
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
