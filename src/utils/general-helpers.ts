@@ -78,3 +78,12 @@ export const getEnvVariableValue = <T = string>(value: any): T | undefined => {
   }
   return value?.trim() as T | undefined;
 };
+
+export const joinWithAnd = (list: string[]): string =>
+  list.length === 0
+    ? ''
+    : list.length === 1
+      ? list[0]
+      : list.length === 2
+        ? `${list[0]} and ${list[1]}`
+        : `${list.slice(0, -1).join(', ')} and ${list[list.length - 1]}`;

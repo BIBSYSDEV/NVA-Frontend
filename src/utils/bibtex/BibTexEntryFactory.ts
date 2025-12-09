@@ -13,6 +13,7 @@ import {
   ResearchDataType,
 } from '../../types/publicationFieldNames';
 import { RegistrationSearchItem } from '../../types/registration.types';
+import { joinWithAnd } from '../general-helpers';
 
 /*
  * The return type of registrationSearch does not currently include all information we need.
@@ -22,13 +23,21 @@ import { RegistrationSearchItem } from '../../types/registration.types';
  * */
 
 const getDoiOrUrl = (pid: string): { doi?: string; url?: string } => {
-  if (pid.includes('doi')) {
-    return { doi: pid };
+  if (!pid || pid.trim() === '') {
+    return {};
   }
-  if (pid.includes('handle')) {
+
+  let identifier = pid;
+  const match = identifier.match(/^https?:\/\/[^\/]+\/(.+)$/i);
+  if (match && match[1]) {
+    identifier = match[1];
+  }
+
+  if (/^10\.\d+\/.+/.test(identifier)) {
+    return { doi: identifier };
+  } else {
     return { url: pid };
   }
-  return { doi: 'unknown', url: 'unknown' };
 };
 
 export const generateBibTexEntry = (registration: RegistrationSearchItem, entryIdentifier: string) => {
@@ -51,7 +60,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         author: generateAuthorListFromPreview(registration),
         journal: registration.publishingDetails.publisher?.name ?? 'unknown',
         year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? `unknown`),
+        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
         note: generateContextAndInstanceNote(registration),
       });
     case BookType.AcademicMonograph:
@@ -70,7 +79,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         publisher: registration.publishingDetails.publisher?.name ?? 'unknown',
         series: registration.publishingDetails.series?.name,
         year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? `unknown`),
+        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
         note: generateContextAndInstanceNote(registration),
       });
     case ChapterType.AcademicChapter:
@@ -90,7 +99,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         publisher: registration.publishingDetails.publisher?.name ?? 'unknown',
         series: registration.publishingDetails.series?.name,
         year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? `unknown`),
+        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
         note: generateContextAndInstanceNote(registration),
       });
     case ChapterType.ConferenceAbstract:
@@ -102,7 +111,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         publisher: registration.publishingDetails.publisher?.name ?? 'unknown',
         series: registration.publishingDetails.series?.name,
         year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? `unknown`),
+        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
         note: generateContextAndInstanceNote(registration),
       });
     case DegreeType.Master:
@@ -114,7 +123,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
         year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? `unknown`),
+        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
         school: registration.publishingDetails.publisher?.name ?? 'unknown',
         type: registration.type.toString(),
         note: generateContextAndInstanceNote(registration),
@@ -126,7 +135,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
         year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? `unknown`),
+        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
         school: registration.publishingDetails.publisher?.name ?? 'unknown',
         type: registration.type.toString(),
         note: generateContextAndInstanceNote(registration),
@@ -142,7 +151,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
         institution: registration.publishingDetails.publisher?.name ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? `unknown`),
+        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
         year: registration.publicationDate?.year ?? 'unknown',
         type: registration.type.toString(),
         note: generateContextAndInstanceNote(registration),
@@ -173,14 +182,14 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
         year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? `unknown`),
+        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
         note: generateContextAndInstanceNote(registration),
       });
   }
 };
 
 const generateAuthorListFromPreview = (registration: RegistrationSearchItem) => {
-  const authorList = registration.contributorsPreview.map((contributor) => contributor.identity.name).join(', ');
+  const authorList = joinWithAnd(registration.contributorsPreview.map((contributor) => contributor.identity.name));
   if (registration.contributorsPreview.length < registration.contributorsCount) {
     return authorList + ', et al.';
   }
