@@ -8,6 +8,7 @@ import { RootState } from '../../../redux/store';
 import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
 import { NviStatusWrapper } from './NviStatusWrapper';
 import { NviPublicationPointsTableRow } from './NviPublicationPointsTableRow';
+import { getLanguageString } from '../../../utils/translation-helpers';
 
 export const NviPublicationPointsPage = () => {
   const { t } = useTranslation();
@@ -16,10 +17,21 @@ export const NviPublicationPointsPage = () => {
   const institution = organizationQuery.data;
   const year = getDefaultNviYear();
   const nviStatusQuery = useFetchNviInstitutionStatus(year);
+  const aggregations = nviStatusQuery.data;
   const headline = t('tasks.nvi.reporting_status_for_publication_points_for_year', { year: year });
 
   return (
-    <NviStatusWrapper headline={headline}>
+    <NviStatusWrapper
+      headline={headline}
+      totalPoints={
+        aggregations
+          ? {
+              orgName: getLanguageString(institution?.labels),
+              result: aggregations.totals.candidateCount,
+              publicationPoints: aggregations.totals.points,
+            }
+          : undefined
+      }>
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
@@ -36,7 +48,7 @@ export const NviPublicationPointsPage = () => {
           </TableHead>
           <TableBody>
             {institution && (
-              <NviPublicationPointsTableRow organization={institution} aggregations={nviStatusQuery.data} year={year} />
+              <NviPublicationPointsTableRow organization={institution} aggregations={aggregations} year={year} />
             )}
           </TableBody>
         </Table>

@@ -48,6 +48,24 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               component={RouterLink}
               data-testid={dataTestId.nviStatusTableRow.candidateLink}
               to={getNviCandidatesSearchPath({
+                username: user?.nvaUsername,
+                year: year,
+                orgNumber: getIdentifierFromId(organization.id),
+                status: NviCandidateStatusEnum.Pending,
+                globalStatus: NviCandidateGlobalStatusEnum.Pending,
+              })}>
+              {orgAggregations?.approvalStatus.New ?? 0}
+            </Link>
+          ) : (
+            <StyledSkeleton />
+          )}
+        </TableCell>
+        <TableCell align="center">
+          {aggregations ? (
+            <Link
+              component={RouterLink}
+              data-testid={dataTestId.nviStatusTableRow.candidateLink}
+              to={getNviCandidatesSearchPath({
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
                 status: NviCandidateStatusEnum.Pending,
@@ -109,13 +127,6 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               })}>
               {orgAggregations?.candidateCount ?? 0}
             </Link>
-          ) : (
-            <StyledSkeleton />
-          )}
-        </TableCell>
-        <TableCell align="center">
-          {aggregations ? (
-            (orgAggregations?.points.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0)
           ) : (
             <StyledSkeleton />
           )}

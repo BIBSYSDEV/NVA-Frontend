@@ -52,8 +52,7 @@ export const NviPublicationPointsTableRow = ({
           {aggregations ? (
             <Link
               component={RouterLink}
-              g
-              data-testid={dataTestId.nviStatusTableRow.totalApprovedLink}
+              data-testid={dataTestId.nviStatusTableRow.candidateLink}
               to={getNviCandidatesSearchPath({
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
@@ -61,7 +60,7 @@ export const NviPublicationPointsTableRow = ({
                 globalStatus: [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending],
                 excludeSubunits: true,
               })}>
-              {orgAggregations?.approvalStatus?.Approved ?? 0}
+              {orgAggregations?.approvalStatus.Approved ?? 0}
             </Link>
           ) : (
             <StyledSkeleton />
