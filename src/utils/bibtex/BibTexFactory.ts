@@ -12,7 +12,7 @@ export const exportToBibTex = (registrations: RegistrationSearchItem[], totalNum
     database.add(
       new BibTeXEntry(BibTeXType.Misc, {
         key: 'Note',
-        note: `Citing ${registrations.length} out of a total of ${totalNumberOfRegistrations} registrations.'`,
+        note: `Citing ${registrations.length} out of a total of ${totalNumberOfRegistrations} registrations.`,
       })
     );
   }
@@ -20,7 +20,7 @@ export const exportToBibTex = (registrations: RegistrationSearchItem[], totalNum
   downloadBibTexFile(database);
 };
 
-function downloadBibTexFile(database: BibTeXDatabase) {
+const downloadBibTexFile = (database: BibTeXDatabase) => {
   const blob = new Blob([database.toString()], { type: 'application/x-bibtex' });
   const url = URL.createObjectURL(blob);
 
@@ -32,4 +32,4 @@ function downloadBibTexFile(database: BibTeXDatabase) {
   document.body.removeChild(link);
 
   URL.revokeObjectURL(url);
-}
+};

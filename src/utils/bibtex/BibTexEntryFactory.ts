@@ -20,8 +20,8 @@ import { BibTeXEntry, BibTeXType } from 'bibtex-generator';
  * mandatory in the future. Backend might have to adjust the search response to include all required
  * fields for BibTex.
  * */
-export function generateBibTexEntry(hit: RegistrationSearchItem, entryIdentifier: string) {
-  switch (hit.type) {
+export const generateBibTexEntry = (registration: RegistrationSearchItem, entryIdentifier: string) => {
+  switch (registration.type) {
     case BookType.AcademicCommentary:
     case JournalType.AcademicArticle:
     case JournalType.AcademicLiteratureReview:
@@ -36,18 +36,18 @@ export function generateBibTexEntry(hit: RegistrationSearchItem, entryIdentifier
     case MediaType.MediaReaderOpinion:
       return new BibTeXEntry(BibTeXType.Article, {
         key: entryIdentifier,
-        title: hit.mainTitle,
-        author: generateAuthorListFromPreview(hit),
-        journal: hit.publishingDetails.publisher?.name ?? 'unknown',
-        year: hit.publicationDate?.year ?? 'unknown',
-        doi: hit.publishingDetails.doi ?? 'unknown',
-        url: hit.id,
+        title: registration.mainTitle,
+        author: generateAuthorListFromPreview(registration),
+        journal: registration.publishingDetails.publisher?.name ?? 'unknown',
+        year: registration.publicationDate?.year ?? 'unknown',
+        doi: registration.publishingDetails.doi ?? 'unknown',
+        url: registration.id,
         // month: undefined,
         // issn: undefined,
         // number: undefined,
         // pages: undefined,
         // volume: undefined,
-        note: generateContextAndInstanceNote(hit),
+        note: generateContextAndInstanceNote(registration),
       });
     case BookType.AcademicMonograph:
     case BookType.ExhibitionCatalog:
@@ -60,18 +60,18 @@ export function generateBibTexEntry(hit: RegistrationSearchItem, entryIdentifier
     case ArtisticType.LiteraryArts:
       return new BibTeXEntry(BibTeXType.Book, {
         key: entryIdentifier,
-        title: hit.mainTitle,
-        author: generateAuthorListFromPreview(hit),
-        publisher: hit.publishingDetails.publisher?.name ?? 'unknown',
-        series: hit.publishingDetails.series?.name,
-        year: hit.publicationDate?.year ?? 'unknown',
-        doi: hit.publishingDetails.doi ?? 'unknown',
-        url: hit.id,
+        title: registration.mainTitle,
+        author: generateAuthorListFromPreview(registration),
+        publisher: registration.publishingDetails.publisher?.name ?? 'unknown',
+        series: registration.publishingDetails.series?.name,
+        year: registration.publicationDate?.year ?? 'unknown',
+        doi: registration.publishingDetails.doi ?? 'unknown',
+        url: registration.id,
         // edition: undefined,
         // address: undefined,
         // month: undefined,
         // volume: undefined,
-        note: generateContextAndInstanceNote(hit),
+        note: generateContextAndInstanceNote(registration),
       });
     case ChapterType.AcademicChapter:
     case ChapterType.EncyclopediaChapter:
@@ -83,15 +83,15 @@ export function generateBibTexEntry(hit: RegistrationSearchItem, entryIdentifier
     case ChapterType.ReportChapter:
       return new BibTeXEntry(BibTeXType.InBook, {
         key: entryIdentifier,
-        title: hit.mainTitle,
+        title: registration.mainTitle,
         booktitle: 'unknown',
         chapter: 'unknown',
-        author: generateAuthorListFromPreview(hit),
-        publisher: hit.publishingDetails.publisher?.name ?? 'unknown',
-        series: hit.publishingDetails.series?.name,
-        year: hit.publicationDate?.year ?? 'unknown',
-        doi: hit.publishingDetails.doi ?? 'unknown',
-        url: hit.id,
+        author: generateAuthorListFromPreview(registration),
+        publisher: registration.publishingDetails.publisher?.name ?? 'unknown',
+        series: registration.publishingDetails.series?.name,
+        year: registration.publicationDate?.year ?? 'unknown',
+        doi: registration.publishingDetails.doi ?? 'unknown',
+        url: registration.id,
         // edition: undefined,
         // address: undefined,
         // month: undefined,
@@ -99,19 +99,19 @@ export function generateBibTexEntry(hit: RegistrationSearchItem, entryIdentifier
         // editor: undefined,
         // number: undefined,
         // pages: undefined,
-        note: generateContextAndInstanceNote(hit),
+        note: generateContextAndInstanceNote(registration),
       });
     case ChapterType.ConferenceAbstract:
       return new BibTeXEntry(BibTeXType.InProceedings, {
         key: entryIdentifier,
-        title: hit.mainTitle,
+        title: registration.mainTitle,
         booktitle: 'unknown',
-        author: generateAuthorListFromPreview(hit),
-        publisher: hit.publishingDetails.publisher?.name ?? 'unknown',
-        series: hit.publishingDetails.series?.name,
-        year: hit.publicationDate?.year ?? 'unknown',
-        doi: hit.publishingDetails.doi ?? 'unknown',
-        url: hit.id,
+        author: generateAuthorListFromPreview(registration),
+        publisher: registration.publishingDetails.publisher?.name ?? 'unknown',
+        series: registration.publishingDetails.series?.name,
+        year: registration.publicationDate?.year ?? 'unknown',
+        doi: registration.publishingDetails.doi ?? 'unknown',
+        url: registration.id,
         // address: undefined,
         // editor: undefined,
         // month: undefined,
@@ -119,7 +119,7 @@ export function generateBibTexEntry(hit: RegistrationSearchItem, entryIdentifier
         // organization: undefined,
         // pages: undefined,
         // volume: undefined,
-        note: generateContextAndInstanceNote(hit),
+        note: generateContextAndInstanceNote(registration),
       });
     case DegreeType.Master:
     case DegreeType.Bachelor:
@@ -127,31 +127,31 @@ export function generateBibTexEntry(hit: RegistrationSearchItem, entryIdentifier
     case DegreeType.Other:
       return new BibTeXEntry(BibTeXType.MastersThesis, {
         key: entryIdentifier,
-        title: hit.mainTitle,
-        author: generateAuthorListFromPreview(hit),
-        year: hit.publicationDate?.year ?? 'unknown',
-        doi: hit.publishingDetails.doi ?? 'unknown',
-        school: hit.publishingDetails.publisher?.name ?? 'unknown',
-        type: hit.type.toString(),
-        url: hit.id,
+        title: registration.mainTitle,
+        author: generateAuthorListFromPreview(registration),
+        year: registration.publicationDate?.year ?? 'unknown',
+        doi: registration.publishingDetails.doi ?? 'unknown',
+        school: registration.publishingDetails.publisher?.name ?? 'unknown',
+        type: registration.type.toString(),
+        url: registration.id,
         // address: undefined,
         // month: undefined,
-        note: generateContextAndInstanceNote(hit),
+        note: generateContextAndInstanceNote(registration),
       });
     case DegreeType.Phd:
     case DegreeType.ArtisticPhd:
       return new BibTeXEntry(BibTeXType.PhdThesis, {
         key: entryIdentifier,
-        title: hit.mainTitle,
-        author: generateAuthorListFromPreview(hit),
-        year: hit.publicationDate?.year ?? 'unknown',
-        doi: hit.publishingDetails.doi ?? 'unknown',
-        school: hit.publishingDetails.publisher?.name ?? 'unknown',
-        type: hit.type.toString(),
-        url: hit.id,
+        title: registration.mainTitle,
+        author: generateAuthorListFromPreview(registration),
+        year: registration.publicationDate?.year ?? 'unknown',
+        doi: registration.publishingDetails.doi ?? 'unknown',
+        school: registration.publishingDetails.publisher?.name ?? 'unknown',
+        type: registration.type.toString(),
+        url: registration.id,
         // address: undefined,
         // month: undefined,
-        note: generateContextAndInstanceNote(hit),
+        note: generateContextAndInstanceNote(registration),
       });
     case JournalType.CaseReport:
     case ReportType.Report:
@@ -161,17 +161,17 @@ export function generateBibTexEntry(hit: RegistrationSearchItem, entryIdentifier
     case ReportType.ConferenceReport:
       return new BibTeXEntry(BibTeXType.TechReport, {
         key: entryIdentifier,
-        title: hit.mainTitle,
-        author: generateAuthorListFromPreview(hit),
-        institution: hit.publishingDetails.publisher?.name ?? 'unknown',
-        year: hit.publicationDate?.year ?? 'unknown',
-        doi: hit.publishingDetails.doi ?? 'unknown',
-        type: hit.type.toString(),
-        url: hit.id,
+        title: registration.mainTitle,
+        author: generateAuthorListFromPreview(registration),
+        institution: registration.publishingDetails.publisher?.name ?? 'unknown',
+        year: registration.publicationDate?.year ?? 'unknown',
+        doi: registration.publishingDetails.doi ?? 'unknown',
+        type: registration.type.toString(),
+        url: registration.id,
         // address: undefined,
         // month: undefined,
         // number: undefined,
-        note: generateContextAndInstanceNote(hit),
+        note: generateContextAndInstanceNote(registration),
       });
     case ArtisticType.ArtisticArchitecture:
     case ArtisticType.ArtisticDesign:
@@ -197,24 +197,25 @@ export function generateBibTexEntry(hit: RegistrationSearchItem, entryIdentifier
       return new BibTeXEntry(BibTeXType.Misc, {
         // Why no doi in Misc?
         key: entryIdentifier,
-        title: hit.mainTitle,
-        author: generateAuthorListFromPreview(hit),
-        year: hit.publicationDate?.year ?? 'unknown',
-        url: hit.id,
+        title: registration.mainTitle,
+        author: generateAuthorListFromPreview(registration),
+        year: registration.publicationDate?.year ?? 'unknown',
+        doi: registration.publishingDetails.doi ?? 'unknown',
+        url: registration.id,
         // howpublished: undefined, // hit.publishingDetails.publisher?.name ?? 'unknown' ?
-        note: generateContextAndInstanceNote(hit),
+        note: generateContextAndInstanceNote(registration),
       });
   }
-}
+};
 
-function generateAuthorListFromPreview(hit: RegistrationSearchItem) {
+const generateAuthorListFromPreview = (hit: RegistrationSearchItem) => {
   const authorList = hit.contributorsPreview.map((contributor) => contributor.identity.name).join(', ');
   if (hit.contributorsPreview.length < hit.contributorsCount) {
     return authorList + ', et al.';
   }
   return authorList;
-}
+};
 
-function generateContextAndInstanceNote(hit: RegistrationSearchItem) {
+const generateContextAndInstanceNote = (hit: RegistrationSearchItem) => {
   return `ContextType: ${hit.publishingDetails.type}, InstanceType: ${hit.type}`;
-}
+};
