@@ -19,6 +19,7 @@ import { ExportResultsButton } from '../ExportResultsButton';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
 import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 
 const facetParams: string[] = [
   ResultParam.Category,
@@ -151,7 +152,9 @@ export const RegistrationSearchBar = () => {
             <Box gridArea="buttonRowTop">
               <FilterButton />
               <ExportResultsButton searchParams={searchParams} />
-              <ExportResultsBibTexButton />
+              <BetaFunctionality>
+                <ExportResultsBibTexButton />
+              </BetaFunctionality>
             </Box>
 
             {showExtraFilterRow && (
