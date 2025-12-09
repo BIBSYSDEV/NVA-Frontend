@@ -42,11 +42,6 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         year: registration.publicationDate?.year ?? 'unknown',
         doi: registration.publishingDetails.doi ?? 'unknown',
         url: registration.id,
-        // month: undefined,
-        // issn: undefined,
-        // number: undefined,
-        // pages: undefined,
-        // volume: undefined,
         note: generateContextAndInstanceNote(registration),
       });
     case BookType.AcademicMonograph:
@@ -67,10 +62,6 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         year: registration.publicationDate?.year ?? 'unknown',
         doi: registration.publishingDetails.doi ?? 'unknown',
         url: registration.id,
-        // edition: undefined,
-        // address: undefined,
-        // month: undefined,
-        // volume: undefined,
         note: generateContextAndInstanceNote(registration),
       });
     case ChapterType.AcademicChapter:
@@ -92,13 +83,6 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         year: registration.publicationDate?.year ?? 'unknown',
         doi: registration.publishingDetails.doi ?? 'unknown',
         url: registration.id,
-        // edition: undefined,
-        // address: undefined,
-        // month: undefined,
-        // volume: undefined,
-        // editor: undefined,
-        // number: undefined,
-        // pages: undefined,
         note: generateContextAndInstanceNote(registration),
       });
     case ChapterType.ConferenceAbstract:
@@ -112,13 +96,6 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         year: registration.publicationDate?.year ?? 'unknown',
         doi: registration.publishingDetails.doi ?? 'unknown',
         url: registration.id,
-        // address: undefined,
-        // editor: undefined,
-        // month: undefined,
-        // number: undefined,
-        // organization: undefined,
-        // pages: undefined,
-        // volume: undefined,
         note: generateContextAndInstanceNote(registration),
       });
     case DegreeType.Master:
@@ -134,8 +111,6 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         school: registration.publishingDetails.publisher?.name ?? 'unknown',
         type: registration.type.toString(),
         url: registration.id,
-        // address: undefined,
-        // month: undefined,
         note: generateContextAndInstanceNote(registration),
       });
     case DegreeType.Phd:
@@ -149,8 +124,6 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         school: registration.publishingDetails.publisher?.name ?? 'unknown',
         type: registration.type.toString(),
         url: registration.id,
-        // address: undefined,
-        // month: undefined,
         note: generateContextAndInstanceNote(registration),
       });
     case JournalType.CaseReport:
@@ -168,9 +141,6 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         doi: registration.publishingDetails.doi ?? 'unknown',
         type: registration.type.toString(),
         url: registration.id,
-        // address: undefined,
-        // month: undefined,
-        // number: undefined,
         note: generateContextAndInstanceNote(registration),
       });
     case ArtisticType.ArtisticArchitecture:
@@ -202,20 +172,19 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         year: registration.publicationDate?.year ?? 'unknown',
         doi: registration.publishingDetails.doi ?? 'unknown',
         url: registration.id,
-        // howpublished: undefined, // hit.publishingDetails.publisher?.name ?? 'unknown' ?
         note: generateContextAndInstanceNote(registration),
       });
   }
 };
 
-const generateAuthorListFromPreview = (hit: RegistrationSearchItem) => {
-  const authorList = hit.contributorsPreview.map((contributor) => contributor.identity.name).join(', ');
-  if (hit.contributorsPreview.length < hit.contributorsCount) {
+const generateAuthorListFromPreview = (registration: RegistrationSearchItem) => {
+  const authorList = registration.contributorsPreview.map((contributor) => contributor.identity.name).join(', ');
+  if (registration.contributorsPreview.length < registration.contributorsCount) {
     return authorList + ', et al.';
   }
   return authorList;
 };
 
-const generateContextAndInstanceNote = (hit: RegistrationSearchItem) => {
-  return `ContextType: ${hit.publishingDetails.type}, InstanceType: ${hit.type}`;
+const generateContextAndInstanceNote = (registration: RegistrationSearchItem) => {
+  return `ContextType: ${registration.publishingDetails.type}, InstanceType: ${registration.type}`;
 };

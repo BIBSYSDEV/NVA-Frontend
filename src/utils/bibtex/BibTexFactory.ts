@@ -23,10 +23,11 @@ export const exportToBibTex = (registrations: RegistrationSearchItem[], totalNum
 const downloadBibTexFile = (database: BibTeXDatabase) => {
   const blob = new Blob([database.toString()], { type: 'application/x-bibtex' });
   const url = URL.createObjectURL(blob);
+  const currentDate = new Date().toLocaleDateString();
 
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'registrations.bib';
+  link.download = `registrations_${currentDate}.bib`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
