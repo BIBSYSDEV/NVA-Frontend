@@ -20,7 +20,6 @@ import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlP
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 
 const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   padding: '0.5rem',
@@ -171,6 +170,16 @@ export const NviCandidatesNavigationAccordion = () => {
               {t('tasks.nvi.show_reporting_status')}
             </SelectableButton>
             <SelectableButton
+              data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
+              sx={{ justifyContent: 'center' }}
+              isSelected={isOnPublicationPointsPage}
+              to={{
+                pathname: UrlPathTemplate.TasksPublicationPoints,
+                search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
+              }}>
+              {t('tasks.nvi.show_status_for_publication_points')}
+            </SelectableButton>
+            <SelectableButton
               data-testid={dataTestId.tasksPage.nvi.showDisputesButton}
               sx={{ justifyContent: 'center' }}
               isSelected={isOnNviDisputePage}
@@ -178,18 +187,6 @@ export const NviCandidatesNavigationAccordion = () => {
               {t('tasks.nvi.show_disputes')} (
               {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
             </SelectableButton>
-            <BetaFunctionality sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <SelectableButton
-                data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
-                sx={{ justifyContent: 'center' }}
-                isSelected={isOnPublicationPointsPage}
-                to={{
-                  pathname: UrlPathTemplate.TasksPublicationPoints,
-                  search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-                }}>
-                {t('tasks.nvi.show_status_for_publication_points')}
-              </SelectableButton>
-            </BetaFunctionality>
           </Box>
         </StyledNviStatusBox>
       </StyledTicketSearchFormGroup>
