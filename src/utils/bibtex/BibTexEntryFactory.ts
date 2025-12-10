@@ -21,6 +21,16 @@ import { RegistrationSearchItem } from '../../types/registration.types';
  * fields for BibTex.
  * */
 
+const checkForPresentDoi = (registration: RegistrationSearchItem) => {
+  if (!!registration.publishingDetails.doi) {
+    return {
+      doi: registration.publishingDetails.doi,
+    };
+  } else {
+    return {};
+  }
+};
+
 export const generateBibTexEntry = (registration: RegistrationSearchItem, entryIdentifier: string) => {
   switch (registration.type) {
     case BookType.AcademicCommentary:
@@ -41,7 +51,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         author: generateAuthorListFromPreview(registration),
         journal: registration.publishingDetails.publisher?.name ?? '',
         year: registration.publicationDate?.year ?? '',
-        doi: registration.publishingDetails.doi ?? '',
+        ...checkForPresentDoi(registration),
         url: registration.id,
         note: generateContextAndInstanceNote(registration),
       });
@@ -61,7 +71,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         publisher: registration.publishingDetails.publisher?.name ?? '',
         series: registration.publishingDetails.series?.name ?? '',
         year: registration.publicationDate?.year ?? '',
-        doi: registration.publishingDetails.doi ?? '',
+        ...checkForPresentDoi(registration),
         url: registration.id,
         note: generateContextAndInstanceNote(registration),
       });
@@ -82,7 +92,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         publisher: registration.publishingDetails.publisher?.name ?? '',
         series: registration.publishingDetails.series?.name ?? '',
         year: registration.publicationDate?.year ?? '',
-        doi: registration.publishingDetails.doi ?? '',
+        ...checkForPresentDoi(registration),
         url: registration.id,
         note: generateContextAndInstanceNote(registration),
       });
@@ -95,7 +105,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         publisher: registration.publishingDetails.publisher?.name ?? '',
         series: registration.publishingDetails.series?.name ?? '',
         year: registration.publicationDate?.year ?? '',
-        doi: registration.publishingDetails.doi ?? '',
+        ...checkForPresentDoi(registration),
         url: registration.id,
         note: generateContextAndInstanceNote(registration),
       });
@@ -108,7 +118,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
         year: registration.publicationDate?.year ?? '',
-        doi: registration.publishingDetails.doi ?? '',
+        ...checkForPresentDoi(registration),
         url: registration.id,
         school: registration.publishingDetails.publisher?.name ?? '',
         type: registration.type.toString(),
@@ -120,7 +130,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
         year: registration.publicationDate?.year ?? '',
-        doi: registration.publishingDetails.doi ?? '',
+        ...checkForPresentDoi(registration),
         url: registration.id,
         school: registration.publishingDetails.publisher?.name ?? '',
         type: registration.type.toString(),
@@ -137,7 +147,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
         institution: registration.publishingDetails.publisher?.name ?? '',
-        doi: registration.publishingDetails.doi ?? '',
+        ...checkForPresentDoi(registration),
         url: registration.id,
         year: registration.publicationDate?.year ?? '',
         type: registration.type.toString(),
@@ -169,7 +179,7 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
         year: registration.publicationDate?.year ?? '',
-        doi: registration.publishingDetails.doi ?? '',
+        ...checkForPresentDoi(registration),
         url: registration.id,
         note: generateContextAndInstanceNote(registration),
       });
