@@ -113,7 +113,7 @@ export const SearchListItemDiv = styled('div')(({ theme }) => ({
   marginBottom: '0.2rem',
 }));
 
-export const StyledTicketSearchFormGroup = styled(FormGroup)({
+export const TasksPanelFormGroup = styled(FormGroup)({
   margin: '1rem',
 });
 

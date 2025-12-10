@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router';
 import { NviStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { NviCandidatePageLocationState } from '../../../types/locationState.types';
+import { TasksPageLocationState } from '../../../types/locationState.types';
 import { NviCandidateSearchHit } from '../../../types/nvi.types';
 import { displayDate } from '../../../utils/date-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
@@ -46,7 +46,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
     candidateOffsetState: { currentOffset, nviQueryParams: nviQueryParams },
     previousSearch: window.location.search,
     isOnDisputePage: location.pathname === UrlPathTemplate.TasksNviDisputes,
-  } satisfies NviCandidatePageLocationState;
+  } satisfies TasksPageLocationState;
 
   return (
     <SearchListItem

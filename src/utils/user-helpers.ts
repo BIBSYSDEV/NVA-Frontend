@@ -88,8 +88,34 @@ export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPers
 
 export const getFullName = (firstName?: string, lastName?: string) => [firstName, lastName].filter(Boolean).join(' ');
 
+export const isNviCurator = (user: User | null) => !!user && !!user.customerId && user.isNviCurator;
+
+export const isPublishingCurator = (user: User | null) => !!user && !!user.customerId && user.isPublishingCurator;
+
+export const isThesisCurator = (user: User | null) => !!user && !!user.customerId && user.isThesisCurator;
+
+export const isDoiCurator = (user: User | null) => !!user && !!user.customerId && user.isDoiCurator;
+
+export const isSupportCurator = (user: User | null) => !!user && !!user.customerId && user.isSupportCurator;
+
+export const checkUserRoles = (user: User | null) => {
+  const userIsNviCurator = isNviCurator(user);
+  const userIsPublishingCurator = isPublishingCurator(user);
+  const userIsThesisCurator = isThesisCurator(user);
+  const userIsDoiCurator = isDoiCurator(user);
+  const userIsSupportCurator = isSupportCurator(user);
+
+  return {
+    isNviCurator: userIsNviCurator,
+    isPublishingCurator: userIsPublishingCurator,
+    isThesisCurator: userIsThesisCurator,
+    isDoiCurator: userIsDoiCurator,
+    isSupportCurator: userIsSupportCurator,
+  };
+};
+
 export const hasCuratorRole = (user: User | null) =>
-  !!user && !!user.customerId && (hasTicketCuratorRole(user) || user.isNviCurator);
+  !!user && !!user.customerId && (hasTicketCuratorRole(user) || isNviCurator(user));
 
 export const hasTicketCuratorRole = (user: User | null) =>
   !!user &&

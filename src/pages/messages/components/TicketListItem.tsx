@@ -14,7 +14,7 @@ import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers'
 import { getInitials } from '../../../utils/general-helpers';
 import { convertToRegistrationSearchItem } from '../../../utils/registration-helpers';
 import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers';
-import { isFileApprovalTicket } from '../../../utils/ticketHelpers';
+import { getTicketColor, isFileApprovalTicket } from '../../../utils/ticketHelpers';
 import {
   doNotRedirectQueryParam,
   getMyMessagesRegistrationPath,
@@ -26,7 +26,6 @@ import { StyledVerifiedContributor } from '../../registration/contributors_tab/C
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
 import { SupportMessagesColumn } from './SupportMessagesColumn';
-import { getTicketColor } from '../utils';
 import { TicketInformation } from '../../../components/RegistrationListItem/TicketInformation';
 
 interface TicketListItemProps {

@@ -7,12 +7,7 @@ import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates'
 import { NviCandidateGlobalStatusEnum, NviCandidatesSearchParam, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
-import {
-  HorizontalBox,
-  MediumTypography,
-  StyledTicketSearchFormGroup,
-  VerticalBox,
-} from '../../../components/styled/Wrappers';
+import { HorizontalBox, MediumTypography, TasksPanelFormGroup, VerticalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
@@ -75,7 +70,7 @@ export const NviCandidatesNavigationAccordion = () => {
         globalStatus: NviCandidateGlobalStatusEnum.Pending,
       })}
       dataTestId={dataTestId.tasksPage.nviAccordion}>
-      <StyledTicketSearchFormGroup>
+      <TasksPanelFormGroup>
         <StyledNviStatusBox>
           <Typography fontWeight="bold">{t('tasks.nvi.progress_nvi_reporting')}</Typography>
           {nviAggregationsQuery.isPending ? (
@@ -192,7 +187,7 @@ export const NviCandidatesNavigationAccordion = () => {
             </BetaFunctionality>
           </Box>
         </StyledNviStatusBox>
-      </StyledTicketSearchFormGroup>
+      </TasksPanelFormGroup>
     </NavigationListAccordion>
   );
 };

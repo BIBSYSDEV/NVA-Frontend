@@ -28,7 +28,7 @@ import {
 import { ProfilePicture } from '../../components/ProfilePicture';
 import { SelectableButton } from '../../components/SelectableButton';
 import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
-import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { TasksPanelFormGroup } from '../../components/styled/Wrappers';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
@@ -213,7 +213,7 @@ const MyPagePage = () => {
             startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
-            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
+            <TasksPanelFormGroup sx={{ gap: '0.5rem' }}>
               <TicketTypeFilterButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 endIcon={<Badge badgeContent={allUnreadPublishingCount} />}
@@ -255,7 +255,7 @@ const MyPagePage = () => {
                   ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                   : t('my_page.messages.types.GeneralSupportCase')}
               </TicketTypeFilterButton>
-            </StyledTicketSearchFormGroup>
+            </TasksPanelFormGroup>
           </NavigationListAccordion>,
 
           <NavigationListAccordion
