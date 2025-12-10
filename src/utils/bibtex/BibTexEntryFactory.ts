@@ -13,7 +13,6 @@ import {
   ResearchDataType,
 } from '../../types/publicationFieldNames';
 import { RegistrationSearchItem } from '../../types/registration.types';
-import { joinWithAnd } from '../general-helpers';
 
 /*
  * The return type of registrationSearch does not currently include all information we need.
@@ -21,24 +20,6 @@ import { joinWithAnd } from '../general-helpers';
  * mandatory in the future. Backend might have to adjust the search response to include all required
  * fields for BibTex.
  * */
-
-const getDoiOrUrl = (pid: string): { doi?: string; url?: string } => {
-  if (!pid || pid.trim() === '') {
-    return {};
-  }
-
-  let identifier = pid;
-  const match = identifier.match(/^https?:\/\/[^\/]+\/(.+)$/i);
-  if (match && match[1]) {
-    identifier = match[1];
-  }
-
-  if (/^10\.\d+\/.+/.test(identifier)) {
-    return { doi: identifier };
-  } else {
-    return { url: pid };
-  }
-};
 
 export const generateBibTexEntry = (registration: RegistrationSearchItem, entryIdentifier: string) => {
   switch (registration.type) {
@@ -58,9 +39,10 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         key: entryIdentifier,
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
-        journal: registration.publishingDetails.publisher?.name ?? 'unknown',
-        year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
+        journal: registration.publishingDetails.publisher?.name ?? '',
+        year: registration.publicationDate?.year ?? '',
+        doi: registration.publishingDetails.doi ?? '',
+        url: registration.id,
         note: generateContextAndInstanceNote(registration),
       });
     case BookType.AcademicMonograph:
@@ -76,10 +58,11 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         key: entryIdentifier,
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
-        publisher: registration.publishingDetails.publisher?.name ?? 'unknown',
-        series: registration.publishingDetails.series?.name,
-        year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
+        publisher: registration.publishingDetails.publisher?.name ?? '',
+        series: registration.publishingDetails.series?.name ?? '',
+        year: registration.publicationDate?.year ?? '',
+        doi: registration.publishingDetails.doi ?? '',
+        url: registration.id,
         note: generateContextAndInstanceNote(registration),
       });
     case ChapterType.AcademicChapter:
@@ -93,25 +76,27 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
       return new BibTeXEntry(BibTeXType.InBook, {
         key: entryIdentifier,
         title: registration.mainTitle,
-        booktitle: 'unknown',
-        chapter: 'unknown',
+        booktitle: '',
+        chapter: '',
         author: generateAuthorListFromPreview(registration),
-        publisher: registration.publishingDetails.publisher?.name ?? 'unknown',
-        series: registration.publishingDetails.series?.name,
-        year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
+        publisher: registration.publishingDetails.publisher?.name ?? '',
+        series: registration.publishingDetails.series?.name ?? '',
+        year: registration.publicationDate?.year ?? '',
+        doi: registration.publishingDetails.doi ?? '',
+        url: registration.id,
         note: generateContextAndInstanceNote(registration),
       });
     case ChapterType.ConferenceAbstract:
       return new BibTeXEntry(BibTeXType.InProceedings, {
         key: entryIdentifier,
         title: registration.mainTitle,
-        booktitle: 'unknown',
+        booktitle: '',
         author: generateAuthorListFromPreview(registration),
-        publisher: registration.publishingDetails.publisher?.name ?? 'unknown',
-        series: registration.publishingDetails.series?.name,
-        year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
+        publisher: registration.publishingDetails.publisher?.name ?? '',
+        series: registration.publishingDetails.series?.name ?? '',
+        year: registration.publicationDate?.year ?? '',
+        doi: registration.publishingDetails.doi ?? '',
+        url: registration.id,
         note: generateContextAndInstanceNote(registration),
       });
     case DegreeType.Master:
@@ -122,11 +107,11 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         key: entryIdentifier,
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
-        year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
-        school: registration.publishingDetails.publisher?.name ?? 'unknown',
+        year: registration.publicationDate?.year ?? '',
+        doi: registration.publishingDetails.doi ?? '',
+        url: registration.id,
+        school: registration.publishingDetails.publisher?.name ?? '',
         type: registration.type.toString(),
-        note: generateContextAndInstanceNote(registration),
       });
     case DegreeType.Phd:
     case DegreeType.ArtisticPhd:
@@ -134,9 +119,10 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         key: entryIdentifier,
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
-        year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
-        school: registration.publishingDetails.publisher?.name ?? 'unknown',
+        year: registration.publicationDate?.year ?? '',
+        doi: registration.publishingDetails.doi ?? '',
+        url: registration.id,
+        school: registration.publishingDetails.publisher?.name ?? '',
         type: registration.type.toString(),
         note: generateContextAndInstanceNote(registration),
       });
@@ -150,9 +136,10 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         key: entryIdentifier,
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
-        institution: registration.publishingDetails.publisher?.name ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
-        year: registration.publicationDate?.year ?? 'unknown',
+        institution: registration.publishingDetails.publisher?.name ?? '',
+        doi: registration.publishingDetails.doi ?? '',
+        url: registration.id,
+        year: registration.publicationDate?.year ?? '',
         type: registration.type.toString(),
         note: generateContextAndInstanceNote(registration),
       });
@@ -181,15 +168,16 @@ export const generateBibTexEntry = (registration: RegistrationSearchItem, entryI
         key: entryIdentifier,
         title: registration.mainTitle,
         author: generateAuthorListFromPreview(registration),
-        year: registration.publicationDate?.year ?? 'unknown',
-        ...getDoiOrUrl(registration.publishingDetails.doi ?? ``),
+        year: registration.publicationDate?.year ?? '',
+        doi: registration.publishingDetails.doi ?? '',
+        url: registration.id,
         note: generateContextAndInstanceNote(registration),
       });
   }
 };
 
 const generateAuthorListFromPreview = (registration: RegistrationSearchItem) => {
-  const authorList = joinWithAnd(registration.contributorsPreview.map((contributor) => contributor.identity.name));
+  const authorList = registration.contributorsPreview.map((contributor) => contributor.identity.name).join(' AND ');
   if (registration.contributorsPreview.length < registration.contributorsCount) {
     return authorList + ', et al.';
   }
