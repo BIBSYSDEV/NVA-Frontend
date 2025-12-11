@@ -15,6 +15,7 @@ export const ExportResultsDropdown = () => {
   const [searchParams] = useSearchParams();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isClicked, setIsClicked] = useState(false);
 
   const exportBibTex = useBibtexExport();
   const csvUrl = `${API_URL.slice(0, -1)}${SearchApiPath.RegistrationsExport}?${searchParams.toString()}`;
@@ -56,7 +57,13 @@ export const ExportResultsDropdown = () => {
             },
           },
         }}>
-        <MenuItem key={'csv'} onClick={() => handleCSVDownload(csvUrl)}>
+        <MenuItem
+          key={'csv'}
+          disabled={isClicked}
+          onClick={() => {
+            setIsClicked(true);
+            handleCSVDownload(csvUrl);
+          }}>
           CSV
         </MenuItem>
         <MenuItem key={'bibtex'} onClick={exportBibTex}>
