@@ -19,14 +19,13 @@ export const ExportResultsDropdown = () => {
   const [isClicked, setIsClicked] = useState(false);
 
   const exportBibTex = useBibtexExport();
-  const csvUrl = `${API_URL.slice(0, -1)}${SearchApiPath.RegistrationsExport}?${searchParams.toString()}`;
+  const csvUrl = `${API_URL.replace(/\/$/, '')}${SearchApiPath.RegistrationsExport}?${searchParams.toString()}`;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const handleCSVDownload = (url: string) => {
     const link = document.createElement('a');
     link.href = url;
-    link.download = url.split('/').pop() || '';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

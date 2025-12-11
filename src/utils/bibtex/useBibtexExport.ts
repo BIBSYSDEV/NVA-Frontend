@@ -26,6 +26,7 @@ export const useBibtexExport = () => {
   };
 
   const registrationsQuery = useRegistrationSearch({
+    enabled: false,
     params: registrationsQueryConfig,
   });
 
