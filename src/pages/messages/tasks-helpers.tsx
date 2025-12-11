@@ -1,7 +1,7 @@
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { LocationWithTasksPageState, TasksPageLocationState } from '../../types/locationState.types';
 
-export const checkIfOnPages = (location: LocationWithTasksPageState) => {
+export const checkPages = (location: LocationWithTasksPageState) => {
   const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
 
@@ -32,7 +32,7 @@ export const checkIfOnPages = (location: LocationWithTasksPageState) => {
 
 export const findBackPathFromTasksLocation = (location: LocationWithTasksPageState) => {
   const locationState = location.state as TasksPageLocationState;
-  const { isOnTicketPage } = checkIfOnPages(location);
+  const { isOnTicketPage } = checkPages(location);
 
   if (isOnTicketPage) {
     return UrlPathTemplate.TasksDialogue;

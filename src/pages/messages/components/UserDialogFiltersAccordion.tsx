@@ -3,11 +3,11 @@ import { TicketSearchParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TasksPanelFormGroup } from '../../../components/styled/Wrappers';
 import { resetPaginationAndNavigate } from '../../../utils/searchHelpers';
-import { TicketTypeEnum, TicketTypeSelection } from '../../../types/publication_types/ticket.types';
+import { TicketTypeEnum } from '../../../types/publication_types/ticket.types';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { useTranslation } from 'react-i18next';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
-import { checkIfOnPages } from '../tasks-helpers';
+import { checkPages } from '../tasks-helpers';
 import { useLocation, useNavigate } from 'react-router';
 import { checkUserRoles } from '../../../utils/user-helpers';
 import { RootState } from '../../../redux/store';
@@ -15,25 +15,19 @@ import { useSelector } from 'react-redux';
 import { TicketTypeFilterButton } from '../../../components/TicketTypeFilterButton';
 import { Badge } from '@mui/material';
 import { TicketTypeTag } from './TicketTypeTag';
-import { useState } from 'react';
-import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
 import { useGetNotificationCounts, useGetTicketsCounts } from '../user-dialog-helpers';
+import { useTasksContext } from '../TasksContext';
 
 export const UserDialogFiltersAccordion = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const { isOnTicketsPage } = checkIfOnPages(location);
   const user = useSelector((store: RootState) => store.user);
+  const { isOnTicketsPage } = checkPages(location);
   const { isPublishingCurator, isThesisCurator, isDoiCurator, isSupportCurator } = checkUserRoles(user);
+  const { institutionUserQuery, ticketsQuery, ticketTypes, setTicketTypes } = useTasksContext();
   const searchParams = new URLSearchParams(location.search);
-  const [ticketTypes, setTicketTypes] = useState<TicketTypeSelection>({
-    doiRequest: isDoiCurator,
-    generalSupportCase: isSupportCurator,
-    publishingRequest: isPublishingCurator,
-    filesApprovalThesis: isThesisCurator,
-  });
-  const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
+
   const {
     doiNotificationsCount,
     publishingNotificationsCount,
@@ -44,11 +38,7 @@ export const UserDialogFiltersAccordion = () => {
     user: user,
   });
   const { doiRequestCount, publishingRequestCount, thesisPublishingRequestCount, generalSupportCaseCount } =
-    useGetTicketsCounts({
-      ticketsQueryEnabled: isOnTicketsPage && !institutionUserQuery.isPending,
-      searchParams: searchParams,
-      ticketTypes: ticketTypes,
-    });
+    useGetTicketsCounts({ ticketsQuery: ticketsQuery });
 
   return (
     <NavigationListAccordion

@@ -1,7 +1,7 @@
 import { useFetchNotifications } from '../../api/hooks/useFetchNotifications';
 import { User } from '../../types/user.types';
-import { TicketTypeSelection } from '../../types/publication_types/ticket.types';
-import { useFetchTickets } from '../../api/hooks/useFetchTickets';
+import { CustomerTicketSearchResponse } from '../../types/publication_types/ticket.types';
+import { UseQueryResult } from '@tanstack/react-query';
 
 interface GetNotificationCountsProps {
   notificationsQueryEnabled: boolean;
@@ -36,22 +36,10 @@ export const useGetNotificationCounts = ({ notificationsQueryEnabled, user }: Ge
 };
 
 interface GetTicketsCountsProps {
-  ticketsQueryEnabled: boolean;
-  searchParams: URLSearchParams;
-  ticketTypes: TicketTypeSelection;
+  ticketsQuery: UseQueryResult<CustomerTicketSearchResponse, Error>;
 }
 
-export const useGetTicketsCounts = ({ ticketsQueryEnabled, searchParams, ticketTypes }: GetTicketsCountsProps) => {
-  const selectedTicketTypes = Object.entries(ticketTypes)
-    .filter(([, selected]) => selected)
-    .map(([key]) => key);
-
-  const ticketsQuery = useFetchTickets({
-    searchParams: searchParams,
-    enabled: ticketsQueryEnabled,
-    selectedTicketTypes: selectedTicketTypes,
-  });
-
+export const useGetTicketsCounts = ({ ticketsQuery }: GetTicketsCountsProps) => {
   const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
 
   const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
