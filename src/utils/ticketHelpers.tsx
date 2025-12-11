@@ -1,8 +1,12 @@
-import { TicketType, TicketTypeEnum } from '../../types/publication_types/ticket.types';
+import { Ticket, TicketType, TicketTypeEnum } from '../types/publication_types/ticket.types';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
+
+export const isFileApprovalTicket = (ticket: Pick<Ticket, 'type'>) => {
+  return ticket.type === 'PublishingRequest' || ticket.type === 'FilesApprovalThesis';
+};
 
 export const getTicketColor = (ticketType: TicketType) => {
   switch (ticketType) {

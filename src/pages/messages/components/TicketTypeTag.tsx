@@ -1,7 +1,7 @@
 import { TicketType } from '../../../types/publication_types/ticket.types';
 import { useTicketTypeText } from '../../../utils/hooks/useTicketTypeText';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
-import { getTicketColor, getTicketTypeIcon } from '../utils';
+import { getTicketColor, getTicketTypeIcon } from '../../../utils/ticketHelpers';
 
 interface TicketTypeTagProps {
   type: TicketType;

@@ -21,8 +21,8 @@ import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
 import { TaskAccordionSummary } from './styles';
-import { getTicketColor } from '../../messages/utils';
 import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
+import { getTicketColor } from '../../../utils/ticketHelpers';
 
 interface SupportAccordionProps {
   registration: Registration;

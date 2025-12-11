@@ -19,7 +19,12 @@ export interface SelectedTicketTypeLocationState {
 
 export type BasicDataLocationState = (PreviousPathLocationState & PreviousSearchLocationState) | null;
 
-export interface NviCandidatePageLocationState extends PreviousSearchLocationState {
+export type LocationWithTasksPageState = {
+  pathname: string;
+  state: TasksPageLocationState;
+};
+
+export interface TasksPageLocationState extends PreviousSearchLocationState {
   candidateOffsetState?: {
     currentOffset: number;
     nviQueryParams: FetchNviCandidatesParams;

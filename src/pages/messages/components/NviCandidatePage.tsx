@@ -7,7 +7,7 @@ import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { NviCandidateProblemsContext } from '../../../context/NviCandidateProblemsContext';
-import { NviCandidatePageLocationState } from '../../../types/locationState.types';
+import { TasksPageLocationState } from '../../../types/locationState.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getNviCandidatePath, IdentifierParams } from '../../../utils/urlPaths';
@@ -22,7 +22,7 @@ export const NviCandidatePage = () => {
   const { t } = useTranslation();
   const [isUpdatingNviCandidateInfo, setIsUpdatingNviCandidateInfo] = useState(true);
   const location = useLocation();
-  const locationState = location.state as NviCandidatePageLocationState;
+  const locationState = location.state as TasksPageLocationState;
   const { identifier } = useParams<IdentifierParams>();
   const nviCandidateQuery = useFetchNviCandidate(identifier);
   const { refetch } = nviCandidateQuery;
@@ -70,7 +70,7 @@ export const NviCandidatePage = () => {
             currentOffset: thisCandidateOffset + 1,
             nviQueryParams,
           },
-        } satisfies NviCandidatePageLocationState)
+        } satisfies TasksPageLocationState)
       : undefined;
 
   const previousCandidateState =
@@ -81,7 +81,7 @@ export const NviCandidatePage = () => {
             currentOffset: thisCandidateOffset - 1,
             nviQueryParams,
           },
-        } satisfies NviCandidatePageLocationState)
+        } satisfies TasksPageLocationState)
       : undefined;
 
   if (nviCandidateQuery.error?.response?.status === 401) {

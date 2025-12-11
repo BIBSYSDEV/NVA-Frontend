@@ -41,9 +41,9 @@ import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
-import { getTicketColor } from '../../messages/utils';
 import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
 import { TaskAccordionSummary } from './styles';
+import { getTicketColor } from '../../../utils/ticketHelpers';
 
 interface DoiRequestAccordionProps {
   registration: Registration;

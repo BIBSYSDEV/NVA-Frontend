@@ -36,10 +36,10 @@ import { MoreActionsCollapse } from './MoreActionsCollapse';
 import { PublishingAccordionLastTicketInfo } from './PublishingAccordionLastTicketInfo';
 import { RefreshPublishingRequestButton } from './RefreshPublishingRequestButton';
 import { TicketAssignee } from './TicketAssignee';
-import { getTicketColor } from '../../messages/utils';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
 import { TaskAccordionSummary } from './styles';
+import { getTicketColor } from '../../../utils/ticketHelpers';
 
 interface PublishingAccordionProps {
   registration: Registration;
