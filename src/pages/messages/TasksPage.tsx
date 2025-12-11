@@ -39,13 +39,13 @@ const TasksPage = () => {
   });
 
   return (
-    <TasksContext.Provider value={{ institutionUserQuery, ticketsQuery, ticketTypes, setTicketTypes }}>
+    <TasksContext value={{ institutionUserQuery, ticketsQuery, ticketTypes, setTicketTypes }}>
       <StyledPageWithSideMenu>
         <TasksSideMenu />
         <Outlet />
         <TasksRoutes />
       </StyledPageWithSideMenu>
-    </TasksContext.Provider>
+    </TasksContext>
   );
 };
 
