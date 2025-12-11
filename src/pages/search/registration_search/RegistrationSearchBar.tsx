@@ -14,7 +14,6 @@ import {
   removeSearchParamValue,
   syncParamsWithSearchFields,
 } from '../../../utils/searchHelpers';
-import { ExportResultsButton } from '../ExportResultsButton';
 import { ExportResultsDropdown } from '../ExportResultsDropdown';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
@@ -150,7 +149,6 @@ export const RegistrationSearchBar = () => {
 
             <Box gridArea="buttonRowTop">
               <FilterButton />
-              <ExportResultsButton searchParams={searchParams} />
               <ExportResultsDropdown />
             </Box>
 

@@ -9,6 +9,7 @@ import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useSearchParams } from 'react-router';
 import { useBibtexExport } from '../../utils/bibtex/useBibtexExport';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 export const ExportResultsDropdown = () => {
   const { t } = useTranslation();
@@ -66,9 +67,11 @@ export const ExportResultsDropdown = () => {
           }}>
           CSV
         </MenuItem>
-        <MenuItem key={'bibtex'} onClick={exportBibTex}>
-          BibTex
-        </MenuItem>
+        <BetaFunctionality>
+          <MenuItem key={'bibtex'} onClick={exportBibTex}>
+            BibTex
+          </MenuItem>
+        </BetaFunctionality>
       </Menu>
     </>
   );
