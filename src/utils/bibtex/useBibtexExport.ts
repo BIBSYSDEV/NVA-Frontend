@@ -37,5 +37,5 @@ export const useBibtexExport = () => {
     }
   };
 
-  return exportBibTex;
+  return { exportBibTex, isFetchingBibtex: registrationsQuery.isFetching };
 };

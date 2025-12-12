@@ -16,16 +16,17 @@ export const ExportResultsDropdown = () => {
   const [searchParams] = useSearchParams();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [isClicked, setIsClicked] = useState(false);
+  const [csvClicked, setCsvClicked] = useState(false);
+  const [bibtexClicked, setBibtexClicked] = useState(false);
 
-  const exportBibTex = useBibtexExport();
-  const csvUrl = `${API_URL.replace(/\/$/, '')}${SearchApiPath.RegistrationsExport}?${searchParams.toString()}`;
+  const { exportBibTex, isFetchingBibtex } = useBibtexExport();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
-  const handleCSVDownload = (url: string) => {
+
+  const handleCSVDownload = () => {
     const link = document.createElement('a');
-    link.href = url;
+    link.href = `${API_URL.replace(/\/$/, '')}${SearchApiPath.RegistrationsExport}?${searchParams.toString()}`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -41,6 +42,7 @@ export const ExportResultsDropdown = () => {
         startIcon={<FileDownloadOutlinedIcon />}
         endIcon={!!anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
         onClick={handleClick}
+        loading={isFetchingBibtex}
         title={t('search.export')}
         data-testid={dataTestId.startPage.advancedSearch.downloadResultsButton}>
         {t('search.export')}
@@ -59,15 +61,21 @@ export const ExportResultsDropdown = () => {
         }}>
         <MenuItem
           key={'csv'}
-          disabled={isClicked}
+          disabled={csvClicked}
           onClick={() => {
-            setIsClicked(true);
-            handleCSVDownload(csvUrl);
+            setCsvClicked(true);
+            handleCSVDownload();
           }}>
           CSV
         </MenuItem>
         <BetaFunctionality>
-          <MenuItem key={'bibtex'} onClick={exportBibTex}>
+          <MenuItem
+            key={'bibtex'}
+            disabled={bibtexClicked}
+            onClick={() => {
+              setBibtexClicked(true);
+              exportBibTex();
+            }}>
             BibTex
           </MenuItem>
         </BetaFunctionality>
