@@ -168,6 +168,7 @@ export interface NviCandidatesSearchParams {
   status?: NviCandidateStatus | NviCandidateStatus[];
   globalStatus?: NviCandidateGlobalStatus | NviCandidateGlobalStatus[];
   excludeUnassigned?: boolean;
+  excludeSubUnits?: boolean;
 }
 
 export const getNviCandidatesSearchPath = ({
@@ -177,6 +178,7 @@ export const getNviCandidatesSearchPath = ({
   status,
   globalStatus,
   excludeUnassigned,
+  excludeSubUnits,
 }: NviCandidatesSearchParams) => {
   const searchParams = new URLSearchParams();
 
@@ -201,6 +203,10 @@ export const getNviCandidatesSearchPath = ({
   }
   if (excludeUnassigned !== undefined) {
     searchParams.set('excludeUnassigned', excludeUnassigned.toString());
+  }
+
+  if (excludeSubUnits !== undefined) {
+    searchParams.set('excludeSubUnits', excludeSubUnits.toString());
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
 };
