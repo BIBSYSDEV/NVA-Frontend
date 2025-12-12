@@ -8,6 +8,7 @@ import { navigationButtonStyling } from '../../pages/registration/RegistrationFo
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
+import { useDecideSaveButtonTextFromUrl } from './merge-results-helpers';
 
 const flexStyling: SxProps = {
   display: 'flex',
@@ -23,7 +24,8 @@ export interface MergeResultsWizardActionsProps {
 export const MergeResultsWizardActions = ({ onCancel }: MergeResultsWizardActionsProps) => {
   const { t } = useTranslation();
   const { formState } = useFormContext<Registration>();
-  const { activeTab, setActiveTab, sourceHeading } = useContext(MergeResultsWizardContext);
+  const { activeTab, setActiveTab } = useContext(MergeResultsWizardContext);
+  const saveButtonText = useDecideSaveButtonTextFromUrl();
 
   return (
     <Box sx={{ ...flexStyling, gridColumn: '1/-1' }}>
@@ -44,14 +46,16 @@ export const MergeResultsWizardActions = ({ onCancel }: MergeResultsWizardAction
           </Button>
         )}
 
-        <Button
-          type="submit"
-          color="secondary"
-          variant="contained"
-          loading={formState.isSubmitting}
-          data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}>
-          {sourceHeading}
-        </Button>
+        {activeTab === RegistrationTab.FilesAndLicenses && (
+          <Button
+            type="submit"
+            color="secondary"
+            variant="contained"
+            loading={formState.isSubmitting}
+            data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}>
+            {saveButtonText}
+          </Button>
+        )}
       </Box>
 
       {activeTab !== RegistrationTab.FilesAndLicenses && (
