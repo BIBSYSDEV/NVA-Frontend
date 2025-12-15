@@ -73,3 +73,5 @@ Lokalise allows translating content in a user-friendly web portal. For more info
 ## License
 
 Distributed under the MIT license. See [LICENSE](LICENSE) for details.
+
+## TESTING
