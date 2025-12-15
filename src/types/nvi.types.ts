@@ -12,7 +12,14 @@ interface NviCandidateContributor {
   name: string;
 }
 
-export type NviCandidateStatus = 'New' | 'Pending' | 'Rejected' | 'Approved';
+export enum NviCandidateStatusEnum {
+  New = 'New',
+  Pending = 'Pending',
+  Rejected = 'Rejected',
+  Approved = 'Approved',
+}
+
+export type NviCandidateStatus = `${NviCandidateStatusEnum}`;
 
 interface NviCandidateSearchHitApproval {
   institutionId: string;

@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
 import { NviStatusChip } from '../../../components/StatusChip';
-import { SearchListItem } from '../../../components/styled/Wrappers';
+import { SearchListItem, VerticalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';
-import { NviCandidateSearchHit } from '../../../types/nvi.types';
+import { NviCandidateSearchHit, NviCandidateStatusEnum } from '../../../types/nvi.types';
 import { displayDate } from '../../../utils/date-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getTitleString } from '../../../utils/registration-helpers';
@@ -33,6 +33,10 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
 
   const focusedApprovals = nviCandidate.approvals.slice(0, 5);
   const countRestApprovals = nviCandidate.approvals.length - focusedApprovals.length;
+
+  const approvedCount = nviCandidate.approvals.filter(
+    (a) => a.approvalStatus === NviCandidateStatusEnum.Approved
+  ).length;
 
   const typeString = nviCandidate.publicationDetails.type
     ? t(`registration.publication_types.${nviCandidate.publicationDetails.type}`)
@@ -95,9 +99,12 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
         )}
       </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <VerticalBox sx={{ alignItems: 'center' }}>
         {myApproval?.approvalStatus && <NviStatusChip status={myApproval.approvalStatus} />}
-      </Box>
+        <Typography sx={{ mt: '0.5rem' }}>
+          {t('tasks.nvi.x_of_y_approved', { approved: approvedCount, total: nviCandidate.approvals.length })}
+        </Typography>
+      </VerticalBox>
     </SearchListItem>
   );
 };
