@@ -33,8 +33,10 @@ import { TicketList } from './components/TicketList';
 import { TicketTypeTag } from './components/TicketTypeTag';
 import { NviDisputePage } from './components/NviDisputePage';
 import { NviPublicationPointsPage } from './components/NviPublicationPointsPage';
-import { useFetchNotifications } from '../../api/hooks/useFetchNotifications';
 import { useFetchTickets } from '../../api/hooks/useFetchTickets';
+import { useGetNotificationCounts, useGetTicketsCounts } from './user-dialog-helpers';
+import { checkPages } from './tasks-helpers';
+import { checkUserRoles } from '../../utils/user-helpers';
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -43,27 +45,11 @@ const TasksPage = () => {
   const navigate = useNavigate();
 
   const user = useSelector((store: RootState) => store.user);
-  const isSupportCurator = !!user?.isSupportCurator;
-  const isDoiCurator = !!user?.isDoiCurator;
-  const isPublishingCurator = !!user?.isPublishingCurator;
-  const isThesisCurator = !!user?.isThesisCurator;
+  const { isNviCurator, isPublishingCurator, isThesisCurator, isDoiCurator, isSupportCurator } = checkUserRoles(user);
   const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator || isThesisCurator;
-  const isNviCurator = !!user?.isNviCurator;
   const isAnyCurator = isTicketCurator || isNviCurator;
 
-  const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
-  const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
-
-  const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
-  const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
-  const isOnNviDisputesPage = location.pathname === UrlPathTemplate.TasksNviDisputes;
-  const isOnNviPublicationPointsPage = location.pathname === UrlPathTemplate.TasksPublicationPoints;
-  const isOnNviCandidatePage =
-    location.pathname.startsWith(UrlPathTemplate.TasksNvi) &&
-    !isOnNviCandidatesPage &&
-    !isOnNviStatusPage &&
-    !isOnNviDisputesPage &&
-    !isOnNviPublicationPointsPage;
+  const { isOnTicketsPage, isOnTicketPage, isOnNviCandidatePage } = checkPages(location);
 
   const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
 
@@ -86,29 +72,18 @@ const TasksPage = () => {
     selectedTicketTypes,
   });
 
-  const notificationsQuery = useFetchNotifications({
-    enabled: isOnTicketsPage && !institutionUserQuery.isPending,
-    user: user,
+  const {
+    doiNotificationsCount,
+    publishingNotificationsCount,
+    thesisPublishingNotificationsCount,
+    supportNotificationsCount,
+  } = useGetNotificationCounts({
+    notificationsQueryEnabled: isOnTicketsPage && !institutionUserQuery.isPending,
+    user,
   });
 
-  const doiNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
-    (notification) => notification.key === 'DoiRequest'
-  )?.count;
-  const publishingNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
-    (notification) => notification.key === 'PublishingRequest'
-  )?.count;
-  const thesisPublishingNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
-    (notification) => notification.key === 'FilesApprovalThesis'
-  )?.count;
-  const supportNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
-    (notification) => notification.key === 'GeneralSupportCase'
-  )?.count;
-
-  const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
-  const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
-  const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
-  const thesisPublishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'FilesApprovalThesis')?.count;
-  const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
+  const { doiRequestCount, publishingRequestCount, thesisPublishingRequestCount, generalSupportCaseCount } =
+    useGetTicketsCounts({ ticketsAggregations: ticketsQuery.data?.aggregations });
 
   return (
     <StyledPageWithSideMenu>
