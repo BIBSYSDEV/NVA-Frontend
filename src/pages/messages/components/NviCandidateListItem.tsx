@@ -25,6 +25,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
   const { t } = useTranslation();
   const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
+  const approvalsCount = usePageSpecificAmountCount(nviCandidate.approvals);
   const nviParamsFromUrl = useNviCandidatesParams();
   const nviQueryParams = nviParams ?? nviParamsFromUrl;
 
@@ -34,8 +35,6 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
 
   const focusedApprovals = nviCandidate.approvals.slice(0, 5);
   const countRestApprovals = nviCandidate.approvals.length - focusedApprovals.length;
-
-  const approvalsCount = usePageSpecificAmountCount(nviCandidate.approvals);
 
   const typeString = nviCandidate.publicationDetails.type
     ? t(`registration.publication_types.${nviCandidate.publicationDetails.type}`)
