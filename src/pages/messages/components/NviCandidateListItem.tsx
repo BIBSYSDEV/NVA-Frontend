@@ -6,13 +6,14 @@ import { NviStatusChip } from '../../../components/StatusChip';
 import { SearchListItem, VerticalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';
-import { NviCandidateSearchHit, NviCandidateStatusEnum } from '../../../types/nvi.types';
+import { NviCandidateSearchHit } from '../../../types/nvi.types';
 import { displayDate } from '../../../utils/date-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { FetchNviCandidatesParams } from '../../../api/searchApi';
+import { usePageSpecificAmountCount } from '../nviUtils';
 
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
@@ -34,9 +35,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
   const focusedApprovals = nviCandidate.approvals.slice(0, 5);
   const countRestApprovals = nviCandidate.approvals.length - focusedApprovals.length;
 
-  const approvedCount = nviCandidate.approvals.filter(
-    (a) => a.approvalStatus === NviCandidateStatusEnum.Approved
-  ).length;
+  const approvalsCount = usePageSpecificAmountCount(nviCandidate.approvals);
 
   const typeString = nviCandidate.publicationDetails.type
     ? t(`registration.publication_types.${nviCandidate.publicationDetails.type}`)
@@ -101,9 +100,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
 
       <VerticalBox sx={{ alignItems: 'center' }}>
         {myApproval?.approvalStatus && <NviStatusChip status={myApproval.approvalStatus} />}
-        <Typography sx={{ mt: '0.5rem' }}>
-          {t('tasks.nvi.x_of_y_approved', { approved: approvedCount, total: nviCandidate.approvals.length })}
-        </Typography>
+        {approvalsCount && <Typography sx={{ mt: '0.5rem' }}>{approvalsCount}</Typography>}
       </VerticalBox>
     </SearchListItem>
   );

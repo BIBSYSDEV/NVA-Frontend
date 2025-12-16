@@ -1950,6 +1950,7 @@
       "no_nvi_candidates": "Du har ingen kandidater for dette søket.",
       "note": "Kommentar",
       "x_of_y_approved": "{{approved}} av {{total}} godkjent",
+      "x_of_y_controlled": "{{controlled}} av {{total}} kontrollert",
       "nvi_control": "NVI-kontroll (Norsk vitenskapsindeks)",
       "nvi_reporting_status": "Status NVI-rapportering",
       "previous_candidate": "Gå til forrige kandidat",

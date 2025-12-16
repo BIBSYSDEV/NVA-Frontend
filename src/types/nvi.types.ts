@@ -21,7 +21,7 @@ export enum NviCandidateStatusEnum {
 
 export type NviCandidateStatus = `${NviCandidateStatusEnum}`;
 
-interface NviCandidateSearchHitApproval {
+export interface NviCandidateSearchHitApproval {
   institutionId: string;
   labels: LanguageString;
   approvalStatus: NviCandidateStatus;

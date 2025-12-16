@@ -6,7 +6,10 @@ import {
   NviCandidateStatus,
   NviCandidateStatusEnum,
 } from '../../api/searchApi';
-import { NviSearchStatus, NviSearchStatusEnum } from '../../types/nvi.types';
+import { NviCandidateSearchHitApproval, NviSearchStatus, NviSearchStatusEnum } from '../../types/nvi.types';
+import { t } from 'i18next';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import { useLocation } from 'react-router';
 
 /*
  * Takes in arrays of statuses extracted from two different url attributes and translates it into the state that
@@ -68,7 +71,7 @@ export const computeParamsFromDropdownStatus = (dropdownStatus: NviSearchStatus[
 };
 
 /*
- * Decides the value to display in the visibility filter dropwdown based on the current status and globalStatus url attributes
+ * Decides the value to display in the visibility filter dropdown based on the current status and globalStatus url attributes
  */
 export const getVisibilityFilterValue = (
   status: NviCandidateStatus[] | null,
@@ -169,4 +172,34 @@ export const isOnlyRejectedSelected = (
         globalStatus.includes(NviCandidateGlobalStatusEnum.Pending))) ??
     false
   );
+};
+
+/* Takes in a list of approvals and returns a line on the format "x of y approved" or similar depending on which page the user is on */
+export const usePageSpecificAmountCount = (approvals: NviCandidateSearchHitApproval[]) => {
+  const location = useLocation();
+  const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
+  const isOnNviDisputesPage = location.pathname === UrlPathTemplate.TasksNviDisputes;
+
+  const approvedCount = approvals.filter(
+    (a: NviCandidateSearchHitApproval) => a.approvalStatus === (NviCandidateStatusEnum.Approved as string)
+  ).length;
+  const rejectedCount = approvals.filter(
+    (a: NviCandidateSearchHitApproval) => a.approvalStatus === (NviCandidateStatusEnum.Rejected as string)
+  ).length;
+
+  let approvalsCountLine = '';
+
+  if (isOnNviDisputesPage) {
+    approvalsCountLine = t('tasks.nvi.x_of_y_approved', {
+      approved: approvedCount,
+      total: approvals.length,
+    });
+  } else if (isOnNviCandidatesPage) {
+    approvalsCountLine = t('tasks.nvi.x_of_y_controlled', {
+      controlled: approvedCount + rejectedCount,
+      total: approvals.length,
+    });
+  }
+
+  return approvalsCountLine;
 };
