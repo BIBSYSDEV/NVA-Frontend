@@ -25,9 +25,10 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
   const { t } = useTranslation();
   const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
-  const approvalsCount = usePageSpecificAmountCount(nviCandidate.approvals);
   const nviParamsFromUrl = useNviCandidatesParams();
   const nviQueryParams = nviParams ?? nviParamsFromUrl;
+
+  const approvalsCount = usePageSpecificAmountCount(nviCandidate.approvals);
 
   const contributors = nviCandidate.publicationDetails.nviContributors;
   const focusedContributors = contributors.slice(0, 5);
