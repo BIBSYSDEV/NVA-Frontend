@@ -644,6 +644,7 @@ export const dataTestId = {
       mediaIssue: 'media-issue',
       nviFailed: 'not-nvi-applicable',
       onlyLinkedMonographNviApplicable: 'only-linked-monograph-nvi-applicable',
+      makeSureCorrectBookCategory: 'make-sure-correct-book-category',
       nviSuccess: 'nvi-applicable',
       otherReleasePublisher: 'artistic-other-release-publisher',
       otherPerfomanceAddWork: 'music-other-performance-add-work',

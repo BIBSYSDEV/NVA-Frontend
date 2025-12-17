@@ -154,6 +154,32 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
         data-testid={dataTestId.registrationWizard.resourceType.onlyLinkedMonographNviApplicable}
       />
     );
+  } else if (
+    containerType === BookType.NonFictionMonograph ||
+    containerType === BookType.Textbook ||
+    containerType === BookType.AcademicCommentary ||
+    containerType === BookType.Encyclopedia
+  ) {
+    return (
+      <>
+        {publisherQuery.data && containerHasIsbn && (
+          <NviStatus
+            scientificValue={
+              seriesScientificValue && seriesScientificValue !== 'Unassigned'
+                ? seriesScientificValue
+                : publisherScientificValue
+            }
+          />
+        )}
+        <InfoBanner
+          type="warning"
+          text={t(
+            'registration.resource_type.nvi.make_sure_that_this_publication_is_linked_to_the_correct_book_category'
+          )}
+          data-testid={dataTestId.registrationWizard.resourceType.makeSureCorrectBookCategory}
+        />
+      </>
+    );
   } else if (publisherQuery.data && containerHasIsbn) {
     return (
       <NviStatus
