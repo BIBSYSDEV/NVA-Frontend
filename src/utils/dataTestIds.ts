@@ -643,6 +643,7 @@ export const dataTestId = {
       mediaSeries: 'media-series',
       mediaIssue: 'media-issue',
       nviFailed: 'not-nvi-applicable',
+      onlyLinkedMonographNviApplicable: 'only-linked-monograph-nvi-applicable',
       nviSuccess: 'nvi-applicable',
       otherReleasePublisher: 'artistic-other-release-publisher',
       otherPerfomanceAddWork: 'music-other-performance-add-work',

@@ -144,15 +144,28 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
   const publisherScientificValue = publisherQuery.data?.scientificValue;
   const seriesScientificValue = seriesQuery.data?.scientificValue;
 
-  return publisherQuery.data && containerHasIsbn ? (
-    <NviStatus
-      scientificValue={
-        seriesScientificValue && seriesScientificValue !== 'Unassigned'
-          ? seriesScientificValue
-          : publisherScientificValue
-      }
-    />
-  ) : (
+  const containerType = containerQuery.data?.entityDescription.reference?.publicationInstance?.type;
+
+  if (containerType === BookType.AcademicMonograph) {
+    return (
+      <InfoBanner
+        type="warning"
+        text={t('registration.resource_type.nvi.only_the_linked_academic_monograph_will_be_included_in_the_nvi')}
+        data-testid={dataTestId.registrationWizard.resourceType.onlyLinkedMonographNviApplicable}
+      />
+    );
+  } else if (publisherQuery.data && containerHasIsbn) {
+    return (
+      <NviStatus
+        scientificValue={
+          seriesScientificValue && seriesScientificValue !== 'Unassigned'
+            ? seriesScientificValue
+            : publisherScientificValue
+        }
+      />
+    );
+  }
+  return (
     <InfoBanner
       text={t('registration.resource_type.nvi.not_applicable_isbn')}
       data-testid={dataTestId.registrationWizard.resourceType.nviFailed}
