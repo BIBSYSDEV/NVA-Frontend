@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchProtectedResource, fetchResource } from '../../../../api/commonApi';
+import { fetchResource } from '../../../../api/commonApi';
 import { InfoBanner } from '../../../../components/InfoBanner';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration, Revision } from '../../../../types/publication_types/bookRegistration.types';
@@ -8,6 +8,9 @@ import { ChapterRegistration } from '../../../../types/publication_types/chapter
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
 import { Publisher, Registration, ScientificValue, SerialPublication } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { useFetchBookRegistration } from '../../../../api/hooks/useFetchBookRegistration';
+import { useFetchPublisherFromId } from '../../../../api/hooks/useFetchPublisherFromId';
+import { useFetchSeries } from '../../../../api/hooks/useFetchSeries';
 
 interface NviValidationProps {
   registration: Registration;
@@ -107,32 +110,13 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
 const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
   const { t } = useTranslation();
   const containerId = registration.entityDescription.reference?.publicationContext.id ?? '';
-
-  const containerQuery = useQuery({
-    queryKey: ['registration', containerId],
-    enabled: !!containerId,
-    queryFn: () => fetchProtectedResource<BookRegistration>(containerId),
-    meta: { errorMessage: t('feedback.error.get_registration') },
-  });
+  const containerQuery = useFetchBookRegistration(containerId);
 
   const publisherId = containerQuery.data?.entityDescription.reference?.publicationContext.publisher?.id ?? '';
   const seriesId = containerQuery.data?.entityDescription.reference?.publicationContext.series?.id ?? '';
 
-  const publisherQuery = useQuery({
-    queryKey: ['channel', publisherId],
-    enabled: !!publisherId,
-    queryFn: () => fetchResource<Publisher>(publisherId),
-    meta: { errorMessage: t('feedback.error.get_publisher') },
-    staleTime: Infinity,
-  });
-
-  const seriesQuery = useQuery({
-    queryKey: ['channel', seriesId],
-    enabled: !!seriesId,
-    queryFn: () => fetchResource<SerialPublication>(seriesId),
-    meta: { errorMessage: t('feedback.error.get_series') },
-    staleTime: Infinity,
-  });
+  const publisherQuery = useFetchPublisherFromId(publisherId);
+  const seriesQuery = useFetchSeries(seriesId);
 
   const containerHasIsbn =
     (containerQuery.data?.entityDescription.reference?.publicationContext.isbnList ?? []).length > 0;
