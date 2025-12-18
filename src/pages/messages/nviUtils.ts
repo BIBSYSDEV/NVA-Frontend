@@ -7,9 +7,9 @@ import {
   NviCandidateStatusEnum,
 } from '../../api/searchApi';
 import { NviCandidateSearchHitApproval, NviSearchStatus, NviSearchStatusEnum } from '../../types/nvi.types';
-import { t } from 'i18next';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { useLocation } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 /*
  * Takes in arrays of statuses extracted from two different url attributes and translates it into the state that
@@ -176,6 +176,7 @@ export const isOnlyRejectedSelected = (
 
 /* Takes in a list of approvals and returns a line on the format "x of y approved" or similar depending on which page the user is on */
 export const usePageSpecificAmountCount = (approvals: NviCandidateSearchHitApproval[]) => {
+  const { t } = useTranslation();
   const location = useLocation();
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviDisputesPage = location.pathname === UrlPathTemplate.TasksNviDisputes;
