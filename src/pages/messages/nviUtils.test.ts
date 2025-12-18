@@ -108,11 +108,6 @@ describe('computeParamsFromDropdownStatus', () => {
         newGlobalStatuses: [NviCandidateGlobalStatusEnum.Rejected, NviCandidateGlobalStatusEnum.Pending],
       });
     });
-    const res = computeParamsFromDropdownStatus([NviSearchStatusEnum.Rejected]);
-    expect(res).toEqual({
-      newStatuses: [NviCandidateStatusEnum.Rejected],
-      newGlobalStatuses: [NviCandidateGlobalStatusEnum.Rejected, NviCandidateGlobalStatusEnum.Pending],
-    });
   });
   describe("Dropdown status is 'Kandidater for kontroll' and 'Godkjent'", () => {
     it('returns the correct statuses', () => {
