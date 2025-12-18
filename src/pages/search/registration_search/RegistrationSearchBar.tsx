@@ -14,12 +14,10 @@ import {
   removeSearchParamValue,
   syncParamsWithSearchFields,
 } from '../../../utils/searchHelpers';
-import { ExportResultsBibTexButton } from '../ExportResultsBibTexButton';
-import { ExportResultsButton } from '../ExportResultsButton';
+import { ExportResultsDropdown } from '../ExportResultsDropdown';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
 import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 
 const facetParams: string[] = [
   ResultParam.Category,
@@ -151,10 +149,7 @@ export const RegistrationSearchBar = () => {
 
             <Box gridArea="buttonRowTop">
               <FilterButton />
-              <ExportResultsButton searchParams={searchParams} />
-              <BetaFunctionality>
-                <ExportResultsBibTexButton />
-              </BetaFunctionality>
+              <ExportResultsDropdown />
             </Box>
 
             {showExtraFilterRow && (
