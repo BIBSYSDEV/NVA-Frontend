@@ -49,7 +49,7 @@ const TasksPage = () => {
   const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator || isThesisCurator;
   const isAnyCurator = isTicketCurator || isNviCurator;
 
-  const { isOnTicketsPage, isOnTicketPage, isOnNviCandidatePage } = checkPages(location);
+  const { isOnTicketsPage, isOnTicketPage, isOnNviCandidatePage } = checkPages(location.pathname);
 
   const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
 
