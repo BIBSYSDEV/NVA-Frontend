@@ -6,11 +6,10 @@ import { BookType, ChapterType, JournalType } from '../../../../types/publicatio
 import { BookRegistration, Revision } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
-import { Publisher, Registration, ScientificValue, SerialPublication } from '../../../../types/registration.types';
+import { Publisher, Registration, SerialPublication } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { useFetchBookRegistration } from '../../../../api/hooks/useFetchBookRegistration';
-import { useFetchPublisherFromId } from '../../../../api/hooks/useFetchPublisherFromId';
-import { useFetchSeries } from '../../../../api/hooks/useFetchSeries';
+import { NviValidationChapter } from './NviValidationChapter';
+import { NviStatus } from './NviStatus';
 
 interface NviValidationProps {
   registration: Registration;
@@ -26,16 +25,16 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
   const isNviApplicableJournalArticle =
     instanceType === JournalType.AcademicArticle || instanceType === JournalType.AcademicLiteratureReview;
   const isNviApplicableBookMonograph = instanceType === BookType.AcademicMonograph;
-  const isNviApplicableChapterArticle = instanceType === ChapterType.AcademicChapter;
+  const isNviApplicableChapter = instanceType === ChapterType.AcademicChapter;
 
-  return isNviApplicableJournalArticle || isNviApplicableBookMonograph || isNviApplicableChapterArticle ? (
+  return isNviApplicableJournalArticle || isNviApplicableBookMonograph || isNviApplicableChapter ? (
     <>
       {isNviApplicableJournalArticle ? (
         <NviValidationJournalArticle registration={registration as JournalRegistration} />
       ) : isNviApplicableBookMonograph ? (
         <NviValidationBookMonograph registration={registration as BookRegistration} />
-      ) : isNviApplicableChapterArticle ? (
-        <NviValidationChapterArticle registration={registration as ChapterRegistration} />
+      ) : isNviApplicableChapter ? (
+        <NviValidationChapter registration={registration as ChapterRegistration} />
       ) : null}
     </>
   ) : null;
@@ -102,105 +101,6 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
         seriesScientificValue && seriesScientificValue !== 'Unassigned'
           ? seriesScientificValue
           : publisherScientificValue
-      }
-    />
-  );
-};
-
-const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
-  const { t } = useTranslation();
-  const containerId = registration.entityDescription.reference?.publicationContext.id ?? '';
-  const containerQuery = useFetchBookRegistration(containerId);
-
-  const publisherId = containerQuery.data?.entityDescription.reference?.publicationContext.publisher?.id ?? '';
-  const seriesId = containerQuery.data?.entityDescription.reference?.publicationContext.series?.id ?? '';
-
-  const publisherQuery = useFetchPublisherFromId(publisherId);
-  const seriesQuery = useFetchSeries(seriesId);
-
-  const containerHasIsbn =
-    (containerQuery.data?.entityDescription.reference?.publicationContext.isbnList ?? []).length > 0;
-
-  if (!containerId) {
-    return null;
-  }
-
-  const publisherScientificValue = publisherQuery.data?.scientificValue;
-  const seriesScientificValue = seriesQuery.data?.scientificValue;
-
-  const containerType = containerQuery.data?.entityDescription.reference?.publicationInstance?.type;
-
-  if (containerType === BookType.AcademicMonograph) {
-    return (
-      <InfoBanner
-        type="warning"
-        text={t('registration.resource_type.nvi.only_the_linked_academic_monograph_will_be_included_in_the_nvi')}
-        data-testid={dataTestId.registrationWizard.resourceType.onlyLinkedMonographNviApplicable}
-      />
-    );
-  } else if (
-    containerType === BookType.NonFictionMonograph ||
-    containerType === BookType.Textbook ||
-    containerType === BookType.AcademicCommentary ||
-    containerType === BookType.Encyclopedia
-  ) {
-    return (
-      <>
-        {publisherQuery.data && containerHasIsbn && (
-          <NviStatus
-            scientificValue={
-              seriesScientificValue && seriesScientificValue !== 'Unassigned'
-                ? seriesScientificValue
-                : publisherScientificValue
-            }
-          />
-        )}
-        <InfoBanner
-          type="warning"
-          text={t(
-            'registration.resource_type.nvi.make_sure_that_this_publication_is_linked_to_the_correct_book_category'
-          )}
-          data-testid={dataTestId.registrationWizard.resourceType.makeSureCorrectBookCategory}
-        />
-      </>
-    );
-  } else if (publisherQuery.data && containerHasIsbn) {
-    return (
-      <NviStatus
-        scientificValue={
-          seriesScientificValue && seriesScientificValue !== 'Unassigned'
-            ? seriesScientificValue
-            : publisherScientificValue
-        }
-      />
-    );
-  }
-  return (
-    <InfoBanner
-      text={t('registration.resource_type.nvi.not_applicable_isbn')}
-      data-testid={dataTestId.registrationWizard.resourceType.nviFailed}
-    />
-  );
-};
-
-interface NviStatusProps {
-  scientificValue?: ScientificValue;
-}
-
-const NviStatus = ({ scientificValue }: NviStatusProps) => {
-  const { t } = useTranslation();
-
-  const isRated = scientificValue === 'LevelOne' || scientificValue === 'LevelTwo';
-
-  return (
-    <InfoBanner
-      text={
-        isRated ? t('registration.resource_type.nvi.applicable') : t('registration.resource_type.nvi.channel_not_rated')
-      }
-      data-testid={
-        isRated
-          ? dataTestId.registrationWizard.resourceType.nviSuccess
-          : dataTestId.registrationWizard.resourceType.nviFailed
       }
     />
   );

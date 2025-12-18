@@ -1749,7 +1749,7 @@
         "not_applicable_revision": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden den er en revisjon",
         "select_all_nvi_categories": "Velg alle",
         "only_the_linked_academic_monograph_will_be_included_in_the_nvi": "Kun den tilknyttede vitenskapelige monografien vil bli inkludert i Norsk vitenskapsindeks",
-        "make_sure_that_this_publication_is_linked_to_the_correct_book_category": "Pass på at denne publikasjonen er koblet til riktig bokkategori"
+        "make_sure_publication_linked_to_the_correct_book_category": "Pass på at denne publikasjonen er koblet til riktig bokkategori"
       },
       "online_issn": "Online ISSN",
       "or": "Eller",
