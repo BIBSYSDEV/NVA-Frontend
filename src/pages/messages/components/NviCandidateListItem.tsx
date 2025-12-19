@@ -13,7 +13,7 @@ import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { FetchNviCandidatesParams } from '../../../api/searchApi';
-import { usePageSpecificAmountCount } from '../nviUtils';
+import { createPageSpecificAmountString } from '../nviUtils';
 
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
@@ -28,7 +28,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
   const nviParamsFromUrl = useNviCandidatesParams();
   const nviQueryParams = nviParams ?? nviParamsFromUrl;
 
-  const approvalsCount = usePageSpecificAmountCount(nviCandidate.approvals);
+  const approvalsCount = createPageSpecificAmountString(t, location.pathname, nviCandidate.approvals);
 
   const contributors = nviCandidate.publicationDetails.nviContributors;
   const focusedContributors = contributors.slice(0, 5);

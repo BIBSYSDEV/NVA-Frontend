@@ -11,8 +11,7 @@ import {
   NviSearchStatusEnum,
 } from '../../types/nvi.types';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { useLocation } from 'react-router';
-import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 
 /*
  * Takes in arrays of statuses extracted from two different url attributes and translates it into the state that
@@ -74,11 +73,17 @@ export const computeParamsFromDropdownStatus = (dropdownStatus: NviSearchStatus[
 };
 
 /* Takes in a list of approvals and returns a line on the format "x of y approved" or similar depending on which page the user is on */
-export const usePageSpecificAmountCount = (approvals: NviCandidateSearchHitApproval[]) => {
-  const { t } = useTranslation();
-  const location = useLocation();
-  const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
-  const isOnNviDisputesPage = location.pathname === UrlPathTemplate.TasksNviDisputes;
+export const createPageSpecificAmountString = (
+  t: TFunction,
+  pathname: string,
+  approvals: NviCandidateSearchHitApproval[]
+) => {
+  if (approvals.length === 0) {
+    return '';
+  }
+
+  const isOnNviCandidatesPage = pathname === UrlPathTemplate.TasksNvi;
+  const isOnNviDisputesPage = pathname === UrlPathTemplate.TasksNviDisputes;
 
   const approvedCount = approvals.filter(
     (a: NviCandidateSearchHitApproval) => a.approvalStatus === NviCandidateApprovalStatusEnum.Approved
