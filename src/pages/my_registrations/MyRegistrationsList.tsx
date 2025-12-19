@@ -41,7 +41,6 @@ export const MyRegistrationsList = ({ registrationsQuery, registrationsKey }: My
       dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-      // Usage inside your async function
       await delay(2000); // waits 2 seconds before refetching in case it gives us fresher data
       await registrationsQuery.refetch();
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
