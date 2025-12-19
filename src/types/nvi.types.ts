@@ -12,19 +12,19 @@ interface NviCandidateContributor {
   name: string;
 }
 
-export enum NviCandidateStatusEnum {
+export enum NviCandidateApprovalStatusEnum {
   New = 'New',
   Pending = 'Pending',
   Rejected = 'Rejected',
   Approved = 'Approved',
 }
 
-export type NviCandidateStatus = `${NviCandidateStatusEnum}`;
+export type NviCandidateApprovalStatus = `${NviCandidateApprovalStatusEnum}`;
 
 export interface NviCandidateSearchHitApproval {
   institutionId: string;
   labels: LanguageString;
-  approvalStatus: NviCandidateStatus;
+  approvalStatus: NviCandidateApprovalStatus;
 }
 
 export interface NviCandidateSearchHit {
@@ -103,7 +103,7 @@ export type NviCandidateSearchResponse = Omit<
 
 export interface Approval {
   institutionId: string;
-  status: NviCandidateStatus;
+  status: NviCandidateApprovalStatus;
   points: number;
   assignee?: string;
 }

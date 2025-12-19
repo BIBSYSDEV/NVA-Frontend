@@ -4,7 +4,12 @@ import {
   NviCandidateStatus,
   NviCandidateStatusEnum,
 } from '../../api/searchApi';
-import { NviCandidateSearchHitApproval, NviSearchStatus, NviSearchStatusEnum } from '../../types/nvi.types';
+import {
+  NviCandidateSearchHitApproval,
+  NviCandidateApprovalStatusEnum,
+  NviSearchStatus,
+  NviSearchStatusEnum,
+} from '../../types/nvi.types';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
@@ -75,8 +80,12 @@ export const usePageSpecificAmountCount = (approvals: NviCandidateSearchHitAppro
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviDisputesPage = location.pathname === UrlPathTemplate.TasksNviDisputes;
 
-  const approvedCount = approvals.filter((a: NviCandidateSearchHitApproval) => a.approvalStatus === 'Approved').length;
-  const rejectedCount = approvals.filter((a: NviCandidateSearchHitApproval) => a.approvalStatus === 'Rejected').length;
+  const approvedCount = approvals.filter(
+    (a: NviCandidateSearchHitApproval) => a.approvalStatus === NviCandidateApprovalStatusEnum.Approved
+  ).length;
+  const rejectedCount = approvals.filter(
+    (a: NviCandidateSearchHitApproval) => a.approvalStatus === NviCandidateApprovalStatusEnum.Rejected
+  ).length;
 
   let approvalsCountLine = '';
 
