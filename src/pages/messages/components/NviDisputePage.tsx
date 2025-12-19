@@ -17,12 +17,14 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
+import { NviDisputeVisibilityFilter } from './NviDisputeVisibilityFilter';
 
 export const NviDisputePage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const nviDisputeParams = useNviDisputeParams();
   const [searchParams] = useSearchParams();
+
+  const nviDisputeParams = useNviDisputeParams();
   const nviCandidatesQuery = useFetchNviCandidates({ params: nviDisputeParams });
   const nviCandidatesQueryResults = nviCandidatesQuery.data?.hits ?? [];
 
@@ -38,11 +40,14 @@ export const NviDisputePage = () => {
       </Typography>
 
       <Grid container columns={16} spacing="1rem" sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
-        <Grid size={16}>
+        <Grid size={12}>
           <SearchForm
             placeholder={t('tasks.search_placeholder')}
             paginationOffsetParamName={NviCandidatesSearchParam.Offset}
           />
+        </Grid>
+        <Grid size={4}>
+          <NviDisputeVisibilityFilter />
         </Grid>
         <Grid size={{ xs: 16, sm: 8, md: 8, lg: 6 }}>
           <CuratorSelector

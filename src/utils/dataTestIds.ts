@@ -769,6 +769,8 @@ export const dataTestId = {
     messageSendButton: 'send-note-button',
     nvi: {
       approveButton: 'approve-button',
+      visibilityFilter: 'visibility-filter',
+      disputeVisibilityFilter: 'dispute-visibility-filter',
       visibilityCheckbox: 'visibility-checkbox',
       candidatesList: 'nvi-candidates-list',
       deleteNoteButton: 'delete-note-button',

@@ -1,7 +1,17 @@
-import { computeParamsFromDropdownStatus, computeDropdownStatusFromParams } from './nviUtils';
+import {
+  computeParamsFromDropdownStatus,
+  computeDropdownStatusFromParams,
+  createPageSpecificAmountString,
+} from './nviUtils';
 import { describe, expect, it } from 'vitest';
 import { NviCandidateStatusEnum, NviCandidateGlobalStatusEnum } from '../../api/searchApi';
-import { NviSearchStatusEnum } from '../../types/nvi.types';
+import {
+  NviCandidateApprovalStatusEnum,
+  NviCandidateSearchHitApproval,
+  NviSearchStatusEnum,
+} from '../../types/nvi.types';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import { TFunction } from 'i18next';
 
 describe('computeDropdownStatusFromParams', () => {
   describe("status: pending and globalStatus: pending'", () => {
@@ -162,5 +172,57 @@ describe('computeParamsFromDropdownStatus', () => {
         ],
       });
     });
+  });
+});
+
+const tMock = (key: string, params: Record<string, string | number>) => {
+  if (key === 'tasks.nvi.x_of_y_approved') {
+    return `${params.approved} of ${params.total} approved`;
+  }
+  if (key === 'tasks.nvi.x_of_y_controlled') {
+    return `${params.controlled} of ${params.total} controlled`;
+  }
+  return '';
+};
+
+describe('createPageSpecificAmountString', () => {
+  it('returns approved string for NVI disputes page', () => {
+    const approvals = [
+      { institutionId: '1', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.Approved },
+      { institutionId: '2', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.Rejected },
+      { institutionId: '3', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.Approved },
+      { institutionId: '4', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.Pending },
+      { institutionId: '5', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.New },
+    ] as NviCandidateSearchHitApproval[];
+    const result = createPageSpecificAmountString(tMock as TFunction, UrlPathTemplate.TasksNviDisputes, approvals);
+    expect(result).toBe('2 of 5 approved');
+  });
+
+  it('returns controlled string for NVI candidates page', () => {
+    const approvals = [
+      { institutionId: '1', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.Pending },
+      { institutionId: '2', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.New },
+      { institutionId: '3', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.Approved },
+      { institutionId: '4', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.Rejected },
+      { institutionId: '5', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.Rejected },
+    ] as NviCandidateSearchHitApproval[];
+    const result = createPageSpecificAmountString(tMock as TFunction, UrlPathTemplate.TasksNvi, approvals as any);
+    expect(result).toBe('3 of 5 controlled');
+  });
+
+  it('returns empty string for other pages', () => {
+    const approvals = [
+      { institutionId: '1', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.Pending },
+      { institutionId: '2', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.New },
+      { institutionId: '3', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.Approved },
+      { institutionId: '4', labels: {}, approvalStatus: NviCandidateApprovalStatusEnum.Rejected },
+    ] as NviCandidateSearchHitApproval[];
+    const result = createPageSpecificAmountString(tMock as TFunction, '/some/other/page', approvals as any);
+    expect(result).toBe('');
+  });
+
+  it('handles empty approvals array', () => {
+    const result = createPageSpecificAmountString(tMock as TFunction, UrlPathTemplate.TasksNvi, []);
+    expect(result).toBe('');
   });
 });
