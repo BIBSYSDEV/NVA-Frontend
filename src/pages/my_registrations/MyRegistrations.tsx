@@ -4,7 +4,10 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router';
-import { useMyRegistrationsSearch } from '../../api/hooks/useMyRegistrationsSearch';
+import {
+  myRegistrationsSearchQueryKeyString,
+  useMyRegistrationsSearch,
+} from '../../api/hooks/useMyRegistrationsSearch';
 import { deleteRegistration } from '../../api/registrationApi';
 import { ProtectedResultParam, ResultParam, ResultSearchOrder, SortOrder } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
@@ -29,12 +32,16 @@ export const MyRegistrations = () => {
 
   const params = useRegistrationsQueryParams();
   const statusValue = params.status?.[0] ?? RegistrationStatus.Draft;
+  const queryKey = [myRegistrationsSearchQueryKeyString, params];
 
   const myRegistrationsQuery = useMyRegistrationsSearch({
-    ...params,
-    status: [statusValue],
-    order: params.order ?? ResultSearchOrder.ModifiedDate,
-    sort: params.sort ?? ('desc' satisfies SortOrder),
+    queryKey: queryKey,
+    params: {
+      ...params,
+      status: [statusValue],
+      order: params.order ?? ResultSearchOrder.ModifiedDate,
+      sort: params.sort ?? ('desc' satisfies SortOrder),
+    },
   });
 
   const registrations = myRegistrationsQuery.data?.hits ?? [];
@@ -120,7 +127,7 @@ export const MyRegistrations = () => {
       {myRegistrationsQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        <MyRegistrationsList registrationsQuery={myRegistrationsQuery} />
+        <MyRegistrationsList registrationsQuery={myRegistrationsQuery} registrationsKey={queryKey} />
       )}
 
       <ConfirmDialog
