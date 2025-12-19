@@ -95,7 +95,7 @@ interface Person {
   username: string;
 }
 
-type CustomerTicketAggregations = {
+export type CustomerTicketAggregations = {
   type?: AggregationValue<TicketType>[];
   status?: AggregationValue<TicketStatus>[];
   byUserPending?: AggregationValue<TicketType>[];

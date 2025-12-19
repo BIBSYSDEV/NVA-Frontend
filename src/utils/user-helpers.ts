@@ -88,6 +88,26 @@ export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPers
 
 export const getFullName = (firstName?: string, lastName?: string) => [firstName, lastName].filter(Boolean).join(' ');
 
+export const isNviCurator = (user: User | null) => !!user && !!user.customerId && user.isNviCurator;
+
+export const isPublishingCurator = (user: User | null) => !!user && !!user.customerId && user.isPublishingCurator;
+
+export const isThesisCurator = (user: User | null) => !!user && !!user.customerId && user.isThesisCurator;
+
+export const isDoiCurator = (user: User | null) => !!user && !!user.customerId && user.isDoiCurator;
+
+export const isSupportCurator = (user: User | null) => !!user && !!user.customerId && user.isSupportCurator;
+
+export const checkUserRoles = (user: User | null) => {
+  return {
+    isNviCurator: isNviCurator(user),
+    isPublishingCurator: isPublishingCurator(user),
+    isThesisCurator: isThesisCurator(user),
+    isDoiCurator: isDoiCurator(user),
+    isSupportCurator: isSupportCurator(user),
+  };
+};
+
 export const hasCuratorRole = (user: User | null) =>
   !!user && !!user.customerId && (hasTicketCuratorRole(user) || user.isNviCurator);
 
