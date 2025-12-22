@@ -623,11 +623,10 @@ export enum ProtectedResultParam {
   Status = 'status',
 }
 
-export interface FetchProtectedResultsParams
-  extends Pick<
-    FetchResultsParams,
-    ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
-  > {
+export interface FetchProtectedResultsParams extends Pick<
+  FetchResultsParams,
+  ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
+> {
   [ProtectedResultParam.Status]?: RegistrationStatus[] | null;
 }
 

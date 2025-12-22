@@ -73,8 +73,10 @@ export interface MediaContributionPeriodicalPublicationContext extends Omit<Jour
     | PublicationChannelType.UnconfirmedMediaContributionPeriodical;
 }
 
-export interface MediaContributionPeriodicalPublicationInstance
-  extends Omit<JournalPublicationInstance, 'type' | 'corrigendumFor'> {
+export interface MediaContributionPeriodicalPublicationInstance extends Omit<
+  JournalPublicationInstance,
+  'type' | 'corrigendumFor'
+> {
   type: MediaType.MediaFeatureArticle | MediaType.MediaReaderOpinion | '';
 }
 
