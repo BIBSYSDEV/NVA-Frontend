@@ -26,7 +26,8 @@ import { AddCuratorForm } from './AddCuratorForm';
 import { OrganizationCuratorsAccordionProps } from './OrganizationCuratorsAccordion';
 
 interface AddCuratorDialogProps
-  extends Pick<DialogProps, 'open'>,
+  extends
+    Pick<DialogProps, 'open'>,
     Pick<OrganizationCuratorsAccordionProps, 'refetchCurators' | 'parentOrganizationIds'> {
   onClose: () => void;
   currentOrganization: Organization;
