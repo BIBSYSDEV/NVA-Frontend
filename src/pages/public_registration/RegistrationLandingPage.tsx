@@ -27,7 +27,7 @@ export const RegistrationLandingPage = () => {
   const { identifier } = useParams<IdentifierParams>();
   const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
   const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
-  const [disableEdit, setDisableEdit] = useState(false);
+  const [isAwaitingStatusSync, setIsAwaitingStatusSync] = useState(false);
 
   const registration = registrationQuery.data;
   const registrationId = registration?.id;
@@ -69,7 +69,7 @@ export const RegistrationLandingPage = () => {
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
           <ErrorBoundary>
-            <LandingPageContext.Provider value={{ disableEdit, setDisableEdit }}>
+            <LandingPageContext.Provider value={{ isAwaitingStatusSync, setIsAwaitingStatusSync }}>
               <PublicRegistrationContent registration={registration} />
 
               <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>

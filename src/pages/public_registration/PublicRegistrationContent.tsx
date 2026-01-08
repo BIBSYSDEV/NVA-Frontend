@@ -68,7 +68,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   });
 
   const userCanEditRegistration = userHasAccessRight(registration, 'partial-update');
-  const { disableEdit } = useContext(LandingPageContext);
+  const { isAwaitingStatusSync } = useContext(LandingPageContext);
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
@@ -94,7 +94,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         {userCanEditRegistration && (
           <Tooltip title={t('registration.edit_registration')}>
             <IconButton
-              disabled={disableEdit}
+              disabled={isAwaitingStatusSync}
               component={RouterLink}
               state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
               to={getWizardPathByRegistration(registration)}

@@ -64,7 +64,7 @@ export const PublishingAccordion = ({
   const location = useLocation();
   const locationState = location.state as SelectedTicketTypeLocationState | undefined;
   const refetchData = useContext(ActionPanelContext).refetchData;
-  const { setDisableEdit } = useContext(LandingPageContext);
+  const { setIsAwaitingStatusSync } = useContext(LandingPageContext);
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
@@ -165,8 +165,8 @@ export const PublishingAccordion = ({
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
 
   useEffect(() => {
-    setDisableEdit(hasMismatchingPublishedStatus || isWaitingForFileDeletion);
-  }, [hasMismatchingPublishedStatus, isWaitingForFileDeletion, setDisableEdit]);
+    setIsAwaitingStatusSync(hasMismatchingPublishedStatus || isWaitingForFileDeletion);
+  }, [hasMismatchingPublishedStatus, isWaitingForFileDeletion, setIsAwaitingStatusSync]);
 
   return (
     <Accordion
