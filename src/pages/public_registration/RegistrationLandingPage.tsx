@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router';
@@ -7,6 +8,7 @@ import { useFetchRegistrationTickets } from '../../api/hooks/useFetchRegistratio
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ActionPanelContext } from '../../context/ActionPanelContext';
+import { LandingPageContext } from '../../context/LandingPageContext';
 import { RootState } from '../../redux/store';
 import { RegistrationStatus } from '../../types/registration.types';
 import { userHasAccessRight } from '../../utils/registration-helpers';
@@ -16,8 +18,6 @@ import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
 import { ActionPanel } from './ActionPanel';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
-import { LandingPageContext } from '../../context/LandingPageContext';
-import { useState } from 'react';
 
 export const RegistrationLandingPage = () => {
   const user = useSelector((state: RootState) => state.user);

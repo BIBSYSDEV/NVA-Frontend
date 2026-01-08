@@ -8,6 +8,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
 import { updateTicket, UpdateTicketData } from '../../../api/registrationApi';
+import { ActionPanelContext } from '../../../context/ActionPanelContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
@@ -15,7 +16,6 @@ import { RegistrationTab } from '../../../types/registration.types';
 import { MAX_MESSAGE_LENGTH } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
-import { ActionPanelContext } from '../../../context/ActionPanelContext';
 
 interface PendingPublishingTicketForCuratorSectionProps {
   publishingTicket: PublishingTicket;

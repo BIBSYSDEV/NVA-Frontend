@@ -12,6 +12,7 @@ import { RegistrationErrorActions } from '../../../components/RegistrationErrorA
 import { TicketStatusChip } from '../../../components/StatusChip';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { ActionPanelContext } from '../../../context/ActionPanelContext';
+import { LandingPageContext } from '../../../context/LandingPageContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
@@ -41,7 +42,6 @@ import { PublishingAccordionLastTicketInfo } from './PublishingAccordionLastTick
 import { RefreshPublishingRequestButton } from './RefreshPublishingRequestButton';
 import { TaskAccordionSummary } from './styles';
 import { TicketAssignee } from './TicketAssignee';
-import { LandingPageContext } from '../../../context/LandingPageContext';
 
 interface PublishingAccordionProps {
   registration: Registration;
@@ -64,6 +64,7 @@ export const PublishingAccordion = ({
   const location = useLocation();
   const locationState = location.state as SelectedTicketTypeLocationState | undefined;
   const refetchData = useContext(ActionPanelContext).refetchData;
+  const { setDisableEdit } = useContext(LandingPageContext);
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
@@ -162,8 +163,6 @@ export const PublishingAccordion = ({
     ? locationState.selectedTicketType === 'PublishingRequest' ||
       locationState.selectedTicketType === 'FilesApprovalThesis'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
-
-  const { setDisableEdit } = useContext(LandingPageContext);
 
   useEffect(() => {
     setDisableEdit(hasMismatchingPublishedStatus || isWaitingForFileDeletion);
