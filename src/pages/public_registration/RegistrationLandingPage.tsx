@@ -71,7 +71,6 @@ export const RegistrationLandingPage = () => {
             <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
               <ActionPanel
                 registration={registration}
-                refetchRegistrationAndTickets={refetchRegistrationAndTickets}
                 tickets={ticketsQuery.data?.tickets ?? []}
                 isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
               />
