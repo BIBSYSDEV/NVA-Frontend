@@ -1,7 +1,7 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
@@ -41,6 +41,7 @@ import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
+import { LandingPageContext } from '../../context/LandingPageContext';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -67,6 +68,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   });
 
   const userCanEditRegistration = userHasAccessRight(registration, 'partial-update');
+  const { disableEdit } = useContext(LandingPageContext);
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
@@ -92,6 +94,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         {userCanEditRegistration && (
           <Tooltip title={t('registration.edit_registration')}>
             <IconButton
+              disabled={disableEdit}
               component={RouterLink}
               state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
               to={getWizardPathByRegistration(registration)}

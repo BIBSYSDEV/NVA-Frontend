@@ -16,6 +16,8 @@ import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
 import { ActionPanel } from './ActionPanel';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
+import { LandingPageContext } from '../../context/LandingPageContext';
+import { useState } from 'react';
 
 export const RegistrationLandingPage = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -25,6 +27,7 @@ export const RegistrationLandingPage = () => {
   const { identifier } = useParams<IdentifierParams>();
   const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
   const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
+  const [disableEdit, setDisableEdit] = useState(false);
 
   const registration = registrationQuery.data;
   const registrationId = registration?.id;
@@ -66,15 +69,17 @@ export const RegistrationLandingPage = () => {
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
           <ErrorBoundary>
-            <PublicRegistrationContent registration={registration} />
+            <LandingPageContext.Provider value={{ disableEdit, setDisableEdit }}>
+              <PublicRegistrationContent registration={registration} />
 
-            <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
-              <ActionPanel
-                registration={registration}
-                tickets={ticketsQuery.data?.tickets ?? []}
-                isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
-              />
-            </ActionPanelContext.Provider>
+              <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
+                <ActionPanel
+                  registration={registration}
+                  tickets={ticketsQuery.data?.tickets ?? []}
+                  isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
+                />
+              </ActionPanelContext.Provider>
+            </LandingPageContext.Provider>
           </ErrorBoundary>
         ) : (
           <NotPublished />

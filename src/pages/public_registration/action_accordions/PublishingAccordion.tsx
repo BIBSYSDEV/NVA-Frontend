@@ -2,7 +2,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import { Accordion, AccordionDetails, Box, Button, Divider, Tooltip, Typography } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
@@ -41,6 +41,7 @@ import { PublishingAccordionLastTicketInfo } from './PublishingAccordionLastTick
 import { RefreshPublishingRequestButton } from './RefreshPublishingRequestButton';
 import { TaskAccordionSummary } from './styles';
 import { TicketAssignee } from './TicketAssignee';
+import { LandingPageContext } from '../../../context/LandingPageContext';
 
 interface PublishingAccordionProps {
   registration: Registration;
@@ -161,6 +162,12 @@ export const PublishingAccordion = ({
     ? locationState.selectedTicketType === 'PublishingRequest' ||
       locationState.selectedTicketType === 'FilesApprovalThesis'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
+
+  const { setDisableEdit } = useContext(LandingPageContext);
+
+  useEffect(() => {
+    setDisableEdit(hasMismatchingPublishedStatus || isWaitingForFileDeletion);
+  }, [hasMismatchingPublishedStatus, isWaitingForFileDeletion, setDisableEdit]);
 
   return (
     <Accordion
