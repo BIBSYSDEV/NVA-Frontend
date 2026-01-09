@@ -2,7 +2,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import { Accordion, AccordionDetails, Box, Button, Divider, Tooltip, Typography } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
@@ -12,6 +12,7 @@ import { RegistrationErrorActions } from '../../../components/RegistrationErrorA
 import { TicketStatusChip } from '../../../components/StatusChip';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { ActionPanelContext } from '../../../context/ActionPanelContext';
+import { LandingPageContext } from '../../../context/LandingPageContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
@@ -63,6 +64,7 @@ export const PublishingAccordion = ({
   const location = useLocation();
   const locationState = location.state as SelectedTicketTypeLocationState | undefined;
   const refetchData = useContext(ActionPanelContext).refetchData;
+  const { setIsAwaitingStatusSync } = useContext(LandingPageContext);
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
@@ -161,6 +163,10 @@ export const PublishingAccordion = ({
     ? locationState.selectedTicketType === 'PublishingRequest' ||
       locationState.selectedTicketType === 'FilesApprovalThesis'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
+
+  useEffect(() => {
+    setIsAwaitingStatusSync(hasMismatchingPublishedStatus || isWaitingForFileDeletion);
+  }, [hasMismatchingPublishedStatus, isWaitingForFileDeletion, setIsAwaitingStatusSync]);
 
   return (
     <Accordion

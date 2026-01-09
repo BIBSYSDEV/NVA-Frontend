@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router';
@@ -7,6 +8,7 @@ import { useFetchRegistrationTickets } from '../../api/hooks/useFetchRegistratio
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ActionPanelContext } from '../../context/ActionPanelContext';
+import { LandingPageContext } from '../../context/LandingPageContext';
 import { RootState } from '../../redux/store';
 import { RegistrationStatus } from '../../types/registration.types';
 import { userHasAccessRight } from '../../utils/registration-helpers';
@@ -25,6 +27,7 @@ export const RegistrationLandingPage = () => {
   const { identifier } = useParams<IdentifierParams>();
   const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
   const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
+  const [isAwaitingStatusSync, setIsAwaitingStatusSync] = useState(false);
 
   const registration = registrationQuery.data;
   const registrationId = registration?.id;
@@ -66,15 +69,17 @@ export const RegistrationLandingPage = () => {
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
           <ErrorBoundary>
-            <PublicRegistrationContent registration={registration} />
+            <LandingPageContext.Provider value={{ isAwaitingStatusSync, setIsAwaitingStatusSync }}>
+              <PublicRegistrationContent registration={registration} />
 
-            <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
-              <ActionPanel
-                registration={registration}
-                tickets={ticketsQuery.data?.tickets ?? []}
-                isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
-              />
-            </ActionPanelContext.Provider>
+              <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
+                <ActionPanel
+                  registration={registration}
+                  tickets={ticketsQuery.data?.tickets ?? []}
+                  isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
+                />
+              </ActionPanelContext.Provider>
+            </LandingPageContext.Provider>
           </ErrorBoundary>
         ) : (
           <NotPublished />
