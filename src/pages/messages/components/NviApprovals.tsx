@@ -5,7 +5,7 @@ import { Box, Skeleton, Table, TableBody, TableCell, TableHead, TableRow, Typogr
 import { useTranslation } from 'react-i18next';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
-import { Approval, NviCandidateStatus } from '../../../types/nvi.types';
+import { Approval, NviCandidateApprovalStatus } from '../../../types/nvi.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface NviApprovalsProps {
@@ -70,7 +70,7 @@ const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalSta
 };
 
 interface InstitutionStatusProps {
-  status: NviCandidateStatus;
+  status: NviCandidateApprovalStatus;
 }
 
 const InstitutionStatus = ({ status }: InstitutionStatusProps) => {

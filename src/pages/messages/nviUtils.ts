@@ -1,12 +1,17 @@
 import {
-  NviCandidateFilter,
   NviCandidateGlobalStatus,
   NviCandidateGlobalStatusEnum,
-  NviCandidatesSearchParam,
   NviCandidateStatus,
   NviCandidateStatusEnum,
 } from '../../api/searchApi';
-import { NviSearchStatus, NviSearchStatusEnum } from '../../types/nvi.types';
+import {
+  NviCandidateSearchHitApproval,
+  NviCandidateApprovalStatusEnum,
+  NviSearchStatus,
+  NviSearchStatusEnum,
+} from '../../types/nvi.types';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import { TFunction } from 'i18next';
 
 /*
  * Takes in arrays of statuses extracted from two different url attributes and translates it into the state that
@@ -67,106 +72,39 @@ export const computeParamsFromDropdownStatus = (dropdownStatus: NviSearchStatus[
   return { newStatuses: Array.from(newStatus), newGlobalStatuses: Array.from(newGlobalStatus) };
 };
 
-/*
- * Decides the value to display in the visibility filter dropwdown based on the current status and globalStatus url attributes
- */
-export const getVisibilityFilterValue = (
-  status: NviCandidateStatus[] | null,
-  globalStatus: NviCandidateGlobalStatus[] | null,
-  filter: NviCandidateFilter | null
+/* Takes in a list of approvals and returns a line on the format "x of y approved" or similar depending on which page the user is on */
+export const createPageSpecificAmountString = (
+  t: TFunction,
+  pathname: string,
+  approvals: NviCandidateSearchHitApproval[]
 ) => {
-  /* We can only select a visibility filter when there is only one NVI status selected */
-  if (status?.length === 1) {
-    if (status?.includes('pending')) {
-      if (filter === 'collaboration') {
-        return filter;
-      }
-    } else if (status?.includes('approved') || status?.includes('rejected')) {
-      if (globalStatus?.length === 1) {
-        return globalStatus[0];
-      }
-    }
+  if (approvals.length === 0) {
+    return '';
   }
-  return '';
-};
 
-/* Takes in an object of url params, and some status- and filter values and returns necessary new param values to reflect the new filters */
-export const updateParamsFromStatusAndFilterValues = (
-  params: URLSearchParams,
-  status: NviCandidateStatus[],
-  globalStatus: NviCandidateGlobalStatus[],
-  newFilter: NviCandidateFilter | NviCandidateGlobalStatus
-) => {
-  const newParams = new URLSearchParams(params);
+  const isOnNviCandidatesPage = pathname === UrlPathTemplate.TasksNvi;
+  const isOnNviDisputesPage = pathname === UrlPathTemplate.TasksNviDisputes;
 
-  // Ensure options are only available when only one item in status dropdown is selected
-  if (status?.length === 1) {
-    if (status?.includes('pending')) {
-      if (newFilter === 'collaboration') {
-        newParams.set(NviCandidatesSearchParam.Filter, newFilter satisfies NviCandidateFilter);
-      }
-    } else if (status?.includes('approved')) {
-      if (newFilter === 'approved' || newFilter === 'pending') {
-        newParams.set(NviCandidatesSearchParam.GlobalStatus, newFilter satisfies NviCandidateGlobalStatus);
-      } else {
-        newParams.set(
-          NviCandidatesSearchParam.GlobalStatus,
-          ['approved' satisfies NviCandidateGlobalStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
-        );
-      }
-    } else if (status?.includes('rejected')) {
-      if (newFilter === 'rejected' || newFilter === 'pending') {
-        newParams.set(NviCandidatesSearchParam.GlobalStatus, newFilter satisfies NviCandidateGlobalStatus);
-      } else {
-        newParams.set(
-          NviCandidatesSearchParam.GlobalStatus,
-          ['rejected' satisfies NviCandidateGlobalStatus, 'pending' satisfies NviCandidateGlobalStatus].join(',')
-        );
-      }
-    }
+  const approvedCount = approvals.filter(
+    (a: NviCandidateSearchHitApproval) => a.approvalStatus === NviCandidateApprovalStatusEnum.Approved
+  ).length;
+  const rejectedCount = approvals.filter(
+    (a: NviCandidateSearchHitApproval) => a.approvalStatus === NviCandidateApprovalStatusEnum.Rejected
+  ).length;
+
+  let approvalsCountLine = '';
+
+  if (isOnNviDisputesPage) {
+    approvalsCountLine = t('tasks.nvi.x_of_y_approved', {
+      approved: approvedCount,
+      total: approvals.length,
+    });
+  } else if (isOnNviCandidatesPage) {
+    approvalsCountLine = t('tasks.nvi.x_of_y_controlled', {
+      controlled: approvedCount + rejectedCount,
+      total: approvals.length,
+    });
   }
-  return newParams;
-};
 
-export const isOnlyPendingSelected = (
-  status: NviCandidateStatus[] | null,
-  globalStatus: NviCandidateGlobalStatus[] | null
-) => {
-  return (
-    (status?.length === 1 &&
-      status[0] === NviCandidateStatusEnum.Pending &&
-      globalStatus?.length === 1 &&
-      globalStatus[0] === NviCandidateGlobalStatusEnum.Pending) ??
-    false
-  );
-};
-
-export const isOnlyApprovedSelected = (
-  status: NviCandidateStatus[] | null,
-  globalStatus: NviCandidateGlobalStatus[] | null
-) => {
-  return (
-    (status?.length === 1 &&
-      status[0] === NviCandidateStatusEnum.Approved &&
-      globalStatus &&
-      globalStatus.length < 3 &&
-      (globalStatus.includes(NviCandidateGlobalStatusEnum.Approved) ||
-        globalStatus.includes(NviCandidateGlobalStatusEnum.Pending))) ??
-    false
-  );
-};
-
-export const isOnlyRejectedSelected = (
-  status: NviCandidateStatus[] | null,
-  globalStatus: NviCandidateGlobalStatus[] | null
-) => {
-  return (
-    (status?.length === 1 &&
-      status[0] === NviCandidateStatusEnum.Rejected &&
-      globalStatus &&
-      globalStatus.length < 3 &&
-      (globalStatus.includes(NviCandidateGlobalStatusEnum.Rejected) ||
-        globalStatus.includes(NviCandidateGlobalStatusEnum.Pending))) ??
-    false
-  );
+  return approvalsCountLine;
 };

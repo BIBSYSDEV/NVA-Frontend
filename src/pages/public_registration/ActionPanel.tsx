@@ -23,16 +23,10 @@ enum TabValue {
 
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
-  refetchRegistrationAndTickets: () => Promise<void>;
   isLoadingData: boolean;
 }
 
-export const ActionPanel = ({
-  registration,
-  tickets,
-  refetchRegistrationAndTickets,
-  isLoadingData,
-}: ActionPanelProps) => {
+export const ActionPanel = ({ registration, tickets, isLoadingData }: ActionPanelProps) => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
   const contributors = registration.entityDescription?.contributors ?? [];
@@ -127,7 +121,6 @@ export const ActionPanel = ({
       <TabPanel tabValue={tabValue} index={0}>
         <ErrorBoundary>
           <ActionPanelContent
-            refetchData={refetchRegistrationAndTickets}
             isLoadingData={isLoadingData}
             registration={registration}
             shouldSeePublishingAccordion={shouldSeePublishingAccordion}

@@ -770,6 +770,8 @@ export const dataTestId = {
     nvi: {
       approveButton: 'approve-button',
       visibilityFilter: 'visibility-filter',
+      disputeVisibilityFilter: 'dispute-visibility-filter',
+      visibilityCheckbox: 'visibility-checkbox',
       candidatesList: 'nvi-candidates-list',
       deleteNoteButton: 'delete-note-button',
       dialogTabButton: 'dialog-tab-button',

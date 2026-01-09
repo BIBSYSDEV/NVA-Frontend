@@ -13,8 +13,7 @@ export interface ResearchDataRegistration extends BaseRegistration {
 }
 
 export interface ResearchDataPublicationInstance
-  extends Partial<DataManagementPlanPublicationInstance>,
-    Partial<DatasetPublicationInstance> {
+  extends Partial<DataManagementPlanPublicationInstance>, Partial<DatasetPublicationInstance> {
   type: ResearchDataType | '';
 }
 
