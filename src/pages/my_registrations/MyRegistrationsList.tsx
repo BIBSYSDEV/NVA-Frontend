@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { deleteRegistration } from '../../api/registrationApi';
-import { ResultParam, ResultSearchOrder } from '../../api/searchApi';
+import { RegistrationSearchResponse, ResultParam, ResultSearchOrder } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { SortSelector } from '../../components/SortSelector';
 import { setNotification } from '../../redux/notificationSlice';
@@ -42,14 +42,17 @@ export const MyRegistrationsList = ({ registrationsQuery, registrationsKey }: My
       dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-      await delay(DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS); // reindexing is slow
+      await delay(DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS); // waits 2 seconds before refetching in case it gives us fresher data
       await registrationsQuery.refetch();
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
       // Update cache manually for cases when the refetch doesn't reflect the deletion
-      queryClient.setQueryData(registrationsKey, (oldData: any) => ({
-        ...oldData,
-        hits: oldData.hits.filter((item: RegistrationSearchItem) => item.id !== registrationToDelete.id),
-      }));
+      queryClient.setQueryData(registrationsKey, (oldData: RegistrationSearchResponse | undefined) => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          hits: oldData.hits.filter((item) => item.id !== registrationToDelete.id),
+        };
+      });
       setIsDeleting(false);
       setShowDeleteModal(false);
     }

@@ -35,16 +35,18 @@ export const MyRegistrations = () => {
 
   const params = useRegistrationsQueryParams();
   const statusValue = params.status?.[0] ?? RegistrationStatus.Draft;
-  const queryKey = [myRegistrationsSearchQueryKeyString, params];
+
+  const searchParams = {
+    ...params,
+    status: [statusValue],
+    order: params.order ?? ResultSearchOrder.ModifiedDate,
+    sort: params.sort ?? ('desc' satisfies SortOrder),
+  };
+  const queryKey = [myRegistrationsSearchQueryKeyString, searchParams];
 
   const myRegistrationsQuery = useMyRegistrationsSearch({
     queryKey: queryKey,
-    params: {
-      ...params,
-      status: [statusValue],
-      order: params.order ?? ResultSearchOrder.ModifiedDate,
-      sort: params.sort ?? ('desc' satisfies SortOrder),
-    },
+    params: searchParams,
   });
 
   const registrations = myRegistrationsQuery.data?.hits ?? [];
