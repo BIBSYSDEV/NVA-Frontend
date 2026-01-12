@@ -18,6 +18,7 @@ export const CorrectionListYearFilter = () => {
   const options = [
     { value: (currentYear + 1).toString(), label: `${currentYear + 1}` },
     { value: currentYear.toString(), label: `${currentYear}` },
+    { value: (currentYear - 1).toString(), label: `${currentYear - 1}` },
     { value: 'showAll', label: t('common.show_all') },
   ];
 
@@ -29,6 +30,7 @@ export const CorrectionListYearFilter = () => {
         select
         data-testid={dataTestId.tasksPage.nvi.yearSelect}
         size="small"
+        defaultValue={(currentYear - 1).toString()}
         value={selectedYear}
         onChange={(event) => {
           const selectedValue = event.target.value;
