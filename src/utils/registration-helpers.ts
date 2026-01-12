@@ -625,6 +625,10 @@ export const contributorConfig: ContributorConfig = {
     ],
     secondaryRoles: [],
   },
+  [ArtisticType.OtherArtisticOutput]: {
+    primaryRoles: [ContributorRole.Artist, ContributorRole.Curator, ContributorRole.Consultant, ContributorRole.Other],
+    secondaryRoles: [],
+  },
   // Media
   [MediaType.MediaFeatureArticle]: {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Other],
