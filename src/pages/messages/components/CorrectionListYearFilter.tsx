@@ -30,7 +30,6 @@ export const CorrectionListYearFilter = () => {
         select
         data-testid={dataTestId.tasksPage.nvi.yearSelect}
         size="small"
-        defaultValue={(currentYear - 1).toString()}
         value={selectedYear}
         onChange={(event) => {
           const selectedValue = event.target.value;
@@ -40,7 +39,7 @@ export const CorrectionListYearFilter = () => {
           } else {
             syncedParams.delete(ResultParam.PublicationYear);
           }
-          navigate({ search: searchParams.toString() });
+          navigate({ search: syncedParams.toString() });
         }}
         slotProps={{
           htmlInput: {
