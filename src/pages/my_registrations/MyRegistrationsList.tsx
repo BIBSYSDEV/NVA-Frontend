@@ -15,6 +15,7 @@ import { RegistrationSearch, SearchPropTypes } from '../search/registration_sear
 import { useQueryClient } from '@tanstack/react-query';
 import { SearchParamType } from '../../utils/hooks/useRegistrationSearchParams';
 import { delay } from '../../utils/utils';
+import { DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS } from './MyRegistrations';
 
 interface MyRegistrationsListProps {
   registrationsQuery: SearchPropTypes['registrationQuery'];
@@ -41,7 +42,7 @@ export const MyRegistrationsList = ({ registrationsQuery, registrationsKey }: My
       dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-      await delay(2000); // waits 2 seconds before refetching in case it gives us fresher data
+      await delay(DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS); // reindexing is slow
       await registrationsQuery.refetch();
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
       // Update cache manually for cases when the refetch doesn't reflect the deletion

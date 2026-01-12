@@ -15,13 +15,15 @@ import { HeadTitle } from '../../components/HeadTitle';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { SearchForm } from '../../components/SearchForm';
 import { setNotification } from '../../redux/notificationSlice';
-import { RegistrationStatus } from '../../types/registration.types';
+import { RegistrationSearchItem, RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 import { MyRegistrationsList } from './MyRegistrationsList';
+import { delay } from '../../utils/utils';
 
 const statusRadioGroupLabelId = 'status-radio-buttons-group-label';
+export const DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS = 2000;
 
 export const MyRegistrations = () => {
   const { t } = useTranslation();
@@ -53,19 +55,32 @@ export const MyRegistrations = () => {
         (registration) => registration.recordMetadata.status === RegistrationStatus.Draft
       );
       const deletePromises = draftRegistrations.map((registration) => deleteRegistration(registration.identifier));
-      await Promise.all(deletePromises);
+      const results = await Promise.allSettled(deletePromises);
+      const allSuccessful = results.every((result) => result.status === 'fulfilled');
+
+      if (allSuccessful) {
+        // Update cache manually because refetch might give us stale data because of slow reindexing
+        queryClient.setQueryData(queryKey, (oldData: any) => ({
+          ...oldData,
+          hits: [],
+        }));
+        dispatch(setNotification({ message: t('feedback.success.delete_draft_registrations'), variant: 'success' }));
+        setShowDeleteModal(false);
+      } else {
+        await delay(DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS); // reindexing is slow
+        await myRegistrationsQuery.refetch();
+        const failedIds = results
+          .map((result, index) => (result.status === 'rejected' ? draftRegistrations[index].identifier : null))
+          .filter((id): id is string => id !== null);
+        // Update cache manually for cases when the refetch doesn't reflect the deletion
+        queryClient.setQueryData(queryKey, (oldData: any) => ({
+          ...oldData,
+          hits: oldData.hits.filter((item: RegistrationSearchItem) => failedIds.includes(item.identifier)),
+        }));
+        dispatch(setNotification({ message: t('feedback.error.delete_draft_registrations'), variant: 'error' }));
+        setShowDeleteModal(false);
+      }
     },
-    onSuccess: async () => {
-      // Update cache manually because refetch might give us stale data because of slow reindexing
-      queryClient.setQueryData(queryKey, (oldData: any) => ({
-        ...oldData,
-        hits: [],
-      }));
-      dispatch(setNotification({ message: t('feedback.success.delete_draft_registrations'), variant: 'success' }));
-      setShowDeleteModal(false);
-    },
-    onError: () =>
-      dispatch(setNotification({ message: t('feedback.error.delete_draft_registrations'), variant: 'error' })),
   });
 
   return (
