@@ -75,7 +75,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.2",
-    "axe-core": "^4.11.0",
+    "axe-core": "^4.11.1",
     "axios-mock-adapter": "^2.1.0",
     "babel-plugin-react-compiler": "^19.1.0-rc.3",
     "cypress": "^15.8.1",
