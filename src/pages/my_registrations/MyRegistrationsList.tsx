@@ -44,7 +44,7 @@ export const MyRegistrationsList = ({ registrationsQuery, registrationsKey }: My
       await delay(2000); // waits 2 seconds before refetching in case it gives us fresher data
       await registrationsQuery.refetch();
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
-      // Update cache manually for cases when the refetch doesn't reflect the deletion immediately
+      // Update cache manually for cases when the refetch doesn't reflect the deletion
       queryClient.setQueryData(registrationsKey, (oldData: any) => ({
         ...oldData,
         hits: oldData.hits.filter((item: RegistrationSearchItem) => item.id !== registrationToDelete.id),

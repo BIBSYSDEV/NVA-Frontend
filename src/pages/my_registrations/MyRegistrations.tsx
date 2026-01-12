@@ -1,5 +1,5 @@
 import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -26,6 +26,7 @@ const statusRadioGroupLabelId = 'status-radio-buttons-group-label';
 export const MyRegistrations = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const [, setSearchParams] = useSearchParams();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -53,9 +54,13 @@ export const MyRegistrations = () => {
       );
       const deletePromises = draftRegistrations.map((registration) => deleteRegistration(registration.identifier));
       await Promise.all(deletePromises);
-      await myRegistrationsQuery.refetch();
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      // Update cache manually because refetch might give us stale data because of slow reindexing
+      queryClient.setQueryData(queryKey, (oldData: any) => ({
+        ...oldData,
+        hits: [],
+      }));
       dispatch(setNotification({ message: t('feedback.success.delete_draft_registrations'), variant: 'success' }));
       setShowDeleteModal(false);
     },
