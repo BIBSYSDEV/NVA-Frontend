@@ -1,17 +1,16 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { TextField, Button } from '@mui/material';
-import { Field, FieldProps, useFormikContext, getIn } from 'formik';
+import { Button, TextField } from '@mui/material';
+import { Field, FieldProps, getIn, useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { dataTestId } from '../../utils/dataTestIds';
 
-export const AlternativeAbstractsFields = ({
-  disableChannelClaimsFields,
-  t,
-  dataTestId,
-}: {
+interface AlternativeAbstractsFieldsProps {
   disableChannelClaimsFields: boolean;
-  t: any;
-  dataTestId: any;
-}) => {
+}
+
+export const AlternativeAbstractsFields = ({ disableChannelClaimsFields }: AlternativeAbstractsFieldsProps) => {
+  const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<any>();
   const alternativeAbstracts = getIn(values, DescriptionFieldNames.AlternativeAbstracts) ?? {};
   const hasAny = Object.keys(alternativeAbstracts).length > 0;
