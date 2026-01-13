@@ -125,11 +125,7 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        <AlternativeAbstractsFields
-          disableChannelClaimsFields={disableChannelClaimsFields}
-          t={t}
-          dataTestId={dataTestId}
-        />
+        <AlternativeAbstractsFields disableChannelClaimsFields={disableChannelClaimsFields} />
       </Box>
       <Field name={DescriptionFieldNames.Description}>
         {({ field }: FieldProps<string>) => (
