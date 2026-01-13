@@ -9,20 +9,19 @@ import { SortSelector } from '../../components/SortSelector';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationSearchItem } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { getIdentifierFromId } from '../../utils/general-helpers';
+import { getIdentifierFromId, setDelay } from '../../utils/general-helpers';
 import { getTitleString } from '../../utils/registration-helpers';
 import { RegistrationSearch, SearchPropTypes } from '../search/registration_search/RegistrationSearch';
 import { useQueryClient } from '@tanstack/react-query';
 import { SearchParamType } from '../../utils/hooks/useRegistrationSearchParams';
-import { delay } from '../../utils/utils';
 import { DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS } from './MyRegistrations';
 
 interface MyRegistrationsListProps {
   registrationsQuery: SearchPropTypes['registrationQuery'];
-  registrationsKey: (string | SearchParamType)[];
+  registrationsQueryKey: (string | SearchParamType)[];
 }
 
-export const MyRegistrationsList = ({ registrationsQuery, registrationsKey }: MyRegistrationsListProps) => {
+export const MyRegistrationsList = ({ registrationsQuery, registrationsQueryKey }: MyRegistrationsListProps) => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
@@ -42,12 +41,12 @@ export const MyRegistrationsList = ({ registrationsQuery, registrationsKey }: My
       dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-      await delay(DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS); // waits 2 seconds before refetching in case it gives us fresher data
+      await setDelay(DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS); // waits 2 seconds before refetching in case it gives us fresher data
       await registrationsQuery.refetch();
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
       // Update cache manually for cases when the refetch doesn't reflect the deletion
-      queryClient.setQueryData(registrationsKey, (oldData: RegistrationSearchResponse | undefined) => {
-        if (!oldData) return oldData;
+      queryClient.setQueryData(registrationsQueryKey, (oldData: RegistrationSearchResponse | undefined) => {
+        if (oldData === undefined) return undefined;
         return {
           ...oldData,
           hits: oldData.hits.filter((item) => item.id !== registrationToDelete.id),

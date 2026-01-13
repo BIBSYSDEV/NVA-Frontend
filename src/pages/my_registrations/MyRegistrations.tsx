@@ -20,7 +20,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 import { MyRegistrationsList } from './MyRegistrationsList';
-import { delay } from '../../utils/utils';
+import { setDelay } from '../../utils/general-helpers';
 
 const statusRadioGroupLabelId = 'status-radio-buttons-group-label';
 export const DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS = 2000;
@@ -69,7 +69,7 @@ export const MyRegistrations = () => {
         dispatch(setNotification({ message: t('feedback.success.delete_draft_registrations'), variant: 'success' }));
         setShowDeleteModal(false);
       } else {
-        await delay(DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS); // reindexing is slow
+        await setDelay(DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS); // Refetching too early gives stale data, because reindexing search after delete can take some seconds
         await myRegistrationsQuery.refetch();
         const failedIds = results
           .map((result, index) => (result.status === 'rejected' ? draftRegistrations[index].identifier : null))
@@ -149,7 +149,7 @@ export const MyRegistrations = () => {
       {myRegistrationsQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        <MyRegistrationsList registrationsQuery={myRegistrationsQuery} registrationsKey={queryKey} />
+        <MyRegistrationsList registrationsQuery={myRegistrationsQuery} registrationsQueryKey={queryKey} />
       )}
 
       <ConfirmDialog
