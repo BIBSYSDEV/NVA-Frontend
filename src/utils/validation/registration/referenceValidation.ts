@@ -388,7 +388,7 @@ const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicatio
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
     type: Yup.string().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
-      publicationInstanceType === ArtisticType.MusicPerformance
+      publicationInstanceType === ArtisticType.MusicPerformance || ArtisticType.OtherArtisticOutput
         ? schema.optional()
         : schema.required(resourceErrorMessage.typeWorkRequired)
     ),

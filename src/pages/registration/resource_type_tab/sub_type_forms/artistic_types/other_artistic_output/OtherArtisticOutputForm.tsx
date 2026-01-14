@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   FormHelperText,
-  MenuItem,
   Table,
   TableBody,
   TableCell,
@@ -15,18 +14,12 @@ import {
 import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
 import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
-import {
-  ArtisticRegistration,
-  VisualArtType,
-} from '../../../../../../types/publication_types/artisticRegistration.types';
+import { ArtisticRegistration } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { VenueModal } from '../design/VenueModal';
-
-const visualArtTypes = Object.values(VisualArtType);
 
 export const OtherArtisticOutputForm = () => {
   const { t } = useTranslation();
@@ -37,48 +30,22 @@ export const OtherArtisticOutputForm = () => {
 
   return (
     <>
-      <Field name={ResourceFieldNames.PublicationInstanceSubtypeType}>
+      <Field name={ResourceFieldNames.PublicationInstanceTypeDescription}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
-          <StyledSelectWrapper>
-            <TextField
-              id={field.name}
-              data-testid={dataTestId.registrationWizard.resourceType.artisticTypeField}
-              select
-              variant="filled"
-              fullWidth
-              {...field}
-              label={t('registration.resource_type.type_work')}
-              required
-              error={!!error && touched}
-              helperText={<ErrorMessage name={field.name} />}>
-              {visualArtTypes.map((visualArtType) => (
-                <MenuItem value={visualArtType} key={visualArtType}>
-                  {t(`registration.resource_type.artistic.visual_arts_type.${visualArtType}`)}
-                </MenuItem>
-              ))}
-            </TextField>
-          </StyledSelectWrapper>
+          <TextField
+            id={field.name}
+            data-testid={dataTestId.registrationWizard.resourceType.subtypeDescriptionField}
+            variant="filled"
+            fullWidth
+            {...field}
+            required
+            multiline
+            label={t('registration.resource_type.type_work_specified')}
+            error={!!error && touched}
+            helperText={<ErrorMessage name={field.name} />}
+          />
         )}
       </Field>
-
-      {values.entityDescription.reference.publicationInstance.subtype?.type === VisualArtType.Other && (
-        <Field name={ResourceFieldNames.PublicationInstanceSubtypeDescription}>
-          {({ field, meta: { error, touched } }: FieldProps<string>) => (
-            <TextField
-              id={field.name}
-              data-testid={dataTestId.registrationWizard.resourceType.subtypeDescriptionField}
-              variant="filled"
-              fullWidth
-              {...field}
-              required
-              multiline
-              label={t('registration.resource_type.type_work_specified')}
-              error={!!error && touched}
-              helperText={<ErrorMessage name={field.name} />}
-            />
-          )}
-        </Field>
-      )}
 
       <Field name={ResourceFieldNames.PublicationInstanceDescription}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
