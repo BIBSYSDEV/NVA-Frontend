@@ -28,7 +28,7 @@ export const AlternativeAbstractsFields = ({ disableChannelClaimsFields }: Alter
               variant="filled"
               fullWidth
               multiline
-              label={`${t('registration.description.alternative_abstract')} (${langKey})`}
+              label={t('registration.description.alternative_abstract')}
             />
           )}
         </Field>
