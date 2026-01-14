@@ -58,7 +58,7 @@ export const NviPublicationPointsTableRow = ({
                 orgNumber: getIdentifierFromId(organization.id),
                 status: NviCandidateStatusEnum.Approved,
                 globalStatus: [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending],
-                excludeSubunits: true,
+                excludeSubUnits: true,
               })}>
               {orgAggregations?.approvalStatus.Approved ?? 0}
             </Link>
