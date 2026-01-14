@@ -2,8 +2,7 @@ import { TextField, TextFieldProps } from '@mui/material';
 import { ErrorMessage, Field, FieldInputProps, FieldProps } from 'formik';
 
 interface CustomerInstitutionTextFieldProps
-  extends Pick<FieldInputProps<string>, 'name'>,
-    Pick<TextFieldProps, 'label' | 'required' | 'disabled'> {
+  extends Pick<FieldInputProps<string>, 'name'>, Pick<TextFieldProps, 'label' | 'required' | 'disabled'> {
   dataTestId?: string;
 }
 

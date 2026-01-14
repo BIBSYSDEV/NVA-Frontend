@@ -1,6 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference types="vitest/config" />
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
+import { configDefaults } from 'vitest/config';
 
 const largeLibraries = [
   '@mui',
@@ -46,5 +49,8 @@ export default defineConfig({
         },
       },
     },
+  },
+  test: {
+    exclude: [...configDefaults.exclude, 'cypress/**'],
   },
 });

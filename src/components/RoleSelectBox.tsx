@@ -1,8 +1,7 @@
 import { Checkbox, CheckboxProps, FormControlLabel, FormControlLabelProps, Typography } from '@mui/material';
 
 interface RoleSelectBoxProps
-  extends Pick<FormControlLabelProps, 'sx' | 'disabled' | 'label'>,
-    Pick<CheckboxProps, 'checked' | 'value'> {
+  extends Pick<FormControlLabelProps, 'sx' | 'disabled' | 'label'>, Pick<CheckboxProps, 'checked' | 'value'> {
   description: string;
 }
 

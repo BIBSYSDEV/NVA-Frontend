@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
 import { NviStatusChip } from '../../../components/StatusChip';
-import { SearchListItem } from '../../../components/styled/Wrappers';
+import { SearchListItem, VerticalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';
 import { NviCandidateSearchHit } from '../../../types/nvi.types';
@@ -13,6 +13,7 @@ import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { FetchNviCandidatesParams } from '../../../api/searchApi';
+import { createPageSpecificAmountString } from '../nviUtils';
 
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
@@ -26,6 +27,8 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
   const user = useSelector((store: RootState) => store.user);
   const nviParamsFromUrl = useNviCandidatesParams();
   const nviQueryParams = nviParams ?? nviParamsFromUrl;
+
+  const approvalsCount = createPageSpecificAmountString(t, location.pathname, nviCandidate.approvals);
 
   const contributors = nviCandidate.publicationDetails.nviContributors;
   const focusedContributors = contributors.slice(0, 5);
@@ -95,9 +98,10 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
         )}
       </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <VerticalBox sx={{ alignItems: 'center' }}>
         {myApproval?.approvalStatus && <NviStatusChip status={myApproval.approvalStatus} />}
-      </Box>
+        {approvalsCount && <Typography sx={{ mt: '0.5rem' }}>{approvalsCount}</Typography>}
+      </VerticalBox>
     </SearchListItem>
   );
 };

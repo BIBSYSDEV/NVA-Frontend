@@ -53,6 +53,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 orgNumber: getIdentifierFromId(organization.id),
                 status: NviCandidateStatusEnum.Pending,
                 globalStatus: NviCandidateGlobalStatusEnum.Pending,
+                excludeSubUnits: true,
               })}>
               {orgAggregations?.approvalStatus.New ?? 0}
             </Link>
@@ -71,6 +72,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 status: NviCandidateStatusEnum.Pending,
                 globalStatus: NviCandidateGlobalStatusEnum.Pending,
                 excludeUnassigned: true,
+                excludeSubUnits: true,
               })}>
               {orgAggregations?.approvalStatus.Pending ?? 0}
             </Link>
@@ -92,6 +94,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                   NviCandidateGlobalStatusEnum.Pending,
                   NviCandidateGlobalStatusEnum.Dispute,
                 ],
+                excludeSubUnits: true,
               })}>
               {orgAggregations?.approvalStatus.Approved ?? 0}
             </Link>
@@ -109,6 +112,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 orgNumber: getIdentifierFromId(organization.id),
                 status: NviCandidateStatusEnum.Rejected,
                 globalStatus: NviCandidateGlobalStatusEnum.Rejected,
+                excludeSubUnits: true,
               })}>
               {orgAggregations?.approvalStatus.Rejected ?? 0}
             </Link>
@@ -124,6 +128,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               to={getNviCandidatesSearchPath({
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
+                excludeSubUnits: true,
               })}>
               {orgAggregations?.candidateCount ?? 0}
             </Link>

@@ -195,6 +195,7 @@
     "go_to_last": "Gå til siste",
     "help": "Hjelp",
     "id": "ID",
+    "import_and_view": "",
     "initials": "Initialar",
     "institution": "Institusjon",
     "institutions": "Institusjonar",
@@ -207,6 +208,7 @@
     "main": "Hovud",
     "mention": "Omtale",
     "menu": "Meny",
+    "merge_and_view": "",
     "message": "Melding",
     "messages": "Meldingar",
     "metadata_source": "Metadatakilde",
@@ -1976,6 +1978,7 @@
         "Pending": "Blir kontrollert",
         "Rejected": "Avvist"
       },
+      "status_dispute_for": "",
       "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknyting til NVI-institusjon"
     },
     "search_placeholder": "Søk etter tittel, bidragsytar, samandrag eller liknande",

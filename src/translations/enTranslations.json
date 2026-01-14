@@ -195,6 +195,7 @@
     "go_to_last": "Go to last",
     "help": "Help",
     "id": "ID",
+    "import_and_view": "",
     "initials": "Initials",
     "institution": "Institution",
     "institutions": "Institutions",
@@ -207,6 +208,7 @@
     "main": "Main",
     "mention": "Mention",
     "menu": "Menu",
+    "merge_and_view": "",
     "message": "Message",
     "messages": "Messages",
     "metadata_source": "Metadata source",
@@ -1976,6 +1978,7 @@
         "Pending": "Being checked",
         "Rejected": "Rejected"
       },
+      "status_dispute_for": "",
       "unidentified_person_with_nvi_institution": "Unidentified person with a connection to an NVI institution"
     },
     "search_placeholder": "Search for title, contributor, abstract or similar",

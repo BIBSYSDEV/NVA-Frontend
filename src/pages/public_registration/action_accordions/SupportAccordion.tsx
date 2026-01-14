@@ -23,19 +23,21 @@ import { TicketAssignee } from './TicketAssignee';
 import { TaskAccordionSummary } from './styles';
 import { getTicketColor } from '../../messages/utils';
 import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
+import { useContext } from 'react';
+import { ActionPanelContext } from '../../../context/ActionPanelContext';
 
 interface SupportAccordionProps {
   registration: Registration;
   supportTicket?: Ticket;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
-  refetchData: () => Promise<void>;
 }
 
-export const SupportAccordion = ({ registration, supportTicket, addMessage, refetchData }: SupportAccordionProps) => {
+export const SupportAccordion = ({ registration, supportTicket, addMessage }: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const location = useLocation();
   const locationState = location.state as SelectedTicketTypeLocationState | undefined;
+  const refetchData = useContext(ActionPanelContext).refetchData;
 
   const user = useSelector((store: RootState) => store.user);
   const userIsTicketOwner = user && supportTicket?.owner === user.nvaUsername;
@@ -106,7 +108,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
 
         {supportTicket && (
           <>
-            <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
+            <TicketAssignee ticket={supportTicket} />
             {userCanCompleteTicket && isOnTasksPage && supportTicket.status !== 'Completed' && (
               <Button
                 color="tertiary"

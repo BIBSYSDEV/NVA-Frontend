@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LanguageString } from '../../types/common.types';
-import { getLanguageString } from '../../utils/translation-helpers';
+import { getLanguageString, triggerLanguageRerender } from '../../utils/translation-helpers';
 
 interface ProjectSummaryProps {
   academicSummary: LanguageString;
@@ -11,23 +11,20 @@ interface ProjectSummaryProps {
 export const ProjectSummary = ({ academicSummary, popularScienceSummary }: ProjectSummaryProps) => {
   const { t } = useTranslation();
 
-  const academicSummaryString = getLanguageString(academicSummary);
-  const popularScienceSummaryString = getLanguageString(popularScienceSummary);
-
-  return !academicSummaryString && !popularScienceSummaryString ? (
+  return !academicSummary && !popularScienceSummary ? (
     <Typography>{t('project.no_summary')}</Typography>
   ) : (
     <>
-      {academicSummaryString && (
+      {academicSummary && (
         <>
           <Typography variant="h3">{t('project.scientific_summary')}</Typography>
-          <Typography sx={{ mb: '1rem' }}>{academicSummaryString}</Typography>
+          <Typography sx={{ mb: '1rem' }}>{triggerLanguageRerender(t, getLanguageString(academicSummary))}</Typography>
         </>
       )}
-      {popularScienceSummaryString && (
+      {popularScienceSummary && (
         <>
           <Typography variant="h3">{t('project.popular_science_summary')}</Typography>
-          <Typography>{popularScienceSummaryString}</Typography>
+          <Typography>{triggerLanguageRerender(t, getLanguageString(popularScienceSummary))}</Typography>
         </>
       )}
     </>

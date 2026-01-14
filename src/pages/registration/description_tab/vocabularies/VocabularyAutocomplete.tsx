@@ -11,7 +11,8 @@ export interface VocabularyComponentProps {
 }
 
 interface VocabularyAutocompleteProps
-  extends VocabularyComponentProps,
+  extends
+    VocabularyComponentProps,
     Pick<TextFieldProps, 'label'>,
     Pick<AutocompleteProps<Category, true, false, false>, 'id' | 'options' | 'renderOption'> {}
 

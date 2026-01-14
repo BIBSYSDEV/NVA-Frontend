@@ -2,7 +2,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import { Accordion, AccordionDetails, Box, Button, Divider, Tooltip, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
@@ -10,6 +10,9 @@ import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateR
 import { publishRegistration } from '../../../api/registrationApi';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { TicketStatusChip } from '../../../components/StatusChip';
+import { HorizontalBox } from '../../../components/styled/Wrappers';
+import { ActionPanelContext } from '../../../context/ActionPanelContext';
+import { LandingPageContext } from '../../../context/LandingPageContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
@@ -30,20 +33,18 @@ import {
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
+import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
+import { getTicketColor } from '../../messages/utils';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
 import { PublishingAccordionLastTicketInfo } from './PublishingAccordionLastTicketInfo';
 import { RefreshPublishingRequestButton } from './RefreshPublishingRequestButton';
-import { TicketAssignee } from './TicketAssignee';
-import { getTicketColor } from '../../messages/utils';
-import { HorizontalBox } from '../../../components/styled/Wrappers';
-import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
 import { TaskAccordionSummary } from './styles';
+import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
   registration: Registration;
-  refetchData: () => Promise<void>;
   publishingRequestTickets: PublishingTicket[];
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
@@ -53,7 +54,6 @@ interface PublishingAccordionProps {
 export const PublishingAccordion = ({
   publishingRequestTickets,
   registration,
-  refetchData,
   isLoadingData,
   addMessage,
   hasReservedDoi,
@@ -63,6 +63,8 @@ export const PublishingAccordion = ({
   const customer = useSelector((store: RootState) => store.customer);
   const location = useLocation();
   const locationState = location.state as SelectedTicketTypeLocationState | undefined;
+  const refetchData = useContext(ActionPanelContext).refetchData;
+  const { setIsAwaitingStatusSync } = useContext(LandingPageContext);
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
@@ -162,6 +164,10 @@ export const PublishingAccordion = ({
       locationState.selectedTicketType === 'FilesApprovalThesis'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
 
+  useEffect(() => {
+    setIsAwaitingStatusSync(hasMismatchingPublishedStatus || isWaitingForFileDeletion);
+  }, [hasMismatchingPublishedStatus, isWaitingForFileDeletion, setIsAwaitingStatusSync]);
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
@@ -202,7 +208,7 @@ export const PublishingAccordion = ({
         )}
       </TaskAccordionSummary>
       <AccordionDetails>
-        {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
+        {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} />}
 
         {tabErrors && !isDeletedRegistration && (
           <RegistrationErrorActions tabErrors={tabErrors} registration={registration} sx={{ mb: '0.5rem' }} />
@@ -230,7 +236,7 @@ export const PublishingAccordion = ({
                   ? t('registration.public_page.tasks_panel.files_will_soon_be_deleted')
                   : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
-            <RefreshPublishingRequestButton refetchData={refetchData} loading={isLoadingData} />
+            <RefreshPublishingRequestButton loading={isLoadingData} />
           </>
         )}
 
@@ -306,7 +312,6 @@ export const PublishingAccordion = ({
             registrationHasApprovedFile={registrationHasApprovedFile}
             registrationIsValid={registrationIsValid}
             addMessage={addMessage}
-            refetchData={refetchData}
           />
         )}
 
@@ -321,7 +326,6 @@ export const PublishingAccordion = ({
           registration={registration}
           registrationIsValid={registrationIsValid}
           ticket={lastPublishingRequest}
-          refetchData={refetchData}
         />
       </AccordionDetails>
     </Accordion>

@@ -19,7 +19,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -29,6 +29,7 @@ import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
 import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
+import { ActionPanelContext } from '../../../context/ActionPanelContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { Ticket, TicketTypeEnum } from '../../../types/publication_types/ticket.types';
@@ -40,14 +41,13 @@ import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers'
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { TicketAssignee } from './TicketAssignee';
-import { getTicketColor } from '../../messages/utils';
 import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
+import { getTicketColor } from '../../messages/utils';
 import { TaskAccordionSummary } from './styles';
+import { TicketAssignee } from './TicketAssignee';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
-  refetchData: () => Promise<void>;
   doiRequestTicket?: Ticket;
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
@@ -73,7 +73,6 @@ const doiLink = (
 export const DoiRequestAccordion = ({
   registration,
   doiRequestTicket,
-  refetchData,
   isLoadingData,
   addMessage,
   hasReservedDoi,
@@ -83,6 +82,7 @@ export const DoiRequestAccordion = ({
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
+  const refetchData = useContext(ActionPanelContext).refetchData;
 
   const location = useLocation();
   const locationState = location.state as SelectedTicketTypeLocationState | undefined;
@@ -255,7 +255,7 @@ export const DoiRequestAccordion = ({
         ) : null}
       </TaskAccordionSummary>
       <AccordionDetails>
-        {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
+        {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} />}
 
         {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} withColor />}
 

@@ -204,6 +204,7 @@ export const getNviCandidatesSearchPath = ({
   if (excludeUnassigned !== undefined) {
     searchParams.set(NviCandidatesSearchParam.ExcludeUnassigned, excludeUnassigned.toString());
   }
+
   if (excludeSubunits !== undefined) {
     searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, excludeSubunits.toString());
   }

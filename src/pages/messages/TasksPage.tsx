@@ -1,20 +1,11 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { Badge } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
-import {
-  fetchCustomerTickets,
-  FetchTicketsParams,
-  NviCandidateGlobalStatusEnum,
-  NviCandidateStatusEnum,
-  SortOrder,
-  TicketOrderBy,
-  TicketSearchParam,
-} from '../../api/searchApi';
+import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -24,10 +15,9 @@ import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefau
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { TicketTypeEnum, TicketTypeSelection } from '../../types/publication_types/ticket.types';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { getTaskNotificationsParams, resetPaginationAndNavigate } from '../../utils/searchHelpers';
+import { resetPaginationAndNavigate } from '../../utils/searchHelpers';
 import { getNviCandidatesSearchPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
 import NotFound from '../errorpages/NotFound';
@@ -43,6 +33,8 @@ import { TicketList } from './components/TicketList';
 import { TicketTypeTag } from './components/TicketTypeTag';
 import { NviDisputePage } from './components/NviDisputePage';
 import { NviPublicationPointsPage } from './components/NviPublicationPointsPage';
+import { useFetchNotifications } from '../../api/hooks/useFetchNotifications';
+import { useFetchTickets } from '../../api/hooks/useFetchTickets';
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -88,38 +80,15 @@ const TasksPage = () => {
     .filter(([, selected]) => selected)
     .map(([key]) => key);
 
-  const organizationIdParam = searchParams.get(TicketSearchParam.OrganizationId);
-
-  const ticketSearchParams: FetchTicketsParams = {
-    aggregation: 'all',
-    query: searchParams.get(TicketSearchParam.Query),
-    results: Number(searchParams.get(TicketSearchParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
-    from: Number(searchParams.get(TicketSearchParam.From) ?? 0),
-    orderBy: searchParams.get(TicketSearchParam.OrderBy) as TicketOrderBy | null,
-    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as SortOrder | null,
-    organizationId: organizationIdParam,
-    excludeSubUnits: searchParams.get(TicketSearchParam.ExcludeSubUnits) === 'true',
-    assignee: searchParams.get(TicketSearchParam.Assignee),
-    status: searchParams.get(TicketSearchParam.Status),
-    type: selectedTicketTypes.join(','),
-    viewedByNot: searchParams.get(TicketSearchParam.ViewedByNot),
-    createdDate: searchParams.get(TicketSearchParam.CreatedDate),
-    publicationType: searchParams.get(TicketSearchParam.PublicationType),
-  };
-
-  const ticketsQuery = useQuery({
+  const ticketsQuery = useFetchTickets({
     enabled: isOnTicketsPage && !institutionUserQuery.isPending,
-    queryKey: ['tickets', ticketSearchParams],
-    queryFn: () => fetchCustomerTickets(ticketSearchParams),
-    meta: { errorMessage: t('feedback.error.get_messages') },
+    searchParams,
+    selectedTicketTypes,
   });
 
-  const tasksNotificationParams = getTaskNotificationsParams(user);
-  const notificationsQuery = useQuery({
+  const notificationsQuery = useFetchNotifications({
     enabled: isOnTicketsPage && !institutionUserQuery.isPending,
-    queryKey: ['taskNotifications', tasksNotificationParams],
-    queryFn: () => fetchCustomerTickets(tasksNotificationParams),
-    meta: { errorMessage: t('feedback.error.get_messages') },
+    user: user,
   });
 
   const doiNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(

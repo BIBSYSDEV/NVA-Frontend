@@ -195,6 +195,7 @@
     "go_to_last": "Gå til siste",
     "help": "Hjelp",
     "id": "ID",
+    "import_and_view": "Importer og se",
     "initials": "Initialer",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
@@ -207,6 +208,7 @@
     "main": "Hoved",
     "mention": "Omtale",
     "menu": "Meny",
+    "merge_and_view": "Slå sammen og se",
     "message": "Melding",
     "messages": "Meldinger",
     "metadata_source": "Metadatakilde",
@@ -1745,7 +1747,9 @@
         "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)",
         "not_applicable_isbn": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden kapittelet er publisert i en bok som mangler ISBN",
         "not_applicable_revision": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden den er en revisjon",
-        "select_all_nvi_categories": "Velg alle"
+        "select_all_nvi_categories": "Velg alle",
+        "only_the_linked_academic_monograph_will_be_included_in_the_nvi": "Kun den tilknyttede vitenskapelige monografien vil bli inkludert i Norsk vitenskapsindeks",
+        "make_sure_publication_linked_to_the_correct_book_category": "Pass på at denne publikasjonen er koblet til riktig bokkategori"
       },
       "online_issn": "Online ISSN",
       "or": "Eller",
@@ -1947,8 +1951,9 @@
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Du har ingen kandidater for dette søket.",
       "note": "Kommentar",
+      "x_of_y_approved": "{{approved}} av {{total}} godkjent",
+      "x_of_y_controlled": "{{controlled}} av {{total}} kontrollert",
       "nvi_control": "NVI-kontroll (Norsk vitenskapsindeks)",
-      "status_dispute_for": "Status tvister for {{year}}",
       "nvi_reporting_status": "Status NVI-rapportering",
       "previous_candidate": "Gå til forrige kandidat",
       "problem_description": "<p>NVI-kandidaten har følgende mangler:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatuser blir opphevet når en uidentifisert person blir identifisert.</p>",
@@ -1981,6 +1986,7 @@
         "Pending": "Kontrolleres",
         "Rejected": "Avvist"
       },
+      "status_dispute_for": "Status tvister for {{year}}",
       "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknytning til NVI-institusjon"
     },
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag eller lignende",

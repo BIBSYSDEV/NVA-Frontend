@@ -1,20 +1,16 @@
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { Button, ButtonProps } from '@mui/material';
+import { Button } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ActionPanelContext } from '../../../context/ActionPanelContext';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers';
 
-interface RefreshPublishingRequestButtonProps extends ButtonProps {
-  refetchData: () => Promise<unknown>;
-}
-
-export const RefreshPublishingRequestButton = ({
-  refetchData,
-  ...buttonProps
-}: RefreshPublishingRequestButtonProps) => {
+export const RefreshPublishingRequestButton = ({ ...buttonProps }) => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
+  const context = useContext(ActionPanelContext);
 
   return (
     <Button
@@ -24,7 +20,7 @@ export const RefreshPublishingRequestButton = ({
       size="small"
       fullWidth
       onClick={async () => {
-        await refetchData();
+        await context.refetchData();
         invalidateQueryKeyDueToReindexing(queryClient, 'taskNotifications');
       }}
       startIcon={<RefreshIcon />}
