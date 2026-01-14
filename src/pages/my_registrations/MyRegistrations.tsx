@@ -9,7 +9,13 @@ import {
   useMyRegistrationsSearch,
 } from '../../api/hooks/useMyRegistrationsSearch';
 import { deleteRegistration } from '../../api/registrationApi';
-import { ProtectedResultParam, ResultParam, ResultSearchOrder, SortOrder } from '../../api/searchApi';
+import {
+  ProtectedResultParam,
+  RegistrationSearchResponse,
+  ResultParam,
+  ResultSearchOrder,
+  SortOrder,
+} from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { HeadTitle } from '../../components/HeadTitle';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -62,10 +68,14 @@ export const MyRegistrations = () => {
 
       if (allSuccessful) {
         // Update cache manually because refetch might give us stale data because of slow reindexing
-        queryClient.setQueryData(queryKey, (oldData: any) => ({
-          ...oldData,
-          hits: [],
-        }));
+        queryClient.setQueryData(queryKey, (oldData: RegistrationSearchResponse | undefined) => {
+          if (oldData === undefined) return undefined;
+          return {
+            ...oldData,
+            hits: [],
+            totalHits: 0,
+          };
+        });
         dispatch(setNotification({ message: t('feedback.success.delete_draft_registrations'), variant: 'success' }));
         setShowDeleteModal(false);
       } else {
@@ -75,10 +85,16 @@ export const MyRegistrations = () => {
           .map((result, index) => (result.status === 'rejected' ? draftRegistrations[index].identifier : null))
           .filter((id): id is string => id !== null);
         // Update cache manually for cases when the refetch doesn't reflect the deletion
-        queryClient.setQueryData(queryKey, (oldData: any) => ({
-          ...oldData,
-          hits: oldData.hits.filter((item: RegistrationSearchItem) => failedIds.includes(item.identifier)),
-        }));
+        queryClient.setQueryData(queryKey, (oldData: any) => {
+          const hitsAfterDelete = oldData.hits.filter((item: RegistrationSearchItem) =>
+            failedIds.includes(item.identifier)
+          );
+          return {
+            ...oldData,
+            hits: hitsAfterDelete,
+            totalHits: oldData.totalHits - (oldData.hits.length - hitsAfterDelete.length),
+          };
+        });
         dispatch(setNotification({ message: t('feedback.error.delete_draft_registrations'), variant: 'error' }));
         setShowDeleteModal(false);
       }

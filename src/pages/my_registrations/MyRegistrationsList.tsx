@@ -47,9 +47,11 @@ export const MyRegistrationsList = ({ registrationsQuery, registrationsQueryKey 
       // Update cache manually for cases when the refetch doesn't reflect the deletion
       queryClient.setQueryData(registrationsQueryKey, (oldData: RegistrationSearchResponse | undefined) => {
         if (oldData === undefined) return undefined;
+        const hitsAfterDelete = oldData.hits.filter((item) => item.id !== registrationToDelete.id);
         return {
           ...oldData,
-          hits: oldData.hits.filter((item) => item.id !== registrationToDelete.id),
+          hits: hitsAfterDelete,
+          totalHits: oldData.totalHits - (oldData.hits.length - hitsAfterDelete.length),
         };
       });
       setIsDeleting(false);
