@@ -1745,8 +1745,10 @@
         "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks",
         "can_give_publication_points": "Kan gi publiseringspoeng",
         "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)",
+        "make_sure_publication_linked_to_the_correct_book_category": "Pass på at denne publikasjonen er koblet til riktig bokkategori",
         "not_applicable_isbn": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden kapittelet er publisert i en bok som mangler ISBN",
         "not_applicable_revision": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden den er en revisjon",
+        "only_the_linked_academic_monograph_will_be_included_in_the_nvi": "Kun den tilknyttede vitenskapelige monografien vil bli inkludert i Norsk vitenskapsindeks",
         "select_all_nvi_categories": "Velg alle"
       },
       "online_issn": "Online ISSN",
@@ -1979,7 +1981,9 @@
         "Rejected": "Avvist"
       },
       "status_dispute_for": "Status tvister for {{year}}",
-      "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknytning til NVI-institusjon"
+      "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknytning til NVI-institusjon",
+      "x_of_y_approved": "{{approved}} av {{total}} godkjent",
+      "x_of_y_controlled": "{{controlled}} av {{total}} kontrollert"
     },
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag eller lignende",
     "select_other_unit_filter": "Velg andre",

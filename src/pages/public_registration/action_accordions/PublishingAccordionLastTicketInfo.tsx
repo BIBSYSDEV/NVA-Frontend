@@ -16,7 +16,6 @@ interface PublishingAccordionLastTicketInfoProps {
   canApprovePublishingRequest: boolean;
   canCreatePublishingRequest: boolean;
   registrationHasApprovedFile: boolean;
-  refetchData: () => Promise<void>;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
   registrationIsValid: boolean;
 }
@@ -28,7 +27,6 @@ export const PublishingAccordionLastTicketInfo = ({
   registrationHasApprovedFile,
   registrationIsValid,
   addMessage,
-  refetchData,
 }: PublishingAccordionLastTicketInfoProps) => {
   const { t } = useTranslation();
 
@@ -120,7 +118,6 @@ export const PublishingAccordionLastTicketInfo = ({
             <PendingPublishingTicketForCuratorSection
               publishingTicket={publishingTicket}
               addMessage={addMessage}
-              refetchData={refetchData}
               registrationIsValid={registrationIsValid}
             />
           ) : registrationHasApprovedFile ? (

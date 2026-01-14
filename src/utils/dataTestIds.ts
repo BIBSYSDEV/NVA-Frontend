@@ -643,6 +643,8 @@ export const dataTestId = {
       mediaSeries: 'media-series',
       mediaIssue: 'media-issue',
       nviFailed: 'not-nvi-applicable',
+      onlyLinkedMonographNviApplicable: 'only-linked-monograph-nvi-applicable',
+      makeSureCorrectBookCategory: 'make-sure-correct-book-category',
       nviSuccess: 'nvi-applicable',
       otherReleasePublisher: 'artistic-other-release-publisher',
       otherPerfomanceAddWork: 'music-other-performance-add-work',
@@ -770,6 +772,8 @@ export const dataTestId = {
     nvi: {
       approveButton: 'approve-button',
       visibilityFilter: 'visibility-filter',
+      disputeVisibilityFilter: 'dispute-visibility-filter',
+      visibilityCheckbox: 'visibility-checkbox',
       candidatesList: 'nvi-candidates-list',
       deleteNoteButton: 'delete-note-button',
       dialogTabButton: 'dialog-tab-button',

@@ -25,7 +25,6 @@ const nviStatusOptions = [
 
 const labelId = 'nvi-status-filter-select';
 
-/* NOTE: This filter influences which options are available in NviVisibilityFilter */
 export const NviStatusFilter = () => {
   const { t } = useTranslation();
   const [, setSearchParams] = useSearchParams();
@@ -36,7 +35,6 @@ export const NviStatusFilter = () => {
     const selectedValues = event.target.value as NviSearchStatus[];
     setSearchParams((params) => {
       const syncedParams = syncParamsWithSearchFields(params);
-      syncedParams.delete(NviCandidatesSearchParam.Filter);
       syncedParams.delete(NviCandidatesSearchParam.Offset);
       const { newStatuses, newGlobalStatuses } = computeParamsFromDropdownStatus(selectedValues);
 

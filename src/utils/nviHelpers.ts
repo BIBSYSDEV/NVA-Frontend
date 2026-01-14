@@ -7,6 +7,10 @@ import { JournalRegistration } from '../types/publication_types/journalRegistrat
 import { Registration } from '../types/registration.types';
 import { getTopLevelOrganization } from './institutions-helpers';
 import { nviApplicableTypes } from './registration-helpers';
+import { BookType } from '../types/publicationFieldNames';
+import { useFetchBookRegistration } from '../api/hooks/useFetchBookRegistration';
+import { useFetchPublisherFromId } from '../api/hooks/useFetchPublisherFromId';
+import { useFetchSeries } from '../api/hooks/useFetchSeries';
 
 const minNviYear = 2011;
 export const getNviYearFilterValues = (maxYear: number) =>
@@ -144,3 +148,39 @@ export const hasUnidentifiedContributorProblem = (nviCandidateProblems: NviCandi
     (problem) =>
       problem.type === 'UnverifiedCreatorExists' || problem.type === 'UnverifiedCreatorFromOrganizationProblem'
   );
+
+export const useGetBookInformation = (containerId = '') => {
+  const bookQuery = useFetchBookRegistration(containerId);
+
+  const publisherId = bookQuery.data?.entityDescription.reference?.publicationContext.publisher?.id ?? '';
+  const seriesId = bookQuery.data?.entityDescription.reference?.publicationContext.series?.id ?? '';
+  const bookHasIsbn = (bookQuery.data?.entityDescription.reference?.publicationContext.isbnList ?? []).length > 0;
+  const { isMonographBook, isNonFictionBook } = checkBookType(
+    bookQuery.data?.entityDescription.reference?.publicationInstance?.type
+  );
+
+  const publisherQuery = useFetchPublisherFromId(publisherId);
+  const seriesQuery = useFetchSeries(seriesId);
+
+  const publisherScientificValue = publisherQuery.data?.scientificValue;
+  const seriesScientificValue = seriesQuery.data?.scientificValue;
+
+  return {
+    bookHasIsbn,
+    isMonographBook,
+    isNonFictionBook,
+    publisherScientificValue,
+    seriesScientificValue,
+  };
+};
+
+const checkBookType = (bookType: '' | BookType | undefined) => {
+  const isMonographBook = bookType === BookType.AcademicMonograph;
+  const isNonFictionBook =
+    bookType === BookType.NonFictionMonograph ||
+    bookType === BookType.Textbook ||
+    bookType === BookType.AcademicCommentary ||
+    bookType === BookType.Encyclopedia;
+
+  return { isMonographBook, isNonFictionBook };
+};

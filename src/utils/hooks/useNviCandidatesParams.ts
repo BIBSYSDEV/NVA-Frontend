@@ -22,6 +22,7 @@ const getCommonNviCandidatesParams = (searchParams: URLSearchParams) => {
   const affiliations = searchParams.get(NviCandidatesSearchParam.Affiliations)?.split(',');
   const assignee = searchParams.get(NviCandidatesSearchParam.Assignee);
   const excludeSubUnits = searchParams.get(NviCandidatesSearchParam.ExcludeSubUnits) === 'true';
+  const filter = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateFilter | null;
   const offsetParam = searchParams.get(NviCandidatesSearchParam.Offset);
   const offset = offsetParam ? Number(offsetParam) : 0;
   const orderBy = searchParams.get(NviCandidatesSearchParam.OrderBy) as NviCandidateOrderBy | null;
@@ -30,7 +31,7 @@ const getCommonNviCandidatesParams = (searchParams: URLSearchParams) => {
   const size = sizeParam ? Number(sizeParam) : ROWS_PER_PAGE_OPTIONS[0];
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
 
-  return { affiliations, assignee, excludeSubUnits, offset, orderBy, query, size, sortOrder };
+  return { affiliations, assignee, excludeSubUnits, filter, offset, orderBy, query, size, sortOrder };
 };
 
 export const useNviCandidatesParams = () => {
@@ -39,7 +40,6 @@ export const useNviCandidatesParams = () => {
   const commonValues = getCommonNviCandidatesParams(searchParams);
 
   const aggregation = searchParams.get(NviCandidatesSearchParam.Aggregation) as 'all' | NviCandidateSearchStatus | null;
-  const filter = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateFilter | null;
   const status = searchParams.get(NviCandidatesSearchParam.Status)?.split(',') as NviCandidateStatus[] | null;
   const globalStatus = searchParams.get(NviCandidatesSearchParam.GlobalStatus)?.split(',') as
     | NviCandidateGlobalStatus[]
@@ -53,7 +53,6 @@ export const useNviCandidatesParams = () => {
     ...commonValues,
     aggregation,
     excludeUnassigned,
-    filter,
     globalStatus,
     sortOrder,
     status,
