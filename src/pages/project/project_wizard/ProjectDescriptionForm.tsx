@@ -64,16 +64,23 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
             />
           )}
           <Field name={ProjectFieldName.AcademicSummaryNb}>
-            {({ field }: FieldProps<string>) => {
+            {({ field, form }: FieldProps<string>) => {
               // NOTE: This functionality should be removed when the db is cleaned
               const academicSummaryNb = values.academicSummary.nb;
               const academicSummaryNo = values.academicSummary.no;
 
-              const fieldValue = academicSummaryNb ?? academicSummaryNo;
+              const fieldValue = academicSummaryNb ?? academicSummaryNo ?? '';
 
               return (
                 <DescriptionInput
-                  field={{ ...field, value: fieldValue }}
+                  field={{
+                    ...field,
+                    value: fieldValue,
+                    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+                      const newValue = e.target.value;
+                      form.setFieldValue(field.name, newValue === '' ? null : newValue);
+                    },
+                  }}
                   dataTestId={dataTestId.projectWizard.descriptionPanel.scientificSummaryNorwegianField}
                   label={t('project.scientific_summary_norwegian')}
                 />
@@ -90,16 +97,23 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
             )}
           </Field>
           <Field name={ProjectFieldName.PopularScientificSummaryNb}>
-            {({ field }: FieldProps<string>) => {
+            {({ field, form }: FieldProps<string>) => {
               // NOTE: This functionality should be removed when the db is cleaned
               const popularScientificSummaryNb = values.popularScientificSummary.nb;
               const popularScientificSummaryNo = values.popularScientificSummary.no;
 
-              const fieldValue = popularScientificSummaryNb ?? popularScientificSummaryNo;
+              const fieldValue = popularScientificSummaryNb ?? popularScientificSummaryNo ?? '';
 
               return (
                 <DescriptionInput
-                  field={{ ...field, value: fieldValue }}
+                  field={{
+                    ...field,
+                    value: fieldValue,
+                    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+                      const newValue = e.target.value;
+                      form.setFieldValue(field.name, newValue === '' ? null : newValue);
+                    },
+                  }}
                   dataTestId={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryNorwegianField}
                   label={t('project.popular_science_summary_norwegian')}
                 />

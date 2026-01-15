@@ -254,7 +254,13 @@ export enum NviCandidatesSearchParam {
 
 export type NviCandidateOrderBy = 'createdDate';
 
-export type NviCandidateFilter = 'rejectedByOthers' | 'approvedByOthers' | 'collaboration';
+export enum NviCandidateFilterEnum {
+  RejectedByOthers = 'rejectedByOthers',
+  ApprovedByOthers = 'approvedByOthers',
+  Collaboration = 'collaboration',
+}
+
+export type NviCandidateFilter = `${NviCandidateFilterEnum}`;
 
 export enum NviCandidateStatusEnum {
   Pending = 'pending',
@@ -617,11 +623,10 @@ export enum ProtectedResultParam {
   Status = 'status',
 }
 
-export interface FetchProtectedResultsParams
-  extends Pick<
-    FetchResultsParams,
-    ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
-  > {
+export interface FetchProtectedResultsParams extends Pick<
+  FetchResultsParams,
+  ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
+> {
   [ProtectedResultParam.Status]?: RegistrationStatus[] | null;
 }
 

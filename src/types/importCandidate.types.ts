@@ -76,8 +76,10 @@ export interface ExpandedImportCandidate extends Registration {
 
 export type CollaborationType = 'Collaborative' | 'NonCollaborative';
 
-export interface ImportCandidateAggregations
-  extends Pick<RegistrationAggregations, 'type' | 'topLevelOrganization' | 'files'> {
+export interface ImportCandidateAggregations extends Pick<
+  RegistrationAggregations,
+  'type' | 'topLevelOrganization' | 'files'
+> {
   importStatus?: AggregationValue<ImportCandidateStatus>[];
   collaborationType?: AggregationValue<CollaborationType>[];
 }
