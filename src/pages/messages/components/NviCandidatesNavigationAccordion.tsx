@@ -16,10 +16,11 @@ import {
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getDisputesSearchPath, getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 
 const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   padding: '0.5rem',
@@ -183,7 +184,9 @@ export const NviCandidatesNavigationAccordion = () => {
               data-testid={dataTestId.tasksPage.nvi.showDisputesButton}
               sx={{ justifyContent: 'center' }}
               isSelected={isOnNviDisputePage}
-              to={{ pathname: UrlPathTemplate.TasksNviDisputes }}>
+              to={getDisputesSearchPath({
+                affiliations: [user?.topOrgCristinId ? getIdentifierFromId(user.topOrgCristinId) : ''],
+              })}>
               {t('tasks.nvi.show_disputes')} (
               {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
             </SelectableButton>

@@ -210,3 +210,17 @@ export const getNviCandidatesSearchPath = ({
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
 };
+
+export interface NviDisputesSearchParams {
+  affiliations?: string[];
+}
+
+export const getDisputesSearchPath = ({ affiliations }: NviDisputesSearchParams) => {
+  const searchParams = new URLSearchParams();
+
+  if (affiliations !== undefined) {
+    const value = Array.isArray(affiliations) ? affiliations.join(',') : affiliations;
+    searchParams.set(NviCandidatesSearchParam.Affiliations, value);
+  }
+  return `${UrlPathTemplate.TasksNviDisputes}?${searchParams.toString()}`;
+};
