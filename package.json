@@ -41,7 +41,7 @@
     "@mui/utils": "^7.3.6",
     "@mui/x-date-pickers": "^8.24.0",
     "@reduxjs/toolkit": "^2.11.2",
-    "@tanstack/react-query": "^5.90.16",
+    "@tanstack/react-query": "^5.90.19",
     "@uppy/aws-s3": "^5.1.0",
     "@uppy/core": "^5.1.0",
     "@uppy/dashboard": "^5.1.0",
@@ -69,7 +69,7 @@
     "yup": "^1.7.1"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.91.2",
+    "@tanstack/eslint-plugin-query": "^5.91.3",
     "@tanstack/react-query-devtools": "^5.91.2",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.8",
