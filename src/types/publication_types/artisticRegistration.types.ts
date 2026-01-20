@@ -225,6 +225,7 @@ export interface ArtisticPublicationInstance {
   architectureOutput?: ArchitectureOutput[];
   outputs?: Venue[] | FilmOutput[];
   manifestations?: MusicOutput[] | LiteraryArtsOutput[];
+  typeDescription?: string | '';
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
