@@ -225,6 +225,7 @@ export interface ArtisticPublicationInstance {
   architectureOutput?: ArchitectureOutput[];
   outputs?: Venue[] | FilmOutput[];
   manifestations?: MusicOutput[] | LiteraryArtsOutput[];
+  typeDescription?: string | '';
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
@@ -247,7 +248,7 @@ export interface ArtisticEntityDescription extends BaseEntityDescription {
   reference: ArtisticReference;
 }
 
-interface ArtisticSubtype {
+export interface ArtisticSubtype {
   type: DesignType | ArchitectureType | PerformingArtType | MovingPictureType | VisualArtType | LiteraryArtsType | '';
   description?: string;
 }
