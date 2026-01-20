@@ -69,7 +69,7 @@ export const publishRegistration = async (registrationId: string) =>
   });
 
 export const deleteRegistration = async (identifier: string) =>
-  await authenticatedApiRequest({
+  await authenticatedApiRequest2({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
     method: 'DELETE',
   });

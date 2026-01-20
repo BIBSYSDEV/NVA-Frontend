@@ -23,6 +23,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import {
   getAssociatedLinks,
   getTitleString,
+  isArtistic,
   isBook,
   isReport,
   isResearchData,
@@ -42,6 +43,10 @@ import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
+import {
+  ArtisticPublicationInstance,
+  emptyArtisticPublicationInstance,
+} from '../../types/publication_types/artisticRegistration.types';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -57,6 +62,11 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   const mainTitle = getTitleString(entityDescription?.mainTitle);
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
+  const publicationInstance = entityDescription?.reference?.publicationInstance;
+  const artisticPublicationInstance =
+    !!publicationInstance && isArtistic(publicationInstance.type)
+      ? (publicationInstance as ArtisticPublicationInstance)
+      : emptyArtisticPublicationInstance;
 
   const relatedRegistrationsQuery = useRegistrationSearch({
     params: {
@@ -85,6 +95,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             publicationDate={entityDescription?.publicationDate}
             showYearOnly
             textColor="primary.contrastText"
+            publicationInstance={artisticPublicationInstance}
           />
           <TruncatableTypography variant="h1" sx={{ color: 'primary.contrastText' }}>
             {mainTitle}
