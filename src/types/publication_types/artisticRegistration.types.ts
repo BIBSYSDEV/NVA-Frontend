@@ -248,7 +248,7 @@ export interface ArtisticEntityDescription extends BaseEntityDescription {
   reference: ArtisticReference;
 }
 
-interface ArtisticSubtype {
+export interface ArtisticSubtype {
   type: DesignType | ArchitectureType | PerformingArtType | MovingPictureType | VisualArtType | LiteraryArtsType | '';
   description?: string;
 }

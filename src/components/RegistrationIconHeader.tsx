@@ -1,9 +1,9 @@
 import NotesIcon from '@mui/icons-material/Notes';
 import { Box, Typography, TypographyProps } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import { otherArtisticSubtypes } from '../pages/public_registration/PublicPublicationInstance';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
 import { PublicationInstanceType, RegistrationDate } from '../types/registration.types';
+import { isOtherSubtype } from '../utils/registration-helpers';
 import { DateText } from './RegistrationListItem/components/DateText';
 import { PublicationInstanceText } from './RegistrationListItem/components/PublicationInstanceText';
 
@@ -24,25 +24,25 @@ export const RegistrationIconHeader = ({
   publicationChannelName,
   publicationInstance: publicationInstance,
 }: RegistrationIconHeaderProps) => {
-  const { t } = useTranslation();
   const subtype = publicationInstance?.subtype;
   const typeDescription = publicationInstance?.typeDescription;
 
-  const typeString = subtype?.type
-    ? otherArtisticSubtypes.includes(subtype.type) && subtype.description
-      ? subtype.description
-      : t(`${subtype.type}` as any)
-    : typeDescription
-      ? typeDescription
-      : '';
+  const typeString =
+    subtype?.type && isOtherSubtype(subtype)
+      ? otherArtisticSubtypes.includes(subtype.type) && subtype.description
+        ? subtype.description
+        : subtype.type
+      : typeDescription
+        ? typeDescription
+        : null;
 
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
       <NotesIcon sx={{ bgcolor: 'registration.main', color: 'primary.main', borderRadius: '0.4rem' }} />
       <PublicationInstanceText publicationInstanceType={publicationInstanceType} textColor={textColor} />
-      {(subtype || typeDescription) && (
+      {!!typeString && (
         <Typography color={textColor} fontWeight="bold">
-          - {typeString}
+          {typeString}
         </Typography>
       )}
       {publicationDate?.year && (

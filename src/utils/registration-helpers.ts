@@ -8,22 +8,29 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '..
 import { Contributor, ContributorRole, PreviewContributor } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
+  ArchitectureType,
+  ArtisticSubtype,
   AudioVisualPublication,
   Award,
   Broadcast,
   CinematicRelease,
   Competition,
   Concert,
+  DesignType,
   Exhibition,
   LiteraryArtsAudioVisual,
   LiteraryArtsMonograph,
   LiteraryArtsPerformance,
+  LiteraryArtsType,
   LiteraryArtsWeb,
   MentionInPublication,
+  MovingPictureType,
   MusicScore,
   OtherMusicPerformance,
   OtherRelease,
+  PerformingArtType,
   Venue,
+  VisualArtType,
 } from '../types/publication_types/artisticRegistration.types';
 import { DegreeRegistration } from '../types/publication_types/degreeRegistration.types';
 import { ExhibitionBasic } from '../types/publication_types/exhibitionContent.types';
@@ -1025,5 +1032,19 @@ export const updateRegistrationQueryData = (queryClient: QueryClient, registrati
   const key2 = ['registration', registration.identifier, false];
   if (queryClient.getQueryData(key2)) {
     queryClient.setQueryData(key2, registration);
+  }
+};
+
+export const isOtherSubtype = (subtype: ArtisticSubtype) => {
+  switch (subtype.type) {
+    case LiteraryArtsType.Other:
+    case VisualArtType.Other:
+    case MovingPictureType.Other:
+    case ArchitectureType.Other:
+    case DesignType.Other:
+    case PerformingArtType.Other:
+      return true;
+    default:
+      return false;
   }
 };
