@@ -5,7 +5,7 @@ import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledInfoBanner } from '../../../components/styled/Wrappers';
 import { RegistrationFormContext } from '../../../context/RegistrationFormContext';
-import { DescriptionFieldNames, ResourceFieldNames } from '../../../types/publicationFieldNames';
+import { DescriptionFieldNames, PublicationType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationDate } from '../../../utils/date-helpers';
@@ -35,6 +35,14 @@ export const DatePickerField = () => {
   const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
   const disabled = disableNviCriticalFields || disableChannelClaimsFields;
 
+  /*
+   * Because NVI publication points are re-evaluated every year, the publication channel IDs (publicationContext.id,
+   * publicationContext.publisher.id, or publicationContext.series.id) are suffixed with the publication year in the API URL
+   * (e.g. "....a6Hg53gsh/2023"). Because of this, when the publication year is changed, we need to update the publication
+   * channel IDs on the registration to reflect the new year.
+   * The exception is for Anthologies, where the publicationContext.id refers to an NVI registration
+   * (the 'parent' it is published in) and not a publication channel. In those cases, we do not change the id at all.
+   * */
   const syncChannelIdsWithYear = (newYear: string) => {
     const publicationContext = entityDescription?.reference?.publicationContext;
     if (!publicationContext) {
@@ -42,6 +50,12 @@ export const DatePickerField = () => {
     }
 
     if (!validYearRegEx.test(newYear)) {
+      return;
+    }
+
+    // The publicationContext.id of registrations published in Anthologies refer to an NVI registration and not to a
+    // publication channel, so we do not change the year
+    if (publicationContext.type === PublicationType.Anthology) {
       return;
     }
 
