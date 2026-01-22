@@ -19,7 +19,7 @@ const replaceYearInId = (id: string, newYear: string) => {
 };
 
 const isPublicationChannel = (id: string) => {
-  return id.includes(PublicationChannelApiPath.SerialPublication);
+  return id.includes(PublicationChannelApiPath.Publisher || PublicationChannelApiPath.SerialPublication);
 };
 
 export const DatePickerField = () => {
