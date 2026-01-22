@@ -78,3 +78,5 @@ export const getEnvVariableValue = <T = string>(value: any): T | undefined => {
   }
   return value?.trim() as T | undefined;
 };
+
+export const setDelay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
