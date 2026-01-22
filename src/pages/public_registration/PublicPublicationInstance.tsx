@@ -94,7 +94,7 @@ export const PublicPublicationInstanceChapter = ({
   ) : null;
 };
 
-const otherArtisticSubtypes = [
+export const otherArtisticSubtypes = [
   DesignType.Other,
   ArchitectureType.Other,
   PerformingArtType.Other,
@@ -109,7 +109,7 @@ export const PublicPublicationInstanceArtistic = ({
   publicationInstance: ArtisticPublicationInstance;
 }) => {
   const { t } = useTranslation();
-  const { type, subtype, description } = publicationInstance;
+  const { type, subtype, description, typeDescription } = publicationInstance;
 
   const i18nTypeBase =
     type === ArtisticType.ArtisticDesign
@@ -124,13 +124,17 @@ export const PublicPublicationInstanceArtistic = ({
               ? 'registration.resource_type.artistic.visual_arts_type.'
               : type === ArtisticType.LiteraryArts
                 ? 'registration.resource_type.artistic.literary_arts_type.'
-                : '';
+                : type === ArtisticType.OtherArtisticOutput
+                  ? 'registration.resource_type.artistic.visual_arts_type.'
+                  : '';
 
   const typeString = subtype?.type
     ? otherArtisticSubtypes.includes(subtype.type) && subtype.description
       ? subtype.description
       : t(`${i18nTypeBase}${subtype.type}` as any)
-    : '';
+    : typeDescription
+      ? typeDescription
+      : '';
 
   return (
     <>
