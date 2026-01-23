@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidateGlobalStatusEnum, NviCandidatesSearchParam, NviCandidateStatusEnum } from '../../../api/searchApi';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
 import {
@@ -178,18 +177,16 @@ export const NviCandidatesNavigationAccordion = () => {
               {t('tasks.nvi.show_disputes')} (
               {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
             </SelectableButton>
-            <BetaFunctionality sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <SelectableButton
-                data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
-                sx={{ justifyContent: 'center' }}
-                isSelected={isOnPublicationPointsPage}
-                to={{
-                  pathname: UrlPathTemplate.TasksPublicationPoints,
-                  search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-                }}>
-                {t('tasks.nvi.show_status_for_publication_points')}
-              </SelectableButton>
-            </BetaFunctionality>
+            <SelectableButton
+              data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
+              sx={{ justifyContent: 'center' }}
+              isSelected={isOnPublicationPointsPage}
+              to={{
+                pathname: UrlPathTemplate.TasksPublicationPoints,
+                search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
+              }}>
+              {t('tasks.nvi.show_status_for_publication_points')}
+            </SelectableButton>
           </Box>
         </StyledNviStatusBox>
       </StyledTicketSearchFormGroup>
