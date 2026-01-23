@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidateGlobalStatusEnum, NviCandidatesSearchParam, NviCandidateStatusEnum } from '../../../api/searchApi';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
 import {
@@ -19,8 +18,9 @@ import {
 } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getDisputesSearchPath, getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
 
 const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   padding: '0.5rem',
@@ -173,22 +173,22 @@ export const NviCandidatesNavigationAccordion = () => {
               data-testid={dataTestId.tasksPage.nvi.showDisputesButton}
               sx={{ justifyContent: 'center' }}
               isSelected={isOnNviDisputePage}
-              to={{ pathname: UrlPathTemplate.TasksNviDisputes }}>
+              to={getDisputesSearchPath({
+                affiliations: [user?.topOrgCristinId ? getIdentifierFromId(user.topOrgCristinId) : ''],
+              })}>
               {t('tasks.nvi.show_disputes')} (
               {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
             </SelectableButton>
-            <BetaFunctionality sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <SelectableButton
-                data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
-                sx={{ justifyContent: 'center' }}
-                isSelected={isOnPublicationPointsPage}
-                to={{
-                  pathname: UrlPathTemplate.TasksPublicationPoints,
-                  search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-                }}>
-                {t('tasks.nvi.show_status_for_publication_points')}
-              </SelectableButton>
-            </BetaFunctionality>
+            <SelectableButton
+              data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
+              sx={{ justifyContent: 'center' }}
+              isSelected={isOnPublicationPointsPage}
+              to={{
+                pathname: UrlPathTemplate.TasksPublicationPoints,
+                search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
+              }}>
+              {t('tasks.nvi.show_status_for_publication_points')}
+            </SelectableButton>
           </Box>
         </StyledNviStatusBox>
       </StyledTicketSearchFormGroup>
