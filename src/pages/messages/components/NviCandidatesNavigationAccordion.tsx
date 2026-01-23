@@ -18,8 +18,10 @@ import {
 } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getDisputesSearchPath, getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { StyledSkeleton } from './NviStatusTableRowWrapper';
 
 const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   padding: '0.5rem',
@@ -27,10 +29,6 @@ const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   marginBottom: '0.5rem',
 }));
-
-const StyledSkeleton = styled(Skeleton)({
-  width: '2ch',
-});
 
 const progressLabel = 'progress-label';
 
@@ -170,14 +168,6 @@ export const NviCandidatesNavigationAccordion = () => {
               {t('tasks.nvi.show_reporting_status')}
             </SelectableButton>
             <SelectableButton
-              data-testid={dataTestId.tasksPage.nvi.showDisputesButton}
-              sx={{ justifyContent: 'center' }}
-              isSelected={isOnNviDisputePage}
-              to={{ pathname: UrlPathTemplate.TasksNviDisputes }}>
-              {t('tasks.nvi.show_disputes')} (
-              {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
-            </SelectableButton>
-            <SelectableButton
               data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
               sx={{ justifyContent: 'center' }}
               isSelected={isOnPublicationPointsPage}
@@ -186,6 +176,16 @@ export const NviCandidatesNavigationAccordion = () => {
                 search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
               }}>
               {t('tasks.nvi.show_status_for_publication_points')}
+            </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.tasksPage.nvi.showDisputesButton}
+              sx={{ justifyContent: 'center' }}
+              isSelected={isOnNviDisputePage}
+              to={getDisputesSearchPath({
+                affiliations: [user?.topOrgCristinId ? getIdentifierFromId(user.topOrgCristinId) : ''],
+              })}>
+              {t('tasks.nvi.show_disputes')} (
+              {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
             </SelectableButton>
           </Box>
         </StyledNviStatusBox>
