@@ -10,6 +10,11 @@ import { AffiliationHierarchy } from '../../components/institution/AffiliationHi
 import { NviCandidateProblemsContext } from '../../context/NviCandidateProblemsContext';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { PublicationInstanceType } from '../../types/registration.types';
+import {
+  someAffiliationIsNviCustomer,
+  useAffiliationNviCheck,
+  useCustomerCristinIdMap,
+} from '../../utils/customer-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { hasUnidentifiedContributorProblem } from '../../utils/nviHelpers';
@@ -46,6 +51,8 @@ export const PublicRegistrationContributors = ({
     ...contributorConfig[registrationType].primaryRoles,
     ...contributorConfig[registrationType].secondaryRoles,
   ];
+
+  console.log('distinctUnits', distinctUnits);
 
   return (
     <Box
@@ -111,6 +118,9 @@ interface ContributorsRowProps {
 
 const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRoles }: ContributorsRowProps) => {
   const { t } = useTranslation();
+  const customerMap = useCustomerCristinIdMap();
+  console.log('customerMap', customerMap);
+  console.log('contributors', contributors);
 
   return (
     <Box
@@ -135,7 +145,12 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
 
+        const a = useAffiliationNviCheck(contributor.affiliations);
         const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
+        const belongsToNviInstitution = someAffiliationIsNviCustomer(contributor.affiliations, customerMap);
+
+        console.log('contributor.affiliations', contributor.affiliations);
+        console.log('belongsToNviInstitution', belongsToNviInstitution);
 
         const showRole = relevantRoles.includes(ContributorRole.Creator)
           ? contributor.role?.type !== ContributorRole.Creator
@@ -166,6 +181,8 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
               )}
 
               {roleContent}
+
+              {belongsToNviInstitution && <p>BELONGS</p>}
 
               {affiliationIndexes && affiliationIndexes.length > 0 && (
                 <sup style={{ marginLeft: '0.1rem' }}>
