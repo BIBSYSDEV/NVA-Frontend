@@ -1,10 +1,14 @@
 import AdjustIcon from '@mui/icons-material/Adjust';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, LinearProgress, Skeleton, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidateGlobalStatusEnum, NviCandidatesSearchParam, NviCandidateStatusEnum } from '../../../api/searchApi';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
 import {
@@ -17,10 +21,6 @@ import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
-import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 
 const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   padding: '0.5rem',
@@ -58,7 +58,6 @@ export const NviCandidatesNavigationAccordion = () => {
   const nviApprovedCount = nviAggregations?.approved.docCount.toLocaleString();
   const nviRejectedCount = nviAggregations?.rejected.docCount.toLocaleString();
   const nviDisputeCount = nviAggregations?.dispute.docCount.toLocaleString();
-
   const nviCandidatesTotal = nviAggregations?.totalCount.docCount ?? 0;
   const nviCandidatesCompleted = nviAggregations?.completed.docCount ?? 0;
   const nviCompletedPercentage =
