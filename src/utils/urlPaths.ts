@@ -1,7 +1,7 @@
 import { To } from 'react-router';
+import { NviCandidateGlobalStatus, NviCandidatesSearchParam, NviCandidateStatus } from '../api/searchApi';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
-import { NviCandidateStatus, NviCandidateGlobalStatus } from '../api/searchApi';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;
@@ -184,29 +184,43 @@ export const getNviCandidatesSearchPath = ({
 
   if (status) {
     const value = Array.isArray(status) ? status.join(',') : status;
-    searchParams.set('status', value);
+    searchParams.set(NviCandidatesSearchParam.Status, value);
   }
 
   if (globalStatus) {
     const value = Array.isArray(globalStatus) ? globalStatus.join(',') : globalStatus;
-    searchParams.set('globalStatus', value);
+    searchParams.set(NviCandidatesSearchParam.GlobalStatus, value);
   }
 
   if (username) {
-    searchParams.set('assignee', username);
+    searchParams.set(NviCandidatesSearchParam.Assignee, username);
   }
   if (year) {
-    searchParams.set('year', year.toString());
+    searchParams.set(NviCandidatesSearchParam.Year, year.toString());
   }
   if (orgNumber) {
-    searchParams.set('affiliations', orgNumber);
+    searchParams.set(NviCandidatesSearchParam.Affiliations, orgNumber);
   }
   if (excludeUnassigned !== undefined) {
-    searchParams.set('excludeUnassigned', excludeUnassigned.toString());
+    searchParams.set(NviCandidatesSearchParam.ExcludeUnassigned, excludeUnassigned.toString());
   }
 
   if (excludeSubUnits !== undefined) {
-    searchParams.set('excludeSubUnits', excludeSubUnits.toString());
+    searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, excludeSubUnits.toString());
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
+};
+
+export interface NviDisputesSearchParams {
+  affiliations?: string[];
+}
+
+export const getDisputesSearchPath = ({ affiliations }: NviDisputesSearchParams) => {
+  const searchParams = new URLSearchParams();
+
+  if (affiliations !== undefined) {
+    const value = Array.isArray(affiliations) ? affiliations.join(',') : affiliations;
+    searchParams.set(NviCandidatesSearchParam.Affiliations, value);
+  }
+  return `${UrlPathTemplate.TasksNviDisputes}?${searchParams.toString()}`;
 };

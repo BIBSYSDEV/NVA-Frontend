@@ -1,4 +1,7 @@
 import AdjustIcon from '@mui/icons-material/Adjust';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, LinearProgress, Skeleton, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -15,12 +18,9 @@ import {
 } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
-import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
+import { getDisputesSearchPath, getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
 
 const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   padding: '0.5rem',
@@ -171,25 +171,25 @@ export const NviCandidatesNavigationAccordion = () => {
               {t('tasks.nvi.show_reporting_status')}
             </SelectableButton>
             <SelectableButton
+              data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
+              sx={{ justifyContent: 'center' }}
+              isSelected={isOnPublicationPointsPage}
+              to={{
+                pathname: UrlPathTemplate.TasksPublicationPoints,
+                search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
+              }}>
+              {t('tasks.nvi.show_status_for_publication_points')}
+            </SelectableButton>
+            <SelectableButton
               data-testid={dataTestId.tasksPage.nvi.showDisputesButton}
               sx={{ justifyContent: 'center' }}
               isSelected={isOnNviDisputePage}
-              to={{ pathname: UrlPathTemplate.TasksNviDisputes }}>
+              to={getDisputesSearchPath({
+                affiliations: [user?.topOrgCristinId ? getIdentifierFromId(user.topOrgCristinId) : ''],
+              })}>
               {t('tasks.nvi.show_disputes')} (
               {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
             </SelectableButton>
-            <BetaFunctionality sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <SelectableButton
-                data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
-                sx={{ justifyContent: 'center' }}
-                isSelected={isOnPublicationPointsPage}
-                to={{
-                  pathname: UrlPathTemplate.TasksPublicationPoints,
-                  search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-                }}>
-                {t('tasks.nvi.show_status_for_publication_points')}
-              </SelectableButton>
-            </BetaFunctionality>
           </Box>
         </StyledNviStatusBox>
       </StyledTicketSearchFormGroup>
