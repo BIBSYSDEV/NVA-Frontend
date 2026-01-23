@@ -184,29 +184,29 @@ export const getNviCandidatesSearchPath = ({
 
   if (status) {
     const value = Array.isArray(status) ? status.join(',') : status;
-    searchParams.set(NviCandidatesSearchParam.Status, value);
+    searchParams.set('status', value);
   }
 
   if (globalStatus) {
     const value = Array.isArray(globalStatus) ? globalStatus.join(',') : globalStatus;
-    searchParams.set(NviCandidatesSearchParam.GlobalStatus, value);
+    searchParams.set('globalStatus', value);
   }
 
   if (username) {
-    searchParams.set(NviCandidatesSearchParam.Assignee, username);
+    searchParams.set('assignee', username);
   }
   if (year) {
-    searchParams.set(NviCandidatesSearchParam.Year, year.toString());
+    searchParams.set('year', year.toString());
   }
   if (orgNumber) {
-    searchParams.set(NviCandidatesSearchParam.Affiliations, orgNumber);
+    searchParams.set('affiliations', orgNumber);
   }
   if (excludeUnassigned !== undefined) {
-    searchParams.set(NviCandidatesSearchParam.ExcludeUnassigned, excludeUnassigned.toString());
+    searchParams.set('excludeUnassigned', excludeUnassigned.toString());
   }
 
   if (excludeSubUnits !== undefined) {
-    searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, excludeSubUnits.toString());
+    searchParams.set('excludeSubUnits', excludeSubUnits.toString());
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
 };
