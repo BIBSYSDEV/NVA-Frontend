@@ -26,7 +26,8 @@ export const NviPublicationPointsTableRow = ({
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
   const orgAggregations = aggregations?.byOrganization[organization.id];
-  const rowIsEmpty = !orgAggregations || orgAggregations.candidateCount === 0;
+  const rowIsEmpty =
+    !orgAggregations || (orgAggregations.points === 0 && orgAggregations.globalApprovalStatus.Approved === 0);
 
   if (rowIsEmpty && excludeEmptyRows) {
     return null;
