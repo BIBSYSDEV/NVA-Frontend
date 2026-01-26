@@ -45,7 +45,7 @@ export const DatePickerField = () => {
    * publicationContext.publisher.id, or publicationContext.series.id) are suffixed with the publication year in the API URL
    * (e.g. "....a6Hg53gsh/2023"). Because of this, when the publication year is changed, we need to update the publication
    * channel IDs on the registration to reflect the new year.
-   * There are some exceptions, especially for Anthologies where the publicationContext.id refers to an NVI registration
+   * There are some exceptions, especially for Anthologies where the publicationContext.id refers to an NVA registration
    * (the 'parent' it is published in) and not a publication channel. In those cases, we do not change the id at all.
    * */
   const syncChannelIdsWithYear = (newYear: string) => {
