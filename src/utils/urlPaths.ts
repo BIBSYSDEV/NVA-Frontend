@@ -220,7 +220,7 @@ export const getDisputesSearchPath = ({ affiliations }: NviDisputesSearchParams)
 
   let value: string | undefined;
   if (Array.isArray(affiliations) && affiliations.length > 0) {
-    value = affiliations.join(',');
+    value = encodeURIComponent(affiliations.join(','));
   }
 
   if (value) {
