@@ -21,7 +21,7 @@ export const useFetchImportCandidatesQuery = (enabled = true) => {
     topLevelOrganization: importCandidateQueryParams.topLevelOrganizationParam,
     type: importCandidateQueryParams.typeParam,
     collaborationType: importCandidateQueryParams.collaborationTypeParam,
-    size: importCandidateQueryParams.sizeParam ?? ROWS_PER_PAGE_OPTIONS[0],
+    size: importCandidateQueryParams.sizeParam ?? ROWS_PER_PAGE_OPTIONS.slice(-1)[0],
     from: importCandidateQueryParams.fromParam ?? 0,
   } satisfies FetchImportCandidatesParams;
 

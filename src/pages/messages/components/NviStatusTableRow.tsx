@@ -1,18 +1,15 @@
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { IconButton, Skeleton, styled, TableCell, TableRow, Link } from '@mui/material';
-import { Link as RouterLink } from 'react-router';
+import { Link, Skeleton, styled, TableCell } from '@mui/material';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router';
+import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
-import { getLanguageString } from '../../../utils/translation-helpers';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
 import { User } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
+import { NviStatusTableRowWrapper } from './NviStatusTableRowWrapper';
 
 interface NviStatusTableRowProps {
   organization: Organization;
@@ -28,20 +25,23 @@ const StyledSkeleton = styled(Skeleton)({
 });
 
 export const NviStatusTableRow = ({ organization, aggregations, level = 0, user, year }: NviStatusTableRowProps) => {
-  const { t } = useTranslation();
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
   const orgAggregations = aggregations?.byOrganization[organization.id];
-  const shouldHideEmptyRow = excludeEmptyRows && (!orgAggregations || orgAggregations.candidateCount === 0);
+  const rowIsEmpty = !orgAggregations || orgAggregations.candidateCount === 0;
 
-  if (shouldHideEmptyRow) {
+  if (rowIsEmpty && excludeEmptyRows) {
     return null;
   }
 
   return (
     <>
-      <TableRow sx={{ bgcolor: level % 2 === 0 ? undefined : 'white' }}>
-        <TableCell sx={{ pl: `${1 + level * 1.5}rem`, py: '1rem' }}>{getLanguageString(organization.labels)}</TableCell>
+      <NviStatusTableRowWrapper
+        level={level}
+        organization={organization}
+        aggregations={aggregations}
+        expanded={expanded}
+        setExpanded={setExpanded}>
         <TableCell align="center">
           {aggregations ? (
             <Link
@@ -136,21 +136,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
             <StyledSkeleton />
           )}
         </TableCell>
-        <TableCell align="center">
-          {aggregations ? (
-            (orgAggregations?.points.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0)
-          ) : (
-            <StyledSkeleton />
-          )}
-        </TableCell>
-        <TableCell>
-          {level !== 0 && organization.hasPart && organization.hasPart.length > 0 && (
-            <IconButton onClick={() => setExpanded(!expanded)} title={t('tasks.nvi.show_subunits')}>
-              {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            </IconButton>
-          )}
-        </TableCell>
-      </TableRow>
+      </NviStatusTableRowWrapper>
 
       {expanded &&
         organization.hasPart?.map((subUnit) => (
