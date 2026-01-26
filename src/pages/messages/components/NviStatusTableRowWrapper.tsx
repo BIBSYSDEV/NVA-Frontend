@@ -45,7 +45,11 @@ export const NviStatusTableRowWrapper = ({
       {children}
       <TableCell>
         {level !== 0 && organization.hasPart && organization.hasPart.length > 0 && (
-          <IconButton onClick={() => setExpanded(!expanded)} title={t('tasks.nvi.show_subunits')}>
+          <IconButton
+            onClick={() => setExpanded(!expanded)}
+            title={t('tasks.nvi.show_subunits')}
+            aria-label={t('tasks.nvi.show_subunits')}
+            aria-expanded={expanded}>
             {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </IconButton>
         )}

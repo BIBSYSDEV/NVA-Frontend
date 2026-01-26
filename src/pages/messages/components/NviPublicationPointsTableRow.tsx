@@ -34,12 +34,10 @@ export const NviPublicationPointsTableRow = ({
   }
 
   const publicationPoints = orgAggregations?.points;
-  const pointsWithTwoDecimals = publicationPoints
-    ? publicationPoints.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })
-    : 0;
+  const pointsWithTwoDecimals = (publicationPoints ?? 0).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   return (
     <>
