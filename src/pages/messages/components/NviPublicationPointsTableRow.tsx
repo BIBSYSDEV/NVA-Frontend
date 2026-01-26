@@ -60,7 +60,7 @@ export const NviPublicationPointsTableRow = ({
                 globalStatus: [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending],
                 excludeSubUnits: true,
               })}>
-              {orgAggregations?.approvalStatus.Approved ?? 0}
+              {orgAggregations?.globalApprovalStatus.Approved ?? 0}
             </Link>
           ) : (
             <StyledSkeleton />
