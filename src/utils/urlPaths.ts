@@ -1,5 +1,5 @@
 import { To } from 'react-router';
-import { NviCandidateGlobalStatus, NviCandidatesSearchParam, NviCandidateStatus } from '../api/searchApi';
+import { NviCandidateGlobalStatus, NviCandidateStatus } from '../api/searchApi';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
 
@@ -209,23 +209,4 @@ export const getNviCandidatesSearchPath = ({
     searchParams.set('excludeSubUnits', excludeSubUnits.toString());
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
-};
-
-export interface NviDisputesSearchParams {
-  affiliations?: string[];
-}
-
-export const getDisputesSearchPath = ({ affiliations }: NviDisputesSearchParams) => {
-  const searchParams = new URLSearchParams();
-
-  let value: string | undefined;
-  if (Array.isArray(affiliations) && affiliations.length > 0) {
-    value = encodeURIComponent(affiliations.join(','));
-  }
-
-  if (value) {
-    searchParams.set(NviCandidatesSearchParam.Affiliations, value);
-  }
-
-  return `${UrlPathTemplate.TasksNviDisputes}?${searchParams.toString()}`;
 };
