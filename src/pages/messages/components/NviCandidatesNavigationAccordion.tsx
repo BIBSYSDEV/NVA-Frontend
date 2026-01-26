@@ -178,10 +178,7 @@ export const NviCandidatesNavigationAccordion = () => {
               data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
               sx={{ justifyContent: 'center' }}
               isSelected={isOnPublicationPointsPage}
-              to={{
-                pathname: UrlPathTemplate.TasksPublicationPoints,
-                search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-              }}>
+              to={{ pathname: UrlPathTemplate.TasksPublicationPoints }}>
               {t('tasks.nvi.show_status_for_publication_points')}
             </SelectableButton>
           </Box>

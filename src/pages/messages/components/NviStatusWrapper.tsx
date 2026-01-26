@@ -1,10 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { HorizontalBox, MediumTypography, VerticalBox } from '../../../components/styled/Wrappers';
-import { RootState } from '../../../redux/store';
 import { ExportNviStatusButton } from './ExportNviStatusButton';
 import { NviVisibilitySelector } from './NviVisibilitySelector';
 import { NviYearSelector } from './NviYearSelector';
@@ -20,12 +17,17 @@ interface NviStatusWrapperProps {
   headline: string;
   totalPoints?: TotalPointsObject;
   yearSelector?: boolean;
+  exportAcronym?: string;
 }
 
-export const NviStatusWrapper = ({ children, headline, totalPoints, yearSelector }: NviStatusWrapperProps) => {
+export const NviStatusWrapper = ({
+  children,
+  headline,
+  totalPoints,
+  yearSelector,
+  exportAcronym,
+}: NviStatusWrapperProps) => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
-  const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
 
   return (
     <VerticalBox sx={{ gap: '1rem', alignItems: 'start' }}>
@@ -48,7 +50,7 @@ export const NviStatusWrapper = ({ children, headline, totalPoints, yearSelector
           {yearSelector && <NviYearSelector sx={{ minWidth: '10rem' }} />}
           <NviVisibilitySelector sx={{ minWidth: '15rem' }} />
         </Box>
-        <ExportNviStatusButton acronym={organizationQuery.data?.acronym ?? ''} />
+        <ExportNviStatusButton acronym={exportAcronym ?? ''} />
       </Box>
       {children}
     </VerticalBox>

@@ -21,7 +21,10 @@ export const NviStatusPage = () => {
   const nviStatusQuery = useFetchNviInstitutionStatus(year);
 
   return (
-    <NviStatusWrapper headline={t('tasks.nvi.institution_nvi_status')} yearSelector>
+    <NviStatusWrapper
+      headline={t('tasks.nvi.institution_nvi_status')}
+      exportAcronym={organizationQuery.data?.acronym}
+      yearSelector>
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>

@@ -23,6 +23,7 @@ export const NviPublicationPointsPage = () => {
   return (
     <NviStatusWrapper
       headline={headline}
+      exportAcronym={organizationQuery.data?.acronym}
       totalPoints={
         aggregations
           ? {
