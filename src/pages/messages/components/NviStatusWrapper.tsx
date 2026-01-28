@@ -50,7 +50,7 @@ export const NviStatusWrapper = ({
           {yearSelector && <NviYearSelector sx={{ minWidth: '10rem' }} />}
           <NviVisibilitySelector sx={{ minWidth: '15rem' }} />
         </Box>
-        <ExportNviStatusButton acronym={exportAcronym ?? ''} />
+        {exportAcronym && <ExportNviStatusButton acronym={exportAcronym} />}
       </Box>
       {children}
     </VerticalBox>
