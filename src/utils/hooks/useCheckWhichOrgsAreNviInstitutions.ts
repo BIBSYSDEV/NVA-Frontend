@@ -6,7 +6,13 @@ export interface NviStatusObject {
   isLoading: boolean;
 }
 
-/* Given a list of orgIds we check all to see if they are, or are descendant of, an NVI institution */
+/* Given a list of orgIds we check all to see if they are, or are descendant of, an NVI institution
+ * @returns Map where key is orgId and value is NviStatusObject with:
+ * - isNviInstitution true if it is found in customers table with nviInstitution true
+ * - isNviInstitution false if it is found in customers table with nviInstitution false
+ * - isNviInstitution undefined if it is not found in customers table or if data is still being fetched
+ * - isLoading true if the data is still being fetched
+ * */
 export const useCheckWhichOrgsAreNviInstitutions = (orgIds: string[]) => {
   const uniqueOrgIds = Array.from(new Set(orgIds));
   const { nvaCustomers, isFetchingCustomerMap } = useFetchCustomerMap();
