@@ -855,5 +855,6 @@ export const dataTestId = {
     rejectedLink: 'nvi-aggregations-rejected-link',
     totalAmountLink: 'nvi-aggregations-total-amount-link',
     disputeLink: 'nvi-aggregations-dispute-link',
+    totalApprovedLink: 'nvi-aggregations-total-approved-link',
   },
 };
