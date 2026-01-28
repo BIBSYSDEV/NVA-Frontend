@@ -16,7 +16,7 @@ export const useCheckNviStatusForOrgs = (orgIds: string[]) => {
   );
 
   const orgIdsNotInCustomersMaps = Array.from(nviStatusForOrgs.entries())
-    .filter(([_, value]) => value === undefined)
+    .filter(([, value]) => value === undefined)
     .map(([id]) => id);
 
   const topLevelOrganizations = useFetchTopLevelOrganizations(orgIdsNotInCustomersMaps);
