@@ -1,5 +1,6 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import WarningIcon from '@mui/icons-material/Warning';
 import { Box, Button, Link, Typography } from '@mui/material';
 import { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,12 +11,8 @@ import { AffiliationHierarchy } from '../../components/institution/AffiliationHi
 import { NviCandidateProblemsContext } from '../../context/NviCandidateProblemsContext';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { PublicationInstanceType } from '../../types/registration.types';
-import {
-  someAffiliationIsNviCustomer,
-  useAffiliationNviCheck,
-  useCustomerCristinIdMap,
-} from '../../utils/customer-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useCheckNviStatusForOrgs } from '../../utils/hooks/useCheckNviStatusForOrgs';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { hasUnidentifiedContributorProblem } from '../../utils/nviHelpers';
 import { contributorConfig, getContributorsWithPrimaryRole } from '../../utils/registration-helpers';
@@ -51,8 +48,6 @@ export const PublicRegistrationContributors = ({
     ...contributorConfig[registrationType].primaryRoles,
     ...contributorConfig[registrationType].secondaryRoles,
   ];
-
-  console.log('distinctUnits', distinctUnits);
 
   return (
     <Box
@@ -118,9 +113,7 @@ interface ContributorsRowProps {
 
 const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRoles }: ContributorsRowProps) => {
   const { t } = useTranslation();
-  const customerMap = useCustomerCristinIdMap();
-  console.log('customerMap', customerMap);
-  console.log('contributors', contributors);
+  const nviAffiliationMap = useCheckNviStatusForOrgs(distinctUnits);
 
   return (
     <Box
@@ -144,13 +137,11 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
           ?.map((affiliation) => affiliation.type === 'Organization' && distinctUnits.indexOf(affiliation.id) + 1)
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
+        const hasNviAffiliation = contributor.affiliations?.some((affiliation) =>
+          affiliation.type === 'Organization' ? nviAffiliationMap.get(affiliation.id) : false
+        );
 
-        const a = useAffiliationNviCheck(contributor.affiliations);
         const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
-        const belongsToNviInstitution = someAffiliationIsNviCustomer(contributor.affiliations, customerMap);
-
-        console.log('contributor.affiliations', contributor.affiliations);
-        console.log('belongsToNviInstitution', belongsToNviInstitution);
 
         const showRole = relevantRoles.includes(ContributorRole.Creator)
           ? contributor.role?.type !== ContributorRole.Creator
@@ -168,7 +159,7 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
 
         return (
           <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
-            <Typography>
+            <Typography sx={{ display: 'flex', alignItems: 'center' }}>
               {id ? (
                 <Link
                   component={RouterLink}
@@ -182,13 +173,12 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
 
               {roleContent}
 
-              {belongsToNviInstitution && <p>BELONGS</p>}
-
               {affiliationIndexes && affiliationIndexes.length > 0 && (
                 <sup style={{ marginLeft: '0.1rem' }}>
                   {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
                 </sup>
               )}
+              {!id && hasNviAffiliation && <WarningIcon fontSize="small" color="warning" />}
             </Typography>
             <ContributorIndicators
               orcId={contributor.identity.orcId}
