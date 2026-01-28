@@ -113,8 +113,10 @@ interface ContributorsRowProps {
 
 const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRoles }: ContributorsRowProps) => {
   const { t } = useTranslation();
-  // TODO: Kun orgId'er til uidentifiserte
-  const nviAffiliationMap = useCheckNviStatusForOrgs(distinctUnits);
+  const distinctUnitsForUnidentifiedContributors = getDistinctContributorUnits(
+    contributors.filter((c) => !c.identity.id)
+  );
+  const nviAffiliationMap = useCheckNviStatusForOrgs(distinctUnitsForUnidentifiedContributors);
 
   return (
     <Box
@@ -139,11 +141,13 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
 
-        const hasLoadingAffiliation = contributor.affiliations?.some((affiliation) =>
-          affiliation.type === 'Organization'
-            ? !nviAffiliationMap.get(affiliation.id) || nviAffiliationMap.get(affiliation.id)!.isLoading
-            : false
-        );
+        const hasLoadingAffiliation =
+          !contributor.identity.id &&
+          contributor.affiliations?.some((affiliation) =>
+            affiliation.type === 'Organization'
+              ? !nviAffiliationMap.get(affiliation.id) || nviAffiliationMap.get(affiliation.id)!.isLoading
+              : false
+          );
 
         const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
 
@@ -166,7 +170,7 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
         }
 
         const hasNviAffiliation = contributor.affiliations?.some((affiliation) =>
-          affiliation.type === 'Organization' ? nviAffiliationMap.get(affiliation.id) : false
+          affiliation.type === 'Organization' ? nviAffiliationMap.get(affiliation.id)?.isNviInstitution : false
         );
 
         return (
