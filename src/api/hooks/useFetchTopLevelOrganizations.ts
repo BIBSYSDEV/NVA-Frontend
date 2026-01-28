@@ -6,5 +6,7 @@ export const useFetchTopLevelOrganizations = (orgIds: string[]) => {
   return organizationsQuery.map((q, idx) => ({
     id: orgIds[idx],
     organization: q.data ? getTopLevelOrganization(q.data) : undefined,
+    isLoading: q.isLoading,
+    isError: q.isError,
   }));
 };

@@ -1,7 +1,7 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import WarningIcon from '@mui/icons-material/Warning';
-import { Box, Button, Link, Typography } from '@mui/material';
+import { Box, Button, Link, Skeleton, Typography } from '@mui/material';
 import { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
@@ -113,7 +113,7 @@ interface ContributorsRowProps {
 
 const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRoles }: ContributorsRowProps) => {
   const { t } = useTranslation();
-  const nviAffiliationMap = useCheckNviStatusForOrgs(distinctUnits);
+  const { isLoading, nviStatusForOrgs: nviAffiliationMap } = useCheckNviStatusForOrgs(distinctUnits);
 
   return (
     <Box
@@ -129,65 +129,73 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
           ml: '1rem', // Use margin instead of gap to indent wrapped elements
         },
       }}>
-      {contributors.map((contributor, index) => {
-        const {
-          identity: { id, name },
-        } = contributor;
-        const affiliationIndexes = contributor.affiliations
-          ?.map((affiliation) => affiliation.type === 'Organization' && distinctUnits.indexOf(affiliation.id) + 1)
-          .filter((affiliationIndex) => affiliationIndex)
-          .sort();
-        const hasNviAffiliation = contributor.affiliations?.some((affiliation) =>
-          affiliation.type === 'Organization' ? nviAffiliationMap.get(affiliation.id) : false
-        );
+      {!isLoading ? (
+        contributors.map((contributor, index) => {
+          const {
+            identity: { id, name },
+          } = contributor;
+          const affiliationIndexes = contributor.affiliations
+            ?.map((affiliation) => affiliation.type === 'Organization' && distinctUnits.indexOf(affiliation.id) + 1)
+            .filter((affiliationIndex) => affiliationIndex)
+            .sort();
+          const hasNviAffiliation = contributor.affiliations?.some((affiliation) =>
+            affiliation.type === 'Organization' ? nviAffiliationMap.get(affiliation.id) : false
+          );
 
-        const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
+          const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
 
-        const showRole = relevantRoles.includes(ContributorRole.Creator)
-          ? contributor.role?.type !== ContributorRole.Creator
-          : true;
+          const showRole = relevantRoles.includes(ContributorRole.Creator)
+            ? contributor.role?.type !== ContributorRole.Creator
+            : true;
 
-        const roleContent = showRole && (
-          <Box component="span" sx={{ ml: '0.2rem' }}>
-            {hasValidRole ? (
-              <>({t(`registration.contributors.types.${contributor.role!.type}`)})</>
-            ) : (
-              <i>({t('registration.public_page.unknown_role')})</i>
-            )}
-          </Box>
-        );
-
-        return (
-          <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
-            <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-              {id ? (
-                <Link
-                  component={RouterLink}
-                  to={getResearchProfilePath(id)}
-                  data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
-                  {name}
-                </Link>
+          const roleContent = showRole && (
+            <Box component="span" sx={{ ml: '0.2rem' }}>
+              {hasValidRole ? (
+                <>({t(`registration.contributors.types.${contributor.role!.type}`)})</>
               ) : (
-                name
+                <i>({t('registration.public_page.unknown_role')})</i>
               )}
+            </Box>
+          );
 
-              {roleContent}
+          return (
+            <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
+              <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+                {id ? (
+                  <Link
+                    component={RouterLink}
+                    to={getResearchProfilePath(id)}
+                    data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
+                    {name}
+                  </Link>
+                ) : (
+                  name
+                )}
 
-              {affiliationIndexes && affiliationIndexes.length > 0 && (
-                <sup style={{ marginLeft: '0.1rem' }}>
-                  {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
-                </sup>
-              )}
-              {!id && hasNviAffiliation && <WarningIcon fontSize="small" color="warning" />}
-            </Typography>
-            <ContributorIndicators
-              orcId={contributor.identity.orcId}
-              correspondingAuthor={contributor.correspondingAuthor}
-            />
-            {index < contributors.length - 1 && <span>;</span>}
-          </Box>
-        );
-      })}
+                {roleContent}
+
+                {affiliationIndexes && affiliationIndexes.length > 0 && (
+                  <sup style={{ marginLeft: '0.1rem' }}>
+                    {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
+                  </sup>
+                )}
+                {!id && hasNviAffiliation && <WarningIcon fontSize="small" color="warning" />}
+              </Typography>
+              <ContributorIndicators
+                orcId={contributor.identity.orcId}
+                correspondingAuthor={contributor.correspondingAuthor}
+              />
+              {index < contributors.length - 1 && <span>;</span>}
+            </Box>
+          );
+        })
+      ) : (
+        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+          <Skeleton width={120} />
+          <Skeleton width={120} />
+          <Skeleton width={120} />
+        </Box>
+      )}
       {hiddenCount && hiddenCount > 0 ? (
         <Typography component="li">
           {t('registration.public_page.other_contributors', { count: hiddenCount })}

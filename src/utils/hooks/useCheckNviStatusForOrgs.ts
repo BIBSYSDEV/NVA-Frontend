@@ -27,5 +27,9 @@ export const useCheckNviStatusForOrgs = (orgIds: string[]) => {
       nviStatusForOrgs.set(orgResult.id, !!customer.nviInstitution);
     }
   });
-  return nviStatusForOrgs;
+
+  const isLoading = topLevelOrganizations.some((org) => org.isLoading);
+  const hasError = topLevelOrganizations.some((org) => org.isError);
+
+  return { isLoading, hasError, nviStatusForOrgs };
 };
