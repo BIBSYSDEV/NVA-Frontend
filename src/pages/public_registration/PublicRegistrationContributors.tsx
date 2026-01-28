@@ -12,7 +12,7 @@ import { NviCandidateProblemsContext } from '../../context/NviCandidateProblemsC
 import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { PublicationInstanceType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useCheckNviStatusForOrgs } from '../../utils/hooks/useCheckNviStatusForOrgs';
+import { useCheckWhichOrgsAreNviInstitutions } from '../../utils/hooks/useCheckWhichOrgsAreNviInstitutions';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { hasUnidentifiedContributorProblem } from '../../utils/nviHelpers';
 import { contributorConfig, getContributorsWithPrimaryRole } from '../../utils/registration-helpers';
@@ -113,10 +113,9 @@ interface ContributorsRowProps {
 
 const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRoles }: ContributorsRowProps) => {
   const { t } = useTranslation();
-  const distinctUnitsForUnidentifiedContributors = getDistinctContributorUnits(
-    contributors.filter((c) => !c.identity.id)
+  const mapOfInstitutionNviStatuses = useCheckWhichOrgsAreNviInstitutions(
+    getDistinctContributorUnits(contributors.filter((c) => !c.identity.id)) // Only relevant for organizations affiliated with unidentified contributors
   );
-  const nviAffiliationMap = useCheckNviStatusForOrgs(distinctUnitsForUnidentifiedContributors);
 
   return (
     <Box
@@ -141,12 +140,13 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
 
-        const hasLoadingAffiliation =
+        const isFetchingAffiliation =
           !contributor.identity.id &&
-          contributor.affiliations?.some((affiliation) =>
-            affiliation.type === 'Organization'
-              ? !nviAffiliationMap.get(affiliation.id) || nviAffiliationMap.get(affiliation.id)!.isLoading
-              : false
+          contributor.affiliations?.some(
+            (a) =>
+              a.type === 'Organization' &&
+              (mapOfInstitutionNviStatuses.get(a.id)?.isNviInstitution === undefined ||
+                mapOfInstitutionNviStatuses.get(a.id)?.isLoading)
           );
 
         const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
@@ -165,12 +165,15 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRol
           </Box>
         );
 
-        if (hasLoadingAffiliation) {
+        if (isFetchingAffiliation) {
           return <Skeleton key={index} width={120} />;
         }
 
-        const hasNviAffiliation = contributor.affiliations?.some((affiliation) =>
-          affiliation.type === 'Organization' ? nviAffiliationMap.get(affiliation.id)?.isNviInstitution : false
+        /* In an effort to highlight unidentified contributors belonging to an NVI-institution, we are looking up all
+         * affiliations of unidentified contributors to check if they are NVI-institutions. */
+        const hasNviAffiliation = contributor.affiliations?.some(
+          (affiliation) =>
+            affiliation.type === 'Organization' && mapOfInstitutionNviStatuses.get(affiliation.id)?.isNviInstitution
         );
 
         return (
