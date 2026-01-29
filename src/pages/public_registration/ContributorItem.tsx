@@ -77,9 +77,7 @@ export const ContributorItem = ({
         )}
         {roleContent}
         {affiliationIndexes && affiliationIndexes.length > 0 && (
-          <sup style={{ marginLeft: '0.1rem' }}>
-            {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
-          </sup>
+          <sup style={{ marginLeft: '0.1rem' }}>{affiliationIndexes.join(',')}</sup>
         )}
         {!id && hasNviAffiliation && <WarningIcon fontSize="small" color="warning" />}
       </Typography>
