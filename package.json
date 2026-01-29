@@ -47,7 +47,7 @@
     "@uppy/dashboard": "^5.1.0",
     "@uppy/locales": "^5.1.0",
     "@uppy/react": "^5.1.1",
-    "aws-amplify": "^6.15.10",
+    "aws-amplify": "^6.16.0",
     "axios": "^1.13.3",
     "bibtex-generator": "^1.0.12",
     "date-fns": "^4.1.0",
