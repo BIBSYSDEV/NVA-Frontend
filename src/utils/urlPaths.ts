@@ -1,7 +1,7 @@
 import { To } from 'react-router';
+import { NviCandidateGlobalStatus, NviCandidateStatus } from '../api/searchApi';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
-import { NviCandidateStatus, NviCandidateGlobalStatus } from '../api/searchApi';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;
