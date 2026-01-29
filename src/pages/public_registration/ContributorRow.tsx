@@ -1,9 +1,9 @@
+import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { useCheckWhichOrgsAreNviInstitutions } from '../../utils/hooks/useCheckWhichOrgsAreNviInstitutions';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { ContributorItem } from './ContributorItem';
-import { Box, Typography } from '@mui/material';
 
 interface ContributorsRowProps {
   contributors: Contributor[];
@@ -39,7 +39,7 @@ export const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, rele
           distinctUnits={distinctUnits}
           orgNviStatuses={orgNviStatuses}
           relevantRoles={relevantRoles}
-          isLastItem={index < contributors.length - 1}
+          showSeparator={index < contributors.length - 1}
         />
       ))}
       {hiddenCount && hiddenCount > 0 ? (

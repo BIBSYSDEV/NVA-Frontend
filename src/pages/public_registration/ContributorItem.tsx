@@ -13,7 +13,7 @@ interface ContributorItemProps {
   distinctUnits: string[];
   orgNviStatuses: Map<string, NviStatusObject>;
   relevantRoles: ContributorRole[];
-  isLastItem: boolean;
+  showSeparator: boolean;
 }
 
 export const ContributorItem = ({
@@ -21,7 +21,7 @@ export const ContributorItem = ({
   distinctUnits,
   orgNviStatuses,
   relevantRoles,
-  isLastItem,
+  showSeparator,
 }: ContributorItemProps) => {
   const { t } = useTranslation();
   const {
@@ -52,11 +52,10 @@ export const ContributorItem = ({
   /* In an effort to highlight unidentified contributors belonging to an NVI-institution, we are looking up all
    * affiliations of unidentified contributors to check if they are NVI-institutions. */
   const isFetchingOrgNviData =
-    !!id && contributor.affiliations?.some((a) => a.type === 'Organization' && orgNviStatuses.get(a.id)?.isLoading);
+    !id && contributor.affiliations?.some((a) => a.type === 'Organization' && orgNviStatuses.get(a.id)?.isLoading);
 
   const hasNviAffiliation = contributor.affiliations?.some(
-    (affiliation) =>
-      affiliation.type === 'Organization' && orgNviStatuses.get(affiliation.id)?.isNviInstitution === true
+    (a) => a.type === 'Organization' && orgNviStatuses.get(a.id)?.isNviInstitution === true
   );
 
   if (isFetchingOrgNviData) {
@@ -85,7 +84,7 @@ export const ContributorItem = ({
         {!id && hasNviAffiliation && <WarningIcon fontSize="small" color="warning" />}
       </Typography>
       <ContributorIndicators orcId={contributor.identity.orcId} correspondingAuthor={contributor.correspondingAuthor} />
-      {isLastItem && <span>;</span>}
+      {showSeparator && <span>;</span>}
     </Box>
   );
 };
