@@ -1,12 +1,12 @@
 import { Divider, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import { useContext } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Contributor } from '../../types/contributor.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { MergeResultsWizardContext } from './MergeResultsWizardContext';
-import { CompareContributor } from './fields/CompareContributor';
+import { CompareContributors } from './fields/CompareContributors';
 import { mergeContributors } from './merge-results-helpers';
 
 enum ContributorMergeOption {
@@ -17,11 +17,10 @@ enum ContributorMergeOption {
 
 export const MergeResultsWizardContributorsTab = () => {
   const { t } = useTranslation();
-  const { control, formState, setValue } = useFormContext<Registration>();
+  const { formState, setValue } = useFormContext<Registration>();
   const { sourceResult, sourceHeading } = useContext(MergeResultsWizardContext);
   const sourceContributors = sourceResult.entityDescription?.contributors ?? [];
 
-  const targetContributors = useWatch({ name: 'entityDescription.contributors', control }) ?? [];
   const initialTargetContributors = (formState.defaultValues?.entityDescription?.contributors ?? []) as Contributor[];
 
   return (
@@ -60,19 +59,21 @@ export const MergeResultsWizardContributorsTab = () => {
 
       <Divider sx={{ display: { xs: 'block', md: 'none' } }} />
 
-      {targetContributors.map((contributor, index) => (
-        <CompareContributor
-          key={contributor.identity.id || `${contributor.identity.name}${index}`}
-          targetContributor={contributor}
-        />
-      ))}
+      <CompareContributors />
 
-      {sourceContributors.map((contributor, index) => (
-        <CompareContributor
-          key={contributor.identity.id || `${contributor.identity.name}${index}`}
-          sourceContributor={contributor}
-        />
-      ))}
+      {/* {targetContributors.map((contributor, index) => ( */}
+      {/*   <CompareContributor */}
+      {/*     key={contributor.identity.id || `${contributor.identity.name}${index}`} */}
+      {/*     targetContributor={contributor} */}
+      {/*   /> */}
+      {/* ))} */}
+      {/**/}
+      {/* {sourceContributors.map((contributor, index) => ( */}
+      {/*   <CompareContributor */}
+      {/*     key={contributor.identity.id || `${contributor.identity.name}${index}`} */}
+      {/*     sourceContributor={contributor} */}
+      {/*   /> */}
+      {/* ))} */}
     </>
   );
 };
