@@ -65,6 +65,13 @@ export const checkIfFundingsAreIdentical = (sourceFunding: Funding, targetFundin
   return false;
 };
 
+export const checkIfContributorsAreIdentical = (sourceContributor: Contributor, targetContributor: Contributor) => {
+  if (sourceContributor.identity.name === targetContributor.identity.name) {
+    return true;
+  }
+  return false;
+};
+
 export const useDecideSaveButtonTextFromUrl = () => {
   const { t } = useTranslation();
 
