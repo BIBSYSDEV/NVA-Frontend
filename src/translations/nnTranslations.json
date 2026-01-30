@@ -1966,8 +1966,10 @@
       "rejection_reason": "Grunngjeving for avvising",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukka.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikkje open.",
+      "reporting_status_for_publication_points_for_year": "",
       "reset_approval": "Nullstill rapporteringsstatus",
       "reset_approval_description": "Er du sikker på at du vil nullstill rapporteringsstatusen? Nokon på din institusjon må då rapportere denne på nytt.",
+      "result": "",
       "save_note": "Lagre kommentar",
       "show_candidate_search": "Vis kandidatsøk",
       "show_disputes": "",
@@ -1983,6 +1985,8 @@
         "Rejected": "Avvist"
       },
       "status_dispute_for": "",
+      "total_for_organization": "",
+      "total_publication_points": "",
       "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknyting til NVI-institusjon",
       "x_of_y_approved": "",
       "x_of_y_controlled": ""
@@ -1995,6 +1999,7 @@
     "user_dialog": "Brukardialog",
     "your_tasks": "Oppgåver du behandlar: {{count}}"
   },
+  "temporarily_disabled": "",
   "time_format": {
     "hours": "TT:MM:SS",
     "minutes": "MM:SS"
