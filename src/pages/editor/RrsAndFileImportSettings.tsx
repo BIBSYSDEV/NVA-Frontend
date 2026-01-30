@@ -144,14 +144,10 @@ export const RrsAndFileImportSettings = () => {
                 <Divider sx={{ my: '2.5rem' }} />
 
                 <Box sx={{ mb: '2.5rem' }}>
-                  <Typography variant="h2">{t('file_import')}</Typography>
-                  <Trans
-                    t={t}
-                    i18nKey="file_import_description"
-                    components={{
-                      p: <Typography gutterBottom />,
-                    }}
-                  />
+                  <Typography variant="h2" gutterBottom>
+                    {t('file_import')}
+                  </Typography>
+                  <Typography fontStyle="italic">{t('temporarily_disabled')}</Typography>
                   <Field name={'autoPublishScopusImportFiles'}>
                     {({ field }: FieldProps<boolean>) => (
                       <RadioGroup
@@ -162,11 +158,13 @@ export const RrsAndFileImportSettings = () => {
                           value={false}
                           control={<Radio data-testid={dataTestId.editor.fileImportCreatesTicketRadioButton} />}
                           label={t('file_import_create_ticket')}
+                          disabled
                         />
                         <FormControlLabel
                           value={true}
                           control={<Radio data-testid={dataTestId.editor.automaticFileImportRadioButton} />}
                           label={t('file_import_automatic_import')}
+                          disabled
                         />
                       </RadioGroup>
                     )}
