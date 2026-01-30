@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { setCustomer } from '../../redux/customerReducer';
