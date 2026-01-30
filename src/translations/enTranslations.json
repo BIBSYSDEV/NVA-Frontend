@@ -1966,8 +1966,10 @@
       "rejection_reason": "Reason for rejection",
       "reporting_period_closed": "The reporting period for this result is closed.",
       "reporting_period_missing": "The reporting period for this result is not open.",
+      "reporting_status_for_publication_points_for_year": "",
       "reset_approval": "Reset reporting status",
       "reset_approval_description": "Are you sure you want to reset the reporting status? Someone at your institution will then have to report it again.",
+      "result": "",
       "save_note": "Save comment",
       "show_candidate_search": "Show candidate search",
       "show_disputes": "",
@@ -1983,6 +1985,8 @@
         "Rejected": "Rejected"
       },
       "status_dispute_for": "",
+      "total_for_organization": "",
+      "total_publication_points": "",
       "unidentified_person_with_nvi_institution": "Unidentified person with a connection to an NVI institution",
       "x_of_y_approved": "",
       "x_of_y_controlled": ""
@@ -1995,6 +1999,7 @@
     "user_dialog": "User dialogue",
     "your_tasks": "Tasks you own: {{count}}"
   },
+  "temporarily_disabled": "",
   "time_format": {
     "hours": "HH:MM:SS",
     "minutes": "MM:SS"

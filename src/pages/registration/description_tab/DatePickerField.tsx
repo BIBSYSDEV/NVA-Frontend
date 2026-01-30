@@ -3,6 +3,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { PublicationChannelApiPath } from '../../../api/apiPaths';
 import { StyledInfoBanner } from '../../../components/styled/Wrappers';
 import { RegistrationFormContext } from '../../../context/RegistrationFormContext';
 import { DescriptionFieldNames, ResourceFieldNames } from '../../../types/publicationFieldNames';
@@ -15,6 +16,10 @@ const validYearRegEx = /\d{4}$/;
 
 const replaceYearInId = (id: string, newYear: string) => {
   return id.replace(validYearRegEx, newYear);
+};
+
+const isPublicationChannel = (id: string) => {
+  return id.includes(PublicationChannelApiPath.Publisher || PublicationChannelApiPath.SerialPublication);
 };
 
 export const DatePickerField = () => {
@@ -35,6 +40,14 @@ export const DatePickerField = () => {
   const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
   const disabled = disableNviCriticalFields || disableChannelClaimsFields;
 
+  /*
+   * Because NVI publication points are re-evaluated every year, the publication channel IDs (publicationContext.id,
+   * publicationContext.publisher.id, or publicationContext.series.id) are suffixed with the publication year in the API URL
+   * (e.g. "....a6Hg53gsh/2023"). Because of this, when the publication year is changed, we need to update the publication
+   * channel IDs on the registration to reflect the new year.
+   * There are some exceptions, especially for Anthologies where the publicationContext.id refers to an NVA registration
+   * (the 'parent' it is published in) and not a publication channel. In those cases, we do not change the id at all.
+   * */
   const syncChannelIdsWithYear = (newYear: string) => {
     const publicationContext = entityDescription?.reference?.publicationContext;
     if (!publicationContext) {
@@ -46,19 +59,19 @@ export const DatePickerField = () => {
     }
 
     const journalId = 'id' in publicationContext ? publicationContext.id : null;
-    if (journalId && !journalId.endsWith(newYear)) {
+    if (journalId && !journalId.endsWith(newYear) && isPublicationChannel(journalId)) {
       const updatedJournalId = replaceYearInId(journalId, newYear);
       setFieldValue(ResourceFieldNames.PublicationContextId, updatedJournalId);
     }
 
     const publisherId = 'publisher' in publicationContext ? publicationContext.publisher?.id : null;
-    if (publisherId && !publisherId.endsWith(newYear)) {
+    if (publisherId && !publisherId.endsWith(newYear) && isPublicationChannel(publisherId)) {
       const updatedPublisherId = replaceYearInId(publisherId, newYear);
       setFieldValue(ResourceFieldNames.PublicationContextPublisherId, updatedPublisherId);
     }
 
     const seriesId = 'series' in publicationContext ? publicationContext.series?.id : null;
-    if (seriesId && !seriesId.endsWith(newYear)) {
+    if (seriesId && !seriesId.endsWith(newYear) && isPublicationChannel(seriesId)) {
       const updatedSeriesId = replaceYearInId(seriesId, newYear);
       setFieldValue(ResourceFieldNames.SeriesId, updatedSeriesId);
     }

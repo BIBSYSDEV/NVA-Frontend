@@ -1,14 +1,4 @@
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -16,10 +6,8 @@ import { useFetchNviInstitutionStatus } from '../../../api/hooks/useFetchNviStat
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { RootState } from '../../../redux/store';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { ExportNviStatusButton } from './ExportNviStatusButton';
 import { NviStatusTableRow } from './NviStatusTableRow';
-import { NviYearSelector } from './NviYearSelector';
-import { NviVisibilitySelector } from './NviVisibilitySelector';
+import { NviStatusWrapper } from './NviStatusWrapper';
 
 export const NviStatusPage = () => {
   const { t } = useTranslation();
@@ -33,23 +21,10 @@ export const NviStatusPage = () => {
   const nviStatusQuery = useFetchNviInstitutionStatus(year);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-        alignItems: 'start',
-      }}>
-      <Typography variant="h1">{t('tasks.nvi.institution_nvi_status')}</Typography>
-
-      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-        <Box sx={{ display: 'flex', gap: '1rem' }}>
-          <NviYearSelector sx={{ minWidth: '10rem' }} />
-          <NviVisibilitySelector sx={{ minWidth: '15rem' }} />
-        </Box>
-        <ExportNviStatusButton acronym={organizationQuery.data?.acronym ?? ''} />
-      </Box>
-
+    <NviStatusWrapper
+      headline={t('tasks.nvi.institution_nvi_status')}
+      exportAcronym={organizationQuery.data?.acronym}
+      yearSelector>
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
@@ -60,7 +35,6 @@ export const NviStatusPage = () => {
               <TableCell>{t('tasks.nvi.status.Approved')}</TableCell>
               <TableCell>{t('tasks.nvi.status.Rejected')}</TableCell>
               <TableCell>{t('common.total_number')}</TableCell>
-              <TableCell>{t('tasks.nvi.publication_points')}</TableCell>
               <TableCell>
                 <Box component="span" sx={visuallyHidden}>
                   {t('tasks.nvi.show_subunits')}
@@ -80,6 +54,6 @@ export const NviStatusPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Box>
+    </NviStatusWrapper>
   );
 };
