@@ -69,8 +69,8 @@
     "yup": "^1.7.1"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.91.3",
-    "@tanstack/react-query-devtools": "^5.91.2",
+    "@tanstack/eslint-plugin-query": "^5.91.4",
+    "@tanstack/react-query-devtools": "^5.91.3",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
