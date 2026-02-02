@@ -2,6 +2,7 @@ import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
+import { FetchNviCandidatesParams } from '../../../api/searchApi';
 import { NviStatusChip } from '../../../components/StatusChip';
 import { SearchListItem, VerticalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
@@ -12,7 +13,6 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath, UrlPathTemplate } from '../../../utils/urlPaths';
-import { FetchNviCandidatesParams } from '../../../api/searchApi';
 import { createPageSpecificAmountString } from '../nviUtils';
 
 interface NviCandidateListItemProps {
@@ -46,7 +46,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
   const myApproval = nviCandidate.approvals.find((approval) => approval.institutionId === user?.topOrgCristinId);
 
   const candidateLinkState = {
-    candidateOffsetState: { currentOffset, nviQueryParams: nviQueryParams },
+    candidateOffsetState: { currentOffset, nviQueryParams },
     previousSearch: window.location.search,
     isOnDisputePage: location.pathname === UrlPathTemplate.TasksNviDisputes,
   } satisfies NviCandidatePageLocationState;
