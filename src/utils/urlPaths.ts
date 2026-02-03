@@ -16,6 +16,7 @@ export enum UrlPathTemplate {
   BasicDataCentralImportCandidateMerge = '/basic-data/central-import/:candidateIdentifier/merge/:registrationIdentifier',
   BasicDataInstitutions = '/basic-data/institutions',
   BasicDataNvi = '/basic-data/nvi',
+  BasicDataNviStatus = '/basic-data/nvi/status',
   BasicDataNviNew = '/basic-data/nvi/new',
   BasicDataPersonRegister = '/basic-data/person-register',
   BasicDataChannelClaims = '/basic-data/channel-claims',

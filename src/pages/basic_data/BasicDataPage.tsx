@@ -32,8 +32,10 @@ import { CentralImportDuplicationCheckPage } from './app_admin/central_import/Ce
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
 import { ImportCandidatesMenuFilters } from './app_admin/central_import/ImportCandidatesMenuFilters';
 import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
+import { NviStatusPage } from './app_admin/NviStatusPage';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 const isOnEditOrMergeImportCandidate = (path: string) =>
   path.endsWith(UrlPathTemplate.BasicDataCentralImportCandidateWizard.split('/').pop() as string) ||
@@ -136,10 +138,19 @@ const BasicDataPage = () => {
               dataTestId={dataTestId.basicData.nviPeriodsLink}>
               <NavigationList aria-label={t('common.nvi')}>
                 <SelectableButton
+                  data-testid={dataTestId.basicData.nviReportingPeriodsLink}
                   isSelected={currentPath === UrlPathTemplate.BasicDataNvi}
                   to={UrlPathTemplate.BasicDataNvi}>
                   {t('basic_data.nvi.reporting_periods')}
                 </SelectableButton>
+                <BetaFunctionality>
+                  <SelectableButton
+                    data-testid={dataTestId.basicData.nviStatusLink}
+                    isSelected={currentPath === UrlPathTemplate.BasicDataNviStatus}
+                    to={UrlPathTemplate.BasicDataNviStatus}>
+                    {t('basic_data.nvi.show_reporting_status')}
+                  </SelectableButton>
+                </BetaFunctionality>
               </NavigationList>
 
               <Divider sx={{ mt: '0.5rem' }} />
@@ -242,6 +253,10 @@ const BasicDataPage = () => {
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataNvi, UrlPathTemplate.BasicData, true)}
             element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />}
+          />
+          <Route
+            path={getSubUrl(UrlPathTemplate.BasicDataNviStatus, UrlPathTemplate.BasicData)}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviStatusPage />} />}
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataPublisherClaims, UrlPathTemplate.BasicData)}

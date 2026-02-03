@@ -41,6 +41,8 @@ export const dataTestId = {
     addEmployeeLink: 'add-employee-link',
     addEmployeeConfirmWindow: 'add-employee-confirm-window',
     addNviPeriodLink: 'add-nvi-period-link',
+    nviReportingPeriodsLink: 'nvi-reporting-periods-link',
+    nviStatusLink: 'nvi-status-link',
     adminInstitutionsLink: 'admin-institutions-link',
     centralImportLink: 'central-import-link',
     centralImport: {
