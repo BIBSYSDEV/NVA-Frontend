@@ -8,6 +8,7 @@ export interface SimpleCustomerInstitution {
   cristinId: string;
   createdDate: string;
   displayName: string;
+  nviInstitution?: boolean;
   doiPrefix?: string;
   serviceCenterUri?: string;
 }
