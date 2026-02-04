@@ -130,6 +130,9 @@
       "nvi_reporting_year": "NVI-rapporteringsår",
       "period_year": "Publiseringsår",
       "reporting_periods": "Rapporteringsperioder",
+      "reporting_status": "Rapporteringsstatus",
+      "reporting_status_description": "<p>Tabellen viser antall kandidater hos gjeldende institusjon og behandlingsstatus på disse.</p><p>Forfatteradresseringen styrer den eller de enhetene de telles for. Samarbeidende institusjoners kontroll, tas ikke hensyn til her.</p>",
+      "show_reporting_status": "Vis rapporteringsstatus",
       "update_reporting_period": "Oppdater rapporteringsperiode"
     },
     "person_register": {
