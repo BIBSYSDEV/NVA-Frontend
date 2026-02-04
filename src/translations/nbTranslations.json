@@ -133,7 +133,18 @@
       "reporting_status": "Rapporteringsstatus",
       "reporting_status_description": "<p>Tabellen viser antall kandidater hos gjeldende institusjon og behandlingsstatus på disse.</p><p>Forfatteradresseringen styrer den eller de enhetene de telles for. Samarbeidende institusjoners kontroll, tas ikke hensyn til her.</p>",
       "show_reporting_status": "Vis rapporteringsstatus",
-      "update_reporting_period": "Oppdater rapporteringsperiode"
+      "update_reporting_period": "Oppdater rapporteringsperiode",
+      "institution": "Institusjon",
+      "sector": "Sektor",
+      "candidate": "Kandidat",
+      "controlling": "Kontrolleres",
+      "approved": "Godkjent",
+      "rejected": "Avvist",
+      "disputes": "Tvister",
+      "total": "Totalt antall",
+      "percentage_controlled": "Andel kontrollert",
+      "internal_nvi_status": "Intern NVI-status",
+      "view_contact_information": "Se kontaktinfo"
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
