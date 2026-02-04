@@ -1,5 +1,6 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Fragment } from 'react/jsx-runtime';
 import { ImportContributor } from '../../../../types/importCandidate.types';
 import { CentralImportAffiliationBox } from './CentralImportAffiliationBox';
 
@@ -24,7 +25,7 @@ export const CentralImportContributorsPanel = ({
 
       {!!importCandidateContributors &&
         importCandidateContributors.map((importContributor) => (
-          <>
+          <Fragment key={importContributor.sequence}>
             <Box
               sx={{
                 display: 'flex',
@@ -58,7 +59,7 @@ export const CentralImportContributorsPanel = ({
               })}
             </Box>
             <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
-          </>
+          </Fragment>
         ))}
     </Box>
   );
