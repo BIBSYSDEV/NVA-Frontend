@@ -15,7 +15,7 @@ interface ContributorsRowProps {
 export const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRoles }: ContributorsRowProps) => {
   const { t } = useTranslation();
   const orgNviStatuses = useCheckWhichOrgsAreNviInstitutions(
-    getDistinctContributorUnits(contributors.filter((c) => !c.identity.id)) // Check is only relevant for organizations affiliated with unidentified contributors
+    getDistinctContributorUnits(contributors.filter((c) => !c.identity.id)) // Check is only relevant for organizations affiliated with unidentified contributors, because we want to highlight unidentified contributors affiliated with NVI institutions on the landing page
   );
 
   return (
