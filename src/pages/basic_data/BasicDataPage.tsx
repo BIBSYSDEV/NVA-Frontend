@@ -32,7 +32,7 @@ import { CentralImportDuplicationCheckPage } from './app_admin/central_import/Ce
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
 import { ImportCandidatesMenuFilters } from './app_admin/central_import/ImportCandidatesMenuFilters';
 import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
-import { NviStatusPage } from './app_admin/NviStatusPage';
+import { NviAdminStatusPage } from './app_admin/NviAdminStatusPage';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
@@ -256,7 +256,7 @@ const BasicDataPage = () => {
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataNviStatus, UrlPathTemplate.BasicData)}
-            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviStatusPage />} />}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviAdminStatusPage />} />}
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataPublisherClaims, UrlPathTemplate.BasicData)}

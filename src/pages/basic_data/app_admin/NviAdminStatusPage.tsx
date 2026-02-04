@@ -1,19 +1,19 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 
-export const NviStatusPage = () => {
+export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
 
   return (
-    <Box>
+    <div>
       <Typography variant="h1" sx={{ mb: '0.5rem' }}>
         {t('basic_data.nvi.reporting_status')}
       </Typography>
       <Trans
         t={t}
         i18nKey="basic_data.nvi.reporting_status_description"
-        components={{ p: <Typography sx={{ mb: '0.5rem' }} /> }}
+        components={{ p: <Typography gutterBottom /> }}
       />
-    </Box>
+    </div>
   );
 };
