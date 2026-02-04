@@ -1,4 +1,5 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ImportContributor } from '../../../../types/importCandidate.types';
 import { CentralImportAffiliationBox } from './CentralImportAffiliationBox';
 
@@ -9,28 +10,43 @@ interface CentralImportContributorsPanelProps {
 export const CentralImportContributorsPanel = ({
   importCandidateContributors,
 }: CentralImportContributorsPanelProps) => {
+  const { t } = useTranslation();
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr 1fr', columnGap: '1rem', rowGap: '1rem' }}>
+      <Typography sx={{ gridColumn: '1', fontWeight: 'bold' }}>{t('common.order')}</Typography>
+      <Typography sx={{ gridColumn: '2', fontWeight: 'bold' }}>
+        {t('basic_data.central_import.import_candidate')}
+      </Typography>
+      <Typography sx={{ gridColumn: '3', fontWeight: 'bold' }}>{t('common.page_title')}</Typography>
+
+      <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
+
       {!!importCandidateContributors &&
         importCandidateContributors.map((importContributor) => (
-          <Box
-            key={importContributor.sequence}
-            sx={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid black', py: '0.5rem' }}>
-            <Box sx={{ width: '100%', display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '2rem' }}>
-              <div>
-                <Box sx={{ bgcolor: 'white', p: '1rem' }}>{importContributor.sequence}</Box>
-              </div>
-              <div>
-                <Typography>{importContributor.identity.name}</Typography>
-                {importContributor.affiliations.map(
-                  (affiliation, index) =>
-                    !!affiliation.sourceOrganization && (
-                      <CentralImportAffiliationBox key={index} affiliation={affiliation} />
-                    )
-                )}
-              </div>
+          <>
+            <Box
+              sx={{
+                display: 'flex',
+                gridColumn: '1',
+                bgcolor: 'white',
+                height: '2.5rem',
+                width: '2.5rem',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              {importContributor.sequence}
             </Box>
-            <Box sx={{ width: '100%' }}>
+            <Box sx={{ gridColumn: '2' }}>
+              <Typography sx={{ gridRow: '1', mt: '0.5rem' }}>{importContributor.identity.name}</Typography>
+              {importContributor.affiliations.map(
+                (affiliation, index) =>
+                  !!affiliation.sourceOrganization && (
+                    <CentralImportAffiliationBox key={index} affiliation={affiliation} />
+                  )
+              )}
+            </Box>
+            <Box sx={{ gridColumn: '3' }}>
               <Typography>{importContributor.identity.name}</Typography>
               {importContributor.affiliations.map((affiliation, index) => {
                 return (
@@ -41,7 +57,8 @@ export const CentralImportContributorsPanel = ({
                 );
               })}
             </Box>
-          </Box>
+            <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
+          </>
         ))}
     </Box>
   );

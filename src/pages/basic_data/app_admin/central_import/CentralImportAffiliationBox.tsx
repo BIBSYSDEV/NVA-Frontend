@@ -7,7 +7,7 @@ interface CentralImportAffiliationBoxProps {
 }
 export const CentralImportAffiliationBox = ({ affiliation }: CentralImportAffiliationBoxProps) => {
   return (
-    <StyledOrganizationBox sx={{ width: '80%' }}>
+    <StyledOrganizationBox sx={{ width: '80%', mt: '1rem' }}>
       <Box
         sx={{
           display: 'flex',
@@ -19,7 +19,7 @@ export const CentralImportAffiliationBox = ({ affiliation }: CentralImportAffili
         </Typography>
         {affiliation.sourceOrganization?.names.map((name, index) => (
           <Typography sx={{ fontWeight: 'bold' }} key={index}>
-            {name}
+            {index + 1}: {name}
           </Typography>
         ))}
       </Box>

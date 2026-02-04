@@ -20,7 +20,6 @@ import { getTouchedTabFields } from '../../../../utils/formik-helpers/formik-hel
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { getImportCandidatePath, IdentifierParams } from '../../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../../utils/validation/registration/registrationValidation';
-import { ContributorsPanel } from '../../../registration/ContributorsPanel';
 import { DescriptionPanel } from '../../../registration/DescriptionPanel';
 import { FilesAndLicensePanel } from '../../../registration/FilesAndLicensePanel';
 import { RegistrationFormStepper } from '../../../registration/RegistrationFormStepper';
