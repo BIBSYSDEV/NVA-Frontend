@@ -129,7 +129,12 @@
       "nvi_publication_year": "NVI publication year",
       "nvi_reporting_year": "NVI reporting year",
       "period_year": "Publication year",
+      "publication_points_status": "",
       "reporting_periods": "Reporting periods",
+      "reporting_status": "",
+      "reporting_status_description": "",
+      "show_publication_points_status": "",
+      "show_reporting_status": "",
       "update_reporting_period": "Update reporting period"
     },
     "person_register": {
