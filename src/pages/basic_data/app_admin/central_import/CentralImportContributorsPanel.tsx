@@ -28,7 +28,6 @@ export const CentralImportContributorsPanel = ({
         importCandidateContributors.map((importContributor) => (
           <Fragment key={importContributor.sequence}>
             <CentralImportContributorBox importContributor={importContributor} />
-
             <CentralImportSearchForContributor importContributor={importContributor} />
             <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
           </Fragment>
