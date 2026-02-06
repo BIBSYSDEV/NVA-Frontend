@@ -22,7 +22,7 @@ export const PercentageWithIcon = ({
         {displayPercentage >= successThresholdMinimum && <CheckCircleIcon fontSize="small" color="success" />}
       </HorizontalBox>
       <HorizontalBox sx={{ justifySelf: 'start', pl: '0.5rem' }}>
-        {displayPercentage > 0 ? `${displayPercentage}%` : alternativeIfZero}
+        {displayPercentage > 0 ? `${displayPercentage}%` : alternativeIfZero || '0%'}
       </HorizontalBox>
     </CenteredGridBox>
   );
