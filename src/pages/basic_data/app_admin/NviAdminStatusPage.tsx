@@ -10,16 +10,22 @@ import {
   Typography,
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const selectedSector = searchParams.get('sector');
+  const institutionSearch = searchParams.get('institution');
+
   const mockData = [
     {
       id: 'uio',
       institution: 'Universitetet i Oslo',
-      sector: 'Høyere utdanning',
+      sector: 'UHI',
       candidate: 10,
       controlling: 8,
       approved: 1,
@@ -32,7 +38,7 @@ export const NviAdminStatusPage = () => {
     {
       id: 'ntnu',
       institution: 'Norges teknisk-naturvitenskapelige universitet',
-      sector: 'Statlig institutt',
+      sector: 'UHI',
       candidate: 15,
       controlling: 12,
       approved: 10,
@@ -45,7 +51,7 @@ export const NviAdminStatusPage = () => {
     {
       id: 'uib',
       institution: 'Universitetet i Bergen',
-      sector: 'Helseforetak',
+      sector: 'HEALTH',
       candidate: 8,
       controlling: 8,
       approved: 7,
@@ -58,7 +64,7 @@ export const NviAdminStatusPage = () => {
     {
       id: 'uit',
       institution: 'Universitetet i Tromsø',
-      sector: 'Privat institusjon',
+      sector: 'UHI',
       candidate: 12,
       controlling: 9,
       approved: 8,
@@ -71,7 +77,7 @@ export const NviAdminStatusPage = () => {
     {
       id: 'oslomet',
       institution: 'OsloMet – storbyuniversitetet',
-      sector: 'Fagskole',
+      sector: 'UHI',
       candidate: 6,
       controlling: 6,
       approved: 5,
@@ -81,7 +87,16 @@ export const NviAdminStatusPage = () => {
       percentageControlled: '100%',
       completed: true,
     },
-  ];
+  ]
+    .filter((obj) => selectedSector === null || obj.sector === selectedSector)
+    .filter((obj) => {
+      if (institutionSearch === null) {
+        return true;
+      }
+      const trimmedSearch = institutionSearch.trim().toLowerCase();
+      const trimmedInstitution = obj.institution.trim().toLowerCase();
+      return trimmedSearch === trimmedInstitution || trimmedInstitution.includes(trimmedSearch);
+    });
 
   return (
     <div>
@@ -96,7 +111,9 @@ export const NviAdminStatusPage = () => {
             />
           </Box>
         }
-        yearSelector>
+        yearSelector
+        sectorSelector
+        institutionSearch>
         <TableContainer component={Paper} variant="outlined">
           <Table size="small">
             <TableHead>
@@ -118,7 +135,7 @@ export const NviAdminStatusPage = () => {
                 return (
                   <TableRow key={obj.id} sx={{ height: '4rem' }}>
                     <TableCell>{obj.institution}</TableCell>
-                    <TableCell>{obj.sector}</TableCell>
+                    <TableCell>{t(`basic_data.institutions.sector_values.${obj.sector}` as any)}</TableCell>
                     <TableCell align="center">{obj.candidate}</TableCell>
                     <TableCell align="center">{obj.controlling}</TableCell>
                     <TableCell align="center">{obj.approved}</TableCell>

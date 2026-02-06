@@ -860,4 +860,6 @@ export const dataTestId = {
     disputeLink: 'nvi-aggregations-dispute-link',
     totalApprovedLink: 'nvi-aggregations-total-approved-link',
   },
+  nviFilterSector: 'nvi-filter-sector',
+  nviFilterInstitution: 'nvi-filter-institution',
 };
