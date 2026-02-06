@@ -29,7 +29,7 @@ export const CentralImportContributorsPanel = ({
         control={
           <Checkbox
             checked={showOnlyNorwegianContributors}
-            onChange={(event) => setShowOnlyNorwegianContributors(!showOnlyNorwegianContributors)}
+            onChange={() => setShowOnlyNorwegianContributors(!showOnlyNorwegianContributors)}
             color="secondary"
           />
         }
