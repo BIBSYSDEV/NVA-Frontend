@@ -13,12 +13,10 @@ export const TotalNviPointsCount = ({ orgName, result, publicationPoints }: Tota
   return (
     <HorizontalBox sx={{ mb: '0.5rem', gap: '1rem' }}>
       <MediumTypography sx={{ fontWeight: 'bold' }}>
-        {t('tasks.nvi.total_for_organization', { orgName: orgName })}
+        {t('tasks.nvi.total_for_organization', { orgName })}
       </MediumTypography>
-      <MediumTypography>{t('tasks.nvi.result', { result: result })}</MediumTypography>
-      <MediumTypography>
-        {t('tasks.nvi.total_publication_points', { publicationPoints: publicationPoints })}
-      </MediumTypography>
+      <MediumTypography>{t('tasks.nvi.result', { result })}</MediumTypography>
+      <MediumTypography>{t('tasks.nvi.total_publication_points', { publicationPoints })}</MediumTypography>
     </HorizontalBox>
   );
 };

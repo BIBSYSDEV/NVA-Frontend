@@ -15,6 +15,7 @@ import { visuallyHidden } from '@mui/utils';
 import { Trans, useTranslation } from 'react-i18next';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { FinishedTag } from '../../../components/atoms/tags/FinishedTag';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminStatusPage = () => {
@@ -147,6 +148,8 @@ export const NviAdminStatusPage = () => {
                     <TableCell align="center">
                       <IconButton
                         onClick={() => {}}
+                        disabled
+                        data-testid={dataTestId.basicData.nviReportingStatusShowSubunits}
                         title={t('tasks.nvi.show_subunits')}
                         aria-label={t('tasks.nvi.show_subunits')}
                         aria-expanded={false}>
