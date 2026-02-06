@@ -35,7 +35,7 @@ export const NviStatusWrapper = ({
       </Typography>
       {topView ?? null}
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-        <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           {yearSelector && <NviYearSelector sx={{ minWidth: '10rem' }} />}
           {sectorSelector && <NviSectorSelector sx={{ minWidth: '15rem' }} />}
           {institutionSearch && <NviInstitutionSearch sx={{ minWidth: '30rem' }} />}

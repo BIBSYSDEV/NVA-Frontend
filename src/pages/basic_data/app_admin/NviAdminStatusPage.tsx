@@ -12,6 +12,7 @@ import {
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
+import { Sector } from '../../../types/customerInstitution.types';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminStatusPage = () => {
@@ -32,8 +33,6 @@ export const NviAdminStatusPage = () => {
       rejected: 1,
       disputes: 1,
       total: 10,
-      percentageControlled: '80%',
-      completed: false,
     },
     {
       id: 'ntnu',
@@ -45,8 +44,6 @@ export const NviAdminStatusPage = () => {
       rejected: 2,
       disputes: 0,
       total: 15,
-      percentageControlled: '80%',
-      completed: false,
     },
     {
       id: 'uib',
@@ -58,8 +55,6 @@ export const NviAdminStatusPage = () => {
       rejected: 1,
       disputes: 0,
       total: 8,
-      percentageControlled: '100%',
-      completed: true,
     },
     {
       id: 'uit',
@@ -71,8 +66,6 @@ export const NviAdminStatusPage = () => {
       rejected: 1,
       disputes: 0,
       total: 12,
-      percentageControlled: '75%',
-      completed: false,
     },
     {
       id: 'oslomet',
@@ -84,8 +77,6 @@ export const NviAdminStatusPage = () => {
       rejected: 1,
       disputes: 0,
       total: 6,
-      percentageControlled: '100%',
-      completed: true,
     },
   ]
     .filter((obj) => selectedSector === null || obj.sector === selectedSector)
@@ -135,7 +126,7 @@ export const NviAdminStatusPage = () => {
                 return (
                   <TableRow key={obj.id} sx={{ height: '4rem' }}>
                     <TableCell>{obj.institution}</TableCell>
-                    <TableCell>{t(`basic_data.institutions.sector_values.${obj.sector}` as any)}</TableCell>
+                    <TableCell>{t(`basic_data.institutions.sector_values.${obj.sector as Sector}`)}</TableCell>
                     <TableCell align="center">{obj.candidate}</TableCell>
                     <TableCell align="center">{obj.controlling}</TableCell>
                     <TableCell align="center">{obj.approved}</TableCell>

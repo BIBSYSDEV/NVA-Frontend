@@ -38,7 +38,11 @@ export const NviInstitutionSearch = (props: Partial<TextFieldProps>) => {
         input: {
           startAdornment: <SearchIcon color="disabled" />,
           endAdornment: (
-            <IconButton onClick={() => updateUrlParam('')} title={t('common.clear')} size="small">
+            <IconButton
+              onClick={() => updateUrlParam('')}
+              title={t('common.clear')}
+              size="small"
+              data-testid={dataTestId.nviFilterInstitutionClearSearch}>
               <ClearIcon />
             </IconButton>
           ),

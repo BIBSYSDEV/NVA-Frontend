@@ -862,4 +862,5 @@ export const dataTestId = {
   },
   nviFilterSector: 'nvi-filter-sector',
   nviFilterInstitution: 'nvi-filter-institution',
+  nviFilterInstitutionClearSearch: 'nvi-filter-institution-clear-search',
 };

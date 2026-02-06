@@ -31,14 +31,14 @@ export const NviSectorSelector = (props: Partial<TextFieldProps>) => {
       value={selectedSector}
       onChange={(event) => {
         const value = event.target.value;
+        const nextParams = new URLSearchParams(location.search);
         if (value === 'ALL') {
-          searchParams.delete('sector');
+          nextParams.delete('sector');
         } else {
-          searchParams.set('sector', value);
+          nextParams.set('sector', value);
         }
-        navigate({ search: searchParams.toString() });
-      }}
-      {...props}>
+        navigate({ search: nextParams.toString() });
+      }}>
       {options.map((option) => (
         <MenuItem key={option.value} value={option.value}>
           {option.label}
