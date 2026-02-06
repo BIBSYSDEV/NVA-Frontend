@@ -34,19 +34,19 @@ export const NviAdminStatusPage = () => {
           <Table size="small">
             <TableHead>
               <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
-                <TableCell>{t('basic_data.nvi.institution')}</TableCell>
-                <TableCell>{t('basic_data.nvi.sector')}</TableCell>
-                <TableCell>{t('basic_data.nvi.candidate')}</TableCell>
-                <TableCell>{t('basic_data.nvi.controlling')}</TableCell>
-                <TableCell>{t('basic_data.nvi.approved')}</TableCell>
-                <TableCell>{t('basic_data.nvi.rejected')}</TableCell>
-                <TableCell>{t('basic_data.nvi.disputes')}</TableCell>
-                <TableCell>{t('basic_data.nvi.total')}</TableCell>
-                <TableCell>{t('basic_data.nvi.percentage_controlled')}</TableCell>
-                <TableCell>{t('basic_data.nvi.internal_nvi_status')}</TableCell>
+                <TableCell>{t('common.institution')}</TableCell>
+                <TableCell>{t('sector')}</TableCell>
+                <TableCell>{t('candidate')}</TableCell>
+                <TableCell>{t('controlling')}</TableCell>
+                <TableCell>{t('approved')}</TableCell>
+                <TableCell>{t('rejected')}</TableCell>
+                <TableCell>{t('disputes')}</TableCell>
+                <TableCell>{t('common.total_number')}</TableCell>
+                <TableCell>{t('percentage_controlled')}</TableCell>
+                <TableCell>{t('internal_nvi_status')}</TableCell>
                 <TableCell>
                   <Box component="span" sx={visuallyHidden}>
-                    {t('basic_data.nvi.view_contact_information')}
+                    {t('view_contact_information')}
                   </Box>
                 </TableCell>
               </TableRow>
