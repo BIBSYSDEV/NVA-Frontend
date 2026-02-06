@@ -1,7 +1,5 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Box,
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -11,11 +9,8 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
 import { Trans, useTranslation } from 'react-i18next';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
-import { FinishedTag } from '../../../components/atoms/tags/FinishedTag';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminStatusPage = () => {
@@ -115,19 +110,13 @@ export const NviAdminStatusPage = () => {
                 <TableCell>{t('disputes')}</TableCell>
                 <TableCell>{t('common.total_number')}</TableCell>
                 <TableCell>{t('percentage_controlled')}</TableCell>
-                <TableCell>{t('internal_nvi_status')}</TableCell>
-                <TableCell>
-                  <Box component="span" sx={visuallyHidden}>
-                    {t('view_contact_information')}
-                  </Box>
-                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {mockData.map((obj) => {
                 const percentageControlled = obj.total > 0 ? (obj.approved + obj.rejected) / obj.total : 0;
                 return (
-                  <TableRow key={obj.id}>
+                  <TableRow key={obj.id} sx={{ height: '4rem' }}>
                     <TableCell>{obj.institution}</TableCell>
                     <TableCell>{obj.sector}</TableCell>
                     <TableCell align="center">{obj.candidate}</TableCell>
@@ -143,18 +132,6 @@ export const NviAdminStatusPage = () => {
                         displayPercentage={Math.round(percentageControlled * 100)}
                         alternativeIfZero={'-'}
                       />
-                    </TableCell>
-                    <TableCell align="center">{obj.completed ? <FinishedTag /> : null}</TableCell>
-                    <TableCell align="center">
-                      <IconButton
-                        onClick={() => {}}
-                        disabled
-                        data-testid={dataTestId.basicData.nviReportingStatusShowSubunits}
-                        title={t('tasks.nvi.show_subunits')}
-                        aria-label={t('tasks.nvi.show_subunits')}
-                        aria-expanded={false}>
-                        <ExpandMoreIcon />
-                      </IconButton>
                     </TableCell>
                   </TableRow>
                 );
