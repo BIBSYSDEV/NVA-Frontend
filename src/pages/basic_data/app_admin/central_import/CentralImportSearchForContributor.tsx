@@ -4,7 +4,9 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Button, TextField }
 import { useTranslation } from 'react-i18next';
 import { ContributorName } from '../../../../components/ContributorName';
 import { OrganizationBox } from '../../../../components/institution/OrganizationBox';
+import { UnconfirmedOrganizationBox } from '../../../../components/institution/UnconfirmedOrganizationBox';
 import { SimpleWarning } from '../../../../components/messages/SimpleWarning';
+import { UnconfirmedOrganization } from '../../../../types/common.types';
 import { ImportContributor } from '../../../../types/importCandidate.types';
 import { Organization } from '../../../../types/organization.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -16,9 +18,13 @@ interface CentralImportSearchForContributorProps {
 export const CentralImportSearchForContributor = ({ importContributor }: CentralImportSearchForContributorProps) => {
   const { t } = useTranslation();
   const isVerified = importContributor.identity.verificationStatus === 'Verified';
-  const targetOrganizations = importContributor.affiliations
+  const verifiedTargetOrganizations = importContributor.affiliations
     .map((a) => a.targetOrganization)
     .filter((org): org is Organization => !!org && org.type === 'Organization' && org.id.length > 0);
+
+  const unverifiedTargetOrganizations = importContributor.affiliations
+    .map((a) => a.targetOrganization)
+    .filter((org): org is UnconfirmedOrganization => !!org && org.type === 'UnconfirmedOrganization');
 
   return (
     <Box sx={{ gridColumn: '3', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -76,8 +82,11 @@ export const CentralImportSearchForContributor = ({ importContributor }: Central
           </Box>
         </AccordionDetails>
       </Accordion>
-      {targetOrganizations.map((org) => {
+      {verifiedTargetOrganizations.map((org) => {
         return <OrganizationBox key={org.id} unitUri={org.id} />;
+      })}
+      {unverifiedTargetOrganizations.map((org, index) => {
+        return <UnconfirmedOrganizationBox key={index} name={org.name} />;
       })}
     </Box>
   );
