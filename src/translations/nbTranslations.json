@@ -2029,5 +2029,8 @@
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
   "update_name": "Oppdater navn",
-  "show_only_norwegian_contributors": "Vis kun norske bidragsytere"
+  "show_only_norwegian_contributors": "Vis kun norske bidragsytere",
+  "select_person_and_affiliation": "Velg person og tilknytning",
+  "contributor_search_hits_one": "Fant {{count}} bidragsyter",
+  "contributor_search_hits_other": "Fant {{count}} bidragsytere"
 }
