@@ -1,10 +1,13 @@
 import { Box, Checkbox, Divider, FormControlLabel, Typography } from '@mui/material';
+import { useFormikContext } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Fragment } from 'react/jsx-runtime';
 import { ImportContributor } from '../../../../types/importCandidate.types';
+import { Registration } from '../../../../types/registration.types';
+import { pairContributors } from '../../../../utils/central-import-helpers';
 import { CentralImportContributorBox } from './CentralImportContributorBox';
 import { CentralImportSearchForContributor } from './CentralImportSearchForContributor';
-import { useState } from 'react';
 
 interface CentralImportContributorsPanelProps {
   importCandidateContributors?: ImportContributor[];
@@ -14,14 +17,18 @@ export const CentralImportContributorsPanel = ({
   importCandidateContributors,
 }: CentralImportContributorsPanelProps) => {
   const { t } = useTranslation();
+  const { values } = useFormikContext<Registration>();
   const [showOnlyNorwegianContributors, setShowOnlyNorwegianContributors] = useState(false);
-  const contributors = importCandidateContributors ?? [];
+  const importContributors = importCandidateContributors ?? [];
+  const formContributors = values.entityDescription?.contributors ?? [];
 
-  const norwegianContributors = contributors.filter((contributor) =>
-    contributor.affiliations?.some((aff) => aff.sourceOrganization?.country?.code?.toLowerCase() === 'nor')
-  );
+  const visibleImportContributors = showOnlyNorwegianContributors
+    ? importContributors.filter((contributor) =>
+        contributor.affiliations?.some((aff) => aff.sourceOrganization?.country?.code?.toLowerCase() === 'nor')
+      )
+    : importContributors;
 
-  const contributorsToDisplay = showOnlyNorwegianContributors ? norwegianContributors : contributors;
+  const paired = pairContributors(visibleImportContributors, formContributors);
 
   return (
     <>
@@ -44,14 +51,13 @@ export const CentralImportContributorsPanel = ({
 
         <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
 
-        {!!contributorsToDisplay &&
-          contributorsToDisplay.map((importContributor) => (
-            <Fragment key={importContributor.sequence}>
-              <CentralImportContributorBox importContributor={importContributor} />
-              <CentralImportSearchForContributor importContributor={importContributor} />
-              <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
-            </Fragment>
-          ))}
+        {paired.map(({ importContributor, contributor }) => (
+          <Fragment key={importContributor.sequence}>
+            <CentralImportContributorBox importContributor={importContributor} />
+            {contributor && <CentralImportSearchForContributor contributor={contributor} />}
+            <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
+          </Fragment>
+        ))}
       </Box>
     </>
   );

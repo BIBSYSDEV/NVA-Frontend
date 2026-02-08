@@ -7,17 +7,15 @@ import { ContributorName } from '../../../../components/ContributorName';
 import { OrganizationBox } from '../../../../components/institution/OrganizationBox';
 import { UnconfirmedOrganizationBox } from '../../../../components/institution/UnconfirmedOrganizationBox';
 import { SimpleWarning } from '../../../../components/messages/SimpleWarning';
-import { UnconfirmedOrganization } from '../../../../types/common.types';
-import { ImportContributor } from '../../../../types/importCandidate.types';
-import { Organization } from '../../../../types/organization.types';
+import { Contributor } from '../../../../types/contributor.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { CentralImportContributorSearchBar } from './CentralImportContributorSearchBar';
 
 interface CentralImportSearchForContributorProps {
-  importContributor: ImportContributor;
+  contributor: Contributor;
 }
 
-export const CentralImportSearchForContributor = ({ importContributor }: CentralImportSearchForContributorProps) => {
+export const CentralImportSearchForContributor = ({ contributor }: CentralImportSearchForContributorProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | boolean>(false);
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
@@ -27,14 +25,7 @@ export const CentralImportSearchForContributor = ({ importContributor }: Central
     setExpanded(isExpanded ? panel : false);
   };
 
-  const isVerified = importContributor.identity.verificationStatus === 'Verified';
-  const verifiedTargetOrganizations = importContributor.affiliations
-    .map((a) => a.targetOrganization)
-    .filter((org): org is Organization => !!org && org.type === 'Organization' && org.id.length > 0);
-
-  const unverifiedTargetOrganizations = importContributor.affiliations
-    .map((a) => a.targetOrganization)
-    .filter((org): org is UnconfirmedOrganization => !!org && org.type === 'UnconfirmedOrganization');
+  const isVerified = contributor && contributor.identity.verificationStatus === 'Verified';
 
   return (
     <Box sx={{ gridColumn: '3', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -60,24 +51,30 @@ export const CentralImportSearchForContributor = ({ importContributor }: Central
           id="panel1-header">
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '0.5rem' }}>
             {!isVerified && <SimpleWarning text={t('registration.contributors.contributor_is_unidentified')} />}
-            <ContributorName
-              name={importContributor.identity.name}
-              hasVerifiedAffiliation={isVerified}
-              id={importContributor.identity.id}
-              orcId={importContributor.identity.orcId}
-            />
+            {contributor && (
+              <ContributorName
+                name={contributor.identity.name}
+                hasVerifiedAffiliation={
+                  !!contributor.affiliations?.some((affiliation) => affiliation.type === 'Organization')
+                }
+                id={contributor.identity.id}
+                orcId={contributor.identity.orcId}
+              />
+            )}
           </Box>
         </AccordionSummary>
         <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <CentralImportContributorSearchBar isExpanded={expanded} importContributor={importContributor} />
+          <CentralImportContributorSearchBar isExpanded={expanded} contributor={contributor} />
         </AccordionDetails>
       </Accordion>
-      {verifiedTargetOrganizations.map((org) => {
-        return <OrganizationBox key={org.id} unitUri={org.id} />;
-      })}
-      {unverifiedTargetOrganizations.map((org, index) => {
-        return <UnconfirmedOrganizationBox key={index} name={org.name} />;
-      })}
+      {contributor &&
+        contributor.affiliations?.map((affiliation, index) =>
+          affiliation.type === 'Organization' ? (
+            <OrganizationBox key={affiliation.id} unitUri={affiliation.id} />
+          ) : (
+            <UnconfirmedOrganizationBox key={`${affiliation.name}${index}`} name={affiliation.name} />
+          )
+        )}
 
       <Button
         color="tertiary"

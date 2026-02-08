@@ -7,21 +7,21 @@ import { ContributorName } from '../../../../components/ContributorName';
 import { OrganizationBox } from '../../../../components/institution/OrganizationBox';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
-import { ImportContributor } from '../../../../types/importCandidate.types';
+import { Contributor } from '../../../../types/contributor.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getFullCristinName } from '../../../../utils/user-helpers';
 
 interface CentralImportContributorSearchBarProps {
-  importContributor: ImportContributor;
+  contributor: Contributor;
   isExpanded: string | boolean;
 }
 
 export const CentralImportContributorSearchBar = ({
-  importContributor,
+  contributor,
   isExpanded,
 }: CentralImportContributorSearchBarProps) => {
   const { t } = useTranslation();
-  const [searchTerm, setSearchTerm] = useState(importContributor.identity.name);
+  const [searchTerm, setSearchTerm] = useState(contributor.identity.name);
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState(searchTerm);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -59,9 +59,7 @@ export const CentralImportContributorSearchBar = ({
           variant="contained"
           color="secondary"
           sx={{ padding: '0.1rem 0.75rem', width: 'fit-content' }}
-          data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
-            importContributor.identity.name
-          )}
+          data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(contributor.identity.name)}
           onClick={handleSearch}
           startIcon={<SearchIcon />}>
           {t('basic_data.add_employee.search_for_person')}
@@ -112,7 +110,7 @@ export const CentralImportContributorSearchBar = ({
                   color="secondary"
                   sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
                   data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
-                    importContributor.identity.name
+                    contributor.identity.name
                   )}>
                   {t('select_person_and_affiliation')}
                 </Button>

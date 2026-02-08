@@ -57,3 +57,22 @@ export const expandImportCandidate = (importCandidate: ImportCandidate): Expande
     entityDescription: convertImportEntityDescription(importCandidate.entityDescription),
   };
 };
+
+interface ImportContributorWithFormValue {
+  importContributor: ImportContributor;
+  contributor?: Contributor;
+}
+
+export const pairContributors = (
+  importContributors: ImportContributor[],
+  formContributors: Contributor[]
+): ImportContributorWithFormValue[] => {
+  return importContributors.map((importContributor) => {
+    const match = formContributors.find((contributor) => contributor.sequence === importContributor.sequence);
+
+    return {
+      importContributor,
+      contributor: match,
+    };
+  });
+};
