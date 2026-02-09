@@ -1,7 +1,6 @@
 import { Box, LinearProgress, Skeleton, Typography } from '@mui/material';
+import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
-
-const progressLabel = 'progress-label';
 
 interface NviReportProgressBarProps {
   completedPercentage: number;
@@ -17,6 +16,7 @@ export const NviReportProgressBar = ({
   isPending,
 }: NviReportProgressBarProps) => {
   const { t } = useTranslation();
+  const progressLabelId = useId();
   return (
     <>
       <Typography fontWeight="bold">{t('tasks.nvi.progress_nvi_reporting')}</Typography>
@@ -29,7 +29,7 @@ export const NviReportProgressBar = ({
         <>
           <Box sx={{ display: 'flex', gap: '0.5rem' }}>
             <LinearProgress
-              aria-labelledby={progressLabel}
+              aria-labelledby={progressLabelId}
               variant="determinate"
               value={completedPercentage}
               color="secondary"
@@ -43,7 +43,7 @@ export const NviReportProgressBar = ({
             />
             <Typography>{completedPercentage}%</Typography>
           </Box>
-          <Typography id={progressLabel} gutterBottom>
+          <Typography id={progressLabelId} gutterBottom>
             {t('tasks.nvi.completed_count', {
               completed: completedCount,
               total: totalCount,
