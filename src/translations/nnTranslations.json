@@ -129,7 +129,12 @@
       "nvi_publication_year": "NVI publiseringsår",
       "nvi_reporting_year": "NVI-rapporteringsår",
       "period_year": "Publiseringsår",
+      "publication_points_status": "",
       "reporting_periods": "Rapporteringsperiodar",
+      "reporting_status": "",
+      "reporting_status_description": "",
+      "show_publication_points_status": "",
+      "show_reporting_status": "",
       "update_reporting_period": "Oppdater rapporteringsperiode"
     },
     "person_register": {

@@ -36,6 +36,7 @@ import { NviAdminStatusPage } from './app_admin/NviAdminStatusPage';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { NviAdminPublicationPointsPage } from './app_admin/NviAdminPublicationPointsPage';
 
 const isOnEditOrMergeImportCandidate = (path: string) =>
   path.endsWith(UrlPathTemplate.BasicDataCentralImportCandidateWizard.split('/').pop() as string) ||
@@ -150,6 +151,12 @@ const BasicDataPage = () => {
                     to={UrlPathTemplate.BasicDataNviStatus}>
                     {t('basic_data.nvi.show_reporting_status')}
                   </SelectableButton>
+                  <SelectableButton
+                    data-testid={dataTestId.basicData.nviPublicationPointsLink}
+                    isSelected={currentPath === UrlPathTemplate.BasicDataNviPublicationPoints}
+                    to={UrlPathTemplate.BasicDataNviPublicationPoints}>
+                    {t('basic_data.nvi.show_publication_points_status')}
+                  </SelectableButton>
                 </BetaFunctionality>
               </NavigationList>
 
@@ -257,6 +264,10 @@ const BasicDataPage = () => {
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataNviStatus, UrlPathTemplate.BasicData)}
             element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviAdminStatusPage />} />}
+          />
+          <Route
+            path={getSubUrl(UrlPathTemplate.BasicDataNviPublicationPoints, UrlPathTemplate.BasicData)}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviAdminPublicationPointsPage />} />}
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataPublisherClaims, UrlPathTemplate.BasicData)}

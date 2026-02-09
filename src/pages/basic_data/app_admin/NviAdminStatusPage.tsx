@@ -24,8 +24,8 @@ export const NviAdminStatusPage = () => {
 
   const mockData = [
     {
-      id: 'uio',
-      institution: 'Universitetet i Oslo',
+      id: 'test1',
+      institution: 'Test1',
       sector: 'UHI',
       candidate: 10,
       controlling: 8,
@@ -35,19 +35,19 @@ export const NviAdminStatusPage = () => {
       total: 10,
     },
     {
-      id: 'ntnu',
-      institution: 'Norges teknisk-naturvitenskapelige universitet',
+      id: 'test2',
+      institution: 'Test2',
       sector: 'UHI',
       candidate: 15,
       controlling: 12,
       approved: 10,
       rejected: 2,
       disputes: 0,
-      total: 15,
+      total: 0,
     },
     {
-      id: 'uib',
-      institution: 'Universitetet i Bergen',
+      id: 'test3',
+      institution: 'Test3',
       sector: 'HEALTH',
       candidate: 8,
       controlling: 8,
@@ -57,8 +57,8 @@ export const NviAdminStatusPage = () => {
       total: 8,
     },
     {
-      id: 'uit',
-      institution: 'Universitetet i Tromsø',
+      id: 'test4',
+      institution: 'Test4',
       sector: 'UHI',
       candidate: 12,
       controlling: 9,
@@ -68,8 +68,8 @@ export const NviAdminStatusPage = () => {
       total: 12,
     },
     {
-      id: 'oslomet',
-      institution: 'OsloMet – storbyuniversitetet',
+      id: 'test5',
+      institution: 'Test5',
       sector: 'UHI',
       candidate: 6,
       controlling: 6,

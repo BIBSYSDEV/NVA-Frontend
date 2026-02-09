@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/notificationSlice';
 import { Registration } from '../../types/registration.types';
 import { isErrorStatus } from '../../utils/constants';
-import { updateRegistrationQueryData } from '../../utils/registration-helpers';
+import { getFormattedRegistration, updateRegistrationQueryData } from '../../utils/registration-helpers';
 import { updateRegistration } from '../registrationApi';
 
 interface UpdateRegistrationConfig {
@@ -19,7 +19,8 @@ export const useUpdateRegistration = ({ onSuccess, ignoreSuccessMessage = false 
 
   return useMutation({
     mutationFn: async (values: Registration) => {
-      const response = await updateRegistration(values);
+      const formattedValues = getFormattedRegistration(values);
+      const response = await updateRegistration(formattedValues);
       if (isErrorStatus(response.status)) {
         // TODO: Remove this workaround to handle 412 error code when updateRegistration no longer uses the deprecated apiRequest function
         throw new Error(response.status.toString());
