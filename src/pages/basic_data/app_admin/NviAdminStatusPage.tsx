@@ -79,62 +79,60 @@ export const NviAdminStatusPage = () => {
   ];
 
   return (
-    <div>
-      <NviStatusWrapper
-        headline={t('basic_data.nvi.reporting_status')}
-        topView={
-          <Box sx={{ mb: '1rem' }}>
-            <Trans
-              t={t}
-              i18nKey="basic_data.nvi.reporting_status_description"
-              components={{ p: <Typography gutterBottom /> }}
-            />
-          </Box>
-        }
-        yearSelector>
-        <TableContainer component={Paper} variant="outlined">
-          <Table size="small">
-            <TableHead>
-              <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
-                <TableCell>{t('common.institution')}</TableCell>
-                <TableCell>{t('sector')}</TableCell>
-                <TableCell>{t('candidate')}</TableCell>
-                <TableCell>{t('controlling')}</TableCell>
-                <TableCell>{t('approved')}</TableCell>
-                <TableCell>{t('rejected')}</TableCell>
-                <TableCell>{t('disputes')}</TableCell>
-                <TableCell>{t('common.total_number')}</TableCell>
-                <TableCell>{t('percentage_controlled')}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {mockData.map((obj) => {
-                const percentageControlled = obj.total > 0 ? (obj.approved + obj.rejected) / obj.total : 0;
-                return (
-                  <TableRow key={obj.id} sx={{ height: '4rem' }}>
-                    <TableCell>{obj.institution}</TableCell>
-                    <TableCell>{obj.sector}</TableCell>
-                    <TableCell align="center">{obj.candidate}</TableCell>
-                    <TableCell align="center">{obj.controlling}</TableCell>
-                    <TableCell align="center">{obj.approved}</TableCell>
-                    <TableCell align="center">{obj.rejected}</TableCell>
-                    <TableCell align="center">{obj.disputes}</TableCell>
-                    <TableCell align="center">{obj.total}</TableCell>
-                    <TableCell align="center">
-                      <PercentageWithIcon
-                        warningThresholdMinimum={30}
-                        successThresholdMinimum={100}
-                        displayPercentage={Math.round(percentageControlled * 100)}
-                        alternativeIfZero={'-'}
-                      />
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </NviStatusWrapper>
-    </div>
+    <NviStatusWrapper
+      headline={t('basic_data.nvi.reporting_status')}
+      topView={
+        <Box sx={{ mb: '1rem' }}>
+          <Trans
+            t={t}
+            i18nKey="basic_data.nvi.reporting_status_description"
+            components={{ p: <Typography gutterBottom /> }}
+          />
+        </Box>
+      }
+      yearSelector>
+      <TableContainer component={Paper} variant="outlined">
+        <Table size="small">
+          <TableHead>
+            <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
+              <TableCell>{t('common.institution')}</TableCell>
+              <TableCell>{t('sector')}</TableCell>
+              <TableCell>{t('candidate')}</TableCell>
+              <TableCell>{t('controlling')}</TableCell>
+              <TableCell>{t('approved')}</TableCell>
+              <TableCell>{t('rejected')}</TableCell>
+              <TableCell>{t('disputes')}</TableCell>
+              <TableCell>{t('common.total_number')}</TableCell>
+              <TableCell>{t('percentage_controlled')}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {mockData.map((obj) => {
+              const percentageControlled = obj.total > 0 ? (obj.approved + obj.rejected) / obj.total : 0;
+              return (
+                <TableRow key={obj.id} sx={{ height: '4rem' }}>
+                  <TableCell>{obj.institution}</TableCell>
+                  <TableCell>{obj.sector}</TableCell>
+                  <TableCell align="center">{obj.candidate}</TableCell>
+                  <TableCell align="center">{obj.controlling}</TableCell>
+                  <TableCell align="center">{obj.approved}</TableCell>
+                  <TableCell align="center">{obj.rejected}</TableCell>
+                  <TableCell align="center">{obj.disputes}</TableCell>
+                  <TableCell align="center">{obj.total}</TableCell>
+                  <TableCell align="center">
+                    <PercentageWithIcon
+                      warningThresholdMinimum={30}
+                      successThresholdMinimum={100}
+                      displayPercentage={Math.round(percentageControlled * 100)}
+                      alternativeIfZero={'-'}
+                    />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </NviStatusWrapper>
   );
 };
