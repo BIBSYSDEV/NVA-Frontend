@@ -17,8 +17,8 @@ export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
   const mockData = [
     {
-      id: 'uio',
-      institution: 'Universitetet i Oslo',
+      id: 'test1',
+      institution: 'Test1',
       sector: 'Høyere utdanning',
       candidate: 10,
       controlling: 8,
@@ -30,8 +30,8 @@ export const NviAdminStatusPage = () => {
       completed: false,
     },
     {
-      id: 'ntnu',
-      institution: 'Norges teknisk-naturvitenskapelige universitet',
+      id: 'test2',
+      institution: 'Test2',
       sector: 'Statlig institutt',
       candidate: 15,
       controlling: 12,
@@ -43,8 +43,8 @@ export const NviAdminStatusPage = () => {
       completed: false,
     },
     {
-      id: 'uib',
-      institution: 'Universitetet i Bergen',
+      id: 'test3',
+      institution: 'Test3',
       sector: 'Helseforetak',
       candidate: 8,
       controlling: 8,
@@ -56,8 +56,8 @@ export const NviAdminStatusPage = () => {
       completed: true,
     },
     {
-      id: 'uit',
-      institution: 'Universitetet i Tromsø',
+      id: 'test4',
+      institution: 'Test4',
       sector: 'Privat institusjon',
       candidate: 12,
       controlling: 9,
@@ -69,8 +69,8 @@ export const NviAdminStatusPage = () => {
       completed: false,
     },
     {
-      id: 'oslomet',
-      institution: 'OsloMet – storbyuniversitetet',
+      id: 'test5',
+      institution: 'Test5',
       sector: 'Fagskole',
       candidate: 6,
       controlling: 6,
