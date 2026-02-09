@@ -10,23 +10,32 @@ import {
   Typography,
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { Sector } from '../../../types/customerInstitution.types';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  const [searchParams] = useSearchParams();
   const selectedSector = searchParams.get('sector');
   const institutionSearch = searchParams.get('institution');
 
-  const mockData = [
+  const mockData: Array<{
+    id: string;
+    institution: string;
+    sector: Sector;
+    candidate: number;
+    controlling: number;
+    approved: number;
+    rejected: number;
+    disputes: number;
+    total: number;
+  }> = [
     {
       id: 'test1',
       institution: 'Test1',
-      sector: 'UHI',
+      sector: Sector.Uhi,
       candidate: 10,
       controlling: 8,
       approved: 1,
@@ -37,7 +46,7 @@ export const NviAdminStatusPage = () => {
     {
       id: 'test2',
       institution: 'Test2',
-      sector: 'UHI',
+      sector: Sector.Uhi,
       candidate: 15,
       controlling: 12,
       approved: 10,
@@ -48,7 +57,7 @@ export const NviAdminStatusPage = () => {
     {
       id: 'test3',
       institution: 'Test3',
-      sector: 'HEALTH',
+      sector: Sector.Health,
       candidate: 8,
       controlling: 8,
       approved: 7,
@@ -59,7 +68,7 @@ export const NviAdminStatusPage = () => {
     {
       id: 'test4',
       institution: 'Test4',
-      sector: 'UHI',
+      sector: Sector.Uhi,
       candidate: 12,
       controlling: 9,
       approved: 8,
@@ -70,7 +79,7 @@ export const NviAdminStatusPage = () => {
     {
       id: 'test5',
       institution: 'Test5',
-      sector: 'UHI',
+      sector: Sector.Uhi,
       candidate: 6,
       controlling: 6,
       approved: 5,
@@ -86,7 +95,7 @@ export const NviAdminStatusPage = () => {
       }
       const trimmedSearch = institutionSearch.trim().toLowerCase();
       const trimmedInstitution = obj.institution.trim().toLowerCase();
-      return trimmedSearch === trimmedInstitution || trimmedInstitution.includes(trimmedSearch);
+      return trimmedInstitution.includes(trimmedSearch);
     });
 
   return (
@@ -126,7 +135,7 @@ export const NviAdminStatusPage = () => {
                 return (
                   <TableRow key={obj.id} sx={{ height: '4rem' }}>
                     <TableCell>{obj.institution}</TableCell>
-                    <TableCell>{t(`basic_data.institutions.sector_values.${obj.sector as Sector}`)}</TableCell>
+                    <TableCell>{t(`basic_data.institutions.sector_values.${obj.sector}`)}</TableCell>
                     <TableCell align="center">{obj.candidate}</TableCell>
                     <TableCell align="center">{obj.controlling}</TableCell>
                     <TableCell align="center">{obj.approved}</TableCell>
