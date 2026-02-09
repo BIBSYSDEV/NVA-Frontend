@@ -34,7 +34,7 @@ export const NviReportProgressBar = ({
               value={completedPercentage}
               color="secondary"
               sx={{
-                flexGrow: '1',
+                flexGrow: 1,
                 my: '0.175rem',
                 height: '1rem',
                 bgcolor: 'tertiary.main',
