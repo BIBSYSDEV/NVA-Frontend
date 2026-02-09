@@ -2032,5 +2032,15 @@
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
+  "sector": "Sektor",
+  "candidate": "Kandidat",
+  "controlling": "Kontrolleres",
+  "approved": "Godkjent",
+  "rejected": "Avvist",
+  "disputes": "Tvister",
+  "percentage_controlled": "Andel kontrollert",
+  "internal_nvi_status": "Intern NVI-status",
+  "view_contact_information": "Se kontaktinfo",
+  "finished": "Ferdig"
 }
