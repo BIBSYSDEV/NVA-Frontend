@@ -1,4 +1,4 @@
-import { Affiliation, Contributor } from '../types/contributor.types';
+import { Affiliation, Contributor, Identity } from '../types/contributor.types';
 import {
   ExpandedImportCandidate,
   ImportAffiliation,
@@ -6,7 +6,9 @@ import {
   ImportContributor,
   ImportEntityDescription,
 } from '../types/importCandidate.types';
-import { emptyReference, emptyRegistration, EntityDescription } from '../types/registration.types';
+import { emptyReference, emptyRegistration, EntityDescription, Registration } from '../types/registration.types';
+import { CristinPerson } from '../types/user.types';
+import { getFullCristinName, getOrcidUri, getVerificationStatus } from './user-helpers';
 
 const convertImportAffiliation = (importAffiliation: ImportAffiliation): Affiliation => {
   // NOTE:  Filtering happens in convertImportContributor.
@@ -75,4 +77,46 @@ export const pairContributors = (
       contributor: match,
     };
   });
+};
+
+export const contributorFromCristinPerson = (oldContributor: Contributor, selected: CristinPerson): Contributor => {
+  const identity: Identity = {
+    type: 'Identity',
+    id: selected.id,
+    name: getFullCristinName(selected.names),
+    orcId: getOrcidUri(selected.identifiers),
+    verificationStatus: getVerificationStatus(selected.verified),
+    additionalIdentifiers: oldContributor.identity.additionalIdentifiers,
+  };
+
+  const affiliations = selected.affiliations;
+  const newAffiliations: Affiliation[] = affiliations.map(({ organization }) => ({
+    type: 'Organization',
+    id: organization,
+  }));
+
+  return {
+    ...oldContributor,
+    identity,
+    affiliations: newAffiliations,
+  };
+};
+
+export const replaceExistingContributor = (
+  values: Registration,
+  setFieldValue: (field: string, value: unknown) => void,
+  selected: CristinPerson,
+  sequence: number
+): void => {
+  const current = values.entityDescription?.contributors ?? [];
+  const index = current.findIndex((c) => c.sequence === sequence);
+  if (index === -1) return;
+
+  const old = current[index];
+  const updated = contributorFromCristinPerson(old, selected);
+
+  const next = [...current];
+  next[index] = updated;
+
+  setFieldValue('entityDescription.contributors', next);
 };

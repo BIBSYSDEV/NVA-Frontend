@@ -8,14 +8,19 @@ import { OrganizationBox } from '../../../../components/institution/Organization
 import { UnconfirmedOrganizationBox } from '../../../../components/institution/UnconfirmedOrganizationBox';
 import { SimpleWarning } from '../../../../components/messages/SimpleWarning';
 import { Contributor } from '../../../../types/contributor.types';
+import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { CentralImportContributorSearchBar } from './CentralImportContributorSearchBar';
 
 interface CentralImportSearchForContributorProps {
   contributor: Contributor;
+  onSelectPerson: (selectedContributor: CristinPerson) => void;
 }
 
-export const CentralImportSearchForContributor = ({ contributor }: CentralImportSearchForContributorProps) => {
+export const CentralImportSearchForContributor = ({
+  contributor,
+  onSelectPerson,
+}: CentralImportSearchForContributorProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | boolean>(false);
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
@@ -64,7 +69,11 @@ export const CentralImportSearchForContributor = ({ contributor }: CentralImport
           </Box>
         </AccordionSummary>
         <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <CentralImportContributorSearchBar isExpanded={expanded} contributor={contributor} />
+          <CentralImportContributorSearchBar
+            isExpanded={expanded}
+            contributor={contributor}
+            onSelectPerson={onSelectPerson}
+          />
         </AccordionDetails>
       </Accordion>
       {contributor &&

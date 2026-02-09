@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { Fragment } from 'react/jsx-runtime';
 import { ImportContributor } from '../../../../types/importCandidate.types';
 import { Registration } from '../../../../types/registration.types';
-import { pairContributors } from '../../../../utils/central-import-helpers';
+import { CristinPerson } from '../../../../types/user.types';
+import { pairContributors, replaceExistingContributor } from '../../../../utils/central-import-helpers';
 import { CentralImportContributorBox } from './CentralImportContributorBox';
 import { CentralImportSearchForContributor } from './CentralImportSearchForContributor';
 
@@ -17,7 +18,7 @@ export const CentralImportContributorsPanel = ({
   importCandidateContributors,
 }: CentralImportContributorsPanelProps) => {
   const { t } = useTranslation();
-  const { values } = useFormikContext<Registration>();
+  const { values, setFieldValue } = useFormikContext<Registration>();
   const [showOnlyNorwegianContributors, setShowOnlyNorwegianContributors] = useState(false);
   const importContributors = importCandidateContributors ?? [];
   const formContributors = values.entityDescription?.contributors ?? [];
@@ -54,7 +55,14 @@ export const CentralImportContributorsPanel = ({
         {paired.map(({ importContributor, contributor }) => (
           <Fragment key={importContributor.sequence}>
             <CentralImportContributorBox importContributor={importContributor} />
-            {contributor && <CentralImportSearchForContributor contributor={contributor} />}
+            {contributor && (
+              <CentralImportSearchForContributor
+                contributor={contributor}
+                onSelectPerson={(selected: CristinPerson) =>
+                  replaceExistingContributor(values, setFieldValue, selected, contributor.sequence)
+                }
+              />
+            )}
             <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
           </Fragment>
         ))}
