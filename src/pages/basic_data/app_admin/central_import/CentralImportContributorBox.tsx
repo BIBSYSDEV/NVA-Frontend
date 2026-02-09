@@ -22,10 +22,9 @@ export const CentralImportContributorBox = ({ importContributor }: CentralImport
       </Box>
       <Box sx={{ gridColumn: '2' }}>
         <Typography sx={{ gridRow: '1', mt: '0.5rem' }}>{importContributor.identity.name}</Typography>
-        {importContributor.affiliations.map(
-          (affiliation, index) =>
-            !!affiliation.sourceOrganization && <CentralImportAffiliationBox key={index} affiliation={affiliation} />
-        )}
+        {importContributor.affiliations.map((affiliation, index) => (
+          <CentralImportAffiliationBox key={index} affiliation={affiliation} />
+        ))}
       </Box>
     </>
   );
