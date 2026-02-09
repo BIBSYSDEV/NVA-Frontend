@@ -57,7 +57,7 @@ export const CentralImportContributorSearchBar = ({
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button
           variant="contained"
-          color="secondary"
+          color="tertiary"
           sx={{ padding: '0.1rem 0.75rem', width: 'fit-content' }}
           data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(contributor.identity.name)}
           onClick={handleSearch}

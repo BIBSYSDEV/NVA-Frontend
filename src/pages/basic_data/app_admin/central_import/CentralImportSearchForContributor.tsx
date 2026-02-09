@@ -70,7 +70,7 @@ export const CentralImportSearchForContributor = ({ contributor }: CentralImport
       {contributor &&
         contributor.affiliations?.map((affiliation, index) =>
           affiliation.type === 'Organization' ? (
-            <OrganizationBox key={affiliation.id} unitUri={affiliation.id} />
+            <OrganizationBox key={affiliation.id + index} unitUri={affiliation.id} />
           ) : (
             <UnconfirmedOrganizationBox key={`${affiliation.name}${index}`} name={affiliation.name} />
           )
