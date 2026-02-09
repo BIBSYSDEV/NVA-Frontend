@@ -26,7 +26,6 @@ export const NviAdminStatusPage = () => {
       rejected: 1,
       disputes: 1,
       total: 10,
-      percentageControlled: '80%',
       completed: false,
     },
     {
@@ -38,8 +37,7 @@ export const NviAdminStatusPage = () => {
       approved: 10,
       rejected: 2,
       disputes: 0,
-      total: 15,
-      percentageControlled: '80%',
+      total: 0,
       completed: false,
     },
     {
@@ -52,7 +50,6 @@ export const NviAdminStatusPage = () => {
       rejected: 1,
       disputes: 0,
       total: 8,
-      percentageControlled: '100%',
       completed: true,
     },
     {
@@ -65,7 +62,6 @@ export const NviAdminStatusPage = () => {
       rejected: 1,
       disputes: 0,
       total: 12,
-      percentageControlled: '75%',
       completed: false,
     },
     {
@@ -78,7 +74,6 @@ export const NviAdminStatusPage = () => {
       rejected: 1,
       disputes: 0,
       total: 6,
-      percentageControlled: '100%',
       completed: true,
     },
   ];
