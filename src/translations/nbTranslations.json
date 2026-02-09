@@ -2041,5 +2041,6 @@
   "disputes": "Tvister",
   "percentage_controlled": "Andel kontrollert",
   "internal_nvi_status": "Intern NVI-status",
-  "view_contact_information": "Se kontaktinfo"
+  "view_contact_information": "Se kontaktinfo",
+  "finished": "Ferdig"
 }

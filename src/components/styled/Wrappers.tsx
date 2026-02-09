@@ -156,3 +156,9 @@ export const VerticalBox = styled(Box)<BoxProps>({
   display: 'flex',
   flexDirection: 'column',
 });
+
+export const CenteredGridBox = styled(Box)<BoxProps>({
+  display: 'grid',
+  alignItems: 'center',
+  justifyContent: 'center',
+});

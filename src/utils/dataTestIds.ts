@@ -132,6 +132,7 @@ export const dataTestId = {
     personRegisterSearchBar: 'person-register-search-bar',
     publisherClaimsLink: 'publisher-claim-link',
     serialPublicationClaimsLink: 'serial-publication-claim-link',
+    nviReportingStatusShowSubunits: 'nvi-reporting-status-show-subunits',
   },
   common: {
     cancel: 'cancel',
