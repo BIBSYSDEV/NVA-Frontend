@@ -10,20 +10,8 @@ interface CentralImportContributorBoxProps {
 export const CentralImportContributorBox = ({ importContributor }: CentralImportContributorBoxProps) => {
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          gridColumn: '1',
-          bgcolor: 'white',
-          height: '2.5rem',
-          width: '2.5rem',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        {importContributor.sequence}
-      </Box>
-      <Box sx={{ gridColumn: '2', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <Typography sx={{ gridRow: '1', mt: '0.5rem' }}>{importContributor.identity.name}</Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <Typography sx={{ mt: '0.5rem' }}>{importContributor.identity.name}</Typography>
         {importContributor.affiliations.map((affiliation, index) => {
           if (affiliation.sourceOrganization) {
             return <CentralImportAffiliationBox key={index} affiliation={affiliation} />;

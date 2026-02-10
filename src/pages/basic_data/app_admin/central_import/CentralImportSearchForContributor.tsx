@@ -42,7 +42,7 @@ export const CentralImportSearchForContributor = ({
   };
 
   return (
-    <Box sx={{ gridColumn: '3', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Accordion
         expanded={expanded === 'panel1'}
         onChange={handleChange('panel1')}

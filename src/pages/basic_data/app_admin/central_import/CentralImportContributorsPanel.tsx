@@ -1,19 +1,12 @@
-import { Box, Checkbox, Divider, FormControlLabel, Typography } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Fragment } from 'react/jsx-runtime';
+import { Contributor } from '../../../../types/contributor.types';
 import { ImportContributor } from '../../../../types/importCandidate.types';
 import { Registration } from '../../../../types/registration.types';
-import { CristinPerson } from '../../../../types/user.types';
-import {
-  ImportContributorWithFormValue,
-  pairContributors,
-  replaceExistingContributor,
-} from '../../../../utils/central-import-helpers';
-import { CentralImportContributorBox } from './CentralImportContributorBox';
-import { CentralImportSearchForContributor } from './CentralImportSearchForContributor';
-import { Contributor } from '../../../../types/contributor.types';
+import { ImportContributorWithFormValue, pairContributors } from '../../../../utils/central-import-helpers';
+import { CentralImportContributorRow } from './CentralImportContributorRow';
 
 interface CentralImportContributorsPanelProps {
   importCandidateContributors?: ImportContributor[];
@@ -23,7 +16,7 @@ export const CentralImportContributorsPanel = ({
   importCandidateContributors,
 }: CentralImportContributorsPanelProps) => {
   const { t } = useTranslation();
-  const { values, setFieldValue } = useFormikContext<Registration>();
+  const { values } = useFormikContext<Registration>();
   const [showOnlyNorwegianContributors, setShowOnlyNorwegianContributors] = useState(false);
   const importContributors = importCandidateContributors ?? [];
   const formContributors = values.entityDescription?.contributors ?? [];
@@ -73,32 +66,26 @@ export const CentralImportContributorsPanel = ({
           label={t('show_only_unconfirmed_affiliations')}
         />
       </Box>
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr 1fr', columnGap: '1rem', rowGap: '1rem' }}>
-        <Typography sx={{ gridColumn: '1', fontWeight: 'bold' }}>{t('common.order')}</Typography>
-        <Typography sx={{ gridColumn: '2', fontWeight: 'bold' }}>
-          {t('basic_data.central_import.import_candidate')}
-        </Typography>
-        <Typography sx={{ gridColumn: '3', fontWeight: 'bold' }}>{t('common.page_title')}</Typography>
-
-        <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
-
-        {filteredPaired.map(({ importContributor, contributor }) => {
-          return (
-            <Fragment key={importContributor.sequence}>
-              <CentralImportContributorBox importContributor={importContributor} />
-              {contributor && (
-                <CentralImportSearchForContributor
-                  contributor={contributor}
-                  onSelectPerson={(selected: CristinPerson) =>
-                    replaceExistingContributor(values, setFieldValue, selected, contributor.sequence)
-                  }
-                />
-              )}
-              <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
-            </Fragment>
-          );
-        })}
-      </Box>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>{t('common.order')}</TableCell>
+            <TableCell> {t('basic_data.central_import.import_candidate')}</TableCell>
+            <TableCell>{t('common.page_title')}</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {filteredPaired.map(({ importContributor, contributor }) => {
+            return (
+              <CentralImportContributorRow
+                key={importContributor.sequence}
+                contributor={contributor}
+                importContributor={importContributor}
+              />
+            );
+          })}
+        </TableBody>
+      </Table>
     </>
   );
 };

@@ -24,7 +24,6 @@ export const UnconfirmedOrganizationAccordion = ({
   const [searchTerm, setSearchTerm] = useState(affiliation.name);
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState(searchTerm);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const organizationSearchQuery = useSearchForOrganizations({
     query: submittedSearchTerm,
