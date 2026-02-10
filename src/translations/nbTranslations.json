@@ -2042,5 +2042,7 @@
   "percentage_controlled": "Andel kontrollert",
   "internal_nvi_status": "Intern NVI-status",
   "view_contact_information": "Se kontaktinfo",
-  "finished": "Ferdig"
+  "finished": "Ferdig",
+  "publication_points_description": "Tabellen viser kandidater som er godkjent per nå hos alle institusjoner og hvor mange som er ferdig kontrollert i forhold til antall kandidater.",
+  "publication_points_description_more": "Kandidatene er lagt på enheten hvor de er registrert. Det er ikke tatt hensyn til samarbeidene institusjoner. Kandidater i eventuelt tvist vises ikke."
 }
