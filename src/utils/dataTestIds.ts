@@ -104,6 +104,9 @@ export const dataTestId = {
       sectorField: 'sector-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
+    nvi: {
+      publicationPointsExpandDescriptionButton: 'publication-points-expand-description-button',
+    },
     nviPeriod: {
       nviPeriodDialog: 'nvi-period-dialog',
       nviPeriodYear: 'nvi-period-year',
