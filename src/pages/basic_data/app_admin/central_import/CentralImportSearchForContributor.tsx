@@ -8,8 +8,10 @@ import { OrganizationBox } from '../../../../components/institution/Organization
 import { UnconfirmedOrganizationBox } from '../../../../components/institution/UnconfirmedOrganizationBox';
 import { SimpleWarning } from '../../../../components/messages/SimpleWarning';
 import { Contributor } from '../../../../types/contributor.types';
+import { ContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { AddAffiliationModal } from '../../../registration/contributors_tab/components/AddAffiliationModal';
 import { CentralImportContributorSearchBar } from './CentralImportContributorSearchBar';
 
 interface CentralImportSearchForContributorProps {
@@ -24,6 +26,8 @@ export const CentralImportSearchForContributor = ({
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | boolean>(false);
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
+  const baseFieldName = `${ContributorFieldNames.Contributors}[${contributor.sequence - 1}]`;
+  const [affiliationToVerify, setAffiliationToVerify] = useState('');
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -94,6 +98,15 @@ export const CentralImportSearchForContributor = ({
         onClick={toggleAffiliationModal}>
         {t('registration.contributors.add_affiliation')}
       </Button>
+      <AddAffiliationModal
+        openAffiliationModal={openAffiliationModal}
+        affiliationToVerify={affiliationToVerify}
+        setAffiliationToVerify={setAffiliationToVerify}
+        toggleAffiliationModal={toggleAffiliationModal}
+        authorName={contributor.identity.name}
+        affiliations={contributor.affiliations}
+        baseFieldName={baseFieldName}
+      />
     </Box>
   );
 };

@@ -52,20 +52,22 @@ export const CentralImportContributorsPanel = ({
 
         <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
 
-        {paired.map(({ importContributor, contributor }) => (
-          <Fragment key={importContributor.sequence}>
-            <CentralImportContributorBox importContributor={importContributor} />
-            {contributor && (
-              <CentralImportSearchForContributor
-                contributor={contributor}
-                onSelectPerson={(selected: CristinPerson) =>
-                  replaceExistingContributor(values, setFieldValue, selected, contributor.sequence)
-                }
-              />
-            )}
-            <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
-          </Fragment>
-        ))}
+        {paired.map(({ importContributor, contributor }) => {
+          return (
+            <Fragment key={importContributor.sequence}>
+              <CentralImportContributorBox importContributor={importContributor} />
+              {contributor && (
+                <CentralImportSearchForContributor
+                  contributor={contributor}
+                  onSelectPerson={(selected: CristinPerson) =>
+                    replaceExistingContributor(values, setFieldValue, selected, contributor.sequence)
+                  }
+                />
+              )}
+              <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
+            </Fragment>
+          );
+        })}
       </Box>
     </>
   );
