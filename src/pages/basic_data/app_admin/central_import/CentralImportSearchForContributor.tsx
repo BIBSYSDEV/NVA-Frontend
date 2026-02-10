@@ -36,6 +36,11 @@ export const CentralImportSearchForContributor = ({
 
   const isVerified = contributor && contributor.identity.verificationStatus === 'Verified';
 
+  const onIdentifyAffiliationClick = (affiliationString: string) => {
+    setAffiliationToVerify(affiliationString);
+    toggleAffiliationModal();
+  };
+
   return (
     <Box sx={{ gridColumn: '3', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Accordion
@@ -52,10 +57,8 @@ export const CentralImportSearchForContributor = ({
         <AccordionSummary
           sx={{
             fontWeight: 'normal',
-            display: 'flex',
-            alignItems: 'flex-start',
           }}
-          expandIcon={<ExpandMoreIcon sx={{ mt: '1.5rem' }} />}
+          expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header">
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '0.5rem' }}>
@@ -85,7 +88,11 @@ export const CentralImportSearchForContributor = ({
           affiliation.type === 'Organization' ? (
             <OrganizationBox key={affiliation.id + index} unitUri={affiliation.id} />
           ) : (
-            <UnconfirmedOrganizationBox key={`${affiliation.name}${index}`} name={affiliation.name} />
+            <UnconfirmedOrganizationBox
+              key={`${affiliation.name}${index}`}
+              name={affiliation.name}
+              onIdentifyAffiliationClick={onIdentifyAffiliationClick}
+            />
           )
         )}
 

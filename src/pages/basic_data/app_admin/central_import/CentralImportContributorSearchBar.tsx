@@ -11,6 +11,7 @@ import { Contributor } from '../../../../types/contributor.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getFullCristinName } from '../../../../utils/user-helpers';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 
 interface CentralImportContributorSearchBarProps {
   contributor: Contributor;
@@ -27,7 +28,7 @@ export const CentralImportContributorSearchBar = ({
   const [searchTerm, setSearchTerm] = useState(contributor.identity.name);
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState(searchTerm);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const personQuery = useSearchForPerson({
     enabled: !!isExpanded,
     name: submittedSearchTerm,
