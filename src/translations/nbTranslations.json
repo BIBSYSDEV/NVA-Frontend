@@ -2045,5 +2045,8 @@
   "finished": "Ferdig",
   "publication_points_description": "Tabellen viser kandidater som er godkjent per nå hos alle institusjoner og hvor mange som er ferdig kontrollert i forhold til antall kandidater.",
   "publication_points_description_more": "Kandidatene er lagt på enheten hvor de er registrert. Det er ikke tatt hensyn til samarbeidene institusjoner. Kandidater i eventuelt tvist vises ikke.",
-  "publication_points": "Publiseringspoeng"
+  "publication_points": "Publiseringspoeng",
+  "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
+  "that_is_x_%_of_the_number_of_published_reports_in_y": "Det er <b>{{percentage}}%</b> av antallet resultat rapportert i {{year}}.",
+  "that_is_x_%_of_the_number_of_publication_points_in_y": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}."
 }
