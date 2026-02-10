@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { Sector } from '../../../types/customerInstitution.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminPublicationPointsPage = () => {
@@ -91,11 +92,16 @@ export const NviAdminPublicationPointsPage = () => {
             onClick={() => setTextExpanded((prev) => !prev)}
             aria-expanded={textExpanded}
             aria-controls={detailsId}
+            data-testid={dataTestId.basicData.nvi.publicationPointsExpandDescriptionButton}
             endIcon={textExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             sx={{ textDecoration: 'underline', justifyContent: 'flex-start', p: 0, minWidth: 0, my: '0.5rem' }}>
             {textExpanded ? t('common.read_less') : t('common.read_more')}
           </Button>
-          {textExpanded && <Typography id={detailsId}>{t('publication_points_description_more')}</Typography>}
+          {
+            <Typography id={detailsId} sx={{ display: textExpanded ? 'block' : 'none' }}>
+              {t('publication_points_description_more')}
+            </Typography>
+          }
         </Box>
       }>
       <TableContainer component={Paper} variant="outlined">
