@@ -12,6 +12,7 @@ import {
 import { Trans, useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
+import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { Sector } from '../../../types/customerInstitution.types';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
@@ -142,12 +143,14 @@ export const NviAdminStatusPage = () => {
                   <TableCell align="center">{obj.disputes}</TableCell>
                   <TableCell align="center">{obj.total}</TableCell>
                   <TableCell align="center">
-                    <PercentageWithIcon
-                      warningThresholdMinimum={30}
-                      successThresholdMinimum={100}
-                      displayPercentage={Math.round(percentageControlled * 100)}
-                      alternativeIfZero={'-'}
-                    />
+                    <HorizontalBox sx={{ justifyContent: 'center' }}>
+                      <PercentageWithIcon
+                        warningThresholdMinimum={30}
+                        successThresholdMinimum={100}
+                        displayPercentage={Math.round(percentageControlled * 100)}
+                        alternativeIfZero={'-'}
+                      />
+                    </HorizontalBox>
                   </TableCell>
                 </TableRow>
               );
