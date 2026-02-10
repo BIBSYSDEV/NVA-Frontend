@@ -60,7 +60,7 @@ export const expandImportCandidate = (importCandidate: ImportCandidate): Expande
   };
 };
 
-interface ImportContributorWithFormValue {
+export interface ImportContributorWithFormValue {
   importContributor: ImportContributor;
   contributor?: Contributor;
 }
