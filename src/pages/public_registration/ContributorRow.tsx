@@ -1,8 +1,10 @@
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { useCheckWhichOrgsAreNviInstitutions } from '../../utils/hooks/useCheckWhichOrgsAreNviInstitutions';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ContributorItem } from './ContributorItem';
 
 interface ContributorsRowProps {
@@ -14,8 +16,11 @@ interface ContributorsRowProps {
 
 export const ContributorsRow = ({ contributors, distinctUnits, hiddenCount, relevantRoles }: ContributorsRowProps) => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const isOnNviPage = location.pathname.startsWith(UrlPathTemplate.TasksNvi + '/');
+
   const orgNviStatuses = useCheckWhichOrgsAreNviInstitutions(
-    getDistinctContributorUnits(contributors.filter((c) => !c.identity.id)) // Check is only relevant for organizations affiliated with unidentified contributors, because we want to highlight unidentified contributors affiliated with NVI institutions on the landing page
+    getDistinctContributorUnits(isOnNviPage ? contributors.filter((c) => !c.identity.id) : []) // Check is only relevant when on NVI registration landing page and for organizations affiliated with unidentified contributors
   );
 
   return (

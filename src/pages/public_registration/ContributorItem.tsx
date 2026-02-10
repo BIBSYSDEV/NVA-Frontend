@@ -54,9 +54,11 @@ export const ContributorItem = ({
   const isFetchingOrgNviData =
     !id && contributor.affiliations?.some((a) => a.type === 'Organization' && orgNviStatuses.get(a.id)?.isLoading);
 
-  const hasNviAffiliation = contributor.affiliations?.some(
-    (a) => a.type === 'Organization' && orgNviStatuses.get(a.id)?.isNviInstitution === true
-  );
+  const hasNviAffiliation =
+    !id &&
+    contributor.affiliations?.some(
+      (a) => a.type === 'Organization' && orgNviStatuses.get(a.id)?.isNviInstitution === true
+    );
 
   if (isFetchingOrgNviData) {
     return <Skeleton width={120} />;
