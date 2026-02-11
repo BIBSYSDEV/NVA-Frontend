@@ -60,7 +60,7 @@ export const expandImportCandidate = (importCandidate: ImportCandidate): Expande
   };
 };
 
-export interface ImportContributorWithFormValue {
+export interface ImportContributorPair {
   importContributor: ImportContributor;
   contributor?: Contributor;
 }
@@ -68,7 +68,7 @@ export interface ImportContributorWithFormValue {
 export const pairContributors = (
   importContributors: ImportContributor[],
   formContributors: Contributor[]
-): ImportContributorWithFormValue[] => {
+): ImportContributorPair[] => {
   return importContributors.map((importContributor) => {
     const match = formContributors.find((contributor) => contributor.sequence === importContributor.sequence);
 

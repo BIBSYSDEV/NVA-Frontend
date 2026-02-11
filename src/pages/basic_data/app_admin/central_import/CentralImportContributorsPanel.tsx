@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Contributor } from '../../../../types/contributor.types';
 import { ImportContributor } from '../../../../types/importCandidate.types';
 import { Registration } from '../../../../types/registration.types';
-import { ImportContributorWithFormValue, pairContributors } from '../../../../utils/central-import-helpers';
+import { ImportContributorPair, pairContributors } from '../../../../utils/central-import-helpers';
 import { CentralImportContributorRow } from './CentralImportContributorRow';
 
 interface CentralImportContributorsPanelProps {
@@ -24,9 +24,8 @@ export const CentralImportContributorsPanel = ({
   const hasUnconfirmedAffiliation = (contributor?: Contributor): boolean =>
     contributor?.affiliations?.some((affiliation) => affiliation.type === 'UnconfirmedOrganization') ?? false;
 
-  const filterContributorsWithUnconfirmedAffiliations = (
-    paired: ImportContributorWithFormValue[]
-  ): ImportContributorWithFormValue[] => paired.filter(({ contributor }) => hasUnconfirmedAffiliation(contributor));
+  const filterContributorsWithUnconfirmedAffiliations = (paired: ImportContributorPair[]): ImportContributorPair[] =>
+    paired.filter(({ contributor }) => hasUnconfirmedAffiliation(contributor));
 
   const visibleImportContributors = showOnlyNorwegianContributors
     ? importContributors.filter((contributor) =>
