@@ -1,54 +1,45 @@
 import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
-import { HorizontalBox, MediumTypography, VerticalBox } from '../../../components/styled/Wrappers';
+import { VerticalBox } from '../../../components/styled/Wrappers';
 import { ExportNviStatusButton } from './ExportNviStatusButton';
+import { NviInstitutionSearch } from './NviInstitutionSearch';
+import { NviSectorSelector } from './NviSectorSelector';
 import { NviVisibilitySelector } from './NviVisibilitySelector';
 import { NviYearSelector } from './NviYearSelector';
 
-interface TotalPointsObject {
-  orgName: string;
-  result: number;
-  publicationPoints: number;
-}
-
 interface NviStatusWrapperProps {
-  children?: ReactNode;
   headline: string;
-  totalPoints?: TotalPointsObject;
+  topView?: ReactNode;
   yearSelector?: boolean;
+  visibilitySelector?: boolean;
+  sectorSelector?: boolean;
+  institutionSearch?: boolean;
   exportAcronym?: string;
+  children?: ReactNode;
 }
 
 export const NviStatusWrapper = ({
-  children,
   headline,
-  totalPoints,
+  topView,
   yearSelector,
+  visibilitySelector,
+  sectorSelector,
+  institutionSearch,
   exportAcronym,
+  children,
 }: NviStatusWrapperProps) => {
-  const { t } = useTranslation();
-
   return (
     <VerticalBox sx={{ gap: '1rem', alignItems: 'start' }}>
       <Typography variant="h1" sx={{ mb: '0.5rem' }}>
         {headline}
       </Typography>
-      {totalPoints && (
-        <HorizontalBox sx={{ mb: '0.5rem', gap: '1rem' }}>
-          <MediumTypography sx={{ fontWeight: 'bold' }}>
-            {t('tasks.nvi.total_for_organization', { orgName: totalPoints.orgName })}
-          </MediumTypography>
-          <MediumTypography>{t('tasks.nvi.result', { result: totalPoints.result })}</MediumTypography>
-          <MediumTypography>
-            {t('tasks.nvi.total_publication_points', { publicationPoints: totalPoints.publicationPoints })}
-          </MediumTypography>
-        </HorizontalBox>
-      )}
+      {topView ?? null}
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-        <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           {yearSelector && <NviYearSelector sx={{ minWidth: '10rem' }} />}
-          <NviVisibilitySelector sx={{ minWidth: '15rem' }} />
+          {sectorSelector && <NviSectorSelector sx={{ minWidth: '15rem' }} />}
+          {institutionSearch && <NviInstitutionSearch sx={{ minWidth: '30rem' }} />}
+          {visibilitySelector && <NviVisibilitySelector sx={{ minWidth: '15rem' }} />}
         </Box>
         {exportAcronym && <ExportNviStatusButton acronym={exportAcronym} />}
       </Box>

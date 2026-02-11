@@ -2038,5 +2038,17 @@
   "select_person_and_affiliation": "Velg person og tilknytning",
   "contributor_search_hits_one": "Fant {{count}} bidragsyter",
   "contributor_search_hits_other": "Fant {{count}} bidragsytere",
-  "show_only_unconfirmed_affiliations": "Vis kun uidentifiserte tilknytninger"
+  "show_only_unconfirmed_affiliations": "Vis kun uidentifiserte tilknytninger",
+  "sector": "Sektor",
+  "candidate": "Kandidat",
+  "controlling": "Kontrolleres",
+  "approved": "Godkjent",
+  "rejected": "Avvist",
+  "disputes": "Tvister",
+  "percentage_controlled": "Andel kontrollert",
+  "internal_nvi_status": "Intern NVI-status",
+  "view_contact_information": "Se kontaktinfo",
+  "finished": "Ferdig",
+  "publication_points_description": "Tabellen viser kandidater som er godkjent per nå hos alle institusjoner og hvor mange som er ferdig kontrollert i forhold til antall kandidater.",
+  "publication_points_description_more": "Kandidatene er lagt på enheten hvor de er registrert. Det er ikke tatt hensyn til samarbeidene institusjoner. Kandidater i eventuelt tvist vises ikke."
 }
