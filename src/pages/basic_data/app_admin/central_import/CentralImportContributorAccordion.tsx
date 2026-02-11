@@ -14,15 +14,15 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { AddAffiliationModal } from '../../../registration/contributors_tab/components/AddAffiliationModal';
 import { CentralImportContributorSearchBar } from './CentralImportContributorSearchBar';
 
-interface CentralImportSearchForContributorProps {
+interface CentralImportContributorAccordionProps {
   contributor: Contributor;
   onSelectPerson: (selectedContributor: CristinPerson) => void;
 }
 
-export const CentralImportSearchForContributor = ({
+export const CentralImportContributorAccordion = ({
   contributor,
   onSelectPerson,
-}: CentralImportSearchForContributorProps) => {
+}: CentralImportContributorAccordionProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | boolean>(false);
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);

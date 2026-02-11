@@ -1,12 +1,12 @@
-import { Box, Divider, TableCell, TableRow } from '@mui/material';
+import { Box, TableCell, TableRow } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { Contributor } from '../../../../types/contributor.types';
 import { ImportContributor } from '../../../../types/importCandidate.types';
 import { Registration } from '../../../../types/registration.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { replaceExistingContributor } from '../../../../utils/central-import-helpers';
-import { CentralImportContributorBox } from './CentralImportContributorBox';
-import { CentralImportSearchForContributor } from './CentralImportSearchForContributor';
+import { ImportCandidatetContributorBox } from './ImportCandidateContributorBox';
+import { CentralImportContributorAccordion } from './CentralImportContributorAccordion';
 
 interface CentralImportContributorRowProps {
   contributor: Contributor | undefined;
@@ -32,11 +32,11 @@ export const CentralImportContributorRow = ({ contributor, importContributor }: 
         </Box>
       </TableCell>
       <TableCell sx={{ verticalAlign: 'top' }}>
-        <CentralImportContributorBox importContributor={importContributor} />
+        <ImportCandidatetContributorBox importContributor={importContributor} />
       </TableCell>
       <TableCell sx={{ verticalAlign: 'top' }}>
         {contributor && (
-          <CentralImportSearchForContributor
+          <CentralImportContributorAccordion
             contributor={contributor}
             onSelectPerson={(selected: CristinPerson) =>
               replaceExistingContributor(values, setFieldValue, selected, contributor.sequence)
@@ -44,7 +44,6 @@ export const CentralImportContributorRow = ({ contributor, importContributor }: 
           />
         )}
       </TableCell>
-      <Divider orientation="horizontal" />
     </TableRow>
   );
 };
