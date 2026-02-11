@@ -15,6 +15,7 @@ import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
 import { expandImportCandidate } from '../../utils/central-import-helpers';
+import { getFormattedRegistration } from '../../utils/registration-helpers';
 
 interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
@@ -76,7 +77,8 @@ export const MergeImportCandidate = () => {
         sourceResult={expandImportCandidate(importCandidateQuery.data)}
         targetResult={registrationQuery.data}
         onSave={async (data) => {
-          await registrationMutation.mutateAsync(data);
+          const formattedData = getFormattedRegistration(data);
+          await registrationMutation.mutateAsync(formattedData);
           await importCandidateMutation.mutateAsync();
           dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
           navigate(getRegistrationWizardPath(registrationQuery.data.identifier), {
