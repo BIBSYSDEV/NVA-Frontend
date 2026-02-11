@@ -104,9 +104,6 @@ export const dataTestId = {
       sectorField: 'sector-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
-    nvi: {
-      publicationPointsExpandDescriptionButton: 'publication-points-expand-description-button',
-    },
     nviPeriod: {
       nviPeriodDialog: 'nvi-period-dialog',
       nviPeriodYear: 'nvi-period-year',
@@ -135,7 +132,6 @@ export const dataTestId = {
     personRegisterSearchBar: 'person-register-search-bar',
     publisherClaimsLink: 'publisher-claim-link',
     serialPublicationClaimsLink: 'serial-publication-claim-link',
-    nviReportingStatusShowSubunits: 'nvi-reporting-status-show-subunits',
   },
   common: {
     cancel: 'cancel',
@@ -864,7 +860,4 @@ export const dataTestId = {
     disputeLink: 'nvi-aggregations-dispute-link',
     totalApprovedLink: 'nvi-aggregations-total-approved-link',
   },
-  nviFilterSector: 'nvi-filter-sector',
-  nviFilterInstitution: 'nvi-filter-institution',
-  nviFilterInstitutionClearSearch: 'nvi-filter-institution-clear-search',
 };
