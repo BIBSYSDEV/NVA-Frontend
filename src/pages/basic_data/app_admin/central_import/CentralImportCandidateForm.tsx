@@ -17,7 +17,7 @@ import { ExpandedImportCandidate } from '../../../../types/importCandidate.types
 import { RegistrationTab } from '../../../../types/registration.types';
 import { expandImportCandidate } from '../../../../utils/central-import-helpers';
 import { getTouchedTabFields } from '../../../../utils/formik-helpers/formik-helpers';
-import { getTitleString } from '../../../../utils/registration-helpers';
+import { getFormattedRegistration, getTitleString } from '../../../../utils/registration-helpers';
 import { getImportCandidatePath, IdentifierParams } from '../../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../../utils/validation/registration/registrationValidation';
 import { ContributorsPanel } from '../../../registration/ContributorsPanel';
@@ -45,7 +45,8 @@ export const CentralImportCandidateForm = () => {
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
   const importCandidateMutation = useMutation({
-    mutationFn: async (values: ExpandedImportCandidate) => await createRegistrationFromImportCandidate(values),
+    mutationFn: async (values: ExpandedImportCandidate) =>
+      await createRegistrationFromImportCandidate(getFormattedRegistration(values)),
     onSuccess: () => {
       dispatch(
         setNotification({

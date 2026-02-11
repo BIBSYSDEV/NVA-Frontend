@@ -9,13 +9,12 @@ import { fetchImportCandidate, updateImportCandidateStatus } from '../../api/reg
 import NotFound from '../../pages/errorpages/NotFound';
 import { setNotification } from '../../redux/notificationSlice';
 import { BasicDataLocationState, RegistrationFormLocationState } from '../../types/locationState.types';
+import { expandImportCandidate } from '../../utils/central-import-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../utils/urlPaths';
 import { HeadTitle } from '../HeadTitle';
 import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
-import { expandImportCandidate } from '../../utils/central-import-helpers';
-import { getFormattedRegistration } from '../../utils/registration-helpers';
 
 interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
@@ -77,8 +76,7 @@ export const MergeImportCandidate = () => {
         sourceResult={expandImportCandidate(importCandidateQuery.data)}
         targetResult={registrationQuery.data}
         onSave={async (data) => {
-          const formattedData = getFormattedRegistration(data);
-          await registrationMutation.mutateAsync(formattedData);
+          await registrationMutation.mutateAsync(data);
           await importCandidateMutation.mutateAsync();
           dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
           navigate(getRegistrationWizardPath(registrationQuery.data.identifier), {
