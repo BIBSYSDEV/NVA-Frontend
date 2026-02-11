@@ -16,12 +16,14 @@ import { CentralImportContributorSearchBar } from './CentralImportContributorSea
 
 interface CentralImportContributorAccordionProps {
   contributor: Contributor;
-  onSelectPerson: (selectedContributor: CristinPerson) => void;
+  onSelectPerson: (selectedPerson: CristinPerson) => void;
+  onSelectPersonAndAffiliation: (selectedContributor: CristinPerson) => void;
 }
 
 export const CentralImportContributorAccordion = ({
   contributor,
   onSelectPerson,
+  onSelectPersonAndAffiliation,
 }: CentralImportContributorAccordionProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -80,6 +82,7 @@ export const CentralImportContributorAccordion = ({
             isExpanded={expanded}
             contributor={contributor}
             onSelectPerson={onSelectPerson}
+            onSelectPersonAndAffiliation={onSelectPersonAndAffiliation}
           />
         </AccordionDetails>
       </Accordion>

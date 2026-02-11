@@ -2039,6 +2039,7 @@
   "contributor_search_hits_one": "Fant {{count}} bidragsyter",
   "contributor_search_hits_other": "Fant {{count}} bidragsytere",
   "show_only_unconfirmed_affiliations": "Vis kun uidentifiserte tilknytninger",
+  "select_person_identity_only": "Velg person",
   "sector": "Sektor",
   "candidate": "Kandidat",
   "controlling": "Kontrolleres",

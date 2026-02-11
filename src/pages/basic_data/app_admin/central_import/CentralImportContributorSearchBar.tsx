@@ -17,12 +17,14 @@ interface CentralImportContributorSearchBarProps {
   contributor: Contributor;
   isExpanded: string | boolean;
   onSelectPerson: (selectedContributor: CristinPerson) => void;
+  onSelectPersonAndAffiliation: (selectedContributor: CristinPerson) => void;
 }
 
 export const CentralImportContributorSearchBar = ({
   contributor,
   isExpanded,
   onSelectPerson,
+  onSelectPersonAndAffiliation,
 }: CentralImportContributorSearchBarProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState(contributor.identity.name);
@@ -109,16 +111,25 @@ export const CentralImportContributorSearchBar = ({
                 {user.affiliations.map((affiliation) => (
                   <OrganizationBox key={affiliation.organization} unitUri={affiliation.organization} />
                 ))}
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
-                  data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
-                    contributor.identity.name
-                  )}
-                  onClick={() => onSelectPerson(user)}>
-                  {t('select_person_and_affiliation')}
-                </Button>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
+                    onClick={() => onSelectPerson(user)}>
+                    {t('select_person_identity_only')}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
+                    data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
+                      contributor.identity.name
+                    )}
+                    onClick={() => onSelectPersonAndAffiliation(user)}>
+                    {t('select_person_and_affiliation')}
+                  </Button>
+                </Box>
               </Box>
             ))}
           </>

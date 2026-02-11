@@ -79,27 +79,60 @@ export const pairContributors = (
   });
 };
 
-export const contributorFromCristinPerson = (oldContributor: Contributor, selected: CristinPerson): Contributor => {
-  const identity: Identity = {
+export const identityFromCristinPerson = (oldIdentity: Identity, selected: CristinPerson): Identity => {
+  return {
     type: 'Identity',
     id: selected.id,
     name: getFullCristinName(selected.names),
     orcId: getOrcidUri(selected.identifiers),
     verificationStatus: getVerificationStatus(selected.verified),
-    additionalIdentifiers: oldContributor.identity.additionalIdentifiers,
+    additionalIdentifiers: oldIdentity.additionalIdentifiers,
   };
+};
 
-  const affiliations = selected.affiliations;
-  const newAffiliations: Affiliation[] = affiliations.map(({ organization }) => ({
-    type: 'Organization',
-    id: organization,
-  }));
+export const affiliationsFromCristinPerson = (selected: CristinPerson): Affiliation[] => {
+  const affiliations = selected.affiliations ?? [];
+
+  return affiliations.map(
+    ({ organization }): Affiliation => ({
+      type: 'Organization',
+      id: organization,
+    })
+  );
+};
+
+export const contributorFromCristinPerson = (oldContributor: Contributor, selected: CristinPerson): Contributor => {
+  const updatedIdentity = identityFromCristinPerson(oldContributor.identity, selected);
+  const updatedAffiliations = affiliationsFromCristinPerson(selected);
 
   return {
     ...oldContributor,
-    identity,
-    affiliations: newAffiliations,
+    identity: updatedIdentity,
+    affiliations: updatedAffiliations,
   };
+};
+
+export const replaceExistingContributorAndAffiliations = (
+  values: Registration,
+  setFieldValue: (field: string, value: unknown) => void,
+  selected: CristinPerson,
+  sequence: number
+): void => {
+  const currentContributors: Contributor[] = values.entityDescription?.contributors ?? [];
+
+  const contributorIndex = currentContributors.findIndex((contributor) => contributor.sequence === sequence);
+
+  if (contributorIndex === -1) {
+    return;
+  }
+
+  const oldContributor = currentContributors[contributorIndex];
+  const updatedContributor = contributorFromCristinPerson(oldContributor, selected);
+
+  const nextContributors = [...currentContributors];
+  nextContributors[contributorIndex] = updatedContributor;
+
+  setFieldValue('entityDescription.contributors', nextContributors);
 };
 
 export const replaceExistingContributor = (
@@ -108,15 +141,29 @@ export const replaceExistingContributor = (
   selected: CristinPerson,
   sequence: number
 ): void => {
-  const current = values.entityDescription?.contributors ?? [];
-  const index = current.findIndex((c) => c.sequence === sequence);
-  if (index === -1) return;
+  const currentContributors: Contributor[] = values.entityDescription?.contributors ?? [];
 
-  const old = current[index];
-  const updated = contributorFromCristinPerson(old, selected);
+  const contributorIndex = currentContributors.findIndex((contributor) => contributor.sequence === sequence);
 
-  const next = [...current];
-  next[index] = updated;
+  if (contributorIndex === -1) {
+    return;
+  }
 
-  setFieldValue('entityDescription.contributors', next);
+  const oldContributor = currentContributors[contributorIndex];
+
+  const updatedIdentity = identityFromCristinPerson(oldContributor.identity, selected);
+
+  // Explicitly preserve old affiliations
+  const preservedAffiliations = oldContributor.affiliations;
+
+  const updatedContributor: Contributor = {
+    ...oldContributor,
+    identity: updatedIdentity,
+    affiliations: preservedAffiliations,
+  };
+
+  const nextContributors = [...currentContributors];
+  nextContributors[contributorIndex] = updatedContributor;
+
+  setFieldValue('entityDescription.contributors', nextContributors);
 };
