@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/AddCircleOutline';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button } from '@mui/material';
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContributorName } from '../../../../components/ContributorName';
 import { OrganizationBox } from '../../../../components/institution/OrganizationBox';
@@ -24,14 +24,14 @@ export const CentralImportContributorAccordion = ({
   onSelectPerson,
 }: CentralImportContributorAccordionProps) => {
   const { t } = useTranslation();
-  const [expanded, setExpanded] = useState<string | boolean>(false);
+  const [expanded, setExpanded] = useState<boolean>(false);
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const baseFieldName = `${ContributorFieldNames.Contributors}[${contributor.sequence - 1}]`;
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
-  const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-    setExpanded(isExpanded ? panel : false);
+  const handleChange = (_event: SyntheticEvent, isExpanded: boolean) => {
+    setExpanded(isExpanded);
   };
 
   const isVerified = contributor && contributor.identity.verificationStatus === 'Verified';
@@ -44,8 +44,8 @@ export const CentralImportContributorAccordion = ({
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Accordion
-        expanded={expanded === 'panel1'}
-        onChange={handleChange('panel1')}
+        expanded={expanded}
+        onChange={handleChange}
         slotProps={{ heading: { component: 'p' } }}
         sx={{
           border: '1px solid',
