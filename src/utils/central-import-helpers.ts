@@ -90,15 +90,32 @@ export const identityFromCristinPerson = (oldIdentity: Identity, selected: Crist
   };
 };
 
-export const affiliationsFromCristinPerson = (selected: CristinPerson): Affiliation[] => {
-  const affiliations = selected.affiliations ?? [];
-
-  return affiliations.map(
+export const affiliationsFromCristinPerson = (selected: CristinPerson): Affiliation[] =>
+  (selected.affiliations ?? []).map(
     ({ organization }): Affiliation => ({
       type: 'Organization',
       id: organization,
     })
   );
+
+const mergeAffiliations = (
+  oldAffiliations: Affiliation[] | undefined,
+  newAffiliations: Affiliation[]
+): Affiliation[] => {
+  const existing = oldAffiliations ?? [];
+  const merged = [...existing];
+
+  for (const newAff of newAffiliations) {
+    if (
+      newAff.type === 'Organization' &&
+      newAff.id &&
+      !existing.some((oldAff) => oldAff.type === 'Organization' && oldAff.id === newAff.id)
+    ) {
+      merged.push(newAff);
+    }
+  }
+
+  return merged;
 };
 
 export const contributorFromCristinPerson = (oldContributor: Contributor, selected: CristinPerson): Contributor => {
@@ -121,13 +138,19 @@ export const replaceExistingContributorAndAffiliations = (
   const currentContributors: Contributor[] = values.entityDescription?.contributors ?? [];
 
   const contributorIndex = currentContributors.findIndex((contributor) => contributor.sequence === sequence);
-
-  if (contributorIndex === -1) {
-    return;
-  }
+  if (contributorIndex === -1) return;
 
   const oldContributor = currentContributors[contributorIndex];
-  const updatedContributor = contributorFromCristinPerson(oldContributor, selected);
+
+  const updatedIdentity = identityFromCristinPerson(oldContributor.identity, selected);
+  const newAffiliationsFromPerson = affiliationsFromCristinPerson(selected);
+  const mergedAffiliations = mergeAffiliations(oldContributor.affiliations, newAffiliationsFromPerson);
+
+  const updatedContributor: Contributor = {
+    ...oldContributor,
+    identity: updatedIdentity,
+    affiliations: mergedAffiliations,
+  };
 
   const nextContributors = [...currentContributors];
   nextContributors[contributorIndex] = updatedContributor;
@@ -144,22 +167,16 @@ export const replaceExistingContributor = (
   const currentContributors: Contributor[] = values.entityDescription?.contributors ?? [];
 
   const contributorIndex = currentContributors.findIndex((contributor) => contributor.sequence === sequence);
-
-  if (contributorIndex === -1) {
-    return;
-  }
+  if (contributorIndex === -1) return;
 
   const oldContributor = currentContributors[contributorIndex];
 
   const updatedIdentity = identityFromCristinPerson(oldContributor.identity, selected);
 
-  // Explicitly preserve old affiliations
-  const preservedAffiliations = oldContributor.affiliations;
-
   const updatedContributor: Contributor = {
     ...oldContributor,
     identity: updatedIdentity,
-    affiliations: preservedAffiliations,
+    affiliations: oldContributor.affiliations,
   };
 
   const nextContributors = [...currentContributors];
