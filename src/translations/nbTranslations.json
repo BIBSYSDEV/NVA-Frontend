@@ -6,6 +6,7 @@
   },
   "add_file": "Legg til fil",
   "add_project": "Legg til prosjekt",
+  "approved": "Godkjent",
   "authorization": {
     "about_terms": "Brukervilkår og personvernerklæring for Nasjonalt vitenarkiv",
     "about_terms_description": "<p>For å bruke tjenesten må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Brukervilkår for Nasjonalt vitenarkiv</a>, og gjøre deg kjent med <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», bekrefter du at du har lest og akseptert brukervilkårene. Du samtykker også til behandling av personopplysninger i samsvar med personvernerklæringen.</p>",
@@ -156,6 +157,7 @@
       "show_full_nin": "Vis personnummer"
     }
   },
+  "candidate": "Kandidat",
   "cannot_copy_category_from_another_context_type": "<p>Du kan ikke kopiere metadata fra kategorifanen hvis resultatet tilhører en annen hovedkategori.</p><p>Denne informasjonen må registreres manuelt etter at resten av metadata er kopiert.</p>",
   "common": {
     "actions": "Handlinger",
@@ -321,6 +323,7 @@
     "year": "År",
     "yes": "Ja"
   },
+  "controlling": "Kontrolleres",
   "corresponding_contributor": "Korresponderende bidragsyter",
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljer",
@@ -402,6 +405,7 @@
     "1168": "Historie og idéhistorie",
     "1170": "Kunst, design og arkitektur"
   },
+  "disputes": "Tvister",
   "does_not_match": "Matcher ikke",
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -714,6 +718,7 @@
   "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Som kurator kan du legge til en fil på vegne av registrator.",
   "file_upload_disabled_due_to_institution_policy": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønsker å ha en fil på dette resultatet.",
   "find_result_to_merge_description": "<p>Slå sammen to resultater for å unngå to versjoner av samme resultat med forskjellige metadata og filer.</p><p>Er det registrert forskjellig metadata så velger du hvilke data som er gjeldende. Du velger også om filer skal flyttes over til det publiserte resultatet.</p><heading>Søk etter forskningsresultat</heading><p>Velg resultatet du ønsker å slå sammen med. Du kan bare slå sammen resultatet der du er registrert som bidragsyter.</p>",
+  "finished": "Ferdig",
   "footer": {
     "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
     "about_nva_text": "Nasjonalt vitenarkiv (NVA) samler publikasjoner og andre forskningsresultater, og gjør dem åpent tilgjengelig i en felles nasjonal løsning. Dette gjør resultater fra norsk forskning tilgjengelig i én tjeneste.",
@@ -730,6 +735,7 @@
   "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
+  "internal_nvi_status": "Intern NVI-status",
   "keep_all_contributors": "Behold bidragsytere fra både {{sourceType}} og publisert resultat",
   "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
   "keep_contributors_from_source_result": "Behold kun bidragsytere fra {{sourceType}}",
@@ -981,6 +987,7 @@
   "overview_over_administrators": "Oversikt over administratorer",
   "overwrite": "Overskriv",
   "owner_institution": "Eierinstitusjon",
+  "percentage_controlled": "Andel kontrollert",
   "person_profiles": "Personprofiler",
   "point_of_contact": "Kontaktpunkt",
   "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
@@ -1095,6 +1102,8 @@
     "verify_project_manager": "Identifiser prosjektleder"
   },
   "projects": "Prosjekter",
+  "publication_points_description": "Tabellen viser kandidater som er godkjent per nå hos alle institusjoner og hvor mange som er ferdig kontrollert i forhold til antall kandidater.",
+  "publication_points_description_more": "Kandidatene er lagt på enheten hvor de er registrert. Det er ikke tatt hensyn til samarbeidene institusjoner. Kandidater i eventuelt tvist vises ikke.",
   "published_result": "Publisert resultat",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikke lagre fordi resultatet er publisert og inneholder valideringsfeil",
@@ -1846,6 +1855,7 @@
     "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål.",
     "year_published": "Publiseringsår"
   },
+  "rejected": "Avvist",
   "reset": "Nullstill",
   "results": "Forskningsresultater",
   "science_categories_front_page": "<heading>Arbeid i ulike kategorier</heading><p>Forskning og formidling omfatter mye mer enn vitenskapelige publikasjoner.</p><p>Alt registreres i ulike kategorier, og du kan søke og gjøre oppslag i alle kategoriene nedenfor.</p>",
@@ -1919,6 +1929,7 @@
     "year_to": "Til år"
   },
   "search_in_national_research_publication": "Søk i over 2 millioner publikasjoner fra forskere fra universiteter, høyskoler og forskningsinstitusjoner over hele landet.",
+  "sector": "Sektor",
   "select_curator": "Velg kurator",
   "select_funder": "Velg finansiør",
   "show_all_units": "Vis alle enheter",
@@ -2028,21 +2039,10 @@
   "use_rerender": "{{value}}",
   "velg_subject_area": "Velg fagfelt",
   "view_contact_info": "Se kontaktinformasjon",
+  "view_contact_information": "Se kontaktinfo",
   "visibility_of_units": "Visning av enheter",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "sector": "Sektor",
-  "candidate": "Kandidat",
-  "controlling": "Kontrolleres",
-  "approved": "Godkjent",
-  "rejected": "Avvist",
-  "disputes": "Tvister",
-  "percentage_controlled": "Andel kontrollert",
-  "internal_nvi_status": "Intern NVI-status",
-  "view_contact_information": "Se kontaktinfo",
-  "finished": "Ferdig",
-  "publication_points_description": "Tabellen viser kandidater som er godkjent per nå hos alle institusjoner og hvor mange som er ferdig kontrollert i forhold til antall kandidater.",
-  "publication_points_description_more": "Kandidatene er lagt på enheten hvor de er registrert. Det er ikke tatt hensyn til samarbeidene institusjoner. Kandidater i eventuelt tvist vises ikke."
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
 }
