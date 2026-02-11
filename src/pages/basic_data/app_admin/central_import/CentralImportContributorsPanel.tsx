@@ -66,12 +66,15 @@ export const CentralImportContributorsPanel = ({
           label={t('show_only_unconfirmed_affiliations')}
         />
       </Box>
-      <Table>
+      <Table sx={{ tableLayout: 'fixed', width: '100%' }}>
         <TableHead>
           <TableRow>
-            <TableCell>{t('common.order')}</TableCell>
-            <TableCell> {t('basic_data.central_import.import_candidate')}</TableCell>
-            <TableCell>{t('common.page_title')}</TableCell>
+            <TableCell sx={{ width: '6rem' }}>{t('common.order')}</TableCell>
+            <TableCell sx={{ width: 'calc((100% - 3rem) / 2)' }}>
+              {' '}
+              {t('basic_data.central_import.import_candidate')}
+            </TableCell>
+            <TableCell sx={{ width: 'calc((100% - 3rem) / 2)' }}>{t('common.page_title')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
