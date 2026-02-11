@@ -8,23 +8,27 @@ import { OrganizationBox } from '../../../../components/institution/Organization
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { Contributor } from '../../../../types/contributor.types';
+import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getFullCristinName } from '../../../../utils/user-helpers';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 
 interface CentralImportContributorSearchBarProps {
   contributor: Contributor;
   isExpanded: string | boolean;
+  onSelectPerson: (selectedContributor: CristinPerson) => void;
 }
 
 export const CentralImportContributorSearchBar = ({
   contributor,
   isExpanded,
+  onSelectPerson,
 }: CentralImportContributorSearchBarProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState(contributor.identity.name);
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState(searchTerm);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const personQuery = useSearchForPerson({
     enabled: !!isExpanded,
     name: submittedSearchTerm,
@@ -111,7 +115,8 @@ export const CentralImportContributorSearchBar = ({
                   sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
                   data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
                     contributor.identity.name
-                  )}>
+                  )}
+                  onClick={() => onSelectPerson(user)}>
                   {t('select_person_and_affiliation')}
                 </Button>
               </Box>

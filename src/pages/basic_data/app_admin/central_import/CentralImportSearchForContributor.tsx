@@ -8,17 +8,26 @@ import { OrganizationBox } from '../../../../components/institution/Organization
 import { UnconfirmedOrganizationBox } from '../../../../components/institution/UnconfirmedOrganizationBox';
 import { SimpleWarning } from '../../../../components/messages/SimpleWarning';
 import { Contributor } from '../../../../types/contributor.types';
+import { ContributorFieldNames } from '../../../../types/publicationFieldNames';
+import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { AddAffiliationModal } from '../../../registration/contributors_tab/components/AddAffiliationModal';
 import { CentralImportContributorSearchBar } from './CentralImportContributorSearchBar';
 
 interface CentralImportSearchForContributorProps {
   contributor: Contributor;
+  onSelectPerson: (selectedContributor: CristinPerson) => void;
 }
 
-export const CentralImportSearchForContributor = ({ contributor }: CentralImportSearchForContributorProps) => {
+export const CentralImportSearchForContributor = ({
+  contributor,
+  onSelectPerson,
+}: CentralImportSearchForContributorProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | boolean>(false);
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
+  const baseFieldName = `${ContributorFieldNames.Contributors}[${contributor.sequence - 1}]`;
+  const [affiliationToVerify, setAffiliationToVerify] = useState('');
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -27,8 +36,13 @@ export const CentralImportSearchForContributor = ({ contributor }: CentralImport
 
   const isVerified = contributor && contributor.identity.verificationStatus === 'Verified';
 
+  const onIdentifyAffiliationClick = (affiliationString: string) => {
+    setAffiliationToVerify(affiliationString);
+    toggleAffiliationModal();
+  };
+
   return (
-    <Box sx={{ gridColumn: '3', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Accordion
         expanded={expanded === 'panel1'}
         onChange={handleChange('panel1')}
@@ -43,10 +57,8 @@ export const CentralImportSearchForContributor = ({ contributor }: CentralImport
         <AccordionSummary
           sx={{
             fontWeight: 'normal',
-            display: 'flex',
-            alignItems: 'flex-start',
           }}
-          expandIcon={<ExpandMoreIcon sx={{ mt: '1.5rem' }} />}
+          expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header">
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '0.5rem' }}>
@@ -64,7 +76,11 @@ export const CentralImportSearchForContributor = ({ contributor }: CentralImport
           </Box>
         </AccordionSummary>
         <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <CentralImportContributorSearchBar isExpanded={expanded} contributor={contributor} />
+          <CentralImportContributorSearchBar
+            isExpanded={expanded}
+            contributor={contributor}
+            onSelectPerson={onSelectPerson}
+          />
         </AccordionDetails>
       </Accordion>
       {contributor &&
@@ -72,7 +88,11 @@ export const CentralImportSearchForContributor = ({ contributor }: CentralImport
           affiliation.type === 'Organization' ? (
             <OrganizationBox key={affiliation.id + index} unitUri={affiliation.id} />
           ) : (
-            <UnconfirmedOrganizationBox key={`${affiliation.name}${index}`} name={affiliation.name} />
+            <UnconfirmedOrganizationBox
+              key={`${affiliation.name}${index}`}
+              name={affiliation.name}
+              onIdentifyAffiliationClick={onIdentifyAffiliationClick}
+            />
           )
         )}
 
@@ -85,6 +105,15 @@ export const CentralImportSearchForContributor = ({ contributor }: CentralImport
         onClick={toggleAffiliationModal}>
         {t('registration.contributors.add_affiliation')}
       </Button>
+      <AddAffiliationModal
+        openAffiliationModal={openAffiliationModal}
+        affiliationToVerify={affiliationToVerify}
+        setAffiliationToVerify={setAffiliationToVerify}
+        toggleAffiliationModal={toggleAffiliationModal}
+        authorName={contributor.identity.name}
+        affiliations={contributor.affiliations}
+        baseFieldName={baseFieldName}
+      />
     </Box>
   );
 };

@@ -1,13 +1,12 @@
-import { Box, Checkbox, Divider, FormControlLabel, Typography } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Fragment } from 'react/jsx-runtime';
+import { Contributor } from '../../../../types/contributor.types';
 import { ImportContributor } from '../../../../types/importCandidate.types';
 import { Registration } from '../../../../types/registration.types';
-import { pairContributors } from '../../../../utils/central-import-helpers';
-import { CentralImportContributorBox } from './CentralImportContributorBox';
-import { CentralImportSearchForContributor } from './CentralImportSearchForContributor';
+import { ImportContributorWithFormValue, pairContributors } from '../../../../utils/central-import-helpers';
+import { CentralImportContributorRow } from './CentralImportContributorRow';
 
 interface CentralImportContributorsPanelProps {
   importCandidateContributors?: ImportContributor[];
@@ -22,6 +21,13 @@ export const CentralImportContributorsPanel = ({
   const importContributors = importCandidateContributors ?? [];
   const formContributors = values.entityDescription?.contributors ?? [];
 
+  const hasUnconfirmedAffiliation = (contributor?: Contributor): boolean =>
+    contributor?.affiliations?.some((affiliation) => affiliation.type === 'UnconfirmedOrganization') ?? false;
+
+  const filterContributorsWithUnconfirmedAffiliations = (
+    paired: ImportContributorWithFormValue[]
+  ): ImportContributorWithFormValue[] => paired.filter(({ contributor }) => hasUnconfirmedAffiliation(contributor));
+
   const visibleImportContributors = showOnlyNorwegianContributors
     ? importContributors.filter((contributor) =>
         contributor.affiliations?.some((aff) => aff.sourceOrganization?.country?.code?.toLowerCase() === 'nor')
@@ -30,35 +36,56 @@ export const CentralImportContributorsPanel = ({
 
   const paired = pairContributors(visibleImportContributors, formContributors);
 
+  const [showOnlyUnconfirmedAffiliations, setShowOnlyUnconfirmedAffiliations] = useState(false);
+
+  const filteredPaired = showOnlyUnconfirmedAffiliations
+    ? filterContributorsWithUnconfirmedAffiliations(paired)
+    : paired;
+
   return (
     <>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={showOnlyNorwegianContributors}
-            onChange={() => setShowOnlyNorwegianContributors(!showOnlyNorwegianContributors)}
-            color="secondary"
-          />
-        }
-        label={t('show_only_norwegian_contributors')}
-      />
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr 1fr', columnGap: '1rem', rowGap: '1rem' }}>
-        <Typography sx={{ gridColumn: '1', fontWeight: 'bold' }}>{t('common.order')}</Typography>
-        <Typography sx={{ gridColumn: '2', fontWeight: 'bold' }}>
-          {t('basic_data.central_import.import_candidate')}
-        </Typography>
-        <Typography sx={{ gridColumn: '3', fontWeight: 'bold' }}>{t('common.page_title')}</Typography>
-
-        <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
-
-        {paired.map(({ importContributor, contributor }) => (
-          <Fragment key={importContributor.sequence}>
-            <CentralImportContributorBox importContributor={importContributor} />
-            {contributor && <CentralImportSearchForContributor contributor={contributor} />}
-            <Divider orientation="horizontal" sx={{ gridColumn: '1/-1' }} />
-          </Fragment>
-        ))}
+      <Box sx={{ display: 'flex', flexDirection: 'column', mb: '1rem' }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={showOnlyNorwegianContributors}
+              onChange={() => setShowOnlyNorwegianContributors(!showOnlyNorwegianContributors)}
+              color="secondary"
+            />
+          }
+          label={t('show_only_norwegian_contributors')}
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={showOnlyUnconfirmedAffiliations}
+              onChange={() => setShowOnlyUnconfirmedAffiliations((prev) => !prev)}
+              color="secondary"
+            />
+          }
+          label={t('show_only_unconfirmed_affiliations')}
+        />
       </Box>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>{t('common.order')}</TableCell>
+            <TableCell> {t('basic_data.central_import.import_candidate')}</TableCell>
+            <TableCell>{t('common.page_title')}</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {filteredPaired.map(({ importContributor, contributor }) => {
+            return (
+              <CentralImportContributorRow
+                key={importContributor.sequence}
+                contributor={contributor}
+                importContributor={importContributor}
+              />
+            );
+          })}
+        </TableBody>
+      </Table>
     </>
   );
 };
