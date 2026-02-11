@@ -1,6 +1,7 @@
 import AddIcon from '@mui/icons-material/AddCircleOutline';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button } from '@mui/material';
+import { useFormikContext } from 'formik';
 import { SyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContributorName } from '../../../../components/ContributorName';
@@ -8,7 +9,8 @@ import { OrganizationBox } from '../../../../components/institution/Organization
 import { UnconfirmedOrganizationBox } from '../../../../components/institution/UnconfirmedOrganizationBox';
 import { SimpleWarning } from '../../../../components/messages/SimpleWarning';
 import { Contributor } from '../../../../types/contributor.types';
-import { ContributorFieldNames } from '../../../../types/publicationFieldNames';
+import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
+import { Registration } from '../../../../types/registration.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { AddAffiliationModal } from '../../../registration/contributors_tab/components/AddAffiliationModal';
@@ -26,11 +28,13 @@ export const CentralImportContributorAccordion = ({
   onSelectPersonAndAffiliation,
 }: CentralImportContributorAccordionProps) => {
   const { t } = useTranslation();
+  const { setFieldValue } = useFormikContext<Registration>();
   const [expanded, setExpanded] = useState<boolean>(false);
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const baseFieldName = `${ContributorFieldNames.Contributors}[${contributor.sequence - 1}]`;
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
+  const affiliations = contributor.affiliations ?? [];
 
   const handleChange = (_event: SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded);
@@ -42,6 +46,12 @@ export const CentralImportContributorAccordion = ({
     setAffiliationToVerify(affiliationString);
     toggleAffiliationModal();
   };
+
+  const removeAffiliation = (index: number) =>
+    setFieldValue(
+      `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
+      affiliations.filter((_, thisIndex) => thisIndex !== index)
+    );
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -89,7 +99,11 @@ export const CentralImportContributorAccordion = ({
       {contributor &&
         contributor.affiliations?.map((affiliation, index) =>
           affiliation.type === 'Organization' ? (
-            <OrganizationBox key={affiliation.id + index} unitUri={affiliation.id} />
+            <OrganizationBox
+              key={affiliation.id + index}
+              unitUri={affiliation.id}
+              removeAffiliation={() => removeAffiliation(index)}
+            />
           ) : (
             <UnconfirmedOrganizationBox
               key={`${affiliation.name}${index}`}
