@@ -10,7 +10,7 @@ interface ImportCandidatetContributorBoxProps {
 export const ImportCandidatetContributorBox = ({ importContributor }: ImportCandidatetContributorBoxProps) => {
   return (
     <>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography sx={{ mt: '0.5rem' }}>{importContributor.identity.name}</Typography>
         {importContributor.affiliations.map((affiliation, index) => {
           if (affiliation.sourceOrganization) {
@@ -23,11 +23,11 @@ export const ImportCandidatetContributorBox = ({ importContributor }: ImportCand
           }
 
           if (target.type === 'Organization') {
-            return <OrganizationBox key={index} unitUri={target.id} sx={{ width: '80%' }} />;
+            return <OrganizationBox key={index} unitUri={target.id} sx={{ width: '80%', mb: '1rem' }} />;
           }
 
           if (target.type === 'UnconfirmedOrganization') {
-            return <UnconfirmedOrganizationBox key={index} name={target.name} sx={{ width: '80%' }} />;
+            return <UnconfirmedOrganizationBox key={index} name={target.name} sx={{ width: '80%', mb: '1rem' }} />;
           }
 
           return null;
