@@ -6,7 +6,6 @@
   },
   "add_file": "Legg til fil",
   "add_project": "",
-  "approved": "",
   "authorization": {
     "about_terms": "Bruksvilkår og personvernerklæring for Nasjonalt vitenarkiv",
     "about_terms_description": "<p>For å bruke tenesta må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Bruksvilkår for Nasjonalt vitenarkiv</a>, og gjere deg kjent med <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», stadfestar du at du har lese og akseptert bruksvilkåra. Du samtykkjer òg til behandling av personopplysningar i samsvar med personvernerklæringa.</p>",
@@ -157,7 +156,6 @@
       "show_full_nin": "Vis personnummer"
     }
   },
-  "candidate": "",
   "cannot_copy_category_from_another_context_type": "<p>Du kan ikkje kopiere metadata frå kategorifana dersom resultatet tilhøyrer ein annan hovudkategori.</p><p>Denne informasjonen må registrerast manuelt etter at resten av metadata er kopiert.</p>",
   "common": {
     "actions": "Handlingar",
@@ -323,7 +321,6 @@
     "year": "År",
     "yes": "Ja"
   },
-  "controlling": "",
   "corresponding_contributor": "Korresponderande bidragsytar",
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> viss ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljar",
@@ -405,7 +402,6 @@
     "1168": "Historie og idéhistorie",
     "1170": "Kunst, design og arkitektur"
   },
-  "disputes": "",
   "does_not_match": "Matcher ikke",
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -718,7 +714,6 @@
   "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støttar ikkje at registrator kan laste opp filer for denne kategorien. Som kurator kan du leggje til ei fil på vegner av registrator.",
   "file_upload_disabled_due_to_institution_policy": "Din institusjon støttar ikkje at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønskjer å ha ei fil på dette resultatet.",
   "find_result_to_merge_description": "<p>Slå saman to resultat for å unngå to versjonar av same resultat med ulike metadata og filer.</p><p>Er det registrert ulike metadata vel du kva data som skal gjelde. Du vel òg om filer skal flyttast over til det publiserte resultatet.</p><heading>Søk etter forskingsresultat</heading><p>Vel resultatet du ønskjer å slå saman med. Du kan berre slå saman resultat der du er registrert som bidragsytar.</p>",
-  "finished": "",
   "footer": {
     "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
     "about_nva_text": "Nasjonalt vitenarkiv (NVA) samlar publikasjonar og andre forskingsresultat, og gjer dei opent tilgjengelege i ei felles nasjonal løysing. Dette gjer resultat frå norsk forsking tilgjengeleg i éi teneste.",
@@ -735,7 +730,6 @@
   "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Intitusjonen si brukarstøtte",
   "institutions_service_support": "Institusjonane si brukarstøtte",
-  "internal_nvi_status": "",
   "keep_all_contributors": "",
   "keep_contributors_from_published_result": "",
   "keep_contributors_from_source_result": "",
@@ -987,7 +981,6 @@
   "overview_over_administrators": "Oversyn over administratorar",
   "overwrite": "Overskriv",
   "owner_institution": "Eigarinstitusjon",
-  "percentage_controlled": "",
   "person_profiles": "Personprofilar",
   "point_of_contact": "Kontaktpunkt",
   "point_of_contact_description": "Har du spørsmål angåande forskingsresultatet?",
@@ -1102,8 +1095,6 @@
     "verify_project_manager": "Identifiser prosjektleiar"
   },
   "projects": "Prosjekt",
-  "publication_points_description": "",
-  "publication_points_description_more": "",
   "published_result": "Publisert resultat",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikkje lagre fordi resultatet er publisert og inneheld valideringsfeil",
@@ -1855,7 +1846,6 @@
     "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål.",
     "year_published": "Publiseringsår"
   },
-  "rejected": "",
   "reset": "Nullstill",
   "results": "Forskingsresultat",
   "science_categories_front_page": "<heading>Arbeid i ulike kategoriar</heading><p>Forsking og formidling omfattar mykje meir enn vitskaplege publikasjonar.</p><p>Alt vert registrert i ulike kategoriar, og du kan søkje og gjere oppslag i alle kategoriar nedanfor.</p>",
@@ -1929,7 +1919,6 @@
     "year_to": "Til år"
   },
   "search_in_national_research_publication": "Søk i over 2 millionar publikasjonar frå forskarar ved universitet, høgskular og forskingsinstitusjonar over heile landet.",
-  "sector": "",
   "select_curator": "Vel kurator",
   "select_funder": "Vel finansiør",
   "show_all_units": "",
@@ -2039,7 +2028,6 @@
   "use_rerender": "{{value}}",
   "velg_subject_area": "Vel fagfelt",
   "view_contact_info": "Sjå kontaktinformasjon",
-  "view_contact_information": "",
   "visibility_of_units": "",
   "vocabulary_missing": "Institusjonen har ikkje lagt til vokabular",
   "what_you_find_in_nva_description": "<heading>Kva finn du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samlar og gjer tilgjengeleg informasjon om norsk forsking.</p><p>Her kan du utforske publikasjonar, forskingsprosjekt og forskarar på tvers av universitet, høgskular og forskingsinstitusjonar.</p>",

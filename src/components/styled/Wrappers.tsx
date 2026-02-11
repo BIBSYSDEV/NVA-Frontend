@@ -156,16 +156,3 @@ export const VerticalBox = styled(Box)<BoxProps>({
   display: 'flex',
   flexDirection: 'column',
 });
-
-export const CenteredGridBox = styled(Box)<BoxProps>({
-  display: 'grid',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-export const StyledNviStatusBox = styled(Box)(({ theme }) => ({
-  padding: '0.5rem',
-  borderRadius: '0.25rem',
-  backgroundColor: theme.palette.background.paper,
-  marginBottom: '0.5rem',
-}));

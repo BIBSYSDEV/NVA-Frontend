@@ -24,8 +24,7 @@ export const NviStatusPage = () => {
     <NviStatusWrapper
       headline={t('tasks.nvi.institution_nvi_status')}
       exportAcronym={organizationQuery.data?.acronym}
-      yearSelector
-      visibilitySelector>
+      yearSelector>
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>

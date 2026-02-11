@@ -9,7 +9,6 @@ import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { NviPublicationPointsTableRow } from './NviPublicationPointsTableRow';
 import { NviStatusWrapper } from './NviStatusWrapper';
-import { TotalNviPointsCount } from './TotalNviPointsCount';
 
 export const NviPublicationPointsPage = () => {
   const { t } = useTranslation();
@@ -25,16 +24,15 @@ export const NviPublicationPointsPage = () => {
     <NviStatusWrapper
       headline={headline}
       exportAcronym={organizationQuery.data?.acronym}
-      topView={
-        aggregations ? (
-          <TotalNviPointsCount
-            orgName={getLanguageString(institution?.labels)}
-            result={aggregations.totals.candidateCount}
-            publicationPoints={aggregations.totals.points}
-          />
-        ) : undefined
-      }
-      visibilitySelector>
+      totalPoints={
+        aggregations
+          ? {
+              orgName: getLanguageString(institution?.labels),
+              result: aggregations.totals.candidateCount,
+              publicationPoints: aggregations.totals.points,
+            }
+          : undefined
+      }>
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
