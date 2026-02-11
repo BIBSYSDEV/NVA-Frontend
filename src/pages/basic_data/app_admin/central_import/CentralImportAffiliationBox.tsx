@@ -7,9 +7,9 @@ interface CentralImportAffiliationBoxProps {
 }
 export const CentralImportAffiliationBox = ({ affiliation }: CentralImportAffiliationBoxProps) => {
   return (
-    <Box sx={{ mb: '1rem' }}>
+    <Box>
       {!!affiliation.sourceOrganization && (
-        <StyledOrganizationBox sx={{ width: '80%', mt: '1rem' }}>
+        <StyledOrganizationBox sx={{ width: '80%' }}>
           <Box
             sx={{
               display: 'flex',
