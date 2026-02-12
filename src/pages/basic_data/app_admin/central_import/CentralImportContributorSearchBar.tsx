@@ -117,16 +117,18 @@ export const CentralImportContributorSearchBar = ({
                       onClick={() => onSelectPerson(user)}>
                       {t('select_person_identity_only')}
                     </Button>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
-                      data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
-                        contributor.identity.name
-                      )}
-                      onClick={() => onSelectPersonAndAffiliation(user)}>
-                      {t('select_person_and_affiliation')}
-                    </Button>
+                    {user.affiliations.length > 0 && (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
+                        data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
+                          contributor.identity.name
+                        )}
+                        onClick={() => onSelectPersonAndAffiliation(user)}>
+                        {t('select_person_and_affiliation')}
+                      </Button>
+                    )}
                   </Box>
                 </Box>
               ))}
