@@ -103,7 +103,7 @@ export const CentralImportContributorSearchBar = ({
                   }}>
                   <ContributorName
                     name={getFullCristinName(user.names)}
-                    hasVerifiedAffiliation={user.verified ? user.verified : false}
+                    hasVerifiedAffiliation={user.verified && user.affiliations.length > 0 ? user.verified : false}
                     id={user.id}
                   />
                   {user.affiliations.map((affiliation) => (
