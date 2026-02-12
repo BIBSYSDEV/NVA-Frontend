@@ -323,6 +323,8 @@
     "year": "Year",
     "yes": "Yes"
   },
+  "contributor_search_hits_one": "",
+  "contributor_search_hits_other": "",
   "controlling": "",
   "corresponding_contributor": "Corresponding collaborator",
   "default_point_of_contact": "<p><link1>Contact Sikt</link1> if no other contact has been listed for this result.</p>",
@@ -1932,7 +1934,11 @@
   "sector": "",
   "select_curator": "Select curator",
   "select_funder": "Select funder",
+  "select_person_and_affiliation": "",
+  "select_person_identity_only": "",
   "show_all_units": "",
+  "show_only_norwegian_contributors": "",
+  "show_only_unconfirmed_affiliations": "",
   "show_only_units_with_candidates": "",
   "start_merging": "Start merging",
   "tasks": {
@@ -2036,6 +2042,7 @@
     "unpublish_registration_reason": "Enter a brief explanation for why this research result should no longer be published. The explanation will be displayed on the research result when looking up the reference to the research result."
   },
   "unpublished_result": "Unpublished result",
+  "update_name": "",
   "use_rerender": "{{value}}",
   "velg_subject_area": "Select subject area",
   "view_contact_info": "View contact information",
