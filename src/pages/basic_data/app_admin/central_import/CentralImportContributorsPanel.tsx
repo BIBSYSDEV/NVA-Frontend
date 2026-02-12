@@ -19,6 +19,7 @@ export const CentralImportContributorsPanel = ({
   const { values } = useFormikContext<Registration>();
   const [showOnlyNorwegianContributors, setShowOnlyNorwegianContributors] = useState(false);
   const importContributors = importCandidateContributors ?? [];
+  const [showOnlyUnconfirmedAffiliations, setShowOnlyUnconfirmedAffiliations] = useState(false);
   const formContributors = values.entityDescription?.contributors ?? [];
 
   const hasUnconfirmedAffiliation = (contributor?: Contributor): boolean =>
@@ -34,8 +35,6 @@ export const CentralImportContributorsPanel = ({
     : importContributors;
 
   const paired = pairContributors(visibleImportContributors, formContributors);
-
-  const [showOnlyUnconfirmedAffiliations, setShowOnlyUnconfirmedAffiliations] = useState(false);
 
   const filteredPaired = showOnlyUnconfirmedAffiliations
     ? filterContributorsWithUnconfirmedAffiliations(paired)

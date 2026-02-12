@@ -116,7 +116,6 @@ export const CentralImportCandidateForm = () => {
                     )}
                     {tabNumber === RegistrationTab.Contributors && (
                       <ErrorBoundary>
-                        {/* <ContributorsPanel /> */}
                         <CentralImportContributorsPanel importCandidateContributors={importCandidateContributors} />
                       </ErrorBoundary>
                     )}
