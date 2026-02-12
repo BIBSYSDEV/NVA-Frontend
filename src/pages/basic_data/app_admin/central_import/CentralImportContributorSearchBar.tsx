@@ -37,12 +37,8 @@ export const CentralImportContributorSearchBar = ({
     results: rowsPerPage,
     page,
   });
-  const userSearch = personQuery.data?.hits ?? [];
 
-  const handleSearch = () => {
-    setSubmittedSearchTerm(searchTerm);
-    personQuery.refetch();
-  };
+  const userSearch = personQuery.data?.hits ?? [];
 
   return (
     <>
@@ -66,7 +62,7 @@ export const CentralImportContributorSearchBar = ({
           color="tertiary"
           sx={{ padding: '0.1rem 0.75rem', width: 'fit-content' }}
           data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(contributor.identity.name)}
-          onClick={handleSearch}
+          onClick={() => setSubmittedSearchTerm(searchTerm)}
           startIcon={<SearchIcon />}>
           {t('basic_data.add_employee.search_for_person')}
         </Button>
@@ -87,54 +83,54 @@ export const CentralImportContributorSearchBar = ({
         }}>
         {personQuery.isFetching ? (
           <ListSkeleton arrayLength={3} minWidth={100} height={80} />
-        ) : userSearch && userSearch.length > 0 ? (
-          <>
-            {userSearch.map((user, index) => (
-              <Box
-                key={index}
-                sx={{
-                  border: '1px solid',
-                  borderRadius: '4px',
-                  boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
-                  backgroundColor: 'white',
-                  height: 'fit-content',
-                  p: '0.5rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.5rem',
-                }}>
-                <ContributorName
-                  name={getFullCristinName(user.names)}
-                  hasVerifiedAffiliation={user.verified ? user.verified : false}
-                  id={user.id}
-                />
-                {user.affiliations.map((affiliation) => (
-                  <OrganizationBox key={affiliation.organization} unitUri={affiliation.organization} />
-                ))}
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
-                    onClick={() => onSelectPerson(user)}>
-                    {t('select_person_identity_only')}
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
-                    data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
-                      contributor.identity.name
-                    )}
-                    onClick={() => onSelectPersonAndAffiliation(user)}>
-                    {t('select_person_and_affiliation')}
-                  </Button>
-                </Box>
-              </Box>
-            ))}
-          </>
         ) : (
-          submittedSearchTerm && <Typography>{t('common.no_hits')}</Typography>
+          userSearch && (
+            <>
+              {userSearch.map((user, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    border: '1px solid',
+                    borderRadius: '4px',
+                    boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
+                    backgroundColor: 'white',
+                    height: 'fit-content',
+                    p: '0.5rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.5rem',
+                  }}>
+                  <ContributorName
+                    name={getFullCristinName(user.names)}
+                    hasVerifiedAffiliation={user.verified ? user.verified : false}
+                    id={user.id}
+                  />
+                  {user.affiliations.map((affiliation) => (
+                    <OrganizationBox key={affiliation.organization} unitUri={affiliation.organization} />
+                  ))}
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
+                      onClick={() => onSelectPerson(user)}>
+                      {t('select_person_identity_only')}
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
+                      data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
+                        contributor.identity.name
+                      )}
+                      onClick={() => onSelectPersonAndAffiliation(user)}>
+                      {t('select_person_and_affiliation')}
+                    </Button>
+                  </Box>
+                </Box>
+              ))}
+            </>
+          )
         )}
       </ListPagination>
     </>
