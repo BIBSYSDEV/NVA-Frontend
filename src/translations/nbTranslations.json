@@ -133,7 +133,7 @@
       "publication_points_status": "Status for publiseringspoeng",
       "reporting_periods": "Rapporteringsperioder",
       "reporting_status": "Rapporteringsstatus",
-      "reporting_status_description": "<p>Tabellen viser antall kandidater hos gjeldende institusjon og behandlingsstatus på disse.</p><p>Forfatteradresseringen styrer den eller de enhetene de telles for. Samarbeidende institusjoners kontroll, tas ikke hensyn til her.</p>",
+      "reporting_status_description": "<p>Tabellen viser antall kandidater hos gjeldende institusjon og behandlingsstatus på disse.</p><p>Samarbeidende institusjoners kontroll, tas ikke hensyn til her så kandidater som har endt i en tvist er ikke inkludert i denne oversikten.</p>",
       "show_publication_points_status": "Vis status for publiseringspoeng",
       "show_reporting_status": "Vis rapporteringsstatus",
       "update_reporting_period": "Oppdater rapporteringsperiode"
