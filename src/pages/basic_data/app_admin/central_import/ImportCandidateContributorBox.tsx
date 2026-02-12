@@ -4,10 +4,10 @@ import { ImportContributor } from '../../../../types/importCandidate.types';
 import { OrganizationBox } from '../../../../components/institution/OrganizationBox';
 import { UnconfirmedOrganizationBox } from '../../../../components/institution/UnconfirmedOrganizationBox';
 
-interface ImportCandidatetContributorBoxProps {
+interface ImportCandidateContributorBoxProps {
   importContributor: ImportContributor;
 }
-export const ImportCandidatetContributorBox = ({ importContributor }: ImportCandidatetContributorBoxProps) => {
+export const ImportCandidateContributorBox = ({ importContributor }: ImportCandidateContributorBoxProps) => {
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

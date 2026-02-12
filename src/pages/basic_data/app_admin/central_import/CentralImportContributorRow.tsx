@@ -9,7 +9,7 @@ import {
   replaceExistingContributorAndAffiliations,
 } from '../../../../utils/central-import-helpers';
 import { CentralImportContributorAccordion } from './CentralImportContributorAccordion';
-import { ImportCandidatetContributorBox } from './ImportCandidateContributorBox';
+import { ImportCandidateContributorBox } from './ImportCandidateContributorBox';
 
 interface CentralImportContributorRowProps {
   contributor: Contributor | undefined;
@@ -35,7 +35,7 @@ export const CentralImportContributorRow = ({ contributor, importContributor }: 
         </Box>
       </TableCell>
       <TableCell sx={{ verticalAlign: 'top' }}>
-        <ImportCandidatetContributorBox importContributor={importContributor} />
+        <ImportCandidateContributorBox importContributor={importContributor} />
       </TableCell>
       <TableCell sx={{ verticalAlign: 'top' }}>
         {contributor && (
