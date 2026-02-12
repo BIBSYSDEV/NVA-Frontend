@@ -66,7 +66,8 @@ export const CentralImportContributorSearchBar = ({
           startIcon={<SearchIcon />}>
           {t('basic_data.add_employee.search_for_person')}
         </Button>
-        <Button variant="contained" color="tertiary" sx={{ padding: '0.1rem 0.75rem', width: 'fit-content' }}>
+        {/* TODO: Implement functionality for updating name only */}
+        <Button disabled variant="contained" color="tertiary" sx={{ padding: '0.1rem 0.75rem', width: 'fit-content' }}>
           {t('update_name')}
         </Button>
       </Box>

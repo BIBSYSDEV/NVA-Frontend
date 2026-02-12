@@ -71,8 +71,8 @@ export const CentralImportContributorAccordion = ({
             fontWeight: 'normal',
           }}
           expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header">
+          aria-controls={`contributor-${contributor.sequence}-content`}
+          id={`contributor-${contributor.sequence}-header`}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '0.5rem' }}>
             {!isVerified && <SimpleWarning text={t('registration.contributors.contributor_is_unidentified')} />}
             {contributor && (
