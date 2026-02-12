@@ -24,7 +24,10 @@ export const StyledBaseContributorIndicator = ({ sx, ...props }: BoxProps) => {
 };
 
 export const StyledVerifiedContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
-  background: theme.palette.background.neutral87,
+  border: '1px solid',
+  borderColor: theme.palette.secondary.main,
+  backgroundColor: theme.palette.secondary.main,
+  color: theme.palette.primary.contrastText,
 }));
 
 const StyledVerifiedContributorWithoutAffiliation = styled(StyledBaseContributorIndicator)(({ theme }) => ({
