@@ -79,19 +79,19 @@ export const pairContributors = (
   });
 };
 
-export const identityFromCristinPerson = (oldIdentity: Identity, selected: CristinPerson): Identity => {
+export const createIdentityFromCristinPerson = (oldIdentity: Identity, person: CristinPerson): Identity => {
   return {
     type: 'Identity',
-    id: selected.id,
-    name: getFullCristinName(selected.names),
-    orcId: getOrcidUri(selected.identifiers),
-    verificationStatus: getVerificationStatus(selected.verified),
+    id: person.id,
+    name: getFullCristinName(person.names),
+    orcId: getOrcidUri(person.identifiers),
+    verificationStatus: getVerificationStatus(person.verified),
     additionalIdentifiers: oldIdentity.additionalIdentifiers,
   };
 };
 
-export const affiliationsFromCristinPerson = (selected: CristinPerson): Affiliation[] =>
-  (selected.affiliations ?? []).map(
+export const getAffiliationsFromCristinPerson = (person: CristinPerson): Affiliation[] =>
+  (person.affiliations ?? []).map(
     ({ organization }): Affiliation => ({
       type: 'Organization',
       id: organization,
@@ -118,9 +118,12 @@ const mergeAffiliations = (
   return merged;
 };
 
-export const contributorFromCristinPerson = (oldContributor: Contributor, selected: CristinPerson): Contributor => {
-  const updatedIdentity = identityFromCristinPerson(oldContributor.identity, selected);
-  const updatedAffiliations = affiliationsFromCristinPerson(selected);
+export const createContributorFromCristinPerson = (
+  oldContributor: Contributor,
+  selected: CristinPerson
+): Contributor => {
+  const updatedIdentity = createIdentityFromCristinPerson(oldContributor.identity, selected);
+  const updatedAffiliations = getAffiliationsFromCristinPerson(selected);
 
   return {
     ...oldContributor,
@@ -142,8 +145,8 @@ export const replaceExistingContributorAndAffiliations = (
 
   const oldContributor = currentContributors[contributorIndex];
 
-  const updatedIdentity = identityFromCristinPerson(oldContributor.identity, selected);
-  const newAffiliationsFromPerson = affiliationsFromCristinPerson(selected);
+  const updatedIdentity = createIdentityFromCristinPerson(oldContributor.identity, selected);
+  const newAffiliationsFromPerson = getAffiliationsFromCristinPerson(selected);
   const mergedAffiliations = mergeAffiliations(oldContributor.affiliations, newAffiliationsFromPerson);
 
   const updatedContributor: Contributor = {
@@ -152,10 +155,10 @@ export const replaceExistingContributorAndAffiliations = (
     affiliations: mergedAffiliations,
   };
 
-  const nextContributors = [...currentContributors];
-  nextContributors[contributorIndex] = updatedContributor;
+  const updatedContributors = [...currentContributors];
+  updatedContributors[contributorIndex] = updatedContributor;
 
-  setFieldValue('entityDescription.contributors', nextContributors);
+  setFieldValue('entityDescription.contributors', updatedContributors);
 };
 
 export const replaceExistingContributor = (
@@ -171,7 +174,7 @@ export const replaceExistingContributor = (
 
   const oldContributor = currentContributors[contributorIndex];
 
-  const updatedIdentity = identityFromCristinPerson(oldContributor.identity, selected);
+  const updatedIdentity = createIdentityFromCristinPerson(oldContributor.identity, selected);
 
   const updatedContributor: Contributor = {
     ...oldContributor,
@@ -179,8 +182,8 @@ export const replaceExistingContributor = (
     affiliations: oldContributor.affiliations,
   };
 
-  const nextContributors = [...currentContributors];
-  nextContributors[contributorIndex] = updatedContributor;
+  const updatedContributors = [...currentContributors];
+  updatedContributors[contributorIndex] = updatedContributor;
 
-  setFieldValue('entityDescription.contributors', nextContributors);
+  setFieldValue('entityDescription.contributors', updatedContributors);
 };
