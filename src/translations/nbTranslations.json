@@ -2054,6 +2054,6 @@
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
   "publication_points": "Publiseringspoeng",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
-  "that_is_x_%_of_the_number_of_published_reports_in_y": "Det er <b>{{percentage}}%</b> av antallet resultat rapportert i {{year}}.",
-  "that_is_x_%_of_the_number_of_publication_points_in_y": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}."
+  "percent_of_published_reports_in_year": "Det er <b>{{percentage}}%</b> av antallet resultat rapportert i {{year}}.",
+  "percent_of_publication_points_in_year": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}."
 }

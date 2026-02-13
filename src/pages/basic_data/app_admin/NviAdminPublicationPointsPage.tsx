@@ -126,14 +126,14 @@ export const NviAdminPublicationPointsPage = () => {
             </Typography>
             <Typography>
               <Trans
-                i18nKey="that_is_x_%_of_the_number_of_published_reports_in_y"
+                i18nKey="percent_of_published_reports_in_year"
                 values={{ percentage: 50.1, year: 2022 }}
                 components={{ b: <strong /> }}
               />
             </Typography>
             <Typography>
               <Trans
-                i18nKey="that_is_x_%_of_the_number_of_publication_points_in_y"
+                i18nKey="percent_of_publication_points_in_year"
                 values={{ percentage: 50.1, year: 2022 }}
                 components={{ b: <strong /> }}
               />
