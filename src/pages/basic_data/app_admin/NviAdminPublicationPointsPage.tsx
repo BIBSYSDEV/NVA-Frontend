@@ -84,7 +84,7 @@ export const NviAdminPublicationPointsPage = () => {
       publicationPoints: 98.49,
     },
   ]
-    .filter((obj) => selectedSector === null || obj.sector === selectedSector)
+    .filter((obj) => selectedSector === null || obj.sector === (selectedSector as Sector))
     .filter((obj) => {
       if (institutionSearch === null) {
         return true;
