@@ -19,6 +19,7 @@ import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon
 import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
 import { Sector } from '../../../types/customerInstitution.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { formatNumber } from '../../../utils/general-helpers';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminPublicationPointsPage = () => {
@@ -119,7 +120,7 @@ export const NviAdminPublicationPointsPage = () => {
             <Typography>
               <Trans
                 i18nKey="x_results_are_ready_for_reporting_and_they_give_y_publication_points"
-                values={{ num_results: 14632, total_publicationpoints: 20566 }}
+                values={{ num_results: formatNumber(14632), total_publicationpoints: formatNumber(20566) }}
                 components={{ b: <strong /> }}
               />
             </Typography>
