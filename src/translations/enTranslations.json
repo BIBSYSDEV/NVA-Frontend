@@ -6,6 +6,7 @@
   },
   "add_file": "Add file",
   "add_project": "",
+  "approved": "",
   "authorization": {
     "about_terms": "Terms of Use and Privacy Policy for the Norwegian Research Information Repository",
     "about_terms_description": "<p>To use the service, you must accept Sikt's <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Terms of Use for the Norwegian Research Information Repository</a>, and familiarize yourself with the <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva\">Privacy Policy for the Norwegian Research Information Repository.</a></p><p>By clicking on «$t(authorization.accept)», you confirm that you have read and accepted the terms of use. You also consent to the processing of personal data in accordance with the privacy policy.</p>",
@@ -156,6 +157,7 @@
       "show_full_nin": "Show national identity number"
     }
   },
+  "candidate": "",
   "cannot_copy_category_from_another_context_type": "<p>You cannot copy metadata from the category tab is the result belongs to a different main category.</p><p>This information must be registered manually after the rest of the metadata has been copied.</p>",
   "common": {
     "actions": "Actions",
@@ -321,6 +323,9 @@
     "year": "Year",
     "yes": "Yes"
   },
+  "contributor_search_hits_one": "",
+  "contributor_search_hits_other": "",
+  "controlling": "",
   "corresponding_contributor": "Corresponding collaborator",
   "default_point_of_contact": "<p><link1>Contact Sikt</link1> if no other contact has been listed for this result.</p>",
   "details": "Details",
@@ -402,6 +407,7 @@
     "1168": "History and History of ideas",
     "1170": "Art, Design and Architecture"
   },
+  "disputes": "",
   "does_not_match": "No match",
   "editor": {
     "categories_with_files": "Categories with File Upload",
@@ -714,6 +720,7 @@
   "file_upload_disabled_curator_can_upload_on_behalf": "Your institution does not allow the registrar to upload files for this category. As curator, you may add a file on behalf of the registrar.",
   "file_upload_disabled_due_to_institution_policy": "Your institution does not allow the registrar to upload files for this category. Contact curator support if you wish to have a file on this result.",
   "find_result_to_merge_description": "<p>Merge two results to avoid having two versions of the same result with different metadata and files.</p><p>If different metadata is registered, you can choose which data will apply. You also decide whether files should be transferred to the published result.</p><heading>Search for research result</heading><p>Select the result you want to merge with. You can only merge results where you are registered as a contributor.</p>",
+  "finished": "",
   "footer": {
     "about_nva": "About The Norwegian Research Information Repository (NVA)",
     "about_nva_text": "The Norwegian Research Information Repository (NVA) collects publications and other research results, and makes them openly available in a common national solution. This makes results from Norwegian research available in a single service.",
@@ -730,6 +737,7 @@
   "go_to_advanced_search": "Go to advanced result search",
   "institution_support": "Institution's user support",
   "institutions_service_support": "Institutions' user support",
+  "internal_nvi_status": "",
   "keep_all_contributors": "",
   "keep_contributors_from_published_result": "",
   "keep_contributors_from_source_result": "",
@@ -981,6 +989,7 @@
   "overview_over_administrators": "Overview of administrators",
   "overwrite": "Overwrite",
   "owner_institution": "Owner institution",
+  "percentage_controlled": "",
   "person_profiles": "Person profiles",
   "point_of_contact": "Contact point",
   "point_of_contact_description": "Du you have questions about the research result?",
@@ -1095,6 +1104,8 @@
     "verify_project_manager": "Identify project manager"
   },
   "projects": "Projects",
+  "publication_points_description": "",
+  "publication_points_description_more": "",
   "published_result": "Published result",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Cannot save because the result is published and contains validation errors",
@@ -1846,6 +1857,7 @@
     "use_curator_help_button": "Use the \"{{buttonText}}\" button below if you have questions.",
     "year_published": "Publication year"
   },
+  "rejected": "",
   "reset": "Reset",
   "results": "Research results",
   "science_categories_front_page": "<heading>Work in various categories</heading><p>Research and dissemination encompass much more than scientific publications.</p><p>Everything is registered in different categories, and you can search and look up all the categories below.</p>",
@@ -1919,9 +1931,14 @@
     "year_to": "To year"
   },
   "search_in_national_research_publication": "Search over 2 million publications from researchers at universities, university colleges, and research institutions across the country.",
+  "sector": "",
   "select_curator": "Select curator",
   "select_funder": "Select funder",
+  "select_person_and_affiliation": "",
+  "select_person_identity_only": "",
   "show_all_units": "",
+  "show_only_norwegian_contributors": "",
+  "show_only_unconfirmed_affiliations": "",
   "show_only_units_with_candidates": "",
   "start_merging": "Start merging",
   "tasks": {
@@ -2025,9 +2042,11 @@
     "unpublish_registration_reason": "Enter a brief explanation for why this research result should no longer be published. The explanation will be displayed on the research result when looking up the reference to the research result."
   },
   "unpublished_result": "Unpublished result",
+  "update_name": "",
   "use_rerender": "{{value}}",
   "velg_subject_area": "Select subject area",
   "view_contact_info": "View contact information",
+  "view_contact_information": "",
   "visibility_of_units": "",
   "vocabulary_missing": "The institution has not added vocabulary",
   "what_you_find_in_nva_description": "<heading>What can you find in NVA?</heading><p>The Norwegian Research Information Repository (NVA) collects and makes information about Norwegian research accessible.</p><p>Here, you can explore publications, research projects, and researchers across universities, university colleges, and research institutions.</p>",

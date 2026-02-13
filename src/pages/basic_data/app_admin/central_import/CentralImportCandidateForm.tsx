@@ -17,15 +17,15 @@ import { ExpandedImportCandidate } from '../../../../types/importCandidate.types
 import { RegistrationTab } from '../../../../types/registration.types';
 import { expandImportCandidate } from '../../../../utils/central-import-helpers';
 import { getTouchedTabFields } from '../../../../utils/formik-helpers/formik-helpers';
-import { getTitleString } from '../../../../utils/registration-helpers';
+import { getFormattedRegistration, getTitleString } from '../../../../utils/registration-helpers';
 import { getImportCandidatePath, IdentifierParams } from '../../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../../utils/validation/registration/registrationValidation';
-import { ContributorsPanel } from '../../../registration/ContributorsPanel';
 import { DescriptionPanel } from '../../../registration/DescriptionPanel';
 import { FilesAndLicensePanel } from '../../../registration/FilesAndLicensePanel';
 import { RegistrationFormStepper } from '../../../registration/RegistrationFormStepper';
 import { ResourceTypePanel } from '../../../registration/ResourceTypePanel';
 import { CentralImportCandidateFormActions } from './CentralImportCandidateFormActions';
+import { CentralImportContributorsPanel } from './CentralImportContributorsPanel';
 
 export const CentralImportCandidateForm = () => {
   const dispatch = useDispatch();
@@ -40,12 +40,14 @@ export const CentralImportCandidateForm = () => {
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
   const importCandidate = importCandidateQuery.data && expandImportCandidate(importCandidateQuery.data);
+  const importCandidateContributors = importCandidateQuery.data?.entityDescription.contributors;
 
   const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
   const importCandidateMutation = useMutation({
-    mutationFn: async (values: ExpandedImportCandidate) => await createRegistrationFromImportCandidate(values),
+    mutationFn: async (values: ExpandedImportCandidate) =>
+      await createRegistrationFromImportCandidate(getFormattedRegistration(values)),
     onSuccess: () => {
       dispatch(
         setNotification({
@@ -114,7 +116,7 @@ export const CentralImportCandidateForm = () => {
                     )}
                     {tabNumber === RegistrationTab.Contributors && (
                       <ErrorBoundary>
-                        <ContributorsPanel />
+                        <CentralImportContributorsPanel importCandidateContributors={importCandidateContributors} />
                       </ErrorBoundary>
                     )}
                     {tabNumber === RegistrationTab.FilesAndLicenses && (
