@@ -2,7 +2,9 @@ import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import { PublicationType } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
+import { isOnPage } from '../../general-helpers';
 import { getMainRegistrationType, isBook, isChapter, nviApplicableTypes } from '../../registration-helpers';
+import { UrlPathTemplate } from '../../urlPaths';
 import { YupShape } from '../validationHelpers';
 import {
   associatedArtifactPublishValidationSchema,
@@ -48,6 +50,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
     npiSubjectHeading: Yup.string()
       .nullable()
       .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+        !isOnPage(UrlPathTemplate.BasicDataCentralImport) &&
         nviApplicableTypes.includes(publicationInstanceType) &&
         (isBook(publicationInstanceType) || isChapter(publicationInstanceType))
           ? schema.required(registrationErrorMessage.npiSubjectRequired)
