@@ -81,4 +81,6 @@ export const getEnvVariableValue = <T = string>(value: any): T | undefined => {
 
 export const setDelay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const formatNumber = (n: number) => new Intl.NumberFormat('nb-NO').format(n);
+const nbNoNumberFormat = new Intl.NumberFormat('nb-NO');
+
+export const formatNumber = (n: number) => nbNoNumberFormat.format(n);
