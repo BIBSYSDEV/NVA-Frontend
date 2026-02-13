@@ -13,12 +13,13 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
-import { HorizontalBox } from '../../../components/styled/Wrappers';
+import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
 import { Sector } from '../../../types/customerInstitution.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { formatNumber } from '../../../utils/general-helpers';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminPublicationPointsPage = () => {
@@ -115,6 +116,29 @@ export const NviAdminPublicationPointsPage = () => {
               {t('publication_points_description_more')}
             </Typography>
           }
+          <VerticalBox sx={{ gap: '0.5rem', mt: '1rem' }}>
+            <Typography>
+              <Trans
+                i18nKey="x_results_are_ready_for_reporting_and_they_give_y_publication_points"
+                values={{ num_results: formatNumber(14632), total_publicationpoints: formatNumber(20566) }}
+                components={{ b: <strong /> }}
+              />
+            </Typography>
+            <Typography>
+              <Trans
+                i18nKey="percent_of_published_reports_in_year"
+                values={{ percentage: formatNumber(50.1), year: 2022 }}
+                components={{ b: <strong /> }}
+              />
+            </Typography>
+            <Typography>
+              <Trans
+                i18nKey="percent_of_publication_points_in_year"
+                values={{ percentage: formatNumber(50.1), year: 2022 }}
+                components={{ b: <strong /> }}
+              />
+            </Typography>
+          </VerticalBox>
         </Box>
       }
       yearSelector
