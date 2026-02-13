@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { Sector } from '../../../types/customerInstitution.types';
@@ -24,6 +25,9 @@ export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
   const [textExpanded, setTextExpanded] = useState(false);
   const detailsId = 'publication-points-details';
+  const [searchParams] = useSearchParams();
+  const selectedSector = searchParams.get('sector');
+  const institutionSearch = searchParams.get('institution');
 
   const mockData: Array<{
     id: string;
@@ -79,7 +83,16 @@ export const NviAdminPublicationPointsPage = () => {
       rejected: 1,
       publicationPoints: 98.49,
     },
-  ];
+  ]
+    .filter((obj) => selectedSector === null || obj.sector === (selectedSector as Sector))
+    .filter((obj) => {
+      if (institutionSearch === null) {
+        return true;
+      }
+      const trimmedSearch = institutionSearch.trim().toLowerCase();
+      const trimmedInstitution = obj.institution.trim().toLowerCase();
+      return trimmedInstitution.includes(trimmedSearch);
+    });
 
   return (
     <NviStatusWrapper
@@ -103,7 +116,10 @@ export const NviAdminPublicationPointsPage = () => {
             </Typography>
           }
         </Box>
-      }>
+      }
+      yearSelector
+      sectorSelector
+      institutionSearch>
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
