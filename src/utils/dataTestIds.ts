@@ -246,6 +246,7 @@ export const dataTestId = {
       removeFilterButton: 'remove-filter-button',
       scientificIndexStatusCheckbox: 'scientific-index-status-checkbox',
       scientificValueLevels: {
+        unassignedCheckbox: 'unassigned-checkbox',
         levelOneCheckbox: 'level-one-checkbox',
         levelTwoCheckbox: 'level-two-checkbox',
         levelZeroCheckbox: 'level-zero-checkbox',

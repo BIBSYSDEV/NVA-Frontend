@@ -12,6 +12,7 @@ import { sanitizeSearchParams } from '../../../utils/searchHelpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
+import { ScientificValueFilter } from '../../search/advanced_search/ScientificValueFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
 import { ExportResultsButton } from '../../search/ExportResultsButton';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
@@ -67,6 +68,8 @@ export const NviCorrectionList = () => {
                   disabled={listConfig.disabledFilters.includes(ResultParam.CategoryShould)}
                 />
               </Box>
+
+              <ScientificValueFilter />
 
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
                 <PublisherFilter />
