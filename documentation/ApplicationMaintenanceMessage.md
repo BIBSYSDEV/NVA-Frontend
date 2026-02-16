@@ -1,40 +1,47 @@
 # Maintenance Message
 
-There are two ways to globally display information to users of the application:
+There are two ways to display global information to users of the application:
 
-- Simple yellow information banner at the top
-- Closing down any routes and only displaying an information message on the page
-  - The header of the application with logo will still be visible
+- Show a simple yellow information banner at the top of the page
+- Close down all routes and display only an information message
 
 ### Information Banner
 
+To show a banner only:
+
 1. Go to AWS Amplify
-2. Select the NVA-Frontend App
-3. Hosting -> Environment variables -> Manage variables
-4. Set the following variables: 5. `VITE_MAINTENANCE_MESSAGE_NB` for Norwegian text 6. `VITE_MAINTENANCE_MESSAGE_EN` for English text
+2. Select the NVA-Frontend app
+3. Navigate to Hosting -> Environment variables -> Manage variables
+4. Set the following variables: 5. `VITE_MAINTENANCE_MESSAGE_NB` - Norwegian message 6. `VITE_MAINTENANCE_MESSAGE_EN` - English message
 5. Save the environment variable changes
-6. Go to Overview -> `main` branch -> ´Redeploy this version´
+6. Navigate to Overview -> `main` branch -> ´Redeploy this version´
 
 ### Closing down the application
 
+To block access and show only an information page:
+
 1. Go to AWS Amplify
-2. Select the NVA-Frontend App
-3. Hosting -> Environment variables -> Manage variables
-4. Set the following variables: 5. `VITE_MAINTENANCE_MESSAGE_NB` for Norwegian text 6. `VITE_MAINTENANCE_MESSAGE_EN` for English text 7. `VITE_MAINTENANCE_SEVERITY` to `block`
+2. Select the NVA-Frontend app
+3. Navigate to Hosting -> Environment variables -> Manage variables
+4. Set the following variables: 5. `VITE_MAINTENANCE_MESSAGE_NB` - Norwegian message 6. `VITE_MAINTENANCE_MESSAGE_EN` - English message 7. `VITE_MAINTENANCE_SEVERITY` - set to `block`
 5. Save the environment variable changes
-6. Go to Overview -> `main` branch -> ´Redeploy this version´
+6. Navigate to Overview -> `main` branch -> ´Redeploy this version´
 
 ### Scheduling messages
 
-Both of the above-mentioned can be scheduled adding the environment variables:
+You can schedule both the banner and the full block by adding the following environment variables:
 
-1. `VITE_MAINTENANCE_START` to i.e. `2025-01-01T12:00:00.000Z`
-2. `VITE_MAINTENANCE_END` to i.e. `2025-01-02T12:00:00.000Z`
+1. `VITE_MAINTENANCE_START` - e.g. `2025-01-01T12:00:00.000Z`
+2. `VITE_MAINTENANCE_END` - e. g. `2025-01-02T12:00:00.000Z`
 
-### Weakness
+### Limitation
 
-There is no way of scheduling a `severity=none` to `severity=block` independent of message. This
-means that there is no way to automatically go from a banner message "At noon, February
-something, the application will be taken down for maintenance" to closing down the application with
-message "The application is under maintenance". To achieve this, a manual update of environment
-variable and new deploy has to be made. In effect making the scheduling pointless for this case.
+t is not possible to schedule a change from severity=none to severity=block independent of the message text.
+
+In practice, this means you cannot automatically:
+
+- Show a banner such as: `“At noon on February X, the application will be taken down for maintenance.”`
+- And then, at that time, switch to a full block with a message such as: `“The application is under maintenance.”`
+
+To achieve this, you must manually update the environment variables and redeploy at the time of the
+change. This limits the usefulness of scheduling for this scenario.
