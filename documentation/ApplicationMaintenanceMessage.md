@@ -41,7 +41,7 @@ You can schedule both the banner and the full block by adding the following envi
 
 ### Limitation
 
-t is not possible to schedule a change from severity=none to severity=block independent of the message text.
+It is not possible to schedule a change from severity=none to severity=block independent of the message text.
 
 In practice, this means you cannot automatically:
 
