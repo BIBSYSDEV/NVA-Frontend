@@ -1964,7 +1964,8 @@
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler",
-        "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsyter med identifisert institusjon"
+        "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsyter med identifisert institusjon",
+        "scientific_chapter_not_in_anthology": "Vitenskapelig kapittel ikke i antologi"
       },
       "delete_note": "Slett kommentar",
       "delete_note_description": "Er du sikker på at du vil slette denne kommentaren?",
@@ -2055,5 +2056,9 @@
   "publication_points": "Publiseringspoeng",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
   "percent_of_published_reports_in_year": "Det er <b>{{percentage}}%</b> av antallet resultat rapportert i {{year}}.",
-  "percent_of_publication_points_in_year": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}."
+  "percent_of_publication_points_in_year": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}.",
+  "channel_level": "Kanalnivå",
+  "level_0": "Nivå 0",
+  "level_1": "Nivå 1",
+  "level_2": "Nivå 2"
 }

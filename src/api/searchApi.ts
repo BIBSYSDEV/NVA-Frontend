@@ -375,6 +375,7 @@ export enum ResultParam {
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
   ExcludeSubunits = 'excludeSubunits',
+  ExcludeParentType = 'excludeParentType',
   Files = 'files',
   From = 'from',
   FundingIdentifier = 'fundingIdentifier',
@@ -431,6 +432,7 @@ export interface FetchResultsParams {
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
   [ResultParam.ExcludeSubunits]?: boolean | null;
+  [ResultParam.ExcludeParentType]?: PublicationInstanceType[] | null;
   [ResultParam.Files]?: string | null;
   [ResultParam.From]?: number | null;
   [ResultParam.FundingIdentifier]?: string | null;

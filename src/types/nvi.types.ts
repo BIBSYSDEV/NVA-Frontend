@@ -167,7 +167,8 @@ export type CorrectionListId =
   | 'AnthologyWithoutChapter'
   | 'AnthologyWithApplicableChapter'
   | 'BooksWithLessThan50Pages'
-  | 'UnidentifiedContributorWithIdentifiedAffiliation';
+  | 'UnidentifiedContributorWithIdentifiedAffiliation'
+  | 'ScientificChapterNotInAnthology';
 
 export type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {

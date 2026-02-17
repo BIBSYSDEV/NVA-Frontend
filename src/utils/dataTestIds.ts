@@ -771,6 +771,12 @@ export const dataTestId = {
       nonApplicableCategoriesWithApplicableChannelButton: 'non-applicable-categories-with-applicable-channel-button',
       unidentifiedContributorWithIdentifiedAffiliationButton:
         'unidentified-contributor-with-identified-affiliation-button',
+      scientificChapterNotInAnthology: 'scientific-chapter-not-in-anthology',
+      channelLevelSelect: {
+        level0: 'channel-level-select-0',
+        level1: 'channel-level-select-1',
+        level2: 'channel-level-select-2',
+      },
     },
     curatorSelector: 'curator-selector',
     dialoguesWithoutCuratorButton: 'dialogues-without-curator-button',
