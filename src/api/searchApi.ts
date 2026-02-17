@@ -513,6 +513,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.excludeSubunits) {
     searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());
   }
+  if (params.excludeParentType) {
+    searchParams.set(ResultParam.ExcludeParentType, params.excludeParentType.join(','));
+  }
   if (params.files) {
     searchParams.set(ResultParam.Files, params.files);
   }
@@ -610,6 +613,11 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.ModifiedDate);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
+
+  console.log('params', params);
+  console.log('params.excludeParentType', params.excludeParentType);
+  console.log('searchParams', searchParams);
+  console.log('searchParams.excludeParentType', searchParams.excludeParentType);
 
   const getResults = await apiRequest2<RegistrationSearchResponse>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
