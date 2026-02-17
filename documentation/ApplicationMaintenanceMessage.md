@@ -12,7 +12,7 @@ To show a banner only:
 1. Go to AWS Amplify
 2. Select the NVA-Frontend app
 3. Navigate to Hosting -> Environment variables -> Manage variables
-4. Set the following variables:
+4. Add an override for `main` branch for the following variables:
    - `VITE_MAINTENANCE_MESSAGE_NB` - Norwegian message
    - `VITE_MAINTENANCE_MESSAGE_EN` - English message
 5. Save the environment variable changes
@@ -25,7 +25,7 @@ To block access and show only an information page:
 1. Go to AWS Amplify
 2. Select the NVA-Frontend app
 3. Navigate to Hosting -> Environment variables -> Manage variables
-4. Set the following variables:
+4. Add an override for `main` branch for the following variables:
    - `VITE_MAINTENANCE_MESSAGE_NB` - Norwegian message
    - `VITE_MAINTENANCE_MESSAGE_EN` - English message
    - `VITE_MAINTENANCE_SEVERITY` - set to `block`
