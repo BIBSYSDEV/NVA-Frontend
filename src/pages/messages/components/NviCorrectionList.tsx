@@ -69,7 +69,8 @@ export const NviCorrectionList = () => {
                 />
               </Box>
 
-              <ScientificValueFilter />
+              {(listId === 'ApplicableCategoriesWithNonApplicableChannel' ||
+                listId === 'NonApplicableCategoriesWithApplicableChannel') && <ScientificValueFilter />}
 
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
                 <PublisherFilter />
