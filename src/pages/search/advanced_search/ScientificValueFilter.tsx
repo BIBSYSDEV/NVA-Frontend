@@ -14,7 +14,7 @@ export enum ScientificValueLevels {
   LevelTwo = 'LevelTwo',
 }
 
-enum ScientificValueFilterMode {
+enum ScientificValueLevelsToShow {
   UnassignedAndZero = 'UnassignedAndZero',
   OneAndTwo = 'OneAndTwo',
   All = 'All',
@@ -25,18 +25,18 @@ enum CorrectionListType {
   NonApplicableCategoriesWithApplicableChannel = 'NonApplicableCategoriesWithApplicableChannel',
 }
 
-const getScientificValueFilterModeFromParams = (searchParams: URLSearchParams): ScientificValueFilterMode => {
+const getScientificValueFiltersFromParams = (searchParams: URLSearchParams): ScientificValueLevelsToShow => {
   const listParam = searchParams.get('list') as CorrectionListType | null;
 
   switch (listParam) {
     case CorrectionListType.ApplicableCategoriesWithNonApplicableChannel:
-      return ScientificValueFilterMode.UnassignedAndZero;
+      return ScientificValueLevelsToShow.UnassignedAndZero;
 
     case CorrectionListType.NonApplicableCategoriesWithApplicableChannel:
-      return ScientificValueFilterMode.OneAndTwo;
+      return ScientificValueLevelsToShow.OneAndTwo;
 
     default:
-      return ScientificValueFilterMode.All;
+      return ScientificValueLevelsToShow.All;
   }
 };
 
@@ -45,7 +45,7 @@ export const ScientificValueFilter = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const mode = getScientificValueFilterModeFromParams(searchParams);
+  const levelsToShow = getScientificValueFiltersFromParams(searchParams);
   const scientificValueParam = searchParams.get(ResultParam.ScientificValue) ?? '';
 
   const selectedScientificValues = {
@@ -85,25 +85,31 @@ export const ScientificValueFilter = () => {
   const checkboxConfigs = [
     {
       key: 'unassigned' as const,
-      shouldShow: mode === ScientificValueFilterMode.UnassignedAndZero || mode === ScientificValueFilterMode.All,
+      shouldShow:
+        levelsToShow === ScientificValueLevelsToShow.UnassignedAndZero ||
+        levelsToShow === ScientificValueLevelsToShow.All,
       label: t('search.advanced_search.scientific_value.unassigned'),
       testId: dataTestId.startPage.advancedSearch.scientificValueLevels.unassignedCheckbox,
     },
     {
       key: 'levelZero' as const,
-      shouldShow: mode === ScientificValueFilterMode.UnassignedAndZero || mode === ScientificValueFilterMode.All,
+      shouldShow:
+        levelsToShow === ScientificValueLevelsToShow.UnassignedAndZero ||
+        levelsToShow === ScientificValueLevelsToShow.All,
       label: t('search.advanced_search.scientific_value.level', { level: 0 }),
       testId: dataTestId.startPage.advancedSearch.scientificValueLevels.levelZeroCheckbox,
     },
     {
       key: 'levelOne' as const,
-      shouldShow: mode === ScientificValueFilterMode.OneAndTwo || mode === ScientificValueFilterMode.All,
+      shouldShow:
+        levelsToShow === ScientificValueLevelsToShow.OneAndTwo || levelsToShow === ScientificValueLevelsToShow.All,
       label: t('search.advanced_search.scientific_value.level', { level: 1 }),
       testId: dataTestId.startPage.advancedSearch.scientificValueLevels.levelOneCheckbox,
     },
     {
       key: 'levelTwo' as const,
-      shouldShow: mode === ScientificValueFilterMode.OneAndTwo || mode === ScientificValueFilterMode.All,
+      shouldShow:
+        levelsToShow === ScientificValueLevelsToShow.OneAndTwo || levelsToShow === ScientificValueLevelsToShow.All,
       label: t('search.advanced_search.scientific_value.level', { level: 2 }),
       testId: dataTestId.startPage.advancedSearch.scientificValueLevels.levelTwoCheckbox,
     },
