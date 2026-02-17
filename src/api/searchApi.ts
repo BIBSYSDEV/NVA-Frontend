@@ -614,11 +614,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.ModifiedDate);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  console.log('params', params);
-  console.log('params.excludeParentType', params.excludeParentType);
-  console.log('searchParams', searchParams);
-  console.log('searchParams.excludeParentType', searchParams.excludeParentType);
-
   const getResults = await apiRequest2<RegistrationSearchResponse>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
     // TODO: Remove version when it becomes default
