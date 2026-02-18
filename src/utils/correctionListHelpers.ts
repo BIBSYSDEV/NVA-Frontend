@@ -11,7 +11,6 @@ export const getCorrectionListSearchParams = (
   newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
   const correctionListCategoryFilter = correctionListConfig[newCorrectionListId].queryParams.categoryShould;
   const correctionListTopLevelOrgFilter = correctionListConfig[newCorrectionListId].topLevelOrganization;
-  const parentTypeFilter = correctionListConfig[newCorrectionListId].queryParams.parentType;
   const scientificValueFilter = correctionListConfig[newCorrectionListId].queryParams.scientificValue;
   if (correctionListCategoryFilter && correctionListCategoryFilter.length > 0) {
     newSearchParams.set(ResultParam.CategoryShould, correctionListCategoryFilter.join(','));
@@ -21,9 +20,6 @@ export const getCorrectionListSearchParams = (
     newSearchParams.set(ResultParam.TopLevelOrganization, correctionListTopLevelOrgFilter);
   }
 
-  if (parentTypeFilter) {
-    newSearchParams.set(ResultParam.ParentType, parentTypeFilter.join(','));
-  }
   if (scientificValueFilter) {
     newSearchParams.set(ResultParam.ScientificValue, scientificValueFilter);
   }
