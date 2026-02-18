@@ -374,6 +374,7 @@ export enum ResultParam {
   Course = 'course',
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  ExcludeParentType = 'excludeParentType',
   ExcludeSubunits = 'excludeSubunits',
   Files = 'files',
   From = 'from',
@@ -389,7 +390,6 @@ export enum ResultParam {
   Issn = 'issn',
   Journal = 'journal',
   Order = 'order',
-  ParentType = 'parentType',
   Project = 'project',
   PublicationLanguageShould = 'publicationLanguageShould',
   PublicationPages = 'publicationPages',
@@ -432,6 +432,7 @@ export interface FetchResultsParams {
   [ResultParam.Course]?: string | null;
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.ExcludeParentType]?: PublicationInstanceType[] | null;
   [ResultParam.ExcludeSubunits]?: boolean | null;
   [ResultParam.Files]?: string | null;
   [ResultParam.From]?: number | null;
@@ -447,7 +448,6 @@ export interface FetchResultsParams {
   [ResultParam.Issn]?: string | null;
   [ResultParam.Journal]?: string | null;
   [ResultParam.Order]?: ResultSearchOrder | null;
-  [ResultParam.ParentType]?: PublicationInstanceType[] | null;
   [ResultParam.Project]?: string | null;
   [ResultParam.PublicationLanguageShould]?: string | null;
   [ResultParam.PublicationPages]?: string | null;
@@ -512,6 +512,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     const formattedDoiValue = getDoiValue(params.doi);
     searchParams.set(ResultParam.Doi, formattedDoiValue);
   }
+  if (params.excludeParentType?.length) {
+    searchParams.set(ResultParam.ExcludeParentType, params.excludeParentType.join(','));
+  }
   if (params.excludeSubunits) {
     searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());
   }
@@ -550,9 +553,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.journal) {
     searchParams.set(ResultParam.Journal, params.journal);
-  }
-  if (params.parentType) {
-    searchParams.set(ResultParam.ParentType, params.parentType.join(','));
   }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
