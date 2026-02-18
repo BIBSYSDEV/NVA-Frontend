@@ -773,6 +773,7 @@ export const dataTestId = {
       unidentifiedContributorWithIdentifiedAffiliationButton:
         'unidentified-contributor-with-identified-affiliation-button',
       scientificChapterNotInAnthology: 'scientific-chapter-not-in-anthology',
+      scientificMonographyOrAnthologyWithoutIsxns: 'scientific-monography-or-anthology-without-isxns',
     },
     curatorSelector: 'curator-selector',
     dialoguesWithoutCuratorButton: 'dialogues-without-curator-button',

@@ -1966,7 +1966,8 @@
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler",
         "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsyter med identifisert institusjon",
-        "scientific_chapter_not_in_anthology": "Vitenskapelig kapittel ikke i antologi"
+        "scientific_chapter_not_in_anthology": "Vitenskapelig kapittel ikke i antologi",
+        "scientific_monography_or_anthology_without_isxns": "Vitenskapelig monografi eller antologi uten ISxN-er"
       },
       "delete_note": "Slett kommentar",
       "delete_note_description": "Er du sikker på at du vil slette denne kommentaren?",

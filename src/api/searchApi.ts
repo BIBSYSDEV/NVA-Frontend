@@ -1,3 +1,4 @@
+import { ScientificValueLevels } from '../pages/search/advanced_search/ScientificValueFilter';
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import {
   CollaborationType,
@@ -374,6 +375,7 @@ export enum ResultParam {
   Course = 'course',
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  ExcludeScientificValueSeries = 'excludeScientificValueSeries',
   ExcludeSubunits = 'excludeSubunits',
   Files = 'files',
   From = 'from',
@@ -381,6 +383,7 @@ export enum ResultParam {
   FundingSource = 'fundingSource',
   Handle = 'handle',
   HasChildren = 'hasChildren',
+  HasIsbn = 'hasIsbn',
   HasNoChildren = 'hasNoChildren',
   HasParent = 'hasParent',
   Identifier = 'id',
@@ -432,6 +435,7 @@ export interface FetchResultsParams {
   [ResultParam.Course]?: string | null;
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.ExcludeScientificValueSeries]?: ScientificValueLevels[] | null;
   [ResultParam.ExcludeSubunits]?: boolean | null;
   [ResultParam.Files]?: string | null;
   [ResultParam.From]?: number | null;
@@ -439,6 +443,7 @@ export interface FetchResultsParams {
   [ResultParam.FundingSource]?: string | null;
   [ResultParam.Handle]?: string | null;
   [ResultParam.HasChildren]?: boolean | null;
+  [ResultParam.HasIsbn]?: boolean | null;
   [ResultParam.HasNoChildren]?: boolean | null;
   [ResultParam.HasParent]?: boolean | null;
   [ResultParam.Identifier]?: string | null;
@@ -512,6 +517,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     const formattedDoiValue = getDoiValue(params.doi);
     searchParams.set(ResultParam.Doi, formattedDoiValue);
   }
+  if (params.excludeScientificValueSeries) {
+    searchParams.set(ResultParam.ExcludeScientificValueSeries, params.excludeScientificValueSeries.join(','));
+  }
   if (params.excludeSubunits) {
     searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());
   }
@@ -529,6 +537,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.hasChildren === true || params.hasChildren === false) {
     searchParams.set(ResultParam.HasChildren, params.hasChildren.toString());
+  }
+  if (params.hasIsbn === true || params.hasIsbn === false) {
+    searchParams.set(ResultParam.HasIsbn, params.hasIsbn.toString());
   }
   if (params.hasNoChildren === true || params.hasNoChildren === false) {
     searchParams.set(ResultParam.HasNoChildren, params.hasNoChildren.toString());

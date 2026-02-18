@@ -76,6 +76,30 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
     },
+    ScientificMonographyOrAnthologyWithoutIsxns: {
+      i18nKey: 'tasks.nvi.correction_list_type.scientific_monography_or_anthology_without_isxns',
+      queryParams: {
+        categoryShould: [
+          BookType.AcademicMonograph,
+          BookType.AcademicCommentary,
+          BookType.NonFictionMonograph,
+          BookType.PopularScienceMonograph,
+          BookType.Textbook,
+          BookType.Encyclopedia,
+          BookType.ExhibitionCatalog,
+          BookType.Anthology,
+        ],
+        excludeScientificValueSeries: [
+          ScientificValueLevels.LevelZero,
+          ScientificValueLevels.LevelOne,
+          ScientificValueLevels.LevelTwo,
+        ],
+        scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+        hasIsbn: false,
+      },
+      disabledFilters: [],
+      topLevelOrganization: userTopLevelOrg,
+    },
   };
 
   return correctionListConfig;
