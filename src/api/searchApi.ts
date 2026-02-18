@@ -533,7 +533,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.hasNoChildren === true || params.hasNoChildren === false) {
     searchParams.set(ResultParam.HasNoChildren, params.hasNoChildren.toString());
   }
-  if (params.hasParent) {
+  if (params.hasParent === true || params.hasParent === false) {
     searchParams.set(ResultParam.HasParent, params.hasParent.toString());
   }
   if (params.id) {

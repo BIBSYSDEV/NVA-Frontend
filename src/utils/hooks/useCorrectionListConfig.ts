@@ -70,7 +70,7 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       queryParams: {
         categoryShould: [ChapterType.AcademicChapter],
         parentType: [BookType.AcademicMonograph, BookType.AcademicCommentary],
-        scientificValue: 'LevelOne,LevelTwo',
+        scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
         hasParent: true,
       },
       disabledFilters: [],
