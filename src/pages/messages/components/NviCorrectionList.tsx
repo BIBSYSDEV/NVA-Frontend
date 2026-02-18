@@ -70,7 +70,8 @@ export const NviCorrectionList = () => {
               </Box>
 
               {(listId === 'ApplicableCategoriesWithNonApplicableChannel' ||
-                listId === 'NonApplicableCategoriesWithApplicableChannel') && <ScientificValueFilter />}
+                listId === 'NonApplicableCategoriesWithApplicableChannel' ||
+                listId === 'ScientificChapterNotInAnthology') && <ScientificValueFilter />}
 
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
                 <PublisherFilter />

@@ -2057,9 +2057,5 @@
   "publication_points": "Publiseringspoeng",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
   "percent_of_published_reports_in_year": "Det er <b>{{percentage}}%</b> av antallet resultat rapportert i {{year}}.",
-  "percent_of_publication_points_in_year": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}.",
-  "channel_level": "Kanalnivå",
-  "level_0": "Nivå 0",
-  "level_1": "Nivå 1",
-  "level_2": "Nivå 2"
+  "percent_of_publication_points_in_year": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}."
 }

@@ -375,7 +375,6 @@ export enum ResultParam {
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
   ExcludeSubunits = 'excludeSubunits',
-  ExcludeParentType = 'excludeParentType',
   Files = 'files',
   From = 'from',
   FundingIdentifier = 'fundingIdentifier',
@@ -383,12 +382,14 @@ export enum ResultParam {
   Handle = 'handle',
   HasChildren = 'hasChildren',
   HasNoChildren = 'hasNoChildren',
+  HasParent = 'hasParent',
   Identifier = 'id',
   IdentifierNot = 'idNot',
   Isbn = 'isbn',
   Issn = 'issn',
   Journal = 'journal',
   Order = 'order',
+  ParentType = 'parentType',
   Project = 'project',
   PublicationLanguageShould = 'publicationLanguageShould',
   PublicationPages = 'publicationPages',
@@ -432,7 +433,6 @@ export interface FetchResultsParams {
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
   [ResultParam.ExcludeSubunits]?: boolean | null;
-  [ResultParam.ExcludeParentType]?: PublicationInstanceType[] | null;
   [ResultParam.Files]?: string | null;
   [ResultParam.From]?: number | null;
   [ResultParam.FundingIdentifier]?: string | null;
@@ -440,12 +440,14 @@ export interface FetchResultsParams {
   [ResultParam.Handle]?: string | null;
   [ResultParam.HasChildren]?: boolean | null;
   [ResultParam.HasNoChildren]?: boolean | null;
+  [ResultParam.HasParent]?: boolean | null;
   [ResultParam.Identifier]?: string | null;
   [ResultParam.IdentifierNot]?: string | null;
   [ResultParam.Isbn]?: string | null;
   [ResultParam.Issn]?: string | null;
   [ResultParam.Journal]?: string | null;
   [ResultParam.Order]?: ResultSearchOrder | null;
+  [ResultParam.ParentType]?: PublicationInstanceType[] | null;
   [ResultParam.Project]?: string | null;
   [ResultParam.PublicationLanguageShould]?: string | null;
   [ResultParam.PublicationPages]?: string | null;
@@ -513,9 +515,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.excludeSubunits) {
     searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());
   }
-  if (params.excludeParentType) {
-    searchParams.set(ResultParam.ExcludeParentType, params.excludeParentType.join(','));
-  }
   if (params.files) {
     searchParams.set(ResultParam.Files, params.files);
   }
@@ -534,6 +533,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.hasNoChildren === true || params.hasNoChildren === false) {
     searchParams.set(ResultParam.HasNoChildren, params.hasNoChildren.toString());
   }
+  if (params.hasParent) {
+    searchParams.set(ResultParam.HasParent, params.hasParent.toString());
+  }
   if (params.id) {
     searchParams.set(ResultParam.Identifier, params.id);
   }
@@ -548,6 +550,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.journal) {
     searchParams.set(ResultParam.Journal, params.journal);
+  }
+  if (params.parentType) {
+    searchParams.set(ResultParam.ParentType, params.parentType.join(','));
   }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);

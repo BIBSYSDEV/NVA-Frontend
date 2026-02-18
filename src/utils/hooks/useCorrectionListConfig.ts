@@ -68,16 +68,10 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
     ScientificChapterNotInAnthology: {
       i18nKey: 'tasks.nvi.correction_list_type.scientific_chapter_not_in_anthology',
       queryParams: {
-        unidentifiedNorwegian: true,
         categoryShould: [ChapterType.AcademicChapter],
-        excludeParentType: [
-          BookType.NonFictionMonograph,
-          BookType.PopularScienceMonograph,
-          BookType.Textbook,
-          BookType.Encyclopedia,
-          BookType.ExhibitionCatalog,
-          BookType.Anthology,
-        ],
+        parentType: [BookType.AcademicMonograph, BookType.AcademicCommentary],
+        scientificValue: 'LevelOne,LevelTwo',
+        hasParent: true,
       },
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
