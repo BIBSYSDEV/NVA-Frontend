@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
@@ -118,7 +118,7 @@ export const ScientificValueFilter = () => {
   return (
     <section>
       <StyledFilterHeading>{t('registration.resource_type.level')}</StyledFilterHeading>
-      <FormGroup row onChange={handleChange} sx={{ justifySelf: 'center' }}>
+      <FormGroup row onChange={handleChange}>
         {checkboxConfigs
           .filter((config) => config.shouldShow)
           .map((config) => (
