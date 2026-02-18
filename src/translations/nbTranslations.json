@@ -1872,7 +1872,8 @@
       "publishing_period": "Publiseringsperiode",
       "reported": "Rapporterte",
       "scientific_value": {
-        "level": "Nivå {{level}}"
+        "level": "Nivå {{level}}",
+        "unassigned": "Ikke bestemt"
       },
       "title_search": "Tittelsøk"
     },
