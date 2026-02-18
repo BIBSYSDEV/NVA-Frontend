@@ -50,8 +50,11 @@ export const dataTestId = {
       checkboxAuthor: 'duplicate-search-author-checkbox',
       checkboxDoi: 'duplicate-search-doi-checkbox',
       checkboxIssn: 'duplicate-search-issn-checkbox',
+      checkboxNorwegian: 'show-norwegian-lcontributors-checkbox',
       checkboxTitle: 'duplicate-search-title-checkbox',
+      checkboxUnverified: 'show-unverified-affiliations-checkboc',
       checkboxYear: 'duplicate-search-year-checkbox',
+      contributorAccordion: (index: number) => `central-import-accordion-${index}`,
       copyValueButton: 'copy-value-button',
       filter: {
         importedRadio: 'imported-radio',

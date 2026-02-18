@@ -74,6 +74,7 @@ export const CentralImportContributorSearchBar = ({
 
       <Typography>{t('contributor_search_hits', { count: personQuery.data?.size ?? 0 })}</Typography>
       <ListPagination
+        size="small"
         count={personQuery.data?.size ?? 0}
         rowsPerPage={rowsPerPage}
         page={page}
