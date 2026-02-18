@@ -1,4 +1,4 @@
-import { ScientificValueLevels } from '../pages/search/advanced_search/ScientificValueFilter';
+import type { ScientificValueLevels } from '../pages/search/advanced_search/ScientificValueFilter';
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import {
   CollaborationType,
@@ -517,7 +517,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     const formattedDoiValue = getDoiValue(params.doi);
     searchParams.set(ResultParam.Doi, formattedDoiValue);
   }
-  if (params.excludeScientificValueSeries) {
+  if (params.excludeScientificValueSeries?.length) {
     searchParams.set(ResultParam.ExcludeScientificValueSeries, params.excludeScientificValueSeries.join(','));
   }
   if (params.excludeSubunits) {
@@ -562,7 +562,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.journal) {
     searchParams.set(ResultParam.Journal, params.journal);
   }
-  if (params.parentType) {
+  if (params.parentType?.length) {
     searchParams.set(ResultParam.ParentType, params.parentType.join(','));
   }
   if (params.project) {
