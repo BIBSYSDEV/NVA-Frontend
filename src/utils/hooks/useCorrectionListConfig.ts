@@ -14,7 +14,7 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       i18nKey: 'tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel',
       queryParams: {
         categoryShould: nviApplicableTypes,
-        allScientificValues: ScientificValueLevels.LevelZero,
+        allScientificValues: [ScientificValueLevels.Unassigned, ScientificValueLevels.LevelZero].join(','),
       },
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
