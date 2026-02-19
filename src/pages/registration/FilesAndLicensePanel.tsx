@@ -200,6 +200,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   />
                 )}
 
+                {pendingFiles.length > 0 &&
+                  pendingFiles.every((file) => file.type === FileType.PendingInternalFile) && (
+                    <InfoBanner type="info-light" text={t('internal_file_info_description')} />
+                  )}
+
                 {pendingFiles.length > 0 && (
                   <FileList
                     title={t('registration.files_and_license.files_in_progress')}
