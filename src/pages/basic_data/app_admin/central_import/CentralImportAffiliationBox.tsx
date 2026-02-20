@@ -18,7 +18,7 @@ export const CentralImportAffiliationBox = ({ affiliation }: CentralImportAffili
             }}>
             {affiliation.sourceOrganization.country && (
               <Typography component="sup" fontWeight="bold" fontSize={'10px'}>
-                {affiliation.sourceOrganization?.country.code.toLocaleUpperCase()}
+                {affiliation.sourceOrganization.country.code.toLocaleUpperCase()}
               </Typography>
             )}
             {affiliation.sourceOrganization?.names.map((name, index) => (
