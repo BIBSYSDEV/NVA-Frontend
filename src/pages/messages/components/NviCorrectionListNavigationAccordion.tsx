@@ -75,6 +75,18 @@ export const NviCorrectionListNavigationAccordion = () => {
           onClick={() => openNewCorrectionList('UnidentifiedContributorWithIdentifiedAffiliation')}>
           {t('tasks.nvi.correction_list_type.unidentified_contributor_with_identified_affiliation')}
         </SelectableButton>
+        <SelectableButton
+          data-testid={dataTestId.tasksPage.correctionList.scientificChapterNotInAnthology}
+          isSelected={selectedNviList === 'ScientificChapterNotInAnthology'}
+          onClick={() => openNewCorrectionList('ScientificChapterNotInAnthology')}>
+          {t('tasks.nvi.correction_list_type.scientific_chapter_not_in_anthology')}
+        </SelectableButton>
+        <SelectableButton
+          data-testid={dataTestId.tasksPage.correctionList.scientificMonographyOrAnthologyWithoutIsxns}
+          isSelected={selectedNviList === 'ScientificMonographyOrAnthologyWithoutIsxns'}
+          onClick={() => openNewCorrectionList('ScientificMonographyOrAnthologyWithoutIsxns')}>
+          {t('tasks.nvi.correction_list_type.scientific_monography_or_anthology_without_isxns')}
+        </SelectableButton>
       </NavigationList>
     </NavigationListAccordion>
   );

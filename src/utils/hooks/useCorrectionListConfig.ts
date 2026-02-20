@@ -1,7 +1,7 @@
 import { ResultParam } from '../../api/searchApi';
 import { ScientificValueLevels } from '../../pages/search/advanced_search/ScientificValueFilter';
 import { CorrectionListSearchConfig } from '../../types/nvi.types';
-import { BookType } from '../../types/publicationFieldNames';
+import { BookType, ChapterType } from '../../types/publicationFieldNames';
 import { nviApplicableTypes } from '../registration-helpers';
 import { useLoggedInUser } from './useLoggedInUser';
 
@@ -14,7 +14,7 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       i18nKey: 'tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel',
       queryParams: {
         categoryShould: nviApplicableTypes,
-        allScientificValues: ScientificValueLevels.LevelZero,
+        allScientificValues: [ScientificValueLevels.Unassigned, ScientificValueLevels.LevelZero].join(','),
       },
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
@@ -61,6 +61,36 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       queryParams: {
         unidentifiedNorwegian: true,
         categoryShould: nviApplicableTypes,
+      },
+      disabledFilters: [],
+      topLevelOrganization: userTopLevelOrg,
+    },
+    ScientificChapterNotInAnthology: {
+      i18nKey: 'tasks.nvi.correction_list_type.scientific_chapter_not_in_anthology',
+      queryParams: {
+        categoryShould: [ChapterType.AcademicChapter],
+        excludeParentType: [BookType.Anthology],
+        scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+        hasParent: true,
+      },
+      disabledFilters: [],
+      topLevelOrganization: userTopLevelOrg,
+    },
+    ScientificMonographyOrAnthologyWithoutIsxns: {
+      i18nKey: 'tasks.nvi.correction_list_type.scientific_monography_or_anthology_without_isxns',
+      queryParams: {
+        categoryShould: [
+          BookType.AcademicMonograph,
+          BookType.AcademicCommentary,
+          BookType.NonFictionMonograph,
+          BookType.PopularScienceMonograph,
+          BookType.Textbook,
+          BookType.Encyclopedia,
+          BookType.ExhibitionCatalog,
+          BookType.Anthology,
+        ],
+        excludeScientificValueSeries: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo],
+        hasIsbn: false,
       },
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
