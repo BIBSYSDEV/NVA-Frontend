@@ -16,7 +16,7 @@ export const CentralImportAffiliationBox = ({ affiliation }: CentralImportAffili
               flexDirection: 'column',
               flexGrow: '1',
             }}>
-            {affiliation.sourceOrganization.country && (
+            {affiliation.sourceOrganization.country.code && (
               <Typography component="sup" fontWeight="bold" fontSize={'10px'}>
                 {affiliation.sourceOrganization.country.code.toLocaleUpperCase()}
               </Typography>
