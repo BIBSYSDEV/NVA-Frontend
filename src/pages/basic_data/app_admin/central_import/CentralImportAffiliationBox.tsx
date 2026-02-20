@@ -16,9 +16,11 @@ export const CentralImportAffiliationBox = ({ affiliation }: CentralImportAffili
               flexDirection: 'column',
               flexGrow: '1',
             }}>
-            <Typography component="sup" fontWeight="bold" fontSize={'10px'}>
-              {affiliation.sourceOrganization?.country.code.toLocaleUpperCase()}
-            </Typography>
+            {affiliation.sourceOrganization.country.code && (
+              <Typography component="sup" fontWeight="bold" fontSize={'10px'}>
+                {affiliation.sourceOrganization.country.code.toLocaleUpperCase()}
+              </Typography>
+            )}
             {affiliation.sourceOrganization?.names.map((name, index) => (
               <Typography sx={{ fontWeight: 'bold' }} key={index}>
                 {index + 1}: {name}
