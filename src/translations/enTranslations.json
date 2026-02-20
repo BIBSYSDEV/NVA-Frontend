@@ -737,6 +737,7 @@
   "go_to_advanced_search": "Go to advanced result search",
   "institution_support": "Institution's user support",
   "institutions_service_support": "Institutions' user support",
+  "internal_file_info_description": "",
   "internal_nvi_status": "",
   "keep_all_contributors": "",
   "keep_contributors_from_published_result": "",
@@ -989,6 +990,8 @@
   "overview_over_administrators": "Overview of administrators",
   "overwrite": "Overwrite",
   "owner_institution": "Owner institution",
+  "percent_of_publication_points_in_year": "",
+  "percent_of_published_reports_in_year": "",
   "percentage_controlled": "",
   "person_profiles": "Person profiles",
   "point_of_contact": "Contact point",
@@ -1104,6 +1107,7 @@
     "verify_project_manager": "Identify project manager"
   },
   "projects": "Projects",
+  "publication_points": "",
   "publication_points_description": "",
   "publication_points_description_more": "",
   "published_result": "Published result",
@@ -1872,7 +1876,8 @@
       "publishing_period": "Publication period",
       "reported": "Reported",
       "scientific_value": {
-        "level": "Level {{level}}"
+        "level": "Level {{level}}",
+        "unassigned": ""
       },
       "title_search": "Search for title"
     },
@@ -1964,6 +1969,8 @@
         "applicable_category_in_non_applicable_channel": "Counting categories in non-counting channels",
         "book_with_less_than_50_pages": "Books with fewer than 50 pages",
         "non_applicable_category_in_applicable_channel": "Non-counting categories in counting channels",
+        "scientific_chapter_not_in_anthology": "",
+        "scientific_monography_or_anthology_without_isxns": "",
         "unidentified_contributor_with_identified_affiliation": "Unidentified contributor with identified institution"
       },
       "delete_note": "Delete comment",
@@ -2050,6 +2057,7 @@
   "visibility_of_units": "",
   "vocabulary_missing": "The institution has not added vocabulary",
   "what_you_find_in_nva_description": "<heading>What can you find in NVA?</heading><p>The Norwegian Research Information Repository (NVA) collects and makes information about Norwegian research accessible.</p><p>Here, you can explore publications, research projects, and researchers across universities, university colleges, and research institutions.</p>",
+  "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "",
   "you_cannot_upload_files_to_this_result": "You do not have access to upload files for this result.",
   "you_do_not_have_permission_to_edit_this_registration": "You do not have access to edit this registration."
 }
