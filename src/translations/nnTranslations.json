@@ -737,6 +737,7 @@
   "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Intitusjonen si brukarstøtte",
   "institutions_service_support": "Institusjonane si brukarstøtte",
+  "internal_file_info_description": "",
   "internal_nvi_status": "",
   "keep_all_contributors": "",
   "keep_contributors_from_published_result": "",
@@ -989,6 +990,8 @@
   "overview_over_administrators": "Oversyn over administratorar",
   "overwrite": "Overskriv",
   "owner_institution": "Eigarinstitusjon",
+  "percent_of_publication_points_in_year": "",
+  "percent_of_published_reports_in_year": "",
   "percentage_controlled": "",
   "person_profiles": "Personprofilar",
   "point_of_contact": "Kontaktpunkt",
@@ -1104,6 +1107,7 @@
     "verify_project_manager": "Identifiser prosjektleiar"
   },
   "projects": "Prosjekt",
+  "publication_points": "",
   "publication_points_description": "",
   "publication_points_description_more": "",
   "published_result": "Publisert resultat",
@@ -1872,7 +1876,8 @@
       "publishing_period": "Publiseringsperiode",
       "reported": "Rapporterte",
       "scientific_value": {
-        "level": "Nivå {{level}}"
+        "level": "Nivå {{level}}",
+        "unassigned": ""
       },
       "title_search": "Tittelsøk"
     },
@@ -1964,6 +1969,8 @@
         "applicable_category_in_non_applicable_channel": "Teljande kategoriar i ikkje-teljande kanalar",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "non_applicable_category_in_applicable_channel": "Ikkje-teljande kategoriar i teljande kanalar",
+        "scientific_chapter_not_in_anthology": "",
+        "scientific_monography_or_anthology_without_isxns": "",
         "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsytar med identifisert institusjon"
       },
       "delete_note": "Slett kommentar",
@@ -2050,6 +2057,7 @@
   "visibility_of_units": "",
   "vocabulary_missing": "Institusjonen har ikkje lagt til vokabular",
   "what_you_find_in_nva_description": "<heading>Kva finn du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samlar og gjer tilgjengeleg informasjon om norsk forsking.</p><p>Her kan du utforske publikasjonar, forskingsprosjekt og forskarar på tvers av universitet, høgskular og forskingsinstitusjonar.</p>",
+  "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "",
   "you_cannot_upload_files_to_this_result": "Du har ikkje tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikkje tilgang til å endre denne registreringa."
 }
