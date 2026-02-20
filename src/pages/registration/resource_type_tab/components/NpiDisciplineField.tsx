@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import disciplines from '../../../../resources/disciplines.json';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { isOnPage } from '../../../../utils/general-helpers';
+import { UrlPathTemplate } from '../../../../utils/urlPaths';
 
 const disciplineOptions = disciplines
   .map((mainDiscipline) =>
@@ -48,7 +50,7 @@ export const NpiDisciplineField = ({ required }: NpiDisciplineFieldProps) => {
                 {...params}
                 onBlur={() => (!touched ? setFieldTouched(name, true, false) : null)}
                 label={t('registration.description.npi_disciplines')}
-                required={required}
+                required={!isOnPage(UrlPathTemplate.BasicDataCentralImport) && required}
                 fullWidth
                 variant="filled"
                 placeholder={!value ? t('velg_subject_area') : ''}

@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import { toDateString } from './date-helpers';
 
+export const isOnPage = (url: string) => window.location.pathname.startsWith(url);
+
 export const isValidUrl = (value: string) => value && Yup.string().url().isValidSync(value);
 
 export const doiUrlBase = 'https://doi.org/';
@@ -80,3 +82,7 @@ export const getEnvVariableValue = <T = string>(value: any): T | undefined => {
 };
 
 export const setDelay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const nbNoNumberFormat = new Intl.NumberFormat('nb-NO');
+
+export const formatNumber = (n: number) => nbNoNumberFormat.format(n);

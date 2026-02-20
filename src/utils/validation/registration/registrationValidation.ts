@@ -25,6 +25,8 @@ import {
   reportReference,
   researchDataReference,
 } from './referenceValidation';
+import { isOnPage } from '../../general-helpers';
+import { UrlPathTemplate } from '../../urlPaths';
 
 const registrationErrorMessage = {
   titleRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('common.title') }),
@@ -48,6 +50,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
     npiSubjectHeading: Yup.string()
       .nullable()
       .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+        !isOnPage(UrlPathTemplate.BasicDataCentralImport) &&
         nviApplicableTypes.includes(publicationInstanceType) &&
         (isBook(publicationInstanceType) || isChapter(publicationInstanceType))
           ? schema.required(registrationErrorMessage.npiSubjectRequired)
