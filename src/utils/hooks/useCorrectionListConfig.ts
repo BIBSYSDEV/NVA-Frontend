@@ -89,12 +89,7 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
           BookType.ExhibitionCatalog,
           BookType.Anthology,
         ],
-        excludeScientificValueSeries: [
-          ScientificValueLevels.LevelZero,
-          ScientificValueLevels.LevelOne,
-          ScientificValueLevels.LevelTwo,
-        ],
-        scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+        excludeScientificValueSeries: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo],
         hasIsbn: false,
       },
       disabledFilters: [],
