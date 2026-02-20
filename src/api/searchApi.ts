@@ -374,6 +374,7 @@ export enum ResultParam {
   Course = 'course',
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  ExcludeParentType = 'excludeParentType',
   ExcludeSubunits = 'excludeSubunits',
   Files = 'files',
   From = 'from',
@@ -382,6 +383,7 @@ export enum ResultParam {
   Handle = 'handle',
   HasChildren = 'hasChildren',
   HasNoChildren = 'hasNoChildren',
+  HasParent = 'hasParent',
   Identifier = 'id',
   IdentifierNot = 'idNot',
   Isbn = 'isbn',
@@ -430,6 +432,7 @@ export interface FetchResultsParams {
   [ResultParam.Course]?: string | null;
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.ExcludeParentType]?: PublicationInstanceType[] | null;
   [ResultParam.ExcludeSubunits]?: boolean | null;
   [ResultParam.Files]?: string | null;
   [ResultParam.From]?: number | null;
@@ -438,6 +441,7 @@ export interface FetchResultsParams {
   [ResultParam.Handle]?: string | null;
   [ResultParam.HasChildren]?: boolean | null;
   [ResultParam.HasNoChildren]?: boolean | null;
+  [ResultParam.HasParent]?: boolean | null;
   [ResultParam.Identifier]?: string | null;
   [ResultParam.IdentifierNot]?: string | null;
   [ResultParam.Isbn]?: string | null;
@@ -508,6 +512,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     const formattedDoiValue = getDoiValue(params.doi);
     searchParams.set(ResultParam.Doi, formattedDoiValue);
   }
+  if (params.excludeParentType?.length) {
+    searchParams.set(ResultParam.ExcludeParentType, params.excludeParentType.join(','));
+  }
   if (params.excludeSubunits) {
     searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());
   }
@@ -528,6 +535,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.hasNoChildren === true || params.hasNoChildren === false) {
     searchParams.set(ResultParam.HasNoChildren, params.hasNoChildren.toString());
+  }
+  if (params.hasParent === true || params.hasParent === false) {
+    searchParams.set(ResultParam.HasParent, params.hasParent.toString());
   }
   if (params.id) {
     searchParams.set(ResultParam.Identifier, params.id);

@@ -1,7 +1,7 @@
 import { ResultParam } from '../../api/searchApi';
 import { ScientificValueLevels } from '../../pages/search/advanced_search/ScientificValueFilter';
 import { CorrectionListSearchConfig } from '../../types/nvi.types';
-import { BookType } from '../../types/publicationFieldNames';
+import { BookType, ChapterType } from '../../types/publicationFieldNames';
 import { nviApplicableTypes } from '../registration-helpers';
 import { useLoggedInUser } from './useLoggedInUser';
 
@@ -61,6 +61,17 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       queryParams: {
         unidentifiedNorwegian: true,
         categoryShould: nviApplicableTypes,
+      },
+      disabledFilters: [],
+      topLevelOrganization: userTopLevelOrg,
+    },
+    ScientificChapterNotInAnthology: {
+      i18nKey: 'tasks.nvi.correction_list_type.scientific_chapter_not_in_anthology',
+      queryParams: {
+        categoryShould: [ChapterType.AcademicChapter],
+        excludeParentType: [BookType.Anthology],
+        scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+        hasParent: true,
       },
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
