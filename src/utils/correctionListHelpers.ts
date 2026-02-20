@@ -12,7 +12,6 @@ export const getCorrectionListSearchParams = (
   const correctionListCategoryFilter = correctionListConfig[newCorrectionListId].queryParams.categoryShould;
   const correctionListTopLevelOrgFilter = correctionListConfig[newCorrectionListId].topLevelOrganization;
   const scientificValueFilter = correctionListConfig[newCorrectionListId].queryParams.scientificValue;
-  const parentTypeFilter = correctionListConfig[newCorrectionListId].queryParams.parentType;
   if (correctionListCategoryFilter && correctionListCategoryFilter.length > 0) {
     newSearchParams.set(ResultParam.CategoryShould, correctionListCategoryFilter.join(','));
   }
@@ -24,11 +23,6 @@ export const getCorrectionListSearchParams = (
   if (scientificValueFilter) {
     newSearchParams.set(ResultParam.ScientificValue, scientificValueFilter);
   }
-
-  if (parentTypeFilter) {
-    newSearchParams.set(ResultParam.ParentType, parentTypeFilter.join(','));
-  }
-
   newSearchParams.set(ResultParam.PublicationYear, (new Date().getFullYear() - 1).toString());
   return newSearchParams;
 };
