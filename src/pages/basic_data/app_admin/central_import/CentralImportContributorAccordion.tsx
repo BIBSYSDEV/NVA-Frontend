@@ -56,7 +56,7 @@ export const CentralImportContributorAccordion = ({
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Accordion
-        date-testid={(dataTestId.basicData.centralImport.contributorAccordion, { index: contributor.sequence })}
+        data-testid={dataTestId.basicData.centralImport.contributorAccordion(contributor.sequence)}
         expanded={expanded}
         onChange={handleChange}
         slotProps={{ heading: { component: 'p' } }}

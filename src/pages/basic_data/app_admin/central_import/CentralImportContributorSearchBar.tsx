@@ -112,6 +112,9 @@ export const CentralImportContributorSearchBar = ({
                   ))}
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Button
+                      data-testid={dataTestId.registrationWizard.contributors.replaceContributorButton(
+                        contributor.sequence
+                      )}
                       variant="contained"
                       color="secondary"
                       sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
@@ -123,8 +126,8 @@ export const CentralImportContributorSearchBar = ({
                         variant="contained"
                         color="secondary"
                         sx={{ padding: '0.1rem 0.75rem', width: 'fit-content', mt: '0.5rem' }}
-                        data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
-                          contributor.identity.name
+                        data-testid={dataTestId.registrationWizard.contributors.replaceContributorAndAffiliationButton(
+                          contributor.sequence
                         )}
                         onClick={() => onSelectPersonAndAffiliation(user)}>
                         {t('select_person_and_affiliation')}
