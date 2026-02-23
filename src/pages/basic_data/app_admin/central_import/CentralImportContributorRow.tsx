@@ -4,10 +4,7 @@ import { Contributor } from '../../../../types/contributor.types';
 import { ImportContributor } from '../../../../types/importCandidate.types';
 import { Registration } from '../../../../types/registration.types';
 import { CristinPerson } from '../../../../types/user.types';
-import {
-  replaceExistingContributor,
-  replaceExistingContributorAndAffiliations,
-} from '../../../../utils/central-import-helpers';
+import { replaceExistingContributor } from '../../../../utils/central-import-helpers';
 import { CentralImportContributorAccordion } from './CentralImportContributorAccordion';
 import { ImportCandidateContributorBox } from './ImportCandidateContributorBox';
 
@@ -42,10 +39,14 @@ export const CentralImportContributorRow = ({ contributor, importContributor }: 
           <CentralImportContributorAccordion
             contributor={contributor}
             onSelectPersonAndAffiliation={(selected: CristinPerson) =>
-              replaceExistingContributorAndAffiliations(values, setFieldValue, selected, contributor.sequence)
+              replaceExistingContributor(values, setFieldValue, selected, contributor.sequence, {
+                updateAffiliations: true,
+              })
             }
             onSelectPerson={(selected: CristinPerson) =>
-              replaceExistingContributor(values, setFieldValue, selected, contributor.sequence)
+              replaceExistingContributor(values, setFieldValue, selected, contributor.sequence, {
+                updateAffiliations: false,
+              })
             }
           />
         )}

@@ -69,10 +69,10 @@ export const CentralImportContributorsPanel = ({
         <TableHead>
           <TableRow>
             <TableCell sx={{ width: '6rem' }}>{t('common.order')}</TableCell>
-            <TableCell sx={{ width: 'calc((100% - 3rem) / 2)' }}>
+            <TableCell sx={{ width: 'calc((100% - 6rem) / 2)' }}>
               {t('basic_data.central_import.import_candidate')}
             </TableCell>
-            <TableCell sx={{ width: 'calc((100% - 3rem) / 2)' }}>{t('common.page_title')}</TableCell>
+            <TableCell sx={{ width: 'calc((100% - 6rem) / 2)' }}>{t('common.page_title')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

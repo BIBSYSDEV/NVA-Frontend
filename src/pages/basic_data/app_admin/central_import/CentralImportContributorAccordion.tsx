@@ -68,9 +68,6 @@ export const CentralImportContributorAccordion = ({
           height: 'fit-content',
         }}>
         <AccordionSummary
-          sx={{
-            fontWeight: 'normal',
-          }}
           expandIcon={<ExpandMoreIcon />}
           aria-controls={`contributor-${contributor.sequence}-content`}
           id={`contributor-${contributor.sequence}-header`}>
