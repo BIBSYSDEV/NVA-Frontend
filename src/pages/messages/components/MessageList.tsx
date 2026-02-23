@@ -113,7 +113,7 @@ export const MessageItem = ({ text, date, username, menuElement, showOrganizatio
             </StyledTruncatableTypography>
           </Tooltip>
         </Box>
-        <HorizontalBox>
+        <HorizontalBox sx={{ gap: '0.25rem' }}>
           <CalendarMonthIcon />
           <Typography
             sx={{ pt: '0.1rem' }}
