@@ -249,6 +249,7 @@ export const dataTestId = {
       removeFilterButton: 'remove-filter-button',
       scientificIndexStatusCheckbox: 'scientific-index-status-checkbox',
       scientificValueLevels: {
+        unassignedCheckbox: 'unassigned-checkbox',
         levelOneCheckbox: 'level-one-checkbox',
         levelTwoCheckbox: 'level-two-checkbox',
         levelZeroCheckbox: 'level-zero-checkbox',
@@ -774,6 +775,8 @@ export const dataTestId = {
       nonApplicableCategoriesWithApplicableChannelButton: 'non-applicable-categories-with-applicable-channel-button',
       unidentifiedContributorWithIdentifiedAffiliationButton:
         'unidentified-contributor-with-identified-affiliation-button',
+      scientificChapterNotInAnthology: 'scientific-chapter-not-in-anthology',
+      scientificMonographyOrAnthologyWithoutIsxns: 'scientific-monography-or-anthology-without-isxns',
     },
     curatorSelector: 'curator-selector',
     dialoguesWithoutCuratorButton: 'dialogues-without-curator-button',

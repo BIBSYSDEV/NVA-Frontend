@@ -1,6 +1,6 @@
 import { ResultParam } from '../api/searchApi';
 import { nviCorrectionListQueryKey } from '../pages/messages/components/NviCorrectionList';
-import { CorrectionListSearchConfig, CorrectionListId } from '../types/nvi.types';
+import { CorrectionListId, CorrectionListSearchConfig } from '../types/nvi.types';
 import { UrlPathTemplate } from './urlPaths';
 
 export const getCorrectionListSearchParams = (
@@ -11,12 +11,17 @@ export const getCorrectionListSearchParams = (
   newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
   const correctionListCategoryFilter = correctionListConfig[newCorrectionListId].queryParams.categoryShould;
   const correctionListTopLevelOrgFilter = correctionListConfig[newCorrectionListId].topLevelOrganization;
+  const scientificValueFilter = correctionListConfig[newCorrectionListId].queryParams.scientificValue;
   if (correctionListCategoryFilter && correctionListCategoryFilter.length > 0) {
     newSearchParams.set(ResultParam.CategoryShould, correctionListCategoryFilter.join(','));
   }
 
   if (correctionListTopLevelOrgFilter) {
     newSearchParams.set(ResultParam.TopLevelOrganization, correctionListTopLevelOrgFilter);
+  }
+
+  if (scientificValueFilter) {
+    newSearchParams.set(ResultParam.ScientificValue, scientificValueFilter);
   }
   newSearchParams.set(ResultParam.PublicationYear, (new Date().getFullYear() - 1).toString());
   return newSearchParams;

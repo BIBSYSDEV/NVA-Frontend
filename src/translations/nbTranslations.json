@@ -737,6 +737,7 @@
   "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
+  "internal_file_info_description": "Internfiler skal primært ikke benyttes for resultater, men til kommunikasjon med kurator, forfatteravtaler o.l. Resultater skal i utgangspunktet publiseres som åpen fil. Velg i så fall hvilken versjon som skal publiseres og hvilken lisens den har.",
   "internal_nvi_status": "Intern NVI-status",
   "keep_all_contributors": "Behold bidragsytere fra både {{sourceType}} og publisert resultat",
   "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
@@ -989,6 +990,8 @@
   "overview_over_administrators": "Oversikt over administratorer",
   "overwrite": "Overskriv",
   "owner_institution": "Eierinstitusjon",
+  "percent_of_publication_points_in_year": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}.",
+  "percent_of_published_reports_in_year": "Det er <b>{{percentage}}%</b> av antallet resultat rapportert i {{year}}.",
   "percentage_controlled": "Andel kontrollert",
   "person_profiles": "Personprofiler",
   "point_of_contact": "Kontaktpunkt",
@@ -1104,6 +1107,7 @@
     "verify_project_manager": "Identifiser prosjektleder"
   },
   "projects": "Prosjekter",
+  "publication_points": "Publiseringspoeng",
   "publication_points_description": "Tabellen viser kandidater som er godkjent per nå hos alle institusjoner og hvor mange som er ferdig kontrollert i forhold til antall kandidater.",
   "publication_points_description_more": "Kandidatene er lagt på enheten hvor de er registrert. Det er ikke tatt hensyn til samarbeidene institusjoner. Kandidater i eventuelt tvist vises ikke.",
   "published_result": "Publisert resultat",
@@ -1872,7 +1876,8 @@
       "publishing_period": "Publiseringsperiode",
       "reported": "Rapporterte",
       "scientific_value": {
-        "level": "Nivå {{level}}"
+        "level": "Nivå {{level}}",
+        "unassigned": "Ikke bestemt"
       },
       "title_search": "Tittelsøk"
     },
@@ -1964,6 +1969,8 @@
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler",
+        "scientific_chapter_not_in_anthology": "Vitenskapelig kapittel ikke i antologi",
+        "scientific_monography_or_anthology_without_isxns": "Vitenskapelig monografi eller antologi uten ISxN-er",
         "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsyter med identifisert institusjon"
       },
       "delete_note": "Slett kommentar",
@@ -2050,10 +2057,7 @@
   "visibility_of_units": "Visning av enheter",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
-  "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "publication_points": "Publiseringspoeng",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
-  "percent_of_published_reports_in_year": "Det er <b>{{percentage}}%</b> av antallet resultat rapportert i {{year}}.",
-  "percent_of_publication_points_in_year": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}."
+  "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
 }

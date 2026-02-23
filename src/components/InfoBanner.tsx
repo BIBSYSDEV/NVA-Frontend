@@ -6,7 +6,7 @@ import { Paper, PaperProps, Typography } from '@mui/material';
 interface InfoBannerProps extends PaperProps {
   text: string;
   size?: 'small' | 'large';
-  type?: 'info' | 'warning' | 'error';
+  type?: 'info' | 'info-light' | 'warning' | 'error';
 }
 
 export const InfoBanner = ({ text, type = 'info', sx, size = 'large', ...props }: InfoBannerProps) => {
@@ -18,18 +18,20 @@ export const InfoBanner = ({ text, type = 'info', sx, size = 'large', ...props }
         gap: '0.5rem',
         alignItems: 'center',
         p: size === 'large' ? '1rem' : '0.3rem 2rem',
-        bgcolor: `${type}.main`,
+        bgcolor: type === 'info-light' ? '#E6F0FF' : `${type}.main`,
         ...sx,
       }}
       {...props}>
       {type === 'info' ? (
         <InfoIcon fontSize={size} sx={{ color: 'white' }} />
+      ) : type === 'info-light' ? (
+        <InfoIcon fontSize={size} sx={{ color: 'blue' }} />
       ) : type === 'warning' ? (
         <WarningIcon fontSize={size} sx={{ color: 'primary.main' }} />
       ) : (
         <ErrorIcon fontSize={size} sx={{ color: 'white' }} />
       )}
-      <Typography color={type === 'warning' ? 'black' : 'white'}>{text}</Typography>
+      <Typography color={type === 'warning' || type === 'info-light' ? 'black' : 'white'}>{text}</Typography>
     </Paper>
   );
 };
