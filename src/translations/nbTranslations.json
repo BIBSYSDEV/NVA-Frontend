@@ -737,7 +737,7 @@
   "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
-  "internal_file_info_description": "Velg åpen fil for forskningsresultater som skal gjøres åpent tilgjengelige. Korrekt lisens må velges, og kurator bistår med valg av lisens. Intern fil skal kun brukes for dokumenter som kun skal deles med kurator, som forfatteravtaler o.l.",
+  "internal_file_info_description": "Velg “Åpen fil” for forskningsresultater som skal gjøres åpent tilgjengelige. Husk å velge korrekt lisens. Kurator kan bistå deg med dette. Velg “Intern fil” for dokumenter som kun skal deles med kurator, for eksempel forfatteravtaler og lignende.",
   "internal_nvi_status": "Intern NVI-status",
   "keep_all_contributors": "Behold bidragsytere fra både {{sourceType}} og publisert resultat",
   "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
@@ -1306,7 +1306,6 @@
       "registration_without_file": "Resultat uten fil",
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
-      "select_availability": "Velg tilgjengelighet",
       "show_all_older_versions": "Vis alle tidligere versjoner",
       "version_helper_text": "<p>Last opp akseptert versjon, dersom publisert versjon ikke er åpent publisert med en <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading> <p>Forfatters siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den presenteres i et tidsskrift. Denne versjonen vil inkludere redaksjonelle forbedringer, og forlagets grafiske profil. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Du må velge den samme Creative Commons-lisensen som artikkelen er publisert med.</p>"
     },
