@@ -737,7 +737,7 @@
   "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
-  "internal_file_info_description": "Internfiler skal primært ikke benyttes for resultater, men til kommunikasjon med kurator, forfatteravtaler o.l. Resultater skal i utgangspunktet publiseres som åpen fil. Velg i så fall hvilken versjon som skal publiseres og hvilken lisens den har.",
+  "internal_file_info_description": "Velg åpen fil for forskningsresultater som skal gjøres åpent tilgjengelige. Korrekt lisens må velges, og kurator bistår med valg av lisens. Intern fil skal kun brukes for dokumenter som kun skal deles med kurator, som forfatteravtaler o.l.",
   "internal_nvi_status": "Intern NVI-status",
   "keep_all_contributors": "Behold bidragsytere fra både {{sourceType}} og publisert resultat",
   "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
