@@ -1,16 +1,17 @@
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import SellIcon from '@mui/icons-material/Sell';
 import { Box, BoxProps, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { HorizontalBox, StyledTruncatableTypography } from '../../../components/styled/Wrappers';
+import { EllipsisTypography, HorizontalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { toDateString } from '../../../utils/date-helpers';
+import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
 import { getFullName, userCanDeleteMessage } from '../../../utils/user-helpers';
 import { MessageItemOrganization } from './MessageItemOrganization';
 import { MessageMenu } from './MessageMenu';
@@ -60,9 +61,17 @@ interface MessageItemProps {
   backgroundColor: BoxProps['bgcolor'];
   menuElement?: ReactNode;
   showOrganization?: boolean;
+  approvalStatus?: 'Approved' | 'Rejected';
 }
 
-export const MessageItem = ({ text, date, username, menuElement, showOrganization = false }: MessageItemProps) => {
+export const MessageItem = ({
+  text,
+  date,
+  username,
+  menuElement,
+  showOrganization = false,
+  approvalStatus,
+}: MessageItemProps) => {
   const { t } = useTranslation();
 
   const senderQuery = useFetchUserQuery(username);
@@ -80,8 +89,14 @@ export const MessageItem = ({ text, date, username, menuElement, showOrganizatio
       }}>
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center', gap: '0.3rem' }}>
         <HorizontalBox sx={{ gap: '0.25rem' }}>
-          <ChatBubbleIcon sx={{ fontSize: '1.1rem' }} />
-          <Typography sx={{ fontWeight: 'bold' }}>{t('tasks.nvi.note')}</Typography>
+          {approvalStatus === 'Rejected' ? (
+            <SellIcon sx={{ fontSize: '1.1rem' }} />
+          ) : (
+            <ChatBubbleIcon sx={{ fontSize: '1.1rem' }} />
+          )}
+          <Typography sx={{ fontWeight: 'bold' }}>
+            {approvalStatus === 'Rejected' ? t('common.justification') : t('tasks.nvi.note')}
+          </Typography>
         </HorizontalBox>
         {showOrganization ? (
           <MessageItemOrganization organizationId={senderQuery.data?.institutionCristinId ?? ''} />
@@ -97,12 +112,15 @@ export const MessageItem = ({ text, date, username, menuElement, showOrganizatio
         component={typeof text === 'string' ? Typography : 'div'}>
         {text ? text : <i>{t('my_page.messages.message_deleted')}</i>}
       </Box>
-      <HorizontalBox>
+      <HorizontalBox sx={{ gap: '1rem' }}>
         <Box sx={{ flexGrow: 1 }}>
           <Tooltip title={senderName ? senderName : t('common.unknown')}>
-            <StyledTruncatableTypography
+            <EllipsisTypography
               data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}
-              sx={{ fontWeight: 'bold' }}>
+              sx={{
+                fontWeight: 'bold',
+                maxWidth: { sm: '10rem', md: '12rem', lg: '18rem', xl: '30rem' },
+              }}>
               {senderQuery.isPending ? (
                 <Skeleton sx={{ width: '8rem' }} />
               ) : senderName ? (
@@ -110,17 +128,19 @@ export const MessageItem = ({ text, date, username, menuElement, showOrganizatio
               ) : (
                 <i>{t('common.unknown')}</i>
               )}
-            </StyledTruncatableTypography>
+            </EllipsisTypography>
           </Tooltip>
         </Box>
-        <HorizontalBox sx={{ gap: '0.25rem' }}>
-          <CalendarMonthIcon />
-          <Typography
-            sx={{ pt: '0.1rem' }}
-            data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
-            {toDateString(date)}
-          </Typography>
-        </HorizontalBox>
+        <Tooltip title={toDateStringWithTime(date)}>
+          <HorizontalBox sx={{ gap: '0.25rem' }}>
+            <CalendarMonthIcon />
+            <Typography
+              sx={{ pt: '0.1rem' }}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
+              {toDateString(date)}
+            </Typography>
+          </HorizontalBox>
+        </Tooltip>
       </HorizontalBox>
     </Box>
   );

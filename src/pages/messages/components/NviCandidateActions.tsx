@@ -40,6 +40,8 @@ interface NviNote {
   username: string;
   institutionId?: string;
   content: ReactNode;
+  text?: string;
+  approvalStatus?: 'Rejected' | 'Approved';
 }
 
 interface NviCandidateActionsProps {
@@ -125,6 +127,8 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
         {rejectionStatus.reason}
       </Typography>
     ),
+    text: rejectionStatus.reason,
+    approvalStatus: 'Rejected',
     username: rejectionStatus.finalizedBy,
     institutionId: rejectionStatus.institutionId,
   }));
@@ -135,6 +139,8 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     type: 'FinalizedNote',
     date: approvalStatus.finalizedDate,
     content: <Typography fontWeight={700}>{t('tasks.nvi.status.Approved')}</Typography>,
+    text: t('tasks.nvi.status.Approved'),
+    approvalStatus: 'Approved',
     username: approvalStatus.finalizedBy,
     institutionId: approvalStatus.institutionId,
   }));
@@ -144,6 +150,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     identifier: note.identifier,
     date: note.createdDate,
     content: note.text,
+    text: note.text,
     username: note.user,
   }));
 
@@ -322,7 +329,8 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                 return (
                   <ErrorBoundary key={noteIdentifier ?? note.date}>
                     <MessageItem
-                      text={note.content}
+                      text={note.text}
+                      approvalStatus={note.approvalStatus}
                       date={note.date}
                       username={note.username}
                       backgroundColor="nvi.main"
