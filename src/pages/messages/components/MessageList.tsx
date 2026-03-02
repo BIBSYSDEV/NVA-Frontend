@@ -62,7 +62,7 @@ interface MessageItemProps {
   backgroundColor: BoxProps['bgcolor'];
   menuElement?: ReactNode;
   showOrganization?: boolean;
-  messageType?: 'Justification' | 'Message' | 'Comment';
+  messageType?: 'Justification' | 'Message' | 'Comment' | 'Approval';
 }
 
 export const MessageItem = ({
@@ -91,7 +91,7 @@ export const MessageItem = ({
       }}>
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center', gap: '0.3rem' }}>
         <HorizontalBox sx={{ gap: '0.25rem' }}>
-          {messageType === 'Justification' ? (
+          {messageType === 'Justification' || messageType === 'Approval' ? (
             <SellIcon sx={{ fontSize: '1.1rem', color: 'black !important' }} />
           ) : (
             <ChatBubbleIcon sx={{ fontSize: '1.1rem', color: 'black !important' }} />
@@ -99,9 +99,11 @@ export const MessageItem = ({
           <Typography sx={{ fontWeight: 'bold', color: 'black !important' }}>
             {messageType === 'Justification'
               ? t('common.justification')
-              : messageType === 'Message'
-                ? t('common.message')
-                : t('tasks.nvi.note')}
+              : messageType === 'Approval'
+                ? t('approved')
+                : messageType === 'Message'
+                  ? t('common.message')
+                  : t('tasks.nvi.note')}
           </Typography>
         </HorizontalBox>
         {showOrganization ? (
@@ -116,7 +118,7 @@ export const MessageItem = ({
         sx={{ color: 'black !important', my: '0.1rem' }}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
         component={typeof text === 'string' ? Typography : 'div'}>
-        {text ? text : <i>{t('my_page.messages.message_deleted')}</i>}
+        {text ? text : messageType !== 'Approval' ? <i>{t('my_page.messages.message_deleted')}</i> : undefined}
       </Box>
       <HorizontalBox sx={{ gap: '1rem', color: 'black' }}>
         <Box sx={{ flexGrow: 1 }}>

@@ -40,7 +40,7 @@ interface NviNote {
   username: string;
   institutionId?: string;
   text?: string;
-  messageType?: 'Justification' | 'General';
+  messageType?: 'Justification' | 'Approval' | 'Comment';
 }
 
 interface NviCandidateActionsProps {
@@ -128,8 +128,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   ).map((approvalStatus) => ({
     type: 'FinalizedNote',
     date: approvalStatus.finalizedDate,
-    text: t('tasks.nvi.status.Approved'),
-    approvalStatus: 'Approved',
+    messageType: 'Approval',
     username: approvalStatus.finalizedBy,
     institutionId: approvalStatus.institutionId,
   }));
@@ -139,6 +138,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     identifier: note.identifier,
     date: note.createdDate,
     text: note.text,
+    messageType: 'Comment',
     username: note.user,
   }));
 
@@ -318,7 +318,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                   <ErrorBoundary key={noteIdentifier ?? note.date}>
                     <MessageItem
                       text={note.text}
-                      messageType={note.messageType === 'Justification' ? 'Justification' : 'Comment'}
+                      messageType={note.messageType}
                       date={note.date}
                       username={note.username}
                       backgroundColor="nvi.main"
