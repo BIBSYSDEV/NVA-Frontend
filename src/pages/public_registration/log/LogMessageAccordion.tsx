@@ -51,6 +51,7 @@ export const LogMessageAccordion = ({ messages, topic }: LogMessageAccordionProp
                 key={message.identifier}
                 text={message.text}
                 date={message.createdDate}
+                messageType={'Message'}
                 username={message.sender}
                 backgroundColor={getMessageItemBackgroundColor(topic)}
                 menuElement={canDeleteMessage && <MessageMenu messageId={message.id} />}

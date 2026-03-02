@@ -44,6 +44,7 @@ export const TicketMessageList = ({ ticket }: MessageListProps) => {
               text={message.text}
               date={message.createdDate}
               username={message.sender}
+              messageType={'Message'}
               backgroundColor={'background.neutral87'}
               menuElement={canDeleteMessage && <MessageMenu messageId={message.id} />}
             />
@@ -61,7 +62,7 @@ interface MessageItemProps {
   backgroundColor: BoxProps['bgcolor'];
   menuElement?: ReactNode;
   showOrganization?: boolean;
-  approvalStatus?: 'Approved' | 'Rejected';
+  messageType?: 'Justification' | 'Message' | 'Comment';
 }
 
 export const MessageItem = ({
@@ -70,7 +71,7 @@ export const MessageItem = ({
   username,
   menuElement,
   showOrganization = false,
-  approvalStatus,
+  messageType = 'Comment',
 }: MessageItemProps) => {
   const { t } = useTranslation();
 
@@ -86,16 +87,21 @@ export const MessageItem = ({
         borderRadius: '4px',
         display: 'flex',
         flexDirection: 'column',
+        color: 'black !important',
       }}>
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center', gap: '0.3rem' }}>
         <HorizontalBox sx={{ gap: '0.25rem' }}>
-          {approvalStatus === 'Rejected' ? (
-            <SellIcon sx={{ fontSize: '1.1rem' }} />
+          {messageType === 'Justification' ? (
+            <SellIcon sx={{ fontSize: '1.1rem', color: 'black !important' }} />
           ) : (
-            <ChatBubbleIcon sx={{ fontSize: '1.1rem' }} />
+            <ChatBubbleIcon sx={{ fontSize: '1.1rem', color: 'black !important' }} />
           )}
-          <Typography sx={{ fontWeight: 'bold' }}>
-            {approvalStatus === 'Rejected' ? t('common.justification') : t('tasks.nvi.note')}
+          <Typography sx={{ fontWeight: 'bold', color: 'black !important' }}>
+            {messageType === 'Justification'
+              ? t('common.justification')
+              : messageType === 'Message'
+                ? t('common.message')
+                : t('tasks.nvi.note')}
           </Typography>
         </HorizontalBox>
         {showOrganization ? (
@@ -107,12 +113,12 @@ export const MessageItem = ({
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
       <Box
-        sx={{ color: 'primary.main', my: '0.1rem' }}
+        sx={{ color: 'black !important', my: '0.1rem' }}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
         component={typeof text === 'string' ? Typography : 'div'}>
         {text ? text : <i>{t('my_page.messages.message_deleted')}</i>}
       </Box>
-      <HorizontalBox sx={{ gap: '1rem' }}>
+      <HorizontalBox sx={{ gap: '1rem', color: 'black' }}>
         <Box sx={{ flexGrow: 1 }}>
           <Tooltip title={senderName ? senderName : t('common.unknown')}>
             <EllipsisTypography
@@ -120,6 +126,7 @@ export const MessageItem = ({
               sx={{
                 fontWeight: 'bold',
                 maxWidth: { sm: '10rem', md: '12rem', lg: '18rem', xl: '30rem' },
+                color: 'black !important',
               }}>
               {senderQuery.isPending ? (
                 <Skeleton sx={{ width: '8rem' }} />
@@ -132,10 +139,10 @@ export const MessageItem = ({
           </Tooltip>
         </Box>
         <Tooltip title={toDateStringWithTime(date)}>
-          <HorizontalBox sx={{ gap: '0.25rem' }}>
-            <CalendarMonthIcon />
+          <HorizontalBox sx={{ gap: '0.25rem', color: 'black' }}>
+            <CalendarMonthIcon sx={{ color: 'black !important' }} />
             <Typography
-              sx={{ pt: '0.1rem' }}
+              sx={{ pt: '0.1rem', color: 'black !important' }}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
               {toDateString(date)}
             </Typography>
