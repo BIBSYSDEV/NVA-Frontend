@@ -1,6 +1,5 @@
 import { createTheme, darken, PaletteColor, PaletteColorOptions, SxProps } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
-import type {} from '@mui/x-date-pickers/themeAugmentation';
 import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
@@ -41,6 +40,7 @@ declare module '@mui/material/styles' {
     person: PaletteColor;
     project: PaletteColor;
     centralImport: PaletteColor;
+    textPrimary: PaletteColor;
     neutral87: PaletteColor;
     taskType: {
       publishingRequest: PaletteColor;
@@ -55,6 +55,7 @@ declare module '@mui/material/styles' {
     person?: PaletteColorOptions;
     project?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
+    textPrimary?: PaletteColorOptions;
     neutral87?: PaletteColorOptions;
     taskType?: {
       publishingRequest?: PaletteColorOptions;
@@ -164,6 +165,9 @@ export const mainTheme = createTheme(
       },
       centralImport: {
         main: Color.CentralImportMain,
+      },
+      textPrimary: {
+        main: Color.TextPrimary,
       },
       background: {
         default: Color.Neutral95,

@@ -56,7 +56,7 @@ export const TicketMessageList = ({ ticket }: MessageListProps) => {
 };
 
 interface MessageItemProps {
-  text: ReactNode;
+  text: string | undefined;
   date: string;
   username: string;
   backgroundColor: BoxProps['bgcolor'];
@@ -88,16 +88,16 @@ export const MessageItem = ({
         borderRadius: '4px',
         display: 'flex',
         flexDirection: 'column',
-        color: 'black !important',
+        color: 'textPrimary.main',
       }}>
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center', gap: '0.3rem' }}>
-        <HorizontalBox sx={{ gap: '0.25rem' }}>
+        <HorizontalBox sx={{ gap: '0.25rem', color: 'textPrimary.main' }}>
           {messageType === 'Justification' || messageType === 'Approval' ? (
-            <SellIcon sx={{ fontSize: '1.1rem', color: 'black !important' }} />
+            <SellIcon sx={{ fontSize: '1.1rem', color: 'textPrimary.main' }} />
           ) : (
-            <ChatBubbleIcon sx={{ fontSize: '1.1rem', color: 'black !important' }} />
+            <ChatBubbleIcon sx={{ fontSize: '1.1rem', color: 'textPrimary.main' }} />
           )}
-          <Typography sx={{ fontWeight: 'bold', color: 'black !important' }}>
+          <Typography sx={{ fontWeight: 'bold', color: 'textPrimary.main' }}>
             {messageType === 'Justification'
               ? t('common.justification')
               : messageType === 'Approval'
@@ -116,12 +116,12 @@ export const MessageItem = ({
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
       <Box
-        sx={{ color: 'black !important', my: '0.1rem' }}
+        sx={{ color: 'textPrimary.main', my: '0.1rem' }}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
-        component={typeof text === 'string' ? Typography : 'div'}>
+        component={Typography}>
         {text ? text : messageType !== 'Approval' ? <i>{t('my_page.messages.message_deleted')}</i> : undefined}
       </Box>
-      <HorizontalBox sx={{ gap: '1rem', color: 'black' }}>
+      <HorizontalBox sx={{ gap: '1rem', color: 'textPrimary.main' }}>
         <Box sx={{ flexGrow: 1 }}>
           <Tooltip title={senderName ? senderName : t('common.unknown')}>
             <EllipsisTypography
@@ -129,7 +129,7 @@ export const MessageItem = ({
               sx={{
                 fontWeight: 'bold',
                 maxWidth: { sm: '10rem', md: '12rem', lg: '18rem', xl: '30rem' },
-                color: 'black !important',
+                color: 'textPrimary.main',
               }}>
               {senderQuery.isPending ? (
                 <Skeleton sx={{ width: '8rem' }} />
@@ -142,10 +142,10 @@ export const MessageItem = ({
           </Tooltip>
         </Box>
         <Tooltip title={toDateStringWithTime(date)}>
-          <HorizontalBox sx={{ gap: '0.25rem', color: 'black' }}>
-            <CalendarMonthIcon sx={{ color: 'black !important' }} />
+          <HorizontalBox sx={{ gap: '0.25rem', color: 'textPrimary.main' }}>
+            <CalendarMonthIcon sx={{ color: 'textPrimary.main' }} />
             <Typography
-              sx={{ pt: '0.1rem', color: 'black !important' }}
+              sx={{ pt: '0.1rem', color: 'textPrimary.main' }}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
               {toDateString(date)}
             </Typography>

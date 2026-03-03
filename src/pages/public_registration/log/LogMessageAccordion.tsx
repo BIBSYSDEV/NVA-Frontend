@@ -53,7 +53,7 @@ export const LogMessageAccordion = ({ messages, topic }: LogMessageAccordionProp
                 date={message.createdDate}
                 messageType={'Message'}
                 username={message.sender}
-                backgroundColor={getMessageItemBackgroundColor(topic)}
+                backgroundColor={'background.neutral87'}
                 menuElement={canDeleteMessage && <MessageMenu messageId={message.id} />}
               />
             );
@@ -72,18 +72,5 @@ const getTicketTypeFromLogEntryTopic = (topic: LogEntry['topic']): TicketType =>
       return 'DoiRequest';
     default:
       return 'PublishingRequest';
-  }
-};
-
-const getMessageItemBackgroundColor = (topic: LogEntry['topic']) => {
-  switch (topic) {
-    case 'DoiRejected':
-    case 'DoiAssigned':
-      return 'doiRequest.main';
-    case 'FileApproved':
-    case 'FileRejected':
-      return 'publishingRequest.main';
-    default:
-      return 'secondary.main';
   }
 };

@@ -321,7 +321,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                       messageType={note.messageType}
                       date={note.date}
                       username={note.username}
-                      backgroundColor="nvi.main"
+                      backgroundColor="background.neutral87"
                       showOrganization
                       menuElement={
                         !!deleteFunction && (
