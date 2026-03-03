@@ -2,6 +2,7 @@ import {
   Approval,
   Note,
   NviCandidate,
+  NviInstitutionsReport,
   NviInstitutionStatusResponse,
   NviPeriod,
   NviPeriodResponse,
@@ -122,4 +123,11 @@ export const fetchNviInstitutionApprovalReport = async (year: number) => {
     responseType: 'blob',
   });
   return fetchNviInstitutionApprovalReportResponse.data;
+};
+
+export const fetchNviReportsAllInstitutions = async (year: string) => {
+  const fetchNviReportsResponse = await authenticatedApiRequest2<NviInstitutionsReport>({
+    url: `${ScientificIndexApiPath.Reports}/${year}/institutions`,
+  });
+  return fetchNviReportsResponse.data;
 };
