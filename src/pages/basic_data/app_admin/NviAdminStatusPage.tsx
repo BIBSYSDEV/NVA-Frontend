@@ -17,6 +17,7 @@ import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon
 import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
 import { InstitutionReport } from '../../../types/nvi.types';
 import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminStatusPage = () => {
@@ -31,7 +32,8 @@ export const NviAdminStatusPage = () => {
     .filter((report: InstitutionReport) => {
       if (institutionSearch === null) return true;
       const trimmedSearch = institutionSearch.trim().toLowerCase();
-      const trimmedInstitution = report.institution.labels['nb'].trim().toLowerCase(); // TODO: Håndter språk på denne og den i tabellen
+      const institutionName = getLanguageString(report.institution.labels);
+      const trimmedInstitution = institutionName.trim().toLowerCase();
       return trimmedInstitution.includes(trimmedSearch);
     });
 
@@ -78,7 +80,7 @@ export const NviAdminStatusPage = () => {
 
                 return (
                   <TableRow key={id} sx={{ height: '4rem' }}>
-                    <TableCell>{institution.labels['nb']}</TableCell>
+                    <TableCell>{getLanguageString(institution.labels)}</TableCell>
                     <TableCell>{sectorLabel}</TableCell>
                     <TableCell align="center">{byLocalApprovalStatus.new}</TableCell>
                     <TableCell align="center">{byLocalApprovalStatus.pending}</TableCell>
