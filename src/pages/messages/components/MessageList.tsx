@@ -72,6 +72,7 @@ export const MessageItem = ({
   menuElement,
   showOrganization = false,
   messageType = 'Comment',
+  backgroundColor = 'background.neutral87',
 }: MessageItemProps) => {
   const { t } = useTranslation();
 
@@ -82,7 +83,7 @@ export const MessageItem = ({
     <Box
       component="li"
       sx={{
-        bgcolor: 'background.neutral87',
+        bgcolor: backgroundColor,
         p: '0.5rem',
         borderRadius: '4px',
         display: 'flex',
