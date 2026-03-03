@@ -126,8 +126,14 @@ export const fetchNviInstitutionApprovalReport = async (year: number) => {
 };
 
 export const fetchNviReportsAllInstitutions = async (year: string) => {
+  const normalisedYear = year.trim();
+
+  if (!/^\d{4}$/.test(normalisedYear)) {
+    throw new Error(`Invalid reporting year: ${year}`);
+  }
+
   const fetchNviReportsResponse = await authenticatedApiRequest2<NviInstitutionsReport>({
-    url: `${ScientificIndexApiPath.Reports}/${year}/institutions`,
+    url: `${ScientificIndexApiPath.Reports}/${encodeURIComponent(normalisedYear)}/institutions`,
   });
   return fetchNviReportsResponse.data;
 };

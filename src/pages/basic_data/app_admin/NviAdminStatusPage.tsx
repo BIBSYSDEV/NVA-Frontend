@@ -25,9 +25,12 @@ export const NviAdminStatusPage = () => {
   const [searchParams] = useSearchParams();
   const selectedSector = searchParams.get('sector');
   const institutionSearch = searchParams.get('institution');
-  const reportsQuery = useFetchNviReports({ year: searchParams.get('year') ?? getDefaultNviYear().toString() });
+  const yearParam = searchParams.get('year')?.trim();
+  const year = /^\d{4}$/.test(yearParam ?? '') ? yearParam! : getDefaultNviYear().toString();
+  const reportsQuery = useFetchNviReports({ year });
 
-  const filteredData = (reportsQuery.data?.institutions ? [...reportsQuery.data?.institutions] : [])
+  const institutions = reportsQuery.data?.institutions ?? [];
+  const filteredData = institutions
     .filter((report: InstitutionReport) => selectedSector === null || report.sector === selectedSector)
     .filter((report: InstitutionReport) => {
       if (institutionSearch === null) return true;
@@ -52,7 +55,15 @@ export const NviAdminStatusPage = () => {
       yearSelector
       sectorSelector
       institutionSearch>
-      {reportsQuery.data ? (
+      {reportsQuery.isPending ? (
+        <VerticalBox sx={{ width: '100%' }}>
+          <Skeleton sx={{ width: '100%', height: '5rem' }} />
+          <Skeleton sx={{ width: '100%', height: '5rem' }} />
+          <Skeleton sx={{ width: '100%', height: '5rem' }} />
+        </VerticalBox>
+      ) : reportsQuery.isError ? (
+        <Typography>{t('feedback.error.get_nvi_reports')}</Typography>
+      ) : (
         <TableContainer component={Paper} variant="outlined">
           <Table size="small">
             <TableHead>
@@ -104,12 +115,6 @@ export const NviAdminStatusPage = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      ) : (
-        <VerticalBox sx={{ width: '100%' }}>
-          <Skeleton sx={{ width: '100%', height: '5rem' }} />
-          <Skeleton sx={{ width: '100%', height: '5rem' }} />
-          <Skeleton sx={{ width: '100%', height: '5rem' }} />
-        </VerticalBox>
       )}
     </NviStatusWrapper>
   );
