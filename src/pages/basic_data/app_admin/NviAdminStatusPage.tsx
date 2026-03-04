@@ -26,7 +26,7 @@ export const NviAdminStatusPage = () => {
   const selectedSector = searchParams.get('sector');
   const institutionSearch = searchParams.get('institution');
   const yearParam = searchParams.get('year')?.trim();
-  const year = /^\d{4}$/.test(yearParam ?? '') ? yearParam! : getDefaultNviYear().toString();
+  const year = yearParam ? Number(yearParam) : getDefaultNviYear();
   const reportsQuery = useFetchNviReports({ year });
 
   const institutions = reportsQuery.data?.institutions ?? [];
