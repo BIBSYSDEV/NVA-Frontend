@@ -585,6 +585,7 @@
       "get_messages": "Kunne ikke hente meldinger",
       "get_nvi_candidate": "Kunne ikke hente NVI-kandidat",
       "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
+      "get_nvi_period_report": "Kunne ikke hente NVI-rapport",
       "get_nvi_reports": "Kunne ikke hente NVI-rapporter",
       "get_nvi_report_for_institution": "Kunne ikke hente NVI-rapport for organisasjon",
       "get_nvi_periods": "Kunne ikke hente NVI-perioder",

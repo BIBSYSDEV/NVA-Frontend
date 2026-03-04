@@ -6,6 +6,7 @@ import {
   NviInstitutionsReport,
   NviInstitutionStatusResponse,
   NviPeriod,
+  NviPeriodReport,
   NviPeriodResponse,
   RejectedApproval,
 } from '../types/nvi.types';
@@ -126,6 +127,20 @@ export const fetchNviInstitutionApprovalReport = async (year: number) => {
   return fetchNviInstitutionApprovalReportResponse.data;
 };
 
+export const fetchNviPeriodReport = async (year: number) => {
+  const isValidYear = Number.isInteger(year) && year >= 1000 && year <= 9999;
+
+  if (!isValidYear) {
+    throw new Error('Invalid year provided. Year must be a four-digit integer.');
+  }
+
+  const fetchNviPeriodReportResponse = await authenticatedApiRequest2<NviPeriodReport>({
+    url: `${ScientificIndexApiPath.Reports}/${year}`,
+  });
+
+  return fetchNviPeriodReportResponse.data;
+};
+
 export const fetchNviReportsAllInstitutions = async (year: number) => {
   const isValidYear = Number.isInteger(year) && year >= 1000 && year <= 9999;
 
@@ -133,11 +148,11 @@ export const fetchNviReportsAllInstitutions = async (year: number) => {
     throw new Error('Invalid year provided. Year must be a four-digit integer.');
   }
 
-  const fetchNviReportsResponse = await authenticatedApiRequest2<NviInstitutionsReport>({
+  const fetchNviReportsAllInstitutionsResponse = await authenticatedApiRequest2<NviInstitutionsReport>({
     url: `${ScientificIndexApiPath.Reports}/${year}/institutions`,
   });
 
-  return fetchNviReportsResponse.data;
+  return fetchNviReportsAllInstitutionsResponse.data;
 };
 
 export const fetchNviReportForInstitution = async (id: string, year: number) => {
@@ -147,8 +162,8 @@ export const fetchNviReportForInstitution = async (id: string, year: number) => 
     throw new Error('Invalid year provided. Year must be a four-digit integer.');
   }
 
-  const fetchNviReportsResponse = await authenticatedApiRequest2<InstitutionReport>({
+  const fetchNviReportForInstitutionResponse = await authenticatedApiRequest2<InstitutionReport>({
     url: `${ScientificIndexApiPath.Reports}/${year}/institutions/${id}`,
   });
-  return fetchNviReportsResponse.data;
+  return fetchNviReportForInstitutionResponse.data;
 };
