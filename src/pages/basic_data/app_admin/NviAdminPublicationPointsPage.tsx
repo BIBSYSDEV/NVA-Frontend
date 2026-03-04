@@ -1,127 +1,23 @@
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {
-  Box,
-  Button,
-  Paper,
-  Skeleton,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
-import { useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
-import { useFetchNviPeriodReport } from '../../../api/hooks/useFetchNviPeriodReport';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
+import { AdminNviPublicationPointsTexts } from '../../../components/AdminNviPublicationPointsTexts';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
-import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
+import { HorizontalBox } from '../../../components/styled/Wrappers';
 import i18n from '../../../translations/i18n';
 import { InstitutionReport } from '../../../types/nvi.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { formatNumber } from '../../../utils/general-helpers';
-import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
-  const [textExpanded, setTextExpanded] = useState(false);
-  const detailsId = 'publication-points-details';
   const { filteredData, isPending, isError } = useGetUrlFilteredInstitutionReports();
-  const year = getDefaultNviYear();
-  const periodReport = useFetchNviPeriodReport({ year });
-  const periodReportLastYear = useFetchNviPeriodReport({ year: year - 1 });
-  const periodTotals = periodReport.data?.totals;
-  const periodTotalsLastYear = periodReportLastYear.data?.totals;
 
   return (
     <NviStatusWrapper
       headline={t('basic_data.nvi.publication_points_status')}
-      topView={
-        <Box sx={{ mb: '1rem' }}>
-          <Typography>{t('publication_points_description')}</Typography>
-          <Button
-            variant="text"
-            onClick={() => setTextExpanded((prev) => !prev)}
-            aria-expanded={textExpanded}
-            aria-controls={detailsId}
-            data-testid={dataTestId.basicData.nvi.publicationPointsExpandDescriptionButton}
-            endIcon={textExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            sx={{ textDecoration: 'underline', justifyContent: 'flex-start', p: 0, minWidth: 0, my: '0.5rem' }}>
-            {textExpanded ? t('common.read_less') : t('common.read_more')}
-          </Button>
-          {
-            <Typography id={detailsId} sx={{ display: textExpanded ? 'block' : 'none' }}>
-              {t('publication_points_description_more')}
-            </Typography>
-          }
-          <VerticalBox sx={{ gap: '0.5rem', mt: '1rem' }}>
-            {periodReport.isPending ? (
-              <Skeleton sx={{ width: '50%' }} />
-            ) : periodReport.isError || !periodTotals ? undefined : (
-              <Typography>
-                <Trans
-                  i18nKey="x_results_are_ready_for_reporting_and_they_give_y_publication_points"
-                  values={{
-                    num_results: formatNumber(periodTotals.undisputedTotalCount),
-                    total_publicationpoints: formatNumber(periodTotals.validPoints),
-                  }}
-                  components={{ b: <strong /> }}
-                />
-              </Typography>
-            )}
-            {periodReport.isPending || periodReportLastYear.isPending ? (
-              <VerticalBox>
-                <Skeleton sx={{ width: '40%' }} />
-                <Skeleton sx={{ width: '40%' }} />
-              </VerticalBox>
-            ) : periodReport.isError ||
-              periodReportLastYear.isError ||
-              !periodTotals ||
-              !periodTotalsLastYear ? undefined : (
-              <>
-                <Typography>
-                  <Trans
-                    i18nKey="percent_of_published_reports_in_year"
-                    values={{
-                      percentage: formatNumber(
-                        Math.round(
-                          periodTotalsLastYear.undisputedTotalCount > 0
-                            ? (periodTotals.undisputedTotalCount / periodTotalsLastYear.undisputedTotalCount) * 100
-                            : 0
-                        )
-                      ),
-                      year: year - 1,
-                    }}
-                    components={{ b: <strong /> }}
-                  />
-                </Typography>
-                <Typography>
-                  <Trans
-                    i18nKey="percent_of_publication_points_in_year"
-                    values={{
-                      percentage: formatNumber(
-                        Math.round(
-                          periodTotalsLastYear.validPoints > 0
-                            ? (periodTotals.validPoints / periodTotalsLastYear.validPoints) * 100
-                            : 0
-                        )
-                      ),
-                      year: year - 1,
-                    }}
-                    components={{ b: <strong /> }}
-                  />
-                </Typography>
-              </>
-            )}
-          </VerticalBox>
-        </Box>
-      }
+      topView={<AdminNviPublicationPointsTexts />}
       yearSelector
       sectorSelector
       institutionSearch>
