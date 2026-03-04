@@ -7,7 +7,9 @@ import { useFetchNviReports } from './useFetchNviReports';
 export const useGetUrlFilteredInstitutionReports = () => {
   const [searchParams] = useSearchParams();
   const yearParam = searchParams.get('year')?.trim();
-  const year = yearParam ? Number(yearParam) : getDefaultNviYear();
+  const parsedYear = yearParam ? Number(yearParam) : NaN;
+  const year =
+    Number.isInteger(parsedYear) && parsedYear >= 1000 && parsedYear <= 9999 ? parsedYear : getDefaultNviYear();
   const reportsQuery = useFetchNviReports({ year });
   const institutions = reportsQuery.data?.institutions ?? [];
 

@@ -19,12 +19,14 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 export const NviAdminNavigationAccordion = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const location = useLocation();
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const topOrgId = user?.topOrgCristinId ? getIdentifierFromId(user.topOrgCristinId) : '';
   const reportQuery = useFetchNviReportForInstitution({
     year: getDefaultNviYear(),
     id: topOrgId,
+    enabled: isAppAdmin,
   });
   const nviNumbers = reportQuery.data?.institutionSummary.totals;
 
