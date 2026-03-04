@@ -14,86 +14,22 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router';
+import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
+import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
 import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
-import { Sector } from '../../../types/customerInstitution.types';
+import i18n from '../../../translations/i18n';
+import { InstitutionReport } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { formatNumber } from '../../../utils/general-helpers';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
   const [textExpanded, setTextExpanded] = useState(false);
   const detailsId = 'publication-points-details';
-  const [searchParams] = useSearchParams();
-  const selectedSector = searchParams.get('sector');
-  const institutionSearch = searchParams.get('institution');
-
-  const mockData: Array<{
-    id: string;
-    institution: string;
-    sector: Sector;
-    approved: number;
-    total: number;
-    rejected: number;
-    publicationPoints: number;
-  }> = [
-    {
-      id: 'test1',
-      institution: 'Test institusjon 1',
-      sector: Sector.Uhi,
-      approved: 1,
-      total: 24,
-      rejected: 15,
-      publicationPoints: 31.45,
-    },
-    {
-      id: 'test2',
-      institution: 'Test institusjon 2',
-      sector: Sector.Uhi,
-      approved: 10,
-      total: 14,
-      rejected: 2,
-      publicationPoints: 67.31,
-    },
-    {
-      id: 'test3',
-      institution: 'Test institusjon 3',
-      sector: Sector.Health,
-      approved: 7,
-      total: 12,
-      rejected: 1,
-      publicationPoints: 13.57,
-    },
-    {
-      id: 'test4',
-      institution: 'Test institusjon 4',
-      sector: Sector.Uhi,
-      approved: 8,
-      total: 240,
-      rejected: 13,
-      publicationPoints: 12,
-    },
-    {
-      id: 'test5',
-      institution: 'Test institusjon 5',
-      sector: Sector.Uhi,
-      approved: 55,
-      total: 56,
-      rejected: 1,
-      publicationPoints: 98.49,
-    },
-  ]
-    .filter((obj) => selectedSector === null || obj.sector === (selectedSector as Sector))
-    .filter((obj) => {
-      if (institutionSearch === null) {
-        return true;
-      }
-      const trimmedSearch = institutionSearch.trim().toLowerCase();
-      const trimmedInstitution = obj.institution.trim().toLowerCase();
-      return trimmedInstitution.includes(trimmedSearch);
-    });
+  const { filteredData, isPending, isError } = useGetUrlFilteredInstitutionReports();
 
   return (
     <NviStatusWrapper
@@ -144,42 +80,55 @@ export const NviAdminPublicationPointsPage = () => {
       yearSelector
       sectorSelector
       institutionSearch>
-      <TableContainer component={Paper} variant="outlined">
-        <Table size="small">
-          <TableHead>
-            <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
-              <TableCell>{t('common.institution')}</TableCell>
-              <TableCell>{t('sector')}</TableCell>
-              <TableCell align="center">{t('approved')}</TableCell>
-              <TableCell align="center">{t('publication_points')}</TableCell>
-              <TableCell align="center">{t('percentage_controlled')}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {mockData.map((obj) => {
-              const controlled = obj.total > 0 ? (obj.approved + obj.rejected) / obj.total : 0;
-              return (
-                <TableRow key={obj.id} sx={{ height: '4rem' }}>
-                  <TableCell>{obj.institution}</TableCell>
-                  <TableCell>{t(`basic_data.institutions.sector_values.${obj.sector}`)}</TableCell>
-                  <TableCell align="center">{obj.approved}</TableCell>
-                  <TableCell align="center">{obj.publicationPoints}</TableCell>
-                  <TableCell align="center" sx={{ py: 0 }}>
-                    <HorizontalBox sx={{ justifyContent: 'center' }}>
-                      <PercentageWithIcon
-                        warningThresholdMinimum={30}
-                        successThresholdMinimum={100}
-                        displayPercentage={Math.round(controlled * 100)}
-                        alternativeIfZero={'-'}
-                      />
-                    </HorizontalBox>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {isPending ? (
+        <TableSkeleton />
+      ) : isError ? (
+        <Typography>{t('feedback.error.get_nvi_reports')}</Typography>
+      ) : (
+        <TableContainer component={Paper} variant="outlined">
+          <Table size="small">
+            <TableHead>
+              <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
+                <TableCell>{t('common.institution')}</TableCell>
+                <TableCell>{t('sector')}</TableCell>
+                <TableCell align="center">{t('approved')}</TableCell>
+                <TableCell align="center">{t('publication_points')}</TableCell>
+                <TableCell align="center">{t('percentage_controlled')}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredData.map(({ id, institution, sector, institutionSummary }: InstitutionReport) => {
+                const { byLocalApprovalStatus, totals } = institutionSummary;
+                const percentageControlled =
+                  totals.undisputedTotalCount > 0
+                    ? (byLocalApprovalStatus.approved + byLocalApprovalStatus.rejected) / totals.undisputedTotalCount
+                    : 0;
+                const sectorKey = `basic_data.institutions.sector_values.${sector}`;
+                const sectorLabel = i18n.exists(sectorKey) ? t(sectorKey as any) : sector;
+
+                return (
+                  <TableRow key={id} sx={{ height: '4rem' }}>
+                    <TableCell>{getLanguageString(institution.labels)}</TableCell>
+                    <TableCell>{sectorLabel}</TableCell>
+                    <TableCell align="center">{byLocalApprovalStatus.approved}</TableCell>
+                    <TableCell align="center">{totals.validPoints}</TableCell>
+                    <TableCell align="center">
+                      <HorizontalBox sx={{ justifyContent: 'center' }}>
+                        <PercentageWithIcon
+                          warningThresholdMinimum={30}
+                          successThresholdMinimum={100}
+                          displayPercentage={Math.round(percentageControlled * 100)}
+                          alternativeIfZero={'-'}
+                        />
+                      </HorizontalBox>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
     </NviStatusWrapper>
   );
 };

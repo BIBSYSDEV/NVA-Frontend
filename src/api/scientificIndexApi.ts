@@ -135,5 +135,19 @@ export const fetchNviReportsAllInstitutions = async (year: number) => {
   const fetchNviReportsResponse = await authenticatedApiRequest2<NviInstitutionsReport>({
     url: `${ScientificIndexApiPath.Reports}/${year}/institutions`,
   });
+
+  return fetchNviReportsResponse.data;
+};
+
+export const fetchNviReportForInstitution = async (id: string, year: number) => {
+  const isValidYear = Number.isInteger(year) && year >= 1000 && year <= 9999;
+
+  if (!isValidYear) {
+    throw new Error('Invalid year provided. Year must be a four-digit integer.');
+  }
+
+  const fetchNviReportsResponse = await authenticatedApiRequest2<NviInstitutionsReport>({
+    url: `${ScientificIndexApiPath.Reports}/${year}/institutions${id}`,
+  });
   return fetchNviReportsResponse.data;
 };

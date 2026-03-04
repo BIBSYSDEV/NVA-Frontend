@@ -1,7 +1,6 @@
 import {
   Box,
   Paper,
-  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -11,34 +10,17 @@ import {
   Typography,
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router';
-import { useFetchNviReports } from '../../../api/hooks/useFetchNviReports';
+import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
-import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
+import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
+import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { InstitutionReport } from '../../../types/nvi.types';
-import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminStatusPage = () => {
   const { t, i18n } = useTranslation();
-  const [searchParams] = useSearchParams();
-  const selectedSector = searchParams.get('sector');
-  const institutionSearch = searchParams.get('institution');
-  const yearParam = searchParams.get('year')?.trim();
-  const year = yearParam ? Number(yearParam) : getDefaultNviYear();
-  const reportsQuery = useFetchNviReports({ year });
-
-  const institutions = reportsQuery.data?.institutions ?? [];
-  const filteredData = institutions
-    .filter((report: InstitutionReport) => selectedSector === null || report.sector === selectedSector)
-    .filter((report: InstitutionReport) => {
-      if (institutionSearch === null) return true;
-      const trimmedSearch = institutionSearch.trim().toLowerCase();
-      const institutionName = getLanguageString(report.institution.labels);
-      const trimmedInstitution = institutionName.trim().toLowerCase();
-      return trimmedInstitution.includes(trimmedSearch);
-    });
+  const { filteredData, isPending, isError } = useGetUrlFilteredInstitutionReports();
 
   return (
     <NviStatusWrapper
@@ -55,13 +37,9 @@ export const NviAdminStatusPage = () => {
       yearSelector
       sectorSelector
       institutionSearch>
-      {reportsQuery.isPending ? (
-        <VerticalBox sx={{ width: '100%' }}>
-          <Skeleton sx={{ width: '100%', height: '5rem' }} />
-          <Skeleton sx={{ width: '100%', height: '5rem' }} />
-          <Skeleton sx={{ width: '100%', height: '5rem' }} />
-        </VerticalBox>
-      ) : reportsQuery.isError ? (
+      {isPending ? (
+        <TableSkeleton />
+      ) : isError ? (
         <Typography>{t('feedback.error.get_nvi_reports')}</Typography>
       ) : (
         <TableContainer component={Paper} variant="outlined">
