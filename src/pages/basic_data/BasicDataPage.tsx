@@ -24,6 +24,7 @@ import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { StyledNviStatusBox } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getDefaultNviYear } from '../../utils/hooks/useNviCandidatesParams';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
@@ -160,7 +161,7 @@ const BasicDataPage = () => {
                       <SelectableButton
                         data-testid={dataTestId.basicData.nviStatusLink}
                         isSelected={currentPath === UrlPathTemplate.BasicDataNviStatus}
-                        to={UrlPathTemplate.BasicDataNviStatus}>
+                        to={`${UrlPathTemplate.BasicDataNviStatus}?year=${getDefaultNviYear()}`}>
                         {t('basic_data.nvi.show_reporting_status')}
                       </SelectableButton>
                       <SelectableButton
