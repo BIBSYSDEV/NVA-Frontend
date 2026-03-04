@@ -8,6 +8,7 @@ import { Box, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
+import { useFetchNviReportForInstitution } from '../../api/hooks/useFetchNviReportForInstitution';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MergeImportCandidate } from '../../components/merge_results/MergeImportCandidate';
@@ -24,6 +25,7 @@ import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { StyledNviStatusBox } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getDefaultNviYear } from '../../utils/hooks/useNviCandidatesParams';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
@@ -54,6 +56,12 @@ const BasicDataPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const topOrgId = user?.topOrgCristinId ? getIdentifierFromId(user.topOrgCristinId) : '';
+  const reportQuery = useFetchNviReportForInstitution({
+    year: getDefaultNviYear(),
+    id: topOrgId,
+  });
+  const nviNumbers = reportQuery.data?.institutionSummary.totals;
 
   const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
   const centralImportIsSelected = currentPath.startsWith(UrlPathTemplate.BasicDataCentralImport);
@@ -143,12 +151,18 @@ const BasicDataPage = () => {
               <NavigationList aria-label={t('common.nvi')}>
                 <StyledNviStatusBox>
                   <BetaFunctionality>
-                    <NviReportProgressBar
-                      completedPercentage={78}
-                      completedCount={245}
-                      totalCount={368}
-                      isPending={false}
-                    />
+                    {reportQuery.isError || !nviNumbers ? undefined : (
+                      <NviReportProgressBar
+                        completedPercentage={
+                          nviNumbers.undisputedTotalCount > 0
+                            ? Math.round((nviNumbers.undisputedProcessedCount / nviNumbers.undisputedTotalCount) * 100)
+                            : 0
+                        }
+                        completedCount={nviNumbers.undisputedProcessedCount}
+                        totalCount={nviNumbers.undisputedTotalCount}
+                        isPending={reportQuery.isPending}
+                      />
+                    )}
                   </BetaFunctionality>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
                     <SelectableButton

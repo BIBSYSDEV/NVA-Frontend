@@ -1,5 +1,6 @@
 import {
   Approval,
+  InstitutionReport,
   Note,
   NviCandidate,
   NviInstitutionsReport,
@@ -146,8 +147,8 @@ export const fetchNviReportForInstitution = async (id: string, year: number) => 
     throw new Error('Invalid year provided. Year must be a four-digit integer.');
   }
 
-  const fetchNviReportsResponse = await authenticatedApiRequest2<NviInstitutionsReport>({
-    url: `${ScientificIndexApiPath.Reports}/${year}/institutions${id}`,
+  const fetchNviReportsResponse = await authenticatedApiRequest2<InstitutionReport>({
+    url: `${ScientificIndexApiPath.Reports}/${year}/institutions/${id}`,
   });
   return fetchNviReportsResponse.data;
 };
