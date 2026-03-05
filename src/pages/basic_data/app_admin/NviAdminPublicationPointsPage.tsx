@@ -51,7 +51,7 @@ export const NviAdminPublicationPointsPage = () => {
                   <TableRow key={id} sx={{ height: '4rem' }}>
                     <TableCell>{getLanguageString(institution.labels)}</TableCell>
                     <TableCell>{sectorLabel}</TableCell>
-                    <TableCell align="center">{totals.undisputedTotalCount}</TableCell>
+                    <TableCell align="center">{totals.undisputedProcessedCount}</TableCell>
                     <TableCell align="center">{totals.validPoints}</TableCell>
                     <TableCell align="center">
                       <HorizontalBox sx={{ justifyContent: 'center' }}>
