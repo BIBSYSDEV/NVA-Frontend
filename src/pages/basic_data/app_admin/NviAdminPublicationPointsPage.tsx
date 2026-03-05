@@ -2,9 +2,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { useTranslation } from 'react-i18next';
 import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
 import { AdminNviPublicationPointsTexts } from '../../../components/AdminNviPublicationPointsTexts';
-import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
-import { HorizontalBox } from '../../../components/styled/Wrappers';
 import i18n from '../../../translations/i18n';
 import { InstitutionReport } from '../../../types/nvi.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -32,18 +30,18 @@ export const NviAdminPublicationPointsPage = () => {
               <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
                 <TableCell>{t('common.institution')}</TableCell>
                 <TableCell>{t('sector')}</TableCell>
-                <TableCell align="center">{t('approved')}</TableCell>
+                {/*<TableCell align="center">{t('approved')}</TableCell>*/}
                 <TableCell align="center">{t('publication_points')}</TableCell>
-                <TableCell align="center">{t('percentage_controlled')}</TableCell>
+                {/*  <TableCell align="center">{t('percentage_controlled')}</TableCell>*/}
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredData.map(({ id, institution, sector, institutionSummary }: InstitutionReport) => {
-                const { byLocalApprovalStatus, totals } = institutionSummary;
-                const percentageControlled =
+                const { totals } = institutionSummary;
+                /*    const percentageControlled =
                   totals.undisputedTotalCount > 0
                     ? (byLocalApprovalStatus.approved + byLocalApprovalStatus.rejected) / totals.undisputedTotalCount
-                    : 0;
+                    : 0;*/
                 const sectorKey = `basic_data.institutions.sector_values.${sector}`;
                 const sectorLabel = i18n.exists(sectorKey) ? t(sectorKey as any) : sector;
 
@@ -51,9 +49,9 @@ export const NviAdminPublicationPointsPage = () => {
                   <TableRow key={id} sx={{ height: '4rem' }}>
                     <TableCell>{getLanguageString(institution.labels)}</TableCell>
                     <TableCell>{sectorLabel}</TableCell>
-                    <TableCell align="center">{totals.undisputedProcessedCount}</TableCell>
+                    {/*                    <TableCell align="center">{byLocalApprovalStatus.approved}</TableCell>*/}
                     <TableCell align="center">{totals.validPoints}</TableCell>
-                    <TableCell align="center">
+                    {/* <TableCell align="center">
                       <HorizontalBox sx={{ justifyContent: 'center' }}>
                         <PercentageWithIcon
                           warningThresholdMinimum={30}
@@ -62,7 +60,7 @@ export const NviAdminPublicationPointsPage = () => {
                           alternativeIfZero={'-'}
                         />
                       </HorizontalBox>
-                    </TableCell>
+                    </TableCell>*/}
                   </TableRow>
                 );
               })}

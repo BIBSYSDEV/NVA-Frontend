@@ -77,7 +77,7 @@ export const AdminNviPublicationPointsTexts = () => {
                 components={{ b: <strong /> }}
               />
             </Typography>
-            <Typography>
+            {/*<Typography>
               <Trans
                 i18nKey="percent_of_publication_points_in_year"
                 values={{
@@ -89,7 +89,7 @@ export const AdminNviPublicationPointsTexts = () => {
                 }}
                 components={{ b: <strong /> }}
               />
-            </Typography>
+            </Typography>*/}
           </>
         )}
       </VerticalBox>
