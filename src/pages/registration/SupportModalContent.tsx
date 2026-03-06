@@ -91,7 +91,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
               <Typography>{customerServiceCenterUri}</Typography>
               <OpenInNewIcon />
             </StyledMuiLink>
-            <Trans i18nKey="registration.support.self_help.institution_help_description">
+            <Trans t={t} i18nKey="registration.support.self_help.institution_help_description">
               <Typography fontStyle="italic" />
             </Trans>
           </Grid>
@@ -110,6 +110,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
             {t('registration.support.curator_help.header')}
           </Typography>
           <Trans
+            t={t}
             i18nKey="registration.support.curator_help.description"
             components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />

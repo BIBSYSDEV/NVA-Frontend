@@ -1,11 +1,9 @@
 import { Box } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
-import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { NviCandidateProblemsContext } from '../../../context/NviCandidateProblemsContext';
@@ -18,29 +16,29 @@ import NotFound from '../../errorpages/NotFound';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { NavigationIconButton } from './NavigationIconButton';
 import { NviCandidateActionPanel } from './NviCandidateActionPanel';
+import { nviCandidateQueryKeyword, useFetchNviCandidate } from '../../../api/hooks/useFetchNviCandidate';
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
+  const [isUpdatingNviCandidateInfo, setIsUpdatingNviCandidateInfo] = useState(true);
   const location = useLocation();
   const locationState = location.state as NviCandidatePageLocationState;
   const { identifier } = useParams<IdentifierParams>();
-
-  const nviCandidateQueryKey = ['nviCandidate', identifier ?? ''];
-  const nviCandidateQuery = useQuery({
-    enabled: !!identifier,
-    queryKey: nviCandidateQueryKey,
-    queryFn: () => fetchNviCandidate(identifier ?? ''),
-    meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
-    retry(failureCount, error: Pick<AxiosError, 'response'>) {
-      if (error.response?.status === 401) {
-        return false;
-      }
-      return failureCount < 3;
-    },
-  });
-
+  const nviCandidateQuery = useFetchNviCandidate(identifier);
+  const { refetch } = nviCandidateQuery;
   const nviCandidate = nviCandidateQuery.data;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
+
+  /* NVI calculation in backend takes a few seconds after a registration has been updated, so we are disabling the
+   * panel for a few seconds before refetching to ensure it shows the correct data (NP-49727) */
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      refetch().finally(() => {
+        setIsUpdatingNviCandidateInfo(false);
+      });
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [identifier, refetch]);
 
   const registrationQuery = useFetchRegistration(registrationIdentifier);
 
@@ -142,7 +140,11 @@ export const NviCandidatePage = () => {
           </ErrorBoundary>
 
           {nviCandidate && (
-            <NviCandidateActionPanel nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
+            <NviCandidateActionPanel
+              nviCandidate={nviCandidate}
+              isUpdatingNviCandidateInfo={isUpdatingNviCandidateInfo}
+              nviCandidateQueryKey={[nviCandidateQueryKeyword, identifier ?? '']}
+            />
           )}
         </ErrorBoundary>
       )}

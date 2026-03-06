@@ -18,6 +18,7 @@ import { ArtisticDesignForm } from './resource_type_tab/sub_type_forms/artistic_
 import { ArtisticLiteraryArtForm } from './resource_type_tab/sub_type_forms/artistic_types/literary_art/ArtisticLiteraryArtForm';
 import { ArtisticMovingPictureForm } from './resource_type_tab/sub_type_forms/artistic_types/moving_picture/ArtisticMovingPictureForm';
 import { ArtisticMusicPerformanceForm } from './resource_type_tab/sub_type_forms/artistic_types/music_performance/ArtisticMusicPerformanceForm';
+import { OtherArtisticOutputForm } from './resource_type_tab/sub_type_forms/artistic_types/other_artistic_output/OtherArtisticOutputForm';
 import { ArtisticPerformingArtsForm } from './resource_type_tab/sub_type_forms/artistic_types/performing_arts/ArtisticPerformingArtsForm';
 import { ArtisticVisualArtForm } from './resource_type_tab/sub_type_forms/artistic_types/visual_arts/ArtisticVisualArtForm';
 import { BookForm } from './resource_type_tab/sub_type_forms/BookForm';
@@ -84,6 +85,8 @@ export const ResourceTypePanel = () => {
           <ArtisticVisualArtForm />
         ) : instanceType === ArtisticType.LiteraryArts ? (
           <ArtisticLiteraryArtForm />
+        ) : instanceType === ArtisticType.OtherArtisticOutput ? (
+          <OtherArtisticOutputForm />
         ) : null
       ) : mainType === PublicationType.MediaContribution ? (
         isPeriodicalMediaContribution(instanceType) ? (

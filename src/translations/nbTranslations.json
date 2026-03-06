@@ -6,6 +6,7 @@
   },
   "add_file": "Legg til fil",
   "add_project": "Legg til prosjekt",
+  "approved": "Godkjent",
   "authorization": {
     "about_terms": "Brukervilkår og personvernerklæring for Nasjonalt vitenarkiv",
     "about_terms_description": "<p>For å bruke tjenesten må du akseptere Sikts <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Brukervilkår for Nasjonalt vitenarkiv</a>, og gjøre deg kjent med <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva\">Personvernerklæring for Nasjonalt vitenarkiv.</a></p><p>Ved å klikke på «$t(authorization.accept)», bekrefter du at du har lest og akseptert brukervilkårene. Du samtykker også til behandling av personopplysninger i samsvar med personvernerklæringen.</p>",
@@ -129,7 +130,12 @@
       "nvi_publication_year": "NVI publiseringsår",
       "nvi_reporting_year": "NVI-rapporteringsår",
       "period_year": "Publiseringsår",
+      "publication_points_status": "Status for publiseringspoeng",
       "reporting_periods": "Rapporteringsperioder",
+      "reporting_status": "Rapporteringsstatus",
+      "reporting_status_description": "<p>Tabellen viser antall kandidater hos gjeldende institusjon og behandlingsstatus på disse.</p><p>Samarbeidende institusjoners kontroll, tas ikke hensyn til her så kandidater som har endt i en tvist er ikke inkludert i denne oversikten.</p>",
+      "show_publication_points_status": "Vis status for publiseringspoeng",
+      "show_reporting_status": "Vis rapporteringsstatus",
       "update_reporting_period": "Oppdater rapporteringsperiode"
     },
     "person_register": {
@@ -151,6 +157,7 @@
       "show_full_nin": "Vis personnummer"
     }
   },
+  "candidate": "Kandidat",
   "cannot_copy_category_from_another_context_type": "<p>Du kan ikke kopiere metadata fra kategorifanen hvis resultatet tilhører en annen hovedkategori.</p><p>Denne informasjonen må registreres manuelt etter at resten av metadata er kopiert.</p>",
   "common": {
     "actions": "Handlinger",
@@ -195,6 +202,7 @@
     "go_to_last": "Gå til siste",
     "help": "Hjelp",
     "id": "ID",
+    "import_and_view": "Importer og se",
     "initials": "Initialer",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
@@ -207,6 +215,7 @@
     "main": "Hoved",
     "mention": "Omtale",
     "menu": "Meny",
+    "merge_and_view": "Slå sammen og se",
     "message": "Melding",
     "messages": "Meldinger",
     "metadata_source": "Metadatakilde",
@@ -314,6 +323,9 @@
     "year": "År",
     "yes": "Ja"
   },
+  "contributor_search_hits_one": "Fant {{count}} bidragsyter",
+  "contributor_search_hits_other": "Fant {{count}} bidragsytere",
+  "controlling": "Kontrolleres",
   "corresponding_contributor": "Korresponderende bidragsyter",
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljer",
@@ -395,6 +407,7 @@
     "1168": "Historie og idéhistorie",
     "1170": "Kunst, design og arkitektur"
   },
+  "disputes": "Tvister",
   "does_not_match": "Matcher ikke",
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -572,6 +585,7 @@
       "get_messages": "Kunne ikke hente meldinger",
       "get_nvi_candidate": "Kunne ikke hente NVI-kandidat",
       "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
+      "get_nvi_reports": "Kunne ikke hente NVI-rapporter",
       "get_nvi_periods": "Kunne ikke hente NVI-perioder",
       "get_nvi_status": "Kunne ikke hente NVI-rapporteringsstatus",
       "get_nvi_status_export": "Kunne ikke laste ned eksport av NVI-rapporteringsstatus",
@@ -707,6 +721,7 @@
   "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Som kurator kan du legge til en fil på vegne av registrator.",
   "file_upload_disabled_due_to_institution_policy": "Din institusjon støtter ikke at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønsker å ha en fil på dette resultatet.",
   "find_result_to_merge_description": "<p>Slå sammen to resultater for å unngå to versjoner av samme resultat med forskjellige metadata og filer.</p><p>Er det registrert forskjellig metadata så velger du hvilke data som er gjeldende. Du velger også om filer skal flyttes over til det publiserte resultatet.</p><heading>Søk etter forskningsresultat</heading><p>Velg resultatet du ønsker å slå sammen med. Du kan bare slå sammen resultatet der du er registrert som bidragsyter.</p>",
+  "finished": "Ferdig",
   "footer": {
     "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
     "about_nva_text": "Nasjonalt vitenarkiv (NVA) samler publikasjoner og andre forskningsresultater, og gjør dem åpent tilgjengelig i en felles nasjonal løsning. Dette gjør resultater fra norsk forskning tilgjengelig i én tjeneste.",
@@ -723,6 +738,8 @@
   "go_to_advanced_search": "Gå til avansert resultatsøk",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
+  "internal_file_info_description": "Velg “Åpen fil” for forskningsresultater som skal gjøres åpent tilgjengelige. Husk å velge korrekt lisens. Kurator kan bistå deg med dette. Velg “Intern fil” for dokumenter som kun skal deles med kurator, for eksempel forfatteravtaler og lignende.",
+  "internal_nvi_status": "Intern NVI-status",
   "keep_all_contributors": "Behold bidragsytere fra både {{sourceType}} og publisert resultat",
   "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
   "keep_contributors_from_source_result": "Behold kun bidragsytere fra {{sourceType}}",
@@ -789,6 +806,7 @@
       "doi_reserved": "DOI reservert",
       "file_archived_one": "Fil arkivert",
       "file_archived_other": "Filer arkivert",
+      "file_awaiting_publishing": "Fil venter på publisering",
       "file_deleted": "Fil slettet",
       "file_hidden": "Fil skjult",
       "file_retracted": "Fil trukket tilbake",
@@ -973,6 +991,9 @@
   "overview_over_administrators": "Oversikt over administratorer",
   "overwrite": "Overskriv",
   "owner_institution": "Eierinstitusjon",
+  "percent_of_publication_points_in_year": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}.",
+  "percent_of_published_reports_in_year": "Det er <b>{{percentage}}%</b> av antallet resultat rapportert i {{year}}.",
+  "percentage_controlled": "Andel kontrollert",
   "person_profiles": "Personprofiler",
   "point_of_contact": "Kontaktpunkt",
   "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
@@ -1087,6 +1108,9 @@
     "verify_project_manager": "Identifiser prosjektleder"
   },
   "projects": "Prosjekter",
+  "publication_points": "Publiseringspoeng",
+  "publication_points_description": "Tabellen viser kandidater som er godkjent per nå hos alle institusjoner og hvor mange som er ferdig kontrollert i forhold til antall kandidater.",
+  "publication_points_description_more": "Kandidatene er lagt på enheten hvor de er registrert. Det er ikke tatt hensyn til samarbeidene institusjoner. Kandidater i eventuelt tvist vises ikke.",
   "published_result": "Publisert resultat",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikke lagre fordi resultatet er publisert og inneholder valideringsfeil",
@@ -1283,7 +1307,6 @@
       "registration_without_file": "Resultat uten fil",
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
-      "select_availability": "Velg tilgjengelighet",
       "show_all_older_versions": "Vis alle tidligere versjoner",
       "version_helper_text": "<p>Last opp akseptert versjon, dersom publisert versjon ikke er åpent publisert med en <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading> <p>Forfatters siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den presenteres i et tidsskrift. Denne versjonen vil inkludere redaksjonelle forbedringer, og forlagets grafiske profil. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Du må velge den samme Creative Commons-lisensen som artikkelen er publisert med.</p>"
     },
@@ -1465,6 +1488,7 @@
       "MusicPerformance": "Musikk",
       "NonFictionChapter": "Faglig kapittel",
       "NonFictionMonograph": "Fagbok",
+      "OtherArtisticOutput": "Annet kunstnerisk resultat",
       "OtherPresentation": "Annen presentasjon",
       "OtherStudentWork": "Annen studentoppgave",
       "PerformingArts": "Scenekunst",
@@ -1743,6 +1767,10 @@
         "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks",
         "can_give_publication_points": "Kan gi publiseringspoeng",
         "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)",
+        "make_sure_publication_linked_to_the_correct_book_category": "Pass på at denne publikasjonen er koblet til riktig bokkategori",
+        "not_applicable_isbn": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden kapittelet er publisert i en bok som mangler ISBN",
+        "not_applicable_revision": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden den er en revisjon",
+        "only_the_linked_academic_monograph_will_be_included_in_the_nvi": "Kun den tilknyttede vitenskapelige monografien vil bli inkludert i Norsk vitenskapsindeks",
         "select_all_nvi_categories": "Velg alle"
       },
       "online_issn": "Online ISSN",
@@ -1833,6 +1861,7 @@
     "use_curator_help_button": "Bruk \"{{buttonText}}\"-knappen nederst om du har spørsmål.",
     "year_published": "Publiseringsår"
   },
+  "rejected": "Avvist",
   "reset": "Nullstill",
   "results": "Forskningsresultater",
   "science_categories_front_page": "<heading>Arbeid i ulike kategorier</heading><p>Forskning og formidling omfatter mye mer enn vitenskapelige publikasjoner.</p><p>Alt registreres i ulike kategorier, og du kan søke og gjøre oppslag i alle kategoriene nedenfor.</p>",
@@ -1847,7 +1876,8 @@
       "publishing_period": "Publiseringsperiode",
       "reported": "Rapporterte",
       "scientific_value": {
-        "level": "Nivå {{level}}"
+        "level": "Nivå {{level}}",
+        "unassigned": "Ikke bestemt"
       },
       "title_search": "Tittelsøk"
     },
@@ -1906,9 +1936,14 @@
     "year_to": "Til år"
   },
   "search_in_national_research_publication": "Søk i over 2 millioner publikasjoner fra forskere fra universiteter, høyskoler og forskningsinstitusjoner over hele landet.",
+  "sector": "Sektor",
   "select_curator": "Velg kurator",
   "select_funder": "Velg finansiør",
+  "select_person_and_affiliation": "Velg person og tilknytning",
+  "select_person_identity_only": "Velg person",
   "show_all_units": "Vis alle enheter",
+  "show_only_norwegian_contributors": "Vis kun norske bidragsytere",
+  "show_only_unconfirmed_affiliations": "Vis kun uidentifiserte tilknytninger",
   "show_only_units_with_candidates": "Vis kun enheter med kandidater",
   "start_merging": "Start sammenslåing",
   "tasks": {
@@ -1934,6 +1969,8 @@
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler",
+        "scientific_chapter_not_in_anthology": "Vitenskapelig kapittel ikke i antologi",
+        "scientific_monography_or_anthology_without_isxns": "Vitenskapelig monografi eller antologi uten ISxN-er",
         "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsyter med identifisert institusjon"
       },
       "delete_note": "Slett kommentar",
@@ -1949,6 +1986,7 @@
       "nvi_reporting_status": "Status NVI-rapportering",
       "previous_candidate": "Gå til forrige kandidat",
       "problem_description": "<p>NVI-kandidaten har følgende mangler:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatuser blir opphevet når en uidentifisert person blir identifisert.</p>",
+      "progress_nvi_reporting": "Fremdrift for NVI-rapporting",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
       "reject_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen ikke kan rapporteres. Du må begrunne avvisningen.",
@@ -1957,12 +1995,16 @@
       "rejection_reason": "Begrunnelse for avvisning",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
+      "reporting_status_for_publication_points_for_year": "Status for publiseringspoeng {{year}}",
       "reset_approval": "Nullstill rapporteringsstatus",
       "reset_approval_description": "Er du sikker på at du vil nullstille rapporteringsstatusen? Noen på din institusjon må da rapportere denne på nytt.",
+      "result": "Resultat: {{result}}",
       "save_note": "Lagre kommentar",
       "show_candidate_search": "Vis kandidatsøk",
+      "show_disputes": "Vis tvister",
       "show_only_collaborative_publications": "Vis kun sampublikasjoner",
       "show_reporting_status": "Vis rapporteringsstatus",
+      "show_status_for_publication_points": "Vis status for publiseringspoeng",
       "show_subunits": "Vis underenheter",
       "status": {
         "Approved": "Godkjent",
@@ -1971,7 +2013,12 @@
         "Pending": "Kontrolleres",
         "Rejected": "Avvist"
       },
-      "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknytning til NVI-institusjon"
+      "status_dispute_for": "Status tvister for {{year}}",
+      "total_for_organization": "Totalt for {{orgName}}",
+      "total_publication_points": "Publiseringspoeng: {{publicationPoints}}",
+      "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknytning til NVI-institusjon",
+      "x_of_y_approved": "{{approved}} av {{total}} godkjent",
+      "x_of_y_controlled": "{{controlled}} av {{total}} kontrollert"
     },
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag eller lignende",
     "select_other_unit_filter": "Velg andre",
@@ -1981,6 +2028,7 @@
     "user_dialog": "Brukerdialog",
     "your_tasks": "Oppgaver du behandler: {{count}}"
   },
+  "temporarily_disabled": "Midlertidig deaktivert",
   "time_format": {
     "hours": "TT:MM:SS",
     "minutes": "MM:SS"
@@ -2001,11 +2049,15 @@
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   },
   "unpublished_result": "Avpublisert resultat",
+  "update_name": "Oppdater navn",
+  "use_rerender": "{{value}}",
   "velg_subject_area": "Velg fagfelt",
   "view_contact_info": "Se kontaktinformasjon",
+  "view_contact_information": "Se kontaktinfo",
   "visibility_of_units": "Visning av enheter",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
+  "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
 }

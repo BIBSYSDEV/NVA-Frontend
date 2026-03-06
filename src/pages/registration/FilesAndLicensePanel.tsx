@@ -144,6 +144,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     modalDataTestId={dataTestId.registrationWizard.files.fileHelpModal}
                     buttonDataTestId={dataTestId.registrationWizard.files.fileHelpButton}>
                     <Trans
+                      t={t}
                       i18nKey="registration.files_and_license.files_helper_text"
                       components={{
                         p: <Typography sx={{ mb: '1rem' }} />,
@@ -165,6 +166,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       {t('registration.files_and_license.files_helper_text_paragraph_2')}
                     </Typography>
                     <Trans
+                      t={t}
                       i18nKey="registration.files_and_license.file_helper_text_point_list"
                       components={{
                         ul: <ul />,
@@ -197,6 +199,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     }}
                   />
                 )}
+
+                {pendingFiles.length > 0 &&
+                  pendingFiles.every((file) => file.type === FileType.PendingInternalFile) && (
+                    <InfoBanner type="info-light" text={t('internal_file_info_description')} />
+                  )}
 
                 {pendingFiles.length > 0 && (
                   <FileList

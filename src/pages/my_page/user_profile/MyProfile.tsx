@@ -184,6 +184,7 @@ export const MyProfile = () => {
                         <UserOrcidHelperModal />
                       </Box>
                       <Trans
+                        t={t}
                         i18nKey="my_page.my_profile.orcid_is_voluntary"
                         components={[<Typography key="1" gutterBottom />]}
                       />
@@ -196,6 +197,7 @@ export const MyProfile = () => {
                         {t('my_page.my_profile.contact_information')}
                       </Typography>
                       <Trans
+                        t={t}
                         i18nKey="my_page.my_profile.contact_information_is_voluntary"
                         components={[<Typography key="1" gutterBottom />]}
                       />
@@ -256,11 +258,13 @@ export const MyProfile = () => {
                       {t('my_page.my_profile.profile_picture')}
                     </Typography>
                     <Trans
+                      t={t}
                       i18nKey="my_page.my_profile.upload_is_not_mandatory"
                       components={[<Typography key="1" gutterBottom sx={{ textAlign: 'center' }} />]}
                     />
                     <ProfilePictureUploader personId={personId} />
                     <Trans
+                      t={t}
                       i18nKey="my_page.my_profile.upload_description"
                       components={[<Typography key="1" gutterBottom sx={{ textAlign: 'center' }} />]}
                     />

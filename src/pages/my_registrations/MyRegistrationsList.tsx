@@ -3,22 +3,27 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { deleteRegistration } from '../../api/registrationApi';
-import { ResultParam, ResultSearchOrder } from '../../api/searchApi';
+import { RegistrationSearchResponse, ResultParam, ResultSearchOrder } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { SortSelector } from '../../components/SortSelector';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationSearchItem } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { getIdentifierFromId } from '../../utils/general-helpers';
+import { getIdentifierFromId, setDelay } from '../../utils/general-helpers';
 import { getTitleString } from '../../utils/registration-helpers';
 import { RegistrationSearch, SearchPropTypes } from '../search/registration_search/RegistrationSearch';
+import { useQueryClient } from '@tanstack/react-query';
+import { SearchParamType } from '../../utils/hooks/useRegistrationSearchParams';
+import { DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS } from './MyRegistrations';
 
 interface MyRegistrationsListProps {
   registrationsQuery: SearchPropTypes['registrationQuery'];
+  registrationsQueryKey: (string | SearchParamType)[];
 }
 
-export const MyRegistrationsList = ({ registrationsQuery }: MyRegistrationsListProps) => {
+export const MyRegistrationsList = ({ registrationsQuery, registrationsQueryKey }: MyRegistrationsListProps) => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -36,8 +41,19 @@ export const MyRegistrationsList = ({ registrationsQuery }: MyRegistrationsListP
       dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
+      await setDelay(DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS); // waits 2 seconds before refetching in case it gives us fresher data
       await registrationsQuery.refetch();
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
+      // Update cache manually for cases when the refetch doesn't reflect the deletion
+      queryClient.setQueryData(registrationsQueryKey, (oldData: RegistrationSearchResponse | undefined) => {
+        if (oldData === undefined) return undefined;
+        const hitsAfterDelete = oldData.hits.filter((item) => item.id !== registrationToDelete.id);
+        return {
+          ...oldData,
+          hits: hitsAfterDelete,
+          totalHits: oldData.totalHits - (oldData.hits.length - hitsAfterDelete.length),
+        };
+      });
       setIsDeleting(false);
       setShowDeleteModal(false);
     }

@@ -1,9 +1,10 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
+import { FetchNviCandidatesParams } from '../../../api/searchApi';
 import { NviStatusChip } from '../../../components/StatusChip';
-import { SearchListItem } from '../../../components/styled/Wrappers';
+import { SearchListItem, VerticalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';
 import { NviCandidateSearchHit } from '../../../types/nvi.types';
@@ -11,17 +12,23 @@ import { displayDate } from '../../../utils/date-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { getNviCandidatePath, getResearchProfilePath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { createPageSpecificAmountString } from '../nviUtils';
 
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
   currentOffset: number;
+  nviParams?: FetchNviCandidatesParams;
 }
 
-export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandidateListItemProps) => {
+export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }: NviCandidateListItemProps) => {
   const { t } = useTranslation();
+  const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
-  const nviParams = useNviCandidatesParams();
+  const nviParamsFromUrl = useNviCandidatesParams();
+  const nviQueryParams = nviParams ?? nviParamsFromUrl;
+
+  const approvalsCount = createPageSpecificAmountString(t, location.pathname, nviCandidate.approvals);
 
   const contributors = nviCandidate.publicationDetails.nviContributors;
   const focusedContributors = contributors.slice(0, 5);
@@ -39,8 +46,9 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandida
   const myApproval = nviCandidate.approvals.find((approval) => approval.institutionId === user?.topOrgCristinId);
 
   const candidateLinkState = {
-    candidateOffsetState: { currentOffset, nviQueryParams: nviParams },
+    candidateOffsetState: { currentOffset, nviQueryParams },
     previousSearch: window.location.search,
+    isOnDisputePage: location.pathname === UrlPathTemplate.TasksNviDisputes,
   } satisfies NviCandidatePageLocationState;
 
   return (
@@ -90,9 +98,10 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandida
         )}
       </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <VerticalBox sx={{ alignItems: 'center' }}>
         {myApproval?.approvalStatus && <NviStatusChip status={myApproval.approvalStatus} />}
-      </Box>
+        {approvalsCount && <Typography sx={{ mt: '0.5rem' }}>{approvalsCount}</Typography>}
+      </VerticalBox>
     </SearchListItem>
   );
 };

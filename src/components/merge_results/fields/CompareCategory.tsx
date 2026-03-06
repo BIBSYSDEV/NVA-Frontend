@@ -35,6 +35,7 @@ export const CompareCategory = ({
           <WarningIcon />
           <div>
             <Trans
+              t={t}
               i18nKey="cannot_copy_category_from_another_context_type"
               components={{ p: <Typography color="inherit" /> }}
             />

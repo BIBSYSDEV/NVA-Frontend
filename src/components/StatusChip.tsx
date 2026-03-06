@@ -3,7 +3,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { NviCandidateStatus } from '../types/nvi.types';
+import { NviCandidateApprovalStatus } from '../types/nvi.types';
 import { Ticket } from '../types/publication_types/ticket.types';
 
 interface TicketStatusChipProps {
@@ -33,7 +33,7 @@ export const TicketStatusChip = ({ ticket }: TicketStatusChipProps) => {
 };
 
 interface NviStatusChip {
-  status: NviCandidateStatus;
+  status: NviCandidateApprovalStatus;
 }
 
 export const NviStatusChip = ({ status }: NviStatusChip) => {

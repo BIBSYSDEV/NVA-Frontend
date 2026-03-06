@@ -1,3 +1,4 @@
+import type { ScientificValueLevels } from '../pages/search/advanced_search/ScientificValueFilter';
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import {
   CollaborationType,
@@ -254,7 +255,13 @@ export enum NviCandidatesSearchParam {
 
 export type NviCandidateOrderBy = 'createdDate';
 
-export type NviCandidateFilter = 'rejectedByOthers' | 'approvedByOthers' | 'collaboration';
+export enum NviCandidateFilterEnum {
+  RejectedByOthers = 'rejectedByOthers',
+  ApprovedByOthers = 'approvedByOthers',
+  Collaboration = 'collaboration',
+}
+
+export type NviCandidateFilter = `${NviCandidateFilterEnum}`;
 
 export enum NviCandidateStatusEnum {
   Pending = 'pending',
@@ -284,7 +291,7 @@ export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.OrderBy]?: NviCandidateOrderBy | null;
   [NviCandidatesSearchParam.Query]?: string | null;
   [NviCandidatesSearchParam.Size]?: number | null;
-  [NviCandidatesSearchParam.Status]?: NviCandidateStatus | null;
+  [NviCandidatesSearchParam.Status]?: NviCandidateStatus[] | null;
   [NviCandidatesSearchParam.SortOrder]?: SortOrder | null;
   [NviCandidatesSearchParam.Year]?: number | null;
   [NviCandidatesSearchParam.ExcludeUnassigned]?: boolean | null;
@@ -316,7 +323,7 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
     searchParams.set(NviCandidatesSearchParam.Filter, params.filter);
   }
   if (params.status) {
-    searchParams.set(NviCandidatesSearchParam.Status, params.status);
+    searchParams.set(NviCandidatesSearchParam.Status, params.status.join(','));
   }
   if (params.globalStatus) {
     searchParams.set(NviCandidatesSearchParam.GlobalStatus, params.globalStatus.join(','));
@@ -368,6 +375,8 @@ export enum ResultParam {
   Course = 'course',
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  ExcludeParentType = 'excludeParentType',
+  ExcludeScientificValueSeries = 'excludeScientificValueSeries',
   ExcludeSubunits = 'excludeSubunits',
   Files = 'files',
   From = 'from',
@@ -375,7 +384,9 @@ export enum ResultParam {
   FundingSource = 'fundingSource',
   Handle = 'handle',
   HasChildren = 'hasChildren',
+  HasIsbn = 'hasIsbn',
   HasNoChildren = 'hasNoChildren',
+  HasParent = 'hasParent',
   Identifier = 'id',
   IdentifierNot = 'idNot',
   Isbn = 'isbn',
@@ -424,6 +435,8 @@ export interface FetchResultsParams {
   [ResultParam.Course]?: string | null;
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.ExcludeParentType]?: PublicationInstanceType[] | null;
+  [ResultParam.ExcludeScientificValueSeries]?: ScientificValueLevels[] | null;
   [ResultParam.ExcludeSubunits]?: boolean | null;
   [ResultParam.Files]?: string | null;
   [ResultParam.From]?: number | null;
@@ -431,7 +444,9 @@ export interface FetchResultsParams {
   [ResultParam.FundingSource]?: string | null;
   [ResultParam.Handle]?: string | null;
   [ResultParam.HasChildren]?: boolean | null;
+  [ResultParam.HasIsbn]?: boolean | null;
   [ResultParam.HasNoChildren]?: boolean | null;
+  [ResultParam.HasParent]?: boolean | null;
   [ResultParam.Identifier]?: string | null;
   [ResultParam.IdentifierNot]?: string | null;
   [ResultParam.Isbn]?: string | null;
@@ -502,6 +517,12 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     const formattedDoiValue = getDoiValue(params.doi);
     searchParams.set(ResultParam.Doi, formattedDoiValue);
   }
+  if (params.excludeParentType?.length) {
+    searchParams.set(ResultParam.ExcludeParentType, params.excludeParentType.join(','));
+  }
+  if (params.excludeScientificValueSeries?.length) {
+    searchParams.set(ResultParam.ExcludeScientificValueSeries, params.excludeScientificValueSeries.join(','));
+  }
   if (params.excludeSubunits) {
     searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());
   }
@@ -520,8 +541,14 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.hasChildren === true || params.hasChildren === false) {
     searchParams.set(ResultParam.HasChildren, params.hasChildren.toString());
   }
+  if (params.hasIsbn === true || params.hasIsbn === false) {
+    searchParams.set(ResultParam.HasIsbn, params.hasIsbn.toString());
+  }
   if (params.hasNoChildren === true || params.hasNoChildren === false) {
     searchParams.set(ResultParam.HasNoChildren, params.hasNoChildren.toString());
+  }
+  if (params.hasParent === true || params.hasParent === false) {
+    searchParams.set(ResultParam.HasParent, params.hasParent.toString());
   }
   if (params.id) {
     searchParams.set(ResultParam.Identifier, params.id);
@@ -617,11 +644,10 @@ export enum ProtectedResultParam {
   Status = 'status',
 }
 
-export interface FetchProtectedResultsParams
-  extends Pick<
-    FetchResultsParams,
-    ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
-  > {
+export interface FetchProtectedResultsParams extends Pick<
+  FetchResultsParams,
+  ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
+> {
   [ProtectedResultParam.Status]?: RegistrationStatus[] | null;
 }
 

@@ -8,6 +8,7 @@ export interface SimpleCustomerInstitution {
   cristinId: string;
   createdDate: string;
   displayName: string;
+  nviInstitution?: boolean;
   doiPrefix?: string;
   serviceCenterUri?: string;
 }
@@ -22,8 +23,10 @@ export enum Sector {
   Other = 'OTHER',
 }
 
-export interface CustomerInstitution
-  extends Pick<SimpleCustomerInstitution, 'id' | 'createdDate' | 'displayName' | 'active'> {
+export interface CustomerInstitution extends Pick<
+  SimpleCustomerInstitution,
+  'id' | 'createdDate' | 'displayName' | 'active'
+> {
   type?: 'Customer';
   cristinId: string;
   feideOrganizationDomain: string;

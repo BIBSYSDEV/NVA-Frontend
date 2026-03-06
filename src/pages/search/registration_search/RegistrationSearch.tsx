@@ -51,7 +51,7 @@ export const RegistrationSearch = ({ registrationQuery, sortingComponent, ...res
     <section>
       <ListPagination
         paginationAriaLabel={t('common.pagination_project_search')}
-        count={registrationQuery.data?.totalHits ?? 0}
+        count={registrations.length === 0 ? 0 : (registrationQuery.data?.totalHits ?? 0)} // Ensure that when we manually delete all items from cache, we don't see the pagination
         page={page + 1}
         onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
         rowsPerPage={rowsPerPage}
@@ -66,6 +66,7 @@ export const RegistrationSearch = ({ registrationQuery, sortingComponent, ...res
         ) : (
           <NoSearchResults>
             <Trans
+              t={t}
               i18nKey="no_search_results_list_default"
               components={{
                 p: <Typography fontWeight="bold" />,

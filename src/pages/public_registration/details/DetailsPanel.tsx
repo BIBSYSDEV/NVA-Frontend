@@ -120,6 +120,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
           <Divider />
 
           <Trans
+            t={t}
             i18nKey="default_point_of_contact"
             components={{
               p: <Typography gutterBottom />,

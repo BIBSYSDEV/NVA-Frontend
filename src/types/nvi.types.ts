@@ -1,6 +1,7 @@
 import { ParseKeys } from 'i18next';
 import { FetchResultsParams, ResultParam } from '../api/searchApi';
 import { LanguageString, SearchResponse } from './common.types';
+import { Organization } from './organization.types';
 import { PublicationInstanceType, RegistrationDate } from './registration.types';
 
 export enum ScientificIndexStatuses {
@@ -12,12 +13,19 @@ interface NviCandidateContributor {
   name: string;
 }
 
-export type NviCandidateStatus = 'New' | 'Pending' | 'Rejected' | 'Approved';
+export enum NviCandidateApprovalStatusEnum {
+  New = 'New',
+  Pending = 'Pending',
+  Rejected = 'Rejected',
+  Approved = 'Approved',
+}
 
-interface NviCandidateSearchHitApproval {
+export type NviCandidateApprovalStatus = `${NviCandidateApprovalStatusEnum}`;
+
+export interface NviCandidateSearchHitApproval {
   institutionId: string;
   labels: LanguageString;
-  approvalStatus: NviCandidateStatus;
+  approvalStatus: NviCandidateApprovalStatus;
 }
 
 export interface NviCandidateSearchHit {
@@ -38,14 +46,42 @@ interface AggregationCount {
   docCount: number;
 }
 
-interface OrganizationDetail extends AggregationCount {
-  dispute: AggregationCount;
-  points: { total: { value: number } };
-  status: { [status in NviCandidateStatus]?: AggregationCount };
+interface ApprovalStatusAggregation {
+  New: number;
+  Approved: number;
+  Rejected: number;
+  Pending: number;
+}
+
+interface GlobalApprovalStatusAggregation {
+  Approved: number;
+  Dispute: number;
+  Rejected: number;
+  Pending: number;
+}
+
+interface BaseAggregation {
+  candidateCount: number;
+  points: number;
+  approvalStatus: ApprovalStatusAggregation;
+  globalApprovalStatus: GlobalApprovalStatusAggregation;
+}
+
+interface TopLevelAggregation extends BaseAggregation {
+  type: 'TopLevelAggregation';
+}
+
+interface DirectAffiliationAggregation extends BaseAggregation {
+  type: 'DirectAffiliationAggregation';
 }
 
 export interface NviInstitutionStatusResponse {
-  [organizationId: string]: OrganizationDetail;
+  year: string;
+  topLevelOrganizationId: string;
+  totals: TopLevelAggregation;
+  byOrganization: {
+    [organizationId: string]: DirectAffiliationAggregation;
+  };
 }
 
 export type NviCandidateSearchStatus = keyof NviCandidateAggregations;
@@ -68,7 +104,7 @@ export type NviCandidateSearchResponse = Omit<
 
 export interface Approval {
   institutionId: string;
-  status: NviCandidateStatus;
+  status: NviCandidateApprovalStatus;
   points: number;
   assignee?: string;
 }
@@ -132,7 +168,9 @@ export type CorrectionListId =
   | 'AnthologyWithoutChapter'
   | 'AnthologyWithApplicableChapter'
   | 'BooksWithLessThan50Pages'
-  | 'UnidentifiedContributorWithIdentifiedAffiliation';
+  | 'UnidentifiedContributorWithIdentifiedAffiliation'
+  | 'ScientificChapterNotInAnthology'
+  | 'ScientificMonographyOrAnthologyWithoutIsxns';
 
 export type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
@@ -142,3 +180,50 @@ export type CorrectionListSearchConfig = {
     topLevelOrganization: string | undefined;
   };
 };
+
+export enum NviSearchStatusEnum {
+  CandidatesForControl = 'candidates_for_control',
+  Approved = 'Approved',
+  Rejected = 'Rejected',
+}
+
+export type NviSearchStatus = `${NviSearchStatusEnum}`;
+
+export interface InstitutionSummaryTotals {
+  type: 'InstitutionTotals';
+  validPoints: number;
+  disputedCount: number;
+  undisputedProcessedCount: number;
+  undisputedTotalCount: number;
+}
+
+export interface InstitutionSummaryTotalsByLocalApprovalStatus {
+  type: 'UndisputedCandidatesByLocalApprovalStatus';
+  new: number;
+  pending: number;
+  approved: number;
+  rejected: number;
+}
+
+export interface InstitutionSummary {
+  type: 'InstitutionSummary';
+  totals: InstitutionSummaryTotals;
+  byLocalApprovalStatus: InstitutionSummaryTotalsByLocalApprovalStatus;
+}
+
+export interface InstitutionReport {
+  type: 'InstitutionReport';
+  id: string;
+  period: NviPeriod;
+  sector: string;
+  institution: Organization;
+  institutionSummary: InstitutionSummary;
+  units: [];
+}
+
+export interface NviInstitutionsReport {
+  type: 'AllInstitutionsReport';
+  id: string;
+  period: NviPeriod;
+  institutions: InstitutionReport[];
+}

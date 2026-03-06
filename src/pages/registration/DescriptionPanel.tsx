@@ -19,6 +19,7 @@ import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { DuplicateWarning } from './DuplicateWarning';
+import { AlternativeAbstractsFields } from './AlternativeAbstractFields';
 
 export const DescriptionPanel = () => {
   const { t } = useTranslation();
@@ -124,37 +125,7 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        <Field name={DescriptionFieldNames.AlternativeAbstracts}>
-          {({ field }: FieldProps<string>) => (
-            <>
-              {field.value !== undefined ? (
-                <TextField
-                  {...field}
-                  disabled={disableChannelClaimsFields}
-                  value={field.value ?? ''}
-                  data-testid={dataTestId.registrationWizard.description.alternativeAbstractField}
-                  variant="filled"
-                  fullWidth
-                  multiline
-                  label={t('registration.description.alternative_abstract')}
-                />
-              ) : null}
-
-              {field.value || field.value === '' ? null : (
-                <Button
-                  color="tertiary"
-                  variant="contained"
-                  startIcon={<AddCircleOutlineIcon />}
-                  disabled={!values.entityDescription?.abstract || disableChannelClaimsFields}
-                  onClick={() => setFieldValue(field.name, '')}>
-                  {t('common.add_custom', {
-                    name: t('registration.description.alternative_abstract').toLocaleLowerCase(),
-                  })}
-                </Button>
-              )}
-            </>
-          )}
-        </Field>
+        <AlternativeAbstractsFields disableChannelClaimsFields={disableChannelClaimsFields} />
       </Box>
       <Field name={DescriptionFieldNames.Description}>
         {({ field }: FieldProps<string>) => (

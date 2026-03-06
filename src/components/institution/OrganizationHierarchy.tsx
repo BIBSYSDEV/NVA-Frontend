@@ -1,13 +1,15 @@
 import { Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { Organization } from '../../types/organization.types';
 import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
-import { getLanguageString } from '../../utils/translation-helpers';
+import { getLanguageString, triggerLanguageRerender } from '../../utils/translation-helpers';
 
 interface OrganizationHierarchyProps {
   organization: Organization;
 }
 
 export const OrganizationHierarchy = ({ organization }: OrganizationHierarchyProps) => {
+  const { t } = useTranslation();
   const units = getOrganizationHierarchy(organization);
 
   return (
@@ -23,10 +25,12 @@ export const OrganizationHierarchy = ({ organization }: OrganizationHierarchyPro
             <Typography component="sup" fontWeight="bold" fontSize={'10px'}>
               {organization.country}
             </Typography>
-            <Typography sx={{ fontWeight: 'bold' }}>{getLanguageString(unit.labels)}</Typography>
+            <Typography sx={{ fontWeight: 'bold' }}>
+              {triggerLanguageRerender(t, getLanguageString(unit.labels))}
+            </Typography>
           </Box>
         ) : (
-          <Typography key={unit.id}>| {getLanguageString(unit.labels)}</Typography>
+          <Typography key={unit.id}>| {triggerLanguageRerender(t, getLanguageString(unit.labels))}</Typography>
         )
       )}
     </Box>

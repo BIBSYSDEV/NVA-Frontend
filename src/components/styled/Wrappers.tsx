@@ -117,6 +117,10 @@ export const StyledTicketSearchFormGroup = styled(FormGroup)({
   margin: '1rem',
 });
 
+export const MediumTypography = styled(Typography)({
+  fontSize: '0.9rem',
+});
+
 export const StyledTruncatableTypography = styled(Typography)({
   whiteSpace: 'nowrap',
   overflow: 'hidden',
@@ -152,3 +156,16 @@ export const VerticalBox = styled(Box)<BoxProps>({
   display: 'flex',
   flexDirection: 'column',
 });
+
+export const CenteredGridBox = styled(Box)<BoxProps>({
+  display: 'grid',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+export const StyledNviStatusBox = styled(Box)(({ theme }) => ({
+  padding: '0.5rem',
+  borderRadius: '0.25rem',
+  backgroundColor: theme.palette.background.paper,
+  marginBottom: '0.5rem',
+}));

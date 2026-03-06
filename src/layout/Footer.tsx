@@ -201,7 +201,7 @@ export const Footer = () => {
             <ArrowRightAltIcon />
 
             <Typography color="white">
-              <Trans i18nKey="footer.technical_support_link">
+              <Trans t={t} i18nKey="footer.technical_support_link">
                 <MuiLink
                   sx={{ color: 'white' }}
                   href="mailto:kontakt@sikt.no"

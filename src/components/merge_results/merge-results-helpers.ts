@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { fundingSourceIsNfr } from '../../pages/registration/description_tab/projects_field/projectHelpers';
 import { Affiliation, Contributor } from '../../types/contributor.types';
 import { Funding } from '../../types/registration.types';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const findMatchingContributor = (sourceContributor: Contributor, targetContributors: Contributor[]) =>
   sourceContributor.identity.id
@@ -61,4 +63,15 @@ export const checkIfFundingsAreIdentical = (sourceFunding: Funding, targetFundin
   }
 
   return false;
+};
+
+export const useDecideSaveButtonTextFromUrl = () => {
+  const { t } = useTranslation();
+
+  if (location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport)) {
+    return t('common.import_and_view');
+  } else if (location.pathname.startsWith(UrlPathTemplate.RegistrationLandingPage.split(':')[0])) {
+    return t('common.merge_and_view');
+  }
+  return t('common.save_and_view');
 };

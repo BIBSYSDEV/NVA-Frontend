@@ -18,6 +18,7 @@ export const CorrectionListYearFilter = () => {
   const options = [
     { value: (currentYear + 1).toString(), label: `${currentYear + 1}` },
     { value: currentYear.toString(), label: `${currentYear}` },
+    { value: (currentYear - 1).toString(), label: `${currentYear - 1}` },
     { value: 'showAll', label: t('common.show_all') },
   ];
 
@@ -38,7 +39,7 @@ export const CorrectionListYearFilter = () => {
           } else {
             syncedParams.delete(ResultParam.PublicationYear);
           }
-          navigate({ search: searchParams.toString() });
+          navigate({ search: syncedParams.toString() });
         }}
         slotProps={{
           htmlInput: {

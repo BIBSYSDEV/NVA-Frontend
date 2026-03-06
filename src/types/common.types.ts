@@ -48,8 +48,10 @@ export interface SearchResponse<HitType, AggregationType = undefined> {
   aggregations?: AggregationType;
 }
 
-export interface SearchResponse2<HitType, AggregationType = undefined>
-  extends Pick<SearchResponse<HitType, AggregationType>, 'hits' | 'aggregations'> {
+export interface SearchResponse2<HitType, AggregationType = undefined> extends Pick<
+  SearchResponse<HitType, AggregationType>,
+  'hits' | 'aggregations'
+> {
   totalHits: number;
 }
 

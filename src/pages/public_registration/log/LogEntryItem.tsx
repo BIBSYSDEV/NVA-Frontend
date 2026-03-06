@@ -183,6 +183,8 @@ const getLogEntryTitle = (logEntry: LogEntry, t: TFunction) => {
           return t('log.internal_file_approved');
         case FileType.HiddenFile:
           return t('log.titles.file_hidden');
+        case FileType.PendingOpenFile:
+          return t('log.titles.file_awaiting_publishing', { count: 1 });
       }
       break;
     case 'FileTypeUpdated':

@@ -16,6 +16,7 @@ export interface ListPaginationBottomProps {
   alternativePaginationText?: string;
   paginationAriaLabel?: string;
   scrollToDivRef: RefObject<HTMLDivElement | null>;
+  size?: 'small' | 'medium' | 'large';
 }
 
 export const ListPaginationBottom = ({
@@ -30,6 +31,7 @@ export const ListPaginationBottom = ({
   alternativePaginationText,
   paginationAriaLabel,
   scrollToDivRef,
+  size,
 }: ListPaginationBottomProps) => {
   const { t } = useTranslation();
 
@@ -51,6 +53,7 @@ export const ListPaginationBottom = ({
       {pageCounterComponent}
 
       <Pagination
+        size={size}
         sx={{
           '.MuiPagination-ul': {
             justifyContent: 'center',

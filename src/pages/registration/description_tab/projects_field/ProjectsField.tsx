@@ -65,6 +65,7 @@ export const ProjectsField = () => {
           modalTitle={t('project.project')}
           modalDataTestId={dataTestId.registrationWizard.description.projectModal}>
           <Trans
+            t={t}
             i18nKey="registration.description.project_helper_text"
             components={[<Typography key="1" sx={{ mb: '1rem' }} />]}
           />
@@ -148,6 +149,7 @@ export const ProjectsField = () => {
                     modalTitle={t('project.create_project')}
                     modalDataTestId={dataTestId.registrationWizard.description.createProjectModal}>
                     <Trans
+                      t={t}
                       i18nKey="registration.description.create_project_helper_text"
                       components={[<Typography key="1" sx={{ mb: '1rem' }} />]}
                     />

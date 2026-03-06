@@ -175,6 +175,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           <Divider sx={{ gridArea: 'divider0' }} />
           <Box sx={{ gridArea: 'problem' }}>
             <Trans
+              t={t}
               i18nKey="tasks.nvi.problem_description"
               components={{
                 p: <Typography gutterBottom />,
@@ -214,6 +215,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               </Typography>
             ) : (
               <Trans
+                t={t}
                 i18nKey="tasks.nvi.approve_nvi_candidate_description"
                 components={{
                   p: <Typography sx={{ mb: '1rem' }} />,

@@ -146,6 +146,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: C
             onAccept={deleteChannelClaimMutation.mutate}
             onCancel={() => setOpenConfirmDialog(false)}>
             <Trans
+              t={t}
               i18nKey="editor.institution.channel_claims.delete_channel_claim_description"
               values={{ name: channelName }}
               components={{ p: <Typography />, span: <span style={{ fontWeight: 'bold' }} /> }}

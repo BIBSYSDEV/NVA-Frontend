@@ -15,7 +15,7 @@ import { SearchParam } from '../searchHelpers';
 
 const defaultRowsPerPage = ROWS_PER_PAGE_OPTIONS[0];
 
-type SearchParamType = FetchResultsParams & FetchProtectedResultsParams;
+export type SearchParamType = FetchResultsParams & FetchProtectedResultsParams;
 
 export const useRegistrationsQueryParams = () => {
   const location = useLocation();

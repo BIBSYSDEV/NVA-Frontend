@@ -85,6 +85,7 @@ export const EditAffiliationModal = ({
       fullWidth
       headingText={t('registration.contributors.edit_affiliation')}>
       <Trans
+        t={t}
         i18nKey="registration.contributors.edit_affiliation_helper_text"
         components={[<Typography key="1" sx={{ mb: '1rem' }} />]}
       />

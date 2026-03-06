@@ -1,7 +1,7 @@
 import { To } from 'react-router';
+import { NviCandidateGlobalStatus, NviCandidateStatus } from '../api/searchApi';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
-import { NviCandidateStatus, NviCandidateGlobalStatus } from '../api/searchApi';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;
@@ -16,6 +16,8 @@ export enum UrlPathTemplate {
   BasicDataCentralImportCandidateMerge = '/basic-data/central-import/:candidateIdentifier/merge/:registrationIdentifier',
   BasicDataInstitutions = '/basic-data/institutions',
   BasicDataNvi = '/basic-data/nvi',
+  BasicDataNviPublicationPoints = '/basic-data/nvi/publication-points',
+  BasicDataNviStatus = '/basic-data/nvi/status',
   BasicDataNviNew = '/basic-data/nvi/new',
   BasicDataPersonRegister = '/basic-data/person-register',
   BasicDataChannelClaims = '/basic-data/channel-claims',
@@ -81,6 +83,8 @@ export enum UrlPathTemplate {
   TasksNviCandidate = '/tasks/nvi/:identifier',
   TasksNviCorrectionList = '/tasks/correction-list',
   TasksNviStatus = '/tasks/nvi/status',
+  TasksNviDisputes = '/tasks/nvi/disputes',
+  TasksPublicationPoints = '/tasks/nvi/publication-points',
   TasksResultRegistrations = '/tasks/result-registrations',
   Wildcard = '*',
 }
@@ -163,9 +167,10 @@ export interface NviCandidatesSearchParams {
   username?: string;
   year?: number;
   orgNumber?: string;
-  status?: NviCandidateStatus;
+  status?: NviCandidateStatus | NviCandidateStatus[];
   globalStatus?: NviCandidateGlobalStatus | NviCandidateGlobalStatus[];
   excludeUnassigned?: boolean;
+  excludeSubUnits?: boolean;
 }
 
 export const getNviCandidatesSearchPath = ({
@@ -175,11 +180,13 @@ export const getNviCandidatesSearchPath = ({
   status,
   globalStatus,
   excludeUnassigned,
+  excludeSubUnits,
 }: NviCandidatesSearchParams) => {
   const searchParams = new URLSearchParams();
 
   if (status) {
-    searchParams.set('status', status);
+    const value = Array.isArray(status) ? status.join(',') : status;
+    searchParams.set('status', value);
   }
 
   if (globalStatus) {
@@ -198,6 +205,10 @@ export const getNviCandidatesSearchPath = ({
   }
   if (excludeUnassigned !== undefined) {
     searchParams.set('excludeUnassigned', excludeUnassigned.toString());
+  }
+
+  if (excludeSubUnits !== undefined) {
+    searchParams.set('excludeSubUnits', excludeSubUnits.toString());
   }
   return `${UrlPathTemplate.TasksNvi}?${searchParams.toString()}`;
 };

@@ -40,6 +40,7 @@ export const SerialPublicationClaimsSettings = () => {
         {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
       </Typography>
       <Trans
+        t={t}
         i18nKey="editor.institution.channel_claims.administer_serial_publication_channel_claim_description"
         components={{
           p: <Typography gutterBottom />,

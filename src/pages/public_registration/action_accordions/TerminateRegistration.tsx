@@ -57,6 +57,7 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
         cancelButtonLabel={t('common.cancel')}
         onCancel={toggleTerminateModal}>
         <Trans
+          t={t}
           i18nKey="registration.public_page.tasks_panel.terminate_result_confirmation"
           components={[<Typography key="1" gutterBottom />]}
         />

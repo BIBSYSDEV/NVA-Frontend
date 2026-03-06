@@ -1,7 +1,10 @@
+import { AssociatedArtifact } from './associatedArtifact.types';
 import { AggregationValue, UnconfirmedOrganization } from './common.types';
 import { Contributor } from './contributor.types';
 import { Organization } from './organization.types';
 import {
+  AdditionalIdentifier,
+  EntityDescription,
   PublicationInstance,
   Publisher,
   Registration,
@@ -19,15 +22,64 @@ export interface ImportStatus {
   comment?: string;
 }
 
-export interface ImportCandidate extends Registration {
+interface SourceOrganizationIdentifier {
+  type: 'SourceOrganizationIdentifier';
+  affiliationIdentifier: string;
+  departmentIdentifier: string;
+}
+
+interface SourceOrganization {
+  type: 'SourceOrganization';
+  identifier: SourceOrganizationIdentifier;
+  names: string[];
+  country: {
+    code: string;
+    name: string;
+  };
+  address: {
+    locality: string;
+  };
+}
+
+export interface ImportAffiliation {
+  type: 'Affiliation';
+  sourceOrganization?: SourceOrganization;
+  targetOrganization?: Organization | UnconfirmedOrganization;
+}
+
+export interface ImportContributor extends Omit<Contributor, 'type' | 'affiliations'> {
+  type: 'ImportContributor';
+  affiliations: ImportAffiliation[];
+}
+
+export interface ImportEntityDescription extends Omit<EntityDescription, 'type' | 'contributors'> {
+  type: 'ImportEntityDescription';
+  contributors: ImportContributor[];
+}
+
+export interface ImportCandidate {
+  type: 'ImportCandidate';
+  importStatus: ImportStatus;
+  additionalIdentifiers?: AdditionalIdentifier[];
+  associatedArtifacts: AssociatedArtifact[];
+  associatedCustomers: string[];
+  identifier: string;
+  createdDate: string;
+  modifiedDate: string;
+  entityDescription: ImportEntityDescription;
+}
+
+export interface ExpandedImportCandidate extends Registration {
   type: 'ImportCandidate';
   importStatus: ImportStatus;
 }
 
 export type CollaborationType = 'Collaborative' | 'NonCollaborative';
 
-export interface ImportCandidateAggregations
-  extends Pick<RegistrationAggregations, 'type' | 'topLevelOrganization' | 'files'> {
+export interface ImportCandidateAggregations extends Pick<
+  RegistrationAggregations,
+  'type' | 'topLevelOrganization' | 'files'
+> {
   importStatus?: AggregationValue<ImportCandidateStatus>[];
   collaborationType?: AggregationValue<CollaborationType>[];
 }

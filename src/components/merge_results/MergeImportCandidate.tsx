@@ -9,6 +9,7 @@ import { fetchImportCandidate, updateImportCandidateStatus } from '../../api/reg
 import NotFound from '../../pages/errorpages/NotFound';
 import { setNotification } from '../../redux/notificationSlice';
 import { BasicDataLocationState, RegistrationFormLocationState } from '../../types/locationState.types';
+import { expandImportCandidate } from '../../utils/central-import-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../utils/urlPaths';
 import { HeadTitle } from '../HeadTitle';
 import { PageSpinner } from '../PageSpinner';
@@ -72,7 +73,7 @@ export const MergeImportCandidate = () => {
       </Paper>
 
       <MergeResultsWizard
-        sourceResult={importCandidateQuery.data}
+        sourceResult={expandImportCandidate(importCandidateQuery.data)}
         targetResult={registrationQuery.data}
         onSave={async (data) => {
           await registrationMutation.mutateAsync(data);

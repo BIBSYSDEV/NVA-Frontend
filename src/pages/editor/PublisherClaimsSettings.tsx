@@ -40,6 +40,7 @@ export const PublisherClaimsSettings = () => {
         {t('editor.institution.channel_claims.administer_publisher_channel_claim')}
       </Typography>
       <Trans
+        t={t}
         i18nKey="editor.institution.channel_claims.administer_publisher_channel_claim_description"
         components={{
           p: <Typography gutterBottom />,

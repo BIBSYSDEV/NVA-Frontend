@@ -303,6 +303,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicOutputs outputs={(publicationInstance as ArtisticPublicationInstance).venues ?? []} />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.LiteraryArts ? (
               <PublicOutputs outputs={(publicationInstance as ArtisticPublicationInstance).manifestations ?? []} />
+            ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.OtherArtisticOutput ? (
+              <PublicOutputs outputs={(publicationInstance as ArtisticPublicationInstance).venues ?? []} />
             ) : null
           ) : isMediaContribution(publicationInstance.type) ? (
             isPeriodicalMediaContribution(publicationInstance.type) ? (

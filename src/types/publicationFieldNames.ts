@@ -83,6 +83,7 @@ export enum ArtisticType {
   PerformingArts = 'PerformingArts',
   MovingPicture = 'MovingPicture',
   LiteraryArts = 'LiteraryArts',
+  OtherArtisticOutput = 'OtherArtisticOutput',
 }
 
 export enum MediaType {
@@ -162,6 +163,7 @@ export enum ResourceFieldNames {
   PublicationInstanceManifestations = 'entityDescription.reference.publicationInstance.manifestations',
   PublicationInstanceOutputs = 'entityDescription.reference.publicationInstance.outputs',
   PublicationInstanceSubtypeDescription = 'entityDescription.reference.publicationInstance.subtype.description',
+  PublicationInstanceTypeDescription = 'entityDescription.reference.publicationInstance.typeDescription',
   PublicationInstanceSubtypeType = 'entityDescription.reference.publicationInstance.subtype.type',
   PublicationInstanceVenues = 'entityDescription.reference.publicationInstance.venues',
   PublicationInstanceReferencedBy = 'entityDescription.reference.publicationInstance.referencedBy',
@@ -179,7 +181,7 @@ export enum ResourceFieldNames {
 
 export enum DescriptionFieldNames {
   Abstract = 'entityDescription.abstract',
-  AlternativeAbstracts = 'entityDescription.alternativeAbstracts.und',
+  AlternativeAbstracts = 'entityDescription.alternativeAbstracts',
   AlternativeTitles = 'entityDescription.alternativeTitles.und',
   Description = 'entityDescription.description',
   Fundings = 'fundings',

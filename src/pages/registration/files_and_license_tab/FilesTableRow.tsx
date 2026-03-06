@@ -229,11 +229,6 @@ export const FilesTableRow = ({
                   input: { sx: { '.MuiSelect-select': { py: '0.75rem' } } },
                   select: { inputProps: { 'aria-label': t('registration.files_and_license.availability') } },
                 }}>
-                {field.value === FileType.UpdloadedFile && (
-                  <MenuItem value={FileType.UpdloadedFile} disabled hidden>
-                    <i>{t('registration.files_and_license.select_availability')}</i>
-                  </MenuItem>
-                )}
                 <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
                   <StyledFileTypeMenuItemContent>
                     <CheckIcon fontSize="small" />
@@ -424,14 +419,16 @@ export const FilesTableRow = ({
                     <>
                       {fileHasCustomerRrs && (
                         <Typography>
-                          <Trans i18nKey="registration.files_and_license.institution_prefers_cc_by">
+                          <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
                             {rrsPolicyLink}
                           </Trans>
                         </Typography>
                       )}
                       {fileHasOverriddenRrs && (
                         <Typography>
-                          <Trans i18nKey="registration.files_and_license.opted_out_of_rrs">{rrsPolicyLink}</Trans>
+                          <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
+                            {rrsPolicyLink}
+                          </Trans>
                         </Typography>
                       )}
                     </>
@@ -499,7 +496,7 @@ export const FilesTableRow = ({
                         <FormControlLabel
                           disabled={disabledFile}
                           label={
-                            <Trans i18nKey="registration.files_and_license.follow_institution_rights_policy">
+                            <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
                               {rrsPolicyLink}
                             </Trans>
                           }

@@ -3,7 +3,7 @@ import { Box, Skeleton, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { ClaimedChannel } from '../../types/customerInstitution.types';
-import { getLanguageString } from '../../utils/translation-helpers';
+import { getLanguageString, triggerLanguageRerender } from '../../utils/translation-helpers';
 
 interface ChannelClaimInfoBoxProps {
   channelClaim: ClaimedChannel;
@@ -28,13 +28,14 @@ export const ChannelClaimInfoBox = ({ channelClaim }: ChannelClaimInfoBoxProps) 
         <Typography variant="h2">{t('registration.channel_claim_info_heading')}</Typography>
         <Typography>
           <Trans
+            t={t}
             i18nKey="registration.channel_claim_info_owned_by"
             components={{
               institution: organizationQuery.isPending ? (
                 <Skeleton sx={{ display: 'inline-block', width: '12rem' }} />
               ) : (
                 <Typography component="span" sx={{ fontWeight: 'bold' }}>
-                  {getLanguageString(organizationQuery.data?.labels)}
+                  {triggerLanguageRerender(t, getLanguageString(organizationQuery.data?.labels))}
                 </Typography>
               ),
             }}
@@ -42,6 +43,7 @@ export const ChannelClaimInfoBox = ({ channelClaim }: ChannelClaimInfoBoxProps) 
         </Typography>
 
         <Trans
+          t={t}
           i18nKey="registration.use_curator_help_button"
           values={{ buttonText: t('my_page.messages.get_curator_support') }}
           components={{ p: <Typography /> }}

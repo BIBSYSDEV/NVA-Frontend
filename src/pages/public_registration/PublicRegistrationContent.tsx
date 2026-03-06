@@ -1,7 +1,7 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
@@ -14,6 +14,7 @@ import { RegistrationIconHeader } from '../../components/RegistrationIconHeader'
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { LandingPageContext } from '../../context/LandingPageContext';
 import { PreviousPathLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
@@ -22,6 +23,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import {
   getAssociatedLinks,
   getTitleString,
+  isArtistic,
   isBook,
   isReport,
   isResearchData,
@@ -41,6 +43,10 @@ import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
+import {
+  ArtisticPublicationInstance,
+  emptyArtisticPublicationInstance,
+} from '../../types/publication_types/artisticRegistration.types';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -56,6 +62,11 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   const mainTitle = getTitleString(entityDescription?.mainTitle);
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
+  const publicationInstance = entityDescription?.reference?.publicationInstance;
+  const artisticPublicationInstance =
+    !!publicationInstance && isArtistic(publicationInstance.type)
+      ? (publicationInstance as ArtisticPublicationInstance)
+      : emptyArtisticPublicationInstance;
 
   const relatedRegistrationsQuery = useRegistrationSearch({
     params: {
@@ -67,6 +78,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   });
 
   const userCanEditRegistration = userHasAccessRight(registration, 'partial-update');
+  const { isAwaitingStatusSync } = useContext(LandingPageContext);
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
@@ -83,6 +95,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             publicationDate={entityDescription?.publicationDate}
             showYearOnly
             textColor="primary.contrastText"
+            publicationInstance={artisticPublicationInstance}
           />
           <TruncatableTypography variant="h1" sx={{ color: 'primary.contrastText' }}>
             {mainTitle}
@@ -92,6 +105,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         {userCanEditRegistration && (
           <Tooltip title={t('registration.edit_registration')}>
             <IconButton
+              disabled={isAwaitingStatusSync}
               component={RouterLink}
               state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
               to={getWizardPathByRegistration(registration)}

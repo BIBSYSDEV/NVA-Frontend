@@ -1,34 +1,28 @@
 import AdjustIcon from '@mui/icons-material/Adjust';
-import { Box, Divider, LinearProgress, Skeleton, styled, Typography } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidateGlobalStatusEnum, NviCandidatesSearchParam, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
+import { NviReportProgressBar } from '../../../components/NviReportProgressBar';
 import { SelectableButton } from '../../../components/SelectableButton';
-import { StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers';
+import {
+  HorizontalBox,
+  MediumTypography,
+  StyledNviStatusBox,
+  StyledTicketSearchFormGroup,
+  VerticalBox,
+} from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
-
-const StyledNviStatusBox = styled(Box)(({ theme }) => ({
-  padding: '0.5rem',
-  borderRadius: '0.25rem',
-  backgroundColor: theme.palette.background.paper,
-  marginBottom: '0.5rem',
-}));
-
-const StyledTypography = styled(Typography)({
-  display: 'flex',
-});
-
-const StyledSkeleton = styled(Skeleton)({
-  width: '2ch',
-});
-
-const progressLabel = 'progress-label';
+import { StyledSkeleton } from './NviStatusTableRowWrapper';
 
 export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();
@@ -37,11 +31,13 @@ export const NviCandidatesNavigationAccordion = () => {
 
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
+  const isOnNviDisputePage = location.pathname === UrlPathTemplate.TasksNviDisputes;
+  const isOnPublicationPointsPage = location.pathname === UrlPathTemplate.TasksPublicationPoints;
 
   const nviParams = useNviCandidatesParams();
 
   const nviAggregationsQuery = useFetchNviCandidates({
-    enabled: isOnNviCandidatesPage || isOnNviStatusPage,
+    enabled: isOnNviCandidatesPage || isOnNviStatusPage || isOnNviDisputePage || isOnPublicationPointsPage,
     params: { year: nviParams.year, size: 0, aggregation: 'all' },
   });
 
@@ -70,39 +66,51 @@ export const NviCandidatesNavigationAccordion = () => {
       dataTestId={dataTestId.tasksPage.nviAccordion}>
       <StyledTicketSearchFormGroup>
         <StyledNviStatusBox>
-          <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}</Typography>
-          {nviAggregationsQuery.isPending ? (
-            <>
-              <Skeleton />
-              <Skeleton sx={{ maxWidth: '10rem' }} />
-            </>
-          ) : (
-            <>
-              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                <LinearProgress
-                  aria-labelledby={progressLabel}
-                  variant="determinate"
-                  value={nviCompletedPercentage}
-                  color="secondary"
-                  sx={{
-                    flexGrow: '1',
-                    my: '0.175rem',
-                    height: '1rem',
-                    bgcolor: 'tertiary.main',
-                    borderRadius: '0.5rem',
-                  }}
-                />
-                <Typography>{nviCompletedPercentage}%</Typography>
-              </Box>
-              <Typography id={progressLabel} gutterBottom>
-                {t('tasks.nvi.completed_count', {
-                  completed: nviCandidatesCompleted,
-                  total: nviCandidatesTotal,
-                })}
-              </Typography>
-            </>
-          )}
+          <NviReportProgressBar
+            completedPercentage={nviCompletedPercentage}
+            completedCount={nviCandidatesCompleted}
+            totalCount={nviCandidatesTotal}
+            isPending={nviAggregationsQuery.isPending}
+          />
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
+            <VerticalBox sx={{ my: '0.5rem', gap: '0.15rem' }}>
+              <HorizontalBox sx={{ gap: '0.25rem' }}>
+                <HourglassEmptyIcon sx={{ fontSize: 'medium' }} />
+                <MediumTypography>
+                  {t('tasks.nvi.candidates_for_control')} (
+                  {nviAggregationsQuery.isPending ? (
+                    <StyledSkeleton sx={{ display: 'inline-flex' }} />
+                  ) : (
+                    (nviPendingCount ?? 0)
+                  )}
+                  )
+                </MediumTypography>
+              </HorizontalBox>
+              <HorizontalBox sx={{ gap: '0.25rem' }}>
+                <CheckIcon sx={{ fontSize: 'medium' }} />
+                <MediumTypography>
+                  {t('tasks.nvi.status.Approved')} (
+                  {nviAggregationsQuery.isPending ? (
+                    <StyledSkeleton sx={{ display: 'inline-flex' }} />
+                  ) : (
+                    (nviApprovedCount ?? 0)
+                  )}
+                  )
+                </MediumTypography>
+              </HorizontalBox>
+              <HorizontalBox sx={{ gap: '0.25rem' }}>
+                <CloseIcon sx={{ fontSize: 'medium' }} />
+                <MediumTypography>
+                  {t('tasks.nvi.status.Rejected')} (
+                  {nviAggregationsQuery.isPending ? (
+                    <StyledSkeleton sx={{ display: 'inline-flex' }} />
+                  ) : (
+                    (nviRejectedCount ?? 0)
+                  )}
+                  )
+                </MediumTypography>
+              </HorizontalBox>
+            </VerticalBox>
             <SelectableButton
               data-testid={dataTestId.tasksPage.nvi.showCandidateSearchButton}
               sx={{ justifyContent: 'center' }}
@@ -125,30 +133,29 @@ export const NviCandidatesNavigationAccordion = () => {
               }}>
               {t('tasks.nvi.show_reporting_status')}
             </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.tasksPage.nvi.showDisputesButton}
+              sx={{ justifyContent: 'center' }}
+              isSelected={isOnNviDisputePage}
+              to={{ pathname: UrlPathTemplate.TasksNviDisputes }}>
+              {t('tasks.nvi.show_disputes')} (
+              {nviAggregationsQuery.isPending ? (
+                <Box sx={{ width: '1.5rem' }}>
+                  <StyledSkeleton width={24} sx={{ display: 'inline-block' }} />
+                </Box>
+              ) : (
+                (nviDisputeCount ?? 0)
+              )}
+              )
+            </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.tasksPage.nvi.showPublicationPointsButton}
+              sx={{ justifyContent: 'center' }}
+              isSelected={isOnPublicationPointsPage}
+              to={{ pathname: UrlPathTemplate.TasksPublicationPoints }}>
+              {t('tasks.nvi.show_status_for_publication_points')}
+            </SelectableButton>
           </Box>
-        </StyledNviStatusBox>
-
-        <StyledNviStatusBox sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-          <Typography fontWeight="bold">{t('tasks.nvi.nvi_reporting_status')}:</Typography>
-          <StyledTypography>
-            {t('tasks.nvi.candidates_for_control')} (
-            {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviPendingCount ?? 0)})
-          </StyledTypography>
-          <Divider sx={{ bgcolor: 'black' }} />
-          <Typography fontWeight="bold">{t('tasks.nvi.controlled')}:</Typography>
-          <StyledTypography>
-            {t('tasks.nvi.status.Approved')} (
-            {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviApprovedCount ?? 0)})
-          </StyledTypography>
-          <StyledTypography>
-            {t('tasks.nvi.status.Rejected')} (
-            {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviRejectedCount ?? 0)})
-          </StyledTypography>
-          <Divider sx={{ bgcolor: 'black' }} />
-          <StyledTypography>
-            {t('tasks.nvi.status.Dispute')} (
-            {nviAggregationsQuery.isPending ? <StyledSkeleton /> : (nviDisputeCount ?? 0)})
-          </StyledTypography>
         </StyledNviStatusBox>
       </StyledTicketSearchFormGroup>
     </NavigationListAccordion>

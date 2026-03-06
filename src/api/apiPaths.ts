@@ -57,7 +57,6 @@ export enum SearchApiPath {
 export enum VerifiedFundingApiPath {
   Nfr = '/verified-funding/nfr',
 }
-
 export enum PersonPreferencesApiPath {
   PersonPreferences = '/person-preferences',
 }
@@ -68,4 +67,5 @@ export enum ScientificIndexApiPath {
   InstitutionReport = '/scientific-index/institution-report',
   Period = '/scientific-index/period',
   Publication = '/scientific-index/publication',
+  Reports = '/scientific-index/reports',
 }

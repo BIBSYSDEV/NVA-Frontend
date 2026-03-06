@@ -16,7 +16,6 @@ interface PublishingAccordionLastTicketInfoProps {
   canApprovePublishingRequest: boolean;
   canCreatePublishingRequest: boolean;
   registrationHasApprovedFile: boolean;
-  refetchData: () => Promise<void>;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
   registrationIsValid: boolean;
 }
@@ -28,7 +27,6 @@ export const PublishingAccordionLastTicketInfo = ({
   registrationHasApprovedFile,
   registrationIsValid,
   addMessage,
-  refetchData,
 }: PublishingAccordionLastTicketInfoProps) => {
   const { t } = useTranslation();
 
@@ -36,7 +34,7 @@ export const PublishingAccordionLastTicketInfo = ({
 
   if (publishingTicket.workflow === 'RegistratorPublishesMetadataAndFiles' && isCompletedTicket) {
     return (
-      <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_workflow1">
+      <Trans t={t} i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_workflow1">
         <Typography sx={{ mb: '1rem' }} />
       </Trans>
     );
@@ -55,20 +53,28 @@ export const PublishingAccordionLastTicketInfo = ({
         <>
           {canApprovePublishingRequest ? (
             registrationHasApprovedFile ? (
-              <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_curator">
+              <Trans
+                t={t}
+                i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_curator">
                 <Typography sx={{ mb: '1rem' }} />
               </Trans>
             ) : (
-              <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_without_file_description_for_curator">
+              <Trans
+                t={t}
+                i18nKey="registration.public_page.tasks_panel.approved_publishing_request_without_file_description_for_curator">
                 <Typography sx={{ mb: '1rem' }} />
               </Trans>
             )
           ) : registrationHasApprovedFile ? (
-            <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_registrator">
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_registrator">
               <Typography sx={{ mb: '1rem' }} />
             </Trans>
           ) : (
-            <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_without_file_description_for_registrator">
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.approved_publishing_request_without_file_description_for_registrator">
               <Typography sx={{ mb: '1rem' }} />
             </Trans>
           )}
@@ -78,12 +84,14 @@ export const PublishingAccordionLastTicketInfo = ({
       {isClosedTicket && (
         <>
           {canApprovePublishingRequest ? (
-            <Trans i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request">
+            <Trans t={t} i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request">
               <Typography sx={{ mb: '1rem' }} />
             </Trans>
           ) : (
             <>
-              <Trans i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request_registrator">
+              <Trans
+                t={t}
+                i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request_registrator">
                 <Typography sx={{ mb: '1rem' }} />
               </Trans>
               <Button
@@ -110,15 +118,18 @@ export const PublishingAccordionLastTicketInfo = ({
             <PendingPublishingTicketForCuratorSection
               publishingTicket={publishingTicket}
               addMessage={addMessage}
-              refetchData={refetchData}
               registrationIsValid={registrationIsValid}
             />
           ) : registrationHasApprovedFile ? (
-            <Trans i18nKey="registration.public_page.tasks_panel.pending_publishing_request_with_file_description_for_registrator">
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.pending_publishing_request_with_file_description_for_registrator">
               <Typography sx={{ mb: '1rem' }} />
             </Trans>
           ) : (
-            <Trans i18nKey="registration.public_page.tasks_panel.pending_publishing_request_without_file_description_for_registrator">
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.pending_publishing_request_without_file_description_for_registrator">
               <Typography sx={{ mb: '1rem' }} />
             </Trans>
           )}
@@ -138,6 +149,7 @@ export const PublishingAccordionLastTicketInfo = ({
               </Typography>
             ) : (
               <Trans
+                t={t}
                 i18nKey="registration.public_page.publishing_request_message_about"
                 components={{ p: <Typography gutterBottom /> }}
               />

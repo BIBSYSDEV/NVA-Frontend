@@ -1,7 +1,9 @@
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTicketMessage } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { ActionPanelContext } from '../../context/ActionPanelContext';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
@@ -12,7 +14,6 @@ import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { SupportAccordion } from './action_accordions/SupportAccordion';
 
 interface ActionPanelContentProps extends PublicRegistrationContentProps {
-  refetchData: () => Promise<void>;
   isLoadingData?: boolean;
   shouldSeePublishingAccordion: boolean;
   shouldSeeDoiAccordion: boolean;
@@ -24,7 +25,6 @@ interface ActionPanelContentProps extends PublicRegistrationContentProps {
 
 export const ActionPanelContent = ({
   registration,
-  refetchData,
   isLoadingData = false,
   shouldSeePublishingAccordion,
   shouldSeeDoiAccordion,
@@ -36,6 +36,7 @@ export const ActionPanelContent = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
+  const refetchData = useContext(ActionPanelContext).refetchData;
 
   const addMessage = async (ticketId: string, message: string) => {
     const addMessageResponse = await addTicketMessage(ticketId, message);
@@ -55,7 +56,6 @@ export const ActionPanelContent = ({
       {shouldSeePublishingAccordion && (
         <ErrorBoundary>
           <PublishingAccordion
-            refetchData={refetchData}
             isLoadingData={isLoadingData}
             registration={registration}
             publishingRequestTickets={publishingRequestTickets}
@@ -69,7 +69,6 @@ export const ActionPanelContent = ({
         <ErrorBoundary>
           {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
             <DoiRequestAccordion
-              refetchData={refetchData}
               isLoadingData={isLoadingData}
               registration={registration}
               doiRequestTicket={newestDoiRequestTicket}
@@ -82,12 +81,7 @@ export const ActionPanelContent = ({
 
       {shouldSeeSupportAccordion && (
         <ErrorBoundary>
-          <SupportAccordion
-            registration={registration}
-            supportTicket={newestSupportTicket}
-            addMessage={addMessage}
-            refetchData={refetchData}
-          />
+          <SupportAccordion registration={registration} supportTicket={newestSupportTicket} addMessage={addMessage} />
         </ErrorBoundary>
       )}
     </>

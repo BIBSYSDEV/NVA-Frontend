@@ -47,6 +47,7 @@ export const ClaimedChannelInfoBox = ({ channelId, channelType }: ClaimedChannel
         </Typography>
         <Typography color="inherit">
           <Trans
+            t={t}
             i18nKey="registration.resource_type.files_will_be_handled_by_other_institution"
             components={{
               institution: organizationQuery.isPending ? (

@@ -113,11 +113,13 @@ export const AddChannelClaimDialog = ({ open, closeDialog }: AddChannelClaimDial
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {isPublisherChannelClaim ? (
             <Trans
+              t={t}
               i18nKey="editor.institution.channel_claims.add_publisher_channel_claim_description"
               components={{ p: <Typography /> }}
             />
           ) : (
             <Trans
+              t={t}
               i18nKey="editor.institution.channel_claims.add_serial_publication_channel_claim_description"
               components={{ p: <Typography /> }}
             />

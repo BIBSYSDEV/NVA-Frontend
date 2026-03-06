@@ -96,6 +96,7 @@ export const PublishingStrategyOverview = () => {
             {isRrs || isOverridableRrs ? (
               <>
                 <Trans
+                  t={t}
                   i18nKey="editor.retention_strategy.customer_has_rrs_text"
                   components={[<Typography key="1" />]}
                 />
@@ -109,6 +110,7 @@ export const PublishingStrategyOverview = () => {
                 <Typography variant="h3">{t('editor.retention_strategy.possible_not_to_follow_rrs')}</Typography>
                 {isOverridableRrs ? (
                   <Trans
+                    t={t}
                     i18nKey="editor.retention_strategy.creator_can_override_rrs_text"
                     components={[
                       <Typography key="1">
@@ -119,6 +121,7 @@ export const PublishingStrategyOverview = () => {
                   />
                 ) : (
                   <Trans
+                    t={t}
                     i18nKey="editor.retention_strategy.curator_can_override_rrs_text"
                     components={[
                       <Typography key="1" />,
@@ -131,6 +134,7 @@ export const PublishingStrategyOverview = () => {
               </>
             ) : (
               <Trans
+                t={t}
                 i18nKey="editor.retention_strategy.customer_has_no_rrs"
                 components={[
                   <Typography key="1" />,

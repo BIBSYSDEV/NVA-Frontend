@@ -4,13 +4,15 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import PeopleIcon from '@mui/icons-material/People';
-import { Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MergeImportCandidate } from '../../components/merge_results/MergeImportCandidate';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import { NviReportProgressBar } from '../../components/NviReportProgressBar';
 import {
   LinkCreateButton,
   NavigationList,
@@ -19,8 +21,10 @@ import {
 } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
+import { StyledNviStatusBox } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getDefaultNviYear } from '../../utils/hooks/useNviCandidatesParams';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
@@ -31,6 +35,8 @@ import { CentralImportCandidateForm } from './app_admin/central_import/CentralIm
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
 import { ImportCandidatesMenuFilters } from './app_admin/central_import/ImportCandidatesMenuFilters';
+import { NviAdminPublicationPointsPage } from './app_admin/NviAdminPublicationPointsPage';
+import { NviAdminStatusPage } from './app_admin/NviAdminStatusPage';
 import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
@@ -135,11 +141,38 @@ const BasicDataPage = () => {
               accordionPath={UrlPathTemplate.BasicDataNvi}
               dataTestId={dataTestId.basicData.nviPeriodsLink}>
               <NavigationList aria-label={t('common.nvi')}>
-                <SelectableButton
-                  isSelected={currentPath === UrlPathTemplate.BasicDataNvi}
-                  to={UrlPathTemplate.BasicDataNvi}>
-                  {t('basic_data.nvi.reporting_periods')}
-                </SelectableButton>
+                <StyledNviStatusBox>
+                  <BetaFunctionality>
+                    <NviReportProgressBar
+                      completedPercentage={78}
+                      completedCount={245}
+                      totalCount={368}
+                      isPending={false}
+                    />
+                  </BetaFunctionality>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
+                    <SelectableButton
+                      data-testid={dataTestId.basicData.nviReportingPeriodsLink}
+                      isSelected={currentPath === UrlPathTemplate.BasicDataNvi}
+                      to={UrlPathTemplate.BasicDataNvi}>
+                      {t('basic_data.nvi.reporting_periods')}
+                    </SelectableButton>
+                    <BetaFunctionality sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <SelectableButton
+                        data-testid={dataTestId.basicData.nviStatusLink}
+                        isSelected={currentPath === UrlPathTemplate.BasicDataNviStatus}
+                        to={`${UrlPathTemplate.BasicDataNviStatus}?year=${getDefaultNviYear()}`}>
+                        {t('basic_data.nvi.show_reporting_status')}
+                      </SelectableButton>
+                      <SelectableButton
+                        data-testid={dataTestId.basicData.nviPublicationPointsLink}
+                        isSelected={currentPath === UrlPathTemplate.BasicDataNviPublicationPoints}
+                        to={UrlPathTemplate.BasicDataNviPublicationPoints}>
+                        {t('basic_data.nvi.show_publication_points_status')}
+                      </SelectableButton>
+                    </BetaFunctionality>
+                  </Box>
+                </StyledNviStatusBox>
               </NavigationList>
 
               <Divider sx={{ mt: '0.5rem' }} />
@@ -242,6 +275,14 @@ const BasicDataPage = () => {
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataNvi, UrlPathTemplate.BasicData, true)}
             element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />}
+          />
+          <Route
+            path={getSubUrl(UrlPathTemplate.BasicDataNviStatus, UrlPathTemplate.BasicData)}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviAdminStatusPage />} />}
+          />
+          <Route
+            path={getSubUrl(UrlPathTemplate.BasicDataNviPublicationPoints, UrlPathTemplate.BasicData)}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviAdminPublicationPointsPage />} />}
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataPublisherClaims, UrlPathTemplate.BasicData)}

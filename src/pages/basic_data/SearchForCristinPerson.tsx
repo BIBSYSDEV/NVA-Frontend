@@ -22,8 +22,10 @@ import { getLanguageString } from '../../utils/translation-helpers';
 import { convertToFlatCristinPerson, getMaskedNationalIdentityNumber } from '../../utils/user-helpers';
 import { AddEmployeeData } from './institution_admin/AddEmployeePage';
 
-interface SearchForCristinPersonProps
-  extends Pick<AutocompleteProps<FlatCristinPerson, false, false, false>, 'disabled'> {
+interface SearchForCristinPersonProps extends Pick<
+  AutocompleteProps<FlatCristinPerson, false, false, false>,
+  'disabled'
+> {
   selectedPerson: FlatCristinPerson | undefined;
   setSelectedPerson: (person: FlatCristinPerson | undefined) => void;
 }

@@ -21,7 +21,7 @@ const NviReports = () => {
       </Typography>
       <StyledReportIframe
         title={t('common.nvi')}
-        src="https://rapport-dv.uhad.no/t/DUCT/views/nettsider_2022_23_04_v9/NVI2011-2023?%3Aembed=y"
+        src="https://rapport-dv.educloud.no/t/DUCT/views/nettsider_2022_23_04_v9/NVI2011-2023?%3Aembed=y"
       />
     </>
   );

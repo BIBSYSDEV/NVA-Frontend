@@ -36,6 +36,7 @@ export const RepublishRegistration = ({
 
       {!userCanRepublish ? (
         <Trans
+          t={t}
           i18nKey="registration.public_page.tasks_panel.no_access_to_republish"
           components={[<Typography gutterBottom key="1" />]}
         />

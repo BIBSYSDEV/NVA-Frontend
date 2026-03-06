@@ -84,7 +84,7 @@ export const AddCuratorForm = ({
             {t('editor.curators.area_of_responsibility')}
           </Typography>
 
-          <Trans i18nKey="editor.curators.area_of_responsibility_description">
+          <Trans t={t} i18nKey="editor.curators.area_of_responsibility_description">
             <Typography gutterBottom />
           </Trans>
 

@@ -1,11 +1,13 @@
 import { Box, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
 import { updateTicket } from '../../../api/registrationApi';
 import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { Avatar } from '../../../components/Avatar';
+import { ActionPanelContext } from '../../../context/ActionPanelContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
@@ -15,7 +17,6 @@ import { getFullName } from '../../../utils/user-helpers';
 
 interface TicketAssigneeProps {
   ticket: Ticket;
-  refetchTickets: () => Promise<void>;
 }
 
 const getRoleFilter = (ticketType: Ticket['type']) => {
@@ -33,10 +34,11 @@ const getRoleFilter = (ticketType: Ticket['type']) => {
   }
 };
 
-export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) => {
+export const TicketAssignee = ({ ticket }: TicketAssigneeProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
+  const refetchTickets = useContext(ActionPanelContext).refetchData;
 
   const canEditTicket =
     !!(ticket.type === 'DoiRequest' && user?.isDoiCurator) ||

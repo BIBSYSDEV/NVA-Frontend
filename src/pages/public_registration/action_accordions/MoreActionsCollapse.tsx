@@ -1,10 +1,11 @@
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Box, Divider, IconButton } from '@mui/material';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { BetaFunctionality } from '../../../components/BetaFunctionality';
+import { ActionPanelContext } from '../../../context/ActionPanelContext';
 import { RootState } from '../../../redux/store';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -17,20 +18,15 @@ import { TerminateRegistration } from './TerminateRegistration';
 import { UnpublishRegistration } from './UnpublishRegistration';
 import { UpdateTicketOwnership } from './UpdateTicketOwnership';
 
-interface MoreActionsCollapseProps extends RepublishRegistrationProps {
+interface MoreActionsCollapseProps extends Omit<RepublishRegistrationProps, 'refetchData'> {
   ticket?: PublishingTicket;
-  refetchData: () => Promise<void>;
 }
 
-export const MoreActionsCollapse = ({
-  registration,
-  registrationIsValid,
-  ticket,
-  refetchData,
-}: MoreActionsCollapseProps) => {
+export const MoreActionsCollapse = ({ registration, registrationIsValid, ticket }: MoreActionsCollapseProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
   const [openMoreActions, setOpenMoreActions] = useState(false);
+  const refetchData = useContext(ActionPanelContext).refetchData;
 
   const isPublished = registration.status === 'PUBLISHED' || registration.status === 'PUBLISHED_METADATA';
   const isUnpublished = registration.status === 'UNPUBLISHED';

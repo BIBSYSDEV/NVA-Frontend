@@ -59,6 +59,7 @@ export const ProjectAddAffiliationModal = ({
       headingText={t('project.add_affiliation')}
       dataTestId="affiliation-modal">
       <Trans
+        t={t}
         i18nKey="project.affiliation_modal.add_new_affiliation_helper_text"
         components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
       />

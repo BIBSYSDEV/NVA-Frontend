@@ -3,11 +3,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
 import { updateTicket, UpdateTicketData } from '../../../api/registrationApi';
+import { ActionPanelContext } from '../../../context/ActionPanelContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
@@ -19,14 +20,12 @@ import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 interface PendingPublishingTicketForCuratorSectionProps {
   publishingTicket: PublishingTicket;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
-  refetchData: () => Promise<void>;
   registrationIsValid: boolean;
 }
 
 export const PendingPublishingTicketForCuratorSection = ({
   publishingTicket,
   addMessage,
-  refetchData,
   registrationIsValid,
 }: PendingPublishingTicketForCuratorSectionProps) => {
   const dispatch = useDispatch();
@@ -34,6 +33,7 @@ export const PendingPublishingTicketForCuratorSection = ({
   const isLoadingData = false;
   const [openRejectionDialog, setOpenRejectionDialog] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
+  const refetchData = useContext(ActionPanelContext).refetchData;
 
   const ticketMutation = useMutation({
     mutationFn: async (newTicketData: UpdateTicketData) => {
@@ -65,6 +65,7 @@ export const PendingPublishingTicketForCuratorSection = ({
   return (
     <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <Trans
+        t={t}
         i18nKey="registration.public_page.tasks_panel.approve_publishing_request_description"
         components={[<Typography key="1" />]}
       />
@@ -82,6 +83,7 @@ export const PendingPublishingTicketForCuratorSection = ({
       </Button>
 
       <Trans
+        t={t}
         i18nKey="registration.public_page.tasks_panel.reject_publishing_request_description"
         values={{ count: publishingTicket.filesForApproval.length }}
         components={[<Typography key="1" />]}
@@ -118,6 +120,7 @@ export const PendingPublishingTicketForCuratorSection = ({
         <DialogTitle fontWeight="bold">{t('registration.public_page.reject_publish_request')}</DialogTitle>
         <DialogContent>
           <Trans
+            t={t}
             i18nKey="registration.public_page.reject_publish_request_description"
             components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />

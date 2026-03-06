@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import { toDateString } from './date-helpers';
 
+export const isOnPage = (url: string) => window.location.pathname.startsWith(url);
+
 export const isValidUrl = (value: string) => value && Yup.string().url().isValidSync(value);
 
 export const doiUrlBase = 'https://doi.org/';
@@ -40,8 +42,9 @@ export const getIdentifierFromId = (id: string) => id.split('/').pop() ?? '';
 
 export const getInitials = (name: string) => {
   if (!name) return '';
-
-  const splittedNames = name.split(' ');
+  const cleanedName = name.trim().replace(/\s+/g, ' ');
+  if (!cleanedName) return '';
+  const splittedNames = cleanedName.split(' ');
   const firstNameInitial = splittedNames[0][0];
   const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
   return `${firstNameInitial}${lastNameInitial}`.toUpperCase();
@@ -77,3 +80,9 @@ export const getEnvVariableValue = <T = string>(value: any): T | undefined => {
   }
   return value?.trim() as T | undefined;
 };
+
+export const setDelay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const nbNoNumberFormat = new Intl.NumberFormat('nb-NO');
+
+export const formatNumber = (n: number) => nbNoNumberFormat.format(n);

@@ -13,7 +13,7 @@ export const Terms = () => {
       <Typography variant="h1" gutterBottom>
         {t('common.terms')}
       </Typography>
-      <Trans i18nKey="my_page.my_profile.terms_description">
+      <Trans t={t} i18nKey="my_page.my_profile.terms_description">
         <Typography sx={{ mb: '1rem', maxWidth: '50rem' }}>
           <Link
             href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv"

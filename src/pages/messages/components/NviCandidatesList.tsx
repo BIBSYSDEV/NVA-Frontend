@@ -20,8 +20,9 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
-import { NviStatusFilter, NviVisibilityFilter } from './NviStatusFilter';
+import { NviStatusFilter } from './NviStatusFilter';
 import { NviYearSelector } from './NviYearSelector';
+import { CoPublicationsCheckbox } from './CoPublicationsCheckbox';
 
 export const NviCandidatesList = () => {
   const { t } = useTranslation();
@@ -53,7 +54,7 @@ export const NviCandidatesList = () => {
           />
         </Grid>
         <Grid size={{ xs: 16, sm: 8, md: 4 }}>
-          <NviVisibilityFilter />
+          <CoPublicationsCheckbox />
         </Grid>
 
         <Grid size={{ xs: 16, sm: 8, md: 6, lg: 4 }}>

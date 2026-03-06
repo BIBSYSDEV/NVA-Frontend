@@ -43,6 +43,7 @@ export const Forbidden = () => {
       ) : (
         <>
           <Trans
+            t={t}
             i18nKey="authorization.forbidden_description"
             components={{
               p: <Typography />,

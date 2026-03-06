@@ -16,6 +16,7 @@ import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wra
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 import { BasicDataLocationState, PreviousPathLocationState } from '../../../../types/locationState.types';
+import { expandImportCandidate } from '../../../../utils/central-import-helpers';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { convertToRegistrationSearchItem } from '../../../../utils/registration-helpers';
@@ -61,7 +62,8 @@ export const CentralImportDuplicationCheckPage = () => {
     queryFn: () => fetchImportCandidate(identifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
-  const importCandidate = importCandidateQuery.data;
+
+  const importCandidate = importCandidateQuery.data && expandImportCandidate(importCandidateQuery.data);
 
   const importCandidateStatusMutation = useMutation({
     mutationFn: (comment: string) =>

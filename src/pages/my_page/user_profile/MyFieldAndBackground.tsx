@@ -182,6 +182,7 @@ export const MyFieldAndBackground = () => {
                   {t('my_page.my_profile.background')}
                 </Typography>
                 <Trans
+                  t={t}
                   i18nKey="my_page.my_profile.background_description"
                   components={[<Typography key="1" gutterBottom />]}
                 />
