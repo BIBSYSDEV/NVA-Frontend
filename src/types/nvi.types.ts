@@ -227,3 +227,27 @@ export interface NviInstitutionsReport {
   period: NviPeriod;
   institutions: InstitutionReport[];
 }
+
+export interface NviPeriodTotals {
+  type: 'PeriodTotals';
+  validPoints: number;
+  disputedCount: number;
+  undisputedProcessedCount: number;
+  undisputedTotalCount: number;
+}
+
+export interface NviPeriodByGlobalApprovalStatus {
+  type: 'CandidatesByGlobalApprovalStatus';
+  dispute: number;
+  pending: number;
+  rejected: number;
+  approved: number;
+}
+
+export interface NviPeriodReport {
+  type: 'PeriodReport';
+  id: string;
+  period: NviPeriod;
+  totals: NviPeriodTotals;
+  byGlobalApprovalStatus: NviPeriodByGlobalApprovalStatus;
+}
