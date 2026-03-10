@@ -1,9 +1,12 @@
 import {
   Approval,
+  InstitutionReport,
   Note,
   NviCandidate,
+  NviInstitutionsReport,
   NviInstitutionStatusResponse,
   NviPeriod,
+  NviPeriodReport,
   NviPeriodResponse,
   RejectedApproval,
 } from '../types/nvi.types';
@@ -122,4 +125,41 @@ export const fetchNviInstitutionApprovalReport = async (year: number) => {
     responseType: 'blob',
   });
   return fetchNviInstitutionApprovalReportResponse.data;
+};
+
+const assertValidReportYear = (year: number) => {
+  const isValidYear = Number.isInteger(year) && year >= 1000 && year <= 9999;
+  if (!isValidYear) {
+    throw new Error('Invalid year provided. Year must be a four-digit integer.');
+  }
+};
+
+export const fetchNviPeriodReport = async (year: number) => {
+  assertValidReportYear(year);
+  const fetchNviPeriodReportResponse = await authenticatedApiRequest2<NviPeriodReport>({
+    url: `${ScientificIndexApiPath.Reports}/${year}`,
+  });
+
+  return fetchNviPeriodReportResponse.data;
+};
+
+export const fetchNviReportsAllInstitutions = async (year: number) => {
+  assertValidReportYear(year);
+  const fetchNviReportsAllInstitutionsResponse = await authenticatedApiRequest2<NviInstitutionsReport>({
+    url: `${ScientificIndexApiPath.Reports}/${year}/institutions`,
+  });
+
+  return fetchNviReportsAllInstitutionsResponse.data;
+};
+
+export const fetchNviReportForInstitution = async (id: string, year: number) => {
+  assertValidReportYear(year);
+  const trimmedId = id.trim();
+  if (!trimmedId) {
+    throw new Error('Invalid institution id provided.');
+  }
+  const fetchNviReportForInstitutionResponse = await authenticatedApiRequest2<InstitutionReport>({
+    url: `${ScientificIndexApiPath.Reports}/${year}/institutions/${encodeURIComponent(trimmedId)}`,
+  });
+  return fetchNviReportForInstitutionResponse.data;
 };

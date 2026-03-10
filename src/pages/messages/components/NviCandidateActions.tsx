@@ -3,7 +3,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
@@ -39,7 +39,8 @@ interface NviNote {
   date: string;
   username: string;
   institutionId?: string;
-  content: ReactNode;
+  text?: string;
+  messageType?: 'Justification' | 'Approval' | 'Comment';
 }
 
 interface NviCandidateActionsProps {
@@ -116,15 +117,8 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   ).map((rejectionStatus) => ({
     type: 'FinalizedNote',
     date: rejectionStatus.finalizedDate,
-    content: (
-      <Typography>
-        <Box component="span" fontWeight={700} sx={{ textDecoration: 'underline' }}>
-          {t('tasks.nvi.rejection_reason')}:
-        </Box>
-        <br />
-        {rejectionStatus.reason}
-      </Typography>
-    ),
+    text: rejectionStatus.reason,
+    messageType: 'Justification',
     username: rejectionStatus.finalizedBy,
     institutionId: rejectionStatus.institutionId,
   }));
@@ -134,7 +128,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   ).map((approvalStatus) => ({
     type: 'FinalizedNote',
     date: approvalStatus.finalizedDate,
-    content: <Typography fontWeight={700}>{t('tasks.nvi.status.Approved')}</Typography>,
+    messageType: 'Approval',
     username: approvalStatus.finalizedBy,
     institutionId: approvalStatus.institutionId,
   }));
@@ -143,7 +137,8 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     type: 'GeneralNote',
     identifier: note.identifier,
     date: note.createdDate,
-    content: note.text,
+    text: note.text,
+    messageType: 'Comment',
     username: note.user,
   }));
 
@@ -322,10 +317,11 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                 return (
                   <ErrorBoundary key={noteIdentifier ?? note.date}>
                     <MessageItem
-                      text={note.content}
+                      text={note.text}
+                      messageType={note.messageType}
                       date={note.date}
                       username={note.username}
-                      backgroundColor="nvi.main"
+                      backgroundColor="background.neutral87"
                       showOrganization
                       menuElement={
                         !!deleteFunction && (
