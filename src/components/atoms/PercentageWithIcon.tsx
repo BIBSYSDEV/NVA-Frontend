@@ -7,6 +7,7 @@ interface PercentageWithIconProps {
   successThresholdMinimum: number;
   displayPercentage: number;
   alternativeIfZero?: string;
+  displayEmpty?: boolean;
 }
 
 export const PercentageWithIcon = ({
@@ -14,6 +15,7 @@ export const PercentageWithIcon = ({
   successThresholdMinimum,
   displayPercentage,
   alternativeIfZero,
+  displayEmpty,
 }: PercentageWithIconProps) => {
   return (
     <CenteredGridBox sx={{ gridTemplateColumns: '1.5rem 1fr', width: '4rem' }}>
@@ -25,7 +27,7 @@ export const PercentageWithIcon = ({
         ) : null}
       </HorizontalBox>
       <HorizontalBox sx={{ justifySelf: 'start', pl: '0.5rem' }}>
-        {displayPercentage > 0 ? `${displayPercentage}%` : alternativeIfZero || '0%'}
+        {displayEmpty ? '-' : displayPercentage > 0 ? `${displayPercentage}%` : alternativeIfZero || '0%'}
       </HorizontalBox>
     </CenteredGridBox>
   );

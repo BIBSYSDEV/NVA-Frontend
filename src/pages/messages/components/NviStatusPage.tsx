@@ -1,9 +1,20 @@
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
+import { VerticalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { NviStatusTableRow } from './NviStatusTableRow';
@@ -23,6 +34,11 @@ export const NviStatusPage = () => {
   return (
     <NviStatusWrapper
       headline={t('tasks.nvi.institution_nvi_status')}
+      topView={
+        <VerticalBox sx={{ mb: '1rem', gap: '0.5rem' }}>
+          <Trans t={t} i18nKey="reporting_status_description" components={[<Typography key="1" />]} />
+        </VerticalBox>
+      }
       exportAcronym={organizationQuery.data?.acronym}
       yearSelector
       visibilitySelector>
@@ -36,6 +52,7 @@ export const NviStatusPage = () => {
               <TableCell>{t('tasks.nvi.status.Approved')}</TableCell>
               <TableCell>{t('tasks.nvi.status.Rejected')}</TableCell>
               <TableCell>{t('common.total_number')}</TableCell>
+              <TableCell>{t('percentage_controlled')}</TableCell>
               <TableCell>
                 <Box component="span" sx={visuallyHidden}>
                   {t('tasks.nvi.show_subunits')}
