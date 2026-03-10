@@ -193,6 +193,8 @@ export interface InstitutionSummaryTotals {
   type: 'InstitutionTotals';
   validPoints: number;
   disputedCount: number;
+  globalApprovedCount: number;
+  globalRejectedCount: number;
   undisputedProcessedCount: number;
   undisputedTotalCount: number;
 }
