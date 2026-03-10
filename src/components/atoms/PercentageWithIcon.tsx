@@ -20,9 +20,9 @@ export const PercentageWithIcon = ({
   return (
     <CenteredGridBox sx={{ gridTemplateColumns: '1.5rem 1fr', width: '4rem' }}>
       <HorizontalBox sx={{ justifySelf: 'end' }}>
-        {displayPercentage < warningThresholdMinimum && displayPercentage > 0 ? (
+        {!displayEmpty && displayPercentage < warningThresholdMinimum && displayPercentage > 0 ? (
           <WarningIcon fontSize="small" color="warning" />
-        ) : displayPercentage >= successThresholdMinimum ? (
+        ) : !displayEmpty && displayPercentage >= successThresholdMinimum ? (
           <CheckCircleIcon fontSize="small" color="success" />
         ) : null}
       </HorizontalBox>
