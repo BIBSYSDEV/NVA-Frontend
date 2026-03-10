@@ -10,6 +10,7 @@ interface ListPaginationProps extends Omit<ListPaginationBottomProps, 'pageCount
   sortingComponent?: ReactNode;
   alternativePaginationText?: string;
   paginationAriaLabel?: string;
+  size?: 'small' | 'medium' | 'large';
 }
 
 export const ListPagination = ({
@@ -25,6 +26,7 @@ export const ListPagination = ({
   rowsPerPageOptions,
   alternativePaginationText,
   paginationAriaLabel,
+  size = 'medium',
 }: ListPaginationProps) => {
   const itemsStart = count > 0 ? (page - 1) * rowsPerPage + 1 : 0;
   const itemsEnd = Math.min(page * rowsPerPage, count);
@@ -54,6 +56,7 @@ export const ListPagination = ({
         alternativePaginationText={alternativePaginationText}
         paginationAriaLabel={paginationAriaLabel}
         scrollToDivRef={scrollToDivRef}
+        size={size}
       />
     </>
   );

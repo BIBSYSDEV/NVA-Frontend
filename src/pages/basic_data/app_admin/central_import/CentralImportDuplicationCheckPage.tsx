@@ -175,7 +175,8 @@ export const CentralImportDuplicationCheckPage = () => {
                 text={importCandidate.importStatus.comment}
                 date={importCandidate.importStatus.modifiedDate ?? ''}
                 username={importCandidate.importStatus.setBy ?? ''}
-                backgroundColor="centralImport.main"
+                messageType={'Justification'}
+                backgroundColor="background.neutral87"
               />
             </>
           )}

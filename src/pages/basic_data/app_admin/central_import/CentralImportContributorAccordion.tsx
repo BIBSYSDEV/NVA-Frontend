@@ -29,12 +29,12 @@ export const CentralImportContributorAccordion = ({
 }: CentralImportContributorAccordionProps) => {
   const { t } = useTranslation();
   const { setFieldValue } = useFormikContext<Registration>();
-  const [expanded, setExpanded] = useState<boolean>(false);
-  const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
+  const affiliations = contributor.affiliations ?? [];
   const baseFieldName = `${ContributorFieldNames.Contributors}[${contributor.sequence - 1}]`;
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
+  const [expanded, setExpanded] = useState<boolean>(false);
+  const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
-  const affiliations = contributor.affiliations ?? [];
 
   const handleChange = (_event: SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded);
@@ -56,6 +56,7 @@ export const CentralImportContributorAccordion = ({
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Accordion
+        data-testid={dataTestId.basicData.centralImport.contributorAccordion(contributor.sequence)}
         expanded={expanded}
         onChange={handleChange}
         slotProps={{ heading: { component: 'p' } }}
@@ -67,9 +68,6 @@ export const CentralImportContributorAccordion = ({
           height: 'fit-content',
         }}>
         <AccordionSummary
-          sx={{
-            fontWeight: 'normal',
-          }}
           expandIcon={<ExpandMoreIcon />}
           aria-controls={`contributor-${contributor.sequence}-content`}
           id={`contributor-${contributor.sequence}-header`}>

@@ -7,6 +7,7 @@ import { ImportContributor } from '../../../../types/importCandidate.types';
 import { Registration } from '../../../../types/registration.types';
 import { ImportContributorPair, pairContributors } from '../../../../utils/central-import-helpers';
 import { CentralImportContributorRow } from './CentralImportContributorRow';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface CentralImportContributorsPanelProps {
   importCandidateContributors?: ImportContributor[];
@@ -17,10 +18,10 @@ export const CentralImportContributorsPanel = ({
 }: CentralImportContributorsPanelProps) => {
   const { t } = useTranslation();
   const { values } = useFormikContext<Registration>();
-  const [showOnlyNorwegianContributors, setShowOnlyNorwegianContributors] = useState(false);
+  const nvaContributors = values.entityDescription?.contributors ?? [];
   const importContributors = importCandidateContributors ?? [];
+  const [showOnlyNorwegianContributors, setShowOnlyNorwegianContributors] = useState(false);
   const [showOnlyUnconfirmedAffiliations, setShowOnlyUnconfirmedAffiliations] = useState(false);
-  const formContributors = values.entityDescription?.contributors ?? [];
 
   const hasUnconfirmedAffiliation = (contributor?: Contributor): boolean =>
     contributor?.affiliations?.some((affiliation) => affiliation.type === 'UnconfirmedOrganization') ?? false;
@@ -28,13 +29,13 @@ export const CentralImportContributorsPanel = ({
   const filterContributorsWithUnconfirmedAffiliations = (paired: ImportContributorPair[]): ImportContributorPair[] =>
     paired.filter(({ contributor }) => hasUnconfirmedAffiliation(contributor));
 
-  const visibleImportContributors = showOnlyNorwegianContributors
+  const contributorsToShow = showOnlyNorwegianContributors
     ? importContributors.filter((contributor) =>
         contributor.affiliations?.some((aff) => aff.sourceOrganization?.country?.code?.toLowerCase() === 'nor')
       )
     : importContributors;
 
-  const paired = pairContributors(visibleImportContributors, formContributors);
+  const paired = pairContributors(contributorsToShow, nvaContributors);
 
   const filteredPaired = showOnlyUnconfirmedAffiliations
     ? filterContributorsWithUnconfirmedAffiliations(paired)
@@ -46,9 +47,9 @@ export const CentralImportContributorsPanel = ({
         <FormControlLabel
           control={
             <Checkbox
+              data-testid={dataTestId.basicData.centralImport.checkboxNorwegian}
               checked={showOnlyNorwegianContributors}
               onChange={() => setShowOnlyNorwegianContributors(!showOnlyNorwegianContributors)}
-              color="secondary"
             />
           }
           label={t('show_only_norwegian_contributors')}
@@ -56,9 +57,9 @@ export const CentralImportContributorsPanel = ({
         <FormControlLabel
           control={
             <Checkbox
+              data-testid={dataTestId.basicData.centralImport.checkboxUnverified}
               checked={showOnlyUnconfirmedAffiliations}
               onChange={() => setShowOnlyUnconfirmedAffiliations((prev) => !prev)}
-              color="secondary"
             />
           }
           label={t('show_only_unconfirmed_affiliations')}
@@ -68,10 +69,10 @@ export const CentralImportContributorsPanel = ({
         <TableHead>
           <TableRow>
             <TableCell sx={{ width: '6rem' }}>{t('common.order')}</TableCell>
-            <TableCell sx={{ width: 'calc((100% - 3rem) / 2)' }}>
+            <TableCell sx={{ width: 'calc((100% - 6rem) / 2)' }}>
               {t('basic_data.central_import.import_candidate')}
             </TableCell>
-            <TableCell sx={{ width: 'calc((100% - 3rem) / 2)' }}>{t('common.page_title')}</TableCell>
+            <TableCell sx={{ width: 'calc((100% - 6rem) / 2)' }}>{t('common.page_title')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

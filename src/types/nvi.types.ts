@@ -1,6 +1,7 @@
 import { ParseKeys } from 'i18next';
 import { FetchResultsParams, ResultParam } from '../api/searchApi';
 import { LanguageString, SearchResponse } from './common.types';
+import { Organization } from './organization.types';
 import { PublicationInstanceType, RegistrationDate } from './registration.types';
 
 export enum ScientificIndexStatuses {
@@ -187,3 +188,66 @@ export enum NviSearchStatusEnum {
 }
 
 export type NviSearchStatus = `${NviSearchStatusEnum}`;
+
+export interface InstitutionSummaryTotals {
+  type: 'InstitutionTotals';
+  validPoints: number;
+  disputedCount: number;
+  undisputedProcessedCount: number;
+  undisputedTotalCount: number;
+}
+
+export interface InstitutionSummaryTotalsByLocalApprovalStatus {
+  type: 'UndisputedCandidatesByLocalApprovalStatus';
+  new: number;
+  pending: number;
+  approved: number;
+  rejected: number;
+}
+
+export interface InstitutionSummary {
+  type: 'InstitutionSummary';
+  totals: InstitutionSummaryTotals;
+  byLocalApprovalStatus: InstitutionSummaryTotalsByLocalApprovalStatus;
+}
+
+export interface InstitutionReport {
+  type: 'InstitutionReport';
+  id: string;
+  period: NviPeriod;
+  sector: string;
+  institution: Organization;
+  institutionSummary: InstitutionSummary;
+  units: [];
+}
+
+export interface NviInstitutionsReport {
+  type: 'AllInstitutionsReport';
+  id: string;
+  period: NviPeriod;
+  institutions: InstitutionReport[];
+}
+
+export interface NviPeriodTotals {
+  type: 'PeriodTotals';
+  validPoints: number;
+  disputedCount: number;
+  undisputedProcessedCount: number;
+  undisputedTotalCount: number;
+}
+
+export interface NviPeriodByGlobalApprovalStatus {
+  type: 'CandidatesByGlobalApprovalStatus';
+  dispute: number;
+  pending: number;
+  rejected: number;
+  approved: number;
+}
+
+export interface NviPeriodReport {
+  type: 'PeriodReport';
+  id: string;
+  period: NviPeriod;
+  totals: NviPeriodTotals;
+  byGlobalApprovalStatus: NviPeriodByGlobalApprovalStatus;
+}

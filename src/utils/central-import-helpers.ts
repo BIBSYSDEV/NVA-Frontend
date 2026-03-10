@@ -132,40 +132,16 @@ export const createContributorFromCristinPerson = (
   };
 };
 
-export const replaceExistingContributorAndAffiliations = (
-  values: Registration,
-  setFieldValue: (field: string, value: unknown) => void,
-  selected: CristinPerson,
-  sequence: number
-): void => {
-  const currentContributors: Contributor[] = values.entityDescription?.contributors ?? [];
-
-  const contributorIndex = currentContributors.findIndex((contributor) => contributor.sequence === sequence);
-  if (contributorIndex === -1) return;
-
-  const oldContributor = currentContributors[contributorIndex];
-
-  const updatedIdentity = createIdentityFromCristinPerson(oldContributor.identity, selected);
-  const newAffiliationsFromPerson = getAffiliationsFromCristinPerson(selected);
-  const mergedAffiliations = mergeAffiliations(oldContributor.affiliations, newAffiliationsFromPerson);
-
-  const updatedContributor: Contributor = {
-    ...oldContributor,
-    identity: updatedIdentity,
-    affiliations: mergedAffiliations,
-  };
-
-  const updatedContributors = [...currentContributors];
-  updatedContributors[contributorIndex] = updatedContributor;
-
-  setFieldValue('entityDescription.contributors', updatedContributors);
+type ReplaceContributorOptions = {
+  updateAffiliations: boolean;
 };
 
 export const replaceExistingContributor = (
   values: Registration,
   setFieldValue: (field: string, value: unknown) => void,
   selected: CristinPerson,
-  sequence: number
+  sequence: number,
+  options: ReplaceContributorOptions
 ): void => {
   const currentContributors: Contributor[] = values.entityDescription?.contributors ?? [];
 
@@ -176,10 +152,14 @@ export const replaceExistingContributor = (
 
   const updatedIdentity = createIdentityFromCristinPerson(oldContributor.identity, selected);
 
+  const affiliations = options.updateAffiliations
+    ? mergeAffiliations(oldContributor.affiliations, getAffiliationsFromCristinPerson(selected))
+    : oldContributor.affiliations;
+
   const updatedContributor: Contributor = {
     ...oldContributor,
     identity: updatedIdentity,
-    affiliations: oldContributor.affiliations,
+    affiliations,
   };
 
   const updatedContributors = [...currentContributors];

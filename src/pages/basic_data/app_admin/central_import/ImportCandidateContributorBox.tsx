@@ -13,7 +13,7 @@ export const ImportCandidateContributorBox = ({ importContributor }: ImportCandi
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <Typography sx={{ mt: '0.5rem' }}>{importContributor.identity.name}</Typography>
         {importContributor.affiliations.map((affiliation, index) => {
-          if (affiliation.sourceOrganization) {
+          if (affiliation.sourceOrganization?.names && affiliation.sourceOrganization?.names.length != 0) {
             return <CentralImportAffiliationBox key={index} affiliation={affiliation} />;
           }
 
