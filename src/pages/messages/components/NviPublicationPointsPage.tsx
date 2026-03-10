@@ -1,9 +1,20 @@
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
+import { VerticalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -27,11 +38,14 @@ export const NviPublicationPointsPage = () => {
       exportAcronym={organizationQuery.data?.acronym}
       topView={
         aggregations ? (
-          <TotalNviPointsCount
-            orgName={getLanguageString(institution?.labels)}
-            result={aggregations.totals.candidateCount}
-            publicationPoints={aggregations.totals.points}
-          />
+          <VerticalBox sx={{ gap: '1rem' }}>
+            <Trans t={t} i18nKey="nvi_publication_points_page_description" components={[<Typography key="1" />]} />
+            <TotalNviPointsCount
+              orgName={getLanguageString(institution?.labels)}
+              result={aggregations.totals.candidateCount}
+              publicationPoints={aggregations.totals.points}
+            />
+          </VerticalBox>
         ) : undefined
       }
       visibilitySelector>
