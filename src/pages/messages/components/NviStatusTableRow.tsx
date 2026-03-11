@@ -48,10 +48,9 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               component={RouterLink}
               data-testid={dataTestId.nviStatusTableRow.candidateLink}
               to={getNviCandidatesSearchPath({
-                username: user?.nvaUsername,
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
-                status: NviCandidateStatusEnum.Pending,
+                status: NviCandidateStatusEnum.New,
                 globalStatus: NviCandidateGlobalStatusEnum.Pending,
                 excludeSubUnits: true,
               })}>
@@ -89,11 +88,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
                 status: NviCandidateStatusEnum.Approved,
-                globalStatus: [
-                  NviCandidateGlobalStatusEnum.Approved,
-                  NviCandidateGlobalStatusEnum.Pending,
-                  NviCandidateGlobalStatusEnum.Dispute,
-                ],
+                globalStatus: [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending],
                 excludeSubUnits: true,
               })}>
               {orgAggregations?.approvalStatus.Approved ?? 0}
@@ -111,7 +106,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
                 status: NviCandidateStatusEnum.Rejected,
-                globalStatus: NviCandidateGlobalStatusEnum.Rejected,
+                globalStatus: [NviCandidateGlobalStatusEnum.Rejected, NviCandidateGlobalStatusEnum.Pending],
                 excludeSubUnits: true,
               })}>
               {orgAggregations?.approvalStatus.Rejected ?? 0}
