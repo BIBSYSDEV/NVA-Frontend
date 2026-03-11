@@ -8,7 +8,6 @@ import { useLoggedInUser } from './useLoggedInUser';
 export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
   const user = useLoggedInUser();
   const userTopLevelOrg = user?.topOrgCristinId;
-  const searchParams = new URLSearchParams(location.search);
 
   const correctionListConfig: CorrectionListSearchConfig = {
     ApplicableCategoriesWithNonApplicableChannel: {
@@ -52,7 +51,7 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       queryParams: {
         categoryShould: [ChapterType.AcademicChapter],
         hasParent: true,
-        excludeParentPublicationYear: 'true',
+        excludeParentPublicationYear: 'initial value',
       },
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
