@@ -375,6 +375,7 @@ export enum ResultParam {
   Course = 'course',
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  ExcludeParentPublicationYear = 'excludeParentPublicationYear',
   ExcludeParentType = 'excludeParentType',
   ExcludeScientificValueSeries = 'excludeScientificValueSeries',
   ExcludeSubunits = 'excludeSubunits',
@@ -393,6 +394,7 @@ export enum ResultParam {
   Issn = 'issn',
   Journal = 'journal',
   Order = 'order',
+  ParentPublicationYear = 'parentPublicationYear',
   Project = 'project',
   PublicationLanguageShould = 'publicationLanguageShould',
   PublicationPages = 'publicationPages',
@@ -435,6 +437,7 @@ export interface FetchResultsParams {
   [ResultParam.Course]?: string | null;
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.ExcludeParentPublicationYear]?: string | null;
   [ResultParam.ExcludeParentType]?: PublicationInstanceType[] | null;
   [ResultParam.ExcludeScientificValueSeries]?: ScientificValueLevels[] | null;
   [ResultParam.ExcludeSubunits]?: boolean | null;
@@ -453,6 +456,7 @@ export interface FetchResultsParams {
   [ResultParam.Issn]?: string | null;
   [ResultParam.Journal]?: string | null;
   [ResultParam.Order]?: ResultSearchOrder | null;
+  [ResultParam.ParentPublicationYear]?: string | null;
   [ResultParam.Project]?: string | null;
   [ResultParam.PublicationLanguageShould]?: string | null;
   [ResultParam.PublicationPages]?: string | null;
@@ -517,6 +521,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     const formattedDoiValue = getDoiValue(params.doi);
     searchParams.set(ResultParam.Doi, formattedDoiValue);
   }
+  if (params.excludeParentPublicationYear) {
+    searchParams.set(ResultParam.ExcludeParentPublicationYear, params.excludeParentPublicationYear);
+  }
   if (params.excludeParentType?.length) {
     searchParams.set(ResultParam.ExcludeParentType, params.excludeParentType.join(','));
   }
@@ -564,6 +571,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.journal) {
     searchParams.set(ResultParam.Journal, params.journal);
+  }
+  if (params.parentPublicationYear) {
+    searchParams.set(ResultParam.ParentPublicationYear, params.parentPublicationYear);
   }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);

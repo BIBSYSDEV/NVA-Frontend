@@ -8,6 +8,7 @@ import { useLoggedInUser } from './useLoggedInUser';
 export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
   const user = useLoggedInUser();
   const userTopLevelOrg = user?.topOrgCristinId;
+  const searchParams = new URLSearchParams(location.search);
 
   const correctionListConfig: CorrectionListSearchConfig = {
     ApplicableCategoriesWithNonApplicableChannel: {
@@ -42,6 +43,16 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       queryParams: {
         categoryShould: Object.values(BookType),
         publicationPages: '0,50',
+      },
+      disabledFilters: [],
+      topLevelOrganization: userTopLevelOrg,
+    },
+    YearBetweenChapterAndBookMismatch: {
+      i18nKey: 'tasks.nvi.correction_list_type.chapter_and_book_year_mismatch',
+      queryParams: {
+        categoryShould: [ChapterType.AcademicChapter],
+        hasParent: true,
+        excludeParentPublicationYear: 'true',
       },
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
