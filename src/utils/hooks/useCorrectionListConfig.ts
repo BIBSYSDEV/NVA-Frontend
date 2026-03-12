@@ -51,7 +51,7 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       queryParams: {
         categoryShould: [ChapterType.AcademicChapter],
         hasParent: true,
-        excludeParentPublicationYear: 'initial value',
+        excludeParentPublicationYear: (new Date().getFullYear() - 1).toString(),
       },
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,

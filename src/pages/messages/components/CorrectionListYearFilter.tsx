@@ -50,11 +50,16 @@ export const CorrectionListYearFilter = () => {
 
           if (selectedValue !== 'showAll') {
             syncedParams.set(ResultParam.PublicationYear, selectedValue);
-            syncedParams.set(ResultParam.ExcludeParentPublicationYear, selectedValue);
+
+            if (shouldExcludeShowAll) {
+              syncedParams.set(ResultParam.ExcludeParentPublicationYear, selectedValue);
+            } else {
+              syncedParams.delete(ResultParam.ExcludeParentPublicationYear);
+            }
           } else {
             syncedParams.delete(ResultParam.PublicationYear);
+            syncedParams.delete(ResultParam.ExcludeParentPublicationYear);
           }
-
           navigate({ search: syncedParams.toString() });
         }}
         slotProps={{
