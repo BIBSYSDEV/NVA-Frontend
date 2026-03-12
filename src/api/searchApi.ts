@@ -264,6 +264,7 @@ export enum NviCandidateFilterEnum {
 export type NviCandidateFilter = `${NviCandidateFilterEnum}`;
 
 export enum NviCandidateStatusEnum {
+  New = 'new',
   Pending = 'pending',
   Approved = 'approved',
   Rejected = 'rejected',

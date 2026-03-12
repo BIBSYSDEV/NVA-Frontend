@@ -1,7 +1,7 @@
 import { Link, TableCell } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
-import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
+import { NviCandidateGlobalStatusEnum } from '../../../api/searchApi';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -55,8 +55,7 @@ export const NviPublicationPointsTableRow = ({
               to={getNviCandidatesSearchPath({
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
-                status: NviCandidateStatusEnum.Approved,
-                globalStatus: [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending],
+                globalStatus: NviCandidateGlobalStatusEnum.Approved,
                 excludeSubUnits: true,
               })}>
               {orgAggregations?.globalApprovalStatus.Approved ?? 0}
