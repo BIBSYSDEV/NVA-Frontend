@@ -35,19 +35,20 @@ export const NviPublicationPointsTexts = ({ aggregationsQuery }: Props) => {
         {aggregationsQuery.isPending ? (
           <Skeleton sx={{ width: { sm: '35rem', xs: '20rem' } }} />
         ) : aggregationsQuery.isError || !aggregations ? null : (
-          <Trans
-            t={t}
-            i18nKey="x_results_are_ready_for_reporting_and_they_give_y_points"
-            values={{
-              num_publications_approved_by_all: formatNumber(aggregations.totals.globalApprovalStatus.Approved),
-              points_for_all_publications_approved_by_all: formatNumber(aggregations.totals.points),
-            }}
-            components={{
-              box: <HorizontalBox sx={{ mt: '1rem', gap: '0.25rem', mb: '0.5rem' }} />,
-              p: <Typography />,
-              bold: <Typography component="span" sx={{ fontWeight: 'bold' }} />,
-            }}
-          />
+          <HorizontalBox sx={{ mt: '1rem', gap: '0.25rem', mb: '0.5rem' }}>
+            <Trans
+              t={t}
+              i18nKey="x_results_are_ready_for_reporting_and_they_give_y_points"
+              values={{
+                num_publications_approved_by_all: formatNumber(aggregations.totals.globalApprovalStatus.Approved),
+                points_for_all_publications_approved_by_all: formatNumber(aggregations.totals.points),
+              }}
+              components={{
+                p: <Typography />,
+                bold: <Typography component="span" sx={{ fontWeight: 'bold' }} />,
+              }}
+            />
+          </HorizontalBox>
         )}
         {aggregationsQuery.isPending || nviStatusLastYearQuery.isPending ? (
           <Skeleton sx={{ width: { sm: '30rem', xs: '20rem' } }} />
@@ -55,22 +56,23 @@ export const NviPublicationPointsTexts = ({ aggregationsQuery }: Props) => {
           !aggregations ||
           nviStatusLastYearQuery.isError ||
           !aggregationsLastYear ? null : (
-          <Trans
-            t={t}
-            i18nKey="that_is_x_percent_of_the_number_reported_in_y"
-            values={{
-              percentage_compared_to_last_year:
-                percentageApprovedComparedToLastYear >= 0
-                  ? formatNumber(Math.round(percentageApprovedComparedToLastYear))
-                  : '-',
-              last_year: lastYear,
-            }}
-            components={{
-              box: <HorizontalBox />,
-              p: <Typography />,
-              bold: <Typography component="span" sx={{ fontWeight: 'bold' }} />,
-            }}
-          />
+          <HorizontalBox>
+            <Trans
+              t={t}
+              i18nKey="that_is_x_percent_of_the_number_reported_in_y"
+              values={{
+                percentage_compared_to_last_year:
+                  percentageApprovedComparedToLastYear >= 0
+                    ? formatNumber(Math.round(percentageApprovedComparedToLastYear))
+                    : '-',
+                last_year: lastYear,
+              }}
+              components={{
+                p: <Typography />,
+                bold: <Typography component="span" sx={{ fontWeight: 'bold' }} />,
+              }}
+            />
+          </HorizontalBox>
         )}
       </VerticalBox>
     </ExpandableNviTopView>

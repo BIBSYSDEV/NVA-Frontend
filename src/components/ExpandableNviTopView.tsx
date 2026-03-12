@@ -21,7 +21,7 @@ export const ExpandableNviTopView = ({ alwaysVisibleText, expandedText, testId, 
       <Typography>{alwaysVisibleText}</Typography>
       <Button
         variant="text"
-        onClick={() => setTextExpanded((prev) => !prev)}
+        onClick={() => setTextExpanded(!textExpanded)}
         aria-expanded={textExpanded}
         aria-controls={expandedTextId}
         data-testid={testId}
