@@ -1,4 +1,5 @@
 import { Skeleton, Typography } from '@mui/material';
+import { UseQueryResult } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { useFetchNviInstitutionStatus } from '../api/hooks/useFetchNviStatus';
 import { NviInstitutionStatusResponse } from '../types/nvi.types';
@@ -6,14 +7,15 @@ import { dataTestId } from '../utils/dataTestIds';
 import { formatNumber } from '../utils/general-helpers';
 import { getDefaultNviYear } from '../utils/hooks/useNviCandidatesParams';
 import { ExpandableNviTopView } from './ExpandableNviTopView';
-import { VerticalBox } from './styled/Wrappers';
+import { HorizontalBox, VerticalBox } from './styled/Wrappers';
 
 interface Props {
-  aggregations?: NviInstitutionStatusResponse;
+  aggregationsQuery: UseQueryResult<NviInstitutionStatusResponse, Error>;
 }
 
-export const NviPublicationPointsTexts = ({ aggregations }: Props) => {
+export const NviPublicationPointsTexts = ({ aggregationsQuery }: Props) => {
   const { t } = useTranslation();
+  const aggregations = aggregationsQuery.data;
   const lastYear = getDefaultNviYear() - 1;
   const nviStatusLastYearQuery = useFetchNviInstitutionStatus(lastYear);
   const aggregationsLastYear = nviStatusLastYearQuery.data;
@@ -29,14 +31,34 @@ export const NviPublicationPointsTexts = ({ aggregations }: Props) => {
       alwaysVisibleText={t('nvi_publication_points_page_description')}
       expandedText={t('nvi_publication_points_page_description_expanded')}
       testId={dataTestId.basicData.nvi.curatorPublicationPointsExpandDescriptionButton}>
-      {aggregations && aggregationsLastYear ? (
-        <VerticalBox sx={{ gap: '0.25rem' }}>
+      <VerticalBox sx={{ gap: '0.25rem' }}>
+        {aggregationsQuery.isPending ? (
+          <Skeleton sx={{ width: { sm: '35rem', xs: '20rem' } }} />
+        ) : aggregationsQuery.isError || !aggregations ? undefined : (
           <Trans
             t={t}
-            i18nKey="nvi_publication_points_page_numbers"
+            i18nKey="x_results_are_ready_for_reporting_and_they_give_y_points"
             values={{
               num_publications_approved_by_all: formatNumber(aggregations.totals.globalApprovalStatus.Approved),
               points_for_all_publications_approved_by_all: formatNumber(aggregations.totals.points),
+            }}
+            components={{
+              box: <HorizontalBox sx={{ mt: '1rem', gap: '0.25rem', mb: '0.5rem' }} />,
+              p: <Typography />,
+              bold: <Typography component="span" sx={{ fontWeight: 'bold' }} />,
+            }}
+          />
+        )}
+        {aggregationsQuery.isPending || nviStatusLastYearQuery.isPending ? (
+          <Skeleton sx={{ width: { sm: '30rem', xs: '20rem' } }} />
+        ) : aggregationsQuery.isError ||
+          !aggregations ||
+          nviStatusLastYearQuery.isError ||
+          !aggregationsLastYear ? undefined : (
+          <Trans
+            t={t}
+            i18nKey="that_is_x_percent_of_the_number_reported_in_y"
+            values={{
               percentage_compared_to_last_year:
                 percentageApprovedComparedToLastYear >= 0
                   ? formatNumber(Math.round(percentageApprovedComparedToLastYear))
@@ -44,18 +66,13 @@ export const NviPublicationPointsTexts = ({ aggregations }: Props) => {
               last_year: lastYear,
             }}
             components={{
-              box: <VerticalBox sx={{ mt: '1rem' }} />,
-              p: <Typography sx={{ mb: '0.5rem' }} />,
+              box: <HorizontalBox />,
+              p: <Typography />,
               bold: <Typography component="span" sx={{ fontWeight: 'bold' }} />,
             }}
           />
-        </VerticalBox>
-      ) : (
-        <VerticalBox sx={{ gap: '0.5rem', my: '1rem' }}>
-          <Skeleton sx={{ width: { sm: '35rem', xs: '20rem' } }} />
-          <Skeleton sx={{ width: { sm: '30rem', xs: '20rem' } }} />
-        </VerticalBox>
-      )}
+        )}
+      </VerticalBox>
     </ExpandableNviTopView>
   );
 };
