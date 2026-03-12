@@ -2066,5 +2066,7 @@
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "nvi_publication_points_page_description": "<0>Tabellen viser kandidater ved din institusjon som er godkjent av dere per nå og hvilke som mangler godkjenning av samarbeidende institusjoner.</0><0>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</0>"
+  "nvi_publication_points_page_description": "Tabellen viser kandidater ved din institusjon som er godkjent av dere per nå og hvilke som mangler godkjenning av samarbeidende institusjoner.",
+  "nvi_publication_points_page_description_expanded": "Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.",
+  "nvi_publication_points_page_numbers": "<bold>{{num_publications_approved_by_all}} resultat</bold> er klar for rapportering, og de gir <bold>{{points_for_all_publications_approved_by_all}} publiseringspoeng</bold>.</p><p>Det er <bold>{{percentage_compared_to_last_year}}%</bold> av antallet resultat rapportert i {{last_year}}.</p></box>"
 }

@@ -1,26 +1,14 @@
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
-import { VerticalBox } from '../../../components/styled/Wrappers';
+import { NviPublicationPointsTexts } from '../../../components/NviPublicationPointsTexts';
 import { RootState } from '../../../redux/store';
 import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
-import { getLanguageString } from '../../../utils/translation-helpers';
 import { NviPublicationPointsTableRow } from './NviPublicationPointsTableRow';
 import { NviStatusWrapper } from './NviStatusWrapper';
-import { TotalNviPointsCount } from './TotalNviPointsCount';
 
 export const NviPublicationPointsPage = () => {
   const { t } = useTranslation();
@@ -36,18 +24,7 @@ export const NviPublicationPointsPage = () => {
     <NviStatusWrapper
       headline={headline}
       exportAcronym={organizationQuery.data?.acronym}
-      topView={
-        aggregations ? (
-          <VerticalBox sx={{ gap: '1rem' }}>
-            <Trans t={t} i18nKey="nvi_publication_points_page_description" components={[<Typography key="1" />]} />
-            <TotalNviPointsCount
-              orgName={getLanguageString(institution?.labels)}
-              result={aggregations.totals.candidateCount}
-              publicationPoints={aggregations.totals.points}
-            />
-          </VerticalBox>
-        ) : undefined
-      }
+      topView={<NviPublicationPointsTexts aggregations={aggregations} />}
       visibilitySelector>
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
