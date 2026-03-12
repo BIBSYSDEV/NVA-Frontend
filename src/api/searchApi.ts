@@ -394,7 +394,6 @@ export enum ResultParam {
   Issn = 'issn',
   Journal = 'journal',
   Order = 'order',
-  ParentPublicationYear = 'parentPublicationYear',
   Project = 'project',
   PublicationLanguageShould = 'publicationLanguageShould',
   PublicationPages = 'publicationPages',
@@ -456,7 +455,6 @@ export interface FetchResultsParams {
   [ResultParam.Issn]?: string | null;
   [ResultParam.Journal]?: string | null;
   [ResultParam.Order]?: ResultSearchOrder | null;
-  [ResultParam.ParentPublicationYear]?: string | null;
   [ResultParam.Project]?: string | null;
   [ResultParam.PublicationLanguageShould]?: string | null;
   [ResultParam.PublicationPages]?: string | null;
@@ -571,9 +569,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.journal) {
     searchParams.set(ResultParam.Journal, params.journal);
-  }
-  if (params.parentPublicationYear) {
-    searchParams.set(ResultParam.ParentPublicationYear, params.parentPublicationYear);
   }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
