@@ -1,7 +1,7 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, Button, Typography } from '@mui/material';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 export const ExpandableNviTopView = ({ alwaysVisibleText, expandedText, testId, children }: Props) => {
   const { t } = useTranslation();
   const [textExpanded, setTextExpanded] = useState(false);
-  const expandedTextId = 'expanded-text-id';
+  const expandedTextId = useId();
 
   return (
     <Box sx={{ mb: '1rem' }}>

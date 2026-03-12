@@ -34,7 +34,7 @@ export const NviPublicationPointsTexts = ({ aggregationsQuery }: Props) => {
       <VerticalBox sx={{ gap: '0.25rem' }}>
         {aggregationsQuery.isPending ? (
           <Skeleton sx={{ width: { sm: '35rem', xs: '20rem' } }} />
-        ) : aggregationsQuery.isError || !aggregations ? undefined : (
+        ) : aggregationsQuery.isError || !aggregations ? null : (
           <Trans
             t={t}
             i18nKey="x_results_are_ready_for_reporting_and_they_give_y_points"
@@ -54,7 +54,7 @@ export const NviPublicationPointsTexts = ({ aggregationsQuery }: Props) => {
         ) : aggregationsQuery.isError ||
           !aggregations ||
           nviStatusLastYearQuery.isError ||
-          !aggregationsLastYear ? undefined : (
+          !aggregationsLastYear ? null : (
           <Trans
             t={t}
             i18nKey="that_is_x_percent_of_the_number_reported_in_y"
