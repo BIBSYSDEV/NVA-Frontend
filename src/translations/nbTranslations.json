@@ -1975,6 +1975,7 @@
         "anthology_without_chapter": "Antologier uten kapittel",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
+        "chapter_and_book_year_mismatch": "Årstall mellom kapittel og bok avviker",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler",
         "scientific_chapter_not_in_anthology": "Vitenskapelig kapittel ikke i antologi",
         "scientific_monography_or_anthology_without_isxns": "Vitenskapelig monografi eller antologi uten ISxN-er",

@@ -33,6 +33,7 @@ export const useRegistrationsQueryParams = () => {
     contributorName: searchParams.get(ResultParam.ContributorName),
     course: searchParams.get(ResultParam.Course),
     cristinIdentifier: searchParams.get(ResultParam.CristinIdentifier),
+    excludeParentPublicationYear: searchParams.get(ResultParam.ExcludeParentPublicationYear),
     excludeSubunits: searchParams.get(ResultParam.ExcludeSubunits) === 'true',
     files: searchParams.get(ResultParam.Files),
     doi: searchParams.get(ResultParam.Doi),

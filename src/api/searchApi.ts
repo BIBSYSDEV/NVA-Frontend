@@ -376,6 +376,7 @@ export enum ResultParam {
   Course = 'course',
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  ExcludeParentPublicationYear = 'excludeParentPublicationYear',
   ExcludeParentType = 'excludeParentType',
   ExcludeScientificValueSeries = 'excludeScientificValueSeries',
   ExcludeSubunits = 'excludeSubunits',
@@ -436,6 +437,7 @@ export interface FetchResultsParams {
   [ResultParam.Course]?: string | null;
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.ExcludeParentPublicationYear]?: string | null;
   [ResultParam.ExcludeParentType]?: PublicationInstanceType[] | null;
   [ResultParam.ExcludeScientificValueSeries]?: ScientificValueLevels[] | null;
   [ResultParam.ExcludeSubunits]?: boolean | null;
@@ -517,6 +519,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.doi) {
     const formattedDoiValue = getDoiValue(params.doi);
     searchParams.set(ResultParam.Doi, formattedDoiValue);
+  }
+  if (params.excludeParentPublicationYear) {
+    searchParams.set(ResultParam.ExcludeParentPublicationYear, params.excludeParentPublicationYear);
   }
   if (params.excludeParentType?.length) {
     searchParams.set(ResultParam.ExcludeParentType, params.excludeParentType.join(','));

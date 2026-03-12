@@ -167,6 +167,7 @@ export type CorrectionListId =
   | 'NonApplicableCategoriesWithApplicableChannel'
   | 'AnthologyWithoutChapter'
   | 'AnthologyWithApplicableChapter'
+  | 'YearBetweenChapterAndBookMismatch'
   | 'BooksWithLessThan50Pages'
   | 'UnidentifiedContributorWithIdentifiedAffiliation'
   | 'ScientificChapterNotInAnthology'

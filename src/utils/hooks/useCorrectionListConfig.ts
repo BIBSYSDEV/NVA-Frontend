@@ -46,6 +46,16 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
     },
+    YearBetweenChapterAndBookMismatch: {
+      i18nKey: 'tasks.nvi.correction_list_type.chapter_and_book_year_mismatch',
+      queryParams: {
+        categoryShould: [ChapterType.AcademicChapter],
+        hasParent: true,
+        excludeParentPublicationYear: (new Date().getFullYear() - 1).toString(),
+      },
+      disabledFilters: [],
+      topLevelOrganization: userTopLevelOrg,
+    },
     AnthologyWithApplicableChapter: {
       i18nKey: 'tasks.nvi.correction_list_type.anthology_with_applicable_chapter',
       queryParams: {

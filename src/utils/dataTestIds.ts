@@ -772,6 +772,7 @@ export const dataTestId = {
       anthologyWithoutChapterButton: 'anthology-without-chapter-button',
       booksWithLessThan50PagesButton: 'books-with-less-than-50-pages-button',
       applicableCategoriesWithNonApplicableChannelButton: 'applicable-categories-with-non-applicable-channel-button',
+      chapterAndBookYearMismatchButton: 'chapter-and-book-year-mismatch-button',
       correctionListAccordion: 'correction-list-accordion',
       correctionListRadioButton: 'correction-list-radio-button',
       nonApplicableCategoriesWithApplicableChannelButton: 'non-applicable-categories-with-applicable-channel-button',
