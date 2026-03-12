@@ -36,10 +36,7 @@ export const AdminNviPublicationPointsTexts = () => {
           </Typography>
         )}
         {periodReport.isPending || periodReportLastYear.isPending ? (
-          <VerticalBox>
-            <Skeleton sx={{ width: '40%' }} />
-            <Skeleton sx={{ width: '40%' }} />
-          </VerticalBox>
+          <Skeleton sx={{ width: '40%' }} />
         ) : periodReport.isError ||
           periodReportLastYear.isError ||
           !periodTotals ||
