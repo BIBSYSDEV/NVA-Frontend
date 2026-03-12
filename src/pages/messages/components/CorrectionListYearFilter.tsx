@@ -21,9 +21,10 @@ export const CorrectionListYearFilter = () => {
 
   const publicationYearParam = searchParams.get(ResultParam.PublicationYear);
   const yearSelectionFromQuery = publicationYearParam ?? 'showAll';
-
   const selectedYear =
-    shouldExcludeShowAll && yearSelectionFromQuery === 'showAll' ? currentYear.toString() : yearSelectionFromQuery;
+    shouldExcludeShowAll && yearSelectionFromQuery === 'showAll'
+      ? (currentYear - 1).toString()
+      : yearSelectionFromQuery;
 
   const baseOptions = [
     { value: (currentYear + 1).toString(), label: `${currentYear + 1}` },
