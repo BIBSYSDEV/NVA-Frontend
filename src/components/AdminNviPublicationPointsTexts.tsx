@@ -14,8 +14,8 @@ export const AdminNviPublicationPointsTexts = () => {
   const [textExpanded, setTextExpanded] = useState(false);
   const detailsId = 'publication-points-details';
   const year = getDefaultNviYear();
-  const periodReport = useFetchNviPeriodReport({ year });
-  const periodReportLastYear = useFetchNviPeriodReport({ year: year - 1 });
+  const periodReport = useFetchNviPeriodReport({ year, hideErrorMessage: true });
+  const periodReportLastYear = useFetchNviPeriodReport({ year: year - 1, hideErrorMessage: true });
   const periodTotals = periodReport.data?.totals;
   const periodTotalsLastYear = periodReportLastYear.data?.totals;
 

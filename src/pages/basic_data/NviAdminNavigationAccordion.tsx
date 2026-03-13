@@ -21,7 +21,11 @@ export const NviAdminNavigationAccordion = () => {
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const location = useLocation();
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
-  const reportQuery = useFetchNviPeriodReport({ year: getDefaultNviYear(), enabled: isAppAdmin });
+  const reportQuery = useFetchNviPeriodReport({
+    year: getDefaultNviYear(),
+    enabled: isAppAdmin,
+    hideErrorMessage: true,
+  });
   const periodTotals = reportQuery.data?.totals;
 
   return (
