@@ -29,9 +29,10 @@ export const NviPublicationPointsPage = () => {
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
-            <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
-              <TableCell sx={{ width: '80%' }}>{t('registration.contributors.department')}</TableCell>
+            <TableRow sx={{ bgcolor: 'white' }}>
+              <TableCell sx={{ width: '30%' }}>{t('registration.contributors.department')}</TableCell>
               <TableCell>{t('candidates_we_have_approved')}</TableCell>
+              <TableCell>{t('tasks.nvi.candidates_pending_verification_by_others')}</TableCell>
               <TableCell>{t('candidates_everyone_has_approved')}</TableCell>
               <TableCell>{t('tasks.nvi.publication_points')}</TableCell>
               <TableCell>{t('percentage_approved_by_all')}</TableCell>

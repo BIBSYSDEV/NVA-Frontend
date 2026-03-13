@@ -74,6 +74,23 @@ export const NviPublicationPointsTableRow = ({
           {aggregations ? (
             <Link
               component={RouterLink}
+              data-testid={dataTestId.nviStatusTableRow.approvedByUsLink}
+              to={getNviCandidatesSearchPath({
+                year: year,
+                orgNumber: getIdentifierFromId(organization.id),
+                globalStatus: [NviCandidateGlobalStatusEnum.Pending],
+                excludeSubUnits: true,
+              })}>
+              {orgAggregations?.globalApprovalStatus.Pending ?? 0}
+            </Link>
+          ) : (
+            <StyledSkeleton />
+          )}
+        </TableCell>
+        <TableCell align="center">
+          {aggregations ? (
+            <Link
+              component={RouterLink}
               data-testid={dataTestId.nviStatusTableRow.approvedByAllLink}
               to={getNviCandidatesSearchPath({
                 year: year,
