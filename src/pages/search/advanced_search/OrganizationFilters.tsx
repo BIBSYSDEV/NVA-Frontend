@@ -37,6 +37,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const params = new URLSearchParams(location.search);
   const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true';
   const topLevelOrgParam = params.get(ResultParam.TopLevelOrganization);
+  const unidentifiedContributorInstitutionParam = params.get(ResultParam.UnidentifiedContributorInstitution);
   const [showUnitSelection, setShowUnitSelection] = useState(false);
   const toggleShowUnitSelection = () => setShowUnitSelection(!showUnitSelection);
 
@@ -112,9 +113,13 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
               const syncedParams = syncParamsWithSearchFields(params);
               if (selectedInstitution) {
                 syncedParams.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
+                if (unidentifiedContributorInstitutionParam) {
+                  syncedParams.set(ResultParam.UnidentifiedContributorInstitution, selectedInstitution.id);
+                }
               } else {
                 syncedParams.delete(ResultParam.TopLevelOrganization);
                 syncedParams.delete(ResultParam.ExcludeSubunits);
+                syncedParams.delete(ResultParam.UnidentifiedContributorInstitution);
               }
               syncedParams.delete(ResultParam.From);
               syncedParams.delete(ResultParam.Unit);

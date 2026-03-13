@@ -17,6 +17,8 @@ export const getCorrectionListSearchParams = (
   }
   const excludeParentPublicationYearFilter =
     correctionListConfig[newCorrectionListId].queryParams.excludeParentPublicationYear;
+  const unidentifiedContributorInstitutionFilter =
+    correctionListConfig[newCorrectionListId].queryParams.unidentifiedContributorInstitution;
 
   if (correctionListTopLevelOrgFilter) {
     newSearchParams.set(ResultParam.TopLevelOrganization, correctionListTopLevelOrgFilter);
@@ -28,6 +30,10 @@ export const getCorrectionListSearchParams = (
 
   if (excludeParentPublicationYearFilter) {
     newSearchParams.set(ResultParam.ExcludeParentPublicationYear, (new Date().getFullYear() - 1).toString());
+  }
+
+  if (unidentifiedContributorInstitutionFilter) {
+    newSearchParams.set(ResultParam.UnidentifiedContributorInstitution, unidentifiedContributorInstitutionFilter);
   }
 
   newSearchParams.set(ResultParam.PublicationYear, (new Date().getFullYear() - 1).toString());

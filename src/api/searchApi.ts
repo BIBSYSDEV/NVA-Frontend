@@ -413,6 +413,7 @@ export enum ResultParam {
   Tags = 'tags',
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
+  UnidentifiedContributorInstitution = 'unidentifiedContributorInstitution',
   UnidentifiedNorwegian = 'unidentifiedNorwegian',
   Unit = 'unit',
   Vocabulary = 'vocabulary',
@@ -475,6 +476,7 @@ export interface FetchResultsParams {
   [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
+  [ResultParam.UnidentifiedContributorInstitution]?: string | null;
   [ResultParam.UnidentifiedNorwegian]?: boolean | null;
   [ResultParam.Unit]?: string | null;
   [ResultParam.Vocabulary]?: string | null;
@@ -623,6 +625,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.topLevelOrganization || params.unit) {
     const unitParam = params.unit || params.topLevelOrganization || '';
     searchParams.set(ResultParam.Unit, encodeURIComponent(unitParam));
+  }
+  if (params.unidentifiedContributorInstitution) {
+    searchParams.set(ResultParam.UnidentifiedContributorInstitution, params.unidentifiedContributorInstitution);
   }
   if (params.unidentifiedNorwegian) {
     searchParams.set(ResultParam.UnidentifiedNorwegian, params.unidentifiedNorwegian.toString());
