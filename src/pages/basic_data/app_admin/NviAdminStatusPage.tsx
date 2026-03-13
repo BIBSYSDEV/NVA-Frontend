@@ -12,9 +12,9 @@ import {
 import { Trans, useTranslation } from 'react-i18next';
 import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
+import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { InstitutionReport } from '../../../types/nvi.types';
-import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
@@ -82,7 +82,7 @@ export const NviAdminStatusPage = () => {
                         <PercentageWithIcon
                           warningThresholdMinimum={30}
                           successThresholdMinimum={100}
-                          displayPercentage={Math.round(percentageControlled * 100)}
+                          displayPercentage={Math.floor(percentageControlled * 100)}
                           alternativeIfZero={'-'}
                         />
                       </HorizontalBox>
