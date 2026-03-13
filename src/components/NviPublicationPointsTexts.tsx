@@ -9,11 +9,11 @@ import { getDefaultNviYear } from '../utils/hooks/useNviCandidatesParams';
 import { ExpandableNviTopView } from './ExpandableNviTopView';
 import { HorizontalBox, VerticalBox } from './styled/Wrappers';
 
-interface Props {
+interface NviPublicationPointsTextsProps {
   aggregationsQuery: UseQueryResult<NviInstitutionStatusResponse, Error>;
 }
 
-export const NviPublicationPointsTexts = ({ aggregationsQuery }: Props) => {
+export const NviPublicationPointsTexts = ({ aggregationsQuery }: NviPublicationPointsTextsProps) => {
   const { t } = useTranslation();
   const aggregations = aggregationsQuery.data;
   const lastYear = getDefaultNviYear() - 1;
