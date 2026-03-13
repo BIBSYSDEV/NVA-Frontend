@@ -3,7 +3,7 @@ import { useFetchBookRegistration } from '../api/hooks/useFetchBookRegistration'
 import { useFetchPublisherFromId } from '../api/hooks/useFetchPublisherFromId';
 import { useFetchSeries } from '../api/hooks/useFetchSeries';
 import { Contributor } from '../types/contributor.types';
-import { CorrectionListNames, NviCandidateProblem } from '../types/nvi.types';
+import { NviCandidateProblem } from '../types/nvi.types';
 import { BookRegistration } from '../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../types/publication_types/chapterRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
@@ -183,8 +183,4 @@ const checkBookType = (bookType: '' | BookType | undefined) => {
     bookType === BookType.Encyclopedia;
 
   return { isMonographBook, isNonFictionBook };
-};
-
-export const isCorrectionListName = (value: string): value is CorrectionListNames => {
-  return Object.values(CorrectionListNames).includes(value as CorrectionListNames);
 };

@@ -5,8 +5,8 @@ import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { CorrectionListNames } from '../../../types/nvi.types';
+import { isCorrectionListName } from '../../../utils/correctionListHelpers';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { isCorrectionListName } from '../../../utils/nviHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 export enum ScientificValueLevels {
