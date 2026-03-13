@@ -2,6 +2,8 @@ import { Link, TableCell } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
 import { NviCandidateGlobalStatusEnum } from '../../../api/searchApi';
+import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
+import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -38,6 +40,10 @@ export const NviPublicationPointsTableRow = ({
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  const percentageApproved =
+    orgAggregations && orgAggregations.approvalStatus.Approved
+      ? orgAggregations.globalApprovalStatus.Approved / orgAggregations.approvalStatus.Approved
+      : -1;
 
   return (
     <>
@@ -65,6 +71,13 @@ export const NviPublicationPointsTableRow = ({
           )}
         </TableCell>
         <TableCell align="center">{aggregations ? pointsWithTwoDecimals : <StyledSkeleton />}</TableCell>
+        <TableCell align="center">
+          {
+            <HorizontalBox sx={{ justifyContent: 'center' }}>
+              <PercentageWithIcon displayPercentage={Math.floor(percentageApproved * 100)} alternativeIfZero={'-'} />
+            </HorizontalBox>
+          }
+        </TableCell>
       </NviStatusTableRowWrapper>
       {expanded &&
         organization.hasPart?.map((subUnit) => (
