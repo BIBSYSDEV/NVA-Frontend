@@ -6,6 +6,7 @@ import { ResultParam } from '../../../api/searchApi';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { CorrectionListNames } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { isCorrectionListName } from '../../../utils/nviHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 export enum ScientificValueLevels {
@@ -28,10 +29,6 @@ export const ScientificValueFilterListIds: CorrectionListNames[] = [
   CorrectionListNames.YearBetweenChapterAndBookMismatch,
   CorrectionListNames.ScientificMonographyOrAnthologyWithoutIsxns,
 ];
-
-const isCorrectionListName = (value: string): value is CorrectionListNames => {
-  return Object.values(CorrectionListNames).includes(value as CorrectionListNames);
-};
 
 const getScientificValueFiltersFromParams = (searchParams: URLSearchParams): ScientificValueLevelsToShow => {
   const rawListParam = searchParams.get('list');
