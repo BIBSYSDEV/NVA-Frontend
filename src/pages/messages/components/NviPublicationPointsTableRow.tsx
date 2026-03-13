@@ -1,7 +1,7 @@
 import { Link, TableCell } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
-import { NviCandidateGlobalStatusEnum } from '../../../api/searchApi';
+import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
@@ -57,7 +57,25 @@ export const NviPublicationPointsTableRow = ({
           {aggregations ? (
             <Link
               component={RouterLink}
-              data-testid={dataTestId.nviStatusTableRow.candidateLink}
+              data-testid={dataTestId.nviStatusTableRow.approvedByUsLink}
+              to={getNviCandidatesSearchPath({
+                year: year,
+                orgNumber: getIdentifierFromId(organization.id),
+                status: [NviCandidateStatusEnum.Approved],
+                globalStatus: [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending],
+                excludeSubUnits: true,
+              })}>
+              {orgAggregations?.approvalStatus.Approved ?? 0}
+            </Link>
+          ) : (
+            <StyledSkeleton />
+          )}
+        </TableCell>
+        <TableCell align="center">
+          {aggregations ? (
+            <Link
+              component={RouterLink}
+              data-testid={dataTestId.nviStatusTableRow.approvedByAllLink}
               to={getNviCandidatesSearchPath({
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
