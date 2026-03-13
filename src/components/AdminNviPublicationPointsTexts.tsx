@@ -2,7 +2,7 @@ import { Skeleton, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { useFetchNviPeriodReport } from '../api/hooks/useFetchNviPeriodReport';
 import { dataTestId } from '../utils/dataTestIds';
-import { formatNumber } from '../utils/general-helpers';
+import { formatLocaleNumber } from '../utils/general-helpers';
 import { getDefaultNviYear } from '../utils/hooks/useNviCandidatesParams';
 import { ExpandableNviTopView } from './ExpandableNviTopView';
 import { VerticalBox } from './styled/Wrappers';
@@ -28,8 +28,8 @@ export const AdminNviPublicationPointsTexts = () => {
             <Trans
               i18nKey="x_results_are_ready_for_reporting_and_they_give_y_publication_points"
               values={{
-                num_results: formatNumber(periodTotals.undisputedTotalCount),
-                total_publicationpoints: formatNumber(periodTotals.validPoints),
+                num_results: formatLocaleNumber(periodTotals.undisputedTotalCount),
+                total_publicationpoints: formatLocaleNumber(periodTotals.validPoints),
               }}
               components={{ b: <strong /> }}
             />
@@ -48,7 +48,7 @@ export const AdminNviPublicationPointsTexts = () => {
                 values={{
                   percentage:
                     periodTotalsLastYear.undisputedTotalCount > 0
-                      ? formatNumber(
+                      ? formatLocaleNumber(
                           Math.round(
                             (periodTotals.undisputedTotalCount / periodTotalsLastYear.undisputedTotalCount) * 100
                           )
