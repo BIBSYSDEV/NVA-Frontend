@@ -109,6 +109,7 @@ export const dataTestId = {
     nationalIdentityNumberField: 'national-identity-number-field',
     nvi: {
       publicationPointsExpandDescriptionButton: 'publication-points-expand-description-button',
+      curatorPublicationPointsExpandDescriptionButton: 'curator-publication-points-expand-description-button',
     },
     nviPeriod: {
       nviPeriodDialog: 'nvi-period-dialog',
