@@ -74,7 +74,7 @@ export const NviPublicationPointsTableRow = ({
           {aggregations ? (
             <Link
               component={RouterLink}
-              data-testid={dataTestId.nviStatusTableRow.approvedByUsLink}
+              data-testid={dataTestId.nviStatusTableRow.candidatesOthersMustApproveLink}
               to={getNviCandidatesSearchPath({
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),

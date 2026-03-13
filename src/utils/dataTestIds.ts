@@ -867,6 +867,7 @@ export const dataTestId = {
   },
   nviStatusTableRow: {
     approvedByUsLink: 'nvi-aggregations-approved-by-us-link',
+    candidatesOthersMustApproveLink: 'candidates-others-must-approve-link',
     approvedByAllLink: 'nvi-aggregations-approved-by-all-link',
     candidateLink: 'nvi-aggregations-candidate-link',
     controlLink: 'nvi-aggregations-control-link',
