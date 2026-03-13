@@ -74,7 +74,11 @@ export const NviPublicationPointsTableRow = ({
         <TableCell align="center">
           {
             <HorizontalBox sx={{ justifyContent: 'center' }}>
-              <PercentageWithIcon displayPercentage={Math.floor(percentageApproved * 100)} alternativeIfZero={'-'} />
+              <PercentageWithIcon
+                displayPercentage={Math.floor(percentageApproved * 100)}
+                alternativeIfZero={'-'}
+                hideWarningIcon
+              />
             </HorizontalBox>
           }
         </TableCell>
