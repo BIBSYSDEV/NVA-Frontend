@@ -119,7 +119,6 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
               } else {
                 syncedParams.delete(ResultParam.TopLevelOrganization);
                 syncedParams.delete(ResultParam.ExcludeSubunits);
-                syncedParams.delete(ResultParam.UnidentifiedContributorInstitution);
               }
               syncedParams.delete(ResultParam.From);
               syncedParams.delete(ResultParam.Unit);
