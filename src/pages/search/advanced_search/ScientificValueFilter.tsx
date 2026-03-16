@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
+import { CorrectionListNames } from '../../../types/nvi.types';
+import { isCorrectionListName } from '../../../utils/correctionListHelpers';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
@@ -20,19 +22,25 @@ enum ScientificValueLevelsToShow {
   All = 'All',
 }
 
-enum CorrectionListType {
-  ApplicableCategoriesWithNonApplicableChannel = 'ApplicableCategoriesWithNonApplicableChannel',
-  NonApplicableCategoriesWithApplicableChannel = 'NonApplicableCategoriesWithApplicableChannel',
-}
+export const ScientificValueFilterListIds: CorrectionListNames[] = [
+  CorrectionListNames.ApplicableCategoriesWithNonApplicableChannel,
+  CorrectionListNames.NonApplicableCategoriesWithApplicableChannel,
+  CorrectionListNames.ScientificChapterNotInAnthology,
+  CorrectionListNames.YearBetweenChapterAndBookMismatch,
+  CorrectionListNames.ScientificMonographyOrAnthologyWithoutIsxns,
+];
 
 const getScientificValueFiltersFromParams = (searchParams: URLSearchParams): ScientificValueLevelsToShow => {
-  const listParam = searchParams.get('list') as CorrectionListType | null;
+  const rawListParam = searchParams.get('list');
+
+  const listParam: CorrectionListNames | null =
+    rawListParam && isCorrectionListName(rawListParam) ? rawListParam : null;
 
   switch (listParam) {
-    case CorrectionListType.ApplicableCategoriesWithNonApplicableChannel:
+    case CorrectionListNames.ApplicableCategoriesWithNonApplicableChannel:
       return ScientificValueLevelsToShow.UnassignedAndZero;
 
-    case CorrectionListType.NonApplicableCategoriesWithApplicableChannel:
+    case CorrectionListNames.NonApplicableCategoriesWithApplicableChannel:
       return ScientificValueLevelsToShow.OneAndTwo;
 
     default:

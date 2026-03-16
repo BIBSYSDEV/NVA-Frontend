@@ -1,6 +1,6 @@
 import { ResultParam } from '../api/searchApi';
 import { nviCorrectionListQueryKey } from '../pages/messages/components/NviCorrectionList';
-import { CorrectionListId, CorrectionListSearchConfig } from '../types/nvi.types';
+import { CorrectionListId, CorrectionListNames, CorrectionListSearchConfig } from '../types/nvi.types';
 import { UrlPathTemplate } from './urlPaths';
 
 export const getCorrectionListSearchParams = (
@@ -46,4 +46,8 @@ export const getAccordionDefaultPath = (correctionListConfig: CorrectionListSear
     correctionListConfig,
     'ApplicableCategoriesWithNonApplicableChannel'
   ).toString()}`;
+};
+
+export const isCorrectionListName = (value: string): value is CorrectionListNames => {
+  return Object.values(CorrectionListNames).includes(value as CorrectionListNames);
 };
