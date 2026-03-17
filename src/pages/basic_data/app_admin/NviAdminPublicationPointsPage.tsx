@@ -2,13 +2,13 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { useTranslation } from 'react-i18next';
 import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
 import { AdminNviPublicationPointsTexts } from '../../../components/AdminNviPublicationPointsTexts';
+import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
+import { HorizontalBox } from '../../../components/styled/Wrappers';
 import i18n from '../../../translations/i18n';
 import { InstitutionReport } from '../../../types/nvi.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
-import { HorizontalBox } from '../../../components/styled/Wrappers';
-import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
@@ -34,7 +34,7 @@ export const NviAdminPublicationPointsPage = () => {
                 <TableCell>{t('sector')}</TableCell>
                 <TableCell>{t('candidates_we_have_approved')}</TableCell>
                 <TableCell>{t('candidates_everyone_has_approved')}</TableCell>
-                <TableCell>{t('publication_points')}</TableCell>
+                <TableCell>{t('points_for_reporting')}</TableCell>
                 <TableCell>{t('percentage_approved')}</TableCell>
               </TableRow>
             </TableHead>
