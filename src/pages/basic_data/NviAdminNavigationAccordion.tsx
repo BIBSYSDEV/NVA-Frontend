@@ -3,7 +3,7 @@ import { Box, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
-import { useFetchNviReportForInstitution } from '../../api/hooks/useFetchNviReportForInstitution';
+import { useFetchNviPeriodReport } from '../../api/hooks/useFetchNviPeriodReport';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NviReportProgressBar } from '../../components/NviReportProgressBar';
@@ -12,7 +12,6 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { StyledNviStatusBox } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getDefaultNviYear } from '../../utils/hooks/useNviCandidatesParams';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
@@ -22,13 +21,12 @@ export const NviAdminNavigationAccordion = () => {
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const location = useLocation();
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
-  const topOrgId = user?.topOrgCristinId ? getIdentifierFromId(user.topOrgCristinId) : '';
-  const reportQuery = useFetchNviReportForInstitution({
+  const reportQuery = useFetchNviPeriodReport({
     year: getDefaultNviYear(),
-    id: topOrgId,
     enabled: isAppAdmin,
+    hideErrorMessage: true,
   });
-  const nviNumbers = reportQuery.data?.institutionSummary.totals;
+  const periodTotals = reportQuery.data?.totals;
 
   return (
     <NavigationListAccordion
@@ -39,15 +37,15 @@ export const NviAdminNavigationAccordion = () => {
       <NavigationList aria-label={t('common.nvi')}>
         <StyledNviStatusBox>
           <BetaFunctionality>
-            {reportQuery.isError || !nviNumbers ? undefined : (
+            {reportQuery.isError || !periodTotals ? undefined : (
               <NviReportProgressBar
                 completedPercentage={
-                  nviNumbers.undisputedTotalCount > 0
-                    ? Math.round((nviNumbers.undisputedProcessedCount / nviNumbers.undisputedTotalCount) * 100)
+                  periodTotals.undisputedTotalCount > 0
+                    ? Math.round((periodTotals.undisputedProcessedCount / periodTotals.undisputedTotalCount) * 100)
                     : 0
                 }
-                completedCount={nviNumbers.undisputedProcessedCount}
-                totalCount={nviNumbers.undisputedTotalCount}
+                completedCount={periodTotals.undisputedProcessedCount}
+                totalCount={periodTotals.undisputedTotalCount}
                 isPending={reportQuery.isPending}
               />
             )}

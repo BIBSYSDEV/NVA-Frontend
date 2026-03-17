@@ -1,6 +1,6 @@
 import { ResultParam } from '../api/searchApi';
 import { nviCorrectionListQueryKey } from '../pages/messages/components/NviCorrectionList';
-import { CorrectionListId, CorrectionListSearchConfig } from '../types/nvi.types';
+import { CorrectionListId, CorrectionListNames, CorrectionListSearchConfig } from '../types/nvi.types';
 import { UrlPathTemplate } from './urlPaths';
 
 export const getCorrectionListSearchParams = (
@@ -17,6 +17,8 @@ export const getCorrectionListSearchParams = (
   }
   const excludeParentPublicationYearFilter =
     correctionListConfig[newCorrectionListId].queryParams.excludeParentPublicationYear;
+  const unidentifiedContributorInstitutionFilter =
+    correctionListConfig[newCorrectionListId].queryParams.unidentifiedContributorInstitution;
 
   if (correctionListTopLevelOrgFilter) {
     newSearchParams.set(ResultParam.TopLevelOrganization, correctionListTopLevelOrgFilter);
@@ -30,6 +32,10 @@ export const getCorrectionListSearchParams = (
     newSearchParams.set(ResultParam.ExcludeParentPublicationYear, (new Date().getFullYear() - 1).toString());
   }
 
+  if (unidentifiedContributorInstitutionFilter) {
+    newSearchParams.set(ResultParam.UnidentifiedContributorInstitution, unidentifiedContributorInstitutionFilter);
+  }
+
   newSearchParams.set(ResultParam.PublicationYear, (new Date().getFullYear() - 1).toString());
 
   return newSearchParams;
@@ -40,4 +46,8 @@ export const getAccordionDefaultPath = (correctionListConfig: CorrectionListSear
     correctionListConfig,
     'ApplicableCategoriesWithNonApplicableChannel'
   ).toString()}`;
+};
+
+export const isCorrectionListName = (value: string): value is CorrectionListNames => {
+  return Object.values(CorrectionListNames).includes(value as CorrectionListNames);
 };

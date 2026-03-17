@@ -63,6 +63,7 @@ export const useRegistrationsQueryParams = () => {
     tags: searchParams.get(ResultParam.Tags),
     title: searchParams.get(ResultParam.Title),
     topLevelOrganization: searchParams.get(ResultParam.TopLevelOrganization),
+    unidentifiedContributorInstitution: searchParams.get(ResultParam.UnidentifiedContributorInstitution),
     unit: searchParams.get(ResultParam.Unit),
     vocabulary: searchParams.get(ResultParam.Vocabulary),
   } satisfies SearchParamType;

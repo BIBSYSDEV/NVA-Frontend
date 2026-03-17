@@ -56,6 +56,7 @@ export const computeParamsFromDropdownStatus = (dropdownStatus: NviSearchStatus[
 
   dropdownStatus.forEach((value) => {
     if (value === NviSearchStatusEnum.CandidatesForControl) {
+      newStatus.add(NviCandidateStatusEnum.New);
       newStatus.add(NviCandidateStatusEnum.Pending);
       newGlobalStatus.add(NviCandidateGlobalStatusEnum.Pending);
     } else if (value === NviSearchStatusEnum.Approved) {

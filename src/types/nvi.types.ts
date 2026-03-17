@@ -162,16 +162,19 @@ export interface NviPeriodResponse {
   periods: NviPeriod[];
 }
 
-export type CorrectionListId =
-  | 'ApplicableCategoriesWithNonApplicableChannel'
-  | 'NonApplicableCategoriesWithApplicableChannel'
-  | 'AnthologyWithoutChapter'
-  | 'AnthologyWithApplicableChapter'
-  | 'YearBetweenChapterAndBookMismatch'
-  | 'BooksWithLessThan50Pages'
-  | 'UnidentifiedContributorWithIdentifiedAffiliation'
-  | 'ScientificChapterNotInAnthology'
-  | 'ScientificMonographyOrAnthologyWithoutIsxns';
+export enum CorrectionListNames {
+  ApplicableCategoriesWithNonApplicableChannel = 'ApplicableCategoriesWithNonApplicableChannel',
+  NonApplicableCategoriesWithApplicableChannel = 'NonApplicableCategoriesWithApplicableChannel',
+  AnthologyWithoutChapter = 'AnthologyWithoutChapter',
+  AnthologyWithApplicableChapter = 'AnthologyWithApplicableChapter',
+  YearBetweenChapterAndBookMismatch = 'YearBetweenChapterAndBookMismatch',
+  BooksWithLessThan50Pages = 'BooksWithLessThan50Pages',
+  UnidentifiedContributorWithIdentifiedAffiliation = 'UnidentifiedContributorWithIdentifiedAffiliation',
+  ScientificChapterNotInAnthology = 'ScientificChapterNotInAnthology',
+  ScientificMonographyOrAnthologyWithoutIsxns = 'ScientificMonographyOrAnthologyWithoutIsxns',
+}
+
+export type CorrectionListId = `${CorrectionListNames}`;
 
 export type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
