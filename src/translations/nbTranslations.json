@@ -158,6 +158,8 @@
     }
   },
   "candidate": "Kandidat",
+  "candidates_everyone_has_approved": "Kandidater alle har godkjent",
+  "candidates_we_have_approved": "Kandidater vi har godkjent",
   "cannot_copy_category_from_another_context_type": "<p>Du kan ikke kopiere metadata fra kategorifanen hvis resultatet tilhører en annen hovedkategori.</p><p>Denne informasjonen må registreres manuelt etter at resten av metadata er kopiert.</p>",
   "common": {
     "actions": "Handlinger",
@@ -990,15 +992,15 @@
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fant dessverre ikke noe som passer med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li></ul>",
+  "nvi_publication_points_page_description": "Tabellen viser kandidater ved din institusjon som er godkjent av dere per nå og hvilke som mangler godkjenning av samarbeidende institusjoner.",
+  "nvi_publication_points_page_description_expanded": "Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.",
   "overview_over_administrators": "Oversikt over administratorer",
   "overwrite": "Overskriv",
   "owner_institution": "Eierinstitusjon",
   "percent_of_publication_points_in_year": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}.",
   "percent_of_published_reports_in_year": "Det er <b>{{percentage}}%</b> av antallet resultat rapportert i {{year}}.",
-  "percentage_controlled": "Andel kontrollert",
   "percentage_approved": "Andel godkjente",
-  "candidates_we_have_approved": "Kandidater vi har godkjent",
-  "candidates_everyone_has_approved": "Kandidater alle har godkjent",
+  "percentage_controlled": "Andel kontrollert",
   "person_profiles": "Personprofiler",
   "point_of_contact": "Kontaktpunkt",
   "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
@@ -1116,7 +1118,6 @@
   "publication_points": "Publiseringspoeng",
   "publication_points_description": "Tabellen viser kandidater som er godkjent per nå hos alle institusjoner og hvor mange som er ferdig kontrollert i forhold til antall kandidater.",
   "publication_points_description_more": "Kandidatene er lagt på enheten hvor de er registrert. Det er ikke tatt hensyn til samarbeidene institusjoner. Kandidater i eventuelt tvist vises ikke.",
-  "reporting_status_description": "<0>Tabellen viser kandidater ved din institusjon som er godkjent av dere per nå og hvilke som mangler godkjenning av samarbeidende institusjoner.</0> <0>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</0>",
   "published_result": "Publisert resultat",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikke lagre fordi resultatet er publisert og inneholder valideringsfeil",
@@ -1869,6 +1870,7 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "Avvist",
+  "reporting_status_description": "<0>Tabellen viser kandidater ved din institusjon som er godkjent av dere per nå og hvilke som mangler godkjenning av samarbeidende institusjoner.</0> <0>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</0>",
   "reset": "Nullstill",
   "results": "Forskningsresultater",
   "science_categories_front_page": "<heading>Arbeid i ulike kategorier</heading><p>Forskning og formidling omfatter mye mer enn vitenskapelige publikasjoner.</p><p>Alt registreres i ulike kategorier, og du kan søke og gjøre oppslag i alle kategoriene nedenfor.</p>",
@@ -2037,6 +2039,7 @@
     "your_tasks": "Oppgaver du behandler: {{count}}"
   },
   "temporarily_disabled": "Midlertidig deaktivert",
+  "that_is_x_percent_of_the_number_reported_in_y": "<p>Det er <bold>{{percentage_compared_to_last_year}}%</bold> av antallet resultat rapportert i {{last_year}}.</p>",
   "time_format": {
     "hours": "TT:MM:SS",
     "minutes": "MM:SS"
@@ -2065,11 +2068,8 @@
   "visibility_of_units": "Visning av enheter",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
+  "x_results_are_ready_for_reporting_and_they_give_y_points": "<p><bold>{{num_publications_approved_by_all}} resultat</bold> er klar for rapportering, og de gir <bold>{{points_for_all_publications_approved_by_all}} publiseringspoeng.</bold></p>",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "nvi_publication_points_page_description": "Tabellen viser kandidater ved din institusjon som er godkjent av dere per nå og hvilke som mangler godkjenning av samarbeidende institusjoner.",
-  "nvi_publication_points_page_description_expanded": "Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.",
-  "x_results_are_ready_for_reporting_and_they_give_y_points": "<p><bold>{{num_publications_approved_by_all}} resultat</bold> er klar for rapportering, og de gir <bold>{{points_for_all_publications_approved_by_all}} publiseringspoeng.</bold></p>",
-  "that_is_x_percent_of_the_number_reported_in_y": "<p>Det er <bold>{{percentage_compared_to_last_year}}%</bold> av antallet resultat rapportert i {{last_year}}.</p>"
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
 }
