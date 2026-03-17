@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviPeriodReport } from '../../api/hooks/useFetchNviPeriodReport';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NviReportProgressBar } from '../../components/NviReportProgressBar';
 import { LinkCreateButton, NavigationList } from '../../components/PageWithSideMenu';
@@ -36,20 +35,18 @@ export const NviAdminNavigationAccordion = () => {
       dataTestId={dataTestId.basicData.nviPeriodsLink}>
       <NavigationList aria-label={t('common.nvi')}>
         <StyledNviStatusBox>
-          <BetaFunctionality>
-            {reportQuery.isError || !periodTotals ? undefined : (
-              <NviReportProgressBar
-                completedPercentage={
-                  periodTotals.undisputedTotalCount > 0
-                    ? Math.round((periodTotals.undisputedProcessedCount / periodTotals.undisputedTotalCount) * 100)
-                    : 0
-                }
-                completedCount={periodTotals.undisputedProcessedCount}
-                totalCount={periodTotals.undisputedTotalCount}
-                isPending={reportQuery.isPending}
-              />
-            )}
-          </BetaFunctionality>
+          {reportQuery.isError || !periodTotals ? undefined : (
+            <NviReportProgressBar
+              completedPercentage={
+                periodTotals.undisputedTotalCount > 0
+                  ? Math.round((periodTotals.undisputedProcessedCount / periodTotals.undisputedTotalCount) * 100)
+                  : 0
+              }
+              completedCount={periodTotals.undisputedProcessedCount}
+              totalCount={periodTotals.undisputedTotalCount}
+              isPending={reportQuery.isPending}
+            />
+          )}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
             <SelectableButton
               data-testid={dataTestId.basicData.nviReportingPeriodsLink}
@@ -57,20 +54,18 @@ export const NviAdminNavigationAccordion = () => {
               to={UrlPathTemplate.BasicDataNvi}>
               {t('basic_data.nvi.reporting_periods')}
             </SelectableButton>
-            <BetaFunctionality sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <SelectableButton
-                data-testid={dataTestId.basicData.nviStatusLink}
-                isSelected={currentPath === UrlPathTemplate.BasicDataNviStatus}
-                to={`${UrlPathTemplate.BasicDataNviStatus}?year=${getDefaultNviYear()}`}>
-                {t('basic_data.nvi.show_reporting_status')}
-              </SelectableButton>
-              <SelectableButton
-                data-testid={dataTestId.basicData.nviPublicationPointsLink}
-                isSelected={currentPath === UrlPathTemplate.BasicDataNviPublicationPoints}
-                to={`${UrlPathTemplate.BasicDataNviPublicationPoints}?year=${getDefaultNviYear()}`}>
-                {t('basic_data.nvi.show_publication_points_status')}
-              </SelectableButton>
-            </BetaFunctionality>
+            <SelectableButton
+              data-testid={dataTestId.basicData.nviStatusLink}
+              isSelected={currentPath === UrlPathTemplate.BasicDataNviStatus}
+              to={`${UrlPathTemplate.BasicDataNviStatus}?year=${getDefaultNviYear()}`}>
+              {t('basic_data.nvi.show_reporting_status')}
+            </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.basicData.nviPublicationPointsLink}
+              isSelected={currentPath === UrlPathTemplate.BasicDataNviPublicationPoints}
+              to={`${UrlPathTemplate.BasicDataNviPublicationPoints}?year=${getDefaultNviYear()}`}>
+              {t('basic_data.nvi.show_publication_points_status')}
+            </SelectableButton>
           </Box>
         </StyledNviStatusBox>
       </NavigationList>
