@@ -109,6 +109,7 @@ export const dataTestId = {
     nationalIdentityNumberField: 'national-identity-number-field',
     nvi: {
       publicationPointsExpandDescriptionButton: 'publication-points-expand-description-button',
+      curatorPublicationPointsExpandDescriptionButton: 'curator-publication-points-expand-description-button',
     },
     nviPeriod: {
       nviPeriodDialog: 'nvi-period-dialog',
@@ -772,6 +773,7 @@ export const dataTestId = {
       anthologyWithoutChapterButton: 'anthology-without-chapter-button',
       booksWithLessThan50PagesButton: 'books-with-less-than-50-pages-button',
       applicableCategoriesWithNonApplicableChannelButton: 'applicable-categories-with-non-applicable-channel-button',
+      chapterAndBookYearMismatchButton: 'chapter-and-book-year-mismatch-button',
       correctionListAccordion: 'correction-list-accordion',
       correctionListRadioButton: 'correction-list-radio-button',
       nonApplicableCategoriesWithApplicableChannelButton: 'non-applicable-categories-with-applicable-channel-button',

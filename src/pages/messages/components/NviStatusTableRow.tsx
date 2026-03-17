@@ -10,6 +10,8 @@ import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
 import { NviStatusTableRowWrapper } from './NviStatusTableRowWrapper';
+import { HorizontalBox } from '../../../components/styled/Wrappers';
+import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 
 interface NviStatusTableRowProps {
   organization: Organization;
@@ -29,6 +31,11 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
   const [expanded, setExpanded] = useState(level === 0);
   const orgAggregations = aggregations?.byOrganization[organization.id];
   const rowIsEmpty = !orgAggregations || orgAggregations.candidateCount === 0;
+  const percentageControlled =
+    orgAggregations && orgAggregations.candidateCount > 0
+      ? (orgAggregations.approvalStatus.Approved + orgAggregations.approvalStatus.Rejected) /
+        orgAggregations.candidateCount
+      : -1;
 
   if (rowIsEmpty && excludeEmptyRows) {
     return null;
@@ -48,10 +55,9 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               component={RouterLink}
               data-testid={dataTestId.nviStatusTableRow.candidateLink}
               to={getNviCandidatesSearchPath({
-                username: user?.nvaUsername,
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
-                status: NviCandidateStatusEnum.Pending,
+                status: NviCandidateStatusEnum.New,
                 globalStatus: NviCandidateGlobalStatusEnum.Pending,
                 excludeSubUnits: true,
               })}>
@@ -89,11 +95,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
                 status: NviCandidateStatusEnum.Approved,
-                globalStatus: [
-                  NviCandidateGlobalStatusEnum.Approved,
-                  NviCandidateGlobalStatusEnum.Pending,
-                  NviCandidateGlobalStatusEnum.Dispute,
-                ],
+                globalStatus: [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending],
                 excludeSubUnits: true,
               })}>
               {orgAggregations?.approvalStatus.Approved ?? 0}
@@ -111,7 +113,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
                 status: NviCandidateStatusEnum.Rejected,
-                globalStatus: NviCandidateGlobalStatusEnum.Rejected,
+                globalStatus: [NviCandidateGlobalStatusEnum.Rejected, NviCandidateGlobalStatusEnum.Pending],
                 excludeSubUnits: true,
               })}>
               {orgAggregations?.approvalStatus.Rejected ?? 0}
@@ -132,6 +134,20 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               })}>
               {orgAggregations?.candidateCount ?? 0}
             </Link>
+          ) : (
+            <StyledSkeleton />
+          )}
+        </TableCell>
+        <TableCell align="center">
+          {aggregations ? (
+            <HorizontalBox sx={{ justifyContent: 'center' }}>
+              <PercentageWithIcon
+                warningThresholdMinimum={30}
+                successThresholdMinimum={100}
+                displayPercentage={Math.round(percentageControlled * 100)}
+                displayEmpty={percentageControlled < 0}
+              />
+            </HorizontalBox>
           ) : (
             <StyledSkeleton />
           )}

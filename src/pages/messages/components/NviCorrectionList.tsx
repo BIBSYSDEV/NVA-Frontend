@@ -5,14 +5,17 @@ import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch'
 import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { HeadTitle } from '../../../components/HeadTitle';
-import { CorrectionListId } from '../../../types/nvi.types';
+import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
-import { ScientificValueFilter } from '../../search/advanced_search/ScientificValueFilter';
+import {
+  ScientificValueFilter,
+  ScientificValueFilterListIds,
+} from '../../search/advanced_search/ScientificValueFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
 import { ExportResultsButton } from '../../search/ExportResultsButton';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
@@ -27,6 +30,8 @@ export const NviCorrectionList = () => {
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
   const correctionListConfig = useCorrectionListConfig();
   const listConfig = listId && correctionListConfig[listId];
+  const shouldShowScientificValueFilter =
+    !!listId && ScientificValueFilterListIds.includes(listId as CorrectionListNames);
 
   const registrationParams = useRegistrationsQueryParams();
   const exportParams = new URLSearchParams(sanitizeSearchParams({ ...listConfig?.queryParams, ...registrationParams }));
@@ -69,9 +74,7 @@ export const NviCorrectionList = () => {
                 />
               </Box>
 
-              {(listId === 'ApplicableCategoriesWithNonApplicableChannel' ||
-                listId === 'NonApplicableCategoriesWithApplicableChannel' ||
-                listId === 'ScientificChapterNotInAnthology') && <ScientificValueFilter />}
+              {shouldShowScientificValueFilter && <ScientificValueFilter />}
 
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
                 <PublisherFilter />
