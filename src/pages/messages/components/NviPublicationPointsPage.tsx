@@ -31,11 +31,11 @@ export const NviPublicationPointsPage = () => {
           <TableHead>
             <TableRow sx={{ bgcolor: 'white' }}>
               <TableCell sx={{ width: '30%' }}>{t('registration.contributors.department')}</TableCell>
-              <TableCell>{t('candidates_we_have_approved')}</TableCell>
-              <TableCell>{t('tasks.nvi.candidates_pending_verification_by_others')}</TableCell>
-              <TableCell>{t('candidates_everyone_has_approved')}</TableCell>
-              <TableCell>{t('tasks.nvi.publication_points')}</TableCell>
-              <TableCell>{t('percentage_approved_by_all')}</TableCell>
+              <TableCell align="center">{t('candidates_we_have_approved')}</TableCell>
+              <TableCell align="center">{t('tasks.nvi.candidates_pending_verification_by_others')}</TableCell>
+              <TableCell align="center">{t('candidates_everyone_has_approved')}</TableCell>
+              <TableCell align="center">{t('tasks.nvi.publication_points')}</TableCell>
+              <TableCell align="center">{t('percentage_approved_by_all')}</TableCell>
               <TableCell>
                 <Box component="span" sx={visuallyHidden}>
                   {t('tasks.nvi.show_subunits')}

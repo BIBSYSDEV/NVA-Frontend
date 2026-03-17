@@ -62,6 +62,7 @@ export const NviPublicationPointsTableRow = ({
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
                 status: [NviCandidateStatusEnum.Approved],
+                globalStatus: [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending],
                 excludeSubUnits: true,
               })}>
               {orgAggregations?.approvalStatus.Approved ?? 0}
@@ -78,10 +79,11 @@ export const NviPublicationPointsTableRow = ({
               to={getNviCandidatesSearchPath({
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
+                status: [NviCandidateStatusEnum.Approved],
                 globalStatus: [NviCandidateGlobalStatusEnum.Pending],
                 excludeSubUnits: true,
               })}>
-              {orgAggregations?.globalApprovalStatus.Pending ?? 0}
+              {(orgAggregations?.approvalStatus.Approved ?? 0) - (orgAggregations?.globalApprovalStatus.Approved ?? 0)}
             </Link>
           ) : (
             <StyledSkeleton />
