@@ -37,7 +37,7 @@ export const NviPublicationPointsPage = () => {
               <TableCell align="center">{t('tasks.nvi.candidates_pending_verification_by_others')}</TableCell>
               <TableCell align="center">{t('candidates_everyone_has_approved')}</TableCell>
               <TableCell align="center">
-                <HorizontalBox>
+                <HorizontalBox sx={{ justifyContent: 'center' }}>
                   {t('points_for_reporting')}
                   <NviPublicationPointsHelper />
                 </HorizontalBox>

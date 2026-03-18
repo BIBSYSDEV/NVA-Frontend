@@ -18,7 +18,9 @@ export const NviPublicationPointsHelper = () => {
           <Trans t={t} i18nKey="points_for_reporting_modal_text" components={{ p: <Typography /> }} />
         </VerticalBox>
         <HorizontalBox sx={{ gap: '0.5rem', mb: '1rem' }}>
-          <OpenInNewLink href={NVI_REPORTING_INSTRUCTIONS_URL}>{t('view_the_reporting_instructions')}</OpenInNewLink>
+          <OpenInNewLink href={NVI_REPORTING_INSTRUCTIONS_URL} data-testid={dataTestId.nviPublicationPointsHelpLink}>
+            {t('view_the_reporting_instructions')}
+          </OpenInNewLink>
         </HorizontalBox>
       </VerticalBox>
     </HelperTextModal>
