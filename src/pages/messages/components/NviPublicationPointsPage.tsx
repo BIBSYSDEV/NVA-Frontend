@@ -29,12 +29,12 @@ export const NviPublicationPointsPage = () => {
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
-            <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
-              <TableCell sx={{ width: '30%' }}>{t('registration.contributors.department')}</TableCell>
+            <TableRow sx={{ bgcolor: 'white' }}>
+              <TableCell sx={{ width: '50%' }}>{t('registration.contributors.department')}</TableCell>
               <TableCell align="center">{t('candidates_we_have_approved')}</TableCell>
               <TableCell align="center">{t('tasks.nvi.candidates_pending_verification_by_others')}</TableCell>
               <TableCell align="center">{t('candidates_everyone_has_approved')}</TableCell>
-              <TableCell align="center">{t('tasks.nvi.points_for_reporting')}</TableCell>
+              <TableCell align="center">{t('points_for_reporting')}</TableCell>
               <TableCell align="center">{t('percentage_approved_by_all')}</TableCell>
               <TableCell>
                 {/* This cell is hidden to make the number of cells in the table header the same as in the table row, where we display an accordion-like arrow to expand or close rows that have subunits */}
