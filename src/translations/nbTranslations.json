@@ -1870,7 +1870,7 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "Avvist",
-  "reporting_status_description": "<0>Tabellen viser kandidater ved din institusjon som er godkjent av dere per nå og hvilke som mangler godkjenning av samarbeidende institusjoner.</0> <0>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</0>",
+  "reporting_status_description": "<0>Tabellen viser antall kandidater for min institusjon og behandlingsstatus på disse.</0> <0>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</0>",
   "reset": "Nullstill",
   "results": "Forskningsresultater",
   "science_categories_front_page": "<heading>Arbeid i ulike kategorier</heading><p>Forskning og formidling omfatter mye mer enn vitenskapelige publikasjoner.</p><p>Alt registreres i ulike kategorier, og du kan søke og gjøre oppslag i alle kategoriene nedenfor.</p>",
