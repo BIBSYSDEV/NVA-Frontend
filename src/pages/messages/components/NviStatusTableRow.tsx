@@ -130,6 +130,11 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               to={getNviCandidatesSearchPath({
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
+                globalStatus: [
+                  NviCandidateGlobalStatusEnum.Approved,
+                  NviCandidateGlobalStatusEnum.Rejected,
+                  NviCandidateGlobalStatusEnum.Pending,
+                ],
                 excludeSubUnits: true,
               })}>
               {orgAggregations?.candidateCount ?? 0}
