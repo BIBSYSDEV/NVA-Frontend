@@ -47,13 +47,14 @@ export const NviStatusPage = () => {
           <TableHead>
             <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
               <TableCell sx={{ width: '60%' }}>{t('registration.contributors.department')}</TableCell>
-              <TableCell>{t('tasks.nvi.status.New')}</TableCell>
-              <TableCell>{t('tasks.nvi.status.Pending')}</TableCell>
-              <TableCell>{t('tasks.nvi.status.Approved')}</TableCell>
-              <TableCell>{t('tasks.nvi.status.Rejected')}</TableCell>
-              <TableCell>{t('common.total_number')}</TableCell>
-              <TableCell>{t('percentage_controlled')}</TableCell>
+              <TableCell align="center">{t('tasks.nvi.status.New')}</TableCell>
+              <TableCell align="center">{t('tasks.nvi.status.Pending')}</TableCell>
+              <TableCell align="center">{t('tasks.nvi.status.Approved')}</TableCell>
+              <TableCell align="center">{t('tasks.nvi.status.Rejected')}</TableCell>
+              <TableCell align="center">{t('common.total_number')}</TableCell>
+              <TableCell align="center">{t('percentage_controlled')}</TableCell>
               <TableCell>
+                {/* This cell is hidden to make the number of cells in the table header the same as in the table row, where we display an accordion-like arrow to expand or close rows that have subunits */}
                 <Box component="span" sx={visuallyHidden}>
                   {t('tasks.nvi.show_subunits')}
                 </Box>
