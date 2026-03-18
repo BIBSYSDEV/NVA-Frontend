@@ -56,9 +56,7 @@ export const NviAdminPublicationPointsPage = () => {
                     <TableCell>
                       <HorizontalBox sx={{ justifyContent: 'center' }}>
                         <PercentageWithIcon
-                          warningThresholdMinimum={30}
-                          successThresholdMinimum={100}
-                          displayPercentage={Math.round(percentageControlled * 100)}
+                          displayPercentage={Math.floor(percentageControlled * 100)}
                           alternativeIfZero={'-'}
                         />
                       </HorizontalBox>

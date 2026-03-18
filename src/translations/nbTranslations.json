@@ -1000,6 +1000,7 @@
   "percent_of_publication_points_in_year": "Det er <b>{{percentage}}%</b> av antallet publiseringspoeng i {{year}}.",
   "percent_of_published_reports_in_year": "Det er <b>{{percentage}}%</b> av antallet resultat rapportert i {{year}}.",
   "percentage_approved": "Andel godkjente",
+  "percentage_approved_by_all": "Andel godkjent av alle",
   "percentage_controlled": "Andel kontrollert",
   "person_profiles": "Personprofiler",
   "point_of_contact": "Kontaktpunkt",
