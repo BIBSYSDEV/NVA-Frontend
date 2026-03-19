@@ -2,6 +2,8 @@ import { Link, Skeleton, styled, TableCell } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
 import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
+import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
+import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
 import { User } from '../../../types/user.types';
@@ -10,8 +12,6 @@ import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
 import { NviStatusTableRowWrapper } from './NviStatusTableRowWrapper';
-import { HorizontalBox } from '../../../components/styled/Wrappers';
-import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 
 interface NviStatusTableRowProps {
   organization: Organization;
@@ -130,6 +130,11 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               to={getNviCandidatesSearchPath({
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
+                globalStatus: [
+                  NviCandidateGlobalStatusEnum.Approved,
+                  NviCandidateGlobalStatusEnum.Rejected,
+                  NviCandidateGlobalStatusEnum.Pending,
+                ],
                 excludeSubUnits: true,
               })}>
               {orgAggregations?.candidateCount ?? 0}
@@ -142,9 +147,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
           {aggregations ? (
             <HorizontalBox sx={{ justifyContent: 'center' }}>
               <PercentageWithIcon
-                warningThresholdMinimum={30}
-                successThresholdMinimum={100}
-                displayPercentage={Math.round(percentageControlled * 100)}
+                displayPercentage={Math.floor(percentageControlled * 100)}
                 displayEmpty={percentageControlled < 0}
               />
             </HorizontalBox>

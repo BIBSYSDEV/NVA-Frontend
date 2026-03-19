@@ -866,6 +866,9 @@ export const dataTestId = {
     },
   },
   nviStatusTableRow: {
+    approvedByUsLink: 'nvi-aggregations-approved-by-us-link',
+    candidatesOthersMustApproveLink: 'candidates-others-must-approve-link',
+    approvedByAllLink: 'nvi-aggregations-approved-by-all-link',
     candidateLink: 'nvi-aggregations-candidate-link',
     controlLink: 'nvi-aggregations-control-link',
     approvedLink: 'nvi-aggregations-approved-link',
@@ -877,4 +880,7 @@ export const dataTestId = {
   nviFilterSector: 'nvi-filter-sector',
   nviFilterInstitution: 'nvi-filter-institution',
   nviFilterInstitutionClearSearch: 'nvi-filter-institution-clear-search',
+  nviPublicationPointsHelpModal: 'nvi-publication-points-help-modal',
+  nviPublicationPointsHelpButton: 'nvi-publication-points-help-button',
+  nviPublicationPointsHelpLink: 'nvi-publication-points-help-link',
 };

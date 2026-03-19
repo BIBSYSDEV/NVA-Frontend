@@ -1,9 +1,11 @@
 import { TextField } from '@mui/material';
-import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { forwardRef, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IMaskInput } from 'react-imask';
 import { RegistrationFormContext } from '../../../../../context/RegistrationFormContext';
+import { BookType } from '../../../../../types/publicationFieldNames';
+import { Registration } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 
 const isbnFormat = '000-00-000-0000-0';
@@ -34,6 +36,10 @@ interface IsbnFieldProps {
 export const IsbnField = ({ fieldName }: IsbnFieldProps) => {
   const { t } = useTranslation();
   const { disableChannelClaimsFields } = useContext(RegistrationFormContext);
+  const { values } = useFormikContext<Registration>();
+  const publicationInstanceType = values.entityDescription?.reference?.publicationInstance?.type;
+  const isRequired =
+    publicationInstanceType === BookType.AcademicMonograph || publicationInstanceType === BookType.AcademicCommentary;
 
   return (
     <FieldArray name={fieldName}>
@@ -45,6 +51,7 @@ export const IsbnField = ({ fieldName }: IsbnFieldProps) => {
               {...field}
               data-testid={dataTestId.registrationWizard.resourceType.isbnField}
               disabled={disableChannelClaimsFields}
+              required={isRequired}
               onChange={(event) => {
                 if (event.target.value) {
                   field.onChange(event);
@@ -57,7 +64,7 @@ export const IsbnField = ({ fieldName }: IsbnFieldProps) => {
               placeholder={isbnFormat}
               variant="filled"
               error={!!meta.error && meta.touched}
-              helperText={<ErrorMessage name={field.name} />}
+              helperText={<ErrorMessage name={fieldName} />}
               slotProps={{ input: { inputComponent: MaskIsbnInput as any } }}
             />
           )}

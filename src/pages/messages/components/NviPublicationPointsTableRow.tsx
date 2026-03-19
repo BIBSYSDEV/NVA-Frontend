@@ -1,7 +1,9 @@
 import { Link, TableCell } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
-import { NviCandidateGlobalStatusEnum } from '../../../api/searchApi';
+import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
+import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
+import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -38,6 +40,10 @@ export const NviPublicationPointsTableRow = ({
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  const percentageApproved =
+    orgAggregations && orgAggregations.approvalStatus.Approved
+      ? orgAggregations.globalApprovalStatus.Approved / orgAggregations.approvalStatus.Approved
+      : -1;
 
   return (
     <>
@@ -51,7 +57,43 @@ export const NviPublicationPointsTableRow = ({
           {aggregations ? (
             <Link
               component={RouterLink}
-              data-testid={dataTestId.nviStatusTableRow.candidateLink}
+              data-testid={dataTestId.nviStatusTableRow.approvedByUsLink}
+              to={getNviCandidatesSearchPath({
+                year: year,
+                orgNumber: getIdentifierFromId(organization.id),
+                status: [NviCandidateStatusEnum.Approved],
+                globalStatus: [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending],
+                excludeSubUnits: true,
+              })}>
+              {orgAggregations?.approvalStatus.Approved ?? 0}
+            </Link>
+          ) : (
+            <StyledSkeleton />
+          )}
+        </TableCell>
+        <TableCell align="center">
+          {aggregations ? (
+            <Link
+              component={RouterLink}
+              data-testid={dataTestId.nviStatusTableRow.candidatesOthersMustApproveLink}
+              to={getNviCandidatesSearchPath({
+                year: year,
+                orgNumber: getIdentifierFromId(organization.id),
+                status: [NviCandidateStatusEnum.Approved],
+                globalStatus: [NviCandidateGlobalStatusEnum.Pending],
+                excludeSubUnits: true,
+              })}>
+              {(orgAggregations?.approvalStatus.Approved ?? 0) - (orgAggregations?.globalApprovalStatus.Approved ?? 0)}
+            </Link>
+          ) : (
+            <StyledSkeleton />
+          )}
+        </TableCell>
+        <TableCell align="center">
+          {aggregations ? (
+            <Link
+              component={RouterLink}
+              data-testid={dataTestId.nviStatusTableRow.approvedByAllLink}
               to={getNviCandidatesSearchPath({
                 year: year,
                 orgNumber: getIdentifierFromId(organization.id),
@@ -65,6 +107,17 @@ export const NviPublicationPointsTableRow = ({
           )}
         </TableCell>
         <TableCell align="center">{aggregations ? pointsWithTwoDecimals : <StyledSkeleton />}</TableCell>
+        <TableCell align="center">
+          {
+            <HorizontalBox sx={{ justifyContent: 'center' }}>
+              <PercentageWithIcon
+                displayPercentage={Math.floor(percentageApproved * 100)}
+                alternativeIfZero={'-'}
+                hideWarningIcon
+              />
+            </HorizontalBox>
+          }
+        </TableCell>
       </NviStatusTableRowWrapper>
       {expanded &&
         organization.hasPart?.map((subUnit) => (
