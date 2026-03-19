@@ -1005,6 +1005,8 @@
   "person_profiles": "Personprofiler",
   "point_of_contact": "Kontaktpunkt",
   "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
+  "points_for_reporting": "Poeng til rapportering",
+  "points_for_reporting_modal_text": "<p>Poengene i tabellen viser poeng for kandidater som er godkjent av alle. Altså poeng for kandidater som er klar til rapporteringen.</p><p>Tabellen viser antall poeng for kandidater adressert på de ulike underenhetene. Vær obs på at hvis en kandidat har adressert flere underenheter på egen institusjon, vil samme poeng for kandidaten telles på flere underenheter. Du kan derfor ikke summere kolonnene vertikalt, kun horisontalt.</p><p>Ønsker du å vite hvordan poengene beregnes?</p>",
   "points_of_contact_for_result": "Kontaktpunkt for resultat",
   "privacy_statement": "Personvernerklæring",
   "project": {
@@ -1116,7 +1118,6 @@
     "verify_project_manager": "Identifiser prosjektleder"
   },
   "projects": "Prosjekter",
-  "points_for_reporting": "Poeng til rapportering",
   "publication_points_description": "Tabellen viser kandidater som er godkjent per nå hos alle institusjoner og hvor mange som er ferdig kontrollert i forhold til antall kandidater.",
   "publication_points_description_more": "Kandidatene er lagt på enheten hvor de er registrert. Det er ikke tatt hensyn til samarbeidene institusjoner. Kandidater i eventuelt tvist vises ikke.",
   "published_result": "Publisert resultat",
@@ -1998,6 +1999,7 @@
       "previous_candidate": "Gå til forrige kandidat",
       "problem_description": "<p>NVI-kandidaten har følgende mangler:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatuser blir opphevet når en uidentifisert person blir identifisert.</p>",
       "progress_nvi_reporting": "Fremdrift for NVI-rapporting",
+      "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
       "reject_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen ikke kan rapporteres. Du må begrunne avvisningen.",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
@@ -2065,13 +2067,12 @@
   "velg_subject_area": "Velg fagfelt",
   "view_contact_info": "Se kontaktinformasjon",
   "view_contact_information": "Se kontaktinfo",
+  "view_the_reporting_instructions": "Se rapporteringsinstruksen",
   "visibility_of_units": "Visning av enheter",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "x_results_are_ready_for_reporting_and_they_give_y_points": "<p><bold>{{num_publications_approved_by_all}} resultat</bold> er klar for rapportering, og de gir <bold>{{points_for_all_publications_approved_by_all}} publiseringspoeng.</bold></p>",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "points_for_reporting_modal_text": "<p>Poengene i tabellen viser poeng for kandidater som er godkjent av alle. Altså poeng for kandidater som er klar til rapporteringen.</p><p>Tabellen viser antall poeng for kandidater adressert på de ulike underenhetene. Vær obs på at hvis en kandidat har adressert flere underenheter på egen institusjon, vil samme poeng for kandidaten telles på flere underenheter. Du kan derfor ikke summere kolonnene vertikalt, kun horisontalt.</p><p>Ønsker du å vite hvordan poengene beregnes?</p>",
-  "view_the_reporting_instructions": "Se rapporteringsinstruksen"
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
 }
