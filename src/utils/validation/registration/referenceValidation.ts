@@ -96,6 +96,9 @@ const resourceErrorMessage = {
   isbnInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.resource_type.isbn'),
   }),
+  isbnRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.isbn'),
+  }),
   isbnTooShort: i18n.t('feedback.validation.isbn_too_short'),
   journalNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
     field: i18n.t('registration.resource_type.journal'),
@@ -155,11 +158,17 @@ const resourceErrorMessage = {
 export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
 
 // Common Fields
-export const isbnListField = Yup.array().of(
-  Yup.string()
-    .min(13, resourceErrorMessage.isbnTooShort)
-    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? ''))
-);
+export const isbnListField = Yup.array()
+  .of(
+    Yup.string()
+      .min(13, resourceErrorMessage.isbnTooShort)
+      .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? ''))
+  )
+  .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+    publicationInstanceType === BookType.AcademicMonograph || publicationInstanceType === BookType.AcademicCommentary
+      ? schema.min(1, resourceErrorMessage.isbnRequired).required(resourceErrorMessage.isbnRequired)
+      : schema
+  );
 
 const pagesMonographField = Yup.object()
   .nullable()
