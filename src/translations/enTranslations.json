@@ -158,6 +158,8 @@
     }
   },
   "candidate": "",
+  "candidates_everyone_has_approved": "",
+  "candidates_we_have_approved": "",
   "cannot_copy_category_from_another_context_type": "<p>You cannot copy metadata from the category tab is the result belongs to a different main category.</p><p>This information must be registered manually after the rest of the metadata has been copied.</p>",
   "common": {
     "actions": "Actions",
@@ -990,15 +992,21 @@
   "no_search_results_found_with_search": "<span><icon /><heading>No results</heading></span><p>Unfortunately, we couldn't find anything that matches your search.</p>",
   "no_search_results_list_default": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that your search words are spelled correctly</li><li>Try a different spelling</li><li>Try a synonym</li><li>Translate the search word to Norwegian Bokmål (NB), Norwegian Nynorsk (NN), or English</li></ul>",
   "no_search_results_list_person": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that the name is spelled correctly</li><li>Try a different spelling</li><li>Try with or without the middle name</li></ul>",
+  "nvi_publication_points_page_description": "",
+  "nvi_publication_points_page_description_expanded": "",
   "overview_over_administrators": "Overview of administrators",
   "overwrite": "Overwrite",
   "owner_institution": "Owner institution",
   "percent_of_publication_points_in_year": "",
   "percent_of_published_reports_in_year": "",
+  "percentage_approved": "",
+  "percentage_approved_by_all": "",
   "percentage_controlled": "",
   "person_profiles": "Person profiles",
   "point_of_contact": "Contact point",
   "point_of_contact_description": "Du you have questions about the research result?",
+  "points_for_reporting": "",
+  "points_for_reporting_modal_text": "",
   "points_of_contact_for_result": "Contact point for the result",
   "privacy_statement": "Privacy policy",
   "project": {
@@ -1110,7 +1118,6 @@
     "verify_project_manager": "Identify project manager"
   },
   "projects": "Projects",
-  "publication_points": "",
   "publication_points_description": "",
   "publication_points_description_more": "",
   "published_result": "Published result",
@@ -1865,6 +1872,7 @@
     "year_published": "Publication year"
   },
   "rejected": "",
+  "reporting_status_description": "",
   "reset": "Reset",
   "results": "Research results",
   "science_categories_front_page": "<heading>Work in various categories</heading><p>Research and dissemination encompass much more than scientific publications.</p><p>Everything is registered in different categories, and you can search and look up all the categories below.</p>",
@@ -1971,6 +1979,7 @@
         "anthology_without_chapter": "Anthologies without a chapter",
         "applicable_category_in_non_applicable_channel": "Counting categories in non-counting channels",
         "book_with_less_than_50_pages": "Books with fewer than 50 pages",
+        "chapter_and_book_year_mismatch": "",
         "non_applicable_category_in_applicable_channel": "Non-counting categories in counting channels",
         "scientific_chapter_not_in_anthology": "",
         "scientific_monography_or_anthology_without_isxns": "",
@@ -2032,6 +2041,7 @@
     "your_tasks": "Tasks you own: {{count}}"
   },
   "temporarily_disabled": "",
+  "that_is_x_percent_of_the_number_reported_in_y": "",
   "time_format": {
     "hours": "HH:MM:SS",
     "minutes": "MM:SS"
@@ -2057,9 +2067,11 @@
   "velg_subject_area": "Select subject area",
   "view_contact_info": "View contact information",
   "view_contact_information": "",
+  "view_the_reporting_instructions": "",
   "visibility_of_units": "",
   "vocabulary_missing": "The institution has not added vocabulary",
   "what_you_find_in_nva_description": "<heading>What can you find in NVA?</heading><p>The Norwegian Research Information Repository (NVA) collects and makes information about Norwegian research accessible.</p><p>Here, you can explore publications, research projects, and researchers across universities, university colleges, and research institutions.</p>",
+  "x_results_are_ready_for_reporting_and_they_give_y_points": "",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "",
   "you_cannot_upload_files_to_this_result": "You do not have access to upload files for this result.",
   "you_do_not_have_permission_to_edit_this_registration": "You do not have access to edit this registration."

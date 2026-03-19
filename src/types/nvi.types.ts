@@ -162,15 +162,19 @@ export interface NviPeriodResponse {
   periods: NviPeriod[];
 }
 
-export type CorrectionListId =
-  | 'ApplicableCategoriesWithNonApplicableChannel'
-  | 'NonApplicableCategoriesWithApplicableChannel'
-  | 'AnthologyWithoutChapter'
-  | 'AnthologyWithApplicableChapter'
-  | 'BooksWithLessThan50Pages'
-  | 'UnidentifiedContributorWithIdentifiedAffiliation'
-  | 'ScientificChapterNotInAnthology'
-  | 'ScientificMonographyOrAnthologyWithoutIsxns';
+export enum CorrectionListNames {
+  ApplicableCategoriesWithNonApplicableChannel = 'ApplicableCategoriesWithNonApplicableChannel',
+  NonApplicableCategoriesWithApplicableChannel = 'NonApplicableCategoriesWithApplicableChannel',
+  AnthologyWithoutChapter = 'AnthologyWithoutChapter',
+  AnthologyWithApplicableChapter = 'AnthologyWithApplicableChapter',
+  YearBetweenChapterAndBookMismatch = 'YearBetweenChapterAndBookMismatch',
+  BooksWithLessThan50Pages = 'BooksWithLessThan50Pages',
+  UnidentifiedContributorWithIdentifiedAffiliation = 'UnidentifiedContributorWithIdentifiedAffiliation',
+  ScientificChapterNotInAnthology = 'ScientificChapterNotInAnthology',
+  ScientificMonographyOrAnthologyWithoutIsxns = 'ScientificMonographyOrAnthologyWithoutIsxns',
+}
+
+export type CorrectionListId = `${CorrectionListNames}`;
 
 export type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
@@ -193,6 +197,8 @@ export interface InstitutionSummaryTotals {
   type: 'InstitutionTotals';
   validPoints: number;
   disputedCount: number;
+  globalApprovedCount: number;
+  globalRejectedCount: number;
   undisputedProcessedCount: number;
   undisputedTotalCount: number;
 }

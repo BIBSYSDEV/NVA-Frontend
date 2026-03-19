@@ -60,7 +60,7 @@ export const NviCandidatesNavigationAccordion = () => {
       accordionPath={UrlPathTemplate.TasksNvi}
       defaultPath={getNviCandidatesSearchPath({
         username: user?.nvaUsername,
-        status: NviCandidateStatusEnum.Pending,
+        status: [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending],
         globalStatus: NviCandidateGlobalStatusEnum.Pending,
       })}
       dataTestId={dataTestId.tasksPage.nviAccordion}>
@@ -118,7 +118,7 @@ export const NviCandidatesNavigationAccordion = () => {
               to={getNviCandidatesSearchPath({
                 username: user?.nvaUsername,
                 year: nviParams.year,
-                status: NviCandidateStatusEnum.Pending,
+                status: [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending],
                 globalStatus: NviCandidateGlobalStatusEnum.Pending,
               })}>
               {t('tasks.nvi.show_candidate_search')}

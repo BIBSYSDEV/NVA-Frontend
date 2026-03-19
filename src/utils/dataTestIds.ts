@@ -109,6 +109,7 @@ export const dataTestId = {
     nationalIdentityNumberField: 'national-identity-number-field',
     nvi: {
       publicationPointsExpandDescriptionButton: 'publication-points-expand-description-button',
+      curatorPublicationPointsExpandDescriptionButton: 'curator-publication-points-expand-description-button',
     },
     nviPeriod: {
       nviPeriodDialog: 'nvi-period-dialog',
@@ -772,6 +773,7 @@ export const dataTestId = {
       anthologyWithoutChapterButton: 'anthology-without-chapter-button',
       booksWithLessThan50PagesButton: 'books-with-less-than-50-pages-button',
       applicableCategoriesWithNonApplicableChannelButton: 'applicable-categories-with-non-applicable-channel-button',
+      chapterAndBookYearMismatchButton: 'chapter-and-book-year-mismatch-button',
       correctionListAccordion: 'correction-list-accordion',
       correctionListRadioButton: 'correction-list-radio-button',
       nonApplicableCategoriesWithApplicableChannelButton: 'non-applicable-categories-with-applicable-channel-button',
@@ -864,6 +866,9 @@ export const dataTestId = {
     },
   },
   nviStatusTableRow: {
+    approvedByUsLink: 'nvi-aggregations-approved-by-us-link',
+    candidatesOthersMustApproveLink: 'candidates-others-must-approve-link',
+    approvedByAllLink: 'nvi-aggregations-approved-by-all-link',
     candidateLink: 'nvi-aggregations-candidate-link',
     controlLink: 'nvi-aggregations-control-link',
     approvedLink: 'nvi-aggregations-approved-link',
@@ -875,4 +880,7 @@ export const dataTestId = {
   nviFilterSector: 'nvi-filter-sector',
   nviFilterInstitution: 'nvi-filter-institution',
   nviFilterInstitutionClearSearch: 'nvi-filter-institution-clear-search',
+  nviPublicationPointsHelpModal: 'nvi-publication-points-help-modal',
+  nviPublicationPointsHelpButton: 'nvi-publication-points-help-button',
+  nviPublicationPointsHelpLink: 'nvi-publication-points-help-link',
 };

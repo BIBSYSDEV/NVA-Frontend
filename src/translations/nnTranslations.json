@@ -158,6 +158,8 @@
     }
   },
   "candidate": "",
+  "candidates_everyone_has_approved": "",
+  "candidates_we_have_approved": "",
   "cannot_copy_category_from_another_context_type": "<p>Du kan ikkje kopiere metadata frå kategorifana dersom resultatet tilhøyrer ein annan hovudkategori.</p><p>Denne informasjonen må registrerast manuelt etter at resten av metadata er kopiert.</p>",
   "common": {
     "actions": "Handlingar",
@@ -990,15 +992,21 @@
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fann dessverre ikkje noko som passar med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv ei anna skriveform av søkeordet</li><li>Prøv med eit synonym</li><li>Overset søkeordet til bokmål. nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at namnet er skrevet korrekt</li><li>Prøv ein annan skrivemåte</li><li>Prøv med eller utan mellomnamn</li></ul>",
+  "nvi_publication_points_page_description": "",
+  "nvi_publication_points_page_description_expanded": "",
   "overview_over_administrators": "Oversyn over administratorar",
   "overwrite": "Overskriv",
   "owner_institution": "Eigarinstitusjon",
   "percent_of_publication_points_in_year": "",
   "percent_of_published_reports_in_year": "",
+  "percentage_approved": "",
+  "percentage_approved_by_all": "",
   "percentage_controlled": "",
   "person_profiles": "Personprofilar",
   "point_of_contact": "Kontaktpunkt",
   "point_of_contact_description": "Har du spørsmål angåande forskingsresultatet?",
+  "points_for_reporting": "",
+  "points_for_reporting_modal_text": "",
   "points_of_contact_for_result": "Kontaktpunkt for resultat",
   "privacy_statement": "Personvernerklæring",
   "project": {
@@ -1110,7 +1118,6 @@
     "verify_project_manager": "Identifiser prosjektleiar"
   },
   "projects": "Prosjekt",
-  "publication_points": "",
   "publication_points_description": "",
   "publication_points_description_more": "",
   "published_result": "Publisert resultat",
@@ -1865,6 +1872,7 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "",
+  "reporting_status_description": "",
   "reset": "Nullstill",
   "results": "Forskingsresultat",
   "science_categories_front_page": "<heading>Arbeid i ulike kategoriar</heading><p>Forsking og formidling omfattar mykje meir enn vitskaplege publikasjonar.</p><p>Alt vert registrert i ulike kategoriar, og du kan søkje og gjere oppslag i alle kategoriar nedanfor.</p>",
@@ -1971,6 +1979,7 @@
         "anthology_without_chapter": "Antologiar utan kapittel",
         "applicable_category_in_non_applicable_channel": "Teljande kategoriar i ikkje-teljande kanalar",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
+        "chapter_and_book_year_mismatch": "",
         "non_applicable_category_in_applicable_channel": "Ikkje-teljande kategoriar i teljande kanalar",
         "scientific_chapter_not_in_anthology": "",
         "scientific_monography_or_anthology_without_isxns": "",
@@ -2032,6 +2041,7 @@
     "your_tasks": "Oppgåver du behandlar: {{count}}"
   },
   "temporarily_disabled": "",
+  "that_is_x_percent_of_the_number_reported_in_y": "",
   "time_format": {
     "hours": "TT:MM:SS",
     "minutes": "MM:SS"
@@ -2057,9 +2067,11 @@
   "velg_subject_area": "Vel fagfelt",
   "view_contact_info": "Sjå kontaktinformasjon",
   "view_contact_information": "",
+  "view_the_reporting_instructions": "",
   "visibility_of_units": "",
   "vocabulary_missing": "Institusjonen har ikkje lagt til vokabular",
   "what_you_find_in_nva_description": "<heading>Kva finn du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samlar og gjer tilgjengeleg informasjon om norsk forsking.</p><p>Her kan du utforske publikasjonar, forskingsprosjekt og forskarar på tvers av universitet, høgskular og forskingsinstitusjonar.</p>",
+  "x_results_are_ready_for_reporting_and_they_give_y_points": "",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "",
   "you_cannot_upload_files_to_this_result": "Du har ikkje tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikkje tilgang til å endre denne registreringa."
