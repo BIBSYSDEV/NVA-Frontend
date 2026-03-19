@@ -10,9 +10,17 @@ import { RevisionField } from '../components/RevisionField';
 import { SeriesFields } from '../components/SeriesFields';
 
 export const BookForm = () => {
-  const { values } = useFormikContext<BookRegistration>();
+  const { values, errors } = useFormikContext<BookRegistration>();
   const instanceType = values.entityDescription.reference?.publicationInstance.type;
-  const isNviApplicable = nviApplicableTypes.includes(instanceType as PublicationInstanceType);
+  const isbnList = values.entityDescription.reference?.publicationContext.isbnList ?? [];
+  const isbnErrors = (errors.entityDescription as any)?.reference?.publicationContext?.isbnList;
+  const hasIsbnError =
+    typeof isbnErrors === 'string' ? !!isbnErrors : Array.isArray(isbnErrors) ? isbnErrors.some(Boolean) : false;
+
+  const hasAnyIsbn = isbnList.length > 0 && isbnList.some((isbn) => !!isbn);
+
+  const isNviApplicable =
+    nviApplicableTypes.includes(instanceType as PublicationInstanceType) && hasAnyIsbn && !hasIsbnError;
 
   return (
     <>
