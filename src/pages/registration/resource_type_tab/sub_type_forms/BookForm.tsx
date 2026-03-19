@@ -19,8 +19,7 @@ export const BookForm = () => {
 
   const hasAnyIsbn = isbnList.length > 0 && isbnList.some((isbn) => !!isbn);
 
-  const isNviApplicable =
-    nviApplicableTypes.includes(instanceType as PublicationInstanceType) && hasAnyIsbn && !hasIsbnError;
+  const isNviApplicable = nviApplicableTypes.includes(instanceType as PublicationInstanceType);
 
   return (
     <>
@@ -33,7 +32,7 @@ export const BookForm = () => {
 
       <SeriesFields />
 
-      {instanceType && isNviApplicable ? <NviValidation registration={values} /> : null}
+      {instanceType && isNviApplicable && hasAnyIsbn && !hasIsbnError ? <NviValidation registration={values} /> : null}
     </>
   );
 };
