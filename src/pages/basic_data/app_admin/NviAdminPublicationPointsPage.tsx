@@ -34,7 +34,7 @@ export const NviAdminPublicationPointsPage = () => {
                 <TableCell>{t('sector')}</TableCell>
                 <TableCell>{t('candidates_we_have_approved')}</TableCell>
                 <TableCell>{t('candidates_everyone_has_approved')}</TableCell>
-                <TableCell>{t('publication_points')}</TableCell>
+                <TableCell>{t('points_for_reporting')}</TableCell>
                 <TableCell>{t('percentage_approved')}</TableCell>
               </TableRow>
             </TableHead>

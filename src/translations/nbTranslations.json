@@ -1116,7 +1116,7 @@
     "verify_project_manager": "Identifiser prosjektleder"
   },
   "projects": "Prosjekter",
-  "publication_points": "Publiseringspoeng",
+  "points_for_reporting": "Poeng til rapportering",
   "publication_points_description": "Tabellen viser kandidater som er godkjent per nå hos alle institusjoner og hvor mange som er ferdig kontrollert i forhold til antall kandidater.",
   "publication_points_description_more": "Kandidatene er lagt på enheten hvor de er registrert. Det er ikke tatt hensyn til samarbeidene institusjoner. Kandidater i eventuelt tvist vises ikke.",
   "published_result": "Publisert resultat",
@@ -1871,7 +1871,7 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "Avvist",
-  "reporting_status_description": "<0>Tabellen viser kandidater ved din institusjon som er godkjent av dere per nå og hvilke som mangler godkjenning av samarbeidende institusjoner.</0> <0>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</0>",
+  "reporting_status_description": "<0>Tabellen viser antall kandidater for min institusjon og behandlingsstatus på disse.</0> <0>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</0>",
   "reset": "Nullstill",
   "results": "Forskningsresultater",
   "science_categories_front_page": "<heading>Arbeid i ulike kategorier</heading><p>Forskning og formidling omfatter mye mer enn vitenskapelige publikasjoner.</p><p>Alt registreres i ulike kategorier, og du kan søke og gjøre oppslag i alle kategoriene nedenfor.</p>",
@@ -1998,7 +1998,6 @@
       "previous_candidate": "Gå til forrige kandidat",
       "problem_description": "<p>NVI-kandidaten har følgende mangler:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatuser blir opphevet når en uidentifisert person blir identifisert.</p>",
       "progress_nvi_reporting": "Fremdrift for NVI-rapporting",
-      "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
       "reject_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen ikke kan rapporteres. Du må begrunne avvisningen.",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
@@ -2072,5 +2071,7 @@
   "x_results_are_ready_for_reporting_and_they_give_y_points": "<p><bold>{{num_publications_approved_by_all}} resultat</bold> er klar for rapportering, og de gir <bold>{{points_for_all_publications_approved_by_all}} publiseringspoeng.</bold></p>",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
+  "points_for_reporting_modal_text": "<p>Poengene i tabellen viser poeng for kandidater som er godkjent av alle. Altså poeng for kandidater som er klar til rapporteringen.</p><p>Tabellen viser antall poeng for kandidater adressert på de ulike underenhetene. Vær obs på at hvis en kandidat har adressert flere underenheter på egen institusjon, vil samme poeng for kandidaten telles på flere underenheter. Du kan derfor ikke summere kolonnene vertikalt, kun horisontalt.</p><p>Ønsker du å vite hvordan poengene beregnes?</p>",
+  "view_the_reporting_instructions": "Se rapporteringsinstruksen"
 }
