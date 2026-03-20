@@ -76,7 +76,14 @@ export const MergeImportCandidate = () => {
         sourceResult={expandImportCandidate(importCandidateQuery.data)}
         targetResult={registrationQuery.data}
         onSave={async (data) => {
-          await registrationMutation.mutateAsync(data);
+          const mergedDataWithIdentifiers = {
+            ...data,
+            additionalIdentifiers: [
+              ...(data.additionalIdentifiers ?? []),
+              ...(importCandidateQuery.data.additionalIdentifiers ?? []),
+            ],
+          };
+          await registrationMutation.mutateAsync(mergedDataWithIdentifiers);
           await importCandidateMutation.mutateAsync();
           dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
           navigate(getRegistrationWizardPath(registrationQuery.data.identifier), {
