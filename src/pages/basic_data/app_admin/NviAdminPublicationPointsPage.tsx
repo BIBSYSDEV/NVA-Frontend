@@ -8,6 +8,7 @@ import { HorizontalBox } from '../../../components/styled/Wrappers';
 import i18n from '../../../translations/i18n';
 import { InstitutionReport } from '../../../types/nvi.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../messages/components/NviPointsQuestionIcon';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminPublicationPointsPage = () => {
@@ -34,7 +35,12 @@ export const NviAdminPublicationPointsPage = () => {
                 <TableCell>{t('sector')}</TableCell>
                 <TableCell>{t('candidates_we_have_approved')}</TableCell>
                 <TableCell>{t('candidates_everyone_has_approved')}</TableCell>
-                <TableCell>{t('points_for_reporting')}</TableCell>
+                <TableCell>
+                  <HorizontalBox sx={{ justifyContent: 'center' }}>
+                    {t('points_for_reporting')}
+                    <NviPointsQuestionIcon variant={NviPointsModalVariant.Admin} />
+                  </HorizontalBox>
+                </TableCell>
                 <TableCell>{t('percentage_approved')}</TableCell>
               </TableRow>
             </TableHead>
