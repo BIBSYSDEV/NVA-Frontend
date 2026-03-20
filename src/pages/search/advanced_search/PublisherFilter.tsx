@@ -18,10 +18,7 @@ import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
-interface PublisherFilterProps {
-  hidden?: boolean;
-}
-export const PublisherFilter = ({ hidden = false }: PublisherFilterProps) => {
+export const PublisherFilter = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -59,10 +56,6 @@ export const PublisherFilter = ({ hidden = false }: PublisherFilterProps) => {
   };
 
   const isFetching = publisherParam ? selectedPublisherQuery.isPending : publisherOptionsQuery.isFetching;
-
-  if (hidden) {
-    return null;
-  }
 
   return (
     <section>

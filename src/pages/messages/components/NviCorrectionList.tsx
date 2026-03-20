@@ -6,7 +6,7 @@ import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
-import { HiddenPublisherFilterListIds, ScientificValueFilterListIds } from '../../../utils/correctionListHelpers';
+import { HideChannelFiltersListIds, ScientificValueFilterListIds } from '../../../utils/correctionListHelpers';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
@@ -30,7 +30,7 @@ export const NviCorrectionList = () => {
   const listConfig = listId && correctionListConfig[listId];
   const shouldShowScientificValueFilter =
     !!listId && ScientificValueFilterListIds.includes(listId as CorrectionListNames);
-  const shouldHidePublisherFilter = !!listId && HiddenPublisherFilterListIds.includes(listId as CorrectionListNames);
+  const hideChannelFilters = !!listId && HideChannelFiltersListIds.includes(listId as CorrectionListNames);
 
   const registrationParams = useRegistrationsQueryParams();
   const exportParams = new URLSearchParams(sanitizeSearchParams({ ...listConfig?.queryParams, ...registrationParams }));
@@ -75,13 +75,15 @@ export const NviCorrectionList = () => {
 
               {shouldShowScientificValueFilter && <ScientificValueFilter />}
 
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
-                <PublisherFilter hidden={shouldHidePublisherFilter} />
-                <JournalFilter />
-                <SeriesFilter />
-                <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
-                <CorrectionListYearFilter />
-              </Box>
+              {!hideChannelFilters && (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
+                  <PublisherFilter />
+                  <JournalFilter />
+                  <SeriesFilter />
+                  <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
+                  <CorrectionListYearFilter />
+                </Box>
+              )}
             </Box>
             <Box sx={{ m: '0.5rem', alignSelf: 'top' }}>
               <ExportResultsButton showText searchParams={exportParams} />
