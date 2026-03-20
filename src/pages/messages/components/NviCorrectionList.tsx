@@ -6,16 +6,14 @@ import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
+import { HiddenPublisherFilterListIds, ScientificValueFilterListIds } from '../../../utils/correctionListHelpers';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
-import { HiddenPublisherFilterListIds, PublisherFilter } from '../../search/advanced_search/PublisherFilter';
-import {
-  ScientificValueFilter,
-  ScientificValueFilterListIds,
-} from '../../search/advanced_search/ScientificValueFilter';
+import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
+import { ScientificValueFilter } from '../../search/advanced_search/ScientificValueFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
 import { ExportResultsButton } from '../../search/ExportResultsButton';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';

@@ -12,16 +12,11 @@ import {
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
-import { CorrectionListNames } from '../../../types/nvi.types';
 import { Publisher } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
-
-export const HiddenPublisherFilterListIds: CorrectionListNames[] = [
-  CorrectionListNames.ScientificChapterNotInAnthology,
-];
 
 interface PublisherFilterProps {
   hidden?: boolean;
