@@ -52,9 +52,9 @@ export const isCorrectionListName = (value: string): value is CorrectionListName
   return Object.values(CorrectionListNames).includes(value as CorrectionListNames);
 };
 
-export const HideChannelFiltersListIds: CorrectionListNames[] = [CorrectionListNames.ScientificChapterNotInAnthology];
+export const hideChannelFiltersListIds: CorrectionListNames[] = [CorrectionListNames.ScientificChapterNotInAnthology];
 
-export const ScientificValueFilterListIds: CorrectionListNames[] = [
+export const scientificValueFilterListIds: CorrectionListNames[] = [
   CorrectionListNames.ApplicableCategoriesWithNonApplicableChannel,
   CorrectionListNames.NonApplicableCategoriesWithApplicableChannel,
   CorrectionListNames.ScientificChapterNotInAnthology,
