@@ -51,3 +51,13 @@ export const getAccordionDefaultPath = (correctionListConfig: CorrectionListSear
 export const isCorrectionListName = (value: string): value is CorrectionListNames => {
   return Object.values(CorrectionListNames).includes(value as CorrectionListNames);
 };
+
+export const hideChannelFiltersListIds: CorrectionListNames[] = [CorrectionListNames.ScientificChapterNotInAnthology];
+
+export const scientificValueFilterListIds: CorrectionListNames[] = [
+  CorrectionListNames.ApplicableCategoriesWithNonApplicableChannel,
+  CorrectionListNames.NonApplicableCategoriesWithApplicableChannel,
+  CorrectionListNames.ScientificChapterNotInAnthology,
+  CorrectionListNames.YearBetweenChapterAndBookMismatch,
+  CorrectionListNames.ScientificMonographyOrAnthologyWithoutIsxns,
+];
