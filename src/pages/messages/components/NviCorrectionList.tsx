@@ -11,7 +11,7 @@ import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistratio
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
-import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
+import { HiddenPublisherFilterListIds, PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import {
   ScientificValueFilter,
   ScientificValueFilterListIds,
@@ -32,6 +32,7 @@ export const NviCorrectionList = () => {
   const listConfig = listId && correctionListConfig[listId];
   const shouldShowScientificValueFilter =
     !!listId && ScientificValueFilterListIds.includes(listId as CorrectionListNames);
+  const shouldHidePublisherFilter = !!listId && HiddenPublisherFilterListIds.includes(listId as CorrectionListNames);
 
   const registrationParams = useRegistrationsQueryParams();
   const exportParams = new URLSearchParams(sanitizeSearchParams({ ...listConfig?.queryParams, ...registrationParams }));
@@ -77,7 +78,7 @@ export const NviCorrectionList = () => {
               {shouldShowScientificValueFilter && <ScientificValueFilter />}
 
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
-                <PublisherFilter />
+                <PublisherFilter hidden={shouldHidePublisherFilter} />
                 <JournalFilter />
                 <SeriesFilter />
                 <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
