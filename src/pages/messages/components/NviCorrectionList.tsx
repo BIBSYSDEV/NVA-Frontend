@@ -6,7 +6,7 @@ import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
-import { HideChannelFiltersListIds, ScientificValueFilterListIds } from '../../../utils/correctionListHelpers';
+import { hideChannelFiltersListIds, scientificValueFilterListIds } from '../../../utils/correctionListHelpers';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
@@ -29,8 +29,8 @@ export const NviCorrectionList = () => {
   const correctionListConfig = useCorrectionListConfig();
   const listConfig = listId && correctionListConfig[listId];
   const shouldShowScientificValueFilter =
-    !!listId && ScientificValueFilterListIds.includes(listId as CorrectionListNames);
-  const hideChannelFilters = !!listId && HideChannelFiltersListIds.includes(listId as CorrectionListNames);
+    !!listId && scientificValueFilterListIds.includes(listId as CorrectionListNames);
+  const hideChannelFilters = !!listId && hideChannelFiltersListIds.includes(listId as CorrectionListNames);
 
   const registrationParams = useRegistrationsQueryParams();
   const exportParams = new URLSearchParams(sanitizeSearchParams({ ...listConfig?.queryParams, ...registrationParams }));
