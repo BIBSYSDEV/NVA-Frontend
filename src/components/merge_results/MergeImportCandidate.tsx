@@ -81,6 +81,15 @@ export const MergeImportCandidate = () => {
             additionalIdentifiers: [
               ...(data.additionalIdentifiers ?? []),
               ...(importCandidateQuery.data.additionalIdentifiers ?? []),
+              ...(importCandidateQuery.data.additionalIdentifiers ?? []).filter(
+                (importId) =>
+                  !(data.additionalIdentifiers ?? []).some(
+                    (existingId) =>
+                      existingId.type === importId.type &&
+                      existingId.sourceName === importId.sourceName &&
+                      existingId.value === importId.value
+                  )
+              ),
             ],
           };
           await registrationMutation.mutateAsync(mergedDataWithIdentifiers);
