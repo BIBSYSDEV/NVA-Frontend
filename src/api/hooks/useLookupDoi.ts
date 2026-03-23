@@ -27,9 +27,6 @@ export const useLookupDoi = (doiQuery: string) => {
         onSuccess: () => {
           setLastMutatedDoi(doiQuery);
         },
-        onError: () => {
-          setLastMutatedDoi(doiQuery);
-        },
       });
     }
   }, [
