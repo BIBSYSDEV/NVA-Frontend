@@ -48,7 +48,7 @@ export const NviPublicationPointsTexts = ({ aggregationsQuery, exportAcronym }: 
               components={{
                 p: <Typography />,
                 bold: <Typography component="span" sx={{ fontWeight: 'bold' }} />,
-                link: <ExportNviStatusLink acronym={exportAcronym ?? ''} />,
+                link: exportAcronym ? <ExportNviStatusLink acronym={exportAcronym} /> : <span />,
               }}
             />
           </HorizontalBox>
