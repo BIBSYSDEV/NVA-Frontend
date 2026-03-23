@@ -39,7 +39,6 @@ export const NviStatusPage = () => {
           <Trans t={t} i18nKey="reporting_status_description" components={[<Typography key="1" />]} />
         </VerticalBox>
       }
-      exportAcronym={organizationQuery.data?.acronym}
       yearSelector
       visibilitySelector>
       <TableContainer component={Paper} variant="outlined">

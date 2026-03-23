@@ -2071,8 +2071,9 @@
   "visibility_of_units": "Visning av enheter",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
-  "x_results_are_ready_for_reporting_and_they_give_y_points": "<p><bold>{{num_publications_approved_by_all}} resultat</bold> er klar for rapportering, og de gir <bold>{{points_for_all_publications_approved_by_all}} publiseringspoeng.</bold></p>",
+  "x_results_are_ready_for_reporting_and_they_give_y_points": "<p><bold>{{num_publications_approved_by_all}} resultat</bold> er klar for rapportering, og de gir <bold>{{points_for_all_publications_approved_by_all}} publiseringspoeng.</bold></p><link />",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
+  "export_dataset_for_nvi_report": "Eksporter datagrunnlag for NVI-rapport"
 }

@@ -1,7 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { VerticalBox } from '../../../components/styled/Wrappers';
-import { ExportNviStatusButton } from './ExportNviStatusButton';
 import { NviInstitutionSearch } from './NviInstitutionSearch';
 import { NviSectorSelector } from './NviSectorSelector';
 import { NviVisibilitySelector } from './NviVisibilitySelector';
@@ -14,7 +13,6 @@ interface NviStatusWrapperProps {
   visibilitySelector?: boolean;
   sectorSelector?: boolean;
   institutionSearch?: boolean;
-  exportAcronym?: string;
   children?: ReactNode;
 }
 
@@ -25,7 +23,6 @@ export const NviStatusWrapper = ({
   visibilitySelector,
   sectorSelector,
   institutionSearch,
-  exportAcronym,
   children,
 }: NviStatusWrapperProps) => {
   return (
@@ -41,7 +38,6 @@ export const NviStatusWrapper = ({
           {institutionSearch && <NviInstitutionSearch sx={{ minWidth: '30rem' }} />}
           {visibilitySelector && <NviVisibilitySelector sx={{ minWidth: '15rem' }} />}
         </Box>
-        {exportAcronym && <ExportNviStatusButton acronym={exportAcronym} />}
       </Box>
       {children}
     </VerticalBox>
