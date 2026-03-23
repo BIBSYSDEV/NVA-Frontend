@@ -23,7 +23,7 @@ export const ExportNviStatusLink = ({ acronym }: ExportNviStatusButtonProps) => 
     <Link
       component="button"
       type="button"
-      data-testid={dataTestId.common.exportButton}
+      data-testid={dataTestId.common.exportLink}
       color="tertiary"
       onClick={handleClick}
       disabled={fetchNviApprovalReportQuery.isFetching}
