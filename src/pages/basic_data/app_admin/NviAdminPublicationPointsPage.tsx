@@ -42,7 +42,7 @@ export const NviAdminPublicationPointsPage = () => {
                 <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
                   <TableCell>{t('common.institution')}</TableCell>
                   <TableCell>{t('sector')}</TableCell>
-                  <TableCell>{t('candidates_we_have_approved')}</TableCell>
+                  <TableCell>{t('candidates_approved_by_the_institution')}</TableCell>
                   <TableCell>{t('candidates_everyone_has_approved')}</TableCell>
                   <TableCell>{t('points_for_reporting')}</TableCell>
                   <TableCell>{t('percentage_approved')}</TableCell>

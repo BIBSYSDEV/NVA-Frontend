@@ -33,7 +33,7 @@ export const NviPublicationPointsPage = () => {
           <TableHead>
             <TableRow sx={{ bgcolor: 'white' }}>
               <TableCell sx={{ width: '40%' }}>{t('registration.contributors.department')}</TableCell>
-              <TableCell align="center">{t('candidates_we_have_approved')}</TableCell>
+              <TableCell align="center">{t('candidates_our_institution_has_approved')}</TableCell>
               <TableCell align="center">{t('tasks.nvi.candidates_pending_verification_by_others')}</TableCell>
               <TableCell align="center">{t('candidates_everyone_has_approved')}</TableCell>
               <TableCell align="center">
