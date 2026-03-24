@@ -11,6 +11,10 @@ export const useSortInstitutionReports = (reports: InstitutionReport[]) => {
   const orderBy = searchParams.get('orderBy');
   const sort = searchParams.get('sort');
 
+  if (!orderBy || !isNviAdminOrderBy(orderBy) || (sort !== 'asc' && sort !== 'desc')) {
+    return reports;
+  }
+
   return reports
     .map((report, index) => ({ report, index }))
     .sort((a, b) => {
