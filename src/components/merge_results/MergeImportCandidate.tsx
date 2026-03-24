@@ -80,7 +80,6 @@ export const MergeImportCandidate = () => {
             ...data,
             additionalIdentifiers: [
               ...(data.additionalIdentifiers ?? []),
-              ...(importCandidateQuery.data.additionalIdentifiers ?? []),
               ...(importCandidateQuery.data.additionalIdentifiers ?? []).filter(
                 (importId) =>
                   !(data.additionalIdentifiers ?? []).some(
