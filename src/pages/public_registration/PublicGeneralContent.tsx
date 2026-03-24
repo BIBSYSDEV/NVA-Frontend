@@ -240,7 +240,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               }
             />
           )}
-          {scopusIdentifiers && (
+          {scopusIdentifiers && scopusIdentifiers.length > 0 && (
             <PublicPageInfoEntry
               title={t('registration.public_page.scopus_id')}
               content={scopusIdentifiers.join(', ')}
