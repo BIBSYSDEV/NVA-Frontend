@@ -15,11 +15,11 @@ import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon
 import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { InstitutionReport } from '../../../types/nvi.types';
-import { getLanguageString } from '../../../utils/translation-helpers';
+import { getNviInstitutionName, getNviSectorLabel } from '../../../utils/nviAdminReportSelectors';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminStatusPage = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { filteredData, isPending, isError } = useGetUrlFilteredInstitutionReports();
 
   return (
@@ -58,19 +58,18 @@ export const NviAdminStatusPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredData.map(({ id, institution, sector, institutionSummary }: InstitutionReport) => {
+              {filteredData.map((report: InstitutionReport) => {
+                const { id, institutionSummary } = report;
                 const { byLocalApprovalStatus, totals } = institutionSummary;
                 const percentageControlled =
                   totals.undisputedTotalCount > 0
                     ? (byLocalApprovalStatus.approved + byLocalApprovalStatus.rejected) / totals.undisputedTotalCount
                     : 0;
-                const sectorKey = `basic_data.institutions.sector_values.${sector}`;
-                const sectorLabel = i18n.exists(sectorKey) ? t(sectorKey as any) : sector;
 
                 return (
                   <TableRow key={id} sx={{ height: '4rem' }}>
-                    <TableCell>{getLanguageString(institution.labels)}</TableCell>
-                    <TableCell>{sectorLabel}</TableCell>
+                    <TableCell>{getNviInstitutionName(report)}</TableCell>
+                    <TableCell>{getNviSectorLabel(report, t)}</TableCell>
                     <TableCell align="center">{byLocalApprovalStatus.new}</TableCell>
                     <TableCell align="center">{byLocalApprovalStatus.pending}</TableCell>
                     <TableCell align="center">{byLocalApprovalStatus.approved}</TableCell>

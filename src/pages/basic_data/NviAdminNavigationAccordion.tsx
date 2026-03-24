@@ -10,6 +10,7 @@ import { LinkCreateButton, NavigationList } from '../../components/PageWithSideM
 import { SelectableButton } from '../../components/SelectableButton';
 import { StyledNviStatusBox } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
+import { NviAdminOrderBy } from '../../types/nviAdminSort';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDefaultNviYear } from '../../utils/hooks/useNviCandidatesParams';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -63,7 +64,7 @@ export const NviAdminNavigationAccordion = () => {
             <SelectableButton
               data-testid={dataTestId.basicData.nviPublicationPointsLink}
               isSelected={currentPath === UrlPathTemplate.BasicDataNviPublicationPoints}
-              to={`${UrlPathTemplate.BasicDataNviPublicationPoints}?year=${getDefaultNviYear()}`}>
+              to={`${UrlPathTemplate.BasicDataNviPublicationPoints}?year=${getDefaultNviYear()}&orderBy=${NviAdminOrderBy.Institution}&sort=asc`}>
               {t('basic_data.nvi.show_publication_points_status')}
             </SelectableButton>
           </Box>
