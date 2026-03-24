@@ -15,6 +15,7 @@ import { HeadTitle } from '../HeadTitle';
 import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
+import { AdditionalIdentifier } from '../../types/registration.types';
 
 interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
@@ -76,18 +77,19 @@ export const MergeImportCandidate = () => {
         sourceResult={expandImportCandidate(importCandidateQuery.data)}
         targetResult={registrationQuery.data}
         onSave={async (data) => {
+          const existing = data.additionalIdentifiers ?? [];
+          const incoming = importCandidateQuery.data.additionalIdentifiers ?? [];
+
+          const isSameIdentifier = (a: AdditionalIdentifier, b: AdditionalIdentifier) =>
+            a.type === b.type && a.sourceName === b.sourceName && a.value === b.value;
+
           const mergedDataWithIdentifiers = {
             ...data,
             additionalIdentifiers: [
-              ...(data.additionalIdentifiers ?? []),
-              ...(importCandidateQuery.data.additionalIdentifiers ?? []).filter(
-                (importId) =>
-                  !(data.additionalIdentifiers ?? []).some(
-                    (existingId) =>
-                      existingId.type === importId.type &&
-                      existingId.sourceName === importId.sourceName &&
-                      existingId.value === importId.value
-                  )
+              ...existing,
+              ...incoming.filter(
+                (importIdentifier) =>
+                  !existing.some((existingIdentifier) => isSameIdentifier(existingIdentifier, importIdentifier))
               ),
             ],
           };
