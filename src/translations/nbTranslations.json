@@ -2080,10 +2080,10 @@
   "sort_by_institution_desc": "Institusjon (Å-A)",
   "sort_by_sector_asc": "Sektor (A-Å)",
   "sort_by_sector_desc": "Sektor (Å-A)",
-  "sort_by_points_asc": "Poeng til rapportering (synkende)",
-  "sort_by_points_desc": "Poeng til rapportering (stigende)",
-  "sort_by_candidates_approved_by_institution_asc": "Kandidater institusjonen har godkjent (synkende)",
-  "sort_by_candidates_approved_by_institution_desc": "Kandidater institusjonen har godkjent (stigende)",
-  "sort_by_candidates_approved_by_everybody_asc": "Kandidater alle har godkjent (synkende)",
-  "sort_by_candidates_approved_by_everybody_desc": "Kandidater alle har godkjent (stigende)"
+  "sort_by_points_asc": "Poeng til rapportering (stigende)",
+  "sort_by_points_desc": "Poeng til rapportering (synkende)",
+  "sort_by_candidates_approved_by_institution_asc": "Kandidater institusjonen har godkjent (stigende)",
+  "sort_by_candidates_approved_by_institution_desc": "Kandidater institusjonen har godkjent (synkende)",
+  "sort_by_candidates_approved_by_everybody_asc": "Kandidater alle har godkjent (stigende)",
+  "sort_by_candidates_approved_by_everybody_desc": "Kandidater alle har godkjent (synkende)"
 }
