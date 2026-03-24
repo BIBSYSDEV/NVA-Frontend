@@ -116,9 +116,9 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     .sort((a, b) => prioritiseIdentifiersFromCristin(a, b))
     .shift()?.value;
 
-  const scopusIdentifier = registration.additionalIdentifiers?.find(
-    (identifier) => identifier.type === 'ScopusIdentifier' || identifier.sourceName === 'Scopus'
-  )?.value;
+  const scopusIdentifiers = registration.additionalIdentifiers
+    ?.filter((identifier) => identifier.type === 'ScopusIdentifier' || identifier.sourceName === 'Scopus')
+    .map((identifier) => identifier.value);
 
   const publicationDateString = displayDate(entityDescription?.publicationDate);
   const nviReportedYearString =
@@ -240,8 +240,11 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               }
             />
           )}
-          {scopusIdentifier && (
-            <PublicPageInfoEntry title={t('registration.public_page.scopus_id')} content={scopusIdentifier} />
+          {scopusIdentifiers && (
+            <PublicPageInfoEntry
+              title={t('registration.public_page.scopus_id')}
+              content={scopusIdentifiers.join(', ')}
+            />
           )}
           <PublicPageInfoEntry title={t('registration.registration_id')} content={registration.identifier} />
         </dl>
