@@ -22,6 +22,9 @@ interface MergeImportCandidateParams extends Record<string, string | undefined> 
   registrationIdentifier: string;
 }
 
+const isSameIdentifier = (a: AdditionalIdentifier, b: AdditionalIdentifier) =>
+  a.type === b.type && a.sourceName === b.sourceName && a.value === b.value;
+
 export const MergeImportCandidate = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -79,10 +82,6 @@ export const MergeImportCandidate = () => {
         onSave={async (data) => {
           const existing = data.additionalIdentifiers ?? [];
           const incoming = importCandidateQuery.data.additionalIdentifiers ?? [];
-
-          const isSameIdentifier = (a: AdditionalIdentifier, b: AdditionalIdentifier) =>
-            a.type === b.type && a.sourceName === b.sourceName && a.value === b.value;
-
           const mergedDataWithIdentifiers = {
             ...data,
             additionalIdentifiers: [
