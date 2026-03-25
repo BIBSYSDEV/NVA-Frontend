@@ -14,7 +14,7 @@ export interface SortSelectorOption {
 interface SortSelectorProps extends Pick<TextFieldProps, 'sx' | 'variant' | 'size' | 'label' | 'aria-label'> {
   orderKey: string;
   options: SortSelectorOption[];
-  paginationKey: string;
+  paginationKey?: string;
   sortKey: string;
 }
 
@@ -41,7 +41,7 @@ export const SortSelector = ({ orderKey, options, paginationKey, sortKey, ...tex
         const value = event.target.value as unknown as SortSelectorOption;
         params.set(orderKey, value.orderBy);
         params.set(sortKey, value.sortOrder);
-        params.delete(paginationKey);
+        if (paginationKey) params.delete(paginationKey);
         navigate({ search: params.toString() });
       }}
       slotProps={{ htmlInput: { 'aria-label': textFieldProps['aria-label'] } }}>

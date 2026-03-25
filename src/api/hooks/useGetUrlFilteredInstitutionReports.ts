@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router';
+import { getNviInstitutionName } from '../../pages/basic_data/app_admin/nviAdmin/nviAdminHelpers';
 import { InstitutionReport } from '../../types/nvi.types';
 import { getDefaultNviYear } from '../../utils/hooks/useNviCandidatesParams';
-import { getLanguageString } from '../../utils/translation-helpers';
 import { useFetchNviReports } from './useFetchNviReports';
 
 export const useGetUrlFilteredInstitutionReports = () => {
@@ -21,8 +21,7 @@ export const useGetUrlFilteredInstitutionReports = () => {
     .filter((report: InstitutionReport) => {
       if (institutionSearch === null) return true;
       const trimmedSearch = institutionSearch.trim().toLowerCase();
-      const institutionName = getLanguageString(report.institution.labels);
-      const trimmedInstitution = institutionName.trim().toLowerCase();
+      const trimmedInstitution = getNviInstitutionName(report).toLowerCase();
       return trimmedInstitution.includes(trimmedSearch);
     });
 

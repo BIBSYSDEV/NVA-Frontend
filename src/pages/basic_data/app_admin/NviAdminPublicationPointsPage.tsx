@@ -1,19 +1,20 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
+import { useSortInstitutionReports } from '../../../api/hooks/useSortInstitutionReports';
 import { AdminNviPublicationPointsTexts } from '../../../components/AdminNviPublicationPointsTexts';
-import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
-import { HorizontalBox } from '../../../components/styled/Wrappers';
-import i18n from '../../../translations/i18n';
+import { CenteredTableCell, HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
 import { InstitutionReport } from '../../../types/nvi.types';
-import { getLanguageString } from '../../../utils/translation-helpers';
 import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../messages/components/NviPointsQuestionIcon';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
+import { NviAdminPublicationPointsRow } from './nviAdmin/NviAdminPublicationPointsRow';
+import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
   const { filteredData, isPending, isError } = useGetUrlFilteredInstitutionReports();
+  const sortedData = useSortInstitutionReports(filteredData);
 
   return (
     <NviStatusWrapper
@@ -27,57 +28,34 @@ export const NviAdminPublicationPointsPage = () => {
       ) : isError ? (
         <Typography>{t('feedback.error.get_nvi_reports')}</Typography>
       ) : (
-        <TableContainer component={Paper} variant="outlined">
-          <Table size="small">
-            <TableHead>
-              <TableRow sx={{ bgcolor: 'white' }}>
-                <TableCell sx={{ width: '30%' }}>{t('common.institution')}</TableCell>
-                <TableCell sx={{ width: '20%' }}>{t('sector')}</TableCell>
-                <TableCell align="center">{t('candidates_we_have_approved')}</TableCell>
-                <TableCell align="center">{t('candidates_others_must_approve')}</TableCell>
-                <TableCell align="center">{t('candidates_everyone_has_approved')}</TableCell>
-                <TableCell align="center">
-                  <HorizontalBox sx={{ justifyContent: 'center' }}>
-                    {t('points_for_reporting')}
-                    <NviPointsQuestionIcon variant={NviPointsModalVariant.Admin} />
-                  </HorizontalBox>
-                </TableCell>
-                <TableCell>{t('percentage_approved')}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredData.map(({ id, institution, sector, institutionSummary }: InstitutionReport) => {
-                const { totals, byLocalApprovalStatus } = institutionSummary;
-                const percentageControlled =
-                  totals.undisputedTotalCount > 0 ? totals.globalApprovedCount / totals.undisputedTotalCount : 0;
-                const sectorKey = `basic_data.institutions.sector_values.${sector}`;
-                const sectorLabel = i18n.exists(sectorKey) ? t(sectorKey as any) : sector;
-
-                return (
-                  <TableRow key={id} sx={{ height: '4rem' }}>
-                    <TableCell>{getLanguageString(institution.labels)}</TableCell>
-                    <TableCell>{sectorLabel}</TableCell>
-                    <TableCell align="center">{byLocalApprovalStatus.approved}</TableCell>
-                    <TableCell align="center">
-                      {totals.undisputedProcessedCount -
-                        (byLocalApprovalStatus.approved + byLocalApprovalStatus.rejected)}
-                    </TableCell>
-                    <TableCell align="center">{totals.globalApprovedCount}</TableCell>
-                    <TableCell align="center">{totals.validPoints}</TableCell>
-                    <TableCell>
-                      <HorizontalBox sx={{ justifyContent: 'center' }}>
-                        <PercentageWithIcon
-                          displayPercentage={Math.floor(percentageControlled * 100)}
-                          alternativeIfZero={'-'}
-                        />
-                      </HorizontalBox>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <VerticalBox sx={{ width: '100%' }}>
+          <NviAdminSortSelector type={NviAdminSortSelectorType.Points} />
+          <TableContainer component={Paper} variant="outlined">
+            <Table size="small">
+              <TableHead>
+                <TableRow sx={{ bgcolor: 'white' }}>
+                  <TableCell sx={{ width: '30%' }}>{t('common.institution')}</TableCell>
+                  <TableCell sx={{ width: '20%' }}>{t('sector')}</TableCell>
+                  <CenteredTableCell>{t('candidates_approved_by_the_institution')}</CenteredTableCell>
+                  <CenteredTableCell>{t('candidates_others_must_approve')}</CenteredTableCell>
+                  <CenteredTableCell>{t('candidates_everyone_has_approved')}</CenteredTableCell>
+                  <CenteredTableCell>
+                    <HorizontalBox sx={{ justifyContent: 'center' }}>
+                      {t('points_for_reporting')}
+                      <NviPointsQuestionIcon variant={NviPointsModalVariant.Admin} />
+                    </HorizontalBox>
+                  </CenteredTableCell>
+                  <CenteredTableCell>{t('percentage_approved')}</CenteredTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {sortedData.map((report: InstitutionReport) => (
+                  <NviAdminPublicationPointsRow report={report} key={report.id} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </VerticalBox>
       )}
     </NviStatusWrapper>
   );
