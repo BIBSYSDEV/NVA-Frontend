@@ -13,12 +13,12 @@ export enum NviPointsModalVariant {
 
 const variantData = {
   [NviPointsModalVariant.Admin]: {
-    modaTestId: dataTestId.nviAdminPublicationPointsHelpModal,
+    modalTestId: dataTestId.nviAdminPublicationPointsHelpModal,
     buttonTestId: dataTestId.nviAdminPublicationPointsHelpButton,
     i18nKey: 'points_for_reporting_admin_modal_text',
   },
   [NviPointsModalVariant.Curator]: {
-    modaTestId: dataTestId.nviPublicationPointsHelpModal,
+    modalTestId: dataTestId.nviPublicationPointsHelpModal,
     buttonTestId: dataTestId.nviPublicationPointsHelpButton,
     i18nKey: 'points_for_reporting_modal_text',
   },
@@ -35,7 +35,7 @@ export const NviPointsQuestionIcon = ({ variant }: NviPublicationPointsHelperMod
   return (
     <HelperTextModal
       modalTitle={t('points_for_reporting')}
-      modalDataTestId={data.modaTestId}
+      modalDataTestId={data.modalTestId}
       buttonDataTestId={data.buttonTestId}>
       <VerticalBox>
         <VerticalBox sx={{ gap: '1rem' }}>
