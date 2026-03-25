@@ -2086,5 +2086,13 @@
   "sort_by_candidates_approved_by_institution_asc": "Kandidater institusjonen har godkjent (stigende)",
   "sort_by_candidates_approved_by_institution_desc": "Kandidater institusjonen har godkjent (synkende)",
   "sort_by_candidates_approved_by_everybody_asc": "Kandidater alle har godkjent (stigende)",
-  "sort_by_candidates_approved_by_everybody_desc": "Kandidater alle har godkjent (synkende)"
+  "sort_by_candidates_approved_by_everybody_desc": "Kandidater alle har godkjent (synkende)",
+  "sort_by_total_number_asc": "Totalt antall (stigende)",
+  "sort_by_total_number_desc": "Totalt antall (synkende)",
+  "sort_by_number_of_candidates_asc": "Antall kandidater (stigende)",
+  "sort_by_number_of_candidates_desc": "Antall kandidater (synkende)",
+  "sort_by_number_of_approved_candidates_asc": "Antall godkjent (stigende)",
+  "sort_by_number_of_approved_candidates_desc": "Antall godkjent (synkende)",
+  "sort_by_number_of_rejected_candidates_asc": "Antall avviste (stigende)",
+  "sort_by_number_of_rejected_candidates_desc": "Antall avviste (synkende)"
 }

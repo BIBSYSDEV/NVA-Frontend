@@ -10,10 +10,10 @@ import { LinkCreateButton, NavigationList } from '../../components/PageWithSideM
 import { SelectableButton } from '../../components/SelectableButton';
 import { StyledNviStatusBox } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { NviAdminOrderBy } from '../../types/nviAdminSort';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDefaultNviYear } from '../../utils/hooks/useNviCandidatesParams';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { NviAdminOrderBy } from './app_admin/nviAdmin/nviAdminHelpers';
 
 export const NviAdminNavigationAccordion = () => {
   const { t } = useTranslation();

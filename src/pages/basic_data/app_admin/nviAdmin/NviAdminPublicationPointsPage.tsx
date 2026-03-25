@@ -1,21 +1,22 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
-import { useSortInstitutionReports } from '../../../api/hooks/useSortInstitutionReports';
-import { AdminNviPublicationPointsTexts } from '../../../components/AdminNviPublicationPointsTexts';
-import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
-import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
-import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
-import { InstitutionReport } from '../../../types/nvi.types';
+import { useGetUrlFilteredInstitutionReports } from '../../../../api/hooks/useGetUrlFilteredInstitutionReports';
+import { useSortInstitutionReports } from '../../../../api/hooks/useSortInstitutionReports';
+import { AdminNviPublicationPointsTexts } from '../../../../components/AdminNviPublicationPointsTexts';
+import { PercentageWithIcon } from '../../../../components/atoms/PercentageWithIcon';
+import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
+import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappers';
+import { InstitutionReport } from '../../../../types/nvi.types';
+import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 import {
   getNviApprovedByEverybody,
   getNviApprovedByInstitution,
   getNviInstitutionName,
   getNviSectorLabel,
   getNviValidPoints,
-} from '../../../utils/nviAdminReportSelectors';
-import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
-import { NviAdminSortSelector } from './NviAdminSortSelector';
+  NviAdminSortSelectorType,
+} from './nviAdminHelpers';
+import { NviAdminSortSelector } from './nviAdminSortSelector/NviAdminSortSelector';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ export const NviAdminPublicationPointsPage = () => {
         <Typography>{t('feedback.error.get_nvi_reports')}</Typography>
       ) : (
         <VerticalBox sx={{ width: '100%' }}>
-          <NviAdminSortSelector />
+          <NviAdminSortSelector type={NviAdminSortSelectorType.Points} />
           <TableContainer component={Paper} variant="outlined">
             <Table size="small">
               <TableHead>
@@ -52,20 +53,18 @@ export const NviAdminPublicationPointsPage = () => {
                 {sortedData.map((report: InstitutionReport) => {
                   const { id, institutionSummary } = report;
                   const { totals } = institutionSummary;
-                  const approvedByInstitution = getNviApprovedByInstitution(report);
                   const approvedByEverybody = getNviApprovedByEverybody(report);
-                  const validPoints = getNviValidPoints(report);
-                  const percentageControlled =
-                    totals.undisputedTotalCount > 0 ? approvedByEverybody / totals.undisputedTotalCount : 0;
+                  const undesputedTotals = totals.undisputedTotalCount;
+                  const percentageControlled = undesputedTotals > 0 ? approvedByEverybody / undesputedTotals : 0;
                   const sectorLabel = getNviSectorLabel(report, t);
 
                   return (
                     <TableRow key={id} sx={{ height: '4rem' }}>
                       <TableCell>{getNviInstitutionName(report)}</TableCell>
                       <TableCell>{sectorLabel}</TableCell>
-                      <TableCell align="center">{approvedByInstitution}</TableCell>
+                      <TableCell align="center">{getNviApprovedByInstitution(report)}</TableCell>
                       <TableCell align="center">{approvedByEverybody}</TableCell>
-                      <TableCell align="center">{validPoints}</TableCell>
+                      <TableCell align="center">{getNviValidPoints(report)}</TableCell>
                       <TableCell>
                         <HorizontalBox sx={{ justifyContent: 'center' }}>
                           <PercentageWithIcon
