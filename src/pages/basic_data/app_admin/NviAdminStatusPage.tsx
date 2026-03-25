@@ -58,15 +58,15 @@ export const NviAdminStatusPage = () => {
             <Table size="small">
               <TableHead>
                 <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
-                  <TableCell>{t('common.institution')}</TableCell>
-                  <TableCell>{t('sector')}</TableCell>
-                  <TableCell>{t('candidate')}</TableCell>
-                  <TableCell>{t('controlling')}</TableCell>
-                  <TableCell>{t('approved')}</TableCell>
-                  <TableCell>{t('rejected')}</TableCell>
-                  <TableCell>{t('disputes')}</TableCell>
-                  <TableCell>{t('common.total_number')}</TableCell>
-                  <TableCell>{t('percentage_controlled')}</TableCell>
+                  <TableCell sx={{ width: '30%' }}>{t('common.institution')}</TableCell>
+                  <TableCell sx={{ width: '20%' }}>{t('sector')}</TableCell>
+                  <TableCell align="center">{t('candidate')}</TableCell>
+                  <TableCell align="center">{t('controlling')}</TableCell>
+                  <TableCell align="center">{t('approved')}</TableCell>
+                  <TableCell align="center">{t('rejected')}</TableCell>
+                  <TableCell align="center">{t('disputes')}</TableCell>
+                  <TableCell align="center">{t('common.total_number')}</TableCell>
+                  <TableCell align="center">{t('percentage_controlled')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

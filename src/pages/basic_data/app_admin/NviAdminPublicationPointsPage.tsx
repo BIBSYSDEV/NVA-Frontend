@@ -7,6 +7,7 @@ import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon
 import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
 import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
 import { InstitutionReport } from '../../../types/nvi.types';
+import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../messages/components/NviPointsQuestionIcon';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 import {
   getNviApprovedByEverybody,
@@ -39,13 +40,19 @@ export const NviAdminPublicationPointsPage = () => {
           <TableContainer component={Paper} variant="outlined">
             <Table size="small">
               <TableHead>
-                <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
-                  <TableCell>{t('common.institution')}</TableCell>
-                  <TableCell>{t('sector')}</TableCell>
-                  <TableCell>{t('candidates_approved_by_the_institution')}</TableCell>
-                  <TableCell>{t('candidates_everyone_has_approved')}</TableCell>
-                  <TableCell>{t('points_for_reporting')}</TableCell>
-                  <TableCell>{t('percentage_approved')}</TableCell>
+                <TableRow sx={{ bgcolor: 'white' }}>
+                  <TableCell sx={{ width: '30%' }}>{t('common.institution')}</TableCell>
+                  <TableCell sx={{ width: '20%' }}>{t('sector')}</TableCell>
+                  <TableCell align="center">{t('candidates_approved_by_the_institution')}</TableCell>
+                  <TableCell align="center">{t('candidates_others_must_approve')}</TableCell>
+                  <TableCell align="center">{t('candidates_everyone_has_approved')}</TableCell>
+                  <TableCell align="center">
+                    <HorizontalBox sx={{ justifyContent: 'center' }}>
+                      {t('points_for_reporting')}
+                      <NviPointsQuestionIcon variant={NviPointsModalVariant.Admin} />
+                    </HorizontalBox>
+                  </TableCell>
+                  <TableCell align="center">{t('percentage_approved')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
