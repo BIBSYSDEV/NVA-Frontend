@@ -1,5 +1,6 @@
 import { SortSelectorOption } from '../../../../../components/SortSelector';
-import { NviAdminOrderBy, NviAdminSortSelectorType } from '../nviAdminHelpers';
+import { NviAdminOrderBy } from '../nviAdminHelpers';
+import { NviAdminSortSelectorType } from './NviAdminSortSelector';
 
 const commonOptions = [
   {

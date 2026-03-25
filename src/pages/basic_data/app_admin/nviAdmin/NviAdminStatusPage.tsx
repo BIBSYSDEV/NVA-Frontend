@@ -24,9 +24,8 @@ import {
   getNviRejectedCount,
   getNviSectorLabel,
   getNviTotalCount,
-  NviAdminSortSelectorType,
 } from './nviAdminHelpers';
-import { NviAdminSortSelector } from './nviAdminSortSelector/NviAdminSortSelector';
+import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdminSortSelector/NviAdminSortSelector';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();

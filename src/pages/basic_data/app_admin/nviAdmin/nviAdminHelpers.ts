@@ -3,11 +3,6 @@ import i18n from '../../../../translations/i18n';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
-export enum NviAdminSortSelectorType {
-  Points = 'points',
-  Status = 'status',
-}
-
 export enum NviAdminOrderBy {
   Institution = 'institution',
   Sector = 'sector',

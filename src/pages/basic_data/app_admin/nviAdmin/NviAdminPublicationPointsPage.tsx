@@ -14,9 +14,8 @@ import {
   getNviInstitutionName,
   getNviSectorLabel,
   getNviValidPoints,
-  NviAdminSortSelectorType,
 } from './nviAdminHelpers';
-import { NviAdminSortSelector } from './nviAdminSortSelector/NviAdminSortSelector';
+import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdminSortSelector/NviAdminSortSelector';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
