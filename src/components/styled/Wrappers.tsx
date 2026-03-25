@@ -181,5 +181,5 @@ export const StyledNviStatusBox = styled(Box)(({ theme }) => ({
 }));
 
 export const CenteredTableCell = styled(TableCell)({
-  align: 'center',
+  textAlign: 'center',
 });
