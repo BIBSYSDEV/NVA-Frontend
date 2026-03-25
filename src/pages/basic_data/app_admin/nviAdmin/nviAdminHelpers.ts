@@ -15,11 +15,6 @@ export enum NviAdminOrderBy {
   NumberOfRejectedCandidates = 'numberOfRejectedCandidates',
 }
 
-export const nviAdminOrderByValues = Object.values(NviAdminOrderBy);
-
-export const isNviAdminOrderBy = (value: string | null): value is NviAdminOrderBy =>
-  nviAdminOrderByValues.includes(value as NviAdminOrderBy);
-
 export const getNviInstitutionName = (report: InstitutionReport) => getLanguageString(report.institution.labels).trim();
 
 export const getNviSectorLabel = (report: InstitutionReport, t: TFunction) => {
@@ -54,7 +49,7 @@ export const getNviAdminSortValue = (report: InstitutionReport, orderBy: NviAdmi
     case NviAdminOrderBy.Points:
       return getNviValidPoints(report);
     case NviAdminOrderBy.CandidatesApprovedByInstitution:
-      return getNviApprovedByInstitution(report);
+      return getNviApprovedCount(report);
     case NviAdminOrderBy.CandidatesApprovedByEverybody:
       return getNviApprovedByEverybody(report);
     case NviAdminOrderBy.TotalNumber:

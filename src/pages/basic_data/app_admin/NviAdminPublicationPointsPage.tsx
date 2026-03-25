@@ -10,7 +10,7 @@ import { InstitutionReport } from '../../../types/nvi.types';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 import {
   getNviApprovedByEverybody,
-  getNviApprovedByInstitution,
+  getNviApprovedCount,
   getNviInstitutionName,
   getNviSectorLabel,
   getNviValidPoints,
@@ -53,15 +53,15 @@ export const NviAdminPublicationPointsPage = () => {
                   const { id, institutionSummary } = report;
                   const { totals } = institutionSummary;
                   const approvedByEverybody = getNviApprovedByEverybody(report);
-                  const undesputedTotals = totals.undisputedTotalCount;
-                  const percentageControlled = undesputedTotals > 0 ? approvedByEverybody / undesputedTotals : 0;
+                  const undisputedTotals = totals.undisputedTotalCount;
+                  const percentageControlled = undisputedTotals > 0 ? approvedByEverybody / undisputedTotals : 0;
                   const sectorLabel = getNviSectorLabel(report, t);
 
                   return (
                     <TableRow key={id} sx={{ height: '4rem' }}>
                       <TableCell>{getNviInstitutionName(report)}</TableCell>
                       <TableCell>{sectorLabel}</TableCell>
-                      <TableCell align="center">{getNviApprovedByInstitution(report)}</TableCell>
+                      <TableCell align="center">{getNviApprovedCount(report)}</TableCell>
                       <TableCell align="center">{approvedByEverybody}</TableCell>
                       <TableCell align="center">{getNviValidPoints(report)}</TableCell>
                       <TableCell>

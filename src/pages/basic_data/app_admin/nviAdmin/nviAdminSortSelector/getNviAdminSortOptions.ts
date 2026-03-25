@@ -2,7 +2,7 @@ import { SortSelectorOption } from '../../../../../components/SortSelector';
 import { NviAdminOrderBy } from '../nviAdminHelpers';
 import { NviAdminSortSelectorType } from './NviAdminSortSelector';
 
-const commonOptions = [
+const commonOptions: SortSelectorOption[] = [
   {
     orderBy: NviAdminOrderBy.Institution,
     sortOrder: 'asc',
@@ -25,7 +25,7 @@ const commonOptions = [
   },
 ];
 
-const pointsOptions = [
+const pointsOptions: SortSelectorOption[] = [
   {
     orderBy: NviAdminOrderBy.Points,
     sortOrder: 'asc',
@@ -58,7 +58,7 @@ const pointsOptions = [
   },
 ];
 
-const statusOptions = [
+const statusOptions: SortSelectorOption[] = [
   {
     orderBy: NviAdminOrderBy.TotalNumber,
     sortOrder: 'asc',
@@ -104,10 +104,10 @@ const statusOptions = [
 export const getNviAdminSortOptions = (type: NviAdminSortSelectorType) => {
   switch (type) {
     case NviAdminSortSelectorType.Status:
-      return [...commonOptions, ...statusOptions] as SortSelectorOption[];
+      return [...commonOptions, ...statusOptions];
     case NviAdminSortSelectorType.Points:
-      return [...commonOptions, ...pointsOptions] as SortSelectorOption[];
+      return [...commonOptions, ...pointsOptions];
     default:
-      return [...commonOptions] as SortSelectorOption[];
+      return [...commonOptions];
   }
 };
