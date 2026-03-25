@@ -1,21 +1,21 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useGetUrlFilteredInstitutionReports } from '../../../../api/hooks/useGetUrlFilteredInstitutionReports';
-import { useSortInstitutionReports } from '../../../../api/hooks/useSortInstitutionReports';
-import { AdminNviPublicationPointsTexts } from '../../../../components/AdminNviPublicationPointsTexts';
-import { PercentageWithIcon } from '../../../../components/atoms/PercentageWithIcon';
-import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
-import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappers';
-import { InstitutionReport } from '../../../../types/nvi.types';
-import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
+import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
+import { useSortInstitutionReports } from '../../../api/hooks/useSortInstitutionReports';
+import { AdminNviPublicationPointsTexts } from '../../../components/AdminNviPublicationPointsTexts';
+import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
+import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
+import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
+import { InstitutionReport } from '../../../types/nvi.types';
+import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 import {
   getNviApprovedByEverybody,
   getNviApprovedByInstitution,
   getNviInstitutionName,
   getNviSectorLabel,
   getNviValidPoints,
-} from './nviAdminHelpers';
-import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdminSortSelector/NviAdminSortSelector';
+} from './nviAdmin/nviAdminHelpers';
+import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
