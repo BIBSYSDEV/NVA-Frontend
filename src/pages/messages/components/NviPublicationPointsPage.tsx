@@ -8,7 +8,7 @@ import { NviPublicationPointsTexts } from '../../../components/NviPublicationPoi
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
-import { NviPublicationPointsHelper } from './NviPublicationPointsHelper';
+import { NviPointsModalVariant, NviPointsQuestionIcon } from './NviPointsQuestionIcon';
 import { NviPublicationPointsTableRow } from './NviPublicationPointsTableRow';
 import { NviStatusWrapper } from './NviStatusWrapper';
 
@@ -39,7 +39,7 @@ export const NviPublicationPointsPage = () => {
               <TableCell align="center">
                 <HorizontalBox sx={{ justifyContent: 'center' }}>
                   {t('points_for_reporting')}
-                  <NviPublicationPointsHelper />
+                  <NviPointsQuestionIcon variant={NviPointsModalVariant.Curator} />
                 </HorizontalBox>
               </TableCell>
               <TableCell align="center">{t('percentage_approved_by_all')}</TableCell>

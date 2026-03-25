@@ -8,6 +8,7 @@ import { HorizontalBox } from '../../../components/styled/Wrappers';
 import i18n from '../../../translations/i18n';
 import { InstitutionReport } from '../../../types/nvi.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../messages/components/NviPointsQuestionIcon';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviAdminPublicationPointsPage = () => {
@@ -29,12 +30,18 @@ export const NviAdminPublicationPointsPage = () => {
         <TableContainer component={Paper} variant="outlined">
           <Table size="small">
             <TableHead>
-              <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
-                <TableCell>{t('common.institution')}</TableCell>
-                <TableCell>{t('sector')}</TableCell>
-                <TableCell>{t('candidates_we_have_approved')}</TableCell>
-                <TableCell>{t('candidates_everyone_has_approved')}</TableCell>
-                <TableCell>{t('points_for_reporting')}</TableCell>
+              <TableRow sx={{ bgcolor: 'white' }}>
+                <TableCell sx={{ width: '30%' }}>{t('common.institution')}</TableCell>
+                <TableCell sx={{ width: '20%' }}>{t('sector')}</TableCell>
+                <TableCell align="center">{t('candidates_we_have_approved')}</TableCell>
+                <TableCell align="center">{t('candidates_others_must_approve')}</TableCell>
+                <TableCell align="center">{t('candidates_everyone_has_approved')}</TableCell>
+                <TableCell align="center">
+                  <HorizontalBox sx={{ justifyContent: 'center' }}>
+                    {t('points_for_reporting')}
+                    <NviPointsQuestionIcon variant={NviPointsModalVariant.Admin} />
+                  </HorizontalBox>
+                </TableCell>
                 <TableCell>{t('percentage_approved')}</TableCell>
               </TableRow>
             </TableHead>
@@ -51,6 +58,10 @@ export const NviAdminPublicationPointsPage = () => {
                     <TableCell>{getLanguageString(institution.labels)}</TableCell>
                     <TableCell>{sectorLabel}</TableCell>
                     <TableCell align="center">{byLocalApprovalStatus.approved}</TableCell>
+                    <TableCell align="center">
+                      {totals.undisputedProcessedCount -
+                        (byLocalApprovalStatus.approved + byLocalApprovalStatus.rejected)}
+                    </TableCell>
                     <TableCell align="center">{totals.globalApprovedCount}</TableCell>
                     <TableCell align="center">{totals.validPoints}</TableCell>
                     <TableCell>

@@ -6,16 +6,40 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { NVI_REPORTING_INSTRUCTIONS_URL } from '../../../utils/externalLinks';
 import { HelperTextModal } from '../../registration/HelperTextModal';
 
-export const NviPublicationPointsHelper = () => {
+export enum NviPointsModalVariant {
+  Admin = 'admin',
+  Curator = 'curator',
+}
+
+const variantData = {
+  [NviPointsModalVariant.Admin]: {
+    modalTestId: dataTestId.nviAdminPublicationPointsHelpModal,
+    buttonTestId: dataTestId.nviAdminPublicationPointsHelpButton,
+    i18nKey: 'points_for_reporting_admin_modal_text',
+  },
+  [NviPointsModalVariant.Curator]: {
+    modalTestId: dataTestId.nviPublicationPointsHelpModal,
+    buttonTestId: dataTestId.nviPublicationPointsHelpButton,
+    i18nKey: 'points_for_reporting_modal_text',
+  },
+} as const;
+
+interface NviPublicationPointsHelperModalProps {
+  variant: NviPointsModalVariant;
+}
+
+export const NviPointsQuestionIcon = ({ variant }: NviPublicationPointsHelperModalProps) => {
   const { t } = useTranslation();
+  const data = variantData[variant];
+
   return (
     <HelperTextModal
       modalTitle={t('points_for_reporting')}
-      modalDataTestId={dataTestId.nviPublicationPointsHelpModal}
-      buttonDataTestId={dataTestId.nviPublicationPointsHelpButton}>
+      modalDataTestId={data.modalTestId}
+      buttonDataTestId={data.buttonTestId}>
       <VerticalBox>
         <VerticalBox sx={{ gap: '1rem' }}>
-          <Trans t={t} i18nKey="points_for_reporting_modal_text" components={{ p: <Typography /> }} />
+          <Trans t={t} i18nKey={data.i18nKey} components={{ p: <Typography /> }} />
         </VerticalBox>
         <HorizontalBox sx={{ gap: '0.5rem', mb: '1rem' }}>
           <OpenInNewLink href={NVI_REPORTING_INSTRUCTIONS_URL} data-testid={dataTestId.nviPublicationPointsHelpLink}>
