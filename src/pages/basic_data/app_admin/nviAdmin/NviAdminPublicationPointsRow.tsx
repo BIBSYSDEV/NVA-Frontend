@@ -1,7 +1,7 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { PercentageWithIcon } from '../../../../components/atoms/PercentageWithIcon';
-import { HorizontalBox } from '../../../../components/styled/Wrappers';
+import { CenteredTableCell, HorizontalBox } from '../../../../components/styled/Wrappers';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import {
   getNviApprovedByEverybody,
@@ -28,10 +28,10 @@ export const NviAdminPublicationPointsRow = ({ report }: NviAdminPublicationPoin
     <TableRow key={id} sx={{ height: '4rem' }}>
       <TableCell>{getNviInstitutionName(report)}</TableCell>
       <TableCell>{getNviSectorLabel(report, t)}</TableCell>
-      <TableCell align="center">{getNviApprovedCount(report)}</TableCell>
-      <TableCell align="center">{getNviCountOthersMustApprove(report)}</TableCell>
-      <TableCell align="center">{approvedByEverybody}</TableCell>
-      <TableCell align="center">{getNviValidPoints(report)}</TableCell>
+      <CenteredTableCell>{getNviApprovedCount(report)}</CenteredTableCell>
+      <CenteredTableCell>{getNviCountOthersMustApprove(report)}</CenteredTableCell>
+      <CenteredTableCell>{approvedByEverybody}</CenteredTableCell>
+      <CenteredTableCell>{getNviValidPoints(report)}</CenteredTableCell>
       <TableCell>
         <HorizontalBox sx={{ justifyContent: 'center' }}>
           <PercentageWithIcon displayPercentage={Math.floor(percentageControlled * 100)} alternativeIfZero={'-'} />

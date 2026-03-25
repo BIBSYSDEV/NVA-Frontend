@@ -4,7 +4,7 @@ import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUr
 import { useSortInstitutionReports } from '../../../api/hooks/useSortInstitutionReports';
 import { AdminNviPublicationPointsTexts } from '../../../components/AdminNviPublicationPointsTexts';
 import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
-import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
+import { CenteredTableCell, HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
 import { InstitutionReport } from '../../../types/nvi.types';
 import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../messages/components/NviPointsQuestionIcon';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
@@ -36,16 +36,16 @@ export const NviAdminPublicationPointsPage = () => {
                 <TableRow sx={{ bgcolor: 'white' }}>
                   <TableCell sx={{ width: '30%' }}>{t('common.institution')}</TableCell>
                   <TableCell sx={{ width: '20%' }}>{t('sector')}</TableCell>
-                  <TableCell align="center">{t('candidates_approved_by_the_institution')}</TableCell>
-                  <TableCell align="center">{t('candidates_others_must_approve')}</TableCell>
-                  <TableCell align="center">{t('candidates_everyone_has_approved')}</TableCell>
-                  <TableCell align="center">
+                  <CenteredTableCell>{t('candidates_approved_by_the_institution')}</CenteredTableCell>
+                  <CenteredTableCell>{t('candidates_others_must_approve')}</CenteredTableCell>
+                  <CenteredTableCell>{t('candidates_everyone_has_approved')}</CenteredTableCell>
+                  <CenteredTableCell>
                     <HorizontalBox sx={{ justifyContent: 'center' }}>
                       {t('points_for_reporting')}
                       <NviPointsQuestionIcon variant={NviPointsModalVariant.Admin} />
                     </HorizontalBox>
-                  </TableCell>
-                  <TableCell align="center">{t('percentage_approved')}</TableCell>
+                  </CenteredTableCell>
+                  <CenteredTableCell>{t('percentage_approved')}</CenteredTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
