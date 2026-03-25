@@ -3,19 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
 import { useSortInstitutionReports } from '../../../api/hooks/useSortInstitutionReports';
 import { AdminNviPublicationPointsTexts } from '../../../components/AdminNviPublicationPointsTexts';
-import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
 import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
 import { InstitutionReport } from '../../../types/nvi.types';
 import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../messages/components/NviPointsQuestionIcon';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
-import {
-  getNviApprovedByEverybody,
-  getNviApprovedCount,
-  getNviInstitutionName,
-  getNviSectorLabel,
-  getNviValidPoints,
-} from './nviAdmin/nviAdminHelpers';
+import { NviAdminPublicationPointsRow } from './nviAdmin/NviAdminPublicationPointsRow';
 import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 
 export const NviAdminPublicationPointsPage = () => {
@@ -56,32 +49,9 @@ export const NviAdminPublicationPointsPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedData.map((report: InstitutionReport) => {
-                  const { id, institutionSummary } = report;
-                  const { totals } = institutionSummary;
-                  const approvedByEverybody = getNviApprovedByEverybody(report);
-                  const undisputedTotals = totals.undisputedTotalCount;
-                  const percentageControlled = undisputedTotals > 0 ? approvedByEverybody / undisputedTotals : 0;
-                  const sectorLabel = getNviSectorLabel(report, t);
-
-                  return (
-                    <TableRow key={id} sx={{ height: '4rem' }}>
-                      <TableCell>{getNviInstitutionName(report)}</TableCell>
-                      <TableCell>{sectorLabel}</TableCell>
-                      <TableCell align="center">{getNviApprovedCount(report)}</TableCell>
-                      <TableCell align="center">{approvedByEverybody}</TableCell>
-                      <TableCell align="center">{getNviValidPoints(report)}</TableCell>
-                      <TableCell>
-                        <HorizontalBox sx={{ justifyContent: 'center' }}>
-                          <PercentageWithIcon
-                            displayPercentage={Math.floor(percentageControlled * 100)}
-                            alternativeIfZero={'-'}
-                          />
-                        </HorizontalBox>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                {sortedData.map((report: InstitutionReport) => (
+                  <NviAdminPublicationPointsRow report={report} key={report.id} />
+                ))}
               </TableBody>
             </Table>
           </TableContainer>

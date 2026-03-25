@@ -1,4 +1,14 @@
-import { Box, BoxProps, FormGroup, ListItem, ListItemProps, styled, Typography, TypographyProps } from '@mui/material';
+import {
+  Box,
+  BoxProps,
+  FormGroup,
+  ListItem,
+  ListItemProps,
+  styled,
+  TableCell,
+  Typography,
+  TypographyProps,
+} from '@mui/material';
 
 export const StyledRightAlignedFooter = styled(Box)({
   display: 'flex',
@@ -169,3 +179,7 @@ export const StyledNviStatusBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   marginBottom: '0.5rem',
 }));
+
+export const CenteredTableCell = styled(TableCell)({
+  align: 'center',
+});

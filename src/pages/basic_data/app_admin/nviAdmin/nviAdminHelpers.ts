@@ -24,8 +24,9 @@ export const getNviSectorLabel = (report: InstitutionReport, t: TFunction) => {
 
 export const getNviValidPoints = (report: InstitutionReport) => report.institutionSummary.totals.validPoints;
 
-export const getNviApprovedByInstitution = (report: InstitutionReport) =>
-  report.institutionSummary.byLocalApprovalStatus.approved;
+export const getNviCountOthersMustApprove = (report: InstitutionReport) =>
+  report.institutionSummary.totals.undisputedProcessedCount -
+  (report.institutionSummary.byLocalApprovalStatus.approved + report.institutionSummary.byLocalApprovalStatus.rejected);
 
 export const getNviApprovedByEverybody = (report: InstitutionReport) =>
   report.institutionSummary.totals.globalApprovedCount;
@@ -60,5 +61,7 @@ export const getNviAdminSortValue = (report: InstitutionReport, orderBy: NviAdmi
       return getNviApprovedCount(report);
     case NviAdminOrderBy.NumberOfRejectedCandidates:
       return getNviRejectedCount(report);
+    default:
+      return getNviInstitutionName(report).toLowerCase();
   }
 };

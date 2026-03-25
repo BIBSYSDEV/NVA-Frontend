@@ -12,20 +12,12 @@ import {
 import { Trans, useTranslation } from 'react-i18next';
 import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
 import { useSortInstitutionReports } from '../../../api/hooks/useSortInstitutionReports';
-import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
 import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
-import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
+import { CenteredTableCell, VerticalBox } from '../../../components/styled/Wrappers';
 import { InstitutionReport } from '../../../types/nvi.types';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
-import {
-  getNviApprovedCount,
-  getNviCandidatesCount,
-  getNviInstitutionName,
-  getNviRejectedCount,
-  getNviSectorLabel,
-  getNviTotalCount,
-} from './nviAdmin/nviAdminHelpers';
 import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
+import { NviAdminStatusPageRow } from './nviAdmin/NviAdminStatusPageRow';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
@@ -60,45 +52,19 @@ export const NviAdminStatusPage = () => {
                 <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
                   <TableCell sx={{ width: '30%' }}>{t('common.institution')}</TableCell>
                   <TableCell sx={{ width: '20%' }}>{t('sector')}</TableCell>
-                  <TableCell align="center">{t('candidate')}</TableCell>
-                  <TableCell align="center">{t('controlling')}</TableCell>
-                  <TableCell align="center">{t('approved')}</TableCell>
-                  <TableCell align="center">{t('rejected')}</TableCell>
-                  <TableCell align="center">{t('disputes')}</TableCell>
-                  <TableCell align="center">{t('common.total_number')}</TableCell>
-                  <TableCell align="center">{t('percentage_controlled')}</TableCell>
+                  <CenteredTableCell>{t('candidate')}</CenteredTableCell>
+                  <CenteredTableCell>{t('controlling')}</CenteredTableCell>
+                  <CenteredTableCell>{t('approved')}</CenteredTableCell>
+                  <CenteredTableCell>{t('rejected')}</CenteredTableCell>
+                  <CenteredTableCell>{t('disputes')}</CenteredTableCell>
+                  <CenteredTableCell>{t('common.total_number')}</CenteredTableCell>
+                  <CenteredTableCell>{t('percentage_controlled')}</CenteredTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedData.map((report: InstitutionReport) => {
-                  const { id, institutionSummary } = report;
-                  const { byLocalApprovalStatus, totals } = institutionSummary;
-                  const percentageControlled =
-                    totals.undisputedTotalCount > 0
-                      ? (byLocalApprovalStatus.approved + byLocalApprovalStatus.rejected) / totals.undisputedTotalCount
-                      : 0;
-
-                  return (
-                    <TableRow key={id} sx={{ height: '4rem' }}>
-                      <TableCell>{getNviInstitutionName(report)}</TableCell>
-                      <TableCell>{getNviSectorLabel(report, t)}</TableCell>
-                      <TableCell align="center">{getNviCandidatesCount(report)}</TableCell>
-                      <TableCell align="center">{byLocalApprovalStatus.pending}</TableCell>
-                      <TableCell align="center">{getNviApprovedCount(report)}</TableCell>
-                      <TableCell align="center">{getNviRejectedCount(report)}</TableCell>
-                      <TableCell align="center">{totals.disputedCount}</TableCell>
-                      <TableCell align="center">{getNviTotalCount(report)}</TableCell>
-                      <TableCell align="center">
-                        <HorizontalBox sx={{ justifyContent: 'center' }}>
-                          <PercentageWithIcon
-                            displayPercentage={Math.floor(percentageControlled * 100)}
-                            alternativeIfZero={'-'}
-                          />
-                        </HorizontalBox>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                {sortedData.map((report: InstitutionReport) => (
+                  <NviAdminStatusPageRow report={report} key={report.id} />
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
