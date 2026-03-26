@@ -13,6 +13,7 @@ import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDefaultNviYear } from '../../utils/hooks/useNviCandidatesParams';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { NviAdminOrderBy } from './app_admin/nviAdmin/nviAdminHelpers';
 
 export const NviAdminNavigationAccordion = () => {
   const { t } = useTranslation();
@@ -63,7 +64,7 @@ export const NviAdminNavigationAccordion = () => {
             <SelectableButton
               data-testid={dataTestId.basicData.nviPublicationPointsLink}
               isSelected={currentPath === UrlPathTemplate.BasicDataNviPublicationPoints}
-              to={`${UrlPathTemplate.BasicDataNviPublicationPoints}?year=${getDefaultNviYear()}`}>
+              to={`${UrlPathTemplate.BasicDataNviPublicationPoints}?year=${getDefaultNviYear()}&orderBy=${NviAdminOrderBy.Institution}&sort=asc`}>
               {t('basic_data.nvi.show_publication_points_status')}
             </SelectableButton>
           </Box>

@@ -882,6 +882,8 @@ export const dataTestId = {
   nviFilterInstitution: 'nvi-filter-institution',
   nviFilterInstitutionClearSearch: 'nvi-filter-institution-clear-search',
   nviPublicationPointsHelpModal: 'nvi-publication-points-help-modal',
+  nviAdminPublicationPointsHelpModal: 'nvi-admin-publication-points-help-modal',
   nviPublicationPointsHelpButton: 'nvi-publication-points-help-button',
+  nviAdminPublicationPointsHelpButton: 'nvi-admin-publication-points-help-button',
   nviPublicationPointsHelpLink: 'nvi-publication-points-help-link',
 };

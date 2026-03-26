@@ -11,16 +11,18 @@ import {
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
-import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
+import { useSortInstitutionReports } from '../../../api/hooks/useSortInstitutionReports';
 import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
-import { HorizontalBox } from '../../../components/styled/Wrappers';
+import { CenteredTableCell, VerticalBox } from '../../../components/styled/Wrappers';
 import { InstitutionReport } from '../../../types/nvi.types';
-import { getLanguageString } from '../../../utils/translation-helpers';
 import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
+import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
+import { NviAdminStatusPageRow } from './nviAdmin/NviAdminStatusPageRow';
 
 export const NviAdminStatusPage = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { filteredData, isPending, isError } = useGetUrlFilteredInstitutionReports();
+  const sortedData = useSortInstitutionReports(filteredData);
 
   return (
     <NviStatusWrapper
@@ -42,55 +44,31 @@ export const NviAdminStatusPage = () => {
       ) : isError ? (
         <Typography>{t('feedback.error.get_nvi_reports')}</Typography>
       ) : (
-        <TableContainer component={Paper} variant="outlined">
-          <Table size="small">
-            <TableHead>
-              <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
-                <TableCell>{t('common.institution')}</TableCell>
-                <TableCell>{t('sector')}</TableCell>
-                <TableCell>{t('candidate')}</TableCell>
-                <TableCell>{t('controlling')}</TableCell>
-                <TableCell>{t('approved')}</TableCell>
-                <TableCell>{t('rejected')}</TableCell>
-                <TableCell>{t('disputes')}</TableCell>
-                <TableCell>{t('common.total_number')}</TableCell>
-                <TableCell>{t('percentage_controlled')}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredData.map(({ id, institution, sector, institutionSummary }: InstitutionReport) => {
-                const { byLocalApprovalStatus, totals } = institutionSummary;
-                const percentageControlled =
-                  totals.undisputedTotalCount > 0
-                    ? (byLocalApprovalStatus.approved + byLocalApprovalStatus.rejected) / totals.undisputedTotalCount
-                    : 0;
-                const sectorKey = `basic_data.institutions.sector_values.${sector}`;
-                const sectorLabel = i18n.exists(sectorKey) ? t(sectorKey as any) : sector;
-
-                return (
-                  <TableRow key={id} sx={{ height: '4rem' }}>
-                    <TableCell>{getLanguageString(institution.labels)}</TableCell>
-                    <TableCell>{sectorLabel}</TableCell>
-                    <TableCell align="center">{byLocalApprovalStatus.new}</TableCell>
-                    <TableCell align="center">{byLocalApprovalStatus.pending}</TableCell>
-                    <TableCell align="center">{byLocalApprovalStatus.approved}</TableCell>
-                    <TableCell align="center">{byLocalApprovalStatus.rejected}</TableCell>
-                    <TableCell align="center">{totals.disputedCount}</TableCell>
-                    <TableCell align="center">{totals.undisputedTotalCount}</TableCell>
-                    <TableCell align="center">
-                      <HorizontalBox sx={{ justifyContent: 'center' }}>
-                        <PercentageWithIcon
-                          displayPercentage={Math.floor(percentageControlled * 100)}
-                          alternativeIfZero={'-'}
-                        />
-                      </HorizontalBox>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <VerticalBox sx={{ width: '100%' }}>
+          <NviAdminSortSelector type={NviAdminSortSelectorType.Status} />
+          <TableContainer component={Paper} variant="outlined">
+            <Table size="small">
+              <TableHead>
+                <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
+                  <TableCell sx={{ width: '30%' }}>{t('common.institution')}</TableCell>
+                  <TableCell sx={{ width: '20%' }}>{t('sector')}</TableCell>
+                  <CenteredTableCell>{t('candidate')}</CenteredTableCell>
+                  <CenteredTableCell>{t('controlling')}</CenteredTableCell>
+                  <CenteredTableCell>{t('approved')}</CenteredTableCell>
+                  <CenteredTableCell>{t('rejected')}</CenteredTableCell>
+                  <CenteredTableCell>{t('disputes')}</CenteredTableCell>
+                  <CenteredTableCell>{t('common.total_number')}</CenteredTableCell>
+                  <CenteredTableCell>{t('percentage_controlled')}</CenteredTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {sortedData.map((report: InstitutionReport) => (
+                  <NviAdminStatusPageRow report={report} key={report.id} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </VerticalBox>
       )}
     </NviStatusWrapper>
   );
