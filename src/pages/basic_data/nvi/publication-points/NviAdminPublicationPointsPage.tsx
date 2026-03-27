@@ -4,7 +4,8 @@ import { useInstitutionReportsFilteredByUrl } from '../../../../hooks/nvi/useIns
 import { useInstitutionReportsSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsSortedByUrl';
 import { AdminNviPublicationPointsTexts } from '../../../../components/AdminNviPublicationPointsTexts';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
-import { CenteredTableCell, HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappers';
+import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappers';
+import { CenteredTableCell } from '../../../../styles/tableStyles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../../messages/components/NviPointsQuestionIcon';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';

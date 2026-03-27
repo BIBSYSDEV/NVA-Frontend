@@ -13,7 +13,8 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useInstitutionReportsFilteredByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredByUrl';
 import { useInstitutionReportsSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsSortedByUrl';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
-import { CenteredTableCell, VerticalBox } from '../../../../components/styled/Wrappers';
+import { VerticalBox } from '../../../../components/styled/Wrappers';
+import { CenteredTableCell } from '../../../../styles/tableStyles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 import {
