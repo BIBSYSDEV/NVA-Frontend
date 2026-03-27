@@ -2,8 +2,8 @@ import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { SortOrder } from '../api/searchApi';
-import { dataTestId } from '../utils/dataTestIds';
+import { SortOrder } from '../../api/searchApi';
+import { dataTestId } from '../../utils/dataTestIds';
 
 export interface SortSelectorOption {
   orderBy: string;

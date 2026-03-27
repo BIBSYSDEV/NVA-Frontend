@@ -1,4 +1,4 @@
-import { SortSelectorOption } from '../../../../../components/SortSelector';
+import { SortSelectorOption } from '../../../../../components/_molecules/SortSelector';
 import { NviAdminOrderBy } from '../nviAdminHelpers';
 import { NviAdminSortSelectorType } from './NviAdminSortSelector';
 
