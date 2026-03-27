@@ -6,7 +6,6 @@ import { formatLocaleNumber } from '../utils/general-helpers';
 import { getDefaultNviYear } from '../utils/hooks/useNviCandidatesParams';
 import { ExpandableNviTopView } from './ExpandableNviTopView';
 import { VerticalBox } from './styled/Wrappers';
-import { ExportNviStatusLink } from '../pages/messages/components/ExportNviStatusLink';
 
 export const AdminNviPublicationPointsTexts = () => {
   const { t } = useTranslation();
