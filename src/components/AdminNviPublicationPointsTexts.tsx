@@ -32,7 +32,7 @@ export const AdminNviPublicationPointsTexts = () => {
                 num_results: formatLocaleNumber(periodTotals.undisputedTotalCount),
                 total_publicationpoints: formatLocaleNumber(periodTotals.validPoints),
               }}
-              components={{ b: <strong />, link: <ExportNviStatusLink /> }}
+              components={{ b: <strong /> }}
             />
           </Typography>
         )}

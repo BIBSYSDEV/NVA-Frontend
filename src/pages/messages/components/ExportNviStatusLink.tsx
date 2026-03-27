@@ -6,9 +6,9 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
 interface ExportNviStatusLinkProps {
-  acronym?: string;
+  acronym: string;
 }
-export const ExportNviStatusLink = ({ acronym = '' }: ExportNviStatusLinkProps) => {
+export const ExportNviStatusLink = ({ acronym }: ExportNviStatusLinkProps) => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const fetchNviApprovalReportQuery = useFetchNviReportExport(year, acronym);
