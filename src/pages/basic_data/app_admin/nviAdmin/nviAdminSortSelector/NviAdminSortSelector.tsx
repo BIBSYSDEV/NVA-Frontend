@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { SortSelector } from '../../../../../components/SortSelector';
+import { SortSelector } from '../../../../../components/_molecules/SortSelector';
 import { HorizontalBox } from '../../../../../components/styled/Wrappers';
 import { getNviAdminSortOptions } from './getNviAdminSortOptions';
 
