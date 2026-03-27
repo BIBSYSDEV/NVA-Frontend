@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { SortSelector } from '../../../../../components/_molecules/SortSelector';
 import { HorizontalBox } from '../../../../../components/styled/Wrappers';
-import { getNviAdminSortOptions } from './getNviAdminSortOptions';
+import { getNviAdminSortOptions } from '../../../../../components/sortSelectors/sortNviTable/nviAdminSortHelpers';
 
 export enum NviAdminSortSelectorType {
   Points = 'points',
