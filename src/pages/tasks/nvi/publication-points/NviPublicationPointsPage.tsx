@@ -2,15 +2,15 @@ import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useFetchNviInstitutionStatus } from '../../../api/hooks/useFetchNviStatus';
-import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
-import { NviPublicationPointsTexts } from '../../../components/NviPublicationPointsTexts';
-import { HorizontalBox } from '../../../components/styled/Wrappers';
-import { RootState } from '../../../redux/store';
-import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
-import { NviPointsModalVariant, NviPointsQuestionIcon } from './NviPointsQuestionIcon';
-import { NviPublicationPointsTableRow } from './NviPublicationPointsTableRow';
-import { NviStatusWrapper } from './NviStatusWrapper';
+import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
+import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
+import { NviPublicationPointsTexts } from '../../../../components/NviPublicationPointsTexts';
+import { HorizontalBox } from '../../../../components/styled/Wrappers';
+import { RootState } from '../../../../redux/store';
+import { getDefaultNviYear } from '../../../../utils/hooks/useNviCandidatesParams';
+import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../../messages/components/NviPointsQuestionIcon';
+import { NviPublicationPointsTableRow } from '../../../messages/components/NviPublicationPointsTableRow';
+import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviPublicationPointsPage = () => {
   const { t } = useTranslation();

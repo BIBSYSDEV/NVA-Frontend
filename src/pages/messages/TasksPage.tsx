@@ -32,7 +32,7 @@ import { ResultRegistrationsNavigationListAccordion } from './components/ResultR
 import { TicketList } from './components/TicketList';
 import { TicketTypeTag } from './components/TicketTypeTag';
 import { NviDisputePage } from './components/NviDisputePage';
-import { NviPublicationPointsPage } from './components/NviPublicationPointsPage';
+import { NviPublicationPointsPage } from '../tasks/nvi/publication-points/NviPublicationPointsPage';
 import { useFetchTickets } from '../../api/hooks/useFetchTickets';
 import { useGetNotificationCounts, useGetTicketsCounts } from './user-dialog-helpers';
 import { checkPages } from './tasks-helpers';
