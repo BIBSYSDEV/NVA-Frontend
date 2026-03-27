@@ -2,7 +2,7 @@ import { Link, TableCell } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
 import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
-import { PercentageWithIcon } from '../../../components/atoms/PercentageWithIcon';
+import { PercentageWithIcon } from '../../../components/_atoms/PercentageWithIcon';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';

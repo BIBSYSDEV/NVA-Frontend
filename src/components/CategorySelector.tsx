@@ -21,8 +21,8 @@ import {
 import { PublicationInstanceType } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { nviApplicableTypes } from '../utils/registration-helpers';
-import { DoesNotSupportFileIcon } from './atoms/DoesNotSupportFileIcon';
-import { NviApplicableIcon } from './atoms/NviApplicableIcon';
+import { DoesNotSupportFileIcon } from './_atoms/DoesNotSupportFileIcon';
+import { NviApplicableIcon } from './_atoms/NviApplicableIcon';
 
 interface RegistrationTypeElement {
   value: PublicationInstanceType;
