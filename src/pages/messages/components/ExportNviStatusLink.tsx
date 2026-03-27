@@ -29,9 +29,9 @@ export const ExportNviStatusLink = ({ acronym }: ExportNviStatusLinkProps) => {
       onClick={handleClick}
       disabled={isFetching}
       sx={{
+        pl: '0.5rem',
         display: 'inline-flex',
         alignItems: 'center',
-        gap: 1,
         cursor: isFetching ? 'default' : 'pointer',
       }}>
       {isFetching ? <CircularProgress size={15} /> : <FileDownloadOutlinedIcon fontSize="small" />}
