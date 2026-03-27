@@ -8,12 +8,14 @@ import { formatLocaleNumber } from '../utils/general-helpers';
 import { getDefaultNviYear } from '../utils/hooks/useNviCandidatesParams';
 import { ExpandableNviTopView } from './ExpandableNviTopView';
 import { HorizontalBox, VerticalBox } from './styled/Wrappers';
+import { ExportNviStatusLink } from '../pages/messages/components/ExportNviStatusLink';
 
 interface NviPublicationPointsTextsProps {
   aggregationsQuery: UseQueryResult<NviInstitutionStatusResponse, Error>;
+  exportAcronym?: string;
 }
 
-export const NviPublicationPointsTexts = ({ aggregationsQuery }: NviPublicationPointsTextsProps) => {
+export const NviPublicationPointsTexts = ({ aggregationsQuery, exportAcronym }: NviPublicationPointsTextsProps) => {
   const { t } = useTranslation();
   const aggregations = aggregationsQuery.data;
   const lastYear = getDefaultNviYear() - 1;
@@ -46,6 +48,7 @@ export const NviPublicationPointsTexts = ({ aggregationsQuery }: NviPublicationP
               components={{
                 p: <Typography />,
                 bold: <Typography component="span" sx={{ fontWeight: 'bold' }} />,
+                link: exportAcronym ? <ExportNviStatusLink acronym={exportAcronym} /> : <span />,
               }}
             />
           </HorizontalBox>

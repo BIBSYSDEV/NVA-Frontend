@@ -144,6 +144,7 @@ export const dataTestId = {
   common: {
     cancel: 'cancel',
     exportButton: 'export-button',
+    exportLink: 'export-link',
     pagination: 'pagination',
     save: 'save',
     showMoreButton: 'show-more-button',
