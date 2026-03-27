@@ -27,7 +27,7 @@ import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCandidatesNavigationAccordion } from './components/NviCandidatesNavigationAccordion';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { NviCorrectionListNavigationAccordion } from './components/NviCorrectionListNavigationAccordion';
-import { NviStatusPage } from './components/NviStatusPage';
+import { NviStatusPage } from '../tasks/nvi/status/NviStatusPage';
 import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
 import { TicketList } from './components/TicketList';
 import { TicketTypeTag } from './components/TicketTypeTag';
