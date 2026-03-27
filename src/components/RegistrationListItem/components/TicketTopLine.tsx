@@ -1,11 +1,11 @@
-import { HorizontalBox } from '../../styled/Wrappers';
-import { RegistrationStatus } from '../../../types/registration.types';
-import { RegistrationListItemContext } from '../context';
 import { useContext } from 'react';
 import { TicketTypeTag } from '../../../pages/messages/components/TicketTypeTag';
-import { PublicationInstanceText } from './PublicationInstanceText';
+import { RegistrationStatus } from '../../../types/registration.types';
+import { NotPublishedTag } from '../../_atoms/tags/NotPublishedTag';
+import { HorizontalBox } from '../../styled/Wrappers';
+import { RegistrationListItemContext } from '../context';
 import { DateText } from './DateText';
-import { NotPublishedTag } from '../../atoms/tags/NotPublishedTag';
+import { PublicationInstanceText } from './PublicationInstanceText';
 
 export const TicketTopLine = () => {
   const { registration, ticketType } = useContext(RegistrationListItemContext) ?? {};
