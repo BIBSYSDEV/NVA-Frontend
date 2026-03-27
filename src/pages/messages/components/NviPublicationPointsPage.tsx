@@ -29,8 +29,7 @@ export const NviPublicationPointsPage = () => {
       topView={
         <NviPublicationPointsTexts exportAcronym={organizationQuery.data?.acronym} aggregationsQuery={nviStatusQuery} />
       }
-      visibilitySelector
-      disableExportButton>
+      visibilitySelector>
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>

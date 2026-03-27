@@ -1,5 +1,5 @@
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviReportExport } from '../../../api/hooks/useFetchNviReportExport';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -7,25 +7,29 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 
 interface ExportNviStatusButtonProps {
   acronym: string;
-  disabled: boolean;
 }
 
-export const ExportNviStatusButton = ({ acronym, disabled }: ExportNviStatusButtonProps) => {
+export const ExportNviStatusButton = ({ acronym }: ExportNviStatusButtonProps) => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const fetchNviApprovalReportQuery = useFetchNviReportExport(year, acronym);
 
   return (
-    <Button
-      disabled={disabled} //NOTE: Disabled temporarily for publication points
-      data-testid={dataTestId.common.exportButton}
-      color="tertiary"
-      variant="contained"
-      startIcon={<FileDownloadOutlinedIcon />}
-      loadingPosition="start"
-      onClick={() => fetchNviApprovalReportQuery.refetch()}
-      loading={fetchNviApprovalReportQuery.isFetching}>
-      {t('search.export')}
-    </Button>
+    <Tooltip title={t('export_nvi_status_button_tooltip_text')}>
+      {/* HACK: Tooltip will not render if the direct child is disabled */}
+      <span>
+        <Button
+          disabled
+          data-testid={dataTestId.common.exportButton}
+          color="tertiary"
+          variant="contained"
+          startIcon={<FileDownloadOutlinedIcon />}
+          loadingPosition="start"
+          onClick={() => fetchNviApprovalReportQuery.refetch()}
+          loading={fetchNviApprovalReportQuery.isFetching}>
+          {t('search.export')}
+        </Button>
+      </span>
+    </Tooltip>
   );
 };

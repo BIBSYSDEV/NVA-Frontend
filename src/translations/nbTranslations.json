@@ -2073,7 +2073,7 @@
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "x_results_are_ready_for_reporting_and_they_give_y_points": "<p><bold>{{num_publications_approved_by_all}} resultat</bold> er klar for rapportering, og de gir <bold>{{points_for_all_publications_approved_by_all}} publiseringspoeng.</bold></p><link />",
-  "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
+  "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b><link>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
   "points_for_reporting_admin_modal_text": "<p>Poengene i tabellen viser poeng for kandidater som er godkjent av alle institusjoner, altså poeng for kandidater som er klare til rapportering.</p><p>Tabellen viser antall poeng for NVI-kandidater adressert på de ulike underenhetene. Vær obs på at hvis en NVI-kandidat har adressert flere underenheter på egen institusjon, vil samme poeng for NVI-kandidat telles på flere underenheter. Du kan derfor ikke summere kolonnene vertikalt, kun horisontalt.</p><p>Ønsker du å vite hvordan poengene beregnes?</p>",
@@ -2097,5 +2097,6 @@
   "sort_by_number_of_approved_candidates_desc": "Antall godkjent (synkende)",
   "sort_by_number_of_rejected_candidates_asc": "Antall avviste (stigende)",
   "sort_by_number_of_rejected_candidates_desc": "Antall avviste (synkende)",
-  "export_dataset_for_nvi_report": "Eksporter datagrunnlag for NVI-rapport"
+  "export_dataset_for_nvi_report": "Eksporter datagrunnlag for NVI-rapport",
+  "export_nvi_status_button_tooltip_text": "Knapp for nedlasting av forfatterandel er flyttet til side for publiseringspoeng. Denne knappen er midlertidig deaktivert — nedlasting av tall fra tabellen kommer snart."
 }

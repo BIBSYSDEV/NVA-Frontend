@@ -16,7 +16,6 @@ interface NviStatusWrapperProps {
   institutionSearch?: boolean;
   exportAcronym?: string;
   children?: ReactNode;
-  disableExportButton?: boolean;
 }
 
 export const NviStatusWrapper = ({
@@ -28,7 +27,6 @@ export const NviStatusWrapper = ({
   institutionSearch,
   exportAcronym,
   children,
-  disableExportButton = false,
 }: NviStatusWrapperProps) => {
   return (
     <VerticalBox sx={{ gap: '1rem', alignItems: 'start' }}>
@@ -43,7 +41,7 @@ export const NviStatusWrapper = ({
           {institutionSearch && <NviInstitutionSearch sx={{ minWidth: '30rem' }} />}
           {visibilitySelector && <NviVisibilitySelector sx={{ minWidth: '15rem' }} />}
         </Box>
-        {exportAcronym && <ExportNviStatusButton acronym={exportAcronym} disabled={disableExportButton} />}
+        {exportAcronym && <ExportNviStatusButton acronym={exportAcronym} />}
       </Box>
       {children}
     </VerticalBox>

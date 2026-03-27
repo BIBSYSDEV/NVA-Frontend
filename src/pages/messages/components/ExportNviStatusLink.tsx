@@ -5,10 +5,10 @@ import { useFetchNviReportExport } from '../../../api/hooks/useFetchNviReportExp
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
-interface ExportNviStatusButtonProps {
-  acronym: string;
+interface ExportNviStatusLinkProps {
+  acronym?: string;
 }
-export const ExportNviStatusLink = ({ acronym }: ExportNviStatusButtonProps) => {
+export const ExportNviStatusLink = ({ acronym = '' }: ExportNviStatusLinkProps) => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const fetchNviApprovalReportQuery = useFetchNviReportExport(year, acronym);
