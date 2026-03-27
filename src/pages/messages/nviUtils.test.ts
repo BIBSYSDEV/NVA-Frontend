@@ -1,17 +1,17 @@
-import {
-  computeParamsFromDropdownStatus,
-  computeDropdownStatusFromParams,
-  createPageSpecificAmountString,
-} from './nviUtils';
+import { TFunction } from 'i18next';
 import { describe, expect, it } from 'vitest';
-import { NviCandidateStatusEnum, NviCandidateGlobalStatusEnum } from '../../api/searchApi';
+import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../api/searchApi';
 import {
   NviCandidateApprovalStatusEnum,
   NviCandidateSearchHitApproval,
   NviSearchStatusEnum,
 } from '../../types/nvi.types';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { TFunction } from 'i18next';
+import {
+  computeDropdownStatusFromParams,
+  computeParamsFromDropdownStatus,
+  createPageSpecificAmountString,
+} from './nviUtils';
 
 describe('computeDropdownStatusFromParams', () => {
   describe("status: pending and globalStatus: pending'", () => {

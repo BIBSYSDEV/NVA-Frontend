@@ -1,3 +1,4 @@
+import { TFunction } from 'i18next';
 import {
   NviCandidateGlobalStatus,
   NviCandidateGlobalStatusEnum,
@@ -5,13 +6,12 @@ import {
   NviCandidateStatusEnum,
 } from '../../api/searchApi';
 import {
-  NviCandidateSearchHitApproval,
   NviCandidateApprovalStatusEnum,
+  NviCandidateSearchHitApproval,
   NviSearchStatus,
   NviSearchStatusEnum,
 } from '../../types/nvi.types';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { TFunction } from 'i18next';
 
 /*
  * Takes in arrays of statuses extracted from two different url attributes and translates it into the state that

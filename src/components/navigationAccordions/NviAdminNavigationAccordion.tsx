@@ -4,16 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviPeriodReport } from '../../api/hooks/useFetchNviPeriodReport';
-import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { NviReportProgressBar } from '../../components/NviReportProgressBar';
-import { LinkCreateButton, NavigationList } from '../../components/PageWithSideMenu';
-import { SelectableButton } from '../../components/SelectableButton';
-import { StyledNviStatusBox } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDefaultNviYear } from '../../utils/hooks/useNviCandidatesParams';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { NviAdminOrderBy } from './app_admin/nviAdmin/nviAdminHelpers';
+import { NavigationListAccordion } from '../NavigationListAccordion';
+import { NviReportProgressBar } from '../NviReportProgressBar';
+import { LinkCreateButton, NavigationList } from '../PageWithSideMenu';
+import { SelectableButton } from '../SelectableButton';
+import { NviAdminOrderBy } from '../sortSelectors/sortNviTable/nviAdminSortHelpers';
+import { StyledNviStatusBox } from '../styled/Wrappers';
 
 export const NviAdminNavigationAccordion = () => {
   const { t } = useTranslation();

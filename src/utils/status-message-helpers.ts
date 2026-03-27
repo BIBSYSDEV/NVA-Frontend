@@ -1,7 +1,7 @@
 import { LanguageString } from '../types/common.types';
 import { getEnvVariableValue } from './general-helpers';
 
-const queryParamName = 'admin';
+const queryParamName = 'nviAdmin';
 const sessionStorageKey = 'disableMaintenancePage';
 
 export const getMaintenanceInfo = () => {

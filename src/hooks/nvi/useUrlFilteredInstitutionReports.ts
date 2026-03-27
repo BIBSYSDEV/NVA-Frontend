@@ -1,10 +1,10 @@
 import { useSearchParams } from 'react-router';
-import { getNviInstitutionName } from '../../pages/basic_data/app_admin/nviAdmin/nviAdminHelpers';
+import { useFetchNviReports } from '../../api/hooks/useFetchNviReports';
+import { getNviInstitutionName } from '../../helpers/nviAdminHelpers';
 import { InstitutionReport } from '../../types/nvi.types';
 import { getDefaultNviYear } from '../../utils/hooks/useNviCandidatesParams';
-import { useFetchNviReports } from './useFetchNviReports';
 
-export const useGetUrlFilteredInstitutionReports = () => {
+export const useUrlFilteredInstitutionReports = () => {
   const [searchParams] = useSearchParams();
   const yearParam = searchParams.get('year')?.trim();
   const parsedYear = yearParam ? Number(yearParam) : NaN;

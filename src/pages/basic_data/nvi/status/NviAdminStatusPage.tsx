@@ -10,18 +10,22 @@ import {
   Typography,
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
-import { useSortInstitutionReports } from '../../../api/hooks/useSortInstitutionReports';
-import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
-import { CenteredTableCell, VerticalBox } from '../../../components/styled/Wrappers';
-import { InstitutionReport } from '../../../types/nvi.types';
-import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
-import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
-import { NviAdminStatusPageRow } from './nviAdmin/NviAdminStatusPageRow';
+import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
+import {
+  NviAdminSortSelector,
+  NviAdminSortSelectorType,
+} from '../../../../components/sortSelectors/sortNviTable/NviAdminSortSelector';
+import { VerticalBox } from '../../../../components/styled/Wrappers';
+import { NviAdminStatusTableRow } from '../../../../components/tables/nviAdmin/NviAdminStatusTableRow';
+import { useSortInstitutionReports } from '../../../../hooks/nvi/useSortInstitutionReports';
+import { useUrlFilteredInstitutionReports } from '../../../../hooks/nvi/useUrlFilteredInstitutionReports';
+import { CenteredTableCell } from '../../../../styles/tableStyles';
+import { InstitutionReport } from '../../../../types/nvi.types';
+import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
-  const { filteredData, isPending, isError } = useGetUrlFilteredInstitutionReports();
+  const { filteredData, isPending, isError } = useUrlFilteredInstitutionReports();
   const sortedData = useSortInstitutionReports(filteredData);
 
   return (
@@ -63,7 +67,7 @@ export const NviAdminStatusPage = () => {
               </TableHead>
               <TableBody>
                 {sortedData.map((report: InstitutionReport) => (
-                  <NviAdminStatusPageRow report={report} key={report.id} />
+                  <NviAdminStatusTableRow report={report} key={report.id} />
                 ))}
               </TableBody>
             </Table>

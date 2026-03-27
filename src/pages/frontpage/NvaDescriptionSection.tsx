@@ -1,18 +1,18 @@
 import { Box, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { TypeCard } from './TypeCard';
-import { FrontPageBox } from './styles';
-import { SearchTypeValue } from '../search/SearchTypeDropdown';
-import { UrlPathTemplate } from '../../utils/urlPaths';
-import { PersonIcon } from '../../components/atoms/PersonIcon';
-import { dataTestId } from '../../utils/dataTestIds';
-import { ProjectIcon } from '../../components/atoms/ProjectIcon';
-import { RegistrationIcon } from '../../components/atoms/RegistrationIcon';
+import { useFetchProjects } from '../../api/hooks/useFetchProjects';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { useSearchForPerson } from '../../api/hooks/useSearchForPerson';
-import { useFetchProjects } from '../../api/hooks/useFetchProjects';
-import { getUrlParams } from './utils';
+import { PersonIcon } from '../../components/_atoms/PersonIcon';
+import { ProjectIcon } from '../../components/_atoms/ProjectIcon';
+import { RegistrationIcon } from '../../components/_atoms/RegistrationIcon';
+import { dataTestId } from '../../utils/dataTestIds';
 import { SearchParam } from '../../utils/searchHelpers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import { SearchTypeValue } from '../search/SearchTypeDropdown';
+import { FrontPageBox } from './styles';
+import { TypeCard } from './TypeCard';
+import { getUrlParams } from './utils';
 
 const iconStyle = { height: { xs: '1.5rem', sm: '2rem' }, width: { xs: '1.5rem', sm: '2rem' } };
 

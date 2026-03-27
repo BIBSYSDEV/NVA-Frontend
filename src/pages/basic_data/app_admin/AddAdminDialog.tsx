@@ -11,9 +11,9 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { FlatCristinPerson, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { addCustomerAdminValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
-import { SearchForCristinPerson } from '../SearchForCristinPerson';
 import { PositionField } from '../fields/PositionField';
 import { StartDateField } from '../fields/StartDateField';
+import { SearchForCristinPerson } from '../SearchForCristinPerson';
 
 interface AddAdminDialogProps extends Pick<DialogProps, 'open'> {
   toggleOpen: () => void;
@@ -54,7 +54,7 @@ export const AddAdminDialog = ({ open, toggleOpen, refetchUsers, cristinInstitut
         }
       }
 
-      // Create NVA User with admin role
+      // Create NVA User with nviAdmin role
       const customerId = new URLSearchParams(location.search).get('id') as string;
       const createNvaUserResponse = await createUser({
         cristinIdentifier: cristinPerson.cristinIdentifier,

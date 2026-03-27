@@ -1,19 +1,23 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
-import { useSortInstitutionReports } from '../../../api/hooks/useSortInstitutionReports';
-import { AdminNviPublicationPointsTexts } from '../../../components/AdminNviPublicationPointsTexts';
-import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
-import { CenteredTableCell, HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
-import { InstitutionReport } from '../../../types/nvi.types';
-import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../messages/components/NviPointsQuestionIcon';
-import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
-import { NviAdminPublicationPointsRow } from './nviAdmin/NviAdminPublicationPointsRow';
-import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
+import { AdminNviPublicationPointsTexts } from '../../../../components/AdminNviPublicationPointsTexts';
+import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
+import {
+  NviAdminSortSelector,
+  NviAdminSortSelectorType,
+} from '../../../../components/sortSelectors/sortNviTable/NviAdminSortSelector';
+import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappers';
+import { NviAdminPointsTableRow } from '../../../../components/tables/nviAdmin/NviAdminPointsTableRow';
+import { useSortInstitutionReports } from '../../../../hooks/nvi/useSortInstitutionReports';
+import { useUrlFilteredInstitutionReports } from '../../../../hooks/nvi/useUrlFilteredInstitutionReports';
+import { CenteredTableCell } from '../../../../styles/tableStyles';
+import { InstitutionReport } from '../../../../types/nvi.types';
+import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../../messages/components/NviPointsQuestionIcon';
+import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
-  const { filteredData, isPending, isError } = useGetUrlFilteredInstitutionReports();
+  const { filteredData, isPending, isError } = useUrlFilteredInstitutionReports();
   const sortedData = useSortInstitutionReports(filteredData);
 
   return (
@@ -50,7 +54,7 @@ export const NviAdminPublicationPointsPage = () => {
               </TableHead>
               <TableBody>
                 {sortedData.map((report: InstitutionReport) => (
-                  <NviAdminPublicationPointsRow report={report} key={report.id} />
+                  <NviAdminPointsTableRow report={report} key={report.id} />
                 ))}
               </TableBody>
             </Table>

@@ -2,14 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { InfoBanner } from '../../../../components/InfoBanner';
-import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration, Revision } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
+import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { Publisher, Registration, SerialPublication } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { NviValidationChapter } from './NviValidationChapter';
 import { NviStatus } from './NviStatus';
+import { NviValidationChapter } from './NviValidationChapter';
 
 interface NviValidationProps {
   registration: Registration;

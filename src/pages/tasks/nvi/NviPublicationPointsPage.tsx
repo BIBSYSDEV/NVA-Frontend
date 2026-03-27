@@ -8,9 +8,9 @@ import { NviPublicationPointsTexts } from '../../../components/NviPublicationPoi
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
-import { NviPointsModalVariant, NviPointsQuestionIcon } from './NviPointsQuestionIcon';
-import { NviPublicationPointsTableRow } from './NviPublicationPointsTableRow';
-import { NviStatusWrapper } from './NviStatusWrapper';
+import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../messages/components/NviPointsQuestionIcon';
+import { NviPublicationPointsTableRow } from '../../messages/components/NviPublicationPointsTableRow';
+import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
 
 export const NviPublicationPointsPage = () => {
   const { t } = useTranslation();

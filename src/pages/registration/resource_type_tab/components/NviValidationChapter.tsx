@@ -1,8 +1,8 @@
-import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
-import { useGetBookInformation } from '../../../../utils/nviHelpers';
-import { InfoBanner } from '../../../../components/InfoBanner';
-import { dataTestId } from '../../../../utils/dataTestIds';
 import { useTranslation } from 'react-i18next';
+import { InfoBanner } from '../../../../components/InfoBanner';
+import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { useGetBookInformation } from '../../../../utils/nviHelpers';
 import { NviStatus } from './NviStatus';
 
 export const NviValidationChapter = ({ registration }: { registration: ChapterRegistration }) => {

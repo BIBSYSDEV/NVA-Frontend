@@ -1,19 +1,19 @@
 import { Typography } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { deleteRegistration } from '../../api/registrationApi';
 import { RegistrationSearchResponse, ResultParam, ResultSearchOrder } from '../../api/searchApi';
+import { SortSelector } from '../../components/_molecules/SortSelector';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { SortSelector } from '../../components/SortSelector';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationSearchItem } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getIdentifierFromId, setDelay } from '../../utils/general-helpers';
+import { SearchParamType } from '../../utils/hooks/useRegistrationSearchParams';
 import { getTitleString } from '../../utils/registration-helpers';
 import { RegistrationSearch, SearchPropTypes } from '../search/registration_search/RegistrationSearch';
-import { useQueryClient } from '@tanstack/react-query';
-import { SearchParamType } from '../../utils/hooks/useRegistrationSearchParams';
 import { DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS } from './MyRegistrations';
 
 interface MyRegistrationsListProps {

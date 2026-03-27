@@ -1,6 +1,29 @@
-import { SortSelectorOption } from '../../../../../components/SortSelector';
-import { NviAdminOrderBy } from '../nviAdminHelpers';
+import { TFunction } from 'i18next';
+import {
+  getNviApprovedCount,
+  getNviCandidatesCount,
+  getNviCountApprovedByEverybody,
+  getNviInstitutionName,
+  getNviPointsForReporting,
+  getNviRejectedCount,
+  getNviSectorLabel,
+  getNviTotalCount,
+} from '../../../helpers/nviAdminHelpers';
+import { InstitutionReport } from '../../../types/nvi.types';
+import { SortSelectorOption } from '../../_molecules/SortSelector';
 import { NviAdminSortSelectorType } from './NviAdminSortSelector';
+
+export enum NviAdminOrderBy {
+  Institution = 'institution',
+  Sector = 'sector',
+  Points = 'points',
+  CandidatesApprovedByInstitution = 'candidatesApprovedByInstitution',
+  CandidatesApprovedByEverybody = 'candidatesApprovedByEverybody',
+  TotalNumber = 'totalNumber',
+  NumberOfCandidates = 'numberOfCandidates',
+  NumberOfApprovedCandidates = 'numberOfApprovedCandidates',
+  NumberOfRejectedCandidates = 'numberOfRejectedCandidates',
+}
 
 const commonOptions: SortSelectorOption[] = [
   {
@@ -101,7 +124,7 @@ const statusOptions: SortSelectorOption[] = [
   },
 ];
 
-export const getNviAdminSortOptions = (type: NviAdminSortSelectorType) => {
+export const nviAdminSortHelpers = (type: NviAdminSortSelectorType) => {
   switch (type) {
     case NviAdminSortSelectorType.Status:
       return [...commonOptions, ...statusOptions];
@@ -109,5 +132,29 @@ export const getNviAdminSortOptions = (type: NviAdminSortSelectorType) => {
       return [...commonOptions, ...pointsOptions];
     default:
       return [...commonOptions];
+  }
+};
+export const getNviAdminSortValue = (report: InstitutionReport, orderBy: NviAdminOrderBy, t: TFunction) => {
+  switch (orderBy) {
+    case NviAdminOrderBy.Institution:
+      return getNviInstitutionName(report).toLowerCase();
+    case NviAdminOrderBy.Sector:
+      return getNviSectorLabel(report, t).toLowerCase();
+    case NviAdminOrderBy.Points:
+      return getNviPointsForReporting(report);
+    case NviAdminOrderBy.CandidatesApprovedByInstitution:
+      return getNviApprovedCount(report);
+    case NviAdminOrderBy.CandidatesApprovedByEverybody:
+      return getNviCountApprovedByEverybody(report);
+    case NviAdminOrderBy.TotalNumber:
+      return getNviTotalCount(report);
+    case NviAdminOrderBy.NumberOfCandidates:
+      return getNviCandidatesCount(report);
+    case NviAdminOrderBy.NumberOfApprovedCandidates:
+      return getNviApprovedCount(report);
+    case NviAdminOrderBy.NumberOfRejectedCandidates:
+      return getNviRejectedCount(report);
+    default:
+      return getNviInstitutionName(report).toLowerCase();
   }
 };

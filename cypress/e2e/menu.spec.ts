@@ -85,7 +85,7 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.myPage.researchProfileAccordion}]`).click();
   });
 
-  it('App-admin sees Basic Data menu options', () => {
+  it('App-nviAdmin sees Basic Data menu options', () => {
     cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
@@ -98,7 +98,7 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.basicData.centralImportAccordion}]`).should('not.exist');
   });
 
-  it('Insitution-admin sees Basic Data menu options', () => {
+  it('Insitution-nviAdmin sees Basic Data menu options', () => {
     cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);

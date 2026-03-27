@@ -1,7 +1,7 @@
-import { ScientificValue } from '../../../../types/registration.types';
-import { InfoBanner } from '../../../../components/InfoBanner';
-import { dataTestId } from '../../../../utils/dataTestIds';
 import { useTranslation } from 'react-i18next';
+import { InfoBanner } from '../../../../components/InfoBanner';
+import { ScientificValue } from '../../../../types/registration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface NviStatusProps {
   scientificValue?: ScientificValue;

@@ -1,9 +1,9 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
+import { NviCandidateFilterEnum, NviCandidatesSearchParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { NviCandidateFilterEnum, NviCandidatesSearchParam } from '../../../api/searchApi';
 
 export const CoPublicationsCheckbox = () => {
   const { t } = useTranslation();

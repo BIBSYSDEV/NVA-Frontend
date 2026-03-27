@@ -1,7 +1,8 @@
 import { Box } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router';
+import { nviCandidateQueryKeyword, useFetchNviCandidate } from '../../../api/hooks/useFetchNviCandidate';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -16,7 +17,6 @@ import NotFound from '../../errorpages/NotFound';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { NavigationIconButton } from './NavigationIconButton';
 import { NviCandidateActionPanel } from './NviCandidateActionPanel';
-import { nviCandidateQueryKeyword, useFetchNviCandidate } from '../../../api/hooks/useFetchNviCandidate';
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();

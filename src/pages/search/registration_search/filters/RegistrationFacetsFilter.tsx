@@ -7,14 +7,14 @@ import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useRegistrationsQueryParams } from '../../../../utils/hooks/useRegistrationSearchParams';
 import { getFileFacetText, removeSearchParamValue, syncParamsWithSearchFields } from '../../../../utils/searchHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-import { FacetItem } from '../../FacetItem';
-import { FacetListItem } from '../../FacetListItem';
-import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchForPersonFacetItem } from '../../facet_search_fields/SearchForContributorFacetItem';
 import { SearchForFundingSourceFacetItem } from '../../facet_search_fields/SearchForFundingSourceFacetItem';
 import { SearchForInstitutionFacetItem } from '../../facet_search_fields/SearchForInstitutionFacetItem';
 import { SearchForSerialPublication } from '../../facet_search_fields/SearchForSerialPublication';
 import { SelectCategoryFacetItem } from '../../facet_search_fields/SelectCategoryFacetItem';
+import { FacetItem } from '../../FacetItem';
+import { FacetListItem } from '../../FacetListItem';
+import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPropTypes } from '../RegistrationSearch';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPropTypes, 'registrationQuery'>) => {

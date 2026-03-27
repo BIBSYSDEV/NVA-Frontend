@@ -44,7 +44,7 @@ export const dataTestId = {
     nviReportingPeriodsLink: 'nvi-reporting-periods-link',
     nviStatusLink: 'nvi-status-link',
     nviPublicationPointsLink: 'nvi-publication-points-link',
-    adminInstitutionsLink: 'admin-institutions-link',
+    adminInstitutionsLink: 'nviAdmin-institutions-link',
     centralImportLink: 'central-import-link',
     centralImport: {
       checkboxAuthor: 'duplicate-search-author-checkbox',
@@ -881,8 +881,8 @@ export const dataTestId = {
   nviFilterInstitution: 'nvi-filter-institution',
   nviFilterInstitutionClearSearch: 'nvi-filter-institution-clear-search',
   nviPublicationPointsHelpModal: 'nvi-publication-points-help-modal',
-  nviAdminPublicationPointsHelpModal: 'nvi-admin-publication-points-help-modal',
+  nviAdminPublicationPointsHelpModal: 'nvi-nviAdmin-publication-points-help-modal',
   nviPublicationPointsHelpButton: 'nvi-publication-points-help-button',
-  nviAdminPublicationPointsHelpButton: 'nvi-admin-publication-points-help-button',
+  nviAdminPublicationPointsHelpButton: 'nvi-nviAdmin-publication-points-help-button',
   nviPublicationPointsHelpLink: 'nvi-publication-points-help-link',
 };

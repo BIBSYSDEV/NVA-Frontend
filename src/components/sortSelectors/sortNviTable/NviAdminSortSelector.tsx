@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { SortSelector } from '../../../../../components/SortSelector';
-import { HorizontalBox } from '../../../../../components/styled/Wrappers';
-import { getNviAdminSortOptions } from './getNviAdminSortOptions';
+import { SortSelector } from '../../_molecules/SortSelector';
+import { HorizontalBox } from '../../styled/Wrappers';
+import { nviAdminSortHelpers } from './nviAdminSortHelpers';
 
 export enum NviAdminSortSelectorType {
   Points = 'points',
@@ -22,7 +22,7 @@ export const NviAdminSortSelector = ({ type }: NviAdminSortSelectorProps) => {
         sortKey="sort"
         aria-label={t('search.sort_by')}
         variant="standard"
-        options={getNviAdminSortOptions(type)}
+        options={nviAdminSortHelpers(type)}
       />
     </HorizontalBox>
   );

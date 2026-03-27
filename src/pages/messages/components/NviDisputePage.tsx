@@ -16,8 +16,8 @@ import { getDefaultNviYear, useNviDisputeParams } from '../../../utils/hooks/use
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
-import { NviSortSelector } from './NviSortSelector';
 import { NviDisputeVisibilityFilter } from './NviDisputeVisibilityFilter';
+import { NviSortSelector } from './NviSortSelector';
 
 export const NviDisputePage = () => {
   const { t } = useTranslation();

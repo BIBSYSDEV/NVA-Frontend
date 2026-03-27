@@ -1,14 +1,14 @@
 import { List, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
+import { SortSelector } from '../../../components/_molecules/SortSelector';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { NoSearchResults } from '../../../components/NoSearchResults';
-import { SortSelector } from '../../../components/SortSelector';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { CristinSearchPagination } from '../CristinSearchPagination';
-import { PersonListItem } from './PersonListItem';
 import { SearchPropTypes } from '../registration_search/RegistrationSearch';
+import { PersonListItem } from './PersonListItem';
 
 type PersonSearchProps = Pick<SearchPropTypes, 'personQuery'>;
 
