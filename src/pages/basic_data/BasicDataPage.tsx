@@ -30,8 +30,8 @@ import { CentralImportCandidateForm } from './app_admin/central_import/CentralIm
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
 import { ImportCandidatesMenuFilters } from './app_admin/central_import/ImportCandidatesMenuFilters';
-import { NviAdminPublicationPointsPage } from './app_admin/NviAdminPublicationPointsPage';
-import { NviAdminStatusPage } from './app_admin/NviAdminStatusPage';
+import { NviAdminPublicationPointsPage } from './nvi/publication-points/NviAdminPublicationPointsPage';
+import { NviAdminStatusPage } from './nvi/status/NviAdminStatusPage';
 import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';

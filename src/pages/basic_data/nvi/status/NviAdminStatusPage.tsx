@@ -10,19 +10,22 @@ import {
   Typography,
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
-import { useSortInstitutionReports } from '../../../api/hooks/useSortInstitutionReports';
-import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
-import { CenteredTableCell, VerticalBox } from '../../../components/styled/Wrappers';
-import { InstitutionReport } from '../../../types/nvi.types';
-import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
-import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
-import { NviAdminStatusPageRow } from './nviAdmin/NviAdminStatusPageRow';
+import { useInstitutionReportsFilteredByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredByUrl';
+import { useInstitutionReportsSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsSortedByUrl';
+import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
+import { CenteredTableCell, VerticalBox } from '../../../../components/styled/Wrappers';
+import { InstitutionReport } from '../../../../types/nvi.types';
+import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
+import {
+  NviAdminSortSelector,
+  NviAdminSortSelectorType,
+} from '../../app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
+import { NviAdminStatusPageRow } from '../../app_admin/nviAdmin/NviAdminStatusPageRow';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
-  const { filteredData, isPending, isError } = useGetUrlFilteredInstitutionReports();
-  const sortedData = useSortInstitutionReports(filteredData);
+  const { filteredData, isPending, isError } = useInstitutionReportsFilteredByUrl();
+  const sortedData = useInstitutionReportsSortedByUrl(filteredData);
 
   return (
     <NviStatusWrapper
