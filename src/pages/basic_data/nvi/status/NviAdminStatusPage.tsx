@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { NviAdminSortSelectorType } from '../../../../components/sortSelectors/sortNviTable/nviAdminSortTypes';
+import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nviAdminSortTypes';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { VerticalBox } from '../../../../components/styled/Wrappers';

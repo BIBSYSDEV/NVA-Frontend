@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { SortSelector } from '../../../../../components/_molecules/SortSelector';
-import { NviAdminSortSelectorType } from '../../../../../components/sortSelectors/sortNviTable/nviAdminSortTypes';
+import { NviAdminSortSelectorType } from '../../../../../components/sort-selectors/sort-nvi-table/nviAdminSortTypes';
 import { HorizontalBox } from '../../../../../components/styled/Wrappers';
-import { getNviAdminSortOptions } from '../../../../../components/sortSelectors/sortNviTable/nviAdminSortHelpers';
+import { getNviAdminSortOptions } from '../../../../../components/sort-selectors/sort-nvi-table/nviAdminSortHelpers';
 
 interface NviAdminSortSelectorProps {
   type: NviAdminSortSelectorType;

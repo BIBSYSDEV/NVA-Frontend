@@ -1,6 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { NviAdminSortSelectorType } from '../../../../components/sortSelectors/sortNviTable/nviAdminSortTypes';
+import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nviAdminSortTypes';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { AdminNviPublicationPointsTexts } from '../../../../components/AdminNviPublicationPointsTexts';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';

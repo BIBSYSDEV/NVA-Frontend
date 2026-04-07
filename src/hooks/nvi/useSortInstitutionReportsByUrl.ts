@@ -1,6 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
-import { getNviAdminSortValue, NviAdminOrderBy } from '../../components/sortSelectors/sortNviTable/nviAdminSortHelpers';
+import {
+  getNviAdminSortValue,
+  NviAdminOrderBy,
+} from '../../components/sort-selectors/sort-nvi-table/nviAdminSortHelpers';
 import { InstitutionReport } from '../../types/nvi.types';
 
 export const useSortInstitutionReportsByUrl = (reports: InstitutionReport[]) => {
