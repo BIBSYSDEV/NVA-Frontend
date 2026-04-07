@@ -8,7 +8,7 @@ import { NavigationListAccordion } from '../../components/NavigationListAccordio
 import { NviReportProgressBar } from '../../components/NviReportProgressBar';
 import { LinkCreateButton, NavigationList } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
-import { NviAdminOrderBy } from '../../components/sort-selectors/sort-nvi-table/nviAdminSortHelpers';
+import { NviAdminOrderBy } from '../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-helpers';
 import { StyledNviStatusBox } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';

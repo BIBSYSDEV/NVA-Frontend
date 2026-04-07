@@ -1,16 +1,16 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nviAdminSortTypes';
+import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { AdminNviPublicationPointsTexts } from '../../../../components/AdminNviPublicationPointsTexts';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappers';
-import { CenteredTableCell } from '../../../../styles/tableStyles';
+import { CenteredTableCell } from '../../../../styles/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../../messages/components/NviPointsQuestionIcon';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
-import { NviAdminPublicationPointsRow } from '../../app_admin/nviAdmin/NviAdminPublicationPointsRow';
-import { NviAdminSortSelector } from '../../app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
+import { NviAdminPublicationPointsRow } from '../../../basic_data/app_admin/nviAdmin/NviAdminPublicationPointsRow';
+import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();

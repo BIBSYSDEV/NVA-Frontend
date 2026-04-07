@@ -11,7 +11,7 @@ import {
 } from '../../../pages/basic_data/app_admin/nviAdmin/nviAdminHelpers';
 import { InstitutionReport } from '../../../types/nvi.types';
 import { SortSelectorOption } from '../../_molecules/SortSelector';
-import { NviAdminSortSelectorType } from './nviAdminSortTypes';
+import { NviAdminSortSelectorType } from './nvi-admin-sort-types';
 
 export enum NviAdminOrderBy {
   Institution = 'institution',

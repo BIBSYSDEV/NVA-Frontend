@@ -10,15 +10,15 @@ import {
   Typography,
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nviAdminSortTypes';
+import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
-import { CenteredTableCell } from '../../../../styles/tableStyles';
+import { CenteredTableCell } from '../../../../styles/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
-import { NviAdminSortSelector } from '../../app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
-import { NviAdminStatusPageRow } from '../../app_admin/nviAdmin/NviAdminStatusPageRow';
+import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
+import { NviAdminStatusPageRow } from '../../../basic_data/app_admin/nviAdmin/NviAdminStatusPageRow';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
