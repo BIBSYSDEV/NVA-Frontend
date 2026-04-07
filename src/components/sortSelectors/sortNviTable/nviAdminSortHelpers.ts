@@ -9,9 +9,9 @@ import {
   getNviTotalCount,
   getNviValidPoints,
 } from '../../../pages/basic_data/app_admin/nviAdmin/nviAdminHelpers';
-import { NviAdminSortSelectorType } from '../../../pages/basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 import { InstitutionReport } from '../../../types/nvi.types';
 import { SortSelectorOption } from '../../_molecules/SortSelector';
+import { NviAdminSortSelectorType } from './nviAdminSortTypes';
 
 export enum NviAdminOrderBy {
   Institution = 'institution',
