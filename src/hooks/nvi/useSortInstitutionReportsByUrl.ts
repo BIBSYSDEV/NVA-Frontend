@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router';
 import { getNviAdminSortValue, NviAdminOrderBy } from '../../components/sortSelectors/sortNviTable/nviAdminSortHelpers';
 import { InstitutionReport } from '../../types/nvi.types';
 
-export const useInstitutionReportsSortedByUrl = (reports: InstitutionReport[]) => {
+export const useSortInstitutionReportsByUrl = (reports: InstitutionReport[]) => {
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
 

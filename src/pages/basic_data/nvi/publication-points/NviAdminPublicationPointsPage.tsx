@@ -1,8 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { NviAdminSortSelectorType } from '../../../../components/sortSelectors/sortNviTable/nviAdminSortTypes';
-import { useInstitutionReportsFilteredByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredByUrl';
-import { useInstitutionReportsSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsSortedByUrl';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { AdminNviPublicationPointsTexts } from '../../../../components/AdminNviPublicationPointsTexts';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappers';
@@ -15,8 +14,7 @@ import { NviAdminSortSelector } from '../../app_admin/nviAdmin/nviAdminSortSelec
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
-  const { filteredData, isPending, isError } = useInstitutionReportsFilteredByUrl();
-  const sortedData = useInstitutionReportsSortedByUrl(filteredData);
+  const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
 
   return (
     <NviStatusWrapper
@@ -51,7 +49,7 @@ export const NviAdminPublicationPointsPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedData.map((report: InstitutionReport) => (
+                {sortedAndFilteredData.map((report: InstitutionReport) => (
                   <NviAdminPublicationPointsRow report={report} key={report.id} />
                 ))}
               </TableBody>
