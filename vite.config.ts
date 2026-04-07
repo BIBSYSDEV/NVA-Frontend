@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="vitest/config" />
-import react from '@vitejs/plugin-react';
+import babel from '@rolldown/plugin-babel';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
 import { configDefaults } from 'vitest/config';
@@ -21,7 +22,8 @@ const largeLibraries = [
 
 export default defineConfig({
   plugins: [
-    react({ babel: { plugins: [['babel-plugin-react-compiler']] } }),
+    react(),
+    babel({ presets: [reactCompilerPreset()] }),
     checker({
       typescript: true,
       eslint: {
@@ -39,9 +41,8 @@ export default defineConfig({
   },
   build: {
     outDir: 'build',
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        experimentalMinChunkSize: 10_000,
         manualChunks: (id) => {
           if (largeLibraries.some((library) => id.includes(`node_modules/${library}`))) {
             return id.toString().split('node_modules/')[1].split('/')[0].toString();
