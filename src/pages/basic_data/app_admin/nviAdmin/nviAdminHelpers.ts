@@ -3,18 +3,6 @@ import i18n from '../../../../translations/i18n';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
-export enum NviAdminOrderBy {
-  Institution = 'institution',
-  Sector = 'sector',
-  Points = 'points',
-  CandidatesApprovedByInstitution = 'candidatesApprovedByInstitution',
-  CandidatesApprovedByEverybody = 'candidatesApprovedByEverybody',
-  TotalNumber = 'totalNumber',
-  NumberOfCandidates = 'numberOfCandidates',
-  NumberOfApprovedCandidates = 'numberOfApprovedCandidates',
-  NumberOfRejectedCandidates = 'numberOfRejectedCandidates',
-}
-
 export const getNviInstitutionName = (report: InstitutionReport) => getLanguageString(report.institution.labels).trim();
 
 export const getNviSectorLabel = (report: InstitutionReport, t: TFunction) => {
@@ -40,28 +28,3 @@ export const getNviRejectedCount = (report: InstitutionReport) =>
   report.institutionSummary.byLocalApprovalStatus.rejected;
 
 export const getNviTotalCount = (report: InstitutionReport) => report.institutionSummary.totals.undisputedTotalCount;
-
-export const getNviAdminSortValue = (report: InstitutionReport, orderBy: NviAdminOrderBy, t: TFunction) => {
-  switch (orderBy) {
-    case NviAdminOrderBy.Institution:
-      return getNviInstitutionName(report).toLowerCase();
-    case NviAdminOrderBy.Sector:
-      return getNviSectorLabel(report, t).toLowerCase();
-    case NviAdminOrderBy.Points:
-      return getNviValidPoints(report);
-    case NviAdminOrderBy.CandidatesApprovedByInstitution:
-      return getNviApprovedCount(report);
-    case NviAdminOrderBy.CandidatesApprovedByEverybody:
-      return getNviApprovedByEverybody(report);
-    case NviAdminOrderBy.TotalNumber:
-      return getNviTotalCount(report);
-    case NviAdminOrderBy.NumberOfCandidates:
-      return getNviCandidatesCount(report);
-    case NviAdminOrderBy.NumberOfApprovedCandidates:
-      return getNviApprovedCount(report);
-    case NviAdminOrderBy.NumberOfRejectedCandidates:
-      return getNviRejectedCount(report);
-    default:
-      return getNviInstitutionName(report).toLowerCase();
-  }
-};

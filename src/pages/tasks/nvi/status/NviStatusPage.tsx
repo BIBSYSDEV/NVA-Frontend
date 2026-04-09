@@ -12,13 +12,13 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useFetchNviInstitutionStatus } from '../../../api/hooks/useFetchNviStatus';
-import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
-import { VerticalBox } from '../../../components/styled/Wrappers';
-import { RootState } from '../../../redux/store';
-import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { NviStatusTableRow } from './NviStatusTableRow';
-import { NviStatusWrapper } from './NviStatusWrapper';
+import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
+import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
+import { VerticalBox } from '../../../../components/styled/Wrappers';
+import { RootState } from '../../../../redux/store';
+import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
+import { NviStatusTableRow } from '../../../messages/components/NviStatusTableRow';
+import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviStatusPage = () => {
   const { t } = useTranslation();

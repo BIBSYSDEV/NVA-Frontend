@@ -1,12 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { SortSelector } from '../../../../../components/_molecules/SortSelector';
+import { NviAdminSortSelectorType } from '../../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { HorizontalBox } from '../../../../../components/styled/Wrappers';
-import { getNviAdminSortOptions } from './getNviAdminSortOptions';
-
-export enum NviAdminSortSelectorType {
-  Points = 'points',
-  Status = 'status',
-}
+import { getNviAdminSortOptions } from '../../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-helpers';
 
 interface NviAdminSortSelectorProps {
   type: NviAdminSortSelectorType;

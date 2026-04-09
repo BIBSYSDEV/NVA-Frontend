@@ -10,19 +10,19 @@ import {
   Typography,
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { useGetUrlFilteredInstitutionReports } from '../../../api/hooks/useGetUrlFilteredInstitutionReports';
-import { useSortInstitutionReports } from '../../../api/hooks/useSortInstitutionReports';
-import { TableSkeleton } from '../../../components/skeletons/TableSkeleton';
-import { CenteredTableCell, VerticalBox } from '../../../components/styled/Wrappers';
-import { InstitutionReport } from '../../../types/nvi.types';
-import { NviStatusWrapper } from '../../messages/components/NviStatusWrapper';
-import { NviAdminSortSelector, NviAdminSortSelectorType } from './nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
-import { NviAdminStatusPageRow } from './nviAdmin/NviAdminStatusPageRow';
+import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
+import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
+import { VerticalBox } from '../../../../components/styled/Wrappers';
+import { CenteredTableCell } from '../../../../styles/table-styles';
+import { InstitutionReport } from '../../../../types/nvi.types';
+import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
+import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
+import { NviAdminStatusPageRow } from '../../../basic_data/app_admin/nviAdmin/NviAdminStatusPageRow';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
-  const { filteredData, isPending, isError } = useGetUrlFilteredInstitutionReports();
-  const sortedData = useSortInstitutionReports(filteredData);
+  const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
 
   return (
     <NviStatusWrapper
@@ -62,7 +62,7 @@ export const NviAdminStatusPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedData.map((report: InstitutionReport) => (
+                {sortedAndFilteredData.map((report: InstitutionReport) => (
                   <NviAdminStatusPageRow report={report} key={report.id} />
                 ))}
               </TableBody>
