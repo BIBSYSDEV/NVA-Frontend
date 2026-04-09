@@ -2098,5 +2098,6 @@
   "sort_by_number_of_rejected_candidates_asc": "Antall avviste (stigende)",
   "sort_by_number_of_rejected_candidates_desc": "Antall avviste (synkende)",
   "export_dataset_for_nvi_report": "Eksporter datagrunnlag for NVI-rapport",
-  "export_nvi_status_button_tooltip_text": "Knapp for nedlasting av forfatterandel er flyttet til side for publiseringspoeng. Denne knappen er midlertidig deaktivert — nedlasting av tall fra tabellen kommer snart."
+  "export_nvi_status_button_tooltip_text": "Knapp for nedlasting av forfatterandel er flyttet til side for publiseringspoeng. Denne knappen er midlertidig deaktivert — nedlasting av tall fra tabellen kommer snart.",
+  "contact_point_for_institution": "Kontaktpunkt for institusjon"
 }

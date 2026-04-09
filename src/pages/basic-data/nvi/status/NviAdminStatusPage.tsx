@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { Trans, useTranslation } from 'react-i18next';
+import { InstitutionContactInformationDialog } from '../../../../components/dialogs/InstitutionContactInformationDialog';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
@@ -20,9 +21,11 @@ import { InstitutionReport } from '../../../../types/nvi.types';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 import { NviAdminStatusPageRow } from '../../../basic_data/app_admin/nviAdmin/NviAdminStatusPageRow';
+import { useState } from 'react';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
+  const [contactInfoDialogOpen, setContactInfoDialogOpen] = useState(false);
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
 
   return (
@@ -70,11 +73,19 @@ export const NviAdminStatusPage = () => {
               </TableHead>
               <TableBody>
                 {sortedAndFilteredData.map((report: InstitutionReport) => (
-                  <NviAdminStatusPageRow report={report} key={report.id} />
+                  <NviAdminStatusPageRow
+                    report={report}
+                    key={report.id}
+                    openContactInformation={setContactInfoDialogOpen}
+                  />
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
+          <InstitutionContactInformationDialog
+            isOpen={contactInfoDialogOpen}
+            onClose={() => setContactInfoDialogOpen(false)}
+          />
         </VerticalBox>
       )}
     </NviStatusWrapper>

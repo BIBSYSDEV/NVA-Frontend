@@ -1,6 +1,6 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ViewContactInfoButton } from '../../../../components/_atoms/buttons/ViewContactInfoButton';
+import { ViewContactInfoButton } from '../../../../components/buttons/ViewContactInfoButton';
 import { PercentageWithIcon } from '../../../../components/_atoms/PercentageWithIcon';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../styles/table-styles';
@@ -17,9 +17,10 @@ import {
 
 interface NviAdminStatusPageRowProps {
   report: InstitutionReport;
+  openContactInformation: (val: boolean) => void;
 }
 
-export const NviAdminStatusPageRow = ({ report }: NviAdminStatusPageRowProps) => {
+export const NviAdminStatusPageRow = ({ report, openContactInformation }: NviAdminStatusPageRowProps) => {
   const { t } = useTranslation();
   const { id, institutionSummary } = report;
   const { byLocalApprovalStatus, totals } = institutionSummary;
@@ -44,7 +45,7 @@ export const NviAdminStatusPageRow = ({ report }: NviAdminStatusPageRowProps) =>
         </HorizontalBox>
       </CenteredTableCell>
       <CenteredTableCell>
-        <ViewContactInfoButton />
+        <ViewContactInfoButton onClick={() => openContactInformation(true)} />
       </CenteredTableCell>
     </TableRow>
   );
