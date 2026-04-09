@@ -51,7 +51,7 @@ export const NviCandidatesNavigationAccordion = () => {
   const nviCandidatesTotal = nviAggregations?.totalCount.docCount ?? 0;
   const nviCandidatesCompleted = nviAggregations?.completed.docCount ?? 0;
   const nviCompletedPercentage =
-    nviCandidatesTotal > 0 ? Math.round((nviCandidatesCompleted / nviCandidatesTotal) * 100) : 100;
+    nviCandidatesTotal > 0 ? Math.floor((nviCandidatesCompleted / nviCandidatesTotal) * 100) : 100;
 
   return (
     <NavigationListAccordion
