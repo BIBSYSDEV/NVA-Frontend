@@ -12,6 +12,7 @@ import {
   getNviRejectedCount,
   getNviSectorLabel,
   getNviTotalCount,
+  getPercentageControlled,
 } from './nviAdminHelpers';
 
 interface NviAdminStatusPageRowProps {
@@ -22,10 +23,7 @@ export const NviAdminStatusPageRow = ({ report }: NviAdminStatusPageRowProps) =>
   const { t } = useTranslation();
   const { id, institutionSummary } = report;
   const { byLocalApprovalStatus, totals } = institutionSummary;
-  const percentageControlled =
-    totals.undisputedTotalCount > 0
-      ? (byLocalApprovalStatus.approved + byLocalApprovalStatus.rejected) / totals.undisputedTotalCount
-      : 0;
+  const percentageControlled = getPercentageControlled(report);
 
   return (
     <TableRow key={id} sx={{ height: '4rem' }}>

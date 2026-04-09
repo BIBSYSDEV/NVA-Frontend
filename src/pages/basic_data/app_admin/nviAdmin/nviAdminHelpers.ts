@@ -28,3 +28,9 @@ export const getNviRejectedCount = (report: InstitutionReport) =>
   report.institutionSummary.byLocalApprovalStatus.rejected;
 
 export const getNviTotalCount = (report: InstitutionReport) => report.institutionSummary.totals.undisputedTotalCount;
+
+export const getPercentageControlled = (report: InstitutionReport) => {
+  const undisputedTotals = report.institutionSummary.totals.undisputedTotalCount;
+  const { approved, rejected } = report.institutionSummary.byLocalApprovalStatus;
+  return undisputedTotals > 0 ? (approved + rejected) / undisputedTotals : 0;
+};
