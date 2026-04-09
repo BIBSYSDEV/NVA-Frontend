@@ -1,5 +1,6 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { ViewContactInfoButton } from '../../../../components/_atoms/buttons/ViewContactInfoButton';
 import { PercentageWithIcon } from '../../../../components/_atoms/PercentageWithIcon';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../styles/table-styles';
@@ -41,6 +42,9 @@ export const NviAdminStatusPageRow = ({ report }: NviAdminStatusPageRowProps) =>
         <HorizontalBox sx={{ justifyContent: 'center' }}>
           <PercentageWithIcon displayPercentage={Math.floor(percentageControlled * 100)} alternativeIfZero={'-'} />
         </HorizontalBox>
+      </CenteredTableCell>
+      <CenteredTableCell>
+        <ViewContactInfoButton />
       </CenteredTableCell>
     </TableRow>
   );

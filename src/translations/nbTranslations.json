@@ -2067,7 +2067,7 @@
   "use_rerender": "{{value}}",
   "velg_subject_area": "Velg fagfelt",
   "view_contact_info": "Se kontaktinformasjon",
-  "view_contact_information": "Se kontaktinfo",
+  "view_contact_info_short": "Se kontaktinfo",
   "view_the_reporting_instructions": "Se rapporteringsinstruksen",
   "visibility_of_units": "Visning av enheter",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",

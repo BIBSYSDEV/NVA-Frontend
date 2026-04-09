@@ -9,6 +9,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { Trans, useTranslation } from 'react-i18next';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
@@ -59,6 +60,12 @@ export const NviAdminStatusPage = () => {
                   <CenteredTableCell>{t('disputes')}</CenteredTableCell>
                   <CenteredTableCell>{t('common.total_number')}</CenteredTableCell>
                   <CenteredTableCell>{t('percentage_controlled')}</CenteredTableCell>
+                  <TableCell>
+                    {/* This cell is hidden to make the number of cells in the table header the same as in the table row, where we display a button for displaying contact information */}
+                    <Box component="span" sx={visuallyHidden}>
+                      {t('view_contact_info_short')}
+                    </Box>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
