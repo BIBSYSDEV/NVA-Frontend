@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
-import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 import { API_URL } from '../utils/constants';
+import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
+import i18n from '../translations/i18n';
 
 const BASE_URL = `${API_URL}scientific-index`;
 
@@ -109,7 +110,7 @@ export const pollForReportReady = async (presignedUrl: string, options: PollOpti
 
     const elapsed = Date.now() - startTime;
     if (elapsed > maxTimeMs) {
-      throw new Error('Kunne ikke hente rapport. Det tok rett og slett for lang tid...');
+      throw new Error(i18n.t('feedback.error.generate_nvi_report_timeout', { seconds: maxTimeMs / 1000 }));
     }
 
     try {
@@ -135,11 +136,10 @@ export const pollForReportReady = async (presignedUrl: string, options: PollOpti
         await sleep(delay, signal);
         delay = Math.min(delay * 2, maxDelayMs);
         continue;
-        console.log('polling...');
       }
 
       const message = err?.response?.data || err?.message || 'Kunne ikke generere rapport.';
-      throw new Error(`Kunne ikke generere rapport (status ${status ?? 'unknown'}): ${message}`);
+      throw new Error(i18n.t('feedback.error.generate_nvi_report_status', { status: status, message: message }));
     }
   }
 };

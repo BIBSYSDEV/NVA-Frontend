@@ -5,7 +5,7 @@ interface ExportNviStatusParams {
   year: number;
   institutionId: string;
 }
-export const useExportNviStatusMutation = () => {
+export const useExportNviAuthorSharesMutation = () => {
   return useMutation({
     mutationFn: async ({ year, institutionId }: ExportNviStatusParams) => {
       const file = await generateReportFile({

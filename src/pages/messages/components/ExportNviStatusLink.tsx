@@ -2,7 +2,7 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { CircularProgress, Link } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useExportNviStatusMutation } from '../../../api/hooks/useExportNviStatusMutation';
+import { useExportNviAuthorSharesMutation } from '../../../api/hooks/useExportNviStatusMutation';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -16,15 +16,15 @@ interface ExportNviStatusLinkProps {
 export const ExportNviStatusLink = ({ acronym }: ExportNviStatusLinkProps) => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
+  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const userTopLevelOrg = user?.topOrgCristinId ?? '';
   const institutionId = getIdentifierFromId(userTopLevelOrg);
-  const dispatch = useDispatch();
-  const exportMutation = useExportNviStatusMutation();
-  const isFetching = exportMutation.isPending;
+  const exportMutation = useExportNviAuthorSharesMutation();
+  const isPending = exportMutation.isPending;
 
   const handleClick = async () => {
-    if (isFetching) {
+    if (isPending) {
       return;
     }
 
@@ -44,7 +44,10 @@ export const ExportNviStatusLink = ({ acronym }: ExportNviStatusLinkProps) => {
       URL.revokeObjectURL(url);
     } catch {
       dispatch(
-        setNotification({ message: exportMutation.error?.message ?? 'Kunne ikke generere rapport', variant: 'error' })
+        setNotification({
+          message: exportMutation.error?.message ?? t('feedback.error.generate_nvi_report'),
+          variant: 'error',
+        })
       );
     }
   };
@@ -55,14 +58,14 @@ export const ExportNviStatusLink = ({ acronym }: ExportNviStatusLinkProps) => {
       type="button"
       data-testid={dataTestId.common.exportLink}
       onClick={handleClick}
-      disabled={isFetching}
+      disabled={isPending}
       sx={{
         pl: '0.5rem',
         display: 'inline-flex',
         alignItems: 'center',
-        cursor: isFetching ? 'default' : 'pointer',
+        cursor: isPending ? 'default' : 'pointer',
       }}>
-      {isFetching ? <CircularProgress size={15} /> : <FileDownloadOutlinedIcon fontSize="small" />}
+      {isPending ? <CircularProgress size={15} /> : <FileDownloadOutlinedIcon fontSize="small" />}
       {t('export_dataset_for_nvi_report')}
     </Link>
   );
