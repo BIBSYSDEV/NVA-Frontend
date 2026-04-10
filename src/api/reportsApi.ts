@@ -50,6 +50,11 @@ const buildAcceptHeader = (options: ReportRequestOptions): string => {
 
 const sleep = (ms: number, signal?: AbortSignal): Promise<void> =>
   new Promise((resolve, reject) => {
+    if (signal?.aborted) {
+      reject(new DOMException('Aborted', 'AbortError'));
+      return;
+    }
+
     const onAbort = () => {
       clearTimeout(id);
       reject(new DOMException('Aborted', 'AbortError'));
@@ -138,7 +143,16 @@ export const pollForReportReady = async (presignedUrl: string, options: PollOpti
         continue;
       }
 
-      const message = err?.response?.data || err?.message || 'Kunne ikke generere rapport.';
+      let message = err?.message || 'Kunne ikke generere rapport.';
+      if (err?.response?.data instanceof Blob) {
+        try {
+          message = await err.response.data.text();
+        } catch {
+          // Keep default message if blob reading fails
+        }
+      } else if (err?.response?.data) {
+        message = String(err.response.data);
+      }
       throw new Error(i18n.t('feedback.error.generate_nvi_report_status', { status: status, message: message }));
     }
   }
