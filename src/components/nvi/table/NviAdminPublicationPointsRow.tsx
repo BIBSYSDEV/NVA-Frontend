@@ -1,9 +1,9 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { PercentageWithIcon } from '../../../../components/_atoms/PercentageWithIcon';
-import { HorizontalBox } from '../../../../components/styled/Wrappers';
-import { CenteredTableCell } from '../../../../styles/table-styles';
-import { InstitutionReport } from '../../../../types/nvi.types';
+import { PercentageWithIcon } from '../../_molecules/PercentageWithIcon';
+import { HorizontalBox } from '../../styled/Wrappers';
+import { CenteredTableCell } from '../../../styles/table-styles';
+import { InstitutionReport } from '../../../types/nvi.types';
 import {
   getNviApprovedByEverybody,
   getNviApprovedCount,
@@ -11,7 +11,8 @@ import {
   getNviInstitutionName,
   getNviSectorLabel,
   getNviValidPoints,
-} from './nviAdminHelpers';
+} from '../../../pages/basic_data/app_admin/nviAdmin/nviAdminHelpers';
+import { CenteredPercentageControlledCell } from './nvi-table-styles';
 
 interface NviAdminPublicationPointsRowProps {
   report: InstitutionReport;
@@ -33,11 +34,11 @@ export const NviAdminPublicationPointsRow = ({ report }: NviAdminPublicationPoin
       <CenteredTableCell>{getNviCountOthersMustApprove(report)}</CenteredTableCell>
       <CenteredTableCell>{approvedByEverybody}</CenteredTableCell>
       <CenteredTableCell>{getNviValidPoints(report)}</CenteredTableCell>
-      <TableCell>
+      <CenteredPercentageControlledCell>
         <HorizontalBox sx={{ justifyContent: 'center' }}>
           <PercentageWithIcon displayPercentage={Math.floor(percentageControlled * 100)} alternativeIfZero={'-'} />
         </HorizontalBox>
-      </TableCell>
+      </CenteredPercentageControlledCell>
     </TableRow>
   );
 };

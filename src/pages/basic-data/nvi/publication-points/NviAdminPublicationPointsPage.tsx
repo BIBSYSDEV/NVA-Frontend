@@ -1,5 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { CenteredPercentageControlledCell } from '../../../../components/nvi/table/nvi-table-styles';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { AdminNviPublicationPointsTexts } from '../../../../components/AdminNviPublicationPointsTexts';
@@ -9,7 +10,7 @@ import { CenteredTableCell } from '../../../../styles/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../../messages/components/NviPointsQuestionIcon';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
-import { NviAdminPublicationPointsRow } from '../../../basic_data/app_admin/nviAdmin/NviAdminPublicationPointsRow';
+import { NviAdminPublicationPointsRow } from '../../../../components/nvi/table/NviAdminPublicationPointsRow';
 import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 
 export const NviAdminPublicationPointsPage = () => {
@@ -45,7 +46,7 @@ export const NviAdminPublicationPointsPage = () => {
                       <NviPointsQuestionIcon variant={NviPointsModalVariant.Admin} />
                     </HorizontalBox>
                   </CenteredTableCell>
-                  <CenteredTableCell>{t('percentage_approved')}</CenteredTableCell>
+                  <CenteredPercentageControlledCell>{t('percentage_approved')}</CenteredPercentageControlledCell>
                 </TableRow>
               </TableHead>
               <TableBody>

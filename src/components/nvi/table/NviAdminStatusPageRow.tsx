@@ -1,10 +1,10 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ViewContactInfoButton } from '../../../../components/buttons/ViewContactInfoButton';
-import { PercentageWithIcon } from '../../../../components/_atoms/PercentageWithIcon';
-import { HorizontalBox } from '../../../../components/styled/Wrappers';
-import { CenteredTableCell } from '../../../../styles/table-styles';
-import { InstitutionReport } from '../../../../types/nvi.types';
+import { ViewContactInfoButton } from '../../buttons/ViewContactInfoButton';
+import { PercentageWithIcon } from '../../_molecules/PercentageWithIcon';
+import { HorizontalBox } from '../../styled/Wrappers';
+import { CenteredTableCell } from '../../../styles/table-styles';
+import { InstitutionReport } from '../../../types/nvi.types';
 
 import {
   getNviApprovedCount,
@@ -13,7 +13,8 @@ import {
   getNviRejectedCount,
   getNviSectorLabel,
   getNviTotalCount,
-} from './nviAdminHelpers';
+} from '../../../pages/basic_data/app_admin/nviAdmin/nviAdminHelpers';
+import { CenteredContactInformationCell, CenteredPercentageControlledCell } from './nvi-table-styles';
 
 interface NviAdminStatusPageRowProps {
   report: InstitutionReport;
@@ -39,14 +40,14 @@ export const NviAdminStatusPageRow = ({ report, openContactInformation }: NviAdm
       <CenteredTableCell>{getNviRejectedCount(report)}</CenteredTableCell>
       <CenteredTableCell>{totals.disputedCount}</CenteredTableCell>
       <CenteredTableCell>{getNviTotalCount(report)}</CenteredTableCell>
-      <CenteredTableCell>
+      <CenteredPercentageControlledCell>
         <HorizontalBox sx={{ justifyContent: 'center' }}>
           <PercentageWithIcon displayPercentage={Math.floor(percentageControlled * 100)} alternativeIfZero={'-'} />
         </HorizontalBox>
-      </CenteredTableCell>
-      <CenteredTableCell>
-        <ViewContactInfoButton onClick={() => openContactInformation(true)} />
-      </CenteredTableCell>
+      </CenteredPercentageControlledCell>
+      <CenteredContactInformationCell>
+        <ViewContactInfoButton onClick={() => onClickContactInformation(report.institution.id)} />
+      </CenteredContactInformationCell>
     </TableRow>
   );
 };

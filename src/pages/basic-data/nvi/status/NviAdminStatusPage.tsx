@@ -12,6 +12,10 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { Trans, useTranslation } from 'react-i18next';
 import { InstitutionContactInformationDialog } from '../../../../components/dialogs/InstitutionContactInformationDialog';
+import {
+  CenteredContactInformationCell,
+  CenteredPercentageControlledCell,
+} from '../../../../components/nvi/table/nvi-table-styles';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
@@ -62,13 +66,13 @@ export const NviAdminStatusPage = () => {
                   <CenteredTableCell>{t('rejected')}</CenteredTableCell>
                   <CenteredTableCell>{t('disputes')}</CenteredTableCell>
                   <CenteredTableCell>{t('common.total_number')}</CenteredTableCell>
-                  <CenteredTableCell>{t('percentage_controlled')}</CenteredTableCell>
-                  <TableCell>
+                  <CenteredPercentageControlledCell>{t('percentage_controlled')}</CenteredPercentageControlledCell>
+                  <CenteredContactInformationCell>
                     {/* This cell is hidden to make the number of cells in the table header the same as in the table row, where we display a button for displaying contact information */}
                     <Box component="span" sx={visuallyHidden}>
                       {t('view_contact_info_short')}
                     </Box>
-                  </TableCell>
+                  </CenteredContactInformationCell>
                 </TableRow>
               </TableHead>
               <TableBody>
