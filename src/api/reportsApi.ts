@@ -165,6 +165,10 @@ export const generateReportFile = async (options: DownloadReportOptions): Promis
   const innerSignal = controller.signal;
 
   if (options.signal) {
+    if (options.signal.aborted) {
+      controller.abort();
+    }
+
     options.signal.addEventListener('abort', () => controller.abort(), {
       once: true,
     });
