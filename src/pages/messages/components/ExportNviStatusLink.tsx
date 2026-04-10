@@ -2,7 +2,7 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { CircularProgress, Link } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useExportNviAuthorSharesMutation } from '../../../api/hooks/useExportNviStatusMutation';
+import { useExportNviAuthorSharesMutation } from '../../../api/hooks/useExportNviAuthorSharesMutation';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
