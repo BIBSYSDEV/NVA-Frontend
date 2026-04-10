@@ -40,7 +40,7 @@ export const NviAdminNavigationAccordion = () => {
             <NviReportProgressBar
               completedPercentage={
                 periodTotals.undisputedTotalCount > 0
-                  ? Math.round((periodTotals.undisputedProcessedCount / periodTotals.undisputedTotalCount) * 100)
+                  ? Math.floor((periodTotals.undisputedProcessedCount / periodTotals.undisputedTotalCount) * 100)
                   : 0
               }
               completedCount={periodTotals.undisputedProcessedCount}
