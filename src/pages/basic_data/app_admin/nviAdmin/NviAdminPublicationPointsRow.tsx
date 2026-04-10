@@ -11,7 +11,7 @@ import {
   getNviInstitutionName,
   getNviSectorLabel,
   getNviValidPoints,
-  getPercentageControlled,
+  getPercentageControlledPublicationPoints,
 } from './nviAdminHelpers';
 
 interface NviAdminPublicationPointsRowProps {
@@ -20,7 +20,7 @@ interface NviAdminPublicationPointsRowProps {
 
 export const NviAdminPublicationPointsRow = ({ report }: NviAdminPublicationPointsRowProps) => {
   const { t } = useTranslation();
-  const percentageControlled = getPercentageControlled(report);
+  const percentageControlled = getPercentageControlledPublicationPoints(report);
 
   return (
     <TableRow key={report.id} sx={{ height: '4rem' }}>
