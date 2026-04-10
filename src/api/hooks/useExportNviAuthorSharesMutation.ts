@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { generateReportFile, ReportProfile } from '../reportsApi';
+import { generateReportFile, ReportProfile } from '../reports-api';
 
 interface ExportNviStatusParams {
   year: number;
@@ -8,15 +8,13 @@ interface ExportNviStatusParams {
 export const useExportNviAuthorSharesMutation = () => {
   return useMutation({
     mutationFn: async ({ year, institutionId }: ExportNviStatusParams) => {
-      const file = await generateReportFile({
+      return await generateReportFile({
         year,
         institutionId,
         format: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         profile: ReportProfile.AuthorShares,
         maxTimeMs: 600000,
       });
-
-      return file;
     },
   });
 };
