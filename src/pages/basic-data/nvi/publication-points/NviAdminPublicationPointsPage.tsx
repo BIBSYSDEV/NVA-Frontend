@@ -9,7 +9,7 @@ import { CenteredTableCell } from '../../../../styles/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../../messages/components/NviPointsQuestionIcon';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
-import { NviAdminPublicationPointsRow } from '../../../basic_data/app_admin/nviAdmin/NviAdminPublicationPointsRow';
+import { NviAdminPublicationPointsRow } from '../../../../components/nvi/table/NviAdminPublicationPointsRow';
 import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 
 export const NviAdminPublicationPointsPage = () => {
