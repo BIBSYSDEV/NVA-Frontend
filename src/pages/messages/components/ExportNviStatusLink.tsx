@@ -42,10 +42,11 @@ export const ExportNviStatusLink = ({ acronym }: ExportNviStatusLinkProps) => {
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-    } catch {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : t('feedback.error.generate_nvi_report');
       dispatch(
         setNotification({
-          message: exportMutation.error?.message ?? t('feedback.error.generate_nvi_report'),
+          message,
           variant: 'error',
         })
       );

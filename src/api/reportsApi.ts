@@ -71,11 +71,11 @@ const sleep = (ms: number, signal?: AbortSignal): Promise<void> =>
   });
 
 export const fetchReport = async (options: ReportRequestOptions, signal?: AbortSignal): Promise<ReportInitResponse> => {
-  const { year, institutionId } = options;
-  const path =
-    institutionId != null
-      ? `/reports/${year}/institutions/${encodeURIComponent(institutionId)}`
-      : `/reports/${year}/institutions`;
+  const { year } = options;
+  const institutionId = options.institutionId?.trim();
+  const path = institutionId
+    ? `/reports/${year}/institutions/${encodeURIComponent(institutionId)}`
+    : `/reports/${year}/institutions`;
 
   const url = `${BASE_URL}${path}`;
   const acceptHeader = buildAcceptHeader(options);
@@ -143,7 +143,7 @@ export const pollForReportReady = async (presignedUrl: string, options: PollOpti
         continue;
       }
 
-      let message = err?.message || 'Kunne ikke generere rapport.';
+      let message = err?.message || i18n.t(`feedback.error.generate_nvi_report`);
       if (err?.response?.data instanceof Blob) {
         try {
           message = await err.response.data.text();
