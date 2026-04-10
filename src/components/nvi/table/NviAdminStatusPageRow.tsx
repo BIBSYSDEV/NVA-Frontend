@@ -18,10 +18,10 @@ import { CenteredContactInformationCell, CenteredPercentageControlledCell } from
 
 interface NviAdminStatusPageRowProps {
   report: InstitutionReport;
-  openContactInformation: (val: boolean) => void;
+  onClickContactInformation: (institutionId: string) => void;
 }
 
-export const NviAdminStatusPageRow = ({ report, openContactInformation }: NviAdminStatusPageRowProps) => {
+export const NviAdminStatusPageRow = ({ report, onClickContactInformation }: NviAdminStatusPageRowProps) => {
   const { t } = useTranslation();
   const { id, institutionSummary } = report;
   const { byLocalApprovalStatus, totals } = institutionSummary;

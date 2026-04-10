@@ -24,13 +24,19 @@ import { CenteredTableCell } from '../../../../styles/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
-import { NviAdminStatusPageRow } from '../../../basic_data/app_admin/nviAdmin/NviAdminStatusPageRow';
+import { NviAdminStatusPageRow } from '../../../../components/nvi/table/NviAdminStatusPageRow';
 import { useState } from 'react';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
-  const [contactInfoDialogOpen, setContactInfoDialogOpen] = useState(false);
+  const [isContactInfoDialogOpen, setIsContactInfoDialogOpen] = useState(false);
+  const [institutionToDisplayId, setInstitutionToDisplayId] = useState('');
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
+
+  const onClickContactInformationButton = (institutionId: string) => {
+    setIsContactInfoDialogOpen(true);
+    setInstitutionToDisplayId(institutionId);
+  };
 
   return (
     <NviStatusWrapper
@@ -80,15 +86,16 @@ export const NviAdminStatusPage = () => {
                   <NviAdminStatusPageRow
                     report={report}
                     key={report.id}
-                    openContactInformation={setContactInfoDialogOpen}
+                    onClickContactInformation={onClickContactInformationButton}
                   />
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
           <InstitutionContactInformationDialog
-            isOpen={contactInfoDialogOpen}
-            onClose={() => setContactInfoDialogOpen(false)}
+            isOpen={isContactInfoDialogOpen}
+            onClose={() => setIsContactInfoDialogOpen(false)}
+            institutionToDisplayId={institutionToDisplayId}
           />
         </VerticalBox>
       )}

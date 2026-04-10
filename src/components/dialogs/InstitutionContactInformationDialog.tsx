@@ -5,9 +5,14 @@ import { BaseDialog } from '../_molecules/BaseDialog';
 interface InstitutionContactInformationDialogProps {
   isOpen: boolean;
   onClose: () => void;
+  institutionToDisplayId: string;
 }
 
-export const InstitutionContactInformationDialog = ({ isOpen, onClose }: InstitutionContactInformationDialogProps) => {
+export const InstitutionContactInformationDialog = ({
+  isOpen,
+  onClose,
+  institutionToDisplayId,
+}: InstitutionContactInformationDialogProps) => {
   const { t } = useTranslation();
 
   return (
@@ -16,7 +21,7 @@ export const InstitutionContactInformationDialog = ({ isOpen, onClose }: Institu
       onClose={onClose}
       dialogTitle={t('contact_point_for_institution')}
       dataTestId={dataTestId.institutionContactInformationDialog}>
-      hei
+      {institutionToDisplayId}
     </BaseDialog>
   );
 };
