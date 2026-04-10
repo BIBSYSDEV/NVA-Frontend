@@ -1,6 +1,6 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { PercentageWithIcon } from '../../../../components/_atoms/PercentageWithIcon';
+import { PercentageWithIcon } from '../../../../components/_molecules/PercentageWithIcon';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../styles/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
