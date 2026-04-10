@@ -1,7 +1,8 @@
 import { AxiosRequestConfig } from 'axios';
-import { authenticatedApiRequest2 } from './apiRequest';
+import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
+import { API_URL } from '../utils/constants';
 
-const BASE_URL = 'https://api.nva.unit.no/scientific-index';
+const BASE_URL = `${API_URL}scientific-index`;
 
 export type ReportFormat =
   | 'application/json'
@@ -119,7 +120,7 @@ export const pollForReportReady = async (presignedUrl: string, options: PollOpti
         signal,
       };
 
-      const reportResponse = await authenticatedApiRequest2<Blob>(requestConfig);
+      const reportResponse = await apiRequest2<Blob>(requestConfig);
 
       return reportResponse.data;
     } catch (err: any) {
@@ -134,6 +135,7 @@ export const pollForReportReady = async (presignedUrl: string, options: PollOpti
         await sleep(delay, signal);
         delay = Math.min(delay * 2, maxDelayMs);
         continue;
+        console.log('polling...');
       }
 
       const message = err?.response?.data || err?.message || 'Kunne ikke generere rapport.';
