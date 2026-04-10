@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router';
-import { getNviInstitutionName } from '../../pages/basic_data/app_admin/nviAdmin/nviAdminHelpers';
+import { getNviInstitutionName } from '../../components/nvi/table/nvi-admin-table-helpers';
 import { InstitutionReport } from '../../types/nvi.types';
 
 export const useFilterInstitutionReportsByUrl = (reports: InstitutionReport[]) => {

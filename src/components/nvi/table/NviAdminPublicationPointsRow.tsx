@@ -12,7 +12,7 @@ import {
   getNviSectorLabel,
   getNviValidPoints,
   getPercentageControlledPublicationPoints,
-} from '../../../pages/basic_data/app_admin/nviAdmin/nviAdminHelpers';
+} from './nvi-admin-table-helpers';
 
 interface NviAdminPublicationPointsRowProps {
   report: InstitutionReport;

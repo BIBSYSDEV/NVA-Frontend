@@ -8,7 +8,7 @@ import {
   getNviSectorLabel,
   getNviTotalCount,
   getNviValidPoints,
-} from '../../../pages/basic_data/app_admin/nviAdmin/nviAdminHelpers';
+} from '../../nvi/table/nvi-admin-table-helpers';
 import { InstitutionReport } from '../../../types/nvi.types';
 import { SortSelectorOption } from '../../_molecules/SortSelector';
 import { NviAdminSortSelectorType } from './nvi-admin-sort-types';

@@ -13,7 +13,7 @@ import {
   getNviSectorLabel,
   getNviTotalCount,
   getPercentageControlled,
-} from '../../../pages/basic_data/app_admin/nviAdmin/nviAdminHelpers';
+} from './nvi-admin-table-helpers';
 
 interface NviAdminStatusPageRowProps {
   report: InstitutionReport;
