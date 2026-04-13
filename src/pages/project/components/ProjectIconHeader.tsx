@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ProjectIcon } from '../../../components/atoms/ProjectIcon';
+import { ProjectIcon } from '../../../components/_atoms/ProjectIcon';
 import { ProjectStatus } from '../../../types/project.types';
 
 interface ProjectIconHeaderProps {

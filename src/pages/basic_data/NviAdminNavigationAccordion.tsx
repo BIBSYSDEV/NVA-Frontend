@@ -8,6 +8,7 @@ import { NavigationListAccordion } from '../../components/NavigationListAccordio
 import { NviReportProgressBar } from '../../components/NviReportProgressBar';
 import { LinkCreateButton, NavigationList } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
+import { NviAdminOrderBy } from '../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-helpers';
 import { StyledNviStatusBox } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -39,7 +40,7 @@ export const NviAdminNavigationAccordion = () => {
             <NviReportProgressBar
               completedPercentage={
                 periodTotals.undisputedTotalCount > 0
-                  ? Math.round((periodTotals.undisputedProcessedCount / periodTotals.undisputedTotalCount) * 100)
+                  ? Math.floor((periodTotals.undisputedProcessedCount / periodTotals.undisputedTotalCount) * 100)
                   : 0
               }
               completedCount={periodTotals.undisputedProcessedCount}
@@ -63,7 +64,7 @@ export const NviAdminNavigationAccordion = () => {
             <SelectableButton
               data-testid={dataTestId.basicData.nviPublicationPointsLink}
               isSelected={currentPath === UrlPathTemplate.BasicDataNviPublicationPoints}
-              to={`${UrlPathTemplate.BasicDataNviPublicationPoints}?year=${getDefaultNviYear()}`}>
+              to={`${UrlPathTemplate.BasicDataNviPublicationPoints}?year=${getDefaultNviYear()}&orderBy=${NviAdminOrderBy.Institution}&sort=asc`}>
               {t('basic_data.nvi.show_publication_points_status')}
             </SelectableButton>
           </Box>

@@ -1,11 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { VerticalBox } from '../../../components/styled/Wrappers';
-import { ExportNviStatusButton } from './ExportNviStatusButton';
 import { NviInstitutionSearch } from './NviInstitutionSearch';
 import { NviSectorSelector } from './NviSectorSelector';
 import { NviVisibilitySelector } from './NviVisibilitySelector';
 import { NviYearSelector } from './NviYearSelector';
+import { ExportNviStatusButton } from './ExportNviStatusButton';
 
 interface NviStatusWrapperProps {
   headline: string;

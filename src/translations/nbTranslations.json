@@ -158,8 +158,10 @@
     }
   },
   "candidate": "Kandidat",
+  "candidates_approved_by_the_institution": "Kandidater institusjonen har godkjent",
   "candidates_everyone_has_approved": "Kandidater alle har godkjent",
-  "candidates_we_have_approved": "Kandidater vi har godkjent",
+  "candidates_others_must_approve": "Kandidater andre må godkjenne",
+  "candidates_our_institution_has_approved": "Kandidater vår institusjon har godkjent",
   "cannot_copy_category_from_another_context_type": "<p>Du kan ikke kopiere metadata fra kategorifanen hvis resultatet tilhører en annen hovedkategori.</p><p>Denne informasjonen må registreres manuelt etter at resten av metadata er kopiert.</p>",
   "common": {
     "actions": "Handlinger",
@@ -540,6 +542,8 @@
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
     }
   },
+  "export_dataset_for_nvi_report": "Eksporter datagrunnlag for NVI-rapport",
+  "export_nvi_status_button_tooltip_text": "Knapp for nedlasting av forfatterandel er flyttet til side for publiseringspoeng. Denne knappen er midlertidig deaktivert — nedlasting av tall fra tabellen kommer snart.",
   "feedback": {
     "error": {
       "404_page": "<span><icon /><h1>Beklager, men vi kan ikke finne siden du ser etter</h1></span><p>Siden du leter etter finnes ikke, eller nettadressen er feil.</p><p>Endre nettadressen eller bruk menyen for å naviger deg til korrekt side.</p>",
@@ -567,6 +571,9 @@
       "download_file": "Kunne ikke laste ned fil",
       "fetch": "Kunne ikke hente {{resource}}",
       "fetch_log": "Kunne ikke hente logg",
+      "generate_nvi_report": "Kunne ikke generere rapport",
+      "generate_nvi_report_status": "Feil ved nedlasting av rapport (HTTP {{status}}: {{message}}",
+      "generate_nvi_report_timeout": "Tidsavbrudd: rapporten ble ikke ferdig generert innen {{seconds}} sekunder. Prøv igjen senere.",
       "get_affiliation_name": "Kunne ikke hente navn på tilknytning for {{unitUri}}",
       "get_channel_claim": "Kunne ikke hente kanaleierskap",
       "get_curators_for_institution": "Kunne ikke hente kuratorer",
@@ -1006,6 +1013,7 @@
   "point_of_contact": "Kontaktpunkt",
   "point_of_contact_description": "Har du spørsmål angående forskningsresultatet?",
   "points_for_reporting": "Poeng til rapportering",
+  "points_for_reporting_admin_modal_text": "<p>Poengene i tabellen viser poeng for kandidater som er godkjent av alle institusjoner, altså poeng for kandidater som er klare til rapportering.</p><p>Tabellen viser antall poeng for NVI-kandidater adressert på de ulike underenhetene. Vær obs på at hvis en NVI-kandidat har adressert flere underenheter på egen institusjon, vil samme poeng for NVI-kandidat telles på flere underenheter. Du kan derfor ikke summere kolonnene vertikalt, kun horisontalt.</p><p>Ønsker du å vite hvordan poengene beregnes?</p>",
   "points_for_reporting_modal_text": "<p>Poengene i tabellen viser poeng for kandidater som er godkjent av alle. Altså poeng for kandidater som er klar til rapporteringen.</p><p>Tabellen viser antall poeng for kandidater adressert på de ulike underenhetene. Vær obs på at hvis en kandidat har adressert flere underenheter på egen institusjon, vil samme poeng for kandidaten telles på flere underenheter. Du kan derfor ikke summere kolonnene vertikalt, kun horisontalt.</p><p>Ønsker du å vite hvordan poengene beregnes?</p>",
   "points_of_contact_for_result": "Kontaktpunkt for resultat",
   "privacy_statement": "Personvernerklæring",
@@ -1956,6 +1964,25 @@
   "show_only_norwegian_contributors": "Vis kun norske bidragsytere",
   "show_only_unconfirmed_affiliations": "Vis kun uidentifiserte tilknytninger",
   "show_only_units_with_candidates": "Vis kun enheter med kandidater",
+  "sort_by": "Sorter på:",
+  "sort_by_candidates_approved_by_everybody_asc": "Kandidater alle har godkjent (stigende)",
+  "sort_by_candidates_approved_by_everybody_desc": "Kandidater alle har godkjent (synkende)",
+  "sort_by_candidates_approved_by_institution_asc": "Kandidater institusjonen har godkjent (stigende)",
+  "sort_by_candidates_approved_by_institution_desc": "Kandidater institusjonen har godkjent (synkende)",
+  "sort_by_institution_asc": "Institusjon (A-Å)",
+  "sort_by_institution_desc": "Institusjon (Å-A)",
+  "sort_by_number_of_approved_candidates_asc": "Antall godkjent (stigende)",
+  "sort_by_number_of_approved_candidates_desc": "Antall godkjent (synkende)",
+  "sort_by_number_of_candidates_asc": "Antall kandidater (stigende)",
+  "sort_by_number_of_candidates_desc": "Antall kandidater (synkende)",
+  "sort_by_number_of_rejected_candidates_asc": "Antall avviste (stigende)",
+  "sort_by_number_of_rejected_candidates_desc": "Antall avviste (synkende)",
+  "sort_by_points_asc": "Poeng til rapportering (stigende)",
+  "sort_by_points_desc": "Poeng til rapportering (synkende)",
+  "sort_by_sector_asc": "Sektor (A-Å)",
+  "sort_by_sector_desc": "Sektor (Å-A)",
+  "sort_by_total_number_asc": "Totalt antall (stigende)",
+  "sort_by_total_number_desc": "Totalt antall (synkende)",
   "start_merging": "Start sammenslåing",
   "tasks": {
     "correction_list": "Retteliste",
@@ -2071,7 +2098,7 @@
   "visibility_of_units": "Visning av enheter",
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
-  "x_results_are_ready_for_reporting_and_they_give_y_points": "<p><bold>{{num_publications_approved_by_all}} resultat</bold> er klar for rapportering, og de gir <bold>{{points_for_all_publications_approved_by_all}} publiseringspoeng.</bold></p>",
+  "x_results_are_ready_for_reporting_and_they_give_y_points": "<p><bold>{{num_publications_approved_by_all}} resultat</bold> er klar for rapportering, og de gir <bold>{{points_for_all_publications_approved_by_all}} publiseringspoeng.</bold><link></p>",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er klar for rapportering, og de gir <b>{{total_publicationpoints}} publiseringspoeng.</b>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."

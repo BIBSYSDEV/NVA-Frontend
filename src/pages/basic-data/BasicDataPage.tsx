@@ -25,17 +25,17 @@ import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils
 import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
 import { SerialPublicationClaimsSettings } from '../editor/SerialPublicationClaimsSettings';
 import NotFound from '../errorpages/NotFound';
-import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
-import { CentralImportCandidateForm } from './app_admin/central_import/CentralImportCandidateForm';
-import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
-import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
-import { ImportCandidatesMenuFilters } from './app_admin/central_import/ImportCandidatesMenuFilters';
-import { NviAdminPublicationPointsPage } from './app_admin/NviAdminPublicationPointsPage';
-import { NviAdminStatusPage } from './app_admin/NviAdminStatusPage';
-import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
-import { AddEmployeePage } from './institution_admin/AddEmployeePage';
-import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
-import { NviAdminNavigationAccordion } from './NviAdminNavigationAccordion';
+import { AdminCustomerInstitutionsContainer } from '../basic_data/app_admin/AdminCustomerInstitutionsContainer';
+import { CentralImportCandidateForm } from '../basic_data/app_admin/central_import/CentralImportCandidateForm';
+import { CentralImportDuplicationCheckPage } from '../basic_data/app_admin/central_import/CentralImportDuplicationCheckPage';
+import { CentralImportPage } from '../basic_data/app_admin/central_import/CentralImportPage';
+import { ImportCandidatesMenuFilters } from '../basic_data/app_admin/central_import/ImportCandidatesMenuFilters';
+import { NviAdminPublicationPointsPage } from './nvi/publication-points/NviAdminPublicationPointsPage';
+import { NviAdminStatusPage } from './nvi/status/NviAdminStatusPage';
+import { NviPeriodsPage } from '../basic_data/app_admin/NviPeriodsPage';
+import { AddEmployeePage } from '../basic_data/institution_admin/AddEmployeePage';
+import { PersonRegisterPage } from '../basic_data/institution_admin/person_register/PersonRegisterPage';
+import { NviAdminNavigationAccordion } from '../basic_data/NviAdminNavigationAccordion';
 
 const isOnEditOrMergeImportCandidate = (path: string) =>
   path.endsWith(UrlPathTemplate.BasicDataCentralImportCandidateWizard.split('/').pop() as string) ||

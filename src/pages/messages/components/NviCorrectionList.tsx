@@ -6,16 +6,14 @@ import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
+import { hideChannelFiltersListIds, scientificValueFilterListIds } from '../../../utils/correctionListHelpers';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
-import {
-  ScientificValueFilter,
-  ScientificValueFilterListIds,
-} from '../../search/advanced_search/ScientificValueFilter';
+import { ScientificValueFilter } from '../../search/advanced_search/ScientificValueFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
 import { ExportResultsButton } from '../../search/ExportResultsButton';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
@@ -31,7 +29,8 @@ export const NviCorrectionList = () => {
   const correctionListConfig = useCorrectionListConfig();
   const listConfig = listId && correctionListConfig[listId];
   const shouldShowScientificValueFilter =
-    !!listId && ScientificValueFilterListIds.includes(listId as CorrectionListNames);
+    !!listId && scientificValueFilterListIds.includes(listId as CorrectionListNames);
+  const hideChannelFilters = !!listId && hideChannelFiltersListIds.includes(listId as CorrectionListNames);
 
   const registrationParams = useRegistrationsQueryParams();
   const exportParams = new URLSearchParams(sanitizeSearchParams({ ...listConfig?.queryParams, ...registrationParams }));
@@ -76,13 +75,15 @@ export const NviCorrectionList = () => {
 
               {shouldShowScientificValueFilter && <ScientificValueFilter />}
 
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
-                <PublisherFilter />
-                <JournalFilter />
-                <SeriesFilter />
-                <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
-                <CorrectionListYearFilter />
-              </Box>
+              {!hideChannelFilters && (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
+                  <PublisherFilter />
+                  <JournalFilter />
+                  <SeriesFilter />
+                  <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
+                  <CorrectionListYearFilter />
+                </Box>
+              )}
             </Box>
             <Box sx={{ m: '0.5rem', alignSelf: 'top' }}>
               <ExportResultsButton showText searchParams={exportParams} />
