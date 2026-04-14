@@ -1,9 +1,9 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { PercentageWithIcon } from '../../../../components/_atoms/PercentageWithIcon';
-import { HorizontalBox } from '../../../../components/styled/Wrappers';
-import { CenteredTableCell } from '../../../../styles/table-styles';
-import { InstitutionReport } from '../../../../types/nvi.types';
+import { PercentageWithIcon } from '../../_molecules/PercentageWithIcon';
+import { HorizontalBox } from '../../styled/Wrappers';
+import { CenteredTableCell } from '../../../styles/table-styles';
+import { InstitutionReport } from '../../../types/nvi.types';
 import {
   getNviApprovedByEverybody,
   getNviApprovedCount,
@@ -12,7 +12,7 @@ import {
   getNviSectorLabel,
   getNviValidPoints,
   getPercentageControlledPublicationPoints,
-} from './nviAdminHelpers';
+} from './nvi-admin-table-helpers';
 
 interface NviAdminPublicationPointsRowProps {
   report: InstitutionReport;
