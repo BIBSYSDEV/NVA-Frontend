@@ -543,6 +543,7 @@
     }
   },
   "export_dataset_for_nvi_report": "Eksporter datagrunnlag for NVI-rapport",
+  "export_dataset_for_nvi_report_description": "<p>Filen inneholder NVI-kandidater som er godkjent eller fortsatt under kontroll. </p><p>Kandidater som er avvist av en eller flere institusjoner er ikke med i oversikten.</p>",
   "export_nvi_status_button_tooltip_text": "Knapp for nedlasting av forfatterandel er flyttet til side for publiseringspoeng. Denne knappen er midlertidig deaktivert — nedlasting av tall fra tabellen kommer snart.",
   "feedback": {
     "error": {
