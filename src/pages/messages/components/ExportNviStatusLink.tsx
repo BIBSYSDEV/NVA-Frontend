@@ -11,10 +11,10 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 
 interface ExportNviStatusLinkProps {
   acronym?: string;
-  isOnAdminPage?: boolean;
+  exportAllInstitutions?: boolean;
 }
 
-export const ExportNviStatusLink = ({ acronym, isOnAdminPage }: ExportNviStatusLinkProps) => {
+export const ExportNviStatusLink = ({ acronym, exportAllInstitutions }: ExportNviStatusLinkProps) => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ export const ExportNviStatusLink = ({ acronym, isOnAdminPage }: ExportNviStatusL
     }
 
     try {
-      const blob = isOnAdminPage
+      const blob = exportAllInstitutions
         ? await exportMutation.mutateAsync({ year })
         : await exportMutation.mutateAsync({ year, institutionId });
 

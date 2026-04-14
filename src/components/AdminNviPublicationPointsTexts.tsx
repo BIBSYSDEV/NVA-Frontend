@@ -33,7 +33,7 @@ export const AdminNviPublicationPointsTexts = () => {
                 approvals: formatLocaleNumber(periodTotals.undisputedTotalCount),
                 publication_points: formatLocaleNumber(periodTotals.validPoints),
               }}
-              components={{ p: <Typography />, b: <strong />, link: <ExportNviStatusLink isOnAdminPage /> }}
+              components={{ p: <Typography />, b: <strong />, link: <ExportNviStatusLink exportAllInstitutions /> }}
             />
             <HelperTextModal modalTitle={t('export_dataset_for_nvi_report')}>
               <Trans i18nKey="export_dataset_for_nvi_report_description" components={{ p: <Typography /> }} />
