@@ -6,6 +6,7 @@ import { formatLocaleNumber } from '../utils/general-helpers';
 import { getDefaultNviYear } from '../utils/hooks/useNviCandidatesParams';
 import { ExpandableNviTopView } from './ExpandableNviTopView';
 import { VerticalBox } from './styled/Wrappers';
+import { ExportNviStatusLink } from '../pages/messages/components/ExportNviStatusLink';
 
 export const AdminNviPublicationPointsTexts = () => {
   const { t } = useTranslation();
@@ -24,16 +25,14 @@ export const AdminNviPublicationPointsTexts = () => {
         {periodReport.isPending ? (
           <Skeleton sx={{ width: '50%' }} />
         ) : periodReport.isError || !periodTotals ? undefined : (
-          <Typography>
-            <Trans
-              i18nKey="x_results_are_ready_for_reporting_and_they_give_y_publication_points"
-              values={{
-                num_results: formatLocaleNumber(periodTotals.undisputedTotalCount),
-                total_publicationpoints: formatLocaleNumber(periodTotals.validPoints),
-              }}
-              components={{ b: <strong /> }}
-            />
-          </Typography>
+          <Trans
+            i18nKey="x_results_are_ready_for_reporting_and_they_give_y_publication_points"
+            values={{
+              approvals: formatLocaleNumber(periodTotals.undisputedTotalCount),
+              publication_points: formatLocaleNumber(periodTotals.validPoints),
+            }}
+            components={{ p: <Typography />, b: <strong />, link: <ExportNviStatusLink isOnAdminPage /> }}
+          />
         )}
         {periodReport.isPending || periodReportLastYear.isPending ? (
           <Skeleton sx={{ width: '40%' }} />
