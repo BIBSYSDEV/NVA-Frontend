@@ -6,6 +6,7 @@ import { NviSectorSelector } from './NviSectorSelector';
 import { NviVisibilitySelector } from './NviVisibilitySelector';
 import { NviYearSelector } from './NviYearSelector';
 import { ExportNviStatusButton } from './ExportNviStatusButton';
+import { ExportNviPublicationPointsButton } from './ExportNviPublicationPointsButton';
 
 interface NviStatusWrapperProps {
   headline: string;
@@ -15,6 +16,7 @@ interface NviStatusWrapperProps {
   sectorSelector?: boolean;
   institutionSearch?: boolean;
   exportAcronym?: string;
+  exportPublicationPoints?: boolean;
   children?: ReactNode;
 }
 
@@ -26,6 +28,7 @@ export const NviStatusWrapper = ({
   sectorSelector,
   institutionSearch,
   exportAcronym,
+  exportPublicationPoints,
   children,
 }: NviStatusWrapperProps) => {
   return (
@@ -41,7 +44,12 @@ export const NviStatusWrapper = ({
           {institutionSearch && <NviInstitutionSearch sx={{ minWidth: '30rem' }} />}
           {visibilitySelector && <NviVisibilitySelector sx={{ minWidth: '15rem' }} />}
         </Box>
-        {exportAcronym && <ExportNviStatusButton acronym={exportAcronym} />}
+        {exportAcronym &&
+          (exportPublicationPoints ? (
+            <ExportNviPublicationPointsButton acronym={exportAcronym} />
+          ) : (
+            <ExportNviStatusButton />
+          ))}
       </Box>
       {children}
     </VerticalBox>
