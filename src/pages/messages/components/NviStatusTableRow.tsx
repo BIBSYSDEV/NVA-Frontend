@@ -40,12 +40,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
 
   return (
     <>
-      <NviStatusTableRowWrapper
-        level={level}
-        organization={organization}
-        aggregations={aggregations}
-        expanded={expanded}
-        setExpanded={setExpanded}>
+      <NviStatusTableRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpanded}>
         <CenteredTableCell>
           {aggregations ? (
             <Link
