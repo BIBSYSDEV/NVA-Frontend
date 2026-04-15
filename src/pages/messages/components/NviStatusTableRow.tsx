@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
 import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { PercentageWithIcon } from '../../../components/_molecules/PercentageWithIcon';
-import { selfOrDescendantHasCandidates } from '../../../components/nvi/table/nvi-aggregations-helpers';
+import { selfOrDescendantHasCandidates } from '../../../components/nvi/table/utils/nvi-aggregations-helpers';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { CenteredTableCell, TableNumberSkeleton } from '../../../styles/table-styles';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';

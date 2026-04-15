@@ -1,5 +1,5 @@
-import { DirectAffiliationAggregation, NviInstitutionStatusResponse } from '../../../types/nvi.types';
-import { Organization } from '../../../types/organization.types';
+import { DirectAffiliationAggregation, NviInstitutionStatusResponse } from '../../../../types/nvi.types';
+import { Organization } from '../../../../types/organization.types';
 
 /**
  * Checks if an organization has at least one NVI candidate.

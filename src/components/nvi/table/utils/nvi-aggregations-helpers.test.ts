@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
-import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
-import { Organization } from '../../../types/organization.types';
+import { NviInstitutionStatusResponse } from '../../../../types/nvi.types';
+import { Organization } from '../../../../types/organization.types';
 import { selfOrDescendantHasCandidates, selfOrDescendantHasPointValues } from './nvi-aggregations-helpers';
 
 interface OrgValues {
