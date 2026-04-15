@@ -6,14 +6,14 @@ import { PercentageWithIcon } from '../../../components/_molecules/PercentageWit
 import { ALTERNATIVE_TEXT_INSTEAD_OF_ZERO } from '../../../components/nvi/table/constants';
 import { selfOrDescendantHasPointValues } from '../../../components/nvi/table/nvi-aggregations-helpers';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
-import { CenteredTableCell } from '../../../styles/table-styles';
+import { CenteredTableCell, TableNumberSkeleton } from '../../../styles/table-styles';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
-import { NviStatusTableRowWrapper, StyledSkeleton } from './NviStatusTableRowWrapper';
+import { NviStatusTableRowWrapper } from './NviStatusTableRowWrapper';
 
 interface NviPublicationPointsTableRowProps {
   organization: Organization;
@@ -72,7 +72,7 @@ export const NviPublicationPointsTableRow = ({
               {orgAggregations?.approvalStatus.Approved ?? 0}
             </Link>
           ) : (
-            <StyledSkeleton />
+            <TableNumberSkeleton />
           )}
         </CenteredTableCell>
         <CenteredTableCell>
@@ -90,7 +90,7 @@ export const NviPublicationPointsTableRow = ({
               {candidatesOthersMustApprove}
             </Link>
           ) : (
-            <StyledSkeleton />
+            <TableNumberSkeleton />
           )}
         </CenteredTableCell>
         <CenteredTableCell>
@@ -107,10 +107,10 @@ export const NviPublicationPointsTableRow = ({
               {orgAggregations?.globalApprovalStatus.Approved ?? 0}
             </Link>
           ) : (
-            <StyledSkeleton />
+            <TableNumberSkeleton />
           )}
         </CenteredTableCell>
-        <CenteredTableCell>{aggregations ? pointsWithTwoDecimals : <StyledSkeleton />}</CenteredTableCell>
+        <CenteredTableCell>{aggregations ? pointsWithTwoDecimals : <TableNumberSkeleton />}</CenteredTableCell>
         <CenteredTableCell>
           <HorizontalBox sx={{ justifyContent: 'center' }}>
             <PercentageWithIcon
