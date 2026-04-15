@@ -16,6 +16,7 @@ import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviS
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
+import { CenteredTableCell } from '../../../../styles/table-styles';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { NviStatusTableRow } from '../../../messages/components/NviStatusTableRow';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
@@ -39,22 +40,22 @@ export const NviStatusPage = () => {
           <Trans t={t} i18nKey="reporting_status_description" components={[<Typography key="1" />]} />
         </VerticalBox>
       }
-      exportAcronym={organizationQuery.data?.acronym}
+      exportAcronym={institution?.acronym}
       yearSelector
       visibilitySelector>
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
-            <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: 'white' }}>
+            <TableRow sx={{ whiteSpace: 'nowrap' }}>
               <TableCell sx={{ width: '60%' }}>{t('registration.contributors.department')}</TableCell>
-              <TableCell align="center">{t('tasks.nvi.status.New')}</TableCell>
-              <TableCell align="center">{t('tasks.nvi.status.Pending')}</TableCell>
-              <TableCell align="center">{t('tasks.nvi.status.Approved')}</TableCell>
-              <TableCell align="center">{t('tasks.nvi.status.Rejected')}</TableCell>
-              <TableCell align="center">{t('common.total_number')}</TableCell>
-              <TableCell align="center">{t('percentage_controlled')}</TableCell>
+              <CenteredTableCell>{t('tasks.nvi.status.New')}</CenteredTableCell>
+              <CenteredTableCell>{t('tasks.nvi.status.Pending')}</CenteredTableCell>
+              <CenteredTableCell>{t('tasks.nvi.status.Approved')}</CenteredTableCell>
+              <CenteredTableCell>{t('tasks.nvi.status.Rejected')}</CenteredTableCell>
+              <CenteredTableCell>{t('common.total_number')}</CenteredTableCell>
+              <CenteredTableCell>{t('percentage_controlled')}</CenteredTableCell>
               <TableCell>
-                {/* This cell is hidden to make the number of cells in the table header the same as in the table row, where we display an accordion-like arrow to expand or close rows that have subunits */}
+                {/* HACK: This cell is hidden to make the number of cells in the table header the same as in the table row, where we display an accordion-like arrow to expand or close rows that have subunits */}
                 <Box component="span" sx={visuallyHidden}>
                   {t('tasks.nvi.show_subunits')}
                 </Box>

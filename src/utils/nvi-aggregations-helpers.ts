@@ -1,0 +1,24 @@
+import { DirectAffiliationAggregation, NviInstitutionStatusResponse } from '../types/nvi.types';
+import { Organization } from '../types/organization.types';
+
+/**
+ * Checks if an organization has at least one NVI candidate.
+ * @param orgAggregations - The aggregation data for the organization
+ * @returns true if the organization has one or more candidates, false otherwise
+ */
+const orgHasCandidates = (orgAggregations?: DirectAffiliationAggregation) =>
+  orgAggregations && orgAggregations.candidateCount > 0;
+
+/**
+ * Recursively checks if an organization or any of its descendants have NVI candidates.
+ * @param organization - The organization to check, including its hasPart tree
+ * @param aggregations - The NVI status response containing candidate counts per organization
+ * @returns true if the organization itself or any descendant has at least one candidate
+ */
+export const hasOrDescendantHasCandidates = (
+  organization: Omit<Organization, 'acronym'>,
+  aggregations: NviInstitutionStatusResponse | undefined
+): boolean => {
+  if (orgHasCandidates(aggregations?.byOrganization[organization.id])) return true;
+  return organization.hasPart?.some((subUnit) => hasOrDescendantHasCandidates(subUnit, aggregations)) ?? false;
+};

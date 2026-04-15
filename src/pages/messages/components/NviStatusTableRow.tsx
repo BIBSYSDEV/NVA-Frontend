@@ -10,6 +10,7 @@ import { User } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { hasOrDescendantHasCandidates } from '../../../utils/nvi-aggregations-helpers';
 import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
 import { NviStatusTableRowWrapper } from './NviStatusTableRowWrapper';
 
@@ -29,17 +30,17 @@ const StyledSkeleton = styled(Skeleton)({
 export const NviStatusTableRow = ({ organization, aggregations, level = 0, user, year }: NviStatusTableRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
+
   const orgAggregations = aggregations?.byOrganization[organization.id];
-  const rowIsEmpty = !orgAggregations || orgAggregations.candidateCount === 0;
+  const rowOrDecendantHasCandidates = hasOrDescendantHasCandidates(organization, aggregations);
+
+  if (excludeEmptyRows && !rowOrDecendantHasCandidates) return null;
+
   const percentageControlled =
     orgAggregations && orgAggregations.candidateCount > 0
       ? (orgAggregations.approvalStatus.Approved + orgAggregations.approvalStatus.Rejected) /
         orgAggregations.candidateCount
       : -1;
-
-  if (rowIsEmpty && excludeEmptyRows) {
-    return null;
-  }
 
   return (
     <>

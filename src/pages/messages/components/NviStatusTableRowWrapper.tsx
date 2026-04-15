@@ -5,7 +5,6 @@ import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
-import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 export const StyledSkeleton = styled(Skeleton)({
@@ -26,18 +25,10 @@ export const NviStatusTableRowWrapper = ({
   children,
   level = 0,
   organization,
-  aggregations,
   expanded,
   setExpanded,
 }: NviStatusTableRowWrapperProps) => {
   const { t } = useTranslation();
-  const { excludeEmptyRows } = useNviCandidatesParams();
-  const orgAggregations = aggregations?.byOrganization[organization.id];
-  const isEmpty = !orgAggregations || orgAggregations.candidateCount === 0;
-
-  if (excludeEmptyRows && isEmpty) {
-    return null;
-  }
 
   return (
     <TableRow sx={{ bgcolor: level % 2 === 0 ? undefined : 'white' }}>
