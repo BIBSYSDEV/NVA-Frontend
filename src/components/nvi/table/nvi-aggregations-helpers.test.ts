@@ -1,10 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import {
-  selfOrDescendantHasCandidates,
-  selfOrDescendantHasPointValues,
-} from '../../components/nvi/table/nvi-aggregations-helpers';
-import { NviInstitutionStatusResponse } from '../../types/nvi.types';
-import { Organization } from '../../types/organization.types';
+import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
+import { Organization } from '../../../types/organization.types';
+import { selfOrDescendantHasCandidates, selfOrDescendantHasPointValues } from './nvi-aggregations-helpers';
 
 const makeAggregations = (counts: Record<string, number>): NviInstitutionStatusResponse => ({
   year: '2024',
