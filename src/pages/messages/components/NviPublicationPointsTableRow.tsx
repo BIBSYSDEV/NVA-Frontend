@@ -31,9 +31,7 @@ export const NviPublicationPointsTableRow = ({
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
 
-  const rowOrDescendantHasPointValues = selfOrDescendantHasPointValues(organization, aggregations);
-
-  if (excludeEmptyRows && !rowOrDescendantHasPointValues) return null;
+  if (excludeEmptyRows && !selfOrDescendantHasPointValues(organization, aggregations)) return null;
 
   const orgAggregations = aggregations?.byOrganization[organization.id];
   const publicationPoints = orgAggregations?.points;
@@ -107,13 +105,17 @@ export const NviPublicationPointsTableRow = ({
         </CenteredTableCell>
         <CenteredTableCell>{aggregations ? pointsWithTwoDecimals : <TableNumberSkeleton />}</CenteredTableCell>
         <CenteredTableCell>
-          <HorizontalBox sx={{ justifyContent: 'center' }}>
-            <PercentageWithIcon
-              displayPercentage={Math.floor(percentageApproved * 100)}
-              alternativeIfZero={ALTERNATIVE_TEXT_INSTEAD_OF_ZERO}
-              hideWarningIcon
-            />
-          </HorizontalBox>
+          {aggregations ? (
+            <HorizontalBox sx={{ justifyContent: 'center' }}>
+              <PercentageWithIcon
+                displayPercentage={Math.floor(percentageApproved * 100)}
+                alternativeIfZero={ALTERNATIVE_TEXT_INSTEAD_OF_ZERO}
+                hideWarningIcon
+              />
+            </HorizontalBox>
+          ) : (
+            <TableNumberSkeleton />
+          )}
         </CenteredTableCell>
       </NviStatusTableRowWrapper>
       {expanded &&
