@@ -3,7 +3,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IconButton, Skeleton, styled, TableCell, TableRow } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
@@ -18,7 +17,6 @@ interface NviStatusTableRowWrapperProps {
   setExpanded: (val: boolean) => void;
   children?: ReactNode;
   level?: number;
-  aggregations?: NviInstitutionStatusResponse;
 }
 
 export const NviStatusTableRowWrapper = ({
