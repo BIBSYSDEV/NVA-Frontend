@@ -31,9 +31,9 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
 
-  const rowOrDecendantHasCandidates = selfOrDescendantHasCandidates(organization, aggregations);
+  const rowOrDescendantHasCandidates = selfOrDescendantHasCandidates(organization, aggregations);
 
-  if (excludeEmptyRows && !rowOrDecendantHasCandidates) return null;
+  if (excludeEmptyRows && !rowOrDescendantHasCandidates) return null;
 
   const orgAggregations = aggregations?.byOrganization[organization.id];
   const percentageControlled =

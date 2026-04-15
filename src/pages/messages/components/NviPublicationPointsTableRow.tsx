@@ -1,10 +1,12 @@
-import { Link, TableCell } from '@mui/material';
+import { Link } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
 import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { PercentageWithIcon } from '../../../components/_molecules/PercentageWithIcon';
+import { ALTERNATIVE_TEXT_INSTEAD_OF_ZERO } from '../../../components/nvi/table/constants';
 import { selfOrDescendantHasPointValues } from '../../../components/nvi/table/nvi-aggregations-helpers';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
+import { CenteredTableCell } from '../../../styles/table-styles';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -13,7 +15,7 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
 import { NviStatusTableRowWrapper, StyledSkeleton } from './NviStatusTableRowWrapper';
 
-interface NviStatusTableRowProps {
+interface NviPublicationPointsTableRowProps {
   organization: Organization;
   aggregations?: NviInstitutionStatusResponse;
   level?: number;
@@ -25,13 +27,13 @@ export const NviPublicationPointsTableRow = ({
   aggregations,
   level = 0,
   year,
-}: NviStatusTableRowProps) => {
+}: NviPublicationPointsTableRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
 
-  const rowOrDecendantHasPointValues = selfOrDescendantHasPointValues(organization, aggregations);
+  const rowOrDescendantHasPointValues = selfOrDescendantHasPointValues(organization, aggregations);
 
-  if (excludeEmptyRows && !rowOrDecendantHasPointValues) return null;
+  if (excludeEmptyRows && !rowOrDescendantHasPointValues) return null;
 
   const orgAggregations = aggregations?.byOrganization[organization.id];
   const publicationPoints = orgAggregations?.points;
@@ -44,6 +46,9 @@ export const NviPublicationPointsTableRow = ({
       ? orgAggregations.globalApprovalStatus.Approved / orgAggregations.approvalStatus.Approved
       : -1;
 
+  const candidatesOthersMustApprove =
+    (orgAggregations?.approvalStatus.Approved ?? 0) - (orgAggregations?.globalApprovalStatus.Approved ?? 0);
+
   return (
     <>
       <NviStatusTableRowWrapper
@@ -52,7 +57,7 @@ export const NviPublicationPointsTableRow = ({
         aggregations={aggregations}
         expanded={expanded}
         setExpanded={setExpanded}>
-        <TableCell align="center">
+        <CenteredTableCell>
           {aggregations ? (
             <Link
               component={RouterLink}
@@ -69,8 +74,8 @@ export const NviPublicationPointsTableRow = ({
           ) : (
             <StyledSkeleton />
           )}
-        </TableCell>
-        <TableCell align="center">
+        </CenteredTableCell>
+        <CenteredTableCell>
           {aggregations ? (
             <Link
               component={RouterLink}
@@ -82,13 +87,13 @@ export const NviPublicationPointsTableRow = ({
                 globalStatus: [NviCandidateGlobalStatusEnum.Pending],
                 excludeSubUnits: true,
               })}>
-              {(orgAggregations?.approvalStatus.Approved ?? 0) - (orgAggregations?.globalApprovalStatus.Approved ?? 0)}
+              {candidatesOthersMustApprove}
             </Link>
           ) : (
             <StyledSkeleton />
           )}
-        </TableCell>
-        <TableCell align="center">
+        </CenteredTableCell>
+        <CenteredTableCell>
           {aggregations ? (
             <Link
               component={RouterLink}
@@ -104,19 +109,17 @@ export const NviPublicationPointsTableRow = ({
           ) : (
             <StyledSkeleton />
           )}
-        </TableCell>
-        <TableCell align="center">{aggregations ? pointsWithTwoDecimals : <StyledSkeleton />}</TableCell>
-        <TableCell align="center">
-          {
-            <HorizontalBox sx={{ justifyContent: 'center' }}>
-              <PercentageWithIcon
-                displayPercentage={Math.floor(percentageApproved * 100)}
-                alternativeIfZero={'-'}
-                hideWarningIcon
-              />
-            </HorizontalBox>
-          }
-        </TableCell>
+        </CenteredTableCell>
+        <CenteredTableCell>{aggregations ? pointsWithTwoDecimals : <StyledSkeleton />}</CenteredTableCell>
+        <CenteredTableCell>
+          <HorizontalBox sx={{ justifyContent: 'center' }}>
+            <PercentageWithIcon
+              displayPercentage={Math.floor(percentageApproved * 100)}
+              alternativeIfZero={ALTERNATIVE_TEXT_INSTEAD_OF_ZERO}
+              hideWarningIcon
+            />
+          </HorizontalBox>
+        </CenteredTableCell>
       </NviStatusTableRowWrapper>
       {expanded &&
         organization.hasPart?.map((subUnit) => (
