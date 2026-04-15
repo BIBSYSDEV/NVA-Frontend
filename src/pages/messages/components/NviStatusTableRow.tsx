@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
 import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { PercentageWithIcon } from '../../../components/_molecules/PercentageWithIcon';
+import { selfOrDescendantHasCandidates } from '../../../components/nvi/table/nvi-aggregations-helpers';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
@@ -10,7 +11,6 @@ import { User } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { hasOrDescendantHasCandidates } from '../../../utils/nvi-aggregations-helpers';
 import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
 import { NviStatusTableRowWrapper } from './NviStatusTableRowWrapper';
 
@@ -31,11 +31,11 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
 
-  const orgAggregations = aggregations?.byOrganization[organization.id];
-  const rowOrDecendantHasCandidates = hasOrDescendantHasCandidates(organization, aggregations);
+  const rowOrDecendantHasCandidates = selfOrDescendantHasCandidates(organization, aggregations);
 
   if (excludeEmptyRows && !rowOrDecendantHasCandidates) return null;
 
+  const orgAggregations = aggregations?.byOrganization[organization.id];
   const percentageControlled =
     orgAggregations && orgAggregations.candidateCount > 0
       ? (orgAggregations.approvalStatus.Approved + orgAggregations.approvalStatus.Rejected) /

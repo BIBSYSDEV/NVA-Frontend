@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
+import { selfOrDescendantHasCandidates } from '../../components/nvi/table/nvi-aggregations-helpers';
 import { NviInstitutionStatusResponse } from '../../types/nvi.types';
 import { Organization } from '../../types/organization.types';
-import { hasOrDescendantHasCandidates } from '../nvi-aggregations-helpers';
 
 const makeAggregations = (counts: Record<string, number>): NviInstitutionStatusResponse => ({
   year: '2024',
@@ -51,38 +51,38 @@ const organization: Organization = {
   hasPart: [child],
 };
 
-describe('hasOrDescendantHasCandidates()', () => {
+describe('selfOrDescendantHasCandidates()', () => {
   test('Returns true when the organization itself has candidates', () => {
     const aggregations = makeAggregations({ [orgId]: 3 });
-    expect(hasOrDescendantHasCandidates(organization, aggregations)).toBe(true);
+    expect(selfOrDescendantHasCandidates(organization, aggregations)).toBe(true);
   });
 
   test('Returns true when a direct child has candidates', () => {
     const aggregations = makeAggregations({ [orgId]: 0, [childId]: 2 });
-    expect(hasOrDescendantHasCandidates(organization, aggregations)).toBe(true);
+    expect(selfOrDescendantHasCandidates(organization, aggregations)).toBe(true);
   });
 
   test('Returns true when only a grandchild has candidates', () => {
     const aggregations = makeAggregations({ [orgId]: 0, [childId]: 0, [grandChildId]: 1 });
-    expect(hasOrDescendantHasCandidates(organization, aggregations)).toBe(true);
+    expect(selfOrDescendantHasCandidates(organization, aggregations)).toBe(true);
   });
 
   test('Returns false when neither the organization nor any descendants have candidates', () => {
     const aggregations = makeAggregations({ [orgId]: 0, [childId]: 0, [grandChildId]: 0 });
-    expect(hasOrDescendantHasCandidates(organization, aggregations)).toBe(false);
+    expect(selfOrDescendantHasCandidates(organization, aggregations)).toBe(false);
   });
 
   test('Returns false when aggregations are undefined', () => {
-    expect(hasOrDescendantHasCandidates(organization, undefined)).toBe(false);
+    expect(selfOrDescendantHasCandidates(organization, undefined)).toBe(false);
   });
 
   test('Returns false for a leaf organization with no candidates', () => {
     const aggregations = makeAggregations({ [grandChildId]: 0 });
-    expect(hasOrDescendantHasCandidates(grandChild, aggregations)).toBe(false);
+    expect(selfOrDescendantHasCandidates(grandChild, aggregations)).toBe(false);
   });
 
   test('Returns true for a leaf organization with candidates', () => {
     const aggregations = makeAggregations({ [grandChildId]: 5 });
-    expect(hasOrDescendantHasCandidates(grandChild, aggregations)).toBe(true);
+    expect(selfOrDescendantHasCandidates(grandChild, aggregations)).toBe(true);
   });
 });

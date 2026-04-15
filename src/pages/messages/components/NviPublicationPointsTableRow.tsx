@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
 import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { PercentageWithIcon } from '../../../components/_molecules/PercentageWithIcon';
+import { selfOrDescendantHasPointValues } from '../../../components/nvi/table/nvi-aggregations-helpers';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
@@ -27,14 +28,12 @@ export const NviPublicationPointsTableRow = ({
 }: NviStatusTableRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
+
+  const rowOrDecendantHasPointValues = selfOrDescendantHasPointValues(organization, aggregations);
+
+  if (excludeEmptyRows && !rowOrDecendantHasPointValues) return null;
+
   const orgAggregations = aggregations?.byOrganization[organization.id];
-  const rowIsEmpty =
-    !orgAggregations || (orgAggregations.points === 0 && orgAggregations.globalApprovalStatus.Approved === 0);
-
-  if (rowIsEmpty && excludeEmptyRows) {
-    return null;
-  }
-
   const publicationPoints = orgAggregations?.points;
   const pointsWithTwoDecimals = (publicationPoints ?? 0).toLocaleString(undefined, {
     minimumFractionDigits: 2,
