@@ -1,40 +1,42 @@
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
-import { Trans, useTranslation } from 'react-i18next';
-import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
-import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
+  NviStatusTopViewText,
+  NviStatusViewVariant,
+} from '../../../../components/nvi/top-view-texts/NviStatusTopViewText';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
+import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
+import { useNviAdminPeriodReportNumbers } from '../../../../hooks/nvi/useNviAdminPeriodReportNumbers';
 import { CenteredTableCell } from '../../../../styles/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
-import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
+import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 import { NviAdminStatusPageRow } from '../../../basic_data/app_admin/nviAdmin/NviAdminStatusPageRow';
+import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
+  const { year } = useNviCandidatesParams();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
+  const {
+    totalCount,
+    percentageComparedToYearBefore,
+    isPending: reportIsPending,
+  } = useNviAdminPeriodReportNumbers(year);
 
   return (
     <NviStatusWrapper
       headline={t('basic_data.nvi.reporting_status')}
       topView={
-        <Box sx={{ mb: '1rem' }}>
-          <Trans
-            t={t}
-            i18nKey="basic_data.nvi.reporting_status_description"
-            components={{ p: <Typography gutterBottom /> }}
-          />
-        </Box>
+        <NviStatusTopViewText
+          variant={NviStatusViewVariant.Admin}
+          numResults={totalCount}
+          percentageComparedToYearBefore={percentageComparedToYearBefore}
+          yearBefore={year - 1}
+          isPending={reportIsPending}
+        />
       }
       yearSelector
       sectorSelector

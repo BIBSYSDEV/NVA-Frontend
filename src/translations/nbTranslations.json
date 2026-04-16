@@ -133,7 +133,7 @@
       "publication_points_status": "Status for publiseringspoeng",
       "reporting_periods": "Rapporteringsperioder",
       "reporting_status": "Rapporteringsstatus",
-      "reporting_status_description": "<p>Tabellen viser antall kandidater hos gjeldende institusjon og behandlingsstatus på disse.</p><p>Samarbeidende institusjoners kontroll, tas ikke hensyn til her så kandidater som har endt i en tvist er ikke inkludert i denne oversikten.</p>",
+      "reporting_status_description": "<p>Tabellen viser antall kandidater hos gjeldende institusjon og behandlingsstatus på disse.</p><p>Samarbeidende institusjoners kontroll tas ikke hensyn til her, så kandidater som har endt i en tvist er ikke inkludert i denne oversikten.</p>",
       "show_publication_points_status": "Vis status for publiseringspoeng",
       "show_reporting_status": "Vis rapporteringsstatus",
       "update_reporting_period": "Oppdater rapporteringsperiode"
@@ -1876,7 +1876,7 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "Avvist",
-  "reporting_status_description": "<0>Tabellen viser antall kandidater for min institusjon og behandlingsstatus på disse.</0> <0>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</0>",
+  "reporting_status_description": "<p>Tabellen viser antall kandidater for min institusjon og behandlingsstatus på disse.</p><p>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</p>",
   "reset": "Nullstill",
   "results": "Forskningsresultater",
   "science_categories_front_page": "<heading>Arbeid i ulike kategorier</heading><p>Forskning og formidling omfatter mye mer enn vitenskapelige publikasjoner.</p><p>Alt registreres i ulike kategorier, og du kan søke og gjøre oppslag i alle kategoriene nedenfor.</p>",
@@ -2077,6 +2077,7 @@
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "x_results_are_ready_for_reporting_and_they_give_y_points": "<p><bold>{{num_publications_approved_by_all}} resultat</bold> er klar for rapportering, og de gir <bold>{{points_for_all_publications_approved_by_all}} publiseringspoeng.</bold><link></p>",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "<b>{{num_results}} resultat</b> er kandidater for rapportering. De vil gi opp til <b>{{total_publicationpoints}} publiseringspoeng.</b>",
+  "x_results_are_ready_for_reporting_and_that_is_y_of_number_reported_in_z": "<b>{{num_results}} resultat</b> er kandidater for rapportering. Det er <b>{{percentage_of_year_before}}%</b> av antall resultat rapportert i {{year_before}}.",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
   "points_for_reporting_admin_modal_text": "<p>Poengene i tabellen viser poeng for kandidater som er godkjent av alle institusjoner, altså poeng for kandidater som er klare til rapportering.</p><p>Tabellen viser antall poeng for NVI-kandidater adressert på de ulike underenhetene. Vær obs på at hvis en NVI-kandidat har adressert flere underenheter på egen institusjon, vil samme poeng for NVI-kandidat telles på flere underenheter. Du kan derfor ikke summere kolonnene vertikalt, kun horisontalt.</p><p>Ønsker du å vite hvordan poengene beregnes?</p>",

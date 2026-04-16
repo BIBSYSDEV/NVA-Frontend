@@ -1,20 +1,13 @@
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
-import { VerticalBox } from '../../../../components/styled/Wrappers';
+import {
+  NviStatusTopViewText,
+  NviStatusViewVariant,
+} from '../../../../components/nvi/top-view-texts/NviStatusTopViewText';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { NviStatusTableRow } from '../../../messages/components/NviStatusTableRow';
@@ -30,14 +23,25 @@ export const NviStatusPage = () => {
   const { year } = useNviCandidatesParams();
 
   const nviStatusQuery = useFetchNviInstitutionStatus(year);
+  const nviStatusQueryYearBefore = useFetchNviInstitutionStatus(year - 1);
+  const candidateCount = nviStatusQuery.data?.totals.candidateCount;
+  const candidateCountYearBefore = nviStatusQueryYearBefore.data?.totals.candidateCount;
+  const percentageComparedToYearBefore =
+    candidateCount && candidateCountYearBefore
+      ? Math.round((candidateCount / candidateCountYearBefore) * 100)
+      : undefined;
 
   return (
     <NviStatusWrapper
       headline={t('tasks.nvi.institution_nvi_status')}
       topView={
-        <VerticalBox sx={{ mb: '1rem', gap: '0.5rem' }}>
-          <Trans t={t} i18nKey="reporting_status_description" components={[<Typography key="1" />]} />
-        </VerticalBox>
+        <NviStatusTopViewText
+          variant={NviStatusViewVariant.Curator}
+          isPending={nviStatusQuery.isPending || nviStatusQueryYearBefore.isPending}
+          numResults={candidateCount}
+          percentageComparedToYearBefore={percentageComparedToYearBefore}
+          yearBefore={year - 1}
+        />
       }
       exportAcronym={organizationQuery.data?.acronym}
       yearSelector
