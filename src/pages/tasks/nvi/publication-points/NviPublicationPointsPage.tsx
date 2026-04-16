@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
 import { NviPublicationPointsTexts } from '../../../../components/nvi/top-view-texts/NviPublicationPointsTexts';
+
 import { NviTopTextViewVariant } from '../../../../components/nvi/top-view-texts/top-text-types';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { useNviInstitutionStatusNumbers } from '../../../../hooks/nvi/useNviInstitutionStatusNumbers';
@@ -33,10 +34,16 @@ export const NviPublicationPointsPage = () => {
           variant={NviTopTextViewVariant.Curator}
           isPending={isPending}
           isError={isError}
-          totalCount={aggregations?.totals.globalApprovalStatus.Approved}
-          percentageComparedToYearBefore={percentageApprovedComparedToLastYear}
-          validPoints={aggregations?.totals.points}
-          yearBefore={year - 1}
+          numbers={
+            aggregations && percentageApprovedComparedToLastYear
+              ? {
+                  totalCount: aggregations.totals.globalApprovalStatus.Approved,
+                  validPoints: aggregations.totals.points,
+                  percentageComparedToYearBefore: percentageApprovedComparedToLastYear,
+                  yearBefore: year - 1,
+                }
+              : undefined
+          }
           exportAcronym={organizationQuery.data?.acronym}
         />
       }

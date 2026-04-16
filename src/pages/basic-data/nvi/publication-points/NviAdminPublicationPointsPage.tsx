@@ -1,6 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { NviPublicationPointsTexts } from '../../../../components/nvi/top-view-texts/NviPublicationPointsTexts';
+
 import { NviTopTextViewVariant } from '../../../../components/nvi/top-view-texts/top-text-types';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
@@ -35,10 +36,11 @@ export const NviAdminPublicationPointsPage = () => {
           variant={NviTopTextViewVariant.Admin}
           isPending={isInstitutionReportPending}
           isError={isInstitutionReportError}
-          totalCount={totalCount}
-          percentageComparedToYearBefore={percentageComparedToYearBefore}
-          validPoints={validPoints}
-          yearBefore={year - 1}
+          numbers={
+            totalCount && validPoints && percentageComparedToYearBefore
+              ? { totalCount, validPoints, percentageComparedToYearBefore, yearBefore: year - 1 }
+              : undefined
+          }
         />
       }
       yearSelector

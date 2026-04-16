@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
 import { NviStatusTexts } from '../../../../components/nvi/top-view-texts/NviStatusTexts';
+
 import { NviTopTextViewVariant } from '../../../../components/nvi/top-view-texts/top-text-types';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';

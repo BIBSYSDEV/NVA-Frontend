@@ -2,6 +2,7 @@ import { Skeleton, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { formatLocaleNumber } from '../../../utils/general-helpers';
 import { VerticalBox } from '../../styled/Wrappers';
+
 import { NviTopTextViewVariant } from './top-text-types';
 
 interface NviStatusTopTextProps {
