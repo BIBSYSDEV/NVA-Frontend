@@ -1,9 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import {
-  NviStatusTopViewText,
-  NviStatusViewVariant,
-} from '../../../../components/nvi/top-view-texts/NviStatusTopViewText';
+import { NviStatusTexts } from '../../../../components/nvi/top-view-texts/NviStatusTexts';
+import { NviTopTextViewVariant } from '../../../../components/nvi/top-view-texts/top-text-types';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
@@ -30,8 +28,8 @@ export const NviAdminStatusPage = () => {
     <NviStatusWrapper
       headline={t('basic_data.nvi.reporting_status')}
       topView={
-        <NviStatusTopViewText
-          variant={NviStatusViewVariant.Admin}
+        <NviStatusTexts
+          variant={NviTopTextViewVariant.Admin}
           numResults={totalCount}
           percentageComparedToYearBefore={percentageComparedToYearBefore}
           yearBefore={year - 1}

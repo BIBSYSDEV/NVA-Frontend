@@ -2,27 +2,23 @@ import { Skeleton, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { formatLocaleNumber } from '../../../utils/general-helpers';
 import { VerticalBox } from '../../styled/Wrappers';
+import { NviTopTextViewVariant } from './top-text-types';
 
-export enum NviStatusViewVariant {
-  Curator = 'curator',
-  Admin = 'admin',
-}
-
-interface NviStatusTopViewTextProps {
-  variant: NviStatusViewVariant;
+interface NviStatusTopTextProps {
+  variant: NviTopTextViewVariant;
   numResults?: number;
   percentageComparedToYearBefore?: number;
   yearBefore?: number;
   isPending: boolean;
 }
 
-export const NviStatusTopViewText = ({
+export const NviStatusTexts = ({
   variant,
   numResults,
   percentageComparedToYearBefore,
   yearBefore,
   isPending,
-}: NviStatusTopViewTextProps) => {
+}: NviStatusTopTextProps) => {
   const { t } = useTranslation();
 
   return (
@@ -30,7 +26,7 @@ export const NviStatusTopViewText = ({
       <Trans
         t={t}
         i18nKey={
-          variant === NviStatusViewVariant.Admin
+          variant === NviTopTextViewVariant.Admin
             ? 'basic_data.nvi.reporting_status_description'
             : 'reporting_status_description'
         }

@@ -2,32 +2,43 @@ import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
-import { NviPublicationPointsTexts } from '../../../../components/NviPublicationPointsTexts';
+import { NviPublicationPointsTexts } from '../../../../components/nvi/top-view-texts/NviPublicationPointsTexts';
+import { NviTopTextViewVariant } from '../../../../components/nvi/top-view-texts/top-text-types';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
+import { useNviInstitutionStatusNumbers } from '../../../../hooks/nvi/useNviInstitutionStatusNumbers';
 import { RootState } from '../../../../redux/store';
-import { getDefaultNviYear } from '../../../../utils/hooks/useNviCandidatesParams';
+import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../../messages/components/NviPointsQuestionIcon';
 import { NviPublicationPointsTableRow } from '../../../messages/components/NviPublicationPointsTableRow';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviPublicationPointsPage = () => {
   const { t } = useTranslation();
+
   const user = useSelector((store: RootState) => store.user);
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
   const institution = organizationQuery.data;
-  const year = getDefaultNviYear();
-  const nviStatusQuery = useFetchNviInstitutionStatus(year);
-  const aggregations = nviStatusQuery.data;
-  const headline = t('tasks.nvi.reporting_status_for_publication_points_for_year', { year: year });
+
+  const { year } = useNviCandidatesParams();
+  const { aggregations, isPending, isError, percentageApprovedComparedToLastYear } =
+    useNviInstitutionStatusNumbers(year);
 
   return (
     <NviStatusWrapper
-      headline={headline}
+      headline={t('tasks.nvi.reporting_status_for_publication_points_for_year', { year: year })}
       exportAcronym={organizationQuery.data?.acronym}
       topView={
-        <NviPublicationPointsTexts exportAcronym={organizationQuery.data?.acronym} aggregationsQuery={nviStatusQuery} />
+        <NviPublicationPointsTexts
+          variant={NviTopTextViewVariant.Curator}
+          isPending={isPending}
+          isError={isError}
+          totalCount={aggregations?.totals.globalApprovalStatus.Approved}
+          percentageComparedToYearBefore={percentageApprovedComparedToLastYear}
+          validPoints={aggregations?.totals.points}
+          yearBefore={year - 1}
+          exportAcronym={organizationQuery.data?.acronym}
+        />
       }
       visibilitySelector>
       <TableContainer component={Paper} variant="outlined">

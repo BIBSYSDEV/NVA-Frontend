@@ -4,10 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
-import {
-  NviStatusTopViewText,
-  NviStatusViewVariant,
-} from '../../../../components/nvi/top-view-texts/NviStatusTopViewText';
+import { NviStatusTexts } from '../../../../components/nvi/top-view-texts/NviStatusTexts';
+import { NviTopTextViewVariant } from '../../../../components/nvi/top-view-texts/top-text-types';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { NviStatusTableRow } from '../../../messages/components/NviStatusTableRow';
@@ -35,8 +33,8 @@ export const NviStatusPage = () => {
     <NviStatusWrapper
       headline={t('tasks.nvi.institution_nvi_status')}
       topView={
-        <NviStatusTopViewText
-          variant={NviStatusViewVariant.Curator}
+        <NviStatusTexts
+          variant={NviTopTextViewVariant.Curator}
           isPending={nviStatusQuery.isPending || nviStatusQueryYearBefore.isPending}
           numResults={candidateCount}
           percentageComparedToYearBefore={percentageComparedToYearBefore}

@@ -992,8 +992,8 @@
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fann dessverre ikkje noko som passar med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv ei anna skriveform av søkeordet</li><li>Prøv med eit synonym</li><li>Overset søkeordet til bokmål. nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at namnet er skrevet korrekt</li><li>Prøv ein annan skrivemåte</li><li>Prøv med eller utan mellomnamn</li></ul>",
-  "nvi_publication_points_page_description": "",
-  "nvi_publication_points_page_description_expanded": "",
+  "nvi_publication_points_description": "",
+  "nvi_publication_points_description_more": "",
   "overview_over_administrators": "Oversyn over administratorar",
   "overwrite": "Overskriv",
   "owner_institution": "Eigarinstitusjon",
@@ -1117,8 +1117,8 @@
     "verify_project_manager": "Identifiser prosjektleiar"
   },
   "projects": "Prosjekt",
-  "publication_points_description": "",
-  "publication_points_description_more": "",
+  "nvi_publication_points_description_admin": "",
+  "nvi_publication_points_description_admin_more": "",
   "published_result": "Publisert resultat",
   "registration": {
     "cannot_update_published_result_with_validation_errors": "Kan ikkje lagre fordi resultatet er publisert og inneheld valideringsfeil",
@@ -2070,7 +2070,6 @@
   "visibility_of_units": "",
   "vocabulary_missing": "Institusjonen har ikkje lagt til vokabular",
   "what_you_find_in_nva_description": "<heading>Kva finn du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samlar og gjer tilgjengeleg informasjon om norsk forsking.</p><p>Her kan du utforske publikasjonar, forskingsprosjekt og forskarar på tvers av universitet, høgskular og forskingsinstitusjonar.</p>",
-  "x_results_are_ready_for_reporting_and_they_give_y_points": "",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "",
   "you_cannot_upload_files_to_this_result": "Du har ikkje tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikkje tilgang til å endre denne registreringa."
