@@ -22,7 +22,7 @@ export const NviPublicationPointsPage = () => {
   const institution = organizationQuery.data;
 
   const { year } = useNviCandidatesParams();
-  const { aggregations, isPending, isError, percentageApprovedComparedToLastYear } =
+  const { aggregations, isPending, isError, numberApprovedComparedToLastYearPercentage } =
     useNviInstitutionStatusNumbers(year);
 
   return (
@@ -35,11 +35,11 @@ export const NviPublicationPointsPage = () => {
           isPending={isPending}
           isError={isError}
           numbers={
-            aggregations && percentageApprovedComparedToLastYear !== undefined
+            aggregations && numberApprovedComparedToLastYearPercentage !== undefined
               ? {
                   totalCount: aggregations.totals.globalApprovalStatus.Approved,
                   validPoints: aggregations.totals.points,
-                  percentageComparedToYearBefore: percentageApprovedComparedToLastYear,
+                  percentageComparedToYearBefore: numberApprovedComparedToLastYearPercentage,
                   yearBefore: year - 1,
                 }
               : undefined

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
 import { NviStatusTexts } from '../../../../components/nvi/top-view-texts/NviStatusTexts';
 import { NviTopTextViewVariant } from '../../../../components/nvi/top-view-texts/top-text-types';
-import { useNviCandidateStatusNumbers } from '../../../../hooks/nvi/useNviCandidateStatusNumbers';
+import { useNviInstitutionStatusNumbers } from '../../../../hooks/nvi/useNviInstitutionStatusNumbers';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { NviStatusTableRow } from '../../../messages/components/NviStatusTableRow';
@@ -20,8 +20,8 @@ export const NviStatusPage = () => {
 
   const { year } = useNviCandidatesParams();
 
-  const { aggregations, candidateCount, percentageComparedToYearBefore, isPending, isError } =
-    useNviCandidateStatusNumbers(year);
+  const { aggregations, candidateCountComparedToLastYearPercentage, isPending, isError } =
+    useNviInstitutionStatusNumbers(year);
 
   return (
     <NviStatusWrapper
@@ -31,8 +31,8 @@ export const NviStatusPage = () => {
           variant={NviTopTextViewVariant.Curator}
           isPending={isPending}
           isError={isError}
-          numResults={candidateCount}
-          percentageComparedToYearBefore={percentageComparedToYearBefore}
+          numResults={aggregations?.totals.candidateCount}
+          percentageComparedToYearBefore={candidateCountComparedToLastYearPercentage}
           yearBefore={year - 1}
         />
       }
