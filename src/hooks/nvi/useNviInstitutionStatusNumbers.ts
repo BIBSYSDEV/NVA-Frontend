@@ -10,10 +10,10 @@ export const useNviInstitutionStatusNumbers = (year: number) => {
       ? (aggregations.totals.globalApprovalStatus.Approved /
           aggregationsLastYear.totals.globalApprovalStatus.Approved) *
         100
-      : -1;
+      : undefined;
 
   return {
-    aggregations: aggregations,
+    aggregations,
     isPending: nviStatusQuery.isPending || nviStatusLastYearQuery.isPending,
     isError: nviStatusQuery.isError || nviStatusLastYearQuery.isError,
     percentageApprovedComparedToLastYear,

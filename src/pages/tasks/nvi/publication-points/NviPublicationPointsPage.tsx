@@ -28,14 +28,14 @@ export const NviPublicationPointsPage = () => {
   return (
     <NviStatusWrapper
       headline={t('tasks.nvi.reporting_status_for_publication_points_for_year', { year: year })}
-      exportAcronym={organizationQuery.data?.acronym}
+      exportAcronym={institution?.acronym}
       topView={
         <NviPublicationPointsTexts
           variant={NviTopTextViewVariant.Curator}
           isPending={isPending}
           isError={isError}
           numbers={
-            aggregations && percentageApprovedComparedToLastYear
+            aggregations && percentageApprovedComparedToLastYear !== undefined
               ? {
                   totalCount: aggregations.totals.globalApprovalStatus.Approved,
                   validPoints: aggregations.totals.points,
@@ -44,7 +44,7 @@ export const NviPublicationPointsPage = () => {
                 }
               : undefined
           }
-          exportAcronym={organizationQuery.data?.acronym}
+          exportAcronym={institution?.acronym}
         />
       }
       visibilitySelector>

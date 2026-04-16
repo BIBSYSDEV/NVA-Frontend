@@ -37,7 +37,7 @@ export const NviAdminPublicationPointsPage = () => {
           isPending={isInstitutionReportPending}
           isError={isInstitutionReportError}
           numbers={
-            totalCount && validPoints && percentageComparedToYearBefore
+            totalCount !== undefined && validPoints !== undefined && percentageComparedToYearBefore !== undefined
               ? { totalCount, validPoints, percentageComparedToYearBefore, yearBefore: year - 1 }
               : undefined
           }

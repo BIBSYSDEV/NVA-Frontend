@@ -1,7 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { NviStatusTexts } from '../../../../components/nvi/top-view-texts/NviStatusTexts';
-
 import { NviTopTextViewVariant } from '../../../../components/nvi/top-view-texts/top-text-types';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
@@ -23,6 +22,7 @@ export const NviAdminStatusPage = () => {
     totalCount,
     percentageComparedToYearBefore,
     isPending: reportIsPending,
+    isError: reportIsError,
   } = useNviAdminPeriodReportNumbers(year);
 
   return (
@@ -35,6 +35,7 @@ export const NviAdminStatusPage = () => {
           percentageComparedToYearBefore={percentageComparedToYearBefore}
           yearBefore={year - 1}
           isPending={reportIsPending}
+          isError={reportIsError}
         />
       }
       yearSelector

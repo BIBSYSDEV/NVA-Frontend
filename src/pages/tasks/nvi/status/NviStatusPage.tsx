@@ -2,11 +2,10 @@ import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
 import { NviStatusTexts } from '../../../../components/nvi/top-view-texts/NviStatusTexts';
-
 import { NviTopTextViewVariant } from '../../../../components/nvi/top-view-texts/top-text-types';
+import { useNviCandidateStatusNumbers } from '../../../../hooks/nvi/useNviCandidateStatusNumbers';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { NviStatusTableRow } from '../../../messages/components/NviStatusTableRow';
@@ -21,14 +20,8 @@ export const NviStatusPage = () => {
 
   const { year } = useNviCandidatesParams();
 
-  const nviStatusQuery = useFetchNviInstitutionStatus(year);
-  const nviStatusQueryYearBefore = useFetchNviInstitutionStatus(year - 1);
-  const candidateCount = nviStatusQuery.data?.totals.candidateCount;
-  const candidateCountYearBefore = nviStatusQueryYearBefore.data?.totals.candidateCount;
-  const percentageComparedToYearBefore =
-    candidateCount && candidateCountYearBefore
-      ? Math.round((candidateCount / candidateCountYearBefore) * 100)
-      : undefined;
+  const { aggregations, candidateCount, percentageComparedToYearBefore, isPending, isError } =
+    useNviCandidateStatusNumbers(year);
 
   return (
     <NviStatusWrapper
@@ -36,13 +29,14 @@ export const NviStatusPage = () => {
       topView={
         <NviStatusTexts
           variant={NviTopTextViewVariant.Curator}
-          isPending={nviStatusQuery.isPending || nviStatusQueryYearBefore.isPending}
+          isPending={isPending}
+          isError={isError}
           numResults={candidateCount}
           percentageComparedToYearBefore={percentageComparedToYearBefore}
           yearBefore={year - 1}
         />
       }
-      exportAcronym={organizationQuery.data?.acronym}
+      exportAcronym={institution?.acronym}
       yearSelector
       visibilitySelector>
       <TableContainer component={Paper} variant="outlined">
@@ -66,12 +60,7 @@ export const NviStatusPage = () => {
           </TableHead>
           <TableBody>
             {institution && (
-              <NviStatusTableRow
-                organization={institution}
-                aggregations={nviStatusQuery.data}
-                user={user}
-                year={year}
-              />
+              <NviStatusTableRow organization={institution} aggregations={aggregations} user={user} year={year} />
             )}
           </TableBody>
         </Table>

@@ -2,7 +2,7 @@ import { Skeleton, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { formatLocaleNumber } from '../../../utils/general-helpers';
 import { VerticalBox } from '../../styled/Wrappers';
-
+import { variantConfig } from './top-text-config';
 import { NviTopTextViewVariant } from './top-text-types';
 
 interface NviStatusTopTextProps {
@@ -11,6 +11,7 @@ interface NviStatusTopTextProps {
   percentageComparedToYearBefore?: number;
   yearBefore?: number;
   isPending: boolean;
+  isError?: boolean;
 }
 
 export const NviStatusTexts = ({
@@ -19,23 +20,20 @@ export const NviStatusTexts = ({
   percentageComparedToYearBefore,
   yearBefore,
   isPending,
+  isError,
 }: NviStatusTopTextProps) => {
   const { t } = useTranslation();
+  const { statusDescriptionKey } = variantConfig[variant];
 
   return (
     <VerticalBox sx={{ mb: '1rem', gap: '0.5rem' }}>
-      <Trans
-        t={t}
-        i18nKey={
-          variant === NviTopTextViewVariant.Admin
-            ? 'basic_data.nvi.reporting_status_description'
-            : 'reporting_status_description'
-        }
-        components={{ p: <Typography gutterBottom /> }}
-      />
+      <Trans t={t} i18nKey={statusDescriptionKey} components={{ p: <Typography gutterBottom /> }} />
       {isPending ? (
         <Skeleton sx={{ width: '50%' }} />
-      ) : numResults !== undefined && percentageComparedToYearBefore !== undefined && yearBefore !== undefined ? (
+      ) : !isError &&
+        numResults !== undefined &&
+        percentageComparedToYearBefore !== undefined &&
+        yearBefore !== undefined ? (
         <Typography>
           <Trans
             i18nKey="x_results_are_ready_for_reporting_and_that_is_y_of_number_reported_in_z"
