@@ -8,21 +8,21 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidateGlobalStatusEnum, NviCandidatesSearchParam, NviCandidateStatusEnum } from '../../../api/searchApi';
-import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
-import { NviReportProgressBar } from '../../../components/NviReportProgressBar';
-import { SelectableButton } from '../../../components/SelectableButton';
+import { NavigationListAccordion } from '../../NavigationListAccordion';
+import { NviReportProgressBar } from '../../NviReportProgressBar';
+import { SelectableButton } from '../../SelectableButton';
 import {
   HorizontalBox,
   MediumTypography,
   StyledNviStatusBox,
   StyledTicketSearchFormGroup,
   VerticalBox,
-} from '../../../components/styled/Wrappers';
+} from '../../styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
-import { StyledSkeleton } from './NviStatusTableRowWrapper';
+import { StyledSkeleton } from '../../../pages/messages/components/NviStatusTableRowWrapper';
 
 export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();
@@ -51,7 +51,7 @@ export const NviCandidatesNavigationAccordion = () => {
   const nviCandidatesTotal = nviAggregations?.totalCount.docCount ?? 0;
   const nviCandidatesCompleted = nviAggregations?.completed.docCount ?? 0;
   const nviCompletedPercentage =
-    nviCandidatesTotal > 0 ? Math.round((nviCandidatesCompleted / nviCandidatesTotal) * 100) : 100;
+    nviCandidatesTotal > 0 ? Math.floor((nviCandidatesCompleted / nviCandidatesTotal) * 100) : 100;
 
   return (
     <NavigationListAccordion

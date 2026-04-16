@@ -1,5 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { NviAdminPublicationPointsRow } from '../../../../components/nvi/table/NviAdminPublicationPointsRow';
 import { NviPublicationPointsTexts } from '../../../../components/nvi/top-view-texts/NviPublicationPointsTexts';
 
 import { NviTopTextViewVariant } from '../../../../components/nvi/top-view-texts/top-text-types';
@@ -11,10 +12,9 @@ import { useNviAdminPeriodReportNumbers } from '../../../../hooks/nvi/useNviAdmi
 import { CenteredTableCell } from '../../../../styles/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
-import { NviAdminPublicationPointsRow } from '../../../basic_data/app_admin/nviAdmin/NviAdminPublicationPointsRow';
-import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../../messages/components/NviPointsQuestionIcon';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
+import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();

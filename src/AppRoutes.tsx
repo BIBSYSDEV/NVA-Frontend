@@ -10,7 +10,7 @@ import { hasCuratorRole } from './utils/user-helpers';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const FrontPage = lazy(() => import('./pages/frontpage/FrontPage'));
-const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
+const BasicDataPage = lazy(() => import('./pages/basic-data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const CopyrightActTerms = lazy(() => import('./pages/infopages/CopyrightActTerms'));

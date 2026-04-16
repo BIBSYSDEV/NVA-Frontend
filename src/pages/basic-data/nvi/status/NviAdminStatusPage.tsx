@@ -1,5 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { NviAdminStatusPageRow } from '../../../../components/nvi/table/NviAdminStatusPageRow';
 import { NviStatusTexts } from '../../../../components/nvi/top-view-texts/NviStatusTexts';
 import { NviTopTextViewVariant } from '../../../../components/nvi/top-view-texts/top-text-types';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
@@ -11,7 +12,6 @@ import { CenteredTableCell } from '../../../../styles/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
-import { NviAdminStatusPageRow } from '../../../basic_data/app_admin/nviAdmin/NviAdminStatusPageRow';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviAdminStatusPage = () => {

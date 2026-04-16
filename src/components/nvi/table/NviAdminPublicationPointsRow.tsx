@@ -1,9 +1,9 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { PercentageWithIcon } from '../../../../components/_atoms/PercentageWithIcon';
-import { HorizontalBox } from '../../../../components/styled/Wrappers';
-import { CenteredTableCell } from '../../../../styles/table-styles';
-import { InstitutionReport } from '../../../../types/nvi.types';
+import { PercentageWithIcon } from '../../_molecules/PercentageWithIcon';
+import { HorizontalBox } from '../../styled/Wrappers';
+import { CenteredTableCell } from '../../../styles/table-styles';
+import { InstitutionReport } from '../../../types/nvi.types';
 import {
   getNviApprovedByEverybody,
   getNviApprovedCount,
@@ -11,7 +11,8 @@ import {
   getNviInstitutionName,
   getNviSectorLabel,
   getNviValidPoints,
-} from './nviAdminHelpers';
+  getPercentageControlledPublicationPoints,
+} from './nvi-admin-table-helpers';
 
 interface NviAdminPublicationPointsRowProps {
   report: InstitutionReport;
@@ -19,19 +20,15 @@ interface NviAdminPublicationPointsRowProps {
 
 export const NviAdminPublicationPointsRow = ({ report }: NviAdminPublicationPointsRowProps) => {
   const { t } = useTranslation();
-  const { id, institutionSummary } = report;
-  const { totals } = institutionSummary;
-  const approvedByEverybody = getNviApprovedByEverybody(report);
-  const undisputedTotals = totals.undisputedTotalCount;
-  const percentageControlled = undisputedTotals > 0 ? approvedByEverybody / undisputedTotals : 0;
+  const percentageControlled = getPercentageControlledPublicationPoints(report);
 
   return (
-    <TableRow key={id} sx={{ height: '4rem' }}>
+    <TableRow key={report.id} sx={{ height: '4rem' }}>
       <TableCell>{getNviInstitutionName(report)}</TableCell>
       <TableCell>{getNviSectorLabel(report, t)}</TableCell>
       <CenteredTableCell>{getNviApprovedCount(report)}</CenteredTableCell>
       <CenteredTableCell>{getNviCountOthersMustApprove(report)}</CenteredTableCell>
-      <CenteredTableCell>{approvedByEverybody}</CenteredTableCell>
+      <CenteredTableCell>{getNviApprovedByEverybody(report)}</CenteredTableCell>
       <CenteredTableCell>{getNviValidPoints(report)}</CenteredTableCell>
       <TableCell>
         <HorizontalBox sx={{ justifyContent: 'center' }}>

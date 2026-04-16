@@ -1,7 +1,7 @@
 import { TFunction } from 'i18next';
-import i18n from '../../../../translations/i18n';
-import { InstitutionReport } from '../../../../types/nvi.types';
-import { getLanguageString } from '../../../../utils/translation-helpers';
+import i18n from '../../../translations/i18n';
+import { InstitutionReport } from '../../../types/nvi.types';
+import { getLanguageString } from '../../../utils/translation-helpers';
 
 export const getNviInstitutionName = (report: InstitutionReport) => getLanguageString(report.institution.labels).trim();
 
@@ -28,3 +28,17 @@ export const getNviRejectedCount = (report: InstitutionReport) =>
   report.institutionSummary.byLocalApprovalStatus.rejected;
 
 export const getNviTotalCount = (report: InstitutionReport) => report.institutionSummary.totals.undisputedTotalCount;
+
+export const getPercentageControlled = (report: InstitutionReport) => {
+  const undisputedTotals = report.institutionSummary.totals.undisputedTotalCount;
+  const { approved, rejected } = report.institutionSummary.byLocalApprovalStatus;
+  return undisputedTotals > 0 ? (approved + rejected) / undisputedTotals : 0;
+};
+
+export const getPercentageControlledPublicationPoints = (report: InstitutionReport) => {
+  const approvedByEverybody = getNviApprovedByEverybody(report);
+  const all = getNviTotalCount(report);
+  const rejected = getNviRejectedCount(report);
+  const allExceptRejected = all - rejected;
+  return allExceptRejected > 0 ? approvedByEverybody / allExceptRejected : 0;
+};

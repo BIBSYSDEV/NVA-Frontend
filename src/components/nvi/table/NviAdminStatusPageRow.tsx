@@ -1,9 +1,9 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { PercentageWithIcon } from '../../../../components/_atoms/PercentageWithIcon';
-import { HorizontalBox } from '../../../../components/styled/Wrappers';
-import { CenteredTableCell } from '../../../../styles/table-styles';
-import { InstitutionReport } from '../../../../types/nvi.types';
+import { PercentageWithIcon } from '../../_molecules/PercentageWithIcon';
+import { HorizontalBox } from '../../styled/Wrappers';
+import { CenteredTableCell } from '../../../styles/table-styles';
+import { InstitutionReport } from '../../../types/nvi.types';
 
 import {
   getNviApprovedCount,
@@ -12,7 +12,8 @@ import {
   getNviRejectedCount,
   getNviSectorLabel,
   getNviTotalCount,
-} from './nviAdminHelpers';
+  getPercentageControlled,
+} from './nvi-admin-table-helpers';
 
 interface NviAdminStatusPageRowProps {
   report: InstitutionReport;
@@ -22,10 +23,7 @@ export const NviAdminStatusPageRow = ({ report }: NviAdminStatusPageRowProps) =>
   const { t } = useTranslation();
   const { id, institutionSummary } = report;
   const { byLocalApprovalStatus, totals } = institutionSummary;
-  const percentageControlled =
-    totals.undisputedTotalCount > 0
-      ? (byLocalApprovalStatus.approved + byLocalApprovalStatus.rejected) / totals.undisputedTotalCount
-      : 0;
+  const percentageControlled = getPercentageControlled(report);
 
   return (
     <TableRow key={id} sx={{ height: '4rem' }}>
