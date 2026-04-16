@@ -38,7 +38,7 @@ export const NviPublicationPointsTexts = ({
             values={{
               num_results_approved_by_all: formatLocaleNumber(numbers.totalCount),
               total_publicationpoints: formatLocaleNumber(numbers.validPoints),
-              percentage: numbers.percentageComparedToYearBefore,
+              percentage: formatLocaleNumber(numbers.percentageComparedToYearBefore),
               year: numbers.yearBefore,
             }}
             components={{
