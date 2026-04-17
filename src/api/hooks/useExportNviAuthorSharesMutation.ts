@@ -3,7 +3,7 @@ import { generateReportFile, ReportProfile } from '../reports-api';
 
 interface ExportNviStatusParams {
   year: number;
-  institutionId: string;
+  institutionId?: string;
 }
 export const useExportNviAuthorSharesMutation = () => {
   return useMutation({
