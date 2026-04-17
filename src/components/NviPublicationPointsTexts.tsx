@@ -40,14 +40,14 @@ export const NviPublicationPointsTexts = ({ aggregationsQuery, exportAcronym }: 
           <HorizontalBox sx={{ mt: '1rem', gap: '0.25rem', mb: '0.5rem' }}>
             <Trans
               t={t}
-              i18nKey="x_results_are_ready_for_reporting_and_they_give_y_points"
+              i18nKey="x_results_are_ready_for_reporting_and_they_give_y_publication_points"
               values={{
-                num_publications_approved_by_all: formatLocaleNumber(aggregations.totals.globalApprovalStatus.Approved),
-                points_for_all_publications_approved_by_all: formatLocaleNumber(aggregations.totals.points),
+                approvals: formatLocaleNumber(aggregations.totals.globalApprovalStatus.Approved),
+                publication_points: formatLocaleNumber(aggregations.totals.points),
               }}
               components={{
                 p: <Typography />,
-                bold: <Typography component="span" sx={{ fontWeight: 'bold' }} />,
+                b: <Typography component="span" sx={{ fontWeight: 'bold' }} />,
                 link: exportAcronym ? <ExportNviStatusLink acronym={exportAcronym} /> : <span />,
               }}
             />

@@ -10,10 +10,11 @@ import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
 interface ExportNviStatusLinkProps {
-  acronym: string;
+  acronym?: string;
+  exportAllInstitutions?: boolean;
 }
 
-export const ExportNviStatusLink = ({ acronym }: ExportNviStatusLinkProps) => {
+export const ExportNviStatusLink = ({ acronym, exportAllInstitutions }: ExportNviStatusLinkProps) => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const dispatch = useDispatch();
@@ -29,11 +30,13 @@ export const ExportNviStatusLink = ({ acronym }: ExportNviStatusLinkProps) => {
     }
 
     try {
-      const blob = await exportMutation.mutateAsync({ year, institutionId });
+      const blob = exportAllInstitutions
+        ? await exportMutation.mutateAsync({ year })
+        : await exportMutation.mutateAsync({ year, institutionId });
 
       const url = URL.createObjectURL(blob);
 
-      const fileName = `nvi-status-${acronym}-${year}.xlsx`;
+      const fileName = acronym ? `nvi-status-${acronym}-${year}.xlsx` : `nvi-status-${year}.xlsx`;
 
       const a = document.createElement('a');
       a.href = url;
