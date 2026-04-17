@@ -11,9 +11,13 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 
 interface ExportNviStatusButtonProps {
   acronym?: string;
+  exportAllInstitutions?: boolean;
 }
 
-export const ExportNviPublicationPointsButton = ({ acronym }: ExportNviStatusButtonProps) => {
+export const ExportNviPublicationPointsButton = ({
+  acronym,
+  exportAllInstitutions = false,
+}: ExportNviStatusButtonProps) => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const user = useSelector((store: RootState) => store.user);
@@ -29,11 +33,15 @@ export const ExportNviPublicationPointsButton = ({ acronym }: ExportNviStatusBut
     }
 
     try {
-      const blob = await exportMutation.mutateAsync({ year, institutionId });
+      const blob = exportAllInstitutions
+        ? await exportMutation.mutateAsync({ year })
+        : await exportMutation.mutateAsync({ year, institutionId });
 
       const url = URL.createObjectURL(blob);
 
-      const fileName = `nvi-publication-points-${acronym}-${year}.csv`;
+      const fileName = exportAllInstitutions
+        ? `nvi-publication-points-${year}.csv`
+        : `nvi-publication-points-${acronym}-${year}.csv`;
 
       const a = document.createElement('a');
       a.href = url;

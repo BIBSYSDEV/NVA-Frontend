@@ -44,12 +44,15 @@ export const NviStatusWrapper = ({
           {institutionSearch && <NviInstitutionSearch sx={{ minWidth: '30rem' }} />}
           {visibilitySelector && <NviVisibilitySelector sx={{ minWidth: '15rem' }} />}
         </Box>
-        {exportAcronym &&
-          (exportPublicationPoints ? (
+        {exportPublicationPoints ? (
+          exportAcronym ? (
             <ExportNviPublicationPointsButton acronym={exportAcronym} />
           ) : (
-            <ExportNviStatusButton />
-          ))}
+            <ExportNviPublicationPointsButton exportAllInstitutions />
+          )
+        ) : (
+          <ExportNviStatusButton />
+        )}
       </Box>
       {children}
     </VerticalBox>
