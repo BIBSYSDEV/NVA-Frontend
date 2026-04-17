@@ -10,7 +10,6 @@ import {
   Typography,
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import { NviAdminTableSortSelector } from '../../../../components/nvi/table/NviAdminTableSortSelector';
 import { NviAdminReportingStatusRow } from '../../../../components/nvi/table/rows/NviAdminReportingStatusRow';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
@@ -19,13 +18,14 @@ import { VerticalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { InstitutionReport } from '../../../../types/nvi.types';
+import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviAdminReportingStatusPage = () => {
   const { t } = useTranslation();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
 
   return (
-    <NviPageLayout
+    <NviStatusWrapper
       headline={t('basic_data.nvi.reporting_status')}
       topView={
         <Box sx={{ mb: '1rem' }}>
@@ -70,6 +70,6 @@ export const NviAdminReportingStatusPage = () => {
           </TableContainer>
         </VerticalBox>
       )}
-    </NviPageLayout>
+    </NviStatusWrapper>
   );
 };

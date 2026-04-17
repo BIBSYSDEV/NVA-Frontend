@@ -14,12 +14,12 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
-import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import { NviReportingStatusRow } from '../../../../components/nvi/table/rows/NviReportingStatusRow';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
+import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviReportingStatusPage = () => {
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ export const NviReportingStatusPage = () => {
   const nviStatusQuery = useFetchNviInstitutionStatus(year);
 
   return (
-    <NviPageLayout
+    <NviStatusWrapper
       headline={t('tasks.nvi.institution_nvi_status')}
       topView={
         <VerticalBox sx={{ mb: '1rem', gap: '0.5rem' }}>
@@ -74,6 +74,6 @@ export const NviReportingStatusPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </NviPageLayout>
+    </NviStatusWrapper>
   );
 };

@@ -1,9 +1,9 @@
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { Button, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useFetchNviReportExport } from '../../api/hooks/useFetchNviReportExport';
-import { dataTestId } from '../../utils/dataTestIds';
-import { useNviCandidatesParams } from '../../utils/hooks/useNviCandidatesParams';
+import { useFetchNviReportExport } from '../../../api/hooks/useFetchNviReportExport';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
 interface ExportNviStatusButtonProps {
   acronym: string;
