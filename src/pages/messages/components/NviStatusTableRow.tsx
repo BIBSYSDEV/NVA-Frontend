@@ -1,9 +1,11 @@
-import { Link, Skeleton, styled, TableCell } from '@mui/material';
+import { Link } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
 import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { PercentageWithIcon } from '../../../components/_molecules/PercentageWithIcon';
+import { selfOrDescendantHasCandidates } from '../../../components/nvi/table/utils/nvi-aggregations-helpers';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
+import { CenteredTableCell, TableNumberSkeleton } from '../../../styles/table-styles';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
 import { User } from '../../../types/user.types';
@@ -21,35 +23,23 @@ interface NviStatusTableRowProps {
   year?: number;
 }
 
-const StyledSkeleton = styled(Skeleton)({
-  width: '2ch',
-  margin: 'auto',
-});
-
 export const NviStatusTableRow = ({ organization, aggregations, level = 0, user, year }: NviStatusTableRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
+
+  if (excludeEmptyRows && !selfOrDescendantHasCandidates(organization, aggregations)) return null;
+
   const orgAggregations = aggregations?.byOrganization[organization.id];
-  const rowIsEmpty = !orgAggregations || orgAggregations.candidateCount === 0;
   const percentageControlled =
     orgAggregations && orgAggregations.candidateCount > 0
       ? (orgAggregations.approvalStatus.Approved + orgAggregations.approvalStatus.Rejected) /
         orgAggregations.candidateCount
       : -1;
 
-  if (rowIsEmpty && excludeEmptyRows) {
-    return null;
-  }
-
   return (
     <>
-      <NviStatusTableRowWrapper
-        level={level}
-        organization={organization}
-        aggregations={aggregations}
-        expanded={expanded}
-        setExpanded={setExpanded}>
-        <TableCell align="center">
+      <NviStatusTableRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpanded}>
+        <CenteredTableCell>
           {aggregations ? (
             <Link
               component={RouterLink}
@@ -64,10 +54,10 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               {orgAggregations?.approvalStatus.New ?? 0}
             </Link>
           ) : (
-            <StyledSkeleton />
+            <TableNumberSkeleton />
           )}
-        </TableCell>
-        <TableCell align="center">
+        </CenteredTableCell>
+        <CenteredTableCell>
           {aggregations ? (
             <Link
               component={RouterLink}
@@ -83,10 +73,10 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               {orgAggregations?.approvalStatus.Pending ?? 0}
             </Link>
           ) : (
-            <StyledSkeleton />
+            <TableNumberSkeleton />
           )}
-        </TableCell>
-        <TableCell align="center">
+        </CenteredTableCell>
+        <CenteredTableCell>
           {aggregations ? (
             <Link
               component={RouterLink}
@@ -101,10 +91,10 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               {orgAggregations?.approvalStatus.Approved ?? 0}
             </Link>
           ) : (
-            <StyledSkeleton />
+            <TableNumberSkeleton />
           )}
-        </TableCell>
-        <TableCell align="center">
+        </CenteredTableCell>
+        <CenteredTableCell>
           {aggregations ? (
             <Link
               component={RouterLink}
@@ -119,10 +109,10 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               {orgAggregations?.approvalStatus.Rejected ?? 0}
             </Link>
           ) : (
-            <StyledSkeleton />
+            <TableNumberSkeleton />
           )}
-        </TableCell>
-        <TableCell align="center">
+        </CenteredTableCell>
+        <CenteredTableCell>
           {aggregations ? (
             <Link
               component={RouterLink}
@@ -140,10 +130,10 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               {orgAggregations?.candidateCount ?? 0}
             </Link>
           ) : (
-            <StyledSkeleton />
+            <TableNumberSkeleton />
           )}
-        </TableCell>
-        <TableCell align="center">
+        </CenteredTableCell>
+        <CenteredTableCell>
           {aggregations ? (
             <HorizontalBox sx={{ justifyContent: 'center' }}>
               <PercentageWithIcon
@@ -152,9 +142,9 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
               />
             </HorizontalBox>
           ) : (
-            <StyledSkeleton />
+            <TableNumberSkeleton />
           )}
-        </TableCell>
+        </CenteredTableCell>
       </NviStatusTableRowWrapper>
 
       {expanded &&
