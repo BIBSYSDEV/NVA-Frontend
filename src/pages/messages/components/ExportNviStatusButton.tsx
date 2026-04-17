@@ -1,18 +1,11 @@
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { Button, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useFetchNviReportExport } from '../../../api/hooks/useFetchNviReportExport';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
-interface ExportNviStatusButtonProps {
-  acronym: string;
-}
-
-export const ExportNviStatusButton = ({ acronym }: ExportNviStatusButtonProps) => {
+// NOTE: This is only used as a placeholder while the endpoint for reporting status is not implemented
+export const ExportNviStatusButton = () => {
   const { t } = useTranslation();
-  const { year } = useNviCandidatesParams();
-  const fetchNviApprovalReportQuery = useFetchNviReportExport(year, acronym);
 
   return (
     <Tooltip title={t('export_nvi_status_button_tooltip_text')}>
@@ -23,10 +16,7 @@ export const ExportNviStatusButton = ({ acronym }: ExportNviStatusButtonProps) =
           data-testid={dataTestId.common.exportButton}
           color="tertiary"
           variant="contained"
-          startIcon={<FileDownloadOutlinedIcon />}
-          loadingPosition="start"
-          onClick={() => fetchNviApprovalReportQuery.refetch()}
-          loading={fetchNviApprovalReportQuery.isFetching}>
+          startIcon={<FileDownloadOutlinedIcon />}>
           {t('search.export')}
         </Button>
       </span>
