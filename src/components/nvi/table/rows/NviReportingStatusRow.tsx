@@ -15,7 +15,7 @@ import { CenteredTableCell, TableNumberSkeleton } from '../../../tables/table-st
 import { selfOrDescendantHasCandidates } from '../utils/nvi-curator-aggregations-helpers';
 import { NviRowWrapper } from './NviRowWrapper';
 
-interface NviStatusTableRowProps {
+interface NviReportingStatusRowProps {
   organization: Organization;
   aggregations?: NviInstitutionStatusResponse;
   level?: number;
@@ -29,7 +29,7 @@ export const NviReportingStatusRow = ({
   level = 0,
   user,
   year,
-}: NviStatusTableRowProps) => {
+}: NviReportingStatusRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
 

@@ -15,11 +15,11 @@ import {
   getPercentageControlled,
 } from '../utils/nvi-admin-aggregations-helpers';
 
-interface NviAdminStatusPageRowProps {
+interface NviAdminReportingStatusRowProps {
   report: InstitutionReport;
 }
 
-export const NviAdminReportingStatusRow = ({ report }: NviAdminStatusPageRowProps) => {
+export const NviAdminReportingStatusRow = ({ report }: NviAdminReportingStatusRowProps) => {
   const { t } = useTranslation();
   const { id, institutionSummary } = report;
   const { byLocalApprovalStatus, totals } = institutionSummary;

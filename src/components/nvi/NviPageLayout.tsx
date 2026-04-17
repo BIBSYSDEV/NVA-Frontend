@@ -7,7 +7,7 @@ import { NviSectorSelector } from './filters/NviSectorSelector';
 import { NviVisibilitySelector } from './filters/NviVisibilitySelector';
 import { NviYearSelector } from './filters/NviYearSelector';
 
-interface NviStatusWrapperProps {
+interface NviPageLayoutProps {
   headline: string;
   topView?: ReactNode;
   yearSelector?: boolean;
@@ -27,7 +27,7 @@ export const NviPageLayout = ({
   institutionSearch,
   exportAcronym,
   children,
-}: NviStatusWrapperProps) => {
+}: NviPageLayoutProps) => {
   return (
     <VerticalBox sx={{ gap: '1rem', alignItems: 'start' }}>
       <Typography variant="h1" sx={{ mb: '0.5rem' }}>

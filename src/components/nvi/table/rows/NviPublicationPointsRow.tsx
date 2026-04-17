@@ -15,7 +15,7 @@ import { ALTERNATIVE_TEXT_INSTEAD_OF_ZERO } from '../utils/constants';
 import { selfOrDescendantHasPointValues } from '../utils/nvi-curator-aggregations-helpers';
 import { NviRowWrapper } from './NviRowWrapper';
 
-interface NviPublicationPointsTableRowProps {
+interface NviPublicationPointsRowProps {
   organization: Organization;
   aggregations?: NviInstitutionStatusResponse;
   level?: number;
@@ -27,7 +27,7 @@ export const NviPublicationPointsRow = ({
   aggregations,
   level = 0,
   year,
-}: NviPublicationPointsTableRowProps) => {
+}: NviPublicationPointsRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
 

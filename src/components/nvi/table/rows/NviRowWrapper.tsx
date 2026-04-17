@@ -11,7 +11,7 @@ export const StyledSkeleton = styled(Skeleton)({
   margin: 'auto',
 });
 
-interface NviStatusTableRowWrapperProps {
+interface NviRowWrapperProps {
   organization: Organization;
   expanded: boolean;
   setExpanded: (val: boolean) => void;
@@ -19,13 +19,7 @@ interface NviStatusTableRowWrapperProps {
   level?: number;
 }
 
-export const NviRowWrapper = ({
-  children,
-  level = 0,
-  organization,
-  expanded,
-  setExpanded,
-}: NviStatusTableRowWrapperProps) => {
+export const NviRowWrapper = ({ children, level = 0, organization, expanded, setExpanded }: NviRowWrapperProps) => {
   const { t } = useTranslation();
 
   return (

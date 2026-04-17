@@ -4,11 +4,11 @@ import { getNviAdminSortOptions } from '../../sort-selectors/sort-nvi-table/nvi-
 import { NviAdminSortSelectorType } from '../../sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { HorizontalBox } from '../../styled/Wrappers';
 
-interface NviAdminSortSelectorProps {
+interface NviAdminTableSortSelectorProps {
   type: NviAdminSortSelectorType;
 }
 
-export const NviAdminTableSortSelector = ({ type }: NviAdminSortSelectorProps) => {
+export const NviAdminTableSortSelector = ({ type }: NviAdminTableSortSelectorProps) => {
   const { t } = useTranslation();
   return (
     <HorizontalBox sx={{ mb: '0.25rem', alignSelf: 'flex-end', gap: '1rem' }}>
