@@ -19,7 +19,7 @@ interface NviStatusTableRowWrapperProps {
   level?: number;
 }
 
-export const NviStatusTableRowWrapper = ({
+export const NviRowWrapper = ({
   children,
   level = 0,
   organization,

@@ -8,7 +8,12 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidateGlobalStatusEnum, NviCandidatesSearchParam, NviCandidateStatusEnum } from '../../../api/searchApi';
+import { RootState } from '../../../redux/store';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { NavigationListAccordion } from '../../NavigationListAccordion';
+import { StyledSkeleton } from '../../nvi/table/NviRowWrapper';
 import { NviReportProgressBar } from '../../NviReportProgressBar';
 import { SelectableButton } from '../../SelectableButton';
 import {
@@ -18,11 +23,6 @@ import {
   StyledTicketSearchFormGroup,
   VerticalBox,
 } from '../../styled/Wrappers';
-import { RootState } from '../../../redux/store';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
-import { StyledSkeleton } from '../../../pages/messages/components/NviStatusTableRowWrapper';
 
 export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();

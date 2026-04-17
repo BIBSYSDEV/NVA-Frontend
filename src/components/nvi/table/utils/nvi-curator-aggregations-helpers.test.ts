@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { NviInstitutionStatusResponse } from '../../../../types/nvi.types';
 import { Organization } from '../../../../types/organization.types';
-import { selfOrDescendantHasCandidates, selfOrDescendantHasPointValues } from './nvi-aggregations-helpers';
+import { selfOrDescendantHasCandidates, selfOrDescendantHasPointValues } from './nvi-curator-aggregations-helpers';
 
 interface OrgValues {
   candidateCount?: number;

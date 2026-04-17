@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
+import { NviPublicationPointsRow } from '../../../../components/nvi/table/NviPublicationPointsRow';
 import { NviPublicationPointsTexts } from '../../../../components/NviPublicationPointsTexts';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
 import { getDefaultNviYear } from '../../../../utils/hooks/useNviCandidatesParams';
 import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../../messages/components/NviPointsQuestionIcon';
-import { NviPublicationPointsTableRow } from '../../../messages/components/NviPublicationPointsTableRow';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviPublicationPointsPage = () => {
@@ -55,7 +55,7 @@ export const NviPublicationPointsPage = () => {
           </TableHead>
           <TableBody>
             {institution && (
-              <NviPublicationPointsTableRow organization={institution} aggregations={aggregations} year={year} />
+              <NviPublicationPointsRow organization={institution} aggregations={aggregations} year={year} />
             )}
           </TableBody>
         </Table>
