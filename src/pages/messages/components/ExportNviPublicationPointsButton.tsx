@@ -9,7 +9,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
-interface ExportNviStatusButtonProps {
+interface ExportNviPublicationPointsButtonProps {
   acronym?: string;
   exportAllInstitutions?: boolean;
 }
@@ -17,7 +17,7 @@ interface ExportNviStatusButtonProps {
 export const ExportNviPublicationPointsButton = ({
   acronym,
   exportAllInstitutions = false,
-}: ExportNviStatusButtonProps) => {
+}: ExportNviPublicationPointsButtonProps) => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const user = useSelector((store: RootState) => store.user);

@@ -1,12 +1,12 @@
 import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { VerticalBox } from '../../../components/styled/Wrappers';
+import { ExportNviPublicationPointsButton } from './ExportNviPublicationPointsButton';
+import { ExportNviStatusButton } from './ExportNviStatusButton';
 import { NviInstitutionSearch } from './NviInstitutionSearch';
 import { NviSectorSelector } from './NviSectorSelector';
 import { NviVisibilitySelector } from './NviVisibilitySelector';
 import { NviYearSelector } from './NviYearSelector';
-import { ExportNviStatusButton } from './ExportNviStatusButton';
-import { ExportNviPublicationPointsButton } from './ExportNviPublicationPointsButton';
 
 interface NviStatusWrapperProps {
   headline: string;
@@ -31,6 +31,18 @@ export const NviStatusWrapper = ({
   exportPublicationPoints,
   children,
 }: NviStatusWrapperProps) => {
+  let exportButton;
+  switch (true) {
+    case exportPublicationPoints && !!exportAcronym:
+      exportButton = <ExportNviPublicationPointsButton acronym={exportAcronym} />;
+      break;
+    case exportPublicationPoints:
+      exportButton = <ExportNviPublicationPointsButton exportAllInstitutions />;
+      break;
+    default:
+      exportButton = <ExportNviStatusButton />;
+  }
+
   return (
     <VerticalBox sx={{ gap: '1rem', alignItems: 'start' }}>
       <Typography variant="h1" sx={{ mb: '0.5rem' }}>
@@ -44,15 +56,7 @@ export const NviStatusWrapper = ({
           {institutionSearch && <NviInstitutionSearch sx={{ minWidth: '30rem' }} />}
           {visibilitySelector && <NviVisibilitySelector sx={{ minWidth: '15rem' }} />}
         </Box>
-        {exportPublicationPoints ? (
-          exportAcronym ? (
-            <ExportNviPublicationPointsButton acronym={exportAcronym} />
-          ) : (
-            <ExportNviPublicationPointsButton exportAllInstitutions />
-          )
-        ) : (
-          <ExportNviStatusButton />
-        )}
+        {exportButton}
       </Box>
       {children}
     </VerticalBox>
