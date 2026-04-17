@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next';
-import { SortSelector } from '../../../../../components/_molecules/SortSelector';
-import { NviAdminSortSelectorType } from '../../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
-import { HorizontalBox } from '../../../../../components/styled/Wrappers';
-import { getNviAdminSortOptions } from '../../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-helpers';
+import { SortSelector } from '../../_molecules/SortSelector';
+import { getNviAdminSortOptions } from '../../sort-selectors/sort-nvi-table/nvi-admin-sort-helpers';
+import { NviAdminSortSelectorType } from '../../sort-selectors/sort-nvi-table/nvi-admin-sort-types';
+import { HorizontalBox } from '../../styled/Wrappers';
 
 interface NviAdminSortSelectorProps {
   type: NviAdminSortSelectorType;
 }
 
-export const NviAdminSortSelector = ({ type }: NviAdminSortSelectorProps) => {
+export const NviAdminTableSortSelector = ({ type }: NviAdminSortSelectorProps) => {
   const { t } = useTranslation();
   return (
     <HorizontalBox sx={{ mb: '0.25rem', alignSelf: 'flex-end', gap: '1rem' }}>

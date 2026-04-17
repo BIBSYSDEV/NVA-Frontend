@@ -1,11 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
-import { VerticalBox } from '../../../components/styled/Wrappers';
-import { NviInstitutionSearch } from './NviInstitutionSearch';
-import { NviSectorSelector } from './NviSectorSelector';
-import { NviVisibilitySelector } from './NviVisibilitySelector';
-import { NviYearSelector } from './NviYearSelector';
+import { VerticalBox } from '../styled/Wrappers';
 import { ExportNviStatusButton } from './ExportNviStatusButton';
+import { NviInstitutionSearch } from './filters/NviInstitutionSearch';
+import { NviSectorSelector } from './filters/NviSectorSelector';
+import { NviVisibilitySelector } from './filters/NviVisibilitySelector';
+import { NviYearSelector } from './filters/NviYearSelector';
 
 interface NviStatusWrapperProps {
   headline: string;
@@ -18,7 +18,7 @@ interface NviStatusWrapperProps {
   children?: ReactNode;
 }
 
-export const NviStatusWrapper = ({
+export const NviPageLayout = ({
   headline,
   topView,
   yearSelector,

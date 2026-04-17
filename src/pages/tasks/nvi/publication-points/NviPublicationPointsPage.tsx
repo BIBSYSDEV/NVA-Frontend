@@ -4,13 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
-import { NviPublicationPointsRow } from '../../../../components/nvi/table/NviPublicationPointsRow';
-import { NviPublicationPointsTexts } from '../../../../components/NviPublicationPointsTexts';
+import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
+import {
+  NviPointsHelperTextModal,
+  NviPointsModalVariant,
+} from '../../../../components/nvi/table/helper-text-modals/NviPointsHelperTextModal';
+import { NviPublicationPointsRow } from '../../../../components/nvi/table/rows/NviPublicationPointsRow';
+import { NviPublicationPointsTexts } from '../../../../components/nvi/top-texts/NviPublicationPointsTexts';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
 import { getDefaultNviYear } from '../../../../utils/hooks/useNviCandidatesParams';
-import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../../messages/components/NviPointsQuestionIcon';
-import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviPublicationPointsPage = () => {
   const { t } = useTranslation();
@@ -23,7 +26,7 @@ export const NviPublicationPointsPage = () => {
   const headline = t('tasks.nvi.reporting_status_for_publication_points_for_year', { year: year });
 
   return (
-    <NviStatusWrapper
+    <NviPageLayout
       headline={headline}
       exportAcronym={organizationQuery.data?.acronym}
       topView={
@@ -41,7 +44,7 @@ export const NviPublicationPointsPage = () => {
               <TableCell align="center">
                 <HorizontalBox sx={{ justifyContent: 'center' }}>
                   {t('points_for_reporting')}
-                  <NviPointsQuestionIcon variant={NviPointsModalVariant.Curator} />
+                  <NviPointsHelperTextModal variant={NviPointsModalVariant.Curator} />
                 </HorizontalBox>
               </TableCell>
               <TableCell align="center">{t('percentage_approved_by_all')}</TableCell>
@@ -60,6 +63,6 @@ export const NviPublicationPointsPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </NviStatusWrapper>
+    </NviPageLayout>
   );
 };

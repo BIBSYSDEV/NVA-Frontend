@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { OpenInNewLink } from '../../../components/OpenInNewLink';
-import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { NVI_REPORTING_INSTRUCTIONS_URL } from '../../../utils/externalLinks';
-import { HelperTextModal } from '../../registration/HelperTextModal';
+import { HelperTextModal } from '../../../../pages/registration/HelperTextModal';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { NVI_REPORTING_INSTRUCTIONS_URL } from '../../../../utils/externalLinks';
+import { OpenInNewLink } from '../../../OpenInNewLink';
+import { HorizontalBox, VerticalBox } from '../../../styled/Wrappers';
 
 export enum NviPointsModalVariant {
   Admin = 'admin',
@@ -28,7 +28,7 @@ interface NviPublicationPointsHelperModalProps {
   variant: NviPointsModalVariant;
 }
 
-export const NviPointsQuestionIcon = ({ variant }: NviPublicationPointsHelperModalProps) => {
+export const NviPointsHelperTextModal = ({ variant }: NviPublicationPointsHelperModalProps) => {
   const { t } = useTranslation();
   const data = variantData[variant];
 

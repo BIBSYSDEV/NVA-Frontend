@@ -13,7 +13,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { NavigationListAccordion } from '../../NavigationListAccordion';
-import { StyledSkeleton } from '../../nvi/table/NviRowWrapper';
+import { StyledSkeleton } from '../../nvi/table/rows/NviRowWrapper';
 import { NviReportProgressBar } from '../../NviReportProgressBar';
 import { SelectableButton } from '../../SelectableButton';
 import {
