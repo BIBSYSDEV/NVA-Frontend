@@ -3,17 +3,17 @@ import { Box, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
-import { useFetchNviPeriodReport } from '../../api/hooks/useFetchNviPeriodReport';
-import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { NviReportProgressBar } from '../../components/NviReportProgressBar';
-import { LinkCreateButton, NavigationList } from '../../components/PageWithSideMenu';
-import { SelectableButton } from '../../components/SelectableButton';
-import { NviAdminOrderBy } from '../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-helpers';
-import { StyledNviStatusBox } from '../../components/styled/Wrappers';
-import { RootState } from '../../redux/store';
-import { dataTestId } from '../../utils/dataTestIds';
-import { getDefaultNviYear } from '../../utils/hooks/useNviCandidatesParams';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { useFetchNviPeriodReport } from '../../../api/hooks/useFetchNviPeriodReport';
+import { NavigationListAccordion } from '../../NavigationListAccordion';
+import { NviReportProgressBar } from '../../NviReportProgressBar';
+import { LinkCreateButton, NavigationList } from '../../PageWithSideMenu';
+import { SelectableButton } from '../../SelectableButton';
+import { NviAdminOrderBy } from '../../sort-selectors/sort-nvi-table/nvi-admin-sort-helpers';
+import { StyledNviStatusBox } from '../../styled/Wrappers';
+import { RootState } from '../../../redux/store';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 export const NviAdminNavigationAccordion = () => {
   const { t } = useTranslation();

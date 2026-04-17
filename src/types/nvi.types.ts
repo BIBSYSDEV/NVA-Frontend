@@ -71,7 +71,7 @@ interface TopLevelAggregation extends BaseAggregation {
   type: 'TopLevelAggregation';
 }
 
-interface DirectAffiliationAggregation extends BaseAggregation {
+export interface DirectAffiliationAggregation extends BaseAggregation {
   type: 'DirectAffiliationAggregation';
 }
 

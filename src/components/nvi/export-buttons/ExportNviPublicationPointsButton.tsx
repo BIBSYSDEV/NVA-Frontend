@@ -1,27 +1,30 @@
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import { CircularProgress, Link } from '@mui/material';
+import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useExportNviAuthorSharesMutation } from '../../../api/hooks/useExportNviAuthorSharesMutation';
+import { useExportNviPublicationPointsMutation } from '../../../api/hooks/useExportNviPublicationPointsMutation';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
-interface ExportNviStatusLinkProps {
+interface ExportNviPublicationPointsButtonProps {
   acronym?: string;
   exportAllInstitutions?: boolean;
 }
 
-export const ExportNviStatusLink = ({ acronym, exportAllInstitutions }: ExportNviStatusLinkProps) => {
+export const ExportNviPublicationPointsButton = ({
+  acronym,
+  exportAllInstitutions = false,
+}: ExportNviPublicationPointsButtonProps) => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
-  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const userTopLevelOrg = user?.topOrgCristinId ?? '';
   const institutionId = getIdentifierFromId(userTopLevelOrg);
-  const exportMutation = useExportNviAuthorSharesMutation();
+  const dispatch = useDispatch();
+  const exportMutation = useExportNviPublicationPointsMutation();
   const isPending = exportMutation.isPending;
 
   const handleClick = async () => {
@@ -36,7 +39,9 @@ export const ExportNviStatusLink = ({ acronym, exportAllInstitutions }: ExportNv
 
       const url = URL.createObjectURL(blob);
 
-      const fileName = acronym ? `nvi-status-${acronym}-${year}.xlsx` : `nvi-status-${year}.xlsx`;
+      const fileName = exportAllInstitutions
+        ? `nvi-publication-points-${year}.csv`
+        : `nvi-publication-points-${acronym}-${year}.csv`;
 
       const a = document.createElement('a');
       a.href = url;
@@ -57,20 +62,15 @@ export const ExportNviStatusLink = ({ acronym, exportAllInstitutions }: ExportNv
   };
 
   return (
-    <Link
-      component="button"
-      type="button"
-      data-testid={dataTestId.common.exportLink}
+    <Button
+      data-testid={dataTestId.common.exportButton}
+      color="tertiary"
+      variant="contained"
+      startIcon={<FileDownloadOutlinedIcon />}
+      loadingPosition="start"
       onClick={handleClick}
-      disabled={isPending}
-      sx={{
-        pl: '0.5rem',
-        display: 'inline-flex',
-        alignItems: 'center',
-        cursor: isPending ? 'default' : 'pointer',
-      }}>
-      {isPending ? <CircularProgress size={15} /> : <FileDownloadOutlinedIcon fontSize="small" />}
-      {t('export_dataset_for_nvi_report')}
-    </Link>
+      loading={isPending}>
+      {t('search.export')}
+    </Button>
   );
 };

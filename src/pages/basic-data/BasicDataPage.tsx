@@ -35,7 +35,7 @@ import { NviAdminStatusPage } from './nvi/status/NviAdminStatusPage';
 import { NviPeriodsPage } from '../basic_data/app_admin/NviPeriodsPage';
 import { AddEmployeePage } from '../basic_data/institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from '../basic_data/institution_admin/person_register/PersonRegisterPage';
-import { NviAdminNavigationAccordion } from '../basic_data/NviAdminNavigationAccordion';
+import { NviAdminNavigationAccordion } from '../../components/navigation-accordions/basic-data/NviAdminNavigationAccordion';
 
 const isOnEditOrMergeImportCandidate = (path: string) =>
   path.endsWith(UrlPathTemplate.BasicDataCentralImportCandidateWizard.split('/').pop() as string) ||

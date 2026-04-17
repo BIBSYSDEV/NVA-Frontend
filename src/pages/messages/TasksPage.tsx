@@ -24,7 +24,7 @@ import NotFound from '../errorpages/NotFound';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
-import { NviCandidatesNavigationAccordion } from './components/NviCandidatesNavigationAccordion';
+import { NviCandidatesNavigationAccordion } from '../../components/navigation-accordions/tasks/NviCandidatesNavigationAccordion';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { NviCorrectionListNavigationAccordion } from './components/NviCorrectionListNavigationAccordion';
 import { NviStatusPage } from '../tasks/nvi/status/NviStatusPage';

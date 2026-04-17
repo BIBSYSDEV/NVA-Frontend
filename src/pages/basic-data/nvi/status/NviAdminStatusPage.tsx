@@ -18,7 +18,7 @@ import { CenteredTableCell } from '../../../../styles/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
-import { NviAdminStatusPageRow } from '../../../basic_data/app_admin/nviAdmin/NviAdminStatusPageRow';
+import { NviAdminStatusPageRow } from '../../../../components/nvi/table/NviAdminStatusPageRow';
 
 export const NviAdminStatusPage = () => {
   const { t } = useTranslation();
