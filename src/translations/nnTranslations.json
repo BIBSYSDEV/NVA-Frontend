@@ -543,6 +543,7 @@
     }
   },
   "export_dataset_for_nvi_report": "",
+  "export_dataset_for_nvi_report_description": "",
   "export_nvi_status_button_tooltip_text": "",
   "feedback": {
     "error": {
