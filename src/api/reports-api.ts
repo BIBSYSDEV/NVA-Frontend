@@ -91,9 +91,9 @@ export const fetchReport = async (options: ReportRequestOptions, signal?: AbortS
 
   const reportResponse = await authenticatedApiRequest2<ReportInitResponse>(requestConfig);
 
-  // NOTE: Axios throws for non-2xx codes (unless you configured it otherwise), so if we are here, it's OK.
+  // NOTE: Axios throws for non-2xx codes.
   if (!reportResponse.data?.uri) {
-    throw new Error('Kunne ikke hente rapport');
+    throw new Error(i18n.t('feedback.error.generate_nvi_report'));
   }
 
   return reportResponse.data;
@@ -136,7 +136,7 @@ export const pollForReportReady = async (presignedUrl: string, options: PollOpti
 
       const status = err?.response?.status as number | undefined;
 
-      // While the report is being generated, the presigned URL returns 404
+      // NOTE: While the report is being generated, the presigned URL returns 404
       if (status === 404) {
         await sleep(delay, signal);
         delay = Math.min(delay * 2, maxDelayMs);
