@@ -8,7 +8,7 @@ import { NviSectorSelector } from './filters/NviSectorSelector';
 import { NviVisibilitySelector } from './filters/NviVisibilitySelector';
 import { NviYearSelector } from './filters/NviYearSelector';
 
-interface NviStatusWrapperProps {
+interface NviPageLayoutProps {
   headline: string;
   topView?: ReactNode;
   yearSelector?: boolean;
@@ -30,7 +30,7 @@ export const NviPageLayout = ({
   exportAcronym,
   exportPublicationPoints,
   children,
-}: NviStatusWrapperProps) => {
+}: NviPageLayoutProps) => {
   let exportButton;
   switch (true) {
     case exportPublicationPoints && !!exportAcronym:
