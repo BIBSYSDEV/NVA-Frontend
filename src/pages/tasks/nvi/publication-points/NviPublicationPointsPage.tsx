@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
+import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import {
   NviPointsHelperTextModal,
   NviPointsModalVariant,
@@ -13,7 +14,6 @@ import { NviPublicationPointsTexts } from '../../../../components/nvi/top-texts/
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
 import { getDefaultNviYear } from '../../../../utils/hooks/useNviCandidatesParams';
-import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviPublicationPointsPage = () => {
   const { t } = useTranslation();
@@ -26,7 +26,7 @@ export const NviPublicationPointsPage = () => {
   const headline = t('tasks.nvi.reporting_status_for_publication_points_for_year', { year: year });
 
   return (
-    <NviStatusWrapper
+    <NviPageLayout
       headline={headline}
       exportAcronym={organizationQuery.data?.acronym}
       exportPublicationPoints
@@ -64,6 +64,6 @@ export const NviPublicationPointsPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </NviStatusWrapper>
+    </NviPageLayout>
   );
 };

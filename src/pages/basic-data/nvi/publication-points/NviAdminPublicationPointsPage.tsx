@@ -1,5 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import {
   NviPointsHelperTextModal,
   NviPointsModalVariant,
@@ -13,14 +14,13 @@ import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappe
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { InstitutionReport } from '../../../../types/nvi.types';
-import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
 
   return (
-    <NviStatusWrapper
+    <NviPageLayout
       headline={t('basic_data.nvi.publication_points_status')}
       topView={<NviAdminPublicationPointsTexts />}
       yearSelector
@@ -61,6 +61,6 @@ export const NviAdminPublicationPointsPage = () => {
           </TableContainer>
         </VerticalBox>
       )}
-    </NviStatusWrapper>
+    </NviPageLayout>
   );
 };
