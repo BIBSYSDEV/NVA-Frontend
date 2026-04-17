@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
+import i18n from '../translations/i18n';
 import { API_URL } from '../utils/constants';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
-import i18n from '../translations/i18n';
 
 const BASE_URL = `${API_URL}scientific-index`;
 
