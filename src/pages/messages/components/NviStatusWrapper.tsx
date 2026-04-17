@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { VerticalBox } from '../../../components/styled/Wrappers';
-import { ExportNviPublicationPointsButton } from './ExportNviPublicationPointsButton';
+import { ExportNviPublicationPointsButton } from '../../../components/nvi/export-buttons/ExportNviPublicationPointsButton';
 import { ExportNviStatusButton } from './ExportNviStatusButton';
 import { NviInstitutionSearch } from './NviInstitutionSearch';
 import { NviSectorSelector } from './NviSectorSelector';
