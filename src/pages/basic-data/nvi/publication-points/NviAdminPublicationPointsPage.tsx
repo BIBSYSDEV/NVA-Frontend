@@ -24,6 +24,7 @@ export const NviAdminPublicationPointsPage = () => {
       headline={t('basic_data.nvi.publication_points_status')}
       topView={<NviAdminPublicationPointsTexts />}
       yearSelector
+      exportPublicationPoints
       sectorSelector
       institutionSearch>
       {isPending ? (

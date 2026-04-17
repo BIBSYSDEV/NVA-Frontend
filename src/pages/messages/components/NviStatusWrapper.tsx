@@ -6,8 +6,9 @@ import { NviVisibilitySelector } from '../../../components/nvi/filters/NviVisibi
 import { NviYearSelector } from '../../../components/nvi/filters/NviYearSelector';
 import { VerticalBox } from '../../../components/styled/Wrappers';
 import { ExportNviStatusButton } from './ExportNviStatusButton';
+import { ExportNviPublicationPointsButton } from '../../../components/nvi/export-buttons/ExportNviPublicationPointsButton';
 
-interface NviPageLayoutProps {
+interface NviStatusWrapperProps {
   headline: string;
   topView?: ReactNode;
   yearSelector?: boolean;
@@ -15,6 +16,7 @@ interface NviPageLayoutProps {
   sectorSelector?: boolean;
   institutionSearch?: boolean;
   exportAcronym?: string;
+  exportPublicationPoints?: boolean;
   children?: ReactNode;
 }
 
@@ -26,8 +28,21 @@ export const NviStatusWrapper = ({
   sectorSelector,
   institutionSearch,
   exportAcronym,
+  exportPublicationPoints,
   children,
-}: NviPageLayoutProps) => {
+}: NviStatusWrapperProps) => {
+  let exportButton;
+  switch (true) {
+    case exportPublicationPoints && !!exportAcronym:
+      exportButton = <ExportNviPublicationPointsButton acronym={exportAcronym} />;
+      break;
+    case exportPublicationPoints:
+      exportButton = <ExportNviPublicationPointsButton exportAllInstitutions />;
+      break;
+    default:
+      exportButton = <ExportNviStatusButton />;
+  }
+
   return (
     <VerticalBox sx={{ gap: '1rem', alignItems: 'start' }}>
       <Typography variant="h1" sx={{ mb: '0.5rem' }}>
@@ -41,7 +56,7 @@ export const NviStatusWrapper = ({
           {institutionSearch && <NviInstitutionSearch sx={{ minWidth: '30rem' }} />}
           {visibilitySelector && <NviVisibilitySelector sx={{ minWidth: '15rem' }} />}
         </Box>
-        {exportAcronym && <ExportNviStatusButton acronym={exportAcronym} />}
+        {exportButton}
       </Box>
       {children}
     </VerticalBox>
