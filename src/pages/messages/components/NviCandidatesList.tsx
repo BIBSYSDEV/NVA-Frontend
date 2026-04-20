@@ -12,17 +12,17 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { NviYearSelector } from '../../../components/nvi/filters/NviYearSelector';
 import { SearchForm } from '../../../components/SearchForm';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { CoPublicationsCheckbox } from './CoPublicationsCheckbox';
 import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
 import { NviStatusFilter } from './NviStatusFilter';
-import { NviYearSelector } from './NviYearSelector';
-import { CoPublicationsCheckbox } from './CoPublicationsCheckbox';
 
 export const NviCandidatesList = () => {
   const { t } = useTranslation();

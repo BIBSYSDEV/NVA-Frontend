@@ -3,15 +3,15 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IconButton, Skeleton, styled, TableCell, TableRow } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Organization } from '../../../types/organization.types';
-import { getLanguageString } from '../../../utils/translation-helpers';
+import { Organization } from '../../../../types/organization.types';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 
 export const StyledSkeleton = styled(Skeleton)({
   width: '2ch',
   margin: 'auto',
 });
 
-interface NviStatusTableRowWrapperProps {
+interface NviRowWrapperProps {
   organization: Organization;
   expanded: boolean;
   setExpanded: (val: boolean) => void;
@@ -19,13 +19,7 @@ interface NviStatusTableRowWrapperProps {
   level?: number;
 }
 
-export const NviStatusTableRowWrapper = ({
-  children,
-  level = 0,
-  organization,
-  expanded,
-  setExpanded,
-}: NviStatusTableRowWrapperProps) => {
+export const NviRowWrapper = ({ children, level = 0, organization, expanded, setExpanded }: NviRowWrapperProps) => {
   const { t } = useTranslation();
 
   return (

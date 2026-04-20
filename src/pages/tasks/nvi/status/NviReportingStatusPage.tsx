@@ -14,14 +14,14 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
+import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
+import { NviReportingStatusRow } from '../../../../components/nvi/table/rows/NviReportingStatusRow';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
+import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { RootState } from '../../../../redux/store';
-import { CenteredTableCell } from '../../../../styles/table-styles';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
-import { NviStatusTableRow } from '../../../messages/components/NviStatusTableRow';
-import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
 
-export const NviStatusPage = () => {
+export const NviReportingStatusPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
@@ -33,7 +33,7 @@ export const NviStatusPage = () => {
   const nviStatusQuery = useFetchNviInstitutionStatus(year);
 
   return (
-    <NviStatusWrapper
+    <NviPageLayout
       headline={t('tasks.nvi.institution_nvi_status')}
       topView={
         <VerticalBox sx={{ mb: '1rem', gap: '0.5rem' }}>
@@ -64,7 +64,7 @@ export const NviStatusPage = () => {
           </TableHead>
           <TableBody>
             {institution && (
-              <NviStatusTableRow
+              <NviReportingStatusRow
                 organization={institution}
                 aggregations={nviStatusQuery.data}
                 user={user}
@@ -74,6 +74,6 @@ export const NviStatusPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </NviStatusWrapper>
+    </NviPageLayout>
   );
 };

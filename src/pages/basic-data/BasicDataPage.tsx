@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MergeImportCandidate } from '../../components/merge_results/MergeImportCandidate';
+import { NviAdminNavigationAccordion } from '../../components/navigation-accordions/basic-data/NviAdminNavigationAccordion';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
   LinkCreateButton,
@@ -22,20 +23,19 @@ import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
-import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
-import { SerialPublicationClaimsSettings } from '../editor/SerialPublicationClaimsSettings';
-import NotFound from '../errorpages/NotFound';
 import { AdminCustomerInstitutionsContainer } from '../basic_data/app_admin/AdminCustomerInstitutionsContainer';
 import { CentralImportCandidateForm } from '../basic_data/app_admin/central_import/CentralImportCandidateForm';
 import { CentralImportDuplicationCheckPage } from '../basic_data/app_admin/central_import/CentralImportDuplicationCheckPage';
 import { CentralImportPage } from '../basic_data/app_admin/central_import/CentralImportPage';
 import { ImportCandidatesMenuFilters } from '../basic_data/app_admin/central_import/ImportCandidatesMenuFilters';
-import { NviAdminPublicationPointsPage } from './nvi/publication-points/NviAdminPublicationPointsPage';
-import { NviAdminStatusPage } from './nvi/status/NviAdminStatusPage';
 import { NviPeriodsPage } from '../basic_data/app_admin/NviPeriodsPage';
 import { AddEmployeePage } from '../basic_data/institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from '../basic_data/institution_admin/person_register/PersonRegisterPage';
-import { NviAdminNavigationAccordion } from '../../components/navigation-accordions/basic-data/NviAdminNavigationAccordion';
+import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
+import { SerialPublicationClaimsSettings } from '../editor/SerialPublicationClaimsSettings';
+import NotFound from '../errorpages/NotFound';
+import { NviAdminPublicationPointsPage } from './nvi/publication-points/NviAdminPublicationPointsPage';
+import { NviAdminReportingStatusPage } from './nvi/status/NviAdminReportingStatusPage';
 
 const isOnEditOrMergeImportCandidate = (path: string) =>
   path.endsWith(UrlPathTemplate.BasicDataCentralImportCandidateWizard.split('/').pop() as string) ||
@@ -225,7 +225,7 @@ const BasicDataPage = () => {
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataNviStatus, UrlPathTemplate.BasicData)}
-            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviAdminStatusPage />} />}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviAdminReportingStatusPage />} />}
           />
           <Route
             path={getSubUrl(UrlPathTemplate.BasicDataNviPublicationPoints, UrlPathTemplate.BasicData)}

@@ -1,21 +1,21 @@
 import { Link } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
-import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
-import { PercentageWithIcon } from '../../../components/_molecules/PercentageWithIcon';
-import { selfOrDescendantHasCandidates } from '../../../components/nvi/table/utils/nvi-aggregations-helpers';
-import { HorizontalBox } from '../../../components/styled/Wrappers';
-import { CenteredTableCell, TableNumberSkeleton } from '../../../styles/table-styles';
-import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
-import { Organization } from '../../../types/organization.types';
-import { User } from '../../../types/user.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
-import { NviStatusTableRowWrapper } from './NviStatusTableRowWrapper';
+import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../../api/searchApi';
+import { NviInstitutionStatusResponse } from '../../../../types/nvi.types';
+import { Organization } from '../../../../types/organization.types';
+import { User } from '../../../../types/user.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
+import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
+import { getNviCandidatesSearchPath } from '../../../../utils/urlPaths';
+import { PercentageWithIcon } from '../../../_molecules/PercentageWithIcon';
+import { HorizontalBox } from '../../../styled/Wrappers';
+import { CenteredTableCell, TableNumberSkeleton } from '../../../tables/table-styles';
+import { selfOrDescendantHasCandidates } from '../utils/nvi-curator-aggregations-helpers';
+import { NviRowWrapper } from './NviRowWrapper';
 
-interface NviStatusTableRowProps {
+interface NviReportingStatusRowProps {
   organization: Organization;
   aggregations?: NviInstitutionStatusResponse;
   level?: number;
@@ -23,7 +23,13 @@ interface NviStatusTableRowProps {
   year?: number;
 }
 
-export const NviStatusTableRow = ({ organization, aggregations, level = 0, user, year }: NviStatusTableRowProps) => {
+export const NviReportingStatusRow = ({
+  organization,
+  aggregations,
+  level = 0,
+  user,
+  year,
+}: NviReportingStatusRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
 
@@ -38,7 +44,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
 
   return (
     <>
-      <NviStatusTableRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpanded}>
+      <NviRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpanded}>
         <CenteredTableCell>
           {aggregations ? (
             <Link
@@ -145,11 +151,11 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0, user,
             <TableNumberSkeleton />
           )}
         </CenteredTableCell>
-      </NviStatusTableRowWrapper>
+      </NviRowWrapper>
 
       {expanded &&
         organization.hasPart?.map((subUnit) => (
-          <NviStatusTableRow
+          <NviReportingStatusRow
             key={subUnit.id}
             organization={subUnit}
             aggregations={aggregations}
