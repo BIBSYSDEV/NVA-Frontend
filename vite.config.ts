@@ -22,8 +22,8 @@ const largeLibraries = [
 
 export default defineConfig({
   plugins: [
-    react(),
     babel({ presets: [reactCompilerPreset()] }),
+    react(),
     checker({
       typescript: true,
       eslint: {
