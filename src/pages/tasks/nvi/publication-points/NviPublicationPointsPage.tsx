@@ -29,7 +29,6 @@ export const NviPublicationPointsPage = () => {
     <NviPageLayout
       headline={headline}
       exportAcronym={organizationQuery.data?.acronym}
-      exportPublicationPoints
       topView={
         <NviPublicationPointsTexts exportAcronym={organizationQuery.data?.acronym} aggregationsQuery={nviStatusQuery} />
       }
