@@ -19,7 +19,7 @@ export const useNviStatusNumbers = (year: number) => {
   const numResultsYearBefore = getNumResults(approvalStatusYearBefore);
 
   const percentageComparedToYearBefore =
-    numResults && numResultsYearBefore && numResultsYearBefore > 0
+    numResults !== undefined && numResultsYearBefore !== undefined && numResultsYearBefore > 0
       ? Math.round((numResults / numResultsYearBefore) * 100)
       : undefined;
 
