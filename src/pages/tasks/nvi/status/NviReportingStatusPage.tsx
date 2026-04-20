@@ -1,22 +1,12 @@
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
+import { useNviStatusNumbers } from '../../../../components/nvi/hooks/useNviStatusNumbers';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import { NviReportingStatusRow } from '../../../../components/nvi/table/rows/NviReportingStatusRow';
-import { VerticalBox } from '../../../../components/styled/Wrappers';
+import { NviReportingStatusTexts } from '../../../../components/nvi/top-texts/NviReportingStatusTexts';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
@@ -29,16 +19,19 @@ export const NviReportingStatusPage = () => {
   const institution = organizationQuery.data;
 
   const { year } = useNviCandidatesParams();
-
-  const nviStatusQuery = useFetchNviInstitutionStatus(year);
+  const { numResults, percentageComparedToYearBefore, statusData, isPending, isError } = useNviStatusNumbers(year);
 
   return (
     <NviPageLayout
       headline={t('tasks.nvi.institution_nvi_status')}
       topView={
-        <VerticalBox sx={{ mb: '1rem', gap: '0.5rem' }}>
-          <Trans t={t} i18nKey="reporting_status_description" components={[<Typography key="1" />]} />
-        </VerticalBox>
+        <NviReportingStatusTexts
+          numResults={numResults}
+          percentage={percentageComparedToYearBefore}
+          yearBefore={year - 1}
+          isError={isError}
+          isPending={isPending}
+        />
       }
       exportAcronym={institution?.acronym}
       yearSelector
@@ -64,12 +57,7 @@ export const NviReportingStatusPage = () => {
           </TableHead>
           <TableBody>
             {institution && (
-              <NviReportingStatusRow
-                organization={institution}
-                aggregations={nviStatusQuery.data}
-                user={user}
-                year={year}
-              />
+              <NviReportingStatusRow organization={institution} aggregations={statusData} user={user} year={year} />
             )}
           </TableBody>
         </Table>
