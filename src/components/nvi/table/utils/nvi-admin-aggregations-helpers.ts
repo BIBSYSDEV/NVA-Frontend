@@ -1,7 +1,7 @@
 import { TFunction } from 'i18next';
-import i18n from '../../../translations/i18n';
-import { InstitutionReport } from '../../../types/nvi.types';
-import { getLanguageString } from '../../../utils/translation-helpers';
+import i18n from '../../../../translations/i18n';
+import { InstitutionReport } from '../../../../types/nvi.types';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 
 export const getNviInstitutionName = (report: InstitutionReport) => getLanguageString(report.institution.labels).trim();
 

@@ -1,33 +1,33 @@
 import { Link } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
-import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
-import { PercentageWithIcon } from '../../../components/_molecules/PercentageWithIcon';
-import { ALTERNATIVE_TEXT_INSTEAD_OF_ZERO } from '../../../components/nvi/table/utils/constants';
-import { selfOrDescendantHasPointValues } from '../../../components/nvi/table/utils/nvi-aggregations-helpers';
-import { HorizontalBox } from '../../../components/styled/Wrappers';
-import { CenteredTableCell, TableNumberSkeleton } from '../../../styles/table-styles';
-import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
-import { Organization } from '../../../types/organization.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
-import { NviStatusTableRowWrapper } from './NviStatusTableRowWrapper';
+import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../../api/searchApi';
+import { NviInstitutionStatusResponse } from '../../../../types/nvi.types';
+import { Organization } from '../../../../types/organization.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
+import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
+import { getNviCandidatesSearchPath } from '../../../../utils/urlPaths';
+import { PercentageWithIcon } from '../../../_molecules/PercentageWithIcon';
+import { HorizontalBox } from '../../../styled/Wrappers';
+import { CenteredTableCell, TableNumberSkeleton } from '../../../tables/table-styles';
+import { ALTERNATIVE_TEXT_INSTEAD_OF_ZERO } from '../utils/constants';
+import { selfOrDescendantHasPointValues } from '../utils/nvi-curator-aggregations-helpers';
+import { NviRowWrapper } from './NviRowWrapper';
 
-interface NviPublicationPointsTableRowProps {
+interface NviPublicationPointsRowProps {
   organization: Organization;
   aggregations?: NviInstitutionStatusResponse;
   level?: number;
   year?: number;
 }
 
-export const NviPublicationPointsTableRow = ({
+export const NviPublicationPointsRow = ({
   organization,
   aggregations,
   level = 0,
   year,
-}: NviPublicationPointsTableRowProps) => {
+}: NviPublicationPointsRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
 
@@ -49,7 +49,7 @@ export const NviPublicationPointsTableRow = ({
 
   return (
     <>
-      <NviStatusTableRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpanded}>
+      <NviRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpanded}>
         <CenteredTableCell>
           {aggregations ? (
             <Link
@@ -117,10 +117,10 @@ export const NviPublicationPointsTableRow = ({
             <TableNumberSkeleton />
           )}
         </CenteredTableCell>
-      </NviStatusTableRowWrapper>
+      </NviRowWrapper>
       {expanded &&
         organization.hasPart?.map((subUnit) => (
-          <NviPublicationPointsTableRow
+          <NviPublicationPointsRow
             key={subUnit.id}
             organization={subUnit}
             aggregations={aggregations}

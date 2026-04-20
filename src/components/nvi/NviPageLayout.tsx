@@ -1,14 +1,14 @@
 import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
-import { VerticalBox } from '../../../components/styled/Wrappers';
-import { ExportNviPublicationPointsButton } from '../../../components/nvi/export-buttons/ExportNviPublicationPointsButton';
-import { ExportNviStatusButton } from './ExportNviStatusButton';
-import { NviInstitutionSearch } from './NviInstitutionSearch';
-import { NviSectorSelector } from './NviSectorSelector';
-import { NviVisibilitySelector } from './NviVisibilitySelector';
-import { NviYearSelector } from './NviYearSelector';
+import { VerticalBox } from '../styled/Wrappers';
+import { ExportNviPublicationPointsButton } from './export-buttons/ExportNviPublicationPointsButton';
+import { ExportNviStatusButton } from './export-buttons/ExportNviStatusButton';
+import { NviInstitutionSearch } from './filters/NviInstitutionSearch';
+import { NviSectorSelector } from './filters/NviSectorSelector';
+import { NviVisibilitySelector } from './filters/NviVisibilitySelector';
+import { NviYearSelector } from './filters/NviYearSelector';
 
-interface NviStatusWrapperProps {
+interface NviPageLayoutProps {
   headline: string;
   topView?: ReactNode;
   yearSelector?: boolean;
@@ -20,7 +20,7 @@ interface NviStatusWrapperProps {
   children?: ReactNode;
 }
 
-export const NviStatusWrapper = ({
+export const NviPageLayout = ({
   headline,
   topView,
   yearSelector,
@@ -30,7 +30,7 @@ export const NviStatusWrapper = ({
   exportAcronym,
   exportPublicationPoints,
   children,
-}: NviStatusWrapperProps) => {
+}: NviPageLayoutProps) => {
   let exportButton;
   switch (true) {
     case exportPublicationPoints && !!exportAcronym:

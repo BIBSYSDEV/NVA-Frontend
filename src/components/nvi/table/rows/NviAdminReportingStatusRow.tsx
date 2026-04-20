@@ -1,9 +1,9 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { PercentageWithIcon } from '../../_molecules/PercentageWithIcon';
-import { HorizontalBox } from '../../styled/Wrappers';
-import { CenteredTableCell } from '../../../styles/table-styles';
-import { InstitutionReport } from '../../../types/nvi.types';
+import { InstitutionReport } from '../../../../types/nvi.types';
+import { PercentageWithIcon } from '../../../_molecules/PercentageWithIcon';
+import { HorizontalBox } from '../../../styled/Wrappers';
+import { CenteredTableCell } from '../../../tables/table-styles';
 
 import {
   getNviApprovedCount,
@@ -13,13 +13,13 @@ import {
   getNviSectorLabel,
   getNviTotalCount,
   getPercentageControlled,
-} from './nvi-admin-table-helpers';
+} from '../utils/nvi-admin-aggregations-helpers';
 
-interface NviAdminStatusPageRowProps {
+interface NviAdminReportingStatusRowProps {
   report: InstitutionReport;
 }
 
-export const NviAdminStatusPageRow = ({ report }: NviAdminStatusPageRowProps) => {
+export const NviAdminReportingStatusRow = ({ report }: NviAdminReportingStatusRowProps) => {
   const { t } = useTranslation();
   const { id, institutionSummary } = report;
   const { byLocalApprovalStatus, totals } = institutionSummary;

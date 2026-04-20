@@ -1,15 +1,15 @@
 import { Skeleton, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { useFetchNviPeriodReport } from '../api/hooks/useFetchNviPeriodReport';
-import { ExportNviStatusLink } from '../pages/messages/components/ExportNviStatusLink';
-import { HelperTextModal } from '../pages/registration/HelperTextModal';
-import { dataTestId } from '../utils/dataTestIds';
-import { formatLocaleNumber } from '../utils/general-helpers';
-import { getDefaultNviYear } from '../utils/hooks/useNviCandidatesParams';
-import { ExpandableNviTopView } from './ExpandableNviTopView';
-import { HorizontalBox, VerticalBox } from './styled/Wrappers';
+import { useFetchNviPeriodReport } from '../../../api/hooks/useFetchNviPeriodReport';
+import { ExportNviStatusLink } from '../../../pages/messages/components/ExportNviStatusLink';
+import { HelperTextModal } from '../../../pages/registration/HelperTextModal';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { formatLocaleNumber } from '../../../utils/general-helpers';
+import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
+import { ExpandableNviTopView } from '../../ExpandableNviTopView';
+import { HorizontalBox, VerticalBox } from '../../styled/Wrappers';
 
-export const AdminNviPublicationPointsTexts = () => {
+export const NviAdminPublicationPointsTexts = () => {
   const { t } = useTranslation();
   const year = getDefaultNviYear();
   const periodReport = useFetchNviPeriodReport({ year, hideErrorMessage: true });

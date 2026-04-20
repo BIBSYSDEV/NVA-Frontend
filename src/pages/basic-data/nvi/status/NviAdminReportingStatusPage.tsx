@@ -10,22 +10,22 @@ import {
   Typography,
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
-import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
+import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
+import { NviAdminTableSortSelector } from '../../../../components/nvi/table/NviAdminTableSortSelector';
+import { NviAdminReportingStatusRow } from '../../../../components/nvi/table/rows/NviAdminReportingStatusRow';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
+import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
-import { CenteredTableCell } from '../../../../styles/table-styles';
+import { CenteredTableCell } from '../../../../components/tables/table-styles';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { InstitutionReport } from '../../../../types/nvi.types';
-import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
-import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
-import { NviAdminStatusPageRow } from '../../../../components/nvi/table/NviAdminStatusPageRow';
 
-export const NviAdminStatusPage = () => {
+export const NviAdminReportingStatusPage = () => {
   const { t } = useTranslation();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
 
   return (
-    <NviStatusWrapper
+    <NviPageLayout
       headline={t('basic_data.nvi.reporting_status')}
       topView={
         <Box sx={{ mb: '1rem' }}>
@@ -45,7 +45,7 @@ export const NviAdminStatusPage = () => {
         <Typography>{t('feedback.error.get_nvi_reports')}</Typography>
       ) : (
         <VerticalBox sx={{ width: '100%' }}>
-          <NviAdminSortSelector type={NviAdminSortSelectorType.Status} />
+          <NviAdminTableSortSelector type={NviAdminSortSelectorType.Status} />
           <TableContainer component={Paper} variant="outlined">
             <Table size="small">
               <TableHead>
@@ -63,13 +63,13 @@ export const NviAdminStatusPage = () => {
               </TableHead>
               <TableBody>
                 {sortedAndFilteredData.map((report: InstitutionReport) => (
-                  <NviAdminStatusPageRow report={report} key={report.id} />
+                  <NviAdminReportingStatusRow report={report} key={report.id} />
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
         </VerticalBox>
       )}
-    </NviStatusWrapper>
+    </NviPageLayout>
   );
 };

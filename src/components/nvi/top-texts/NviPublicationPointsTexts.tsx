@@ -1,14 +1,14 @@
 import { Skeleton, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
-import { useFetchNviInstitutionStatus } from '../api/hooks/useFetchNviStatus';
-import { NviInstitutionStatusResponse } from '../types/nvi.types';
-import { dataTestId } from '../utils/dataTestIds';
-import { formatLocaleNumber } from '../utils/general-helpers';
-import { getDefaultNviYear } from '../utils/hooks/useNviCandidatesParams';
-import { ExpandableNviTopView } from './ExpandableNviTopView';
-import { HorizontalBox, VerticalBox } from './styled/Wrappers';
-import { ExportNviStatusLink } from '../pages/messages/components/ExportNviStatusLink';
+import { useFetchNviInstitutionStatus } from '../../../api/hooks/useFetchNviStatus';
+import { ExportNviStatusLink } from '../../../pages/messages/components/ExportNviStatusLink';
+import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { formatLocaleNumber } from '../../../utils/general-helpers';
+import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
+import { ExpandableNviTopView } from '../../ExpandableNviTopView';
+import { HorizontalBox, VerticalBox } from '../../styled/Wrappers';
 
 interface NviPublicationPointsTextsProps {
   aggregationsQuery: UseQueryResult<NviInstitutionStatusResponse, Error>;

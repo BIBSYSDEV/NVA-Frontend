@@ -1,25 +1,28 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
-import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
-import { AdminNviPublicationPointsTexts } from '../../../../components/AdminNviPublicationPointsTexts';
+import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
+import {
+  NviPointsHelperTextModal,
+  NviPointsModalVariant,
+} from '../../../../components/nvi/table/helper-text-modals/NviPointsHelperTextModal';
+import { NviAdminTableSortSelector } from '../../../../components/nvi/table/NviAdminTableSortSelector';
+import { NviAdminPublicationPointsRow } from '../../../../components/nvi/table/rows/NviAdminPublicationPointsRow';
+import { NviAdminPublicationPointsTexts } from '../../../../components/nvi/top-texts/NviAdminPublicationPointsTexts';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
+import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappers';
-import { CenteredTableCell } from '../../../../styles/table-styles';
+import { CenteredTableCell } from '../../../../components/tables/table-styles';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { InstitutionReport } from '../../../../types/nvi.types';
-import { NviPointsModalVariant, NviPointsQuestionIcon } from '../../../messages/components/NviPointsQuestionIcon';
-import { NviStatusWrapper } from '../../../messages/components/NviStatusWrapper';
-import { NviAdminPublicationPointsRow } from '../../../../components/nvi/table/NviAdminPublicationPointsRow';
-import { NviAdminSortSelector } from '../../../basic_data/app_admin/nviAdmin/nviAdminSortSelector/NviAdminSortSelector';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
 
   return (
-    <NviStatusWrapper
+    <NviPageLayout
       headline={t('basic_data.nvi.publication_points_status')}
-      topView={<AdminNviPublicationPointsTexts />}
+      topView={<NviAdminPublicationPointsTexts />}
       yearSelector
       exportPublicationPoints
       sectorSelector
@@ -30,7 +33,7 @@ export const NviAdminPublicationPointsPage = () => {
         <Typography>{t('feedback.error.get_nvi_reports')}</Typography>
       ) : (
         <VerticalBox sx={{ width: '100%' }}>
-          <NviAdminSortSelector type={NviAdminSortSelectorType.Points} />
+          <NviAdminTableSortSelector type={NviAdminSortSelectorType.Points} />
           <TableContainer component={Paper} variant="outlined">
             <Table size="small">
               <TableHead>
@@ -43,7 +46,7 @@ export const NviAdminPublicationPointsPage = () => {
                   <CenteredTableCell>
                     <HorizontalBox sx={{ justifyContent: 'center' }}>
                       {t('points_for_reporting')}
-                      <NviPointsQuestionIcon variant={NviPointsModalVariant.Admin} />
+                      <NviPointsHelperTextModal variant={NviPointsModalVariant.Admin} />
                     </HorizontalBox>
                   </CenteredTableCell>
                   <CenteredTableCell>{t('percentage_approved')}</CenteredTableCell>
@@ -58,6 +61,6 @@ export const NviAdminPublicationPointsPage = () => {
           </TableContainer>
         </VerticalBox>
       )}
-    </NviStatusWrapper>
+    </NviPageLayout>
   );
 };
