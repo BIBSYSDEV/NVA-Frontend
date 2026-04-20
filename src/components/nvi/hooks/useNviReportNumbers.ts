@@ -6,7 +6,7 @@ export const getNumResults = (approvalStatus: ApprovalStatusAggregation | undefi
     ? approvalStatus.New + approvalStatus.Pending + approvalStatus.Approved + approvalStatus.Rejected
     : undefined;
 
-export const useNviStatusNumbers = (year: number) => {
+export const useNviReportNumbers = (year: number) => {
   const yearBefore = year - 1;
 
   const nviStatusQuery = useFetchNviInstitutionStatus(year);
