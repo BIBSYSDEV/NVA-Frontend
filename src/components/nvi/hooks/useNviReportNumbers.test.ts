@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { ApprovalStatusAggregation } from '../../../types/nvi.types';
-import { getNumResults } from './useNviStatusNumbers';
+import { getNumResults } from './useNviReportNumbers';
 
 const makeApprovalStatus = (overrides: Partial<ApprovalStatusAggregation> = {}): ApprovalStatusAggregation => ({
   New: 0,

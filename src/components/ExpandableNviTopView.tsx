@@ -4,7 +4,7 @@ import { Box, Button, Typography } from '@mui/material';
 import { ReactNode, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface NviPublicationPointsTextsProps {
+interface ExpandableNviTopViewProps {
   alwaysVisibleText: string;
   expandedText: string;
   testId: string;
@@ -16,7 +16,7 @@ export const ExpandableNviTopView = ({
   expandedText,
   testId,
   children,
-}: NviPublicationPointsTextsProps) => {
+}: ExpandableNviTopViewProps) => {
   const { t } = useTranslation();
   const [textExpanded, setTextExpanded] = useState(false);
   const expandedTextId = useId();
@@ -31,10 +31,10 @@ export const ExpandableNviTopView = ({
         aria-controls={expandedTextId}
         data-testid={testId}
         endIcon={textExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        sx={{ textDecoration: 'underline', justifyContent: 'flex-start', p: 0, my: '0.5rem' }}>
+        sx={{ textDecoration: 'underline', justifyContent: 'flex-start', p: 0, my: '0.5rem', mb: '1rem' }}>
         {textExpanded ? t('common.read_less') : t('common.read_more')}
       </Button>
-      <Typography id={expandedTextId} sx={{ display: textExpanded ? 'block' : 'none' }}>
+      <Typography id={expandedTextId} sx={{ display: textExpanded ? 'block' : 'none', mb: '1rem' }}>
         {expandedText}
       </Typography>
       {children}

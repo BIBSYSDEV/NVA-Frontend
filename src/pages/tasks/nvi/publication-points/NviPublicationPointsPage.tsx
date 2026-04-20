@@ -2,8 +2,8 @@ import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useFetchNviInstitutionStatus } from '../../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
+import { useNviReportNumbers } from '../../../../components/nvi/hooks/useNviReportNumbers';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import {
   NviPointsHelperTextModal,
@@ -13,25 +13,34 @@ import { NviPublicationPointsRow } from '../../../../components/nvi/table/rows/N
 import { NviPublicationPointsTexts } from '../../../../components/nvi/top-texts/NviPublicationPointsTexts';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
-import { getDefaultNviYear } from '../../../../utils/hooks/useNviCandidatesParams';
+import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 
 export const NviPublicationPointsPage = () => {
   const { t } = useTranslation();
+
   const user = useSelector((store: RootState) => store.user);
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
   const institution = organizationQuery.data;
-  const year = getDefaultNviYear();
-  const nviStatusQuery = useFetchNviInstitutionStatus(year);
-  const aggregations = nviStatusQuery.data;
-  const headline = t('tasks.nvi.reporting_status_for_publication_points_for_year', { year: year });
+
+  const { year } = useNviCandidatesParams();
+  const { numApprovedByAll, publicationPoints, approvedByAllComparedToYearBefore, statusData, isPending, isError } =
+    useNviReportNumbers(year);
 
   return (
     <NviPageLayout
-      headline={headline}
+      headline={t('tasks.nvi.reporting_status_for_publication_points_for_year', { year: year })}
       exportAcronym={organizationQuery.data?.acronym}
       exportPublicationPoints
       topView={
-        <NviPublicationPointsTexts exportAcronym={organizationQuery.data?.acronym} aggregationsQuery={nviStatusQuery} />
+        <NviPublicationPointsTexts
+          yearBefore={year - 1}
+          isPending={isPending}
+          isError={isError}
+          numResults={numApprovedByAll}
+          publicationPoints={publicationPoints}
+          percentage={approvedByAllComparedToYearBefore}
+          exportAcronym={organizationQuery.data?.acronym}
+        />
       }
       visibilitySelector>
       <TableContainer component={Paper} variant="outlined">
@@ -59,7 +68,7 @@ export const NviPublicationPointsPage = () => {
           </TableHead>
           <TableBody>
             {institution && (
-              <NviPublicationPointsRow organization={institution} aggregations={aggregations} year={year} />
+              <NviPublicationPointsRow organization={institution} aggregations={statusData} year={year} />
             )}
           </TableBody>
         </Table>
