@@ -4,9 +4,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
+import { useFetchTickets } from '../../api/hooks/useFetchTickets';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { NviCandidatesNavigationAccordion } from '../../components/navigation-accordions/tasks/NviCandidatesNavigationAccordion';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
@@ -19,24 +21,22 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { resetPaginationAndNavigate } from '../../utils/searchHelpers';
 import { getNviCandidatesSearchPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
+import { checkUserRoles } from '../../utils/user-helpers';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
 import NotFound from '../errorpages/NotFound';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import { NviPublicationPointsPage } from '../tasks/nvi/publication-points/NviPublicationPointsPage';
+import { NviReportingStatusPage } from '../tasks/nvi/status/NviReportingStatusPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
-import { NviCandidatesNavigationAccordion } from './components/NviCandidatesNavigationAccordion';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { NviCorrectionListNavigationAccordion } from './components/NviCorrectionListNavigationAccordion';
-import { NviStatusPage } from './components/NviStatusPage';
+import { NviDisputePage } from './components/NviDisputePage';
 import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
 import { TicketList } from './components/TicketList';
 import { TicketTypeTag } from './components/TicketTypeTag';
-import { NviDisputePage } from './components/NviDisputePage';
-import { NviPublicationPointsPage } from './components/NviPublicationPointsPage';
-import { useFetchTickets } from '../../api/hooks/useFetchTickets';
-import { useGetNotificationCounts, useGetTicketsCounts } from './user-dialog-helpers';
 import { checkPages } from './tasks-helpers';
-import { checkUserRoles } from '../../utils/user-helpers';
+import { useGetNotificationCounts, useGetTicketsCounts } from './user-dialog-helpers';
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -253,7 +253,7 @@ const TasksPage = () => {
 
           <Route
             path={getSubUrl(UrlPathTemplate.TasksNviStatus, UrlPathTemplate.Tasks)}
-            element={<PrivateRoute element={<NviStatusPage />} isAuthorized={isNviCurator} />}
+            element={<PrivateRoute element={<NviReportingStatusPage />} isAuthorized={isNviCurator} />}
           />
 
           <Route

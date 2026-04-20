@@ -1,7 +1,7 @@
 import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../utils/dataTestIds';
-import { SortSelectorOption } from './SortSelector';
+import { SortSelectorOption } from './_molecules/SortSelector';
 
 interface SortSelectorWithoutParamsProps<T> {
   options: T[];

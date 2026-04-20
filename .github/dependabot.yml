@@ -7,6 +7,8 @@ updates:
       day: 'monday'
       time: '07:00'
       timezone: Europe/Oslo
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 20
     groups:
       mui:

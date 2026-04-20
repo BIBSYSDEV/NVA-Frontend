@@ -22,14 +22,6 @@ enum ScientificValueLevelsToShow {
   All = 'All',
 }
 
-export const ScientificValueFilterListIds: CorrectionListNames[] = [
-  CorrectionListNames.ApplicableCategoriesWithNonApplicableChannel,
-  CorrectionListNames.NonApplicableCategoriesWithApplicableChannel,
-  CorrectionListNames.ScientificChapterNotInAnthology,
-  CorrectionListNames.YearBetweenChapterAndBookMismatch,
-  CorrectionListNames.ScientificMonographyOrAnthologyWithoutIsxns,
-];
-
 const getScientificValueFiltersFromParams = (searchParams: URLSearchParams): ScientificValueLevelsToShow => {
   const rawListParam = searchParams.get('list');
 

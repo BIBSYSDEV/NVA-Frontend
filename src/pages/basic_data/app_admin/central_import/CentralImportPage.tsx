@@ -9,7 +9,7 @@ import { HeadTitle } from '../../../../components/HeadTitle';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { SearchForm } from '../../../../components/SearchForm';
-import { SortSelector } from '../../../../components/SortSelector';
+import { SortSelector } from '../../../../components/_molecules/SortSelector';
 import { useFetchImportCandidatesQuery } from '../../../../utils/hooks/useFetchImportCandidatesQuery';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../../utils/searchHelpers';

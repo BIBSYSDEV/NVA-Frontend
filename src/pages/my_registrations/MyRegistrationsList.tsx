@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { deleteRegistration } from '../../api/registrationApi';
 import { RegistrationSearchResponse, ResultParam, ResultSearchOrder } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { SortSelector } from '../../components/SortSelector';
+import { SortSelector } from '../../components/_molecules/SortSelector';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationSearchItem } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';

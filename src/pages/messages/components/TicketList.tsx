@@ -15,7 +15,7 @@ import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
-import { SortSelector } from '../../../components/SortSelector';
+import { SortSelector } from '../../../components/_molecules/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
 import { RootState } from '../../../redux/store';
 import { CustomerTicketSearchResponse, ticketStatusValues } from '../../../types/publication_types/ticket.types';

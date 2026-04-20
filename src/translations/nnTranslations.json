@@ -158,8 +158,10 @@
     }
   },
   "candidate": "",
+  "candidates_approved_by_the_institution": "",
   "candidates_everyone_has_approved": "",
-  "candidates_we_have_approved": "",
+  "candidates_others_must_approve": "",
+  "candidates_our_institution_has_approved": "",
   "cannot_copy_category_from_another_context_type": "<p>Du kan ikkje kopiere metadata frå kategorifana dersom resultatet tilhøyrer ein annan hovudkategori.</p><p>Denne informasjonen må registrerast manuelt etter at resten av metadata er kopiert.</p>",
   "common": {
     "actions": "Handlingar",
@@ -540,6 +542,9 @@
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikkje tilgjengeleg"
     }
   },
+  "export_dataset_for_nvi_report": "",
+  "export_dataset_for_nvi_report_description": "",
+  "export_nvi_status_button_tooltip_text": "",
   "feedback": {
     "error": {
       "404_page": "<span><icon /><h1>Beklagar, men vi kan ikkje finne sida du leitar etter</h1></span><p>Sida du leitar etter eksisterar ikkje, eller nettadressa er feil.</p><p>Endre nettadressa eller bruk menyen for å navigere deg til korrekt side.</p>",
@@ -567,6 +572,9 @@
       "download_file": "Kunne ikkje laste ned fil",
       "fetch": "Kunne ikkje hente {{resource}}",
       "fetch_log": "Kunne ikkje hente logg",
+      "generate_nvi_report": "",
+      "generate_nvi_report_status": "",
+      "generate_nvi_report_timeout": "",
       "get_affiliation_name": "Kunne ikkje hente namn på tilknyting for {{unitUri}}",
       "get_channel_claim": "Kunne ikkje hente kanaleigarskap",
       "get_curators_for_institution": "Kunne ikkje hente kurator",
@@ -1006,6 +1014,7 @@
   "point_of_contact": "Kontaktpunkt",
   "point_of_contact_description": "Har du spørsmål angåande forskingsresultatet?",
   "points_for_reporting": "",
+  "points_for_reporting_admin_modal_text": "",
   "points_for_reporting_modal_text": "",
   "points_of_contact_for_result": "Kontaktpunkt for resultat",
   "privacy_statement": "Personvernerklæring",
@@ -1956,6 +1965,25 @@
   "show_only_norwegian_contributors": "",
   "show_only_unconfirmed_affiliations": "",
   "show_only_units_with_candidates": "",
+  "sort_by": "",
+  "sort_by_candidates_approved_by_everybody_asc": "",
+  "sort_by_candidates_approved_by_everybody_desc": "",
+  "sort_by_candidates_approved_by_institution_asc": "",
+  "sort_by_candidates_approved_by_institution_desc": "",
+  "sort_by_institution_asc": "",
+  "sort_by_institution_desc": "",
+  "sort_by_number_of_approved_candidates_asc": "",
+  "sort_by_number_of_approved_candidates_desc": "",
+  "sort_by_number_of_candidates_asc": "",
+  "sort_by_number_of_candidates_desc": "",
+  "sort_by_number_of_rejected_candidates_asc": "",
+  "sort_by_number_of_rejected_candidates_desc": "",
+  "sort_by_points_asc": "",
+  "sort_by_points_desc": "",
+  "sort_by_sector_asc": "",
+  "sort_by_sector_desc": "",
+  "sort_by_total_number_asc": "",
+  "sort_by_total_number_desc": "",
   "start_merging": "Start samanslåing",
   "tasks": {
     "correction_list": "Retteliste",
@@ -2071,7 +2099,6 @@
   "visibility_of_units": "",
   "vocabulary_missing": "Institusjonen har ikkje lagt til vokabular",
   "what_you_find_in_nva_description": "<heading>Kva finn du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samlar og gjer tilgjengeleg informasjon om norsk forsking.</p><p>Her kan du utforske publikasjonar, forskingsprosjekt og forskarar på tvers av universitet, høgskular og forskingsinstitusjonar.</p>",
-  "x_results_are_ready_for_reporting_and_they_give_y_points": "",
   "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "",
   "you_cannot_upload_files_to_this_result": "Du har ikkje tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikkje tilgang til å endre denne registreringa."

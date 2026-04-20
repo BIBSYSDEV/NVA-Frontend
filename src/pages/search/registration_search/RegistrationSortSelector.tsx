@@ -1,7 +1,7 @@
 import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
-import { SortSelector } from '../../../components/SortSelector';
+import { SortSelector } from '../../../components/_molecules/SortSelector';
 
 export interface RegistrationSortOption {
   orderBy: ResultSearchOrder;
