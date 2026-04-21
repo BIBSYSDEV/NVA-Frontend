@@ -7,9 +7,10 @@ export const getTotalResults = (approvalStatus: ApprovalStatusAggregation | unde
     : undefined;
 
 export const useNviReportNumbers = (year: number) => {
-  const previousYear = year - 1;
+  const reportingYear = Number(year);
+  const previousYear = reportingYear - 1;
 
-  const nviStatusQuery = useFetchNviInstitutionStatus(year);
+  const nviStatusQuery = useFetchNviInstitutionStatus(reportingYear);
   const nviStatusPreviousYearQuery = useFetchNviInstitutionStatus(previousYear);
 
   const approvalStatus = nviStatusQuery.data?.totals.approvalStatus;
@@ -18,14 +19,26 @@ export const useNviReportNumbers = (year: number) => {
   const totalResults = getTotalResults(approvalStatus);
   const totalResultsPreviousYear = getTotalResults(approvalStatusPreviousYear);
 
+  const numApprovedByAll = nviStatusQuery.data?.totals.globalApprovalStatus.Approved;
+  const numApprovedByAllPreviousYear = nviStatusPreviousYearQuery.data?.totals.globalApprovalStatus.Approved;
+  const publicationPoints = nviStatusQuery.data?.totals.points;
+
   const percentageComparedToPreviousYear =
     totalResults !== undefined && totalResultsPreviousYear !== undefined && totalResultsPreviousYear > 0
       ? Math.round((totalResults / totalResultsPreviousYear) * 100)
       : undefined;
 
+  const approvedByAllComparedToPreviousYear =
+    numApprovedByAll !== undefined && numApprovedByAllPreviousYear !== undefined && numApprovedByAllPreviousYear > 0
+      ? Math.round((numApprovedByAll / numApprovedByAllPreviousYear) * 100)
+      : undefined;
+
   return {
     totalResults,
-    percentageComparedToPreviousYear: percentageComparedToPreviousYear,
+    numApprovedByAll,
+    publicationPoints,
+    percentageComparedToPreviousYear,
+    approvedByAllComparedToPreviousYear,
     statusData: nviStatusQuery.data,
     isPending: nviStatusQuery.isPending || nviStatusPreviousYearQuery.isPending,
     isError: nviStatusQuery.isError || nviStatusPreviousYearQuery.isError,

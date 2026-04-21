@@ -2069,7 +2069,6 @@
     "your_tasks": "Tasks you own: {{count}}"
   },
   "temporarily_disabled": "",
-  "that_is_x_percent_of_the_number_reported_in_y": "",
   "time_format": {
     "hours": "HH:MM:SS",
     "minutes": "MM:SS"

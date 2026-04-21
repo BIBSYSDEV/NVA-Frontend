@@ -17,23 +17,23 @@ import { NviRowWrapper } from './NviRowWrapper';
 
 interface NviPublicationPointsRowProps {
   organization: Organization;
-  aggregations?: NviInstitutionStatusResponse;
+  statusData?: NviInstitutionStatusResponse;
   level?: number;
   year?: number;
 }
 
 export const NviPublicationPointsRow = ({
   organization,
-  aggregations,
+  statusData,
   level = 0,
   year,
 }: NviPublicationPointsRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
 
-  if (excludeEmptyRows && !selfOrDescendantHasPointValues(organization, aggregations)) return null;
+  if (excludeEmptyRows && !selfOrDescendantHasPointValues(organization, statusData)) return null;
 
-  const orgAggregations = aggregations?.byOrganization[organization.id];
+  const orgAggregations = statusData?.byOrganization[organization.id];
   const publicationPoints = orgAggregations?.points;
   const pointsWithTwoDecimals = (publicationPoints ?? 0).toLocaleString(undefined, {
     minimumFractionDigits: 2,
@@ -51,7 +51,7 @@ export const NviPublicationPointsRow = ({
     <>
       <NviRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpanded}>
         <CenteredTableCell>
-          {aggregations ? (
+          {statusData ? (
             <Link
               component={RouterLink}
               data-testid={dataTestId.nviStatusTableRow.approvedByUsLink}
@@ -69,7 +69,7 @@ export const NviPublicationPointsRow = ({
           )}
         </CenteredTableCell>
         <CenteredTableCell>
-          {aggregations ? (
+          {statusData ? (
             <Link
               component={RouterLink}
               data-testid={dataTestId.nviStatusTableRow.candidatesOthersMustApproveLink}
@@ -87,7 +87,7 @@ export const NviPublicationPointsRow = ({
           )}
         </CenteredTableCell>
         <CenteredTableCell>
-          {aggregations ? (
+          {statusData ? (
             <Link
               component={RouterLink}
               data-testid={dataTestId.nviStatusTableRow.approvedByAllLink}
@@ -103,9 +103,9 @@ export const NviPublicationPointsRow = ({
             <TableNumberSkeleton />
           )}
         </CenteredTableCell>
-        <CenteredTableCell>{aggregations ? pointsWithTwoDecimals : <TableNumberSkeleton />}</CenteredTableCell>
+        <CenteredTableCell>{statusData ? pointsWithTwoDecimals : <TableNumberSkeleton />}</CenteredTableCell>
         <CenteredTableCell>
-          {aggregations ? (
+          {statusData ? (
             <HorizontalBox sx={{ justifyContent: 'center' }}>
               <PercentageWithIcon
                 displayPercentage={Math.floor(percentageApproved * 100)}
@@ -123,7 +123,7 @@ export const NviPublicationPointsRow = ({
           <NviPublicationPointsRow
             key={subUnit.id}
             organization={subUnit}
-            aggregations={aggregations}
+            statusData={statusData}
             level={level + 1}
             year={year}
           />
