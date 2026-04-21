@@ -1,0 +1,45 @@
+import { Skeleton, Typography } from '@mui/material';
+import { Trans, useTranslation } from 'react-i18next';
+import { formatLocaleNumber } from '../../../utils/general-helpers';
+import { VerticalBox } from '../../styled/Wrappers';
+
+interface NviReportingStatusTextsProps {
+  previousYear?: number;
+  totalResults?: number;
+  percentage?: number;
+  isPending?: boolean;
+  isError?: boolean;
+}
+
+export const NviReportingStatusTexts = ({
+  previousYear,
+  isPending = false,
+  isError = false,
+  totalResults,
+  percentage,
+}: NviReportingStatusTextsProps) => {
+  const { t } = useTranslation();
+
+  return (
+    <VerticalBox sx={{ mb: '1rem', gap: '0.5rem' }}>
+      <Trans t={t} i18nKey="reporting_status_description" components={{ p: <Typography /> }} />
+      {isPending ? (
+        <Skeleton sx={{ width: '50%' }} />
+      ) : isError || totalResults === undefined || previousYear === undefined ? null : (
+        <Trans
+          t={t}
+          i18nKey="reporting_status_numbers"
+          values={{
+            num_results: formatLocaleNumber(totalResults),
+            percentage: percentage !== undefined ? formatLocaleNumber(percentage) : '–',
+            previous_year: previousYear,
+          }}
+          components={{
+            p: <Typography />,
+            b: <strong />,
+          }}
+        />
+      )}
+    </VerticalBox>
+  );
+};
