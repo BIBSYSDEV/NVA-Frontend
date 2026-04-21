@@ -32,12 +32,12 @@ export const NviPublicationPointsPage = () => {
       exportAcronym={organizationQuery.data?.acronym}
       topView={
         <NviPublicationPointsTexts
-          yearBefore={year - 1}
+          previousYear={year - 1}
           isPending={isPending}
           isError={isError}
           numApprovedByAll={numApprovedByAll}
           publicationPoints={publicationPoints}
-          approvedPercentageComparedToYearBefore={approvedByAllComparedToPreviousYear}
+          approvedPercentageComparedToPreviousYear={approvedByAllComparedToPreviousYear}
           exportAcronym={organizationQuery.data?.acronym}
         />
       }
@@ -66,9 +66,7 @@ export const NviPublicationPointsPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {institution && (
-              <NviPublicationPointsRow organization={institution} aggregations={statusData} year={year} />
-            )}
+            {institution && <NviPublicationPointsRow organization={institution} statusData={statusData} year={year} />}
           </TableBody>
         </Table>
       </TableContainer>
