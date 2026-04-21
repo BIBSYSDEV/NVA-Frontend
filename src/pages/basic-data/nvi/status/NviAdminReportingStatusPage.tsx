@@ -1,40 +1,34 @@
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
-import { Trans, useTranslation } from 'react-i18next';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import { NviAdminTableSortSelector } from '../../../../components/nvi/table/NviAdminTableSortSelector';
 import { NviAdminReportingStatusRow } from '../../../../components/nvi/table/rows/NviAdminReportingStatusRow';
+import { NviAdminReportingStatusTexts } from '../../../../components/nvi/top-texts/NviAdminReportingStatusTexts';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { InstitutionReport } from '../../../../types/nvi.types';
+import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 
 export const NviAdminReportingStatusPage = () => {
   const { t } = useTranslation();
-  const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
+  const { year } = useNviCandidatesParams();
+  const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
+  const a = 123;
 
   return (
     <NviPageLayout
       headline={t('basic_data.nvi.reporting_status')}
       topView={
-        <Box sx={{ mb: '1rem' }}>
-          <Trans
-            t={t}
-            i18nKey="basic_data.nvi.reporting_status_description"
-            components={{ p: <Typography gutterBottom /> }}
-          />
-        </Box>
+        <NviAdminReportingStatusTexts
+          previousYear={year - 1}
+          isPending={false}
+          isError={false}
+          totalResults={a}
+          percentage={a}
+        />
       }
       yearSelector
       sectorSelector
