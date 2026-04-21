@@ -4,39 +4,39 @@ import { formatLocaleNumber } from '../../../utils/general-helpers';
 import { VerticalBox } from '../../styled/Wrappers';
 
 interface NviReportingStatusTextsProps {
-  yearBefore?: number;
-  numResults?: number;
+  previousYear?: number;
+  totalResults?: number;
   percentage?: number;
   isPending?: boolean;
   isError?: boolean;
 }
 
 export const NviReportingStatusTexts = ({
-  yearBefore,
+  previousYear,
   isPending = false,
   isError = false,
-  numResults,
+  totalResults,
   percentage,
 }: NviReportingStatusTextsProps) => {
   const { t } = useTranslation();
 
   return (
     <VerticalBox sx={{ mb: '1rem', gap: '0.5rem' }}>
-      <Trans t={t} i18nKey="reporting_status_description" components={[<Typography key="1" />]} />
+      <Trans t={t} i18nKey="reporting_status_description" components={{ p: <Typography /> }} />
       {isPending ? (
         <Skeleton sx={{ width: '50%' }} />
-      ) : isError || numResults === undefined || yearBefore === undefined ? null : (
+      ) : isError || totalResults === undefined || previousYear === undefined ? null : (
         <Trans
           t={t}
           i18nKey="reporting_status_numbers"
           values={{
-            num_results: formatLocaleNumber(numResults),
+            num_results: formatLocaleNumber(totalResults),
             percentage: percentage !== undefined ? formatLocaleNumber(percentage) : '–',
-            yearBefore: yearBefore,
+            previous_year: previousYear,
           }}
           components={{
             p: <Typography />,
-            b: <Typography component="strong" sx={{ fontWeight: 'bold' }} />,
+            b: <strong />,
           }}
         />
       )}

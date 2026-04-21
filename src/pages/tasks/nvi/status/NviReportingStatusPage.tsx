@@ -19,16 +19,16 @@ export const NviReportingStatusPage = () => {
   const institution = organizationQuery.data;
 
   const { year } = useNviCandidatesParams();
-  const { numResults, percentageComparedToYearBefore, statusData, isPending, isError } = useNviReportNumbers(year);
+  const { totalResults, percentageComparedToPreviousYear, statusData, isPending, isError } = useNviReportNumbers(year);
 
   return (
     <NviPageLayout
       headline={t('tasks.nvi.institution_nvi_status')}
       topView={
         <NviReportingStatusTexts
-          numResults={numResults}
-          percentage={percentageComparedToYearBefore}
-          yearBefore={year - 1}
+          totalResults={totalResults}
+          percentage={percentageComparedToPreviousYear}
+          previousYear={year - 1}
           isError={isError}
           isPending={isPending}
         />

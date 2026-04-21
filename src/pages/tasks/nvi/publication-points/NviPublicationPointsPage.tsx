@@ -23,14 +23,13 @@ export const NviPublicationPointsPage = () => {
   const institution = organizationQuery.data;
 
   const { year } = useNviCandidatesParams();
-  const { numApprovedByAll, publicationPoints, approvedByAllComparedToYearBefore, statusData, isPending, isError } =
+  const { numApprovedByAll, publicationPoints, approvedByAllComparedToPreviousYear, statusData, isPending, isError } =
     useNviReportNumbers(year);
 
   return (
     <NviPageLayout
       headline={t('tasks.nvi.reporting_status_for_publication_points_for_year', { year: year })}
       exportAcronym={organizationQuery.data?.acronym}
-      exportPublicationPoints
       topView={
         <NviPublicationPointsTexts
           yearBefore={year - 1}
@@ -38,7 +37,7 @@ export const NviPublicationPointsPage = () => {
           isError={isError}
           numApprovedByAll={numApprovedByAll}
           publicationPoints={publicationPoints}
-          approvedPercentageComparedToYearBefore={approvedByAllComparedToYearBefore}
+          approvedPercentageComparedToYearBefore={approvedByAllComparedToPreviousYear}
           exportAcronym={organizationQuery.data?.acronym}
         />
       }
