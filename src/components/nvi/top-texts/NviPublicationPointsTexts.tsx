@@ -33,10 +33,7 @@ export const NviPublicationPointsTexts = ({
       testId={dataTestId.basicData.nvi.curatorPublicationPointsExpandDescriptionButton}>
       {isPending ? (
         <Skeleton sx={{ width: { xs: '20rem', sm: '35rem' } }} />
-      ) : isError ||
-        numApprovedByAll === undefined ||
-        publicationPoints === undefined ||
-        approvedPercentageComparedToYearBefore === undefined ? null : (
+      ) : isError || numApprovedByAll === undefined || publicationPoints === undefined ? null : (
         <Trans
           parent={Box}
           t={t}
@@ -44,7 +41,10 @@ export const NviPublicationPointsTexts = ({
           values={{
             num_approved_by_all: formatLocaleNumber(numApprovedByAll),
             publication_points: formatLocaleNumber(publicationPoints),
-            percentage: formatLocaleNumber(approvedPercentageComparedToYearBefore),
+            percentage:
+              approvedPercentageComparedToYearBefore !== undefined
+                ? formatLocaleNumber(approvedPercentageComparedToYearBefore)
+                : '–',
             year: yearBefore,
           }}
           components={{

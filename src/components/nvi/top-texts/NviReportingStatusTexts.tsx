@@ -25,13 +25,13 @@ export const NviReportingStatusTexts = ({
       <Trans t={t} i18nKey="reporting_status_description" components={[<Typography key="1" />]} />
       {isPending ? (
         <Skeleton sx={{ width: '50%' }} />
-      ) : isError || numResults === undefined || percentage === undefined || yearBefore === undefined ? null : (
+      ) : isError || numResults === undefined || yearBefore === undefined ? null : (
         <Trans
           t={t}
           i18nKey="reporting_status_numbers"
           values={{
             num_results: formatLocaleNumber(numResults),
-            percentage: formatLocaleNumber(percentage),
+            percentage: percentage !== undefined ? formatLocaleNumber(percentage) : '–',
             yearBefore: yearBefore,
           }}
           components={{
