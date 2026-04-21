@@ -9,9 +9,9 @@ interface NviPublicationPointsTextsProps {
   yearBefore: number;
   isPending?: boolean;
   isError?: boolean;
-  numResults?: number;
+  numApprovedByAll?: number;
   publicationPoints?: number;
-  percentage?: number;
+  approvedPercentageComparedToYearBefore?: number;
   exportAcronym?: string;
 }
 
@@ -19,9 +19,9 @@ export const NviPublicationPointsTexts = ({
   yearBefore,
   isPending = false,
   isError = false,
-  numResults,
+  numApprovedByAll,
   publicationPoints,
-  percentage,
+  approvedPercentageComparedToYearBefore,
   exportAcronym,
 }: NviPublicationPointsTextsProps) => {
   const { t } = useTranslation();
@@ -33,15 +33,18 @@ export const NviPublicationPointsTexts = ({
       testId={dataTestId.basicData.nvi.curatorPublicationPointsExpandDescriptionButton}>
       {isPending ? (
         <Skeleton sx={{ width: { xs: '20rem', sm: '35rem' } }} />
-      ) : isError || numResults === undefined || publicationPoints === undefined || percentage === undefined ? null : (
+      ) : isError ||
+        numApprovedByAll === undefined ||
+        publicationPoints === undefined ||
+        approvedPercentageComparedToYearBefore === undefined ? null : (
         <Trans
           parent={Box}
           t={t}
           i18nKey="nvi_approved_results_publication_points_summary"
           values={{
-            num_results: formatLocaleNumber(numResults),
+            num_approved_by_all: formatLocaleNumber(numApprovedByAll),
             publication_points: formatLocaleNumber(publicationPoints),
-            percentage: formatLocaleNumber(percentage),
+            percentage: formatLocaleNumber(approvedPercentageComparedToYearBefore),
             year: yearBefore,
           }}
           components={{

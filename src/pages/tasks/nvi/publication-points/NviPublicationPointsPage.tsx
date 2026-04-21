@@ -36,9 +36,9 @@ export const NviPublicationPointsPage = () => {
           yearBefore={year - 1}
           isPending={isPending}
           isError={isError}
-          numResults={numApprovedByAll}
+          numApprovedByAll={numApprovedByAll}
           publicationPoints={publicationPoints}
-          percentage={approvedByAllComparedToYearBefore}
+          approvedPercentageComparedToYearBefore={approvedByAllComparedToYearBefore}
           exportAcronym={organizationQuery.data?.acronym}
         />
       }
