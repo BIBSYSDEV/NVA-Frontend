@@ -46,8 +46,8 @@ export const useNviCandidatesParams = () => {
     | null;
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
   const yearParam = searchParams.get(NviCandidatesSearchParam.Year);
-  const parsedYear = yearParam !== null ? Number(yearParam) : null;
-  const year = parsedYear !== null && !isNaN(parsedYear) ? parsedYear : getDefaultNviYear();
+  const parsedYear = yearParam ? Number(yearParam) : null;
+  const year = parsedYear !== null && Number.isFinite(parsedYear) ? parsedYear : getDefaultNviYear();
   const excludeUnassigned = searchParams.get(NviCandidatesSearchParam.ExcludeUnassigned) === 'true';
   const excludeEmptyRows = searchParams.get(NviCandidatesSearchParam.ExcludeEmptyRows) === 'true';
 

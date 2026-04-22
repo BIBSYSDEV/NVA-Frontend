@@ -13,15 +13,15 @@ export const useImportCandidatesParams = () => {
   ) as CollaborationType | null;
   const filesParam = searchParams.get(ImportCandidatesSearchParam.Files) as AggregationFileKeyType | null;
   const fromRaw = searchParams.get(ImportCandidatesSearchParam.From);
-  const fromParam = fromRaw !== null && !isNaN(Number(fromRaw)) ? Number(fromRaw) : null;
+  const fromParam = fromRaw && Number.isFinite(Number(fromRaw)) ? Number(fromRaw) : null;
   const importStatusParam = searchParams.get(ImportCandidatesSearchParam.ImportStatus) as ImportCandidateStatus | null;
   const orderByParam = searchParams.get(ImportCandidatesSearchParam.OrderBy) as ImportCandidateOrderBy | null;
   const publicationYearRaw = searchParams.get(ImportCandidatesSearchParam.PublicationYear);
   const publicationYearParam =
-    publicationYearRaw !== null && !isNaN(Number(publicationYearRaw)) ? Number(publicationYearRaw) : null;
+    publicationYearRaw && Number.isFinite(Number(publicationYearRaw)) ? Number(publicationYearRaw) : null;
   const queryParam = searchParams.get(ImportCandidatesSearchParam.Query);
   const sizeRaw = searchParams.get(ImportCandidatesSearchParam.Size);
-  const sizeParam = sizeRaw !== null && !isNaN(Number(sizeRaw)) ? Number(sizeRaw) : null;
+  const sizeParam = sizeRaw && Number.isFinite(Number(sizeRaw)) ? Number(sizeRaw) : null;
   const sortOrderParam = searchParams.get(ImportCandidatesSearchParam.SortOrder) as SortOrder | null;
   const topLevelOrganizationParam = searchParams.get(ImportCandidatesSearchParam.TopLevelOrganization);
   const typeParam = searchParams.get(ImportCandidatesSearchParam.Type) as PublicationInstanceType | null;
