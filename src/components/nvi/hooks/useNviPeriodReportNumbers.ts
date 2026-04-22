@@ -13,9 +13,9 @@ export const useNviPeriodReportNumbers = (year: number) => {
   const periodReportQuery = useFetchNviPeriodReport({ year: reportingYear, hideErrorMessage: true });
   const periodReportPreviousYearQuery = useFetchNviPeriodReport({ year: previousYear, hideErrorMessage: true });
 
-  const numCandidatesForReporting = getCandidatesForReporting(periodReportQuery?.data?.byGlobalApprovalStatus);
+  const numCandidatesForReporting = getCandidatesForReporting(periodReportQuery.data?.byGlobalApprovalStatus);
   const numCandidatesForReportingPreviousYear = getCandidatesForReporting(
-    periodReportPreviousYearQuery?.data?.byGlobalApprovalStatus
+    periodReportPreviousYearQuery.data?.byGlobalApprovalStatus
   );
   const percentageCandidatesComparedToPreviousYear =
     numCandidatesForReporting !== undefined &&

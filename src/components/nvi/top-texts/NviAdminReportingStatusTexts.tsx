@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { formatLocaleNumber } from '../../../utils/general-helpers';
 import { VerticalBox } from '../../styled/Wrappers';
 
-interface NviReportingStatusTextsProps {
+interface NviAdminReportingStatusTextsProps {
   previousYear?: number;
   totalResults?: number;
   percentage?: number;
@@ -17,7 +17,7 @@ export const NviAdminReportingStatusTexts = ({
   isError = false,
   totalResults,
   percentage,
-}: NviReportingStatusTextsProps) => {
+}: NviAdminReportingStatusTextsProps) => {
   const { t } = useTranslation();
 
   return (
