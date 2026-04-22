@@ -3,7 +3,7 @@ import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
-import { useNviReportNumbers } from '../../../../components/nvi/hooks/useNviReportNumbers';
+import { useNviInstitutionStatusNumbers } from '../../../../components/nvi/hooks/useNviInstitutionStatusNumbers';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import { NviReportingStatusRow } from '../../../../components/nvi/table/rows/NviReportingStatusRow';
 import { NviReportingStatusTexts } from '../../../../components/nvi/top-texts/NviReportingStatusTexts';
@@ -19,7 +19,8 @@ export const NviReportingStatusPage = () => {
   const institution = organizationQuery.data;
 
   const { year } = useNviCandidatesParams();
-  const { totalResults, percentageComparedToPreviousYear, statusData, isPending, isError } = useNviReportNumbers(year);
+  const { totalResults, percentageComparedToPreviousYear, statusData, isPending, isError } =
+    useNviInstitutionStatusNumbers(year);
 
   return (
     <NviPageLayout

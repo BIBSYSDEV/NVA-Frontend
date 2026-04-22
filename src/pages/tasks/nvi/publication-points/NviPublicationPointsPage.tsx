@@ -3,7 +3,7 @@ import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
-import { useNviReportNumbers } from '../../../../components/nvi/hooks/useNviReportNumbers';
+import { useNviInstitutionStatusNumbers } from '../../../../components/nvi/hooks/useNviInstitutionStatusNumbers';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import {
   NviPointsHelperTextModal,
@@ -24,7 +24,7 @@ export const NviPublicationPointsPage = () => {
 
   const { year } = useNviCandidatesParams();
   const { numApprovedByAll, publicationPoints, approvedByAllComparedToPreviousYear, statusData, isPending, isError } =
-    useNviReportNumbers(year);
+    useNviInstitutionStatusNumbers(year);
 
   return (
     <NviPageLayout
