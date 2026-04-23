@@ -1,8 +1,8 @@
 import { useLocation } from 'react-router';
 import { ImportCandidateOrderBy, ImportCandidatesSearchParam, SortOrder } from '../../api/searchApi';
-import { parseNumericParam } from '../url-param-utils';
 import { CollaborationType, ImportCandidateStatus } from '../../types/importCandidate.types';
 import { AggregationFileKeyType, PublicationInstanceType } from '../../types/registration.types';
+import { parseNumericParam } from '../url-param-helpers';
 
 export const useImportCandidatesParams = () => {
   const location = useLocation();

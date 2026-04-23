@@ -8,9 +8,9 @@ import {
   NviCandidatesSearchParam,
   NviCandidateStatus,
 } from '../../api/searchApi';
-import { parseNumericParam } from '../url-param-utils';
 import { NviCandidateSearchStatus } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';
+import { parseNumericParam } from '../url-param-helpers';
 
 export const getDefaultNviYear = () => {
   const currentDate = new Date();
