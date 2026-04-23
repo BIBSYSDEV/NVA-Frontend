@@ -1,4 +1,7 @@
-export const parseNumericParam = (param: string | null | undefined, fallback: number | null): number | null => {
+export const parseNumericParam = <T extends number | null | undefined>(
+  param: string | null | undefined,
+  fallback: T
+): number | T => {
   if (param == null) return fallback;
   const parsed = Number(param);
   return Number.isFinite(parsed) ? parsed : fallback;
