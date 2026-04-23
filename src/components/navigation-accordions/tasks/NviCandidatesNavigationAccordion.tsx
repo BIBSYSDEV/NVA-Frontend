@@ -40,7 +40,7 @@ export const NviCandidatesNavigationAccordion = () => {
 
   const nviReportsQuery = useFetchNviReportForInstitution({
     id: getIdentifierFromId(user?.topOrgCristinId ?? ''),
-    year: Number(year), // HACK: awaiting refactir of typecasting
+    year: Number(year), // HACK: awaiting refactor of typecasting
     enabled: isOnNviCandidatesPage || isOnNviStatusPage || isOnNviDisputePage || isOnPublicationPointsPage,
   });
 
