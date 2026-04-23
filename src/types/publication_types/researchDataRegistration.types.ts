@@ -13,7 +13,10 @@ export interface ResearchDataRegistration extends BaseRegistration {
 }
 
 export interface ResearchDataPublicationInstance
-  extends Partial<DataManagementPlanPublicationInstance>, Partial<DatasetPublicationInstance> {
+  extends
+    Partial<DataManagementPlanPublicationInstance>,
+    Partial<DatasetPublicationInstance>,
+    Partial<SoftwareSourceCodePublicationInstance> {
   type: ResearchDataType | '';
 }
 
@@ -27,6 +30,8 @@ export const emptyResearchDataPublicationInstance: ResearchDataPublicationInstan
   },
   referencedBy: [],
   compliesWith: [],
+  repositoryUrl: '',
+  version: '',
 };
 
 export const emptyResearchDataPublicationContext: ResearchDataPublicationContext = {
@@ -61,6 +66,11 @@ interface DatasetPublicationInstance {
   compliesWith: string[]; // Related DMPs
   referencedBy: string[]; // Related Registrations (not DMPs)
   related: RelatedDocument[]; // External links
+}
+
+interface SoftwareSourceCodePublicationInstance {
+  repositoryUrl: string;
+  version: string;
 }
 
 interface GeographicalDescription {

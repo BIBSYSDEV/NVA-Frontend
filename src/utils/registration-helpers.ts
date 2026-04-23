@@ -692,6 +692,10 @@ export const contributorConfig: ContributorConfig = {
     ],
     secondaryRoles: [],
   },
+  [ResearchDataType.SoftwareSourceCode]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
   // Exhibition
   [ExhibitionContentType.ExhibitionProduction]: {
     primaryRoles: [

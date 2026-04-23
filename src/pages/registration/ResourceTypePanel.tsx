@@ -33,6 +33,7 @@ import { PresentationForm } from './resource_type_tab/sub_type_forms/Presentatio
 import { ReportForm } from './resource_type_tab/sub_type_forms/ReportForm';
 import { DataManagementPlanForm } from './resource_type_tab/sub_type_forms/research_data_types/DataManagementPlanForm';
 import { DatasetForm } from './resource_type_tab/sub_type_forms/research_data_types/DatasetForm';
+import { SoftwareSourceCodeForm } from './resource_type_tab/sub_type_forms/research_data_types/SoftwareSourceCodeForm';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation();
@@ -99,6 +100,8 @@ export const ResourceTypePanel = () => {
           <DataManagementPlanForm />
         ) : instanceType === ResearchDataType.Dataset ? (
           <DatasetForm />
+        ) : instanceType === ResearchDataType.SoftwareSourceCode ? (
+          <SoftwareSourceCodeForm />
         ) : null
       ) : mainType === PublicationType.ExhibitionContent ? (
         <ExhibitionProductionForm />
