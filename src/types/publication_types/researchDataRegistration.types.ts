@@ -31,7 +31,7 @@ export const emptyResearchDataPublicationInstance: ResearchDataPublicationInstan
   referencedBy: [],
   compliesWith: [],
   repositoryUrl: '',
-  version: '',
+  softwareVersion: '',
 };
 
 export const emptyResearchDataPublicationContext: ResearchDataPublicationContext = {
@@ -70,7 +70,7 @@ interface DatasetPublicationInstance {
 
 interface SoftwareSourceCodePublicationInstance {
   repositoryUrl: string;
-  version: string;
+  softwareVersion: string;
 }
 
 interface GeographicalDescription {
