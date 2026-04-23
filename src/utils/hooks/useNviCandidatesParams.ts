@@ -8,6 +8,7 @@ import {
   NviCandidatesSearchParam,
   NviCandidateStatus,
 } from '../../api/searchApi';
+import { parseNumericParam } from '../url-param-utils';
 import { NviCandidateSearchStatus } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';
 
@@ -23,12 +24,10 @@ const getCommonNviCandidatesParams = (searchParams: URLSearchParams) => {
   const assignee = searchParams.get(NviCandidatesSearchParam.Assignee);
   const excludeSubUnits = searchParams.get(NviCandidatesSearchParam.ExcludeSubUnits) === 'true';
   const filter = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateFilter | null;
-  const offsetParam = searchParams.get(NviCandidatesSearchParam.Offset);
-  const offset = offsetParam ? Number(offsetParam) : 0;
+  const offset = parseNumericParam(searchParams.get(NviCandidatesSearchParam.Offset), 0);
   const orderBy = searchParams.get(NviCandidatesSearchParam.OrderBy) as NviCandidateOrderBy | null;
   const query = searchParams.get(NviCandidatesSearchParam.Query);
-  const sizeParam = searchParams.get(NviCandidatesSearchParam.Size);
-  const size = sizeParam ? Number(sizeParam) : ROWS_PER_PAGE_OPTIONS[0];
+  const size = parseNumericParam(searchParams.get(NviCandidatesSearchParam.Size), ROWS_PER_PAGE_OPTIONS[0]);
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
 
   return { affiliations, assignee, excludeSubUnits, filter, offset, orderBy, query, size, sortOrder };
@@ -45,9 +44,7 @@ export const useNviCandidatesParams = () => {
     | NviCandidateGlobalStatus[]
     | null;
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
-  const yearParam = searchParams.get(NviCandidatesSearchParam.Year);
-  const parsedYear = yearParam ? Number(yearParam) : null;
-  const year = parsedYear !== null && Number.isFinite(parsedYear) ? parsedYear : getDefaultNviYear();
+  const year = parseNumericParam(searchParams.get(NviCandidatesSearchParam.Year), getDefaultNviYear());
   const excludeUnassigned = searchParams.get(NviCandidatesSearchParam.ExcludeUnassigned) === 'true';
   const excludeEmptyRows = searchParams.get(NviCandidatesSearchParam.ExcludeEmptyRows) === 'true';
 
