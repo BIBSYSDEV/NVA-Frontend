@@ -29,6 +29,7 @@ export const SoftwareSourceCodeForm = () => {
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
+              required
               fullWidth
               data-testid={dataTestId.registrationWizard.resourceType.versionField}
               variant="filled"
