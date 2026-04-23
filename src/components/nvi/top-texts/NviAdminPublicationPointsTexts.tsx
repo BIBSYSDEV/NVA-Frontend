@@ -55,7 +55,7 @@ export const NviAdminPublicationPointsTexts = ({
         )}
         {isPending ? (
           <Skeleton sx={{ width: '40%' }} />
-        ) : isError ? undefined : (
+        ) : isError || previousYear === undefined ? undefined : (
           <Trans
             i18nKey="percent_of_published_reports_in_year"
             values={{
