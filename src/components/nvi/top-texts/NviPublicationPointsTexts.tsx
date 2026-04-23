@@ -48,7 +48,7 @@ export const NviPublicationPointsTexts = ({
           }}
           components={{
             p: <Typography sx={{ mt: '0.5rem' }} />,
-            b: <Typography component="strong" sx={{ fontWeight: 'bold' }} />,
+            b: <strong />,
             link: exportAcronym ? <ExportNviStatusLink acronym={exportAcronym} /> : <span />,
           }}
         />
