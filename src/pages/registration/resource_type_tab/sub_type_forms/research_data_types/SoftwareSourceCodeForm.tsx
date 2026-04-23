@@ -25,7 +25,7 @@ export const SoftwareSourceCodeForm = () => {
           )}
         </Field>
 
-        <Field name={ResourceFieldNames.PublicationInstanceVersion}>
+        <Field name={ResourceFieldNames.PublicationInstanceSoftwareVersion}>
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}

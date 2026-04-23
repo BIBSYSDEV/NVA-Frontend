@@ -170,7 +170,7 @@ export enum ResourceFieldNames {
   PublicationInstanceReferencedBy = 'entityDescription.reference.publicationInstance.referencedBy',
   PublicationInstanceRelated = 'entityDescription.reference.publicationInstance.related',
   PublicationInstanceRepositoryUrl = 'entityDescription.reference.publicationInstance.repositoryUrl',
-  PublicationInstanceVersion = 'entityDescription.reference.publicationInstance.version',
+  PublicationInstanceSoftwareVersion = 'entityDescription.reference.publicationInstance.softwareVersion',
   Reference = 'entityDescription.reference',
   Revision = 'entityDescription.reference.publicationContext.revision',
   Series = 'entityDescription.reference.publicationContext.series',
