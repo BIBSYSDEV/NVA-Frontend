@@ -13,12 +13,13 @@ export const SoftwareSourceCodeForm = () => {
       <PublisherField />
 
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
-        <Field name={ResourceFieldNames.PublicationInstanceRepositoryUrl}>
+        <Field name={ResourceFieldNames.PublicationInstanceCodeRepository}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
+              value={field.value ?? ''}
               fullWidth
-              data-testid={dataTestId.registrationWizard.resourceType.repositoryUrlField}
+              data-testid={dataTestId.registrationWizard.resourceType.codeRepositoryField}
               variant="filled"
               label={t('registration.resource_type.research_data.repository_url')}
               error={touched && !!error}
@@ -31,6 +32,7 @@ export const SoftwareSourceCodeForm = () => {
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
+              value={field.value ?? ''}
               required
               fullWidth
               data-testid={dataTestId.registrationWizard.resourceType.versionField}

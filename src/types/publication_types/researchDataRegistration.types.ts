@@ -30,7 +30,7 @@ export const emptyResearchDataPublicationInstance: ResearchDataPublicationInstan
   },
   referencedBy: [],
   compliesWith: [],
-  repositoryUrl: '',
+  codeRepository: '',
   softwareVersion: '',
 };
 
@@ -69,7 +69,7 @@ interface DatasetPublicationInstance {
 }
 
 interface SoftwareSourceCodePublicationInstance {
-  repositoryUrl: string;
+  codeRepository: string;
   softwareVersion: string;
 }
 

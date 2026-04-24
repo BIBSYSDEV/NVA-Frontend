@@ -643,7 +643,7 @@ export const dataTestId = {
       externalLinkAddButton: 'external-link-add-button',
       externalLink: 'external-link',
       geographicDescriptionField: 'geographic-description-field',
-      repositoryUrlField: 'repository-url-field',
+      codeRepositoryField: 'code-repository-field',
       versionField: 'version-field',
       dateFromField: 'date-from-field',
       dateToField: 'date-to-field',

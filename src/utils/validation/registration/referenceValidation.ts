@@ -134,7 +134,7 @@ const resourceErrorMessage = {
     field: i18n.t('common.publisher'),
   }),
   referenceRequired: i18n.t('feedback.validation.reference_required'),
-  repositoryUrlInvalid: i18n.t('feedback.validation.has_invalid_format', {
+  codeRepositoryInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.resource_type.research_data.repository_url'),
   }),
   seriesNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
@@ -529,7 +529,7 @@ const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicat
       ? schema.required(resourceErrorMessage.softwareVersionRequired)
       : schema
   ),
-  repositoryUrl: Yup.string().nullable().trim().url(resourceErrorMessage.repositoryUrlInvalid),
+  codeRepository: Yup.string().nullable().trim().url(resourceErrorMessage.codeRepositoryInvalid),
 });
 
 export const researchDataReference = baseReference.shape({
