@@ -46,7 +46,7 @@ interface AggregationCount {
   docCount: number;
 }
 
-interface ApprovalStatusAggregation {
+export interface ApprovalStatusAggregation {
   New: number;
   Approved: number;
   Rejected: number;

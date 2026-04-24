@@ -1000,6 +1000,7 @@
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fant dessverre ikke noe som passer med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li></ul>",
+  "nvi_approved_results_publication_points_summary": "<p><b>{{num_approved_by_all}} resultat</b> er godkjent av alle, og de gir <b>{{publication_points}} publiseringspoeng.</b><link></p><p>Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{year}}.</p>",
   "nvi_publication_points_page_description": "Tabellen viser kandidater ved din institusjon som er godkjent av dere per nå og hvilke som mangler godkjenning av samarbeidende institusjoner.",
   "nvi_publication_points_page_description_expanded": "Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.",
   "overview_over_administrators": "Oversikt over administratorer",
@@ -1881,7 +1882,8 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "Avvist",
-  "reporting_status_description": "<0>Tabellen viser antall kandidater for min institusjon og behandlingsstatus på disse.</0> <0>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</0>",
+  "reporting_status_description": "<p>Tabellen viser antall kandidater for din institusjon og behandlingsstatus på disse.</p> <p>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</p>",
+  "reporting_status_numbers": "<p><b>{{num_results}} resultat</b> er kandidater for rapportering. Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{previous_year}}.</p>",
   "reset": "Nullstill",
   "results": "Forskningsresultater",
   "science_categories_front_page": "<heading>Arbeid i ulike kategorier</heading><p>Forskning og formidling omfatter mye mer enn vitenskapelige publikasjoner.</p><p>Alt registreres i ulike kategorier, og du kan søke og gjøre oppslag i alle kategoriene nedenfor.</p>",
@@ -2069,7 +2071,6 @@
     "your_tasks": "Oppgaver du behandler: {{count}}"
   },
   "temporarily_disabled": "Midlertidig deaktivert",
-  "that_is_x_percent_of_the_number_reported_in_y": "<p>Det er <bold>{{percentage_compared_to_last_year}}%</bold> av antallet resultat rapportert i {{last_year}}.</p>",
   "time_format": {
     "hours": "TT:MM:SS",
     "minutes": "MM:SS"

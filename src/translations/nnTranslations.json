@@ -1000,6 +1000,7 @@
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fann dessverre ikkje noko som passar med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv ei anna skriveform av søkeordet</li><li>Prøv med eit synonym</li><li>Overset søkeordet til bokmål. nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at namnet er skrevet korrekt</li><li>Prøv ein annan skrivemåte</li><li>Prøv med eller utan mellomnamn</li></ul>",
+  "nvi_approved_results_publication_points_summary": "",
   "nvi_publication_points_page_description": "",
   "nvi_publication_points_page_description_expanded": "",
   "overview_over_administrators": "Oversyn over administratorar",
@@ -1882,6 +1883,7 @@
   },
   "rejected": "",
   "reporting_status_description": "",
+  "reporting_status_numbers": "",
   "reset": "Nullstill",
   "results": "Forskingsresultat",
   "science_categories_front_page": "<heading>Arbeid i ulike kategoriar</heading><p>Forsking og formidling omfattar mykje meir enn vitskaplege publikasjonar.</p><p>Alt vert registrert i ulike kategoriar, og du kan søkje og gjere oppslag i alle kategoriar nedanfor.</p>",
@@ -2069,7 +2071,6 @@
     "your_tasks": "Oppgåver du behandlar: {{count}}"
   },
   "temporarily_disabled": "",
-  "that_is_x_percent_of_the_number_reported_in_y": "",
   "time_format": {
     "hours": "TT:MM:SS",
     "minutes": "MM:SS"
