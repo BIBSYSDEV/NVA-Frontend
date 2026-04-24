@@ -3,8 +3,7 @@ import { useFilterInstitutionReportsByUrl } from './useFilterInstitutionReportsB
 import { useSortInstitutionReportsByUrl } from './useSortInstitutionReportsByUrl';
 
 export const useInstitutionReportsFilteredAndSortedByUrl = (year: number) => {
-  const reportingYear = Number(year);
-  const reportsQuery = useFetchNviReports({ year: reportingYear });
+  const reportsQuery = useFetchNviReports({ year });
   const reports = reportsQuery.data?.institutions ?? [];
   const filteredData = useFilterInstitutionReportsByUrl(reports);
   const sortedAndFilteredData = useSortInstitutionReportsByUrl(filteredData);
