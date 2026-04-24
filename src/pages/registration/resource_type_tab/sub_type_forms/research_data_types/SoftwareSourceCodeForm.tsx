@@ -14,13 +14,15 @@ export const SoftwareSourceCodeForm = () => {
 
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
         <Field name={ResourceFieldNames.PublicationInstanceRepositoryUrl}>
-          {({ field }: FieldProps<string>) => (
+          {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
               fullWidth
               data-testid={dataTestId.registrationWizard.resourceType.repositoryUrlField}
               variant="filled"
               label={t('registration.resource_type.research_data.repository_url')}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
             />
           )}
         </Field>
