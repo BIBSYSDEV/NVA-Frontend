@@ -1,6 +1,6 @@
 import { useFetchNviInstitutionStatus } from '../../../api/hooks/useFetchNviStatus';
 import { ApprovalStatusAggregation } from '../../../types/nvi.types';
-import { percentageOfAComparedToB } from '../../../utils/general-helpers';
+import { percentageOfAComparedToB } from '../../../utils/general-helpers/calculation-helpers';
 
 export const getTotalResults = (approvalStatus: ApprovalStatusAggregation | undefined) =>
   approvalStatus

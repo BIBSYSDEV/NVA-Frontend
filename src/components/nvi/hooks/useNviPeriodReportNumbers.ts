@@ -1,6 +1,6 @@
 import { useFetchNviPeriodReport } from '../../../api/hooks/useFetchNviPeriodReport';
 import { NviPeriodByGlobalApprovalStatus } from '../../../types/nvi.types';
-import { percentageOfAComparedToB } from '../../../utils/general-helpers';
+import { percentageOfAComparedToB } from '../../../utils/general-helpers/calculation-helpers';
 
 export const getCandidatesForReporting = (globalApprovalStatus: NviPeriodByGlobalApprovalStatus | undefined) =>
   globalApprovalStatus
