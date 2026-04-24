@@ -1,4 +1,4 @@
-import { useFetchNviReports } from '../../api/hooks/useFetchNviReports';
+import { useFetchNviReports } from '../../../api/hooks/useFetchNviReports';
 import { useFilterInstitutionReportsByUrl } from './useFilterInstitutionReportsByUrl';
 import { useSortInstitutionReportsByUrl } from './useSortInstitutionReportsByUrl';
 
