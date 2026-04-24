@@ -645,7 +645,6 @@
       "update_publish_strategy": "Failed to update publishing strategy",
       "update_publishing_request": "Failed to update publishing request",
       "update_registration": "Failed to update registration",
-      "update_rights_retention_strategy": "Failed to update rights policy",
       "update_rrs_and_file_import": "",
       "update_ticket_assignee": "Failed to set curator",
       "update_ticket_status": "Failed to update status",
@@ -694,7 +693,6 @@
       "update_promoted_publication": "Favourite marking was updated",
       "update_publish_strategy": "Publishing strategy updated successfully",
       "update_registration": "Registration updated successfully",
-      "update_rights_retention_strategy": "Rights retention policy was updated",
       "update_rrs_and_file_import": "",
       "update_ticket_assignee": "Curator was updated",
       "update_vocabulary": "{{vocabulary}} is now {{status}}"

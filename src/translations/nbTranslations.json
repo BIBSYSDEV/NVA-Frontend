@@ -645,7 +645,6 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
-      "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
       "update_rrs_and_file_import": "Kunne ikke oppdatere rettighetspolitikk og filimport",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
@@ -694,7 +693,6 @@
       "update_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
-      "update_rights_retention_strategy": "Rettighetspolitikk ble oppdatert",
       "update_rrs_and_file_import": "Rettighetspolitikk og filimport ble oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
