@@ -137,6 +137,9 @@ const resourceErrorMessage = {
   seriesNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
     field: i18n.t('registration.resource_type.series'),
   }),
+  softwareVersionRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.research_data.version'),
+  }),
   toMustBeAfterFrom: i18n.t('feedback.validation.cannot_be_before', {
     field: i18n.t('registration.resource_type.date_to'),
     limitField: i18n.t('registration.resource_type.date_from').toLowerCase(),
@@ -518,6 +521,11 @@ const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicat
         : schema
     ),
   related: Yup.array(),
+  softwareVersion: Yup.string().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+    publicationInstanceType === ResearchDataType.SoftwareSourceCode
+      ? schema.required(resourceErrorMessage.softwareVersionRequired)
+      : schema
+  ),
 });
 
 export const researchDataReference = baseReference.shape({

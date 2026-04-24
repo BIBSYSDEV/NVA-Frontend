@@ -1,5 +1,5 @@
 import { Box, TextField } from '@mui/material';
-import { Field, FieldProps } from 'formik';
+import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../utils/dataTestIds';
@@ -26,7 +26,7 @@ export const SoftwareSourceCodeForm = () => {
         </Field>
 
         <Field name={ResourceFieldNames.PublicationInstanceSoftwareVersion}>
-          {({ field }: FieldProps<string>) => (
+          {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
               required
@@ -34,6 +34,8 @@ export const SoftwareSourceCodeForm = () => {
               data-testid={dataTestId.registrationWizard.resourceType.versionField}
               variant="filled"
               label={t('registration.resource_type.research_data.version')}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
             />
           )}
         </Field>
