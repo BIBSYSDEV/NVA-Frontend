@@ -7,10 +7,9 @@ export const getCandidatesForReporting = (globalApprovalStatus: NviPeriodByGloba
     : undefined;
 
 export const useNviPeriodReportNumbers = (year: number) => {
-  const reportingYear = Number(year);
-  const previousYear = reportingYear - 1;
+  const previousYear = year - 1;
 
-  const periodReportQuery = useFetchNviPeriodReport({ year: reportingYear, hideErrorMessage: true });
+  const periodReportQuery = useFetchNviPeriodReport({ year, hideErrorMessage: true });
   const periodReportPreviousYearQuery = useFetchNviPeriodReport({ year: previousYear, hideErrorMessage: true });
 
   const numCandidatesForReporting = getCandidatesForReporting(periodReportQuery.data?.byGlobalApprovalStatus);
