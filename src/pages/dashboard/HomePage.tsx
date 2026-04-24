@@ -145,12 +145,12 @@ const HomePage = () => {
               to={UrlPathTemplate.ReportsNvi}>
               {t('common.nvi')}
             </SelectableButton>
-            <SelectableButton
+            {/*     <SelectableButton
               data-testid={dataTestId.startPage.reportsInternationalWorkButton}
               isSelected={currentPath === UrlPathTemplate.ReportsInternationalCooperation}
               to={UrlPathTemplate.ReportsInternationalCooperation}>
               {t('search.reports.international_cooperation')}
-            </SelectableButton>
+            </SelectableButton>*/}
             <SelectableButton
               data-testid={dataTestId.startPage.reportsClinicalTreatmentStudiesButton}
               isSelected={currentPath === UrlPathTemplate.ReportsClinicalTreatmentStudies}
