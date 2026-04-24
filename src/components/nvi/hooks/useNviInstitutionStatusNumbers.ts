@@ -7,10 +7,9 @@ export const getTotalResults = (approvalStatus: ApprovalStatusAggregation | unde
     : undefined;
 
 export const useNviInstitutionStatusNumbers = (year: number) => {
-  const reportingYear = Number(year);
-  const previousYear = reportingYear - 1;
+  const previousYear = year - 1;
 
-  const nviStatusQuery = useFetchNviInstitutionStatus(reportingYear);
+  const nviStatusQuery = useFetchNviInstitutionStatus(year);
   const nviStatusPreviousYearQuery = useFetchNviInstitutionStatus(previousYear);
 
   const approvalStatus = nviStatusQuery.data?.totals.approvalStatus;
