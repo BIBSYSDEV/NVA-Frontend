@@ -14,10 +14,12 @@ import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappe
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { InstitutionReport } from '../../../../types/nvi.types';
+import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
-  const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
+  const { year } = useNviCandidatesParams();
+  const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
 
   return (
     <NviPageLayout
