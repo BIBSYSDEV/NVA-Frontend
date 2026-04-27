@@ -1990,6 +1990,7 @@
       "approve_rejected_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen skal rapporteres. Da fjernes også begrunnelsen for avvisningen.",
       "candidates": "Kandidater",
       "candidates_approved_by_others": "Kandidater andre har godkjent",
+      "candidates_for_control": "Kandidater til kontroll",
       "candidates_pending_verification_by_others": "Kandidater andre må kontrollere",
       "candidates_rejected_by_others": "Kandidater andre har avvist",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
