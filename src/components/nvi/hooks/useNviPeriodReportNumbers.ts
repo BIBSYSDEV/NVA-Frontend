@@ -15,14 +15,28 @@ export const useNviPeriodReportNumbers = (year: number) => {
   const numCandidatesForReportingPreviousYear = getCandidatesForReporting(
     periodReportPreviousYearQuery.data?.byGlobalApprovalStatus
   );
+
+  const numApprovedByAll = periodReportQuery.data?.byGlobalApprovalStatus.approved;
+  const numApprovedByAllPreviousYear = periodReportPreviousYearQuery.data?.byGlobalApprovalStatus.approved;
+
+  const publicationPoints = periodReportQuery.data?.totals.validPoints;
+
   const percentageCandidatesComparedToPreviousYear = percentageOfAComparedToB(
     numCandidatesForReporting,
     numCandidatesForReportingPreviousYear
   );
 
+  const percentageApprovedComparedToPreviousYear = percentageOfAComparedToB(
+    numApprovedByAll,
+    numApprovedByAllPreviousYear
+  );
+
   return {
+    numApprovedByAll,
+    publicationPoints,
     numCandidatesForReporting,
     percentageCandidatesComparedToPreviousYear,
+    percentageApprovedComparedToPreviousYear,
     isPending: periodReportQuery.isPending || periodReportPreviousYearQuery.isPending,
     isError: periodReportQuery.isError || periodReportPreviousYearQuery.isError,
   };
