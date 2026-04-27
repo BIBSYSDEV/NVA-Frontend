@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
-import { NviPeriodByGlobalApprovalStatus } from '../../../types/nvi.types';
-import { getCandidatesForReporting } from './useNviPeriodReportNumbers';
+import { NviPeriodByGlobalApprovalStatus } from '../../../../types/nvi.types';
+import { getCandidatesForReporting } from '../useNviPeriodReportNumbers';
 
 const makeGlobalApprovalStatus = (
   overrides: Partial<NviPeriodByGlobalApprovalStatus> = {}
