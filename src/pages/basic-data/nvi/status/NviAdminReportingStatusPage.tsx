@@ -1,7 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
-import { useNviPeriodReportNumbers } from '../../../../components/nvi/hooks/useNviPeriodReportNumbers';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import { NviAdminTableSortSelector } from '../../../../components/nvi/table/NviAdminTableSortSelector';
 import { NviAdminReportingStatusRow } from '../../../../components/nvi/table/rows/NviAdminReportingStatusRow';
@@ -17,25 +16,11 @@ export const NviAdminReportingStatusPage = () => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
-  const {
-    numCandidatesForReporting,
-    percentageCandidatesComparedToPreviousYear,
-    isPending: periodReportIsPending,
-    isError: periodReportIsError,
-  } = useNviPeriodReportNumbers(year);
 
   return (
     <NviPageLayout
       headline={t('basic_data.nvi.reporting_status')}
-      topView={
-        <NviAdminReportingStatusTexts
-          previousYear={year - 1}
-          isPending={periodReportIsPending}
-          isError={periodReportIsError}
-          totalResults={numCandidatesForReporting}
-          percentage={percentageCandidatesComparedToPreviousYear}
-        />
-      }
+      topView={<NviAdminReportingStatusTexts />}
       yearSelector
       sectorSelector
       institutionSearch>
