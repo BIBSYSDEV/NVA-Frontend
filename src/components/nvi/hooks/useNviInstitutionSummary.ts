@@ -14,7 +14,7 @@ export const useNviInstitutionSummary = ({ enabled = true }: UseNviInstitutionSu
 
   const query = useFetchNviReportForInstitution({
     id: getIdentifierFromId(user?.topOrgCristinId ?? ''),
-    year: Number(year), // HACK: awaiting refactor of typecasting
+    year: year,
     enabled,
   });
 
