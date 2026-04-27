@@ -4,27 +4,21 @@ import { ExportNviStatusLink } from '../../../pages/messages/components/ExportNv
 import { HelperTextModal } from '../../../pages/registration/HelperTextModal';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { formatLocaleNumber } from '../../../utils/general-helpers';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { ExpandableNviTopView } from '../../ExpandableNviTopView';
 import { HorizontalBox, VerticalBox } from '../../styled/Wrappers';
+import { useNviPeriodReportNumbers } from '../hooks/useNviPeriodReportNumbers';
 
-interface NviAdminPublicationPointsTextsProps {
-  previousYear?: number;
-  numApprovals?: number;
-  publicationPoints?: number;
-  percentage?: number;
-  isPending?: boolean;
-  isError?: boolean;
-}
-
-export const NviAdminPublicationPointsTexts = ({
-  previousYear,
-  isPending = false,
-  isError = false,
-  numApprovals,
-  percentage,
-  publicationPoints,
-}: NviAdminPublicationPointsTextsProps) => {
+export const NviAdminPublicationPointsTexts = () => {
   const { t } = useTranslation();
+  const { year } = useNviCandidatesParams();
+  const {
+    isPending,
+    isError,
+    numApprovedByAll,
+    publicationPoints,
+    percentageApprovedComparedToPreviousYear: percentage,
+  } = useNviPeriodReportNumbers(year);
 
   return (
     <ExpandableNviTopView
@@ -34,12 +28,12 @@ export const NviAdminPublicationPointsTexts = ({
       <VerticalBox>
         {isPending ? (
           <Skeleton sx={{ width: '50%' }} />
-        ) : isError || numApprovals === undefined || publicationPoints === undefined ? undefined : (
+        ) : isError || numApprovedByAll === undefined || publicationPoints === undefined ? undefined : (
           <HorizontalBox>
             <Trans
               i18nKey="nvi_admin_publication_points_numbers"
               values={{
-                approvals: formatLocaleNumber(numApprovals),
+                approvals: formatLocaleNumber(numApprovedByAll),
                 publication_points: formatLocaleNumber(publicationPoints),
               }}
               components={{
@@ -55,12 +49,12 @@ export const NviAdminPublicationPointsTexts = ({
         )}
         {isPending ? (
           <Skeleton sx={{ width: '40%' }} />
-        ) : isError || previousYear === undefined ? undefined : (
+        ) : isError ? undefined : (
           <Trans
             i18nKey="percent_of_published_reports_in_year"
             values={{
               percentage: percentage !== undefined ? formatLocaleNumber(percentage) : '–',
-              year: previousYear,
+              year: year - 1,
             }}
             components={{
               p: <Typography gutterBottom />,

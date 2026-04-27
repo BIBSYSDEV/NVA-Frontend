@@ -1,7 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
-import { useNviPeriodReportNumbers } from '../../../../components/nvi/hooks/useNviPeriodReportNumbers';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import {
   NviPointsHelperTextModal,
@@ -21,27 +20,11 @@ export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
-  const {
-    isPending: periodReportIsPending,
-    isError: periodReportIsError,
-    numApprovedByAll,
-    publicationPoints,
-    percentageApprovedComparedToPreviousYear,
-  } = useNviPeriodReportNumbers(year);
 
   return (
     <NviPageLayout
       headline={t('basic_data.nvi.publication_points_status')}
-      topView={
-        <NviAdminPublicationPointsTexts
-          previousYear={year - 1}
-          isPending={periodReportIsPending}
-          isError={periodReportIsError}
-          numApprovals={numApprovedByAll}
-          publicationPoints={publicationPoints}
-          percentage={percentageApprovedComparedToPreviousYear}
-        />
-      }
+      topView={<NviAdminPublicationPointsTexts />}
       yearSelector
       exportPublicationPoints
       sectorSelector
