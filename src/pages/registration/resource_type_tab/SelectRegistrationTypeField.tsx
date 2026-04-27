@@ -301,6 +301,7 @@ export const SelectRegistrationTypeField = () => {
           onCategoryClick={onChangeType}
           disabledCategories={disabledCategories}
           categoriesWithoutFiles={categoriesWithoutFiles}
+          betaCategories={[ResearchDataType.SoftwareSourceCode]}
         />
 
         {!currentInstanceType && (

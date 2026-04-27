@@ -134,8 +134,14 @@ const resourceErrorMessage = {
     field: i18n.t('common.publisher'),
   }),
   referenceRequired: i18n.t('feedback.validation.reference_required'),
+  codeRepositoryInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.research_data.repository_url'),
+  }),
   seriesNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
     field: i18n.t('registration.resource_type.series'),
+  }),
+  softwareVersionRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.research_data.version'),
   }),
   toMustBeAfterFrom: i18n.t('feedback.validation.cannot_be_before', {
     field: i18n.t('registration.resource_type.date_to'),
@@ -518,6 +524,12 @@ const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicat
         : schema
     ),
   related: Yup.array(),
+  softwareVersion: Yup.string().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+    publicationInstanceType === ResearchDataType.SoftwareSourceCode
+      ? schema.required(resourceErrorMessage.softwareVersionRequired)
+      : schema
+  ),
+  codeRepository: Yup.string().nullable().trim().url(resourceErrorMessage.codeRepositoryInvalid),
 });
 
 export const researchDataReference = baseReference.shape({
