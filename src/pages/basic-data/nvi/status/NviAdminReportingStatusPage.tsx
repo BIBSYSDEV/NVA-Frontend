@@ -1,5 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
 import { useNviPeriodReportNumbers } from '../../../../components/nvi/hooks/useNviPeriodReportNumbers';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import { NviAdminTableSortSelector } from '../../../../components/nvi/table/NviAdminTableSortSelector';
@@ -9,7 +10,6 @@ import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
-import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 

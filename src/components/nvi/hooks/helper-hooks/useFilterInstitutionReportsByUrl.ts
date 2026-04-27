@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router';
-import { getNviInstitutionName } from '../../components/nvi/table/utils/nvi-admin-aggregations-helpers';
-import { InstitutionReport } from '../../types/nvi.types';
+import { InstitutionReport } from '../../../../types/nvi.types';
+import { getNviInstitutionName } from '../../table/utils/nvi-admin-aggregations-helpers';
 
 export const useFilterInstitutionReportsByUrl = (reports: InstitutionReport[]) => {
   const [searchParams] = useSearchParams();

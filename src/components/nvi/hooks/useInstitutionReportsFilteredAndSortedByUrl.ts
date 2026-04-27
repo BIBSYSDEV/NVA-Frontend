@@ -1,6 +1,6 @@
-import { useFetchNviReports } from '../../api/hooks/useFetchNviReports';
-import { useFilterInstitutionReportsByUrl } from './useFilterInstitutionReportsByUrl';
-import { useSortInstitutionReportsByUrl } from './useSortInstitutionReportsByUrl';
+import { useFetchNviReports } from '../../../api/hooks/useFetchNviReports';
+import { useFilterInstitutionReportsByUrl } from './helper-hooks/useFilterInstitutionReportsByUrl';
+import { useSortInstitutionReportsByUrl } from './helper-hooks/useSortInstitutionReportsByUrl';
 
 export const useInstitutionReportsFilteredAndSortedByUrl = (year: number) => {
   const reportsQuery = useFetchNviReports({ year });
