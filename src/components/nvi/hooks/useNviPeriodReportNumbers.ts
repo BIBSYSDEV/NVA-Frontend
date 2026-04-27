@@ -1,5 +1,6 @@
 import { useFetchNviPeriodReport } from '../../../api/hooks/useFetchNviPeriodReport';
 import { NviPeriodByGlobalApprovalStatus } from '../../../types/nvi.types';
+import { percentageOfAComparedToB } from '../../../utils/general-helpers/calculation-helpers';
 
 export const getCandidatesForReporting = (globalApprovalStatus: NviPeriodByGlobalApprovalStatus | undefined) =>
   globalApprovalStatus
@@ -7,10 +8,8 @@ export const getCandidatesForReporting = (globalApprovalStatus: NviPeriodByGloba
     : undefined;
 
 export const useNviPeriodReportNumbers = (year: number) => {
-  const previousYear = year - 1;
-
   const periodReportQuery = useFetchNviPeriodReport({ year, hideErrorMessage: true });
-  const periodReportPreviousYearQuery = useFetchNviPeriodReport({ year: previousYear, hideErrorMessage: true });
+  const periodReportPreviousYearQuery = useFetchNviPeriodReport({ year: year - 1, hideErrorMessage: true });
 
   const numCandidatesForReporting = getCandidatesForReporting(periodReportQuery.data?.byGlobalApprovalStatus);
   const numCandidatesForReportingPreviousYear = getCandidatesForReporting(
@@ -22,17 +21,15 @@ export const useNviPeriodReportNumbers = (year: number) => {
 
   const publicationPoints = periodReportQuery.data?.totals.validPoints;
 
-  const percentageCandidatesComparedToPreviousYear =
-    numCandidatesForReporting !== undefined &&
-    numCandidatesForReportingPreviousYear !== undefined &&
-    numCandidatesForReportingPreviousYear > 0
-      ? Math.round((numCandidatesForReporting / numCandidatesForReportingPreviousYear) * 100)
-      : undefined;
+  const percentageCandidatesComparedToPreviousYear = percentageOfAComparedToB(
+    numCandidatesForReporting,
+    numCandidatesForReportingPreviousYear
+  );
 
-  const percentageApprovedComparedToPreviousYear =
-    numApprovedByAll !== undefined && numApprovedByAllPreviousYear !== undefined && numApprovedByAllPreviousYear > 0
-      ? Math.round((numApprovedByAll / numApprovedByAllPreviousYear) * 100)
-      : undefined;
+  const percentageApprovedComparedToPreviousYear = percentageOfAComparedToB(
+    numApprovedByAll,
+    numApprovedByAllPreviousYear
+  );
 
   return {
     numApprovedByAll,
