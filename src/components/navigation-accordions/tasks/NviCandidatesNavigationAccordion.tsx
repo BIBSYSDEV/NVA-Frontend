@@ -6,13 +6,13 @@ import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
-import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidateGlobalStatusEnum, NviCandidatesSearchParam, NviCandidateStatusEnum } from '../../../api/searchApi';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { NavigationListAccordion } from '../../NavigationListAccordion';
+import { useNviInstitutionSummary } from '../../nvi/hooks/useNviInstitutionSummary';
 import { StyledSkeleton } from '../../nvi/table/rows/NviRowWrapper';
 import { NviReportProgressBar } from '../../NviReportProgressBar';
 import { SelectableButton } from '../../SelectableButton';
@@ -36,22 +36,15 @@ export const NviCandidatesNavigationAccordion = () => {
 
   const nviParams = useNviCandidatesParams();
 
-  const nviAggregationsQuery = useFetchNviCandidates({
+  const {
+    query: nviReportsQuery,
+    counts,
+    candidatesTotal: nviCandidatesTotal,
+    candidatesCompleted: nviCandidatesCompleted,
+    completedPercentage: nviCompletedPercentage,
+  } = useNviInstitutionSummary({
     enabled: isOnNviCandidatesPage || isOnNviStatusPage || isOnNviDisputePage || isOnPublicationPointsPage,
-    params: { year: nviParams.year, size: 0, aggregation: 'all' },
   });
-
-  const nviAggregations = nviAggregationsQuery.data?.aggregations;
-
-  const nviPendingCount = nviAggregations?.pending.docCount.toLocaleString();
-  const nviApprovedCount = nviAggregations?.approved.docCount.toLocaleString();
-  const nviRejectedCount = nviAggregations?.rejected.docCount.toLocaleString();
-  const nviDisputeCount = nviAggregations?.dispute.docCount.toLocaleString();
-
-  const nviCandidatesTotal = nviAggregations?.totalCount.docCount ?? 0;
-  const nviCandidatesCompleted = nviAggregations?.completed.docCount ?? 0;
-  const nviCompletedPercentage =
-    nviCandidatesTotal > 0 ? Math.floor((nviCandidatesCompleted / nviCandidatesTotal) * 100) : 100;
 
   return (
     <NavigationListAccordion
@@ -70,18 +63,25 @@ export const NviCandidatesNavigationAccordion = () => {
             completedPercentage={nviCompletedPercentage}
             completedCount={nviCandidatesCompleted}
             totalCount={nviCandidatesTotal}
-            isPending={nviAggregationsQuery.isPending}
+            isPending={nviReportsQuery.isPending}
           />
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
             <VerticalBox sx={{ my: '0.5rem', gap: '0.15rem' }}>
               <HorizontalBox sx={{ gap: '0.25rem' }}>
                 <HourglassEmptyIcon sx={{ fontSize: 'medium' }} />
                 <MediumTypography>
-                  {t('tasks.nvi.candidates_for_control')} (
-                  {nviAggregationsQuery.isPending ? (
+                  {t('tasks.nvi.candidates')} (
+                  {nviReportsQuery.isPending ? <StyledSkeleton sx={{ display: 'inline-flex' }} /> : (counts.new ?? 0)})
+                </MediumTypography>
+              </HorizontalBox>
+              <HorizontalBox sx={{ gap: '0.25rem' }}>
+                <HourglassEmptyIcon sx={{ fontSize: 'medium' }} />
+                <MediumTypography>
+                  {t('controlling')} (
+                  {nviReportsQuery.isPending ? (
                     <StyledSkeleton sx={{ display: 'inline-flex' }} />
                   ) : (
-                    (nviPendingCount ?? 0)
+                    (counts.pending ?? 0)
                   )}
                   )
                 </MediumTypography>
@@ -90,10 +90,10 @@ export const NviCandidatesNavigationAccordion = () => {
                 <CheckIcon sx={{ fontSize: 'medium' }} />
                 <MediumTypography>
                   {t('tasks.nvi.status.Approved')} (
-                  {nviAggregationsQuery.isPending ? (
+                  {nviReportsQuery.isPending ? (
                     <StyledSkeleton sx={{ display: 'inline-flex' }} />
                   ) : (
-                    (nviApprovedCount ?? 0)
+                    (counts.approved ?? 0)
                   )}
                   )
                 </MediumTypography>
@@ -102,10 +102,10 @@ export const NviCandidatesNavigationAccordion = () => {
                 <CloseIcon sx={{ fontSize: 'medium' }} />
                 <MediumTypography>
                   {t('tasks.nvi.status.Rejected')} (
-                  {nviAggregationsQuery.isPending ? (
+                  {nviReportsQuery.isPending ? (
                     <StyledSkeleton sx={{ display: 'inline-flex' }} />
                   ) : (
-                    (nviRejectedCount ?? 0)
+                    (counts.rejected ?? 0)
                   )}
                   )
                 </MediumTypography>
@@ -139,12 +139,12 @@ export const NviCandidatesNavigationAccordion = () => {
               isSelected={isOnNviDisputePage}
               to={{ pathname: UrlPathTemplate.TasksNviDisputes }}>
               {t('tasks.nvi.show_disputes')} (
-              {nviAggregationsQuery.isPending ? (
+              {nviReportsQuery.isPending ? (
                 <Box sx={{ width: '1.5rem' }}>
                   <StyledSkeleton width={24} sx={{ display: 'inline-block' }} />
                 </Box>
               ) : (
-                (nviDisputeCount ?? 0)
+                (counts.dispute ?? 0)
               )}
               )
             </SelectableButton>
