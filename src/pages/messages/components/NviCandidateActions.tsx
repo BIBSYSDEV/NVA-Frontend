@@ -22,7 +22,7 @@ import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { PreviousPathLocationState } from '../../../types/locationState.types';
-import { FinalizedApproval, NviCandidate, RejectedApproval } from '../../../types/nvi.types';
+import { FinalizedApproval, NviCandidate, NviPeriodStatusEnum, RejectedApproval } from '../../../types/nvi.types';
 import { RegistrationTab } from '../../../types/registration.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -148,7 +148,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     return dateA.getTime() - dateB.getTime();
   });
 
-  const isOpenPeriod = nviCandidate.period.status === 'OpenPeriod';
+  const isOpenPeriod = nviCandidate.period.status === NviPeriodStatusEnum.OpenPeriod;
 
   const canApproveCandidate = nviCandidate.allowedOperations.includes('approval/approve-candidate');
   const canRejectCandidate = nviCandidate.allowedOperations.includes('approval/reject-candidate');
