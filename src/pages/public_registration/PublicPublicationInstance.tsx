@@ -24,6 +24,7 @@ import { PagesMonograph, PagesRange } from '../../types/publication_types/pages.
 import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
 import { ResearchDataPublicationInstance } from '../../types/publication_types/researchDataRegistration.types';
 import { PublicPageInfoEntry } from './PublicPageInfoEntry';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const getPageInterval = (pages: PagesRange | null) => {
   if (!pages?.begin && !pages?.end) {
@@ -167,7 +168,9 @@ export const PublicPublicationInstanceSoftwareSourceCode = ({
           title={t('registration.resource_type.research_data.repository_url')}
           content={
             <Typography component="dd" gridColumn={2}>
-              <OpenInNewLink href={codeRepository}>{codeRepository}</OpenInNewLink>
+              <OpenInNewLink href={codeRepository} data-testid={dataTestId.registrationLandingPage.codebaseUrl}>
+                {codeRepository}
+              </OpenInNewLink>
             </Typography>
           }
         />
