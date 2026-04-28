@@ -110,6 +110,7 @@ export const dataTestId = {
     nvi: {
       publicationPointsExpandDescriptionButton: 'publication-points-expand-description-button',
       curatorPublicationPointsExpandDescriptionButton: 'curator-publication-points-expand-description-button',
+      viewContactInfoButton: 'view-contact-info-button',
     },
     nviPeriod: {
       nviPeriodDialog: 'nvi-period-dialog',
