@@ -316,7 +316,12 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
                 if (isFinalizedNote && canResetApproval && note.institutionId === user?.topOrgCristinId) {
                   deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
-                } else if (note.type === 'GeneralNote' && noteIdentifier && note.username === user?.nvaUsername) {
+                } else if (
+                  isOpenPeriod &&
+                  note.type === 'GeneralNote' &&
+                  noteIdentifier &&
+                  note.username === user?.nvaUsername
+                ) {
                   deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
                 }
 
