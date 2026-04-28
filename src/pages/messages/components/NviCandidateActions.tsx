@@ -22,7 +22,7 @@ import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { PreviousPathLocationState } from '../../../types/locationState.types';
-import { FinalizedApproval, NviCandidate, RejectedApproval } from '../../../types/nvi.types';
+import { FinalizedApproval, NviCandidate, NviPeriodStatusEnum, RejectedApproval } from '../../../types/nvi.types';
 import { RegistrationTab } from '../../../types/registration.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -148,10 +148,12 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     return dateA.getTime() - dateB.getTime();
   });
 
+  const isOpenPeriod = nviCandidate.period.status === NviPeriodStatusEnum.OpenPeriod;
+
   const canApproveCandidate = nviCandidate.allowedOperations.includes('approval/approve-candidate');
   const canRejectCandidate = nviCandidate.allowedOperations.includes('approval/reject-candidate');
-  const canResetApproval = nviCandidate.allowedOperations.includes('approval/reset-approval');
-  const canCreateNote = nviCandidate.allowedOperations.includes('note/create-note');
+  const canResetApproval = isOpenPeriod && nviCandidate.allowedOperations.includes('approval/reset-approval');
+  const canCreateNote = isOpenPeriod && nviCandidate.allowedOperations.includes('note/create-note');
 
   return (
     <>
@@ -199,93 +201,101 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
       <Divider sx={{ gridArea: 'divider1' }} />
 
-      <Box sx={{ gridArea: 'actions' }}>
-        {myApproval && myApproval.status !== 'Approved' && (
-          <>
-            {myApproval.status === 'Rejected' ? (
-              <Typography sx={{ mb: '1rem' }}>
-                {t('tasks.nvi.approve_rejected_nvi_candidate_description', {
-                  buttonText: t('tasks.nvi.approve_nvi_candidate'),
-                })}
-              </Typography>
-            ) : (
-              <Trans
-                t={t}
-                i18nKey="tasks.nvi.approve_nvi_candidate_description"
-                components={{
-                  p: <Typography sx={{ mb: '1rem' }} />,
-                  hyperlink: (
-                    <OpenInNewLink
-                      href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks"
-                      sx={{ fontStyle: 'italic' }}
-                    />
-                  ),
-                }}
-                values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
-              />
+      {isOpenPeriod && (
+        <>
+          <Box sx={{ gridArea: 'actions' }}>
+            {myApproval && myApproval.status !== 'Approved' && (
+              <>
+                {myApproval.status === 'Rejected' ? (
+                  <Typography sx={{ mb: '1rem' }}>
+                    {t('tasks.nvi.approve_rejected_nvi_candidate_description', {
+                      buttonText: t('tasks.nvi.approve_nvi_candidate'),
+                    })}
+                  </Typography>
+                ) : (
+                  <Trans
+                    t={t}
+                    i18nKey="tasks.nvi.approve_nvi_candidate_description"
+                    components={{
+                      p: <Typography sx={{ mb: '1rem' }} />,
+                      hyperlink: (
+                        <OpenInNewLink
+                          href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks"
+                          sx={{ fontStyle: 'italic' }}
+                        />
+                      ),
+                    }}
+                    values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
+                  />
+                )}
+
+                <Button
+                  data-testid={dataTestId.tasksPage.nvi.approveButton}
+                  color="secondary"
+                  variant="contained"
+                  fullWidth
+                  size="small"
+                  sx={{ mb: '1rem' }}
+                  loading={statusMutation.isPending && statusMutation.variables?.status === 'Approved'}
+                  disabled={!canApproveCandidate || isMutating}
+                  startIcon={<CheckIcon />}
+                  loadingPosition="end"
+                  onClick={() => statusMutation.mutate({ status: 'Approved' })}>
+                  {t('tasks.nvi.approve_nvi_candidate')}
+                </Button>
+              </>
             )}
 
-            <Button
-              data-testid={dataTestId.tasksPage.nvi.approveButton}
-              color="secondary"
-              variant="contained"
-              fullWidth
-              size="small"
-              sx={{ mb: '1rem' }}
-              loading={statusMutation.isPending && statusMutation.variables?.status === 'Approved'}
-              disabled={!canApproveCandidate || isMutating}
-              startIcon={<CheckIcon />}
-              loadingPosition="end"
-              onClick={() => statusMutation.mutate({ status: 'Approved' })}>
-              {t('tasks.nvi.approve_nvi_candidate')}
-            </Button>
-          </>
-        )}
+            {myApproval && myApproval.status !== 'Rejected' && (
+              <>
+                <Typography sx={{ mb: '1rem' }}>
+                  {t('tasks.nvi.reject_nvi_candidate_description', { buttonText: t('tasks.nvi.reject_nvi_candidate') })}
+                </Typography>
+                <Button
+                  data-testid={dataTestId.tasksPage.nvi.rejectButton}
+                  color="tertiary"
+                  variant="contained"
+                  fullWidth
+                  size="small"
+                  disabled={!canRejectCandidate || isMutating || hasSelectedRejectCandidate}
+                  startIcon={<ClearIcon />}
+                  onClick={() => setHasSelectedRejectCandidate(true)}>
+                  {t('tasks.nvi.reject_nvi_candidate')}
+                </Button>
 
-        {myApproval && myApproval.status !== 'Rejected' && (
-          <>
-            <Typography sx={{ mb: '1rem' }}>
-              {t('tasks.nvi.reject_nvi_candidate_description', { buttonText: t('tasks.nvi.reject_nvi_candidate') })}
-            </Typography>
-            <Button
-              data-testid={dataTestId.tasksPage.nvi.rejectButton}
-              color="tertiary"
-              variant="contained"
-              fullWidth
-              size="small"
-              disabled={!canRejectCandidate || isMutating || hasSelectedRejectCandidate}
-              startIcon={<ClearIcon />}
-              onClick={() => setHasSelectedRejectCandidate(true)}>
-              {t('tasks.nvi.reject_nvi_candidate')}
-            </Button>
+                <NviCandidateRejectionDialog
+                  open={hasSelectedRejectCandidate}
+                  onCancel={() => setHasSelectedRejectCandidate(false)}
+                  onAccept={async (reason) => {
+                    await statusMutation.mutateAsync({ status: 'Rejected', reason });
+                    setHasSelectedRejectCandidate(false);
+                  }}
+                  isLoading={statusMutation.isPending}
+                />
+              </>
+            )}
+          </Box>
 
-            <NviCandidateRejectionDialog
-              open={hasSelectedRejectCandidate}
-              onCancel={() => setHasSelectedRejectCandidate(false)}
-              onAccept={async (reason) => {
-                await statusMutation.mutateAsync({ status: 'Rejected', reason });
-                setHasSelectedRejectCandidate(false);
-              }}
-              isLoading={statusMutation.isPending}
-            />
-          </>
-        )}
-      </Box>
+          <Divider sx={{ gridArea: 'divider2' }} />
+        </>
+      )}
 
-      <Divider sx={{ gridArea: 'divider2' }} />
-
-      {canCreateNote && (
+      {(canCreateNote || sortedNotes.length > 0) && (
         <Box sx={{ gridArea: 'comment' }}>
           <Typography variant="h3" gutterBottom>
             {t('tasks.nvi.note')}
           </Typography>
-          <Typography sx={{ mb: '1rem' }}>{t('tasks.nvi.message_description')}</Typography>
-          <MessageForm
-            hideRequiredAsterisk
-            confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
-            fieldLabel={t('tasks.nvi.note')}
-            buttonTitle={t('tasks.nvi.save_note')}
-          />
+          {canCreateNote && (
+            <>
+              <Typography sx={{ mb: '1rem' }}>{t('tasks.nvi.message_description')}</Typography>
+              <MessageForm
+                hideRequiredAsterisk
+                confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
+                fieldLabel={t('tasks.nvi.note')}
+                buttonTitle={t('tasks.nvi.save_note')}
+              />
+            </>
+          )}
 
           {sortedNotes.length > 0 && (
             <Box
@@ -306,7 +316,12 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
                 if (isFinalizedNote && canResetApproval && note.institutionId === user?.topOrgCristinId) {
                   deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
-                } else if (note.type === 'GeneralNote' && noteIdentifier && note.username === user?.nvaUsername) {
+                } else if (
+                  isOpenPeriod &&
+                  note.type === 'GeneralNote' &&
+                  noteIdentifier &&
+                  note.username === user?.nvaUsername
+                ) {
                   deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
                 }
 
