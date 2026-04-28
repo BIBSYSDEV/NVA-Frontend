@@ -168,7 +168,7 @@ export const PublicPublicationInstanceSoftwareSourceCode = ({
           title={t('registration.resource_type.research_data.repository_url')}
           content={
             <Typography component="dd" gridColumn={2}>
-              <OpenInNewLink href={codeRepository} data-testid={dataTestId.registrationLandingPage.codebaseUrl}>
+              <OpenInNewLink href={codeRepository} data-testid={dataTestId.registrationLandingPage.codeRepositoryLink}>
                 {codeRepository}
               </OpenInNewLink>
             </Typography>
