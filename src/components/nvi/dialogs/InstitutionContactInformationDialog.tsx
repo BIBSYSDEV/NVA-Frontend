@@ -4,7 +4,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { BaseDialog } from '../../_molecules/BaseDialog';
 import { VerticalBox } from '../../styled/Wrappers';
 import { useInstitutionUsersByRole } from '../hooks/useInstitutionUsersByRole';
-import { RoleContactInformation } from './RoleContactInformation';
+import { RoleContactInformation } from './role-contact-information/RoleContactInformation';
 
 interface InstitutionContactInformationDialogProps {
   isOpen: boolean;
@@ -20,7 +20,7 @@ export const InstitutionContactInformationDialog = ({
   isFetchingCustomers = false,
 }: InstitutionContactInformationDialogProps) => {
   const { t } = useTranslation();
-  const { editor, institutionAdmin, nviCurators, isLoading: isFetchingUsers } = useInstitutionUsersByRole(id);
+  const { editor, institutionAdmin, nviCurators, isLoading: isFetchingUsers, isError } = useInstitutionUsersByRole(id);
 
   return (
     <BaseDialog
@@ -31,6 +31,8 @@ export const InstitutionContactInformationDialog = ({
       dataTestId={dataTestId.institutionContactInformationDialog}>
       {!id && !isFetchingCustomers ? (
         <Typography>{t('no_contact_information_for_institution')}</Typography>
+      ) : isError ? (
+        <Typography>{t('feedback.error.get_users_for_institution')}</Typography>
       ) : (
         <VerticalBox sx={{ gap: '1rem' }}>
           {editor && <RoleContactInformation roleName={t('my_page.roles.editor')} users={[editor]} />}
