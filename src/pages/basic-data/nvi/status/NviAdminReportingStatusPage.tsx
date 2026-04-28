@@ -35,14 +35,8 @@ export const NviAdminReportingStatusPage = () => {
   const { year } = useNviCandidatesParams();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
 
-  const [isContactInfoDialogOpen, setIsContactInfoDialogOpen] = useState(false);
-  const [institutionToDisplayId, setInstitutionToDisplayId] = useState('');
+  const [selectedInstitutionId, setSelectedInstitutionId] = useState<string | undefined>();
   const { nvaCustomers, isFetchingCustomerMap } = useFetchCustomerMap();
-
-  const onClickContactInformationButton = (institutionId: string) => {
-    setIsContactInfoDialogOpen(true);
-    setInstitutionToDisplayId(institutionId);
-  };
 
   return (
     <NviPageLayout
@@ -84,17 +78,17 @@ export const NviAdminReportingStatusPage = () => {
                   <NviAdminReportingStatusRow
                     report={report}
                     key={report.id}
-                    onClickContactInformation={onClickContactInformationButton}
+                    onClickContactInformation={setSelectedInstitutionId}
                   />
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
           <InstitutionContactInformationDialog
-            isOpen={isContactInfoDialogOpen}
-            onClose={() => setIsContactInfoDialogOpen(false)}
+            isOpen={selectedInstitutionId !== undefined}
+            onClose={() => setSelectedInstitutionId(undefined)}
             isFetchingCustomers={isFetchingCustomerMap}
-            id={nvaCustomers?.get(institutionToDisplayId)?.id}
+            id={nvaCustomers?.get(selectedInstitutionId ?? '')?.id}
           />
         </VerticalBox>
       )}

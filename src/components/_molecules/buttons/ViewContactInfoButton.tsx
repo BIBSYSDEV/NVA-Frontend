@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-export const ViewContactInfoButton = ({ ...props }: ButtonProps) => {
+export const ViewContactInfoButton = (props: ButtonProps) => {
   const { t } = useTranslation();
 
   return (

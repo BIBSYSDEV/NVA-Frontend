@@ -11,5 +11,5 @@ export const useInstitutionUsersByRole = (id?: string) => {
   );
   const nviCurators = users?.filter((user) => user.roles.some((role) => role.rolename === RoleName.NviCurator));
 
-  return { editor, institutionAdmin, nviCurators, isLoading: usersQuery.isLoading };
+  return { editor, institutionAdmin, nviCurators, isLoading: usersQuery.isLoading, isError: usersQuery.isError };
 };

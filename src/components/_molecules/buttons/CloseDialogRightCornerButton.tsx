@@ -1,12 +1,12 @@
-import { Button, ButtonBaseProps } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
+import { Button, ButtonProps } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
-export const CloseDialogRightCornerButton = ({ onClick, sx }: ButtonBaseProps) => {
+export const CloseDialogRightCornerButton = ({ onClick, sx }: ButtonProps) => {
   const { t } = useTranslation();
 
   return (
-    <Button aria-label={t('common.close')} onClick={onClick} endIcon={<CloseIcon />} sx={sx}>
+    <Button onClick={onClick} endIcon={<CloseIcon />} sx={sx}>
       {t('common.close')}
     </Button>
   );
