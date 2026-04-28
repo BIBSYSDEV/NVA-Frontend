@@ -148,12 +148,12 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     return dateA.getTime() - dateB.getTime();
   });
 
-  const isPeriodOpen = nviCandidate.period.status === 'OpenPeriod';
+  const isOpenPeriod = nviCandidate.period.status === 'OpenPeriod';
 
   const canApproveCandidate = nviCandidate.allowedOperations.includes('approval/approve-candidate');
   const canRejectCandidate = nviCandidate.allowedOperations.includes('approval/reject-candidate');
-  const canResetApproval = isPeriodOpen && nviCandidate.allowedOperations.includes('approval/reset-approval');
-  const canCreateNote = isPeriodOpen && nviCandidate.allowedOperations.includes('note/create-note');
+  const canResetApproval = isOpenPeriod && nviCandidate.allowedOperations.includes('approval/reset-approval');
+  const canCreateNote = isOpenPeriod && nviCandidate.allowedOperations.includes('note/create-note');
 
   return (
     <>
@@ -201,7 +201,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
       <Divider sx={{ gridArea: 'divider1' }} />
 
-      {isPeriodOpen && (
+      {isOpenPeriod && (
         <>
           <Box sx={{ gridArea: 'actions' }}>
             {myApproval && myApproval.status !== 'Approved' && (
