@@ -1,7 +1,22 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
+import {
+  CenteredContactInformationCell,
+  CenteredPercentageControlledCell,
+} from '../../../../components/nvi/table/nvi-table-styles';
 import { NviAdminTableSortSelector } from '../../../../components/nvi/table/NviAdminTableSortSelector';
 import { NviAdminReportingStatusRow } from '../../../../components/nvi/table/rows/NviAdminReportingStatusRow';
 import { NviAdminReportingStatusTexts } from '../../../../components/nvi/top-texts/NviAdminReportingStatusTexts';
@@ -43,7 +58,13 @@ export const NviAdminReportingStatusPage = () => {
                   <CenteredTableCell>{t('rejected')}</CenteredTableCell>
                   <CenteredTableCell>{t('disputes')}</CenteredTableCell>
                   <CenteredTableCell>{t('common.total_number')}</CenteredTableCell>
-                  <CenteredTableCell>{t('percentage_controlled')}</CenteredTableCell>
+                  <CenteredPercentageControlledCell>{t('percentage_controlled')}</CenteredPercentageControlledCell>
+                  <CenteredContactInformationCell>
+                    {/* INFO: Empty header cell to match contact info button column */}
+                    <Box component="span" sx={visuallyHidden}>
+                      {t('view_contact_info_short')}
+                    </Box>
+                  </CenteredContactInformationCell>
                 </TableRow>
               </TableHead>
               <TableBody>
