@@ -1,8 +1,26 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useFetchCustomerMap } from '../../../../api/hooks/useFetchCustomerMap';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
 import { useNviPeriodReportNumbers } from '../../../../components/nvi/hooks/useNviPeriodReportNumbers';
+import { InstitutionContactInformationDialog } from '../../../../components/nvi/InstitutionContactInformationDialog';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
+import {
+  CenteredContactInformationCell,
+  CenteredPercentageControlledCell,
+} from '../../../../components/nvi/table/nvi-table-styles';
 import { NviAdminTableSortSelector } from '../../../../components/nvi/table/NviAdminTableSortSelector';
 import { NviAdminReportingStatusRow } from '../../../../components/nvi/table/rows/NviAdminReportingStatusRow';
 import { NviAdminReportingStatusTexts } from '../../../../components/nvi/top-texts/NviAdminReportingStatusTexts';
@@ -15,6 +33,8 @@ import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidates
 
 export const NviAdminReportingStatusPage = () => {
   const { t } = useTranslation();
+  const [isContactInfoDialogOpen, setIsContactInfoDialogOpen] = useState(false);
+  const [institutionToDisplayId, setInstitutionToDisplayId] = useState('');
   const { year } = useNviCandidatesParams();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
   const {
@@ -23,6 +43,12 @@ export const NviAdminReportingStatusPage = () => {
     isPending: periodReportIsPending,
     isError: periodReportIsError,
   } = useNviPeriodReportNumbers(year);
+  const { nvaCustomers, isFetchingCustomerMap } = useFetchCustomerMap();
+
+  const onClickContactInformationButton = (institutionId: string) => {
+    setIsContactInfoDialogOpen(true);
+    setInstitutionToDisplayId(institutionId);
+  };
 
   return (
     <NviPageLayout
@@ -58,16 +84,32 @@ export const NviAdminReportingStatusPage = () => {
                   <CenteredTableCell>{t('rejected')}</CenteredTableCell>
                   <CenteredTableCell>{t('disputes')}</CenteredTableCell>
                   <CenteredTableCell>{t('common.total_number')}</CenteredTableCell>
-                  <CenteredTableCell>{t('percentage_controlled')}</CenteredTableCell>
+                  <CenteredPercentageControlledCell>{t('percentage_controlled')}</CenteredPercentageControlledCell>
+                  <CenteredContactInformationCell>
+                    {/* This cell is hidden to make the number of cells in the table header the same as in the table row, where we display a button for displaying contact information */}
+                    <Box component="span" sx={visuallyHidden}>
+                      {t('view_contact_info_short')}
+                    </Box>
+                  </CenteredContactInformationCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {sortedAndFilteredData.map((report: InstitutionReport) => (
-                  <NviAdminReportingStatusRow report={report} key={report.id} />
+                  <NviAdminReportingStatusRow
+                    report={report}
+                    key={report.id}
+                    onClickContactInformation={onClickContactInformationButton}
+                  />
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
+          <InstitutionContactInformationDialog
+            isOpen={isContactInfoDialogOpen}
+            onClose={() => setIsContactInfoDialogOpen(false)}
+            isFetchingCustomers={isFetchingCustomerMap}
+            institution={nvaCustomers.get(institutionToDisplayId)}
+          />
         </VerticalBox>
       )}
     </NviPageLayout>

@@ -4,6 +4,7 @@ import { InstitutionReport } from '../../../../types/nvi.types';
 import { PercentageWithIcon } from '../../../_molecules/PercentageWithIcon';
 import { HorizontalBox } from '../../../styled/Wrappers';
 import { CenteredTableCell } from '../../../tables/table-styles';
+import { CenteredPercentageControlledCell } from '../nvi-table-styles';
 import {
   getNviApprovedByEverybody,
   getNviApprovedCount,
@@ -30,11 +31,11 @@ export const NviAdminPublicationPointsRow = ({ report }: NviAdminPublicationPoin
       <CenteredTableCell>{getNviCountOthersMustApprove(report)}</CenteredTableCell>
       <CenteredTableCell>{getNviApprovedByEverybody(report)}</CenteredTableCell>
       <CenteredTableCell>{getNviValidPoints(report)}</CenteredTableCell>
-      <TableCell>
+      <CenteredPercentageControlledCell>
         <HorizontalBox sx={{ justifyContent: 'center' }}>
           <PercentageWithIcon displayPercentage={Math.floor(percentageControlled * 100)} alternativeIfZero={'-'} />
         </HorizontalBox>
-      </TableCell>
+      </CenteredPercentageControlledCell>
     </TableRow>
   );
 };
