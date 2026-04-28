@@ -1818,8 +1818,6 @@
         "external_link_helper_text_error": "Ugyldig URL. Pass på at lenken du oppgir er fullstendig. Eksempel: https://sikt.no",
         "external_links": "Eksterne lenker",
         "geographic_description": "Geografisk område",
-        "repository_url": "Lenke til kodebase",
-        "version": "Versjon",
         "no_dmp": "Ingen datahåndteringsplan.",
         "no_external_links": "Ingen eksterne lenker.",
         "no_publications_using_dataset": "Ingen publikasjoner bruker datasettet.",
@@ -1829,9 +1827,11 @@
         "related_publications": "Relaterte publikasjoner",
         "remove_relation": "Fjern relasjon",
         "remove_relation_confirm_text": "Ønsker du å fjerne denne relasjonen?",
+        "repository_url": "Lenke til kodebase",
         "search_for_related_dmps": "Søk etter relaterte datahåndteringsplaner",
         "search_for_related_registrations": "Søk etter resultat med bruk av tittel eller DOI",
-        "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA"
+        "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA",
+        "version": "Versjon"
       },
       "resource_type": "Kategori",
       "same_title": "samme tittel",

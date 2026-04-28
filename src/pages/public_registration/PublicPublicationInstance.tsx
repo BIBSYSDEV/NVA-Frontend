@@ -1,5 +1,7 @@
+import { Typography } from '@mui/material';
 import { hyphenate } from 'isbn3';
 import { useTranslation } from 'react-i18next';
+import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { ArtisticType } from '../../types/publicationFieldNames';
 import {
   ArchitectureType,
@@ -20,7 +22,9 @@ import {
 import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import { PagesMonograph, PagesRange } from '../../types/publication_types/pages.types';
 import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
+import { ResearchDataPublicationInstance } from '../../types/publication_types/researchDataRegistration.types';
 import { PublicPageInfoEntry } from './PublicPageInfoEntry';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const getPageInterval = (pages: PagesRange | null) => {
   if (!pages?.begin && !pages?.end) {
@@ -141,6 +145,35 @@ export const PublicPublicationInstanceArtistic = ({
       {typeString && <PublicPageInfoEntry title={t('registration.resource_type.type_work')} content={typeString} />}
       {description && (
         <PublicPageInfoEntry title={t('registration.resource_type.more_info_about_work')} content={description} />
+      )}
+    </>
+  );
+};
+
+export const PublicPublicationInstanceSoftwareSourceCode = ({
+  publicationInstance,
+}: {
+  publicationInstance: ResearchDataPublicationInstance;
+}) => {
+  const { t } = useTranslation();
+  const { codeRepository, softwareVersion } = publicationInstance;
+
+  return (
+    <>
+      {softwareVersion && (
+        <PublicPageInfoEntry title={t('registration.resource_type.research_data.version')} content={softwareVersion} />
+      )}
+      {codeRepository && (
+        <PublicPageInfoEntry
+          title={t('registration.resource_type.research_data.repository_url')}
+          content={
+            <Typography component="dd" gridColumn={2}>
+              <OpenInNewLink href={codeRepository} data-testid={dataTestId.registrationLandingPage.codeRepositoryLink}>
+                {codeRepository}
+              </OpenInNewLink>
+            </Typography>
+          }
+        />
       )}
     </>
   );

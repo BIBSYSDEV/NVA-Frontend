@@ -362,6 +362,7 @@ export const dataTestId = {
     abstractAccordion: 'abstract-accordion',
     addLinkOrFilesButton: 'add-link-or-files-button',
     authorLink: (id: string) => `presentation-author-link-${id}`,
+    codeRepositoryLink: 'code-repository-link',
     contributors: 'public-registration-contributors',
     detailsTab: {
       detailsTab: 'details-tab',
