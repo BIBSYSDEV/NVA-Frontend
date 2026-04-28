@@ -13,8 +13,8 @@ import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchCustomerMap } from '../../../../api/hooks/useFetchCustomerMap';
+import { InstitutionContactInformationDialog } from '../../../../components/nvi/dialogs/InstitutionContactInformationDialog';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
-import { InstitutionContactInformationDialog } from '../../../../components/nvi/InstitutionContactInformationDialog';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import {
   CenteredContactInformationCell,
@@ -94,7 +94,7 @@ export const NviAdminReportingStatusPage = () => {
             isOpen={isContactInfoDialogOpen}
             onClose={() => setIsContactInfoDialogOpen(false)}
             isFetchingCustomers={isFetchingCustomerMap}
-            institution={nvaCustomers.get(institutionToDisplayId)}
+            id={nvaCustomers?.get(institutionToDisplayId)?.id}
           />
         </VerticalBox>
       )}
