@@ -14,7 +14,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchCustomerMap } from '../../../../api/hooks/useFetchCustomerMap';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
-import { useNviPeriodReportNumbers } from '../../../../components/nvi/hooks/useNviPeriodReportNumbers';
 import { InstitutionContactInformationDialog } from '../../../../components/nvi/InstitutionContactInformationDialog';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import {
@@ -33,16 +32,11 @@ import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidates
 
 export const NviAdminReportingStatusPage = () => {
   const { t } = useTranslation();
-  const [isContactInfoDialogOpen, setIsContactInfoDialogOpen] = useState(false);
-  const [institutionToDisplayId, setInstitutionToDisplayId] = useState('');
   const { year } = useNviCandidatesParams();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
-  const {
-    numCandidatesForReporting,
-    percentageCandidatesComparedToPreviousYear,
-    isPending: periodReportIsPending,
-    isError: periodReportIsError,
-  } = useNviPeriodReportNumbers(year);
+
+  const [isContactInfoDialogOpen, setIsContactInfoDialogOpen] = useState(false);
+  const [institutionToDisplayId, setInstitutionToDisplayId] = useState('');
   const { nvaCustomers, isFetchingCustomerMap } = useFetchCustomerMap();
 
   const onClickContactInformationButton = (institutionId: string) => {
@@ -53,15 +47,7 @@ export const NviAdminReportingStatusPage = () => {
   return (
     <NviPageLayout
       headline={t('basic_data.nvi.reporting_status')}
-      topView={
-        <NviAdminReportingStatusTexts
-          previousYear={year - 1}
-          isPending={periodReportIsPending}
-          isError={periodReportIsError}
-          totalResults={numCandidatesForReporting}
-          percentage={percentageCandidatesComparedToPreviousYear}
-        />
-      }
+      topView={<NviAdminReportingStatusTexts />}
       yearSelector
       sectorSelector
       institutionSearch>
