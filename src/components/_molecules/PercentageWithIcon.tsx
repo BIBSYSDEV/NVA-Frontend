@@ -25,9 +25,9 @@ export const PercentageWithIcon = ({
   return (
     <CenteredGridBox sx={{ gridTemplateColumns: '1rem 3rem', width: '4rem' }}>
       {!displayEmpty && !hideWarningIcon && displayPercentage < warningThresholdMinimum && displayPercentage > 0 ? (
-        <WarningIcon fontSize="small" color="warning" sx={{ gridColumn: '1' }} />
+        <WarningIcon aria-hidden="true" fontSize="small" color="warning" sx={{ gridColumn: '1' }} />
       ) : !displayEmpty && displayPercentage >= successThresholdMinimum ? (
-        <CheckCircleIcon fontSize="small" color="success" sx={{ gridColumn: '1' }} />
+        <CheckCircleIcon aria-hidden="true" fontSize="small" color="success" sx={{ gridColumn: '1' }} />
       ) : null}
       <HorizontalBox sx={{ justifySelf: 'start', pl: '0.5rem', gridColumn: '2' }}>
         {displayEmpty ? '-' : displayPercentage > 0 ? `${displayPercentage}%` : alternativeIfZero || '0%'}
