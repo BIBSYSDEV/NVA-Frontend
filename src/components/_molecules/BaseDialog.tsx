@@ -9,7 +9,7 @@ interface BaseDialogProps extends Omit<DialogProps, 'onClose'> {
   dialogTitle?: string;
   boxMaxWidth?: number;
   dialogActions?: ReactNode;
-  isFetchingData?: boolean;
+  isLoading?: boolean;
 }
 
 export const BaseDialog = ({
@@ -20,7 +20,7 @@ export const BaseDialog = ({
   boxMaxWidth = 450,
   dataTestId,
   dialogActions,
-  isFetchingData,
+  isLoading,
   ...rest
 }: BaseDialogProps) => {
   return (
@@ -34,10 +34,16 @@ export const BaseDialog = ({
       {(dialogTitle || onClose) && (
         <DialogTitle sx={{ pr: 14, overflowWrap: 'anywhere' }}>
           {dialogTitle}
-          {onClose && <CloseTextAndIconButton onClick={onClose} sx={{ position: 'absolute', top: 14, right: 8 }} />}
+          {onClose && (
+            <CloseTextAndIconButton
+              data-testid={`${dataTestId}-close-button`}
+              onClick={onClose}
+              sx={{ position: 'absolute', top: 14, right: 8 }}
+            />
+          )}
         </DialogTitle>
       )}
-      {children && <DialogContent>{!isFetchingData ? children : <PageSpinner />}</DialogContent>}
+      {(children || isLoading) && <DialogContent>{!isLoading ? children : <PageSpinner />}</DialogContent>}
       {dialogActions && <DialogActions>{dialogActions}</DialogActions>}
     </Dialog>
   );
