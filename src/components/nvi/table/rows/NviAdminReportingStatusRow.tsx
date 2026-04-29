@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { ViewContactInfoButton } from '../../../_atoms/buttons/ViewContactInfoButton';
 import { PercentageWithIcon } from '../../../_molecules/PercentageWithIcon';
-import { HorizontalBox } from '../../../styled/Wrappers';
 import { CenteredTableCell } from '../../../tables/table-styles';
+import { HorizontalBox } from '../../../styled/Wrappers';
 import { CenteredContactInformationCell, CenteredPercentageControlledCell } from '../nvi-table-styles';
 
 import {
@@ -26,6 +26,7 @@ export const NviAdminReportingStatusRow = ({ report, onClickContactInformation }
   const { t } = useTranslation();
   const { id, institutionSummary } = report;
   const { byLocalApprovalStatus, totals } = institutionSummary;
+
   const percentageControlled = getPercentageControlled(report);
 
   return (

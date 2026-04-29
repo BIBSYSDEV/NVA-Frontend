@@ -9,8 +9,8 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
+import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { InstitutionContactInformationDialog } from '../../../../components/nvi/dialogs/InstitutionContactInformationDialog';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
