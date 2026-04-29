@@ -107,10 +107,10 @@ export const dataTestId = {
       sectorField: 'sector-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
+    viewContactInfoButton: 'view-contact-information-button',
     nvi: {
       publicationPointsExpandDescriptionButton: 'publication-points-expand-description-button',
       curatorPublicationPointsExpandDescriptionButton: 'curator-publication-points-expand-description-button',
-      viewContactInfoButton: 'view-contact-info-button',
     },
     nviPeriod: {
       nviPeriodDialog: 'nvi-period-dialog',
@@ -370,7 +370,6 @@ export const dataTestId = {
       emailLink: (id: string) => `email-link-${id}`,
       infoLink: 'info-link',
       resultContactModal: 'result-contact-modal',
-      viewContactInformationButton: 'view-contact-information-button',
     },
     dmpAccordion: 'dmp-accordion',
     doiLink: 'doi-link',
