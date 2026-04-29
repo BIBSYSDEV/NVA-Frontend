@@ -1,9 +1,11 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { InstitutionReport } from '../../../../types/nvi.types';
+import { ViewContactInfoButton } from '../../../_atoms/buttons/ViewContactInfoButton';
 import { PercentageWithIcon } from '../../../_molecules/PercentageWithIcon';
 import { HorizontalBox } from '../../../styled/Wrappers';
 import { CenteredTableCell } from '../../../tables/table-styles';
+import { CenteredContactInformationCell, CenteredPercentageControlledCell } from '../nvi-table-styles';
 
 import {
   getNviApprovedCount,
@@ -35,11 +37,14 @@ export const NviAdminReportingStatusRow = ({ report }: NviAdminReportingStatusRo
       <CenteredTableCell>{getNviRejectedCount(report)}</CenteredTableCell>
       <CenteredTableCell>{totals.disputedCount}</CenteredTableCell>
       <CenteredTableCell>{getNviTotalCount(report)}</CenteredTableCell>
-      <CenteredTableCell>
+      <CenteredPercentageControlledCell>
         <HorizontalBox sx={{ justifyContent: 'center' }}>
           <PercentageWithIcon displayPercentage={Math.floor(percentageControlled * 100)} alternativeIfZero={'-'} />
         </HorizontalBox>
-      </CenteredTableCell>
+      </CenteredPercentageControlledCell>
+      <CenteredContactInformationCell>
+        <ViewContactInfoButton onClick={() => {}} />
+      </CenteredContactInformationCell>
     </TableRow>
   );
 };

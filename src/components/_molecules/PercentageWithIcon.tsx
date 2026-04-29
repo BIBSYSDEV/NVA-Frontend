@@ -23,7 +23,7 @@ export const PercentageWithIcon = ({
   hideWarningIcon = false,
 }: PercentageWithIconProps) => {
   return (
-    <CenteredGridBox sx={{ gridTemplateColumns: '1rem 1rem', width: '4rem' }}>
+    <CenteredGridBox sx={{ gridTemplateColumns: '1rem 3rem', width: '4rem' }}>
       {!displayEmpty && !hideWarningIcon && displayPercentage < warningThresholdMinimum && displayPercentage > 0 ? (
         <WarningIcon fontSize="small" color="warning" sx={{ gridColumn: '1' }} />
       ) : !displayEmpty && displayPercentage >= successThresholdMinimum ? (
