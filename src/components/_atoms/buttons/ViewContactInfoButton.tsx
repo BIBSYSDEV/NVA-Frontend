@@ -9,7 +9,6 @@ export const ViewContactInfoButton = (props: ButtonProps) => {
     <Button
       color="tertiary"
       variant="contained"
-      type="button"
       data-testid={dataTestId.basicData.nvi.viewContactInfoButton}
       {...props}>
       {t('view_contact_info_short')}
