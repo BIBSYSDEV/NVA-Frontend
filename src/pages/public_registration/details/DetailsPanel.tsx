@@ -1,21 +1,11 @@
 import CloseIcon from '@mui/icons-material/Close';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  IconButton,
-  styled,
-  Typography,
-} from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, Divider, IconButton, styled, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useQueries } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
+import { ViewContactInfoButton } from '../../../components/_atoms/buttons/ViewContactInfoButton';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { ConfirmedAffiliation, Contributor, ContributorRole } from '../../../types/contributor.types';
 import { Organization } from '../../../types/organization.types';
@@ -65,15 +55,7 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
       </Typography>
       <Typography variant="h3">{t('point_of_contact')}</Typography>
       <Typography>{t('point_of_contact_description')}</Typography>
-      <Button
-        data-testid={dataTestId.registrationLandingPage.detailsTab.viewContactInformationButton}
-        variant="contained"
-        color="tertiary"
-        sx={{ alignSelf: { sm: 'start', md: 'center' } }}
-        startIcon={<MailOutlineIcon />}
-        onClick={() => setOpenModal(true)}>
-        {t('view_contact_info')}
-      </Button>
+      <ViewContactInfoButton sx={{ alignSelf: { sm: 'start', md: 'center' } }} onClick={() => setOpenModal(true)} />
 
       <Dialog
         data-testid={dataTestId.registrationLandingPage.detailsTab.resultContactModal}
