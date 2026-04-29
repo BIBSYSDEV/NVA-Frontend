@@ -19,9 +19,10 @@ import {
 
 interface NviAdminReportingStatusRowProps {
   report: InstitutionReport;
+  onClickContactInformation: (institutionId: string) => void;
 }
 
-export const NviAdminReportingStatusRow = ({ report }: NviAdminReportingStatusRowProps) => {
+export const NviAdminReportingStatusRow = ({ report, onClickContactInformation }: NviAdminReportingStatusRowProps) => {
   const { t } = useTranslation();
   const { id, institutionSummary } = report;
   const { byLocalApprovalStatus, totals } = institutionSummary;
@@ -43,7 +44,7 @@ export const NviAdminReportingStatusRow = ({ report }: NviAdminReportingStatusRo
         </HorizontalBox>
       </CenteredPercentageControlledCell>
       <CenteredContactInformationCell>
-        <ViewContactInfoButton onClick={() => {}} />
+        <ViewContactInfoButton onClick={() => onClickContactInformation(report.institution.id)} />
       </CenteredContactInformationCell>
     </TableRow>
   );
