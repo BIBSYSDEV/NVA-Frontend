@@ -67,7 +67,7 @@ export const NviAdminReportingStatusPage = () => {
                   <CenteredContactInformationCell>
                     {/* INFO: Empty header cell to match contact info button column */}
                     <Box component="span" sx={visuallyHidden}>
-                      {t('view_contact_info_short')}
+                      {t('view_contact_info')}
                     </Box>
                   </CenteredContactInformationCell>
                 </TableRow>

@@ -6,5 +6,5 @@ export const CenteredPercentageControlledCell = styled(CenteredTableCell)({
 });
 
 export const CenteredContactInformationCell = styled(CenteredTableCell)({
-  minWidth: '10rem',
+  minWidth: '13rem',
 });
