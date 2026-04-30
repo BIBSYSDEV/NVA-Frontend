@@ -1,5 +1,5 @@
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import { CircularProgress, Link } from '@mui/material';
+import { CircularProgress, Link, SxProps, Theme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useExportNviAuthorSharesMutation } from '../../../api/hooks/useExportNviAuthorSharesMutation';
@@ -12,9 +12,11 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 interface ExportNviStatusLinkProps {
   acronym?: string;
   exportAllInstitutions?: boolean;
+  text?: string;
+  sx?: SxProps<Theme>;
 }
 
-export const ExportNviStatusLink = ({ acronym, exportAllInstitutions }: ExportNviStatusLinkProps) => {
+export const ExportNviStatusLink = ({ acronym, exportAllInstitutions, text, sx = {} }: ExportNviStatusLinkProps) => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const dispatch = useDispatch();
@@ -68,9 +70,11 @@ export const ExportNviStatusLink = ({ acronym, exportAllInstitutions }: ExportNv
         display: 'inline-flex',
         alignItems: 'center',
         cursor: isPending ? 'default' : 'pointer',
+        gap: '0.25rem',
+        ...sx,
       }}>
-      {isPending ? <CircularProgress size={15} /> : <FileDownloadOutlinedIcon fontSize="small" />}
-      {t('export_dataset_for_nvi_report')}
+      {isPending ? <CircularProgress size={15} sx={{ mr: '0.3rem' }} /> : <FileDownloadOutlinedIcon fontSize="small" />}
+      {text ? text : t('export_dataset_for_nvi_report')}
     </Link>
   );
 };

@@ -542,8 +542,8 @@
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
     }
   },
-  "export_dataset_for_nvi_report": "Eksporter datagrunnlag for NVI-rapport",
-  "export_dataset_for_nvi_report_description": "<p>Filen inneholder NVI-kandidater som er godkjent eller fortsatt under kontroll. </p><p>Kandidater som er avvist av en eller flere institusjoner er ikke med i oversikten.</p>",
+  "export_dataset_for_nvi_report": "Eksporter rapporterte publiseringspoeng",
+  "export_dataset_for_nvi_report_description": "<p>Filen inneholder NVI-kandidater som er godkjent og vil bli, eller er, rapportert når perioden er lukket.</p><p>Filen vil ikke endres etter at perioden er lukket.</p><p>Om du kun vil ha statusfilen så ligger de tilgjengelig på \"Vis rapporteringsstatus\".</p>",
   "export_nvi_status_button_tooltip_text": "Knapp for nedlasting av forfatterandel er flyttet til side for publiseringspoeng. Denne knappen er midlertidig deaktivert — nedlasting av tall fra tabellen kommer snart.",
   "feedback": {
     "error": {
@@ -2089,5 +2089,7 @@
   "nvi_admin_publication_points_numbers": "<p><b>{{approvals}} resultat</b> er godkjent av alle, og de gir <b>{{publication_points}} publiseringspoeng.</b><link></p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "nvi_admin_reporting_status_numbers": "<p><b>{{num_results}} resultat</b> er kandidater for rapportering. Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{previous_year}}.</p>"
+  "nvi_admin_reporting_status_numbers": "<p><b>{{num_results}} resultat</b> er kandidater for rapportering. Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{previous_year}}.</p>",
+  "export_data_for_nvi_control": "Eksporter datagrunnlag for NVI-kontroll",
+  "export_data_for_nvi_control_description": "<p>Denne filen viser forfatterandeler som krever endring for å bli rapportert. Det vanligste manglende for å kunne bli rapportert er at forfatter må identifiseres (knyttes til en forfatterprofil i NVA).</p><p>Filen inneholder alle NVI-kandidater, både de som er godkjent, avvist og de som er under kontroll. Om du kun vil ha godkjente / rapporterte så ligger de tilgjengelig på \"Vis status for publiseringspoeng\".</p>"
 }

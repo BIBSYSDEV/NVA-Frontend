@@ -43,7 +43,9 @@ export const NviAdminPublicationPointsTexts = () => {
               }}
             />
             <HelperTextModal modalTitle={t('export_dataset_for_nvi_report')}>
-              <Trans i18nKey="export_dataset_for_nvi_report_description" components={{ p: <Typography /> }} />
+              <VerticalBox sx={{ gap: '1rem' }}>
+                <Trans i18nKey="export_dataset_for_nvi_report_description" components={{ p: <Typography /> }} />
+              </VerticalBox>
             </HelperTextModal>
           </HorizontalBox>
         )}
