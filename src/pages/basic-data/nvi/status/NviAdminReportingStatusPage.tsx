@@ -9,8 +9,10 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { useState } from 'react';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
+import { InstitutionContactInformationDialog } from '../../../../components/nvi/dialogs/InstitutionContactInformationDialog';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import {
@@ -31,6 +33,7 @@ export const NviAdminReportingStatusPage = () => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
+  const [selectedInstitutionId, setSelectedInstitutionId] = useState<string | undefined>();
 
   return (
     <NviPageLayout
@@ -69,11 +72,19 @@ export const NviAdminReportingStatusPage = () => {
               </TableHead>
               <TableBody>
                 {sortedAndFilteredData.map((report: InstitutionReport) => (
-                  <NviAdminReportingStatusRow report={report} key={report.id} />
+                  <NviAdminReportingStatusRow
+                    report={report}
+                    key={report.id}
+                    onClickContactInformation={setSelectedInstitutionId}
+                  />
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
+          <InstitutionContactInformationDialog
+            isOpen={selectedInstitutionId !== undefined}
+            onClose={() => setSelectedInstitutionId(undefined)}
+          />
         </VerticalBox>
       )}
     </NviPageLayout>

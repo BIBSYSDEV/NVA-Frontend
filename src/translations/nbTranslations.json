@@ -2089,5 +2089,6 @@
   "nvi_admin_publication_points_numbers": "<p><b>{{approvals}} resultat</b> er godkjent av alle, og de gir <b>{{publication_points}} publiseringspoeng.</b><link></p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "nvi_admin_reporting_status_numbers": "<p><b>{{num_results}} resultat</b> er kandidater for rapportering. Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{previous_year}}.</p>"
+  "nvi_admin_reporting_status_numbers": "<p><b>{{num_results}} resultat</b> er kandidater for rapportering. Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{previous_year}}.</p>",
+  "contact_point_for_institution": "Kontaktpunkt for institusjon"
 }
