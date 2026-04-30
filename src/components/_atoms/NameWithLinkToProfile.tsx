@@ -7,7 +7,7 @@ interface CuratorNameProps {
   cristinId?: string;
 }
 
-export const NameWithOptionalLinkToResearchProfile = ({ name, cristinId }: CuratorNameProps) => {
+export const NameWithLinkToProfile = ({ name, cristinId }: CuratorNameProps) => {
   if (cristinId) {
     return (
       <MuiLink component={Link} to={getResearchProfilePath(cristinId)}>

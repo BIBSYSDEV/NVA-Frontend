@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { InstitutionUser } from '../../../../types/user.types';
 import { getFullName } from '../../../../utils/user-helpers';
-import { NameWithOptionalLinkToResearchProfile } from '../../../_atoms/NameWithOptionalLinkToResearchProfile';
+import { NameWithLinkToProfile } from '../../../_atoms/NameWithLinkToProfile';
 import { VerticalBox } from '../../../styled/Wrappers';
 
 const MAX_VISIBLE_USERS = 5;
@@ -24,7 +24,7 @@ export const ContactInformation = ({ roleName, users }: RoleContactInformationPr
           ...(users.length > MAX_VISIBLE_USERS && { maxHeight: USER_LIST_MAX_HEIGHT, overflowY: 'auto' }),
         }}>
         {users.map((user) => (
-          <NameWithOptionalLinkToResearchProfile
+          <NameWithLinkToProfile
             key={user.cristinId}
             name={getFullName(user.givenName, user.familyName)}
             cristinId={user.cristinId}
