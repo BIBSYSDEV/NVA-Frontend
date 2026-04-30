@@ -26,7 +26,7 @@ export const InstitutionContactInformationDialog = ({
     <BaseDialog
       open={isOpen}
       onClose={onClose}
-      isLoading={isFetchingCustomers || isFetchingUsers}
+      showLoader={isFetchingCustomers || isFetchingUsers}
       dialogTitle={t('contact_point_for_institution')}
       dataTestId={dataTestId.institutionContactInformationDialog}>
       {!id && !isFetchingCustomers ? (
