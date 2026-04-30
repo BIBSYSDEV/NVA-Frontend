@@ -9,9 +9,10 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
 import { visuallyHidden } from '@mui/utils';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useFetchCustomerMap } from '../../../../api/hooks/useFetchCustomerMap';
 import { InstitutionContactInformationDialog } from '../../../../components/nvi/dialogs/InstitutionContactInformationDialog';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
 import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
@@ -34,6 +35,7 @@ export const NviAdminReportingStatusPage = () => {
   const { year } = useNviCandidatesParams();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
   const [selectedInstitutionId, setSelectedInstitutionId] = useState<string | undefined>();
+  const { nvaCustomers, isFetchingCustomerMap } = useFetchCustomerMap();
 
   return (
     <NviPageLayout
@@ -84,6 +86,8 @@ export const NviAdminReportingStatusPage = () => {
           <InstitutionContactInformationDialog
             isOpen={selectedInstitutionId !== undefined}
             onClose={() => setSelectedInstitutionId(undefined)}
+            isFetchingCustomers={isFetchingCustomerMap}
+            id={nvaCustomers?.get(selectedInstitutionId ?? '')?.id}
           />
         </VerticalBox>
       )}
