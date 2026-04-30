@@ -1,5 +1,6 @@
 import { Link as MuiLink, Typography } from '@mui/material';
 import { Link } from 'react-router';
+import { dataTestId } from '../../utils/dataTestIds';
 import { getResearchProfilePath } from '../../utils/urlPaths';
 
 interface CuratorNameProps {
@@ -10,7 +11,10 @@ interface CuratorNameProps {
 export const NameWithLinkToProfile = ({ name, cristinId }: CuratorNameProps) => {
   if (cristinId) {
     return (
-      <MuiLink component={Link} to={getResearchProfilePath(cristinId)}>
+      <MuiLink
+        data-testid={dataTestId.researchProfileLink(cristinId)}
+        component={Link}
+        to={getResearchProfilePath(cristinId)}>
         {name}
       </MuiLink>
     );

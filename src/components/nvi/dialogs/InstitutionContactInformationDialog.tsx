@@ -21,18 +21,22 @@ export const InstitutionContactInformationDialog = ({
 }: InstitutionContactInformationDialogProps) => {
   const { t } = useTranslation();
   const { editor, institutionAdmin, nviCurators, isLoading: isFetchingUsers, isError } = useInstitutionUsersByRole(id);
+  const isLoading = isFetchingCustomers || isFetchingUsers;
+  const hasNoContactInfo = !isLoading && !isError && !editor && !institutionAdmin && !nviCurators?.length;
 
   return (
     <BaseDialog
       open={isOpen}
       onClose={onClose}
-      showLoader={isFetchingCustomers || isFetchingUsers}
+      showLoader={isLoading}
       dialogTitle={t('contact_point_for_institution')}
       dataTestId={dataTestId.institutionContactInformationDialog}>
       {!id && !isFetchingCustomers ? (
         <Typography>{t('no_contact_information_for_institution')}</Typography>
       ) : isError ? (
         <Typography>{t('feedback.error.get_users_for_institution')}</Typography>
+      ) : hasNoContactInfo ? (
+        <Typography>{t('no_contact_information_for_institution')}</Typography>
       ) : (
         <VerticalBox sx={{ gap: '1.5rem' }}>
           {editor && <ContactInformation roleName={t('my_page.roles.editor')} users={[editor]} />}

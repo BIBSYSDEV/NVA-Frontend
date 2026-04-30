@@ -25,7 +25,7 @@ export const ContactInformation = ({ roleName, users }: RoleContactInformationPr
         }}>
         {users.map((user) => (
           <NameWithLinkToProfile
-            key={user.cristinId}
+            key={user.username}
             name={getFullName(user.givenName, user.familyName)}
             cristinId={user.cristinId}
           />
