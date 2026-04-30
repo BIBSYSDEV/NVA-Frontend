@@ -1,8 +1,10 @@
 import { Skeleton, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
+import { ExportNviStatusLink } from '../../../pages/messages/components/ExportNviStatusLink';
+import { HelperTextModal } from '../../../pages/registration/HelperTextModal';
 import { formatLocaleNumber } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { VerticalBox } from '../../styled/Wrappers';
+import { HorizontalBox, VerticalBox } from '../../styled/Wrappers';
 import { useNviPeriodReportNumbers } from '../hooks/useNviPeriodReportNumbers';
 
 export const NviAdminReportingStatusTexts = () => {
@@ -35,6 +37,14 @@ export const NviAdminReportingStatusTexts = () => {
           }}
         />
       )}
+      <HorizontalBox sx={{ mt: '1rem', alignItems: 'center' }}>
+        <ExportNviStatusLink exportAllInstitutions text={t('export_data_for_nvi_control')} sx={{ pl: 0 }} />
+        <HelperTextModal modalTitle={t('export_data_for_nvi_control')}>
+          <VerticalBox sx={{ gap: '1rem' }}>
+            <Trans i18nKey="export_data_for_nvi_control_description" components={{ p: <Typography /> }} />
+          </VerticalBox>
+        </HelperTextModal>
+      </HorizontalBox>
     </VerticalBox>
   );
 };
