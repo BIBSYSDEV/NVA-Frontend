@@ -4,46 +4,49 @@ import { CloseTextAndIconButton } from '../_atoms/buttons/CloseTextAndIconButton
 import { PageSpinner } from '../PageSpinner';
 
 interface BaseDialogProps extends Omit<DialogProps, 'onClose'> {
-  onClose?: () => void;
   dataTestId: string;
+  onClose?: () => void;
   dialogTitle?: string;
-  boxMaxWidth?: number;
+  ariaLabel?: string;
+  boxMaxWidth?: string | number;
   dialogActions?: ReactNode;
-  isLoading?: boolean;
+  showLoader?: boolean;
 }
 
 export const BaseDialog = ({
   open,
   dialogTitle,
+  ariaLabel,
   onClose,
   children,
-  boxMaxWidth = 450,
+  boxMaxWidth = '28rem',
   dataTestId,
   dialogActions,
-  isLoading,
+  showLoader,
   ...rest
 }: BaseDialogProps) => {
+  const titleId = `${dataTestId}-title`;
+  const showCloseIcon = !!onClose;
+
   return (
     <Dialog
       {...rest}
       open={open}
       onClose={onClose}
       fullWidth
-      slotProps={{ paper: { sx: { width: '100%', maxWidth: boxMaxWidth } } }}
+      aria-labelledby={dialogTitle ? titleId : undefined}
+      aria-label={ariaLabel}
+      slotProps={{ paper: { sx: { maxWidth: boxMaxWidth } } }}
       data-testid={dataTestId}>
-      {(dialogTitle || onClose) && (
-        <DialogTitle sx={{ pr: 14, overflowWrap: 'anywhere' }}>
+      {(dialogTitle || showCloseIcon) && (
+        <DialogTitle
+          id={dialogTitle ? titleId : undefined}
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', overflowWrap: 'anywhere' }}>
           {dialogTitle}
-          {onClose && (
-            <CloseTextAndIconButton
-              data-testid={`${dataTestId}-close-button`}
-              onClick={onClose}
-              sx={{ position: 'absolute', top: 14, right: 8 }}
-            />
-          )}
+          {showCloseIcon && <CloseTextAndIconButton data-testid={`${dataTestId}-close-button`} onClick={onClose} />}
         </DialogTitle>
       )}
-      {(children || isLoading) && <DialogContent>{!isLoading ? children : <PageSpinner />}</DialogContent>}
+      {(children || showLoader) && <DialogContent>{!showLoader ? children : <PageSpinner />}</DialogContent>}
       {dialogActions && <DialogActions>{dialogActions}</DialogActions>}
     </Dialog>
   );
