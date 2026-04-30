@@ -1,6 +1,6 @@
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@mui/material';
 import { ReactNode } from 'react';
-import { CloseTextAndIconButton } from '../_atoms/buttons/CloseTextAndIconButton';
+import { CloseButton } from '../_atoms/buttons/CloseButton';
 import { PageSpinner } from '../PageSpinner';
 
 interface BaseDialogProps extends Omit<DialogProps, 'onClose'> {
@@ -43,7 +43,7 @@ export const BaseDialog = ({
           id={dialogTitle ? titleId : undefined}
           sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', overflowWrap: 'anywhere' }}>
           {dialogTitle}
-          {showCloseIcon && <CloseTextAndIconButton data-testid={`${dataTestId}-close-button`} onClick={onClose} />}
+          {showCloseIcon && <CloseButton data-testid={`${dataTestId}-close-button`} onClick={onClose} />}
         </DialogTitle>
       )}
       {(children || showLoader) && <DialogContent>{!showLoader ? children : <PageSpinner />}</DialogContent>}
