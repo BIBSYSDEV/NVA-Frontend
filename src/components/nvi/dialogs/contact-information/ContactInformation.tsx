@@ -24,11 +24,7 @@ export const ContactInformation = ({ roleName, users }: ContactInformationProps)
         }}>
         {users.map((user) => (
           <li key={user.username}>
-            <ResearchProfileLink
-              key={user.username}
-              name={getFullName(user.givenName, user.familyName)}
-              cristinId={user.cristinId}
-            />
+            <ResearchProfileLink name={getFullName(user.givenName, user.familyName)} cristinId={user.cristinId} />
           </li>
         ))}
       </VerticalBox>
