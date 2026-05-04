@@ -49,7 +49,7 @@
     "@uppy/react": "^5.2.0",
     "aws-amplify": "^6.16.4",
     "axios": "^1.15.1",
-    "bibtex-generator": "^1.0.14",
+    "bibtex-generator": "^1.0.15",
     "date-fns": "^4.1.0",
     "deepmerge": "^4.3.1",
     "formik": "^2.4.9",
