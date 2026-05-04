@@ -41,6 +41,7 @@ export const NviPublicationPointsPage = () => {
           exportAcronym={organizationQuery.data?.acronym}
         />
       }
+      yearSelector
       visibilitySelector>
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
