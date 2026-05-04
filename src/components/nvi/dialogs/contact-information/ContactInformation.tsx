@@ -1,34 +1,35 @@
 import { Typography } from '@mui/material';
 import { InstitutionUser } from '../../../../types/user.types';
 import { getFullName } from '../../../../utils/user-helpers';
-import { NameWithLinkToProfile } from '../../../_atoms/NameWithLinkToProfile';
+import { ResearchProfileLink } from '../../../_atoms/ResearchProfileLink';
 import { VerticalBox } from '../../../styled/Wrappers';
 
-const MAX_VISIBLE_USERS = 5;
-const USER_LIST_MAX_HEIGHT = '9rem';
-
-interface RoleContactInformationProps {
+interface ContactInformationProps {
   roleName: string;
   users: InstitutionUser[];
 }
 
-export const ContactInformation = ({ roleName, users }: RoleContactInformationProps) => {
+export const ContactInformation = ({ roleName, users }: ContactInformationProps) => {
   return (
     <VerticalBox sx={{ gap: '0.25rem' }}>
-      <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-        {roleName}
-      </Typography>
+      <Typography variant="h2">{roleName}</Typography>
       <VerticalBox
+        component="ul"
         sx={{
+          listStyle: 'none',
+          padding: 0,
+          margin: 0,
           gap: '0.5rem',
-          ...(users.length > MAX_VISIBLE_USERS && { maxHeight: USER_LIST_MAX_HEIGHT, overflowY: 'auto' }),
+          ...(users.length > 5 && { maxHeight: '9rem', overflowY: 'auto' }),
         }}>
         {users.map((user) => (
-          <NameWithLinkToProfile
-            key={user.username}
-            name={getFullName(user.givenName, user.familyName)}
-            cristinId={user.cristinId}
-          />
+          <li key={user.username}>
+            <ResearchProfileLink
+              key={user.username}
+              name={getFullName(user.givenName, user.familyName)}
+              cristinId={user.cristinId}
+            />
+          </li>
         ))}
       </VerticalBox>
     </VerticalBox>

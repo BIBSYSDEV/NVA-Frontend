@@ -7,7 +7,7 @@ export const useFetchUsersByCustomer = (customerId?: string, role?: RoleName | R
   const { t } = useTranslation();
 
   return useQuery({
-    queryKey: ['institutionUsers', customerId, role],
+    queryKey: ['customerUsers', customerId, role],
     enabled: !!customerId,
     queryFn: () => (customerId ? fetchUsersByCustomer(customerId, role) : null),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },

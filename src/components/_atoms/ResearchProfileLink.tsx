@@ -3,12 +3,12 @@ import { Link } from 'react-router';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getResearchProfilePath } from '../../utils/urlPaths';
 
-interface CuratorNameProps {
+interface ResearchProfileLinkProps {
   name: string;
   cristinId?: string;
 }
 
-export const NameWithLinkToProfile = ({ name, cristinId }: CuratorNameProps) => {
+export const ResearchProfileLink = ({ name, cristinId }: ResearchProfileLinkProps) => {
   if (cristinId) {
     return (
       <MuiLink
