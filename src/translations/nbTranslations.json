@@ -2090,5 +2090,7 @@
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
   "nvi_admin_reporting_status_numbers": "<p><b>{{num_results}} resultat</b> er kandidater for rapportering. Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{previous_year}}.</p>",
-  "contact_point_for_institution": "Kontaktpunkt for institusjon"
+  "contact_point_for_institution": "Kontaktpunkt for institusjon",
+  "no_contact_information_for_institution": "Ingen kontaktinformasjon å vise for denne institusjonen.",
+  "nvi_curators_at_main_unit": "NVI-kuratorer på hovedenhet"
 }

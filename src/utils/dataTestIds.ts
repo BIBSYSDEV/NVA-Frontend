@@ -890,4 +890,5 @@ export const dataTestId = {
   nviAdminPublicationPointsHelpButton: 'nvi-admin-publication-points-help-button',
   nviPublicationPointsHelpLink: 'nvi-publication-points-help-link',
   institutionContactInformationDialog: 'institution-contact-information-dialog',
+  researchProfileLink: (id: string) => `research-profile-link-${id}`,
 };
