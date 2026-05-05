@@ -24,7 +24,7 @@ export const NviReportingStatusPage = () => {
 
   return (
     <NviPageLayout
-      headline={t('tasks.nvi.institution_nvi_status')}
+      headline={t('reporting_status')}
       topView={
         <NviReportingStatusTexts
           totalResults={totalResults}

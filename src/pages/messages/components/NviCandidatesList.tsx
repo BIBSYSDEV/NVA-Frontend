@@ -1,7 +1,6 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import { Button, Grid, List, Typography } from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
@@ -38,9 +37,9 @@ export const NviCandidatesList = () => {
 
   return (
     <section>
-      <HeadTitle>{t('tasks.nvi.nvi_control')}</HeadTitle>
-      <Typography component="h1" sx={visuallyHidden}>
-        {t('tasks.nvi.nvi_control')}
+      <HeadTitle>{t('candidate_search')}</HeadTitle>
+      <Typography variant="h1" sx={{ mb: '1.5rem' }}>
+        {t('candidate_search')}
       </Typography>
 
       <Grid container columns={16} spacing="1rem" sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
