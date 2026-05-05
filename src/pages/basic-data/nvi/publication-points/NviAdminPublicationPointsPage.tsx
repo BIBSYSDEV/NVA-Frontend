@@ -13,7 +13,7 @@ import { InstitutionReport } from '../../../../types/nvi.types';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../components/hooks/useInstitutionReportsFilteredAndSortedByUrl';
 import { NviAdminTableSortSelector } from '../components/NviAdminTableSortSelector';
-import { CenteredPercentageControlledCell } from '../components/styles/nvi-table-styles';
+import { CenteredPercentageControlledCell } from '../components/styles/nvi-admin-table-styles';
 import { NviAdminPublicationPointsRow } from './components/NviAdminPublicationPointsRow';
 import { NviAdminPublicationPointsTexts } from './components/NviAdminPublicationPointsTexts';
 

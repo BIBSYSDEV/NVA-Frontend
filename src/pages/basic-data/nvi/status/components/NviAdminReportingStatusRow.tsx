@@ -8,7 +8,7 @@ import { InstitutionReport } from '../../../../../types/nvi.types';
 import {
   CenteredContactInformationCell,
   CenteredPercentageControlledCell,
-} from '../../components/styles/nvi-table-styles';
+} from '../../components/styles/nvi-admin-table-styles';
 
 import {
   getNviApprovedCount,

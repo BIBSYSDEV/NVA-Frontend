@@ -26,7 +26,7 @@ import { NviAdminTableSortSelector } from '../components/NviAdminTableSortSelect
 import {
   CenteredContactInformationCell,
   CenteredPercentageControlledCell,
-} from '../components/styles/nvi-table-styles';
+} from '../components/styles/nvi-admin-table-styles';
 import { NviAdminReportingStatusRow } from './components/NviAdminReportingStatusRow';
 import { NviAdminReportingStatusTexts } from './components/NviAdminReportingStatusTexts';
 

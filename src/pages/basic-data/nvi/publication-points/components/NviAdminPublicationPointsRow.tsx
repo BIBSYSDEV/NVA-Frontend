@@ -4,7 +4,7 @@ import { PercentageWithIcon } from '../../../../../components/_molecules/Percent
 import { HorizontalBox } from '../../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../../components/tables/table-styles';
 import { InstitutionReport } from '../../../../../types/nvi.types';
-import { CenteredPercentageControlledCell } from '../../components/styles/nvi-table-styles';
+import { CenteredPercentageControlledCell } from '../../components/styles/nvi-admin-table-styles';
 import {
   getNviApprovedByEverybody,
   getNviApprovedCount,
