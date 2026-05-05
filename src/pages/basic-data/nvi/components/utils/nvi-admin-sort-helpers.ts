@@ -8,9 +8,9 @@ import {
   getNviSectorLabel,
   getNviTotalCount,
   getNviValidPoints,
-} from '../../../pages/basic-data/nvi/components/utils/nvi-admin-aggregations-helpers';
-import { InstitutionReport } from '../../../types/nvi.types';
-import { SortSelectorOption } from '../../_molecules/SortSelector';
+} from './nvi-admin-aggregations-helpers';
+import { InstitutionReport } from '../../../../../types/nvi.types';
+import { SortSelectorOption } from '../../../../../components/_molecules/SortSelector';
 import { NviAdminSortSelectorType } from './nvi-admin-sort-types';
 
 export enum NviAdminOrderBy {
