@@ -1,6 +1,4 @@
 import { TFunction } from 'i18next';
-import { InstitutionReport } from '../../../types/nvi.types';
-import { SortSelectorOption } from '../../_molecules/SortSelector';
 import {
   getNviApprovedByEverybody,
   getNviApprovedCount,
@@ -10,7 +8,9 @@ import {
   getNviSectorLabel,
   getNviTotalCount,
   getNviValidPoints,
-} from '../../nvi/table/utils/nvi-admin-aggregations-helpers';
+} from '../../../pages/basic-data/nvi/components/utils/nvi-admin-aggregations-helpers';
+import { InstitutionReport } from '../../../types/nvi.types';
+import { SortSelectorOption } from '../../_molecules/SortSelector';
 import { NviAdminSortSelectorType } from './nvi-admin-sort-types';
 
 export enum NviAdminOrderBy {

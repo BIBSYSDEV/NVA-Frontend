@@ -3,17 +3,17 @@ import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
-import { useNviInstitutionStatusNumbers } from '../../../../components/nvi/hooks/useNviInstitutionStatusNumbers';
-import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import {
   NviPointsHelperTextModal,
   NviPointsModalVariant,
-} from '../../../../components/nvi/table/helper-text-modals/NviPointsHelperTextModal';
-import { NviPublicationPointsRow } from '../../../../components/nvi/table/rows/NviPublicationPointsRow';
-import { NviPublicationPointsTexts } from '../../../../components/nvi/top-texts/NviPublicationPointsTexts';
+} from '../../../../components/helper-text-modals/NviPointsHelperTextModal';
+import { NviPublicationPointsRow } from './components/NviPublicationPointsRow';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
+import { useNviInstitutionStatusNumbers } from '../components/hooks/useNviInstitutionStatusNumbers';
+import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
+import { NviPublicationPointsTexts } from './components/NviPublicationPointsTexts';
 
 export const NviPublicationPointsPage = () => {
   const { t } = useTranslation();

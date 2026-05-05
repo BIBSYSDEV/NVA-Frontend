@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MergeImportCandidate } from '../../components/merge_results/MergeImportCandidate';
-import { NviAdminNavigationAccordion } from '../../components/navigation-accordions/basic-data/NviAdminNavigationAccordion';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
   LinkCreateButton,
@@ -34,6 +33,7 @@ import { PersonRegisterPage } from '../basic_data/institution_admin/person_regis
 import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
 import { SerialPublicationClaimsSettings } from '../editor/SerialPublicationClaimsSettings';
 import NotFound from '../errorpages/NotFound';
+import { NviAdminNavigationAccordion } from './components/NviAdminNavigationAccordion';
 import { NviAdminPublicationPointsPage } from './nvi/publication-points/NviAdminPublicationPointsPage';
 import { NviAdminReportingStatusPage } from './nvi/status/NviAdminReportingStatusPage';
 
@@ -104,7 +104,6 @@ const BasicDataPage = () => {
             />
           </NavigationListAccordion>
         )}
-
         {isAppAdmin && (
           <>
             <NavigationListAccordion
@@ -158,7 +157,6 @@ const BasicDataPage = () => {
             </NavigationListAccordion>
           </>
         )}
-
         {isInternalImporter && (
           <NavigationListAccordion
             title={t('basic_data.central_import.central_import')}

@@ -1,21 +1,21 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
-import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
 import {
   NviPointsHelperTextModal,
   NviPointsModalVariant,
-} from '../../../../components/nvi/table/helper-text-modals/NviPointsHelperTextModal';
-import { CenteredPercentageControlledCell } from '../../../../components/nvi/table/nvi-table-styles';
-import { NviAdminTableSortSelector } from '../../../../components/nvi/table/NviAdminTableSortSelector';
-import { NviAdminPublicationPointsRow } from '../../../../components/nvi/table/rows/NviAdminPublicationPointsRow';
-import { NviAdminPublicationPointsTexts } from '../../../../components/nvi/top-texts/NviAdminPublicationPointsTexts';
+} from '../../../../components/helper-text-modals/NviPointsHelperTextModal';
+import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
 import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../components/hooks/useInstitutionReportsFilteredAndSortedByUrl';
+import { NviAdminTableSortSelector } from '../components/NviAdminTableSortSelector';
+import { CenteredPercentageControlledCell } from '../components/styles/nvi-table-styles';
+import { NviAdminPublicationPointsRow } from './components/NviAdminPublicationPointsRow';
+import { NviAdminPublicationPointsTexts } from './components/NviAdminPublicationPointsTexts';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();
