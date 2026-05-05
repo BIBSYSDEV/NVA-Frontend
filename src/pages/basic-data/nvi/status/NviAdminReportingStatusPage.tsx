@@ -13,7 +13,7 @@ import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchCustomerMap } from '../../../../api/hooks/useFetchCustomerMap';
-import { InstitutionContactInformationDialog } from '../../../../components/dialogs/contact-information/InstitutionContactInformationDialog';
+import { InstitutionContactInformationDialog } from '../../../../components/dialogs/institution-contact-information/InstitutionContactInformationDialog';
 import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';

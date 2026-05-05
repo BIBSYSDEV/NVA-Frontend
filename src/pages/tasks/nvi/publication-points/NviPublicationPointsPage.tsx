@@ -6,7 +6,7 @@ import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization
 import {
   NviPointsHelperTextModal,
   NviPointsModalVariant,
-} from '../../../../components/helper-text-modals/NviPointsHelperTextModal';
+} from '../../../../components/dialogs/helper-texts/NviPointsHelperTextModal';
 import { NviPublicationPointsRow } from './components/NviPublicationPointsRow';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';

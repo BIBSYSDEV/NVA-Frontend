@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   NviPointsHelperTextModal,
   NviPointsModalVariant,
-} from '../../../../components/helper-text-modals/NviPointsHelperTextModal';
+} from '../../../../components/dialogs/helper-texts/NviPointsHelperTextModal';
 import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';

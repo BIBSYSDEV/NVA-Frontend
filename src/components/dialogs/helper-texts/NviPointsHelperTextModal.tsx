@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { HelperTextModal } from '../../pages/registration/HelperTextModal';
-import { dataTestId } from '../../utils/dataTestIds';
-import { NVI_REPORTING_INSTRUCTIONS_URL } from '../../utils/externalLinks';
-import { OpenInNewLink } from '../OpenInNewLink';
-import { HorizontalBox, VerticalBox } from '../styled/Wrappers';
+import { HelperTextModal } from '../../../pages/registration/HelperTextModal';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { NVI_REPORTING_INSTRUCTIONS_URL } from '../../../utils/externalLinks';
+import { OpenInNewLink } from '../../OpenInNewLink';
+import { HorizontalBox, VerticalBox } from '../../styled/Wrappers';
 
 export enum NviPointsModalVariant {
   Admin = 'admin',
