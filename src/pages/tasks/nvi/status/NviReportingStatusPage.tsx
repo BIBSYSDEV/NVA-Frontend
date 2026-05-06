@@ -3,12 +3,12 @@ import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
-import { NviReportingStatusRow } from './components/NviReportingStatusRow';
-import { NviReportingStatusTexts } from './components/NviReportingStatusTexts';
+import { NviReportingStatusRow } from './_components/NviReportingStatusRow';
+import { NviReportingStatusTexts } from './_components/NviReportingStatusTexts';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
-import { useNviInstitutionStatusNumbers } from '../components/hooks/useNviInstitutionStatusNumbers';
+import { useNviInstitutionStatusNumbers } from '../_hooks/useNviInstitutionStatusNumbers';
 import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
 
 export const NviReportingStatusPage = () => {

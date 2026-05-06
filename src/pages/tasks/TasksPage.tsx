@@ -34,7 +34,7 @@ import { TicketTypeTag } from '../messages/components/TicketTypeTag';
 import { checkPages } from '../messages/tasks-helpers';
 import { useGetNotificationCounts, useGetTicketsCounts } from '../messages/user-dialog-helpers';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
-import { NviCandidatesNavigationAccordion } from './components/NviCandidatesNavigationAccordion';
+import { NviCandidatesNavigationAccordion } from './_components/NviCandidatesNavigationAccordion';
 import { NviPublicationPointsPage } from './nvi/publication-points/NviPublicationPointsPage';
 import { NviReportingStatusPage } from './nvi/status/NviReportingStatusPage';
 

@@ -6,16 +6,16 @@ import {
 } from '../../../../components/dialogs/helper-texts/NviPointsHelperTextModal';
 import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
-import { NviAdminSortSelectorType } from '../components/utils/nvi-admin-sort-types';
+import { NviAdminSortSelectorType } from '../_utils/nvi-admin-sort-types';
 import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
-import { useInstitutionReportsFilteredAndSortedByUrl } from '../components/hooks/useInstitutionReportsFilteredAndSortedByUrl';
-import { NviAdminTableSortSelector } from '../components/NviAdminTableSortSelector';
-import { CenteredPercentageControlledCell } from '../components/styles/nvi-admin-table-styles';
-import { NviAdminPublicationPointsRow } from './components/NviAdminPublicationPointsRow';
-import { NviAdminPublicationPointsTexts } from './components/NviAdminPublicationPointsTexts';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../_hooks/useInstitutionReportsFilteredAndSortedByUrl';
+import { NviAdminTableSortSelector } from '../_components/NviAdminTableSortSelector';
+import { CenteredPercentageControlledCell } from '../_styles/nvi-admin-table-styles';
+import { NviAdminPublicationPointsRow } from './_components/NviAdminPublicationPointsRow';
+import { NviAdminPublicationPointsTexts } from './_components/NviAdminPublicationPointsTexts';
 
 export const NviAdminPublicationPointsPage = () => {
   const { t } = useTranslation();

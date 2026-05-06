@@ -7,13 +7,13 @@ import {
   NviPointsHelperTextModal,
   NviPointsModalVariant,
 } from '../../../../components/dialogs/helper-texts/NviPointsHelperTextModal';
-import { NviPublicationPointsRow } from './components/NviPublicationPointsRow';
+import { NviPublicationPointsRow } from './_components/NviPublicationPointsRow';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
-import { useNviInstitutionStatusNumbers } from '../components/hooks/useNviInstitutionStatusNumbers';
+import { useNviInstitutionStatusNumbers } from '../_hooks/useNviInstitutionStatusNumbers';
 import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
-import { NviPublicationPointsTexts } from './components/NviPublicationPointsTexts';
+import { NviPublicationPointsTexts } from './_components/NviPublicationPointsTexts';
 
 export const NviPublicationPointsPage = () => {
   const { t } = useTranslation();
