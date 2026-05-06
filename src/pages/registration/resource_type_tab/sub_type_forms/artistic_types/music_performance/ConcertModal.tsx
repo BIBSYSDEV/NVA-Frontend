@@ -100,19 +100,13 @@ const validationSchema = Yup.object<YupShape<Concert>>({
         })
   ),
 
-  extent: Yup.string()
-    .required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.artistic.extent'),
-      })
-    )
-    .matches(
-      /^([0-9][0-9]):([0-5][0-9]):([0-5][0-9])$/,
-      i18n.t('feedback.validation.invalid_format', {
-        field: i18n.t('registration.resource_type.artistic.extent'),
-        format: i18n.t('time_format.hours'),
-      })
-    ),
+  extent: Yup.string().matches(
+    /^([0-9][0-9]):([0-5][0-9])$/,
+    i18n.t('feedback.validation.invalid_format', {
+      field: i18n.t('registration.resource_type.artistic.extent'),
+      format: i18n.t('time_format.hours_minutes'),
+    })
+  ),
   concertProgramme: Yup.array()
     .of(
       Yup.object<YupShape<MusicalWorkPerformance>>({
@@ -245,11 +239,10 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
 
                 <ExtentField
                   fieldName="extent"
-                  mask="00:00:00"
+                  mask="00:00"
                   dataTestId={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
-                  placeholder={t('time_format.hours')}
+                  placeholder={t('time_format.hours_minutes')}
                   label={t('registration.resource_type.artistic.extent')}
-                  required
                 />
               </Box>
               {partOfSeries && (
