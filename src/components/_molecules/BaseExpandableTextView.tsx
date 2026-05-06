@@ -4,7 +4,7 @@ import { Box, Button, Typography } from '@mui/material';
 import { ReactNode, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface ExpandableNviTopViewProps {
+interface BaseExpandableTextViewProps {
   alwaysVisibleText: string;
   expandedText: string;
   testId: string;
@@ -16,7 +16,7 @@ export const BaseExpandableTextView = ({
   expandedText,
   testId,
   children,
-}: ExpandableNviTopViewProps) => {
+}: BaseExpandableTextViewProps) => {
   const { t } = useTranslation();
   const [textExpanded, setTextExpanded] = useState(false);
   const expandedTextId = useId();
