@@ -13,22 +13,19 @@ import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchCustomerMap } from '../../../../api/hooks/useFetchCustomerMap';
-import { InstitutionContactInformationDialog } from '../../../../components/nvi/dialogs/InstitutionContactInformationDialog';
-import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../components/nvi/hooks/useInstitutionReportsFilteredAndSortedByUrl';
-import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
-import {
-  CenteredContactInformationCell,
-  CenteredPercentageControlledCell,
-} from '../../../../components/nvi/table/nvi-table-styles';
-import { NviAdminTableSortSelector } from '../../../../components/nvi/table/NviAdminTableSortSelector';
-import { NviAdminReportingStatusRow } from '../../../../components/nvi/table/rows/NviAdminReportingStatusRow';
-import { NviAdminReportingStatusTexts } from '../../../../components/nvi/top-texts/NviAdminReportingStatusTexts';
+import { InstitutionContactInformationDialog } from '../../../../components/dialogs/institution-contact-information/InstitutionContactInformationDialog';
+import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
-import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
+import { NviAdminSortSelectorType } from '../_utils/nvi-admin-sort-types';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../_hooks/useInstitutionReportsFilteredAndSortedByUrl';
+import { NviAdminTableSortSelector } from '../_components/NviAdminTableSortSelector';
+import { CenteredContactInformationCell, CenteredPercentageControlledCell } from '../_styles/nvi-admin-table-styles';
+import { NviAdminReportingStatusRow } from './_components/NviAdminReportingStatusRow';
+import { NviAdminReportingStatusTexts } from './_components/NviAdminReportingStatusTexts';
 
 export const NviAdminReportingStatusPage = () => {
   const { t } = useTranslation();
