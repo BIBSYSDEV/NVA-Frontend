@@ -24,7 +24,7 @@ import { checkUserRoles } from '../../utils/user-helpers';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
 import NotFound from '../errorpages/NotFound';
 import { NviCandidatePage } from '../messages/components/NviCandidatePage';
-import { NviCandidatesList } from '../messages/components/NviCandidatesList';
+import { NviCandidatesListPage } from './nvi/NviCandidatesListPage';
 import { NviCorrectionList } from '../messages/components/NviCorrectionList';
 import { NviCorrectionListNavigationAccordion } from '../messages/components/NviCorrectionListNavigationAccordion';
 import { NviDisputePage } from '../messages/components/NviDisputePage';
@@ -245,7 +245,7 @@ const TasksPage = () => {
 
           <Route
             path={getSubUrl(UrlPathTemplate.TasksNvi, UrlPathTemplate.Tasks)}
-            element={<PrivateRoute element={<NviCandidatesList />} isAuthorized={isNviCurator} />}
+            element={<PrivateRoute element={<NviCandidatesListPage />} isAuthorized={isNviCurator} />}
           />
 
           <Route

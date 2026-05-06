@@ -17,13 +17,13 @@ import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { CoPublicationsCheckbox } from './CoPublicationsCheckbox';
-import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
-import { NviCandidateListItem } from './NviCandidateListItem';
-import { NviSortSelector } from './NviSortSelector';
-import { NviStatusFilter } from './NviStatusFilter';
+import { CoPublicationsCheckbox } from '../../messages/components/CoPublicationsCheckbox';
+import { ExcludeSubunitsCheckbox } from '../../messages/components/ExcludeSubunitsCheckbox';
+import { NviCandidateListItem } from '../../messages/components/NviCandidateListItem';
+import { NviSortSelector } from '../../messages/components/NviSortSelector';
+import { NviStatusFilter } from '../../messages/components/NviStatusFilter';
 
-export const NviCandidatesList = () => {
+export const NviCandidatesListPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const nviParams = useNviCandidatesParams();
