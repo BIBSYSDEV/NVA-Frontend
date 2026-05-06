@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Button, Dialog, DialogContent, DialogTitle, FormHelperText, TextField, Typography } from '@mui/material';
+import { Button, Dialog, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -53,28 +53,20 @@ const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
       format: i18n.t('time_format.minutes'),
     })
   ),
-  musicalWorks: Yup.array()
-    .of(
-      Yup.object<YupShape<MusicalWork>>({
-        title: Yup.string().required(
-          i18n.t('feedback.validation.is_required', {
-            field: i18n.t('common.title'),
-          })
-        ),
-        composer: Yup.string().required(
-          i18n.t('feedback.validation.is_required', {
-            field: i18n.t('registration.resource_type.artistic.composer'),
-          })
-        ),
-      })
-    )
-    .min(
-      1,
-      i18n.t('feedback.validation.must_have_minimum', {
-        min: 1,
-        field: i18n.t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
-      })
-    ),
+  musicalWorks: Yup.array().of(
+    Yup.object<YupShape<MusicalWork>>({
+      title: Yup.string().required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.title'),
+        })
+      ),
+      composer: Yup.string().required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('registration.resource_type.artistic.composer'),
+        })
+      ),
+    })
+  ),
 });
 
 export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeModal }: OtherPerformanceModalProps) => {
@@ -103,7 +95,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
           onSubmit(values);
           closeModal();
         }}>
-        {({ values, errors, touched, isSubmitting }: FormikProps<OtherMusicPerformance>) => (
+        {({ values, isSubmitting }: FormikProps<OtherMusicPerformance>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="performanceType">
@@ -212,12 +204,6 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                       }}>
                       <Typography>{t('registration.resource_type.artistic.remove_music_work_description')}</Typography>
                     </ConfirmDialog>
-
-                    {!!touched.musicalWorks && typeof errors.musicalWorks === 'string' && (
-                      <FormHelperText error>
-                        <ErrorMessage name={name} />
-                      </FormHelperText>
-                    )}
                   </>
                 )}
               </FieldArray>
