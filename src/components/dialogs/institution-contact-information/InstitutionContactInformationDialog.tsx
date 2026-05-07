@@ -33,7 +33,7 @@ export const InstitutionContactInformationDialog = ({
       open={isOpen}
       onClose={onClose}
       showLoader={isLoading}
-      boxMaxWidth="36rem"
+      boxMaxWidth="sm"
       dialogTitle={(() => {
         const name = getLanguageString(institutionLabels);
         return name ? t('contact_point_for_institution_name', { name }) : t('contact_point_for_institution');
