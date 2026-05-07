@@ -1,14 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  FormHelperText,
-  MenuItem,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Button, Dialog, DialogContent, DialogTitle, MenuItem, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { forwardRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -97,41 +88,33 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
         })
       ),
   }),
-  trackList: Yup.array()
-    .of(
-      Yup.object<YupShape<MusicTrack>>({
-        title: Yup.string().required(
+  trackList: Yup.array().of(
+    Yup.object<YupShape<MusicTrack>>({
+      title: Yup.string().required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.title'),
+        })
+      ),
+      composer: Yup.string().required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('registration.resource_type.artistic.composer'),
+        })
+      ),
+      extent: Yup.string()
+        .required(
           i18n.t('feedback.validation.is_required', {
-            field: i18n.t('common.title'),
+            field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+          })
+        )
+        .matches(
+          /^([0-5][0-9]):([0-5][0-9])$/,
+          i18n.t('feedback.validation.invalid_format', {
+            field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+            format: i18n.t('time_format.minutes'),
           })
         ),
-        composer: Yup.string().required(
-          i18n.t('feedback.validation.is_required', {
-            field: i18n.t('registration.resource_type.artistic.composer'),
-          })
-        ),
-        extent: Yup.string()
-          .required(
-            i18n.t('feedback.validation.is_required', {
-              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-            })
-          )
-          .matches(
-            /^([0-5][0-9]):([0-5][0-9])$/,
-            i18n.t('feedback.validation.invalid_format', {
-              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
-              format: i18n.t('time_format.minutes'),
-            })
-          ),
-      })
-    )
-    .min(
-      1,
-      i18n.t('feedback.validation.must_have_minimum', {
-        min: 1,
-        field: i18n.t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
-      })
-    ),
+    })
+  ),
 });
 
 export const AudioVisualPublicationModal = ({
@@ -163,7 +146,7 @@ export const AudioVisualPublicationModal = ({
           onSubmit(formattedValues);
           closeModal();
         }}>
-        {({ values, errors, touched, isSubmitting, setFieldValue }: FormikProps<AudioVisualPublication>) => (
+        {({ values, isSubmitting, setFieldValue }: FormikProps<AudioVisualPublication>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="mediaType.type">
@@ -333,12 +316,6 @@ export const AudioVisualPublicationModal = ({
                       }}>
                       <Typography>{t('registration.resource_type.artistic.remove_music_work_description')}</Typography>
                     </ConfirmDialog>
-
-                    {!!touched.trackList && typeof errors.trackList === 'string' && (
-                      <FormHelperText error>
-                        <ErrorMessage name={name} />
-                      </FormHelperText>
-                    )}
                   </>
                 )}
               </FieldArray>
