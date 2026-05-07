@@ -21,7 +21,7 @@ export const NviCandidateNavigation = () => {
   const newNviQueryParams = { ...nviQueryParams };
 
   if (hasOffset && nviQueryParams) {
-    newNviQueryParams.offset = Math.max(thisCandidateOffset - 1, 0);
+    newNviQueryParams.offset = Math.max(thisCandidateOffset - 1, 0); // Setting the offset to the offset of the previous candidate, so that the upcoming fetch will return the previous and next candidates around the current one.
   }
 
   const navigateCandidateQuery = useFetchNviCandidates({
