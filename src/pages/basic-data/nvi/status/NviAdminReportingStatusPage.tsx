@@ -19,6 +19,7 @@ import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
 import { NviAdminSortSelectorType } from '../_utils/nvi-admin-sort-types';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
+import { LanguageString } from '../../../../types/common.types';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { useInstitutionReportsFilteredAndSortedByUrl } from '../_hooks/useInstitutionReportsFilteredAndSortedByUrl';
@@ -31,7 +32,7 @@ export const NviAdminReportingStatusPage = () => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
-  const [selectedInstitutionId, setSelectedInstitutionId] = useState<string | undefined>();
+  const [selectedInstitution, setSelectedInstitution] = useState<{ id: string; labels: LanguageString } | undefined>();
   const { nvaCustomers, isFetchingCustomerMap } = useFetchCustomerMap();
 
   return (
@@ -64,7 +65,7 @@ export const NviAdminReportingStatusPage = () => {
                   <CenteredContactInformationCell>
                     {/* INFO: Empty header cell to match contact info button column */}
                     <Box component="span" sx={visuallyHidden}>
-                      {t('view_contact_info')}
+                      {t('view_contact_point')}
                     </Box>
                   </CenteredContactInformationCell>
                 </TableRow>
@@ -74,17 +75,18 @@ export const NviAdminReportingStatusPage = () => {
                   <NviAdminReportingStatusRow
                     report={report}
                     key={report.id}
-                    onClickContactInformation={setSelectedInstitutionId}
+                    onClickContactInformation={setSelectedInstitution}
                   />
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
           <InstitutionContactInformationDialog
-            isOpen={selectedInstitutionId !== undefined}
-            onClose={() => setSelectedInstitutionId(undefined)}
+            isOpen={selectedInstitution !== undefined}
+            onClose={() => setSelectedInstitution(undefined)}
             isFetchingCustomers={isFetchingCustomerMap}
-            id={nvaCustomers?.get(selectedInstitutionId ?? '')?.id}
+            id={nvaCustomers?.get(selectedInstitution?.id ?? '')?.id}
+            institutionLabels={selectedInstitution?.labels}
           />
         </VerticalBox>
       )}

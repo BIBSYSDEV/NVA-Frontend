@@ -4,6 +4,7 @@ import { ViewContactInfoButton } from '../../../../../components/_atoms/buttons/
 import { PercentageWithIcon } from '../../../../../components/_molecules/PercentageWithIcon';
 import { HorizontalBox } from '../../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../../components/tables/table-styles';
+import { LanguageString } from '../../../../../types/common.types';
 import { InstitutionReport } from '../../../../../types/nvi.types';
 import { CenteredContactInformationCell, CenteredPercentageControlledCell } from '../../_styles/nvi-admin-table-styles';
 
@@ -19,7 +20,7 @@ import {
 
 interface NviAdminReportingStatusRowProps {
   report: InstitutionReport;
-  onClickContactInformation: (institutionId: string) => void;
+  onClickContactInformation: (institution: { id: string; labels: LanguageString }) => void;
 }
 
 export const NviAdminReportingStatusRow = ({ report, onClickContactInformation }: NviAdminReportingStatusRowProps) => {
@@ -44,7 +45,9 @@ export const NviAdminReportingStatusRow = ({ report, onClickContactInformation }
         </HorizontalBox>
       </CenteredPercentageControlledCell>
       <CenteredContactInformationCell>
-        <ViewContactInfoButton onClick={() => onClickContactInformation(report.institution.id)} />
+        <ViewContactInfoButton
+          onClick={() => onClickContactInformation({ id: report.institution.id, labels: report.institution.labels })}
+        />
       </CenteredContactInformationCell>
     </TableRow>
   );
