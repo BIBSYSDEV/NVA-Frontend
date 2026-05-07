@@ -1,1 +1,0 @@
-export const ALTERNATIVE_TEXT_INSTEAD_OF_ZERO = '-';

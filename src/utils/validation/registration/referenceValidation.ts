@@ -415,11 +415,20 @@ const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicatio
     ),
   }),
   description: Yup.string().nullable(),
-  venues: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
-    publicationInstanceType === ArtisticType.ArtisticDesign || publicationInstanceType === ArtisticType.VisualArts
-      ? schema.min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired)
-      : schema.nullable()
-  ),
+  venues: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) => {
+    if (
+      publicationInstanceType === ArtisticType.ArtisticDesign ||
+      publicationInstanceType === ArtisticType.VisualArts
+    ) {
+      return schema.min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired);
+    } else if (publicationInstanceType === ArtisticType.OtherArtisticOutput) {
+      return schema
+        .min(1, resourceErrorMessage.announcementsRequired)
+        .required(resourceErrorMessage.announcementsRequired);
+    } else {
+      return schema.nullable();
+    }
+  }),
   architectureOutput: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
     publicationInstanceType === ArtisticType.ArtisticArchitecture
       ? schema.min(1, resourceErrorMessage.announcementsRequired).required(resourceErrorMessage.announcementsRequired)
