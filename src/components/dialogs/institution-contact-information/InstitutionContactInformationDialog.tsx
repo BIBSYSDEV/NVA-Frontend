@@ -34,11 +34,10 @@ export const InstitutionContactInformationDialog = ({
       onClose={onClose}
       showLoader={isLoading}
       boxMaxWidth="36rem"
-      dialogTitle={
-        institutionLabels
-          ? t('contact_point_for_institution_name', { name: getLanguageString(institutionLabels) })
-          : t('contact_point_for_institution')
-      }
+      dialogTitle={(() => {
+        const name = getLanguageString(institutionLabels);
+        return name ? t('contact_point_for_institution_name', { name }) : t('contact_point_for_institution');
+      })()}
       dataTestId={dataTestId.institutionContactInformationDialog}>
       {!id && !isFetchingCustomers ? (
         <Typography>{t('no_contact_information_for_institution')}</Typography>

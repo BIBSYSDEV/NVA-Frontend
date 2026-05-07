@@ -6,7 +6,10 @@ export const CloseButton = (props: ButtonProps) => {
   const { t } = useTranslation();
 
   return (
-    <Button endIcon={<CloseIcon />} {...props} sx={{ whiteSpace: 'nowrap', flexShrink: 0, ...props.sx }}>
+    <Button
+      endIcon={<CloseIcon />}
+      {...props}
+      sx={[{ whiteSpace: 'nowrap', flexShrink: 0 }, ...(Array.isArray(props.sx) ? props.sx : [props.sx])]}>
       {t('common.close')}
     </Button>
   );
