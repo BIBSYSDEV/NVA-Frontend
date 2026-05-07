@@ -1,6 +1,8 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { LanguageString } from '../../../types/common.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { BaseDialog } from '../../_molecules/BaseDialog';
 import { VerticalBox } from '../../styled/Wrappers';
 import { ContactInformationBox } from './components/ContactInformationBox';
@@ -11,6 +13,7 @@ interface InstitutionContactInformationDialogProps {
   onClose: () => void;
   isFetchingCustomers: boolean;
   id: string | undefined;
+  institutionLabels?: LanguageString;
 }
 
 export const InstitutionContactInformationDialog = ({
@@ -18,6 +21,7 @@ export const InstitutionContactInformationDialog = ({
   onClose,
   id,
   isFetchingCustomers = false,
+  institutionLabels,
 }: InstitutionContactInformationDialogProps) => {
   const { t } = useTranslation();
   const { editor, institutionAdmin, nviCurators, isLoading: isFetchingUsers, isError } = useInstitutionUsersByRole(id);
@@ -29,7 +33,12 @@ export const InstitutionContactInformationDialog = ({
       open={isOpen}
       onClose={onClose}
       showLoader={isLoading}
-      dialogTitle={t('contact_point_for_institution')}
+      boxMaxWidth="36rem"
+      dialogTitle={
+        institutionLabels
+          ? t('contact_point_for_institution_name', { name: getLanguageString(institutionLabels) })
+          : t('contact_point_for_institution')
+      }
       dataTestId={dataTestId.institutionContactInformationDialog}>
       {!id && !isFetchingCustomers ? (
         <Typography>{t('no_contact_information_for_institution')}</Typography>

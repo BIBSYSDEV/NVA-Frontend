@@ -6,7 +6,7 @@ export const CloseButton = (props: ButtonProps) => {
   const { t } = useTranslation();
 
   return (
-    <Button endIcon={<CloseIcon />} {...props}>
+    <Button endIcon={<CloseIcon />} {...props} sx={{ whiteSpace: 'nowrap', flexShrink: 0, ...props.sx }}>
       {t('common.close')}
     </Button>
   );
