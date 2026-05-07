@@ -158,6 +158,7 @@
     }
   },
   "candidate": "",
+  "candidate_search": "",
   "candidates_approved_by_the_institution": "",
   "candidates_everyone_has_approved": "",
   "candidates_others_must_approve": "",
@@ -327,6 +328,8 @@
     "year": "År",
     "yes": "Ja"
   },
+  "contact_point_for_institution": "",
+  "contact_point_for_institution_name": "",
   "contributor_search_hits_one": "",
   "contributor_search_hits_other": "",
   "controlling": "",
@@ -729,11 +732,9 @@
   "file_import": "",
   "file_import_automatic_import": "",
   "file_import_create_ticket": "",
-  "file_import_description": "",
   "file_upload_disabled_curator_can_upload_on_behalf": "Din institusjon støttar ikkje at registrator kan laste opp filer for denne kategorien. Som kurator kan du leggje til ei fil på vegner av registrator.",
   "file_upload_disabled_due_to_institution_policy": "Din institusjon støttar ikkje at registrator kan laste opp filer for denne kategorien. Kontakt kuratorstøtte om du ønskjer å ha ei fil på dette resultatet.",
   "find_result_to_merge_description": "<p>Slå saman to resultat for å unngå to versjonar av same resultat med ulike metadata og filer.</p><p>Er det registrert ulike metadata vel du kva data som skal gjelde. Du vel òg om filer skal flyttast over til det publiserte resultatet.</p><heading>Søk etter forskingsresultat</heading><p>Vel resultatet du ønskjer å slå saman med. Du kan berre slå saman resultat der du er registrert som bidragsytar.</p>",
-  "finished": "",
   "footer": {
     "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
     "about_nva_text": "Nasjonalt vitenarkiv (NVA) samlar publikasjonar og andre forskingsresultat, og gjer dei opent tilgjengelege i ei felles nasjonal løysing. Dette gjer resultat frå norsk forsking tilgjengeleg i éi teneste.",
@@ -751,7 +752,6 @@
   "institution_support": "Intitusjonen si brukarstøtte",
   "institutions_service_support": "Institusjonane si brukarstøtte",
   "internal_file_info_description": "",
-  "internal_nvi_status": "",
   "keep_all_contributors": "",
   "keep_contributors_from_published_result": "",
   "keep_contributors_from_source_result": "",
@@ -997,16 +997,19 @@
       "thesis_embargo_curator_description": "Kan sjå og endre embargofiler på studentoppgåver."
     }
   },
+  "no_contact_information_for_institution": "",
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fann dessverre ikkje noko som passar med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv ei anna skriveform av søkeordet</li><li>Prøv med eit synonym</li><li>Overset søkeordet til bokmål. nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at namnet er skrevet korrekt</li><li>Prøv ein annan skrivemåte</li><li>Prøv med eller utan mellomnamn</li></ul>",
+  "nvi_admin_publication_points_numbers": "",
+  "nvi_admin_reporting_status_numbers": "",
   "nvi_approved_results_publication_points_summary": "",
+  "nvi_curators_at_main_unit": "",
   "nvi_publication_points_page_description": "",
   "nvi_publication_points_page_description_expanded": "",
   "overview_over_administrators": "Oversyn over administratorar",
   "overwrite": "Overskriv",
   "owner_institution": "Eigarinstitusjon",
-  "percent_of_publication_points_in_year": "",
   "percent_of_published_reports_in_year": "",
   "percentage_approved": "",
   "percentage_approved_by_all": "",
@@ -1523,6 +1526,7 @@
       "ReportResearch": "Forskingsrapport",
       "ReportWorkingPaper": "Arbeidsnotat",
       "ResearchData": "Forskingsdata",
+      "SoftwareSourceCode": "",
       "StudyProtocol": "Studieprotokoll",
       "Textbook": "Lærebok",
       "TextbookChapter": "Kapittel i lærebok",
@@ -1834,9 +1838,11 @@
         "related_publications": "Relaterte publikasjonar",
         "remove_relation": "Fjern relasjon",
         "remove_relation_confirm_text": "Ønskjer du å fjerne denne relasjonen?",
+        "repository_url": "",
         "search_for_related_dmps": "Søk etter relaterte datahandteringsplanar",
         "search_for_related_registrations": "Søk etter resultat med bruk av anten tittel eller DOI",
-        "search_for_related_registrations_helper": "Vel mellom registreringar som er publisert i NVA"
+        "search_for_related_registrations_helper": "Vel mellom registreringar som er publisert i NVA",
+        "version": ""
       },
       "resource_type": "Kategori",
       "same_title": "same tittel",
@@ -1882,6 +1888,7 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "",
+  "reporting_status": "",
   "reporting_status_description": "",
   "reporting_status_numbers": "",
   "reset": "Nullstill",
@@ -1996,6 +2003,7 @@
       "approve_nvi_candidate": "Godkjenn resultat",
       "approve_nvi_candidate_description": "<p>Kontroll av forskingsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporterast. Sjå <hyperlink>Rapporteringsinstruksen</hyperlink> for meir informasjon.</p>",
       "approve_rejected_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen skal rapporterast. Då vert også grunngjevinga for avvisinga fjerna.",
+      "candidates": "",
       "candidates_approved_by_all": "Kandidatar alle har godkjend",
       "candidates_approved_by_others": "Kandidatar andre har godkjend",
       "candidates_for_control": "Kandidatar til kontroll",
@@ -2040,7 +2048,6 @@
       "reporting_status_for_publication_points_for_year": "",
       "reset_approval": "Nullstill rapporteringsstatus",
       "reset_approval_description": "Er du sikker på at du vil nullstill rapporteringsstatusen? Nokon på din institusjon må då rapportere denne på nytt.",
-      "result": "",
       "save_note": "Lagre kommentar",
       "show_candidate_search": "Vis kandidatsøk",
       "show_disputes": "",
@@ -2056,8 +2063,6 @@
         "Rejected": "Avvist"
       },
       "status_dispute_for": "",
-      "total_for_organization": "",
-      "total_publication_points": "",
       "unidentified_person_with_nvi_institution": "Uidentifisert person med tilknyting til NVI-institusjon",
       "x_of_y_approved": "",
       "x_of_y_controlled": ""
@@ -2073,6 +2078,7 @@
   "temporarily_disabled": "",
   "time_format": {
     "hours": "TT:MM:SS",
+    "hours_minutes": "",
     "minutes": "MM:SS"
   },
   "unpublish_actions": {
@@ -2095,12 +2101,11 @@
   "use_rerender": "{{value}}",
   "velg_subject_area": "Vel fagfelt",
   "view_contact_info": "Sjå kontaktinformasjon",
-  "view_contact_information": "",
+  "view_contact_point": "",
   "view_the_reporting_instructions": "",
   "visibility_of_units": "",
   "vocabulary_missing": "Institusjonen har ikkje lagt til vokabular",
   "what_you_find_in_nva_description": "<heading>Kva finn du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samlar og gjer tilgjengeleg informasjon om norsk forsking.</p><p>Her kan du utforske publikasjonar, forskingsprosjekt og forskarar på tvers av universitet, høgskular og forskingsinstitusjonar.</p>",
-  "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "",
   "you_cannot_upload_files_to_this_result": "Du har ikkje tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikkje tilgang til å endre denne registreringa."
 }

@@ -6,7 +6,7 @@ import { exportToBibTex } from './BibTexFactory';
 
 export const useBibtexExport = () => {
   const [searchParams] = useSearchParams();
-  const maxNumberOfCitations = 500;
+  const maxNumberOfCitations = 100;
 
   const registrationsQueryConfig: FetchResultsParams = {
     query: searchParams.get(ResultParam.Query),

@@ -1,4 +1,4 @@
-import { NviCandidate } from '../../types/nvi.types';
+import { NviCandidate, NviPeriodStatusEnum } from '../../types/nvi.types';
 
 export const mockNviCandidate: NviCandidate = {
   id: 'https://api.dev.nva.aws.unit.no/scientific-index/candidate/1',
@@ -6,7 +6,7 @@ export const mockNviCandidate: NviCandidate = {
   approvals: [],
   notes: [],
   period: {
-    status: 'OpenPeriod',
+    status: NviPeriodStatusEnum.OpenPeriod,
   },
   allowedOperations: ['approval/approve-candidate', 'approval/reject-candidate', 'approval/reset-approval'],
   problems: [],

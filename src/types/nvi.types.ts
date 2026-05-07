@@ -22,6 +22,15 @@ export enum NviCandidateApprovalStatusEnum {
 
 export type NviCandidateApprovalStatus = `${NviCandidateApprovalStatusEnum}`;
 
+export enum NviPeriodStatusEnum {
+  OpenPeriod = 'OpenPeriod',
+  ClosedPeriod = 'ClosedPeriod',
+  NoPeriod = 'NoPeriod',
+  UnopenedPeriod = 'UnopenedPeriod',
+}
+
+export type NviPeriodStatus = `${NviPeriodStatusEnum}`;
+
 export interface NviCandidateSearchHitApproval {
   institutionId: string;
   labels: LanguageString;
@@ -136,7 +145,7 @@ export interface NviCandidate {
   approvals: (Approval | FinalizedApproval | RejectedApproval)[];
   notes: Note[];
   period: {
-    status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod' | 'UnopenedPeriod';
+    status: NviPeriodStatus;
     year?: string;
   };
   status?: 'Reported';

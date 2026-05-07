@@ -23,6 +23,7 @@ import { dataTestId } from '../utils/dataTestIds';
 import { nviApplicableTypes } from '../utils/registration-helpers';
 import { DoesNotSupportFileIcon } from './_atoms/DoesNotSupportFileIcon';
 import { NviApplicableIcon } from './_atoms/NviApplicableIcon';
+import { BetaFunctionality } from './BetaFunctionality';
 
 interface RegistrationTypeElement {
   value: PublicationInstanceType;
@@ -30,6 +31,7 @@ interface RegistrationTypeElement {
   selected: boolean;
   disableText?: string;
   showNoFilesIcon?: boolean;
+  isBeta?: boolean;
 }
 
 interface RegistrationRowConfig {
@@ -62,6 +64,7 @@ interface CategorySelectorProps {
   onCategoryClick?: (category: PublicationInstanceType) => void;
   disabledCategories?: DisabledCategory[];
   categoriesWithoutFiles?: PublicationInstanceType[];
+  betaCategories?: PublicationInstanceType[];
 }
 
 export const CategorySelector = ({
@@ -70,6 +73,7 @@ export const CategorySelector = ({
   selectedCategories,
   setSelectedCategories,
   categoriesWithoutFiles,
+  betaCategories,
 }: CategorySelectorProps) => {
   const { t } = useTranslation();
 
@@ -151,6 +155,7 @@ export const CategorySelector = ({
                 selected: selectedCategories.includes(registrationType),
                 disableText: disabledCategories?.find((category) => category.type === registrationType)?.text,
                 showNoFilesIcon: categoriesWithoutFiles?.includes(registrationType),
+                isBeta: betaCategories?.includes(registrationType),
               }))
             )}
             onChangeType={onCategoryClick}
@@ -175,10 +180,16 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
       <Typography component="legend" fontWeight={700}>
         {t(`registration.publication_types.${mainType}`)}
       </Typography>
-      <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
-        {registrationTypes.map((registrationType) => (
-          <CategoryChip key={registrationType.value} category={registrationType} onClickChip={onChangeType} />
-        ))}
+      <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+        {registrationTypes.map((registrationType) =>
+          registrationType.isBeta ? (
+            <BetaFunctionality key={registrationType.value} sx={{ p: '0.25rem' }}>
+              <CategoryChip category={registrationType} onClickChip={onChangeType} />
+            </BetaFunctionality>
+          ) : (
+            <CategoryChip key={registrationType.value} category={registrationType} onClickChip={onChangeType} />
+          )
+        )}
       </Box>
     </Box>
   ) : null;

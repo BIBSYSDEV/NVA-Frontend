@@ -9,33 +9,36 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { Trans, useTranslation } from 'react-i18next';
-import { NviPageLayout } from '../../../../components/nvi/NviPageLayout';
-import { NviAdminTableSortSelector } from '../../../../components/nvi/table/NviAdminTableSortSelector';
-import { NviAdminReportingStatusRow } from '../../../../components/nvi/table/rows/NviAdminReportingStatusRow';
+import { visuallyHidden } from '@mui/utils';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useFetchCustomerMap } from '../../../../api/hooks/useFetchCustomerMap';
+import { InstitutionContactInformationDialog } from '../../../../components/dialogs/institution-contact-information/InstitutionContactInformationDialog';
+import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
-import { NviAdminSortSelectorType } from '../../../../components/sort-selectors/sort-nvi-table/nvi-admin-sort-types';
+import { NviAdminSortSelectorType } from '../_utils/nvi-admin-sort-types';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
-import { useInstitutionReportsFilteredAndSortedByUrl } from '../../../../hooks/nvi/useInstitutionReportsFilteredAndSortedByUrl';
+import { LanguageString } from '../../../../types/common.types';
 import { InstitutionReport } from '../../../../types/nvi.types';
+import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../_hooks/useInstitutionReportsFilteredAndSortedByUrl';
+import { NviAdminTableSortSelector } from '../_components/NviAdminTableSortSelector';
+import { CenteredContactInformationCell, CenteredPercentageControlledCell } from '../_styles/nvi-admin-table-styles';
+import { NviAdminReportingStatusRow } from './_components/NviAdminReportingStatusRow';
+import { NviAdminReportingStatusTexts } from './_components/NviAdminReportingStatusTexts';
 
 export const NviAdminReportingStatusPage = () => {
   const { t } = useTranslation();
-  const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl();
+  const { year } = useNviCandidatesParams();
+  const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
+  const [selectedInstitution, setSelectedInstitution] = useState<{ id: string; labels: LanguageString } | undefined>();
+  const { nvaCustomers, isFetchingCustomerMap } = useFetchCustomerMap();
 
   return (
     <NviPageLayout
       headline={t('basic_data.nvi.reporting_status')}
-      topView={
-        <Box sx={{ mb: '1rem' }}>
-          <Trans
-            t={t}
-            i18nKey="basic_data.nvi.reporting_status_description"
-            components={{ p: <Typography gutterBottom /> }}
-          />
-        </Box>
-      }
+      topView={<NviAdminReportingStatusTexts />}
       yearSelector
       sectorSelector
       institutionSearch>
@@ -58,16 +61,33 @@ export const NviAdminReportingStatusPage = () => {
                   <CenteredTableCell>{t('rejected')}</CenteredTableCell>
                   <CenteredTableCell>{t('disputes')}</CenteredTableCell>
                   <CenteredTableCell>{t('common.total_number')}</CenteredTableCell>
-                  <CenteredTableCell>{t('percentage_controlled')}</CenteredTableCell>
+                  <CenteredPercentageControlledCell>{t('percentage_controlled')}</CenteredPercentageControlledCell>
+                  <CenteredContactInformationCell>
+                    {/* INFO: Empty header cell to match contact info button column */}
+                    <Box component="span" sx={visuallyHidden}>
+                      {t('view_contact_point')}
+                    </Box>
+                  </CenteredContactInformationCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {sortedAndFilteredData.map((report: InstitutionReport) => (
-                  <NviAdminReportingStatusRow report={report} key={report.id} />
+                  <NviAdminReportingStatusRow
+                    report={report}
+                    key={report.id}
+                    onClickContactInformation={setSelectedInstitution}
+                  />
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
+          <InstitutionContactInformationDialog
+            isOpen={selectedInstitution !== undefined}
+            onClose={() => setSelectedInstitution(undefined)}
+            isFetchingCustomers={isFetchingCustomerMap}
+            id={nvaCustomers?.get(selectedInstitution?.id ?? '')?.id}
+            institutionLabels={selectedInstitution?.labels}
+          />
         </VerticalBox>
       )}
     </NviPageLayout>

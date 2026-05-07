@@ -107,6 +107,7 @@ export const dataTestId = {
       sectorField: 'sector-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
+    viewContactInfoButton: 'view-contact-information-button',
     nvi: {
       publicationPointsExpandDescriptionButton: 'publication-points-expand-description-button',
       curatorPublicationPointsExpandDescriptionButton: 'curator-publication-points-expand-description-button',
@@ -362,13 +363,13 @@ export const dataTestId = {
     abstractAccordion: 'abstract-accordion',
     addLinkOrFilesButton: 'add-link-or-files-button',
     authorLink: (id: string) => `presentation-author-link-${id}`,
+    codeRepositoryLink: 'code-repository-link',
     contributors: 'public-registration-contributors',
     detailsTab: {
       detailsTab: 'details-tab',
       emailLink: (id: string) => `email-link-${id}`,
       infoLink: 'info-link',
       resultContactModal: 'result-contact-modal',
-      viewContactInformationButton: 'view-contact-information-button',
     },
     dmpAccordion: 'dmp-accordion',
     doiLink: 'doi-link',
@@ -643,6 +644,8 @@ export const dataTestId = {
       externalLinkAddButton: 'external-link-add-button',
       externalLink: 'external-link',
       geographicDescriptionField: 'geographic-description-field',
+      codeRepositoryField: 'code-repository-field',
+      versionField: 'version-field',
       dateFromField: 'date-from-field',
       dateToField: 'date-to-field',
       eventOrganizerField: 'event-organizer-field',
@@ -886,4 +889,6 @@ export const dataTestId = {
   nviPublicationPointsHelpButton: 'nvi-publication-points-help-button',
   nviAdminPublicationPointsHelpButton: 'nvi-admin-publication-points-help-button',
   nviPublicationPointsHelpLink: 'nvi-publication-points-help-link',
+  institutionContactInformationDialog: 'institution-contact-information-dialog',
+  researchProfileLink: (id: string) => `research-profile-link-${id}`,
 };

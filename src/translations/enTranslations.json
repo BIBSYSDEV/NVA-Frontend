@@ -5,8 +5,8 @@
     "footer_text": "The service is provided by Sikt — Norwegian Agency for Shared Services in Education and Research. Sikt provides shared services to the Norwegian knowledge sector."
   },
   "add_file": "Add file",
-  "add_project": "",
-  "approved": "",
+  "add_project": "Add project",
+  "approved": "Approved",
   "authorization": {
     "about_terms": "Terms of Use and Privacy Policy for the Norwegian Research Information Repository",
     "about_terms_description": "<p>To use the service, you must accept Sikt's <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Terms of Use for the Norwegian Research Information Repository</a>, and familiarize yourself with the <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva\">Privacy Policy for the Norwegian Research Information Repository.</a></p><p>By clicking on «$t(authorization.accept)», you confirm that you have read and accepted the terms of use. You also consent to the processing of personal data in accordance with the privacy policy.</p>",
@@ -157,9 +157,10 @@
       "show_full_nin": "Show national identity number"
     }
   },
-  "candidate": "",
-  "candidates_approved_by_the_institution": "",
-  "candidates_everyone_has_approved": "",
+  "candidate": "Candidate",
+  "candidate_search": "",
+  "candidates_approved_by_the_institution": "Candidates the institution has approved",
+  "candidates_everyone_has_approved": "Candidates everyone has approved",
   "candidates_others_must_approve": "",
   "candidates_our_institution_has_approved": "",
   "cannot_copy_category_from_another_context_type": "<p>You cannot copy metadata from the category tab is the result belongs to a different main category.</p><p>This information must be registered manually after the rest of the metadata has been copied.</p>",
@@ -327,6 +328,8 @@
     "year": "Year",
     "yes": "Yes"
   },
+  "contact_point_for_institution": "",
+  "contact_point_for_institution_name": "",
   "contributor_search_hits_one": "",
   "contributor_search_hits_other": "",
   "controlling": "",
@@ -729,11 +732,9 @@
   "file_import": "",
   "file_import_automatic_import": "",
   "file_import_create_ticket": "",
-  "file_import_description": "",
   "file_upload_disabled_curator_can_upload_on_behalf": "Your institution does not allow the registrar to upload files for this category. As curator, you may add a file on behalf of the registrar.",
   "file_upload_disabled_due_to_institution_policy": "Your institution does not allow the registrar to upload files for this category. Contact curator support if you wish to have a file on this result.",
   "find_result_to_merge_description": "<p>Merge two results to avoid having two versions of the same result with different metadata and files.</p><p>If different metadata is registered, you can choose which data will apply. You also decide whether files should be transferred to the published result.</p><heading>Search for research result</heading><p>Select the result you want to merge with. You can only merge results where you are registered as a contributor.</p>",
-  "finished": "",
   "footer": {
     "about_nva": "About The Norwegian Research Information Repository (NVA)",
     "about_nva_text": "The Norwegian Research Information Repository (NVA) collects publications and other research results, and makes them openly available in a common national solution. This makes results from Norwegian research available in a single service.",
@@ -751,7 +752,6 @@
   "institution_support": "Institution's user support",
   "institutions_service_support": "Institutions' user support",
   "internal_file_info_description": "",
-  "internal_nvi_status": "",
   "keep_all_contributors": "",
   "keep_contributors_from_published_result": "",
   "keep_contributors_from_source_result": "",
@@ -997,16 +997,19 @@
       "thesis_embargo_curator_description": "Can view and edit files with embargo on theses."
     }
   },
+  "no_contact_information_for_institution": "",
   "no_search_results_found_with_search": "<span><icon /><heading>No results</heading></span><p>Unfortunately, we couldn't find anything that matches your search.</p>",
   "no_search_results_list_default": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that your search words are spelled correctly</li><li>Try a different spelling</li><li>Try a synonym</li><li>Translate the search word to Norwegian Bokmål (NB), Norwegian Nynorsk (NN), or English</li></ul>",
   "no_search_results_list_person": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that the name is spelled correctly</li><li>Try a different spelling</li><li>Try with or without the middle name</li></ul>",
+  "nvi_admin_publication_points_numbers": "",
+  "nvi_admin_reporting_status_numbers": "",
   "nvi_approved_results_publication_points_summary": "",
+  "nvi_curators_at_main_unit": "",
   "nvi_publication_points_page_description": "",
   "nvi_publication_points_page_description_expanded": "",
   "overview_over_administrators": "Overview of administrators",
   "overwrite": "Overwrite",
   "owner_institution": "Owner institution",
-  "percent_of_publication_points_in_year": "",
   "percent_of_published_reports_in_year": "",
   "percentage_approved": "",
   "percentage_approved_by_all": "",
@@ -1523,6 +1526,7 @@
       "ReportResearch": "Research report",
       "ReportWorkingPaper": "Working paper",
       "ResearchData": "Research data",
+      "SoftwareSourceCode": "",
       "StudyProtocol": "Study protocol",
       "Textbook": "Textbook",
       "TextbookChapter": "Textbook chapter",
@@ -1834,9 +1838,11 @@
         "related_publications": "Related publications",
         "remove_relation": "Remove relation",
         "remove_relation_confirm_text": "Do you want to remove this relation?",
+        "repository_url": "",
         "search_for_related_dmps": "Search for related data management plans",
         "search_for_related_registrations": "Search for results using either title or DOI",
-        "search_for_related_registrations_helper": "Choose from registrations that are published in NVA"
+        "search_for_related_registrations_helper": "Choose from registrations that are published in NVA",
+        "version": ""
       },
       "resource_type": "Category",
       "same_title": "same title",
@@ -1882,6 +1888,7 @@
     "year_published": "Publication year"
   },
   "rejected": "",
+  "reporting_status": "",
   "reporting_status_description": "",
   "reporting_status_numbers": "",
   "reset": "Reset",
@@ -1996,6 +2003,7 @@
       "approve_nvi_candidate": "Approve result",
       "approve_nvi_candidate_description": "<p>Check of research result for Norwegian Publication Indicator (NVI) reporting.</p><p>Press \"{{buttonText}}\" if the publication can be reported. See the <hyperlink>Reporting Instruction</hyperlink> for more information.</p>",
       "approve_rejected_nvi_candidate_description": "Press \"{{buttonText}}\" if the publication is to be reported. The reason for the rejection will also be removed.",
+      "candidates": "",
       "candidates_approved_by_all": "Candidates everyone has approved",
       "candidates_approved_by_others": "Candidates others have approved",
       "candidates_for_control": "Candidates for control",
@@ -2040,7 +2048,6 @@
       "reporting_status_for_publication_points_for_year": "",
       "reset_approval": "Reset reporting status",
       "reset_approval_description": "Are you sure you want to reset the reporting status? Someone at your institution will then have to report it again.",
-      "result": "",
       "save_note": "Save comment",
       "show_candidate_search": "Show candidate search",
       "show_disputes": "",
@@ -2056,8 +2063,6 @@
         "Rejected": "Rejected"
       },
       "status_dispute_for": "",
-      "total_for_organization": "",
-      "total_publication_points": "",
       "unidentified_person_with_nvi_institution": "Unidentified person with a connection to an NVI institution",
       "x_of_y_approved": "",
       "x_of_y_controlled": ""
@@ -2073,6 +2078,7 @@
   "temporarily_disabled": "",
   "time_format": {
     "hours": "HH:MM:SS",
+    "hours_minutes": "",
     "minutes": "MM:SS"
   },
   "unpublish_actions": {
@@ -2095,12 +2101,11 @@
   "use_rerender": "{{value}}",
   "velg_subject_area": "Select subject area",
   "view_contact_info": "View contact information",
-  "view_contact_information": "",
+  "view_contact_point": "",
   "view_the_reporting_instructions": "",
   "visibility_of_units": "",
   "vocabulary_missing": "The institution has not added vocabulary",
   "what_you_find_in_nva_description": "<heading>What can you find in NVA?</heading><p>The Norwegian Research Information Repository (NVA) collects and makes information about Norwegian research accessible.</p><p>Here, you can explore publications, research projects, and researchers across universities, university colleges, and research institutions.</p>",
-  "x_results_are_ready_for_reporting_and_they_give_y_publication_points": "",
   "you_cannot_upload_files_to_this_result": "You do not have access to upload files for this result.",
   "you_do_not_have_permission_to_edit_this_registration": "You do not have access to edit this registration."
 }
