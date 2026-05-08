@@ -106,6 +106,7 @@ export enum OtherRegistrationType {
 export enum ResearchDataType {
   DataManagementPlan = 'DataManagementPlan',
   Dataset = 'DataSet',
+  SoftwareSourceCode = 'SoftwareSourceCode',
 }
 
 export const allPublicationInstanceTypes = [
@@ -168,6 +169,8 @@ export enum ResourceFieldNames {
   PublicationInstanceVenues = 'entityDescription.reference.publicationInstance.venues',
   PublicationInstanceReferencedBy = 'entityDescription.reference.publicationInstance.referencedBy',
   PublicationInstanceRelated = 'entityDescription.reference.publicationInstance.related',
+  PublicationInstanceCodeRepository = 'entityDescription.reference.publicationInstance.codeRepository',
+  PublicationInstanceSoftwareVersion = 'entityDescription.reference.publicationInstance.softwareVersion',
   Reference = 'entityDescription.reference',
   Revision = 'entityDescription.reference.publicationContext.revision',
   Series = 'entityDescription.reference.publicationContext.series',

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { NviStatusChip } from '../../../components/StatusChip';
 import { RootState } from '../../../redux/store';
-import { NviCandidate } from '../../../types/nvi.types';
+import { NviCandidate, NviPeriodStatusEnum } from '../../../types/nvi.types';
 import { hasUnidentifiedContributorProblem } from '../../../utils/nviHelpers';
 import { NviApprovals } from './NviApprovals';
 import { NviCandidateActions } from './NviCandidateActions';
@@ -26,10 +26,17 @@ export const NviDialoguePanel = ({
   const candidateStatus = nviCandidate.approvals.find(
     (approval) => approval.institutionId === user?.topOrgCristinId
   )?.status;
-  const periodStatus = nviCandidate?.period.status;
+  const periodStatus = nviCandidate.period.status;
 
   const isPendingCandidate = candidateStatus === 'New' || candidateStatus === 'Pending';
   const hasProblem = hasUnidentifiedContributorProblem(nviCandidate.problems);
+
+  const periodBannerKey =
+    periodStatus === NviPeriodStatusEnum.ClosedPeriod
+      ? 'tasks.nvi.reporting_period_closed'
+      : periodStatus === NviPeriodStatusEnum.NoPeriod
+        ? 'tasks.nvi.reporting_period_missing'
+        : null;
 
   return (
     <>
@@ -52,28 +59,29 @@ export const NviDialoguePanel = ({
         )}
       </Box>
       {!isUpdatingNviCandidateInfo ? (
-        <Box
-          sx={{
-            mx: '1rem',
-            display: 'grid',
-            gap: '1rem',
-            gridTemplateAreas: isPendingCandidate
-              ? hasProblem
-                ? "'curator' 'approvals' 'divider0' 'problem' 'divider1' 'actions' 'divider2' 'comment'"
-                : "'curator' 'approvals' 'divider1' 'actions' 'divider2' 'comment'"
-              : hasProblem
-                ? "'curator' 'approvals' 'divider0' 'problem' 'divider1' 'comment' 'divider2' 'actions'"
-                : "'curator' 'approvals' 'divider1' 'comment' 'divider2' 'actions'",
-          }}>
-          {periodStatus === 'OpenPeriod' ? (
+        <>
+          {periodBannerKey && (
+            <Typography sx={{ mx: '1rem', mb: '1rem', p: '1rem', bgcolor: 'nvi.main' }}>
+              {t(periodBannerKey)}
+            </Typography>
+          )}
+          <Box
+            sx={{
+              mx: '1rem',
+              display: 'grid',
+              gap: '1rem',
+              gridTemplateAreas: isPendingCandidate
+                ? hasProblem
+                  ? "'curator' 'approvals' 'divider0' 'problem' 'divider1' 'actions' 'divider2' 'comment'"
+                  : "'curator' 'approvals' 'divider1' 'actions' 'divider2' 'comment'"
+                : hasProblem
+                  ? "'curator' 'approvals' 'divider0' 'problem' 'divider1' 'comment' 'divider2' 'actions'"
+                  : "'curator' 'approvals' 'divider1' 'comment' 'divider2' 'actions'",
+            }}>
             <NviCandidateActions nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
-          ) : periodStatus === 'ClosedPeriod' ? (
-            <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_closed')}</Typography>
-          ) : periodStatus === 'NoPeriod' ? (
-            <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_missing')}</Typography>
-          ) : null}
-          <NviApprovals approvals={nviCandidate?.approvals ?? []} />
-        </Box>
+            <NviApprovals approvals={nviCandidate?.approvals ?? []} />
+          </Box>
+        </>
       ) : (
         <NviDialoguePanelSkeleton />
       )}

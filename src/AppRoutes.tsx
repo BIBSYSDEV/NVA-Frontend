@@ -19,7 +19,7 @@ const EditProject = lazy(() => import('./pages/project/project_wizard/EditProjec
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
 const MyPagePage = lazy(() => import('./pages/my_page/MyPagePage'));
 const PublicResearchProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
-const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
+const TasksPage = lazy(() => import('./pages/tasks/TasksPage'));
 const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
 const ProjectPage = lazy(() => import('./pages/projects/ProjectPage'));
 const Logout = lazy(() => import('./layout/Logout'));

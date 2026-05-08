@@ -1,0 +1,61 @@
+import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { LanguageString } from '../../../types/common.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { getLanguageString } from '../../../utils/translation-helpers';
+import { BaseDialog } from '../../_molecules/BaseDialog';
+import { VerticalBox } from '../../styled/Wrappers';
+import { ContactInformationBox } from './components/ContactInformationBox';
+import { useInstitutionUsersByRole } from './hooks/useInstitutionUsersByRole';
+
+interface InstitutionContactInformationDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  isFetchingCustomers: boolean;
+  id: string | undefined;
+  institutionLabels?: LanguageString;
+}
+
+export const InstitutionContactInformationDialog = ({
+  isOpen,
+  onClose,
+  id,
+  isFetchingCustomers = false,
+  institutionLabels,
+}: InstitutionContactInformationDialogProps) => {
+  const { t } = useTranslation();
+  const { editor, institutionAdmin, nviCurators, isLoading: isFetchingUsers, isError } = useInstitutionUsersByRole(id);
+  const isLoading = isFetchingCustomers || isFetchingUsers;
+  const hasNoContactInfo = !isLoading && !isError && !editor && !institutionAdmin && !nviCurators?.length;
+
+  return (
+    <BaseDialog
+      open={isOpen}
+      onClose={onClose}
+      showLoader={isLoading}
+      boxMaxWidth="sm"
+      dialogTitle={(() => {
+        const name = getLanguageString(institutionLabels);
+        return name ? t('contact_point_for_institution_name', { name }) : t('contact_point_for_institution');
+      })()}
+      dataTestId={dataTestId.institutionContactInformationDialog}>
+      {!id && !isFetchingCustomers ? (
+        <Typography>{t('no_contact_information_for_institution')}</Typography>
+      ) : isError ? (
+        <Typography>{t('feedback.error.get_users_for_institution')}</Typography>
+      ) : hasNoContactInfo ? (
+        <Typography>{t('no_contact_information_for_institution')}</Typography>
+      ) : (
+        <VerticalBox sx={{ gap: '1.5rem' }}>
+          {editor && <ContactInformationBox roleName={t('my_page.roles.editor')} users={[editor]} />}
+          {institutionAdmin && (
+            <ContactInformationBox roleName={t('my_page.roles.institution_admin')} users={[institutionAdmin]} />
+          )}
+          {nviCurators && nviCurators.length > 0 && (
+            <ContactInformationBox roleName={t('nvi_curators_at_main_unit')} users={nviCurators} />
+          )}
+        </VerticalBox>
+      )}
+    </BaseDialog>
+  );
+};

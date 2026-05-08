@@ -24,7 +24,7 @@ export const useLookupDoi = (doiQuery: string) => {
 
     if (hits.length === 0 && isNewDoi && !doiPreviewMutation.isPending) {
       doiPreviewMutation.mutate(doiQuery, {
-        onSuccess: () => {
+        onSettled: () => {
           setLastMutatedDoi(doiQuery);
         },
       });

@@ -35,8 +35,11 @@ import {
   ReportPublicationInstance,
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
-import { ResearchDataPublicationContext } from '../../types/publication_types/researchDataRegistration.types';
-import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
+import {
+  ResearchDataPublicationContext,
+  ResearchDataPublicationInstance,
+} from '../../types/publication_types/researchDataRegistration.types';
+import { ArtisticType, DegreeType, JournalType, ResearchDataType } from '../../types/publicationFieldNames';
 import { AdditionalIdentifier, RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
@@ -78,6 +81,7 @@ import {
   PublicPublicationInstanceExhibition,
   PublicPublicationInstanceJournal,
   PublicPublicationInstanceReport,
+  PublicPublicationInstanceSoftwareSourceCode,
 } from './PublicPublicationInstance';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
@@ -219,6 +223,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             ) : isExhibitionContent(publicationInstance.type) ? (
               <PublicPublicationInstanceExhibition
                 publicationInstance={publicationInstance as ExhibitionPublicationInstance}
+              />
+            ) : publicationInstance.type === ResearchDataType.SoftwareSourceCode ? (
+              <PublicPublicationInstanceSoftwareSourceCode
+                publicationInstance={publicationInstance as ResearchDataPublicationInstance}
               />
             ) : null)}
 
