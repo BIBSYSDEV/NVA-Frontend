@@ -4,26 +4,29 @@ import { useFetchNviCandidates } from '../../../../../api/hooks/useFetchNviCandi
 import { NviCandidatePageLocationState } from '../../../../../types/locationState.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { getNviCandidatePath } from '../../../../../utils/urlPaths';
-import { NavigationIconButton } from '../../../../messages/components/NavigationIconButton';
+import { generateLocationState } from '../_utils/generate-location-state';
+import { NavigationIconButton } from './NavigationIconButton';
 
 export const NviCandidateNavigation = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const locationState = location.state as NviCandidatePageLocationState;
 
-  const nviQueryParams = location.state?.candidateOffsetState?.nviQueryParams;
+  const nviQueryParams = locationState?.candidateOffsetState?.nviQueryParams;
   const thisCandidateOffset = locationState?.candidateOffsetState?.currentOffset;
 
   const hasOffset = typeof thisCandidateOffset === 'number';
   const isFirstCandidate = hasOffset && thisCandidateOffset === 0;
 
+  const newNviQueryParams = { ...nviQueryParams };
+
   if (hasOffset && nviQueryParams) {
-    nviQueryParams.offset = Math.max(thisCandidateOffset - 1, 0);
+    newNviQueryParams.offset = Math.max(thisCandidateOffset - 1, 0); // Setting the offset to the offset of the previous candidate, so that the upcoming fetch will return the previous and next candidates around the current one.
   }
 
   const navigateCandidateQuery = useFetchNviCandidates({
     enabled: hasOffset && !!nviQueryParams,
-    params: nviQueryParams ?? {},
+    params: newNviQueryParams,
   });
 
   const nextCandidateIdentifier = navigateCandidateQuery.isSuccess
@@ -34,25 +37,14 @@ export const NviCandidateNavigation = () => {
 
   const nextCandidateState =
     hasOffset && nviQueryParams
-      ? ({
-          ...location.state,
-          candidateOffsetState: {
-            currentOffset: thisCandidateOffset + 1,
-            nviQueryParams,
-          },
-        } satisfies NviCandidatePageLocationState)
+      ? generateLocationState(locationState, newNviQueryParams, thisCandidateOffset + 1)
       : undefined;
 
   const previousCandidateState =
     hasOffset && nviQueryParams
-      ? ({
-          ...locationState,
-          candidateOffsetState: {
-            currentOffset: thisCandidateOffset - 1,
-            nviQueryParams,
-          },
-        } satisfies NviCandidatePageLocationState)
+      ? generateLocationState(locationState, newNviQueryParams, thisCandidateOffset - 1)
       : undefined;
+
   return (
     <>
       {previousCandidateIdentifier && (
