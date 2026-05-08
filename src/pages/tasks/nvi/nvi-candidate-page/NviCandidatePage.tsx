@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 import { nviCandidateQueryKeyword } from '../../../../api/hooks/useFetchNviCandidate';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../../components/PageSpinner';
+import { MainWithRightSidebarLayout } from '../../../../components/page-layouts/MainWithRightSidebarLayout';
 import { NviCandidateProblemsContext } from '../../../../context/NviCandidateProblemsContext';
 import { IdentifierParams } from '../../../../utils/urlPaths';
 import { Forbidden } from '../../../errorpages/Forbidden';
@@ -31,38 +32,30 @@ export const NviCandidatePage = () => {
     return () => clearTimeout(timer);
   }, [identifier, refetch]);
 
-  if (error?.response?.status === 401) {
-    return <Forbidden />;
-  }
+  if (error?.response?.status === 401) return <Forbidden />;
+  if (error?.response?.status === 404) return <NotFound />;
+  if (isPending) return <PageSpinner aria-label={t('common.result')} />;
+  if (!registration) return null;
 
-  if (error?.response?.status === 404) {
-    return <NotFound />;
-  }
-
-  return isPending ? (
-    <PageSpinner aria-label={t('common.result')} />
-  ) : (
-    <Box
-      component="section"
-      sx={{
-        display: 'grid',
-        gridTemplateColumns: { xs: '1fr', sm: '4fr 1fr' },
-        gridTemplateAreas: { xs: '"nvi" "registration"', sm: '"registration nvi"' },
-        gap: '1rem',
-      }}>
-      {registration && (
-        <ErrorBoundary>
-          <NviCandidateProblemsContext.Provider value={{ problems: nviCandidate!.problems }}>
-            <PublicRegistrationContent registration={registration} />
-          </NviCandidateProblemsContext.Provider>
-          <NviCandidateNavigation />
+  return (
+    <ErrorBoundary>
+      <MainWithRightSidebarLayout
+        main={
+          <Box sx={{ position: 'relative' }}>
+            <NviCandidateProblemsContext.Provider value={{ problems: nviCandidate!.problems }}>
+              <PublicRegistrationContent registration={registration} />
+            </NviCandidateProblemsContext.Provider>
+            <NviCandidateNavigation />
+          </Box>
+        }
+        sidebar={
           <NviCandidateActionPanel
             nviCandidate={nviCandidate!}
             isUpdatingNviCandidateInfo={isUpdatingNviCandidateInfo}
             nviCandidateQueryKey={[nviCandidateQueryKeyword, identifier ?? '']}
           />
-        </ErrorBoundary>
-      )}
-    </Box>
+        }
+      />
+    </ErrorBoundary>
   );
 };
