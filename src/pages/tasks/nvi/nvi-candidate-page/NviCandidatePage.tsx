@@ -13,7 +13,8 @@ import { Forbidden } from '../../../errorpages/Forbidden';
 import NotFound from '../../../errorpages/NotFound';
 import { NviCandidateActionPanel } from '../../../messages/components/NviCandidateActionPanel';
 import { PublicRegistrationContent } from '../../../public_registration/PublicRegistrationContent';
-import { NviCandidateNavigation } from './components/NviCandidateNavigation';
+import { NviCandidateNavigation } from './_components/NviCandidateNavigation';
+import { useFetchNviCandidateData } from './_hooks/useFetchNviCandidateData';
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
