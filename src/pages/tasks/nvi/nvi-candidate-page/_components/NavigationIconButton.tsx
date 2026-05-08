@@ -13,8 +13,6 @@ export const NavigationIconButton = ({ navigateTo, sx, ...rest }: NavigationIcon
     size="small"
     sx={{
       display: { xs: 'none', md: 'inline-flex' },
-      height: 'fit-content',
-      justifySelf: navigateTo === 'previous' ? 'start' : 'end',
       border: '1px solid',
       borderColor: 'primary.main',
       bgcolor: 'tertiary.main',

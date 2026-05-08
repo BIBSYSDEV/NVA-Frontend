@@ -6,6 +6,7 @@ interface Props {
   sidebar: ReactNode;
 }
 
+// NOTE: On mobile (xs), sidebar appears above main
 export const MainWithRightSidebarLayout = ({ main, sidebar }: Props) => (
   <Box
     component="section"

@@ -3,7 +3,8 @@ import { useFetchRegistration } from '../../../../../api/hooks/useFetchRegistrat
 import { getIdentifierFromId } from '../../../../../utils/general-helpers';
 
 /**
- * Fetches an NVI candidate and its associated registration in parallel.
+ * Fetches an NVI candidate and its associated registration sequentially —
+ * the registration fetch depends on the publicationId returned by the candidate fetch.
  *
  * @param identifier - The NVI candidate identifier. Queries are skipped if undefined.
  * @returns Combined pending/error state, the NVI candidate, its registration, and a refetch function.
