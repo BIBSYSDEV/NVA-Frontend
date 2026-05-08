@@ -2,12 +2,10 @@ import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
-import { nviCandidateQueryKeyword, useFetchNviCandidate } from '../../../../api/hooks/useFetchNviCandidate';
-import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
+import { nviCandidateQueryKeyword } from '../../../../api/hooks/useFetchNviCandidate';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { NviCandidateProblemsContext } from '../../../../context/NviCandidateProblemsContext';
-import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { IdentifierParams } from '../../../../utils/urlPaths';
 import { Forbidden } from '../../../errorpages/Forbidden';
 import NotFound from '../../../errorpages/NotFound';
@@ -18,15 +16,12 @@ import { useFetchNviCandidateData } from './_hooks/useFetchNviCandidateData';
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
-  const [isUpdatingNviCandidateInfo, setIsUpdatingNviCandidateInfo] = useState(true);
   const { identifier } = useParams<IdentifierParams>();
-  const nviCandidateQuery = useFetchNviCandidate(identifier);
-  const { refetch } = nviCandidateQuery;
-  const nviCandidate = nviCandidateQuery.data;
-  const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
+  const { nviCandidate, registration, refetch, error, isPending } = useFetchNviCandidateData(identifier);
+  const [isUpdatingNviCandidateInfo, setIsUpdatingNviCandidateInfo] = useState(true);
 
-  /* NVI calculation in backend takes a few seconds after a registration has been updated, so we are disabling the
-   * panel for a few seconds before refetching to ensure it shows the correct data (NP-49727) */
+  /* Disabling the panel for a few seconds before refetching NVI data to ensure it shows correct information (NP-49727).
+   * This is done on initial load in case the load is a return from edit - does not affect loads after navigation */
   useEffect(() => {
     const timer = setTimeout(() => {
       refetch().finally(() => {
@@ -36,17 +31,15 @@ export const NviCandidatePage = () => {
     return () => clearTimeout(timer);
   }, [identifier, refetch]);
 
-  const registrationQuery = useFetchRegistration(registrationIdentifier);
-
-  if (nviCandidateQuery.error?.response?.status === 401) {
+  if (error?.response?.status === 401) {
     return <Forbidden />;
   }
 
-  if (nviCandidateQuery.error?.response?.status === 404) {
+  if (error?.response?.status === 404) {
     return <NotFound />;
   }
 
-  return registrationQuery.isPending || nviCandidateQuery.isPending ? (
+  return isPending ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : (
     <Box
@@ -57,22 +50,17 @@ export const NviCandidatePage = () => {
         gridTemplateAreas: { xs: '"nvi" "registration"', sm: '"registration nvi"' },
         gap: '1rem',
       }}>
-      {registrationQuery.data && (
+      {registration && (
         <ErrorBoundary>
-          <ErrorBoundary>
-            <NviCandidateProblemsContext.Provider value={{ problems: nviCandidate?.problems }}>
-              <PublicRegistrationContent registration={registrationQuery.data} />
-            </NviCandidateProblemsContext.Provider>
-            <NviCandidateNavigation />
-          </ErrorBoundary>
-
-          {nviCandidate && (
-            <NviCandidateActionPanel
-              nviCandidate={nviCandidate}
-              isUpdatingNviCandidateInfo={isUpdatingNviCandidateInfo}
-              nviCandidateQueryKey={[nviCandidateQueryKeyword, identifier ?? '']}
-            />
-          )}
+          <NviCandidateProblemsContext.Provider value={{ problems: nviCandidate!.problems }}>
+            <PublicRegistrationContent registration={registration} />
+          </NviCandidateProblemsContext.Provider>
+          <NviCandidateNavigation />
+          <NviCandidateActionPanel
+            nviCandidate={nviCandidate!}
+            isUpdatingNviCandidateInfo={isUpdatingNviCandidateInfo}
+            nviCandidateQueryKey={[nviCandidateQueryKeyword, identifier ?? '']}
+          />
         </ErrorBoundary>
       )}
     </Box>
