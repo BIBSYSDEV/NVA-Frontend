@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { nviCandidateQueryKeyword } from '../../../../api/hooks/useFetchNviCandidate';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
-import { PageSpinner } from '../../../../components/PageSpinner';
 import { MainWithRightSidebarLayout } from '../../../../components/page-layouts/MainWithRightSidebarLayout';
+import { PageSpinner } from '../../../../components/PageSpinner';
 import { NviCandidateProblemsContext } from '../../../../context/NviCandidateProblemsContext';
 import { IdentifierParams } from '../../../../utils/urlPaths';
 import { Forbidden } from '../../../errorpages/Forbidden';
@@ -33,9 +33,9 @@ export const NviCandidatePage = () => {
   }, [identifier, refetch]);
 
   if (error?.response?.status === 401) return <Forbidden />;
-  if (error?.response?.status === 404) return <NotFound />;
+  if (error) return <NotFound />;
+  if (!nviCandidate || !registration) return <NotFound />;
   if (isPending) return <PageSpinner aria-label={t('common.result')} />;
-  if (!registration) return null;
 
   return (
     <ErrorBoundary>
