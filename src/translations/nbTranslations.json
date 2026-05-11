@@ -2026,6 +2026,7 @@
       "delete_note": "Slett kommentar",
       "delete_note_description": "Er du sikker på at du vil slette denne kommentaren?",
       "exclude_subunits": "Ekskluder underenheter",
+      "imported_data_warning": "Viser importerte data. Tallene kan avvike fra det som ble rapportert på rapporteringstidspunkt.",
       "include_candidates_without_curator": "Inkluder kandidater uten kurator",
       "institution_nvi_status": "Status NVI-rapportering",
       "message_description": "Har du relevante opplysninger for kontrollen, legg inn en kommentar. Kommentaren er synlig for andre NVI-kuratorer med redigeringstilgang.",

@@ -42,6 +42,7 @@ export const NviPublicationPointsPage = () => {
         />
       }
       yearSelector
+      showImportedDataWarning
       visibilitySelector>
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
