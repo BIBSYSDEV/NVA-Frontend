@@ -57,17 +57,19 @@ export const NviPageLayout = ({
       {topView ?? null}
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-          {yearSelector && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', maxWidth: '20rem' }}>
-              <NviYearSelector sx={{ minWidth: '10rem' }} />
-              {showImportedDataWarning && year <= 2024 && (
-                <Typography variant="body2">{t('tasks.nvi.imported_data_warning')}</Typography>
-              )}
-            </Box>
-          )}
           {sectorSelector && <NviSectorSelector sx={{ minWidth: '15rem' }} />}
           {institutionSearch && <NviInstitutionSearch sx={{ minWidth: '30rem' }} />}
           {visibilitySelector && <NviVisibilitySelector sx={{ minWidth: '15rem' }} />}
+          {yearSelector && (
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+              <NviYearSelector sx={{ width: '10rem' }} />
+              {showImportedDataWarning && year <= 2024 && (
+                <Typography variant="body2" sx={{ maxWidth: '20rem' }}>
+                  {t('tasks.nvi.imported_data_warning')}
+                </Typography>
+              )}
+            </Box>
+          )}
         </Box>
         {exportButton}
       </Box>
