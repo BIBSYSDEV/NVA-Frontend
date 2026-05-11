@@ -5,8 +5,8 @@
     "footer_text": "The service is provided by Sikt — Norwegian Agency for Shared Services in Education and Research. Sikt provides shared services to the Norwegian knowledge sector."
   },
   "add_file": "Add file",
-  "add_project": "",
-  "approved": "",
+  "add_project": "Add project",
+  "approved": "Approved",
   "authorization": {
     "about_terms": "Terms of Use and Privacy Policy for the Norwegian Research Information Repository",
     "about_terms_description": "<p>To use the service, you must accept Sikt's <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv\">Terms of Use for the Norwegian Research Information Repository</a>, and familiarize yourself with the <a href=\"https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/personvernerklaering-nasjonalt-vitenarkiv-nva\">Privacy Policy for the Norwegian Research Information Repository.</a></p><p>By clicking on «$t(authorization.accept)», you confirm that you have read and accepted the terms of use. You also consent to the processing of personal data in accordance with the privacy policy.</p>",
@@ -157,9 +157,10 @@
       "show_full_nin": "Show national identity number"
     }
   },
-  "candidate": "",
-  "candidates_approved_by_the_institution": "",
-  "candidates_everyone_has_approved": "",
+  "candidate": "Candidate",
+  "candidate_search": "",
+  "candidates_approved_by_the_institution": "Candidates the institution has approved",
+  "candidates_everyone_has_approved": "Candidates everyone has approved",
   "candidates_others_must_approve": "",
   "candidates_our_institution_has_approved": "",
   "cannot_copy_category_from_another_context_type": "<p>You cannot copy metadata from the category tab is the result belongs to a different main category.</p><p>This information must be registered manually after the rest of the metadata has been copied.</p>",
@@ -327,6 +328,8 @@
     "year": "Year",
     "yes": "Yes"
   },
+  "contact_point_for_institution": "",
+  "contact_point_for_institution_name": "",
   "contributor_search_hits_one": "",
   "contributor_search_hits_other": "",
   "controlling": "",
@@ -645,6 +648,7 @@
       "update_publish_strategy": "Failed to update publishing strategy",
       "update_publishing_request": "Failed to update publishing request",
       "update_registration": "Failed to update registration",
+      "update_rights_retention_strategy": "Failed to update rights policy",
       "update_rrs_and_file_import": "",
       "update_ticket_assignee": "Failed to set curator",
       "update_ticket_status": "Failed to update status",
@@ -693,6 +697,7 @@
       "update_promoted_publication": "Favourite marking was updated",
       "update_publish_strategy": "Publishing strategy updated successfully",
       "update_registration": "Registration updated successfully",
+      "update_rights_retention_strategy": "Rights retention policy was updated",
       "update_rrs_and_file_import": "",
       "update_ticket_assignee": "Curator was updated",
       "update_vocabulary": "{{vocabulary}} is now {{status}}"
@@ -992,10 +997,14 @@
       "thesis_embargo_curator_description": "Can view and edit files with embargo on theses."
     }
   },
+  "no_contact_information_for_institution": "",
   "no_search_results_found_with_search": "<span><icon /><heading>No results</heading></span><p>Unfortunately, we couldn't find anything that matches your search.</p>",
   "no_search_results_list_default": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that your search words are spelled correctly</li><li>Try a different spelling</li><li>Try a synonym</li><li>Translate the search word to Norwegian Bokmål (NB), Norwegian Nynorsk (NN), or English</li></ul>",
   "no_search_results_list_person": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that the name is spelled correctly</li><li>Try a different spelling</li><li>Try with or without the middle name</li></ul>",
+  "nvi_admin_publication_points_numbers": "",
+  "nvi_admin_reporting_status_numbers": "",
   "nvi_approved_results_publication_points_summary": "",
+  "nvi_curators_at_main_unit": "",
   "nvi_publication_points_page_description": "",
   "nvi_publication_points_page_description_expanded": "",
   "overview_over_administrators": "Overview of administrators",
@@ -1230,6 +1239,7 @@
       "verify_affiliation": "Confirm affiliation",
       "verify_contributor": "Identify contributor"
     },
+    "delete_registration": "Delete result",
     "description": {
       "abstract": "Abstract",
       "add_project_helper_text": "Search for and select the project in the search field to link the result to a project that is already registered in NVA.",
@@ -1319,6 +1329,7 @@
       "registration_without_file": "Result without a file",
       "resource_has_no_files_or_links": "The resource does not have any files or links to publish",
       "resource_is_a_reference": "The resource is a reference and has no files or links to publish",
+      "select_availability": "Select availability",
       "show_all_older_versions": "Show all previous versions",
       "version_helper_text": "<p>Upload the accepted version if the published version is not openly published with a <ccLink>Creative Commons licence</ccLink>. </p><heading>Accepted Version (Authors Accepted Manuscript, AAM)</heading><p>Author's final version after peer review, as submitted to the publisher. This version does not have the publisher's pagination and graphic style or any editorial rewrites that the published version includes.</p><heading>Published Version (Version of Records, VOR) </heading><p>The article as presented in a journal, in print and/or online. This version will include editorial improvements and the publisher's graphic profile. Usually available on a publisher's website, in PDF format. The publisher has determined the licence, and you must choose the same one with which the article is published.</p>"
     },
@@ -1515,6 +1526,7 @@
       "ReportResearch": "Research report",
       "ReportWorkingPaper": "Working paper",
       "ResearchData": "Research data",
+      "SoftwareSourceCode": "",
       "StudyProtocol": "Study protocol",
       "Textbook": "Textbook",
       "TextbookChapter": "Textbook chapter",
@@ -1826,9 +1838,11 @@
         "related_publications": "Related publications",
         "remove_relation": "Remove relation",
         "remove_relation_confirm_text": "Do you want to remove this relation?",
+        "repository_url": "",
         "search_for_related_dmps": "Search for related data management plans",
         "search_for_related_registrations": "Search for results using either title or DOI",
-        "search_for_related_registrations_helper": "Choose from registrations that are published in NVA"
+        "search_for_related_registrations_helper": "Choose from registrations that are published in NVA",
+        "version": ""
       },
       "resource_type": "Category",
       "same_title": "same title",
@@ -1874,6 +1888,7 @@
     "year_published": "Publication year"
   },
   "rejected": "",
+  "reporting_status": "",
   "reporting_status_description": "",
   "reporting_status_numbers": "",
   "reset": "Reset",
@@ -1988,11 +2003,15 @@
       "approve_nvi_candidate": "Approve result",
       "approve_nvi_candidate_description": "<p>Check of research result for Norwegian Publication Indicator (NVI) reporting.</p><p>Press \"{{buttonText}}\" if the publication can be reported. See the <hyperlink>Reporting Instruction</hyperlink> for more information.</p>",
       "approve_rejected_nvi_candidate_description": "Press \"{{buttonText}}\" if the publication is to be reported. The reason for the rejection will also be removed.",
+      "candidates": "",
+      "candidates_approved_by_all": "Candidates everyone has approved",
       "candidates_approved_by_others": "Candidates others have approved",
       "candidates_for_control": "Candidates for control",
       "candidates_pending_verification_by_others": "Candidates others need to inspect",
+      "candidates_rejected_by_all": "Candidates everyone has rejected",
       "candidates_rejected_by_others": "Candidates others have rejected",
       "completed_count": "Finished checking ({{completed}} of {{total}})",
+      "controlled": "Controlled",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Anthologies with academic chapters",
         "anthology_without_chapter": "Anthologies without a chapter",
@@ -2008,18 +2027,22 @@
       "delete_note_description": "Are you sure you want to delete this comment?",
       "exclude_subunits": "Exclude subunits",
       "include_candidates_without_curator": "Include candidates without a curator",
+      "institution_nvi_status": "Status NVI reporting",
       "message_description": "If you have relevant information for the check, please add a comment. The comment is visible to other Norwegian Science Index (NVI) curators with editing access.",
       "next_candidate": "Go to the next candidate",
       "no_nvi_candidates": "You have no NVI candidates for this search.",
       "note": "Comment",
       "nvi_control": "NVI control (Norwegian Science Index)",
+      "nvi_reporting_status": "Status NVI reporting",
       "previous_candidate": "Go to previous candidate",
       "problem_description": "<p>The NVI candidate lacks required information:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identify the person before approving by editing the result. Control statuses are reset when an unidentified person is identified.</p>",
       "progress_nvi_reporting": "",
+      "publication_points": "Publication points",
       "reject_nvi_candidate": "Reject result",
       "reject_nvi_candidate_description": "Click \"{{buttonText}}\" if the publication cannot be reported. You must justify the rejection.",
       "reject_nvi_candidate_form_label": "Reason for rejection",
       "reject_nvi_candidate_modal_text": "<p>Provide an explanation for why you are rejecting the publication for Norwegian Publication Indicator (NVI) reporting.</p><p>If you are unsure about the requirements, see the <hyperlink>Reporting Instruction</hyperlink>.</p><p>The explanation will be stored in NVA, and will be visible to NVI curators at the co-publishing institutions.</p><p>Provide an explanation for why you are rejecting this publication for reporting. The explanation must contain at least 10 characters.</p>",
+      "rejection_reason": "Reason for rejection",
       "reporting_period_closed": "The reporting period for this result is closed.",
       "reporting_period_missing": "The reporting period for this result is not open.",
       "reporting_status_for_publication_points_for_year": "",
@@ -2055,6 +2078,7 @@
   "temporarily_disabled": "",
   "time_format": {
     "hours": "HH:MM:SS",
+    "hours_minutes": "",
     "minutes": "MM:SS"
   },
   "unpublish_actions": {
@@ -2076,7 +2100,8 @@
   "update_name": "",
   "use_rerender": "{{value}}",
   "velg_subject_area": "Select subject area",
-  "view_contact_info": "View contact info",
+  "view_contact_info": "View contact information",
+  "view_contact_point": "",
   "view_the_reporting_instructions": "",
   "visibility_of_units": "",
   "vocabulary_missing": "The institution has not added vocabulary",

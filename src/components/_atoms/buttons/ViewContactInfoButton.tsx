@@ -13,7 +13,7 @@ export const ViewContactInfoButton = (props: ButtonProps) => {
       color="tertiary"
       variant="contained"
       startIcon={<MailOutlineIcon />}>
-      {t('view_contact_info')}
+      {t('view_contact_point')}
     </Button>
   );
 };
