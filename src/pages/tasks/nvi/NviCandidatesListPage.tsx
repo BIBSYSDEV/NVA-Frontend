@@ -9,9 +9,9 @@ import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsi
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { NviYearSelector } from '../../../components/filters/nvi/NviYearSelector';
-import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { NviSearchPageLayout } from '../../../components/page-layouts/NviSearchPageLayout';
 import { SearchForm } from '../../../components/SearchForm';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -36,12 +36,7 @@ export const NviCandidatesListPage = () => {
   const page = Math.floor(nviParams.offset / nviParams.size) + 1;
 
   return (
-    <section>
-      <HeadTitle>{t('candidate_search')}</HeadTitle>
-      <Typography variant="h1" sx={{ mb: '1.5rem' }}>
-        {t('candidate_search')}
-      </Typography>
-
+    <NviSearchPageLayout headline={t('candidate_search')} headtitle={t('candidate_search')}>
       <Grid container columns={16} spacing="1rem" sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
         <Grid size={{ xs: 16, md: 4 }}>
           <NviStatusFilter />
@@ -160,6 +155,6 @@ export const NviCandidatesListPage = () => {
           </List>
         )}
       </ListPagination>
-    </section>
+    </NviSearchPageLayout>
   );
 };

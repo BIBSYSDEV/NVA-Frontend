@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { ReactNode } from 'react';
 import { ExportNviPublicationPointsButton } from '../buttons/export-buttons/ExportNviPublicationPointsButton';
 import { ExportNviStatusButton } from '../buttons/export-buttons/ExportNviStatusButton';
@@ -6,10 +6,11 @@ import { NviInstitutionSearch } from '../filters/nvi/NviInstitutionSearch';
 import { NviSectorSelector } from '../filters/nvi/NviSectorSelector';
 import { NviVisibilitySelector } from '../filters/nvi/NviVisibilitySelector';
 import { NviYearSelector } from '../filters/nvi/NviYearSelector';
-import { VerticalBox } from '../styled/Wrappers';
+import { TasksPageLayout } from './TasksPageLayout';
 
-interface NviPageLayoutProps {
+interface NviStatusPageLayoutProps {
   headline: string;
+  headtitle?: string;
   topView?: ReactNode;
   yearSelector?: boolean;
   visibilitySelector?: boolean;
@@ -20,8 +21,9 @@ interface NviPageLayoutProps {
   children?: ReactNode;
 }
 
-export const NviPageLayout = ({
+export const NviStatusPageLayout = ({
   headline,
+  headtitle,
   topView,
   yearSelector,
   visibilitySelector,
@@ -30,7 +32,7 @@ export const NviPageLayout = ({
   exportAcronym,
   exportPublicationPoints,
   children,
-}: NviPageLayoutProps) => {
+}: NviStatusPageLayoutProps) => {
   let exportButton;
   switch (true) {
     case exportPublicationPoints && !!exportAcronym:
@@ -44,11 +46,8 @@ export const NviPageLayout = ({
   }
 
   return (
-    <VerticalBox sx={{ gap: '1rem', alignItems: 'start' }}>
-      <Typography variant="h1" sx={{ mb: '0.5rem' }}>
-        {headline}
-      </Typography>
-      {topView ?? null}
+    <TasksPageLayout headline={headline} headtitle={headtitle}>
+      {topView}
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           {yearSelector && <NviYearSelector sx={{ minWidth: '10rem' }} />}
@@ -59,6 +58,6 @@ export const NviPageLayout = ({
         {exportButton}
       </Box>
       {children}
-    </VerticalBox>
+    </TasksPageLayout>
   );
 };

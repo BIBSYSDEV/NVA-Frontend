@@ -4,16 +4,16 @@ import {
   NviPointsHelperTextModal,
   NviPointsModalVariant,
 } from '../../../../components/dialogs/helper-texts/NviPointsHelperTextModal';
-import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
+import { NviStatusPageLayout } from '../../../../components/page-layouts/NviStatusPageLayout';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
-import { NviAdminSortSelectorType } from '../_utils/nvi-admin-sort-types';
 import { HorizontalBox, VerticalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
-import { useInstitutionReportsFilteredAndSortedByUrl } from '../_hooks/useInstitutionReportsFilteredAndSortedByUrl';
 import { NviAdminTableSortSelector } from '../_components/NviAdminTableSortSelector';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../_hooks/useInstitutionReportsFilteredAndSortedByUrl';
 import { CenteredPercentageControlledCell } from '../_styles/nvi-admin-table-styles';
+import { NviAdminSortSelectorType } from '../_utils/nvi-admin-sort-types';
 import { NviAdminPublicationPointsRow } from './_components/NviAdminPublicationPointsRow';
 import { NviAdminPublicationPointsTexts } from './_components/NviAdminPublicationPointsTexts';
 
@@ -23,7 +23,7 @@ export const NviAdminPublicationPointsPage = () => {
   const { sortedAndFilteredData, isPending, isError } = useInstitutionReportsFilteredAndSortedByUrl(year);
 
   return (
-    <NviPageLayout
+    <NviStatusPageLayout
       headline={t('basic_data.nvi.publication_points_status')}
       topView={<NviAdminPublicationPointsTexts />}
       yearSelector
@@ -64,6 +64,6 @@ export const NviAdminPublicationPointsPage = () => {
           </TableContainer>
         </VerticalBox>
       )}
-    </NviPageLayout>
+    </NviStatusPageLayout>
   );
 };
