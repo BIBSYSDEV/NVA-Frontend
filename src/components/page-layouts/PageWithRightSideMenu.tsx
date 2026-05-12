@@ -6,14 +6,13 @@ interface PageWithRightSideMenuProps {
   sidebar: ReactNode;
 }
 
-// NOTE: On mobile (xs), sidebar appears above main
 export const PageWithRightSideMenu = ({ main, sidebar }: PageWithRightSideMenuProps) => (
   <Box
     component="section"
     sx={{
       display: 'grid',
       gridTemplateColumns: { xs: '1fr', sm: '4fr 1fr' },
-      gridTemplateAreas: { xs: '"sidebar" "main"', sm: '"main sidebar"' },
+      gridTemplateAreas: { xs: '"sidebar" "main"', sm: '"main sidebar"' }, // NOTE: On mobile (xs), sidebar appears above main
       gap: '1rem',
     }}>
     <Box sx={{ gridArea: 'main' }}>{main}</Box>
