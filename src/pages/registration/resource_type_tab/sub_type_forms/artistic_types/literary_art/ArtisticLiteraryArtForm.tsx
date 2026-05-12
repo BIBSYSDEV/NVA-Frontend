@@ -107,7 +107,7 @@ export const ArtisticLiteraryArtForm = () => {
                       <TableRow>
                         <TableCell>{t('common.order')}</TableCell>
                         <TableCell>{t('common.type')}</TableCell>
-                        <TableCell>{t('registration.resource_type.artistic.publisher')}</TableCell>
+                        <TableCell>{t('registration.resource_type.artistic.publisher_or_place')}</TableCell>
                         <TableCell>{t('common.actions')}</TableCell>
                       </TableRow>
                     </TableHead>
