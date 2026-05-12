@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router';
 import { SearchApiPath } from '../../api/apiPaths';
 import { apiRequest2 } from '../../api/apiRequest';
 import { ResultParam } from '../../api/searchApi';
+import { triggerFileDownload } from '../downloadFileHelpers';
 
 const maxNumberOfCitations = 500;
 
@@ -22,22 +23,11 @@ export const useBibtexExport = () => {
       });
       return response.data;
     },
-    onSuccess: (blob) => downloadBibTexFile(blob),
+    onSuccess: (blob) => {
+      const currentDate = new Date().toLocaleDateString();
+      triggerFileDownload(blob, `registrations_${currentDate}.bib`);
+    },
   });
 
   return { exportBibTex: mutation.mutate, isFetchingBibtex: mutation.isPending };
-};
-
-const downloadBibTexFile = (blob: Blob) => {
-  const url = URL.createObjectURL(blob);
-  const currentDate = new Date().toLocaleDateString();
-
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `registrations_${currentDate}.bib`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-
-  URL.revokeObjectURL(url);
 };
