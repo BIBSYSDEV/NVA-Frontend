@@ -1,4 +1,14 @@
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -41,7 +51,13 @@ export const NviPublicationPointsPage = () => {
           exportAcronym={organizationQuery.data?.acronym}
         />
       }
+      yearSelector
       visibilitySelector>
+      {year <= 2024 && (
+        <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
+          {t('imported_data_warning')}
+        </Typography>
+      )}
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
