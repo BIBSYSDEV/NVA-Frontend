@@ -14,17 +14,17 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchCustomerMap } from '../../../../api/hooks/useFetchCustomerMap';
 import { InstitutionContactInformationDialog } from '../../../../components/dialogs/institution-contact-information/InstitutionContactInformationDialog';
-import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
+import { NviStatusPageLayout } from '../../../../components/page-layouts/NviStatusPageLayout';
 import { TableSkeleton } from '../../../../components/skeletons/TableSkeleton';
-import { NviAdminSortSelectorType } from '../_utils/nvi-admin-sort-types';
 import { VerticalBox } from '../../../../components/styled/Wrappers';
 import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { LanguageString } from '../../../../types/common.types';
 import { InstitutionReport } from '../../../../types/nvi.types';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
-import { useInstitutionReportsFilteredAndSortedByUrl } from '../_hooks/useInstitutionReportsFilteredAndSortedByUrl';
 import { NviAdminTableSortSelector } from '../_components/NviAdminTableSortSelector';
+import { useInstitutionReportsFilteredAndSortedByUrl } from '../_hooks/useInstitutionReportsFilteredAndSortedByUrl';
 import { CenteredContactInformationCell, CenteredPercentageControlledCell } from '../_styles/nvi-admin-table-styles';
+import { NviAdminSortSelectorType } from '../_utils/nvi-admin-sort-types';
 import { NviAdminReportingStatusRow } from './_components/NviAdminReportingStatusRow';
 import { NviAdminReportingStatusTexts } from './_components/NviAdminReportingStatusTexts';
 
@@ -36,7 +36,7 @@ export const NviAdminReportingStatusPage = () => {
   const { nvaCustomers, isFetchingCustomerMap } = useFetchCustomerMap();
 
   return (
-    <NviPageLayout
+    <NviStatusPageLayout
       headline={t('basic_data.nvi.reporting_status')}
       topView={<NviAdminReportingStatusTexts />}
       yearSelector
@@ -90,6 +90,6 @@ export const NviAdminReportingStatusPage = () => {
           />
         </VerticalBox>
       )}
-    </NviPageLayout>
+    </NviStatusPageLayout>
   );
 };

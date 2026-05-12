@@ -20,7 +20,7 @@ interface NviPageLayoutProps {
   children?: ReactNode;
 }
 
-export const NviPageLayout = ({
+export const NviStatusPageLayout = ({
   headline,
   topView,
   yearSelector,

@@ -17,12 +17,12 @@ import {
   NviPointsHelperTextModal,
   NviPointsModalVariant,
 } from '../../../../components/dialogs/helper-texts/NviPointsHelperTextModal';
-import { NviPublicationPointsRow } from './_components/NviPublicationPointsRow';
+import { NviStatusPageLayout } from '../../../../components/page-layouts/NviStatusPageLayout';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { useNviInstitutionStatusNumbers } from '../_hooks/useNviInstitutionStatusNumbers';
-import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
+import { NviPublicationPointsRow } from './_components/NviPublicationPointsRow';
 import { NviPublicationPointsTexts } from './_components/NviPublicationPointsTexts';
 
 export const NviPublicationPointsPage = () => {
@@ -37,7 +37,7 @@ export const NviPublicationPointsPage = () => {
     useNviInstitutionStatusNumbers(year);
 
   return (
-    <NviPageLayout
+    <NviStatusPageLayout
       headline={t('tasks.nvi.reporting_status_for_publication_points_for_year', { year: year })}
       exportAcronym={organizationQuery.data?.acronym}
       topView={
@@ -86,6 +86,6 @@ export const NviPublicationPointsPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </NviPageLayout>
+    </NviStatusPageLayout>
   );
 };
