@@ -1,13 +1,13 @@
 import { Box } from '@mui/material';
 import { ReactNode } from 'react';
 
-interface Props {
+interface PageWithRightSideMenuProps {
   main: ReactNode;
   sidebar: ReactNode;
 }
 
 // NOTE: On mobile (xs), sidebar appears above main
-export const MainWithRightSidebarLayout = ({ main, sidebar }: Props) => (
+export const PageWithRightSideMenu = ({ main, sidebar }: PageWithRightSideMenuProps) => (
   <Box
     component="section"
     sx={{

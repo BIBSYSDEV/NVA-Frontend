@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { nviCandidateQueryKeyword } from '../../../../api/hooks/useFetchNviCandidate';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
-import { MainWithRightSidebarLayout } from '../../../../components/page-layouts/MainWithRightSidebarLayout';
+import { PageWithRightSideMenu } from '../../../../components/page-layouts/PageWithRightSideMenu';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { NviCandidateProblemsContext } from '../../../../context/NviCandidateProblemsContext';
 import { IdentifierParams } from '../../../../utils/urlPaths';
@@ -34,12 +34,12 @@ export const NviCandidatePage = () => {
 
   if (error?.response?.status === 401) return <Forbidden />;
   if (error) return <NotFound />;
-  if (!nviCandidate || !registration) return <NotFound />;
   if (isPending) return <PageSpinner aria-label={t('common.result')} />;
+  if (!nviCandidate || !registration) return <NotFound />;
 
   return (
     <ErrorBoundary>
-      <MainWithRightSidebarLayout
+      <PageWithRightSideMenu
         main={
           <Box sx={{ position: 'relative' }}>
             <NviCandidateProblemsContext.Provider value={{ problems: nviCandidate!.problems }}>
