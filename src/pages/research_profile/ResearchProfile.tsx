@@ -312,27 +312,27 @@ const ResearchProfile = () => {
           {registrationsHeading}
         </Typography>
         {registrationsQuery.data?.totalHits && registrationsQuery.data.totalHits > 0 ? (
-          <Typography>
-            <Trans t={t} i18nKey="my_page.my_profile.link_to_results_search">
-              <MuiLink
-                component={Link}
-                to={`${UrlPathTemplate.Filter}?${ResultParam.Contributor}=${encodeURIComponent(personIdentifier)}`}
+          <>
+            <Typography>
+              <Trans t={t} i18nKey="my_page.my_profile.link_to_results_search">
+                <MuiLink
+                  component={Link}
+                  to={`${UrlPathTemplate.Filter}?${ResultParam.Contributor}=${encodeURIComponent(personIdentifier)}`}
+                />
+              </Trans>
+            </Typography>
+            <BetaFunctionality sx={{ mt: '1rem', width: 'fit-content', ml: 'auto' }}>
+              <ExportResultsBibTexButton
+                searchParams={
+                  new URLSearchParams({
+                    [ResultParam.Contributor]: personIdentifier,
+                    [ResultParam.Order]: registrationSort.orderBy,
+                    [ResultParam.Sort]: registrationSort.sortOrder,
+                  })
+                }
               />
-            </Trans>
-          </Typography>
-        ) : null}
-        {registrationsQuery.data?.totalHits && registrationsQuery.data.totalHits > 0 ? (
-          <BetaFunctionality sx={{ mt: '1rem', width: 'fit-content', ml: 'auto' }}>
-            <ExportResultsBibTexButton
-              searchParams={
-                new URLSearchParams({
-                  [ResultParam.Contributor]: personIdentifier,
-                  [ResultParam.Order]: registrationSort.orderBy,
-                  [ResultParam.Sort]: registrationSort.sortOrder,
-                })
-              }
-            />
-          </BetaFunctionality>
+            </BetaFunctionality>
+          </>
         ) : null}
         <ListPagination
           paginationAriaLabel={t('common.pagination_result_search')}

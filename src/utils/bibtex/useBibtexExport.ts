@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { SearchApiPath } from '../../api/apiPaths';
 import { apiRequest2 } from '../../api/apiRequest';
 import { ResultParam } from '../../api/searchApi';
+import { formatDateStringToISO } from '../date-helpers';
 import { triggerFileDownload } from '../downloadFileHelpers';
 
 const maxNumberOfCitations = 500;
@@ -21,7 +22,7 @@ export const useBibtexExport = (searchParams: URLSearchParams) => {
       return response.data;
     },
     onSuccess: (blob) => {
-      const currentDate = new Date().toLocaleDateString();
+      const currentDate = formatDateStringToISO(new Date());
       triggerFileDownload(blob, `registrations_${currentDate}.bib`);
     },
   });
