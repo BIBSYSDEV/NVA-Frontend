@@ -1,41 +1,43 @@
+import { useMutation } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router';
-import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
-import { FetchResultsParams, ResultParam } from '../../api/searchApi';
-import { PublicationInstanceType } from '../../types/registration.types';
-import { exportToBibTex } from './BibTexFactory';
+import { SearchApiPath } from '../../api/apiPaths';
+import { apiRequest2 } from '../../api/apiRequest';
+import { ResultParam } from '../../api/searchApi';
+
+const maxNumberOfCitations = 500;
 
 export const useBibtexExport = () => {
   const [searchParams] = useSearchParams();
-  const maxNumberOfCitations = 100;
 
-  const registrationsQueryConfig: FetchResultsParams = {
-    query: searchParams.get(ResultParam.Query),
-    category: searchParams.get(ResultParam.Category) as PublicationInstanceType | null,
-    topLevelOrganization: searchParams.get(ResultParam.TopLevelOrganization),
-    contributor: searchParams.get(ResultParam.Contributor),
-    fundingSource: searchParams.get(ResultParam.FundingSource),
-    publisher: searchParams.get(ResultParam.Publisher),
-    series: searchParams.get(ResultParam.Series),
-    journal: searchParams.get(ResultParam.Journal),
-    files: searchParams.get(ResultParam.Files),
-    publicationYear: searchParams.get(ResultParam.PublicationYear),
-    publicationYearBefore: searchParams.get(ResultParam.PublicationYearBefore),
-    publicationYearSince: searchParams.get(ResultParam.PublicationYearSince),
-    from: 0,
-    results: maxNumberOfCitations,
-  };
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const exportParams = new URLSearchParams(searchParams);
+      exportParams.set(ResultParam.From, '0');
+      exportParams.set(ResultParam.Results, maxNumberOfCitations.toString());
 
-  const registrationsQuery = useRegistrationSearch({
-    enabled: false,
-    params: registrationsQueryConfig,
+      const response = await apiRequest2<Blob>({
+        url: `${SearchApiPath.Registrations}?${exportParams.toString()}`,
+        headers: { Accept: 'text/x-bibtex' },
+        responseType: 'blob',
+      });
+      return response.data;
+    },
+    onSuccess: (blob) => downloadBibTexFile(blob),
   });
 
-  const exportBibTex = async () => {
-    const { data } = await registrationsQuery.refetch();
-    if (!!data) {
-      exportToBibTex(data.hits, data.totalHits);
-    }
-  };
+  return { exportBibTex: mutation.mutate, isFetchingBibtex: mutation.isPending };
+};
 
-  return { exportBibTex, isFetchingBibtex: registrationsQuery.isFetching };
+const downloadBibTexFile = (blob: Blob) => {
+  const url = URL.createObjectURL(blob);
+  const currentDate = new Date().toLocaleDateString();
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `registrations_${currentDate}.bib`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
 };
