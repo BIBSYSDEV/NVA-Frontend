@@ -2109,5 +2109,15 @@
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "imported_data_warning": "Viser importerte data. Tallene kan avvike fra det som ble rapportert på rapporteringstidspunkt."
+  "imported_data_warning": "Viser importerte data. Tallene kan avvike fra det som ble rapportert på rapporteringstidspunkt.",
+  "nvi_reporting_periods_text": "Oversikten viser status på NVI-periode og totalt antall kandidater i perioden. For perioder som er rapportert vises antall godkjente kandidater. For åpne perioder vises antall kandidater totalt.",
+  "status_on_nvi_period": "Status på NVI-periode",
+  "nvi_period_status_not_opened": "Ikke åpnet",
+  "nvi_period_status_ongoing": "Pågående",
+  "nvi_period_status_closed": "Lukket",
+  "nvi_period_status_reported": "Rapportert",
+  "nvi_year": "NVI-år",
+  "number_of_candidates": "Antall kandidater",
+  "nvi_points": "NVI-poeng",
+  "status_for_period": "Status for periode"
 }
