@@ -19,7 +19,7 @@ export const ExportResultsDropdown = () => {
   const [csvClicked, setCsvClicked] = useState(false);
   const [bibtexClicked, setBibtexClicked] = useState(false);
 
-  const { exportBibTex, isFetchingBibtex } = useBibtexExport();
+  const { exportBibTex, isFetchingBibtex } = useBibtexExport(searchParams);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);

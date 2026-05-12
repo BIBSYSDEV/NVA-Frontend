@@ -12,6 +12,8 @@ import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam, ResultSearchOrder } from '../../api/searchApi';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { ExportResultsBibTexButton } from '../../components/buttons/export-buttons/ExportResultsBibTexButton';
 import { HeadTitle } from '../../components/HeadTitle';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
@@ -318,6 +320,19 @@ const ResearchProfile = () => {
               />
             </Trans>
           </Typography>
+        ) : null}
+        {registrationsQuery.data?.totalHits && registrationsQuery.data.totalHits > 0 ? (
+          <BetaFunctionality sx={{ mt: '1rem', width: 'fit-content', ml: 'auto' }}>
+            <ExportResultsBibTexButton
+              searchParams={
+                new URLSearchParams({
+                  [ResultParam.Contributor]: personIdentifier,
+                  [ResultParam.Order]: registrationSort.orderBy,
+                  [ResultParam.Sort]: registrationSort.sortOrder,
+                })
+              }
+            />
+          </BetaFunctionality>
         ) : null}
         <ListPagination
           paginationAriaLabel={t('common.pagination_result_search')}

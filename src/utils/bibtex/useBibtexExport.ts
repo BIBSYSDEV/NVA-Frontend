@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import { useSearchParams } from 'react-router';
 import { SearchApiPath } from '../../api/apiPaths';
 import { apiRequest2 } from '../../api/apiRequest';
 import { ResultParam } from '../../api/searchApi';
@@ -7,9 +6,7 @@ import { triggerFileDownload } from '../downloadFileHelpers';
 
 const maxNumberOfCitations = 500;
 
-export const useBibtexExport = () => {
-  const [searchParams] = useSearchParams();
-
+export const useBibtexExport = (searchParams: URLSearchParams) => {
   const mutation = useMutation({
     mutationFn: async () => {
       const exportParams = new URLSearchParams(searchParams);
