@@ -2,7 +2,7 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button, Menu, MenuItem } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchApiPath } from '../../api/apiPaths';
 import { API_URL } from '../../utils/constants';
@@ -22,6 +22,11 @@ export const ExportResultsDropdown = () => {
   const [bibtexClicked, setBibtexClicked] = useState(false);
 
   const { exportBibTex, isFetchingBibtex } = useBibtexExport(registrationParams);
+
+  useEffect(() => {
+    setCsvClicked(false);
+    setBibtexClicked(false);
+  }, [searchParams]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
