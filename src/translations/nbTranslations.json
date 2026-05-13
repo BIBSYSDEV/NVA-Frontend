@@ -2114,6 +2114,7 @@
   "status_on_nvi_period": "Status på NVI-periode",
   "nvi_period_status_not_opened": "Ikke åpnet",
   "nvi_period_status_ongoing": "Pågående",
+  "nvi_period_status_is_going_on": "Pågår",
   "nvi_period_status_closed": "Lukket",
   "nvi_period_status_reported": "Rapportert",
   "nvi_year": "NVI-år",
