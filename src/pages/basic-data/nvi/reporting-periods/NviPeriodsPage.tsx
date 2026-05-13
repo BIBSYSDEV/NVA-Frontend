@@ -39,6 +39,8 @@ export const NviPeriodsPage = () => {
               <TableCell>{t('nvi_points')}</TableCell>
               <CenteredPercentageControlledCell>{t('percentage_controlled')}</CenteredPercentageControlledCell>
               <TableCell>{t('status_for_period')}</TableCell>
+              {/* INFO: Empty header cell to allow space report-button */}
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>

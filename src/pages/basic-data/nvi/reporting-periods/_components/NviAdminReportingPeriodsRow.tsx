@@ -1,10 +1,11 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { DateAndTimeWithIcons } from '../../../../../components/_molecules/DateAndTimeWithIcons';
 import { PercentageWithIcon } from '../../../../../components/_molecules/PercentageWithIcon';
 import { StatusChip, StatusValue } from '../../../../../components/status-chips/StatusChip';
 import { HorizontalBox } from '../../../../../components/styled/Wrappers';
 import { NviPeriodReport } from '../../../../../types/nvi.types';
-import { toDateString } from '../../../../../utils/date-helpers';
+import { EditIconButton } from '../../../../messages/components/EditIconButton';
 import { CenteredPercentageControlledCell } from '../../_styles/nvi-admin-table-styles';
 import { getPercentageControlledReportingPeriods } from '../../_utils/nvi-admin-aggregations-helpers';
 
@@ -15,18 +16,17 @@ interface NviAdminReportingStatusRowProps {
 export const NviAdminReportingPeriodsRow = ({ nviPeriodReport }: NviAdminReportingStatusRowProps) => {
   const { t } = useTranslation();
   const { period, totals } = nviPeriodReport;
-  const startDateString = period.startDate
-    ? `${toDateString(period.startDate)} (${new Date(period.startDate).toLocaleTimeString()})`
-    : '?';
-  const endDateString = period.reportingDate
-    ? `${toDateString(period.reportingDate)} (${new Date(period.reportingDate).toLocaleTimeString()})`
-    : '?';
 
   return (
     <TableRow sx={{ height: '4rem' }}>
       <TableCell>{period.publishingYear}</TableCell>
-      <TableCell>{startDateString}</TableCell>
-      <TableCell>{endDateString}</TableCell>
+      <TableCell>{<DateAndTimeWithIcons date={period.startDate} />}</TableCell>
+      <TableCell>
+        <HorizontalBox sx={{ gap: '1rem' }}>
+          <DateAndTimeWithIcons date={period.reportingDate} />
+          {true && <EditIconButton />}
+        </HorizontalBox>
+      </TableCell>
       <TableCell>{totals.undisputedTotalCount}</TableCell>
       <TableCell>{totals.validPoints}</TableCell>
       <CenteredPercentageControlledCell>
