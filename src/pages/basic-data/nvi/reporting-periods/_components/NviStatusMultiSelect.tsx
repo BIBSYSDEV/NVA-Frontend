@@ -1,18 +1,19 @@
-import { Checkbox, FormControlLabel, Typography } from '@mui/material';
+import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { HorizontalBox, VerticalBox } from '../../../../../components/styled/Wrappers';
 
 export const NviStatusMultiSelect = () => {
   const { t } = useTranslation();
   return (
-    <VerticalBox>
-      <Typography sx={{ color: 'lightgray' }}>{t('status_on_nvi_period')}</Typography>
-      <HorizontalBox>
+    <FormControl component="fieldset">
+      <FormLabel component="legend" sx={{ color: 'text.primary', fontWeight: 'bold' }}>
+        {t('status_on_nvi_period')}
+      </FormLabel>
+      <FormGroup row>
         <FormControlLabel control={<Checkbox />} label={t('nvi_period_status_not_opened')} />
         <FormControlLabel control={<Checkbox />} label={t('nvi_period_status_ongoing')} />
         <FormControlLabel control={<Checkbox />} label={t('nvi_period_status_closed')} />
         <FormControlLabel control={<Checkbox />} label={t('nvi_period_status_reported')} />
-      </HorizontalBox>
-    </VerticalBox>
+      </FormGroup>
+    </FormControl>
   );
 };

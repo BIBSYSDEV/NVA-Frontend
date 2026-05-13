@@ -8,12 +8,13 @@ import { NavigationListAccordion } from '../../../components/NavigationListAccor
 import { NviReportProgressBar } from '../../../components/NviReportProgressBar';
 import { LinkCreateButton, NavigationList } from '../../../components/PageWithSideMenu';
 import { SelectableButton } from '../../../components/SelectableButton';
-import { NviAdminOrderBy } from '../nvi/_utils/nvi-admin-sort-helpers';
 import { StyledNviStatusBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { getPercentageControlledReportingPeriods } from '../nvi/_utils/nvi-admin-aggregations-helpers';
+import { NviAdminOrderBy } from '../nvi/_utils/nvi-admin-sort-helpers';
 
 export const NviAdminNavigationAccordion = () => {
   const { t } = useTranslation();
@@ -38,11 +39,7 @@ export const NviAdminNavigationAccordion = () => {
         <StyledNviStatusBox>
           {reportQuery.isError || !periodTotals ? undefined : (
             <NviReportProgressBar
-              completedPercentage={
-                periodTotals.undisputedTotalCount > 0
-                  ? Math.floor((periodTotals.undisputedProcessedCount / periodTotals.undisputedTotalCount) * 100)
-                  : 0
-              }
+              completedPercentage={getPercentageControlledReportingPeriods(periodTotals)}
               completedCount={periodTotals.undisputedProcessedCount}
               totalCount={periodTotals.undisputedTotalCount}
               isPending={reportQuery.isPending}

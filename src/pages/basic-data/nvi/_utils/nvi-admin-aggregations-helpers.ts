@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next';
 import i18n from '../../../../translations/i18n';
-import { InstitutionReport } from '../../../../types/nvi.types';
+import { InstitutionReport, NviPeriodTotals } from '../../../../types/nvi.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
 export const getNviInstitutionName = (report: InstitutionReport) => getLanguageString(report.institution.labels).trim();
@@ -41,4 +41,10 @@ export const getPercentageControlledPublicationPoints = (report: InstitutionRepo
   const rejected = getNviRejectedCount(report);
   const allExceptRejected = all - rejected;
   return allExceptRejected > 0 ? approvedByEverybody / allExceptRejected : 0;
+};
+
+export const getPercentageControlledReportingPeriods = (totals?: NviPeriodTotals) => {
+  return totals && totals.undisputedTotalCount > 0
+    ? Math.floor((totals.undisputedProcessedCount / totals.undisputedTotalCount) * 100)
+    : 0;
 };
