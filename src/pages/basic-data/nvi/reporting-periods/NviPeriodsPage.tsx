@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviPeriodReports } from '../../../../api/hooks/useFetchNviPeriodReports';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
+import { NviStatusMultiSelect } from '../../../../components/filters/nvi/NviStatusMultiSelect';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { MainContentLayout } from '../../../../components/page-layouts/MainContentLayout';
 import { NviPeriod } from '../../../../types/nvi.types';
 import { UpsertNviPeriodDialog } from '../../../basic_data/app_admin/UpsertNviPeriodDialog';
 import { CenteredPercentageControlledCell } from '../_styles/nvi-admin-table-styles';
 import { NviAdminReportingPeriodsRow } from './_components/NviAdminReportingPeriodsRow';
-import { NviStatusMultiSelect } from './_components/NviStatusMultiSelect';
 
 export const NviPeriodsPage = () => {
   const { t } = useTranslation();
