@@ -8,7 +8,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { formatDateStringToISO } from '../date-helpers';
 import { triggerFileDownload } from '../downloadFileHelpers';
 
-const maxNumberOfCitations = 500;
+const maxNumberOfCitations = 100;
 
 export const useBibtexExport = (params: FetchResultsParams) => {
   const { t } = useTranslation();

@@ -321,7 +321,7 @@ const ResearchProfile = () => {
                 />
               </Trans>
             </Typography>
-            <BetaFunctionality sx={{ mt: '1rem', width: 'fit-content', ml: 'auto' }}>
+            <BetaFunctionality sx={{ mt: '1rem', width: 'fit-content' }}>
               <ExportResultsBibTexButton
                 params={{
                   contributor: personIdentifier,
