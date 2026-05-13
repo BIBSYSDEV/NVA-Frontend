@@ -323,13 +323,11 @@ const ResearchProfile = () => {
             </Typography>
             <BetaFunctionality sx={{ mt: '1rem', width: 'fit-content', ml: 'auto' }}>
               <ExportResultsBibTexButton
-                searchParams={
-                  new URLSearchParams({
-                    [ResultParam.Contributor]: personIdentifier,
-                    [ResultParam.Order]: registrationSort.orderBy,
-                    [ResultParam.Sort]: registrationSort.sortOrder,
-                  })
-                }
+                params={{
+                  contributor: personIdentifier,
+                  order: registrationSort.orderBy,
+                  sort: registrationSort.sortOrder,
+                }}
               />
             </BetaFunctionality>
           </>

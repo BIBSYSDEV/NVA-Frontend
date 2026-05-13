@@ -1,21 +1,23 @@
 import { useMutation } from '@tanstack/react-query';
 import { SearchApiPath } from '../../api/apiPaths';
 import { apiRequest2 } from '../../api/apiRequest';
-import { ResultParam } from '../../api/searchApi';
+import { buildRegistrationSearchParams, FetchResultsParams } from '../../api/searchApi';
 import { formatDateStringToISO } from '../date-helpers';
 import { triggerFileDownload } from '../downloadFileHelpers';
 
 const maxNumberOfCitations = 500;
 
-export const useBibtexExport = (searchParams: URLSearchParams) => {
+export const useBibtexExport = (params: FetchResultsParams) => {
   const mutation = useMutation({
     mutationFn: async () => {
-      const exportParams = new URLSearchParams(searchParams);
-      exportParams.set(ResultParam.From, '0');
-      exportParams.set(ResultParam.Results, maxNumberOfCitations.toString());
+      const searchParams = buildRegistrationSearchParams({
+        ...params,
+        from: 0,
+        results: maxNumberOfCitations,
+      });
 
       const response = await apiRequest2<Blob>({
-        url: `${SearchApiPath.Registrations}?${exportParams.toString()}`,
+        url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
         headers: { Accept: 'text/x-bibtex' },
         responseType: 'blob',
       });

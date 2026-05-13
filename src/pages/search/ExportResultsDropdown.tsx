@@ -9,17 +9,19 @@ import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useSearchParams } from 'react-router';
 import { useBibtexExport } from '../../utils/bibtex/useBibtexExport';
+import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 export const ExportResultsDropdown = () => {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
+  const registrationParams = useRegistrationsQueryParams();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [csvClicked, setCsvClicked] = useState(false);
   const [bibtexClicked, setBibtexClicked] = useState(false);
 
-  const { exportBibTex, isFetchingBibtex } = useBibtexExport(searchParams);
+  const { exportBibTex, isFetchingBibtex } = useBibtexExport(registrationParams);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);

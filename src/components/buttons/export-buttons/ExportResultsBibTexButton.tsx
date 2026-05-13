@@ -1,16 +1,17 @@
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { FetchResultsParams } from '../../../api/searchApi';
 import { useBibtexExport } from '../../../utils/bibtex/useBibtexExport';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 interface ExportResultsBibTexButtonProps {
-  searchParams: URLSearchParams;
+  params: FetchResultsParams;
 }
 
-export const ExportResultsBibTexButton = ({ searchParams }: ExportResultsBibTexButtonProps) => {
+export const ExportResultsBibTexButton = ({ params }: ExportResultsBibTexButtonProps) => {
   const { t } = useTranslation();
-  const { exportBibTex, isFetchingBibtex } = useBibtexExport(searchParams);
+  const { exportBibTex, isFetchingBibtex } = useBibtexExport(params);
 
   return (
     <Button
