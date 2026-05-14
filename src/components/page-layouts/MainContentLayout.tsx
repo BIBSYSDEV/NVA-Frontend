@@ -13,9 +13,11 @@ export const MainContentLayout = ({ headtitle, headline, children }: MainContent
   return (
     <VerticalBox component="section" sx={{ gap: '1rem' }}>
       <HeadTitle>{headtitle}</HeadTitle>
-      <Typography variant="h1" sx={{ mb: '0.5rem' }}>
-        {headline}
-      </Typography>
+      {headline && (
+        <Typography variant="h1" sx={{ mb: '0.5rem' }}>
+          {headline}
+        </Typography>
+      )}
       {children}
     </VerticalBox>
   );
