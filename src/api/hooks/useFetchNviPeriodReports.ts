@@ -7,7 +7,7 @@ export const useFetchNviPeriodReports = () => {
 
   return useQuery({
     queryKey: ['nviReports'],
-    queryFn: () => fetchAllNviPeriodReports(),
+    queryFn: fetchAllNviPeriodReports,
     meta: { errorMessage: t('feedback.error.get_nvi_periods') },
   });
 };

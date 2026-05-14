@@ -9,7 +9,7 @@ import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { Avatar, Box, Divider, styled, SvgIconProps, Tooltip, Typography } from '@mui/material';
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { DateAndTimeWithIcons } from '../../../components/_molecules/DateAndTimeWithIcons';
+import { DateAndTimeDisplay } from '../../../components/_molecules/DateAndTimeDisplay';
 import { FileType } from '../../../types/associatedArtifact.types';
 import { FileLogEntry, LogEntry, LogEntryOrganization, LogEntryPerson } from '../../../types/log.types';
 import { Message } from '../../../types/publication_types/ticket.types';
@@ -48,7 +48,7 @@ export const LogEntryItem = ({ logEntry, messages }: LogEntryItemProps) => {
         <LogHeaderIcon topic={logEntry.topic} />
         <Typography variant="h3">{getLogEntryTitle(logEntry, t)}</Typography>
       </StyledLogRow>
-      <DateAndTimeWithIcons date={logEntry.timestamp} />
+      <DateAndTimeDisplay date={logEntry.timestamp} />
 
       {logEntry.performedBy.type === 'Person' ? (
         <LogEntryPersonInfo performedBy={logEntry.performedBy} />

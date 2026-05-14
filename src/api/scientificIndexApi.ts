@@ -137,7 +137,7 @@ const assertValidReportYear = (year: number) => {
 
 export const fetchAllNviPeriodReports = async () => {
   const fetchNviPeriodReportResponse = await authenticatedApiRequest2<AllPeriodsReport>({
-    url: `${ScientificIndexApiPath.Reports}`,
+    url: ScientificIndexApiPath.Reports,
   });
 
   return fetchNviPeriodReportResponse.data;

@@ -14,10 +14,9 @@ export const NviPeriodsPage = () => {
   const [nviPeriodToEdit, setNviPeriodToEdit] = useState<NviPeriod | null>(null);
 
   const { data, isPending, refetch } = useFetchNviPeriodReports();
-  const sortedPeriods =
-    data?.periods.sort(
-      (a: NviPeriodReport, b: NviPeriodReport) => +b.period.publishingYear - +a.period.publishingYear
-    ) ?? [];
+  const sortedPeriods = [...(data?.periods ?? [])].sort(
+    (a: NviPeriodReport, b: NviPeriodReport) => +b.period.publishingYear - +a.period.publishingYear
+  );
 
   return (
     <MainContentLayout
