@@ -1,4 +1,5 @@
 import {
+  AllPeriodsReport,
   Approval,
   InstitutionReport,
   Note,
@@ -132,6 +133,14 @@ const assertValidReportYear = (year: number) => {
   if (!isValidYear) {
     throw new Error('Invalid year provided. Year must be a four-digit integer.');
   }
+};
+
+export const fetchAllNviPeriodReports = async () => {
+  const fetchNviPeriodReportResponse = await authenticatedApiRequest2<AllPeriodsReport>({
+    url: `${ScientificIndexApiPath.Reports}`,
+  });
+
+  return fetchNviPeriodReportResponse.data;
 };
 
 export const fetchNviPeriodReport = async (year: number) => {
