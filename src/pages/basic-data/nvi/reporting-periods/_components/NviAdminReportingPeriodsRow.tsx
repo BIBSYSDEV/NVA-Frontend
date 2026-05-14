@@ -1,5 +1,7 @@
 import { TableCell, TableRow } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { DateAndTimeDisplay } from '../../../../../components/_molecules/DateAndTimeDisplay';
+import { StatusChip, StatusValue } from '../../../../../components/status-chips/StatusChip';
 import { HorizontalBox } from '../../../../../components/styled/Wrappers';
 import { NviPeriod, NviPeriodReport } from '../../../../../types/nvi.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
@@ -14,6 +16,7 @@ export const NviAdminReportingPeriodsRow = ({
   nviPeriodReport,
   setNviPeriodToEdit,
 }: NviAdminReportingPeriodsRowProps) => {
+  const { t } = useTranslation();
   const { period } = nviPeriodReport;
 
   return (
@@ -30,6 +33,9 @@ export const NviAdminReportingPeriodsRow = ({
             onClick={() => setNviPeriodToEdit(nviPeriodReport.period)}
           />
         </HorizontalBox>
+      </TableCell>
+      <TableCell>
+        {<StatusChip status={StatusValue.WaitingToStart} text={t('nvi_period_status_not_opened')} />}
       </TableCell>
     </TableRow>
   );

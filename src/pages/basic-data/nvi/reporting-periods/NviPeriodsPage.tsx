@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviPeriodReports } from '../../../../api/hooks/useFetchNviPeriodReports';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
+import { NviStatusMultiSelect } from '../../../../components/filters/nvi/NviStatusMultiSelect';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { MainContentLayout } from '../../../../components/page-layouts/MainContentLayout';
 import { NviPeriod, NviPeriodReport } from '../../../../types/nvi.types';
@@ -23,6 +24,7 @@ export const NviPeriodsPage = () => {
       headtitle={t('basic_data.nvi.reporting_periods')}
       headline={t('basic_data.nvi.reporting_periods')}>
       <Typography sx={{ width: { md: '100%', lg: '50%' }, mb: '1rem' }}>{t('nvi_reporting_periods_text')}</Typography>
+      <NviStatusMultiSelect />
       {isPending ? (
         <ListSkeleton height={100} minWidth={100} />
       ) : sortedPeriods.length === 0 ? (
@@ -34,6 +36,7 @@ export const NviPeriodsPage = () => {
               <TableCell>{t('nvi_year')}</TableCell>
               <TableCell>{t('common.start_date')}</TableCell>
               <TableCell>{t('common.end_date')}</TableCell>
+              <TableCell>{t('status_for_period')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
