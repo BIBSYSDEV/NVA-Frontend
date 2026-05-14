@@ -4,16 +4,20 @@ import { DateAndTimeWithIcons } from '../../../../../components/_molecules/DateA
 import { PercentageWithIcon } from '../../../../../components/_molecules/PercentageWithIcon';
 import { StatusChip, StatusValue } from '../../../../../components/status-chips/StatusChip';
 import { HorizontalBox } from '../../../../../components/styled/Wrappers';
-import { NviPeriodReport } from '../../../../../types/nvi.types';
+import { NviPeriod, NviPeriodReport } from '../../../../../types/nvi.types';
 import { EditIconButton } from '../../../../messages/components/EditIconButton';
 import { CenteredPercentageControlledCell } from '../../_styles/nvi-admin-table-styles';
 import { getPercentageControlledReportingPeriods } from '../../_utils/nvi-admin-aggregations-helpers';
 
 interface NviAdminReportingStatusRowProps {
   nviPeriodReport: NviPeriodReport;
+  setNviPeriodToEdit: (val: NviPeriod | null) => void;
 }
 
-export const NviAdminReportingPeriodsRow = ({ nviPeriodReport }: NviAdminReportingStatusRowProps) => {
+export const NviAdminReportingPeriodsRow = ({
+  nviPeriodReport,
+  setNviPeriodToEdit,
+}: NviAdminReportingStatusRowProps) => {
   const { t } = useTranslation();
   const { period, totals } = nviPeriodReport;
 
@@ -24,7 +28,7 @@ export const NviAdminReportingPeriodsRow = ({ nviPeriodReport }: NviAdminReporti
       <TableCell>
         <HorizontalBox sx={{ gap: '1rem' }}>
           <DateAndTimeWithIcons date={period.reportingDate} />
-          {true && <EditIconButton />}
+          <EditIconButton onClick={() => setNviPeriodToEdit(nviPeriodReport.period)} />
         </HorizontalBox>
       </TableCell>
       <TableCell>{totals.undisputedTotalCount}</TableCell>

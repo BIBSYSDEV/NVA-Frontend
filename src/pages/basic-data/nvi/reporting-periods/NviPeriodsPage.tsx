@@ -45,7 +45,11 @@ export const NviPeriodsPage = () => {
           </TableHead>
           <TableBody>
             {sortedPeriods.map((nviPeriodReport) => (
-              <NviAdminReportingPeriodsRow nviPeriodReport={nviPeriodReport} key={nviPeriodReport.id} />
+              <NviAdminReportingPeriodsRow
+                nviPeriodReport={nviPeriodReport}
+                key={nviPeriodReport.id}
+                setNviPeriodToEdit={setNviPeriodToEdit}
+              />
             ))}
           </TableBody>
         </Table>
