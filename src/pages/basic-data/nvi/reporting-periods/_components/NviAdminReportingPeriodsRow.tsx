@@ -35,7 +35,7 @@ export const NviAdminReportingPeriodsRow = ({
         </HorizontalBox>
       </TableCell>
       <TableCell>
-        {<StatusChip status={StatusValue.WaitingToStart} text={t('nvi_period_status_not_opened')} />}
+        <StatusChip status={StatusValue.WaitingToStart} text={t('nvi_period_status_not_opened')} />
       </TableCell>
     </TableRow>
   );

@@ -17,38 +17,38 @@ interface BaseStatusChipProps {
 }
 
 /* Generic component for showing statuses in NVA for an amount of base statuses. The goal is that all chips with the same kind of status will use the same icon
-and backgorund color even if the text varies. If you need a status that is not in the StatusValue list you can add it, but only if you think it is of general interest */
+and background color even if the text varies. If you need a status that is not in the StatusValue list you can add it, but only if you think it is of general interest */
 export const StatusChip = ({ status, text }: BaseStatusChipProps) => {
   switch (status) {
     case StatusValue.WaitingToStart:
       return (
         <HorizontalRoundedBox sx={{ bgcolor: 'neutral87.main' }}>
-          <LockClockIcon fontSize={'small'} />
+          <LockClockIcon aria-hidden="true" fontSize={'small'} />
           {text}
         </HorizontalRoundedBox>
       );
     case StatusValue.InProgress:
       return (
         <HorizontalRoundedBox sx={{ bgcolor: 'info.light' }}>
-          <HourglassEmptyIcon fontSize={'small'} />
+          <HourglassEmptyIcon aria-hidden="true" fontSize={'small'} />
           {text}
         </HorizontalRoundedBox>
       );
     case StatusValue.Closed:
       return (
         <HorizontalRoundedBox sx={{ bgcolor: 'neutral87.main' }}>
-          <CheckIcon fontSize={'small'} />
+          <CheckIcon aria-hidden="true" fontSize={'small'} />
           {text}
         </HorizontalRoundedBox>
       );
     case StatusValue.Success:
       return (
         <HorizontalRoundedBox sx={{ bgcolor: 'success.light' }}>
-          <CheckIcon fontSize={'small'} />
+          <CheckIcon aria-hidden="true" fontSize={'small'} />
           {text}
         </HorizontalRoundedBox>
       );
     default:
-      return undefined;
+      return null;
   }
 };
