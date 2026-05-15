@@ -749,6 +749,7 @@
     "to_top": "To the top"
   },
   "go_to_advanced_search": "Go to advanced result search",
+  "imported_data_warning": "",
   "institution_support": "Institution's user support",
   "institutions_service_support": "Institutions' user support",
   "internal_file_info_description": "",
@@ -1700,6 +1701,7 @@
         "program": "Program",
         "program_table_caption": "Overview of programme",
         "publisher": "Publisher",
+        "publisher_or_place": "",
         "remove_announcement": "Remove announcement",
         "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list of announcements?",
         "remove_music_work": "Remove work",
