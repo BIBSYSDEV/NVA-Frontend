@@ -10,7 +10,7 @@ import {
 } from '../../../../components/filters/nvi/NviStatusMultiSelect';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { MainContentLayout } from '../../../../components/page-layouts/MainContentLayout';
-import { NviPeriod, NviPeriodReport } from '../../../../types/nvi.types';
+import { NviPeriod, NviPeriodReport, NviPeriodStatusEnum } from '../../../../types/nvi.types';
 import { UpsertNviPeriodDialog } from '../../../basic_data/app_admin/UpsertNviPeriodDialog';
 import { NviAdminReportingPeriodsRow } from './_components/NviAdminReportingPeriodsRow';
 import { getNviPeriodStatus } from './_utils/nvi-period-helpers';
@@ -25,8 +25,11 @@ export const NviPeriodsPage = () => {
     (a: NviPeriodReport, b: NviPeriodReport) => +b.period.publishingYear - +a.period.publishingYear
   );
 
+  const allowedStatuses = new Set(Object.values(NviPeriodStatusEnum));
   const selectedStatuses = new Set(
-    (new URLSearchParams(location.search).get(PARAM_NAME_PERIOD_STATUSES) ?? '').split(',').filter(Boolean)
+    (new URLSearchParams(location.search).get(PARAM_NAME_PERIOD_STATUSES) ?? '')
+      .split(',')
+      .filter((status): status is NviPeriodStatusEnum => allowedStatuses.has(status as NviPeriodStatusEnum))
   );
 
   const filteredPeriods =

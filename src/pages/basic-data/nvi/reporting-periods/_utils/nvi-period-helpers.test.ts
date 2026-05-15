@@ -24,4 +24,14 @@ describe('getNviPeriodStatus()', () => {
   test('Returns ClosedPeriod when both startDate and reportingDate are in the past', () => {
     expect(getNviPeriodStatus(makePeriod(yesterday, yesterday))).toBe(NviPeriodStatusEnum.ClosedPeriod);
   });
+
+  test('Returns OpenPeriod when startDate equals now and reportingDate is in the future', () => {
+    const nowIso = new Date().toISOString();
+    expect(getNviPeriodStatus(makePeriod(nowIso, tomorrow))).toBe(NviPeriodStatusEnum.OpenPeriod);
+  });
+
+  test('Returns ClosedPeriod when reportingDate equals now', () => {
+    const nowIso = new Date().toISOString();
+    expect(getNviPeriodStatus(makePeriod(yesterday, nowIso))).toBe(NviPeriodStatusEnum.ClosedPeriod);
+  });
 });
