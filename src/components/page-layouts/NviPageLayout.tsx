@@ -44,7 +44,7 @@ export const NviPageLayout = ({
   }
 
   return (
-    <MainContentLayout headline={headline}>
+    <MainContentLayout heading={headline}>
       {topView ?? null}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
