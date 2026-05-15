@@ -1,9 +1,12 @@
 import { TableCell, TableRow } from '@mui/material';
 import { DateAndTimeDisplay } from '../../../../../components/_molecules/DateAndTimeDisplay';
+import { PercentageWithIcon } from '../../../../../components/_molecules/PercentageWithIcon';
 import { HorizontalBox } from '../../../../../components/styled/Wrappers';
 import { NviPeriod, NviPeriodReport } from '../../../../../types/nvi.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { EditIconButton } from '../../../../messages/components/EditIconButton';
+import { CenteredPercentageControlledCell } from '../../_styles/nvi-admin-table-styles';
+import { getPercentageControlledReportingPeriod } from '../../_utils/nvi-admin-aggregations-helpers';
 import { NviPeriodStatusChip } from './NviPeriodStatusChip';
 
 interface NviAdminReportingPeriodsRowProps {
@@ -15,7 +18,7 @@ export const NviAdminReportingPeriodsRow = ({
   nviPeriodReport,
   setNviPeriodToEdit,
 }: NviAdminReportingPeriodsRowProps) => {
-  const { period } = nviPeriodReport;
+  const { period, totals } = nviPeriodReport;
 
   return (
     <TableRow sx={{ height: '4rem' }}>
@@ -32,6 +35,14 @@ export const NviAdminReportingPeriodsRow = ({
           />
         </HorizontalBox>
       </TableCell>
+      <CenteredPercentageControlledCell>
+        <HorizontalBox sx={{ justifyContent: 'center' }}>
+          <PercentageWithIcon
+            displayPercentage={getPercentageControlledReportingPeriod(totals)}
+            alternativeIfZero={'-'}
+          />
+        </HorizontalBox>
+      </CenteredPercentageControlledCell>
       <TableCell>
         <NviPeriodStatusChip period={period} />
       </TableCell>
