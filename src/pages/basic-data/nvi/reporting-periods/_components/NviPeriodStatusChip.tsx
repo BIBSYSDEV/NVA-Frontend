@@ -13,7 +13,7 @@ export const NviPeriodStatusChip = ({ period }: NviPeriodStatusChipProps) => {
 
   switch (status) {
     case NviPeriodStatusEnum.UnopenedPeriod:
-      return <StatusChip status={StatusValue.Waiting} text={t('nvi_period_status_not_opened')} />;
+      return <StatusChip status={StatusValue.Pending} text={t('nvi_period_status_not_opened')} />;
     case NviPeriodStatusEnum.OpenPeriod:
       return <StatusChip status={StatusValue.InProgress} text={t('nvi_period_status_is_going_on')} />;
     case NviPeriodStatusEnum.ClosedPeriod:

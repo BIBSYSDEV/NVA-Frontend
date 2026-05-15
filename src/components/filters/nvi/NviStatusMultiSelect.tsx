@@ -2,6 +2,7 @@ import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel } from '@
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { NviPeriodStatusEnum } from '../../../types/nvi.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 const statusOptions = [
   { value: NviPeriodStatusEnum.UnopenedPeriod, labelKey: 'nvi_period_status_not_opened' },
@@ -48,6 +49,7 @@ export const NviStatusMultiSelect = () => {
             control={
               <Checkbox
                 checked={periodStatuses.includes(value)}
+                data-testid={dataTestId.basicData.nviPeriod.statusFilterCheckbox(value)}
                 onChange={(_, checked) => handleChange(value, checked)}
               />
             }
