@@ -1,13 +1,12 @@
-import { Box } from '@mui/material';
+import { Box, SxProps, Theme } from '@mui/material';
 import { ReactNode } from 'react';
 
 interface StatusChipProps {
   children: ReactNode;
-  bgcolor?: string;
-  paddingY?: string | number;
+  sx?: SxProps<Theme>;
 }
 
-export const BaseStatusChip = ({ children, bgcolor = 'info.light', paddingY }: StatusChipProps) => {
+export const BaseStatusChip = ({ children, sx }: StatusChipProps) => {
   return (
     <Box
       sx={{
@@ -18,8 +17,8 @@ export const BaseStatusChip = ({ children, bgcolor = 'info.light', paddingY }: S
         alignItems: 'center',
         p: '0.25rem 0.75rem 0.25rem 0.5rem',
         borderRadius: '1rem',
-        bgcolor,
-        paddingY,
+        bgcolor: 'info.light',
+        ...sx,
       }}>
       {children}
     </Box>
