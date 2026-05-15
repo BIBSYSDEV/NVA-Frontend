@@ -27,7 +27,7 @@ export enum NviPeriodStatusEnum {
   ClosedPeriod = 'ClosedPeriod',
   NoPeriod = 'NoPeriod',
   UnopenedPeriod = 'UnopenedPeriod',
-  Reported = 'Reported',
+  Reported = 'ReportedPeriod',
 }
 
 export type NviPeriodStatus = `${NviPeriodStatusEnum}`;
