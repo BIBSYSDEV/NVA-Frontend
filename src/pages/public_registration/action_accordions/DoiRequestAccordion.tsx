@@ -24,11 +24,11 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicket } from '../../../api/registrationApi';
+import { StatusChip, StatusValue } from '../../../components/_molecules/status-chip/StatusChip';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
-import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { ActionPanelContext } from '../../../context/ActionPanelContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
@@ -43,6 +43,7 @@ import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMe
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
 import { getTicketColor } from '../../messages/utils';
+import { TicketStatusChip } from '../../registration/_components/TicketStatusChip';
 import { TaskAccordionSummary } from './styles';
 import { TicketAssignee } from './TicketAssignee';
 
@@ -251,7 +252,7 @@ export const DoiRequestAccordion = ({
         {doiRequestTicket ? (
           <TicketStatusChip ticket={doiRequestTicket} />
         ) : hasReservedDoi ? (
-          <StatusChip text={t('registration.public_page.tasks_panel.reserved')} icon="hourglass" />
+          <StatusChip text={t('registration.public_page.tasks_panel.reserved')} status={StatusValue.InProgress} />
         ) : null}
       </TaskAccordionSummary>
       <AccordionDetails>

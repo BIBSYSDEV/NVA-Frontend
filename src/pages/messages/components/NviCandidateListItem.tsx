@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
 import { FetchNviCandidatesParams } from '../../../api/searchApi';
-import { NviStatusChip } from '../../../components/StatusChip';
 import { SearchListItem, VerticalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';
@@ -13,6 +12,7 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { NviStatusChip } from '../../tasks/nvi/_components/NviStatusChip';
 import { createPageSpecificAmountString } from '../nviUtils';
 
 interface NviCandidateListItemProps {

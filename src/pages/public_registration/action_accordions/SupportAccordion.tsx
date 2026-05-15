@@ -1,13 +1,14 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, Button, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
-import { TicketStatusChip } from '../../../components/StatusChip';
+import { ActionPanelContext } from '../../../context/ActionPanelContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
@@ -19,12 +20,11 @@ import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-he
 import { invalidateQueryKeyDueToReindexing } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { TicketAssignee } from './TicketAssignee';
-import { TaskAccordionSummary } from './styles';
-import { getTicketColor } from '../../messages/utils';
 import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
-import { useContext } from 'react';
-import { ActionPanelContext } from '../../../context/ActionPanelContext';
+import { getTicketColor } from '../../messages/utils';
+import { TicketStatusChip } from '../../registration/_components/TicketStatusChip';
+import { TaskAccordionSummary } from './styles';
+import { TicketAssignee } from './TicketAssignee';
 
 interface SupportAccordionProps {
   registration: Registration;

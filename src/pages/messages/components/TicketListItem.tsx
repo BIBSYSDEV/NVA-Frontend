@@ -1,10 +1,13 @@
+import CheckIcon from '@mui/icons-material/Check';
 import { Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import { updateTicket } from '../../../api/registrationApi';
-import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
+import { BaseStatusChip } from '../../../components/_molecules/status-chip/BaseStatusChip';
+import { StatusChip, StatusValue } from '../../../components/_molecules/status-chip/StatusChip';
+import { TicketInformation } from '../../../components/RegistrationListItem/TicketInformation';
 import { TaskListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
@@ -22,12 +25,12 @@ import {
   UrlPathTemplate,
 } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
+import { TicketStatusChip } from '../../registration/_components/TicketStatusChip';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
+import { getTicketColor } from '../utils';
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
 import { SupportMessagesColumn } from './SupportMessagesColumn';
-import { getTicketColor } from '../utils';
-import { TicketInformation } from '../../../components/RegistrationListItem/TicketInformation';
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;
@@ -117,9 +120,12 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
 
           {ticket.type === 'GeneralSupportCase' && isOnMyPageMessages ? (
             viewedByUser ? (
-              <StatusChip text={t('common.read_past_tense')} icon="check" />
+              <BaseStatusChip>
+                <CheckIcon sx={{ fontSize: '1rem' }} />
+                <Typography>{t('common.read_past_tense')}</Typography>
+              </BaseStatusChip>
             ) : (
-              <StatusChip text={t('common.unread')} icon="hourglass" />
+              <StatusChip status={StatusValue.InProgress} text={t('common.unread')} />
             )
           ) : (
             <TicketStatusChip ticket={ticket} />

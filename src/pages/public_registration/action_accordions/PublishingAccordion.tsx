@@ -9,7 +9,6 @@ import { Link, useLocation } from 'react-router';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { publishRegistration } from '../../../api/registrationApi';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
-import { TicketStatusChip } from '../../../components/StatusChip';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
 import { ActionPanelContext } from '../../../context/ActionPanelContext';
 import { LandingPageContext } from '../../../context/LandingPageContext';
@@ -35,6 +34,7 @@ import {
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
 import { getTicketColor } from '../../messages/utils';
+import { TicketStatusChip } from '../../registration/_components/TicketStatusChip';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';

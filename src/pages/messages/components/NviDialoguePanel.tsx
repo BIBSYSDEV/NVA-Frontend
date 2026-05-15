@@ -1,10 +1,10 @@
 import { Box, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { NviStatusChip } from '../../../components/StatusChip';
 import { RootState } from '../../../redux/store';
 import { NviCandidate, NviPeriodStatusEnum } from '../../../types/nvi.types';
 import { hasUnidentifiedContributorProblem } from '../../../utils/nviHelpers';
+import { NviStatusChip } from '../../tasks/nvi/_components/NviStatusChip';
 import { NviApprovals } from './NviApprovals';
 import { NviCandidateActions } from './NviCandidateActions';
 import { NviDialoguePanelSkeleton } from './NviDialogPanelSkeleton';
