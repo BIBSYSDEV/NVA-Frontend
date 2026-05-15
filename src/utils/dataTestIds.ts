@@ -118,6 +118,7 @@ export const dataTestId = {
       nviPeriodStartDate: 'nvi-period-start-date',
       nviPeriodEndDate: 'nvi-period-end-date',
       editNviPeriodButton: (id: string) => `edit-nvi-period-${id}`,
+      statusFilterCheckbox: (status: string) => `nvi-period-status-filter-${status}`,
     },
     nviPeriodsLink: 'nvi-periods-link',
     personAdmin: {

@@ -3,11 +3,13 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchAllNviPeriodReports } from '../../../../api/hooks/useFetchAllNviPeriodReports';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
+import { NviStatusMultiSelect } from '../../../../components/filters/nvi/NviStatusMultiSelect';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { MainContentLayout } from '../../../../components/page-layouts/MainContentLayout';
 import { NviPeriod, NviPeriodReport } from '../../../../types/nvi.types';
 import { UpsertNviPeriodDialog } from '../../../basic_data/app_admin/UpsertNviPeriodDialog';
 import { NviAdminReportingPeriodsRow } from './_components/NviAdminReportingPeriodsRow';
+import { useFilteredNviPeriods } from './_hooks/useFilteredNviPeriods';
 
 export const NviPeriodsPage = () => {
   const { t } = useTranslation();
@@ -17,15 +19,17 @@ export const NviPeriodsPage = () => {
   const sortedPeriods = [...(data?.periods ?? [])].sort(
     (a: NviPeriodReport, b: NviPeriodReport) => +b.period.publishingYear - +a.period.publishingYear
   );
+  const filteredPeriods = useFilteredNviPeriods(sortedPeriods);
 
   return (
     <MainContentLayout
       headTitle={t('basic_data.nvi.reporting_periods')}
       heading={t('basic_data.nvi.reporting_periods')}>
       <Typography sx={{ width: { md: '100%', lg: '50%' }, mb: '1rem' }}>{t('nvi_reporting_periods_text')}</Typography>
+      <NviStatusMultiSelect />
       {isPending ? (
         <ListSkeleton height={100} minWidth={100} />
-      ) : sortedPeriods.length === 0 ? (
+      ) : filteredPeriods.length === 0 ? (
         <Typography>{t('common.no_hits')}</Typography>
       ) : (
         <Table size="small">
@@ -34,10 +38,11 @@ export const NviPeriodsPage = () => {
               <TableCell>{t('nvi_year')}</TableCell>
               <TableCell>{t('common.start_date')}</TableCell>
               <TableCell>{t('common.end_date')}</TableCell>
+              <TableCell>{t('status_for_period')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedPeriods.map((nviPeriodReport: NviPeriodReport) => (
+            {filteredPeriods.map((nviPeriodReport: NviPeriodReport) => (
               <NviAdminReportingPeriodsRow
                 nviPeriodReport={nviPeriodReport}
                 key={nviPeriodReport.id}

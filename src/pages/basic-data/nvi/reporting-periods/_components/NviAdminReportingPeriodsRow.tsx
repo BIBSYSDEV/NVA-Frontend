@@ -4,6 +4,7 @@ import { HorizontalBox } from '../../../../../components/styled/Wrappers';
 import { NviPeriod, NviPeriodReport } from '../../../../../types/nvi.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { EditIconButton } from '../../../../messages/components/EditIconButton';
+import { NviPeriodStatusChip } from './NviPeriodStatusChip';
 
 interface NviAdminReportingPeriodsRowProps {
   nviPeriodReport: NviPeriodReport;
@@ -30,6 +31,9 @@ export const NviAdminReportingPeriodsRow = ({
             onClick={() => setNviPeriodToEdit(nviPeriodReport.period)}
           />
         </HorizontalBox>
+      </TableCell>
+      <TableCell>
+        <NviPeriodStatusChip period={period} />
       </TableCell>
     </TableRow>
   );
