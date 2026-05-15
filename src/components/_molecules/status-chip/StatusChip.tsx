@@ -17,8 +17,7 @@ interface StatusChipProps {
   text: string;
 }
 
-/* Generic component for showing statuses in NVA for an amount of base statuses. Enabling all chips with the same kind of status to use the same icon
-and background color even if the text varies. */
+/* Generic component for showing statuses in NVA for an amount of base statuses even if the text varies. */
 export const StatusChip = ({ status, text }: StatusChipProps) => {
   switch (status) {
     case StatusValue.Waiting:
