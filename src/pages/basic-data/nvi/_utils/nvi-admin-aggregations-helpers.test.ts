@@ -10,7 +10,7 @@ const makeTotals = (undisputedProcessedCount: number, undisputedTotalCount: numb
   undisputedTotalCount,
 });
 
-describe('getPercentageControlledReportingPeriods()', () => {
+describe('getPercentageControlledReportingPeriod()', () => {
   test('Returns 0 when totals is undefined', () => {
     expect(getPercentageControlledReportingPeriod(undefined)).toBe(0);
   });
