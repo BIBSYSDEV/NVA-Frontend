@@ -8,7 +8,7 @@ const statusOptions = [
   { value: NviPeriodStatusEnum.UnopenedPeriod, labelKey: 'nvi_period_status_not_opened' },
   { value: NviPeriodStatusEnum.OpenPeriod, labelKey: 'nvi_period_status_ongoing' },
   { value: NviPeriodStatusEnum.ClosedPeriod, labelKey: 'nvi_period_status_closed' },
-  { value: NviPeriodStatusEnum.Reported, labelKey: 'nvi_period_status_reported' },
+  { value: NviPeriodStatusEnum.ReportedPeriod, labelKey: 'nvi_period_status_reported' },
 ] as const;
 
 export const PARAM_NAME_PERIOD_STATUSES = 'periodStatuses';
