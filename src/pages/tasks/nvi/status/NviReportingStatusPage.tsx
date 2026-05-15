@@ -49,7 +49,7 @@ export const NviReportingStatusPage = () => {
               <CenteredTableCell>{t('common.total_number')}</CenteredTableCell>
               <CenteredTableCell>{t('percentage_controlled')}</CenteredTableCell>
               <TableCell>
-                {/* HACK: This cell is hidden to make the number of cells in the table header the same as in the table row, where we display an accordion-like arrow to expand or close rows that have subunits. */}
+                {/* HACK: This cell is hidden to make the number of cells in the table header the same as in the table row, where we display an accordion-like arrow to expand or close rows that have subunits */}
                 <Box component="span" sx={visuallyHidden}>
                   {t('tasks.nvi.show_subunits')}
                 </Box>
