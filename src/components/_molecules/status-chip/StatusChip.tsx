@@ -5,7 +5,7 @@ import LockClockIcon from '@mui/icons-material/LockClock';
 import { BaseStatusChip } from './BaseStatusChip';
 
 export enum StatusValue {
-  Waiting = 'WAITING',
+  Pending = 'PENDING',
   InProgress = 'IN_PROGRESS',
   Completed = 'COMPLETED',
   Success = 'SUCCESS',
@@ -20,7 +20,7 @@ interface StatusChipProps {
 /* Generic component for showing statuses in NVA for an amount of base statuses even if the text varies. */
 export const StatusChip = ({ status, text }: StatusChipProps) => {
   switch (status) {
-    case StatusValue.Waiting:
+    case StatusValue.Pending:
       return (
         <BaseStatusChip sx={{ bgcolor: 'neutral87.main' }}>
           <LockClockIcon aria-hidden="true" fontSize={'small'} />
