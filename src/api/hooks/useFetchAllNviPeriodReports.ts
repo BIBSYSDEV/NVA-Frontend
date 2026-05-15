@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchAllNviPeriodReports } from '../scientificIndexApi';
 
-export const useFetchNviPeriodReports = () => {
+export const useFetchAllNviPeriodReports = () => {
   const { t } = useTranslation();
 
   return useQuery({

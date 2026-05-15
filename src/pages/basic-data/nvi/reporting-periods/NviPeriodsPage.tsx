@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFetchNviPeriodReports } from '../../../../api/hooks/useFetchNviPeriodReports';
+import { useFetchAllNviPeriodReports } from '../../../../api/hooks/useFetchAllNviPeriodReports';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { NviStatusMultiSelect } from '../../../../components/filters/nvi/NviStatusMultiSelect';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
@@ -14,15 +14,15 @@ export const NviPeriodsPage = () => {
   const { t } = useTranslation();
   const [nviPeriodToEdit, setNviPeriodToEdit] = useState<NviPeriod | null>(null);
 
-  const { data, isPending, refetch } = useFetchNviPeriodReports();
+  const { data, isPending, refetch } = useFetchAllNviPeriodReports();
   const sortedPeriods = [...(data?.periods ?? [])].sort(
     (a: NviPeriodReport, b: NviPeriodReport) => +b.period.publishingYear - +a.period.publishingYear
   );
 
   return (
     <MainContentLayout
-      headtitle={t('basic_data.nvi.reporting_periods')}
-      headline={t('basic_data.nvi.reporting_periods')}>
+      headTitle={t('basic_data.nvi.reporting_periods')}
+      heading={t('basic_data.nvi.reporting_periods')}>
       <Typography sx={{ width: { md: '100%', lg: '50%' }, mb: '1rem' }}>{t('nvi_reporting_periods_text')}</Typography>
       <NviStatusMultiSelect />
       {isPending ? (

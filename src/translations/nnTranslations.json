@@ -749,6 +749,7 @@
     "to_top": "Til toppen"
   },
   "go_to_advanced_search": "Gå til avansert resultatsøk",
+  "imported_data_warning": "",
   "institution_support": "Intitusjonen si brukarstøtte",
   "institutions_service_support": "Institusjonane si brukarstøtte",
   "internal_file_info_description": "",
@@ -1700,6 +1701,7 @@
         "program": "Program",
         "program_table_caption": "Oversyn over program",
         "publisher": "Utgjevar/forlag",
+        "publisher_or_place": "",
         "remove_announcement": "Fjern offentleggjering",
         "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" frå lista over offentleggjeringar?",
         "remove_music_work": "Fjern verk",

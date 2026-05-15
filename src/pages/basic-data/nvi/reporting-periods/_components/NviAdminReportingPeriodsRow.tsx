@@ -9,7 +9,7 @@ import { EditIconButton } from '../../../../messages/components/EditIconButton';
 
 interface NviAdminReportingPeriodsRowProps {
   nviPeriodReport: NviPeriodReport;
-  setNviPeriodToEdit: (val: NviPeriod | null) => void;
+  setNviPeriodToEdit: (period: NviPeriod | null) => void;
 }
 
 export const NviAdminReportingPeriodsRow = ({
