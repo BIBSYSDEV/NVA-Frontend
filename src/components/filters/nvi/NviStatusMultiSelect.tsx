@@ -10,7 +10,7 @@ const statusOptions = [
   { value: NviPeriodStatusEnum.Reported, labelKey: 'nvi_period_status_reported' },
 ] as const;
 
-const PARAM_NAME_PERIOD_STATUSES = 'periodStatuses';
+export const PARAM_NAME_PERIOD_STATUSES = 'periodStatuses';
 
 /**
  * Multi-select filter for NVI period statuses.

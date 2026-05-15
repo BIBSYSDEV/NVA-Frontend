@@ -33,7 +33,7 @@ export const NviAdminReportingPeriodsRow = ({
         </HorizontalBox>
       </TableCell>
       <TableCell>
-        <NviPeriodStatusChip startDate={period.startDate} endDate={period.reportingDate} />
+        <NviPeriodStatusChip period={period} />
       </TableCell>
     </TableRow>
   );
