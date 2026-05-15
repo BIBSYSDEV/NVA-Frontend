@@ -1,4 +1,5 @@
 import {
+  AllPeriodsReport,
   Approval,
   InstitutionReport,
   Note,
@@ -7,7 +8,6 @@ import {
   NviInstitutionStatusResponse,
   NviPeriod,
   NviPeriodReport,
-  NviPeriodResponse,
   RejectedApproval,
 } from '../types/nvi.types';
 import { ScientificIndexApiPath } from './apiPaths';
@@ -57,14 +57,6 @@ export const deleteCandidateNote = async (candidateId: string, noteIdentifier: s
   });
 
   return deleteNoteResponse.data;
-};
-
-export const fetchNviPeriods = async () => {
-  const fetchNviPeriodsResponse = await authenticatedApiRequest2<NviPeriodResponse>({
-    url: ScientificIndexApiPath.Period,
-  });
-
-  return fetchNviPeriodsResponse.data;
 };
 
 export const createNviPeriod = async (data: NviPeriod) => {
@@ -132,6 +124,14 @@ const assertValidReportYear = (year: number) => {
   if (!isValidYear) {
     throw new Error('Invalid year provided. Year must be a four-digit integer.');
   }
+};
+
+export const fetchAllNviPeriodReports = async () => {
+  const fetchNviPeriodReportResponse = await authenticatedApiRequest2<AllPeriodsReport>({
+    url: ScientificIndexApiPath.Reports,
+  });
+
+  return fetchNviPeriodReportResponse.data;
 };
 
 export const fetchNviPeriodReport = async (year: number) => {

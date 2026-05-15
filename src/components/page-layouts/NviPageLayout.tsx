@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { ReactNode } from 'react';
 import { ExportNviPublicationPointsButton } from '../buttons/export-buttons/ExportNviPublicationPointsButton';
 import { ExportNviStatusButton } from '../buttons/export-buttons/ExportNviStatusButton';
@@ -6,7 +6,7 @@ import { NviInstitutionSearch } from '../filters/nvi/NviInstitutionSearch';
 import { NviSectorSelector } from '../filters/nvi/NviSectorSelector';
 import { NviVisibilitySelector } from '../filters/nvi/NviVisibilitySelector';
 import { NviYearSelector } from '../filters/nvi/NviYearSelector';
-import { VerticalBox } from '../styled/Wrappers';
+import { MainContentLayout } from './MainContentLayout';
 
 interface NviPageLayoutProps {
   headline: string;
@@ -44,12 +44,9 @@ export const NviPageLayout = ({
   }
 
   return (
-    <VerticalBox sx={{ gap: '1rem', alignItems: 'start' }}>
-      <Typography variant="h1" sx={{ mb: '0.5rem' }}>
-        {headline}
-      </Typography>
+    <MainContentLayout heading={headline}>
       {topView ?? null}
-      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           {yearSelector && <NviYearSelector sx={{ minWidth: '10rem' }} />}
           {sectorSelector && <NviSectorSelector sx={{ minWidth: '15rem' }} />}
@@ -59,6 +56,6 @@ export const NviPageLayout = ({
         {exportButton}
       </Box>
       {children}
-    </VerticalBox>
+    </MainContentLayout>
   );
 };

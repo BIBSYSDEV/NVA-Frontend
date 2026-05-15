@@ -266,3 +266,9 @@ export interface NviPeriodReport {
   totals: NviPeriodTotals;
   byGlobalApprovalStatus: NviPeriodByGlobalApprovalStatus;
 }
+
+export interface AllPeriodsReport {
+  type: 'AllPeriodsReport';
+  id: string;
+  periods: NviPeriodReport[];
+}
