@@ -1,41 +1,25 @@
 import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
 import { useFetchAllNviPeriodReports } from '../../../../api/hooks/useFetchAllNviPeriodReports';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
-import {
-  NviStatusMultiSelect,
-  PARAM_NAME_PERIOD_STATUSES,
-} from '../../../../components/filters/nvi/NviStatusMultiSelect';
+import { NviStatusMultiSelect } from '../../../../components/filters/nvi/NviStatusMultiSelect';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { MainContentLayout } from '../../../../components/page-layouts/MainContentLayout';
-import { NviPeriod, NviPeriodReport, NviPeriodStatusEnum } from '../../../../types/nvi.types';
+import { NviPeriod, NviPeriodReport } from '../../../../types/nvi.types';
 import { UpsertNviPeriodDialog } from '../../../basic_data/app_admin/UpsertNviPeriodDialog';
 import { NviAdminReportingPeriodsRow } from './_components/NviAdminReportingPeriodsRow';
-import { getNviPeriodStatus } from './_utils/nvi-period-helpers';
+import { useFilteredNviPeriods } from './_hooks/useFilteredNviPeriods';
 
 export const NviPeriodsPage = () => {
   const { t } = useTranslation();
   const [nviPeriodToEdit, setNviPeriodToEdit] = useState<NviPeriod | null>(null);
-  const location = useLocation();
 
   const { data, isPending, refetch } = useFetchAllNviPeriodReports();
   const sortedPeriods = [...(data?.periods ?? [])].sort(
     (a: NviPeriodReport, b: NviPeriodReport) => +b.period.publishingYear - +a.period.publishingYear
   );
-
-  const allowedStatuses = new Set(Object.values(NviPeriodStatusEnum));
-  const selectedStatuses = new Set(
-    (new URLSearchParams(location.search).get(PARAM_NAME_PERIOD_STATUSES) ?? '')
-      .split(',')
-      .filter((status): status is NviPeriodStatusEnum => allowedStatuses.has(status as NviPeriodStatusEnum))
-  );
-
-  const filteredPeriods =
-    selectedStatuses.size === 0
-      ? sortedPeriods
-      : sortedPeriods.filter((report) => selectedStatuses.has(getNviPeriodStatus(report.period)));
+  const filteredPeriods = useFilteredNviPeriods(sortedPeriods);
 
   return (
     <MainContentLayout
