@@ -83,7 +83,7 @@ const getParamContent = (t: TFunction, param: string) => {
     case ResultParam.FundingSource:
       return t('common.financier');
     case ResultParam.ScientificReportPeriodSinceParam:
-      return t('basic_data.nvi.nvi_publication_year');
+      return t('basic_data.nvi.nvi_reporting_year');
     case ResultParam.Series:
       return t('registration.resource_type.series');
     case ResultParam.TopLevelOrganization:
