@@ -23,6 +23,8 @@ import { getNviCandidatesSearchPath, getSubUrl, UrlPathTemplate } from '../../ut
 import { checkUserRoles } from '../../utils/user-helpers';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
 import NotFound from '../errorpages/NotFound';
+import { NviCandidatePage } from '../messages/components/NviCandidatePage';
+import { NviCandidatesListPage } from './nvi/NviCandidatesListPage';
 import { NviCorrectionList } from '../messages/components/NviCorrectionList';
 import { NviCorrectionListNavigationAccordion } from '../messages/components/NviCorrectionListNavigationAccordion';
 import { NviDisputePage } from '../messages/components/NviDisputePage';
@@ -33,8 +35,6 @@ import { checkPages } from '../messages/tasks-helpers';
 import { useGetNotificationCounts, useGetTicketsCounts } from '../messages/user-dialog-helpers';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatesNavigationAccordion } from './_components/NviCandidatesNavigationAccordion';
-import { NviCandidatePage } from './nvi/nvi-candidate-page/NviCandidatePage';
-import { NviCandidatesListPage } from './nvi/NviCandidatesListPage';
 import { NviPublicationPointsPage } from './nvi/publication-points/NviPublicationPointsPage';
 import { NviReportingStatusPage } from './nvi/status/NviReportingStatusPage';
 

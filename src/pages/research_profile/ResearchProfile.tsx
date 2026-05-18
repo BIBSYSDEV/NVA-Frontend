@@ -12,8 +12,6 @@ import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam, ResultSearchOrder } from '../../api/searchApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
-import { ExportResultsBibTexButton } from '../../components/buttons/export-buttons/ExportResultsBibTexButton';
 import { HeadTitle } from '../../components/HeadTitle';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
@@ -312,25 +310,14 @@ const ResearchProfile = () => {
           {registrationsHeading}
         </Typography>
         {registrationsQuery.data?.totalHits && registrationsQuery.data.totalHits > 0 ? (
-          <>
-            <Typography>
-              <Trans t={t} i18nKey="my_page.my_profile.link_to_results_search">
-                <MuiLink
-                  component={Link}
-                  to={`${UrlPathTemplate.Filter}?${ResultParam.Contributor}=${encodeURIComponent(personIdentifier)}`}
-                />
-              </Trans>
-            </Typography>
-            <BetaFunctionality sx={{ mt: '1rem', width: 'fit-content' }}>
-              <ExportResultsBibTexButton
-                params={{
-                  contributor: personIdentifier,
-                  order: registrationSort.orderBy,
-                  sort: registrationSort.sortOrder,
-                }}
+          <Typography>
+            <Trans t={t} i18nKey="my_page.my_profile.link_to_results_search">
+              <MuiLink
+                component={Link}
+                to={`${UrlPathTemplate.Filter}?${ResultParam.Contributor}=${encodeURIComponent(personIdentifier)}`}
               />
-            </BetaFunctionality>
-          </>
+            </Trans>
+          </Typography>
         ) : null}
         <ListPagination
           paginationAriaLabel={t('common.pagination_result_search')}
