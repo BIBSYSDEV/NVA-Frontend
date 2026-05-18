@@ -55,7 +55,7 @@ export const ArtisticMusicPerformanceForm = () => {
                     <TableRow>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.type')}</TableCell>
-                      <TableCell>{t('common.description')}</TableCell>
+                      <TableCell>{t('registration.resource_type.artistic.publisher_or_place')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
