@@ -12,7 +12,10 @@ export const NavigationIconButton = ({ navigateTo, sx, ...rest }: NavigationIcon
     component={Link}
     size="small"
     sx={{
-      display: { xs: 'none', md: 'inline-flex' },
+      display: { xs: 'none', md: 'inherit' },
+      mt: '20rem',
+      height: 'fit-content',
+      justifySelf: navigateTo === 'previous' ? 'start' : 'end',
       border: '1px solid',
       borderColor: 'primary.main',
       bgcolor: 'tertiary.main',

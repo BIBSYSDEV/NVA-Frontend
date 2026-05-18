@@ -1,12 +1,15 @@
+import FormatBoldIcon from '@mui/icons-material/FormatBold';
+import { Button } from '@mui/material';
 import { useSearchParams } from 'react-router';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { FetchResultsParams, ResultParam } from '../../api/searchApi';
 import { PublicationInstanceType } from '../../types/registration.types';
-import { exportToBibTex } from './BibTexFactory';
+import { exportToBibTex } from '../../utils/bibtex/BibTexFactory';
+import { dataTestId } from '../../utils/dataTestIds';
 
-export const useBibtexExport = () => {
+export const ExportResultsBibTexButton = () => {
+  const maxNumberOfCitations = 500;
   const [searchParams] = useSearchParams();
-  const maxNumberOfCitations = 100;
 
   const registrationsQueryConfig: FetchResultsParams = {
     query: searchParams.get(ResultParam.Query),
@@ -26,7 +29,6 @@ export const useBibtexExport = () => {
   };
 
   const registrationsQuery = useRegistrationSearch({
-    enabled: false,
     params: registrationsQueryConfig,
   });
 
@@ -37,5 +39,16 @@ export const useBibtexExport = () => {
     }
   };
 
-  return { exportBibTex, isFetchingBibtex: registrationsQuery.isFetching };
+  return (
+    <Button
+      variant="contained"
+      sx={{ ml: '1em' }}
+      color="tertiary"
+      onClick={exportBibTex}
+      title={'Export BibTex'}
+      data-testid={dataTestId.startPage.advancedSearch.downloadBibTexButton}
+      disabled={registrationsQuery.isFetching || registrationsQuery.data?.hits.length === 0}>
+      <FormatBoldIcon />
+    </Button>
+  );
 };

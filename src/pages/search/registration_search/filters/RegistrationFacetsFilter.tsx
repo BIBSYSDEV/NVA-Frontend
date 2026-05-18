@@ -320,7 +320,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPropT
 
       {(registrationQuery.isPending || scientificIndexFacet.length > 0) && (
         <FacetItem
-          title={t('basic_data.nvi.nvi_reporting_year')}
+          title={t('basic_data.nvi.nvi_publication_year')}
           dataTestId={dataTestId.aggregations.scientificIndexFacet}
           isPending={registrationQuery.isPending}>
           {scientificIndexFacet
