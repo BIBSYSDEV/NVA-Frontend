@@ -8,6 +8,7 @@ import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { MainContentLayout } from '../../../../components/page-layouts/MainContentLayout';
 import { NviPeriod, NviPeriodReport } from '../../../../types/nvi.types';
 import { UpsertNviPeriodDialog } from '../../../basic_data/app_admin/UpsertNviPeriodDialog';
+import { CenteredPercentageControlledCell } from '../_styles/nvi-admin-table-styles';
 import { NviAdminReportingPeriodsRow } from './_components/NviAdminReportingPeriodsRow';
 import { useFilteredNviPeriods } from './_hooks/useFilteredNviPeriods';
 
@@ -15,7 +16,7 @@ export const NviPeriodsPage = () => {
   const { t } = useTranslation();
   const [nviPeriodToEdit, setNviPeriodToEdit] = useState<NviPeriod | null>(null);
 
-  const { data, isPending, refetch } = useFetchAllNviPeriodReports();
+  const { data, isPending, isError, refetch } = useFetchAllNviPeriodReports();
   const sortedPeriods = [...(data?.periods ?? [])].sort(
     (a: NviPeriodReport, b: NviPeriodReport) => +b.period.publishingYear - +a.period.publishingYear
   );
@@ -29,6 +30,8 @@ export const NviPeriodsPage = () => {
       <NviStatusMultiSelect />
       {isPending ? (
         <ListSkeleton height={100} minWidth={100} />
+      ) : isError ? (
+        <Typography>{t('feedback.error.get_nvi_periods')}</Typography>
       ) : filteredPeriods.length === 0 ? (
         <Typography>{t('common.no_hits')}</Typography>
       ) : (
@@ -38,6 +41,7 @@ export const NviPeriodsPage = () => {
               <TableCell>{t('nvi_year')}</TableCell>
               <TableCell>{t('common.start_date')}</TableCell>
               <TableCell>{t('common.end_date')}</TableCell>
+              <CenteredPercentageControlledCell>{t('percentage_controlled')}</CenteredPercentageControlledCell>
               <TableCell>{t('status_for_period')}</TableCell>
             </TableRow>
           </TableHead>
