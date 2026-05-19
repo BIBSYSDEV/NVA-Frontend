@@ -1,7 +1,8 @@
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, Link, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StatusChip } from '../../components/StatusChip';
+import { BaseStatusChip } from '../../components/_molecules/status-chip/BaseStatusChip';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { userHasAccessRight } from '../../utils/registration-helpers';
@@ -74,15 +75,14 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
               </Typography>
               {canSeeDraftDoi &&
                 nvaDoiIsFindable === false && ( // Note: Must check explicitly for false, since it is undefined initially
-                  <StatusChip
-                    icon="hourglass"
-                    paddingY={0}
-                    text={
-                      registration.status === RegistrationStatus.Published
+                  <BaseStatusChip sx={{ py: 0 }}>
+                    <HourglassEmptyIcon aria-hidden="true" fontSize={'small'} />
+                    <Typography>
+                      {registration.status === RegistrationStatus.Published
                         ? t('my_page.messages.ticket_types.Pending')
-                        : t('registration.public_page.tasks_panel.reserved')
-                    }
-                  />
+                        : t('registration.public_page.tasks_panel.reserved')}
+                    </Typography>
+                  </BaseStatusChip>
                 )}
             </Box>
           }
