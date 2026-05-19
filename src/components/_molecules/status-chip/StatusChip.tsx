@@ -2,6 +2,7 @@ import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import LockClockIcon from '@mui/icons-material/LockClock';
+import { Typography } from '@mui/material';
 import { BaseStatusChip } from './BaseStatusChip';
 
 export enum StatusValue {
@@ -24,35 +25,35 @@ export const StatusChip = ({ status, text }: StatusChipProps) => {
       return (
         <BaseStatusChip sx={{ bgcolor: 'neutral87.main' }}>
           <LockClockIcon aria-hidden="true" fontSize={'small'} />
-          {text}
+          <Typography>{text}</Typography>
         </BaseStatusChip>
       );
     case StatusValue.InProgress:
       return (
         <BaseStatusChip>
           <HourglassEmptyIcon aria-hidden="true" fontSize={'small'} />
-          {text}
+          <Typography>{text}</Typography>
         </BaseStatusChip>
       );
     case StatusValue.Completed:
       return (
         <BaseStatusChip sx={{ bgcolor: 'neutral87.main' }}>
           <CheckIcon aria-hidden="true" fontSize={'small'} />
-          {text}
+          <Typography>{text}</Typography>
         </BaseStatusChip>
       );
     case StatusValue.Success:
       return (
         <BaseStatusChip sx={{ bgcolor: 'success.light' }}>
           <CheckIcon aria-hidden="true" fontSize={'small'} />
-          {text}
+          <Typography>{text}</Typography>
         </BaseStatusChip>
       );
     case StatusValue.Closed:
       return (
         <BaseStatusChip sx={{ bgcolor: 'warning.light' }}>
           <BlockIcon aria-hidden="true" fontSize={'small'} />
-          {text}
+          <Typography>{text}</Typography>
         </BaseStatusChip>
       );
     default:

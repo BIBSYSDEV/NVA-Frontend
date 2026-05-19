@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
 import { FetchNviCandidatesParams } from '../../../api/searchApi';
-import { NviStatusChip } from '../../../components/StatusChip';
+import { NviStatusChip } from '../../../components/_molecules/status-chip/NviStatusChip';
 import { SearchListItem, VerticalBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';

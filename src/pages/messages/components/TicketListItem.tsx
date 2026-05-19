@@ -1,11 +1,14 @@
+import CheckIcon from '@mui/icons-material/Check';
 import { Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import { updateTicket } from '../../../api/registrationApi';
+import { BaseStatusChip } from '../../../components/_molecules/status-chip/BaseStatusChip';
+import { StatusChip, StatusValue } from '../../../components/_molecules/status-chip/StatusChip';
+import { TicketStatusChip } from '../../../components/_molecules/status-chip/TicketStatusChip';
 import { TicketInformation } from '../../../components/RegistrationListItem/TicketInformation';
-import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { TaskListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
@@ -114,9 +117,12 @@ export const TicketListItem = ({ ticket, currentOffset, selectedTicketTypes }: T
 
           {ticket.type === 'GeneralSupportCase' && isOnMyPageMessages ? (
             viewedByUser ? (
-              <StatusChip text={t('common.read_past_tense')} icon="check" />
+              <BaseStatusChip sx={{ bgcolor: 'info.light' }}>
+                <CheckIcon aria-hidden="true" fontSize={'small'} />
+                <Typography>{t('common.read_past_tense')}</Typography>
+              </BaseStatusChip>
             ) : (
-              <StatusChip text={t('common.unread')} icon="hourglass" />
+              <StatusChip status={StatusValue.InProgress} text={t('common.unread')} />
             )
           ) : (
             <TicketStatusChip ticket={ticket} />
