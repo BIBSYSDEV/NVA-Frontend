@@ -1,13 +1,18 @@
 import { LinkProps } from 'react-router';
 import { NavigationIconButton } from '../../../../pages/tasks/nvi/nvi-candidate-page/_components/NavigationIconButton';
-import { dataTestId } from '../../../../utils/dataTestIds';
+import { dataTestId as testIds } from '../../../../utils/dataTestIds';
 
-type ListNavigationButtonBackProps = Pick<LinkProps, 'to' | 'state'> & { title: string };
+type ListNavigationButtonBackProps = Pick<LinkProps, 'to' | 'state'> & { title: string; dataTestId?: string };
 
-export const ListNavigationButtonBack = ({ to, state, title }: ListNavigationButtonBackProps) => {
+export const ListNavigationButtonBack = ({
+  to,
+  state,
+  title,
+  dataTestId = testIds.tasksPage.previousItemButton,
+}: ListNavigationButtonBackProps) => {
   return (
     <NavigationIconButton
-      data-testid={dataTestId.tasksPage.previousItemButton}
+      data-testid={dataTestId}
       to={to}
       state={state}
       title={title}

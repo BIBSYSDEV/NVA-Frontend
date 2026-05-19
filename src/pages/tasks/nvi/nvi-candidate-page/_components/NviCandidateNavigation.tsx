@@ -4,6 +4,7 @@ import { useFetchNviCandidates } from '../../../../../api/hooks/useFetchNviCandi
 import { ListNavigationButtonBack } from '../../../../../components/_atoms/buttons/navigation/ListNavigationButtonBack';
 import { ListNavigationButtonNext } from '../../../../../components/_atoms/buttons/navigation/ListNavigationButtonNext';
 import { NviCandidatePageLocationState } from '../../../../../types/locationState.types';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 import { getNviCandidatePath } from '../../../../../utils/urlPaths';
 import { generateLocationState } from '../_utils/generate-location-state';
 
@@ -52,6 +53,7 @@ export const NviCandidateNavigation = () => {
           to={getNviCandidatePath(previousCandidateIdentifier)}
           state={previousCandidateState}
           title={t('tasks.nvi.previous_candidate')}
+          dataTestId={dataTestId.tasksPage.nvi.previousCandidateButton}
         />
       )}
 
@@ -60,6 +62,7 @@ export const NviCandidateNavigation = () => {
           to={getNviCandidatePath(nextCandidateIdentifier)}
           state={nextCandidateState}
           title={t('tasks.nvi.next_candidate')}
+          dataTestId={dataTestId.tasksPage.nvi.nextCandidateButton}
         />
       )}
     </>
