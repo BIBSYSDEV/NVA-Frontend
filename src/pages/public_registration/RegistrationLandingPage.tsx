@@ -16,6 +16,7 @@ import { doNotRedirectQueryParam, IdentifierParams } from '../../utils/urlPaths'
 import { hasTicketCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
+import { TaskNavigation } from '../tasks/_components/TaskNavigation';
 import { ActionPanel } from './ActionPanel';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
 
@@ -70,8 +71,10 @@ export const RegistrationLandingPage = () => {
         isAllowedToSeePublicRegistration ? (
           <ErrorBoundary>
             <LandingPageContext.Provider value={{ isAwaitingStatusSync, setIsAwaitingStatusSync }}>
-              <PublicRegistrationContent registration={registration} />
-
+              <Box sx={{ position: 'relative' }}>
+                <PublicRegistrationContent registration={registration} />
+                <TaskNavigation />
+              </Box>
               <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
                 <ActionPanel
                   registration={registration}

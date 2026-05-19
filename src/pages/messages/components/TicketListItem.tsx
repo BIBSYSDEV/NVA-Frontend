@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import { updateTicket } from '../../../api/registrationApi';
+import { TicketInformation } from '../../../components/RegistrationListItem/TicketInformation';
 import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { TaskListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
+import { TaskNavigationLocationState } from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration, RegistrationStatus } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
@@ -23,17 +24,18 @@ import {
 } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
+import { getTicketColor } from '../utils';
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
 import { SupportMessagesColumn } from './SupportMessagesColumn';
-import { getTicketColor } from '../utils';
-import { TicketInformation } from '../../../components/RegistrationListItem/TicketInformation';
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;
+  currentOffset?: number;
+  selectedTicketTypes?: string[];
 }
 
-export const TicketListItem = ({ ticket }: TicketListItemProps) => {
+export const TicketListItem = ({ ticket, currentOffset, selectedTicketTypes }: TicketListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const queryClient = useQueryClient();
@@ -75,7 +77,13 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           {
             previousSearch: window.location.search,
             selectedTicketType: ticket.type,
-          } satisfies PreviousSearchLocationState & SelectedTicketTypeLocationState
+            ...(isOnTasksPage && typeof currentOffset === 'number' && selectedTicketTypes
+              ? {
+                  ticketTypeFilters: selectedTicketTypes,
+                  ticketOffset: currentOffset,
+                }
+              : {}),
+          } satisfies Partial<TaskNavigationLocationState>
         }
         to={{
           pathname: isOnTasksPage

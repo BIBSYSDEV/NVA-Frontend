@@ -792,6 +792,8 @@ export const dataTestId = {
     dialoguesWithoutCuratorButton: 'dialogues-without-curator-button',
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
+    previousItemButton: 'previous-item-button',
+    nextItemButton: 'next-item-button',
     nvi: {
       approveButton: 'approve-button',
       visibilityFilter: 'visibility-filter',
