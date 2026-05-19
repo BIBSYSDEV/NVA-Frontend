@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { matchPath, useLocation, useNavigate, useParams } from 'react-router';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { useFetchRegistrationTickets } from '../../api/hooks/useFetchRegistrationTickets';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -12,7 +12,7 @@ import { LandingPageContext } from '../../context/LandingPageContext';
 import { RootState } from '../../redux/store';
 import { RegistrationStatus } from '../../types/registration.types';
 import { userHasAccessRight } from '../../utils/registration-helpers';
-import { doNotRedirectQueryParam, IdentifierParams } from '../../utils/urlPaths';
+import { doNotRedirectQueryParam, IdentifierParams, UrlPathTemplate } from '../../utils/urlPaths';
 import { hasTicketCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
@@ -26,6 +26,7 @@ export const RegistrationLandingPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
+  const isOnTasksDialogue = !!matchPath(UrlPathTemplate.TasksDialogueRegistration, location.pathname);
   const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
   const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
   const [isAwaitingStatusSync, setIsAwaitingStatusSync] = useState(false);
@@ -73,7 +74,7 @@ export const RegistrationLandingPage = () => {
             <LandingPageContext.Provider value={{ isAwaitingStatusSync, setIsAwaitingStatusSync }}>
               <Box sx={{ position: 'relative' }}>
                 <PublicRegistrationContent registration={registration} />
-                <TaskNavigation />
+                {isOnTasksDialogue && <TaskNavigation />}
               </Box>
               <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
                 <ActionPanel

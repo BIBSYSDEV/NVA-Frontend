@@ -6,7 +6,7 @@ import { ListNavigationButtonBack } from '../../../components/_atoms/buttons/nav
 import { ListNavigationButtonNext } from '../../../components/_atoms/buttons/navigation/ListNavigationButtonNext';
 import { TaskNavigationLocationState } from '../../../types/locationState.types';
 import { getTasksRegistrationPath } from '../../../utils/urlPaths';
-import { generateTaskNavigationState } from '../_utils/generate-task-navigation-state';
+import { updateNavigationOffset } from '../_utils/task-navigation-state';
 
 export const TaskNavigation = () => {
   const { t } = useTranslation();
@@ -17,16 +17,16 @@ export const TaskNavigation = () => {
   const hasOffset = typeof currentOffset === 'number';
   const isFirst = hasOffset && currentOffset === 0;
 
-  const navigationSearchParams = new URLSearchParams(locationState?.previousSearch ?? '');
+  const ticketSearchParams = new URLSearchParams(locationState?.previousSearch ?? '');
 
   if (hasOffset) {
-    navigationSearchParams.set(TicketSearchParam.From, String(Math.max(currentOffset - 1, 0))); // Setting from-parameter to the offset of the previous candidate if there is one, so that the upcoming fetch will return the previous and next candidates around the current one.
-    navigationSearchParams.set(TicketSearchParam.Results, '3'); // Only fetching previous, current and next candidate, since that's all we need to determine the identifiers of the previous and next candidate.
+    ticketSearchParams.set(TicketSearchParam.From, String(Math.max(currentOffset - 1, 0))); // Setting from-parameter to the offset of the previous candidate if there is one.
+    ticketSearchParams.set(TicketSearchParam.Results, '3'); // Only fetching previous, current and next candidate.
   }
 
   const ticketsQuery = useFetchTickets({
     enabled: hasOffset,
-    searchParams: navigationSearchParams,
+    searchParams: ticketSearchParams,
     selectedTicketTypes: locationState?.ticketTypeFilters ?? [],
   });
 
@@ -42,14 +42,14 @@ export const TaskNavigation = () => {
       {previousTicketIdentifier && (
         <ListNavigationButtonBack
           to={getTasksRegistrationPath(previousTicketIdentifier)}
-          state={generateTaskNavigationState(locationState, currentOffset! - 1)}
+          state={updateNavigationOffset(locationState, currentOffset! - 1)}
           title={t('tasks.dialogue.previous_ticket')}
         />
       )}
       {nextTicketIdentifier && (
         <ListNavigationButtonNext
           to={getTasksRegistrationPath(nextTicketIdentifier)}
-          state={generateTaskNavigationState(locationState, currentOffset! + 1)}
+          state={updateNavigationOffset(locationState, currentOffset! + 1)}
           title={t('tasks.dialogue.next_ticket')}
         />
       )}

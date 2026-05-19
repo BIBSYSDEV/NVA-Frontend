@@ -8,7 +8,6 @@ import { TicketInformation } from '../../../components/RegistrationListItem/Tick
 import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { TaskListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { TaskNavigationLocationState } from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration, RegistrationStatus } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
@@ -24,6 +23,7 @@ import {
 } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
+import { buildTicketLinkState } from '../../tasks/_utils/task-navigation-state';
 import { getTicketColor } from '../utils';
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
@@ -73,18 +73,7 @@ export const TicketListItem = ({ ticket, currentOffset, selectedTicketTypes }: T
       sx={{ bgcolor: !viewedByUser ? 'tertiary.light' : 'white', borderLeftColor: getTicketColor(ticket.type) }}>
       <MuiLink
         component={Link}
-        state={
-          {
-            previousSearch: window.location.search,
-            selectedTicketType: ticket.type,
-            ...(isOnTasksPage && typeof currentOffset === 'number' && selectedTicketTypes
-              ? {
-                  ticketTypeFilters: selectedTicketTypes,
-                  ticketOffset: currentOffset,
-                }
-              : {}),
-          } satisfies Partial<TaskNavigationLocationState>
-        }
+        state={buildTicketLinkState(ticket.type, window.location.search, currentOffset, selectedTicketTypes)}
         to={{
           pathname: isOnTasksPage
             ? getTasksRegistrationPath(identifier)
