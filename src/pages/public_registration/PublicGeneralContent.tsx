@@ -35,8 +35,11 @@ import {
   ReportPublicationInstance,
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
-import { ResearchDataPublicationContext } from '../../types/publication_types/researchDataRegistration.types';
-import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
+import {
+  ResearchDataPublicationContext,
+  ResearchDataPublicationInstance,
+} from '../../types/publication_types/researchDataRegistration.types';
+import { ArtisticType, DegreeType, JournalType, ResearchDataType } from '../../types/publicationFieldNames';
 import { AdditionalIdentifier, RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
@@ -78,6 +81,7 @@ import {
   PublicPublicationInstanceExhibition,
   PublicPublicationInstanceJournal,
   PublicPublicationInstanceReport,
+  PublicPublicationInstanceSoftwareSourceCode,
 } from './PublicPublicationInstance';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
@@ -116,9 +120,9 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     .sort((a, b) => prioritiseIdentifiersFromCristin(a, b))
     .shift()?.value;
 
-  const scopusIdentifier = registration.additionalIdentifiers?.find(
-    (identifier) => identifier.type === 'ScopusIdentifier' || identifier.sourceName === 'Scopus'
-  )?.value;
+  const scopusIdentifiers = registration.additionalIdentifiers
+    ?.filter((identifier) => identifier.type === 'ScopusIdentifier' || identifier.sourceName === 'Scopus')
+    .map((identifier) => identifier.value);
 
   const publicationDateString = displayDate(entityDescription?.publicationDate);
   const nviReportedYearString =
@@ -220,6 +224,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicPublicationInstanceExhibition
                 publicationInstance={publicationInstance as ExhibitionPublicationInstance}
               />
+            ) : publicationInstance.type === ResearchDataType.SoftwareSourceCode ? (
+              <PublicPublicationInstanceSoftwareSourceCode
+                publicationInstance={publicationInstance as ResearchDataPublicationInstance}
+              />
             ) : null)}
 
           <PublicDoi registration={registration} />
@@ -240,8 +248,11 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               }
             />
           )}
-          {scopusIdentifier && (
-            <PublicPageInfoEntry title={t('registration.public_page.scopus_id')} content={scopusIdentifier} />
+          {scopusIdentifiers && scopusIdentifiers.length > 0 && (
+            <PublicPageInfoEntry
+              title={t('registration.public_page.scopus_id')}
+              content={scopusIdentifiers.join(', ')}
+            />
           )}
           <PublicPageInfoEntry title={t('registration.registration_id')} content={registration.identifier} />
         </dl>

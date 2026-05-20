@@ -41,6 +41,7 @@ declare module '@mui/material/styles' {
     person: PaletteColor;
     project: PaletteColor;
     centralImport: PaletteColor;
+    textPrimary: PaletteColor;
     neutral87: PaletteColor;
     taskType: {
       publishingRequest: PaletteColor;
@@ -55,6 +56,7 @@ declare module '@mui/material/styles' {
     person?: PaletteColorOptions;
     project?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
+    textPrimary?: PaletteColorOptions;
     neutral87?: PaletteColorOptions;
     taskType?: {
       publishingRequest?: PaletteColorOptions;
@@ -164,6 +166,9 @@ export const mainTheme = createTheme(
       },
       centralImport: {
         main: Color.CentralImportMain,
+      },
+      textPrimary: {
+        main: Color.TextPrimary,
       },
       background: {
         default: Color.Neutral95,

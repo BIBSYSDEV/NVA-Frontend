@@ -70,6 +70,12 @@ export const NviCorrectionListNavigationAccordion = () => {
           {t('tasks.nvi.correction_list_type.book_with_less_than_50_pages')}
         </SelectableButton>
         <SelectableButton
+          data-testid={dataTestId.tasksPage.correctionList.chapterAndBookYearMismatchButton}
+          isSelected={selectedNviList === 'YearBetweenChapterAndBookMismatch'}
+          onClick={() => openNewCorrectionList('YearBetweenChapterAndBookMismatch')}>
+          {t('tasks.nvi.correction_list_type.chapter_and_book_year_mismatch')}
+        </SelectableButton>
+        <SelectableButton
           data-testid={dataTestId.tasksPage.correctionList.unidentifiedContributorWithIdentifiedAffiliationButton}
           isSelected={selectedNviList === 'UnidentifiedContributorWithIdentifiedAffiliation'}
           onClick={() => openNewCorrectionList('UnidentifiedContributorWithIdentifiedAffiliation')}>

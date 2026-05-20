@@ -3,7 +3,6 @@ import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { HeadTitle } from '../../components/HeadTitle';
 import clinicalTreatmentStudiesThumbnail from '../../resources/images/clinical-treatment-studies-thumbnail.png';
-import internationalCooperationThumbnail from '../../resources/images/international-cooperation-report-thumbnail.png';
 import nviReportThumbnail from '../../resources/images/nvi-report-thumbnail.png';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ReportButton } from './ReportButton';
@@ -35,12 +34,12 @@ const ReportsPage = () => {
           imageSrc={nviReportThumbnail}
           path={UrlPathTemplate.ReportsNvi}
         />
-        <ReportButton
+        {/* <ReportButton
           title={t('search.reports.international_cooperation')}
           description={t('search.reports.external_reports')}
           imageSrc={internationalCooperationThumbnail}
           path={UrlPathTemplate.ReportsInternationalCooperation}
-        />
+        />*/}
         <ReportButton
           title={t('search.reports.clinical_treatment_studies')}
           description={t('search.reports.external_reports')}

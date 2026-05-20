@@ -1,16 +1,16 @@
 import { fetchOrganization } from '../api/cristinApi';
+import { useFetchBookRegistration } from '../api/hooks/useFetchBookRegistration';
+import { useFetchPublisherFromId } from '../api/hooks/useFetchPublisherFromId';
+import { useFetchSeries } from '../api/hooks/useFetchSeries';
 import { Contributor } from '../types/contributor.types';
 import { NviCandidateProblem } from '../types/nvi.types';
 import { BookRegistration } from '../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../types/publication_types/chapterRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
+import { BookType } from '../types/publicationFieldNames';
 import { Registration } from '../types/registration.types';
 import { getTopLevelOrganization } from './institutions-helpers';
 import { nviApplicableTypes } from './registration-helpers';
-import { BookType } from '../types/publicationFieldNames';
-import { useFetchBookRegistration } from '../api/hooks/useFetchBookRegistration';
-import { useFetchPublisherFromId } from '../api/hooks/useFetchPublisherFromId';
-import { useFetchSeries } from '../api/hooks/useFetchSeries';
 
 const minNviYear = 2011;
 export const getNviYearFilterValues = (maxYear: number) =>

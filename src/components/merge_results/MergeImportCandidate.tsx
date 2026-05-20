@@ -15,11 +15,15 @@ import { HeadTitle } from '../HeadTitle';
 import { PageSpinner } from '../PageSpinner';
 import { StyledPageContent } from '../styled/Wrappers';
 import { MergeResultsWizard } from './MergeResultsWizard';
+import { AdditionalIdentifier } from '../../types/registration.types';
 
 interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
   registrationIdentifier: string;
 }
+
+const isSameIdentifier = (a: AdditionalIdentifier, b: AdditionalIdentifier) =>
+  a.type === b.type && a.sourceName === b.sourceName && a.value === b.value;
 
 export const MergeImportCandidate = () => {
   const { t } = useTranslation();
@@ -76,7 +80,19 @@ export const MergeImportCandidate = () => {
         sourceResult={expandImportCandidate(importCandidateQuery.data)}
         targetResult={registrationQuery.data}
         onSave={async (data) => {
-          await registrationMutation.mutateAsync(data);
+          const existing = data.additionalIdentifiers ?? [];
+          const incoming = importCandidateQuery.data.additionalIdentifiers ?? [];
+          const mergedDataWithIdentifiers = {
+            ...data,
+            additionalIdentifiers: [
+              ...existing,
+              ...incoming.filter(
+                (importIdentifier) =>
+                  !existing.some((existingIdentifier) => isSameIdentifier(existingIdentifier, importIdentifier))
+              ),
+            ],
+          };
+          await registrationMutation.mutateAsync(mergedDataWithIdentifiers);
           await importCandidateMutation.mutateAsync();
           dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
           navigate(getRegistrationWizardPath(registrationQuery.data.identifier), {

@@ -264,6 +264,7 @@ export enum NviCandidateFilterEnum {
 export type NviCandidateFilter = `${NviCandidateFilterEnum}`;
 
 export enum NviCandidateStatusEnum {
+  New = 'new',
   Pending = 'pending',
   Approved = 'approved',
   Rejected = 'rejected',
@@ -375,6 +376,7 @@ export enum ResultParam {
   Course = 'course',
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  ExcludeParentPublicationYear = 'excludeParentPublicationYear',
   ExcludeParentType = 'excludeParentType',
   ExcludeScientificValueSeries = 'excludeScientificValueSeries',
   ExcludeSubunits = 'excludeSubunits',
@@ -411,6 +413,7 @@ export enum ResultParam {
   Tags = 'tags',
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
+  UnidentifiedContributorInstitution = 'unidentifiedContributorInstitution',
   UnidentifiedNorwegian = 'unidentifiedNorwegian',
   Unit = 'unit',
   Vocabulary = 'vocabulary',
@@ -435,6 +438,7 @@ export interface FetchResultsParams {
   [ResultParam.Course]?: string | null;
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.ExcludeParentPublicationYear]?: string | null;
   [ResultParam.ExcludeParentType]?: PublicationInstanceType[] | null;
   [ResultParam.ExcludeScientificValueSeries]?: ScientificValueLevels[] | null;
   [ResultParam.ExcludeSubunits]?: boolean | null;
@@ -472,12 +476,13 @@ export interface FetchResultsParams {
   [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
+  [ResultParam.UnidentifiedContributorInstitution]?: string | null;
   [ResultParam.UnidentifiedNorwegian]?: boolean | null;
   [ResultParam.Unit]?: string | null;
   [ResultParam.Vocabulary]?: string | null;
 }
 
-export const fetchResults = async (params: FetchResultsParams, signal?: AbortSignal) => {
+export const buildRegistrationSearchParams = (params: FetchResultsParams): URLSearchParams => {
   const searchParams = new URLSearchParams();
 
   if (params.abstract) {
@@ -516,6 +521,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.doi) {
     const formattedDoiValue = getDoiValue(params.doi);
     searchParams.set(ResultParam.Doi, formattedDoiValue);
+  }
+  if (params.excludeParentPublicationYear) {
+    searchParams.set(ResultParam.ExcludeParentPublicationYear, params.excludeParentPublicationYear);
   }
   if (params.excludeParentType?.length) {
     searchParams.set(ResultParam.ExcludeParentType, params.excludeParentType.join(','));
@@ -618,6 +626,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     const unitParam = params.unit || params.topLevelOrganization || '';
     searchParams.set(ResultParam.Unit, encodeURIComponent(unitParam));
   }
+  if (params.unidentifiedContributorInstitution) {
+    searchParams.set(ResultParam.UnidentifiedContributorInstitution, params.unidentifiedContributorInstitution);
+  }
   if (params.unidentifiedNorwegian) {
     searchParams.set(ResultParam.UnidentifiedNorwegian, params.unidentifiedNorwegian.toString());
   }
@@ -629,6 +640,12 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.ModifiedDate);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
+
+  return searchParams;
+};
+
+export const fetchResults = async (params: FetchResultsParams, signal?: AbortSignal) => {
+  const searchParams = buildRegistrationSearchParams(params);
 
   const getResults = await apiRequest2<RegistrationSearchResponse>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,

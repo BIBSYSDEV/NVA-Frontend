@@ -96,6 +96,9 @@ const resourceErrorMessage = {
   isbnInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.resource_type.isbn'),
   }),
+  isbnRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.isbn'),
+  }),
   isbnTooShort: i18n.t('feedback.validation.isbn_too_short'),
   journalNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
     field: i18n.t('registration.resource_type.journal'),
@@ -131,8 +134,14 @@ const resourceErrorMessage = {
     field: i18n.t('common.publisher'),
   }),
   referenceRequired: i18n.t('feedback.validation.reference_required'),
+  codeRepositoryInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.research_data.repository_url'),
+  }),
   seriesNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
     field: i18n.t('registration.resource_type.series'),
+  }),
+  softwareVersionRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.research_data.version'),
   }),
   toMustBeAfterFrom: i18n.t('feedback.validation.cannot_be_before', {
     field: i18n.t('registration.resource_type.date_to'),
@@ -155,11 +164,17 @@ const resourceErrorMessage = {
 export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
 
 // Common Fields
-export const isbnListField = Yup.array().of(
-  Yup.string()
-    .min(13, resourceErrorMessage.isbnTooShort)
-    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? ''))
-);
+export const isbnListField = Yup.array()
+  .of(
+    Yup.string()
+      .min(13, resourceErrorMessage.isbnTooShort)
+      .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? ''))
+  )
+  .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+    publicationInstanceType === BookType.AcademicMonograph || publicationInstanceType === BookType.AcademicCommentary
+      ? schema.min(1, resourceErrorMessage.isbnRequired).required(resourceErrorMessage.isbnRequired)
+      : schema
+  );
 
 const pagesMonographField = Yup.object()
   .nullable()
@@ -400,11 +415,20 @@ const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicatio
     ),
   }),
   description: Yup.string().nullable(),
-  venues: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
-    publicationInstanceType === ArtisticType.ArtisticDesign || publicationInstanceType === ArtisticType.VisualArts
-      ? schema.min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired)
-      : schema.nullable()
-  ),
+  venues: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) => {
+    if (
+      publicationInstanceType === ArtisticType.ArtisticDesign ||
+      publicationInstanceType === ArtisticType.VisualArts
+    ) {
+      return schema.min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired);
+    } else if (publicationInstanceType === ArtisticType.OtherArtisticOutput) {
+      return schema
+        .min(1, resourceErrorMessage.announcementsRequired)
+        .required(resourceErrorMessage.announcementsRequired);
+    } else {
+      return schema.nullable();
+    }
+  }),
   architectureOutput: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
     publicationInstanceType === ArtisticType.ArtisticArchitecture
       ? schema.min(1, resourceErrorMessage.announcementsRequired).required(resourceErrorMessage.announcementsRequired)
@@ -509,6 +533,12 @@ const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicat
         : schema
     ),
   related: Yup.array(),
+  softwareVersion: Yup.string().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+    publicationInstanceType === ResearchDataType.SoftwareSourceCode
+      ? schema.required(resourceErrorMessage.softwareVersionRequired)
+      : schema
+  ),
+  codeRepository: Yup.string().nullable().trim().url(resourceErrorMessage.codeRepositoryInvalid),
 });
 
 export const researchDataReference = baseReference.shape({

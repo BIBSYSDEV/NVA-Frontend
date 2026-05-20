@@ -1,11 +1,13 @@
 import {
+  AllPeriodsReport,
   Approval,
+  InstitutionReport,
   Note,
   NviCandidate,
   NviInstitutionsReport,
   NviInstitutionStatusResponse,
   NviPeriod,
-  NviPeriodResponse,
+  NviPeriodReport,
   RejectedApproval,
 } from '../types/nvi.types';
 import { ScientificIndexApiPath } from './apiPaths';
@@ -55,14 +57,6 @@ export const deleteCandidateNote = async (candidateId: string, noteIdentifier: s
   });
 
   return deleteNoteResponse.data;
-};
-
-export const fetchNviPeriods = async () => {
-  const fetchNviPeriodsResponse = await authenticatedApiRequest2<NviPeriodResponse>({
-    url: ScientificIndexApiPath.Period,
-  });
-
-  return fetchNviPeriodsResponse.data;
 };
 
 export const createNviPeriod = async (data: NviPeriod) => {
@@ -125,15 +119,47 @@ export const fetchNviInstitutionApprovalReport = async (year: number) => {
   return fetchNviInstitutionApprovalReportResponse.data;
 };
 
-export const fetchNviReportsAllInstitutions = async (year: number) => {
+const assertValidReportYear = (year: number) => {
   const isValidYear = Number.isInteger(year) && year >= 1000 && year <= 9999;
-
   if (!isValidYear) {
     throw new Error('Invalid year provided. Year must be a four-digit integer.');
   }
+};
 
-  const fetchNviReportsResponse = await authenticatedApiRequest2<NviInstitutionsReport>({
+export const fetchAllNviPeriodReports = async () => {
+  const fetchNviPeriodReportResponse = await authenticatedApiRequest2<AllPeriodsReport>({
+    url: ScientificIndexApiPath.Reports,
+  });
+
+  return fetchNviPeriodReportResponse.data;
+};
+
+export const fetchNviPeriodReport = async (year: number) => {
+  assertValidReportYear(year);
+  const fetchNviPeriodReportResponse = await authenticatedApiRequest2<NviPeriodReport>({
+    url: `${ScientificIndexApiPath.Reports}/${year}`,
+  });
+
+  return fetchNviPeriodReportResponse.data;
+};
+
+export const fetchNviReportsAllInstitutions = async (year: number) => {
+  assertValidReportYear(year);
+  const fetchNviReportsAllInstitutionsResponse = await authenticatedApiRequest2<NviInstitutionsReport>({
     url: `${ScientificIndexApiPath.Reports}/${year}/institutions`,
   });
-  return fetchNviReportsResponse.data;
+
+  return fetchNviReportsAllInstitutionsResponse.data;
+};
+
+export const fetchNviReportForInstitution = async (id: string, year: number) => {
+  assertValidReportYear(year);
+  const trimmedId = id.trim();
+  if (!trimmedId) {
+    throw new Error('Invalid institution id provided.');
+  }
+  const fetchNviReportForInstitutionResponse = await authenticatedApiRequest2<InstitutionReport>({
+    url: `${ScientificIndexApiPath.Reports}/${year}/institutions/${encodeURIComponent(trimmedId)}`,
+  });
+  return fetchNviReportForInstitutionResponse.data;
 };

@@ -2,7 +2,7 @@ import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { ProjectSearchOrder } from '../api/cristinApi';
 import { SortOrder } from '../api/searchApi';
-import { SortSelector } from './SortSelector';
+import { SortSelector } from './_molecules/SortSelector';
 
 interface ProjectSortOption {
   orderBy: ProjectSearchOrder;

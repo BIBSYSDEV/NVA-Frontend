@@ -77,5 +77,5 @@ export const getSourceRegistrationHeading = (t: TFunction) => {
  * Note: relies on translation key 'use_rerender' which should remain exactly '{{value}}' in all locales.
  */
 export const triggerLanguageRerender = (t: TFunction, label: string) => {
-  return t('use_rerender', { value: label });
+  return t('use_rerender', { value: label, interpolation: { escapeValue: false } });
 };

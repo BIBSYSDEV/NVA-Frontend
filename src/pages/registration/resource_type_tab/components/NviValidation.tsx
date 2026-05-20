@@ -24,7 +24,8 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
 
   const isNviApplicableJournalArticle =
     instanceType === JournalType.AcademicArticle || instanceType === JournalType.AcademicLiteratureReview;
-  const isNviApplicableBookMonograph = instanceType === BookType.AcademicMonograph;
+  const isNviApplicableBookMonograph =
+    instanceType === BookType.AcademicMonograph || instanceType === BookType.AcademicCommentary;
   const isNviApplicableChapter = instanceType === ChapterType.AcademicChapter;
 
   return isNviApplicableJournalArticle || isNviApplicableBookMonograph || isNviApplicableChapter ? (

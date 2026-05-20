@@ -85,4 +85,4 @@ export const setDelay = (ms: number) => new Promise((resolve) => setTimeout(reso
 
 const nbNoNumberFormat = new Intl.NumberFormat('nb-NO');
 
-export const formatNumber = (n: number) => nbNoNumberFormat.format(n);
+export const formatLocaleNumber = (n: number) => nbNoNumberFormat.format(n);

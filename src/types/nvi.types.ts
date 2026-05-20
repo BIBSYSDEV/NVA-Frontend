@@ -22,6 +22,16 @@ export enum NviCandidateApprovalStatusEnum {
 
 export type NviCandidateApprovalStatus = `${NviCandidateApprovalStatusEnum}`;
 
+export enum NviPeriodStatusEnum {
+  OpenPeriod = 'OpenPeriod',
+  ClosedPeriod = 'ClosedPeriod',
+  NoPeriod = 'NoPeriod',
+  UnopenedPeriod = 'UnopenedPeriod',
+  ReportedPeriod = 'ReportedPeriod',
+}
+
+export type NviPeriodStatus = `${NviPeriodStatusEnum}`;
+
 export interface NviCandidateSearchHitApproval {
   institutionId: string;
   labels: LanguageString;
@@ -46,7 +56,7 @@ interface AggregationCount {
   docCount: number;
 }
 
-interface ApprovalStatusAggregation {
+export interface ApprovalStatusAggregation {
   New: number;
   Approved: number;
   Rejected: number;
@@ -71,7 +81,7 @@ interface TopLevelAggregation extends BaseAggregation {
   type: 'TopLevelAggregation';
 }
 
-interface DirectAffiliationAggregation extends BaseAggregation {
+export interface DirectAffiliationAggregation extends BaseAggregation {
   type: 'DirectAffiliationAggregation';
 }
 
@@ -136,7 +146,7 @@ export interface NviCandidate {
   approvals: (Approval | FinalizedApproval | RejectedApproval)[];
   notes: Note[];
   period: {
-    status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod' | 'UnopenedPeriod';
+    status: NviPeriodStatus;
     year?: string;
   };
   status?: 'Reported';
@@ -162,15 +172,19 @@ export interface NviPeriodResponse {
   periods: NviPeriod[];
 }
 
-export type CorrectionListId =
-  | 'ApplicableCategoriesWithNonApplicableChannel'
-  | 'NonApplicableCategoriesWithApplicableChannel'
-  | 'AnthologyWithoutChapter'
-  | 'AnthologyWithApplicableChapter'
-  | 'BooksWithLessThan50Pages'
-  | 'UnidentifiedContributorWithIdentifiedAffiliation'
-  | 'ScientificChapterNotInAnthology'
-  | 'ScientificMonographyOrAnthologyWithoutIsxns';
+export enum CorrectionListNames {
+  ApplicableCategoriesWithNonApplicableChannel = 'ApplicableCategoriesWithNonApplicableChannel',
+  NonApplicableCategoriesWithApplicableChannel = 'NonApplicableCategoriesWithApplicableChannel',
+  AnthologyWithoutChapter = 'AnthologyWithoutChapter',
+  AnthologyWithApplicableChapter = 'AnthologyWithApplicableChapter',
+  YearBetweenChapterAndBookMismatch = 'YearBetweenChapterAndBookMismatch',
+  BooksWithLessThan50Pages = 'BooksWithLessThan50Pages',
+  UnidentifiedContributorWithIdentifiedAffiliation = 'UnidentifiedContributorWithIdentifiedAffiliation',
+  ScientificChapterNotInAnthology = 'ScientificChapterNotInAnthology',
+  ScientificMonographyOrAnthologyWithoutIsxns = 'ScientificMonographyOrAnthologyWithoutIsxns',
+}
+
+export type CorrectionListId = `${CorrectionListNames}`;
 
 export type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
@@ -193,6 +207,8 @@ export interface InstitutionSummaryTotals {
   type: 'InstitutionTotals';
   validPoints: number;
   disputedCount: number;
+  globalApprovedCount: number;
+  globalRejectedCount: number;
   undisputedProcessedCount: number;
   undisputedTotalCount: number;
 }
@@ -226,4 +242,34 @@ export interface NviInstitutionsReport {
   id: string;
   period: NviPeriod;
   institutions: InstitutionReport[];
+}
+
+export interface NviPeriodTotals {
+  type: 'PeriodTotals';
+  validPoints: number;
+  disputedCount: number;
+  undisputedProcessedCount: number;
+  undisputedTotalCount: number;
+}
+
+export interface NviPeriodByGlobalApprovalStatus {
+  type: 'CandidatesByGlobalApprovalStatus';
+  dispute: number;
+  pending: number;
+  rejected: number;
+  approved: number;
+}
+
+export interface NviPeriodReport {
+  type: 'PeriodReport';
+  id: string;
+  period: NviPeriod;
+  totals: NviPeriodTotals;
+  byGlobalApprovalStatus: NviPeriodByGlobalApprovalStatus;
+}
+
+export interface AllPeriodsReport {
+  type: 'AllPeriodsReport';
+  id: string;
+  periods: NviPeriodReport[];
 }

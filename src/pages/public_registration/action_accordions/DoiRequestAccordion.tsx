@@ -24,11 +24,12 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicket } from '../../../api/registrationApi';
+import { StatusChip, StatusValue } from '../../../components/_molecules/status-chip/StatusChip';
+import { TicketStatusChip } from '../../../components/_molecules/status-chip/TicketStatusChip';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
-import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { ActionPanelContext } from '../../../context/ActionPanelContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
@@ -251,7 +252,7 @@ export const DoiRequestAccordion = ({
         {doiRequestTicket ? (
           <TicketStatusChip ticket={doiRequestTicket} />
         ) : hasReservedDoi ? (
-          <StatusChip text={t('registration.public_page.tasks_panel.reserved')} icon="hourglass" />
+          <StatusChip status={StatusValue.InProgress} text={t('registration.public_page.tasks_panel.reserved')} />
         ) : null}
       </TaskAccordionSummary>
       <AccordionDetails>

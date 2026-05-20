@@ -261,7 +261,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             </>
           )}
 
-          {(associatedArtifacts.length === 0 || isNullAssociatedArtifact) && !originalDoi && !values.doi && (
+          {(associatedArtifacts.length === 0 || isNullAssociatedArtifact) && !originalDoi && (
             <div>
               <Typography variant="h2" sx={{ mb: '1rem' }}>
                 {t('registration.files_and_license.resource_is_a_reference')}

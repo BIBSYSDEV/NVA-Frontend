@@ -17,7 +17,7 @@ describe('computeDropdownStatusFromParams', () => {
   describe("status: pending and globalStatus: pending'", () => {
     it('returns the search status "candidates for control"', () => {
       const res = computeDropdownStatusFromParams(
-        [NviCandidateStatusEnum.Pending],
+        [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending],
         [NviCandidateGlobalStatusEnum.Pending]
       );
       expect(res).toEqual([NviSearchStatusEnum.CandidatesForControl]);
@@ -96,7 +96,7 @@ describe('computeParamsFromDropdownStatus', () => {
     it('returns pending statuses', () => {
       const res = computeParamsFromDropdownStatus([NviSearchStatusEnum.CandidatesForControl]);
       expect(res).toEqual({
-        newStatuses: [NviCandidateStatusEnum.Pending],
+        newStatuses: [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending],
         newGlobalStatuses: [NviCandidateGlobalStatusEnum.Pending],
       });
     });
@@ -126,7 +126,7 @@ describe('computeParamsFromDropdownStatus', () => {
         NviSearchStatusEnum.Approved,
       ]);
       expect(res).toEqual({
-        newStatuses: [NviCandidateStatusEnum.Pending, NviCandidateStatusEnum.Approved],
+        newStatuses: [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending, NviCandidateStatusEnum.Approved],
         newGlobalStatuses: [NviCandidateGlobalStatusEnum.Pending, NviCandidateGlobalStatusEnum.Approved],
       });
     });
@@ -138,7 +138,7 @@ describe('computeParamsFromDropdownStatus', () => {
         NviSearchStatusEnum.Rejected,
       ]);
       expect(res).toEqual({
-        newStatuses: [NviCandidateStatusEnum.Pending, NviCandidateStatusEnum.Rejected],
+        newStatuses: [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending, NviCandidateStatusEnum.Rejected],
         newGlobalStatuses: [NviCandidateGlobalStatusEnum.Pending, NviCandidateGlobalStatusEnum.Rejected],
       });
     });
@@ -164,7 +164,12 @@ describe('computeParamsFromDropdownStatus', () => {
         NviSearchStatusEnum.Rejected,
       ]);
       expect(res).toEqual({
-        newStatuses: [NviCandidateStatusEnum.Pending, NviCandidateStatusEnum.Approved, NviCandidateStatusEnum.Rejected],
+        newStatuses: [
+          NviCandidateStatusEnum.New,
+          NviCandidateStatusEnum.Pending,
+          NviCandidateStatusEnum.Approved,
+          NviCandidateStatusEnum.Rejected,
+        ],
         newGlobalStatuses: [
           NviCandidateGlobalStatusEnum.Pending,
           NviCandidateGlobalStatusEnum.Approved,

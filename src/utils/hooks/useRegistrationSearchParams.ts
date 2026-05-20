@@ -33,6 +33,7 @@ export const useRegistrationsQueryParams = () => {
     contributorName: searchParams.get(ResultParam.ContributorName),
     course: searchParams.get(ResultParam.Course),
     cristinIdentifier: searchParams.get(ResultParam.CristinIdentifier),
+    excludeParentPublicationYear: searchParams.get(ResultParam.ExcludeParentPublicationYear),
     excludeSubunits: searchParams.get(ResultParam.ExcludeSubunits) === 'true',
     files: searchParams.get(ResultParam.Files),
     doi: searchParams.get(ResultParam.Doi),
@@ -62,6 +63,7 @@ export const useRegistrationsQueryParams = () => {
     tags: searchParams.get(ResultParam.Tags),
     title: searchParams.get(ResultParam.Title),
     topLevelOrganization: searchParams.get(ResultParam.TopLevelOrganization),
+    unidentifiedContributorInstitution: searchParams.get(ResultParam.UnidentifiedContributorInstitution),
     unit: searchParams.get(ResultParam.Unit),
     vocabulary: searchParams.get(ResultParam.Vocabulary),
   } satisfies SearchParamType;

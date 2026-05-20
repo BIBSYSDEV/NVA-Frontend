@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { NviCandidateOrderBy, NviCandidatesSearchParam, SortOrder } from '../../../api/searchApi';
-import { SortSelector } from '../../../components/SortSelector';
+import { SortSelector } from '../../../components/_molecules/SortSelector';
 
 export const NviSortSelector = () => {
   const { t } = useTranslation();

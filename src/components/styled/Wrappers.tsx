@@ -121,7 +121,7 @@ export const MediumTypography = styled(Typography)({
   fontSize: '0.9rem',
 });
 
-export const StyledTruncatableTypography = styled(Typography)({
+export const EllipsisTypography = styled(Typography)({
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
