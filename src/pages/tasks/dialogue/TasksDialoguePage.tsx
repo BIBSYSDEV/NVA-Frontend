@@ -1,6 +1,6 @@
+import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useOutletContext } from 'react-router';
-import { UseQueryResult } from '@tanstack/react-query';
 import { TicketListDefaultValuesWrapper } from '../../../components/TicketListDefaultValuesWrapper';
 import { CustomerTicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { TicketList } from '../../messages/components/TicketList';
