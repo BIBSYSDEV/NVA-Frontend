@@ -31,10 +31,10 @@ const TasksPage = () => {
   const searchParams = new URLSearchParams(location.search);
 
   const [ticketTypeToggles, setTicketTypeToggles] = useState<TicketTypeSelection>({
-    doiRequest: true,
-    generalSupportCase: true,
-    publishingRequest: true,
-    filesApprovalThesis: true,
+    doiRequest: isDoiCurator,
+    generalSupportCase: isSupportCurator,
+    publishingRequest: isPublishingCurator,
+    filesApprovalThesis: isThesisCurator,
   });
 
   const selectedTicketTypes = Object.entries(ticketTypeToggles)
