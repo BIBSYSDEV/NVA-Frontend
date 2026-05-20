@@ -55,7 +55,8 @@ export const NviCandidateNavigation = () => {
           title={t('tasks.nvi.previous_candidate')}
           navigateTo={'previous'}
           sx={{
-            gridArea: 'registration',
+            position: 'absolute',
+            top: '20rem',
             left: '-1rem',
           }}
         />
@@ -69,7 +70,8 @@ export const NviCandidateNavigation = () => {
           title={t('tasks.nvi.next_candidate')}
           navigateTo={'next'}
           sx={{
-            gridArea: 'registration',
+            position: 'absolute',
+            top: '20rem',
             right: '-1rem',
           }}
         />

@@ -27,6 +27,7 @@ export enum NviPeriodStatusEnum {
   ClosedPeriod = 'ClosedPeriod',
   NoPeriod = 'NoPeriod',
   UnopenedPeriod = 'UnopenedPeriod',
+  ReportedPeriod = 'ReportedPeriod',
 }
 
 export type NviPeriodStatus = `${NviPeriodStatusEnum}`;
@@ -265,4 +266,10 @@ export interface NviPeriodReport {
   period: NviPeriod;
   totals: NviPeriodTotals;
   byGlobalApprovalStatus: NviPeriodByGlobalApprovalStatus;
+}
+
+export interface AllPeriodsReport {
+  type: 'AllPeriodsReport';
+  id: string;
+  periods: NviPeriodReport[];
 }
