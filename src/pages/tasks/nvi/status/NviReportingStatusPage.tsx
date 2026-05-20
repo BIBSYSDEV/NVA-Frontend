@@ -66,3 +66,5 @@ export const NviReportingStatusPage = () => {
     </NviPageLayout>
   );
 };
+
+export default NviReportingStatusPage;

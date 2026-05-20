@@ -59,3 +59,5 @@ export const NviCandidatePage = () => {
     </ErrorBoundary>
   );
 };
+
+export default NviCandidatePage;

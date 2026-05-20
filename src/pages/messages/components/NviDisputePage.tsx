@@ -124,3 +124,5 @@ export const NviDisputePage = () => {
     </section>
   );
 };
+
+export default NviDisputePage;

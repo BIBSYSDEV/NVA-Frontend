@@ -163,3 +163,5 @@ export const NviCandidatesListPage = () => {
     </section>
   );
 };
+
+export default NviCandidatesListPage;

@@ -96,3 +96,5 @@ export const NviCorrectionList = () => {
     </section>
   );
 };
+
+export default NviCorrectionList;

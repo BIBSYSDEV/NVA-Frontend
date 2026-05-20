@@ -89,3 +89,5 @@ export const NviPublicationPointsPage = () => {
     </NviPageLayout>
   );
 };
+
+export default NviPublicationPointsPage;
