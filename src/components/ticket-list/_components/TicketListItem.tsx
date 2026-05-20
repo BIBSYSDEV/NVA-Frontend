@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import { updateTicket } from '../../../api/registrationApi';
-import { BaseStatusChip } from '../../../components/_molecules/status-chip/BaseStatusChip';
-import { StatusChip, StatusValue } from '../../../components/_molecules/status-chip/StatusChip';
-import { TicketStatusChip } from '../../../components/_molecules/status-chip/TicketStatusChip';
-import { TicketInformation } from '../../../components/RegistrationListItem/TicketInformation';
-import { TaskListItem } from '../../../components/styled/Wrappers';
+import { BaseStatusChip } from '../../_molecules/status-chip/BaseStatusChip';
+import { StatusChip, StatusValue } from '../../_molecules/status-chip/StatusChip';
+import { TicketStatusChip } from '../../_molecules/status-chip/TicketStatusChip';
+import { TicketInformation } from '../../RegistrationListItem/TicketInformation';
+import { TaskListItem } from '../../styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration, RegistrationStatus } from '../../../types/registration.types';
@@ -25,12 +25,12 @@ import {
   UrlPathTemplate,
 } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
-import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
-import { buildTicketLinkState } from '../../tasks/_utils/task-navigation-state';
-import { getTicketColor } from '../utils';
-import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
-import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
-import { SupportMessagesColumn } from './SupportMessagesColumn';
+import { StyledVerifiedContributor } from '../../../pages/registration/contributors_tab/ContributorIndicator';
+import { buildTicketLinkState } from '../../../pages/tasks/_utils/task-navigation-state';
+import { getTicketColor } from '../../../pages/messages/utils';
+import { DoiRequestMessagesColumn } from '../../../pages/messages/components/DoiRequestMessagesColumn';
+import { PublishingRequestMessagesColumn } from '../../../pages/messages/components/PublishingRequestMessagesColumn';
+import { SupportMessagesColumn } from '../../../pages/messages/components/SupportMessagesColumn';
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;

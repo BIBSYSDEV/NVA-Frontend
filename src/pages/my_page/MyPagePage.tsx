@@ -40,9 +40,9 @@ import { getDialogueNotificationsParams, resetPaginationAndNavigate } from '../.
 import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
-import { TicketList } from '../messages/components/TicketList';
+import { TicketList } from '../../components/ticket-list/TicketList';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
-import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import { RegistrationLandingPage } from '../../components/registration-landing-page/RegistrationLandingPage';
 import ResearchProfile from '../research_profile/ResearchProfile';
 import { MyFieldAndBackground } from './user_profile/MyFieldAndBackground';
 import { MyProfile } from './user_profile/MyProfile';

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { MinimizedMenuIconButton } from '../../components/SideMenu';
 import { PreviousPathLocationState } from '../../types/locationState.types';
-import { RegistrationLandingPage } from './RegistrationLandingPage';
+import { RegistrationLandingPage } from '../../components/registration-landing-page/RegistrationLandingPage';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();
