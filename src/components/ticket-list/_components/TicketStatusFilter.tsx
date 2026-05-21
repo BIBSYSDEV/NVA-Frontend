@@ -1,10 +1,11 @@
 import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { TicketSearchParam } from '../api/searchApi';
-import { TicketStatus } from '../types/publication_types/ticket.types';
-import { dataTestId } from '../utils/dataTestIds';
-import { syncParamsWithSearchFields } from '../utils/searchHelpers';
+import { TicketSearchParam } from '../../../api/searchApi';
+import { TicketStatus } from '../../../types/publication_types/ticket.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { useTicketsParams } from '../_hooks/useTicketsParams';
 
 const labelId = 'status-filter-select';
 
@@ -17,9 +18,9 @@ export const TicketStatusFilter = ({ options }: TicketStatusFilterProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const currentStatusFilter = (searchParams.get(TicketSearchParam.Status)?.split(',') ?? []) as TicketStatus[];
-  const selectedOptions = currentStatusFilter.filter((status) => options.includes(status));
-  const otherSelectedStatuses = currentStatusFilter.filter((status) => !options.includes(status));
+  const { status } = useTicketsParams();
+  const selectedOptions = status.filter((ticketStatus) => options.includes(ticketStatus));
+  const otherSelectedStatuses = status.filter((ticketStatus) => !options.includes(ticketStatus));
 
   const handleChange = (event: SelectChangeEvent<TicketStatus[]>) => {
     const newSelectedOptions = event.target.value as TicketStatus[];
