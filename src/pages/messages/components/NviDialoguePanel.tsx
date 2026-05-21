@@ -1,7 +1,7 @@
 import { Box, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { NviStatusChip } from '../../../components/StatusChip';
+import { NviStatusChip } from '../../../components/_molecules/status-chip/NviStatusChip';
 import { RootState } from '../../../redux/store';
 import { NviCandidate, NviPeriodStatusEnum } from '../../../types/nvi.types';
 import { hasUnidentifiedContributorProblem } from '../../../utils/nviHelpers';

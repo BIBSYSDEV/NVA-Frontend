@@ -749,6 +749,7 @@
     "to_top": "Til toppen"
   },
   "go_to_advanced_search": "Gå til avansert resultatsøk",
+  "imported_data_warning": "Viser importerte data. Tallene kan avvike fra det som ble rapportert på rapporteringstidspunkt.",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
   "internal_file_info_description": "Velg “Åpen fil” for forskningsresultater som skal gjøres åpent tilgjengelige. Husk å velge korrekt lisens. Kurator kan bistå deg med dette. Velg “Intern fil” for dokumenter som kun skal deles med kurator, for eksempel forfatteravtaler og lignende.",
@@ -2109,5 +2110,13 @@
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "imported_data_warning": "Viser importerte data. Tallene kan avvike fra det som ble rapportert på rapporteringstidspunkt."
+  "nvi_reporting_periods_text": "Oversikten viser status på NVI-periode og totalt antall kandidater i perioden. For perioder som er rapportert vises antall godkjente kandidater. For åpne perioder vises antall kandidater totalt.",
+  "nvi_year": "NVI-år",
+  "status_on_nvi_period": "Status på NVI-periode",
+  "nvi_period_status_not_opened": "Ikke åpnet",
+  "nvi_period_status_ongoing": "Pågående",
+  "nvi_period_status_is_going_on": "Pågår",
+  "nvi_period_status_closed": "Lukket",
+  "nvi_period_status_reported": "Rapportert",
+  "status_for_period": "Status for periode"
 }
