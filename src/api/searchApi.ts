@@ -482,7 +482,7 @@ export interface FetchResultsParams {
   [ResultParam.Vocabulary]?: string | null;
 }
 
-export const fetchResults = async (params: FetchResultsParams, signal?: AbortSignal) => {
+export const buildRegistrationSearchParams = (params: FetchResultsParams): URLSearchParams => {
   const searchParams = new URLSearchParams();
 
   if (params.abstract) {
@@ -640,6 +640,12 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.ModifiedDate);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
+
+  return searchParams;
+};
+
+export const fetchResults = async (params: FetchResultsParams, signal?: AbortSignal) => {
+  const searchParams = buildRegistrationSearchParams(params);
 
   const getResults = await apiRequest2<RegistrationSearchResponse>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,

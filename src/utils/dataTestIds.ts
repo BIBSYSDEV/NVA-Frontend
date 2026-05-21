@@ -117,6 +117,8 @@ export const dataTestId = {
       nviPeriodYear: 'nvi-period-year',
       nviPeriodStartDate: 'nvi-period-start-date',
       nviPeriodEndDate: 'nvi-period-end-date',
+      editNviPeriodButton: (id: string) => `edit-nvi-period-${id}`,
+      statusFilterCheckbox: (status: string) => `nvi-period-status-filter-${status}`,
     },
     nviPeriodsLink: 'nvi-periods-link',
     personAdmin: {
@@ -144,6 +146,7 @@ export const dataTestId = {
   },
   common: {
     cancel: 'cancel',
+    exportBibTexButton: 'export-bibtex-button',
     exportButton: 'export-button',
     exportLink: 'export-link',
     pagination: 'pagination',
@@ -240,7 +243,6 @@ export const dataTestId = {
       advancedFieldSelect: 'advanced-field-select',
       advancedValueField: 'advanced-value-field',
       courseField: 'course-field',
-      downloadBibTexButton: 'download-bibtex-button',
       downloadResultsButton: 'download-results-button',
       fileStatusSelect: 'file-status-select',
       fundingSourceField: 'funding-source-field',
