@@ -2,11 +2,11 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { useFetchTickets } from '../../../api/hooks/useFetchTickets';
 import { TicketSearchParam } from '../../../api/searchApi';
-import { ListNavigationButtonBack } from '../../../components/_atoms/buttons/navigation/ListNavigationButtonBack';
-import { ListNavigationButtonNext } from '../../../components/_atoms/buttons/navigation/ListNavigationButtonNext';
 import { TaskNavigationLocationState } from '../../../types/locationState.types';
 import { getTasksRegistrationPath } from '../../../utils/urlPaths';
 import { updateNavigationOffset } from '../_utils/task-navigation-state';
+import { ListNavigationButtonBack } from './ListNavigationButtonBack';
+import { ListNavigationButtonNext } from './ListNavigationButtonNext';
 
 export const TaskNavigation = () => {
   const { t } = useTranslation();
@@ -20,8 +20,8 @@ export const TaskNavigation = () => {
   const ticketSearchParams = new URLSearchParams(locationState?.previousSearch ?? '');
 
   if (hasOffset) {
-    ticketSearchParams.set(TicketSearchParam.From, String(Math.max(currentOffset - 1, 0))); // Setting from-parameter to the offset of the previous candidate if there is one.
-    ticketSearchParams.set(TicketSearchParam.Results, '3'); // Only fetching previous, current and next candidate.
+    ticketSearchParams.set(TicketSearchParam.From, String(Math.max(currentOffset - 1, 0))); // Setting from-parameter to the offset of the previous ticket if there is one.
+    ticketSearchParams.set(TicketSearchParam.Results, '3'); // Only fetching previous, current and next ticket.
   }
 
   const ticketsQuery = useFetchTickets({

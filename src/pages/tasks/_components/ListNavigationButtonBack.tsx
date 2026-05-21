@@ -1,8 +1,11 @@
 import { LinkProps } from 'react-router';
-import { NavigationIconButton } from '../../../../pages/tasks/nvi/nvi-candidate-page/_components/NavigationIconButton';
-import { dataTestId as testIds } from '../../../../utils/dataTestIds';
+import { dataTestId as testIds } from '../../../utils/dataTestIds';
+import { NavigationIconButton } from '../nvi/nvi-candidate-page/_components/NavigationIconButton';
 
-type ListNavigationButtonBackProps = Pick<LinkProps, 'to' | 'state'> & { title: string; dataTestId?: string };
+interface ListNavigationButtonBackProps extends Pick<LinkProps, 'to' | 'state'> {
+  title: string;
+  dataTestId?: string;
+}
 
 export const ListNavigationButtonBack = ({
   to,

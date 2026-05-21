@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { useFetchNviCandidates } from '../../../../../api/hooks/useFetchNviCandidates';
-import { ListNavigationButtonBack } from '../../../../../components/_atoms/buttons/navigation/ListNavigationButtonBack';
-import { ListNavigationButtonNext } from '../../../../../components/_atoms/buttons/navigation/ListNavigationButtonNext';
 import { NviCandidatePageLocationState } from '../../../../../types/locationState.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { getNviCandidatePath } from '../../../../../utils/urlPaths';
+import { ListNavigationButtonBack } from '../../../_components/ListNavigationButtonBack';
+import { ListNavigationButtonNext } from '../../../_components/ListNavigationButtonNext';
 import { generateLocationState } from '../_utils/generate-location-state';
 
 export const NviCandidateNavigation = () => {
