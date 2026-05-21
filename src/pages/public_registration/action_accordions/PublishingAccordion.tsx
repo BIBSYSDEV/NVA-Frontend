@@ -43,7 +43,7 @@ import { RefreshPublishingRequestButton } from './RefreshPublishingRequestButton
 import { TaskAccordionSummary } from './styles';
 import { TicketAssignee } from './TicketAssignee';
 
-const AWAITING_STATUS_SYNC_TIMEOUT_MS = 2 * 60 * 1000;
+const AWAITING_STATUS_SYNC_TIMEOUT_MS = 30 * 1000;
 
 interface PublishingAccordionProps {
   registration: Registration;
