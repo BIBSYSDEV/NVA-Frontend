@@ -27,7 +27,6 @@ import { CentralImportCandidateForm } from '../basic_data/app_admin/central_impo
 import { CentralImportDuplicationCheckPage } from '../basic_data/app_admin/central_import/CentralImportDuplicationCheckPage';
 import { CentralImportPage } from '../basic_data/app_admin/central_import/CentralImportPage';
 import { ImportCandidatesMenuFilters } from '../basic_data/app_admin/central_import/ImportCandidatesMenuFilters';
-import { NviPeriodsPage } from '../basic_data/app_admin/NviPeriodsPage';
 import { AddEmployeePage } from '../basic_data/institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from '../basic_data/institution_admin/person_register/PersonRegisterPage';
 import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
@@ -35,6 +34,7 @@ import { SerialPublicationClaimsSettings } from '../editor/SerialPublicationClai
 import NotFound from '../errorpages/NotFound';
 import { NviAdminNavigationAccordion } from './_components/NviAdminNavigationAccordion';
 import { NviAdminPublicationPointsPage } from './nvi/publication-points/NviAdminPublicationPointsPage';
+import { NviPeriodsPage } from './nvi/reporting-periods/NviPeriodsPage';
 import { NviAdminReportingStatusPage } from './nvi/status/NviAdminReportingStatusPage';
 
 const isOnEditOrMergeImportCandidate = (path: string) =>
