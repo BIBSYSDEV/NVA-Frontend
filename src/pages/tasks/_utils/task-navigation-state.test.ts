@@ -1,27 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { TaskNavigationLocationState } from '../../../types/locationState.types';
-import { buildTicketLinkState, updateNavigationOffset } from './task-navigation-state';
-
-describe('updateNavigationOffset', () => {
-  const baseState: TaskNavigationLocationState = {
-    previousSearch: '?status=pending',
-    selectedTicketType: 'DoiRequest',
-    ticketTypeFilters: ['doiRequest'],
-    ticketOffset: 3,
-  };
-
-  test('updates ticketOffset', () => {
-    const result = updateNavigationOffset(baseState, 4);
-    expect(result.ticketOffset).toBe(4);
-  });
-
-  test('preserves other state fields', () => {
-    const result = updateNavigationOffset(baseState, 4);
-    expect(result.previousSearch).toBe(baseState.previousSearch);
-    expect(result.selectedTicketType).toBe(baseState.selectedTicketType);
-    expect(result.ticketTypeFilters).toBe(baseState.ticketTypeFilters);
-  });
-});
+import { buildTicketLinkState } from './task-navigation-state';
 
 describe('buildTicketLinkState', () => {
   test('includes navigation state when offset and filters are present', () => {
