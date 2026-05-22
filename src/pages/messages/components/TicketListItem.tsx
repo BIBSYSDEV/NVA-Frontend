@@ -11,7 +11,6 @@ import { TicketStatusChip } from '../../../components/_molecules/status-chip/Tic
 import { TicketInformation } from '../../../components/RegistrationListItem/TicketInformation';
 import { TaskListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration, RegistrationStatus } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
@@ -27,6 +26,7 @@ import {
 } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
+import { buildTicketLinkState } from '../../tasks/_utils/task-navigation-state';
 import { getTicketColor } from '../utils';
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
@@ -34,9 +34,11 @@ import { SupportMessagesColumn } from './SupportMessagesColumn';
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;
+  currentOffset?: number;
+  selectedTicketTypes?: string[];
 }
 
-export const TicketListItem = ({ ticket }: TicketListItemProps) => {
+export const TicketListItem = ({ ticket, currentOffset, selectedTicketTypes }: TicketListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const queryClient = useQueryClient();
@@ -74,12 +76,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       sx={{ bgcolor: !viewedByUser ? 'tertiary.light' : 'white', borderLeftColor: getTicketColor(ticket.type) }}>
       <MuiLink
         component={Link}
-        state={
-          {
-            previousSearch: window.location.search,
-            selectedTicketType: ticket.type,
-          } satisfies PreviousSearchLocationState & SelectedTicketTypeLocationState
-        }
+        state={buildTicketLinkState(ticket.type, window.location.search, currentOffset, selectedTicketTypes)}
         to={{
           pathname: isOnTasksPage
             ? getTasksRegistrationPath(identifier)
