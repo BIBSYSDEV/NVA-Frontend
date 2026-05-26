@@ -1998,6 +1998,10 @@
   "start_merging": "Start sammenslåing",
   "tasks": {
     "correction_list": "Retteliste",
+    "dialogue": {
+      "next_ticket": "Gå til neste oppgave",
+      "previous_ticket": "Gå til forrige oppgave"
+    },
     "display_options": "Visningsalternativer",
     "include_tasks_without_curator": "Inkluder oppgaver uten kurator",
     "new_tasks": "Innmeldte oppgaver: {{count}}",

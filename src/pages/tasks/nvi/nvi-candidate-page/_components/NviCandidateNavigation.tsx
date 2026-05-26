@@ -4,8 +4,9 @@ import { useFetchNviCandidates } from '../../../../../api/hooks/useFetchNviCandi
 import { NviCandidatePageLocationState } from '../../../../../types/locationState.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { getNviCandidatePath } from '../../../../../utils/urlPaths';
+import { ListNavigationButtonBack } from '../../../_components/ListNavigationButtonBack';
+import { ListNavigationButtonNext } from '../../../_components/ListNavigationButtonNext';
 import { generateLocationState } from '../_utils/generate-location-state';
-import { NavigationIconButton } from './NavigationIconButton';
 
 export const NviCandidateNavigation = () => {
   const { t } = useTranslation();
@@ -48,32 +49,20 @@ export const NviCandidateNavigation = () => {
   return (
     <>
       {previousCandidateIdentifier && (
-        <NavigationIconButton
-          data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
+        <ListNavigationButtonBack
           to={getNviCandidatePath(previousCandidateIdentifier)}
           state={previousCandidateState}
           title={t('tasks.nvi.previous_candidate')}
-          navigateTo={'previous'}
-          sx={{
-            position: 'absolute',
-            top: '20rem',
-            left: '-1rem',
-          }}
+          dataTestId={dataTestId.tasksPage.nvi.previousCandidateButton}
         />
       )}
 
       {nextCandidateIdentifier && (
-        <NavigationIconButton
-          data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
+        <ListNavigationButtonNext
           to={getNviCandidatePath(nextCandidateIdentifier)}
           state={nextCandidateState}
           title={t('tasks.nvi.next_candidate')}
-          navigateTo={'next'}
-          sx={{
-            position: 'absolute',
-            top: '20rem',
-            right: '-1rem',
-          }}
+          dataTestId={dataTestId.tasksPage.nvi.nextCandidateButton}
         />
       )}
     </>
