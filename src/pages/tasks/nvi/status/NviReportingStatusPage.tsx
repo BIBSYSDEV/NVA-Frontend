@@ -11,7 +11,7 @@ import { useNviInstitutionStatusNumbers } from '../_hooks/useNviInstitutionStatu
 import { NviReportingStatusRow } from './_components/NviReportingStatusRow';
 import { NviReportingStatusTexts } from './_components/NviReportingStatusTexts';
 
-export const NviReportingStatusPage = () => {
+const NviReportingStatusPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 

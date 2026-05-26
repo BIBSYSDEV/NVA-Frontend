@@ -17,15 +17,15 @@ import {
   NviPointsHelperTextModal,
   NviPointsModalVariant,
 } from '../../../../components/dialogs/helper-texts/NviPointsHelperTextModal';
-import { NviPublicationPointsRow } from './_components/NviPublicationPointsRow';
+import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
 import { HorizontalBox } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
 import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
 import { useNviInstitutionStatusNumbers } from '../_hooks/useNviInstitutionStatusNumbers';
-import { NviPageLayout } from '../../../../components/page-layouts/NviPageLayout';
+import { NviPublicationPointsRow } from './_components/NviPublicationPointsRow';
 import { NviPublicationPointsTexts } from './_components/NviPublicationPointsTexts';
 
-export const NviPublicationPointsPage = () => {
+const NviPublicationPointsPage = () => {
   const { t } = useTranslation();
 
   const user = useSelector((store: RootState) => store.user);

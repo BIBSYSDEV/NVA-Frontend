@@ -21,7 +21,7 @@ import { CorrectionListYearFilter } from './CorrectionListYearFilter';
 
 export const nviCorrectionListQueryKey = 'list';
 
-export const NviCorrectionList = () => {
+const NviCorrectionList = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);

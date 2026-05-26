@@ -10,7 +10,7 @@ interface TasksDialoguePageContext {
   selectedTicketTypes: string[];
 }
 
-export const TasksDialoguePage = () => {
+const TasksDialoguePage = () => {
   const { t } = useTranslation();
   const { ticketsQuery, selectedTicketTypes } = useOutletContext<TasksDialoguePageContext>();
 
