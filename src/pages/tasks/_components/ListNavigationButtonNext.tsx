@@ -1,6 +1,6 @@
 import { LinkProps } from 'react-router';
+import { NavigationIconButton } from '../../../components/_atoms/buttons/NavigationIconButton';
 import { dataTestId as testIds } from '../../../utils/dataTestIds';
-import { NavigationIconButton } from '../nvi/nvi-candidate-page/_components/NavigationIconButton';
 
 interface ListNavigationButtonNextProps extends Pick<LinkProps, 'to' | 'state'> {
   title: string;

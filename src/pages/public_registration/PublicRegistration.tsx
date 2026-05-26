@@ -2,9 +2,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
+import { RegistrationLandingPage } from '../../components/registration-landing-page/RegistrationLandingPage';
 import { MinimizedMenuIconButton } from '../../components/SideMenu';
 import { PreviousPathLocationState } from '../../types/locationState.types';
-import { RegistrationLandingPage } from './RegistrationLandingPage';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();
