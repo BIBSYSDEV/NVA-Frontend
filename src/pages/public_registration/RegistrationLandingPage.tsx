@@ -94,3 +94,5 @@ export const RegistrationLandingPage = () => {
     </Box>
   );
 };
+
+export default RegistrationLandingPage;

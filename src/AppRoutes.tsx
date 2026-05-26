@@ -1,12 +1,14 @@
 import { lazy } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
+import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from './api/searchApi';
 import { Layout } from './Layout';
 import NotFound from './pages/errorpages/NotFound';
 import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
-import { UrlPathTemplate } from './utils/urlPaths';
-import { hasCuratorRole } from './utils/user-helpers';
+import { getNviCandidatesSearchPath, UrlPathTemplate } from './utils/urlPaths';
+import { hasCuratorRole, hasTicketCuratorRole } from './utils/user-helpers';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const FrontPage = lazy(() => import('./pages/frontpage/FrontPage'));
@@ -30,8 +32,18 @@ const ReportsPage = lazy(() => import('./pages/reports/ReportsPage'));
 const NviReports = lazy(() => import('./pages/reports/NviReports'));
 const InternationalCooperationReports = lazy(() => import('./pages/reports/InternationalCooperationReports'));
 const ClinicalTreatmentStudiesReports = lazy(() => import('./pages/reports/ClinicalTreatmentStudiesReports'));
+const TasksDialoguePage = lazy(() => import('./pages/tasks/dialogue/TasksDialoguePage'));
+const RegistrationLandingPage = lazy(() => import('./pages/public_registration/RegistrationLandingPage'));
+const NviCandidatesListPage = lazy(() => import('./pages/tasks/nvi/NviCandidatesListPage'));
+const NviReportingStatusPage = lazy(() => import('./pages/tasks/nvi/status/NviReportingStatusPage'));
+const NviDisputePage = lazy(() => import('./pages/messages/components/NviDisputePage'));
+const NviPublicationPointsPage = lazy(() => import('./pages/tasks/nvi/publication-points/NviPublicationPointsPage'));
+const NviCandidatePage = lazy(() => import('./pages/tasks/nvi/nvi-candidate-page/NviCandidatePage'));
+const NviCorrectionList = lazy(() => import('./pages/messages/components/NviCorrectionList'));
+const PortfolioSearchPage = lazy(() => import('./pages/editor/PortfolioSearchPage'));
 
 export const AppRoutes = () => {
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
   const isAuthenticated = !!user;
@@ -41,6 +53,7 @@ export const AppRoutes = () => {
   const isEditor = hasCustomerId && user.isEditor;
   const canSeeBasicData = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin || user.isInternalImporter);
   const isNviCurator = hasCustomerId && user.isNviCurator;
+  const isTicketCurator = hasTicketCuratorRole(user);
 
   return (
     <Routes>
@@ -89,9 +102,68 @@ export const AppRoutes = () => {
 
         {/* Curator routes */}
         <Route
-          path={`${UrlPathTemplate.Tasks}/*`}
-          element={<PrivateRoute isAuthorized={isCurator || isNviCurator} element={<TasksPage />} />}
-        />
+          path={UrlPathTemplate.Tasks}
+          element={<PrivateRoute isAuthorized={isCurator || isNviCurator} element={<TasksPage />} />}>
+          <Route
+            index
+            element={
+              isTicketCurator ? (
+                <Navigate to={UrlPathTemplate.TasksDialogue} replace />
+              ) : (
+                <Navigate
+                  to={getNviCandidatesSearchPath({
+                    username: user?.nvaUsername,
+                    status: NviCandidateStatusEnum.Pending,
+                    globalStatus: NviCandidateGlobalStatusEnum.Pending,
+                  })}
+                  replace
+                />
+              )
+            }
+          />
+          <Route
+            path={UrlPathTemplate.TasksDialogue}
+            element={<PrivateRoute isAuthorized={isTicketCurator} element={<TasksDialoguePage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.TasksDialogueRegistration}
+            element={<PrivateRoute element={<RegistrationLandingPage />} isAuthorized={isTicketCurator} />}
+          />
+          <Route
+            path={UrlPathTemplate.TasksNvi}
+            element={<PrivateRoute element={<NviCandidatesListPage />} isAuthorized={isNviCurator} />}
+          />
+          <Route
+            path={UrlPathTemplate.TasksNviStatus}
+            element={<PrivateRoute element={<NviReportingStatusPage />} isAuthorized={isNviCurator} />}
+          />
+          <Route
+            path={UrlPathTemplate.TasksNviDisputes}
+            element={<PrivateRoute element={<NviDisputePage />} isAuthorized={isNviCurator} />}
+          />
+          <Route
+            path={UrlPathTemplate.TasksPublicationPoints}
+            element={<PrivateRoute element={<NviPublicationPointsPage />} isAuthorized={isNviCurator} />}
+          />
+          <Route
+            path={UrlPathTemplate.TasksNviCandidate}
+            element={<PrivateRoute element={<NviCandidatePage />} isAuthorized={isNviCurator} />}
+          />
+          <Route
+            path={UrlPathTemplate.TasksNviCorrectionList}
+            element={<PrivateRoute element={<NviCorrectionList />} isAuthorized={isNviCurator} />}
+          />
+          <Route
+            path={UrlPathTemplate.TasksResultRegistrations}
+            element={
+              <PrivateRoute
+                element={<PortfolioSearchPage title={t('common.result_portfolio')} />}
+                isAuthorized={isCurator || isNviCurator}
+              />
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Route>
 
         {/* Basic Data routes */}
         <Route
