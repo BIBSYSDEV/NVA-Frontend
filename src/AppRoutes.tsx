@@ -33,7 +33,7 @@ const NviReports = lazy(() => import('./pages/reports/NviReports'));
 const InternationalCooperationReports = lazy(() => import('./pages/reports/InternationalCooperationReports'));
 const ClinicalTreatmentStudiesReports = lazy(() => import('./pages/reports/ClinicalTreatmentStudiesReports'));
 const TasksDialoguePage = lazy(() => import('./pages/tasks/dialogue/TasksDialoguePage'));
-const RegistrationLandingPage = lazy(() => import('./pages/public_registration/RegistrationLandingPage'));
+const RegistrationLandingPage = lazy(() => import('./components/registration-landing-page/RegistrationLandingPage'));
 const NviCandidatesListPage = lazy(() => import('./pages/tasks/nvi/NviCandidatesListPage'));
 const NviReportingStatusPage = lazy(() => import('./pages/tasks/nvi/status/NviReportingStatusPage'));
 const NviDisputePage = lazy(() => import('./pages/messages/components/NviDisputePage'));
