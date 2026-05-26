@@ -23,7 +23,7 @@ import { NviCandidateListItem } from '../../messages/components/NviCandidateList
 import { NviSortSelector } from '../../messages/components/NviSortSelector';
 import { NviStatusFilter } from '../../messages/components/NviStatusFilter';
 
-export const NviCandidatesListPage = () => {
+const NviCandidatesListPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const nviParams = useNviCandidatesParams();
