@@ -32,6 +32,7 @@ import { TicketListItem } from './TicketListItem';
 interface TicketListProps {
   ticketsQuery: UseQueryResult<CustomerTicketSearchResponse>;
   title: string;
+  selectedTicketTypes?: string[];
 }
 
 const viewedByLabelId = 'viewed-by-select';
@@ -49,7 +50,7 @@ const getRoleFilterOptions = (roles: RoleName[]) => {
   return roleFilterOptions;
 };
 
-export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
+export const TicketList = ({ ticketsQuery, title, selectedTicketTypes }: TicketListProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -231,9 +232,13 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
           )
         ) : (
           <List disablePadding sx={{ my: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {tickets.map((ticket) => (
+            {tickets.map((ticket, index) => (
               <ErrorBoundary key={ticket.id}>
-                <TicketListItem ticket={ticket} />
+                <TicketListItem
+                  ticket={ticket}
+                  currentOffset={page * rowsPerPage + index}
+                  selectedTicketTypes={selectedTicketTypes}
+                />
               </ErrorBoundary>
             ))}
           </List>
