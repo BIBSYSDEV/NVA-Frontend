@@ -8,8 +8,8 @@ import { setNotification } from '../../redux/notificationSlice';
 import { formatDateStringToISO } from '../date-helpers';
 import { triggerFileDownload } from '../downloadFileHelpers';
 
-const pageSize = 500;
-const hardCap = 10_000;
+const pageSize = 200;
+const hardCap = 6000;
 
 const parseNextLink = (header: string | undefined): string | null => {
   if (!header) return null;
