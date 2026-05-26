@@ -846,6 +846,7 @@ export const dataTestId = {
     },
     unreadSearchSelect: 'unread-search-select',
     userDialogAccordion: 'user-dialog-accordion',
+    minimizedMenuButton: 'tasks-minimized-menu-button',
   },
   unpublishActions: {
     confirmUnpublishCheckbox: 'confirm-unpublish-checkbox',
