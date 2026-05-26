@@ -67,7 +67,7 @@ const TasksPage = () => {
         )}
       </SideMenu>
       <ErrorBoundary>
-        <Outlet context={{ ticketsQuery }} />
+        <Outlet context={{ ticketsQuery, selectedTicketTypes }} />
       </ErrorBoundary>
     </StyledPageWithSideMenu>
   );

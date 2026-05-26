@@ -5,13 +5,22 @@ import { TicketListDefaultValuesWrapper } from '../../../components/TicketListDe
 import { CustomerTicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { TicketList } from '../../messages/components/TicketList';
 
+interface TasksDialoguePageContext {
+  ticketsQuery: UseQueryResult<CustomerTicketSearchResponse>;
+  selectedTicketTypes: string[];
+}
+
 export const TasksDialoguePage = () => {
   const { t } = useTranslation();
-  const { ticketsQuery } = useOutletContext<{ ticketsQuery: UseQueryResult<CustomerTicketSearchResponse> }>();
+  const { ticketsQuery, selectedTicketTypes } = useOutletContext<TasksDialoguePageContext>();
 
   return (
     <TicketListDefaultValuesWrapper>
-      <TicketList ticketsQuery={ticketsQuery} title={t('tasks.user_dialog')} />
+      <TicketList
+        ticketsQuery={ticketsQuery}
+        title={t('tasks.user_dialog')}
+        selectedTicketTypes={selectedTicketTypes}
+      />
     </TicketListDefaultValuesWrapper>
   );
 };
