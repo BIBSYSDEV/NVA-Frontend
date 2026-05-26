@@ -11,10 +11,12 @@ import { triggerFileDownload } from '../downloadFileHelpers';
 const pageSize = 200;
 const hardCap = 6000;
 
+const nextLinkRegex = /<([^>]+)>;\s*rel="next"/;
+
 const parseNextLink = (header: string | undefined): string | null => {
   if (!header) return null;
   for (const part of header.split(',')) {
-    const match = part.match(/<([^>]+)>;\s*rel="next"/);
+    const match = part.match(nextLinkRegex);
     if (match) return match[1];
   }
   return null;
