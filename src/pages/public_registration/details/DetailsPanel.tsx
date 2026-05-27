@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { ViewContactInfoButton } from '../../../components/_atoms/buttons/ViewContactInfoButton';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { ConfirmedAffiliation, ContributorRole } from '../../../types/contributor.types';
 import { Organization } from '../../../types/organization.types';
@@ -57,7 +58,9 @@ export const DetailsPanel = ({ registration }: DetailsPanelProps) => {
         {t('details')}
       </Typography>
 
-      <CitationBox registration={registration} />
+      <BetaFunctionality>
+        <CitationBox registration={registration} />
+      </BetaFunctionality>
 
       <Typography variant="h3">{t('point_of_contact')}</Typography>
       <Typography>{t('point_of_contact_description')}</Typography>
