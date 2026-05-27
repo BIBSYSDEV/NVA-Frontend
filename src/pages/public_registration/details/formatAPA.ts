@@ -61,6 +61,7 @@ const formatPages = (pages?: PagesRange | null): string => {
   if (begin && end) {
     return `${begin}–${end}`;
   }
+
   return begin || end;
 };
 
