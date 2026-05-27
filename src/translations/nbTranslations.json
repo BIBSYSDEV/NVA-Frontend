@@ -1913,6 +1913,8 @@
       "title_search": "Tittelsøk"
     },
     "export": "Eksporter",
+    "exporting_bibtex": "Eksporterer BibTeX",
+    "export_progress_count": "{{fetched}} av {{total}} registreringer",
     "field_label": "Felt",
     "health_project_type": "Helseprosjekttype",
     "health_project_types": {

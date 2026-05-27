@@ -1,9 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { SearchApiPath } from '../../api/apiPaths';
 import { apiRequest2 } from '../../api/apiRequest';
-import { buildRegistrationSearchParams, FetchResultsParams } from '../../api/searchApi';
+import { buildRegistrationSearchParams, fetchResults, FetchResultsParams } from '../../api/searchApi';
 import { setNotification } from '../../redux/notificationSlice';
 import { formatDateStringToISO } from '../date-helpers';
 import { triggerFileDownload } from '../downloadFileHelpers';
@@ -25,9 +26,18 @@ const parseNextLink = (header: string | undefined): string | null => {
 export const useBibtexExport = (params: FetchResultsParams) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [fetchedCount, setFetchedCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
   const mutation = useMutation({
     mutationFn: async () => {
+      setFetchedCount(0);
+      setTotalCount(0);
+
+      const countResponse = await fetchResults({ ...params, from: 0, results: 0 });
+      const expectedTotal = Math.min(countResponse.totalHits, hardCap);
+      setTotalCount(expectedTotal);
+
       const initialParams = buildRegistrationSearchParams({
         ...params,
         from: 0,
@@ -45,6 +55,7 @@ export const useBibtexExport = (params: FetchResultsParams) => {
         });
         chunks.push(await response.data.text());
         fetched += pageSize;
+        setFetchedCount(Math.min(fetched, expectedTotal));
         nextUrl = parseNextLink(response.headers.link);
       }
 
@@ -65,5 +76,10 @@ export const useBibtexExport = (params: FetchResultsParams) => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' })),
   });
 
-  return { exportBibTex: mutation.mutate, isFetchingBibtex: mutation.isPending };
+  return {
+    exportBibTex: mutation.mutate,
+    isFetchingBibtex: mutation.isPending,
+    fetchedCount,
+    totalCount,
+  };
 };

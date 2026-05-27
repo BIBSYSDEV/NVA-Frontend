@@ -11,6 +11,7 @@ import { useSearchParams } from 'react-router';
 import { useBibtexExport } from '../../utils/bibtex/useBibtexExport';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { BibtexExportProgressDialog } from '../../components/BibtexExportProgressDialog';
 
 export const ExportResultsDropdown = () => {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ export const ExportResultsDropdown = () => {
   const [csvClicked, setCsvClicked] = useState(false);
   const [bibtexClicked, setBibtexClicked] = useState(false);
 
-  const { exportBibTex, isFetchingBibtex } = useBibtexExport(registrationParams);
+  const { exportBibTex, isFetchingBibtex, fetchedCount, totalCount } = useBibtexExport(registrationParams);
 
   useEffect(() => {
     setCsvClicked(false);
@@ -87,6 +88,7 @@ export const ExportResultsDropdown = () => {
           </MenuItem>
         </BetaFunctionality>
       </Menu>
+      <BibtexExportProgressDialog open={isFetchingBibtex} fetchedCount={fetchedCount} totalCount={totalCount} />
     </>
   );
 };
