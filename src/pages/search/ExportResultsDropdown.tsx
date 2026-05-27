@@ -11,7 +11,7 @@ import { useSearchParams } from 'react-router';
 import { useBibtexExport } from '../../utils/bibtex/useBibtexExport';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
-import { BibtexExportProgressDialog } from '../../components/BibtexExportProgressDialog';
+import { BibtexExportProgressDialog } from '../../components/dialogs/BibtexExportProgressDialog';
 
 export const ExportResultsDropdown = () => {
   const { t } = useTranslation();
