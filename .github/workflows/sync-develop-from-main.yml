@@ -12,21 +12,16 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Open or update sync PR
+      - name: Open sync PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           existing=$(gh pr list --base develop --head main --state open --json number -q '.[0].number')
           if [ -n "$existing" ]; then
-            echo "Sync PR #$existing already open; relying on existing PR"
-            pr=$existing
+            echo "Sync PR #$existing already open; nothing to do"
           else
-            pr=$(gh pr create --base develop --head main \
-              --title "Sync develop from main $(date +%d.%m.%y)" \
-              --body "Automated sync after main update. Auto-merges if no conflicts." \
-              | grep -oE '[0-9]+$')
+            gh pr create --base develop --head main \
+              --title "Sync develop from main" \
+              --body "Automated sync after main update. Merge once checks pass."
           fi
-          gh pr merge "$pr" --auto --merge
