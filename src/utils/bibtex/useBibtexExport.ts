@@ -8,7 +8,19 @@ import { setNotification } from '../../redux/notificationSlice';
 import { formatDateStringToISO } from '../date-helpers';
 import { triggerFileDownload } from '../downloadFileHelpers';
 
-const maxNumberOfCitations = 100;
+const pageSize = 200;
+const hardCap = 6000;
+
+const nextLinkRegex = /<([^>]+)>;\s*rel="next"/;
+
+const parseNextLink = (header: string | undefined): string | null => {
+  if (!header) return null;
+  for (const part of header.split(',')) {
+    const match = part.match(nextLinkRegex);
+    if (match) return match[1];
+  }
+  return null;
+};
 
 export const useBibtexExport = (params: FetchResultsParams) => {
   const { t } = useTranslation();
@@ -16,22 +28,39 @@ export const useBibtexExport = (params: FetchResultsParams) => {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const searchParams = buildRegistrationSearchParams({
+      const initialParams = buildRegistrationSearchParams({
         ...params,
         from: 0,
-        results: maxNumberOfCitations,
+        results: pageSize,
       });
+      let nextUrl: string | null = `${SearchApiPath.Registrations}?${initialParams.toString()}`;
+      const chunks: string[] = [];
+      let fetched = 0;
 
-      const response = await apiRequest2<Blob>({
-        url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
-        headers: { Accept: 'text/x-bibtex' },
-        responseType: 'blob',
-      });
-      return response.data;
+      while (nextUrl && fetched < hardCap) {
+        const response = await apiRequest2<Blob>({
+          url: nextUrl,
+          headers: { Accept: 'text/x-bibtex' },
+          responseType: 'blob',
+        });
+        chunks.push(await response.data.text());
+        fetched += pageSize;
+        nextUrl = parseNextLink(response.headers.link);
+      }
+
+      return { blob: new Blob([chunks.join('\n')], { type: 'text/x-bibtex' }), truncated: nextUrl !== null };
     },
-    onSuccess: (blob) => {
+    onSuccess: ({ blob, truncated }) => {
       const currentDate = formatDateStringToISO(new Date());
       triggerFileDownload(blob, `registrations_${currentDate}.bib`);
+      if (truncated) {
+        dispatch(
+          setNotification({
+            message: t('export_limit_reached', { limit: hardCap }),
+            variant: 'warning',
+          })
+        );
+      }
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' })),
   });
