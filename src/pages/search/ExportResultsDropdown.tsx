@@ -82,6 +82,7 @@ export const ExportResultsDropdown = () => {
             disabled={bibtexClicked}
             onClick={() => {
               setBibtexClicked(true);
+              handleClose();
               exportBibTex();
             }}>
             BibTex
