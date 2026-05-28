@@ -79,10 +79,10 @@ export const useBibtexExport = (params: FetchResultsParams) => {
   const cappedFetched = Math.min(fetchedCount, totalCount);
   const isDeterminate = totalCount > 0;
   const progress = {
-    title: t('search.exporting_bibtex'),
+    title: t('exporting_bibtex'),
     label: isDeterminate
-      ? t('search.export_progress_count', { fetched: cappedFetched, total: totalCount })
-      : t('search.exporting_bibtex'),
+      ? t('export_progress_count', { fetched: cappedFetched, total: totalCount })
+      : t('exporting_bibtex'),
     value: isDeterminate ? (cappedFetched / totalCount) * 100 : undefined,
   };
 
