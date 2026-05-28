@@ -6,11 +6,14 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { ViewContactInfoButton } from '../../../components/_atoms/buttons/ViewContactInfoButton';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
-import { ConfirmedAffiliation, Contributor, ContributorRole } from '../../../types/contributor.types';
+import { ConfirmedAffiliation, ContributorRole } from '../../../types/contributor.types';
 import { Organization } from '../../../types/organization.types';
+import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTopLevelOrganization, getUniqueOrganizations } from '../../../utils/institutions-helpers';
+import { CitationBox } from './CitationBox';
 import { ContactPersonRow } from './ContactPersonRow';
 import { InstitutionsServiceCenterOverview } from './InstitutionsServiceCenterOverview';
 
@@ -19,12 +22,13 @@ const StyledList = styled('ul')({
 });
 
 interface DetailsPanelProps {
-  contributors: Contributor[];
+  registration: Registration;
 }
 
-export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
+export const DetailsPanel = ({ registration }: DetailsPanelProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
+  const contributors = registration.entityDescription?.contributors ?? [];
   const correspondingContributors = contributors.filter((contributor) => contributor.correspondingAuthor);
   const contactPersons = contributors.filter((contributor) => contributor.role?.type === ContributorRole.ContactPerson);
 
@@ -53,6 +57,11 @@ export const DetailsPanel = ({ contributors }: DetailsPanelProps) => {
       <Typography variant="h2" sx={visuallyHidden}>
         {t('details')}
       </Typography>
+
+      <BetaFunctionality>
+        <CitationBox registration={registration} />
+      </BetaFunctionality>
+
       <Typography variant="h3">{t('point_of_contact')}</Typography>
       <Typography>{t('point_of_contact_description')}</Typography>
       <ViewContactInfoButton sx={{ alignSelf: { sm: 'start', md: 'center' } }} onClick={() => setOpenModal(true)} />
