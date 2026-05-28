@@ -2,7 +2,7 @@ import { TextField, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Registration } from '../../../types/registration.types';
 import { useJournalSeoData } from '../../../utils/hooks/useJournalSeoData';
-import { formatAPA } from './formatAPA';
+import { formatAPA } from './format-apa';
 
 const citationHeadingId = 'citation-box-heading';
 
