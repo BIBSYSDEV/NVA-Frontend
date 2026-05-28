@@ -2123,5 +2123,8 @@
   "nvi_period_status_closed": "Lukket",
   "nvi_period_status_reported": "Rapportert",
   "status_for_period": "Status for periode",
-  "export_limit_reached": "Bare de første {{limit}} resultatene ble eksportert. Avgrens søket for å eksportere de resterende resultatene."
+  "export_limit_reached": "Bare de første {{limit}} resultatene ble eksportert. Avgrens søket for å eksportere de resterende resultatene.",
+  "add_control_period": "Legg til kontrollperiode",
+  "edit_control_period": "Rediger kontrollperiode",
+  "edit_control_period_text": "<p>Start- og sluttdato styrer når perioden åpnes og lukkes.</p><p>Når sluttdato er passert, lukkes perioden, og NVI-kuratorer kan ikke lenger kontrollere kandudater.</p><p>Endre sluttdato for å gjenåpne perioden. Når sluttdato er passert, kan perioden rapporteres.</p>"
 }
