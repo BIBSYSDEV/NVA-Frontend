@@ -66,7 +66,7 @@ export const UpsertNviPeriodDialog = ({
       open={location.pathname === UrlPathTemplate.BasicDataNviNew || !!nviPeriod}
       onClose={closeDialog}
       data-testid={dataTestId.basicData.nviPeriod.nviPeriodDialog}>
-      <DialogTitle>{nviPeriod ? t('edit_control_period') : t('add_control_period')}</DialogTitle>
+      <DialogTitle>{nviPeriod ? t('edit_reporting_period') : t('basic_data.nvi.add_reporting_period')}</DialogTitle>
       <Formik
         initialValues={nviPeriod ?? emptyNviPeriod}
         onSubmit={async (values) => {
@@ -77,7 +77,7 @@ export const UpsertNviPeriodDialog = ({
         {({ values, setFieldValue, isSubmitting }) => (
           <Form>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <Trans t={t} i18nKey="edit_control_period_text" components={{ p: <Typography /> }} />
+              <Trans t={t} i18nKey="edit_reporting_period_text" components={{ p: <Typography /> }} />
               <VerticalBox sx={{ mt: '1rem', gap: '2rem' }}>
                 <Field name="publishingYear">
                   {({ field }: FieldProps<string>) => (

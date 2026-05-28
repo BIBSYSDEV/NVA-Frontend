@@ -135,8 +135,7 @@
       "reporting_status": "",
       "reporting_status_description": "",
       "show_publication_points_status": "",
-      "show_reporting_status": "",
-      "update_reporting_period": "Oppdater rapporteringsperiode"
+      "show_reporting_status": ""
     },
     "person_register": {
       "current_employments": "Noverande tilsetjingar",
