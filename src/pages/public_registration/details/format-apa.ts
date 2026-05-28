@@ -1,4 +1,8 @@
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
+import {
+  JournalPublicationContext,
+  JournalPublicationInstance,
+} from '../../../types/publication_types/journalRegistration.types';
 import { PagesRange } from '../../../types/publication_types/pages.types';
 import { JournalType } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
@@ -84,10 +88,8 @@ export const formatAPA = (registration: Registration, options: FormatAPAOptions 
     return '';
   }
 
-  const publicationContext = reference?.publicationContext as { title?: string } | undefined;
-  const publicationInstance = reference?.publicationInstance as
-    | { volume?: string | null; issue?: string | null; pages?: PagesRange | null }
-    | undefined;
+  const publicationContext = reference?.publicationContext as JournalPublicationContext | undefined;
+  const publicationInstance = reference?.publicationInstance as JournalPublicationInstance | undefined;
 
   const creators =
     entityDescription?.contributors?.filter((contributor) => contributor.role?.type === ContributorRole.Creator) ?? [];
