@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { SearchApiPath } from '../../api/apiPaths';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
-import { ProgressDialog } from '../../components/dialogs/ProgressDialog';
+import { ProgressDialog } from '../../components/dialogs/progress-dialog/ProgressDialog';
 import { useBibtexExport } from '../../utils/bibtex/useBibtexExport';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';

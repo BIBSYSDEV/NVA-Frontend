@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { FetchResultsParams } from '../../../api/searchApi';
 import { useBibtexExport } from '../../../utils/bibtex/useBibtexExport';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { ProgressDialog } from '../../dialogs/ProgressDialog';
+import { ProgressDialog } from '../../dialogs/progress-dialog/ProgressDialog';
 
 interface ExportResultsBibTexButtonProps {
   params: FetchResultsParams;
