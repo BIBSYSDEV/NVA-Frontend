@@ -2,8 +2,8 @@ import { Box, Dialog, DialogContent, DialogTitle, LinearProgress, Typography } f
 import { useId } from 'react';
 import { useDelayedOpen } from './hooks/useDelayedOpen';
 
-const defaultOpenDelayMs = 400;
-const defaultMinVisibleMs = 500;
+const defaultOpenDelayMs = 700;
+const defaultMinVisibleMs = 2000;
 
 interface ProgressDialogProps {
   open: boolean;
