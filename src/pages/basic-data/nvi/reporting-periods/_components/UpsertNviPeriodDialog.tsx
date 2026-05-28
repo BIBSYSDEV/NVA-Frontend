@@ -5,12 +5,12 @@ import { Field, FieldProps, Form, Formik } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
-import { createNviPeriod, updateNviPeriod } from '../../../api/scientificIndexApi';
-import { HorizontalBox, VerticalBox } from '../../../components/styled/Wrappers';
-import { setNotification } from '../../../redux/notificationSlice';
-import { NviPeriod } from '../../../types/nvi.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { createNviPeriod, updateNviPeriod } from '../../../../../api/scientificIndexApi';
+import { HorizontalBox, VerticalBox } from '../../../../../components/styled/Wrappers';
+import { setNotification } from '../../../../../redux/notificationSlice';
+import { NviPeriod } from '../../../../../types/nvi.types';
+import { dataTestId } from '../../../../../utils/dataTestIds';
+import { UrlPathTemplate } from '../../../../../utils/urlPaths';
 
 const minNewNviPeriodYear = new Date().getFullYear();
 const minNewNviDate = new Date(minNewNviPeriodYear, 0, 1);
