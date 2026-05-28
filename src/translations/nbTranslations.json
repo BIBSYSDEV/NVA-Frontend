@@ -2124,5 +2124,5 @@
   "status_for_period": "Status for periode",
   "export_limit_reached": "Bare de første {{limit}} resultatene ble eksportert. Avgrens søket for å eksportere de resterende resultatene.",
   "edit_reporting_period": "Rediger rapporteringsperiode",
-  "edit_reporting_period_text": "<p>Start- og sluttdato styrer når perioden åpnes og lukkes.</p><p>Når sluttdato er passert, lukkes perioden, og NVI-kuratorer kan ikke lenger kontrollere kandidater.</p><p>Endre sluttdato for å gjenåpne perioden. Når sluttdato er passert, kan perioden rapporteres.</p>"
+  "reporting_period_text": "<p>Start- og sluttdato styrer når perioden åpnes og lukkes.</p><p>Når sluttdato er passert, lukkes perioden, og NVI-kuratorer kan ikke lenger kontrollere kandidater.</p><p>Endre sluttdato for å gjenåpne perioden. Når sluttdato er passert, kan perioden rapporteres.</p>"
 }

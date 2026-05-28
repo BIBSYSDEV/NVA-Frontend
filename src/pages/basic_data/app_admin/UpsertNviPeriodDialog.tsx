@@ -77,7 +77,7 @@ export const UpsertNviPeriodDialog = ({
         {({ values, setFieldValue, isSubmitting }) => (
           <Form>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <Trans t={t} i18nKey="edit_reporting_period_text" components={{ p: <Typography /> }} />
+              <Trans t={t} i18nKey="reporting_period_text" components={{ p: <Typography /> }} />
               <VerticalBox sx={{ mt: '1rem', gap: '2rem' }}>
                 <Field name="publishingYear">
                   {({ field }: FieldProps<string>) => (
