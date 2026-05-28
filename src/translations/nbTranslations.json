@@ -2124,5 +2124,7 @@
   "nvi_period_status_closed": "Lukket",
   "nvi_period_status_reported": "Rapportert",
   "status_for_period": "Status for periode",
-  "export_limit_reached": "Bare de første {{limit}} resultatene ble eksportert. Avgrens søket for å eksportere de resterende resultatene."
+  "export_limit_reached": "Bare de første {{limit}} resultatene ble eksportert. Avgrens søket for å eksportere de resterende resultatene.",
+  "exporting_bibtex": "Eksporterer BibTeX",
+  "export_progress_count": "{{fetched}} av {{total}} resultater"
 }
