@@ -4,13 +4,14 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button, Menu, MenuItem } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router';
 import { SearchApiPath } from '../../api/apiPaths';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { ProgressDialog } from '../../components/dialogs/progress-dialog/ProgressDialog';
+import { useBibtexExport } from '../../utils/bibtex/useBibtexExport';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useSearchParams } from 'react-router';
-import { useBibtexExport } from '../../utils/bibtex/useBibtexExport';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 export const ExportResultsDropdown = () => {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ export const ExportResultsDropdown = () => {
   const [csvClicked, setCsvClicked] = useState(false);
   const [bibtexClicked, setBibtexClicked] = useState(false);
 
-  const { exportBibTex, isFetchingBibtex } = useBibtexExport(registrationParams);
+  const { exportBibTex, isFetchingBibtex, progress } = useBibtexExport(registrationParams);
 
   useEffect(() => {
     setCsvClicked(false);
@@ -81,12 +82,14 @@ export const ExportResultsDropdown = () => {
             disabled={bibtexClicked}
             onClick={() => {
               setBibtexClicked(true);
+              handleClose();
               exportBibTex();
             }}>
             BibTex
           </MenuItem>
         </BetaFunctionality>
       </Menu>
+      <ProgressDialog open={isFetchingBibtex} {...progress} />
     </>
   );
 };

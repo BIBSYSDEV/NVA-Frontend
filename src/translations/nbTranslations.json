@@ -333,6 +333,7 @@
   "contributor_search_hits_other": "Fant {{count}} bidragsytere",
   "controlling": "Kontrolleres",
   "corresponding_contributor": "Korresponderende bidragsyter",
+  "citation": "Sitering",
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljer",
   "disciplines": {
@@ -2124,5 +2125,7 @@
   "status_for_period": "Status for periode",
   "export_limit_reached": "Bare de første {{limit}} resultatene ble eksportert. Avgrens søket for å eksportere de resterende resultatene.",
   "edit_reporting_period": "Rediger rapporteringsperiode",
-  "reporting_period_text": "<p>Start- og sluttdato styrer når perioden åpnes og lukkes.</p><p>Når sluttdato er passert, lukkes perioden, og NVI-kuratorer kan ikke lenger kontrollere kandidater.</p><p>Endre sluttdato for å gjenåpne perioden. Når sluttdato er passert, kan perioden rapporteres.</p>"
+  "reporting_period_text": "<p>Start- og sluttdato styrer når perioden åpnes og lukkes.</p><p>Når sluttdato er passert, lukkes perioden, og NVI-kuratorer kan ikke lenger kontrollere kandidater.</p><p>Endre sluttdato for å gjenåpne perioden. Når sluttdato er passert, kan perioden rapporteres.</p>",
+  "exporting_bibtex": "Eksporterer BibTeX",
+  "export_progress_count": "{{fetched}} av {{total}} resultater"
 }
