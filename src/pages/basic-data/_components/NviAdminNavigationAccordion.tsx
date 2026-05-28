@@ -4,6 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviPeriodReport } from '../../../api/hooks/useFetchNviPeriodReport';
+import {
+  allFilterableNviPeriodStatuses,
+  PARAM_NAME_PERIOD_STATUSES,
+} from '../../../components/filters/nvi/NviStatusMultiSelect';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NviReportProgressBar } from '../../../components/NviReportProgressBar';
 import { LinkCreateButton, NavigationList } from '../../../components/PageWithSideMenu';
@@ -49,7 +53,7 @@ export const NviAdminNavigationAccordion = () => {
             <SelectableButton
               data-testid={dataTestId.basicData.nviReportingPeriodsLink}
               isSelected={currentPath === UrlPathTemplate.BasicDataNvi}
-              to={`${UrlPathTemplate.BasicDataNvi}?periodStatuses=UnopenedPeriod,OpenPeriod,ClosedPeriod,ReportedPeriod`}>
+              to={`${UrlPathTemplate.BasicDataNvi}?${PARAM_NAME_PERIOD_STATUSES}=${allFilterableNviPeriodStatuses.join(',')}`}>
               {t('basic_data.nvi.reporting_periods')}
             </SelectableButton>
             <SelectableButton
