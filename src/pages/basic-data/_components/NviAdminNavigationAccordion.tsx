@@ -49,7 +49,7 @@ export const NviAdminNavigationAccordion = () => {
             <SelectableButton
               data-testid={dataTestId.basicData.nviReportingPeriodsLink}
               isSelected={currentPath === UrlPathTemplate.BasicDataNvi}
-              to={UrlPathTemplate.BasicDataNvi}>
+              to={`${UrlPathTemplate.BasicDataNvi}?periodStatuses=UnopenedPeriod,OpenPeriod,ClosedPeriod,ReportedPeriod`}>
               {t('basic_data.nvi.reporting_periods')}
             </SelectableButton>
             <SelectableButton
