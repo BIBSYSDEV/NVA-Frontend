@@ -9,18 +9,18 @@ import { Registration } from '../../../types/registration.types';
 
 const supportedJournalArticleTypes: string[] = [JournalType.AcademicArticle, JournalType.AcademicLiteratureReview];
 
+const toInitials = (givenNames: string): string =>
+  givenNames
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => `${part[0].toUpperCase()}.`)
+    .join(' ');
+
 const formatAuthorName = (name: string): string => {
   const trimmed = name.trim();
   if (!trimmed) {
     return '';
   }
-
-  const toInitials = (givenNames: string) =>
-    givenNames
-      .split(/\s+/)
-      .filter(Boolean)
-      .map((part) => `${part[0].toUpperCase()}.`)
-      .join(' ');
 
   if (trimmed.includes(',')) {
     const [last, given = ''] = trimmed.split(',', 2);
@@ -69,6 +69,25 @@ const formatPages = (pages?: PagesRange | null): string => {
   return begin || end;
 };
 
+const formatAuthorYearSegment = (authors: string, year: string): string => {
+  if (authors && year) return `${authors} (${year}).`;
+  if (authors) return `${authors}.`;
+  if (year) return `(${year}).`;
+  return '';
+};
+
+const formatVolumeIssue = (volume: string, issue: string): string => {
+  if (volume && issue) return `${volume}(${issue})`;
+  if (volume) return volume;
+  if (issue) return `(${issue})`;
+  return '';
+};
+
+const formatJournalSegment = (journalTitle: string, volumeIssue: string, pages: string): string => {
+  const parts = [journalTitle, volumeIssue, pages].filter(Boolean);
+  return parts.length > 0 ? `${parts.join(', ')}.` : '';
+};
+
 const joinNonEmpty = (segments: string[]): string => segments.filter(Boolean).join(' ');
 
 interface FormatAPAOptions {
@@ -79,6 +98,11 @@ interface FormatAPAOptions {
   journalName?: string;
 }
 
+/**
+ * Formats a registration as an APA-style citation string.
+ * Supports AcademicArticle and AcademicLiteratureReview; returns '' for other types.
+ * Empty fields are omitted when its underlying data is missing.
+ */
 export const formatAPA = (registration: Registration, options: FormatAPAOptions = {}): string => {
   const entityDescription = registration.entityDescription;
   const reference = entityDescription?.reference;
@@ -100,24 +124,11 @@ export const formatAPA = (registration: Registration, options: FormatAPAOptions 
   const volume = publicationInstance?.volume?.trim() ?? '';
   const issue = publicationInstance?.issue?.trim() ?? '';
   const pages = formatPages(publicationInstance?.pages);
-  const doi = reference?.doi || registration.doi || registration.handle || '';
+  const pid = reference?.doi || registration.doi || registration.handle || '';
 
-  const authorYearSegment =
-    authors && year ? `${authors} (${year}).` : authors ? `${authors}.` : year ? `(${year}).` : '';
+  const authorYearSegment = formatAuthorYearSegment(authors, year);
   const titleSegment = title ? `${title}.` : '';
+  const journalSegment = formatJournalSegment(journalTitle, formatVolumeIssue(volume, issue), pages);
 
-  const journalParts: string[] = [];
-  if (journalTitle) {
-    journalParts.push(journalTitle);
-  }
-  const volumeIssue = volume && issue ? `${volume}(${issue})` : volume || (issue ? `(${issue})` : '');
-  if (volumeIssue) {
-    journalParts.push(volumeIssue);
-  }
-  if (pages) {
-    journalParts.push(pages);
-  }
-  const journalSegment = journalParts.length > 0 ? `${journalParts.join(', ')}.` : '';
-
-  return joinNonEmpty([authorYearSegment, titleSegment, journalSegment, doi]);
+  return joinNonEmpty([authorYearSegment, titleSegment, journalSegment, pid]);
 };
