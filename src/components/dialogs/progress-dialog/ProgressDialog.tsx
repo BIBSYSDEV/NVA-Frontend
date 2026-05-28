@@ -1,6 +1,6 @@
 import { Box, Dialog, DialogContent, DialogTitle, LinearProgress, Typography } from '@mui/material';
 import { useId } from 'react';
-import { useDelayedOpen } from './hooks/useDelayedOpen';
+import { useDelayedOpen } from './_hooks/useDelayedOpen';
 
 const defaultOpenDelayMs = 700;
 const defaultMinVisibleMs = 2000;
