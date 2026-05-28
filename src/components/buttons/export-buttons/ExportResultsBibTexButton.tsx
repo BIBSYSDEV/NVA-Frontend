@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { FetchResultsParams } from '../../../api/searchApi';
 import { useBibtexExport } from '../../../utils/bibtex/useBibtexExport';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { BibtexExportProgressDialog } from '../../dialogs/BibtexExportProgressDialog';
+import { ProgressDialog } from '../../dialogs/ProgressDialog';
 
 interface ExportResultsBibTexButtonProps {
   params: FetchResultsParams;
@@ -12,7 +12,7 @@ interface ExportResultsBibTexButtonProps {
 
 export const ExportResultsBibTexButton = ({ params }: ExportResultsBibTexButtonProps) => {
   const { t } = useTranslation();
-  const { exportBibTex, isFetchingBibtex, fetchedCount, totalCount } = useBibtexExport(params);
+  const { exportBibTex, isFetchingBibtex, progress } = useBibtexExport(params);
 
   return (
     <>
@@ -26,7 +26,7 @@ export const ExportResultsBibTexButton = ({ params }: ExportResultsBibTexButtonP
         loading={isFetchingBibtex}>
         {t('search.export')}
       </Button>
-      <BibtexExportProgressDialog open={isFetchingBibtex} fetchedCount={fetchedCount} totalCount={totalCount} />
+      <ProgressDialog open={isFetchingBibtex} {...progress} />
     </>
   );
 };

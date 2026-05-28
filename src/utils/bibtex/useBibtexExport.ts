@@ -10,7 +10,7 @@ import { formatDateStringToISO } from '../date-helpers';
 import { triggerFileDownload } from '../downloadFileHelpers';
 
 const pageSize = 200;
-const hardCap = 6000;
+const hardCap = 10_000;
 
 const nextLinkRegex = /<([^>]+)>;\s*rel="next"/;
 
@@ -76,10 +76,19 @@ export const useBibtexExport = (params: FetchResultsParams) => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' })),
   });
 
+  const cappedFetched = Math.min(fetchedCount, totalCount);
+  const isDeterminate = totalCount > 0;
+  const progress = {
+    title: t('search.exporting_bibtex'),
+    label: isDeterminate
+      ? t('search.export_progress_count', { fetched: cappedFetched, total: totalCount })
+      : t('search.exporting_bibtex'),
+    value: isDeterminate ? (cappedFetched / totalCount) * 100 : undefined,
+  };
+
   return {
     exportBibTex: mutation.mutate,
     isFetchingBibtex: mutation.isPending,
-    fetchedCount,
-    totalCount,
+    progress,
   };
 };
