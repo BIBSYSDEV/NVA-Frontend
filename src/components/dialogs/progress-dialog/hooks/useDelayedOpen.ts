@@ -13,26 +13,25 @@ import { useEffect, useRef, useState } from 'react';
 export const useDelayedOpen = (open: boolean, openDelayMs: number, minVisibleMs: number): boolean => {
   const [shown, setShown] = useState(false);
   const shownAtRef = useRef<number | null>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
-    clearTimeout(timerRef.current);
+    if (open === shown) return;
+
     if (open) {
-      if (shown) return;
-      timerRef.current = setTimeout(() => {
+      const timer = setTimeout(() => {
         shownAtRef.current = Date.now();
         setShown(true);
       }, openDelayMs);
-    } else {
-      if (!shown) return;
-      const elapsed = Date.now() - (shownAtRef.current ?? 0);
-      const remaining = Math.max(0, minVisibleMs - elapsed);
-      timerRef.current = setTimeout(() => {
-        shownAtRef.current = null;
-        setShown(false);
-      }, remaining);
+      return () => clearTimeout(timer);
     }
-    return () => clearTimeout(timerRef.current);
+
+    const elapsed = Date.now() - (shownAtRef.current ?? 0);
+    const remaining = Math.max(0, minVisibleMs - elapsed);
+    const timer = setTimeout(() => {
+      shownAtRef.current = null;
+      setShown(false);
+    }, remaining);
+    return () => clearTimeout(timer);
   }, [open, shown, openDelayMs, minVisibleMs]);
 
   return shown;
