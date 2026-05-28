@@ -135,8 +135,7 @@
       "reporting_status": "Rapporteringsstatus",
       "reporting_status_description": "<p>Tabellen viser antall kandidater hos alle institusjoner og hvor mange som er ferdig kontrollert i forhold til antall kandidater.</p><p>Forfatteradresseringen styrer den eller de institusjon de telles for. Kandidater som har endt i en tvist er ikke inkludert i denne oversikten.</p>",
       "show_publication_points_status": "Vis status for publiseringspoeng",
-      "show_reporting_status": "Vis rapporteringsstatus",
-      "update_reporting_period": "Oppdater rapporteringsperiode"
+      "show_reporting_status": "Vis rapporteringsstatus"
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
@@ -2125,6 +2124,8 @@
   "nvi_period_status_reported": "Rapportert",
   "status_for_period": "Status for periode",
   "export_limit_reached": "Bare de første {{limit}} resultatene ble eksportert. Avgrens søket for å eksportere de resterende resultatene.",
+  "edit_reporting_period": "Rediger rapporteringsperiode",
+  "reporting_period_text": "<p>Start- og sluttdato styrer når perioden åpnes og lukkes.</p><p>Når sluttdato er passert, lukkes perioden, og NVI-kuratorer kan ikke lenger kontrollere kandidater.</p><p>Endre sluttdato for å gjenåpne perioden. Når sluttdato er passert, kan perioden rapporteres.</p>",
   "exporting_bibtex": "Eksporterer BibTeX",
   "export_progress_count": "{{fetched}} av {{total}} resultater"
 }
