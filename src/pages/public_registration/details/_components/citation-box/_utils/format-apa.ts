@@ -1,11 +1,11 @@
-import { Contributor, ContributorRole } from '../../../types/contributor.types';
+import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
 import {
   JournalPublicationContext,
   JournalPublicationInstance,
-} from '../../../types/publication_types/journalRegistration.types';
-import { PagesRange } from '../../../types/publication_types/pages.types';
-import { JournalType } from '../../../types/publicationFieldNames';
-import { Registration } from '../../../types/registration.types';
+} from '../../../../../../types/publication_types/journalRegistration.types';
+import { PagesRange } from '../../../../../../types/publication_types/pages.types';
+import { JournalType } from '../../../../../../types/publicationFieldNames';
+import { Registration } from '../../../../../../types/registration.types';
 
 const supportedJournalArticleTypes: string[] = [JournalType.AcademicArticle, JournalType.AcademicLiteratureReview];
 

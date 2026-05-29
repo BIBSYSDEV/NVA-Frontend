@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { Contributor, ContributorRole } from '../../../types/contributor.types';
-import { JournalType } from '../../../types/publicationFieldNames';
-import { Registration } from '../../../types/registration.types';
+import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
+import { JournalType } from '../../../../../../types/publicationFieldNames';
+import { Registration } from '../../../../../../types/registration.types';
 import { formatAPA } from './format-apa';
 
 const buildJournalArticle = (overrides: {

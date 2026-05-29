@@ -13,7 +13,7 @@ import { Organization } from '../../../types/organization.types';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTopLevelOrganization, getUniqueOrganizations } from '../../../utils/institutions-helpers';
-import { CitationBox } from './CitationBox';
+import { CitationBox } from './_components/citation-box/CitationBox';
 import { ContactPersonRow } from './ContactPersonRow';
 import { InstitutionsServiceCenterOverview } from './InstitutionsServiceCenterOverview';
 
