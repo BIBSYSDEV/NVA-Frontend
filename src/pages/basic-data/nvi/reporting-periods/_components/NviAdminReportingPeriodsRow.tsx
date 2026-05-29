@@ -2,7 +2,7 @@ import { TableCell, TableRow } from '@mui/material';
 import { DateAndTimeDisplay } from '../../../../../components/_molecules/DateAndTimeDisplay';
 import { PercentageWithIcon } from '../../../../../components/_molecules/PercentageWithIcon';
 import { HorizontalBox } from '../../../../../components/styled/Wrappers';
-import { RightAlignedTableCell } from '../../../../../components/tables/table-styles';
+import { CenteredTableCell } from '../../../../../components/tables/table-styles';
 import { NviPeriod, NviPeriodReport, NviPeriodStatusEnum } from '../../../../../types/nvi.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { EditIconButton } from '../../../../messages/components/EditIconButton';
@@ -38,14 +38,14 @@ export const NviAdminReportingPeriodsRow = ({
           />
         </HorizontalBox>
       </TableCell>
-      <RightAlignedTableCell>
+      <CenteredTableCell>
         {/* We are showing different numbers based on period status, and this is the only status we have a number for yet */}
         {status === NviPeriodStatusEnum.ClosedPeriod ? byGlobalApprovalStatus.approved : '-'}
-      </RightAlignedTableCell>
-      <RightAlignedTableCell>
+      </CenteredTableCell>
+      <CenteredTableCell>
         {/* We are showing different numbers based on period status, and this is the only status we have a number for yet */}
         {status === NviPeriodStatusEnum.ClosedPeriod ? totals.validPoints : '-'}
-      </RightAlignedTableCell>
+      </CenteredTableCell>
       <CenteredPercentageControlledCell>
         <HorizontalBox sx={{ justifyContent: 'center' }}>
           <PercentageWithIcon

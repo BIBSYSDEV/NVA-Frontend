@@ -20,6 +20,8 @@ import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getPercentageControlledReportingPeriod } from '../nvi/_utils/nvi-admin-aggregations-helpers';
 import { NviAdminOrderBy } from '../nvi/_utils/nvi-admin-sort-helpers';
 
+const nviPeriodsDefaultPath = `${UrlPathTemplate.BasicDataNvi}?${new URLSearchParams({ [PARAM_NAME_PERIOD_STATUSES]: allFilterableNviPeriodStatuses.join(',') })}`;
+
 export const NviAdminNavigationAccordion = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -38,6 +40,7 @@ export const NviAdminNavigationAccordion = () => {
       title={t('common.nvi')}
       startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
       accordionPath={UrlPathTemplate.BasicDataNvi}
+      defaultPath={nviPeriodsDefaultPath}
       dataTestId={dataTestId.basicData.nviPeriodsLink}>
       <NavigationList aria-label={t('common.nvi')}>
         <StyledNviStatusBox>
@@ -53,7 +56,7 @@ export const NviAdminNavigationAccordion = () => {
             <SelectableButton
               data-testid={dataTestId.basicData.nviReportingPeriodsLink}
               isSelected={currentPath === UrlPathTemplate.BasicDataNvi}
-              to={`${UrlPathTemplate.BasicDataNvi}?${new URLSearchParams({ [PARAM_NAME_PERIOD_STATUSES]: allFilterableNviPeriodStatuses.join(',') })}`}>
+              to={nviPeriodsDefaultPath}>
               {t('basic_data.nvi.reporting_periods')}
             </SelectableButton>
             <SelectableButton
