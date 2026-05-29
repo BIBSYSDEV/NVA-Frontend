@@ -4,6 +4,34 @@ import { JournalType } from '../../../../../../types/publicationFieldNames';
 import { Registration } from '../../../../../../types/registration.types';
 import { formatAPA } from './format-apa';
 
+const buildRegistration = (
+  overrides: {
+    instanceType?: string;
+    contributors?: Contributor[];
+    year?: string;
+    mainTitle?: string;
+    doi?: string;
+    publicationContext?: Record<string, unknown>;
+    publicationInstance?: Record<string, unknown>;
+  } = {}
+) =>
+  ({
+    entityDescription: {
+      contributors: overrides.contributors ?? [],
+      mainTitle: overrides.mainTitle ?? '',
+      publicationDate: { type: 'PublicationDate', year: overrides.year ?? '', month: '', day: '' },
+      reference: {
+        type: 'Reference',
+        doi: overrides.doi ?? '',
+        publicationContext: overrides.publicationContext ?? { type: 'Unknown' },
+        publicationInstance: {
+          type: overrides.instanceType ?? '',
+          ...(overrides.publicationInstance ?? {}),
+        },
+      },
+    },
+  }) as unknown as Registration;
+
 const buildJournalArticle = (overrides: {
   contributors?: Contributor[];
   year?: string;
@@ -85,5 +113,29 @@ describe('formatAPA', () => {
     expect(formatAPA(registration, { journalName: 'Some Journal' })).toBe(
       'Mincyte, D. (2024). Some Title. Some Journal. https://doi.org/10.1000/example'
     );
+  });
+
+  it('Falls back to a generic citation for an unknown instance type', () => {
+    const registration = buildRegistration({
+      instanceType: 'SomeFutureType',
+      contributors: [
+        {
+          type: 'Contributor',
+          identity: { type: 'Identity', name: 'Doe, Jane' },
+          role: { type: ContributorRole.Creator },
+          sequence: 1,
+        },
+      ],
+      year: '2024',
+      mainTitle: 'A Future Resource',
+      doi: 'https://doi.org/10.1000/future',
+    });
+
+    expect(formatAPA(registration)).toBe('Doe, J. (2024). A Future Resource. https://doi.org/10.1000/future');
+  });
+
+  it('Generic fallback renders without errors when metadata is missing', () => {
+    const registration = buildRegistration({ instanceType: 'SomeFutureType' });
+    expect(formatAPA(registration)).toBe('');
   });
 });

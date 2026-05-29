@@ -128,6 +128,19 @@ const formatJournalArticle: Formatter = (registration, options) => {
   return joinNonEmpty([authorYearSegment, titleSegment, journalSegment, pid]);
 };
 
+const formatGeneric: Formatter = (registration) => {
+  const entityDescription = registration.entityDescription;
+  const authors = formatAuthorList(getCreators(registration));
+  const year = entityDescription?.publicationDate?.year?.trim() ?? '';
+  const title = entityDescription?.mainTitle?.trim() ?? '';
+  const pid = getPersistentIdentifier(registration);
+
+  const authorYearSegment = formatAuthorYearSegment(authors, year);
+  const titleSegment = title ? `${title}.` : '';
+
+  return joinNonEmpty([authorYearSegment, titleSegment, pid]);
+};
+
 const formattersByInstanceType: Record<string, Formatter> = {
   [JournalType.AcademicArticle]: formatJournalArticle,
   [JournalType.AcademicLiteratureReview]: formatJournalArticle,
@@ -136,13 +149,10 @@ const formattersByInstanceType: Record<string, Formatter> = {
 /**
  * Formats a registration as an APA-style citation string.
  * Dispatches on publicationInstance.type to a type-specific formatter.
- * Returns '' for types without a registered formatter.
+ * Falls back to a generic formatter (authors, year, title, DOI) for unhandled types.
  */
 export const formatAPA = (registration: Registration, options: FormatAPAOptions = {}): string => {
   const instanceType = registration.entityDescription?.reference?.publicationInstance?.type;
-  if (!instanceType) {
-    return '';
-  }
-  const formatter = formattersByInstanceType[instanceType];
-  return formatter ? formatter(registration, options) : '';
+  const formatter = (instanceType && formattersByInstanceType[instanceType]) || formatGeneric;
+  return formatter(registration, options);
 };
