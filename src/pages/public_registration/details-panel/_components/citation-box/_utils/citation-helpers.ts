@@ -98,6 +98,13 @@ export const getCreators = (registration: Registration): Contributor[] =>
 /**
  * Returns the most authoritative persistent identifier for a registration.
  * Prefers the reference DOI, then the registration-level DOI, then the handle.
+ * Handles can live either on registration.handle or in additionalIdentifiers (matching PublicHandles.tsx).
  */
-export const getPersistentIdentifier = (registration: Registration): string =>
-  registration.entityDescription?.reference?.doi || registration.doi || registration.handle || '';
+export const getPersistentIdentifier = (registration: Registration): string => {
+  const additionalHandle = registration.additionalIdentifiers?.find(
+    (identifier) => identifier.type === 'HandleIdentifier' || identifier.sourceName === 'handle'
+  )?.value;
+  return (
+    registration.entityDescription?.reference?.doi || registration.doi || registration.handle || additionalHandle || ''
+  );
+};

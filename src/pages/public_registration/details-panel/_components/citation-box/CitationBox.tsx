@@ -1,5 +1,6 @@
 import { TextField, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useFetchPublisherFromId } from '../../../../../api/hooks/useFetchPublisherFromId';
 import { Registration } from '../../../../../types/registration.types';
 import { useJournalSeoData } from '../../../../../utils/hooks/useJournalSeoData';
 import { formatAPA } from './_utils/format-apa';
@@ -13,7 +14,13 @@ interface CitationBoxProps {
 export const CitationBox = ({ registration }: CitationBoxProps) => {
   const { t } = useTranslation();
   const { journalName } = useJournalSeoData(registration);
-  const citation = formatAPA(registration, { journalName });
+
+  const publicationContext = registration.entityDescription?.reference?.publicationContext;
+  const publisherId =
+    (publicationContext && 'publisher' in publicationContext && publicationContext.publisher?.id) || '';
+  const publisherName = useFetchPublisherFromId(publisherId).data?.name ?? '';
+
+  const citation = formatAPA(registration, { journalName, publisherName });
 
   if (!citation) {
     return null;

@@ -11,11 +11,15 @@ const buildRegistration = (
     year?: string;
     mainTitle?: string;
     doi?: string;
+    handle?: string;
+    additionalIdentifiers?: { type: string; sourceName?: string; value: string }[];
     publicationContext?: Record<string, unknown>;
     publicationInstance?: Record<string, unknown>;
   } = {}
 ) =>
   ({
+    handle: overrides.handle,
+    additionalIdentifiers: overrides.additionalIdentifiers,
     entityDescription: {
       contributors: overrides.contributors ?? [],
       mainTitle: overrides.mainTitle ?? '',
@@ -270,5 +274,26 @@ describe('formatAPA', () => {
   it('Generic fallback renders without errors when metadata is missing', () => {
     const registration = buildRegistration({ instanceType: 'SomeFutureType' });
     expect(formatAPA(registration)).toBe('');
+  });
+
+  it('Uses a handle from additionalIdentifiers when DOI is missing', () => {
+    const registration = buildRegistration({
+      instanceType: ReportType.Research,
+      contributors: [
+        {
+          type: 'Contributor',
+          identity: { type: 'Identity', name: 'Lee, Bo' },
+          role: { type: ContributorRole.Creator },
+          sequence: 1,
+        },
+      ],
+      year: '2022',
+      mainTitle: 'A Report',
+      additionalIdentifiers: [
+        { type: 'HandleIdentifier', sourceName: 'handle', value: 'https://hdl.handle.net/11250/3001' },
+      ],
+    });
+
+    expect(formatAPA(registration)).toBe('Lee, B. (2022). A Report. https://hdl.handle.net/11250/3001');
   });
 });
