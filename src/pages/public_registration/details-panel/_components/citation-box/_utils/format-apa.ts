@@ -1,10 +1,11 @@
 import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
+import { BookPublicationContext } from '../../../../../../types/publication_types/bookRegistration.types';
 import {
   JournalPublicationContext,
   JournalPublicationInstance,
 } from '../../../../../../types/publication_types/journalRegistration.types';
 import { PagesRange } from '../../../../../../types/publication_types/pages.types';
-import { JournalType } from '../../../../../../types/publicationFieldNames';
+import { BookType, JournalType } from '../../../../../../types/publicationFieldNames';
 import { Registration } from '../../../../../../types/registration.types';
 
 const toInitials = (givenNames: string): string =>
@@ -102,6 +103,11 @@ interface FormatAPAOptions {
    * publicationContext.title is only used as a fallback for unconfirmed journals.
    */
   journalName?: string;
+  /**
+   * The publisher name resolved from the publication channel.
+   * publicationContext.publisher.name is used as a fallback for unconfirmed publishers.
+   */
+  publisherName?: string;
 }
 
 type Formatter = (registration: Registration, options: FormatAPAOptions) => string;
@@ -128,6 +134,23 @@ const formatJournalArticle: Formatter = (registration, options) => {
   return joinNonEmpty([authorYearSegment, titleSegment, journalSegment, pid]);
 };
 
+const formatBook: Formatter = (registration, options) => {
+  const entityDescription = registration.entityDescription;
+  const publicationContext = entityDescription?.reference?.publicationContext as BookPublicationContext | undefined;
+
+  const authors = formatAuthorList(getCreators(registration));
+  const year = entityDescription?.publicationDate?.year?.trim() ?? '';
+  const title = entityDescription?.mainTitle?.trim() ?? '';
+  const publisher = options.publisherName?.trim() || publicationContext?.publisher?.name?.trim() || '';
+  const pid = getPersistentIdentifier(registration);
+
+  const authorYearSegment = formatAuthorYearSegment(authors, year);
+  const titleSegment = title ? `${title}.` : '';
+  const publisherSegment = publisher ? `${publisher}.` : '';
+
+  return joinNonEmpty([authorYearSegment, titleSegment, publisherSegment, pid]);
+};
+
 const formatGeneric: Formatter = (registration) => {
   const entityDescription = registration.entityDescription;
   const authors = formatAuthorList(getCreators(registration));
@@ -144,6 +167,14 @@ const formatGeneric: Formatter = (registration) => {
 const formattersByInstanceType: Record<string, Formatter> = {
   [JournalType.AcademicArticle]: formatJournalArticle,
   [JournalType.AcademicLiteratureReview]: formatJournalArticle,
+  [BookType.AcademicMonograph]: formatBook,
+  [BookType.AcademicCommentary]: formatBook,
+  [BookType.NonFictionMonograph]: formatBook,
+  [BookType.PopularScienceMonograph]: formatBook,
+  [BookType.Textbook]: formatBook,
+  [BookType.Encyclopedia]: formatBook,
+  [BookType.ExhibitionCatalog]: formatBook,
+  [BookType.Anthology]: formatBook,
 };
 
 /**

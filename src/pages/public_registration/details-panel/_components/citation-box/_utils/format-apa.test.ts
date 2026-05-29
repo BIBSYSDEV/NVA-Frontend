@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
-import { JournalType } from '../../../../../../types/publicationFieldNames';
+import { BookType, JournalType } from '../../../../../../types/publicationFieldNames';
 import { Registration } from '../../../../../../types/registration.types';
 import { formatAPA } from './format-apa';
 
@@ -113,6 +113,46 @@ describe('formatAPA', () => {
     expect(formatAPA(registration, { journalName: 'Some Journal' })).toBe(
       'Mincyte, D. (2024). Some Title. Some Journal. https://doi.org/10.1000/example'
     );
+  });
+
+  it('Formats a fully-populated book', () => {
+    const registration = buildRegistration({
+      instanceType: BookType.AcademicMonograph,
+      contributors: [
+        {
+          type: 'Contributor',
+          identity: { type: 'Identity', name: 'Smith, Alice' },
+          role: { type: ContributorRole.Creator },
+          sequence: 1,
+        },
+      ],
+      year: '2023',
+      mainTitle: 'A Comprehensive Guide',
+      doi: 'https://doi.org/10.1000/book',
+      publicationContext: { type: 'Book', isbnList: [], publisher: { type: 'Publisher', id: 'channel-id' } },
+    });
+
+    expect(formatAPA(registration, { publisherName: 'Academic Press' })).toBe(
+      'Smith, A. (2023). A Comprehensive Guide. Academic Press. https://doi.org/10.1000/book'
+    );
+  });
+
+  it('Omits missing publisher and DOI for a book', () => {
+    const registration = buildRegistration({
+      instanceType: BookType.NonFictionMonograph,
+      contributors: [
+        {
+          type: 'Contributor',
+          identity: { type: 'Identity', name: 'Smith, Alice' },
+          role: { type: ContributorRole.Creator },
+          sequence: 1,
+        },
+      ],
+      year: '2023',
+      mainTitle: 'Another Book',
+    });
+
+    expect(formatAPA(registration)).toBe('Smith, A. (2023). Another Book.');
   });
 
   it('Falls back to a generic citation for an unknown instance type', () => {
