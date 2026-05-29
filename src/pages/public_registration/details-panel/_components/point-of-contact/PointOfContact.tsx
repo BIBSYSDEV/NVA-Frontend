@@ -1,31 +1,28 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Dialog, DialogContent, DialogTitle, Divider, IconButton, styled, Typography } from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
+import { Dialog, DialogContent, DialogTitle, Divider, IconButton, styled, Typography } from '@mui/material';
 import { useQueries } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { fetchOrganization } from '../../../api/cristinApi';
-import { ViewContactInfoButton } from '../../../components/_atoms/buttons/ViewContactInfoButton';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
-import { OpenInNewLink } from '../../../components/OpenInNewLink';
-import { ConfirmedAffiliation, ContributorRole } from '../../../types/contributor.types';
-import { Organization } from '../../../types/organization.types';
-import { Registration } from '../../../types/registration.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getTopLevelOrganization, getUniqueOrganizations } from '../../../utils/institutions-helpers';
-import { CitationBox } from './CitationBox';
-import { ContactPersonRow } from './ContactPersonRow';
-import { InstitutionsServiceCenterOverview } from './InstitutionsServiceCenterOverview';
+import { fetchOrganization } from '../../../../../api/cristinApi';
+import { ViewContactInfoButton } from '../../../../../components/_atoms/buttons/ViewContactInfoButton';
+import { OpenInNewLink } from '../../../../../components/OpenInNewLink';
+import { ConfirmedAffiliation, ContributorRole } from '../../../../../types/contributor.types';
+import { Organization } from '../../../../../types/organization.types';
+import { Registration } from '../../../../../types/registration.types';
+import { dataTestId } from '../../../../../utils/dataTestIds';
+import { getTopLevelOrganization, getUniqueOrganizations } from '../../../../../utils/institutions-helpers';
+import { ContactPersonRow } from './_components/ContactPersonRow';
+import { InstitutionsServiceCenterOverview } from './_components/InstitutionsServiceCenterOverview';
 
 const StyledList = styled('ul')({
   padding: 0,
 });
 
-interface DetailsPanelProps {
+interface PointOfContactProps {
   registration: Registration;
 }
 
-export const DetailsPanel = ({ registration }: DetailsPanelProps) => {
+export const PointOfContact = ({ registration }: PointOfContactProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const contributors = registration.entityDescription?.contributors ?? [];
@@ -53,15 +50,7 @@ export const DetailsPanel = ({ registration }: DetailsPanelProps) => {
   const uniqueInstitutions = getUniqueOrganizations(topLevelOrgs);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', p: '1rem', bgcolor: 'background.paper', gap: '0.5rem' }}>
-      <Typography variant="h2" sx={visuallyHidden}>
-        {t('details')}
-      </Typography>
-
-      <BetaFunctionality>
-        <CitationBox registration={registration} />
-      </BetaFunctionality>
-
+    <>
       <Typography variant="h3">{t('point_of_contact')}</Typography>
       <Typography>{t('point_of_contact_description')}</Typography>
       <ViewContactInfoButton sx={{ alignSelf: { sm: 'start', md: 'center' } }} onClick={() => setOpenModal(true)} />
@@ -125,6 +114,6 @@ export const DetailsPanel = ({ registration }: DetailsPanelProps) => {
           />
         </DialogContent>
       </Dialog>
-    </Box>
+    </>
   );
 };
