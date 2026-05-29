@@ -1,81 +1,21 @@
-import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
 import { BookPublicationContext } from '../../../../../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationInstance } from '../../../../../../types/publication_types/chapterRegistration.types';
 import {
   JournalPublicationContext,
   JournalPublicationInstance,
 } from '../../../../../../types/publication_types/journalRegistration.types';
-import { PagesRange } from '../../../../../../types/publication_types/pages.types';
 import { ReportPublicationContext } from '../../../../../../types/publication_types/reportRegistration.types';
 import { BookType, ChapterType, JournalType, ReportType } from '../../../../../../types/publicationFieldNames';
 import { Registration } from '../../../../../../types/registration.types';
-
-const toInitials = (givenNames: string): string =>
-  givenNames
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((part) => `${part[0].toUpperCase()}.`)
-    .join(' ');
-
-const formatAuthorName = (name: string): string => {
-  const trimmed = name.trim();
-  if (!trimmed) {
-    return '';
-  }
-
-  if (trimmed.includes(',')) {
-    const [last, given = ''] = trimmed.split(',', 2);
-    const lastName = last.trim();
-    const initials = toInitials(given.trim());
-    return initials ? `${lastName}, ${initials}` : lastName;
-  }
-
-  const parts = trimmed.split(/\s+/).filter(Boolean);
-  if (parts.length === 1) {
-    return parts[0];
-  }
-  const lastName = parts[parts.length - 1];
-  const initials = toInitials(parts.slice(0, -1).join(' '));
-  return `${lastName}, ${initials}`;
-};
-
-const formatAuthorList = (creators: Contributor[]): string => {
-  const names = [...creators]
-    .sort((a, b) => a.sequence - b.sequence)
-    .map((contributor) => formatAuthorName(contributor.identity.name))
-    .filter(Boolean);
-
-  if (names.length === 0) {
-    return '';
-  }
-  if (names.length === 1) {
-    return names[0];
-  }
-  if (names.length === 2) {
-    return `${names[0]}, & ${names[1]}`;
-  }
-  return `${names.slice(0, -1).join(', ')}, & ${names[names.length - 1]}`;
-};
-
-const formatPages = (pages?: PagesRange | null): string => {
-  if (!pages) {
-    return '';
-  }
-  const begin = pages.begin?.trim() ?? '';
-  const end = pages.end?.trim() ?? '';
-  if (begin && end) {
-    return `${begin}–${end}`;
-  }
-
-  return begin || end;
-};
-
-const formatAuthorYearSegment = (authors: string, year: string): string => {
-  if (authors && year) return `${authors} (${year}).`;
-  if (authors) return `${authors}.`;
-  if (year) return `(${year}).`;
-  return '';
-};
+import {
+  formatAuthorList,
+  formatAuthorYearSegment,
+  formatPages,
+  getCreators,
+  getPersistentIdentifier,
+  joinNonEmpty,
+} from './citation-helpers';
+import { FormatAPAOptions, Formatter } from './formatter.types';
 
 const formatVolumeIssue = (volume: string, issue: string): string => {
   if (volume && issue) return `${volume}(${issue})`;
@@ -88,41 +28,6 @@ const formatJournalSegment = (journalTitle: string, volumeIssue: string, pages: 
   const parts = [journalTitle, volumeIssue, pages].filter(Boolean);
   return parts.length > 0 ? `${parts.join(', ')}.` : '';
 };
-
-const joinNonEmpty = (segments: string[]): string => segments.filter(Boolean).join(' ');
-
-const getCreators = (registration: Registration): Contributor[] =>
-  registration.entityDescription?.contributors?.filter(
-    (contributor) => contributor.role?.type === ContributorRole.Creator
-  ) ?? [];
-
-const getPersistentIdentifier = (registration: Registration): string =>
-  registration.entityDescription?.reference?.doi || registration.doi || registration.handle || '';
-
-interface FormatAPAOptions {
-  /**
-   * The journal name resolved from the publication channel (SerialPublication.name).
-   * publicationContext.title is only used as a fallback for unconfirmed journals.
-   */
-  journalName?: string;
-  /**
-   * The publisher name resolved from the publication channel.
-   * publicationContext.publisher.name is used as a fallback for unconfirmed publishers.
-   */
-  publisherName?: string;
-  /**
-   * For chapters: the formatted editor name(s) of the parent book.
-   * Must be resolved by the caller from the parent book registration.
-   */
-  editors?: string;
-  /**
-   * For chapters: the title of the parent book.
-   * Must be resolved by the caller from the parent book registration.
-   */
-  bookTitle?: string;
-}
-
-type Formatter = (registration: Registration, options: FormatAPAOptions) => string;
 
 const formatJournalArticle: Formatter = (registration, options) => {
   const entityDescription = registration.entityDescription;
