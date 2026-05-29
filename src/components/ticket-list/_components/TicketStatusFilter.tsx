@@ -1,6 +1,6 @@
 import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { TicketStatus } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -16,9 +16,7 @@ interface TicketStatusFilterProps {
 export const TicketStatusFilter = ({ options }: TicketStatusFilterProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const { status } = useTicketsParams();
+  const { status, searchParams } = useTicketsParams();
   const selectedOptions = status.filter((ticketStatus) => options.includes(ticketStatus));
   const otherSelectedStatuses = status.filter((ticketStatus) => !options.includes(ticketStatus));
 
@@ -38,7 +36,7 @@ export const TicketStatusFilter = ({ options }: TicketStatusFilterProps) => {
   };
 
   return (
-    <FormControl size="small" sx={{ width: '100%' }}>
+    <FormControl size="small" fullWidth>
       <InputLabel id={labelId}>{t('tasks.status')}</InputLabel>
       <Select
         labelId={labelId}

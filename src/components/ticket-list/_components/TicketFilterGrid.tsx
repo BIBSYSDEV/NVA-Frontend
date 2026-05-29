@@ -10,6 +10,7 @@ import { AreaOfResponsibilitySelector } from '../../AreaOfResponsibiltySelector'
 import { CategorySearchFilter } from '../../CategorySearchFilter';
 import { DialoguesWithoutCuratorButton } from '../../DialoguesWithoutCuratorButton';
 import { SearchForm } from '../../SearchForm';
+import { useTicketsParams } from '../_hooks/useTicketsParams';
 import { DisplayOptionsDropdown } from './DisplayOptionsDropdown';
 import { TicketCuratorSelector } from './TicketCuratorSelector';
 import { TicketStatusFilter } from './TicketStatusFilter';
@@ -22,10 +23,10 @@ interface TicketFilterGridProps {
 export const TicketFilterGrid = ({ showAdvancedFilters = false, ticketStatusOptions }: TicketFilterGridProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const searchParams = new URLSearchParams(location.search);
+  const { searchParams } = useTicketsParams();
 
   return (
-    <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
+    <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
       <Grid size={{ xs: 16, md: 5, lg: 4 }}>
         <TicketStatusFilter options={ticketStatusOptions} />
       </Grid>

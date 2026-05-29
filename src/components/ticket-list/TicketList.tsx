@@ -41,8 +41,7 @@ export const TicketList = ({ ticketsQuery, title, selectedTicketTypes }: TicketL
     }
   }, [tickets]);
 
-  const searchParams = new URLSearchParams(location.search);
-  const { viewedByNot, results, from } = useTicketsParams();
+  const { viewedByNot, results, from, searchParams } = useTicketsParams();
 
   const rowsPerPage = (results && +results) || ROWS_PER_PAGE_OPTIONS[0];
   const page = (from && results && Math.floor(+from / rowsPerPage)) || 0;
@@ -55,7 +54,7 @@ export const TicketList = ({ ticketsQuery, title, selectedTicketTypes }: TicketL
   };
 
   return (
-    <MainContentLayout headTitle={title} heading={title} hiddenHeading>
+    <MainContentLayout headTitle={title} heading={title} hiddenHeading sx={{ gap: '0.25rem' }}>
       <TicketFilterGrid showAdvancedFilters={isOnTasksPage} ticketStatusOptions={ticketStatusOptions} />
       <ListPagination
         count={ticketsQuery.data?.totalHits ?? 0}

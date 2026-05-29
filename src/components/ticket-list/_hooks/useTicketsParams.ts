@@ -14,6 +14,7 @@ export const useTicketsParams = () => {
   const status = (searchParams.get(TicketSearchParam.Status)?.split(',') ?? []) as TicketStatus[];
 
   return {
+    searchParams,
     viewedByNot,
     results,
     from,

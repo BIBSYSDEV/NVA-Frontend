@@ -16,8 +16,7 @@ interface DisplayOptionsDropdownProps {
 export const DisplayOptionsDropdown = ({ user }: DisplayOptionsDropdownProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { viewedByNot } = useTicketsParams();
-  const searchParams = new URLSearchParams(location.search);
+  const { viewedByNot, searchParams } = useTicketsParams();
 
   return (
     <FormControl fullWidth>

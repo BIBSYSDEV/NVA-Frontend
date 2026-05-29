@@ -20,8 +20,7 @@ const getRoleFilterOptions = (roles: RoleName[]) => roles.filter((role) => relev
 export const TicketCuratorSelector = () => {
   const user = useSelector((store: RootState) => store.user);
   const navigate = useNavigate();
-  const searchParams = new URLSearchParams(location.search);
-  const { assignee } = useTicketsParams();
+  const { assignee, searchParams } = useTicketsParams();
 
   return (
     <CuratorSelector
