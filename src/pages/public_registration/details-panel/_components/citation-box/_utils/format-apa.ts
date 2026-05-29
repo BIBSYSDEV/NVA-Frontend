@@ -1,12 +1,13 @@
 import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
 import { BookPublicationContext } from '../../../../../../types/publication_types/bookRegistration.types';
+import { ChapterPublicationInstance } from '../../../../../../types/publication_types/chapterRegistration.types';
 import {
   JournalPublicationContext,
   JournalPublicationInstance,
 } from '../../../../../../types/publication_types/journalRegistration.types';
 import { PagesRange } from '../../../../../../types/publication_types/pages.types';
 import { ReportPublicationContext } from '../../../../../../types/publication_types/reportRegistration.types';
-import { BookType, JournalType, ReportType } from '../../../../../../types/publicationFieldNames';
+import { BookType, ChapterType, JournalType, ReportType } from '../../../../../../types/publicationFieldNames';
 import { Registration } from '../../../../../../types/registration.types';
 
 const toInitials = (givenNames: string): string =>
@@ -109,6 +110,16 @@ interface FormatAPAOptions {
    * publicationContext.publisher.name is used as a fallback for unconfirmed publishers.
    */
   publisherName?: string;
+  /**
+   * For chapters: the formatted editor name(s) of the parent book.
+   * Must be resolved by the caller from the parent book registration.
+   */
+  editors?: string;
+  /**
+   * For chapters: the title of the parent book.
+   * Must be resolved by the caller from the parent book registration.
+   */
+  bookTitle?: string;
 }
 
 type Formatter = (registration: Registration, options: FormatAPAOptions) => string;
@@ -172,6 +183,37 @@ const formatReport: Formatter = (registration, options) => {
   return joinNonEmpty([authorYearSegment, titleSegment, institutionSegment, pid]);
 };
 
+const formatChapterContainerSegment = (editors: string, bookTitle: string, pages: string): string => {
+  // The "In ..." segment is anchored on the parent book title; without it the editor/pages are meaningless.
+  if (!bookTitle) return '';
+  const editorPart = editors ? `${editors} (Ed.), ` : '';
+  const pagesPart = pages ? ` (pp. ${pages})` : '';
+  return `In ${editorPart}${bookTitle}${pagesPart}.`;
+};
+
+const formatChapter: Formatter = (registration, options) => {
+  const entityDescription = registration.entityDescription;
+  const publicationInstance = entityDescription?.reference?.publicationInstance as
+    | ChapterPublicationInstance
+    | undefined;
+
+  const authors = formatAuthorList(getCreators(registration));
+  const year = entityDescription?.publicationDate?.year?.trim() ?? '';
+  const chapterTitle = entityDescription?.mainTitle?.trim() ?? '';
+  const editors = options.editors?.trim() ?? '';
+  const bookTitle = options.bookTitle?.trim() ?? '';
+  const publisher = options.publisherName?.trim() ?? '';
+  const pages = formatPages(publicationInstance?.pages);
+  const pid = getPersistentIdentifier(registration);
+
+  const authorYearSegment = formatAuthorYearSegment(authors, year);
+  const chapterTitleSegment = chapterTitle ? `${chapterTitle}.` : '';
+  const containerSegment = formatChapterContainerSegment(editors, bookTitle, pages);
+  const publisherSegment = publisher ? `${publisher}.` : '';
+
+  return joinNonEmpty([authorYearSegment, chapterTitleSegment, containerSegment, publisherSegment, pid]);
+};
+
 const formatGeneric: Formatter = (registration) => {
   const entityDescription = registration.entityDescription;
   const authors = formatAuthorList(getCreators(registration));
@@ -202,6 +244,15 @@ const formattersByInstanceType: Record<string, Formatter> = {
   [ReportType.BookOfAbstracts]: formatReport,
   [ReportType.ConferenceReport]: formatReport,
   [ReportType.Report]: formatReport,
+  [ChapterType.AcademicChapter]: formatChapter,
+  [ChapterType.NonFictionChapter]: formatChapter,
+  [ChapterType.PopularScienceChapter]: formatChapter,
+  [ChapterType.TextbookChapter]: formatChapter,
+  [ChapterType.EncyclopediaChapter]: formatChapter,
+  [ChapterType.Introduction]: formatChapter,
+  [ChapterType.ExhibitionCatalogChapter]: formatChapter,
+  [ChapterType.ReportChapter]: formatChapter,
+  [ChapterType.ConferenceAbstract]: formatChapter,
 };
 
 /**

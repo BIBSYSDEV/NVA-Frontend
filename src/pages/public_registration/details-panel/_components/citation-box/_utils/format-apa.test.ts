@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
-import { BookType, JournalType, ReportType } from '../../../../../../types/publicationFieldNames';
+import { BookType, ChapterType, JournalType, ReportType } from '../../../../../../types/publicationFieldNames';
 import { Registration } from '../../../../../../types/registration.types';
 import { formatAPA } from './format-apa';
 
@@ -200,6 +200,52 @@ describe('formatAPA', () => {
     });
 
     expect(formatAPA(registration)).toBe('Lee, B. (2022). A Policy Brief.');
+  });
+
+  it('Formats a fully-populated book chapter', () => {
+    const registration = buildRegistration({
+      instanceType: ChapterType.AcademicChapter,
+      contributors: [
+        {
+          type: 'Contributor',
+          identity: { type: 'Identity', name: 'Smith, Alice' },
+          role: { type: ContributorRole.Creator },
+          sequence: 1,
+        },
+      ],
+      year: '2021',
+      mainTitle: 'On Quantum Theory',
+      doi: 'https://doi.org/10.1000/chapter',
+      publicationInstance: { pages: { type: 'Range', begin: '15', end: '32' } },
+    });
+
+    expect(
+      formatAPA(registration, {
+        editors: 'R. Editor',
+        bookTitle: 'Advances in Physics',
+        publisherName: 'Academic Press',
+      })
+    ).toBe(
+      'Smith, A. (2021). On Quantum Theory. In R. Editor (Ed.), Advances in Physics (pp. 15–32). Academic Press. https://doi.org/10.1000/chapter'
+    );
+  });
+
+  it('Omits missing book title, editor, pages, and DOI for a chapter', () => {
+    const registration = buildRegistration({
+      instanceType: ChapterType.AcademicChapter,
+      contributors: [
+        {
+          type: 'Contributor',
+          identity: { type: 'Identity', name: 'Smith, Alice' },
+          role: { type: ContributorRole.Creator },
+          sequence: 1,
+        },
+      ],
+      year: '2021',
+      mainTitle: 'On Quantum Theory',
+    });
+
+    expect(formatAPA(registration)).toBe('Smith, A. (2021). On Quantum Theory.');
   });
 
   it('Falls back to a generic citation for an unknown instance type', () => {
