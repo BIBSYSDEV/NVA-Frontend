@@ -80,3 +80,17 @@ export const getPersistentIdentifier = (registration: Registration): string => {
     registration.entityDescription?.reference?.doi || registration.doi || registration.handle || additionalHandle || ''
   );
 };
+
+/**
+ * Resolves the fields every APA formatter needs: formatted author list, year, main title, and the
+ * persistent identifier. Type-specific formatters spread the result and add their own fields on top.
+ */
+export const normalizeBaseFields = (registration: Registration) => {
+  const entityDescription = registration.entityDescription;
+  return {
+    authors: formatAuthorList(getCreators(registration)),
+    year: entityDescription?.publicationDate?.year?.trim() ?? '',
+    title: entityDescription?.mainTitle?.trim() ?? '',
+    pid: getPersistentIdentifier(registration),
+  };
+};
