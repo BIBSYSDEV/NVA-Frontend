@@ -141,24 +141,6 @@ describe('formatAPA', () => {
     );
   });
 
-  it('Omits missing publisher and DOI for a book', () => {
-    const registration = buildRegistration({
-      instanceType: BookType.NonFictionMonograph,
-      contributors: [
-        {
-          type: 'Contributor',
-          identity: { type: 'Identity', name: 'Smith, Alice' },
-          role: { type: ContributorRole.Creator },
-          sequence: 1,
-        },
-      ],
-      year: '2023',
-      mainTitle: 'Another Book',
-    });
-
-    expect(formatAPA(registration)).toBe('Smith, Alice (2023). Another Book.');
-  });
-
   it('Formats a fully-populated report', () => {
     const registration = buildRegistration({
       instanceType: ReportType.Research,
@@ -186,24 +168,6 @@ describe('formatAPA', () => {
     expect(formatAPA(registration, { publisherName: 'Sikt' })).toBe(
       'Lee, Bo (2022). Climate Trends (Report No. 12). Sikt. https://doi.org/10.1000/report'
     );
-  });
-
-  it('Omits missing report number, publisher, and DOI for a report', () => {
-    const registration = buildRegistration({
-      instanceType: ReportType.Policy,
-      contributors: [
-        {
-          type: 'Contributor',
-          identity: { type: 'Identity', name: 'Lee, Bo' },
-          role: { type: ContributorRole.Creator },
-          sequence: 1,
-        },
-      ],
-      year: '2022',
-      mainTitle: 'A Policy Brief',
-    });
-
-    expect(formatAPA(registration)).toBe('Lee, Bo (2022). A Policy Brief.');
   });
 
   it('Formats a fully-populated book chapter', () => {
@@ -234,23 +198,42 @@ describe('formatAPA', () => {
     );
   });
 
-  it('Omits missing book title, editor, pages, and DOI for a chapter', () => {
-    const registration = buildRegistration({
+  it.each([
+    {
+      label: 'book',
+      instanceType: BookType.NonFictionMonograph,
+      name: 'Smith, Alice',
+      year: '2023',
+      title: 'Another Book',
+    },
+    { label: 'report', instanceType: ReportType.Policy, name: 'Lee, Bo', year: '2022', title: 'A Policy Brief' },
+    {
+      label: 'chapter',
       instanceType: ChapterType.AcademicChapter,
-      contributors: [
-        {
-          type: 'Contributor',
-          identity: { type: 'Identity', name: 'Smith, Alice' },
-          role: { type: ContributorRole.Creator },
-          sequence: 1,
-        },
-      ],
+      name: 'Smith, Alice',
       year: '2021',
-      mainTitle: 'On Quantum Theory',
-    });
+      title: 'On Quantum Theory',
+    },
+  ])(
+    'Omits missing type-specific fields for a $label, leaving just author, year, and title',
+    ({ instanceType, name, year, title }) => {
+      const registration = buildRegistration({
+        instanceType,
+        contributors: [
+          {
+            type: 'Contributor',
+            identity: { type: 'Identity', name },
+            role: { type: ContributorRole.Creator },
+            sequence: 1,
+          },
+        ],
+        year,
+        mainTitle: title,
+      });
 
-    expect(formatAPA(registration)).toBe('Smith, Alice (2021). On Quantum Theory.');
-  });
+      expect(formatAPA(registration)).toBe(`${name} (${year}). ${title}.`);
+    }
+  );
 
   it('Falls back to a generic citation for an unknown instance type', () => {
     const registration = buildRegistration({
