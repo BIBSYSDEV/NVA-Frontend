@@ -11,6 +11,8 @@ const statusOptions = [
   { value: NviPeriodStatusEnum.ReportedPeriod, labelKey: 'nvi_period_status_reported' },
 ] as const;
 
+export const allFilterableNviPeriodStatuses = statusOptions.map(({ value }) => value);
+
 export const PARAM_NAME_PERIOD_STATUSES = 'periodStatuses';
 
 /**

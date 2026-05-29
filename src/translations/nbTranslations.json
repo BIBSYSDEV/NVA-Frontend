@@ -2127,5 +2127,7 @@
   "edit_reporting_period": "Rediger rapporteringsperiode",
   "reporting_period_text": "<p>Start- og sluttdato styrer når perioden åpnes og lukkes.</p><p>Når sluttdato er passert, lukkes perioden, og NVI-kuratorer kan ikke lenger kontrollere kandidater.</p><p>Endre sluttdato for å gjenåpne perioden. Når sluttdato er passert, kan perioden rapporteres.</p>",
   "exporting_bibtex": "Eksporterer BibTeX",
-  "export_progress_count": "{{fetched}} av {{total}} resultater"
+  "export_progress_count": "{{fetched}} av {{total}} resultater",
+  "number_of_candidates": "Antall kandidater",
+  "nvi_points": "NVI-poeng"
 }
