@@ -1,9 +1,9 @@
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Box, Link, Skeleton } from '@mui/material';
-import { useFetchPerson } from '../../../api/hooks/useFetchPerson';
-import { ContributorName } from '../../../components/ContributorName';
-import { Contributor } from '../../../types/contributor.types';
-import { dataTestId } from '../../../utils/dataTestIds';
+import { useFetchPerson } from '../../../../../../api/hooks/useFetchPerson';
+import { ContributorName } from '../../../../../../components/ContributorName';
+import { Contributor } from '../../../../../../types/contributor.types';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface ContactPersonRowProps {
   contributor: Contributor;
