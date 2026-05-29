@@ -5,7 +5,8 @@ import {
   JournalPublicationInstance,
 } from '../../../../../../types/publication_types/journalRegistration.types';
 import { PagesRange } from '../../../../../../types/publication_types/pages.types';
-import { BookType, JournalType } from '../../../../../../types/publicationFieldNames';
+import { ReportPublicationContext } from '../../../../../../types/publication_types/reportRegistration.types';
+import { BookType, JournalType, ReportType } from '../../../../../../types/publicationFieldNames';
 import { Registration } from '../../../../../../types/registration.types';
 
 const toInitials = (givenNames: string): string =>
@@ -151,6 +152,26 @@ const formatBook: Formatter = (registration, options) => {
   return joinNonEmpty([authorYearSegment, titleSegment, publisherSegment, pid]);
 };
 
+const formatReport: Formatter = (registration, options) => {
+  const entityDescription = registration.entityDescription;
+  const publicationContext = entityDescription?.reference?.publicationContext as ReportPublicationContext | undefined;
+
+  const authors = formatAuthorList(getCreators(registration));
+  const year = entityDescription?.publicationDate?.year?.trim() ?? '';
+  const title = entityDescription?.mainTitle?.trim() ?? '';
+  const reportNumber = publicationContext?.seriesNumber?.trim() ?? '';
+  const institution = options.publisherName?.trim() || publicationContext?.publisher?.name?.trim() || '';
+  const pid = getPersistentIdentifier(registration);
+
+  const titleText = title && reportNumber ? `${title} (Report No. ${reportNumber})` : title;
+
+  const authorYearSegment = formatAuthorYearSegment(authors, year);
+  const titleSegment = titleText ? `${titleText}.` : '';
+  const institutionSegment = institution ? `${institution}.` : '';
+
+  return joinNonEmpty([authorYearSegment, titleSegment, institutionSegment, pid]);
+};
+
 const formatGeneric: Formatter = (registration) => {
   const entityDescription = registration.entityDescription;
   const authors = formatAuthorList(getCreators(registration));
@@ -175,6 +196,12 @@ const formattersByInstanceType: Record<string, Formatter> = {
   [BookType.Encyclopedia]: formatBook,
   [BookType.ExhibitionCatalog]: formatBook,
   [BookType.Anthology]: formatBook,
+  [ReportType.Research]: formatReport,
+  [ReportType.Policy]: formatReport,
+  [ReportType.WorkingPaper]: formatReport,
+  [ReportType.BookOfAbstracts]: formatReport,
+  [ReportType.ConferenceReport]: formatReport,
+  [ReportType.Report]: formatReport,
 };
 
 /**

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
-import { BookType, JournalType } from '../../../../../../types/publicationFieldNames';
+import { BookType, JournalType, ReportType } from '../../../../../../types/publicationFieldNames';
 import { Registration } from '../../../../../../types/registration.types';
 import { formatAPA } from './format-apa';
 
@@ -153,6 +153,53 @@ describe('formatAPA', () => {
     });
 
     expect(formatAPA(registration)).toBe('Smith, A. (2023). Another Book.');
+  });
+
+  it('Formats a fully-populated report', () => {
+    const registration = buildRegistration({
+      instanceType: ReportType.Research,
+      contributors: [
+        {
+          type: 'Contributor',
+          identity: { type: 'Identity', name: 'Lee, Bo' },
+          role: { type: ContributorRole.Creator },
+          sequence: 1,
+        },
+      ],
+      year: '2022',
+      mainTitle: 'Climate Trends',
+      doi: 'https://doi.org/10.1000/report',
+      publicationContext: {
+        type: 'Report',
+        isbnList: [],
+        publisher: { type: 'Publisher', id: 'channel-id' },
+        seriesNumber: '12',
+        onlineIssn: '',
+        printIssn: '',
+      },
+    });
+
+    expect(formatAPA(registration, { publisherName: 'Sikt' })).toBe(
+      'Lee, B. (2022). Climate Trends (Report No. 12). Sikt. https://doi.org/10.1000/report'
+    );
+  });
+
+  it('Omits missing report number, publisher, and DOI for a report', () => {
+    const registration = buildRegistration({
+      instanceType: ReportType.Policy,
+      contributors: [
+        {
+          type: 'Contributor',
+          identity: { type: 'Identity', name: 'Lee, Bo' },
+          role: { type: ContributorRole.Creator },
+          sequence: 1,
+        },
+      ],
+      year: '2022',
+      mainTitle: 'A Policy Brief',
+    });
+
+    expect(formatAPA(registration)).toBe('Lee, B. (2022). A Policy Brief.');
   });
 
   it('Falls back to a generic citation for an unknown instance type', () => {
