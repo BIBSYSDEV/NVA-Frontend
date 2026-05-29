@@ -92,7 +92,7 @@ describe('formatAPA', () => {
     });
 
     expect(formatAPA(registration, { journalName: 'Frontiers in Sustainability' })).toBe(
-      'Normann, O. H., & Mincyte, D. (2025). A Qualitative Comparative Analysis. Frontiers in Sustainability, 6(2), 10–25. https://doi.org/10.3389/frsus.2025.1490685'
+      'Normann, Ola Henrik, & Mincyte, Diana (2025). A Qualitative Comparative Analysis. Frontiers in Sustainability, 6(2), 10–25. https://doi.org/10.3389/frsus.2025.1490685'
     );
   });
 
@@ -115,7 +115,7 @@ describe('formatAPA', () => {
     });
 
     expect(formatAPA(registration, { journalName: 'Some Journal' })).toBe(
-      'Mincyte, D. (2024). Some Title. Some Journal. https://doi.org/10.1000/example'
+      'Mincyte, Diana (2024). Some Title. Some Journal. https://doi.org/10.1000/example'
     );
   });
 
@@ -137,7 +137,7 @@ describe('formatAPA', () => {
     });
 
     expect(formatAPA(registration, { publisherName: 'Academic Press' })).toBe(
-      'Smith, A. (2023). A Comprehensive Guide. Academic Press. https://doi.org/10.1000/book'
+      'Smith, Alice (2023). A Comprehensive Guide. Academic Press. https://doi.org/10.1000/book'
     );
   });
 
@@ -156,7 +156,7 @@ describe('formatAPA', () => {
       mainTitle: 'Another Book',
     });
 
-    expect(formatAPA(registration)).toBe('Smith, A. (2023). Another Book.');
+    expect(formatAPA(registration)).toBe('Smith, Alice (2023). Another Book.');
   });
 
   it('Formats a fully-populated report', () => {
@@ -184,7 +184,7 @@ describe('formatAPA', () => {
     });
 
     expect(formatAPA(registration, { publisherName: 'Sikt' })).toBe(
-      'Lee, B. (2022). Climate Trends (Report No. 12). Sikt. https://doi.org/10.1000/report'
+      'Lee, Bo (2022). Climate Trends (Report No. 12). Sikt. https://doi.org/10.1000/report'
     );
   });
 
@@ -203,7 +203,7 @@ describe('formatAPA', () => {
       mainTitle: 'A Policy Brief',
     });
 
-    expect(formatAPA(registration)).toBe('Lee, B. (2022). A Policy Brief.');
+    expect(formatAPA(registration)).toBe('Lee, Bo (2022). A Policy Brief.');
   });
 
   it('Formats a fully-populated book chapter', () => {
@@ -230,7 +230,7 @@ describe('formatAPA', () => {
         publisherName: 'Academic Press',
       })
     ).toBe(
-      'Smith, A. (2021). On Quantum Theory. In R. Editor (Ed.), Advances in Physics (pp. 15–32). Academic Press. https://doi.org/10.1000/chapter'
+      'Smith, Alice (2021). On Quantum Theory. In R. Editor (Ed.), Advances in Physics (pp. 15–32). Academic Press. https://doi.org/10.1000/chapter'
     );
   });
 
@@ -249,7 +249,7 @@ describe('formatAPA', () => {
       mainTitle: 'On Quantum Theory',
     });
 
-    expect(formatAPA(registration)).toBe('Smith, A. (2021). On Quantum Theory.');
+    expect(formatAPA(registration)).toBe('Smith, Alice (2021). On Quantum Theory.');
   });
 
   it('Falls back to a generic citation for an unknown instance type', () => {
@@ -268,7 +268,7 @@ describe('formatAPA', () => {
       doi: 'https://doi.org/10.1000/future',
     });
 
-    expect(formatAPA(registration)).toBe('Doe, J. (2024). A Future Resource. https://doi.org/10.1000/future');
+    expect(formatAPA(registration)).toBe('Doe, Jane (2024). A Future Resource. https://doi.org/10.1000/future');
   });
 
   it('Generic fallback renders without errors when metadata is missing', () => {
@@ -294,6 +294,6 @@ describe('formatAPA', () => {
       ],
     });
 
-    expect(formatAPA(registration)).toBe('Lee, B. (2022). A Report. https://hdl.handle.net/11250/3001');
+    expect(formatAPA(registration)).toBe('Lee, Bo (2022). A Report. https://hdl.handle.net/11250/3001');
   });
 });

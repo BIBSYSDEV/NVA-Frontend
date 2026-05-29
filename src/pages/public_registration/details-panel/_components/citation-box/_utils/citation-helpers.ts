@@ -2,44 +2,16 @@ import { Contributor, ContributorRole } from '../../../../../../types/contributo
 import { PagesRange } from '../../../../../../types/publication_types/pages.types';
 import { Registration } from '../../../../../../types/registration.types';
 
-const toInitials = (givenNames: string): string =>
-  givenNames
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((part) => `${part[0].toUpperCase()}.`)
-    .join(' ');
-
-const formatAuthorName = (name: string): string => {
-  const trimmed = name.trim();
-  if (!trimmed) {
-    return '';
-  }
-
-  if (trimmed.includes(',')) {
-    const [last, given = ''] = trimmed.split(',', 2);
-    const lastName = last.trim();
-    const initials = toInitials(given.trim());
-    return initials ? `${lastName}, ${initials}` : lastName;
-  }
-
-  const parts = trimmed.split(/\s+/).filter(Boolean);
-  if (parts.length === 1) {
-    return parts[0];
-  }
-  const lastName = parts[parts.length - 1];
-  const initials = toInitials(parts.slice(0, -1).join(' '));
-  return `${lastName}, ${initials}`;
-};
-
 /**
- * Formats a list of contributors as an APA-style author list.
- * Sorts by sequence, abbreviates given names to initials, and joins with commas / ampersand.
- * Example: [Smith, Alice; Doe, John] → "Smith, A., & Doe, J."
+ * Formats a list of contributors as an APA-style author list, using each name as stored on the registration.
+ * Names are not split or abbreviated — APA's "Last, F." convention can't be applied reliably when the
+ * boundary between given names, middle names, and surnames is unknown.
+ * Sorts by sequence and joins multiple names with commas and an ampersand before the last entry.
  */
 export const formatAuthorList = (creators: Contributor[]): string => {
   const names = [...creators]
     .sort((a, b) => a.sequence - b.sequence)
-    .map((contributor) => formatAuthorName(contributor.identity.name))
+    .map((contributor) => contributor.identity.name?.trim() ?? '')
     .filter(Boolean);
 
   if (names.length === 0) {
