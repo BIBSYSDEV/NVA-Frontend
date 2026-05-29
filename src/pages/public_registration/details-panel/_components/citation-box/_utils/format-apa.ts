@@ -7,8 +7,6 @@ import { PagesRange } from '../../../../../../types/publication_types/pages.type
 import { JournalType } from '../../../../../../types/publicationFieldNames';
 import { Registration } from '../../../../../../types/registration.types';
 
-const supportedJournalArticleTypes: string[] = [JournalType.AcademicArticle, JournalType.AcademicLiteratureReview];
-
 const toInitials = (givenNames: string): string =>
   givenNames
     .split(/\s+/)
@@ -90,6 +88,14 @@ const formatJournalSegment = (journalTitle: string, volumeIssue: string, pages: 
 
 const joinNonEmpty = (segments: string[]): string => segments.filter(Boolean).join(' ');
 
+const getCreators = (registration: Registration): Contributor[] =>
+  registration.entityDescription?.contributors?.filter(
+    (contributor) => contributor.role?.type === ContributorRole.Creator
+  ) ?? [];
+
+const getPersistentIdentifier = (registration: Registration): string =>
+  registration.entityDescription?.reference?.doi || registration.doi || registration.handle || '';
+
 interface FormatAPAOptions {
   /**
    * The journal name resolved from the publication channel (SerialPublication.name).
@@ -98,37 +104,45 @@ interface FormatAPAOptions {
   journalName?: string;
 }
 
-/**
- * Formats a registration as an APA-style citation string.
- * Supports AcademicArticle and AcademicLiteratureReview; returns '' for other types.
- * Empty fields are omitted when its underlying data is missing.
- */
-export const formatAPA = (registration: Registration, options: FormatAPAOptions = {}): string => {
+type Formatter = (registration: Registration, options: FormatAPAOptions) => string;
+
+const formatJournalArticle: Formatter = (registration, options) => {
   const entityDescription = registration.entityDescription;
   const reference = entityDescription?.reference;
-  const instanceType = reference?.publicationInstance?.type;
-
-  if (!instanceType || !supportedJournalArticleTypes.includes(instanceType)) {
-    return '';
-  }
-
   const publicationContext = reference?.publicationContext as JournalPublicationContext | undefined;
   const publicationInstance = reference?.publicationInstance as JournalPublicationInstance | undefined;
 
-  const creators =
-    entityDescription?.contributors?.filter((contributor) => contributor.role?.type === ContributorRole.Creator) ?? [];
-  const authors = formatAuthorList(creators);
+  const authors = formatAuthorList(getCreators(registration));
   const year = entityDescription?.publicationDate?.year?.trim() ?? '';
   const title = entityDescription?.mainTitle?.trim() ?? '';
   const journalTitle = options.journalName?.trim() || publicationContext?.title?.trim() || '';
   const volume = publicationInstance?.volume?.trim() ?? '';
   const issue = publicationInstance?.issue?.trim() ?? '';
   const pages = formatPages(publicationInstance?.pages);
-  const pid = reference?.doi || registration.doi || registration.handle || '';
+  const pid = getPersistentIdentifier(registration);
 
   const authorYearSegment = formatAuthorYearSegment(authors, year);
   const titleSegment = title ? `${title}.` : '';
   const journalSegment = formatJournalSegment(journalTitle, formatVolumeIssue(volume, issue), pages);
 
   return joinNonEmpty([authorYearSegment, titleSegment, journalSegment, pid]);
+};
+
+const formattersByInstanceType: Record<string, Formatter> = {
+  [JournalType.AcademicArticle]: formatJournalArticle,
+  [JournalType.AcademicLiteratureReview]: formatJournalArticle,
+};
+
+/**
+ * Formats a registration as an APA-style citation string.
+ * Dispatches on publicationInstance.type to a type-specific formatter.
+ * Returns '' for types without a registered formatter.
+ */
+export const formatAPA = (registration: Registration, options: FormatAPAOptions = {}): string => {
+  const instanceType = registration.entityDescription?.reference?.publicationInstance?.type;
+  if (!instanceType) {
+    return '';
+  }
+  const formatter = formattersByInstanceType[instanceType];
+  return formatter ? formatter(registration, options) : '';
 };
