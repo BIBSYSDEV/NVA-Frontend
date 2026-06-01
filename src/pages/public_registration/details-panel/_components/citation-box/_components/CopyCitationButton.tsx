@@ -36,7 +36,7 @@ export const CopyCitationButton = ({ citation }: CopyCitationButtonProps) => {
     <>
       <Button
         data-testid={dataTestId.registrationLandingPage.detailsTab.copyCitationButton}
-        color={justCopied ? 'success' : 'secondary'}
+        color="secondary"
         variant="contained"
         endIcon={justCopied ? <CheckIcon /> : <ContentCopyIcon />}
         sx={{ mt: '0.5rem', alignSelf: 'end', width: 'fit-content' }}
