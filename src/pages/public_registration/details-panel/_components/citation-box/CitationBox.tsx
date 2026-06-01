@@ -1,4 +1,4 @@
-import { TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchBookRegistration } from '../../../../../api/hooks/useFetchBookRegistration';
 import { useFetchPublisherFromId } from '../../../../../api/hooks/useFetchPublisherFromId';
@@ -7,6 +7,7 @@ import { Registration } from '../../../../../types/registration.types';
 import { useJournalSeoData } from '../../../../../utils/hooks/useJournalSeoData';
 import { isChapter } from '../../../../../utils/registration-helpers';
 import { formatAPA } from './_utils/format-apa';
+import { CopyCitationButton } from './_atoms/CopyCitationButton';
 
 const citationHeadingId = 'citation-box-heading';
 
@@ -36,8 +37,8 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
   }
 
   return (
-    <>
-      <Typography id={citationHeadingId} variant="h3">
+    <Box component="section" display="flex" flexDirection="column">
+      <Typography id={citationHeadingId} variant="h3" gutterBottom>
         {t('citation')}
       </Typography>
       <TextField
@@ -51,6 +52,7 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
           htmlInput: { 'aria-labelledby': citationHeadingId },
         }}
       />
-    </>
+      <CopyCitationButton citation={citation} />
+    </Box>
   );
 };

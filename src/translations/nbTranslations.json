@@ -2116,5 +2116,6 @@
   "exporting_bibtex": "Eksporterer BibTeX",
   "export_progress_count": "{{fetched}} av {{total}} resultater",
   "number_of_candidates": "Antall kandidater",
-  "nvi_points": "NVI-poeng"
+  "nvi_points": "NVI-poeng",
+  "copy_citation": "Kopier sitering"
 }
