@@ -1,8 +1,11 @@
 import { TextField, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useFetchBookRegistration } from '../../../../../api/hooks/useFetchBookRegistration';
 import { useFetchPublisherFromId } from '../../../../../api/hooks/useFetchPublisherFromId';
+import { ChapterPublicationContext } from '../../../../../types/publication_types/chapterRegistration.types';
 import { Registration } from '../../../../../types/registration.types';
 import { useJournalSeoData } from '../../../../../utils/hooks/useJournalSeoData';
+import { isChapter } from '../../../../../utils/registration-helpers';
 import { formatAPA } from './_utils/format-apa';
 
 const citationHeadingId = 'citation-box-heading';
@@ -20,7 +23,13 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
     (publicationContext && 'publisher' in publicationContext && publicationContext.publisher?.id) || '';
   const publisherName = useFetchPublisherFromId(publisherId).data?.name ?? '';
 
-  const citation = formatAPA(registration, { journalName, publisherName });
+  const isChapterRegistration = isChapter(registration.entityDescription?.reference?.publicationInstance?.type);
+  const parentBookId = isChapterRegistration
+    ? ((publicationContext as ChapterPublicationContext | undefined)?.id ?? '')
+    : '';
+  const bookTitle = useFetchBookRegistration(parentBookId).data?.entityDescription?.mainTitle ?? '';
+
+  const citation = formatAPA(registration, { journalName, publisherName, bookTitle });
 
   if (!citation) {
     return null;
