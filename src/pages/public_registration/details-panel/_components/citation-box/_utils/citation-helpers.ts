@@ -6,6 +6,18 @@ import { Registration } from '../../../../../../types/registration.types';
 // Imported names sometimes arrive as "Lastname," or ", Firstname" when one name half is missing.
 const edgeCommasPattern = /^,+\s*|\s*,+$/g;
 
+interface FormatAuthorListOptions {
+  /** When set to 'editor', appends " (Ed.)" for a single contributor or " (Eds.)" for two or more. */
+  role?: 'editor';
+}
+
+const joinNames = (names: string[]): string => {
+  if (names.length === 1) return names[0];
+  if (names.length === 2) return `${names[0]}, & ${names[1]}`;
+  if (names.length <= 20) return `${names.slice(0, -1).join(', ')}, & ${names[names.length - 1]}`;
+  return `${names.slice(0, 19).join(', ')}, ... ${names[names.length - 1]}`;
+};
+
 /**
  * Formats a list of contributors as an APA-style author list, using each name as stored on the registration.
  * Names are not split or abbreviated — APA's "Last, F." convention can't be applied reliably when the
@@ -13,26 +25,19 @@ const edgeCommasPattern = /^,+\s*|\s*,+$/g;
  * Sorts by sequence. For 1-20 contributors all names are listed with commas and an ampersand before
  * the last entry. For 21+ contributors APA 7 truncation applies: the first 19 names, then an ellipsis,
  * then the final name with no ampersand.
+ * Pass { role: 'editor' } to suffix the list with " (Ed.)" or " (Eds.)" per APA chapter conventions.
  */
-export const formatAuthorList = (creators: Contributor[]): string => {
+export const formatAuthorList = (creators: Contributor[], options: FormatAuthorListOptions = {}): string => {
   const names = [...creators]
     .sort((a, b) => a.sequence - b.sequence)
     .map((contributor) => (contributor.identity.name ?? '').trim().replace(edgeCommasPattern, ''))
     .filter(Boolean);
 
-  if (names.length === 0) {
-    return '';
-  }
-  if (names.length === 1) {
-    return names[0];
-  }
-  if (names.length === 2) {
-    return `${names[0]}, & ${names[1]}`;
-  }
-  if (names.length <= 20) {
-    return `${names.slice(0, -1).join(', ')}, & ${names[names.length - 1]}`;
-  }
-  return `${names.slice(0, 19).join(', ')}, ... ${names[names.length - 1]}`;
+  if (names.length === 0) return '';
+
+  const joined = joinNames(names);
+  if (options.role !== 'editor') return joined;
+  return `${joined} ${names.length === 1 ? '(Ed.)' : '(Eds.)'}`;
 };
 
 /**
@@ -74,6 +79,14 @@ export const joinNonEmpty = (segments: string[]): string => segments.filter(Bool
 export const getCreators = (registration: Registration): Contributor[] =>
   registration.entityDescription?.contributors?.filter(
     (contributor) => contributor.role?.type === ContributorRole.Creator
+  ) ?? [];
+
+/**
+ * Returns contributors with the Editor role from a registration (e.g. editors of a parent book).
+ */
+export const getEditors = (registration: Registration): Contributor[] =>
+  registration.entityDescription?.contributors?.filter(
+    (contributor) => contributor.role?.type === ContributorRole.Editor
   ) ?? [];
 
 /**

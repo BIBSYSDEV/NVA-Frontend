@@ -7,6 +7,7 @@ import { Registration } from '../../../../../types/registration.types';
 import { useJournalSeoData } from '../../../../../utils/hooks/useJournalSeoData';
 import { isChapter } from '../../../../../utils/registration-helpers';
 import { formatAPA } from './_utils/format-apa';
+import { formatAuthorList, getEditors } from './_utils/citation-helpers';
 import { CopyCitationButton } from './_components/CopyCitationButton';
 
 const citationHeadingId = 'citation-box-heading';
@@ -28,9 +29,11 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
   const parentBookId = isChapterRegistration
     ? ((publicationContext as ChapterPublicationContext | undefined)?.id ?? '')
     : '';
-  const bookTitle = useFetchBookRegistration(parentBookId).data?.entityDescription?.mainTitle ?? '';
+  const parentBook = useFetchBookRegistration(parentBookId).data;
+  const bookTitle = parentBook?.entityDescription?.mainTitle ?? '';
+  const editors = parentBook ? formatAuthorList(getEditors(parentBook), { role: 'editor' }) : '';
 
-  const citation = formatAPA(registration, { journalName, publisherName, bookTitle });
+  const citation = formatAPA(registration, { journalName, publisherName, bookTitle, editors });
 
   if (!citation) {
     return null;

@@ -5,8 +5,9 @@ import { FormatAPAOptions, Formatter } from '../formatter.types';
 
 const formatChapterContainerSegment = (editors: string, bookTitle: string, pages: string): string => {
   // The "In ..." segment is anchored on the parent book title; without it the editor/pages are meaningless.
+  // The editors string is expected to already include the "(Ed.)" / "(Eds.)" suffix (added by formatAuthorList).
   if (!bookTitle) return '';
-  const editorPart = editors ? `${editors} (Ed.), ` : '';
+  const editorPart = editors ? `${editors}, ` : '';
   const pagesPart = pages ? ` (pp. ${pages})` : '';
   return `In ${editorPart}${bookTitle}${pagesPart}.`;
 };

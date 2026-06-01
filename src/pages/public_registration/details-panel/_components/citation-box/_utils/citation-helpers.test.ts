@@ -65,4 +65,14 @@ describe('formatAuthorList', () => {
       'World Health Organization'
     );
   });
+
+  it('Appends (Ed.) when role is "editor" and there is a single contributor', () => {
+    expect(formatAuthorList(buildContributorsFromNames(['R. Editor']), { role: 'editor' })).toBe('R. Editor (Ed.)');
+  });
+
+  it('Appends (Eds.) when role is "editor" and there are multiple contributors', () => {
+    expect(formatAuthorList(buildContributorsFromNames(['R. Editor', 'S. Editor']), { role: 'editor' })).toBe(
+      'R. Editor, & S. Editor (Eds.)'
+    );
+  });
 });
