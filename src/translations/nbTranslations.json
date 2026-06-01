@@ -566,6 +566,7 @@
       "create_registration": "Kunne ikke opprette registrering",
       "create_series": "Kunne ikke opprette serie",
       "create_user": "Kunne ikke opprette person",
+      "copy_citation": "Kunne ikke kopiere sitering",
       "delete_channel_claim": "Kunne ikke fjerne kanaleierskap",
       "delete_draft_registrations": "Kunne ikke slette alle kladdene",
       "delete_file": "Kunne ikke slette fil",
@@ -655,6 +656,7 @@
     "success": {
       "add_employment": "Ansettelse lagt til",
       "admin_added": "Bruker lagt til som administrator",
+      "copy_citation": "Sitering kopiert",
       "create_journal": "Tidsskriftet ble opprettet",
       "create_note": "Kommentaren ble lagret",
       "create_nvi_period": "NVI-periode ble opprettet",
