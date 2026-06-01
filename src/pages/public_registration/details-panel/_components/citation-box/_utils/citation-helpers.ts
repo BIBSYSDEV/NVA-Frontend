@@ -6,7 +6,9 @@ import { Registration } from '../../../../../../types/registration.types';
  * Formats a list of contributors as an APA-style author list, using each name as stored on the registration.
  * Names are not split or abbreviated — APA's "Last, F." convention can't be applied reliably when the
  * boundary between given names, middle names, and surnames is unknown.
- * Sorts by sequence and joins multiple names with commas and an ampersand before the last entry.
+ * Sorts by sequence. For 1-20 contributors all names are listed with commas and an ampersand before
+ * the last entry. For 21+ contributors APA 7 truncation applies: the first 19 names, then an ellipsis,
+ * then the final name with no ampersand.
  */
 export const formatAuthorList = (creators: Contributor[]): string => {
   const names = [...creators]
@@ -23,7 +25,10 @@ export const formatAuthorList = (creators: Contributor[]): string => {
   if (names.length === 2) {
     return `${names[0]}, & ${names[1]}`;
   }
-  return `${names.slice(0, -1).join(', ')}, & ${names[names.length - 1]}`;
+  if (names.length <= 20) {
+    return `${names.slice(0, -1).join(', ')}, & ${names[names.length - 1]}`;
+  }
+  return `${names.slice(0, 19).join(', ')}, ... ${names[names.length - 1]}`;
 };
 
 /**
