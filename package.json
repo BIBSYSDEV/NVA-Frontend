@@ -72,7 +72,7 @@
     "@tanstack/eslint-plugin-query": "^5.100.11",
     "@tanstack/react-query-devtools": "^5.100.11",
     "@types/jest": "^30.0.0",
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
     "axe-core": "^4.11.4",
