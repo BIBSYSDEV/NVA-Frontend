@@ -7,7 +7,7 @@ import { Registration } from '../../../../../types/registration.types';
 import { useJournalSeoData } from '../../../../../utils/hooks/useJournalSeoData';
 import { isChapter } from '../../../../../utils/registration-helpers';
 import { formatAPA } from './_utils/format-apa';
-import { CopyCitationButton } from './_atoms/CopyCitationButton';
+import { CopyCitationButton } from './_components/CopyCitationButton';
 
 const citationHeadingId = 'citation-box-heading';
 
