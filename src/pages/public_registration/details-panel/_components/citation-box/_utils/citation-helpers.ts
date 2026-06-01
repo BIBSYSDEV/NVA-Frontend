@@ -2,6 +2,10 @@ import { Contributor, ContributorRole } from '../../../../../../types/contributo
 import { PagesRange } from '../../../../../../types/publication_types/pages.types';
 import { Registration } from '../../../../../../types/registration.types';
 
+// Matches one or more commas (with adjacent whitespace) at the start or end of a string.
+// Imported names sometimes arrive as "Lastname," or ", Firstname" when one name half is missing.
+const edgeCommasPattern = /^,+\s*|\s*,+$/g;
+
 /**
  * Formats a list of contributors as an APA-style author list, using each name as stored on the registration.
  * Names are not split or abbreviated — APA's "Last, F." convention can't be applied reliably when the
@@ -13,7 +17,7 @@ import { Registration } from '../../../../../../types/registration.types';
 export const formatAuthorList = (creators: Contributor[]): string => {
   const names = [...creators]
     .sort((a, b) => a.sequence - b.sequence)
-    .map((contributor) => contributor.identity.name?.trim() ?? '')
+    .map((contributor) => (contributor.identity.name ?? '').trim().replace(edgeCommasPattern, ''))
     .filter(Boolean);
 
   if (names.length === 0) {

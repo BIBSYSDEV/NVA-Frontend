@@ -13,6 +13,16 @@ const buildContributors = (count: number): Contributor[] =>
       }) as unknown as Contributor
   );
 
+const buildContributorsFromNames = (names: string[]): Contributor[] =>
+  names.map(
+    (name, index) =>
+      ({
+        type: 'Contributor',
+        identity: { type: 'Identity', name },
+        sequence: index + 1,
+      }) as unknown as Contributor
+  );
+
 const join19 = Array.from({ length: 19 }, (_, index) => `Author${index + 1}`).join(', ');
 
 describe('formatAuthorList', () => {
@@ -40,5 +50,19 @@ describe('formatAuthorList', () => {
 
   it('Truncates 25 authors with the APA 7 ellipsis rule', () => {
     expect(formatAuthorList(buildContributors(25))).toBe(`${join19}, ... Author25`);
+  });
+
+  it('Strips a leading comma from a name missing the surname half', () => {
+    expect(formatAuthorList(buildContributorsFromNames([', Firstname']))).toBe('Firstname');
+  });
+
+  it('Strips a trailing comma from a name missing the given-name half', () => {
+    expect(formatAuthorList(buildContributorsFromNames(['Lastname,']))).toBe('Lastname');
+  });
+
+  it('Renders an organisational author verbatim', () => {
+    expect(formatAuthorList(buildContributorsFromNames(['World Health Organization']))).toBe(
+      'World Health Organization'
+    );
   });
 });
