@@ -39,9 +39,16 @@ export const CopyCitationButton = ({ citation }: CopyCitationButtonProps) => {
         color={justCopied ? 'success' : 'secondary'}
         variant="contained"
         endIcon={justCopied ? <CheckIcon /> : <ContentCopyIcon />}
-        sx={{ mt: '0.5rem', alignSelf: 'end', width: 'fit-content', minWidth: '10rem' }}
+        sx={{ mt: '0.5rem', alignSelf: 'end', width: 'fit-content' }}
         onClick={handleCopy}>
-        {justCopied ? t('feedback.success.copy_citation') : t('copy_citation')}
+        <Box sx={{ display: 'grid', '& > *': { gridArea: '1 / 1' } }}>
+          <span aria-hidden={!justCopied} style={{ visibility: justCopied ? 'visible' : 'hidden' }}>
+            {t('feedback.success.copy_citation')}
+          </span>
+          <span aria-hidden={justCopied} style={{ visibility: justCopied ? 'hidden' : 'visible' }}>
+            {t('copy_citation')}
+          </span>
+        </Box>
       </Button>
       <Box component="span" sx={visuallyHidden} aria-live="polite">
         {justCopied ? t('feedback.success.copy_citation') : ''}
