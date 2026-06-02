@@ -164,6 +164,7 @@
   "candidates_others_must_approve": "Kandidater andre må godkjenne",
   "candidates_our_institution_has_approved": "Kandidater vår institusjon har godkjent",
   "cannot_copy_category_from_another_context_type": "<p>Du kan ikke kopiere metadata fra kategorifanen hvis resultatet tilhører en annen hovedkategori.</p><p>Denne informasjonen må registreres manuelt etter at resten av metadata er kopiert.</p>",
+  "citation": "Sitering",
   "common": {
     "actions": "Handlinger",
     "add": "Legg til",
@@ -333,6 +334,7 @@
   "contributor_search_hits_one": "Fant {{count}} bidragsyter",
   "contributor_search_hits_other": "Fant {{count}} bidragsytere",
   "controlling": "Kontrolleres",
+  "copy_citation": "Kopier sitering",
   "corresponding_contributor": "Korresponderende bidragsyter",
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljer",
@@ -416,6 +418,7 @@
   },
   "disputes": "Tvister",
   "does_not_match": "Matcher ikke",
+  "edit_reporting_period": "Rediger rapporteringsperiode",
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angi kategoriene hvor din institusjon tillater filopplasting.",
@@ -547,7 +550,10 @@
   },
   "export_dataset_for_nvi_report": "Eksporter datagrunnlag for NVI-rapport",
   "export_dataset_for_nvi_report_description": "<p>Filen inneholder NVI-kandidater som er godkjent eller fortsatt under kontroll. </p><p>Kandidater som er avvist av en eller flere institusjoner er ikke med i oversikten.</p>",
+  "export_limit_reached": "Bare de første {{limit}} resultatene ble eksportert. Avgrens søket for å eksportere de resterende resultatene.",
   "export_nvi_status_button_tooltip_text": "Knapp for nedlasting av forfatterandel er flyttet til side for publiseringspoeng. Denne knappen er midlertidig deaktivert — nedlasting av tall fra tabellen kommer snart.",
+  "export_progress_count": "{{fetched}} av {{total}} resultater",
+  "exporting_bibtex": "Eksporterer BibTeX",
   "feedback": {
     "error": {
       "404_page": "<span><icon /><h1>Beklager, men vi kan ikke finne siden du ser etter</h1></span><p>Siden du leter etter finnes ikke, eller nettadressen er feil.</p><p>Endre nettadressen eller bruk menyen for å naviger deg til korrekt side.</p>",
@@ -557,6 +563,7 @@
       "add_role": "Kunne ikke legge til rolle",
       "an_error_occurred": "En feil oppstod",
       "approve_doi_request": "Kunne ikke godkjenne DOI-forespørsel",
+      "copy_citation": "Kunne ikke kopiere sitering",
       "create_customer": "Kunne ikke opprette institusjon",
       "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
       "create_journal": "Kunne ikke opprette tidsskrift",
@@ -657,6 +664,7 @@
     "success": {
       "add_employment": "Ansettelse lagt til",
       "admin_added": "Bruker lagt til som administrator",
+      "copy_citation": "Sitering kopiert",
       "create_journal": "Tidsskriftet ble opprettet",
       "create_note": "Kommentaren ble lagret",
       "create_nvi_period": "NVI-periode ble opprettet",
@@ -1002,12 +1010,21 @@
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fant dessverre ikke noe som passer med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li></ul>",
+  "number_of_candidates": "Antall kandidater",
   "nvi_admin_publication_points_numbers": "<p><b>{{approvals}} resultat</b> er godkjent av alle, og de gir <b>{{publication_points}} publiseringspoeng.</b><link></p>",
   "nvi_admin_reporting_status_numbers": "<p><b>{{num_results}} resultat</b> er kandidater for rapportering. Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{previous_year}}.</p>",
   "nvi_approved_results_publication_points_summary": "<p><b>{{num_approved_by_all}} resultat</b> er godkjent av alle, og de gir <b>{{publication_points}} publiseringspoeng.</b><link></p><p>Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{year}}.</p>",
   "nvi_curators_at_main_unit": "NVI-kuratorer på hovedenhet",
+  "nvi_period_status_closed": "Lukket",
+  "nvi_period_status_is_going_on": "Pågår",
+  "nvi_period_status_not_opened": "Ikke åpnet",
+  "nvi_period_status_ongoing": "Pågående",
+  "nvi_period_status_reported": "Rapportert",
+  "nvi_points": "NVI-poeng",
   "nvi_publication_points_page_description": "Tabellen viser kandidater ved din institusjon som er godkjent av dere per nå og hvilke som mangler godkjenning av samarbeidende institusjoner.",
   "nvi_publication_points_page_description_expanded": "Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.",
+  "nvi_reporting_periods_text": "Oversikten viser status på NVI-periode og totalt antall kandidater i perioden. For perioder som er rapportert vises antall godkjente kandidater. For åpne perioder vises antall kandidater totalt.",
+  "nvi_year": "NVI-år",
   "overview_over_administrators": "Oversikt over administratorer",
   "overwrite": "Overskriv",
   "owner_institution": "Eierinstitusjon",
@@ -1890,6 +1907,7 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "Avvist",
+  "reporting_period_text": "<p>Start- og sluttdato styrer når perioden åpnes og lukkes.</p><p>Når sluttdato er passert, lukkes perioden, og NVI-kuratorer kan ikke lenger kontrollere kandidater.</p><p>Endre sluttdato for å gjenåpne perioden. Når sluttdato er passert, kan perioden rapporteres.</p>",
   "reporting_status": "Rapporteringsstatus",
   "reporting_status_description": "<p>Tabellen viser antall kandidater for din institusjon og behandlingsstatus på disse.</p> <p>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</p>",
   "reporting_status_numbers": "<p><b>{{num_results}} resultat</b> er kandidater for rapportering. Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{previous_year}}.</p>",
@@ -1996,8 +2014,14 @@
   "sort_by_total_number_asc": "Totalt antall (stigende)",
   "sort_by_total_number_desc": "Totalt antall (synkende)",
   "start_merging": "Start sammenslåing",
+  "status_for_period": "Status for periode",
+  "status_on_nvi_period": "Status på NVI-periode",
   "tasks": {
     "correction_list": "Retteliste",
+    "dialogue": {
+      "next_ticket": "Gå til neste oppgave",
+      "previous_ticket": "Gå til forrige oppgave"
+    },
     "display_options": "Visningsalternativer",
     "include_tasks_without_curator": "Inkluder oppgaver uten kurator",
     "new_tasks": "Innmeldte oppgaver: {{count}}",
@@ -2109,14 +2133,5 @@
   "vocabulary_missing": "Institusjonen har ikke lagt til vokabular.",
   "what_you_find_in_nva_description": "<heading>Hva finner du i NVA?</heading><p>Nasjonalt vitenarkiv (NVA) samler og gjør tilgjengelig informasjon om norsk forskning.</p><p>Her kan du utforske publikasjoner, forskningsprosjekt og forskere på tvers av universiteter, høyskoler og forskningsinstitusjoner.</p>",
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
-  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
-  "nvi_reporting_periods_text": "Oversikten viser status på NVI-periode og totalt antall kandidater i perioden. For perioder som er rapportert vises antall godkjente kandidater. For åpne perioder vises antall kandidater totalt.",
-  "nvi_year": "NVI-år",
-  "status_on_nvi_period": "Status på NVI-periode",
-  "nvi_period_status_not_opened": "Ikke åpnet",
-  "nvi_period_status_ongoing": "Pågående",
-  "nvi_period_status_is_going_on": "Pågår",
-  "nvi_period_status_closed": "Lukket",
-  "nvi_period_status_reported": "Rapportert",
-  "status_for_period": "Status for periode"
+  "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen."
 }

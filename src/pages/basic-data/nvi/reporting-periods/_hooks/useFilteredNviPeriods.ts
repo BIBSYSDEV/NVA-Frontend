@@ -14,7 +14,7 @@ export const useFilteredNviPeriods = (periods: NviPeriodReport[]) => {
       .filter((status): status is NviPeriodStatusEnum => allowedStatuses.has(status as NviPeriodStatusEnum))
   );
 
-  if (selectedStatuses.size === 0) return periods;
+  if (selectedStatuses.size === 0) return [];
 
   return periods.filter((report) => selectedStatuses.has(getNviPeriodStatus(report.period)));
 };

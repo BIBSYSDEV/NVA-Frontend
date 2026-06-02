@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useFetchCustomers } from '../../../api/hooks/useFetchCustomers';
-import { OpenInNewLink } from '../../../components/OpenInNewLink';
-import { PageSpinner } from '../../../components/PageSpinner';
-import { Organization } from '../../../types/organization.types';
-import { getLanguageString } from '../../../utils/translation-helpers';
+import { useFetchCustomers } from '../../../../../../api/hooks/useFetchCustomers';
+import { OpenInNewLink } from '../../../../../../components/OpenInNewLink';
+import { PageSpinner } from '../../../../../../components/PageSpinner';
+import { Organization } from '../../../../../../types/organization.types';
+import { getLanguageString } from '../../../../../../utils/translation-helpers';
 
 interface InstitutionsServiceCenterOverviewProps {
   institutions: Organization[];

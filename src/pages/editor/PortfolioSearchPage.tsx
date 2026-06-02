@@ -31,3 +31,5 @@ export const PortfolioSearchPage = ({ title }: PortfolioSearchPageProps) => {
     </section>
   );
 };
+
+export default PortfolioSearchPage;

@@ -11,7 +11,7 @@ import { userHasAccessRight } from '../../utils/registration-helpers';
 import { isFileApprovalTicket } from '../../utils/ticketHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
-import { DetailsPanel } from './details/DetailsPanel';
+import { DetailsPanel } from './details-panel/DetailsPanel';
 import { LogPanel } from './log/LogPanel';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
@@ -29,7 +29,6 @@ interface ActionPanelProps extends PublicRegistrationContentProps {
 export const ActionPanel = ({ registration, tickets, isLoadingData }: ActionPanelProps) => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
-  const contributors = registration.entityDescription?.contributors ?? [];
   const user = useSelector((store: RootState) => store.user);
 
   const publishingRequestTickets = tickets.filter(isFileApprovalTicket) as PublishingTicket[];
@@ -133,7 +132,7 @@ export const ActionPanel = ({ registration, tickets, isLoadingData }: ActionPane
         </ErrorBoundary>
       </TabPanel>
       <TabPanel tabValue={tabValue} index={1}>
-        <DetailsPanel contributors={contributors} />
+        <DetailsPanel registration={registration} />
       </TabPanel>
       <TabPanel tabValue={tabValue} index={2}>
         <ErrorBoundary>
