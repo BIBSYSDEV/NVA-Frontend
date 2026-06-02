@@ -6,7 +6,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { SearchApiPath } from '../../api/apiPaths';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ProgressDialog } from '../../components/dialogs/progress-dialog/ProgressDialog';
 import { useBibtexExport } from '../../utils/bibtex/useBibtexExport';
 import { API_URL } from '../../utils/constants';
@@ -76,18 +75,16 @@ export const ExportResultsDropdown = () => {
           }}>
           CSV
         </MenuItem>
-        <BetaFunctionality>
-          <MenuItem
-            key={'bibtex'}
-            disabled={bibtexClicked}
-            onClick={() => {
-              setBibtexClicked(true);
-              handleClose();
-              exportBibTex();
-            }}>
-            BibTex
-          </MenuItem>
-        </BetaFunctionality>
+        <MenuItem
+          key={'bibtex'}
+          disabled={bibtexClicked}
+          onClick={() => {
+            setBibtexClicked(true);
+            handleClose();
+            exportBibTex();
+          }}>
+          BibTex
+        </MenuItem>
       </Menu>
       <ProgressDialog open={isFetchingBibtex} {...progress} />
     </>
