@@ -5,13 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import { updateTicket } from '../../../api/registrationApi';
-import { BaseStatusChip } from '../../../components/_molecules/status-chip/BaseStatusChip';
-import { StatusChip, StatusValue } from '../../../components/_molecules/status-chip/StatusChip';
-import { TicketStatusChip } from '../../../components/_molecules/status-chip/TicketStatusChip';
-import { TicketInformation } from '../../../components/RegistrationListItem/TicketInformation';
-import { TaskListItem } from '../../../components/styled/Wrappers';
+import { DoiRequestMessagesColumn } from '../../../pages/messages/components/DoiRequestMessagesColumn';
+import { PublishingRequestMessagesColumn } from '../../../pages/messages/components/PublishingRequestMessagesColumn';
+import { SupportMessagesColumn } from '../../../pages/messages/components/SupportMessagesColumn';
+import { getTicketColor } from '../../../pages/messages/utils';
+import { StyledVerifiedContributor } from '../../../pages/registration/contributors_tab/ContributorIndicator';
+import { buildTicketLinkState } from '../../../pages/tasks/_utils/task-navigation-state';
 import { RootState } from '../../../redux/store';
-import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration, RegistrationStatus } from '../../../types/registration.types';
 import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
@@ -26,17 +26,19 @@ import {
   UrlPathTemplate,
 } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
-import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
-import { getTicketColor } from '../utils';
-import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
-import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
-import { SupportMessagesColumn } from './SupportMessagesColumn';
+import { BaseStatusChip } from '../../_molecules/status-chip/BaseStatusChip';
+import { StatusChip, StatusValue } from '../../_molecules/status-chip/StatusChip';
+import { TicketStatusChip } from '../../_molecules/status-chip/TicketStatusChip';
+import { TicketInformation } from '../../RegistrationListItem/TicketInformation';
+import { TaskListItem } from '../../styled/Wrappers';
 
 interface TicketListItemProps {
   ticket: ExpandedTicket;
+  currentOffset?: number;
+  selectedTicketTypes?: string[];
 }
 
-export const TicketListItem = ({ ticket }: TicketListItemProps) => {
+export const TicketListItem = ({ ticket, currentOffset, selectedTicketTypes }: TicketListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const queryClient = useQueryClient();
@@ -74,12 +76,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       sx={{ bgcolor: !viewedByUser ? 'tertiary.light' : 'white', borderLeftColor: getTicketColor(ticket.type) }}>
       <MuiLink
         component={Link}
-        state={
-          {
-            previousSearch: window.location.search,
-            selectedTicketType: ticket.type,
-          } satisfies PreviousSearchLocationState & SelectedTicketTypeLocationState
-        }
+        state={buildTicketLinkState(ticket.type, window.location.search, currentOffset, selectedTicketTypes)}
         to={{
           pathname: isOnTasksPage
             ? getTasksRegistrationPath(identifier)

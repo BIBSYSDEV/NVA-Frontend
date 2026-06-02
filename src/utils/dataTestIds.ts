@@ -368,6 +368,7 @@ export const dataTestId = {
     codeRepositoryLink: 'code-repository-link',
     contributors: 'public-registration-contributors',
     detailsTab: {
+      copyCitationButton: 'copy-citation-button',
       detailsTab: 'details-tab',
       emailLink: (id: string) => `email-link-${id}`,
       infoLink: 'info-link',
@@ -792,6 +793,8 @@ export const dataTestId = {
     dialoguesWithoutCuratorButton: 'dialogues-without-curator-button',
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
+    previousItemButton: 'previous-item-button',
+    nextItemButton: 'next-item-button',
     nvi: {
       approveButton: 'approve-button',
       visibilityFilter: 'visibility-filter',
@@ -844,6 +847,7 @@ export const dataTestId = {
     },
     unreadSearchSelect: 'unread-search-select',
     userDialogAccordion: 'user-dialog-accordion',
+    minimizedMenuButton: 'tasks-minimized-menu-button',
   },
   unpublishActions: {
     confirmUnpublishCheckbox: 'confirm-unpublish-checkbox',
