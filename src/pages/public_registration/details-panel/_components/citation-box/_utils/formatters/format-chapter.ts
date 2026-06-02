@@ -4,9 +4,8 @@ import { formatAuthorYearSegment, formatPages, joinNonEmpty, normalizeBaseFields
 import { FormatAPAOptions, Formatter } from '../formatter.types';
 
 const formatChapterContainerSegment = (editors: string, bookTitle: string, pages: string): string => {
-  // The "In ..." segment is anchored on the parent book title; without it the editor/pages are meaningless.
   if (!bookTitle) return '';
-  const editorPart = editors ? `${editors} (Ed.), ` : '';
+  const editorPart = editors ? `${editors}, ` : '';
   const pagesPart = pages ? ` (pp. ${pages})` : '';
   return `In ${editorPart}${bookTitle}${pagesPart}.`;
 };

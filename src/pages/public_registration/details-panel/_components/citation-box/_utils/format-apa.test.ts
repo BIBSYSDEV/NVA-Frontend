@@ -189,7 +189,7 @@ describe('formatAPA', () => {
 
     expect(
       formatAPA(registration, {
-        editors: 'R. Editor',
+        editors: 'R. Editor (Ed.)',
         bookTitle: 'Advances in Physics',
         publisherName: 'Academic Press',
       })
