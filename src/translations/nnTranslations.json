@@ -135,7 +135,8 @@
       "reporting_status": "",
       "reporting_status_description": "",
       "show_publication_points_status": "",
-      "show_reporting_status": ""
+      "show_reporting_status": "",
+      "update_reporting_period": "Oppdater rapporteringsperiode"
     },
     "person_register": {
       "current_employments": "Noverande tilsetjingar",
@@ -163,6 +164,7 @@
   "candidates_others_must_approve": "",
   "candidates_our_institution_has_approved": "",
   "cannot_copy_category_from_another_context_type": "<p>Du kan ikkje kopiere metadata frå kategorifana dersom resultatet tilhøyrer ein annan hovudkategori.</p><p>Denne informasjonen må registrerast manuelt etter at resten av metadata er kopiert.</p>",
+  "citation": "",
   "common": {
     "actions": "Handlingar",
     "add": "Legg til",
@@ -332,6 +334,7 @@
   "contributor_search_hits_one": "",
   "contributor_search_hits_other": "",
   "controlling": "",
+  "copy_citation": "",
   "corresponding_contributor": "Korresponderande bidragsytar",
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> viss ingen er kontaktpunkt for resultatet.</p>",
   "details": "Detaljar",
@@ -415,6 +418,7 @@
   },
   "disputes": "",
   "does_not_match": "Matcher ikke",
+  "edit_reporting_period": "",
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angje kategoriane der institusjonen din tillèt filopplasting.",
@@ -546,7 +550,10 @@
   },
   "export_dataset_for_nvi_report": "",
   "export_dataset_for_nvi_report_description": "",
+  "export_limit_reached": "",
   "export_nvi_status_button_tooltip_text": "",
+  "export_progress_count": "",
+  "exporting_bibtex": "",
   "feedback": {
     "error": {
       "404_page": "<span><icon /><h1>Beklagar, men vi kan ikkje finne sida du leitar etter</h1></span><p>Sida du leitar etter eksisterar ikkje, eller nettadressa er feil.</p><p>Endre nettadressa eller bruk menyen for å navigere deg til korrekt side.</p>",
@@ -556,6 +563,7 @@
       "add_role": "Kunne ikkje leggje til rolle",
       "an_error_occurred": "Ein feil oppstod",
       "approve_doi_request": "Kunne ikkje godkjenne DOI-førespurnad",
+      "copy_citation": "",
       "create_customer": "Kunne ikkje opprette institusjon",
       "create_doi_request": "Kunne ikkje opprette DOI-førespurnad",
       "create_journal": "Kunne ikkje opprette tidsskrift",
@@ -656,6 +664,7 @@
     "success": {
       "add_employment": "Tilsetjing lagt til",
       "admin_added": "Brukar lagt til som administrator",
+      "copy_citation": "",
       "create_journal": "Tiddskriftet vart oppretta",
       "create_note": "Kommentaren vart lagra",
       "create_nvi_period": "NVI-periode blei oppretta",
@@ -1001,12 +1010,21 @@
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fann dessverre ikkje noko som passar med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv ei anna skriveform av søkeordet</li><li>Prøv med eit synonym</li><li>Overset søkeordet til bokmål. nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern ei eller fleire avgrensningar i søket</li><li>Sjekk at namnet er skrevet korrekt</li><li>Prøv ein annan skrivemåte</li><li>Prøv med eller utan mellomnamn</li></ul>",
+  "number_of_candidates": "",
   "nvi_admin_publication_points_numbers": "",
   "nvi_admin_reporting_status_numbers": "",
   "nvi_approved_results_publication_points_summary": "",
   "nvi_curators_at_main_unit": "",
+  "nvi_period_status_closed": "",
+  "nvi_period_status_is_going_on": "",
+  "nvi_period_status_not_opened": "",
+  "nvi_period_status_ongoing": "",
+  "nvi_period_status_reported": "",
+  "nvi_points": "",
   "nvi_publication_points_page_description": "",
   "nvi_publication_points_page_description_expanded": "",
+  "nvi_reporting_periods_text": "",
+  "nvi_year": "",
   "overview_over_administrators": "Oversyn over administratorar",
   "overwrite": "Overskriv",
   "owner_institution": "Eigarinstitusjon",
@@ -1889,6 +1907,7 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "",
+  "reporting_period_text": "",
   "reporting_status": "",
   "reporting_status_description": "",
   "reporting_status_numbers": "",
@@ -1995,8 +2014,14 @@
   "sort_by_total_number_asc": "",
   "sort_by_total_number_desc": "",
   "start_merging": "Start samanslåing",
+  "status_for_period": "",
+  "status_on_nvi_period": "",
   "tasks": {
     "correction_list": "Retteliste",
+    "dialogue": {
+      "next_ticket": "",
+      "previous_ticket": ""
+    },
     "display_options": "Visingsalternativ",
     "include_tasks_without_curator": "Inkluder oppgåver utan kurator",
     "new_tasks": "Innmelde oppgåver: {{count}}",

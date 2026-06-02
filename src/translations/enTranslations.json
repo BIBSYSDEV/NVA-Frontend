@@ -135,7 +135,8 @@
       "reporting_status": "",
       "reporting_status_description": "",
       "show_publication_points_status": "",
-      "show_reporting_status": ""
+      "show_reporting_status": "",
+      "update_reporting_period": "Update reporting period"
     },
     "person_register": {
       "current_employments": "Current employments",
@@ -163,6 +164,7 @@
   "candidates_others_must_approve": "",
   "candidates_our_institution_has_approved": "",
   "cannot_copy_category_from_another_context_type": "<p>You cannot copy metadata from the category tab is the result belongs to a different main category.</p><p>This information must be registered manually after the rest of the metadata has been copied.</p>",
+  "citation": "",
   "common": {
     "actions": "Actions",
     "add": "Add",
@@ -332,6 +334,7 @@
   "contributor_search_hits_one": "",
   "contributor_search_hits_other": "",
   "controlling": "",
+  "copy_citation": "",
   "corresponding_contributor": "Corresponding collaborator",
   "default_point_of_contact": "<p><link1>Contact Sikt</link1> if no other contact has been listed for this result.</p>",
   "details": "Details",
@@ -415,6 +418,7 @@
   },
   "disputes": "",
   "does_not_match": "No match",
+  "edit_reporting_period": "",
   "editor": {
     "categories_with_files": "Categories with File Upload",
     "categories_with_files_description": "Specify the categories your institution will allow file upload for.",
@@ -546,7 +550,10 @@
   },
   "export_dataset_for_nvi_report": "",
   "export_dataset_for_nvi_report_description": "",
+  "export_limit_reached": "",
   "export_nvi_status_button_tooltip_text": "",
+  "export_progress_count": "",
+  "exporting_bibtex": "",
   "feedback": {
     "error": {
       "404_page": "<span><icon /><h1>Sorry, we can't find the page you're looking for</h1></span><p>The page your looking for does not exist, or the web address is wrong.</p><p>Change the web address or use the menu to navigate to the correct page.</p>",
@@ -556,6 +563,7 @@
       "add_role": "Failed to add role",
       "an_error_occurred": "An error occurred",
       "approve_doi_request": "Could not approve DOI request",
+      "copy_citation": "",
       "create_customer": "Failed to create institution",
       "create_doi_request": "Failed to create DOI request",
       "create_journal": "Failed to create journal",
@@ -656,6 +664,7 @@
     "success": {
       "add_employment": "Employment added",
       "admin_added": "User added as administrator",
+      "copy_citation": "",
       "create_journal": "Journal was created",
       "create_note": "Comment saved successfully",
       "create_nvi_period": "NVI period was created",
@@ -1001,12 +1010,21 @@
   "no_search_results_found_with_search": "<span><icon /><heading>No results</heading></span><p>Unfortunately, we couldn't find anything that matches your search.</p>",
   "no_search_results_list_default": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that your search words are spelled correctly</li><li>Try a different spelling</li><li>Try a synonym</li><li>Translate the search word to Norwegian Bokmål (NB), Norwegian Nynorsk (NN), or English</li></ul>",
   "no_search_results_list_person": "<p>Suggestions for search:</p><ul><li>Remove one or more limitations in the search</li><li>Check that the name is spelled correctly</li><li>Try a different spelling</li><li>Try with or without the middle name</li></ul>",
+  "number_of_candidates": "",
   "nvi_admin_publication_points_numbers": "",
   "nvi_admin_reporting_status_numbers": "",
   "nvi_approved_results_publication_points_summary": "",
   "nvi_curators_at_main_unit": "",
+  "nvi_period_status_closed": "",
+  "nvi_period_status_is_going_on": "",
+  "nvi_period_status_not_opened": "",
+  "nvi_period_status_ongoing": "",
+  "nvi_period_status_reported": "",
+  "nvi_points": "",
   "nvi_publication_points_page_description": "",
   "nvi_publication_points_page_description_expanded": "",
+  "nvi_reporting_periods_text": "",
+  "nvi_year": "",
   "overview_over_administrators": "Overview of administrators",
   "overwrite": "Overwrite",
   "owner_institution": "Owner institution",
@@ -1889,6 +1907,7 @@
     "year_published": "Publication year"
   },
   "rejected": "",
+  "reporting_period_text": "",
   "reporting_status": "",
   "reporting_status_description": "",
   "reporting_status_numbers": "",
@@ -1995,8 +2014,14 @@
   "sort_by_total_number_asc": "",
   "sort_by_total_number_desc": "",
   "start_merging": "Start merging",
+  "status_for_period": "",
+  "status_on_nvi_period": "",
   "tasks": {
     "correction_list": "Correction list",
+    "dialogue": {
+      "next_ticket": "",
+      "previous_ticket": ""
+    },
     "display_options": "Display options",
     "include_tasks_without_curator": "Include tasks without a curator",
     "new_tasks": "New tasks: {{count}}",
