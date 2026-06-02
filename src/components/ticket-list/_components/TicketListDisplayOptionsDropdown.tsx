@@ -9,11 +9,11 @@ import { SHOW_ALL_VIEWED_BY_VALUE, useTicketsParams } from '../_hooks/useTickets
 
 const viewedByLabelId = 'viewed-by-select';
 
-interface DisplayOptionsDropdownProps {
+interface TicketListDisplayOptionsDropdownProps {
   user: User;
 }
 
-export const DisplayOptionsDropdown = ({ user }: DisplayOptionsDropdownProps) => {
+export const TicketListDisplayOptionsDropdown = ({ user }: TicketListDisplayOptionsDropdownProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { viewedByNot, searchParams } = useTicketsParams();

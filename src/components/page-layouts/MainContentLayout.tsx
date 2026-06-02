@@ -1,4 +1,4 @@
-import { SxProps, Theme, Typography } from '@mui/material';
+import { SxProps, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { ReactNode } from 'react';
 import { HeadTitle } from '../HeadTitle';
@@ -8,7 +8,7 @@ interface MainContentLayoutProps {
   headTitle?: string;
   heading?: string;
   hiddenHeading?: boolean;
-  sx?: SxProps<Theme>;
+  sx?: SxProps;
   children?: ReactNode;
 }
 

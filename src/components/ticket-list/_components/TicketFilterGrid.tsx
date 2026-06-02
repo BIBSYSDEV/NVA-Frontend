@@ -11,8 +11,8 @@ import { CategorySearchFilter } from '../../CategorySearchFilter';
 import { DialoguesWithoutCuratorButton } from '../../DialoguesWithoutCuratorButton';
 import { SearchForm } from '../../SearchForm';
 import { useTicketsParams } from '../_hooks/useTicketsParams';
-import { DisplayOptionsDropdown } from './DisplayOptionsDropdown';
 import { TicketCuratorSelector } from './TicketCuratorSelector';
+import { TicketListDisplayOptionsDropdown } from './TicketListDisplayOptionsDropdown';
 import { TicketStatusFilter } from './TicketStatusFilter';
 
 interface TicketFilterGridProps {
@@ -35,7 +35,7 @@ export const TicketFilterGrid = ({ showAdvancedFilters = false, ticketStatusOpti
       </Grid>
       {user && (
         <Grid size={{ xs: 16, md: 5, lg: 3 }}>
-          <DisplayOptionsDropdown user={user} />
+          <TicketListDisplayOptionsDropdown user={user} />
         </Grid>
       )}
       {showAdvancedFilters && (
