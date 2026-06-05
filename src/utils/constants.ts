@@ -25,4 +25,6 @@ export enum LocalStorageKey {
   Beta = 'beta',
   EnvironmentBanner = 'environmentBanner',
   RedirectPath = 'redirectPath',
+  /** Dev-only: when set to 'true', the app behaves as if the session token has expired. Compiled out of production builds. */
+  SimulateExpiredToken = 'simulateExpiredToken',
 }
