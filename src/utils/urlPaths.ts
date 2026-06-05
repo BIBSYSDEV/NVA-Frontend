@@ -1,4 +1,4 @@
-import { To } from 'react-router';
+import { matchPath, To } from 'react-router';
 import { NviCandidateGlobalStatus, NviCandidateStatus } from '../api/searchApi';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
@@ -93,21 +93,40 @@ export const getSubUrl = (path: UrlPathTemplate, basePath: UrlPathTemplate, spla
   return `${path.replace(basePath, '')}${splashRoute ? '/*' : ''}`;
 };
 
-const registrationLandingPageParts = UrlPathTemplate.RegistrationWizard.split('/');
+const publicPageTemplates = [
+  UrlPathTemplate.Root,
+  UrlPathTemplate.Search,
+  UrlPathTemplate.Filter,
+  UrlPathTemplate.Reports,
+  UrlPathTemplate.ResearchProfileRoot,
+  UrlPathTemplate.ResearchProfile,
+  UrlPathTemplate.ProjectsRoot,
+  UrlPathTemplate.ProjectPage,
+  UrlPathTemplate.RegistrationLandingPage,
+];
+
+// Protected routes whose paths are also matched by a broader public template and must therefore
+// be excluded first — e.g. /projects/new matches the /projects/:identifier landing pattern. Without
+// this, an expired token on these pages would not redirect to SignedOut.
+const protectedPageTemplates = [
+  UrlPathTemplate.ProjectsNew,
+  UrlPathTemplate.ProjectsEdit,
+  UrlPathTemplate.RegistrationNew,
+  UrlPathTemplate.RegistrationWizard,
+];
 
 /**
  * Pages that display public content and must remain accessible without a valid token.
  * Used both to decide post-logout redirects and to avoid redirecting to SignedOut when a
  * token has expired while viewing public content.
  */
-export const isPublicPage = (path: string) =>
-  path === UrlPathTemplate.Root ||
-  path === UrlPathTemplate.Search ||
-  path === UrlPathTemplate.Filter ||
-  path === UrlPathTemplate.Reports ||
-  path.startsWith(UrlPathTemplate.ResearchProfileRoot) ||
-  path.startsWith(UrlPathTemplate.ProjectsRoot) ||
-  (path.startsWith(`/${registrationLandingPageParts[1]}`) && !path.endsWith(`/${registrationLandingPageParts[3]}`));
+export const isPublicPage = (path: string) => {
+  const pathname = path.split('?')[0];
+  if (protectedPageTemplates.some((template) => matchPath(template, pathname))) {
+    return false;
+  }
+  return publicPageTemplates.some((template) => matchPath(template, pathname));
+};
 
 export const getRegistrationLandingPagePath = (identifier: string) =>
   UrlPathTemplate.RegistrationLandingPage.replace(':identifier', encodeURIComponent(identifier));
