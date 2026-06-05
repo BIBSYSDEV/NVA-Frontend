@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { matchPath, useLocation, useNavigate, useParams } from 'react-router';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { useFetchRegistrationTickets } from '../../api/hooks/useFetchRegistrationTickets';
+import { useIsAuthenticated } from '../../api/hooks/useIsAuthenticated';
 import { ActionPanelContext } from '../../context/ActionPanelContext';
 import { LandingPageContext } from '../../context/LandingPageContext';
 import NotFound from '../../pages/errorpages/NotFound';
@@ -41,7 +42,10 @@ export const RegistrationLandingPage = () => {
   }
 
   const canEditRegistration = userHasAccessRight(registration, 'partial-update');
-  const isTicketCurator = hasTicketCuratorRole(user);
+  // Gate the curator branch on a live token, not just the (possibly stale) Redux user, so that an
+  // expired token doesn't trigger a failing authenticated tickets request on this public page.
+  const isAuthenticatedQuery = useIsAuthenticated();
+  const isTicketCurator = hasTicketCuratorRole(user) && isAuthenticatedQuery.data === true;
 
   const isAllowedToSeePublicRegistration =
     registration?.status === RegistrationStatus.Published ||

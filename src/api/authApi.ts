@@ -2,7 +2,7 @@ import { AuthSession, fetchAuthSession, FetchAuthSessionOptions } from 'aws-ampl
 import { CustomUserAttributes } from '../types/user.types';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { getCurrentPath } from '../utils/general-helpers';
-import { UrlPathTemplate } from '../utils/urlPaths';
+import { isPublicPage, UrlPathTemplate } from '../utils/urlPaths';
 
 export const getAccessToken = async () => {
   if (USE_MOCK_DATA) {
@@ -13,9 +13,14 @@ export const getAccessToken = async () => {
     if (currentSession.tokens) {
       return currentSession.tokens.accessToken.toString();
     } else {
-      const searchParams = new URLSearchParams();
-      searchParams.set(LocalStorageKey.RedirectPath, getCurrentPath());
-      window.location.href = `${UrlPathTemplate.SignedOut}?${searchParams.toString()}`;
+      const currentPath = getCurrentPath();
+      // Don't redirect to SignedOut when viewing public content (e.g. a registration landing page);
+      // the request simply proceeds unauthenticated instead of kicking the user off a public page.
+      if (!isPublicPage(currentPath)) {
+        const searchParams = new URLSearchParams();
+        searchParams.set(LocalStorageKey.RedirectPath, currentPath);
+        window.location.href = `${UrlPathTemplate.SignedOut}?${searchParams.toString()}`;
+      }
       return null;
     }
   } catch {

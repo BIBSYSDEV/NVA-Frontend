@@ -93,6 +93,22 @@ export const getSubUrl = (path: UrlPathTemplate, basePath: UrlPathTemplate, spla
   return `${path.replace(basePath, '')}${splashRoute ? '/*' : ''}`;
 };
 
+const registrationLandingPageParts = UrlPathTemplate.RegistrationWizard.split('/');
+
+/**
+ * Pages that display public content and must remain accessible without a valid token.
+ * Used both to decide post-logout redirects and to avoid redirecting to SignedOut when a
+ * token has expired while viewing public content.
+ */
+export const isPublicPage = (path: string) =>
+  path === UrlPathTemplate.Root ||
+  path === UrlPathTemplate.Search ||
+  path === UrlPathTemplate.Filter ||
+  path === UrlPathTemplate.Reports ||
+  path.startsWith(UrlPathTemplate.ResearchProfileRoot) ||
+  path.startsWith(UrlPathTemplate.ProjectsRoot) ||
+  (path.startsWith(`/${registrationLandingPageParts[1]}`) && !path.endsWith(`/${registrationLandingPageParts[3]}`));
+
 export const getRegistrationLandingPagePath = (identifier: string) =>
   UrlPathTemplate.RegistrationLandingPage.replace(':identifier', encodeURIComponent(identifier));
 
