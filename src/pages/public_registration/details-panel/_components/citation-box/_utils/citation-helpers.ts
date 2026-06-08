@@ -102,6 +102,96 @@ export const getPersistentIdentifier = (registration: Registration): string => {
   );
 };
 
+// Strips everything except letters, leaving the cased characters used to judge a word's casing.
+const lettersOnly = (word: string): string => word.replace(/[^\p{L}]/gu, '');
+
+// Words shorter than this are ignored by the casing heuristic — short words ("of", "the", "in") are
+// lowercase even in title case, so counting them would mask whether the title is title-cased.
+const SIGNIFICANT_WORD_MIN_LENGTH = 4;
+const CONVERT_THRESHOLD = 0.6;
+const ALL_CAPS_THRESHOLD = 0.8;
+
+const significantWords = (title: string): string[] =>
+  title.split(/\s+/).filter((word) => lettersOnly(word).length >= SIGNIFICANT_WORD_MIN_LENGTH);
+
+const startsCapitalised = (word: string): boolean => {
+  const first = lettersOnly(word)[0] ?? '';
+  return first !== '' && first === first.toUpperCase() && first !== first.toLowerCase();
+};
+
+const isAcronym = (word: string): boolean => {
+  const letters = lettersOnly(word);
+  return letters.length >= 2 && letters === letters.toUpperCase();
+};
+
+// Detects all-caps or title-case input: of the significant words, more than 60% start with a capital.
+const shouldConvert = (title: string): boolean => {
+  const significant = significantWords(title);
+  if (significant.length === 0) return false;
+  const capitalised = significant.filter(startsCapitalised).length;
+  return capitalised / significant.length > CONVERT_THRESHOLD;
+};
+
+// A wholly all-caps title (almost every significant word fully uppercase) can't distinguish acronyms
+// from ordinary words, so it is lowercased throughout; title case preserves acronyms instead.
+const isAllCaps = (title: string): boolean => {
+  const significant = significantWords(title);
+  if (significant.length === 0) return false;
+  const fullyUpper = significant.filter((word) => lettersOnly(word) === lettersOnly(word).toUpperCase()).length;
+  return fullyUpper / significant.length > ALL_CAPS_THRESHOLD;
+};
+
+const capitaliseFirstLetter = (word: string): string => word.replace(/\p{L}/u, (letter) => letter.toUpperCase());
+
+// Splits a title into word tokens (letters/digits, plus internal apostrophes and hyphens) and runs of
+// everything else (whitespace, punctuation), so the converter can transform words while tracking the
+// colons and parentheses between them.
+const wordOrSeparatorPattern = /[\p{L}\p{N}][\p{L}\p{N}'’-]*|[^\p{L}\p{N}]+/gu;
+
+/**
+ * Converts a title to sentence case, but only when it looks like it was entered in all-caps or title
+ * case (see {@link shouldConvert}). Titles that already read as sentence case are returned untouched.
+ *
+ * When converting, capitalisation is preserved for: the first letter of the title, the first word
+ * after a colon (the start of an APA subtitle), and anything inside parentheses. Acronyms (DNA, NASA)
+ * are preserved for title-case input; an all-caps title is lowercased throughout as a best effort,
+ * since its acronyms are indistinguishable from ordinary words.
+ */
+export const toSentenceCase = (title: string): string => {
+  if (!title.trim() || !shouldConvert(title)) return title;
+
+  const allCaps = isAllCaps(title);
+  const tokens = title.match(wordOrSeparatorPattern) ?? [];
+
+  let parenDepth = 0;
+  let atSentenceStart = true;
+  let result = '';
+
+  for (const token of tokens) {
+    const isWord = /^[\p{L}\p{N}]/u.test(token);
+    if (!isWord) {
+      for (const char of token) {
+        if (char === '(') parenDepth += 1;
+        else if (char === ')') parenDepth = Math.max(0, parenDepth - 1);
+      }
+      // A colon starts the APA subtitle, whose first word is capitalised like a new sentence.
+      if (token.includes(':')) atSentenceStart = true;
+      result += token;
+      continue;
+    }
+
+    if (parenDepth > 0) {
+      result += token; // Preserve capitalisation inside parentheses.
+    } else {
+      const base = allCaps ? token.toLowerCase() : isAcronym(token) ? token : token.toLowerCase();
+      result += atSentenceStart ? capitaliseFirstLetter(base) : base;
+    }
+    atSentenceStart = false;
+  }
+
+  return result;
+};
+
 /**
  * Resolves the fields every APA formatter needs: formatted author list, year, main title, and the
  * persistent identifier. Type-specific formatters spread the result and add their own fields on top.
