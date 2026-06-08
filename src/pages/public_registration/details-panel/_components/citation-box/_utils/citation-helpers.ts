@@ -1,6 +1,7 @@
 import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
 import { PagesRange } from '../../../../../../types/publication_types/pages.types';
 import { Registration } from '../../../../../../types/registration.types';
+import { toSentenceCase } from './to-sentence-case';
 
 // Matches one or more commas (with adjacent whitespace) at the start or end of a string.
 // Imported names sometimes arrive as "Lastname," or ", Firstname" when one name half is missing.
@@ -111,7 +112,7 @@ export const normalizeBaseFields = (registration: Registration) => {
   return {
     authors: formatAuthorList(getCreators(registration)),
     year: entityDescription?.publicationDate?.year?.trim() ?? '',
-    title: entityDescription?.mainTitle?.trim() ?? '',
+    title: toSentenceCase(entityDescription?.mainTitle?.trim() ?? ''),
     pid: getPersistentIdentifier(registration),
   };
 };
