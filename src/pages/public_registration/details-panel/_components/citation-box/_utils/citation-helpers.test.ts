@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Contributor } from '../../../../../../types/contributor.types';
-import { formatAuthorList, toSentenceCase } from './citation-helpers';
+import { formatAuthorList } from './citation-helpers';
 
 const buildContributors = (count: number): Contributor[] =>
   Array.from(
