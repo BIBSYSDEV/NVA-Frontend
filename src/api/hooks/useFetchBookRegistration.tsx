@@ -1,7 +1,7 @@
-import { fetchProtectedResource } from '../commonApi';
-import { BookRegistration } from '../../types/publication_types/bookRegistration.types';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { BookRegistration } from '../../types/publication_types/bookRegistration.types';
+import { fetchResource } from '../commonApi';
 
 export const useFetchBookRegistration = (containerId: string) => {
   const { t } = useTranslation();
@@ -9,7 +9,7 @@ export const useFetchBookRegistration = (containerId: string) => {
   return useQuery({
     queryKey: ['registration', containerId],
     enabled: !!containerId,
-    queryFn: () => fetchProtectedResource<BookRegistration>(containerId),
+    queryFn: () => fetchResource<BookRegistration>(containerId),
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 };
