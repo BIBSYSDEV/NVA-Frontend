@@ -14,7 +14,7 @@ import {
 import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
+import { alternatingTableRowColor } from '../../../../../../themes/cssStyles';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { ArtisticRegistration } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';

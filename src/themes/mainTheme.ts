@@ -1,97 +1,11 @@
-import { createTheme, darken, PaletteColor, PaletteColorOptions, SxProps } from '@mui/material';
+import { createTheme, darken } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import i18n from '../translations/i18n';
-
-// Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
-enum Color {
-  Black = '#222222',
-  White = '#FFFFFF',
-  Purple = '#7351FB',
-  PurpleLight = '#D1CDFF',
-  PurpleDark = '#0A0132',
-  TextPrimary = 'rgba(0, 0, 0, 0.87)',
-  CentralImportMain = '#D9D9D9',
-  Registration = '#EED2AE',
-  Person = '#BAD2F7',
-  Project = '#E8B8D0',
-  Neutral97 = '#F7F7F7',
-  Neutral95 = '#F1F1F1',
-  Neutral87 = '#DEDEDE',
-  Neutral46 = '#767676',
-  BlueLight = '#E6F0FF',
-  BlueClear = '#75C7F0',
-  Blue = '#004FCF',
-  Green = '#096638',
-  GreenLight = '#CFF7E2',
-  Red = '#B60203',
-  RedLight = '#FFEAE9',
-  YellowLight = '#FCEED2',
-  YellowClear = '#FBE774',
-  Yellow = '#FFB700',
-  Orange = '#FFAC70',
-}
+import { Color } from './colors';
+import './themeAugmentation.d.ts';
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
-
-declare module '@mui/material/styles' {
-  interface Palette {
-    tertiary: PaletteColor;
-    registration: PaletteColor;
-    person: PaletteColor;
-    project: PaletteColor;
-    centralImport: PaletteColor;
-    textPrimary: PaletteColor;
-    neutral87: PaletteColor;
-    taskType: {
-      publishingRequest: PaletteColor;
-      filesApprovalThesis: PaletteColor;
-      doiRequest: PaletteColor;
-      generalSupportCase: PaletteColor;
-    };
-  }
-  interface PaletteOptions {
-    tertiary: PaletteColorOptions;
-    registration?: PaletteColorOptions;
-    person?: PaletteColorOptions;
-    project?: PaletteColorOptions;
-    centralImport?: PaletteColorOptions;
-    textPrimary?: PaletteColorOptions;
-    neutral87?: PaletteColorOptions;
-    taskType?: {
-      publishingRequest?: PaletteColorOptions;
-      filesApprovalThesis?: PaletteColorOptions;
-      doiRequest?: PaletteColorOptions;
-      generalSupportCase?: PaletteColorOptions;
-    };
-  }
-  interface TypeBackground {
-    neutral97?: string;
-    neutral95?: string;
-    neutral87?: string;
-    neutral46?: string;
-  }
-}
-declare module '@mui/material/Button' {
-  interface ButtonPropsColorOverrides {
-    tertiary: true;
-    registration: true;
-    person: true;
-    project: true;
-    white: true;
-    neutral87: true;
-  }
-}
-declare module '@mui/material/Chip' {
-  interface ChipPropsColorOverrides {
-    tertiary: true;
-  }
-}
-declare module '@mui/material/PaginationItem' {
-  interface PaginationItemPropsColorOverrides {
-    tertiary: true;
-  }
-}
 
 const dialogTitleId = 'dialog-title-id';
 export const dialogDescriptionId = 'dialog-description-id';
@@ -502,19 +416,3 @@ export const mainTheme = createTheme(
   },
   coreLocale
 );
-
-export const alternatingTableRowColor: SxProps = {
-  thead: {
-    tr: {
-      bgcolor: Color.White,
-    },
-  },
-  tbody: {
-    tr: {
-      bgcolor: Color.Neutral97,
-      '&:nth-of-type(even)': {
-        bgcolor: 'white',
-      },
-    },
-  },
-};
