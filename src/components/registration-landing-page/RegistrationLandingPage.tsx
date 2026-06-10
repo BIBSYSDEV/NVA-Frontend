@@ -46,7 +46,6 @@ export const RegistrationLandingPage = () => {
   // user, so an expired token doesn't trigger a failing authenticated tickets request on this public page.
   const hasValidTokenQuery = useHasValidToken();
   const isTicketCurator = hasTicketCuratorRole(user) && hasValidTokenQuery.data === true;
-  console.log(hasValidTokenQuery.data);
 
   const isAllowedToSeePublicRegistration =
     registration?.status === RegistrationStatus.Published ||
