@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  sync:
+  get-commit-messages-after-prod-deployment:
     runs-on: ubuntu-latest
     permissions:
       contents: write
