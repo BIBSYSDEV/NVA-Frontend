@@ -3,7 +3,7 @@ import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/mater
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import i18n from '../translations/i18n';
 import { Color } from './colors';
-import './themeAugmentation.d.ts';
+import type {} from './themeAugmentation';
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
 
