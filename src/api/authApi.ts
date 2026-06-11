@@ -2,7 +2,15 @@ import { AuthSession, fetchAuthSession, FetchAuthSessionOptions } from 'aws-ampl
 import { CustomUserAttributes } from '../types/user.types';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { getCurrentPath } from '../utils/general-helpers';
-import { UrlPathTemplate } from '../utils/urlPaths';
+import { isPublicPage, UrlPathTemplate } from '../utils/urlPaths';
+
+/**
+ * Dev-only helper to reproduce an expired session in the GUI without touching Cognito.
+ * Toggle from the browser console with `localStorage.setItem('simulateExpiredToken', 'true')`
+ * (and `removeItem` to restore). Compiled out of production builds via `import.meta.env.DEV`.
+ */
+const simulateExpiredToken = () =>
+  import.meta.env.DEV && localStorage.getItem(LocalStorageKey.SimulateExpiredToken) === 'true';
 
 export const getAccessToken = async () => {
   if (USE_MOCK_DATA) {
@@ -10,12 +18,17 @@ export const getAccessToken = async () => {
   }
   try {
     const currentSession = await fetchAuthSession();
-    if (currentSession.tokens) {
+    if (currentSession.tokens && !simulateExpiredToken()) {
       return currentSession.tokens.accessToken.toString();
     } else {
-      const searchParams = new URLSearchParams();
-      searchParams.set(LocalStorageKey.RedirectPath, getCurrentPath());
-      window.location.href = `${UrlPathTemplate.SignedOut}?${searchParams.toString()}`;
+      const currentPath = getCurrentPath();
+      // Don't redirect to SignedOut when viewing public content (e.g. a registration landing page);
+      // the request simply proceeds unauthenticated instead of kicking the user off a public page.
+      if (!isPublicPage(currentPath)) {
+        const searchParams = new URLSearchParams();
+        searchParams.set(LocalStorageKey.RedirectPath, currentPath);
+        window.location.href = `${UrlPathTemplate.SignedOut}?${searchParams.toString()}`;
+      }
       return null;
     }
   } catch {
@@ -26,13 +39,19 @@ export const getAccessToken = async () => {
 export const userIsAuthenticated = async () => {
   try {
     const cognitoUser = await fetchAuthSession();
-    return !!cognitoUser.tokens;
+    return !!cognitoUser.tokens && !simulateExpiredToken();
   } catch {
     return false;
   }
 };
 
 export const getCustomUserAttributes = async (options?: FetchAuthSessionOptions) => {
+  if (simulateExpiredToken()) {
+    // Keep the simulated-expired state consistent across full-page reloads (e.g. after a redirect to
+    // SignedOut): without this the Redux `user` would be repopulated from the still-valid real token,
+    // causing SignedOutPage to bounce back to Root in a redirect loop.
+    return null;
+  }
   try {
     const currentSession = await fetchAuthSession(options);
     return getCustomTokenAttributes(currentSession.tokens);
