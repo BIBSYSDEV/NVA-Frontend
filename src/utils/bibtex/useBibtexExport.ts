@@ -9,7 +9,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { formatDateStringToISO } from '../date-helpers';
 import { triggerFileDownload } from '../downloadFileHelpers';
 
-const pageSize = 200;
+const pageSize = 100;
 const hardCap = 10_000;
 
 const nextLinkRegex = /<([^>]+)>;\s*rel="next"/;

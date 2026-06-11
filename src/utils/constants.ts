@@ -25,4 +25,5 @@ export enum LocalStorageKey {
   Beta = 'beta',
   EnvironmentBanner = 'environmentBanner',
   RedirectPath = 'redirectPath',
+  SimulateExpiredToken = 'simulateExpiredToken',
 }
