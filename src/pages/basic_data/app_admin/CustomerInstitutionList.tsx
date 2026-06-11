@@ -19,7 +19,7 @@ import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
-import { alternatingTableRowColor } from '../../../themes/mainTheme';
+import { alternatingTableRowColor } from '../../../themes/cssStyles';
 import { SimpleCustomerInstitution } from '../../../types/customerInstitution.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';

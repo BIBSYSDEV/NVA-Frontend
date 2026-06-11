@@ -23,7 +23,7 @@ import { HeadTitle } from '../../../../components/HeadTitle';
 import { ListPagination } from '../../../../components/ListPagination';
 import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
-import { alternatingTableRowColor } from '../../../../themes/mainTheme';
+import { alternatingTableRowColor } from '../../../../themes/cssStyles';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
