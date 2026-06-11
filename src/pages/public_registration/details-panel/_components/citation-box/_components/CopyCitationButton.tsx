@@ -28,7 +28,7 @@ export const CopyCitationButton = ({ citation }: CopyCitationButtonProps) => {
       await navigator.clipboard.writeText(citation);
       setJustCopied(true);
     } catch {
-      dispatch(setNotification({ message: t('feedback.error.copy_citation'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.copy_reference'), variant: 'error' }));
     }
   };
 
@@ -43,15 +43,15 @@ export const CopyCitationButton = ({ citation }: CopyCitationButtonProps) => {
         onClick={handleCopy}>
         <Box sx={{ display: 'grid', '& > *': { gridArea: '1 / 1' } }}>
           <span aria-hidden={!justCopied} style={{ visibility: justCopied ? 'visible' : 'hidden' }}>
-            {t('feedback.success.copy_citation')}
+            {t('feedback.success.copy_reference')}
           </span>
           <span aria-hidden={justCopied} style={{ visibility: justCopied ? 'hidden' : 'visible' }}>
-            {t('copy_citation')}
+            {t('copy_reference')}
           </span>
         </Box>
       </Button>
       <Box component="span" sx={visuallyHidden} aria-live="polite">
-        {justCopied ? t('feedback.success.copy_citation') : ''}
+        {justCopied ? t('feedback.success.copy_reference') : ''}
       </Box>
     </>
   );

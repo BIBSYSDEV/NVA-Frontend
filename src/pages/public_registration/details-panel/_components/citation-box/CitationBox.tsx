@@ -54,7 +54,7 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
   return (
     <Box component="section" display="flex" flexDirection="column">
       <Typography id={citationHeadingId} variant="h3" gutterBottom>
-        {t('citation')}
+        {t('reference')}
       </Typography>
       <Paper
         variant="outlined"

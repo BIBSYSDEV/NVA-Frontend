@@ -1,0 +1,27 @@
+name: Auto-sync develop from main
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  get-commit-messages-after-prod-deployment:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Open sync PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          existing=$(gh pr list --base develop --head main --state open --json number -q '.[0].number')
+          if [ -n "$existing" ]; then
+            echo "Sync PR #$existing already open; nothing to do"
+          else
+            gh pr create --base develop --head main \
+              --title "Sync develop from main" \
+              --body "Automated sync after main update. Merge once checks pass."
+          fi
