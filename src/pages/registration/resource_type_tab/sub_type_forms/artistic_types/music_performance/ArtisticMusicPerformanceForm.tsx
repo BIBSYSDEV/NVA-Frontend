@@ -13,7 +13,7 @@ import {
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { alternatingTableRowColor } from '../../../../../../themes/mainTheme';
+import { alternatingTableRowColor } from '../../../../../../themes/cssStyles';
 import {
   ArtisticRegistration,
   MusicOutput,
