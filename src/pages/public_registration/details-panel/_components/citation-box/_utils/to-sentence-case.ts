@@ -6,11 +6,14 @@ const ALL_CAPS_THRESHOLD = 0.8;
 
 // Matches a single word: a letter or digit followed by any letters, digits, apostrophes, or hyphens.
 const wordPattern = /[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu;
+
 // Captures the start of an APA subtitle (the position just after a colon) together with the first
 // letter that follows, so it can be capitalised.
 const subtitleStartPattern = /(:\s*)(\p{L})/gu;
+
 // As above, but also matches the very start of the title (^) so the title's first letter is capitalised too.
 const titleStartPattern = /(^|:\s*)(\p{L})/gu;
+
 // Splits a title around parenthesised groups, keeping the groups (every odd element) so their casing
 // can be preserved verbatim.
 const parentheticalPattern = /(\([^)]*\))/;
