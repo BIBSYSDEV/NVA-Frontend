@@ -27,10 +27,6 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
   const publicationContext = reference?.publicationContext;
   const mainTitle = entityDescription?.mainTitle ?? '';
 
-  const publisherId =
-    (publicationContext && 'publisher' in publicationContext && publicationContext.publisher?.id) || '';
-  const publisherName = useFetchPublisherFromId(publisherId).data?.name ?? '';
-
   const isChapterRegistration = isChapter(reference?.publicationInstance?.type);
   const parentBookId = isChapterRegistration
     ? ((publicationContext as ChapterPublicationContext | undefined)?.id ?? '')
@@ -38,6 +34,14 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
   const parentBook = useFetchBookRegistration(parentBookId).data;
   const bookTitle = parentBook?.entityDescription?.mainTitle ?? '';
   const editors = parentBook ? formatAuthorList(getEditors(parentBook), { role: 'editor' }) : '';
+
+  // For chapters the publisher lives on the parent book's context, not the chapter's own context.
+  const parentBookContext = parentBook?.entityDescription?.reference?.publicationContext;
+  const publisherId =
+    (publicationContext && 'publisher' in publicationContext && publicationContext.publisher?.id) ||
+    (parentBookContext && 'publisher' in parentBookContext && parentBookContext.publisher?.id) ||
+    '';
+  const publisherName = useFetchPublisherFromId(publisherId).data?.name ?? '';
 
   const citation = formatAPA(registration, { journalName, publisherName, bookTitle, editors });
 
