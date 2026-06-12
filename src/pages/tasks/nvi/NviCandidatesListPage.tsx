@@ -4,6 +4,7 @@ import { Button, Grid, List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
+import { useFetchNviPeriodReport } from '../../../api/hooks/useFetchNviPeriodReport';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CuratorSelector } from '../../../components/CuratorSelector';
@@ -15,11 +16,12 @@ import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { MainContentLayout } from '../../../components/page-layouts/MainContentLayout';
 import { SearchForm } from '../../../components/SearchForm';
+import { NviPeriodStatusEnum } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { useNviPeriodReportNumbers } from '../../basic-data/nvi/_hooks/useNviPeriodReportNumbers';
+import { getNviPeriodStatus } from '../../basic-data/nvi/reporting-periods/_utils/nvi-period-helpers';
 import { CoPublicationsCheckbox } from '../../messages/components/CoPublicationsCheckbox';
 import { ExcludeSubunitsCheckbox } from '../../messages/components/ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from '../../messages/components/NviCandidateListItem';
@@ -30,7 +32,10 @@ const NviCandidatesListPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const nviParams = useNviCandidatesParams();
-  const { periodIsClosed } = useNviPeriodReportNumbers(nviParams.year);
+  const { data: periodData } = useFetchNviPeriodReport({ year: nviParams.year });
+  const periodIsClosed = periodData?.period
+    ? getNviPeriodStatus(periodData.period) === NviPeriodStatusEnum.ClosedPeriod
+    : false;
 
   const [searchParams, setSearchParams] = useSearchParams();
 

@@ -1,7 +1,6 @@
 import { useFetchNviPeriodReport } from '../../../../api/hooks/useFetchNviPeriodReport';
-import { NviPeriodByGlobalApprovalStatus, NviPeriodStatusEnum } from '../../../../types/nvi.types';
+import { NviPeriodByGlobalApprovalStatus } from '../../../../types/nvi.types';
 import { percentageOfAComparedToB } from '../../../../utils/general-helpers/calculation-helpers';
-import { getNviPeriodStatus } from '../reporting-periods/_utils/nvi-period-helpers';
 
 export const getCandidatesForReporting = (globalApprovalStatus: NviPeriodByGlobalApprovalStatus | undefined) =>
   globalApprovalStatus
@@ -32,16 +31,12 @@ export const useNviPeriodReportNumbers = (year: number) => {
     numApprovedByAllPreviousYear
   );
 
-  const period = periodReportQuery.data?.period;
-  const periodIsClosed = period ? getNviPeriodStatus(period) === NviPeriodStatusEnum.ClosedPeriod : false;
-
   return {
     numApprovedByAll,
     publicationPoints,
     numCandidatesForReporting,
     percentageCandidatesComparedToPreviousYear,
     percentageApprovedComparedToPreviousYear,
-    periodIsClosed,
     isPending: periodReportQuery.isPending || periodReportPreviousYearQuery.isPending,
     isError: periodReportQuery.isError || periodReportPreviousYearQuery.isError,
   };
