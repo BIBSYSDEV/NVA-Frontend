@@ -40,8 +40,10 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
   const editors = parentBook ? formatAuthorList(getEditors(parentBook), { role: 'editor' }) : '';
 
   // For chapters the publisher lives on the parent book's context, not the chapter's own context.
-  const publisherId =
-    getPublisherId(publicationContext) || getPublisherId(parentBook?.entityDescription?.reference?.publicationContext);
+  const publisherId = isChapterRegistration
+    ? getPublisherId(parentBook?.entityDescription?.reference?.publicationContext)
+    : getPublisherId(publicationContext);
+
   const publisherName = useFetchPublisherFromId(publisherId).data?.name ?? '';
 
   const citation = formatAPA(registration, { journalName, publisherName, bookTitle, editors });
