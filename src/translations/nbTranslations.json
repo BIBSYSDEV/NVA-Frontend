@@ -2134,5 +2134,5 @@
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
   "copy_reference": "Kopier referanse",
   "reference": "Referanse",
-  "NVI_period_for_year_is_closed": "NVI-periode for {{year}} er lukket."
+  "nvi_period_for_year_is_closed": "NVI-periode for {{year}} er lukket."
 }

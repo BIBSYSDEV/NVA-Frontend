@@ -4,14 +4,14 @@ import { infoBannerConfig, infoBannerPadding } from './info-banner-config';
 
 interface InfoBannerProps extends PaperProps {
   text: string;
-  elevation?: number;
+  noElevation?: boolean;
   size?: InfoBannerSize;
   type?: InfoBannerType;
 }
 
 export const InfoBanner = ({
   text,
-  elevation = 5,
+  noElevation = false,
   type = InfoBannerType.INFO,
   size = InfoBannerSize.LARGE,
   sx,
@@ -21,7 +21,7 @@ export const InfoBanner = ({
 
   return (
     <Paper
-      elevation={elevation}
+      elevation={noElevation ? 0 : 5}
       sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', p: infoBannerPadding[size], bgcolor: bgColor, ...sx }}
       {...props}>
       {icon(size)}

@@ -5,7 +5,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import { ReactElement } from 'react';
 import { InfoBannerSize, InfoBannerType } from './enums';
 
-interface InfoBannerConfig {
+interface InfoBannerConfigProps {
   bgColor: string;
   textColor: string;
   icon: (size: InfoBannerSize) => ReactElement;
@@ -17,7 +17,7 @@ export const infoBannerPadding: Record<InfoBannerSize, string> = {
   [InfoBannerSize.SMALL]: '0.3rem 2rem',
 };
 
-export const infoBannerConfig: Record<InfoBannerType, InfoBannerConfig> = {
+export const infoBannerConfig: Record<InfoBannerType, InfoBannerConfigProps> = {
   [InfoBannerType.INFO]: {
     bgColor: 'info.main',
     textColor: 'white',

@@ -49,10 +49,10 @@ const NviCandidatesListPage = () => {
       <>
         {periodIsClosed && (
           <InfoBanner
-            text={t('NVI_period_for_year_is_closed', { year: nviParams.year })}
+            text={t('nvi_period_for_year_is_closed', { year: nviParams.year })}
             size={InfoBannerSize.MEDIUM}
             type={InfoBannerType.LOCK}
-            elevation={0}
+            noElevation
           />
         )}
         <Grid container columns={16} spacing="1rem" sx={{ px: { xs: '0.5rem', md: 0 }, my: '1rem' }}>
