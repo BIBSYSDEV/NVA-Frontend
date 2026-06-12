@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useFetchBookRegistration } from '../../../../../api/hooks/useFetchBookRegistration';
 import { useFetchPublisherFromId } from '../../../../../api/hooks/useFetchPublisherFromId';
 import { ChapterPublicationContext } from '../../../../../types/publication_types/chapterRegistration.types';
-import { Registration } from '../../../../../types/registration.types';
+import { ContextPublisher, Registration } from '../../../../../types/registration.types';
 import { useJournalSeoData } from '../../../../../utils/hooks/useJournalSeoData';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../../utils/mathJaxHelpers';
 import { isChapter } from '../../../../../utils/registration-helpers';
@@ -14,6 +14,9 @@ import { CopyCitationButton } from './_components/CopyCitationButton';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 
 const citationHeadingId = 'citation-box-heading';
+
+const getPublisherId = (context: { type?: string; publisher?: ContextPublisher } | undefined): string =>
+  context?.publisher?.id ?? '';
 
 interface CitationBoxProps {
   registration: Registration;
@@ -37,11 +40,8 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
   const editors = parentBook ? formatAuthorList(getEditors(parentBook), { role: 'editor' }) : '';
 
   // For chapters the publisher lives on the parent book's context, not the chapter's own context.
-  const parentBookContext = parentBook?.entityDescription?.reference?.publicationContext;
   const publisherId =
-    (publicationContext && 'publisher' in publicationContext && publicationContext.publisher?.id) ||
-    (parentBookContext && 'publisher' in parentBookContext && parentBookContext.publisher?.id) ||
-    '';
+    getPublisherId(publicationContext) || getPublisherId(parentBook?.entityDescription?.reference?.publicationContext);
   const publisherName = useFetchPublisherFromId(publisherId).data?.name ?? '';
 
   const citation = formatAPA(registration, { journalName, publisherName, bookTitle, editors });
