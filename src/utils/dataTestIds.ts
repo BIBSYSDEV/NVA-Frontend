@@ -372,6 +372,7 @@ export const dataTestId = {
       detailsTab: 'details-tab',
       emailLink: (id: string) => `email-link-${id}`,
       infoLink: 'info-link',
+      referenceTextBox: 'reference-text-box',
       resultContactModal: 'result-contact-modal',
     },
     dmpAccordion: 'dmp-accordion',

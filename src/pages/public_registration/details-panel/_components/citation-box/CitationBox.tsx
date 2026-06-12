@@ -11,6 +11,7 @@ import { isChapter } from '../../../../../utils/registration-helpers';
 import { formatAPA } from './_utils/format-apa';
 import { formatAuthorList, getEditors } from './_utils/citation-helpers';
 import { CopyCitationButton } from './_components/CopyCitationButton';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 
 const citationHeadingId = 'citation-box-heading';
 
@@ -61,6 +62,7 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
         {t('reference')}
       </Typography>
       <Paper
+        data-testid={dataTestId.registrationLandingPage.detailsTab.referenceTextBox}
         variant="outlined"
         role="region"
         tabIndex={0}
