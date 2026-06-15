@@ -4,7 +4,8 @@ import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useContext, useEffect, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { InfoBanner } from '../../components/InfoBanner';
+import { InfoBannerType } from '../../components/info-banner/enums';
+import { InfoBanner } from '../../components/info-banner/InfoBanner';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { RegistrationFormContext } from '../../context/RegistrationFormContext';
 import { RootState } from '../../redux/store';
@@ -202,7 +203,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
                 {pendingFiles.length > 0 &&
                   pendingFiles.every((file) => file.type === FileType.PendingInternalFile) && (
-                    <InfoBanner type="info-light" text={t('internal_file_info_description')} />
+                    <InfoBanner type={InfoBannerType.INFO_LIGHT} text={t('internal_file_info_description')} />
                   )}
 
                 {pendingFiles.length > 0 && (

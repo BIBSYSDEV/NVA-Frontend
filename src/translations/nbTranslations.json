@@ -2133,5 +2133,6 @@
   "you_cannot_upload_files_to_this_result": "Du har ikke tilgang til å laste opp filer for dette resultatet.",
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
   "copy_reference": "Kopier referanse",
-  "reference": "Referanse"
+  "reference": "Referanse",
+  "nvi_period_for_year_is_closed": "NVI-periode for {{year}} er lukket."
 }
