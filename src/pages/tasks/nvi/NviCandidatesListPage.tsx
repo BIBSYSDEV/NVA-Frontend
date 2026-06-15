@@ -48,12 +48,14 @@ const NviCandidatesListPage = () => {
   const openingDate = periodData?.period?.startDate ? toDateString(periodData.period.startDate) : '';
   const infoBannerText = periodIsClosed
     ? t('nvi_period_for_year_is_closed', { year: nviParams.year })
-    : t('nvi_period_for_year_is_unopened', { year: nviParams.year, date: openingDate });
+    : periodIsUnopened
+      ? t('nvi_period_for_year_is_unopened', { year: nviParams.year, date: openingDate })
+      : null;
 
   return (
     <MainContentLayout heading={t('candidate_search')} headTitle={t('candidate_search')} sx={{ gap: '0.1rem' }}>
       <>
-        {(periodIsClosed || periodIsUnopened) && (
+        {infoBannerText && (
           <InfoBanner text={infoBannerText} size={InfoBannerSize.MEDIUM} type={InfoBannerType.LOCK} noElevation />
         )}
         <Grid container columns={16} spacing="1rem" sx={{ px: { xs: '0.5rem', md: 0 }, my: '1rem' }}>
