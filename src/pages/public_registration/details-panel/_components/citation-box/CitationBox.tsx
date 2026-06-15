@@ -1,6 +1,7 @@
-import { Box, Paper, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import { Box, CircularProgress, Paper, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useFetchBibtexCitation } from '../../../../../api/hooks/useFetchBibtexCitation';
 import { useFetchBookRegistration } from '../../../../../api/hooks/useFetchBookRegistration';
 import { useFetchPublisherFromId } from '../../../../../api/hooks/useFetchPublisherFromId';
 import { ChapterPublicationContext } from '../../../../../types/publication_types/chapterRegistration.types';
@@ -10,6 +11,12 @@ import { useJournalSeoData } from '../../../../../utils/hooks/useJournalSeoData'
 import { stringIncludesMathJax, typesetMathJax } from '../../../../../utils/mathJaxHelpers';
 import { isChapter } from '../../../../../utils/registration-helpers';
 import { CopyCitationButton } from './_components/CopyCitationButton';
+import {
+  getReferenceFormatTabId,
+  ReferenceFormat,
+  ReferenceFormatToggle,
+  referenceFormatPanelId,
+} from './_components/ReferenceFormatToggle';
 import { formatAuthorList, getEditors, getPublisherId } from './_utils/citation-helpers';
 import { formatAPA } from './_utils/format-apa';
 
@@ -45,11 +52,21 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
 
   const citation = formatAPA(registration, { journalName, publisherName, bookTitle, editors });
 
+  const [format, setFormat] = useState<ReferenceFormat>('plain');
+  const isBibtex = format === 'bibtex';
+
+  // BibTeX requires an API call, so it is fetched lazily only once the user selects that format.
+  const bibtexQuery = useFetchBibtexCitation(registration.identifier, isBibtex);
+
+  const isLoadingBibtex = isBibtex && bibtexQuery.isLoading;
+  const hasBibtexError = isBibtex && bibtexQuery.isError;
+  const activeCitation = isBibtex ? (bibtexQuery.data ?? '') : citation;
+
   useEffect(() => {
-    if (stringIncludesMathJax(mainTitle) || stringIncludesMathJax(bookTitle)) {
+    if (!isBibtex && (stringIncludesMathJax(mainTitle) || stringIncludesMathJax(bookTitle))) {
       typesetMathJax();
     }
-  }, [mainTitle, bookTitle]);
+  }, [mainTitle, bookTitle, isBibtex]);
 
   if (!citation) {
     return null;
@@ -60,16 +77,28 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
       <Typography id={citationHeadingId} variant="h3" gutterBottom>
         {t('reference')}
       </Typography>
+      <ReferenceFormatToggle value={format} onChange={setFormat} />
       <Paper
         data-testid={dataTestId.registrationLandingPage.detailsTab.referenceTextBox}
         variant="outlined"
-        role="region"
+        role="tabpanel"
+        id={referenceFormatPanelId}
         tabIndex={0}
-        aria-labelledby={citationHeadingId}
+        aria-labelledby={getReferenceFormatTabId(format)}
+        aria-busy={isLoadingBibtex}
         sx={{ p: '1rem', maxHeight: '12rem', overflow: 'auto', whiteSpace: 'pre-wrap' }}>
-        <Typography>{citation}</Typography>
+        {isLoadingBibtex ? (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <CircularProgress size="1rem" aria-hidden />
+            <Typography>{t('fetching_reference')}</Typography>
+          </Box>
+        ) : hasBibtexError ? (
+          <Typography>{t('feedback.error.get_reference')}</Typography>
+        ) : (
+          <Typography>{activeCitation}</Typography>
+        )}
       </Paper>
-      <CopyCitationButton citation={citation} />
+      <CopyCitationButton citation={activeCitation} disabled={isLoadingBibtex || hasBibtexError || !activeCitation} />
     </Box>
   );
 };

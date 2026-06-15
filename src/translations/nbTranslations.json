@@ -2135,5 +2135,9 @@
   "you_do_not_have_permission_to_edit_this_registration": "Du har ikke tilgang til å endre denne registreringen.",
   "copy_reference": "Kopier referanse",
   "reference": "Referanse",
+  "reference_format": "Referanseformat",
+  "reference_format_bibtex": "BibTeX",
+  "reference_format_plain": "Ren tekst",
+  "fetching_reference": "Henter referanse …",
   "nvi_period_for_year_is_closed": "NVI-periode for {{year}} er lukket."
 }
