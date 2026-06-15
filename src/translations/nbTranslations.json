@@ -617,6 +617,7 @@
       "get_project_categories": "Kunne ikke hente prosjektkategorier",
       "get_publisher": "Kunne ikke hente utgiver",
       "get_publishers": "Søk på utgivere feilet",
+      "get_reference": "Kunne ikke hente referanse",
       "get_registration": "Kunne ikke laste inn registrering",
       "get_registrations": "Kunne ikke laste inn registreringer",
       "get_serial_publication": "Kunne ikke hente serie/tidsskrift",
