@@ -5,12 +5,13 @@ import { useFetchBookRegistration } from '../../../../../api/hooks/useFetchBookR
 import { useFetchPublisherFromId } from '../../../../../api/hooks/useFetchPublisherFromId';
 import { ChapterPublicationContext } from '../../../../../types/publication_types/chapterRegistration.types';
 import { Registration } from '../../../../../types/registration.types';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useJournalSeoData } from '../../../../../utils/hooks/useJournalSeoData';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../../utils/mathJaxHelpers';
 import { isChapter } from '../../../../../utils/registration-helpers';
-import { formatAPA } from './_utils/format-apa';
-import { formatAuthorList, getEditors } from './_utils/citation-helpers';
 import { CopyCitationButton } from './_components/CopyCitationButton';
+import { formatAuthorList, getEditors, getPublisherId } from './_utils/citation-helpers';
+import { formatAPA } from './_utils/format-apa';
 
 const citationHeadingId = 'citation-box-heading';
 
@@ -27,10 +28,6 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
   const publicationContext = reference?.publicationContext;
   const mainTitle = entityDescription?.mainTitle ?? '';
 
-  const publisherId =
-    (publicationContext && 'publisher' in publicationContext && publicationContext.publisher?.id) || '';
-  const publisherName = useFetchPublisherFromId(publisherId).data?.name ?? '';
-
   const isChapterRegistration = isChapter(reference?.publicationInstance?.type);
   const parentBookId = isChapterRegistration
     ? ((publicationContext as ChapterPublicationContext | undefined)?.id ?? '')
@@ -38,6 +35,13 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
   const parentBook = useFetchBookRegistration(parentBookId).data;
   const bookTitle = parentBook?.entityDescription?.mainTitle ?? '';
   const editors = parentBook ? formatAuthorList(getEditors(parentBook), { role: 'editor' }) : '';
+
+  // For chapters the publisher lives on the parent book's context, not the chapter's own context.
+  const publisherId = isChapterRegistration
+    ? getPublisherId(parentBook?.entityDescription?.reference?.publicationContext)
+    : getPublisherId(publicationContext);
+
+  const publisherName = useFetchPublisherFromId(publisherId).data?.name ?? '';
 
   const citation = formatAPA(registration, { journalName, publisherName, bookTitle, editors });
 
@@ -57,6 +61,7 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
         {t('reference')}
       </Typography>
       <Paper
+        data-testid={dataTestId.registrationLandingPage.detailsTab.referenceTextBox}
         variant="outlined"
         role="region"
         tabIndex={0}
