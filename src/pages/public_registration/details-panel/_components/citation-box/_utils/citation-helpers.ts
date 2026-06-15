@@ -1,6 +1,6 @@
 import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
 import { PagesRange } from '../../../../../../types/publication_types/pages.types';
-import { Registration } from '../../../../../../types/registration.types';
+import { ContextPublisher, Registration } from '../../../../../../types/registration.types';
 
 // Matches one or more commas (with adjacent whitespace) at the start or end of a string.
 // Imported names sometimes arrive as "Lastname," or ", Firstname" when one name half is missing.
@@ -115,3 +115,11 @@ export const normalizeBaseFields = (registration: Registration) => {
     pid: getPersistentIdentifier(registration),
   };
 };
+
+/**
+ * Extracts the publisher id from a publication context, returning an empty string when none is set.
+ * Accepts any context shape carrying an optional publisher, so it works across registration types
+ * (e.g. a book's own context or the parent book context resolved for a chapter).
+ */
+export const getPublisherId = (context: { type?: string; publisher?: ContextPublisher } | undefined): string =>
+  context?.publisher?.id ?? '';

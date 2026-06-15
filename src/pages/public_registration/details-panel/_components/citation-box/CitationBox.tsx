@@ -4,19 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { useFetchBookRegistration } from '../../../../../api/hooks/useFetchBookRegistration';
 import { useFetchPublisherFromId } from '../../../../../api/hooks/useFetchPublisherFromId';
 import { ChapterPublicationContext } from '../../../../../types/publication_types/chapterRegistration.types';
-import { ContextPublisher, Registration } from '../../../../../types/registration.types';
+import { Registration } from '../../../../../types/registration.types';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useJournalSeoData } from '../../../../../utils/hooks/useJournalSeoData';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../../utils/mathJaxHelpers';
 import { isChapter } from '../../../../../utils/registration-helpers';
-import { formatAPA } from './_utils/format-apa';
-import { formatAuthorList, getEditors } from './_utils/citation-helpers';
 import { CopyCitationButton } from './_components/CopyCitationButton';
-import { dataTestId } from '../../../../../utils/dataTestIds';
+import { formatAuthorList, getEditors, getPublisherId } from './_utils/citation-helpers';
+import { formatAPA } from './_utils/format-apa';
 
 const citationHeadingId = 'citation-box-heading';
-
-const getPublisherId = (context: { type?: string; publisher?: ContextPublisher } | undefined): string =>
-  context?.publisher?.id ?? '';
 
 interface CitationBoxProps {
   registration: Registration;
