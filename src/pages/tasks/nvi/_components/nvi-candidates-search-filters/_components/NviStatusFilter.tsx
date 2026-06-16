@@ -1,12 +1,12 @@
-import { MenuItem, Checkbox, Typography, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
+import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
-import { NviCandidatesSearchParam } from '../../../api/searchApi';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { NviSearchStatus, NviSearchStatusEnum } from '../../../types/nvi.types';
-import { computeDropdownStatusFromParams, computeParamsFromDropdownStatus } from '../nviUtils';
+import { NviCandidatesSearchParam } from '../../../../../../api/searchApi';
+import { NviSearchStatus, NviSearchStatusEnum } from '../../../../../../types/nvi.types';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { useNviCandidatesParams } from '../../../../../../utils/hooks/useNviCandidatesParams';
+import { syncParamsWithSearchFields } from '../../../../../../utils/searchHelpers';
+import { computeDropdownStatusFromParams, computeParamsFromDropdownStatus } from '../../../../../messages/nviUtils';
 
 const nviStatusOptions = [
   {
