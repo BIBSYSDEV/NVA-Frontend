@@ -1,7 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { alternatingTableRowColor } from '../../../themes/mainTheme';
+import { alternatingTableRowColor } from '../../../themes/cssStyles';
 
 interface ProjectContributorTableProps {
   children?: ReactNode;

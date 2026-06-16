@@ -1,8 +1,9 @@
-import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
-import { useGetBookInformation } from '../../../../utils/nviHelpers';
-import { InfoBanner } from '../../../../components/InfoBanner';
-import { dataTestId } from '../../../../utils/dataTestIds';
 import { useTranslation } from 'react-i18next';
+import { InfoBannerType } from '../../../../components/info-banner/enums';
+import { InfoBanner } from '../../../../components/info-banner/InfoBanner';
+import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { useGetBookInformation } from '../../../../utils/nviHelpers';
 import { NviStatus } from './NviStatus';
 
 export const NviValidationChapter = ({ registration }: { registration: ChapterRegistration }) => {
@@ -21,7 +22,7 @@ export const NviValidationChapter = ({ registration }: { registration: ChapterRe
     if (isMonographBook) {
       return (
         <InfoBanner
-          type="warning"
+          type={InfoBannerType.WARNING}
           text={t('registration.resource_type.nvi.only_the_linked_academic_monograph_will_be_included_in_the_nvi')}
           data-testid={dataTestId.registrationWizard.resourceType.onlyLinkedMonographNviApplicable}
         />
@@ -32,7 +33,7 @@ export const NviValidationChapter = ({ registration }: { registration: ChapterRe
           <NviStatus scientificValue={seriesHasScientificValue ? seriesScientificValue : publisherScientificValue} />
           {isNonFictionBook && (
             <InfoBanner
-              type="warning"
+              type={InfoBannerType.WARNING}
               text={t('registration.resource_type.nvi.make_sure_publication_linked_to_the_correct_book_category')}
               data-testid={dataTestId.registrationWizard.resourceType.makeSureCorrectBookCategory}
             />

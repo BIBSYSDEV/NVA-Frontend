@@ -16,7 +16,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
-import { alternatingTableRowColor } from '../../../../../themes/mainTheme';
+import { alternatingTableRowColor } from '../../../../../themes/cssStyles';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import {
   ExhibitionProductionSubtype,

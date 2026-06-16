@@ -1,7 +1,11 @@
 import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
 import { PagesRange } from '../../../../../../types/publication_types/pages.types';
-import { ContextPublisher, Registration } from '../../../../../../types/registration.types';
+<<<<<<< HEAD
+import { Registration } from '../../../../../../types/registration.types';
 import { toSentenceCase } from './to-sentence-case';
+=======
+import { ContextPublisher, Registration } from '../../../../../../types/registration.types';
+>>>>>>> e7bc1f564769c14e8553088669f866faebeb4f49
 
 // Matches one or more commas (with adjacent whitespace) at the start or end of a string.
 // Imported names sometimes arrive as "Lastname," or ", Firstname" when one name half is missing.
