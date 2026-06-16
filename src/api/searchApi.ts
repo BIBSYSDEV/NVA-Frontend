@@ -661,7 +661,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
  * Fetches a single publication's reference formatted as BibTeX. The search is scoped to the
  * publication identifier so that only this publication is included in the response.
  */
-export const fetchBibtexCitation = async (identifier: string, signal?: AbortSignal) => {
+export const fetchBibtexReference = async (identifier: string, signal?: AbortSignal) => {
   if (!identifier) {
     throw new Error('Cannot fetch BibTeX reference without a publication identifier');
   }

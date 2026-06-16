@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFetchBibtexCitation } from '../../../../../api/hooks/useFetchBibtexCitation';
+import { useFetchBibtexReference } from '../../../../../api/hooks/useFetchBibtexCitation';
 import { Registration } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { CopyCitationButton } from './_components/CopyCitationButton';
@@ -28,7 +28,7 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
   const [format, setFormat] = useState<ReferenceFormat>('plain');
   const isBibtex = format === 'bibtex';
 
-  const bibtexQuery = useFetchBibtexCitation(registration.identifier, isBibtex);
+  const bibtexQuery = useFetchBibtexReference(registration.identifier, isBibtex);
   const {
     citation: activeCitation,
     isLoading,
