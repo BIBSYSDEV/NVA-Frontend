@@ -10,9 +10,10 @@ import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface CopyCitationButtonProps {
   citation: string;
+  disabled?: boolean;
 }
 
-export const CopyCitationButton = ({ citation }: CopyCitationButtonProps) => {
+export const CopyCitationButton = ({ citation, disabled = false }: CopyCitationButtonProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [justCopied, setJustCopied] = useState(false);
@@ -38,6 +39,7 @@ export const CopyCitationButton = ({ citation }: CopyCitationButtonProps) => {
         data-testid={dataTestId.registrationLandingPage.detailsTab.copyCitationButton}
         color="secondary"
         variant="contained"
+        disabled={disabled}
         endIcon={justCopied ? <CheckIcon /> : <ContentCopyIcon />}
         sx={{ mt: '0.5rem', alignSelf: 'end', width: 'fit-content' }}
         onClick={handleCopy}>

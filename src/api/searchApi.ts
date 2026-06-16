@@ -657,6 +657,27 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   return getResults.data;
 };
 
+/**
+ * Fetches a single publication's reference formatted as BibTeX. The search is scoped to the
+ * publication identifier so that only this publication is included in the response.
+ */
+export const fetchBibtexReference = async (identifier: string, signal?: AbortSignal) => {
+  if (!identifier) {
+    throw new Error('Cannot fetch BibTeX reference without a publication identifier');
+  }
+
+  const searchParams = buildRegistrationSearchParams({ id: identifier, results: 1 });
+
+  const getBibtex = await apiRequest2<string>({
+    url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
+    headers: { Accept: 'text/x-bibtex' },
+    responseType: 'text',
+    signal,
+  });
+
+  return getBibtex.data;
+};
+
 export enum ProtectedResultParam {
   Status = 'status',
 }
