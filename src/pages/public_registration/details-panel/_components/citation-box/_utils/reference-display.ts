@@ -7,7 +7,6 @@ interface BibtexQueryState {
 }
 
 export interface ReferenceDisplayState {
-  /** Text to show in the reference box and copy to the clipboard. */
   citation: string;
   isLoading: boolean;
   isError: boolean;
