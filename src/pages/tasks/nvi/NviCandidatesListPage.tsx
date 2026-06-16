@@ -22,7 +22,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { getNviPeriodStatus } from '../../basic-data/nvi/reporting-periods/_utils/nvi-period-helpers';
 import { CoPublicationsCheckbox } from '../../messages/components/CoPublicationsCheckbox';
 import { ExcludeSubunitsCheckbox } from '../../messages/components/ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from '../../messages/components/NviCandidateListItem';
@@ -34,7 +33,7 @@ const NviCandidatesListPage = () => {
   const navigate = useNavigate();
   const nviParams = useNviCandidatesParams();
   const { data: periodData } = useFetchNviPeriodReport({ year: nviParams.year });
-  const periodStatus = periodData?.period ? getNviPeriodStatus(periodData.period) : null;
+  const periodStatus = periodData?.period ? periodData.period.status : null;
   const periodIsClosed = periodStatus === NviPeriodStatusEnum.ClosedPeriod;
   const periodIsUnopened = periodStatus === NviPeriodStatusEnum.UnopenedPeriod;
 

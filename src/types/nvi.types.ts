@@ -163,9 +163,11 @@ export interface Note {
 
 export interface NviPeriod {
   type: 'NviPeriod';
+  id: string;
   publishingYear: string;
-  reportingDate: string;
   startDate: string;
+  reportingDate: string;
+  status: NviPeriodStatusEnum;
 }
 
 export interface NviPeriodResponse {
