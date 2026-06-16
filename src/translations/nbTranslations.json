@@ -2139,5 +2139,6 @@
   "reference_format_bibtex": "BibTeX",
   "reference_format_plain": "Ren tekst",
   "fetching_reference": "Henter referanse...",
-  "nvi_period_for_year_is_closed": "NVI-periode for {{year}} er lukket."
+  "nvi_period_for_year_is_closed": "NVI-periode for {{year}} er lukket.",
+  "nvi_period_for_year_is_unopened": "NVI-periode for {{year}} åpner {{date}}."
 }

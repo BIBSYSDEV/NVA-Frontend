@@ -19,6 +19,7 @@ import { SearchForm } from '../../../components/SearchForm';
 import { NviPeriodStatusEnum } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { toDateString } from '../../../utils/date-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getNviPeriodStatus } from '../../basic-data/nvi/reporting-periods/_utils/nvi-period-helpers';
@@ -33,9 +34,9 @@ const NviCandidatesListPage = () => {
   const navigate = useNavigate();
   const nviParams = useNviCandidatesParams();
   const { data: periodData } = useFetchNviPeriodReport({ year: nviParams.year });
-  const periodIsClosed = periodData?.period
-    ? getNviPeriodStatus(periodData.period) === NviPeriodStatusEnum.ClosedPeriod
-    : false;
+  const periodStatus = periodData?.period ? getNviPeriodStatus(periodData.period) : null;
+  const periodIsClosed = periodStatus === NviPeriodStatusEnum.ClosedPeriod;
+  const periodIsUnopened = periodStatus === NviPeriodStatusEnum.UnopenedPeriod;
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -44,16 +45,18 @@ const NviCandidatesListPage = () => {
 
   const page = Math.floor(nviParams.offset / nviParams.size) + 1;
 
+  const openingDate = periodData?.period?.startDate ? toDateString(periodData.period.startDate) : '';
+  const infoBannerText = periodIsClosed
+    ? t('nvi_period_for_year_is_closed', { year: nviParams.year })
+    : periodIsUnopened
+      ? t('nvi_period_for_year_is_unopened', { year: nviParams.year, date: openingDate })
+      : null;
+
   return (
     <MainContentLayout heading={t('candidate_search')} headTitle={t('candidate_search')} sx={{ gap: '0.1rem' }}>
       <>
-        {periodIsClosed && (
-          <InfoBanner
-            text={t('nvi_period_for_year_is_closed', { year: nviParams.year })}
-            size={InfoBannerSize.MEDIUM}
-            type={InfoBannerType.LOCK}
-            noElevation
-          />
+        {infoBannerText && (
+          <InfoBanner text={infoBannerText} size={InfoBannerSize.MEDIUM} type={InfoBannerType.LOCK} noElevation />
         )}
         <Grid container columns={16} spacing="1rem" sx={{ px: { xs: '0.5rem', md: 0 }, my: '1rem' }}>
           <Grid size={{ xs: 16, md: 4 }}>
