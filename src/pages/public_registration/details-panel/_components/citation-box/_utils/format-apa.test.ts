@@ -92,7 +92,7 @@ describe('formatAPA', () => {
     });
 
     expect(formatAPA(registration, { journalName: 'Frontiers in Sustainability' })).toBe(
-      'Normann, Ola Henrik, & Mincyte, Diana (2025). A Qualitative Comparative Analysis. Frontiers in Sustainability, 6(2), 10–25. https://doi.org/10.3389/frsus.2025.1490685'
+      'Normann, Ola Henrik, & Mincyte, Diana (2025). A qualitative comparative analysis. Frontiers in Sustainability, 6(2), 10–25. https://doi.org/10.3389/frsus.2025.1490685'
     );
   });
 
@@ -115,7 +115,7 @@ describe('formatAPA', () => {
     });
 
     expect(formatAPA(registration, { journalName: 'Some Journal' })).toBe(
-      'Mincyte, Diana (2024). Some Title. Some Journal. https://doi.org/10.1000/example'
+      'Mincyte, Diana (2024). Some title. Some Journal. https://doi.org/10.1000/example'
     );
   });
 
@@ -137,7 +137,7 @@ describe('formatAPA', () => {
     });
 
     expect(formatAPA(registration, { publisherName: 'Academic Press' })).toBe(
-      'Smith, Alice (2023). A Comprehensive Guide. Academic Press. https://doi.org/10.1000/book'
+      'Smith, Alice (2023). A comprehensive guide. Academic Press. https://doi.org/10.1000/book'
     );
   });
 
@@ -166,7 +166,7 @@ describe('formatAPA', () => {
     });
 
     expect(formatAPA(registration, { publisherName: 'Sikt' })).toBe(
-      'Lee, Bo (2022). Climate Trends (Report No. 12). Sikt. https://doi.org/10.1000/report'
+      'Lee, Bo (2022). Climate trends (Report No. 12). Sikt. https://doi.org/10.1000/report'
     );
   });
 
@@ -194,7 +194,7 @@ describe('formatAPA', () => {
         publisherName: 'Academic Press',
       })
     ).toBe(
-      'Smith, Alice (2021). On Quantum Theory. In R. Editor (Ed.), Advances in Physics (pp. 15–32). Academic Press. https://doi.org/10.1000/chapter'
+      'Smith, Alice (2021). On quantum theory. In R. Editor (Ed.), Advances in Physics (pp. 15–32). Academic Press. https://doi.org/10.1000/chapter'
     );
   });
 
@@ -205,18 +205,27 @@ describe('formatAPA', () => {
       name: 'Smith, Alice',
       year: '2023',
       title: 'Another Book',
+      expectedTitle: 'Another book',
     },
-    { label: 'report', instanceType: ReportType.Policy, name: 'Lee, Bo', year: '2022', title: 'A Policy Brief' },
+    {
+      label: 'report',
+      instanceType: ReportType.Policy,
+      name: 'Lee, Bo',
+      year: '2022',
+      title: 'A Policy Brief',
+      expectedTitle: 'A policy brief',
+    },
     {
       label: 'chapter',
       instanceType: ChapterType.AcademicChapter,
       name: 'Smith, Alice',
       year: '2021',
       title: 'On Quantum Theory',
+      expectedTitle: 'On quantum theory',
     },
   ])(
     'Omits missing type-specific fields for a $label, leaving just author, year, and title',
-    ({ instanceType, name, year, title }) => {
+    ({ instanceType, name, year, title, expectedTitle }) => {
       const registration = buildRegistration({
         instanceType,
         contributors: [
@@ -231,7 +240,7 @@ describe('formatAPA', () => {
         mainTitle: title,
       });
 
-      expect(formatAPA(registration)).toBe(`${name} (${year}). ${title}.`);
+      expect(formatAPA(registration)).toBe(`${name} (${year}). ${expectedTitle}.`);
     }
   );
 
@@ -251,7 +260,7 @@ describe('formatAPA', () => {
       doi: 'https://doi.org/10.1000/future',
     });
 
-    expect(formatAPA(registration)).toBe('Doe, Jane (2024). A Future Resource. https://doi.org/10.1000/future');
+    expect(formatAPA(registration)).toBe('Doe, Jane (2024). A future resource. https://doi.org/10.1000/future');
   });
 
   it('Generic fallback renders without errors when metadata is missing', () => {
@@ -277,6 +286,24 @@ describe('formatAPA', () => {
       ],
     });
 
-    expect(formatAPA(registration)).toBe('Lee, Bo (2022). A Report. https://hdl.handle.net/11250/3001');
+    expect(formatAPA(registration)).toBe('Lee, Bo (2022). A report. https://hdl.handle.net/11250/3001');
+  });
+
+  it('Sentence-cases an all-caps title in the citation', () => {
+    const registration = buildRegistration({
+      instanceType: BookType.NonFictionMonograph,
+      contributors: [
+        {
+          type: 'Contributor',
+          identity: { type: 'Identity', name: 'Smith, Alice' },
+          role: { type: ContributorRole.Creator },
+          sequence: 1,
+        },
+      ],
+      year: '2023',
+      mainTitle: 'A COMPREHENSIVE GUIDE TO CITATIONS',
+    });
+
+    expect(formatAPA(registration)).toBe('Smith, Alice (2023). A comprehensive guide to citations.');
   });
 });
