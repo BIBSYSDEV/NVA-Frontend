@@ -2,13 +2,13 @@ import { Autocomplete, Avatar, Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { fetchUsersByCustomer } from '../api/roleApi';
-import { RootState } from '../redux/store';
-import { InstitutionUser, RoleName } from '../types/user.types';
-import { dataTestId } from '../utils/dataTestIds';
-import { getInitials } from '../utils/general-helpers';
-import { getFullName } from '../utils/user-helpers';
-import { AutocompleteTextField } from './AutocompleteTextField';
+import { fetchUsersByCustomer } from '../../api/roleApi';
+import { RootState } from '../../redux/store';
+import { InstitutionUser, RoleName } from '../../types/user.types';
+import { dataTestId } from '../../utils/dataTestIds';
+import { getInitials } from '../../utils/general-helpers';
+import { getFullName } from '../../utils/user-helpers';
+import { AutocompleteTextField } from '../AutocompleteTextField';
 
 interface CuratorSelectorProps {
   roleFilter: RoleName[];

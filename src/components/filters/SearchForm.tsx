@@ -1,8 +1,8 @@
 import { Box, BoxProps, TextFieldProps } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { SearchTextField } from '../pages/search/SearchTextField';
-import { dataSearchFieldAttributeName, syncParamsWithSearchFields } from '../utils/searchHelpers';
+import { SearchTextField } from '../../pages/search/SearchTextField';
+import { dataSearchFieldAttributeName, syncParamsWithSearchFields } from '../../utils/searchHelpers';
 
 interface SearchFormProps extends Pick<BoxProps, 'sx'>, Pick<TextFieldProps, 'label' | 'placeholder'> {
   paginationOffsetParamName: string;
