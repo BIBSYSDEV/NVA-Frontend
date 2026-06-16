@@ -1,5 +1,6 @@
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { LabeledSpinner } from '../../../../../../components/_molecules/LabeledSpinner';
 
 interface ReferenceContentProps {
   citation: string;
@@ -11,12 +12,7 @@ export const ReferenceContent = ({ citation, isLoading, isError }: ReferenceCont
   const { t } = useTranslation();
 
   if (isLoading) {
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        <CircularProgress size="1rem" aria-hidden />
-        <Typography>{t('fetching_reference')}</Typography>
-      </Box>
-    );
+    return <LabeledSpinner label={t('fetching_reference')} />;
   }
 
   if (isError) {
