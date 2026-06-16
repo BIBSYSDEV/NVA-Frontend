@@ -4,7 +4,7 @@ import { TicketSearchParam } from '../../../api/searchApi';
 import { RootState } from '../../../redux/store';
 import { RoleName } from '../../../types/user.types';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { CuratorSelector } from '../../CuratorSelector';
+import { CuratorSelector } from '../../filters/CuratorSelector';
 import { useTicketsParams } from '../_hooks/useTicketsParams';
 
 const relevantRoleFilterOptions = [

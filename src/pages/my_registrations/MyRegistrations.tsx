@@ -17,16 +17,16 @@ import {
   SortOrder,
 } from '../../api/searchApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { SearchForm } from '../../components/filters/SearchForm';
 import { HeadTitle } from '../../components/HeadTitle';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { SearchForm } from '../../components/SearchForm';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationSearchItem, RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { setDelay } from '../../utils/general-helpers';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 import { MyRegistrationsList } from './MyRegistrationsList';
-import { setDelay } from '../../utils/general-helpers';
 
 const statusRadioGroupLabelId = 'status-radio-buttons-group-label';
 export const DELAY_BEFORE_REFETCH_DRAFT_REGISTRATIONS = 2000;

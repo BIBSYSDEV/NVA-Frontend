@@ -1,8 +1,8 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { dataTestId } from '../../utils/dataTestIds';
+import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 
 interface ExcludeSubunitsCheckboxProps {
   paramName: string;

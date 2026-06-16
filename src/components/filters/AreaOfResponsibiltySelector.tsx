@@ -3,13 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
-import { fetchOrganizations } from '../api/cristinApi';
-import { useFetchUserQuery } from '../api/hooks/useFetchUserQuery';
-import { RootState } from '../redux/store';
-import { Organization } from '../types/organization.types';
-import { dataTestId } from '../utils/dataTestIds';
-import { syncParamsWithSearchFields } from '../utils/searchHelpers';
-import { getLanguageString } from '../utils/translation-helpers';
+import { fetchOrganizations } from '../../api/cristinApi';
+import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
+import { RootState } from '../../redux/store';
+import { Organization } from '../../types/organization.types';
+import { dataTestId } from '../../utils/dataTestIds';
+import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
+import { getLanguageString } from '../../utils/translation-helpers';
 
 interface OrganizationOption extends Organization {
   level: number;
