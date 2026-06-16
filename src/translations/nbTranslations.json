@@ -2138,6 +2138,6 @@
   "reference_format": "Referanseformat",
   "reference_format_bibtex": "BibTeX",
   "reference_format_plain": "Ren tekst",
-  "fetching_reference": "Henter referanse …",
+  "fetching_reference": "Henter referanse...",
   "nvi_period_for_year_is_closed": "NVI-periode for {{year}} er lukket."
 }

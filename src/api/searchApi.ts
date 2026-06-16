@@ -662,6 +662,10 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
  * publication identifier so that only this publication is included in the response.
  */
 export const fetchBibtexCitation = async (identifier: string, signal?: AbortSignal) => {
+  if (!identifier) {
+    throw new Error('Cannot fetch BibTeX reference without a publication identifier');
+  }
+
   const searchParams = buildRegistrationSearchParams({ id: identifier, results: 1 });
 
   const getBibtex = await apiRequest2<string>({
