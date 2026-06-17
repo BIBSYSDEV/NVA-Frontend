@@ -15,7 +15,7 @@ import { PublicRegistrationContent } from '../../../public_registration/PublicRe
 import { NviCandidateNavigation } from './_components/NviCandidateNavigation';
 import { useFetchNviCandidateData } from './_hooks/useFetchNviCandidateData';
 
-export const NviCandidatePage = () => {
+const NviCandidatePage = () => {
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
   const { nviCandidate, registration, refetch, error, isPending } = useFetchNviCandidateData(identifier);
@@ -59,3 +59,5 @@ export const NviCandidatePage = () => {
     </ErrorBoundary>
   );
 };
+
+export default NviCandidatePage;

@@ -6,10 +6,11 @@ import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { NviStatusMultiSelect } from '../../../../components/filters/nvi/NviStatusMultiSelect';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { MainContentLayout } from '../../../../components/page-layouts/MainContentLayout';
+import { CenteredTableCell } from '../../../../components/tables/table-styles';
 import { NviPeriod, NviPeriodReport } from '../../../../types/nvi.types';
-import { UpsertNviPeriodDialog } from '../../../basic_data/app_admin/UpsertNviPeriodDialog';
 import { CenteredPercentageControlledCell } from '../_styles/nvi-admin-table-styles';
 import { NviAdminReportingPeriodsRow } from './_components/NviAdminReportingPeriodsRow';
+import { UpsertNviPeriodDialog } from './_components/UpsertNviPeriodDialog';
 import { useFilteredNviPeriods } from './_hooks/useFilteredNviPeriods';
 
 export const NviPeriodsPage = () => {
@@ -41,6 +42,8 @@ export const NviPeriodsPage = () => {
               <TableCell>{t('nvi_year')}</TableCell>
               <TableCell>{t('common.start_date')}</TableCell>
               <TableCell>{t('common.end_date')}</TableCell>
+              <CenteredTableCell>{t('number_of_candidates')}</CenteredTableCell>
+              <CenteredTableCell>{t('nvi_points')}</CenteredTableCell>
               <CenteredPercentageControlledCell>{t('percentage_controlled')}</CenteredPercentageControlledCell>
               <TableCell>{t('status_for_period')}</TableCell>
             </TableRow>

@@ -3,8 +3,8 @@ import { User } from '../../types/user.types';
 import { CustomerTicketAggregations } from '../../types/publication_types/ticket.types';
 
 interface GetNotificationCountsProps {
-  notificationsQueryEnabled: boolean;
   user: User | null;
+  notificationsQueryEnabled: boolean;
 }
 
 export const useGetNotificationCounts = ({ notificationsQueryEnabled, user }: GetNotificationCountsProps) => {

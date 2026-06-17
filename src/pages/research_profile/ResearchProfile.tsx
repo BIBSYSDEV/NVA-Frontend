@@ -12,7 +12,6 @@ import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam, ResultSearchOrder } from '../../api/searchApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ExportResultsBibTexButton } from '../../components/buttons/export-buttons/ExportResultsBibTexButton';
 import { HeadTitle } from '../../components/HeadTitle';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
@@ -321,7 +320,7 @@ const ResearchProfile = () => {
                 />
               </Trans>
             </Typography>
-            <BetaFunctionality sx={{ mt: '1rem', width: 'fit-content' }}>
+            <Box sx={{ mt: '1rem', width: 'fit-content' }}>
               <ExportResultsBibTexButton
                 params={{
                   contributor: personIdentifier,
@@ -329,7 +328,7 @@ const ResearchProfile = () => {
                   sort: registrationSort.sortOrder,
                 }}
               />
-            </BetaFunctionality>
+            </Box>
           </>
         ) : null}
         <ListPagination

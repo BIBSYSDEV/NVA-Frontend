@@ -9,7 +9,7 @@ interface BetaFunctionalityProps extends BoxProps {
 export const BetaFunctionality = ({ children, sx, ...props }: BetaFunctionalityProps) => {
   const betaEnabled = useBetaFlag();
   return betaEnabled ? (
-    <Box sx={{ border: '3px dashed', padding: '0.5rem', ...sx }} {...props}>
+    <Box id="beta-functionality" sx={{ border: '3px dashed black', padding: '0.5rem', ...sx }} {...props}>
       {children}
     </Box>
   ) : null;

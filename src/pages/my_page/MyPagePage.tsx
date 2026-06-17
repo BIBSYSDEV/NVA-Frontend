@@ -26,9 +26,11 @@ import {
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { ProfilePicture } from '../../components/ProfilePicture';
+import { RegistrationLandingPage } from '../../components/registration-landing-page/RegistrationLandingPage';
 import { SelectableButton } from '../../components/SelectableButton';
 import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { TicketList } from '../../components/ticket-list/TicketList';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
@@ -40,9 +42,7 @@ import { getDialogueNotificationsParams, resetPaginationAndNavigate } from '../.
 import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
-import { TicketList } from '../messages/components/TicketList';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
-import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import ResearchProfile from '../research_profile/ResearchProfile';
 import { MyFieldAndBackground } from './user_profile/MyFieldAndBackground';
 import { MyProfile } from './user_profile/MyProfile';

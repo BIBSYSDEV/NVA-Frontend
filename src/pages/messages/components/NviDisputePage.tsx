@@ -3,23 +3,23 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
-import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
-import { CuratorSelector } from '../../../components/CuratorSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { AreaOfResponsibilitySelector } from '../../../components/filters/AreaOfResponsibiltySelector';
+import { CuratorSelector } from '../../../components/filters/CuratorSelector';
+import { ExcludeSubunitsCheckbox } from '../../../components/filters/ExcludeSubunitsCheckbox';
+import { SearchForm } from '../../../components/filters/SearchForm';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { SearchForm } from '../../../components/SearchForm';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getDefaultNviYear, useNviDisputeParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
-import { NviSortSelector } from './NviSortSelector';
 import { NviDisputeVisibilityFilter } from './NviDisputeVisibilityFilter';
+import { NviSortSelector } from './NviSortSelector';
 
-export const NviDisputePage = () => {
+const NviDisputePage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -124,3 +124,5 @@ export const NviDisputePage = () => {
     </section>
   );
 };
+
+export default NviDisputePage;

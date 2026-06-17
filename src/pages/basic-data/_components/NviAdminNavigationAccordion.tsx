@@ -4,6 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviPeriodReport } from '../../../api/hooks/useFetchNviPeriodReport';
+import {
+  allFilterableNviPeriodStatuses,
+  PARAM_NAME_PERIOD_STATUSES,
+} from '../../../components/filters/nvi/NviStatusMultiSelect';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NviReportProgressBar } from '../../../components/NviReportProgressBar';
 import { LinkCreateButton, NavigationList } from '../../../components/PageWithSideMenu';
@@ -15,6 +19,8 @@ import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getPercentageControlledReportingPeriod } from '../nvi/_utils/nvi-admin-aggregations-helpers';
 import { NviAdminOrderBy } from '../nvi/_utils/nvi-admin-sort-helpers';
+
+const nviPeriodsDefaultPath = `${UrlPathTemplate.BasicDataNvi}?${new URLSearchParams({ [PARAM_NAME_PERIOD_STATUSES]: allFilterableNviPeriodStatuses.join(',') })}`;
 
 export const NviAdminNavigationAccordion = () => {
   const { t } = useTranslation();
@@ -34,6 +40,7 @@ export const NviAdminNavigationAccordion = () => {
       title={t('common.nvi')}
       startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
       accordionPath={UrlPathTemplate.BasicDataNvi}
+      defaultPath={nviPeriodsDefaultPath}
       dataTestId={dataTestId.basicData.nviPeriodsLink}>
       <NavigationList aria-label={t('common.nvi')}>
         <StyledNviStatusBox>
@@ -49,7 +56,7 @@ export const NviAdminNavigationAccordion = () => {
             <SelectableButton
               data-testid={dataTestId.basicData.nviReportingPeriodsLink}
               isSelected={currentPath === UrlPathTemplate.BasicDataNvi}
-              to={UrlPathTemplate.BasicDataNvi}>
+              to={nviPeriodsDefaultPath}>
               {t('basic_data.nvi.reporting_periods')}
             </SelectableButton>
             <SelectableButton

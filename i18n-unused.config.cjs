@@ -37,6 +37,13 @@ module.exports = {
     'registration.resource_type.media_contribution.medium_types.',
     'registration.status.',
     'tasks.nvi.status.',
+    // Used as `labelKey` in option arrays (resolved at render time via `t(labelKey)`):
+    'nvi_period_status_ongoing',
+    'nvi_period_status_reported',
+    'tasks.nvi.candidates_for_control',
+    // Key picked by a ternary then passed to `t()`:
+    'tasks.nvi.reporting_period_closed',
+    'tasks.nvi.reporting_period_missing',
   ],
   translationContextSeparator: '__',
 };

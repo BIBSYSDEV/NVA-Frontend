@@ -19,15 +19,15 @@ export interface SelectedTicketTypeLocationState {
 
 export type BasicDataLocationState = (PreviousPathLocationState & PreviousSearchLocationState) | null;
 
-export type LocationWithNviCandidatePageState = {
-  pathname: string;
-  state: NviCandidatePageLocationState;
-};
-
 export interface NviCandidatePageLocationState extends PreviousSearchLocationState {
   candidateOffsetState?: {
     currentOffset: number;
     nviQueryParams: FetchNviCandidatesParams;
   };
   isOnDisputePage?: boolean;
+}
+
+export interface TaskNavigationLocationState extends PreviousSearchLocationState, SelectedTicketTypeLocationState {
+  ticketTypeFilters?: string[];
+  ticketOffset?: number;
 }

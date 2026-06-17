@@ -3,7 +3,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, Button } from '@mui/material';
 import { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { InfoBanner } from '../../components/InfoBanner';
+import { InfoBannerSize } from '../../components/info-banner/enums';
+import { InfoBanner } from '../../components/info-banner/InfoBanner';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { NviCandidateProblemsContext } from '../../context/NviCandidateProblemsContext';
 import { Contributor } from '../../types/contributor.types';
@@ -93,7 +94,7 @@ export const PublicRegistrationContributors = ({
 
       {problems && hasUnidentifiedContributorProblem(problems) && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem' }}>
-          <InfoBanner size="small" text={t('tasks.nvi.unidentified_person_with_nvi_institution')} />
+          <InfoBanner size={InfoBannerSize.SMALL} text={t('tasks.nvi.unidentified_person_with_nvi_institution')} />
         </Box>
       )}
     </Box>

@@ -1,0 +1,28 @@
+import { UseQueryResult } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { useOutletContext } from 'react-router';
+import { TicketList } from '../../../components/ticket-list/TicketList';
+import { TicketListDefaultValuesWrapper } from '../../../components/TicketListDefaultValuesWrapper';
+import { CustomerTicketSearchResponse } from '../../../types/publication_types/ticket.types';
+
+interface TasksDialoguePageContext {
+  ticketsQuery: UseQueryResult<CustomerTicketSearchResponse>;
+  selectedTicketTypes: string[];
+}
+
+const TasksDialoguePage = () => {
+  const { t } = useTranslation();
+  const { ticketsQuery, selectedTicketTypes } = useOutletContext<TasksDialoguePageContext>();
+
+  return (
+    <TicketListDefaultValuesWrapper>
+      <TicketList
+        ticketsQuery={ticketsQuery}
+        title={t('tasks.user_dialog')}
+        selectedTicketTypes={selectedTicketTypes}
+      />
+    </TicketListDefaultValuesWrapper>
+  );
+};
+
+export default TasksDialoguePage;

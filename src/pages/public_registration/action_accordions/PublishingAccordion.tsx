@@ -43,6 +43,8 @@ import { RefreshPublishingRequestButton } from './RefreshPublishingRequestButton
 import { TaskAccordionSummary } from './styles';
 import { TicketAssignee } from './TicketAssignee';
 
+const AWAITING_STATUS_SYNC_TIMEOUT_MS = 30 * 1000;
+
 interface PublishingAccordionProps {
   registration: Registration;
   publishingRequestTickets: PublishingTicket[];
@@ -165,7 +167,18 @@ export const PublishingAccordion = ({
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
 
   useEffect(() => {
-    setIsAwaitingStatusSync(hasMismatchingPublishedStatus || isWaitingForFileDeletion);
+    const shouldAwaitSync = hasMismatchingPublishedStatus || isWaitingForFileDeletion;
+    setIsAwaitingStatusSync(shouldAwaitSync);
+
+    if (!shouldAwaitSync) {
+      return;
+    }
+
+    // INFO: If the backend never reports the sync as completed (e.g. a stuck reindex
+    // or a Completed ticket still carrying filesForApproval), re-enable editing after 2 minutes
+    // so the user is not locked out indefinitely.
+    const timeoutId = setTimeout(() => setIsAwaitingStatusSync(false), AWAITING_STATUS_SYNC_TIMEOUT_MS);
+    return () => clearTimeout(timeoutId);
   }, [hasMismatchingPublishedStatus, isWaitingForFileDeletion, setIsAwaitingStatusSync]);
 
   return (
