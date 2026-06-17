@@ -7,7 +7,7 @@ interface BibtexQueryState {
 }
 
 export interface ReferenceDisplayState {
-  citation: string;
+  reference: string;
   isLoading: boolean;
   isError: boolean;
   isCopyDisabled: boolean;
@@ -26,12 +26,12 @@ export const getReferenceDisplayState = (
   const isBibtex = format === 'bibtex';
   const isLoading = isBibtex && bibtex.isLoading;
   const isError = isBibtex && bibtex.isError;
-  const citation = isBibtex ? (bibtex.data ?? '') : plainCitation;
+  const reference = isBibtex ? (bibtex.data ?? '') : plainCitation;
 
   return {
-    citation,
+    reference,
     isLoading,
     isError,
-    isCopyDisabled: isLoading || isError || !citation,
+    isCopyDisabled: isLoading || isError || !reference,
   };
 };
