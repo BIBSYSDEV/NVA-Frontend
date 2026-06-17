@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
 import { useFetchRegistrationTickets } from '../../../api/hooks/useFetchRegistrationTickets';
+import { LogPanel } from '../../../pages/public_registration/log/LogPanel';
 import { NviCandidate } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
-import { LogPanel } from '../../public_registration/log/LogPanel';
-import { NviDialoguePanel } from './NviDialoguePanel';
+import { NviDialoguePanel } from './_components/nvi-dialogue-panel/NviDialoguePanel';
 
 interface NviCandidateActionPanelProps {
   nviCandidate: NviCandidate;

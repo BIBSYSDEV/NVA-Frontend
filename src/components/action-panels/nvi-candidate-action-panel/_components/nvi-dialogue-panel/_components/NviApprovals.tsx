@@ -3,10 +3,10 @@ import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, Skeleton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
-import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
-import { Approval, NviCandidateApprovalStatus } from '../../../types/nvi.types';
-import { getLanguageString } from '../../../utils/translation-helpers';
+import { useFetchOrganization } from '../../../../../../api/hooks/useFetchOrganization';
+import { Approval, NviCandidateApprovalStatus } from '../../../../../../types/nvi.types';
+import { getLanguageString } from '../../../../../../utils/translation-helpers';
+import { PublicationPointsTypography } from '../../../../../PublicationPointsTypography';
 
 interface NviApprovalsProps {
   approvals: Approval[];

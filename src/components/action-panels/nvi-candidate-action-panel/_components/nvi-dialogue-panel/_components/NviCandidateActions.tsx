@@ -14,24 +14,29 @@ import {
   setCandidateAssignee,
   setCandidateStatus,
   SetNviCandidateStatusData,
-} from '../../../api/scientificIndexApi';
-import { AssigneeSelector } from '../../../components/AssigneeSelector';
-import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { MessageForm } from '../../../components/MessageForm';
-import { OpenInNewLink } from '../../../components/OpenInNewLink';
-import { setNotification } from '../../../redux/notificationSlice';
-import { RootState } from '../../../redux/store';
-import { PreviousPathLocationState } from '../../../types/locationState.types';
-import { FinalizedApproval, NviCandidate, NviPeriodStatusEnum, RejectedApproval } from '../../../types/nvi.types';
-import { RegistrationTab } from '../../../types/registration.types';
-import { RoleName } from '../../../types/user.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { hasUnidentifiedContributorProblem } from '../../../utils/nviHelpers';
-import { getRegistrationWizardPath } from '../../../utils/urlPaths';
-import { MessageItem } from './MessageList';
-import { NviCandidateRejectionDialog } from './NviCandidateRejectionDialog';
-import { NviNoteMenu } from './NviNoteMenu';
+} from '../../../../../../api/scientificIndexApi';
+import { MessageItem } from '../../../../../../pages/messages/components/MessageList';
+import { NviCandidateRejectionDialog } from '../../../../../../pages/messages/components/NviCandidateRejectionDialog';
+import { NviNoteMenu } from '../../../../../../pages/messages/components/NviNoteMenu';
+import { setNotification } from '../../../../../../redux/notificationSlice';
+import { RootState } from '../../../../../../redux/store';
+import { PreviousPathLocationState } from '../../../../../../types/locationState.types';
+import {
+  FinalizedApproval,
+  NviCandidate,
+  NviPeriodStatusEnum,
+  RejectedApproval,
+} from '../../../../../../types/nvi.types';
+import { RegistrationTab } from '../../../../../../types/registration.types';
+import { RoleName } from '../../../../../../types/user.types';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../../../../utils/general-helpers';
+import { hasUnidentifiedContributorProblem } from '../../../../../../utils/nviHelpers';
+import { getRegistrationWizardPath } from '../../../../../../utils/urlPaths';
+import { AssigneeSelector } from '../../../../../AssigneeSelector';
+import { ErrorBoundary } from '../../../../../ErrorBoundary';
+import { MessageForm } from '../../../../../MessageForm';
+import { OpenInNewLink } from '../../../../../OpenInNewLink';
 
 interface NviNote {
   type: 'FinalizedNote' | 'GeneralNote';
