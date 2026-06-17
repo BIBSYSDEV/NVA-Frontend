@@ -43,7 +43,7 @@ export const UpsertNviPeriodDialog = ({
 
   const nviPeriodMutation = useMutation({
     mutationFn: (data: Omit<NviPeriod, 'id' | 'status'>) =>
-      nviPeriod ? updateNviPeriod({ ...nviPeriod, ...data }) : createNviPeriod(data),
+      nviPeriod ? updateNviPeriod({ id: nviPeriod.id, ...data }) : createNviPeriod(data),
     onSuccess: () =>
       nviPeriod
         ? dispatch(setNotification({ message: t('feedback.success.update_nvi_period'), variant: 'success' }))
