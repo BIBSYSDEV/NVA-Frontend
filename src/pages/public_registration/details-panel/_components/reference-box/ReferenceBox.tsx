@@ -1,10 +1,10 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFetchBibtexReference } from '../../../../../api/hooks/useFetchBibtexCitation';
+import { useFetchBibtexReference } from '../../../../../api/hooks/useFetchBibtexReference';
 import { Registration } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
-import { CopyCitationButton } from './_components/CopyCitationButton';
+import { CopyReferenceButton } from './_components/CopyReferenceButton';
 import { ReferenceContent } from './_components/ReferenceContent';
 import {
   getReferenceFormatTabId,
@@ -15,34 +15,29 @@ import {
 import { useApaCitation } from './_hooks/useApaCitation';
 import { getReferenceDisplayState } from './_utils/reference-display';
 
-const citationHeadingId = 'citation-box-heading';
+const referenceHeadingId = 'reference-box-heading';
 
-interface CitationBoxProps {
+interface ReferenceBoxProps {
   registration: Registration;
 }
 
-export const CitationBox = ({ registration }: CitationBoxProps) => {
+export const ReferenceBox = ({ registration }: ReferenceBoxProps) => {
   const { t } = useTranslation();
-  const citation = useApaCitation(registration);
+  const apaCitation = useApaCitation(registration);
 
   const [format, setFormat] = useState<ReferenceFormat>('plain');
   const isBibtex = format === 'bibtex';
 
   const bibtexQuery = useFetchBibtexReference(registration.identifier, isBibtex);
-  const {
-    citation: activeCitation,
-    isLoading,
-    isError,
-    isCopyDisabled,
-  } = getReferenceDisplayState(format, citation, bibtexQuery);
+  const { reference, isLoading, isError, isCopyDisabled } = getReferenceDisplayState(format, apaCitation, bibtexQuery);
 
-  if (!citation) {
+  if (!apaCitation) {
     return null;
   }
 
   return (
     <Box component="section" display="flex" flexDirection="column">
-      <Typography id={citationHeadingId} variant="h3" gutterBottom>
+      <Typography id={referenceHeadingId} variant="h3" gutterBottom>
         {t('reference')}
       </Typography>
       <ReferenceFormatToggle value={format} onChange={setFormat} />
@@ -55,9 +50,9 @@ export const CitationBox = ({ registration }: CitationBoxProps) => {
         aria-labelledby={getReferenceFormatTabId(format)}
         aria-busy={isLoading}
         sx={{ p: '1rem', maxHeight: '12rem', overflow: 'auto', whiteSpace: 'pre-wrap' }}>
-        <ReferenceContent citation={activeCitation} isLoading={isLoading} isError={isError} />
+        <ReferenceContent reference={reference} isLoading={isLoading} isError={isError} />
       </Paper>
-      <CopyCitationButton citation={activeCitation} disabled={isCopyDisabled} />
+      <CopyReferenceButton reference={reference} disabled={isCopyDisabled} />
     </Box>
   );
 };

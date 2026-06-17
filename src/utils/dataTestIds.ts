@@ -368,7 +368,7 @@ export const dataTestId = {
     codeRepositoryLink: 'code-repository-link',
     contributors: 'public-registration-contributors',
     detailsTab: {
-      copyCitationButton: 'copy-citation-button',
+      copyReferenceButton: 'copy-reference-button',
       detailsTab: 'details-tab',
       emailLink: (id: string) => `email-link-${id}`,
       infoLink: 'info-link',

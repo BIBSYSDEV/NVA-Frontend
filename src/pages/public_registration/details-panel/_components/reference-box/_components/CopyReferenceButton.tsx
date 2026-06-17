@@ -8,12 +8,12 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../../../redux/notificationSlice';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 
-interface CopyCitationButtonProps {
-  citation: string;
+interface CopyReferenceButtonProps {
+  reference: string;
   disabled?: boolean;
 }
 
-export const CopyCitationButton = ({ citation, disabled = false }: CopyCitationButtonProps) => {
+export const CopyReferenceButton = ({ reference, disabled = false }: CopyReferenceButtonProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [justCopied, setJustCopied] = useState(false);
@@ -26,7 +26,7 @@ export const CopyCitationButton = ({ citation, disabled = false }: CopyCitationB
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(citation);
+      await navigator.clipboard.writeText(reference);
       setJustCopied(true);
     } catch {
       dispatch(setNotification({ message: t('feedback.error.copy_reference'), variant: 'error' }));
@@ -36,7 +36,7 @@ export const CopyCitationButton = ({ citation, disabled = false }: CopyCitationB
   return (
     <>
       <Button
-        data-testid={dataTestId.registrationLandingPage.detailsTab.copyCitationButton}
+        data-testid={dataTestId.registrationLandingPage.detailsTab.copyReferenceButton}
         color="secondary"
         variant="contained"
         disabled={disabled}
