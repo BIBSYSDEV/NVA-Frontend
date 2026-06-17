@@ -59,7 +59,7 @@ export const deleteCandidateNote = async (candidateId: string, noteIdentifier: s
   return deleteNoteResponse.data;
 };
 
-export const createNviPeriod = async (data: NviPeriod) => {
+export const createNviPeriod = async (data: Omit<NviPeriod, 'id' | 'status'>) => {
   const createNviPeriodResponse = await authenticatedApiRequest2<NviPeriod>({
     url: ScientificIndexApiPath.Period,
     method: 'POST',

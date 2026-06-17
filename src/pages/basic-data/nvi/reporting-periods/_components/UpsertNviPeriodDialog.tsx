@@ -23,7 +23,7 @@ interface UpsertNviPeriodDialogProps {
   closeEditDialog: () => void;
 }
 
-const emptyNviPeriod: NviPeriod = {
+const emptyNviPeriod: Omit<NviPeriod, 'id' | 'status'> = {
   type: 'NviPeriod',
   publishingYear: '',
   startDate: '',
@@ -42,7 +42,8 @@ export const UpsertNviPeriodDialog = ({
   const location = useLocation();
 
   const nviPeriodMutation = useMutation({
-    mutationFn: (data: NviPeriod) => (nviPeriod ? updateNviPeriod(data) : createNviPeriod(data)),
+    mutationFn: (data: Omit<NviPeriod, 'id' | 'status'>) =>
+      nviPeriod ? updateNviPeriod({ ...nviPeriod, ...data }) : createNviPeriod(data),
     onSuccess: () =>
       nviPeriod
         ? dispatch(setNotification({ message: t('feedback.success.update_nvi_period'), variant: 'success' }))
