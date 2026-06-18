@@ -1,13 +1,13 @@
 import { Box, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { NviStatusChip } from '../../../components/_molecules/status-chip/NviStatusChip';
-import { RootState } from '../../../redux/store';
-import { NviCandidate, NviPeriodStatusEnum } from '../../../types/nvi.types';
-import { hasUnidentifiedContributorProblem } from '../../../utils/nviHelpers';
-import { NviApprovals } from './NviApprovals';
-import { NviCandidateActions } from './NviCandidateActions';
-import { NviDialoguePanelSkeleton } from './NviDialogPanelSkeleton';
+import { NviDialoguePanelSkeleton } from '../../../../../pages/messages/components/NviDialogPanelSkeleton';
+import { RootState } from '../../../../../redux/store';
+import { NviCandidate, NviPeriodStatusEnum } from '../../../../../types/nvi.types';
+import { hasUnidentifiedContributorProblem } from '../../../../../utils/nviHelpers';
+import { NviStatusChip } from '../../../../_molecules/status-chip/NviStatusChip';
+import { NviApprovals } from './_components/NviApprovals';
+import { NviCandidateActions } from './_components/NviCandidateActions';
 
 interface NviDialoguePanelProps {
   nviCandidate: NviCandidate;
