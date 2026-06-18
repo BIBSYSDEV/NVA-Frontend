@@ -8,7 +8,6 @@ import { dataTestId } from '../../../../../utils/dataTestIds';
 import { EditIconButton } from '../../../../messages/components/EditIconButton';
 import { CenteredPercentageControlledCell } from '../../_styles/nvi-admin-table-styles';
 import { getPercentageControlledReportingPeriod } from '../../_utils/nvi-admin-aggregations-helpers';
-import { getNviPeriodStatus } from '../_utils/nvi-period-helpers';
 import { NviPeriodStatusChip } from './NviPeriodStatusChip';
 
 interface NviAdminReportingPeriodsRowProps {
@@ -21,7 +20,6 @@ export const NviAdminReportingPeriodsRow = ({
   setNviPeriodToEdit,
 }: NviAdminReportingPeriodsRowProps) => {
   const { period, totals, byGlobalApprovalStatus } = nviPeriodReport;
-  const status = getNviPeriodStatus(period);
 
   return (
     <TableRow sx={{ height: '4rem' }}>
@@ -40,11 +38,11 @@ export const NviAdminReportingPeriodsRow = ({
       </TableCell>
       <CenteredTableCell>
         {/* We are showing different numbers based on period status, and this is the only status we have a number for yet */}
-        {status === NviPeriodStatusEnum.ClosedPeriod ? byGlobalApprovalStatus.approved : '-'}
+        {period.status === NviPeriodStatusEnum.ClosedPeriod ? byGlobalApprovalStatus.approved : '-'}
       </CenteredTableCell>
       <CenteredTableCell>
         {/* We are showing different numbers based on period status, and this is the only status we have a number for yet */}
-        {status === NviPeriodStatusEnum.ClosedPeriod ? totals.validPoints : '-'}
+        {period.status === NviPeriodStatusEnum.ClosedPeriod ? totals.validPoints : '-'}
       </CenteredTableCell>
       <CenteredPercentageControlledCell>
         <HorizontalBox sx={{ justifyContent: 'center' }}>
