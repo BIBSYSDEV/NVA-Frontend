@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useFetchNviReportForInstitution } from '../../../api/hooks/useFetchNviReportForInstitution';
 import { RootState } from '../../../redux/store';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
 
 interface UseNviInstitutionSummaryOptions {
   enabled?: boolean;
@@ -10,7 +10,7 @@ interface UseNviInstitutionSummaryOptions {
 
 export const useNviInstitutionSummary = ({ enabled = true }: UseNviInstitutionSummaryOptions = {}) => {
   const user = useSelector((store: RootState) => store.user);
-  const { year } = useNviCandidatesParams();
+  const year = getDefaultNviYear();
 
   const query = useFetchNviReportForInstitution({
     id: getIdentifierFromId(user?.topOrgCristinId ?? ''),
