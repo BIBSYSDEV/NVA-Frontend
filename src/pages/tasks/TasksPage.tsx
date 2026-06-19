@@ -9,7 +9,7 @@ import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWith
 import { SideMenu } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { TicketTypeSelection } from '../../types/publication_types/ticket.types';
-import { checkWhichTasksPage } from '../../utils/location-checkers';
+import { checkWhichTasksPage } from '../../utils/location-helpers';
 import { checkUserRoles } from '../../utils/user-helpers';
 import { NviCorrectionListNavigationAccordion } from '../messages/components/NviCorrectionListNavigationAccordion';
 import { ResultRegistrationsNavigationListAccordion } from '../messages/components/ResultRegistrationsNavigationListAccordion';

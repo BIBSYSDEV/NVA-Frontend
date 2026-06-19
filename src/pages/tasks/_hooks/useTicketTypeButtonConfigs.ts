@@ -7,7 +7,7 @@ import {
   TicketTypeSelection,
 } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { checkWhichTasksPage } from '../../../utils/location-checkers';
+import { checkWhichTasksPage } from '../../../utils/location-helpers';
 import { checkUserRoles } from '../../../utils/user-helpers';
 import { useGetNotificationCounts, useGetTicketsCounts } from '../../messages/user-dialog-helpers';
 

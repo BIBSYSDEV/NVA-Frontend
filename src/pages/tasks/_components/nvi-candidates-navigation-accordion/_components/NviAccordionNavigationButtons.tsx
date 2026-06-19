@@ -15,7 +15,7 @@ import { RootState } from '../../../../../redux/store';
 import { InstitutionReport } from '../../../../../types/nvi.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../../../utils/hooks/useNviCandidatesParams';
-import { checkWhichTasksPage } from '../../../../../utils/location-checkers';
+import { checkWhichTasksPage } from '../../../../../utils/location-helpers';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../../utils/urlPaths';
 import { NviApprovalStatusCounts } from '../_hooks/useNviInstitutionReportSummary';
 

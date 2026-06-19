@@ -8,7 +8,7 @@ import { NviReportProgressBar } from '../../../../components/NviReportProgressBa
 import { StyledNviStatusBox, StyledTicketSearchFormGroup } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { checkWhichTasksPage } from '../../../../utils/location-checkers';
+import { checkWhichTasksPage } from '../../../../utils/location-helpers';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../utils/urlPaths';
 import { NviReportNumbers } from './_components/nvi-report-numbers/NviReportNumbers';
 import { NviAccordionNavigationButtons } from './_components/NviAccordionNavigationButtons';
