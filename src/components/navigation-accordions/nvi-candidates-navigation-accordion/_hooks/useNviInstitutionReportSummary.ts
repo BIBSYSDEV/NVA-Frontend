@@ -35,7 +35,6 @@ export const useNviInstitutionReportSummary = ({
   const query = useFetchNviReportForInstitution({
     id: getIdentifierFromId(user?.topOrgCristinId ?? ''),
     year: year,
-
     enabled,
   });
 
