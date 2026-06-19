@@ -19,10 +19,10 @@ import {
 } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { getDefaultNviYear, useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../utils/urlPaths';
-import { StyledSkeleton } from '../nvi/_components/NviRowWrapper';
 import { useNviInstitutionSummary } from '../_hooks/useNviInstitutionSummary';
+import { StyledSkeleton } from '../nvi/_components/NviRowWrapper';
 
 export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();
@@ -54,6 +54,7 @@ export const NviCandidatesNavigationAccordion = () => {
       defaultPath={getNviCandidatesSearchPath({
         username: user?.nvaUsername,
         status: [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending],
+        year: getDefaultNviYear(),
         globalStatus: NviCandidateGlobalStatusEnum.Pending,
       })}
       dataTestId={dataTestId.tasksPage.nviAccordion}>
