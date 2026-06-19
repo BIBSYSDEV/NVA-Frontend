@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { MinimizedMenuIconButton } from '../../../components/SideMenu';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { checkPages } from '../../messages/tasks-helpers';
+import { checkWhichTasksPage } from '../../../utils/location-checkers';
 import { selectTasksBackPath } from '../_utils/select-tasks-back-path';
 
 export const TasksPageMinimizedIconButton = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const locationState = location.state;
-  const { isOnTicketPage } = checkPages(location.pathname);
+  const { isOnTicketPage } = checkWhichTasksPage(location.pathname);
 
   return (
     <MinimizedMenuIconButton

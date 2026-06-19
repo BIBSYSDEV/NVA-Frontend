@@ -1,6 +1,6 @@
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { UrlPathTemplate } from './urlPaths';
 
-export const checkPages = (pathname: string) => {
+export const checkWhichTasksPage = (pathname: string) => {
   const isOnTicketsPage = pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
 
@@ -10,13 +10,20 @@ export const checkPages = (pathname: string) => {
   const isOnNviDisputesPage = pathname === UrlPathTemplate.TasksNviDisputes;
   const isOnNviPublicationPointsPage = pathname === UrlPathTemplate.TasksPublicationPoints;
 
-  // The NVI candidate detail page that is reached by clicking a candidate from the NVI search
-  const isOnNviCandidatePage =
-    pathname.startsWith(UrlPathTemplate.TasksNvi) &&
-    !isOnNviCandidatesPage &&
-    !isOnNviStatusPage &&
-    !isOnNviDisputesPage &&
-    !isOnNviPublicationPointsPage;
+  const isOnAnyNviOverviewPage =
+    isOnNviCandidatesPage || isOnNviStatusPage || isOnNviDisputesPage || isOnNviPublicationPointsPage;
 
-  return { isOnTicketsPage, isOnTicketPage, isOnNviCandidatePage };
+  // The NVI candidate detail page that is reached by clicking a candidate from the NVI search
+  const isOnNviCandidatePage = pathname.startsWith(UrlPathTemplate.TasksNvi) && !isOnAnyNviOverviewPage;
+
+  return {
+    isOnTicketsPage,
+    isOnTicketPage,
+    isOnNviCandidatePage,
+    isOnAnyNviOverviewPage,
+    isOnNviCandidatesPage,
+    isOnNviStatusPage,
+    isOnNviDisputesPage,
+    isOnNviPublicationPointsPage,
+  };
 };

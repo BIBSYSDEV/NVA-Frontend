@@ -5,15 +5,15 @@ import { useSelector } from 'react-redux';
 import { Outlet, useLocation } from 'react-router';
 import { useFetchTickets } from '../../api/hooks/useFetchTickets';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { NviCandidatesNavigationAccordion } from '../../components/navigation-accordions/nvi-candidates-navigation-accordion/NviCandidatesNavigationAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { TicketTypeSelection } from '../../types/publication_types/ticket.types';
+import { checkWhichTasksPage } from '../../utils/location-checkers';
 import { checkUserRoles } from '../../utils/user-helpers';
 import { NviCorrectionListNavigationAccordion } from '../messages/components/NviCorrectionListNavigationAccordion';
 import { ResultRegistrationsNavigationListAccordion } from '../messages/components/ResultRegistrationsNavigationListAccordion';
-import { checkPages } from '../messages/tasks-helpers';
-import { NviCandidatesNavigationAccordion } from './_components/NviCandidatesNavigationAccordion';
 import { TasksPageMinimizedIconButton } from './_components/TasksPageMinimizedIconButton';
 import { UserDialogueNavigationAccordion } from './_components/UserDialogueNavigationAccordion';
 
@@ -25,7 +25,7 @@ const TasksPage = () => {
   const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator || isThesisCurator;
   const isAnyCurator = isTicketCurator || isNviCurator;
 
-  const { isOnTicketsPage, isOnTicketPage, isOnNviCandidatePage } = checkPages(location.pathname);
+  const { isOnTicketsPage, isOnTicketPage, isOnNviCandidatePage } = checkWhichTasksPage(location.pathname);
   const isOnADetailsPage = isOnTicketPage || isOnNviCandidatePage;
 
   const searchParams = new URLSearchParams(location.search);

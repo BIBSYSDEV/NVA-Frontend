@@ -7,8 +7,8 @@ import {
   TicketTypeSelection,
 } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { checkWhichTasksPage } from '../../../utils/location-checkers';
 import { checkUserRoles } from '../../../utils/user-helpers';
-import { checkPages } from '../../messages/tasks-helpers';
 import { useGetNotificationCounts, useGetTicketsCounts } from '../../messages/user-dialog-helpers';
 
 interface TicketTypeButtonConfig {
@@ -25,7 +25,7 @@ export const useTicketTypeButtonConfigs = (
   const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
   const { isPublishingCurator, isThesisCurator, isDoiCurator, isSupportCurator } = checkUserRoles(user);
-  const { isOnTicketsPage } = checkPages(location.pathname);
+  const { isOnTicketsPage } = checkWhichTasksPage(location.pathname);
   const {
     doiNotificationsCount,
     publishingNotificationsCount,
