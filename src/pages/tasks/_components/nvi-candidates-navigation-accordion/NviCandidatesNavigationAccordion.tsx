@@ -44,7 +44,7 @@ export const NviCandidatesNavigationAccordion = () => {
             isPending={query.isPending}
           />
           <NviReportNumbers isLoading={query.isPending} numbers={counts} />
-          <NviAccordionNavigationButtons nviReportsQuery={query} approvalStatusCounts={counts} />
+          <NviAccordionNavigationButtons reportsArePending={query.isPending} approvalStatusCounts={counts} />
         </StyledNviStatusBox>
       </StyledTicketSearchFormGroup>
     </NavigationListAccordion>

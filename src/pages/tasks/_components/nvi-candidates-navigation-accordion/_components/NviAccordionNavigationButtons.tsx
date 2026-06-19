@@ -1,5 +1,4 @@
 import { Box } from '@mui/material';
-import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -12,7 +11,6 @@ import { SelectableButton } from '../../../../../components/SelectableButton';
 import { SkeletonLine } from '../../../../../components/skeletons/SkeletonLine';
 import { VerticalBox } from '../../../../../components/styled/Wrappers';
 import { RootState } from '../../../../../redux/store';
-import { InstitutionReport } from '../../../../../types/nvi.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../../../utils/hooks/useNviCandidatesParams';
 import { checkWhichTasksPage } from '../../../../../utils/location-helpers';
@@ -20,12 +18,12 @@ import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../../util
 import { NviApprovalStatusCounts } from '../_hooks/useNviInstitutionReportSummary';
 
 interface NviAccordionNavigationButtonsProps {
-  nviReportsQuery: UseQueryResult<NoInfer<InstitutionReport>, Error>;
   approvalStatusCounts: NviApprovalStatusCounts;
+  reportsArePending: boolean;
 }
 
 export const NviAccordionNavigationButtons = ({
-  nviReportsQuery,
+  reportsArePending,
   approvalStatusCounts,
 }: NviAccordionNavigationButtonsProps) => {
   const { t } = useTranslation();
@@ -66,7 +64,7 @@ export const NviAccordionNavigationButtons = ({
         isSelected={isOnNviDisputesPage}
         to={{ pathname: UrlPathTemplate.TasksNviDisputes }}>
         {t('tasks.nvi.show_disputes')} (
-        {nviReportsQuery.isPending ? (
+        {reportsArePending ? (
           <Box sx={{ width: '1.5rem' }}>
             <SkeletonLine width={24} sx={{ display: 'inline-block' }} />
           </Box>
