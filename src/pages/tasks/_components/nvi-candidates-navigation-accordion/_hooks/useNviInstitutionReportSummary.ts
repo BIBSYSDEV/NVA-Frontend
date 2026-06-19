@@ -4,7 +4,7 @@ import { useFetchNviReportForInstitution } from '../../../../../api/hooks/useFet
 import { RootState } from '../../../../../redux/store';
 import { InstitutionReport } from '../../../../../types/nvi.types';
 import { getIdentifierFromId } from '../../../../../utils/general-helpers';
-import { useNviCandidatesParams } from '../../../../../utils/hooks/useNviCandidatesParams';
+import { getDefaultNviYear } from '../../../../../utils/hooks/useNviCandidatesParams';
 
 export interface NviApprovalStatusCounts {
   new: string | undefined;
@@ -30,7 +30,7 @@ export const useNviInstitutionReportSummary = ({
   enabled = true,
 }: UseNviInstitutionSummaryOptions = {}): NviInstitutionSummary => {
   const user = useSelector((store: RootState) => store.user);
-  const { year } = useNviCandidatesParams();
+  const year = getDefaultNviYear();
 
   const query = useFetchNviReportForInstitution({
     id: getIdentifierFromId(user?.topOrgCristinId ?? ''),

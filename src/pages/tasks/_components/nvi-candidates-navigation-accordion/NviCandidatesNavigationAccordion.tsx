@@ -8,6 +8,7 @@ import { NviReportProgressBar } from '../../../../components/NviReportProgressBa
 import { StyledNviStatusBox, StyledTicketSearchFormGroup } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { getDefaultNviYear } from '../../../../utils/hooks/useNviCandidatesParams';
 import { checkWhichTasksPage } from '../../../../utils/location-helpers';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../utils/urlPaths';
 import { NviReportNumbers } from './_components/nvi-report-numbers/NviReportNumbers';
@@ -31,6 +32,7 @@ export const NviCandidatesNavigationAccordion = () => {
       accordionPath={UrlPathTemplate.TasksNvi}
       defaultPath={getNviCandidatesSearchPath({
         username: user?.nvaUsername,
+        year: getDefaultNviYear(),
         status: [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending],
         globalStatus: NviCandidateGlobalStatusEnum.Pending,
       })}
