@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { Outlet, useLocation } from 'react-router';
 import { useFetchTickets } from '../../api/hooks/useFetchTickets';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { NviCandidatesNavigationAccordion } from '../../components/navigation-accordions/nvi-candidates-navigation-accordion/NviCandidatesNavigationAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
@@ -14,6 +13,7 @@ import { checkWhichTasksPage } from '../../utils/location-checkers';
 import { checkUserRoles } from '../../utils/user-helpers';
 import { NviCorrectionListNavigationAccordion } from '../messages/components/NviCorrectionListNavigationAccordion';
 import { ResultRegistrationsNavigationListAccordion } from '../messages/components/ResultRegistrationsNavigationListAccordion';
+import { NviCandidatesNavigationAccordion } from './_components/nvi-candidates-navigation-accordion/NviCandidatesNavigationAccordion';
 import { TasksPageMinimizedIconButton } from './_components/TasksPageMinimizedIconButton';
 import { UserDialogueNavigationAccordion } from './_components/UserDialogueNavigationAccordion';
 

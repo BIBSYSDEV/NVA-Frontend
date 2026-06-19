@@ -7,16 +7,16 @@ import {
   NviCandidateGlobalStatusEnum,
   NviCandidatesSearchParam,
   NviCandidateStatusEnum,
-} from '../../../../api/searchApi';
-import { SkeletonLine } from '../../../skeletons/SkeletonLine';
-import { RootState } from '../../../../redux/store';
-import { InstitutionReport } from '../../../../types/nvi.types';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { useNviCandidatesParams } from '../../../../utils/hooks/useNviCandidatesParams';
-import { checkWhichTasksPage } from '../../../../utils/location-checkers';
-import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../utils/urlPaths';
-import { SelectableButton } from '../../../SelectableButton';
-import { VerticalBox } from '../../../styled/Wrappers';
+} from '../../../../../api/searchApi';
+import { SelectableButton } from '../../../../../components/SelectableButton';
+import { SkeletonLine } from '../../../../../components/skeletons/SkeletonLine';
+import { VerticalBox } from '../../../../../components/styled/Wrappers';
+import { RootState } from '../../../../../redux/store';
+import { InstitutionReport } from '../../../../../types/nvi.types';
+import { dataTestId } from '../../../../../utils/dataTestIds';
+import { useNviCandidatesParams } from '../../../../../utils/hooks/useNviCandidatesParams';
+import { checkWhichTasksPage } from '../../../../../utils/location-checkers';
+import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../../utils/urlPaths';
 import { NviApprovalStatusCounts } from '../_hooks/useNviInstitutionReportSummary';
 
 interface NviAccordionNavigationButtonsProps {

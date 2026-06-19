@@ -1,6 +1,6 @@
-import { NviReportLineTypeEnum } from '../../../nvi-report-line/enums';
-import { NviReportLine } from '../../../nvi-report-line/NviReportLine';
-import { VerticalBox } from '../../../styled/Wrappers';
+import { NviReportLineTypeEnum } from '../../../../../components/nvi-report-line/enums';
+import { NviReportLine } from '../../../../../components/nvi-report-line/NviReportLine';
+import { VerticalBox } from '../../../../../components/styled/Wrappers';
 import { NviApprovalStatusCounts } from '../_hooks/useNviInstitutionReportSummary';
 
 interface NviReportNumbersProps {
