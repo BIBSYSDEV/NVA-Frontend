@@ -10,8 +10,8 @@ import { RootState } from '../../../../redux/store';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { checkWhichTasksPage } from '../../../../utils/location-checkers';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../utils/urlPaths';
+import { NviReportNumbers } from './_components/nvi-report-numbers/NviReportNumbers';
 import { NviAccordionNavigationButtons } from './_components/NviAccordionNavigationButtons';
-import { NviReportNumbers } from './_components/NviReportNumbers';
 import { useNviInstitutionReportSummary } from './_hooks/useNviInstitutionReportSummary';
 
 export const NviCandidatesNavigationAccordion = () => {
