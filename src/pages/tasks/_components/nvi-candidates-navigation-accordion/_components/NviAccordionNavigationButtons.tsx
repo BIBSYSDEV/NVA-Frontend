@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import {
   NviCandidateGlobalStatusEnum,
@@ -10,8 +9,8 @@ import {
 import { SelectableButton } from '../../../../../components/SelectableButton';
 import { SkeletonLine } from '../../../../../components/skeletons/SkeletonLine';
 import { VerticalBox } from '../../../../../components/styled/Wrappers';
-import { RootState } from '../../../../../redux/store';
 import { dataTestId } from '../../../../../utils/dataTestIds';
+import { useLoggedInUser } from '../../../../../utils/hooks/useLoggedInUser';
 import { useNviCandidatesParams } from '../../../../../utils/hooks/useNviCandidatesParams';
 import { checkWhichTasksPage } from '../../../../../utils/location-helpers';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../../utils/urlPaths';
@@ -28,7 +27,7 @@ export const NviAccordionNavigationButtons = ({
 }: NviAccordionNavigationButtonsProps) => {
   const { t } = useTranslation();
   const location = useLocation();
-  const user = useSelector((store: RootState) => store.user);
+  const user = useLoggedInUser();
 
   const nviParams = useNviCandidatesParams();
   const { isOnNviCandidatesPage, isOnNviStatusPage, isOnNviDisputesPage, isOnNviPublicationPointsPage } =
@@ -65,8 +64,8 @@ export const NviAccordionNavigationButtons = ({
         to={{ pathname: UrlPathTemplate.TasksNviDisputes }}>
         {t('tasks.nvi.show_disputes')} (
         {reportsArePending ? (
-          <Box sx={{ width: '1.5rem' }}>
-            <SkeletonLine width={24} sx={{ display: 'inline-block' }} />
+          <Box sx={{ width: '1rem' }}>
+            <SkeletonLine sx={{ width: '1rem', display: 'inline-block' }} />
           </Box>
         ) : (
           (approvalStatusCounts.dispute ?? 0)

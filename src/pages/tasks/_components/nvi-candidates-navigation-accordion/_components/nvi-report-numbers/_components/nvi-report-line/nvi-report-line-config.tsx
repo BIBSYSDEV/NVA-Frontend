@@ -5,12 +5,12 @@ import { ParseKeys } from 'i18next';
 import { ReactElement } from 'react';
 import { NviReportLineTypeEnum } from './enums';
 
-interface NviReportLineConfig {
+interface NviReportLineConfigProps {
   label: ParseKeys;
   icon: ReactElement;
 }
 
-export const nviReportLineConfig: Record<NviReportLineTypeEnum, NviReportLineConfig> = {
+export const nviReportLineConfig: Record<NviReportLineTypeEnum, NviReportLineConfigProps> = {
   [NviReportLineTypeEnum.Candidates]: {
     label: 'tasks.nvi.candidates',
     icon: <HourglassEmptyIcon aria-hidden="true" sx={{ fontSize: 'medium' }} />,

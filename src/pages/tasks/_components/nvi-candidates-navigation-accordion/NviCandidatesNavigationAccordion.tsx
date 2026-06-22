@@ -1,13 +1,12 @@
 import AdjustIcon from '@mui/icons-material/Adjust';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../../api/searchApi';
 import { NavigationListAccordion } from '../../../../components/NavigationListAccordion';
 import { NviReportProgressBar } from '../../../../components/NviReportProgressBar';
 import { StyledNviStatusBox, StyledTicketSearchFormGroup } from '../../../../components/styled/Wrappers';
-import { RootState } from '../../../../redux/store';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { useLoggedInUser } from '../../../../utils/hooks/useLoggedInUser';
 import { getDefaultNviYear } from '../../../../utils/hooks/useNviCandidatesParams';
 import { checkWhichTasksPage } from '../../../../utils/location-helpers';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../utils/urlPaths';
@@ -18,7 +17,7 @@ import { useNviInstitutionReportSummary } from './_hooks/useNviInstitutionReport
 export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const user = useSelector((store: RootState) => store.user);
+  const user = useLoggedInUser();
   const { isOnAnyNviOverviewPage } = checkWhichTasksPage(location.pathname);
 
   const { query, counts, candidatesTotal, candidatesCompleted, completedPercentage } = useNviInstitutionReportSummary({

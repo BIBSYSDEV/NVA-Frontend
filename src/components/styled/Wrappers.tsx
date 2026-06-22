@@ -117,10 +117,6 @@ export const StyledTicketSearchFormGroup = styled(FormGroup)({
   margin: '1rem',
 });
 
-export const MediumTypography = styled(Typography)({
-  fontSize: '0.9rem',
-});
-
 export const EllipsisTypography = styled(Typography)({
   whiteSpace: 'nowrap',
   overflow: 'hidden',
