@@ -1,14 +1,34 @@
+import { UseQueryResult } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
-import { useFetchNviReportForInstitution } from '../../../api/hooks/useFetchNviReportForInstitution';
-import { RootState } from '../../../redux/store';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
+import { useFetchNviReportForInstitution } from '../../../../../api/hooks/useFetchNviReportForInstitution';
+import { RootState } from '../../../../../redux/store';
+import { InstitutionReport } from '../../../../../types/nvi.types';
+import { getIdentifierFromId } from '../../../../../utils/general-helpers';
+import { getDefaultNviYear } from '../../../../../utils/hooks/useNviCandidatesParams';
+
+export interface NviApprovalStatusCounts {
+  new: string | undefined;
+  pending: string | undefined;
+  approved: string | undefined;
+  rejected: string | undefined;
+  dispute: string | undefined;
+}
+
+export interface NviInstitutionSummary {
+  query: UseQueryResult<NoInfer<InstitutionReport>, Error>;
+  counts: NviApprovalStatusCounts;
+  candidatesTotal: number;
+  candidatesCompleted: number;
+  completedPercentage: number;
+}
 
 interface UseNviInstitutionSummaryOptions {
   enabled?: boolean;
 }
 
-export const useNviInstitutionSummary = ({ enabled = true }: UseNviInstitutionSummaryOptions = {}) => {
+export const useNviInstitutionReportSummary = ({
+  enabled = true,
+}: UseNviInstitutionSummaryOptions = {}): NviInstitutionSummary => {
   const user = useSelector((store: RootState) => store.user);
   const year = getDefaultNviYear();
 
@@ -21,7 +41,7 @@ export const useNviInstitutionSummary = ({ enabled = true }: UseNviInstitutionSu
   const byLocalApprovalStatus = query.data?.institutionSummary.byLocalApprovalStatus;
   const totals = query.data?.institutionSummary.totals;
 
-  const counts = {
+  const counts: NviApprovalStatusCounts = {
     new: byLocalApprovalStatus?.new.toLocaleString(),
     pending: byLocalApprovalStatus?.pending.toLocaleString(),
     approved: byLocalApprovalStatus?.approved.toLocaleString(),
