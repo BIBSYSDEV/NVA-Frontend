@@ -47,7 +47,7 @@
     "@uppy/dashboard": "^5.1.1",
     "@uppy/locales": "^5.1.1",
     "@uppy/react": "^5.2.0",
-    "aws-amplify": "^6.17.0",
+    "aws-amplify": "^6.18.0",
     "axios": "^1.18.0",
     "date-fns": "^4.4.0",
     "deepmerge": "^4.3.1",
