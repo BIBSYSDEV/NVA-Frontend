@@ -1,6 +1,6 @@
 import { Box, Button, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { selectIso6392LanguageCode } from '../../translations/i18n';
+import { selectIso6393LanguageCode } from '../../translations/i18n';
 
 export type LanguageCode = 'nob' | 'eng' | 'nno';
 
@@ -11,7 +11,7 @@ export const LanguageSelector = () => {
     i18n.changeLanguage(languageCode);
   };
 
-  const displayLanguage = selectIso6392LanguageCode(i18n.language);
+  const displayLanguage = selectIso6393LanguageCode(i18n.language);
 
   return (
     <Box

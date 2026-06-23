@@ -2,8 +2,8 @@ import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { registrationLanguageOptions } from '../../../utils/registration-helpers';
-import { useThreeLetterLanguageCode } from '../../../utils/translation-helpers';
+import { getLanguageOptions, registrationLanguageOptions } from '../../../utils/registration-helpers';
+import { useIso6393LanguageCode } from '../../../utils/translation-helpers';
 import { LanguageCode } from '../../../layout/header/LanguageSelector';
 
 interface LanguageSelectorProps extends Omit<TextFieldProps, 'value'> {
@@ -12,7 +12,8 @@ interface LanguageSelectorProps extends Omit<TextFieldProps, 'value'> {
 
 export const LanguageSelectorField = (props: LanguageSelectorProps) => {
   const { t } = useTranslation();
-  const languageCode: LanguageCode = useThreeLetterLanguageCode();
+  const languageCode: LanguageCode = useIso6393LanguageCode();
+  const { primaryLanguages, restOfLanguages } = getLanguageOptions(languageCode);
 
   return (
     <TextField
