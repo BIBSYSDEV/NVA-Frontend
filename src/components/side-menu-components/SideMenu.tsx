@@ -9,7 +9,7 @@ interface SideMenuProps {
 }
 
 export const SideMenu = ({ children, isVisible, backToSideMenuButton }: SideMenuProps) => (
-  <Box component="nav" aria-labelledby={sideNavHeaderId}>
+  <Box component="nav" aria-labelledby={isVisible || !backToSideMenuButton ? sideNavHeaderId : undefined}>
     {isVisible || !backToSideMenuButton ? (
       <Box sx={{ bgcolor: 'background.default', width: { xs: '100%', md: '20rem' }, height: '100%' }}>{children}</Box>
     ) : (

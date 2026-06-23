@@ -60,11 +60,15 @@ const BasicDataPage = () => {
         isVisible={showMenu}
         backToSideMenuButton={
           simpleGoBack ? (
-            <BackToMenuButton title={t('basic_data.basic_data')} onClick={() => navigate(-1)}>
+            <BackToMenuButton
+              data-testid={dataTestId.basicData.backToMenuButton}
+              title={t('basic_data.basic_data')}
+              onClick={() => navigate(-1)}>
               <BusinessCenterIcon />
             </BackToMenuButton>
           ) : (
             <BackToMenuButton
+              data-testid={dataTestId.basicData.backToMenuButton}
               title={t('basic_data.basic_data')}
               to={{
                 pathname: UrlPathTemplate.BasicDataCentralImport,

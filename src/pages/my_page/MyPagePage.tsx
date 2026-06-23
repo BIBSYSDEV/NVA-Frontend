@@ -131,8 +131,7 @@ const MyPagePage = () => {
 
   // Hide menu when opening a ticket on Messages path
   const showMenu =
-    !location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
-    location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
+    !currentPath.startsWith(UrlPathTemplate.MyPageMyMessages) || currentPath.endsWith(UrlPathTemplate.MyPageMyMessages);
 
   return (
     <StyledPageWithSideMenu>
