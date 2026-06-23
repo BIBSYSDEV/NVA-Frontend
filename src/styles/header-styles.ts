@@ -1,6 +1,6 @@
 import { Box, styled } from '@mui/material';
 
-export const PrimaryColoredHeader = styled(Box)(({ theme }) => ({
+export const PrimaryColoredBox = styled(Box)(({ theme }) => ({
   color: theme.palette.common.white,
   backgroundColor: theme.palette.primary.main,
   display: 'flex',

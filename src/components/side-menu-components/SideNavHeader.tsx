@@ -1,4 +1,4 @@
-import { PrimaryColoredHeader } from '../../styles/header-styles';
+import { PrimaryColoredBox } from '../../styles/header-styles';
 import { sideNavHeaderId } from './_utils/side-menu-constants';
 import { SvgIcon, Typography } from '@mui/material';
 
@@ -9,7 +9,7 @@ interface SideNavHeaderProps {
 
 export const SideNavHeader = ({ icon: Icon, text }: SideNavHeaderProps) => {
   return (
-    <PrimaryColoredHeader sx={{ alignItems: 'center', gap: '0.5rem', padding: '0.5rem' }}>
+    <PrimaryColoredBox sx={{ alignItems: 'center', gap: '0.5rem', padding: '0.5rem' }}>
       {Icon && <Icon sx={{ fontSize: '1.5rem' }} />}
       <Typography
         textTransform={'uppercase'}
@@ -20,6 +20,6 @@ export const SideNavHeader = ({ icon: Icon, text }: SideNavHeaderProps) => {
         sx={{ color: 'inherit' }}>
         {text}
       </Typography>
-    </PrimaryColoredHeader>
+    </PrimaryColoredBox>
   );
 };

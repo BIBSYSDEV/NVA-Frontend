@@ -8,7 +8,7 @@ import { LandingPageAccordion } from '../../components/landing_page/LandingPageA
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RootState } from '../../redux/store';
-import { PrimaryColoredHeader } from '../../styles/header-styles';
+import { PrimaryColoredBox } from '../../styles/header-styles';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getEditProjectPath } from '../../utils/urlPaths';
@@ -33,7 +33,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
   return (
     <Paper elevation={0}>
       <HeadTitle>{project.title}</HeadTitle>
-      <PrimaryColoredHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'project.main' }}>
+      <PrimaryColoredBox sx={{ borderLeft: '1.5rem solid', borderColor: 'project.main' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <ProjectIconHeader projectStatus={project.status} />
           <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
@@ -51,7 +51,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
             </IconButton>
           </Tooltip>
         )}
-      </PrimaryColoredHeader>
+      </PrimaryColoredBox>
       <BackgroundDiv sx={{ bgcolor: 'white' }}>
         <ProjectGeneralInfo project={project} />
 

@@ -13,7 +13,7 @@ import { PageSpinner } from '../../../../components/PageSpinner';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
 import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
-import { PrimaryColoredHeader } from '../../../../styles/header-styles';
+import { PrimaryColoredBox } from '../../../../styles/header-styles';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 import { BasicDataLocationState, PreviousPathLocationState } from '../../../../types/locationState.types';
 import { expandImportCandidate } from '../../../../utils/central-import-helpers';
@@ -151,11 +151,11 @@ export const CentralImportDuplicationCheckPage = () => {
       </BackgroundDiv>
 
       <Paper elevation={0} sx={{ gridArea: 'actions' }}>
-        <PrimaryColoredHeader>
+        <PrimaryColoredBox>
           <Typography color="inherit" variant="h2">
             {t('common.dialogue')}
           </Typography>
-        </PrimaryColoredHeader>
+        </PrimaryColoredBox>
 
         <Box sx={{ m: '0.5rem' }}>
           {importCandidate?.importStatus.candidateStatus === 'IMPORTED' && (
