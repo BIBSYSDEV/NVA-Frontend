@@ -1,61 +1,7 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Box, BoxProps, styled, SvgIcon, Typography } from '@mui/material';
+import { Box, BoxProps, Typography } from '@mui/material';
 import { ElementType } from 'react';
 import { SelectableButton, SelectableButtonProps } from './SelectableButton';
-
-export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
-  width: '100%',
-  display: 'grid',
-  gap: '1rem',
-  padding: '1rem',
-
-  gridTemplateColumns: 'auto 1fr',
-  [theme.breakpoints.down('md')]: {
-    padding: 0,
-    gridTemplateColumns: '1fr',
-    marginTop: '1px',
-  },
-}));
-
-export const StyledPaperHeader = styled(Box)(({ theme }) => ({
-  color: theme.palette.common.white,
-  backgroundColor: theme.palette.primary.main,
-  display: 'flex',
-  alignItems: 'center',
-  gap: '1.5rem',
-  padding: '1rem',
-}));
-
-const StyledSideMenuHeader = styled(StyledPaperHeader)({
-  alignItems: 'center',
-  gap: '0.5rem',
-  padding: '0.5rem',
-});
-
-interface SideNavHeaderProps {
-  icon?: typeof SvgIcon;
-  text?: string;
-}
-
-export const sideNavHeaderId = 'left-side-menu-header';
-
-export const SideNavHeader = ({ icon, text }: SideNavHeaderProps) => {
-  const IconComponent = icon;
-  return (
-    <StyledSideMenuHeader>
-      {IconComponent && <IconComponent sx={{ fontSize: '1.5rem' }} />}
-      <Typography
-        textTransform={'uppercase'}
-        component="h2"
-        fontWeight="bold"
-        fontSize="1rem"
-        id={sideNavHeaderId}
-        sx={{ color: 'inherit' }}>
-        {text}
-      </Typography>
-    </StyledSideMenuHeader>
-  );
-};
 
 interface NavigationListProps extends BoxProps {
   component?: ElementType;

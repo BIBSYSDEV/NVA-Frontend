@@ -10,14 +10,12 @@ import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MergeImportCandidate } from '../../components/merge_results/MergeImportCandidate';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import {
-  LinkCreateButton,
-  NavigationList,
-  SideNavHeader,
-  StyledPageWithSideMenu,
-} from '../../components/PageWithSideMenu';
+import { BackToMenuButton } from '../../components/side-menu-components/BackToMenuButton';
+import { StyledPageWithSideMenu } from '../../components/side-menu-components/_utils/side-menu-styles';
+import { SideNavHeader } from '../../components/side-menu-components/SideNavHeader';
+import { LinkCreateButton, NavigationList } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
-import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
+import { SideMenu } from '../../components/side-menu-components/SideMenu';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -53,27 +51,27 @@ const BasicDataPage = () => {
   const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
   const centralImportIsSelected = currentPath.startsWith(UrlPathTemplate.BasicDataCentralImport);
 
-  const expandedMenu = currentPath === UrlPathTemplate.BasicDataCentralImport || !centralImportIsSelected;
+  const showMenu = currentPath === UrlPathTemplate.BasicDataCentralImport || !centralImportIsSelected;
   const simpleGoBack = centralImportIsSelected && isOnEditOrMergeImportCandidate(currentPath);
 
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={expandedMenu}
-        minimizedMenu={
+        isVisible={showMenu}
+        backToSideMenuButton={
           simpleGoBack ? (
-            <MinimizedMenuIconButton title={t('basic_data.basic_data')} onClick={() => navigate(-1)}>
+            <BackToMenuButton title={t('basic_data.basic_data')} onClick={() => navigate(-1)}>
               <BusinessCenterIcon />
-            </MinimizedMenuIconButton>
+            </BackToMenuButton>
           ) : (
-            <MinimizedMenuIconButton
+            <BackToMenuButton
               title={t('basic_data.basic_data')}
               to={{
                 pathname: UrlPathTemplate.BasicDataCentralImport,
                 search: location.state?.previousSearch,
               }}>
               <BusinessCenterIcon />
-            </MinimizedMenuIconButton>
+            </BackToMenuButton>
           )
         }>
         <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} />

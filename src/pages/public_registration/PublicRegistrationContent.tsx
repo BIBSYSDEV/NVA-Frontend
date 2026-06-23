@@ -9,12 +9,12 @@ import { HeadTitle } from '../../components/HeadTitle';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { RegistrationIconHeader } from '../../components/RegistrationIconHeader';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { LandingPageContext } from '../../context/LandingPageContext';
+import { PrimaryColoredHeader } from '../../styles/header-styles';
 import { PreviousPathLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
@@ -88,7 +88,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
       <Box sx={visuallyHidden}>
         <DeletedPublicationInformation registration={registration} />
       </Box>
-      <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'registration.main' }}>
+      <PrimaryColoredHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'registration.main' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <RegistrationIconHeader
             publicationInstanceType={entityDescription?.reference?.publicationInstance?.type}
@@ -115,7 +115,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             </IconButton>
           </Tooltip>
         )}
-      </StyledPaperHeader>
+      </PrimaryColoredHeader>
       <BackgroundDiv sx={{ bgcolor: 'white' }}>
         {contributors.length > 0 && entityDescription?.reference?.publicationInstance?.type && (
           <PublicRegistrationContributors

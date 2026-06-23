@@ -10,10 +10,10 @@ import { fetchImportCandidates, FetchImportCandidatesParams } from '../../../../
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
 import { HeadTitle } from '../../../../components/HeadTitle';
 import { PageSpinner } from '../../../../components/PageSpinner';
-import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
 import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
+import { PrimaryColoredHeader } from '../../../../styles/header-styles';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 import { BasicDataLocationState, PreviousPathLocationState } from '../../../../types/locationState.types';
 import { expandImportCandidate } from '../../../../utils/central-import-helpers';
@@ -151,11 +151,11 @@ export const CentralImportDuplicationCheckPage = () => {
       </BackgroundDiv>
 
       <Paper elevation={0} sx={{ gridArea: 'actions' }}>
-        <StyledPaperHeader>
+        <PrimaryColoredHeader>
           <Typography color="inherit" variant="h2">
             {t('common.dialogue')}
           </Typography>
-        </StyledPaperHeader>
+        </PrimaryColoredHeader>
 
         <Box sx={{ m: '0.5rem' }}>
           {importCandidate?.importStatus.candidateStatus === 'IMPORTED' && (

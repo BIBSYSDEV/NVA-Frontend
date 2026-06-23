@@ -16,6 +16,8 @@ export const checkWhichTasksPage = (pathname: string) => {
   // The NVI candidate detail page that is reached by clicking a candidate from the NVI search
   const isOnNviCandidatePage = pathname.startsWith(UrlPathTemplate.TasksNvi) && !isOnAnyNviOverviewPage;
 
+  const isOnADetailsPage = isOnTicketPage || isOnNviCandidatePage;
+
   return {
     isOnTicketsPage,
     isOnTicketPage,
@@ -25,5 +27,6 @@ export const checkWhichTasksPage = (pathname: string) => {
     isOnNviStatusPage,
     isOnNviDisputesPage,
     isOnNviPublicationPointsPage,
+    isOnADetailsPage,
   };
 };
