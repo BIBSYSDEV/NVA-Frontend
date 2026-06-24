@@ -1,10 +1,11 @@
-import { MenuItem, TextField, TextFieldProps } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { ListSubheader, MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { getLanguageByIso6393Code } from 'nva-language';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getLanguageOptions, registrationLanguageOptions } from '../../../utils/registration-helpers';
+import { getLanguageOptions } from '../../../utils/registration-helpers';
 import { useIso6393LanguageCode } from '../../../utils/translation-helpers';
-import { LanguageCode } from '../../../layout/header/LanguageSelector';
 
 interface LanguageSelectorProps extends Omit<TextFieldProps, 'value'> {
   value?: string;
@@ -12,7 +13,8 @@ interface LanguageSelectorProps extends Omit<TextFieldProps, 'value'> {
 
 export const LanguageSelectorField = (props: LanguageSelectorProps) => {
   const { t } = useTranslation();
-  const languageCode: LanguageCode = useIso6393LanguageCode();
+  const [showAll, setShowAll] = useState(false);
+  const languageCode = useIso6393LanguageCode();
   const { primaryLanguages, restOfLanguages } = getLanguageOptions(languageCode);
 
   return (
@@ -24,14 +26,18 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
       label={t('registration.description.primary_language')}
       placeholder={t('registration.description.primary_language')}
       select
+      SelectProps={{
+        MenuProps: {
+          PaperProps: { sx: { maxHeight: '20rem' } },
+        },
+      }}
       variant="filled">
-      {!registrationLanguageOptions.some((language) => language.uri === props.value) && (
-        // Show if Registration has a language that's currently not supported
+      {props.value && ![...primaryLanguages, ...restOfLanguages].some((language) => language.uri === props.value) && (
         <MenuItem value={props.value} disabled>
           {getLanguageByIso6393Code('und')[languageCode]}
         </MenuItem>
       )}
-      {registrationLanguageOptions.map((language) => (
+      {primaryLanguages.map((language) => (
         <MenuItem
           value={language.uri}
           key={language.uri}
@@ -39,6 +45,31 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
           {language[languageCode]}
         </MenuItem>
       ))}
+      <ListSubheader
+        disableSticky
+        onMouseDown={(e) => {
+          e.preventDefault();
+          setShowAll(true);
+        }}
+        sx={{
+          cursor: 'pointer',
+          color: 'primary.main',
+          display: showAll ? 'none' : 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        {t('common.show_more')}
+        <ExpandMoreIcon />
+      </ListSubheader>
+      {showAll &&
+        restOfLanguages.map((language) => (
+          <MenuItem
+            value={language.uri}
+            key={language.uri}
+            data-testid={dataTestId.registrationWizard.description.languageItem(language.uri)}>
+            {language[languageCode]}
+          </MenuItem>
+        ))}
     </TextField>
   );
 };

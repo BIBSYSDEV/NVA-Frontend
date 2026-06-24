@@ -883,9 +883,10 @@ export const getLanguageOptions = (languageCode: LanguageCode) => {
   const allLanguages = getLanguages();
   const locale = getPreferredLanguageCode(languageCode);
 
-  const primaryLanguages = primaryLanguageCodes
-    .map((code) => allLanguages.find((lang) => lang.iso6393Code === code))
-    .filter(Boolean);
+  const primaryLanguages = primaryLanguageCodes.flatMap((code) => {
+    const language = allLanguages.find((lang) => lang.iso6393Code === code);
+    return language ? [language] : [];
+  });
 
   const restOfLanguages = allLanguages
     .filter((lang) => !primaryLanguageCodes.includes(lang.iso6393Code))
