@@ -69,7 +69,6 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
           <MenuItem
             value={language.uri}
             key={language.uri}
-            disabled={language.iso6393Code === 'und'}
             data-testid={dataTestId.registrationWizard.description.languageItem(language.uri)}>
             {language[languageCode]}
           </MenuItem>
