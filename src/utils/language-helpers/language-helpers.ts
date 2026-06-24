@@ -1,5 +1,5 @@
 import { getLanguages } from 'nva-language';
-import { LanguageCode } from '../../layout/header/LanguageSelector';
+import { LanguageCode } from '../../types/language.types';
 import { getIso6391InPreferredLanguage } from '../translation-helpers';
 
 // Languages that are used by most registrations and should be displayed at the top of the list in the language selector

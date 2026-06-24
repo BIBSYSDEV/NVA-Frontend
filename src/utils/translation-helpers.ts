@@ -2,7 +2,7 @@ import { TFunction } from 'i18next';
 import i18n, { getIso6393Language } from '../translations/i18n';
 import { LanguageString } from '../types/common.types';
 import { UrlPathTemplate } from './urlPaths';
-import { LanguageCode } from '../layout/header/LanguageSelector';
+import { LanguageCode } from '../types/language.types';
 import { useTranslation } from 'react-i18next';
 
 /* The language code can be on different formats depending on where it is originally fetched from.

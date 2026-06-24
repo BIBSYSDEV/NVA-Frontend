@@ -2,7 +2,7 @@ import { Box, Button, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { getIso6393Language } from '../../translations/i18n';
 
-export type LanguageCode = 'nob' | 'eng' | 'nno';
+import { LanguageCode } from '../../types/language.types';
 
 export const LanguageSelector = () => {
   const { i18n } = useTranslation();
