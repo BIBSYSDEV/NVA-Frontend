@@ -50,6 +50,7 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
       ))}
       <ListSubheader
         disableSticky
+        data-testid={dataTestId.registrationWizard.description.showMoreLanguagesButton}
         onMouseDown={(e) => {
           e.preventDefault();
           setShowAll(true);
@@ -62,7 +63,7 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
           justifyContent: 'center',
         }}>
         {t('common.show_more')}
-        <ExpandMoreIcon />
+        <ExpandMoreIcon aria-hidden="true" />
       </ListSubheader>
       {showAll &&
         restOfLanguages.map((language) => (

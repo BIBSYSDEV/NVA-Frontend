@@ -27,8 +27,8 @@ describe('getLanguageOptions', () => {
   it('sorts restOfLanguages differently based on languageCode', () => {
     const { restOfLanguages: nobLanguages } = getLanguageOptions('nob');
     const { restOfLanguages: engLanguages } = getLanguageOptions('eng');
-    const nobNames = nobLanguages.map((l) => l.nob);
-    const engNames = engLanguages.map((l) => l.eng);
-    expect(nobNames).not.toEqual(engNames);
+    const nobOrder = nobLanguages.map((l) => l.iso6393Code);
+    const engOrder = engLanguages.map((l) => l.iso6393Code);
+    expect(nobOrder).not.toEqual(engOrder);
   });
 });
