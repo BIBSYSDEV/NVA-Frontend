@@ -39,6 +39,10 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
             PaperProps: { sx: { maxHeight: '20rem' } },
           },
           onClose: () => setShowAll(false),
+          renderValue: (value) => {
+            const selected = [...primaryLanguages, ...restOfLanguages].find((lang) => lang.uri === value);
+            return selected ? selected[languageCode] : getLanguageByIso6393Code('und')[languageCode];
+          },
         },
       }}
       variant="filled">
