@@ -4,7 +4,7 @@ import { getLanguageByIso6393Code } from 'nva-language';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getLanguageOptions } from '../../../utils/registration-helpers';
+import { getLanguageOptions } from '../../../utils/language-helpers/language-helpers';
 import { useIso6393LanguageCode } from '../../../utils/translation-helpers';
 
 interface LanguageSelectorProps extends Omit<TextFieldProps, 'value'> {
@@ -26,13 +26,16 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
       label={t('registration.description.primary_language')}
       placeholder={t('registration.description.primary_language')}
       select
-      SelectProps={{
-        MenuProps: {
-          PaperProps: { sx: { maxHeight: '20rem' } },
+      slotProps={{
+        select: {
+          MenuProps: {
+            PaperProps: { sx: { maxHeight: '20rem' } },
+          },
         },
       }}
       variant="filled">
       {props.value && ![...primaryLanguages, ...restOfLanguages].some((language) => language.uri === props.value) && (
+        // Show if Registration has a language that's currently not supported
         <MenuItem value={props.value} disabled>
           {getLanguageByIso6393Code('und')[languageCode]}
         </MenuItem>

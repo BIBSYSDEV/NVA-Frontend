@@ -29,7 +29,7 @@ const handledLanguages = [
   ...samiLanguageCodes,
 ];
 
-export const selectIso6393LanguageCode = (langCode: string | undefined | null) => {
+export const getIso6393Language = (langCode: string | undefined | null) => {
   // Might be a string because it might come from local storage
   if (langCode === 'undefined' || langCode === 'null' || !langCode) {
     return 'nob'; // When the user's language is not specified, then the service should display in Bokmål
@@ -55,7 +55,7 @@ i18n.use(LanguageDetector).init({
     },
   },
   contextSeparator: '__',
-  fallbackLng: (langCode) => [selectIso6393LanguageCode(langCode), 'nob'], // Regardless of language code we want to map it to one of our three language files
+  fallbackLng: (langCode) => [getIso6393Language(langCode), 'nob'], // Regardless of language code we want to map it to one of our three language files
   returnEmptyString: false,
   debug: false,
 });
@@ -71,7 +71,7 @@ const convertToIso6391LanguageCode = (language: 'eng' | 'nob' | 'nno') => {
 
 /* This code sets the local storage and language in the html */
 if (typeof document !== 'undefined') {
-  const displayLanguage = selectIso6393LanguageCode(i18n.language);
+  const displayLanguage = getIso6393Language(i18n.language);
 
   // We want a three letter language code in local storage (i.e. "nob" instead of "no")
   try {
@@ -84,7 +84,7 @@ if (typeof document !== 'undefined') {
   document.documentElement.lang = convertToIso6391LanguageCode(displayLanguage);
 
   i18n.on('languageChanged', (newLanguage) => {
-    const newDisplayLanguage = selectIso6393LanguageCode(newLanguage);
+    const newDisplayLanguage = getIso6393Language(newLanguage);
     document.documentElement.lang = convertToIso6391LanguageCode(newDisplayLanguage);
 
     try {

@@ -57,9 +57,6 @@ import {
 } from '../types/registration.types';
 import { User } from '../types/user.types';
 import { hasCuratorRole } from './user-helpers';
-import { LanguageCode } from '../layout/header/LanguageSelector';
-import { getPreferredLanguageCode } from './translation-helpers';
-import { getLanguages } from 'nva-language';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -875,24 +872,6 @@ export const findParentSubject = (disciplines: NpiSubjectDomain[], npiSubjectHea
     domain.subdomains.some((subdomain) => subdomain.id === npiSubjectHeadingId)
   );
   return parent ? parent.id : null;
-};
-
-const primaryLanguageCodes = ['eng', 'nob', 'nno', 'sme', 'sma', 'smj', 'mul'];
-
-export const getLanguageOptions = (languageCode: LanguageCode) => {
-  const allLanguages = getLanguages();
-  const locale = getPreferredLanguageCode(languageCode);
-
-  const primaryLanguages = primaryLanguageCodes.flatMap((code) => {
-    const language = allLanguages.find((lang) => lang.iso6393Code === code);
-    return language ? [language] : [];
-  });
-
-  const restOfLanguages = allLanguages
-    .filter((lang) => !primaryLanguageCodes.includes(lang.iso6393Code))
-    .sort((a, b) => a[languageCode].localeCompare(b[languageCode], locale));
-
-  return { primaryLanguages, restOfLanguages };
 };
 
 export const registrationLanguageOptions = [
