@@ -4,7 +4,7 @@ import { SvgIcon, Typography } from '@mui/material';
 
 interface SideNavHeaderProps {
   icon?: typeof SvgIcon;
-  text: string;
+  text?: string;
 }
 
 export const SideNavHeader = ({ icon: Icon, text }: SideNavHeaderProps) => {
