@@ -1,7 +1,7 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ListSubheader, MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { getLanguageByIso6393Code } from 'nva-language';
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageOptions } from '../../../utils/language-helpers/language-helpers';
@@ -14,7 +14,14 @@ interface LanguageSelectorProps extends Omit<TextFieldProps, 'value'> {
 export const LanguageSelectorField = (props: LanguageSelectorProps) => {
   const { t } = useTranslation();
   const [showAll, setShowAll] = useState(false);
+  const firstRestItemRef = useRef<HTMLLIElement>(null);
   const languageCode = useIso6393LanguageCode();
+
+  useLayoutEffect(() => {
+    if (showAll) {
+      firstRestItemRef.current?.focus();
+    }
+  }, [showAll]);
   const { primaryLanguages, restOfLanguages } = getLanguageOptions(languageCode);
 
   return (
@@ -31,6 +38,7 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
           MenuProps: {
             PaperProps: { sx: { maxHeight: '20rem' } },
           },
+          onClose: () => setShowAll(false),
         },
       }}
       variant="filled">
@@ -50,10 +58,18 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
       ))}
       <ListSubheader
         disableSticky
+        tabIndex={0}
         data-testid={dataTestId.registrationWizard.description.showMoreLanguagesButton}
         onMouseDown={(e) => {
           e.preventDefault();
           setShowAll(true);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            setShowAll(true);
+          }
         }}
         sx={{
           cursor: 'pointer',
@@ -66,8 +82,9 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
         <ExpandMoreIcon aria-hidden="true" />
       </ListSubheader>
       {showAll &&
-        restOfLanguages.map((language) => (
+        restOfLanguages.map((language, index) => (
           <MenuItem
+            ref={index === 0 ? firstRestItemRef : undefined}
             value={language.uri}
             key={language.uri}
             data-testid={dataTestId.registrationWizard.description.languageItem(language.uri)}>
