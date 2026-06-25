@@ -19,14 +19,12 @@ export const useIso6393LanguageCode = (): LanguageCode => {
  * @returns BCP 47 locale code, e.g. 'nb', 'nn', 'en'
  */
 export const getIso6391InPreferredLanguage = (language?: LanguageCode | null) => {
-  const currentLanguage = language || i18n.language;
+  const currentLanguage = language || getIso6393Language(i18n.language);
 
   if (currentLanguage === 'nob') {
     return 'nb';
   } else if (currentLanguage === 'nno') {
     return 'nn';
-  } else if (currentLanguage === 'nor') {
-    return 'no';
   } else {
     return 'en';
   }
