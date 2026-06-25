@@ -17,10 +17,8 @@ export const ShowMoreDropdownItemsButton = ({ showAll, onExpand, dataTestId }: S
       role="button"
       tabIndex={0}
       data-testid={dataTestId}
-      onMouseDown={(e) => {
-        e.preventDefault();
-        onExpand();
-      }}
+      onMouseDown={(e) => e.preventDefault()}
+      onClick={onExpand}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
