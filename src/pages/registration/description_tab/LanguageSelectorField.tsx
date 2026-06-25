@@ -7,11 +7,11 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageOptions } from '../../../utils/language-helpers/language-helpers';
 import { useThreeLetterLanguageCode } from '../../../utils/translation-helpers';
 
-interface LanguageSelectorProps extends Omit<TextFieldProps, 'value'> {
+interface LanguageSelectorFieldProps extends Omit<TextFieldProps, 'value'> {
   value?: string;
 }
 
-export const LanguageSelectorField = (props: LanguageSelectorProps) => {
+export const LanguageSelectorField = (props: LanguageSelectorFieldProps) => {
   const { t } = useTranslation();
   const [showAll, setShowAll] = useState(false);
   const firstRestItemRef = useRef<HTMLLIElement>(null);
@@ -23,6 +23,7 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
     }
   }, [showAll]);
   const { primaryLanguages, restOfLanguages } = getLanguageOptions(appLanguage);
+  const allLanguages = [...primaryLanguages, ...restOfLanguages];
 
   return (
     <TextField
@@ -40,13 +41,13 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
           },
           onClose: () => setShowAll(false),
           renderValue: (value) => {
-            const selected = [...primaryLanguages, ...restOfLanguages].find((lang) => lang.uri === value);
+            const selected = allLanguages.find((lang) => lang.uri === value);
             return selected ? selected[appLanguage] : getLanguageByIso6393Code('und')[appLanguage];
           },
         },
       }}
       variant="filled">
-      {props.value && ![...primaryLanguages, ...restOfLanguages].some((language) => language.uri === props.value) && (
+      {props.value && !allLanguages.some((language) => language.uri === props.value) && (
         // Show if Registration has a language that's currently not supported
         <MenuItem value={props.value} disabled>
           {getLanguageByIso6393Code('und')[appLanguage]}
@@ -62,6 +63,7 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
       ))}
       <ListSubheader
         disableSticky
+        role="button"
         tabIndex={0}
         data-testid={dataTestId.registrationWizard.description.showMoreLanguagesButton}
         onMouseDown={(e) => {
