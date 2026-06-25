@@ -71,18 +71,22 @@ export const LanguageFilter = () => {
           <MenuItem
             value={language.iso6393Code}
             key={language.uri}
-            data-testid={`publication-language-${language.uri}`}>
+            data-testid={dataTestId.startPage.advancedSearch.languageItem(language.uri)}>
             {language[appLanguage]}
           </MenuItem>
         ))}
-        <ShowMoreDropdownItemsButton showAll={showAll} onExpand={() => setShowAll(true)} />
+        <ShowMoreDropdownItemsButton
+          showAll={showAll}
+          onExpand={() => setShowAll(true)}
+          dataTestId={dataTestId.startPage.advancedSearch.showMoreLanguagesButton}
+        />
         {showAll &&
           restOfLanguages.map((language, index) => (
             <MenuItem
               ref={index === 0 ? firstRestItemRef : undefined}
               value={language.iso6393Code}
               key={language.uri}
-              data-testid={`publication-language-${language.uri}`}>
+              data-testid={dataTestId.startPage.advancedSearch.languageItem(language.uri)}>
               {language[appLanguage]}
             </MenuItem>
           ))}
