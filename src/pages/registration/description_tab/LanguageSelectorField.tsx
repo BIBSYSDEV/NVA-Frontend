@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageOptions } from '../../../utils/language-helpers/language-helpers';
-import { useIso6393LanguageCode } from '../../../utils/translation-helpers';
+import { useThreeLetterLanguageCode } from '../../../utils/translation-helpers';
 
 interface LanguageSelectorProps extends Omit<TextFieldProps, 'value'> {
   value?: string;
@@ -15,14 +15,14 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
   const { t } = useTranslation();
   const [showAll, setShowAll] = useState(false);
   const firstRestItemRef = useRef<HTMLLIElement>(null);
-  const languageCode = useIso6393LanguageCode();
+  const appLanguage = useThreeLetterLanguageCode();
 
   useLayoutEffect(() => {
     if (showAll) {
       firstRestItemRef.current?.focus();
     }
   }, [showAll]);
-  const { primaryLanguages, restOfLanguages } = getLanguageOptions(languageCode);
+  const { primaryLanguages, restOfLanguages } = getLanguageOptions(appLanguage);
 
   return (
     <TextField
@@ -41,7 +41,7 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
           onClose: () => setShowAll(false),
           renderValue: (value) => {
             const selected = [...primaryLanguages, ...restOfLanguages].find((lang) => lang.uri === value);
-            return selected ? selected[languageCode] : getLanguageByIso6393Code('und')[languageCode];
+            return selected ? selected[appLanguage] : getLanguageByIso6393Code('und')[appLanguage];
           },
         },
       }}
@@ -49,7 +49,7 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
       {props.value && ![...primaryLanguages, ...restOfLanguages].some((language) => language.uri === props.value) && (
         // Show if Registration has a language that's currently not supported
         <MenuItem value={props.value} disabled>
-          {getLanguageByIso6393Code('und')[languageCode]}
+          {getLanguageByIso6393Code('und')[appLanguage]}
         </MenuItem>
       )}
       {primaryLanguages.map((language) => (
@@ -57,7 +57,7 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
           value={language.uri}
           key={language.uri}
           data-testid={dataTestId.registrationWizard.description.languageItem(language.uri)}>
-          {language[languageCode]}
+          {language[appLanguage]}
         </MenuItem>
       ))}
       <ListSubheader
@@ -92,7 +92,7 @@ export const LanguageSelectorField = (props: LanguageSelectorProps) => {
             value={language.uri}
             key={language.uri}
             data-testid={dataTestId.registrationWizard.description.languageItem(language.uri)}>
-            {language[languageCode]}
+            {language[appLanguage]}
           </MenuItem>
         ))}
     </TextField>

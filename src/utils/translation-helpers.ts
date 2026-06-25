@@ -1,30 +1,26 @@
 import { TFunction } from 'i18next';
-import i18n, { getIso6393Language } from '../translations/i18n';
+import i18n, { selectIso6392LanguageCode } from '../translations/i18n';
 import { LanguageString } from '../types/common.types';
 import { UrlPathTemplate } from './urlPaths';
-import { LanguageCode } from '../types/language.types';
+import { LanguageCode } from '../layout/header/LanguageSelector';
 import { useTranslation } from 'react-i18next';
 
 /* The language code can be on different formats depending on where it is originally fetched from.
- * This hook runs it through a converter before its returned to ensure its on our chosen format (ISO 639-3) */
-export const useIso6393LanguageCode = (): LanguageCode => {
+ * This hook runs it through a converter before its returned to ensure its on our chosen format (ISO 639-2) */
+export const useThreeLetterLanguageCode = (): LanguageCode => {
   const { i18n } = useTranslation();
-  return getIso6393Language(i18n.language) as LanguageCode;
+  return selectIso6392LanguageCode(i18n.language) as LanguageCode;
 };
 
-/**
- * Converts an ISO 639-3 language code ('nob') to a BCP 47 / ISO 639-1 locale code ('nb').
- * Returns the current i18n language if no code is provided, and defaults to 'en' for unrecognized codes.
- * @param language - ISO 639-3 language code
- * @returns BCP 47 locale code, e.g. 'nb', 'nn', 'en'
- */
-export const getIso6391InPreferredLanguage = (language?: LanguageCode | null) => {
-  const currentLanguage = language || getIso6393Language(i18n.language);
-
+// Map from three letter language to two ("nob" -> "no")
+export const getPreferredLanguageCode = (language?: string) => {
+  const currentLanguage = language || i18n.language;
   if (currentLanguage === 'nob') {
     return 'nb';
   } else if (currentLanguage === 'nno') {
     return 'nn';
+  } else if (currentLanguage === 'nor') {
+    return 'no';
   } else {
     return 'en';
   }
@@ -35,7 +31,7 @@ export const getLanguageString = (labels?: LanguageString, preferredLanguageCode
   if (!labels || Object.keys(labels).length === 0) {
     return '';
   }
-  preferredLanguageCode = preferredLanguageCode ?? getIso6391InPreferredLanguage();
+  preferredLanguageCode = preferredLanguageCode ?? getPreferredLanguageCode();
 
   let translatedString = '';
 
