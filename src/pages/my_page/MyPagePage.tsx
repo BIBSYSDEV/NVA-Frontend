@@ -19,16 +19,14 @@ import {
   TicketSearchParam,
 } from '../../api/searchApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import {
-  LinkCreateButton,
-  NavigationList,
-  SideNavHeader,
-  StyledPageWithSideMenu,
-} from '../../components/PageWithSideMenu';
+import { BackToMenuButton } from '../../components/side-menu-components/BackToMenuButton';
+import { StyledPageWithSideMenu } from '../../components/side-menu-components/_utils/side-menu-styles';
+import { SideNavHeader } from '../../components/side-menu-components/SideNavHeader';
+import { LinkCreateButton, NavigationList } from '../../components/PageWithSideMenu';
 import { ProfilePicture } from '../../components/ProfilePicture';
 import { RegistrationLandingPage } from '../../components/registration-landing-page/RegistrationLandingPage';
 import { SelectableButton } from '../../components/SelectableButton';
-import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
+import { SideMenu } from '../../components/side-menu-components/SideMenu';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketList } from '../../components/ticket-list/TicketList';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
@@ -132,21 +130,20 @@ const MyPagePage = () => {
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   // Hide menu when opening a ticket on Messages path
-  const expandMenu =
-    !location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
-    location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
+  const showMenu =
+    !currentPath.startsWith(UrlPathTemplate.MyPageMyMessages) || currentPath.endsWith(UrlPathTemplate.MyPageMyMessages);
 
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={expandMenu}
-        minimizedMenu={
-          <MinimizedMenuIconButton
+        isVisible={showMenu}
+        backToSideMenuButton={
+          <BackToMenuButton
             title={t('my_page.my_page')}
             to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: locationState?.previousSearch }}
             onClick={() => ticketsQuery.refetch()}>
             <FavoriteBorderIcon />
-          </MinimizedMenuIconButton>
+          </BackToMenuButton>
         }>
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
         <NavigationListAccordion

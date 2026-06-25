@@ -36,6 +36,7 @@ export const dataTestId = {
     loginButtonForbidden: 'login-button-forbidden',
   },
   basicData: {
+    backToMenuButton: 'basic-data-back-to-menu-button',
     addChannelClaimButton: 'add-channel-claim-button',
     addCustomerLink: 'add-customer-link',
     addEmployeeLink: 'add-employee-link',

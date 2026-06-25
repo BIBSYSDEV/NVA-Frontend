@@ -1,7 +1,7 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import { MinimizedMenuIconButton } from '../../../components/SideMenu';
+import { BackToMenuButton } from '../../../components/side-menu-components/BackToMenuButton';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { checkWhichTasksPage } from '../../../utils/location-helpers';
 import { selectTasksBackPath } from '../_utils/select-tasks-back-path';
@@ -13,7 +13,7 @@ export const TasksPageMinimizedIconButton = () => {
   const { isOnTicketPage } = checkWhichTasksPage(location.pathname);
 
   return (
-    <MinimizedMenuIconButton
+    <BackToMenuButton
       data-testid={dataTestId.tasksPage.minimizedMenuButton}
       title={t('common.tasks')}
       to={selectTasksBackPath({
@@ -22,6 +22,6 @@ export const TasksPageMinimizedIconButton = () => {
         previousSearch: locationState?.previousSearch,
       })}>
       <AssignmentIcon />
-    </MinimizedMenuIconButton>
+    </BackToMenuButton>
   );
 };
