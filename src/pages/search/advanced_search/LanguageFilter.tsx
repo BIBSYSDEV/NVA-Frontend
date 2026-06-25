@@ -5,29 +5,31 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { registrationLanguageOptions } from '../../../utils/registration-helpers';
+import { ShowMoreDropdownItemsButton } from '../../../components/buttons/ShowMoreDropdownItemsButton';
+import { useLanguageOptions } from '../../../utils/language-helpers/useLanguageOptions';
+import { useShowAll } from '../../../utils/hooks/useShowAll';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 export const LanguageFilter = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const languageParam = searchParams.get(ResultParam.PublicationLanguageShould)?.split(',') || [];
   const [open, setOpen] = useState(false);
+  const { primaryLanguages, restOfLanguages, allLanguages, appLanguage } = useLanguageOptions();
+  const { showAll, setShowAll, firstRestItemRef } = useShowAll();
 
-  const toggleOpenOptions = () => {
-    setOpen(!open);
+  const handleClose = () => {
+    setOpen(false);
+    setShowAll(false);
   };
 
-  const updateSelectedLanguages = (selectedUris: string[]) => {
+  const updateSelectedLanguages = (selectedCodes: string[]) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
-    if (selectedUris && selectedUris.length > 0) {
-      const languages = selectedUris
-        .map(
-          (iso6393Code) =>
-            registrationLanguageOptions.find((language) => language.iso6393Code === iso6393Code)?.iso6393Code
-        )
+    if (selectedCodes && selectedCodes.length > 0) {
+      const languages = selectedCodes
+        .map((iso6393Code) => allLanguages.find((language) => language.iso6393Code === iso6393Code)?.iso6393Code)
         .filter(Boolean);
 
       if (languages.length > 0) {
@@ -39,12 +41,11 @@ export const LanguageFilter = () => {
       syncedParams.delete(ResultParam.PublicationLanguageShould);
     }
     syncedParams.delete(ResultParam.From);
-
     navigate({ search: syncedParams.toString() });
   };
 
   const selectedLanguages = languageParam
-    .map((iso6393Code) => registrationLanguageOptions.find((language) => language.iso6393Code === iso6393Code))
+    .map((iso6393Code) => allLanguages.find((language) => language.iso6393Code === iso6393Code))
     .filter(Boolean) as Language[];
 
   return (
@@ -54,22 +55,37 @@ export const LanguageFilter = () => {
         multiple
         size="small"
         open={open}
-        onOpen={toggleOpenOptions}
-        onClose={toggleOpenOptions}
+        onOpen={() => setOpen(true)}
+        onClose={handleClose}
         value={languageParam}
         data-testid={dataTestId.startPage.advancedSearch.publicationLanguageField}
         onChange={(event) => {
           updateSelectedLanguages(event.target.value as string[]);
-          toggleOpenOptions();
+          handleClose();
         }}
         displayEmpty
         renderValue={() => t('search.advanced_search.choose_one_or_more')}
+        MenuProps={{ PaperProps: { sx: { maxHeight: '20rem' } } }}
         variant="outlined">
-        {registrationLanguageOptions.map(({ uri, iso6393Code, nob, eng }) => (
-          <MenuItem value={iso6393Code} key={uri} data-testid={`publication-language-${uri}`}>
-            {i18n.language === 'nob' ? nob : eng}
+        {primaryLanguages.map((language) => (
+          <MenuItem
+            value={language.iso6393Code}
+            key={language.uri}
+            data-testid={`publication-language-${language.uri}`}>
+            {language[appLanguage]}
           </MenuItem>
         ))}
+        <ShowMoreDropdownItemsButton showAll={showAll} onExpand={() => setShowAll(true)} />
+        {showAll &&
+          restOfLanguages.map((language, index) => (
+            <MenuItem
+              ref={index === 0 ? firstRestItemRef : undefined}
+              value={language.iso6393Code}
+              key={language.uri}
+              data-testid={`publication-language-${language.uri}`}>
+              {language[appLanguage]}
+            </MenuItem>
+          ))}
       </Select>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', maxWidth: { lg: '25rem' } }}>
         {selectedLanguages.map((language) => (
@@ -78,7 +94,7 @@ export const LanguageFilter = () => {
             variant="filled"
             sx={{ mb: '0.25rem' }}
             key={language.uri}
-            label={i18n.language === 'nob' ? language?.nob : language?.eng}
+            label={language[appLanguage]}
             onDelete={() =>
               updateSelectedLanguages(languageParam.filter((iso6393Code) => iso6393Code !== language?.iso6393Code))
             }

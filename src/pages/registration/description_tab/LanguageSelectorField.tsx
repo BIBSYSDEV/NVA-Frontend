@@ -1,11 +1,10 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { ListSubheader, MenuItem, TextField, TextFieldProps } from '@mui/material';
+import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { getLanguageByIso6393Code } from 'nva-language';
-import { useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getLanguageOptions } from '../../../utils/language-helpers/language-helpers';
-import { useThreeLetterLanguageCode } from '../../../utils/translation-helpers';
+import { ShowMoreDropdownItemsButton } from '../../../components/buttons/ShowMoreDropdownItemsButton';
+import { useLanguageOptions } from '../../../utils/language-helpers/useLanguageOptions';
+import { useShowAll } from '../../../utils/hooks/useShowAll';
 
 interface LanguageSelectorFieldProps extends Omit<TextFieldProps, 'value'> {
   value?: string;
@@ -13,17 +12,8 @@ interface LanguageSelectorFieldProps extends Omit<TextFieldProps, 'value'> {
 
 export const LanguageSelectorField = (props: LanguageSelectorFieldProps) => {
   const { t } = useTranslation();
-  const [showAll, setShowAll] = useState(false);
-  const firstRestItemRef = useRef<HTMLLIElement>(null);
-  const appLanguage = useThreeLetterLanguageCode();
-
-  useLayoutEffect(() => {
-    if (showAll) {
-      firstRestItemRef.current?.focus();
-    }
-  }, [showAll]);
-  const { primaryLanguages, restOfLanguages } = getLanguageOptions(appLanguage);
-  const allLanguages = [...primaryLanguages, ...restOfLanguages];
+  const { primaryLanguages, restOfLanguages, allLanguages, appLanguage } = useLanguageOptions();
+  const { showAll, setShowAll, firstRestItemRef } = useShowAll();
 
   return (
     <TextField
@@ -61,32 +51,11 @@ export const LanguageSelectorField = (props: LanguageSelectorFieldProps) => {
           {language[appLanguage]}
         </MenuItem>
       ))}
-      <ListSubheader
-        disableSticky
-        role="button"
-        tabIndex={0}
-        data-testid={dataTestId.registrationWizard.description.showMoreLanguagesButton}
-        onMouseDown={(e) => {
-          e.preventDefault();
-          setShowAll(true);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            e.stopPropagation();
-            setShowAll(true);
-          }
-        }}
-        sx={{
-          cursor: 'pointer',
-          color: 'primary.main',
-          display: showAll ? 'none' : 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        {t('common.show_more')}
-        <ExpandMoreIcon aria-hidden="true" />
-      </ListSubheader>
+      <ShowMoreDropdownItemsButton
+        showAll={showAll}
+        onExpand={() => setShowAll(true)}
+        dataTestId={dataTestId.registrationWizard.description.showMoreLanguagesButton}
+      />
       {showAll &&
         restOfLanguages.map((language, index) => (
           <MenuItem
