@@ -12,7 +12,7 @@ import { VerticalBox } from '../../../../../components/styled/Wrappers';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useLoggedInUser } from '../../../../../utils/hooks/useLoggedInUser';
 import { useNviCandidatesParams } from '../../../../../utils/hooks/useNviCandidatesParams';
-import { checkWhichTasksPage } from '../../../../../utils/location-helpers';
+import { checkWhichTasksPage } from '../../../../../utils/location-helpers/check-which-tasks-page';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../../utils/urlPaths';
 import { NviApprovalStatusCounts } from '../_hooks/useNviInstitutionReportSummary';
 

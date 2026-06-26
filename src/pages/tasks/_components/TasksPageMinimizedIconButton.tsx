@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { BackToMenuButton } from '../../../components/side-menu-components/BackToMenuButton';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { checkWhichTasksPage } from '../../../utils/location-helpers';
+import { checkWhichTasksPage } from '../../../utils/location-helpers/check-which-tasks-page';
 import { selectTasksBackPath } from '../_utils/select-tasks-back-path';
 
 export const TasksPageMinimizedIconButton = () => {
