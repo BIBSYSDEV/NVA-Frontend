@@ -5,7 +5,6 @@ import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import PeopleIcon from '@mui/icons-material/People';
 import { Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MergeImportCandidate } from '../../components/merge_results/MergeImportCandidate';
@@ -15,11 +14,12 @@ import { SideNavHeader } from '../../components/side-menu-components/SideNavHead
 import { LinkCreateButton, NavigationList } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/side-menu-components/SideMenu';
-import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useLoggedInUser } from '../../utils/hooks/useLoggedInUser';
 import { checkWhichBasicDataPage } from '../../utils/location-helpers/check-which-basic-data-page';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
+import { checkUserRoles } from '../../utils/user-helpers';
 import { AdminCustomerInstitutionsContainer } from '../basic_data/app_admin/AdminCustomerInstitutionsContainer';
 import { CentralImportCandidateForm } from '../basic_data/app_admin/central_import/CentralImportCandidateForm';
 import { CentralImportDuplicationCheckPage } from '../basic_data/app_admin/central_import/CentralImportDuplicationCheckPage';
@@ -38,12 +38,9 @@ import { NviAdminReportingStatusPage } from './nvi/status/NviAdminReportingStatu
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
-  const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
-  const isAppAdmin = !!user?.customerId && user.isAppAdmin;
-  const isInternalImporter = !!user?.customerId && user.isInternalImporter;
+  const user = useLoggedInUser();
   const location = useLocation();
-
+  const { isInstitutionAdmin, isAppAdmin, isInternalImporter } = checkUserRoles(user);
   const {
     isOnPersonRegisterPage,
     isOnInstitutionsPage,
