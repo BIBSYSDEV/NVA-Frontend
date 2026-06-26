@@ -1,9 +1,5 @@
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
-import LockOutlineIcon from '@mui/icons-material/LockOutline';
-import PeopleIcon from '@mui/icons-material/People';
-import { Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -11,14 +7,12 @@ import { MergeImportCandidate } from '../../components/merge_results/MergeImport
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { StyledPageWithSideMenu } from '../../components/side-menu-components/_utils/side-menu-styles';
 import { SideNavHeader } from '../../components/side-menu-components/SideNavHeader';
-import { LinkCreateButton, NavigationList } from '../../components/PageWithSideMenu';
-import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/side-menu-components/SideMenu';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useLoggedInUser } from '../../utils/hooks/useLoggedInUser';
 import { checkWhichBasicDataPage } from '../../utils/location-helpers/check-which-basic-data-page';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
+import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { checkUserRoles } from '../../utils/user-helpers';
 import { AdminCustomerInstitutionsContainer } from '../basic_data/app_admin/AdminCustomerInstitutionsContainer';
 import { CentralImportCandidateForm } from '../basic_data/app_admin/central_import/CentralImportCandidateForm';
@@ -31,7 +25,10 @@ import { PublisherClaimsSettings } from '../editor/PublisherClaimsSettings';
 import { SerialPublicationClaimsSettings } from '../editor/SerialPublicationClaimsSettings';
 import NotFound from '../errorpages/NotFound';
 import { BasicDataBackToMenuButton } from './_components/BasicDataBackToMenuButton';
+import { ChannelClaimAccordion } from './_components/ChannelClaimAccordion';
+import { InstitutionsNavigationAccordion } from './_components/InstitutionsNavigationAccordion';
 import { NviAdminNavigationAccordion } from './_components/NviAdminNavigationAccordion';
+import { PersonRegisterNavigationAccordion } from './_components/PersonRegisterNavigationAccordion';
 import { NviAdminPublicationPointsPage } from './nvi/publication-points/NviAdminPublicationPointsPage';
 import { NviPeriodsPage } from './nvi/reporting-periods/NviPeriodsPage';
 import { NviAdminReportingStatusPage } from './nvi/status/NviAdminReportingStatusPage';
@@ -41,17 +38,10 @@ const BasicDataPage = () => {
   const user = useLoggedInUser();
   const location = useLocation();
   const { isInstitutionAdmin, isAppAdmin, isInternalImporter } = checkUserRoles(user);
-  const {
-    isOnPersonRegisterPage,
-    isOnInstitutionsPage,
-    isOnChannelOwnershipPage,
-    isOnAddEmployeePage,
-    isOnNewInstitutionPage,
-    isOnCentralImportEditPage,
-    isOnCentralImportMergePage,
-    isOnACentralImportSubPage,
-    isOnSerialPublicationClaimsPage,
-  } = checkWhichBasicDataPage(location.pathname, location.search);
+  const { isOnCentralImportEditPage, isOnCentralImportMergePage, isOnACentralImportSubPage } = checkWhichBasicDataPage(
+    location.pathname,
+    location.search
+  );
 
   return (
     <StyledPageWithSideMenu>
@@ -61,84 +51,12 @@ const BasicDataPage = () => {
           <BasicDataBackToMenuButton recreateSearch={!isOnCentralImportEditPage && !isOnCentralImportMergePage} /> // These pages are two levels deep, so we want to go back to the landing page of central import (one level back) instead of going back to the search
         }>
         <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} />
-        {isInstitutionAdmin && (
-          <NavigationListAccordion
-            title={t('basic_data.person_register.person_register')}
-            startIcon={<PeopleIcon sx={{ bgcolor: 'person.main' }} />}
-            accordionPath={UrlPathTemplate.BasicDataPersonRegister}
-            dataTestId={dataTestId.basicData.personRegisterAccordion}>
-            <NavigationList aria-label={t('basic_data.person_register.person_register')}>
-              <SelectableButton
-                data-testid={dataTestId.basicData.personRegisterLink}
-                isSelected={isOnPersonRegisterPage}
-                to={UrlPathTemplate.BasicDataPersonRegister}>
-                {t('basic_data.person_register.person_register')}
-              </SelectableButton>
-            </NavigationList>
-
-            <Divider sx={{ mt: '0.5rem' }} />
-
-            <LinkCreateButton
-              data-testid={dataTestId.basicData.addEmployeeLink}
-              variant="outlined"
-              isSelected={isOnAddEmployeePage}
-              selectedColor="tertiary.dark"
-              to={UrlPathTemplate.BasicDataAddEmployee}
-              title={t('basic_data.add_employee.add_employee')}
-            />
-          </NavigationListAccordion>
-        )}
+        {isInstitutionAdmin && <PersonRegisterNavigationAccordion />}
         {isAppAdmin && (
           <>
-            <NavigationListAccordion
-              title={t('common.institutions')}
-              startIcon={<AccountBalanceIcon sx={{ bgcolor: 'grey.500' }} />}
-              accordionPath={UrlPathTemplate.BasicDataInstitutions}
-              dataTestId={dataTestId.basicData.institutionsAccordion}>
-              <NavigationList aria-label={t('common.institutions')}>
-                <SelectableButton
-                  data-testid={dataTestId.basicData.adminInstitutionsLink}
-                  isSelected={isOnInstitutionsPage && !isOnNewInstitutionPage}
-                  to={UrlPathTemplate.BasicDataInstitutions}>
-                  {t('common.institutions')}
-                </SelectableButton>
-              </NavigationList>
-              <Divider sx={{ mt: '0.5rem' }} />
-              <LinkCreateButton
-                data-testid={dataTestId.basicData.addCustomerLink}
-                isSelected={isOnNewInstitutionPage}
-                selectedColor="grey.500"
-                to={getAdminInstitutionPath('new')}
-                title={t('basic_data.institutions.add_institution')}
-              />
-            </NavigationListAccordion>
-
+            <InstitutionsNavigationAccordion />
             <NviAdminNavigationAccordion />
-
-            <NavigationListAccordion
-              title={t('editor.institution.channel_claims.channel_claim')}
-              startIcon={<LockOutlineIcon sx={{ bgcolor: 'grey.500' }} />}
-              accordionPath={UrlPathTemplate.BasicDataChannelClaims}
-              defaultPath={UrlPathTemplate.BasicDataPublisherClaims}
-              dataTestId={dataTestId.basicData.channelClaimLink}>
-              <NavigationList aria-label={t('editor.institution.channel_claims.channel_claim')}>
-                <Typography sx={{ mt: '0.5rem' }}>
-                  {t('editor.institution.channel_claims.channel_claims_settings_description')}
-                </Typography>
-                <SelectableButton
-                  isSelected={isOnChannelOwnershipPage}
-                  data-testid={dataTestId.basicData.publisherClaimsLink}
-                  to={UrlPathTemplate.BasicDataPublisherClaims}>
-                  {t('editor.institution.channel_claims.administer_publisher_channel_claim')}
-                </SelectableButton>
-                <SelectableButton
-                  isSelected={isOnSerialPublicationClaimsPage}
-                  data-testid={dataTestId.basicData.serialPublicationClaimsLink}
-                  to={UrlPathTemplate.BasicDataSerialPublicationClaims}>
-                  {t('editor.institution.channel_claims.administer_serial_publication_channel_claim')}
-                </SelectableButton>
-              </NavigationList>
-            </NavigationListAccordion>
+            <ChannelClaimAccordion />
           </>
         )}
         {isInternalImporter && (

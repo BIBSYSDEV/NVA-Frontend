@@ -6,7 +6,7 @@ import {
   NviCandidatesSearchParam,
   NviCandidateStatusEnum,
 } from '../../../../../api/searchApi';
-import { SelectableButton } from '../../../../../components/SelectableButton';
+import { SelectableButton } from '../../../../../components/buttons/SelectableButton';
 import { SkeletonLine } from '../../../../../components/skeletons/SkeletonLine';
 import { VerticalBox } from '../../../../../components/styled/Wrappers';
 import { dataTestId } from '../../../../../utils/dataTestIds';

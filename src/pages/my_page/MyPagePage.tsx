@@ -18,14 +18,15 @@ import {
   TicketOrderBy,
   TicketSearchParam,
 } from '../../api/searchApi';
+import { SelectableCreateButton } from '../../components/buttons/SelectableCreateButton';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { BackToMenuButton } from '../../components/side-menu-components/BackToMenuButton';
 import { StyledPageWithSideMenu } from '../../components/side-menu-components/_utils/side-menu-styles';
 import { SideNavHeader } from '../../components/side-menu-components/SideNavHeader';
-import { LinkCreateButton, NavigationList } from '../../components/PageWithSideMenu';
+import { NavigationList } from '../../components/_atoms/NavigationList';
 import { ProfilePicture } from '../../components/ProfilePicture';
 import { RegistrationLandingPage } from '../../components/registration-landing-page/RegistrationLandingPage';
-import { SelectableButton } from '../../components/SelectableButton';
+import { SelectableButton } from '../../components/buttons/SelectableButton';
 import { SideMenu } from '../../components/side-menu-components/SideMenu';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketList } from '../../components/ticket-list/TicketList';
@@ -266,7 +267,7 @@ const MyPagePage = () => {
             <Typography sx={{ margin: '1rem' }}>
               {t('my_page.my_profile.list_contains_all_registration_you_have_created')}
             </Typography>
-            <LinkCreateButton
+            <SelectableCreateButton
               data-testid={dataTestId.myPage.newRegistrationLink}
               to={UrlPathTemplate.RegistrationNew}
               title={t('registration.new_registration')}
@@ -284,7 +285,7 @@ const MyPagePage = () => {
             <Typography sx={{ margin: '1rem' }}>
               {t('my_page.my_profile.list_contains_all_projects_you_have_created')}
             </Typography>
-            <LinkCreateButton
+            <SelectableCreateButton
               data-testid={dataTestId.myPage.createProjectButton}
               to={UrlPathTemplate.ProjectsNew}
               title={t('project.create_project')}

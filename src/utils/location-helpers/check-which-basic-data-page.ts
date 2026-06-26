@@ -1,11 +1,11 @@
 import { matchPath } from 'react-router';
 import { UrlPathTemplate } from '../urlPaths';
 
-export const checkWhichBasicDataPage = (pathname: string, search: string) => {
+export const checkWhichBasicDataPage = (pathname: string, search?: string) => {
   // Main accordion default pages
   const isOnPersonRegisterPage = !!matchPath(UrlPathTemplate.BasicDataPersonRegister, pathname);
   const isOnInstitutionsPage = !!matchPath(UrlPathTemplate.BasicDataInstitutions, pathname);
-  const isOnChannelOwnershipPage = !!matchPath(UrlPathTemplate.BasicDataPublisherClaims, pathname);
+  const isOnChannelClaimPage = !!matchPath(UrlPathTemplate.BasicDataPublisherClaims, pathname);
   const isOnCentralImportPage = !!matchPath({ path: UrlPathTemplate.BasicDataCentralImport }, pathname);
 
   // Person register subpages
@@ -27,7 +27,7 @@ export const checkWhichBasicDataPage = (pathname: string, search: string) => {
   return {
     isOnPersonRegisterPage,
     isOnInstitutionsPage,
-    isOnChannelOwnershipPage,
+    isOnChannelClaimPage,
     isOnCentralImportPage,
     isOnAddEmployeePage,
     isOnNewInstitutionPage,

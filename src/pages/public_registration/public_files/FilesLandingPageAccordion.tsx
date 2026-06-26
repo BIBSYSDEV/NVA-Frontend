@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
-import { SelectableButton } from '../../../components/SelectableButton';
+import { SelectableButton } from '../../../components/buttons/SelectableButton';
 import { RootState } from '../../../redux/store';
 import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
