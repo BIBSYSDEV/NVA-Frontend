@@ -21,7 +21,11 @@ export const getLanguageOptions = (appLanguage: LanguageCode) => {
 
   const restOfLanguages = allLanguages
     .filter((lang) => !primaryLanguageCodes.includes(lang.iso6393Code))
-    .sort((a, b) => a[appLanguage].localeCompare(b[appLanguage], locale));
+    .sort((a, b) => {
+      if (a.iso6393Code === 'und') return 1;
+      if (b.iso6393Code === 'und') return -1;
+      return a[appLanguage].localeCompare(b[appLanguage], locale);
+    });
 
   return { primaryLanguages, restOfLanguages };
 };
