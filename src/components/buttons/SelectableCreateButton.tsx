@@ -2,11 +2,17 @@ import { SelectableButton, SelectableButtonProps } from './SelectableButton';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Typography } from '@mui/material';
 
-interface CreateButtonProps extends SelectableButtonProps {
+interface SelectableCreateButtonProps extends SelectableButtonProps {
   selectedColor?: string;
 }
 
-export const SelectableCreateButton = ({ sx, title, isSelected, selectedColor, ...rest }: CreateButtonProps) => {
+export const SelectableCreateButton = ({
+  sx,
+  title,
+  isSelected,
+  selectedColor,
+  ...rest
+}: SelectableCreateButtonProps) => {
   return (
     <SelectableButton
       sx={{
