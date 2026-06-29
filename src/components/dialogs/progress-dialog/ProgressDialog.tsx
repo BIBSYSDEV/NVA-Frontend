@@ -23,7 +23,6 @@ interface ProgressDialogProps {
   value?: number;
   openDelayMs?: number;
   minVisibleMs?: number;
-  /** When provided, a cancel button is shown that calls this to abort the operation. */
   onCancel?: () => void;
 }
 

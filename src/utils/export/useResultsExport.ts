@@ -107,7 +107,7 @@ export const useResultsExport = (params: FetchResultsParams) => {
     },
     onError: (error) => {
       if (isCancel(error)) {
-        return; // User aborted the export; no error feedback needed.
+        return;
       }
       dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' }));
     },
