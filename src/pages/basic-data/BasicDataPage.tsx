@@ -48,7 +48,8 @@ const BasicDataPage = () => {
       <SideMenu
         isVisible={!isOnACentralImportSubPage}
         backToSideMenuButton={
-          <BasicDataBackToMenuButton recreateSearch={!isOnCentralImportEditPage && !isOnCentralImportMergePage} /> // These pages are two levels deep, so we want to go back to the landing page of central import (one level back) instead of going back to the search
+          // INFO: CentralImportEditPage and CentralImportMergePage are two levels deep, so for them we want to go back to the landing page of central import (one level back) instead of going back to the search
+          <BasicDataBackToMenuButton recreateSearch={!isOnCentralImportEditPage && !isOnCentralImportMergePage} />
         }>
         <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} />
         {isInstitutionAdmin && <PersonRegisterNavigationAccordion />}

@@ -1,9 +1,9 @@
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router';
 import { BackToMenuButton } from '../../../components/side-menu-components/BackToMenuButton';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
-import { useLocation, useNavigate } from 'react-router';
 
 interface BasicDataBackToMenuButtonProps {
   recreateSearch: boolean;

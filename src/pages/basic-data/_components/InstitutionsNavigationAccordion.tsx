@@ -1,3 +1,7 @@
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { Divider } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 import { SelectableCreateButton } from '../../../components/buttons/SelectableCreateButton';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NavigationList } from '../../../components/_atoms/NavigationList';
@@ -5,12 +9,10 @@ import { SelectableButton } from '../../../components/buttons/SelectableButton';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { checkWhichBasicDataPage } from '../../../utils/location-helpers/check-which-basic-data-page';
 import { getAdminInstitutionPath, UrlPathTemplate } from '../../../utils/urlPaths';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import { Divider } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 
 export const InstitutionsNavigationAccordion = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const { isOnInstitutionsPage, isOnNewInstitutionPage } = checkWhichBasicDataPage(location.pathname, location.search);
 
   return (

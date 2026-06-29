@@ -1,15 +1,17 @@
+import LockOutlineIcon from '@mui/icons-material/LockOutline';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NavigationList } from '../../../components/_atoms/NavigationList';
 import { SelectableButton } from '../../../components/buttons/SelectableButton';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { checkWhichBasicDataPage } from '../../../utils/location-helpers/check-which-basic-data-page';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
-import LockOutlineIcon from '@mui/icons-material/LockOutline';
-import { Typography } from '@mui/material';
 
 export const ChannelClaimAccordion = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const { isOnChannelClaimPage, isOnSerialPublicationClaimsPage } = checkWhichBasicDataPage(
     location.pathname,
     location.search

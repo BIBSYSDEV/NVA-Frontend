@@ -1,4 +1,7 @@
+import PeopleIcon from '@mui/icons-material/People';
+import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 import { SelectableCreateButton } from '../../../components/buttons/SelectableCreateButton';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NavigationList } from '../../../components/_atoms/NavigationList';
@@ -6,11 +9,10 @@ import { SelectableButton } from '../../../components/buttons/SelectableButton';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { checkWhichBasicDataPage } from '../../../utils/location-helpers/check-which-basic-data-page';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
-import PeopleIcon from '@mui/icons-material/People';
-import { Divider } from '@mui/material';
 
 export const PersonRegisterNavigationAccordion = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const { isOnPersonRegisterPage, isOnAddEmployeePage } = checkWhichBasicDataPage(location.pathname, location.search);
 
   return (
