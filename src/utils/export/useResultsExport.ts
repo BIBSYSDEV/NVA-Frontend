@@ -24,6 +24,25 @@ const parseNextLink = (header: string | undefined): string | null => {
   return null;
 };
 
+/**
+ * Bulk-exports registration search results in a given file format.
+ *
+ * The matching results are fetched page by page (following the `link: rel="next"`
+ * header) up to a hard cap of {@link hardCap} results, then each format's
+ * {@link PaginatedExportFormat.combine} merges the pages into a single file that is
+ * downloaded in the browser. If more results exist than the cap allows, the export is
+ * truncated and the user is notified.
+ *
+ * The export format is supplied per invocation via the returned `exportResults`
+ * callback, so a single hook instance can drive several format options (e.g. a menu).
+ *
+ * @param params - Search parameters describing which results to export. The `from` and
+ *   `results` values are overridden internally for paging and the total count lookup.
+ * @returns
+ *   - `exportResults`: starts an export for the given {@link PaginatedExportFormat}.
+ *   - `isExporting`: whether an export is currently running.
+ *   - `progress`: title, label and percentage (`undefined` while indeterminate) for a progress dialog.
+ */
 export const useResultsExport = (params: FetchResultsParams) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
