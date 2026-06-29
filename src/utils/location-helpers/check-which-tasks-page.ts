@@ -1,4 +1,4 @@
-import { UrlPathTemplate } from './urlPaths';
+import { UrlPathTemplate } from '../urlPaths';
 
 export const checkWhichTasksPage = (pathname: string) => {
   const isOnTicketsPage = pathname === UrlPathTemplate.TasksDialogue;

@@ -8,7 +8,7 @@ import { StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers
 import { TicketTypeFilterButton } from '../../../components/TicketTypeFilterButton';
 import { CustomerTicketAggregations, TicketTypeSelection } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { checkWhichTasksPage } from '../../../utils/location-helpers';
+import { checkWhichTasksPage } from '../../../utils/location-helpers/check-which-tasks-page';
 import { resetPaginationAndNavigate } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
