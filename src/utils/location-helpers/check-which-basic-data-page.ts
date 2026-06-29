@@ -12,7 +12,7 @@ export const checkWhichBasicDataPage = (rawPathname: string, search?: string) =>
   const isOnAddEmployeePage = !!matchPath(UrlPathTemplate.BasicDataAddEmployee, pathname);
 
   // Institution subpages
-  const isOnNewInstitutionPage = pathname === UrlPathTemplate.BasicDataInstitutions && search === '?id=new';
+  const isOnNewInstitutionPage = isOnInstitutionsPage && new URLSearchParams(search).get('id') === 'new';
 
   // Central import subpages
   const isOnCentralImportCandidateLandingPage = !!matchPath(UrlPathTemplate.BasicDataCentralImportCandidate, pathname);

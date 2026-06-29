@@ -8,14 +8,10 @@ interface NavigationListProps extends BoxProps {
 export const NavigationList = ({ sx, ...props }: NavigationListProps) => (
   <Box
     component="nav"
-    sx={{
-      mb: '0.5rem',
-      mx: '0.5rem',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '0.5rem',
-      ...sx,
-    }}
+    sx={[
+      { mb: '0.5rem', mx: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+      ...(Array.isArray(sx) ? sx : [sx]),
+    ]}
     {...props}
   />
 );
