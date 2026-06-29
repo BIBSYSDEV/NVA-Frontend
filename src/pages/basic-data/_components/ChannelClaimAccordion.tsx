@@ -12,7 +12,7 @@ import { UrlPathTemplate } from '../../../utils/urlPaths';
 export const ChannelClaimAccordion = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const { isOnChannelClaimPage, isOnSerialPublicationClaimsPage } = checkWhichBasicDataPage(
+  const { isOnPublisherClaimPage, isOnSerialPublicationClaimsPage } = checkWhichBasicDataPage(
     location.pathname,
     location.search
   );
@@ -29,7 +29,7 @@ export const ChannelClaimAccordion = () => {
           {t('editor.institution.channel_claims.channel_claims_settings_description')}
         </Typography>
         <SelectableButton
-          isSelected={isOnChannelClaimPage}
+          isSelected={isOnPublisherClaimPage}
           data-testid={dataTestId.basicData.publisherClaimsLink}
           to={UrlPathTemplate.BasicDataPublisherClaims}>
           {t('editor.institution.channel_claims.administer_publisher_channel_claim')}

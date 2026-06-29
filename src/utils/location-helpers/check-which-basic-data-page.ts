@@ -6,7 +6,7 @@ export const checkWhichBasicDataPage = (rawPathname: string, search?: string) =>
   // Main accordion default pages
   const isOnPersonRegisterPage = !!matchPath(UrlPathTemplate.BasicDataPersonRegister, pathname);
   const isOnInstitutionsPage = !!matchPath(UrlPathTemplate.BasicDataInstitutions, pathname);
-  const isOnChannelClaimPage = !!matchPath(UrlPathTemplate.BasicDataPublisherClaims, pathname);
+  const isOnPublisherClaimPage = !!matchPath(UrlPathTemplate.BasicDataPublisherClaims, pathname);
 
   // Person register subpages
   const isOnAddEmployeePage = !!matchPath(UrlPathTemplate.BasicDataAddEmployee, pathname);
@@ -27,7 +27,7 @@ export const checkWhichBasicDataPage = (rawPathname: string, search?: string) =>
   return {
     isOnPersonRegisterPage,
     isOnInstitutionsPage,
-    isOnChannelClaimPage,
+    isOnPublisherClaimPage,
     isOnAddEmployeePage,
     isOnNewInstitutionPage,
     isOnCentralImportCandidateLandingPage,
