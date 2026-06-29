@@ -30,15 +30,6 @@ export const ExportResultsDropdown = () => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
-  const handleCSVDownload = () => {
-    const link = document.createElement('a');
-    link.href = csvExportFormat.buildHref(searchParams);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    handleClose();
-  };
-
   return (
     <>
       <Button
@@ -70,7 +61,8 @@ export const ExportResultsDropdown = () => {
           disabled={csvClicked}
           onClick={() => {
             setCsvClicked(true);
-            handleCSVDownload();
+            handleClose();
+            exportResults(csvExportFormat);
           }}>
           CSV
         </MenuItem>

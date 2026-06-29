@@ -1,15 +1,9 @@
 import { ParseKeys } from 'i18next';
-import { SearchApiPath } from '../../api/apiPaths';
-import { API_URL } from '../constants';
-
-interface BaseExportFormat {
-  id: string;
-  label: string;
-}
 
 /** Formats fetched page-by-page via the link:rel="next" loop, then combined into one Blob. */
-export interface PaginatedExportFormat extends BaseExportFormat {
-  kind: 'paginated';
+export interface PaginatedExportFormat {
+  id: string;
+  label: string;
   accept: string;
   mimeType: string;
   fileExtension: string;
@@ -17,16 +11,21 @@ export interface PaginatedExportFormat extends BaseExportFormat {
   combine: (chunks: string[]) => string;
 }
 
-/** Formats handled server-side as a plain anchor download (no fetch loop). */
-export interface DirectLinkExportFormat extends BaseExportFormat {
-  kind: 'direct-link';
-  buildHref: (searchParams: URLSearchParams) => string;
-}
+/** Drop the first line (the CSV header row) from a chunk; returns '' if there is nothing after it. */
+const dropFirstLine = (text: string): string => {
+  const newlineIndex = text.indexOf('\n');
+  return newlineIndex === -1 ? '' : text.slice(newlineIndex + 1);
+};
 
-export type ResultExportFormat = PaginatedExportFormat | DirectLinkExportFormat;
+const combineCsvChunks = (chunks: string[]): string => {
+  const [first, ...rest] = chunks.map((chunk) => chunk.trimEnd()).filter(Boolean);
+  if (!first) {
+    return '';
+  }
+  return [first, ...rest.map(dropFirstLine)].filter(Boolean).join('\n');
+};
 
 export const bibtexExportFormat: PaginatedExportFormat = {
-  kind: 'paginated',
   id: 'bibtex',
   label: 'BibTex',
   accept: 'text/x-bibtex',
@@ -36,10 +35,12 @@ export const bibtexExportFormat: PaginatedExportFormat = {
   combine: (chunks) => chunks.join('\n'),
 };
 
-export const csvExportFormat: DirectLinkExportFormat = {
-  kind: 'direct-link',
+export const csvExportFormat: PaginatedExportFormat = {
   id: 'csv',
   label: 'CSV',
-  buildHref: (searchParams) =>
-    `${API_URL.replace(/\/$/, '')}${SearchApiPath.RegistrationsExport}?${searchParams.toString()}`,
+  accept: 'text/csv',
+  mimeType: 'text/csv',
+  fileExtension: 'csv',
+  progressTitleKey: 'exporting_csv',
+  combine: combineCsvChunks,
 };
