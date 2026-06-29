@@ -20,7 +20,7 @@ export const ExportResultsDropdown = () => {
   const [csvClicked, setCsvClicked] = useState(false);
   const [bibtexClicked, setBibtexClicked] = useState(false);
 
-  const { exportResults, isExporting, progress } = useResultsExport(registrationParams);
+  const { exportResults, cancelExport, isExporting, progress } = useResultsExport(registrationParams);
 
   useEffect(() => {
     setCsvClicked(false);
@@ -77,7 +77,7 @@ export const ExportResultsDropdown = () => {
           BibTex
         </MenuItem>
       </Menu>
-      <ProgressDialog open={isExporting} {...progress} />
+      <ProgressDialog open={isExporting} onCancel={cancelExport} {...progress} />
     </>
   );
 };

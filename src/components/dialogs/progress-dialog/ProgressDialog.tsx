@@ -1,5 +1,16 @@
-import { Box, Dialog, DialogContent, DialogTitle, LinearProgress, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  LinearProgress,
+  Typography,
+} from '@mui/material';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useDelayedOpen } from './_hooks/useDelayedOpen';
 
 const defaultOpenDelayMs = 700;
@@ -12,6 +23,8 @@ interface ProgressDialogProps {
   value?: number;
   openDelayMs?: number;
   minVisibleMs?: number;
+  /** When provided, a cancel button is shown that calls this to abort the operation. */
+  onCancel?: () => void;
 }
 
 export const ProgressDialog = ({
@@ -21,7 +34,9 @@ export const ProgressDialog = ({
   value,
   openDelayMs = defaultOpenDelayMs,
   minVisibleMs = defaultMinVisibleMs,
+  onCancel,
 }: ProgressDialogProps) => {
+  const { t } = useTranslation();
   const titleId = useId();
   const progressLabelId = useId();
   const effectiveOpen = useDelayedOpen(open, openDelayMs, minVisibleMs);
@@ -52,6 +67,17 @@ export const ProgressDialog = ({
           {label}
         </Typography>
       </DialogContent>
+      {onCancel && (
+        <DialogActions>
+          <Button
+            variant="contained"
+            color="secondary"
+            data-testid={dataTestId.common.cancelExportButton}
+            onClick={onCancel}>
+            {t('common.cancel')}
+          </Button>
+        </DialogActions>
+      )}
     </Dialog>
   );
 };

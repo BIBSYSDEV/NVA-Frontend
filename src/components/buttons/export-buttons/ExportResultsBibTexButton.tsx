@@ -13,7 +13,7 @@ interface ExportResultsBibTexButtonProps {
 
 export const ExportResultsBibTexButton = ({ params }: ExportResultsBibTexButtonProps) => {
   const { t } = useTranslation();
-  const { exportResults, isExporting, progress } = useResultsExport(params);
+  const { exportResults, cancelExport, isExporting, progress } = useResultsExport(params);
 
   return (
     <>
@@ -27,7 +27,7 @@ export const ExportResultsBibTexButton = ({ params }: ExportResultsBibTexButtonP
         loading={isExporting}>
         {t('search.export')}
       </Button>
-      <ProgressDialog open={isExporting} {...progress} />
+      <ProgressDialog open={isExporting} onCancel={cancelExport} {...progress} />
     </>
   );
 };

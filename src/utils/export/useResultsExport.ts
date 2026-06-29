@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { isCancel } from 'axios';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { SearchApiPath } from '../../api/apiPaths';
@@ -40,6 +41,7 @@ const parseNextLink = (header: string | undefined): string | null => {
  *   `results` values are overridden internally for paging and the total count lookup.
  * @returns
  *   - `exportResults`: starts an export for the given {@link PaginatedExportFormat}.
+ *   - `cancelExport`: aborts the in-progress export without showing an error.
  *   - `isExporting`: whether an export is currently running.
  *   - `progress`: title, label and percentage (`undefined` while indeterminate) for a progress dialog.
  */
@@ -48,13 +50,18 @@ export const useResultsExport = (params: FetchResultsParams) => {
   const dispatch = useDispatch();
   const [fetchedCount, setFetchedCount] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const mutation = useMutation({
     mutationFn: async (format: PaginatedExportFormat) => {
       setFetchedCount(0);
       setTotalCount(0);
 
-      const countResponse = await fetchResults({ ...params, from: 0, results: 0 });
+      const abortController = new AbortController();
+      abortControllerRef.current = abortController;
+      const { signal } = abortController;
+
+      const countResponse = await fetchResults({ ...params, from: 0, results: 0 }, signal);
       const expectedTotal = Math.min(countResponse.totalHits, hardCap);
       setTotalCount(expectedTotal);
 
@@ -72,6 +79,7 @@ export const useResultsExport = (params: FetchResultsParams) => {
           url: nextUrl,
           headers: { Accept: format.accept },
           responseType: 'blob',
+          signal,
         });
         chunks.push(await response.data.text());
         fetched += pageSize;
@@ -97,8 +105,15 @@ export const useResultsExport = (params: FetchResultsParams) => {
         );
       }
     },
-    onError: () => dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' })),
+    onError: (error) => {
+      if (isCancel(error)) {
+        return; // User aborted the export; no error feedback needed.
+      }
+      dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' }));
+    },
   });
+
+  const cancelExport = () => abortControllerRef.current?.abort();
 
   const cappedFetched = Math.min(fetchedCount, totalCount);
   const isDeterminate = totalCount > 0;
@@ -111,6 +126,7 @@ export const useResultsExport = (params: FetchResultsParams) => {
 
   return {
     exportResults: mutation.mutate,
+    cancelExport,
     isExporting: mutation.isPending,
     progress,
   };
