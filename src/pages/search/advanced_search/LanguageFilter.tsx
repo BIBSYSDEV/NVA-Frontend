@@ -28,9 +28,8 @@ export const LanguageFilter = () => {
   const updateSelectedLanguages = (selectedCodes: string[]) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedCodes && selectedCodes.length > 0) {
-      const languages = selectedCodes
-        .map((iso6393Code) => allLanguages.find((language) => language.iso6393Code === iso6393Code)?.iso6393Code)
-        .filter(Boolean);
+      const validCodes = new Set(allLanguages.map((language) => language.iso6393Code));
+      const languages = selectedCodes.filter((iso6393Code) => validCodes.has(iso6393Code));
 
       if (languages.length > 0) {
         syncedParams.set(ResultParam.PublicationLanguageShould, languages.join(','));
@@ -44,8 +43,9 @@ export const LanguageFilter = () => {
     navigate({ search: syncedParams.toString() });
   };
 
+  const languageByCode = new Map(allLanguages.map((language) => [language.iso6393Code, language]));
   const selectedLanguages = languageParam
-    .map((iso6393Code) => allLanguages.find((language) => language.iso6393Code === iso6393Code))
+    .map((iso6393Code) => languageByCode.get(iso6393Code))
     .filter(Boolean) as Language[];
 
   return (
