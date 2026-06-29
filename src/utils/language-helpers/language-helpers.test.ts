@@ -19,9 +19,15 @@ describe('getLanguageOptions', () => {
 
   it('returns restOfLanguages sorted alphabetically for the given languageCode', () => {
     const { restOfLanguages } = getLanguageOptions('nob');
-    for (let i = 0; i < restOfLanguages.length - 1; i++) {
-      expect(restOfLanguages[i].nob.localeCompare(restOfLanguages[i + 1].nob, 'nb')).toBeLessThanOrEqual(0);
+    const withoutUnd = restOfLanguages.filter((l) => l.iso6393Code !== 'und');
+    for (let i = 0; i < withoutUnd.length - 1; i++) {
+      expect(withoutUnd[i].nob.localeCompare(withoutUnd[i + 1].nob, 'nb')).toBeLessThanOrEqual(0);
     }
+  });
+
+  it('returns und as the last element in restOfLanguages', () => {
+    const { restOfLanguages } = getLanguageOptions('nob');
+    expect(restOfLanguages[restOfLanguages.length - 1].iso6393Code).toBe('und');
   });
 
   it('sorts restOfLanguages differently based on languageCode', () => {
