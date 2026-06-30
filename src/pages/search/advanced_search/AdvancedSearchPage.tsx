@@ -89,7 +89,7 @@ const AdvancedSearchPage = () => {
                 placeholder={t('search.search_for_title')}
                 paginationOffsetParamName={ResultParam.From}
               />
-              <ExportResultsDropdown />
+              <ExportResultsDropdown params={registrationParams} />
             </Box>
             <StyledDivider sx={{ mt: '1rem' }} />
           </Grid>
