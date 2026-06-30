@@ -253,7 +253,7 @@ export const SelectRegistrationTypeField = () => {
           setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType }, false);
           break;
       }
-      validateForm();
+      setTimeout(() => validateForm(), 0);
     }
   };
 
