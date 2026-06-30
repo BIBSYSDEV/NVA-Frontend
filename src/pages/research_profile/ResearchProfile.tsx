@@ -13,7 +13,7 @@ import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam, ResultSearchOrder } from '../../api/searchApi';
 import { HeadTitle } from '../../components/HeadTitle';
-import { ExportResultsDropdown } from '../search/ExportResultsDropdown';
+import { ExportResultsDropdown } from '../../components/buttons/export-buttons/ExportResultsDropdown';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';

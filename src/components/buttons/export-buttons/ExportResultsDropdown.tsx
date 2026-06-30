@@ -4,11 +4,11 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button, Menu, MenuItem } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams } from '../../api/searchApi';
-import { ProgressDialog } from '../../components/dialogs/progress-dialog/ProgressDialog';
-import { dataTestId } from '../../utils/dataTestIds';
-import { bibtexExportFormat, csvExportFormat } from '../../utils/export/exportFormats';
-import { useResultsExport } from '../../utils/export/useResultsExport';
+import { FetchResultsParams } from '../../../api/searchApi';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { bibtexExportFormat, csvExportFormat } from '../../../utils/export/exportFormats';
+import { useResultsExport } from '../../../utils/export/useResultsExport';
+import { ProgressDialog } from '../../dialogs/progress-dialog/ProgressDialog';
 
 interface ExportResultsDropdownProps {
   params: FetchResultsParams;

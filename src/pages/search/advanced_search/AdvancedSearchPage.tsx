@@ -22,7 +22,7 @@ import { ScientificIndexStatuses } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { ExportResultsDropdown } from '../ExportResultsDropdown';
+import { ExportResultsDropdown } from '../../../components/buttons/export-buttons/ExportResultsDropdown';
 import { PublicationYearIntervalFilter } from '../PublicationYearIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { FileStatusSelect } from './FileStatusSelect';

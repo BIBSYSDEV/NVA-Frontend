@@ -15,7 +15,7 @@ import {
   syncParamsWithSearchFields,
 } from '../../../utils/searchHelpers';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
-import { ExportResultsDropdown } from '../ExportResultsDropdown';
+import { ExportResultsDropdown } from '../../../components/buttons/export-buttons/ExportResultsDropdown';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
 import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
