@@ -553,6 +553,7 @@
   "export_nvi_status_button_tooltip_text": "",
   "export_progress_count": "",
   "exporting_bibtex": "",
+  "exporting_csv": "",
   "feedback": {
     "error": {
       "404_page": "<span><icon /><h1>Sorry, we can't find the page you're looking for</h1></span><p>The page your looking for does not exist, or the web address is wrong.</p><p>Change the web address or use the menu to navigate to the correct page.</p>",
@@ -1551,7 +1552,7 @@
       "ReportResearch": "Research report",
       "ReportWorkingPaper": "Working paper",
       "ResearchData": "Research data",
-      "SoftwareSourceCode": "",
+      "SoftwareSourceCode": "Source code",
       "StudyProtocol": "Study protocol",
       "Textbook": "Textbook",
       "TextbookChapter": "Textbook chapter",

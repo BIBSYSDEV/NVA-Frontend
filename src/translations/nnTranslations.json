@@ -553,6 +553,7 @@
   "export_nvi_status_button_tooltip_text": "",
   "export_progress_count": "",
   "exporting_bibtex": "",
+  "exporting_csv": "",
   "feedback": {
     "error": {
       "404_page": "<span><icon /><h1>Beklagar, men vi kan ikkje finne sida du leitar etter</h1></span><p>Sida du leitar etter eksisterar ikkje, eller nettadressa er feil.</p><p>Endre nettadressa eller bruk menyen for å navigere deg til korrekt side.</p>",
@@ -1551,7 +1552,7 @@
       "ReportResearch": "Forskingsrapport",
       "ReportWorkingPaper": "Arbeidsnotat",
       "ResearchData": "Forskingsdata",
-      "SoftwareSourceCode": "",
+      "SoftwareSourceCode": "Kjeldekode",
       "StudyProtocol": "Studieprotokoll",
       "Textbook": "Lærebok",
       "TextbookChapter": "Kapittel i lærebok",
