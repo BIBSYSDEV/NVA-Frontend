@@ -12,7 +12,6 @@ import { ProgressDialog } from '../../dialogs/progress-dialog/ProgressDialog';
 
 interface ExportResultsDropdownProps {
   params: FetchResultsParams;
-  /** Context label used as the download file name stem; defaults to a generic search-results name. */
   fileNameBase?: string;
 }
 
