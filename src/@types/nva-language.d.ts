@@ -18,4 +18,5 @@ declare module 'nva-language' {
   export function getLanguageByNynorskName(name: string): Language;
   export function getLanguageBySamiName(name: string): Language;
   export function getLanguageByUri(uri: string): Language;
+  export function getLanguages(): Language[];
 }

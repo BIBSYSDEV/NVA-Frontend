@@ -36,6 +36,7 @@ export const dataTestId = {
     loginButtonForbidden: 'login-button-forbidden',
   },
   basicData: {
+    backToMenuButton: 'basic-data-back-to-menu-button',
     addChannelClaimButton: 'add-channel-claim-button',
     addCustomerLink: 'add-customer-link',
     addEmployeeLink: 'add-employee-link',
@@ -146,6 +147,7 @@ export const dataTestId = {
   },
   common: {
     cancel: 'cancel',
+    cancelExportButton: 'cancel-export-button',
     exportBibTexButton: 'export-bibtex-button',
     exportButton: 'export-button',
     exportLink: 'export-link',
@@ -248,7 +250,9 @@ export const dataTestId = {
       fundingSourceField: 'funding-source-field',
       journalField: 'journal-field',
       nviReportedYearField: 'nvi-reported-year-field',
+      languageItem: (language: string) => `publication-language-${language}`,
       publicationLanguageField: 'publication-language-field',
+      showMoreLanguagesButton: 'publication-language-show-more-button',
       publisherField: 'publisher-field',
       removeFacetButton: 'remove-facet-button',
       removeFilterButton: 'remove-filter-button',
@@ -368,7 +372,7 @@ export const dataTestId = {
     codeRepositoryLink: 'code-repository-link',
     contributors: 'public-registration-contributors',
     detailsTab: {
-      copyCitationButton: 'copy-citation-button',
+      copyReferenceButton: 'copy-reference-button',
       detailsTab: 'details-tab',
       emailLink: (id: string) => `email-link-${id}`,
       infoLink: 'info-link',
@@ -539,6 +543,7 @@ export const dataTestId = {
       descriptionField: 'registration-description-field',
       languageField: 'registration-language-field',
       languageItem: (language: string) => `registration-language-item-${language}`,
+      showMoreLanguagesButton: 'registration-show-more-languages-button',
       removeProjectButton: 'remove-project-button',
       tagField: 'registration-tag-field',
       titleField: 'registration-title-field',

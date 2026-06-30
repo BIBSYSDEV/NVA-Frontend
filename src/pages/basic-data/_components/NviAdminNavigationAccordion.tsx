@@ -4,14 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useFetchNviPeriodReport } from '../../../api/hooks/useFetchNviPeriodReport';
+import { SelectableCreateButton } from '../../../components/buttons/SelectableCreateButton';
 import {
   allFilterableNviPeriodStatuses,
   PARAM_NAME_PERIOD_STATUSES,
 } from '../../../components/filters/nvi/NviStatusMultiSelect';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NviReportProgressBar } from '../../../components/NviReportProgressBar';
-import { LinkCreateButton, NavigationList } from '../../../components/PageWithSideMenu';
-import { SelectableButton } from '../../../components/SelectableButton';
+import { NavigationList } from '../../../components/_atoms/NavigationList';
+import { SelectableButton } from '../../../components/buttons/SelectableButton';
 import { StyledNviStatusBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -76,7 +77,7 @@ export const NviAdminNavigationAccordion = () => {
       </NavigationList>
 
       <Divider sx={{ mt: '0.5rem' }} />
-      <LinkCreateButton
+      <SelectableCreateButton
         data-testid={dataTestId.basicData.addNviPeriodLink}
         isSelected={currentPath === UrlPathTemplate.BasicDataNviNew}
         selectedColor="nvi.main"

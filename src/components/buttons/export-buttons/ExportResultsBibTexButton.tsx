@@ -2,8 +2,9 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { FetchResultsParams } from '../../../api/searchApi';
-import { useBibtexExport } from '../../../utils/bibtex/useBibtexExport';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { bibtexExportFormat } from '../../../utils/export/exportFormats';
+import { useResultsExport } from '../../../utils/export/useResultsExport';
 import { ProgressDialog } from '../../dialogs/progress-dialog/ProgressDialog';
 
 interface ExportResultsBibTexButtonProps {
@@ -12,7 +13,7 @@ interface ExportResultsBibTexButtonProps {
 
 export const ExportResultsBibTexButton = ({ params }: ExportResultsBibTexButtonProps) => {
   const { t } = useTranslation();
-  const { exportBibTex, isFetchingBibtex, progress } = useBibtexExport(params);
+  const { exportResults, cancelExport, isExporting, progress } = useResultsExport(params);
 
   return (
     <>
@@ -22,11 +23,11 @@ export const ExportResultsBibTexButton = ({ params }: ExportResultsBibTexButtonP
         variant="contained"
         startIcon={<FileDownloadOutlinedIcon />}
         loadingPosition="start"
-        onClick={() => exportBibTex()}
-        loading={isFetchingBibtex}>
+        onClick={() => exportResults(bibtexExportFormat)}
+        loading={isExporting}>
         {t('search.export')}
       </Button>
-      <ProgressDialog open={isFetchingBibtex} {...progress} />
+      <ProgressDialog open={isExporting} onCancel={cancelExport} {...progress} />
     </>
   );
 };

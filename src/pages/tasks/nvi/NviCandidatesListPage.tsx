@@ -1,50 +1,33 @@
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import { Button, Grid, List, Typography } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { useFetchNviPeriodReport } from '../../../api/hooks/useFetchNviPeriodReport';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
-import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
-import { CuratorSelector } from '../../../components/CuratorSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { NviYearSelector } from '../../../components/filters/nvi/NviYearSelector';
 import { InfoBannerSize, InfoBannerType } from '../../../components/info-banner/enums';
 import { InfoBanner } from '../../../components/info-banner/InfoBanner';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { MainContentLayout } from '../../../components/page-layouts/MainContentLayout';
-import { SearchForm } from '../../../components/SearchForm';
 import { NviPeriodStatusEnum } from '../../../types/nvi.types';
-import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { getNviPeriodStatus } from '../../basic-data/nvi/reporting-periods/_utils/nvi-period-helpers';
-import { CoPublicationsCheckbox } from '../../messages/components/CoPublicationsCheckbox';
-import { ExcludeSubunitsCheckbox } from '../../messages/components/ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from '../../messages/components/NviCandidateListItem';
 import { NviSortSelector } from '../../messages/components/NviSortSelector';
-import { NviStatusFilter } from '../../messages/components/NviStatusFilter';
+import { NviCandidatesSearchFilters } from './_components/nvi-candidates-search-filters/NviCandidatesSearchFilters';
 
 const NviCandidatesListPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const nviParams = useNviCandidatesParams();
+
   const { data: periodData } = useFetchNviPeriodReport({ year: nviParams.year });
-  const periodStatus = periodData?.period ? getNviPeriodStatus(periodData.period) : null;
+  const periodStatus = periodData?.period ? periodData.period.status : null;
   const periodIsClosed = periodStatus === NviPeriodStatusEnum.ClosedPeriod;
   const periodIsUnopened = periodStatus === NviPeriodStatusEnum.UnopenedPeriod;
-
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const nviCandidatesQuery = useFetchNviCandidates({ params: nviParams });
-  const nviCandidatesQueryResults = nviCandidatesQuery.data?.hits ?? [];
-
-  const page = Math.floor(nviParams.offset / nviParams.size) + 1;
-
   const openingDate = periodData?.period?.startDate ? toDateString(periodData.period.startDate) : '';
   const infoBannerText = periodIsClosed
     ? t('nvi_period_for_year_is_closed', { year: nviParams.year })
@@ -52,97 +35,18 @@ const NviCandidatesListPage = () => {
       ? t('nvi_period_for_year_is_unopened', { year: nviParams.year, date: openingDate })
       : null;
 
+  const nviCandidatesQuery = useFetchNviCandidates({ params: nviParams });
+  const nviCandidatesQueryResults = nviCandidatesQuery.data?.hits ?? [];
+
+  const page = Math.floor(nviParams.offset / nviParams.size) + 1;
+
   return (
     <MainContentLayout heading={t('candidate_search')} headTitle={t('candidate_search')} sx={{ gap: '0.1rem' }}>
       <>
         {infoBannerText && (
           <InfoBanner text={infoBannerText} size={InfoBannerSize.MEDIUM} type={InfoBannerType.LOCK} noElevation />
         )}
-        <Grid container columns={16} spacing="1rem" sx={{ px: { xs: '0.5rem', md: 0 }, my: '1rem' }}>
-          <Grid size={{ xs: 16, md: 4 }}>
-            <NviStatusFilter />
-          </Grid>
-          <Grid size={{ xs: 16, md: 12, lg: 8 }}>
-            <SearchForm
-              placeholder={t('tasks.search_placeholder')}
-              paginationOffsetParamName={NviCandidatesSearchParam.Offset}
-            />
-          </Grid>
-          <Grid size={{ xs: 16, sm: 8, md: 4 }}>
-            <CoPublicationsCheckbox />
-          </Grid>
-
-          <Grid size={{ xs: 16, sm: 8, md: 6, lg: 4 }}>
-            <Button
-              fullWidth
-              variant="outlined"
-              sx={{ bgcolor: 'white' }}
-              data-testid={dataTestId.tasksPage.nvi.excludeUnassignedButton}
-              startIcon={
-                !nviParams.excludeUnassigned ? (
-                  <CheckBoxIcon color="secondary" />
-                ) : (
-                  <CheckBoxOutlineBlankIcon color="secondary" />
-                )
-              }
-              onClick={() => {
-                setSearchParams((params) => {
-                  const syncedParams = syncParamsWithSearchFields(params);
-                  syncedParams.delete(NviCandidatesSearchParam.Offset);
-                  if (nviParams.excludeUnassigned) {
-                    syncedParams.delete(NviCandidatesSearchParam.ExcludeUnassigned);
-                  } else {
-                    syncedParams.set(NviCandidatesSearchParam.ExcludeUnassigned, 'true');
-                  }
-                  return syncedParams;
-                });
-              }}>
-              {t('tasks.nvi.include_candidates_without_curator')}
-            </Button>
-          </Grid>
-
-          <Grid size={{ xs: 16, sm: 6, lg: 4 }}>
-            <CuratorSelector
-              selectedUsername={nviParams.assignee}
-              onChange={(curator) => {
-                const syncedParams = syncParamsWithSearchFields(searchParams);
-                syncedParams.delete(NviCandidatesSearchParam.Offset);
-                if (curator) {
-                  syncedParams.set(NviCandidatesSearchParam.Assignee, curator.username);
-                } else {
-                  syncedParams.delete(NviCandidatesSearchParam.Assignee);
-                }
-                navigate({ search: syncedParams.toString() });
-              }}
-              roleFilter={[RoleName.NviCurator]}
-            />
-          </Grid>
-
-          <Grid size={{ xs: 8, sm: 5, lg: 4 }}>
-            <AreaOfResponsibilitySelector
-              paramName={NviCandidatesSearchParam.Affiliations}
-              resetPagination={(params) => {
-                params.delete(NviCandidatesSearchParam.Offset);
-                if (!params.has(NviCandidatesSearchParam.Affiliations)) {
-                  params.delete(NviCandidatesSearchParam.ExcludeSubUnits);
-                }
-              }}
-            />
-          </Grid>
-
-          <Grid size={{ xs: 8, sm: 5, lg: 2 }}>
-            <ExcludeSubunitsCheckbox
-              paramName={NviCandidatesSearchParam.ExcludeSubUnits}
-              paginationParamName={NviCandidatesSearchParam.Offset}
-              disabled={!nviParams.affiliations?.length}
-            />
-          </Grid>
-
-          <Grid size={{ xs: 16, md: 6, lg: 2 }}>
-            <NviYearSelector fullWidth />
-          </Grid>
-        </Grid>
-
+        <NviCandidatesSearchFilters />
         <ListPagination
           count={nviCandidatesQuery.data?.totalHits ?? 0}
           rowsPerPage={nviParams.size}
