@@ -12,14 +12,16 @@ import { ProgressDialog } from '../../dialogs/progress-dialog/ProgressDialog';
 
 interface ExportResultsDropdownProps {
   params: FetchResultsParams;
+  /** Context label used as the download file name stem; defaults to a generic search-results name. */
+  fileNameBase?: string;
 }
 
-export const ExportResultsDropdown = ({ params }: ExportResultsDropdownProps) => {
+export const ExportResultsDropdown = ({ params, fileNameBase }: ExportResultsDropdownProps) => {
   const { t } = useTranslation();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const { exportResults, cancelExport, isExporting, progress } = useResultsExport(params);
+  const { exportResults, cancelExport, isExporting, progress } = useResultsExport(params, fileNameBase);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
