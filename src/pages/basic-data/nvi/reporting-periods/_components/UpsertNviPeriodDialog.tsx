@@ -23,7 +23,7 @@ interface UpsertNviPeriodDialogProps {
   closeEditDialog: () => void;
 }
 
-const emptyNviPeriod: NviPeriod = {
+const emptyNviPeriod: Omit<NviPeriod, 'id' | 'status'> = {
   type: 'NviPeriod',
   publishingYear: '',
   startDate: '',
@@ -42,7 +42,8 @@ export const UpsertNviPeriodDialog = ({
   const location = useLocation();
 
   const nviPeriodMutation = useMutation({
-    mutationFn: (data: NviPeriod) => (nviPeriod ? updateNviPeriod(data) : createNviPeriod(data)),
+    mutationFn: (data: Omit<NviPeriod, 'id' | 'status'>) =>
+      nviPeriod ? updateNviPeriod({ id: nviPeriod.id, ...data }) : createNviPeriod(data),
     onSuccess: () =>
       nviPeriod
         ? dispatch(setNotification({ message: t('feedback.success.update_nvi_period'), variant: 'success' }))
@@ -52,6 +53,15 @@ export const UpsertNviPeriodDialog = ({
         ? dispatch(setNotification({ message: t('feedback.error.update_nvi_period'), variant: 'error' }))
         : dispatch(setNotification({ message: t('feedback.error.create_nvi_period'), variant: 'error' })),
   });
+
+  const formValues: Omit<NviPeriod, 'id' | 'status'> = nviPeriod
+    ? {
+        type: nviPeriod.type,
+        publishingYear: nviPeriod.publishingYear,
+        startDate: nviPeriod.startDate,
+        reportingDate: nviPeriod.reportingDate,
+      }
+    : emptyNviPeriod;
 
   const closeDialog = () => {
     if (nviPeriod) {
@@ -68,7 +78,7 @@ export const UpsertNviPeriodDialog = ({
       data-testid={dataTestId.basicData.nviPeriod.nviPeriodDialog}>
       <DialogTitle>{nviPeriod ? t('edit_reporting_period') : t('basic_data.nvi.add_reporting_period')}</DialogTitle>
       <Formik
-        initialValues={nviPeriod ?? emptyNviPeriod}
+        initialValues={formValues}
         onSubmit={async (values) => {
           await nviPeriodMutation.mutateAsync(values);
           await refetchNviPeriods();

@@ -553,6 +553,7 @@
   "export_nvi_status_button_tooltip_text": "Knapp for nedlasting av forfatterandel er flyttet til side for publiseringspoeng. Denne knappen er midlertidig deaktivert — nedlasting av tall fra tabellen kommer snart.",
   "export_progress_count": "{{fetched}} av {{total}} resultater",
   "exporting_bibtex": "Eksporterer BibTeX",
+  "exporting_csv": "Eksporterer CSV",
   "feedback": {
     "error": {
       "404_page": "<span><icon /><h1>Beklager, men vi kan ikke finne siden du ser etter</h1></span><p>Siden du leter etter finnes ikke, eller nettadressen er feil.</p><p>Endre nettadressen eller bruk menyen for å naviger deg til korrekt side.</p>",

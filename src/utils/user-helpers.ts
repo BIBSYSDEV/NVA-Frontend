@@ -98,6 +98,12 @@ export const isDoiCurator = (user: User | null) => !!user && !!user.customerId &
 
 export const isSupportCurator = (user: User | null) => !!user && !!user.customerId && user.isSupportCurator;
 
+export const isInstitutionAdmin = (user: User | null) => !!user && !!user.customerId && user.isInstitutionAdmin;
+
+export const isAppAdmin = (user: User | null) => !!user && !!user.customerId && user.isAppAdmin;
+
+export const isInternalImporter = (user: User | null) => !!user && !!user.customerId && user.isInternalImporter;
+
 export const checkUserRoles = (user: User | null) => {
   return {
     isNviCurator: isNviCurator(user),
@@ -105,6 +111,9 @@ export const checkUserRoles = (user: User | null) => {
     isThesisCurator: isThesisCurator(user),
     isDoiCurator: isDoiCurator(user),
     isSupportCurator: isSupportCurator(user),
+    isInstitutionAdmin: isInstitutionAdmin(user),
+    isAppAdmin: isAppAdmin(user),
+    isInternalImporter: isInternalImporter(user),
   };
 };
 

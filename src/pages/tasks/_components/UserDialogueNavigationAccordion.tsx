@@ -8,10 +8,10 @@ import { StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers
 import { TicketTypeFilterButton } from '../../../components/TicketTypeFilterButton';
 import { CustomerTicketAggregations, TicketTypeSelection } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { checkWhichTasksPage } from '../../../utils/location-helpers/check-which-tasks-page';
 import { resetPaginationAndNavigate } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
-import { checkPages } from '../../messages/tasks-helpers';
 import { useTicketTypeButtonConfigs } from '../_hooks/useTicketTypeButtonConfigs';
 
 interface UserDialogueNavigationAccordionProps {
@@ -29,7 +29,7 @@ export const UserDialogueNavigationAccordion = ({
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
-  const { isOnTicketsPage } = checkPages(location.pathname);
+  const { isOnTicketsPage } = checkWhichTasksPage(location.pathname);
   const buttonConfigs = useTicketTypeButtonConfigs(ticketsAggregations);
 
   const toggleTicketType = (key: keyof TicketTypeSelection) => {
