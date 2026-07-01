@@ -249,7 +249,11 @@ export const AppRoutes = () => {
             element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviAdminPublicationPointsPage />} />}
           />
           <Route
-            path={`${UrlPathTemplate.BasicDataNvi}/*`}
+            path={UrlPathTemplate.BasicDataNvi}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataNviNew}
             element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />}
           />
           <Route
