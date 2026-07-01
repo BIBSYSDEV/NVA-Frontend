@@ -2,30 +2,25 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button, Menu, MenuItem } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router';
-import { ProgressDialog } from '../../components/dialogs/progress-dialog/ProgressDialog';
-import { dataTestId } from '../../utils/dataTestIds';
-import { bibtexExportFormat, csvExportFormat } from '../../utils/export/exportFormats';
-import { useResultsExport } from '../../utils/export/useResultsExport';
-import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
+import { FetchResultsParams } from '../../../api/searchApi';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { bibtexExportFormat, csvExportFormat } from '../../../utils/export/exportFormats';
+import { useResultsExport } from '../../../utils/export/useResultsExport';
+import { ProgressDialog } from '../../dialogs/progress-dialog/ProgressDialog';
 
-export const ExportResultsDropdown = () => {
+interface ExportResultsDropdownProps {
+  params: FetchResultsParams;
+  fileNameBase?: string;
+}
+
+export const ExportResultsDropdown = ({ params, fileNameBase }: ExportResultsDropdownProps) => {
   const { t } = useTranslation();
-  const [searchParams] = useSearchParams();
-  const registrationParams = useRegistrationsQueryParams();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [csvClicked, setCsvClicked] = useState(false);
-  const [bibtexClicked, setBibtexClicked] = useState(false);
 
-  const { exportResults, cancelExport, isExporting, progress } = useResultsExport(registrationParams);
-
-  useEffect(() => {
-    setCsvClicked(false);
-    setBibtexClicked(false);
-  }, [searchParams]);
+  const { exportResults, cancelExport, isExporting, progress } = useResultsExport(params, fileNameBase);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -58,9 +53,8 @@ export const ExportResultsDropdown = () => {
         }}>
         <MenuItem
           key={'csv'}
-          disabled={csvClicked}
+          disabled={isExporting}
           onClick={() => {
-            setCsvClicked(true);
             handleClose();
             exportResults(csvExportFormat);
           }}>
@@ -68,9 +62,8 @@ export const ExportResultsDropdown = () => {
         </MenuItem>
         <MenuItem
           key={'bibtex'}
-          disabled={bibtexClicked}
+          disabled={isExporting}
           onClick={() => {
-            setBibtexClicked(true);
             handleClose();
             exportResults(bibtexExportFormat);
           }}>

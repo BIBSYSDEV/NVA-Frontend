@@ -12,8 +12,8 @@ import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam, ResultSearchOrder } from '../../api/searchApi';
-import { ExportResultsBibTexButton } from '../../components/buttons/export-buttons/ExportResultsBibTexButton';
 import { HeadTitle } from '../../components/HeadTitle';
+import { ExportResultsDropdown } from '../../components/buttons/export-buttons/ExportResultsDropdown';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -321,12 +321,13 @@ const ResearchProfile = () => {
               </Trans>
             </Typography>
             <Box sx={{ mt: '1rem', width: 'fit-content' }}>
-              <ExportResultsBibTexButton
+              <ExportResultsDropdown
                 params={{
                   contributor: personIdentifier,
                   order: registrationSort.orderBy,
                   sort: registrationSort.sortOrder,
                 }}
+                fileNameBase={`nva-results-${personIdentifier}`}
               />
             </Box>
           </>

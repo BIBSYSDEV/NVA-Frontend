@@ -14,7 +14,8 @@ import {
   removeSearchParamValue,
   syncParamsWithSearchFields,
 } from '../../../utils/searchHelpers';
-import { ExportResultsDropdown } from '../ExportResultsDropdown';
+import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
+import { ExportResultsDropdown } from '../../../components/buttons/export-buttons/ExportResultsDropdown';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
 import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
@@ -52,6 +53,7 @@ export const RegistrationSearchBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
+  const registrationParams = useRegistrationsQueryParams();
 
   const selectedFacets: SelectedFacet[] = [];
   searchParams.forEach((value, param) => {
@@ -149,7 +151,7 @@ export const RegistrationSearchBar = () => {
 
             <Box gridArea="buttonRowTop">
               <FilterButton />
-              <ExportResultsDropdown />
+              <ExportResultsDropdown params={registrationParams} />
             </Box>
 
             {showExtraFilterRow && (
