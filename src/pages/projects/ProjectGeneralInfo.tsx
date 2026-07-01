@@ -88,6 +88,22 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
           <Typography component="dd">-</Typography>
         )}
 
+        {project.approvals && project.approvals.length > 0 && (
+          <>
+            <Typography variant="overline" component="dt">
+              {t('approval')}
+            </Typography>
+            {project.approvals.map((approval, index) => (
+              <>
+                <Typography key={index} component="dd" title={getLanguageString(approval.authorityName)}>
+                  {getLanguageString(approval.authorityName)}
+                </Typography>
+                <Typography>{approval.identifier}</Typography>
+              </>
+            ))}
+          </>
+        )}
+
         <Typography variant="overline" component="dt">
           {t('project.project_category')}
         </Typography>
