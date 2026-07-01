@@ -13,3 +13,5 @@ export const AdminCustomerInstitutionsContainer = () => {
     </BackgroundDiv>
   );
 };
+
+export default AdminCustomerInstitutionsContainer;
