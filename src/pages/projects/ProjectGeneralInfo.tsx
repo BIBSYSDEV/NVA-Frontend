@@ -91,7 +91,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         <Typography variant="overline" component="dt">
           {t('project.project_category')}
         </Typography>
-        {project.projectCategories.length > 0 ? (
+        {project.projectCategories.length > 0 || project.healthProjectData ? (
           <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             {project.projectCategories.map((category, index) => (
               <Chip
@@ -102,6 +102,14 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
                 label={getLanguageString(category.label)}
               />
             ))}
+            {project.healthProjectData && (
+              <Chip
+                component="dd"
+                sx={{ m: '0' }}
+                color="secondary"
+                label={getLanguageString(project.healthProjectData.label)}
+              />
+            )}
           </Box>
         ) : (
           <Typography component="dd">-</Typography>
