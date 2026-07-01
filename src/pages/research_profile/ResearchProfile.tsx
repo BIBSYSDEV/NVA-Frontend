@@ -327,7 +327,7 @@ const ResearchProfile = () => {
                   order: registrationSort.orderBy,
                   sort: registrationSort.sortOrder,
                 }}
-                fileNameBase={`nva-publications-${personIdentifier}`}
+                fileNameBase={`nva-results-${personIdentifier}`}
               />
             </Box>
           </>
