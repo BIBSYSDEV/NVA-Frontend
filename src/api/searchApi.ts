@@ -417,6 +417,7 @@ export enum ResultParam {
   UnidentifiedNorwegian = 'unidentifiedNorwegian',
   Unit = 'unit',
   Vocabulary = 'vocabulary',
+  HasNpiSubjectHeading = 'hasNpiSubjectHeading',
 }
 
 export enum ResultSearchOrder {
@@ -480,6 +481,7 @@ export interface FetchResultsParams {
   [ResultParam.UnidentifiedNorwegian]?: boolean | null;
   [ResultParam.Unit]?: string | null;
   [ResultParam.Vocabulary]?: string | null;
+  [ResultParam.HasNpiSubjectHeading]?: boolean | null;
 }
 
 export const buildRegistrationSearchParams = (params: FetchResultsParams): URLSearchParams => {
@@ -634,6 +636,9 @@ export const buildRegistrationSearchParams = (params: FetchResultsParams): URLSe
   }
   if (params.vocabulary) {
     searchParams.set(ResultParam.Vocabulary, params.vocabulary);
+  }
+  if (params.hasNpiSubjectHeading !== undefined && params.hasNpiSubjectHeading !== null) {
+    searchParams.set(ResultParam.HasNpiSubjectHeading, params.hasNpiSubjectHeading.toString());
   }
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');

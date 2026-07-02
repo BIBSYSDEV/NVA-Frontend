@@ -1,15 +1,23 @@
+import { useTranslation } from 'react-i18next';
 import { ResultParam } from '../../api/searchApi';
+import { DisabledCategory } from '../../components/CategorySelector';
 import { ScientificValueLevels } from '../../pages/search/advanced_search/ScientificValueFilter';
 import { CorrectionListSearchConfig } from '../../types/nvi.types';
-import { BookType, ChapterType } from '../../types/publicationFieldNames';
+import { allPublicationInstanceTypes, BookType, ChapterType } from '../../types/publicationFieldNames';
 import { nviApplicableTypes } from '../registration-helpers';
 import { useLoggedInUser } from './useLoggedInUser';
 
 export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
+  const { t } = useTranslation();
   const user = useLoggedInUser();
   const userTopLevelOrg = user?.topOrgCristinId;
 
-  const correctionListConfig: CorrectionListSearchConfig = {
+  const bookTypeValues = Object.values(BookType);
+  const nonBookDisabledCategories: DisabledCategory[] = allPublicationInstanceTypes
+    .filter((type) => !bookTypeValues.includes(type as BookType))
+    .map((type) => ({ type, text: t('tasks.nvi.only_book_categories_available') }));
+
+  return {
     ApplicableCategoriesWithNonApplicableChannel: {
       i18nKey: 'tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel',
       queryParams: {
@@ -105,7 +113,16 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
     },
+    BooksWithoutNpiField: {
+      i18nKey: 'tasks.nvi.correction_list_type.books_without_npi_field',
+      queryParams: {
+        categoryShould: [BookType.AcademicMonograph, BookType.AcademicCommentary],
+        hasNpiSubjectHeading: false,
+        scientificValue: [ScientificValueLevels.Unassigned].join(','),
+      },
+      disabledFilters: [],
+      disabledCategories: nonBookDisabledCategories,
+      topLevelOrganization: userTopLevelOrg,
+    },
   };
-
-  return correctionListConfig;
 };

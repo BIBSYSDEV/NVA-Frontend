@@ -5,7 +5,7 @@ import { ResultParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NavigationList } from '../../../components/_atoms/NavigationList';
 import { SelectableButton } from '../../../components/buttons/SelectableButton';
-import { CorrectionListId } from '../../../types/nvi.types';
+import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
 import { getAccordionDefaultPath, getCorrectionListSearchParams } from '../../../utils/correctionListHelpers';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
@@ -92,6 +92,12 @@ export const NviCorrectionListNavigationAccordion = () => {
           isSelected={selectedNviList === 'ScientificMonographyOrAnthologyWithoutIsxns'}
           onClick={() => openNewCorrectionList('ScientificMonographyOrAnthologyWithoutIsxns')}>
           {t('tasks.nvi.correction_list_type.scientific_monography_or_anthology_without_isxns')}
+        </SelectableButton>
+        <SelectableButton
+          data-testid={dataTestId.tasksPage.correctionList.booksWithoutNpiField}
+          isSelected={selectedNviList === CorrectionListNames.BooksWithoutNpiField}
+          onClick={() => openNewCorrectionList(CorrectionListNames.BooksWithoutNpiField)}>
+          {t('tasks.nvi.correction_list_type.books_without_npi_field')}
         </SelectableButton>
       </NavigationList>
     </NavigationListAccordion>
