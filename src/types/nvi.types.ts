@@ -1,5 +1,6 @@
 import { ParseKeys } from 'i18next';
 import { FetchResultsParams, ResultParam } from '../api/searchApi';
+import type { DisabledCategory } from '../components/CategorySelector';
 import { LanguageString, SearchResponse } from './common.types';
 import { Organization } from './organization.types';
 import { PublicationInstanceType, RegistrationDate } from './registration.types';
@@ -184,6 +185,7 @@ export enum CorrectionListNames {
   UnidentifiedContributorWithIdentifiedAffiliation = 'UnidentifiedContributorWithIdentifiedAffiliation',
   ScientificChapterNotInAnthology = 'ScientificChapterNotInAnthology',
   ScientificMonographyOrAnthologyWithoutIsxns = 'ScientificMonographyOrAnthologyWithoutIsxns',
+  BooksWithoutNpiField = 'BooksWithoutNpiField',
 }
 
 export type CorrectionListId = `${CorrectionListNames}`;
@@ -193,6 +195,7 @@ export type CorrectionListSearchConfig = {
     i18nKey: ParseKeys;
     queryParams: FetchResultsParams;
     disabledFilters: ResultParam[];
+    disabledCategories?: DisabledCategory[];
     topLevelOrganization: string | undefined;
   };
 };

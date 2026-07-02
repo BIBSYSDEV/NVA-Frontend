@@ -60,4 +60,5 @@ export const scientificValueFilterListIds: CorrectionListNames[] = [
   CorrectionListNames.ScientificChapterNotInAnthology,
   CorrectionListNames.YearBetweenChapterAndBookMismatch,
   CorrectionListNames.ScientificMonographyOrAnthologyWithoutIsxns,
+  CorrectionListNames.BooksWithoutNpiField,
 ];

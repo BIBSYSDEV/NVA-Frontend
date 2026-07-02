@@ -2055,8 +2055,10 @@
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler",
         "scientific_chapter_not_in_anthology": "Vitenskapelig kapittel ikke i antologi",
         "scientific_monography_or_anthology_without_isxns": "Vitenskapelig monografi eller antologi uten ISxN-er",
-        "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsyter med identifisert institusjon"
+        "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsyter med identifisert institusjon",
+        "books_without_npi_field": "Bøker uten NPI-fagfelt"
       },
+      "only_book_categories_available": "Kun bok-kategorier er tilgjengelige for denne listen",
       "delete_note": "Slett kommentar",
       "delete_note_description": "Er du sikker på at du vil slette denne kommentaren?",
       "exclude_subunits": "Ekskluder underenheter",

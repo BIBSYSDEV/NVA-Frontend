@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ResultParam, TicketSearchParam } from '../../../api/searchApi';
-import { CategorySelector } from '../../../components/CategorySelector';
+import { CategorySelector, DisabledCategory } from '../../../components/CategorySelector';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
@@ -12,6 +12,7 @@ interface CategoryFilterDialogProps {
   currentCategories: PublicationInstanceType[];
   closeDialog: () => void;
   searchParam: ResultParam.CategoryShould | TicketSearchParam.PublicationType;
+  disabledCategories?: DisabledCategory[];
 }
 
 export const CategoryFilterDialog = ({
@@ -19,6 +20,7 @@ export const CategoryFilterDialog = ({
   currentCategories,
   closeDialog,
   searchParam,
+  disabledCategories,
 }: CategoryFilterDialogProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -47,6 +49,7 @@ export const CategoryFilterDialog = ({
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
           onCategoryClick={onSelectType}
+          disabledCategories={disabledCategories}
         />
       </DialogContent>
       <DialogActions>
