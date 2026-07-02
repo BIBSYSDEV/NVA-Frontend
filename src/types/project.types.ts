@@ -71,18 +71,14 @@ export interface ProjectFunding extends Pick<Funding, 'identifier' | 'source' | 
 }
 
 export interface HealthProjectData {
-  type: string;
   label: LanguageString;
-  clinicalTrialPhase: string;
 }
 
+export type ProjectApprovalStatus = 'Approved' | 'Rejected';
+
 export interface ProjectApproval {
-  type: 'Approval';
-  date: string;
-  authority: string;
   authorityName: LanguageString;
-  status: string;
-  applicationCode: string;
+  status: ProjectApprovalStatus;
   identifier: string;
 }
 
