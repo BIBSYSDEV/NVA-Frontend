@@ -74,3 +74,5 @@ export const PublisherClaimsSettings = () => {
     </BackgroundDiv>
   );
 };
+
+export default PublisherClaimsSettings;

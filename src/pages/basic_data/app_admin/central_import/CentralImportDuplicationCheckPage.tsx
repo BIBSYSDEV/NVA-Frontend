@@ -250,3 +250,5 @@ export const CentralImportDuplicationCheckPage = () => {
     </Box>
   );
 };
+
+export default CentralImportDuplicationCheckPage;
