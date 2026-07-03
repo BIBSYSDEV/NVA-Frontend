@@ -29,7 +29,7 @@ const handledLanguages = [
  *
  * Falls back to `'nob'` when the code is missing, `null`, the string `'undefined'`/`'null'`
  * (which can appear when reading from localStorage).
- * English codes and all unhandled languages map to `'eng'`.
+ * Falls back to `'eng'` for unrecognised language codes.
  *
  * @param langCode - BCP 47 tag, ISO 639-1/2/3 code, or a raw localStorage value.
  * @returns The resolved ISO 639-3 code: `'eng'`, `'nob'`, or `'nno'`.
@@ -46,8 +46,18 @@ export const normalizeToIso6393 = (langCode: string | undefined | null): Languag
   }
   return 'nob';
 };
-/** Maps the incoming string to the ISO 639-1 version following the rules defined in the app. */
-export const normalizeToIso6391 = (language?: string): LanguageCode6391 => {
+/**
+ * Maps an arbitrary language code to one of the three ISO 639-1 codes supported by the application:
+ * `'en'`, `'nb'` (Bokmål), or `'nn'` (Nynorsk).
+ *
+ * Pipes through `normalizeToIso6393` first, so it handles the same range of inputs: BCP 47 tags,
+ * ISO 639-1/2/3 codes, raw localStorage values, `null`, and `undefined`.
+ * Falls back to `'nb'` when no language code is provided, and to `'en'` for unrecognised language codes.
+ *
+ * @param language - BCP 47 tag, ISO 639-1/2/3 code, a raw localStorage value, or `null`/`undefined`.
+ * @returns The resolved ISO 639-1 code: `'en'`, `'nb'`, or `'nn'`.
+ */
+export const normalizeToIso6391 = (language?: string | null): LanguageCode6391 => {
   const lang = normalizeToIso6393(language);
   if (lang === 'eng') {
     return 'en';
