@@ -1,5 +1,6 @@
 import { getLanguages } from 'nva-language';
 import { LanguageCode6393 } from '../../translations/language.types';
+import { normalizeToIso6391 } from '../../translations/translation-helpers';
 
 // Languages that are used by most registrations and should be displayed at the top of the list in the language selector
 const primaryLanguageCodesIso6393 = ['eng', 'nob', 'nno', 'sme', 'sma', 'smj', 'mul'];
@@ -22,7 +23,7 @@ export const getLanguageOptions = (appLanguage: LanguageCode6393) => {
     .sort((a, b) => {
       if (a.iso6393Code === 'und') return 1;
       if (b.iso6393Code === 'und') return -1;
-      return a.iso6393Code.localeCompare(b.iso6393Code, appLanguage);
+      return a[appLanguage].localeCompare(b[appLanguage], normalizeToIso6391(appLanguage));
     });
 
   return { primaryLanguages, restOfLanguages };
