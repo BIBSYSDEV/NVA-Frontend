@@ -3,7 +3,7 @@ import { getLanguageByIso6393Code } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { ShowMoreDropdownItemsButton } from '../../../components/buttons/ShowMoreDropdownItemsButton';
-import { useLanguageOptions } from '../../../utils/language-helpers/useLanguageOptions';
+import { useLanguageOptions } from '../../../utils/registration-language-helpers/useLanguageOptions';
 import { useShowAll } from '../../../utils/hooks/useShowAll';
 
 interface LanguageSelectorFieldProps extends Omit<TextFieldProps, 'value'> {

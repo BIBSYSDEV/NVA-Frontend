@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { ShowMoreDropdownItemsButton } from '../../../components/buttons/ShowMoreDropdownItemsButton';
-import { useLanguageOptions } from '../../../utils/language-helpers/useLanguageOptions';
+import { useLanguageOptions } from '../../../utils/registration-language-helpers/useLanguageOptions';
 import { useShowAll } from '../../../utils/hooks/useShowAll';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 

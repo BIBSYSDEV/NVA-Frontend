@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getLanguageOptions } from './language-helpers';
+import { getLanguageOptions } from './get-language-options';
 
 const primaryLanguageCodes = ['eng', 'nob', 'nno', 'sme', 'sma', 'smj', 'mul'];
 
