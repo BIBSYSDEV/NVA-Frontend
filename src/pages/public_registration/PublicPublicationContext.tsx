@@ -28,7 +28,7 @@ import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
-import { useAppLanguageIn6391Format, useAppLanguageInIso6393Format } from '../../translations/translation-helpers';
+import { useAppLanguageIn6391Format } from '../../translations/translation-helpers';
 import {
   AudioVisualPublication,
   Award,
