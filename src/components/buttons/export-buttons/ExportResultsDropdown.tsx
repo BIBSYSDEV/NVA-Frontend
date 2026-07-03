@@ -6,7 +6,7 @@ import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FetchResultsParams } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { bibtexExportFormat, csvExportFormat } from '../../../utils/export/exportFormats';
+import { bibtexExportFormat, csvExportFormat, jsonLdExportFormat } from '../../../utils/export/exportFormats';
 import { useResultsExport } from '../../../utils/export/useResultsExport';
 import { ProgressDialog } from '../../dialogs/progress-dialog/ProgressDialog';
 
@@ -68,6 +68,15 @@ export const ExportResultsDropdown = ({ params, fileNameBase }: ExportResultsDro
             exportResults(bibtexExportFormat);
           }}>
           BibTex
+        </MenuItem>
+        <MenuItem
+          key={'json_ld'}
+          disabled={isExporting}
+          onClick={() => {
+            handleClose();
+            exportResults(jsonLdExportFormat);
+          }}>
+          JSON-LD
         </MenuItem>
       </Menu>
       <ProgressDialog open={isExporting} onCancel={cancelExport} {...progress} />

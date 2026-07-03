@@ -25,6 +25,24 @@ const combineCsvChunks = (chunks: string[]): string => {
   return [first, ...rest.map(dropFirstLine)].filter(Boolean).join('\n');
 };
 
+const combineJsonLdChunks = (chunks: string[]): string => {
+  const chunksAsJson = chunks.map((chunk) => JSON.parse(chunk));
+  const allResults = chunksAsJson.flatMap((page) => page.itemListElement ?? []);
+
+  /** Use metadata from initial page/chunk */
+  const context = chunksAsJson[0]?.['@context'] ?? 'undefined';
+  const type = chunksAsJson[0]?.['@type'] ?? 'undefined';
+  const numberOfItems = chunksAsJson[0]?.['numberOfItems'] ?? 'undefined';
+
+  const merged = {
+    '@context': context,
+    '@type': type,
+    numberOfItems: numberOfItems,
+    itemListElement: allResults,
+  };
+  return JSON.stringify(merged, null, 2);
+};
+
 export const bibtexExportFormat: PaginatedExportFormat = {
   id: 'bibtex',
   label: 'BibTex',
@@ -43,4 +61,14 @@ export const csvExportFormat: PaginatedExportFormat = {
   fileExtension: 'csv',
   progressTitleKey: 'exporting_csv',
   combine: combineCsvChunks,
+};
+
+export const jsonLdExportFormat: PaginatedExportFormat = {
+  id: 'json-ld',
+  label: 'JSON-LD',
+  accept: 'application/vnd.schemaorg.ld+json',
+  mimeType: 'application/vnd.schemaorg.ld+json',
+  fileExtension: 'json',
+  progressTitleKey: 'exporting_json_ld',
+  combine: combineJsonLdChunks,
 };
