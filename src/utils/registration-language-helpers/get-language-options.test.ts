@@ -37,4 +37,12 @@ describe('getLanguageOptions', () => {
     const engOrder = engLanguages.map((l) => l.iso6393Code);
     expect(nobOrder).not.toEqual(engOrder);
   });
+
+  it('returns restOfLanguages sorted alphabetically by Nynorsk name when languageCode is nno', () => {
+    const { restOfLanguages } = getLanguageOptions('nno');
+    const withoutUnd = restOfLanguages.filter((l) => l.iso6393Code !== 'und');
+    for (let i = 0; i < withoutUnd.length - 1; i++) {
+      expect(withoutUnd[i].nno.localeCompare(withoutUnd[i + 1].nno, 'nn')).toBeLessThanOrEqual(0);
+    }
+  });
 });

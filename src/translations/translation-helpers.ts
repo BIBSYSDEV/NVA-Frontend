@@ -38,8 +38,10 @@ export const normalizeToIso6393 = (langCode: string | undefined | null): Languag
   // Might be a string because it might come from local storage
   if (langCode === 'undefined' || langCode === 'null' || !langCode) {
     return 'nob'; // When the user's language is not specified, then the service should display in Bokmål
-  } else if (englishLanguages.includes(langCode) || !handledLanguages.includes(langCode)) {
-    // When the selected language is english or a language that is not handled, then the service should display in English by default
+  } else if (englishLanguages.includes(langCode)) {
+    return 'eng';
+  } else if (!handledLanguages.includes(langCode)) {
+    // When the selected language is not handled, then the service should display in English by default
     return 'eng';
   } else if (norwegianNynorskLanguages.includes(langCode)) {
     return 'nno';
@@ -92,7 +94,7 @@ export const useAppLanguageInIso6393Format = (): LanguageCode6393 => {
  *
  * @returns The current app language as an ISO 639-1 code.
  */
-export const useAppLanguageIn6391Format = (): LanguageCode6391 => {
+export const useAppLanguageInIso6391Format = (): LanguageCode6391 => {
   const { i18n } = useTranslation();
   return normalizeToIso6391(i18n.language);
 };

@@ -6,6 +6,7 @@ describe('normalizeToIso6393', () => {
     expect(normalizeToIso6393('nb')).toBe('nob');
     expect(normalizeToIso6393('nb-NO')).toBe('nob');
     expect(normalizeToIso6393('no')).toBe('nob');
+    expect(normalizeToIso6393('nor')).toBe('nob');
   });
 
   it('maps ISO 639-1 Nynorsk codes to nno', () => {
