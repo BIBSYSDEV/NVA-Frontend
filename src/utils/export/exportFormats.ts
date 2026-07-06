@@ -66,8 +66,8 @@ export const csvExportFormat: PaginatedExportFormat = {
 export const jsonLdExportFormat: PaginatedExportFormat = {
   id: 'json-ld',
   label: 'JSON-LD',
-  accept: 'application/vnd.schemaorg.ld+json',
-  mimeType: 'application/vnd.schemaorg.ld+json',
+  accept: 'application/ld+json; profile="https://schema.org"',
+  mimeType: 'application/ld+json',
   fileExtension: 'json',
   progressTitleKey: 'exporting_json_ld',
   combine: combineJsonLdChunks,
