@@ -148,6 +148,7 @@ export const dataTestId = {
   common: {
     cancel: 'cancel',
     cancelExportButton: 'cancel-export-button',
+    exportFormatOption: (format: string) => `export-format-option-${format}`,
     exportBibTexButton: 'export-bibtex-button',
     exportButton: 'export-button',
     exportLink: 'export-link',

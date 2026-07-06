@@ -26,18 +26,15 @@ const combineCsvChunks = (chunks: string[]): string => {
 };
 
 const combineJsonLdChunks = (chunks: string[]): string => {
-  const chunksAsJson = chunks.map((chunk) => JSON.parse(chunk));
+  const chunksAsJson = chunks.filter((chunk) => chunk.trim()).map((chunk) => JSON.parse(chunk));
   const allResults = chunksAsJson.flatMap((page) => page.itemListElement ?? []);
-
-  /** Use metadata from initial page/chunk */
-  const context = chunksAsJson[0]?.['@context'] ?? 'undefined';
-  const type = chunksAsJson[0]?.['@type'] ?? 'undefined';
-  const numberOfItems = chunksAsJson[0]?.['numberOfItems'] ?? 'undefined';
+  const [firstPage] = chunksAsJson;
 
   const merged = {
-    '@context': context,
-    '@type': type,
-    numberOfItems: numberOfItems,
+    // Reuse the list-level metadata from the first page.
+    '@context': firstPage?.['@context'],
+    '@type': firstPage?.['@type'],
+    numberOfItems: allResults.length,
     itemListElement: allResults,
   };
   return JSON.stringify(merged, null, 2);
@@ -68,7 +65,7 @@ export const jsonLdExportFormat: PaginatedExportFormat = {
   label: 'JSON-LD',
   accept: 'application/ld+json; profile="https://schema.org"',
   mimeType: 'application/ld+json',
-  fileExtension: 'json',
+  fileExtension: 'jsonld',
   progressTitleKey: 'exporting_json_ld',
   combine: combineJsonLdChunks,
 };
