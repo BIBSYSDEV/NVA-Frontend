@@ -23,6 +23,10 @@ const handledLanguages = [
   ...norwegianNynorskLanguages,
   ...samiLanguageCodes,
 ];
+// langCode can be a stringified 'undefined'/'null' when read from localStorage
+const isMissingLanguageCode = (langCode: string | undefined | null): langCode is null | undefined =>
+  !langCode || langCode === 'undefined' || langCode === 'null';
+
 /**
  * Maps an arbitrary language code to one of the three ISO 639-3 codes supported by the application:
  * `'eng'`, `'nob'` (Bokmål), or `'nno'` (Nynorsk).
@@ -35,8 +39,7 @@ const handledLanguages = [
  * @returns The resolved ISO 639-3 code: `'eng'`, `'nob'`, or `'nno'`.
  */
 export const normalizeToIso6393 = (langCode: string | undefined | null): LanguageCode6393 => {
-  // Might be a string because it might come from local storage
-  if (langCode === 'undefined' || langCode === 'null' || !langCode) {
+  if (isMissingLanguageCode(langCode)) {
     return 'nob'; // When the user's language is not specified, then the service should display in Bokmål
   } else if (englishLanguages.includes(langCode)) {
     return 'eng';
