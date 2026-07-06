@@ -6,7 +6,7 @@ import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FetchResultsParams } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { bibtexExportFormat, csvExportFormat } from '../../../utils/export/exportFormats';
+import { bibtexExportFormat, csvExportFormat, jsonLdExportFormat } from '../../../utils/export/exportFormats';
 import { useResultsExport } from '../../../utils/export/useResultsExport';
 import { ProgressDialog } from '../../dialogs/progress-dialog/ProgressDialog';
 
@@ -52,7 +52,7 @@ export const ExportResultsDropdown = ({ params, fileNameBase }: ExportResultsDro
           },
         }}>
         <MenuItem
-          key={'csv'}
+          data-testid={dataTestId.common.exportFormatOption(csvExportFormat.id)}
           disabled={isExporting}
           onClick={() => {
             handleClose();
@@ -61,13 +61,22 @@ export const ExportResultsDropdown = ({ params, fileNameBase }: ExportResultsDro
           CSV
         </MenuItem>
         <MenuItem
-          key={'bibtex'}
+          data-testid={dataTestId.common.exportFormatOption(bibtexExportFormat.id)}
           disabled={isExporting}
           onClick={() => {
             handleClose();
             exportResults(bibtexExportFormat);
           }}>
           BibTex
+        </MenuItem>
+        <MenuItem
+          data-testid={dataTestId.common.exportFormatOption(jsonLdExportFormat.id)}
+          disabled={isExporting}
+          onClick={() => {
+            handleClose();
+            exportResults(jsonLdExportFormat);
+          }}>
+          JSON-LD
         </MenuItem>
       </Menu>
       <ProgressDialog open={isExporting} onCancel={cancelExport} {...progress} />
