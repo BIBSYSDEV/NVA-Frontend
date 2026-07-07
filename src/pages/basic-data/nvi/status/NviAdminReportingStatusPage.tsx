@@ -93,3 +93,5 @@ export const NviAdminReportingStatusPage = () => {
     </NviPageLayout>
   );
 };
+
+export default NviAdminReportingStatusPage;

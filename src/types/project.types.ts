@@ -70,6 +70,18 @@ export interface ProjectFunding extends Pick<Funding, 'identifier' | 'source' | 
   type: 'UnconfirmedFunding';
 }
 
+export interface HealthProjectData {
+  label: LanguageString;
+}
+
+export type ProjectApprovalStatus = 'Approved' | 'Rejected';
+
+export interface ProjectApproval {
+  authorityName: LanguageString;
+  status: ProjectApprovalStatus;
+  identifier: string;
+}
+
 export const emptyProjectFunding: ProjectFunding = {
   type: 'UnconfirmedFunding',
   identifier: '',
@@ -104,6 +116,8 @@ export interface CristinProject extends SaveCristinProject {
     sourceShortName: 'REK' | 'NVA' | 'FORSKDOK';
   };
   creator?: ProjectCreator;
+  healthProjectData?: HealthProjectData;
+  approvals?: ProjectApproval[];
 }
 
 export interface ProjectAggregations {

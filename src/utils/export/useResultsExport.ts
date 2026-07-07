@@ -14,6 +14,8 @@ import { PaginatedExportFormat } from './exportFormats';
 const pageSize = 25;
 const hardCap = 10_000;
 
+const defaultFileNameBase = 'nva-search-results';
+
 const nextLinkRegex = /<([^>]+)>;\s*rel="next"/;
 
 const parseNextLink = (header: string | undefined): string | null => {
@@ -39,13 +41,15 @@ const parseNextLink = (header: string | undefined): string | null => {
  *
  * @param params - Search parameters describing which results to export. The `from` and
  *   `results` values are overridden internally for paging and the total count lookup.
+ * @param fileNameBase - Context label used as the download file name stem (the export date
+ *   and format extension are appended), e.g. `nva-publications-<personId>`.
  * @returns
  *   - `exportResults`: starts an export for the given {@link PaginatedExportFormat}.
  *   - `cancelExport`: aborts the in-progress export without showing an error.
  *   - `isExporting`: whether an export is currently running.
  *   - `progress`: title, label and percentage (`undefined` while indeterminate) for a progress dialog.
  */
-export const useResultsExport = (params: FetchResultsParams) => {
+export const useResultsExport = (params: FetchResultsParams, fileNameBase: string = defaultFileNameBase) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [fetchedCount, setFetchedCount] = useState(0);
@@ -91,7 +95,7 @@ export const useResultsExport = (params: FetchResultsParams) => {
       return {
         blob: new Blob([format.combine(chunks)], { type: format.mimeType }),
         truncated: nextUrl !== null,
-        fileName: `registrations_${currentDate}.${format.fileExtension}`,
+        fileName: `${fileNameBase}-${currentDate}.${format.fileExtension}`,
       };
     },
     onSuccess: ({ blob, truncated, fileName }) => {
