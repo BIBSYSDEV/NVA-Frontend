@@ -5,8 +5,7 @@ import { FormatAPAOptions, Formatter } from '../formatter.types';
 
 const normalizeBookFields = (registration: Registration, options: FormatAPAOptions) => {
   const publicationContext = registration.entityDescription?.reference?.publicationContext as
-    | BookPublicationContext
-    | undefined;
+    BookPublicationContext | undefined;
   return {
     ...normalizeBaseFields(registration),
     publisher: options.publisherName?.trim() || publicationContext?.publisher?.name?.trim() || '',

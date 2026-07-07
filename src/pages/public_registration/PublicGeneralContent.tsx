@@ -106,8 +106,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const publicationContext = entityDescription?.reference?.publicationContext;
   const publicationInstance = entityDescription?.reference?.publicationInstance;
   const journalPublicationInstance = entityDescription?.reference?.publicationInstance as
-    | JournalPublicationInstance
-    | undefined;
+    JournalPublicationInstance | undefined;
 
   const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
 

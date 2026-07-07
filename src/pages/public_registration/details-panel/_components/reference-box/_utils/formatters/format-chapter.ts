@@ -12,8 +12,7 @@ const formatChapterContainerSegment = (editors: string, bookTitle: string, pages
 
 const normalizeChapterFields = (registration: Registration, options: FormatAPAOptions) => {
   const publicationInstance = registration.entityDescription?.reference?.publicationInstance as
-    | ChapterPublicationInstance
-    | undefined;
+    ChapterPublicationInstance | undefined;
   return {
     ...normalizeBaseFields(registration),
     editors: options.editors?.trim() ?? '',
