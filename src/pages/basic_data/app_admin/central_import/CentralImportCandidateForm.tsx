@@ -135,3 +135,5 @@ export const CentralImportCandidateForm = () => {
     </Box>
   );
 };
+
+export default CentralImportCandidateForm;

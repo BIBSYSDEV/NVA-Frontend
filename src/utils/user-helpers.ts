@@ -90,6 +90,10 @@ export const getFullName = (firstName?: string, lastName?: string) => [firstName
 
 export const isNviCurator = (user: User | null) => !!user && !!user.customerId && user.isNviCurator;
 
+export const isEditor = (user: User | null) => !!user && !!user.customerId && user.isEditor;
+
+export const isCreator = (user: User | null) => !!user && !!user.customerId && user.isCreator;
+
 export const isPublishingCurator = (user: User | null) => !!user && !!user.customerId && user.isPublishingCurator;
 
 export const isThesisCurator = (user: User | null) => !!user && !!user.customerId && user.isThesisCurator;
@@ -104,19 +108,6 @@ export const isAppAdmin = (user: User | null) => !!user && !!user.customerId && 
 
 export const isInternalImporter = (user: User | null) => !!user && !!user.customerId && user.isInternalImporter;
 
-export const checkUserRoles = (user: User | null) => {
-  return {
-    isNviCurator: isNviCurator(user),
-    isPublishingCurator: isPublishingCurator(user),
-    isThesisCurator: isThesisCurator(user),
-    isDoiCurator: isDoiCurator(user),
-    isSupportCurator: isSupportCurator(user),
-    isInstitutionAdmin: isInstitutionAdmin(user),
-    isAppAdmin: isAppAdmin(user),
-    isInternalImporter: isInternalImporter(user),
-  };
-};
-
 export const hasCuratorRole = (user: User | null) =>
   !!user && !!user.customerId && (hasTicketCuratorRole(user) || user.isNviCurator);
 
@@ -128,6 +119,23 @@ export const hasTicketCuratorRole = (user: User | null) =>
     user.isSupportCurator ||
     user.isThesisCurator ||
     user.isEmbargoThesisCurator);
+
+export const checkUserRoles = (user: User | null) => {
+  return {
+    isEditor: isEditor(user),
+    isCreator: isCreator(user),
+    isCurator: hasCuratorRole(user),
+    isNviCurator: isNviCurator(user),
+    isPublishingCurator: isPublishingCurator(user),
+    isThesisCurator: isThesisCurator(user),
+    isDoiCurator: isDoiCurator(user),
+    isSupportCurator: isSupportCurator(user),
+    isInstitutionAdmin: isInstitutionAdmin(user),
+    isAppAdmin: isAppAdmin(user),
+    isInternalImporter: isInternalImporter(user),
+    isTicketCurator: hasTicketCuratorRole(user),
+  };
+};
 
 export const getUsername = (person?: CristinPerson | null, topOrgCristinId?: string) => {
   if (!person || !topOrgCristinId) {

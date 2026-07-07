@@ -8,11 +8,33 @@ import NotFound from './pages/errorpages/NotFound';
 import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from './utils/urlPaths';
-import { hasCuratorRole, hasTicketCuratorRole } from './utils/user-helpers';
+import { checkUserRoles } from './utils/user-helpers';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const FrontPage = lazy(() => import('./pages/frontpage/FrontPage'));
 const BasicDataPage = lazy(() => import('./pages/basic-data/BasicDataPage'));
+const AdminCustomerInstitutionsContainer = lazy(
+  () => import('./pages/basic_data/app_admin/AdminCustomerInstitutionsContainer')
+);
+const CentralImportPage = lazy(() => import('./pages/basic_data/app_admin/central_import/CentralImportPage'));
+const CentralImportDuplicationCheckPage = lazy(
+  () => import('./pages/basic_data/app_admin/central_import/CentralImportDuplicationCheckPage')
+);
+const CentralImportCandidateForm = lazy(
+  () => import('./pages/basic_data/app_admin/central_import/CentralImportCandidateForm')
+);
+const MergeImportCandidate = lazy(() => import('./components/merge_results/MergeImportCandidate'));
+const AddEmployeePage = lazy(() => import('./pages/basic_data/institution_admin/AddEmployeePage'));
+const PersonRegisterPage = lazy(
+  () => import('./pages/basic_data/institution_admin/person_register/PersonRegisterPage')
+);
+const NviPeriodsPage = lazy(() => import('./pages/basic-data/nvi/reporting-periods/NviPeriodsPage'));
+const NviAdminReportingStatusPage = lazy(() => import('./pages/basic-data/nvi/status/NviAdminReportingStatusPage'));
+const NviAdminPublicationPointsPage = lazy(
+  () => import('./pages/basic-data/nvi/publication-points/NviAdminPublicationPointsPage')
+);
+const PublisherClaimsSettings = lazy(() => import('./pages/editor/PublisherClaimsSettings'));
+const SerialPublicationClaimsSettings = lazy(() => import('./pages/editor/SerialPublicationClaimsSettings'));
 const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const CopyrightActTerms = lazy(() => import('./pages/infopages/CopyrightActTerms'));
@@ -45,15 +67,19 @@ const PortfolioSearchPage = lazy(() => import('./pages/editor/PortfolioSearchPag
 export const AppRoutes = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-
   const isAuthenticated = !!user;
   const hasCustomerId = isAuthenticated && !!user.customerId;
-  const isCreator = hasCustomerId && user.isCreator;
-  const isCurator = hasCuratorRole(user);
-  const isEditor = hasCustomerId && user.isEditor;
-  const canSeeBasicData = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin || user.isInternalImporter);
-  const isNviCurator = hasCustomerId && user.isNviCurator;
-  const isTicketCurator = hasTicketCuratorRole(user);
+  const {
+    isEditor,
+    isCreator,
+    isCurator,
+    isNviCurator,
+    isTicketCurator,
+    isInstitutionAdmin,
+    isAppAdmin,
+    isInternalImporter,
+  } = checkUserRoles(user);
+  const canSeeBasicData = isAppAdmin || isInstitutionAdmin || isInternalImporter;
 
   return (
     <Routes>
@@ -167,9 +193,79 @@ export const AppRoutes = () => {
 
         {/* Basic Data routes */}
         <Route
-          path={`${UrlPathTemplate.BasicData}/*`}
-          element={<PrivateRoute isAuthorized={canSeeBasicData} element={<BasicDataPage />} />}
-        />
+          path={UrlPathTemplate.BasicData}
+          element={<PrivateRoute isAuthorized={canSeeBasicData} element={<BasicDataPage />} />}>
+          <Route
+            index
+            element={
+              <PrivateRoute
+                isAuthorized={canSeeBasicData}
+                element={
+                  isInstitutionAdmin ? (
+                    <Navigate to={UrlPathTemplate.BasicDataPersonRegister} replace />
+                  ) : isAppAdmin ? (
+                    <Navigate to={UrlPathTemplate.BasicDataInstitutions} replace />
+                  ) : (
+                    <Navigate to={UrlPathTemplate.BasicDataCentralImport} replace />
+                  )
+                }
+              />
+            }
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataInstitutions}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<AdminCustomerInstitutionsContainer />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataCentralImport}
+            element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportPage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataCentralImportCandidate}
+            element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportDuplicationCheckPage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataCentralImportCandidateWizard}
+            element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateForm />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataCentralImportCandidateMerge}
+            element={<PrivateRoute isAuthorized={isInternalImporter} element={<MergeImportCandidate />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataAddEmployee}
+            element={<PrivateRoute isAuthorized={isInstitutionAdmin} element={<AddEmployeePage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataPersonRegister}
+            element={<PrivateRoute isAuthorized={isInstitutionAdmin} element={<PersonRegisterPage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataNviStatus}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviAdminReportingStatusPage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataNviPublicationPoints}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviAdminPublicationPointsPage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataNvi}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataNviNew}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataPublisherClaims}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<PublisherClaimsSettings />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataSerialPublicationClaims}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<SerialPublicationClaimsSettings />} />}
+          />
+          <Route path="*" element={<NotFound />} />
+        </Route>
 
         {/* Institution routes */}
         <Route

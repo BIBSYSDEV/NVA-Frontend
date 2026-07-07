@@ -25,6 +25,21 @@ const combineCsvChunks = (chunks: string[]): string => {
   return [first, ...rest.map(dropFirstLine)].filter(Boolean).join('\n');
 };
 
+const combineJsonLdChunks = (chunks: string[]): string => {
+  const chunksAsJson = chunks.filter((chunk) => chunk.trim()).map((chunk) => JSON.parse(chunk));
+  const allResults = chunksAsJson.flatMap((page) => page.itemListElement ?? []);
+  const [firstPage] = chunksAsJson;
+
+  const merged = {
+    // Reuse the list-level metadata from the first page.
+    '@context': firstPage?.['@context'],
+    '@type': firstPage?.['@type'],
+    numberOfItems: allResults.length,
+    itemListElement: allResults,
+  };
+  return JSON.stringify(merged, null, 2);
+};
+
 export const bibtexExportFormat: PaginatedExportFormat = {
   id: 'bibtex',
   label: 'BibTex',
@@ -43,4 +58,14 @@ export const csvExportFormat: PaginatedExportFormat = {
   fileExtension: 'csv',
   progressTitleKey: 'exporting_csv',
   combine: combineCsvChunks,
+};
+
+export const jsonLdExportFormat: PaginatedExportFormat = {
+  id: 'json-ld',
+  label: 'JSON-LD',
+  accept: 'application/ld+json; profile="https://schema.org"',
+  mimeType: 'application/ld+json',
+  fileExtension: 'jsonld',
+  progressTitleKey: 'exporting_json_ld',
+  combine: combineJsonLdChunks,
 };

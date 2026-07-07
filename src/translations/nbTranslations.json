@@ -6,6 +6,7 @@
   },
   "add_file": "Legg til fil",
   "add_project": "Legg til prosjekt",
+  "approval": "Godkjenning",
   "approved": "Godkjent",
   "authorization": {
     "about_terms": "Brukervilkår og personvernerklæring for Nasjonalt vitenarkiv",
@@ -554,6 +555,7 @@
   "export_progress_count": "{{fetched}} av {{total}} resultater",
   "exporting_bibtex": "Eksporterer BibTeX",
   "exporting_csv": "Eksporterer CSV",
+  "exporting_json_ld": "Eksporterer JSON-LD",
   "feedback": {
     "error": {
       "404_page": "<span><icon /><h1>Beklager, men vi kan ikke finne siden du ser etter</h1></span><p>Siden du leter etter finnes ikke, eller nettadressen er feil.</p><p>Endre nettadressen eller bruk menyen for å naviger deg til korrekt side.</p>",

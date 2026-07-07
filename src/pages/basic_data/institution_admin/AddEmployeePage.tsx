@@ -204,3 +204,5 @@ export const AddEmployeePage = () => {
     </BackgroundDiv>
   );
 };
+
+export default AddEmployeePage;

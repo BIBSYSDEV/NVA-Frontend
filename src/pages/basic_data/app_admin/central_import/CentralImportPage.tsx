@@ -97,3 +97,5 @@ export const CentralImportPage = () => {
     </section>
   );
 };
+
+export default CentralImportPage;
