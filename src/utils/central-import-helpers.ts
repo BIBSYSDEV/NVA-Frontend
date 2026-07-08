@@ -91,12 +91,10 @@ export const createIdentityFromCristinPerson = (oldIdentity: Identity, person: C
 };
 
 export const getAffiliationsFromCristinPerson = (person: CristinPerson): Affiliation[] =>
-  (person.affiliations ?? []).map(
-    ({ organization }): Affiliation => ({
-      type: 'Organization',
-      id: organization,
-    })
-  );
+  (person.affiliations ?? []).map(({ organization }): Affiliation => ({
+    type: 'Organization',
+    id: organization,
+  }));
 
 const mergeAffiliations = (
   oldAffiliations: Affiliation[] | undefined,
