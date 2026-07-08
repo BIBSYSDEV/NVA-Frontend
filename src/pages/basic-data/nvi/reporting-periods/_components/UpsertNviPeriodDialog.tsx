@@ -1,34 +1,22 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
-import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
-import { useMutation } from '@tanstack/react-query';
-import { Field, FieldProps, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
-import { createNviPeriod, updateNviPeriod } from '../../../../../api/scientificIndexApi';
+import { useNviPeriodMutation } from '../../../../../api/hooks/useNviPeriodMutation';
 import { HorizontalBox, VerticalBox } from '../../../../../components/styled/Wrappers';
-import { setNotification } from '../../../../../redux/notificationSlice';
+import { NviPeriodDateTimeField } from './NviPeriodDateTimeField';
+import { NviPeriodYearField } from './NviPeriodYearField';
 import { NviPeriod } from '../../../../../types/nvi.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
+import { checkWhichBasicDataPage } from '../../../../../utils/location-helpers/check-which-basic-data-page';
 import { UrlPathTemplate } from '../../../../../utils/urlPaths';
-
-const minNewNviPeriodYear = new Date().getFullYear();
-const minNewNviDate = new Date(minNewNviPeriodYear, 0, 1);
-const maxNewNviDate = new Date(minNewNviPeriodYear + 1, 0, 1);
 
 interface UpsertNviPeriodDialogProps {
   refetchNviPeriods: () => Promise<unknown>;
   yearsWithPeriod: number[];
-  nviPeriod: NviPeriod | null; // NviPeriod to edit
+  nviPeriod: NviPeriod | null; // Provided for edit NviPeriod
   closeEditDialog: () => void;
 }
-
-const emptyNviPeriod: Omit<NviPeriod, 'id' | 'status'> = {
-  type: 'NviPeriod',
-  publishingYear: '',
-  startDate: '',
-  reportingDate: '',
-};
 
 export const UpsertNviPeriodDialog = ({
   refetchNviPeriods,
@@ -37,22 +25,26 @@ export const UpsertNviPeriodDialog = ({
   closeEditDialog,
 }: UpsertNviPeriodDialogProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const location = useLocation();
+  const { isOnNewNviPeriodPage } = checkWhichBasicDataPage(location.pathname, location.search);
 
-  const nviPeriodMutation = useMutation({
-    mutationFn: (data: Omit<NviPeriod, 'id' | 'status'>) =>
-      nviPeriod ? updateNviPeriod({ id: nviPeriod.id, ...data }) : createNviPeriod(data),
-    onSuccess: () =>
-      nviPeriod
-        ? dispatch(setNotification({ message: t('feedback.success.update_nvi_period'), variant: 'success' }))
-        : dispatch(setNotification({ message: t('feedback.success.create_nvi_period'), variant: 'success' })),
-    onError: () =>
-      nviPeriod
-        ? dispatch(setNotification({ message: t('feedback.error.update_nvi_period'), variant: 'error' }))
-        : dispatch(setNotification({ message: t('feedback.error.create_nvi_period'), variant: 'error' })),
-  });
+  const nviPeriodMutation = useNviPeriodMutation(nviPeriod);
+
+  const isEdit = !!nviPeriod;
+  const dialogTitle = isEdit ? t('edit_reporting_period') : t('basic_data.nvi.add_reporting_period');
+  const minNewNviPeriodYear = new Date().getFullYear();
+  const yearPickerMinDate = isEdit ? undefined : new Date(minNewNviPeriodYear, 0, 1);
+  const yearPickerMaxDate = isEdit ? undefined : new Date(minNewNviPeriodYear + 1, 0, 1);
+
+  const shouldDisableYearOption = (date: Date) => {
+    const yearToCheck = date.getFullYear();
+    if (nviPeriod?.publishingYear === yearToCheck.toString()) return false; // Keep the period's own publishing year selectable
+    return yearsWithPeriod.includes(yearToCheck); // Not possible to select years that already have a period
+  };
+
+  const closeDialog = () => (isEdit ? closeEditDialog() : navigate(UrlPathTemplate.BasicDataNvi));
 
   const formValues: Omit<NviPeriod, 'id' | 'status'> = nviPeriod
     ? {
@@ -61,22 +53,14 @@ export const UpsertNviPeriodDialog = ({
         startDate: nviPeriod.startDate,
         reportingDate: nviPeriod.reportingDate,
       }
-    : emptyNviPeriod;
-
-  const closeDialog = () => {
-    if (nviPeriod) {
-      closeEditDialog();
-    } else {
-      navigate(UrlPathTemplate.BasicDataNvi);
-    }
-  };
+    : { type: 'NviPeriod', publishingYear: '', startDate: '', reportingDate: '' };
 
   return (
     <Dialog
-      open={location.pathname === UrlPathTemplate.BasicDataNviNew || !!nviPeriod}
+      open={isOnNewNviPeriodPage || isEdit}
       onClose={closeDialog}
       data-testid={dataTestId.basicData.nviPeriod.nviPeriodDialog}>
-      <DialogTitle>{nviPeriod ? t('edit_reporting_period') : t('basic_data.nvi.add_reporting_period')}</DialogTitle>
+      <DialogTitle>{dialogTitle}</DialogTitle>
       <Formik
         initialValues={formValues}
         onSubmit={async (values) => {
@@ -84,91 +68,28 @@ export const UpsertNviPeriodDialog = ({
           await refetchNviPeriods();
           closeDialog();
         }}>
-        {({ values, setFieldValue, isSubmitting }) => (
+        {({ isSubmitting }) => (
           <Form>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <Trans t={t} i18nKey="reporting_period_text" components={{ p: <Typography /> }} />
               <VerticalBox sx={{ mt: '1rem', gap: '2rem' }}>
-                <Field name="publishingYear">
-                  {({ field }: FieldProps<string>) => (
-                    <DatePicker
-                      label={t('basic_data.nvi.period_year')}
-                      slotProps={{
-                        textField: {
-                          required: true,
-                          inputProps: { 'data-testid': dataTestId.basicData.nviPeriod.nviPeriodYear },
-                        },
-                      }}
-                      disabled={!!nviPeriod}
-                      views={['year']}
-                      value={field.value ? new Date(field.value) : null}
-                      onChange={(newDate) => {
-                        const year = newDate ? newDate.getFullYear().toString() : '';
-                        setFieldValue(field.name, year);
-                        if (year) {
-                          setFieldValue('startDate', new Date(+year, 3, 1).toISOString());
-                          setFieldValue('reportingDate', new Date(+year + 1, 3, 1).toISOString());
-                        }
-                      }}
-                      shouldDisableYear={(date) => {
-                        const thisYear = date.getFullYear();
-                        return nviPeriod?.publishingYear !== thisYear.toString() && yearsWithPeriod.includes(thisYear);
-                      }}
-                      minDate={nviPeriod ? undefined : minNewNviDate}
-                      maxDate={nviPeriod ? undefined : maxNewNviDate}
-                    />
-                  )}
-                </Field>
+                <NviPeriodYearField
+                  disabled={isEdit}
+                  shouldDisableYear={shouldDisableYearOption}
+                  minDate={yearPickerMinDate}
+                  maxDate={yearPickerMaxDate}
+                />
                 <HorizontalBox sx={{ gap: '1.5rem' }}>
-                  <Field name="startDate">
-                    {({ field }: FieldProps<string>) => (
-                      <DateTimePicker
-                        sx={{ flex: 1 }}
-                        label={t('common.start_date')}
-                        slotProps={{
-                          textField: {
-                            required: true,
-                            inputProps: { 'data-testid': dataTestId.basicData.nviPeriod.nviPeriodStartDate },
-                          },
-                        }}
-                        disabled={!values.publishingYear}
-                        value={field.value ? new Date(field.value) : null}
-                        minDate={values.publishingYear ? new Date(+values.publishingYear, 0, 1) : undefined}
-                        maxDate={values.publishingYear ? new Date(+values.publishingYear + 1, 0, 1) : undefined}
-                        onChange={(newDate, context) => {
-                          if (context.validationError !== 'invalidDate') {
-                            const dateString = newDate ? newDate.toISOString() : '';
-                            setFieldValue(field.name, dateString);
-                          }
-                        }}
-                      />
-                    )}
-                  </Field>
-
-                  <Field name="reportingDate">
-                    {({ field }: FieldProps<string>) => (
-                      <DateTimePicker
-                        sx={{ flex: 1 }}
-                        label={t('common.end_date')}
-                        slotProps={{
-                          textField: {
-                            required: true,
-                            inputProps: { 'data-testid': dataTestId.basicData.nviPeriod.nviPeriodEndDate },
-                          },
-                        }}
-                        disabled={!values.publishingYear}
-                        value={field.value ? new Date(field.value) : null}
-                        minDate={values.publishingYear ? new Date(+values.publishingYear + 1, 0, 1) : undefined}
-                        maxDate={values.publishingYear ? new Date(+values.publishingYear + 1, 6, 31) : undefined}
-                        onChange={(newDate, context) => {
-                          if (context.validationError !== 'invalidDate') {
-                            const dateString = newDate ? newDate.toISOString() : '';
-                            setFieldValue(field.name, dateString);
-                          }
-                        }}
-                      />
-                    )}
-                  </Field>
+                  <NviPeriodDateTimeField
+                    name="startDate"
+                    label={t('common.start_date')}
+                    dataTestId={dataTestId.basicData.nviPeriod.nviPeriodStartDate}
+                  />
+                  <NviPeriodDateTimeField
+                    name="reportingDate"
+                    label={t('common.end_date')}
+                    dataTestId={dataTestId.basicData.nviPeriod.nviPeriodEndDate}
+                  />
                 </HorizontalBox>
               </VerticalBox>
             </DialogContent>
