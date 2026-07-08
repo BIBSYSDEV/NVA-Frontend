@@ -77,7 +77,7 @@ export const normalizeToIso6391 = (language?: string | null): LanguageCode6391 =
  * supported codes languages as an ISO 639-3 code (`'eng'`, `'nob'`, `'nno'`).
  *
  * Subscribes to language changes via `useTranslation`, so the component re-renders automatically
- * when the user switches language. For two-letter codes use `useAppLanguageIn6391Format`.
+ * when the user switches language. For two-letter codes use {@link useAppLanguageInIso6391Format}.
  *
  * @returns The current app language as an ISO 639-3 code.
  */
@@ -93,7 +93,7 @@ export const useAppLanguageInIso6393Format = (): LanguageCode6393 => {
  * when the user switches language.
  *
  * Use this when the consuming code requires a two-letter code, e.g. for HTML `lang` attributes
- * or third-party APIs that expect ISO 639-1. For three-letter codes use `useAppLanguageInIso6393Format`.
+ * or third-party APIs that expect ISO 639-1. For three-letter codes use {@link useAppLanguageInIso6393Format}.
  *
  * @returns The current app language as an ISO 639-1 code.
  */
