@@ -40,7 +40,7 @@ export const UpsertNviPeriodDialog = ({
 
   const shouldDisableYearOption = (date: Date) => {
     const yearToCheck = date.getFullYear();
-    if (nviPeriod?.publishingYear === yearToCheck.toString()) return false; // Keep the period's own publishing year selectable
+    if (nviPeriod?.publishingYear === yearToCheck.toString()) return false; // Keep the period's own publishing year selectable - doesn't matter since field is diabled in edit mode
     return yearsWithPeriod.includes(yearToCheck); // Not possible to select years that already have a period
   };
 

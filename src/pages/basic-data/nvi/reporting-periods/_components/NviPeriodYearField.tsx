@@ -28,7 +28,7 @@ export const NviPeriodYearField = ({ disabled, shouldDisableYear, minDate, maxDa
           }}
           disabled={disabled}
           views={['year']}
-          value={field.value ? new Date(field.value) : null}
+          value={field.value ? new Date(Number(field.value), 0, 1) : null}
           onChange={(newDate) => {
             const year = newDate ? newDate.getFullYear().toString() : '';
             setFieldValue(field.name, year);
