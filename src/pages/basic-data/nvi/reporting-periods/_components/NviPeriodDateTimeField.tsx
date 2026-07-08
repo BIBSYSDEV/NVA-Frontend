@@ -2,13 +2,15 @@ import { DateTimePicker } from '@mui/x-date-pickers';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { NviPeriod } from '../../../../../types/nvi.types';
 
+type NviPeriodDateField = 'startDate' | 'reportingDate';
+
 interface NviPeriodDateTimeFieldProps {
-  name: 'startDate' | 'reportingDate';
+  name: NviPeriodDateField;
   label: string;
   dataTestId: string;
 }
 
-const getDateBounds = (name: 'startDate' | 'reportingDate', publishingYear: number) => {
+const getDateBounds = (name: NviPeriodDateField, publishingYear: number) => {
   if (name === 'startDate') {
     return { minDate: new Date(publishingYear, 0, 1), maxDate: new Date(publishingYear + 1, 0, 1) };
   }
