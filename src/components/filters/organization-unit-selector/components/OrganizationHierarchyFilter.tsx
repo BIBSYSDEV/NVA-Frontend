@@ -14,14 +14,14 @@ import {
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { ResultParam } from '../../../api/searchApi';
-import { OrganizationAccordion } from '../../../components/OrganizationAccordion';
-import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
-import { Organization } from '../../../types/organization.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { getSortedSubUnits } from '../../../utils/institutions-helpers';
-import { getLanguageString } from '../../../utils/translation-helpers';
+import { ResultParam } from '../../../../api/searchApi';
+import { Organization } from '../../../../types/organization.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
+import { getSortedSubUnits } from '../../../../utils/institutions-helpers';
+import { getLanguageString } from '../../../../utils/translation-helpers';
+import { OrganizationAccordion } from '../../../OrganizationAccordion';
+import { OrganizationRenderOption } from '../../../OrganizationRenderOption';
 
 interface OrganizationHierarchyFilterProps extends Pick<DialogProps, 'open'> {
   onClose: () => void;
