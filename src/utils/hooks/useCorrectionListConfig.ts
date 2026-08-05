@@ -118,7 +118,7 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       queryParams: {
         categoryShould: [BookType.AcademicMonograph, BookType.AcademicCommentary],
         hasNpiSubjectHeading: false,
-        scientificValue: [ScientificValueLevels.Unassigned].join(','),
+        scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
       },
       disabledFilters: [],
       disabledCategories: nonBookDisabledCategories,
