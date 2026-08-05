@@ -70,6 +70,7 @@ const NviCorrectionList = () => {
                 <CategorySearchFilter
                   searchParam={ResultParam.CategoryShould}
                   disabled={listConfig.disabledFilters.includes(ResultParam.CategoryShould)}
+                  disabledCategories={listConfig.disabledCategories}
                 />
               </Box>
 
