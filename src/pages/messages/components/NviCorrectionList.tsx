@@ -4,6 +4,7 @@ import { useLocation } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
+import { OrganizationFilters } from '../../../components/filters/OrganizationFilters';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
 import { hideChannelFiltersListIds, scientificValueFilterListIds } from '../../../utils/correctionListHelpers';
@@ -11,7 +12,6 @@ import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListC
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
-import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { ScientificValueFilter } from '../../search/advanced_search/ScientificValueFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
@@ -63,8 +63,19 @@ const NviCorrectionList = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column', px: { xs: '0.5rem', md: 0 }, gap: '0.5rem' }}>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
                 <OrganizationFilters
-                  topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
-                  unitId={registrationParams.unit ?? null}
+                  // The "unidentified contributor with identified affiliation" correction list filters on
+                  // unidentifiedContributorInstitution, defaulting to the user's own institution. If that's the
+                  // active list, keep unidentifiedContributorInstitution in sync with
+                  // whichever institution is selected here, so the list keeps following the chosen institution
+                  onTopLevelOrganizationChange={
+                    listConfig.queryParams.unidentifiedContributorInstitution
+                      ? (selectedOrganization, syncedParams) => {
+                          if (selectedOrganization) {
+                            syncedParams.set(ResultParam.UnidentifiedContributorInstitution, selectedOrganization.id);
+                          }
+                        }
+                      : undefined
+                  }
                 />
                 <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
                 <CategorySearchFilter

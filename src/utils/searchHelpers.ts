@@ -2,7 +2,7 @@ import { FilterOptionsState } from '@mui/material';
 import { Query, QueryClient } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
 import { NavigateFunction } from 'react-router';
-import { FetchTicketsParams, ResultParam, TicketSearchParam } from '../api/searchApi';
+import { FetchTicketsParams, ResultParam } from '../api/searchApi';
 import { FundingSource } from '../types/project.types';
 import { TicketType } from '../types/publication_types/ticket.types';
 import { AggregationFileKeyType } from '../types/registration.types';
@@ -202,10 +202,19 @@ export const syncParamsWithSearchFields = (params: URLSearchParams) => {
   return params;
 };
 
-export const resetPaginationAndNavigate = (params: URLSearchParams, navigate: NavigateFunction) => {
+/**
+ * Syncs the given params with the search fields (see {@link syncParamsWithSearchFields}) and resets pagination by
+ * deleting {@link ResultParam.From}. Any filter change should reset pagination, so use this instead of deleting the
+ * "from" param manually.
+ */
+export const resetPagination = (params: URLSearchParams) => {
   const syncedParams = syncParamsWithSearchFields(params);
-  syncedParams.delete(TicketSearchParam.From);
-  navigate({ search: syncedParams.toString() });
+  syncedParams.delete(ResultParam.From);
+  return syncedParams;
+};
+
+export const resetPaginationAndNavigate = (params: URLSearchParams, navigate: NavigateFunction) => {
+  navigate({ search: resetPagination(params).toString() });
 };
 
 export const fundingSourceAutocompleteFilterOptions = (

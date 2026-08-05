@@ -30,7 +30,7 @@ import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
 import { NviReportedYearFilter } from './NviReportedYearFilter';
-import { OrganizationFilters } from './OrganizationFilters';
+import { OrganizationFilters } from '../../../components/filters/OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
 import { ScientificValueFilter } from './ScientificValueFilter';
 import { SeriesFilter } from './SeriesFilter';
@@ -156,10 +156,7 @@ const AdvancedSearchPage = () => {
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
             <Grid>
-              <OrganizationFilters
-                topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
-                unitId={registrationParams.unit ?? null}
-              />
+              <OrganizationFilters />
             </Grid>
           </Grid>
 

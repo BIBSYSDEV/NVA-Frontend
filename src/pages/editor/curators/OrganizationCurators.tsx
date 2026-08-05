@@ -10,13 +10,11 @@ import { fetchUsersByCustomer } from '../../../api/roleApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
+import { OrganizationSearchAutocomplete } from '../../../components/OrganizationSearchAutocomplete';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
-import { getLanguageString } from '../../../utils/translation-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 import { rolesWithAreaOfResponsibility } from '../../basic_data/institution_admin/edit_user/TasksFormSection';
 import { OrganizationCuratorsAccordion } from './OrganizationCuratorsAccordion';
@@ -102,26 +100,12 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
             </TextField>
 
             {searchType === SearchTypeValue.Unit ? (
-              <Autocomplete
+              <OrganizationSearchAutocomplete
                 fullWidth
                 size="small"
                 value={allSubUnits.find((unit) => unit.id === searchValue) ?? null}
-                data-testid={dataTestId.editor.organizationOverviewSearchField}
                 options={allSubUnits}
                 inputMode="search"
-                getOptionLabel={(option) => getLanguageString(option.labels)}
-                renderOption={({ key, ...props }, option) => (
-                  <OrganizationRenderOption key={option.id} props={props} option={option} />
-                )}
-                filterOptions={(options, state) =>
-                  options.filter(
-                    (option) =>
-                      Object.values(option.labels).some((label) =>
-                        label.toLowerCase().includes(state.inputValue.toLowerCase())
-                      ) || getIdentifierFromId(option.id).includes(state.inputValue)
-                  )
-                }
-                getOptionKey={(option) => option.id}
                 onChange={(_, selectedUnit) => setSearchValue(selectedUnit?.id ?? '')}
                 renderInput={(params) => (
                   <AutocompleteTextField {...params} variant="outlined" placeholder={t('common.select_unit')} />

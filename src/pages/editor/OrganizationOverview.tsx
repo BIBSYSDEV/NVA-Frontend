@@ -1,14 +1,5 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Autocomplete,
-  Box,
-  Link,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Link, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -16,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { fetchResource } from '../../api/commonApi';
 import { HeadTitle } from '../../components/HeadTitle';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { OrganizationRenderOption } from '../../components/OrganizationRenderOption';
+import { OrganizationSearchAutocomplete } from '../../components/OrganizationSearchAutocomplete';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -59,23 +50,9 @@ export const OrganizationOverview = () => {
         <ListSkeleton height={100} minWidth={100} />
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <Autocomplete
-            data-testid={dataTestId.editor.organizationOverviewSearchField}
+          <OrganizationSearchAutocomplete
             options={allSubUnits}
             inputMode="search"
-            getOptionLabel={(option) => getLanguageString(option.labels)}
-            renderOption={({ key, ...props }, option) => (
-              <OrganizationRenderOption key={option.id} props={props} option={option} />
-            )}
-            filterOptions={(options, state) =>
-              options.filter(
-                (option) =>
-                  Object.values(option.labels).some((label) =>
-                    label.toLowerCase().includes(state.inputValue.toLowerCase())
-                  ) || getIdentifierFromId(option.id).includes(state.inputValue)
-              )
-            }
-            getOptionKey={(option) => option.id}
             onChange={(_, selectedUnit) => setSearchId(selectedUnit?.id ?? '')}
             renderInput={(params) => <TextField {...params} variant="outlined" label={t('common.select_unit')} />}
           />
