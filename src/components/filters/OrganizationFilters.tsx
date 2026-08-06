@@ -1,41 +1,38 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { fetchOrganization } from '../../api/cristinApi';
+import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { ResultParam } from '../../api/searchApi';
 import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 import { HorizontalBoxResponsive, StyledFilterHeading } from '../styled/Wrappers';
 import { OrganizationUnitSelector } from './organization-unit-selector/OrganizationUnitSelector';
 import { OrganizationAutocomplete } from './OrganizationAutocomplete';
 
-interface OrganizationFiltersProps {
-  topLevelOrganizationId: string | null;
-  unitId: string | null;
-}
-
-export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: OrganizationFiltersProps) => {
+/**
+ * Filters for selecting organization.
+ *
+ * Renders a search field, a chip for narrowing down to a sub-unit, and an "exclude subunits" checkbox.
+ *
+ * Reads the current filter state from the URL query params and writes back to them on change, using
+ * {@link ResultParam.TopLevelOrganization}, {@link ResultParam.Unit} and {@link ResultParam.ExcludeSubunits}.
+ */
+export const OrganizationFilters = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+
   const params = new URLSearchParams(location.search);
   const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true';
-  const topLevelOrgParam = params.get(ResultParam.TopLevelOrganization);
+  const topLevelOrganizationId = params.get(ResultParam.TopLevelOrganization);
+  const unitId = params.get(ResultParam.Unit);
   const unidentifiedContributorInstitutionParam = params.get(ResultParam.UnidentifiedContributorInstitution);
 
-  const topLevelOrganizationQuery = useQuery({
-    enabled: !!topLevelOrganizationId,
-    queryKey: ['organization', topLevelOrganizationId],
-    queryFn: () => fetchOrganization(topLevelOrganizationId ?? ''),
-    meta: { errorMessage: t('feedback.error.get_institution') },
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-  });
+  const topLevelOrganizationQuery = useFetchOrganization(topLevelOrganizationId);
 
   const handleCheckedExcludeSubunits = (event: ChangeEvent<HTMLInputElement>) => {
     const syncedParams = syncParamsWithSearchFields(params);
-    if (topLevelOrgParam) {
+    if (topLevelOrganizationId) {
       if (event.target.checked) {
         syncedParams.set(ResultParam.ExcludeSubunits, 'true');
       } else {

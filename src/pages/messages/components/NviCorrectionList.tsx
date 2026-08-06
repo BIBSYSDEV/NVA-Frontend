@@ -62,10 +62,7 @@ const NviCorrectionList = () => {
             }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', px: { xs: '0.5rem', md: 0 }, gap: '0.5rem' }}>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-                <OrganizationFilters
-                  topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
-                  unitId={registrationParams.unit ?? null}
-                />
+                <OrganizationFilters />
                 <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
                 <CategorySearchFilter
                   searchParam={ResultParam.CategoryShould}
