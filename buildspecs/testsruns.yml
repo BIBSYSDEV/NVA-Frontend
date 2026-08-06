@@ -10,8 +10,10 @@ env:
 phases:
   install:
     runtime-versions:
-      nodejs: latest
+      # Keep in sync with .nvmrc and package.json engines
+      nodejs: 24
     commands:
+      - node -v
       # https://docs.cypress.io/guides/getting-started/installing-cypress#Amazon-Linux-2023
       - dnf install -y xorg-x11-server-Xvfb gtk3-devel nss alsa-lib
       - npm ci
