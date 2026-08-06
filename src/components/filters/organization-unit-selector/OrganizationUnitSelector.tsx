@@ -1,9 +1,9 @@
 import { Box, Chip, Skeleton } from '@mui/material';
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { UseQueryResult } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { fetchOrganization } from '../../../api/cristinApi';
+import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { ResultParam } from '../../../api/searchApi';
 import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -23,14 +23,7 @@ export const OrganizationUnitSelector = ({ unitId, topLevelOrganizationQuery }: 
   const [showUnitSelection, setShowUnitSelection] = useState(false);
   const toggleShowUnitSelection = () => setShowUnitSelection(!showUnitSelection);
 
-  const subUnitQuery = useQuery({
-    enabled: !!unitId,
-    queryKey: ['organization', unitId],
-    queryFn: () => fetchOrganization(unitId ?? ''),
-    meta: { errorMessage: t('feedback.error.get_institution') },
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-  });
+  const subUnitQuery = useFetchOrganization(unitId);
 
   return (
     <>

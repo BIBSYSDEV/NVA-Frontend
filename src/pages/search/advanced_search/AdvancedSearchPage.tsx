@@ -156,10 +156,7 @@ const AdvancedSearchPage = () => {
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
             <Grid>
-              <OrganizationFilters
-                topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
-                unitId={registrationParams.unit ?? null}
-              />
+              <OrganizationFilters />
             </Grid>
           </Grid>
 
