@@ -26,6 +26,7 @@ const NviCorrectionList = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
+  const unidentifiedContributorInstitutionParam = searchParams.get(ResultParam.UnidentifiedContributorInstitution);
   const correctionListConfig = useCorrectionListConfig();
   const listConfig = listId && correctionListConfig[listId];
   const shouldShowScientificValueFilter =
@@ -62,7 +63,19 @@ const NviCorrectionList = () => {
             }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', px: { xs: '0.5rem', md: 0 }, gap: '0.5rem' }}>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-                <OrganizationFilters />
+                <OrganizationFilters
+                  // The "unidentified contributor with identified affiliation" correction list filters on unidentifiedContributorInstitution.
+                  // If that parameter is present it should stay in sync with whichever institution is selected
+                  onTopLevelOrganizationChange={
+                    unidentifiedContributorInstitutionParam
+                      ? (selectedOrganization, syncedParams) => {
+                          if (selectedOrganization) {
+                            syncedParams.set(ResultParam.UnidentifiedContributorInstitution, selectedOrganization.id);
+                          }
+                        }
+                      : undefined
+                  }
+                />
                 <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
                 <CategorySearchFilter
                   searchParam={ResultParam.CategoryShould}
