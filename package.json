@@ -3,20 +3,25 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "^24.0.0"
+  },
   "scripts": {
     "build": "tsc && vite build",
     "lint": "eslint . --ext .ts,.tsx",
-    "pre-commit": "npx lint-staged && npm run unused-i18n-keys",
+    "pre-commit": "lint-staged && npm run unused-i18n-keys",
     "prepare": "husky",
     "preview": "vite preview",
     "start": "vite",
     "start:mock": "set VITE_USE_MOCK=true&& npm start",
     "start:mock:win": "set VITE_USE_MOCK=true&& npm start",
     "start:mock:unix": "export VITE_USE_MOCK=true && npm start",
-    "test": "cypress run",
+    "test": "cypress install && cypress run",
     "test:vitest": "vitest",
     "test:vitest:verbose": "vitest run --reporter=verbose",
     "test:cypress": "start-server-and-test start:mock:win http://localhost:3000 test",
+    "test:cypress:ci": "start-server-and-test preview http://localhost:3000 test",
+    "test:cypress:open": "cypress install && cypress open",
     "unused-i18n-keys": "i18n-unused display-unused"
   },
   "browserslist": {
