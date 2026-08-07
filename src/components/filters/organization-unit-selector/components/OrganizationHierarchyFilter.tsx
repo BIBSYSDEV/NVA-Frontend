@@ -42,9 +42,7 @@ export const OrganizationHierarchyFilter = ({
   const [selectedId, setSelectedId] = useState(value ?? '');
 
   useEffect(() => {
-    if (!value) {
-      setSelectedId('');
-    }
+    setSelectedId(value ?? '');
   }, [value]);
 
   const closeDialog = () => {

@@ -38,14 +38,14 @@ export const OrganizationFilters = ({ onTopLevelOrganizationChange }: Organizati
     const syncedParams = syncParamsWithSearchFields(params);
     if (selectedInstitution) {
       syncedParams.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
-
-      // This was introduced because of a special need from NVI Correction Lists to sync with other url params - earlier that
-      // was handled here, but now, to keep it generic, we accept a callback, so the exceptions are handled by the caller instead
-      onTopLevelOrganizationChange?.(selectedInstitution, syncedParams);
     } else {
       syncedParams.delete(ResultParam.TopLevelOrganization);
       syncedParams.delete(ResultParam.ExcludeSubunits);
     }
+
+    // This was introduced because of a special need from NVI Correction Lists to sync with other url params - earlier that
+    // was handled here, but now, to keep it generic, we accept a callback, so the exceptions are handled by the caller instead
+    onTopLevelOrganizationChange?.(selectedInstitution, syncedParams);
     syncedParams.delete(ResultParam.From);
     syncedParams.delete(ResultParam.Unit);
 

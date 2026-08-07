@@ -71,6 +71,8 @@ const NviCorrectionList = () => {
                       ? (selectedOrganization, syncedParams) => {
                           if (selectedOrganization) {
                             syncedParams.set(ResultParam.UnidentifiedContributorInstitution, selectedOrganization.id);
+                          } else {
+                            syncedParams.delete(ResultParam.UnidentifiedContributorInstitution);
                           }
                         }
                       : undefined
