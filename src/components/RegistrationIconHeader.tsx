@@ -1,6 +1,6 @@
 import NotesIcon from '@mui/icons-material/Notes';
 import { Box, Typography, TypographyProps } from '@mui/material';
-import { otherArtisticSubtypes } from '../pages/public_registration/PublicPublicationInstance';
+import { otherArtisticSubtypes } from '../pages/public_registration/publication-instance/publication-instance-helpers';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
 import { PublicationInstanceType, RegistrationDate } from '../types/registration.types';
 import { DateText } from './RegistrationListItem/components/DateText';

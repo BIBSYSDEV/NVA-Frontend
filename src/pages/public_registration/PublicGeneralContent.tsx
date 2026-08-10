@@ -72,17 +72,15 @@ import {
   PublicSeries,
   RevisionInformation,
 } from './PublicPublicationContext';
-import {
-  PublicIsbnContent,
-  PublicPublicationInstanceArtistic,
-  PublicPublicationInstanceBook,
-  PublicPublicationInstanceChapter,
-  PublicPublicationInstanceDegree,
-  PublicPublicationInstanceExhibition,
-  PublicPublicationInstanceJournal,
-  PublicPublicationInstanceReport,
-  PublicPublicationInstanceSoftwareSourceCode,
-} from './PublicPublicationInstance';
+import { PublicIsbnContent } from './publication-instance/PublicIsbnContent';
+import { PublicPublicationInstanceArtistic } from './publication-instance/PublicPublicationInstanceArtistic';
+import { PublicPublicationInstanceBook } from './publication-instance/PublicPublicationInstanceBook';
+import { PublicPublicationInstanceChapter } from './publication-instance/PublicPublicationInstanceChapter';
+import { PublicPublicationInstanceDegree } from './publication-instance/PublicPublicationInstanceDegree';
+import { PublicPublicationInstanceExhibition } from './publication-instance/PublicPublicationInstanceExhibition';
+import { PublicPublicationInstanceJournal } from './publication-instance/PublicPublicationInstanceJournal';
+import { PublicPublicationInstanceReport } from './publication-instance/PublicPublicationInstanceReport';
+import { PublicPublicationInstanceSoftwareSourceCode } from './publication-instance/PublicPublicationInstanceSoftwareSourceCode';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
 
