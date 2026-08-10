@@ -105,7 +105,12 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         {userCanEditRegistration &&
           (isAwaitingStatusSync ? (
             <Tooltip title={t('registration.edit_registration_awaiting_sync')}>
-              <CircularProgress size="1.5rem" color="inherit" sx={{ ml: 'auto', mr: '1rem' }} />
+              <CircularProgress
+                size="1.5rem"
+                color="inherit"
+                aria-label={t('registration.edit_registration_awaiting_sync')}
+                sx={{ ml: 'auto', mr: '1rem' }}
+              />
             </Tooltip>
           ) : (
             <Tooltip title={t('registration.edit_registration')}>
