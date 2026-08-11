@@ -147,7 +147,12 @@ export const RrsAndFileImportSettings = () => {
                   <Typography variant="h2" gutterBottom>
                     {t('file_import')}
                   </Typography>
-                  <Typography fontStyle="italic">{t('temporarily_disabled')}</Typography>
+                  <Typography
+                    sx={{
+                      fontStyle: 'italic',
+                    }}>
+                    {t('temporarily_disabled')}
+                  </Typography>
                   <Field name={'autoPublishScopusImportFiles'}>
                     {({ field }: FieldProps<boolean>) => (
                       <RadioGroup

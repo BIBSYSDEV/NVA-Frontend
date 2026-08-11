@@ -13,7 +13,15 @@ export const PublicPageInfoEntry = ({ title, content, ...rest }: PublicPageInfoE
       {title}:
     </Typography>
     {typeof content === 'string' ? (
-      <Typography component="dd" gridColumn={2} {...rest}>
+      <Typography
+        component="dd"
+        {...rest}
+        sx={[
+          {
+            gridColumn: 2,
+          },
+          ...(Array.isArray(rest.sx) ? rest.sx : [rest.sx]),
+        ]}>
         {content}
       </Typography>
     ) : (

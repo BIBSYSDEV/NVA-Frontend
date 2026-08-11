@@ -42,7 +42,12 @@ export const FacetItem = ({ title, children, dataTestId, renderCustomSelect, isP
       }}>
       <ListItemButton onClick={toggleOpen} dense>
         <ListItemText>
-          <Typography fontWeight={600}>{title}</Typography>
+          <Typography
+            sx={{
+              fontWeight: 600,
+            }}>
+            {title}
+          </Typography>
         </ListItemText>
         {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>

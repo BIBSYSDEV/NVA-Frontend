@@ -96,7 +96,10 @@ export const OtherArtisticOutputForm = () => {
               )}
               {!!touched.entityDescription?.reference?.publicationInstance?.venues &&
                 typeof errors.entityDescription?.reference?.publicationInstance?.venues === 'string' && (
-                  <Box mt="1rem">
+                  <Box
+                    sx={{
+                      mt: '1rem',
+                    }}>
                     <FormHelperText error>
                       <ErrorMessage name={name} />
                     </FormHelperText>

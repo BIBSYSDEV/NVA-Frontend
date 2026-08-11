@@ -112,7 +112,12 @@ export const CristinPersonTableRow = ({
             })}
           </Box>
         ) : (
-          <Typography fontStyle="italic">{t('registration.contributors.no_affiliations_found')}</Typography>
+          <Typography
+            sx={{
+              fontStyle: 'italic',
+            }}>
+            {t('registration.contributors.no_affiliations_found')}
+          </Typography>
         )}
       </TableCell>
       <TableCell>

@@ -128,7 +128,10 @@ export const ArtisticPerformingArtsForm = () => {
               )}
               {!!touched.entityDescription?.reference?.publicationInstance?.outputs &&
                 typeof errors.entityDescription?.reference?.publicationInstance?.outputs === 'string' && (
-                  <Box mt="1rem">
+                  <Box
+                    sx={{
+                      mt: '1rem',
+                    }}>
                     <FormHelperText error>
                       <ErrorMessage name={name} />
                     </FormHelperText>

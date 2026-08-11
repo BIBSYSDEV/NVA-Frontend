@@ -14,14 +14,28 @@ export const ImportCandidateChannelName = ({ importCandidate }: ImportCandidateC
 
   if (shouldHaveJournal) {
     if (importCandidate.journal?.name) {
-      return <Typography fontWeight={600}>{importCandidate.journal.name}</Typography>;
+      return (
+        <Typography
+          sx={{
+            fontWeight: 600,
+          }}>
+          {importCandidate.journal.name}
+        </Typography>
+      );
     } else {
       return <Typography>{t('basic_data.central_import.missing_journal')}</Typography>;
     }
   }
 
   if (importCandidate.publisher?.name) {
-    return <Typography fontWeight={600}>{importCandidate.publisher.name}</Typography>;
+    return (
+      <Typography
+        sx={{
+          fontWeight: 600,
+        }}>
+        {importCandidate.publisher.name}
+      </Typography>
+    );
   }
   return <Typography>{t('basic_data.central_import.missing_publisher')}</Typography>;
 };

@@ -67,7 +67,12 @@ export const RelatedResultsField = () => {
 
       <SearchRelatedResultField />
 
-      <Typography fontWeight="bold">{t('registration.resource_type.add_related_results_reference')}</Typography>
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+        }}>
+        {t('registration.resource_type.add_related_results_reference')}
+      </Typography>
       <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
         {({ push }: FieldArrayRenderProps) => (
           <Button

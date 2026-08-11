@@ -77,8 +77,17 @@ const AdvancedSearchPage = () => {
   return (
     <>
       <HeadTitle>{t('search.advanced_search.advanced_search')}</HeadTitle>
-      <Grid container rowGap={2}>
-        <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
+      <Grid
+        container
+        sx={{
+          rowGap: 2,
+        }}>
+        <Grid
+          container
+          sx={{
+            rowGap: 2,
+            px: { xs: '0.5rem', md: 0 },
+          }}>
           <Typography variant="h1">{t('search.advanced_search.advanced_search')}</Typography>
           <Grid size={12}>
             <StyledFilterHeading>{t('search.advanced_search.title_search')}</StyledFilterHeading>
@@ -94,7 +103,13 @@ const AdvancedSearchPage = () => {
             <StyledDivider sx={{ mt: '1rem' }} />
           </Grid>
 
-          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
+          <Grid
+            container
+            direction={isLargeScreen ? 'row' : 'column'}
+            size={12}
+            sx={{
+              gap: 2,
+            }}>
             <Grid component="fieldset" sx={{ width: 'fit-content' }}>
               <StyledFilterHeading component="legend">
                 {t('search.advanced_search.publishing_period')}
@@ -143,7 +158,13 @@ const AdvancedSearchPage = () => {
 
           {gridRowDivider}
 
-          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
+          <Grid
+            container
+            direction={isLargeScreen ? 'row' : 'column'}
+            size={12}
+            sx={{
+              gap: 2,
+            }}>
             <Grid>
               <StyledFilterHeading>{t('registration.contributors.contributor')}</StyledFilterHeading>
               <SearchForm
@@ -162,8 +183,19 @@ const AdvancedSearchPage = () => {
 
           {gridRowDivider}
 
-          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
-            <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2}>
+          <Grid
+            container
+            direction={isLargeScreen ? 'row' : 'column'}
+            size={12}
+            sx={{
+              gap: 2,
+            }}>
+            <Grid
+              container
+              direction={isLargeScreen ? 'row' : 'column'}
+              sx={{
+                gap: 2,
+              }}>
               <Grid>
                 <PublisherFilter />
               </Grid>
@@ -184,7 +216,13 @@ const AdvancedSearchPage = () => {
 
           {gridRowDivider}
 
-          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
+          <Grid
+            container
+            direction={isLargeScreen ? 'row' : 'column'}
+            size={12}
+            sx={{
+              gap: 2,
+            }}>
             <Grid>
               <StyledFilterHeading>{t('common.financier')}</StyledFilterHeading>
               <FundingSourceFilter />

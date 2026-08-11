@@ -139,7 +139,10 @@ export const ArtisticArchitectureForm = () => {
               )}
               {!!touched.entityDescription?.reference?.publicationInstance?.architectureOutput &&
                 typeof errors.entityDescription?.reference?.publicationInstance?.architectureOutput === 'string' && (
-                  <Box mt="1rem">
+                  <Box
+                    sx={{
+                      mt: '1rem',
+                    }}>
                     <FormHelperText error>
                       <ErrorMessage name={name} />
                     </FormHelperText>

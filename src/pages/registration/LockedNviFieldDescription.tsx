@@ -13,11 +13,18 @@ export const LockedNviFieldDescription = ({ fieldLabel }: LockedNviFieldDescript
     <>
       <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mb: '0.25rem' }}>
         <ErrorIcon />
-        <Typography variant="h2" color="inherit">
+        <Typography
+          variant="h2"
+          sx={{
+            color: 'inherit',
+          }}>
           {t('common.nvi')}
         </Typography>
       </Box>
-      <Typography color="inherit">
+      <Typography
+        sx={{
+          color: 'inherit',
+        }}>
         {t('registration.locked_nvi_field_description', { field: fieldLabel.toLocaleLowerCase() })}
       </Typography>
     </>

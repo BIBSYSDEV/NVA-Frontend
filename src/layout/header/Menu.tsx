@@ -51,7 +51,11 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           data-testid={dataTestId.header.menuButton}
           onClick={handleClickMenuAnchor}
           startIcon={<AccountCircle />}>
-          <Typography noWrap color="inherit">
+          <Typography
+            noWrap
+            sx={{
+              color: 'inherit',
+            }}>
             {name}
           </Typography>
         </Button>
