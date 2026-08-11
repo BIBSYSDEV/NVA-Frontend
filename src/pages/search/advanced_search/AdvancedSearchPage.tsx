@@ -105,10 +105,10 @@ const AdvancedSearchPage = () => {
 
           <Grid
             container
-            direction={isLargeScreen ? 'row' : 'column'}
             size={12}
             sx={{
               gap: 2,
+              flexDirection: isLargeScreen ? 'row' : 'column',
             }}>
             <Grid component="fieldset" sx={{ width: 'fit-content' }}>
               <StyledFilterHeading component="legend">
@@ -160,10 +160,10 @@ const AdvancedSearchPage = () => {
 
           <Grid
             container
-            direction={isLargeScreen ? 'row' : 'column'}
             size={12}
             sx={{
               gap: 2,
+              flexDirection: isLargeScreen ? 'row' : 'column',
             }}>
             <Grid>
               <StyledFilterHeading>{t('registration.contributors.contributor')}</StyledFilterHeading>
@@ -185,16 +185,16 @@ const AdvancedSearchPage = () => {
 
           <Grid
             container
-            direction={isLargeScreen ? 'row' : 'column'}
             size={12}
             sx={{
               gap: 2,
+              flexDirection: isLargeScreen ? 'row' : 'column',
             }}>
             <Grid
               container
-              direction={isLargeScreen ? 'row' : 'column'}
               sx={{
                 gap: 2,
+                flexDirection: isLargeScreen ? 'row' : 'column',
               }}>
               <Grid>
                 <PublisherFilter />
@@ -218,10 +218,10 @@ const AdvancedSearchPage = () => {
 
           <Grid
             container
-            direction={isLargeScreen ? 'row' : 'column'}
             size={12}
             sx={{
               gap: 2,
+              flexDirection: isLargeScreen ? 'row' : 'column',
             }}>
             <Grid>
               <StyledFilterHeading>{t('common.financier')}</StyledFilterHeading>

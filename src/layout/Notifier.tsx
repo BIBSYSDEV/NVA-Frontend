@@ -31,7 +31,7 @@ export const Notifier = () => {
       open={true}
       autoHideDuration={autoHideNotificationDuration[notification.variant]}
       onClose={handleClose}
-      TransitionComponent={Fade}
+      slots={{ transition: Fade }}
       transitionDuration={100}>
       <Alert onClose={handleClose} variant="filled" severity={notification.variant}>
         <Typography
