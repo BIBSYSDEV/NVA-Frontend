@@ -1,4 +1,4 @@
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';

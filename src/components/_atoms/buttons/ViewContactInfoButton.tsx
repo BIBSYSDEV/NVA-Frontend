@@ -1,4 +1,4 @@
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import MailOutlineIcon from '@mui/icons-material/MailOutlineOutlined';
 import { Button, ButtonProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';

@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import MailOutlineIcon from '@mui/icons-material/MailOutlineOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import {
   Button,

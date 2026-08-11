@@ -1,5 +1,5 @@
 import LinkIcon from '@mui/icons-material/Link';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import MailOutlineIcon from '@mui/icons-material/MailOutlineOutlined';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
