@@ -42,6 +42,10 @@ const NviCorrectionList = () => {
       ...listConfig?.queryParams,
       ...registrationParams,
       unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
+      // unidentifiedContributorInstitution should always be the same as topLevelOrganization because its's chosen in the same dropdown
+      ...(isUnidentifiedContributorList && {
+        unidentifiedContributorInstitution: registrationParams.topLevelOrganization,
+      }),
     },
   });
 
