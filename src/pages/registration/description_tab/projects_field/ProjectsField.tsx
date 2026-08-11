@@ -137,7 +137,7 @@ export const ProjectsField = () => {
                       placeholder={t('search.search_project_placeholder')}
                     />
                   )}
-                  renderTags={() => null}
+                  renderValue={() => null}
                 />
 
                 <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', mt: '0.5rem' }}>
