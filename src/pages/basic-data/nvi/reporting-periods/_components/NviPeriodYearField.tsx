@@ -23,7 +23,7 @@ export const NviPeriodYearField = ({ disabled, shouldDisableYear, minDate, maxDa
           slotProps={{
             textField: {
               required: true,
-              inputProps: { 'data-testid': dataTestId.basicData.nviPeriod.nviPeriodYear },
+              slotProps: { htmlInput: { 'data-testid': dataTestId.basicData.nviPeriod.nviPeriodYear } },
             },
           }}
           disabled={disabled}

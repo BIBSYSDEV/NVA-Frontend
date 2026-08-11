@@ -117,7 +117,7 @@ export const AddAffiliationSection = () => {
                 minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : undefined}
                 slotProps={{
                   textField: {
-                    inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
+                    slotProps: { htmlInput: { 'data-testid': dataTestId.basicData.personAdmin.endDate } },
                     variant: 'filled',
                     error: touched && !!error,
                     helperText: <ErrorMessage name={field.name} />,

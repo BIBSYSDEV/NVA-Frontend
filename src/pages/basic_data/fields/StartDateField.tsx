@@ -28,7 +28,7 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false, dataTestI
           maxDate={maxDate}
           slotProps={{
             textField: {
-              inputProps: { 'data-testid': dataTestId },
+              slotProps: { htmlInput: { 'data-testid': dataTestId } },
               variant: 'outlined',
               error: touched && !!error,
               helperText: <ErrorMessage name={field.name} />,

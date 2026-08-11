@@ -124,7 +124,7 @@ export const DatePickerField = () => {
         maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
         slotProps={{
           textField: {
-            inputProps: { 'data-testid': dataTestId.registrationWizard.description.datePublishedField },
+            slotProps: { htmlInput: { 'data-testid': dataTestId.registrationWizard.description.datePublishedField } },
             variant: 'filled',
             required: true,
             onBlur: () => !touchedYear && setFieldTouched(DescriptionFieldNames.PublicationYear),

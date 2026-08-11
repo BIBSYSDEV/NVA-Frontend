@@ -107,7 +107,7 @@ export const AffiliationFormSection = () => {
                   }
                   slotProps={{
                     textField: {
-                      inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
+                      slotProps: { htmlInput: { 'data-testid': dataTestId.basicData.personAdmin.endDate } },
                       variant: 'outlined',
                       error: touched && !!error,
                       helperText: <ErrorMessage name={field.name} />,

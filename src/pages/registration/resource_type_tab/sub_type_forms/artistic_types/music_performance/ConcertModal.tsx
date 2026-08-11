@@ -221,8 +221,10 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                         }}
                         slotProps={{
                           textField: {
-                            inputProps: {
-                              'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                            slotProps: {
+                              htmlInput: {
+                                'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                              },
                             },
                             sx: { maxWidth: '15rem' },
                             onBlur: () => !touched && setFieldTouched(field.name),
