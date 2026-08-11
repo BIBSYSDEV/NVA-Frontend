@@ -26,7 +26,7 @@ const NviCorrectionList = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
-  const unidentifiedContributorInstitutionParam = searchParams.get(ResultParam.UnidentifiedContributorInstitution);
+  const isUnidentifiedContributorList = listId === CorrectionListNames.UnidentifiedContributorWithIdentifiedAffiliation;
   const correctionListConfig = useCorrectionListConfig();
   const listConfig = listId && correctionListConfig[listId];
   const shouldShowScientificValueFilter =
@@ -65,9 +65,9 @@ const NviCorrectionList = () => {
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
                 <OrganizationFilters
                   // The "unidentified contributor with identified affiliation" correction list filters on unidentifiedContributorInstitution.
-                  // If that parameter is present it should stay in sync with whichever institution is selected
+                  // It should stay in sync with whichever institution is selected, for as long as this list is active
                   onTopLevelOrganizationChange={
-                    unidentifiedContributorInstitutionParam
+                    isUnidentifiedContributorList
                       ? (selectedOrganization, syncedParams) => {
                           if (selectedOrganization) {
                             syncedParams.set(ResultParam.UnidentifiedContributorInstitution, selectedOrganization.id);
