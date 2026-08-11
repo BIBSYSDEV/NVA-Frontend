@@ -34,19 +34,21 @@ const NviCorrectionList = () => {
   const hideChannelFilters = !!listId && hideChannelFiltersListIds.includes(listId as CorrectionListNames);
 
   const registrationParams = useRegistrationsQueryParams();
-  const exportParams = new URLSearchParams(sanitizeSearchParams({ ...listConfig?.queryParams, ...registrationParams }));
+
+  const mergedParams = {
+    ...listConfig?.queryParams,
+    ...registrationParams,
+    unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
+    // unidentifiedContributorInstitution should always be the same as topLevelOrganization because its's chosen in the same dropdown
+    ...(isUnidentifiedContributorList && {
+      unidentifiedContributorInstitution: registrationParams.topLevelOrganization,
+    }),
+  };
+  const exportParams = new URLSearchParams(sanitizeSearchParams(mergedParams));
 
   const registrationQuery = useRegistrationSearch({
     enabled: !!listConfig,
-    params: {
-      ...listConfig?.queryParams,
-      ...registrationParams,
-      unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
-      // unidentifiedContributorInstitution should always be the same as topLevelOrganization because its's chosen in the same dropdown
-      ...(isUnidentifiedContributorList && {
-        unidentifiedContributorInstitution: registrationParams.topLevelOrganization,
-      }),
-    },
+    params: mergedParams,
   });
 
   return (
