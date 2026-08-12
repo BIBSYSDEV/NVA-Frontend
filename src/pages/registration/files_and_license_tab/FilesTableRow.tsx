@@ -559,9 +559,7 @@ export const FilesTableRow = ({
                         sx={{ minWidth: '15rem' }}
                         slotProps={{
                           textField: {
-                            slotProps: {
-                              htmlInput: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
-                            },
+                            'data-testid': dataTestId.registrationWizard.files.embargoDateField,
                             variant: 'filled',
                             onBlur: () => !touched && setFieldTouched(field.name),
                             error: !!error && touched,

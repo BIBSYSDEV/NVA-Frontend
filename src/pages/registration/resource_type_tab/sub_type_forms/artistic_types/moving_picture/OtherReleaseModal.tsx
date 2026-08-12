@@ -137,11 +137,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     }}
                     slotProps={{
                       textField: {
-                        slotProps: {
-                          htmlInput: {
-                            'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
-                          },
-                        },
+                        'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
                         sx: { maxWidth: '13rem' },
                         variant: 'filled',
                         required: true,

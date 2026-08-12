@@ -32,7 +32,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
             maxDate={toValue ? new Date(toValue) : maxDate}
             slotProps={{
               textField: {
-                slotProps: { htmlInput: { 'data-testid': dataTestId.registrationWizard.resourceType.dateFromField } },
+                'data-testid': dataTestId.registrationWizard.resourceType.dateFromField,
                 variant: 'filled',
                 error: touched && !!error,
                 required: true,
@@ -58,7 +58,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
             maxDate={maxDate}
             slotProps={{
               textField: {
-                slotProps: { htmlInput: { 'data-testid': dataTestId.registrationWizard.resourceType.dateToField } },
+                'data-testid': dataTestId.registrationWizard.resourceType.dateToField,
                 variant: 'filled',
                 onBlur: () => !touched && setFieldTouched(field.name),
                 error: touched && !!error,
