@@ -122,7 +122,7 @@ export interface Approval {
 
 export interface FinalizedApproval extends Approval {
   status: 'Rejected' | 'Approved';
-  finalizedBy: string;
+  finalizedBy?: string;
   finalizedDate: string;
 }
 
