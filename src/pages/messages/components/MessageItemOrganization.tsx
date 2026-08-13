@@ -20,7 +20,7 @@ export const MessageItemOrganization = ({ organizationId }: MessageItemOrganizat
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.1rem' }}>
         <AccountBalanceIcon fontSize="small" />
         <Typography>
-          {organizationQuery.isPending ? (
+          {organizationQuery.isLoading ? (
             <Skeleton sx={{ width: '2rem' }} />
           ) : acronym ? (
             acronym

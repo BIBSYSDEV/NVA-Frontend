@@ -42,7 +42,7 @@ interface NviNote {
   type: 'FinalizedNote' | 'GeneralNote';
   identifier?: string;
   date: string;
-  username: string;
+  username?: string;
   institutionId?: string;
   text?: string;
   messageType?: 'Justification' | 'Approval' | 'Comment';
