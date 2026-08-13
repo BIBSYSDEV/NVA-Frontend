@@ -36,7 +36,12 @@ export const FundingBox = ({ funding, sx }: FundingBoxProps) => {
         bgcolor: 'white',
         ...sx,
       }}>
-      <Typography fontWeight="bold">{t('registration.description.funding.funder')}:</Typography>
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+        }}>
+        {t('registration.description.funding.funder')}:
+      </Typography>
       {fundingSourcesQuery.isPending ? (
         <Skeleton />
       ) : (
@@ -45,19 +50,34 @@ export const FundingBox = ({ funding, sx }: FundingBoxProps) => {
         </Typography>
       )}
 
-      <Typography fontWeight="bold">{t('registration.description.funding.funding_id')}:</Typography>
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+        }}>
+        {t('registration.description.funding.funding_id')}:
+      </Typography>
       {fundingSourceIsNfr(funding.source) && funding.identifier ? (
         <OpenInNewLink href={getNfrProjectUrl(funding.identifier)}>{funding.identifier}</OpenInNewLink>
       ) : (
         <Typography>{funding.identifier}</Typography>
       )}
 
-      <Typography fontWeight="bold">{t('registration.description.funding.funding_name')}:</Typography>
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+        }}>
+        {t('registration.description.funding.funding_name')}:
+      </Typography>
       <Typography>{getLanguageString(funding.labels)}</Typography>
 
       {funding.fundingAmount && (
         <>
-          <Typography fontWeight="bold">{t('registration.description.funding.funding_sum')}:</Typography>
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}>
+            {t('registration.description.funding.funding_sum')}:
+          </Typography>
           <Typography>
             {funding.fundingAmount.currency} {funding.fundingAmount.amount}
           </Typography>

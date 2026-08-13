@@ -47,7 +47,7 @@ export const SearchForm = ({
         navigate({ search: searchParams.toString() });
       }}>
       <SearchTextField
-        inputProps={{ [dataSearchFieldAttributeName]: paramName }}
+        slotProps={{ htmlInput: { [dataSearchFieldAttributeName]: paramName } }}
         dataTestId={dataTestId}
         name={paramName}
         label={label}

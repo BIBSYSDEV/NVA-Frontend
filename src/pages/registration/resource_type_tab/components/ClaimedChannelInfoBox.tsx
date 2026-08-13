@@ -42,10 +42,16 @@ export const ClaimedChannelInfoBox = ({ channelId, channelType }: ClaimedChannel
     <StyledInfoBanner sx={{ gridColumn: '1/-1', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
       <ErrorIcon />
       <div>
-        <Typography color="inherit">
+        <Typography
+          sx={{
+            color: 'inherit',
+          }}>
           {t('registration.resource_type.channel_claimed_by_other_institution', { channelType })}
         </Typography>
-        <Typography color="inherit">
+        <Typography
+          sx={{
+            color: 'inherit',
+          }}>
           <Trans
             t={t}
             i18nKey="registration.resource_type.files_will_be_handled_by_other_institution"

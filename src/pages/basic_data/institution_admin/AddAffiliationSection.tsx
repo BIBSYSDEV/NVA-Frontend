@@ -68,7 +68,10 @@ export const AddAffiliationSection = () => {
             />
           )}
         </Field>
-        <Box display={{ display: 'flex', gap: '1rem' }}>
+        <Box
+          sx={{
+            display: { display: 'flex', gap: '1rem' },
+          }}>
           <PositionField fieldName="affiliation.type" disabled={isDisabled} />
 
           <Field name="affiliation.fullTimeEquivalentPercentage">
@@ -88,7 +91,10 @@ export const AddAffiliationSection = () => {
             )}
           </Field>
         </Box>
-        <Box display={{ display: 'flex', gap: '1rem' }}>
+        <Box
+          sx={{
+            display: { display: 'flex', gap: '1rem' },
+          }}>
           <StartDateField
             fieldName="affiliation.startDate"
             disabled={isDisabled}
@@ -111,7 +117,7 @@ export const AddAffiliationSection = () => {
                 minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : undefined}
                 slotProps={{
                   textField: {
-                    inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
+                    'data-testid': dataTestId.basicData.personAdmin.endDate,
                     variant: 'filled',
                     error: touched && !!error,
                     helperText: <ErrorMessage name={field.name} />,

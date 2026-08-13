@@ -1,7 +1,7 @@
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import SellIcon from '@mui/icons-material/Sell';
-import { Box, BoxProps, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
+import { Box, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -59,7 +59,9 @@ interface MessageItemProps {
   text: string | undefined;
   date: string;
   username: string | undefined;
-  backgroundColor: BoxProps['bgcolor'];
+
+  /** Theme palette path, applied as the `bgcolor` of the message. */
+  backgroundColor: string;
   menuElement?: ReactNode;
   showOrganization?: boolean;
   /** Organization to show instead of the one belonging to the sender. */

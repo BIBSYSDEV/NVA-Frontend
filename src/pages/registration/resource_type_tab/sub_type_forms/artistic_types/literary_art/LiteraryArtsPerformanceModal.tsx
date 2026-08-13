@@ -163,9 +163,7 @@ export const LiteraryArtsPerformanceModal = ({
                     }}
                     slotProps={{
                       textField: {
-                        inputProps: {
-                          'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
-                        },
+                        'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
                         onBlur: () => !touched && setFieldTouched(field.name),
                         variant: 'filled',
                         required: true,

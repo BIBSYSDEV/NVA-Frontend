@@ -36,7 +36,12 @@ export const ReferenceBox = ({ registration }: ReferenceBoxProps) => {
   }
 
   return (
-    <Box component="section" display="flex" flexDirection="column">
+    <Box
+      component="section"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
       <Typography id={referenceHeadingId} variant="h3" gutterBottom>
         {t('reference')}
       </Typography>

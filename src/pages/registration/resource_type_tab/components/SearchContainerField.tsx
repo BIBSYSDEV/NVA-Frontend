@@ -134,10 +134,10 @@ export const SearchContainerField = ({
                 </Box>
               </li>
             )}
-            renderTags={(value, getTagProps) =>
+            renderValue={(value, getItemProps) =>
               value.map((option, index) => (
                 <Chip
-                  {...getTagProps({ index })}
+                  {...getItemProps({ index })}
                   key={option.identifier}
                   data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
                   label={

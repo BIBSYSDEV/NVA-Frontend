@@ -19,7 +19,12 @@ export const NviReportProgressBar = ({
   const progressLabelId = useId();
   return (
     <>
-      <Typography fontWeight="bold">{t('tasks.nvi.progress_nvi_reporting')}</Typography>
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+        }}>
+        {t('tasks.nvi.progress_nvi_reporting')}
+      </Typography>
       {isPending ? (
         <>
           <Skeleton />

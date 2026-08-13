@@ -149,7 +149,10 @@ export const RegistrationSearchBar = () => {
               )}
             </Field>
 
-            <Box gridArea="buttonRowTop">
+            <Box
+              sx={{
+                gridArea: 'buttonRowTop',
+              }}>
               <FilterButton />
               <ExportResultsDropdown params={registrationParams} />
             </Box>
@@ -158,7 +161,13 @@ export const RegistrationSearchBar = () => {
               <FieldArray name="properties">
                 {({ push, remove }: FieldArrayRenderProps) => (
                   <>
-                    <Box gridArea="filter" sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    <Box
+                      sx={{
+                        gridArea: 'filter',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.75rem',
+                      }}>
                       {values.properties.map((property, index) => (
                         <AdvancedSearchRow
                           key={index}
@@ -176,7 +185,13 @@ export const RegistrationSearchBar = () => {
                         />
                       ))}
                     </Box>
-                    <Box gridArea="buttonRowBottom" sx={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem' }}>
+                    <Box
+                      sx={{
+                        gridArea: 'buttonRowBottom',
+                        display: 'flex',
+                        alignItems: 'flex-end',
+                        gap: '0.5rem',
+                      }}>
                       <IconButton
                         sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
                         size="small"

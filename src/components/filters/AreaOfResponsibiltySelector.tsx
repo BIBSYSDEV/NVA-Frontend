@@ -77,7 +77,7 @@ export const AreaOfResponsibilitySelector = ({ paramName, resetPagination }: Are
       disabled={organizationQuery.isPending}
       loading={organizationQuery.isPending}
       getOptionLabel={(option) => getLanguageString(option.labels)}
-      renderTags={(values) => (
+      renderValue={(values) => (
         <Chip
           sx={{ py: '0.1rem' }}
           label={t('common.chosen', { count: values.length })}

@@ -37,7 +37,11 @@ export const RegistrationIconHeader = ({
       <NotesIcon sx={{ bgcolor: 'registration.main', color: 'primary.main', borderRadius: '0.4rem' }} />
       <PublicationInstanceText publicationInstanceType={publicationInstanceType} textColor={textColor} />
       {!!typeString && (
-        <Typography color={textColor} fontWeight="bold">
+        <Typography
+          color={textColor}
+          sx={{
+            fontWeight: 'bold',
+          }}>
           {typeString}
         </Typography>
       )}

@@ -92,7 +92,11 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage }: Su
         sx={{ borderLeftColor: getTicketColor(TicketTypeEnum.GeneralSupportCase) }}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <TicketTypeTag type={TicketTypeEnum.GeneralSupportCase} showText={false} />
-        <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+            flexGrow: '1',
+          }}>
           {t('my_page.messages.types.GeneralSupportCase')}
         </Typography>
         {supportTicket && isOnTasksPage && <TicketStatusChip ticket={supportTicket} />}

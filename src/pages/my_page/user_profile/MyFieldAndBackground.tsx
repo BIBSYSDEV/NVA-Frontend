@@ -131,12 +131,12 @@ export const MyFieldAndBackground = () => {
                           <Typography>{getLanguageString(option.labels)}</Typography>
                         </li>
                       )}
-                      renderTags={(value, getTagProps) =>
+                      renderValue={(value, getItemProps) =>
                         value.map((option, index) => (
                           <Chip
                             color="secondary"
                             variant="filled"
-                            {...getTagProps({ index })}
+                            {...getItemProps({ index })}
                             key={option.identifier}
                             label={getLanguageString(option.labels)}
                           />
