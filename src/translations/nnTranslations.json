@@ -5,7 +5,7 @@
     "footer_text": "Tenesta blir levert av Sikt – Kunnskapssektorens tenesteleverandør. Sikt er leverandør av fellesstenester til norsk kunnskapssektor."
   },
   "add_file": "Legg til fil",
-  "add_project": "",
+  "add_project": "Legg til prosjekt",
   "approval": "",
   "approved": "",
   "authorization": {
@@ -2053,6 +2053,7 @@
         "anthology_without_chapter": "Antologiar utan kapittel",
         "applicable_category_in_non_applicable_channel": "Teljande kategoriar i ikkje-teljande kanalar",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
+        "books_without_npi_field": "",
         "chapter_and_book_year_mismatch": "",
         "non_applicable_category_in_applicable_channel": "Ikkje-teljande kategoriar i teljande kanalar",
         "scientific_chapter_not_in_anthology": "",
@@ -2070,6 +2071,7 @@
       "note": "Kommentar",
       "nvi_control": "NVI-kontroll (Norsk vitskapsindeks)",
       "nvi_reporting_status": "Status NVI-rapportering",
+      "only_book_categories_available": "",
       "previous_candidate": "Gå til førre kandidat",
       "problem_description": "<p>NVI-kandidaten har følgjande manglar:</p><ul><li>$t(tasks.nvi.unidentified_person_with_nvi_institution)</li></ul><p>Identifiser person før du godkjenner ved å redigere resultatet. Kontrollstatusar blir oppheva når ein uidentifisert person blir identifisert.</p>",
       "progress_nvi_reporting": "",
