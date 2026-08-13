@@ -14,6 +14,12 @@ export const checkWhichBasicDataPage = (rawPathname: string, search?: string) =>
   // Institution subpages
   const isOnNewInstitutionPage = isOnInstitutionsPage && new URLSearchParams(search).get('id') === 'new';
 
+  // NVI subpages
+  const isOnNewNviPeriodPage = !!matchPath(UrlPathTemplate.BasicDataNviNew, pathname);
+
+  // Channel ownership subpages
+  const isOnSerialPublicationClaimsPage = !!matchPath(UrlPathTemplate.BasicDataSerialPublicationClaims, pathname);
+
   // Central import subpages
   const isOnCentralImportCandidateLandingPage = !!matchPath(UrlPathTemplate.BasicDataCentralImportCandidate, pathname);
   const isOnCentralImportEditPage = !!matchPath(UrlPathTemplate.BasicDataCentralImportCandidateWizard, pathname);
@@ -21,15 +27,13 @@ export const checkWhichBasicDataPage = (rawPathname: string, search?: string) =>
   const isOnACentralImportSubPage =
     isOnCentralImportCandidateLandingPage || isOnCentralImportEditPage || isOnCentralImportMergePage;
 
-  // Channel ownership subpages
-  const isOnSerialPublicationClaimsPage = !!matchPath(UrlPathTemplate.BasicDataSerialPublicationClaims, pathname);
-
   return {
     isOnPersonRegisterPage,
     isOnInstitutionsPage,
     isOnPublisherClaimPage,
     isOnAddEmployeePage,
     isOnNewInstitutionPage,
+    isOnNewNviPeriodPage,
     isOnCentralImportCandidateLandingPage,
     isOnCentralImportEditPage,
     isOnCentralImportMergePage,

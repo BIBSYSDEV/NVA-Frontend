@@ -1,5 +1,6 @@
 import { ParseKeys } from 'i18next';
 import { FetchResultsParams, ResultParam } from '../api/searchApi';
+import type { DisabledCategory } from '../components/CategorySelector';
 import { LanguageString, SearchResponse } from './common.types';
 import { Organization } from './organization.types';
 import { PublicationInstanceType, RegistrationDate } from './registration.types';
@@ -121,7 +122,7 @@ export interface Approval {
 
 export interface FinalizedApproval extends Approval {
   status: 'Rejected' | 'Approved';
-  finalizedBy: string;
+  finalizedBy?: string;
   finalizedDate: string;
 }
 
@@ -131,10 +132,7 @@ export interface RejectedApproval extends FinalizedApproval {
 }
 
 type NviAllowedOperation =
-  | 'approval/reject-candidate'
-  | 'approval/approve-candidate'
-  | 'approval/reset-approval'
-  | 'note/create-note';
+  'approval/reject-candidate' | 'approval/approve-candidate' | 'approval/reset-approval' | 'note/create-note';
 
 export interface NviCandidateProblem {
   type: 'UnverifiedCreatorExists' | 'UnverifiedCreatorFromOrganizationProblem';
@@ -184,6 +182,7 @@ export enum CorrectionListNames {
   UnidentifiedContributorWithIdentifiedAffiliation = 'UnidentifiedContributorWithIdentifiedAffiliation',
   ScientificChapterNotInAnthology = 'ScientificChapterNotInAnthology',
   ScientificMonographyOrAnthologyWithoutIsxns = 'ScientificMonographyOrAnthologyWithoutIsxns',
+  BooksWithoutNpiField = 'BooksWithoutNpiField',
 }
 
 export type CorrectionListId = `${CorrectionListNames}`;
@@ -193,6 +192,7 @@ export type CorrectionListSearchConfig = {
     i18nKey: ParseKeys;
     queryParams: FetchResultsParams;
     disabledFilters: ResultParam[];
+    disabledCategories?: DisabledCategory[];
     topLevelOrganization: string | undefined;
   };
 };

@@ -210,10 +210,7 @@ export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
 export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
 export type MusicOutput = MusicScore | AudioVisualPublication | Concert | OtherMusicPerformance;
 export type LiteraryArtsOutput =
-  | LiteraryArtsMonograph
-  | LiteraryArtsAudioVisual
-  | LiteraryArtsPerformance
-  | LiteraryArtsWeb;
+  LiteraryArtsMonograph | LiteraryArtsAudioVisual | LiteraryArtsPerformance | LiteraryArtsWeb;
 
 export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput | MusicOutput | LiteraryArtsOutput;
 

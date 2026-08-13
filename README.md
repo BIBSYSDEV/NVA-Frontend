@@ -1,5 +1,25 @@
 # Nasjonalt Vitenarkiv Frontend
 
+## Getting started
+
+1. Use Node 24, as pinned in `.nvmrc` and `engines` in `package.json`.
+2. Run `npm ci` to install dependencies.
+3. Run `npm run prepare` once to install the git hooks (not automatic, see below).
+
+## npm configuration
+
+The committed `.npmrc` locks down npm behavior in this repo, both locally and in CI.
+Each setting is explained by a comment in the file.
+
+The most important one is `ignore-scripts=true`, which blocks lifecycle scripts (`preinstall`, `postinstall`, `prepare`) so a compromised dependency cannot run arbitrary code on install.
+It has two consequences:
+
+- Git hooks are not set up on install. Run `npm run prepare` once after cloning.
+- The Cypress binary is not downloaded on install. The `test` and `test:cypress:open` scripts handle this by running `cypress install` first.
+
+Consider setting `ignore-scripts=true` in your own `~/.npmrc` as well, since the project `.npmrc` only protects installs in this repo.
+Avoid `pre`/`post` script names (like `prebuild`) in `package.json`; npm skips them when `ignore-scripts` is set.
+
 ## Environment variables
 
 To run this app, you need to add a set of environment variables to a `.env` file located at the root of the project folder (`/NVA-Frontend/.env`).
@@ -57,7 +77,7 @@ Alternatively:
 
 1. Set environment variable in `.env`: `VITE_USE_MOCK=true`
 2. `npm start`
-3. `npx cypress run` or `npx cypress open`
+3. `npm test` or `npm run test:cypress:open`
 
 ## External tools
 

@@ -11,9 +11,9 @@ import { SelectAffiliationRadioButton } from './SelectAffiliationRadioButton';
 import { SelectAffiliationsCheckbox } from './SelectAffiliationsCheckbox';
 
 export enum SelectAffiliations {
-  'MULTIPLE',
-  'SINGLE',
-  'NO_SELECT',
+  MULTIPLE,
+  SINGLE,
+  NO_SELECT,
 }
 
 interface CristinPersonTableRowProps {

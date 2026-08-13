@@ -14,7 +14,9 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ResultParam } from '../../../api/searchApi';
+import { ExportResultsDropdown } from '../../../components/buttons/export-buttons/ExportResultsDropdown';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
+import { OrganizationFilters } from '../../../components/filters/OrganizationFilters';
 import { SearchForm } from '../../../components/filters/SearchForm';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
@@ -22,7 +24,6 @@ import { ScientificIndexStatuses } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { ExportResultsDropdown } from '../../../components/buttons/export-buttons/ExportResultsDropdown';
 import { PublicationYearIntervalFilter } from '../PublicationYearIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { FileStatusSelect } from './FileStatusSelect';
@@ -30,7 +31,6 @@ import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
 import { NviReportedYearFilter } from './NviReportedYearFilter';
-import { OrganizationFilters } from './OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
 import { ScientificValueFilter } from './ScientificValueFilter';
 import { SeriesFilter } from './SeriesFilter';
@@ -156,10 +156,7 @@ const AdvancedSearchPage = () => {
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
             <Grid>
-              <OrganizationFilters
-                topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
-                unitId={registrationParams.unit ?? null}
-              />
+              <OrganizationFilters />
             </Grid>
           </Grid>
 

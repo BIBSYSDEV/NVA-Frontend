@@ -161,9 +161,6 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
 
       const verifiedContributor: Contributor = {
         ...thisContributor,
-        role: {
-          type: role,
-        },
         identity: {
           ...identity,
           orcId: verifiedOrcid || identity.orcId || '',

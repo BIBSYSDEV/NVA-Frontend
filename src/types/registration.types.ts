@@ -420,9 +420,7 @@ interface RepublishPublicationRequest {
 }
 
 export type UpdateRegistrationStatusRequest =
-  | UnpublishPublicationRequest
-  | TerminatePublicationRequest
-  | RepublishPublicationRequest;
+  UnpublishPublicationRequest | TerminatePublicationRequest | RepublishPublicationRequest;
 
 interface NpiSubjectSubdomain {
   id: string;
