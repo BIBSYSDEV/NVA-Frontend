@@ -62,6 +62,10 @@ interface MessageItemProps {
   backgroundColor: BoxProps['bgcolor'];
   menuElement?: ReactNode;
   showOrganization?: boolean;
+  /** Organization to show instead of the one belonging to the sender. */
+  organizationId?: string;
+  /** Text to show when the sender or organization cannot be resolved. Defaults to "Unknown". */
+  missingDataText?: string;
   messageType?: 'Justification' | 'Message' | 'Comment' | 'Approval';
 }
 
@@ -71,6 +75,8 @@ export const MessageItem = ({
   username,
   menuElement,
   showOrganization = false,
+  organizationId,
+  missingDataText,
   messageType = 'Comment',
   backgroundColor = 'background.neutral87',
 }: MessageItemProps) => {
@@ -78,6 +84,8 @@ export const MessageItem = ({
 
   const senderQuery = useFetchUserQuery(username);
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
+
+  const missingDataLabel = missingDataText ?? t('common.unknown');
 
   return (
     <Box
@@ -108,7 +116,10 @@ export const MessageItem = ({
           </Typography>
         </HorizontalBox>
         {showOrganization ? (
-          <MessageItemOrganization organizationId={senderQuery.data?.institutionCristinId ?? ''} />
+          <MessageItemOrganization
+            organizationId={organizationId ?? senderQuery.data?.institutionCristinId ?? ''}
+            missingDataText={missingDataLabel}
+          />
         ) : undefined}
         {menuElement}
       </Box>
@@ -123,7 +134,7 @@ export const MessageItem = ({
       </Box>
       <HorizontalBox sx={{ gap: '1rem', color: 'textPrimary.main' }}>
         <Box sx={{ flexGrow: 1 }}>
-          <Tooltip title={senderName ? senderName : t('common.unknown')}>
+          <Tooltip title={senderName ? senderName : missingDataLabel}>
             <EllipsisTypography
               data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}
               sx={{
@@ -136,7 +147,7 @@ export const MessageItem = ({
               ) : senderName ? (
                 senderName
               ) : (
-                <i>{t('common.unknown')}</i>
+                <i>{missingDataLabel}</i>
               )}
             </EllipsisTypography>
           </Tooltip>

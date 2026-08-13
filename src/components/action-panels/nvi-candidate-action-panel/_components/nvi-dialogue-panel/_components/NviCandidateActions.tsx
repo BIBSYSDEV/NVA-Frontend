@@ -343,6 +343,8 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                       username={note.username}
                       backgroundColor="background.neutral87"
                       showOrganization
+                      organizationId={note.institutionId}
+                      missingDataText={t('common.not_applicable')}
                       menuElement={
                         !!deleteFunction && (
                           <NviNoteMenu
