@@ -19,8 +19,7 @@ export const ChapterPublisherInfo = ({ publicationContext }: ChapterPublisherInf
   const publisherQuery = useFetchRegistration(identifier);
 
   const publisherPublicationContext = publisherQuery.data?.entityDescription?.reference?.publicationContext as
-    | BookPublicationContext
-    | ReportPublicationContext;
+    BookPublicationContext | ReportPublicationContext;
 
   return publisherPublicationContext ? (
     <>

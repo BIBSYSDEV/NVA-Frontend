@@ -32,11 +32,7 @@ import { LiteraryArtsWebPublicationModal } from './LiteraryArtsWebPublicationMod
 
 const literaryArtTypes = Object.values(LiteraryArtsType);
 type ArtisticArchitectureModalType =
-  | ''
-  | 'LiteraryArtsMonograph'
-  | 'LiteraryArtsWeb'
-  | 'LiteraryArtsPerformance'
-  | 'LiteraryArtsAudioVisual';
+  '' | 'LiteraryArtsMonograph' | 'LiteraryArtsWeb' | 'LiteraryArtsPerformance' | 'LiteraryArtsAudioVisual';
 
 export const ArtisticLiteraryArtForm = () => {
   const { t } = useTranslation();

@@ -6,9 +6,11 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface MessageItemOrganizationProps {
   organizationId: string;
+  /** Text to show when the organization cannot be resolved. Defaults to "Unknown". */
+  missingDataText?: string;
 }
 
-export const MessageItemOrganization = ({ organizationId }: MessageItemOrganizationProps) => {
+export const MessageItemOrganization = ({ organizationId, missingDataText }: MessageItemOrganizationProps) => {
   const { t } = useTranslation();
   const organizationQuery = useFetchOrganization(organizationId);
 
@@ -20,12 +22,12 @@ export const MessageItemOrganization = ({ organizationId }: MessageItemOrganizat
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.1rem' }}>
         <AccountBalanceIcon fontSize="small" />
         <Typography>
-          {organizationQuery.isPending ? (
+          {organizationQuery.isLoading ? (
             <Skeleton sx={{ width: '2rem' }} />
           ) : acronym ? (
             acronym
           ) : (
-            <i>{t('common.unknown')}</i>
+            <i>{missingDataText ?? t('common.unknown')}</i>
           )}
         </Typography>
       </Box>

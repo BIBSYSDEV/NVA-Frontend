@@ -1,6 +1,4 @@
 import {
-  Autocomplete,
-  Box,
   Button,
   Dialog,
   DialogActions,
@@ -14,14 +12,12 @@ import {
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { ResultParam } from '../../../api/searchApi';
-import { OrganizationAccordion } from '../../../components/OrganizationAccordion';
-import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
-import { Organization } from '../../../types/organization.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { getSortedSubUnits } from '../../../utils/institutions-helpers';
-import { getLanguageString } from '../../../utils/translation-helpers';
+import { ResultParam } from '../../../../api/searchApi';
+import { Organization } from '../../../../types/organization.types';
+import { getSortedSubUnits } from '../../../../utils/institutions-helpers';
+import { OrganizationAccordion } from '../../../OrganizationAccordion';
+import { OrganizationSearchAutocomplete } from '../../../OrganizationSearchAutocomplete';
+import { VerticalBox } from '../../../styled/Wrappers';
 
 interface OrganizationHierarchyFilterProps extends Pick<DialogProps, 'open'> {
   onClose: () => void;
@@ -69,24 +65,10 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
           </Trans>
         </Typography>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <Autocomplete
-            data-testid={dataTestId.editor.organizationOverviewSearchField}
+        <VerticalBox sx={{ gap: '0.5rem' }}>
+          <OrganizationSearchAutocomplete
             options={allSubUnits}
             inputMode="search"
-            getOptionLabel={(option) => getLanguageString(option.labels)}
-            renderOption={({ key, ...props }, option) => (
-              <OrganizationRenderOption key={option.id} props={props} option={option} />
-            )}
-            filterOptions={(options, state) =>
-              options.filter(
-                (option) =>
-                  Object.values(option.labels).some((label) =>
-                    label.toLowerCase().includes(state.inputValue.toLowerCase())
-                  ) || getIdentifierFromId(option.id).includes(state.inputValue)
-              )
-            }
-            getOptionKey={(option) => option.id}
             onChange={(_, selectedUnit) => setSearchId(selectedUnit?.id ?? '')}
             renderInput={(params) => <TextField {...params} variant="outlined" label={t('common.select_unit')} />}
           />
@@ -102,7 +84,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
               displaySubunitsCount
             />
           ))}
-        </Box>
+        </VerticalBox>
       </DialogContent>
 
       <DialogActions>

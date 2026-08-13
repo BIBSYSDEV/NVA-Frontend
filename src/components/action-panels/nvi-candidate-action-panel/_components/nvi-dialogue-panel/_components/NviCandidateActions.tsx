@@ -42,7 +42,7 @@ interface NviNote {
   type: 'FinalizedNote' | 'GeneralNote';
   identifier?: string;
   date: string;
-  username: string;
+  username?: string;
   institutionId?: string;
   text?: string;
   messageType?: 'Justification' | 'Approval' | 'Comment';
@@ -343,6 +343,8 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                       username={note.username}
                       backgroundColor="background.neutral87"
                       showOrganization
+                      organizationId={note.institutionId}
+                      missingDataText={t('common.not_applicable')}
                       menuElement={
                         !!deleteFunction && (
                           <NviNoteMenu

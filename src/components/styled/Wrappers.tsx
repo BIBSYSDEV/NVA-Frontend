@@ -21,10 +21,15 @@ export const HorizontalBox = styled(Box)({
   alignItems: 'center',
 });
 
-export const StyledRightAlignedWrapper = styled(Box)({
+export const HorizontalBoxResponsive = styled(Box)(({ theme }) => ({
   display: 'flex',
-  justifyContent: 'flex-end',
-});
+  flexDirection: 'column',
+  alignItems: 'start',
+  [theme.breakpoints.up('lg')]: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+}));
 
 export const WizardStartPageWrapper = styled(Box)({
   maxWidth: '55rem',

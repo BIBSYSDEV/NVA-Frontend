@@ -28,6 +28,7 @@ import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
+import { useAppLanguageInIso6391Format } from '../../translations/translation-helpers';
 import {
   AudioVisualPublication,
   Award,
@@ -221,7 +222,8 @@ interface PublicPresentationProps {
 }
 
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const appLanguage = useAppLanguageInIso6391Format();
   const { type, time, place, name, agent } = publicationContext;
   const periodString = getPeriodString(time?.from, time?.to);
 
@@ -245,7 +247,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
       )}
       {place?.country && (
         <Typography>
-          {t('common.country')}: {getCountries(i18n.language)[place.country]}
+          {t('common.country')}: {getCountries(appLanguage)[place.country]}
         </Typography>
       )}
       {periodString && <Typography>{periodString}</Typography>}
