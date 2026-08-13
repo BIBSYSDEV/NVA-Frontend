@@ -58,7 +58,7 @@ export const TicketMessageList = ({ ticket }: MessageListProps) => {
 interface MessageItemProps {
   text: string | undefined;
   date: string;
-  username: string;
+  username: string | undefined;
   backgroundColor: BoxProps['bgcolor'];
   menuElement?: ReactNode;
   showOrganization?: boolean;
@@ -131,7 +131,7 @@ export const MessageItem = ({
                 maxWidth: { sm: '10rem', md: '12rem', lg: '18rem', xl: '30rem' },
                 color: 'textPrimary.main',
               }}>
-              {senderQuery.isPending ? (
+              {senderQuery.isLoading ? (
                 <Skeleton sx={{ width: '8rem' }} />
               ) : senderName ? (
                 senderName
