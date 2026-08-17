@@ -30,7 +30,12 @@ const loadMathJax = () => {
       script.src = mathJaxScriptSrc;
       script.async = true;
       script.onload = () => resolve();
-      script.onerror = () => reject(new Error('Failed to load MathJax'));
+      script.onerror = () => {
+        // Discard the failed attempt, so a later call can retry instead of awaiting this rejection
+        script.remove();
+        mathJaxLoader = null;
+        reject(new Error('Failed to load MathJax'));
+      };
 
       document.head.appendChild(script);
     });
