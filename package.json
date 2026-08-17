@@ -65,7 +65,7 @@
     "pretty-bytes": "^7.1.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-hook-form": "^7.84.0",
+    "react-hook-form": "^7.85.0",
     "react-i18next": "^17.0.10",
     "react-imask": "^7.6.1",
     "react-redux": "^9.3.0",
