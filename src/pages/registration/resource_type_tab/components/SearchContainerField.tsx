@@ -1,7 +1,7 @@
 import { Autocomplete, Box, Chip, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { fetchResults } from '../../../../api/searchApi';
@@ -23,7 +23,6 @@ import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { convertToRegistrationSearchItem, getTitleString } from '../../../../utils/registration-helpers';
 import { isValidIsbn } from '../../../../utils/searchHelpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
@@ -67,12 +66,6 @@ export const SearchContainerField = ({
     getIn(values, fieldName),
     fetchErrorMessage
   );
-
-  useEffect(() => {
-    if (stringIncludesMathJax(selectedContainer?.entityDescription?.mainTitle)) {
-      typesetMathJax();
-    }
-  }, [selectedContainer]);
 
   return (
     <Field name={fieldName}>
