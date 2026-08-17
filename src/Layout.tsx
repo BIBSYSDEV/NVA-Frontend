@@ -12,9 +12,11 @@ import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
 import { getDateFnsLocale, getDatePickerLocaleText } from './utils/date-helpers';
+import { useMathJaxTypesetting } from './utils/hooks/useMathJaxTypesetting';
 
 export const Layout = () => {
   const { t, i18n } = useTranslation();
+  useMathJaxTypesetting();
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
