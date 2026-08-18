@@ -1302,6 +1302,7 @@
       "year_only": "Kun årstall"
     },
     "edit_registration": "Rediger resultat",
+    "edit_registration_awaiting_sync": "Rediger resultat (forbereder skjema)",
     "files_and_license": {
       "accepted": "Akseptert",
       "accepted_version": "Akseptert versjon",
