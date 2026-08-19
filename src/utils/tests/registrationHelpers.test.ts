@@ -1,6 +1,7 @@
+import { QueryClient } from '@tanstack/react-query';
 import { PublicationChannelType, Registration } from '../../types/registration.types';
 import { describe, expect, it } from 'vitest';
-import { getFormattedRegistration } from '../registration-helpers';
+import { getFormattedRegistration, updateRegistrationQueryData } from '../registration-helpers';
 import { mockRegistration } from '../testfiles/mockRegistration';
 import {
   ArtisticType,
@@ -350,6 +351,39 @@ describe('getFormattedRegistration', () => {
     } as unknown as Registration;
     const result = getFormattedRegistration(registration);
     expect(result.entityDescription?.reference?.publicationInstance).not.toBeDefined();
+  });
+});
+
+describe('updateRegistrationQueryData', () => {
+  const registrationQueryKey = ['registration', 'registration-1', false];
+
+  it('updates cached registrations with an ETag', () => {
+    const queryClient = new QueryClient();
+    queryClient.setQueryData(registrationQueryKey, { identifier: 'registration-1', etag: '"v1"' } as Registration);
+
+    const updatedRegistration = { identifier: 'registration-1', etag: '"v2"' } as Registration;
+    updateRegistrationQueryData(queryClient, updatedRegistration);
+
+    expect(queryClient.getQueryData(registrationQueryKey)).toEqual(updatedRegistration);
+  });
+
+  it('invalidates cached registrations instead of caching a registration without an ETag', () => {
+    const queryClient = new QueryClient();
+    const cachedRegistration = { identifier: 'registration-1', etag: '"v1"' } as Registration;
+    queryClient.setQueryData(registrationQueryKey, cachedRegistration);
+
+    updateRegistrationQueryData(queryClient, { identifier: 'registration-1' } as Registration);
+
+    expect(queryClient.getQueryData(registrationQueryKey)).toEqual(cachedRegistration);
+    expect(queryClient.getQueryState(registrationQueryKey)?.isInvalidated).toBe(true);
+  });
+
+  it('does not cache registrations that are not cached already', () => {
+    const queryClient = new QueryClient();
+
+    updateRegistrationQueryData(queryClient, { identifier: 'registration-1', etag: '"v2"' } as Registration);
+
+    expect(queryClient.getQueryData(registrationQueryKey)).toBeUndefined();
   });
 });
 

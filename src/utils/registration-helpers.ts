@@ -1002,12 +1002,19 @@ export const getAssociatedLinkRelationTitle = (t: TFunction, relation: Associate
 };
 
 export const updateRegistrationQueryData = (queryClient: QueryClient, registration: Registration) => {
-  const key1 = ['registration', registration.identifier, true];
-  if (queryClient.getQueryData(key1)) {
-    queryClient.setQueryData(key1, registration);
-  }
-  const key2 = ['registration', registration.identifier, false];
-  if (queryClient.getQueryData(key2)) {
-    queryClient.setQueryData(key2, registration);
-  }
+  const updateQueryData = (queryKey: unknown[]) => {
+    if (!queryClient.getQueryData(queryKey)) {
+      return;
+    }
+    if (registration.etag) {
+      queryClient.setQueryData(queryKey, registration);
+    } else {
+      // A cached registration without an ETag would make later updates of it be sent without
+      // If-Match, so it must be fetched again instead of being cached without a concurrency token.
+      queryClient.invalidateQueries({ queryKey });
+    }
+  };
+
+  updateQueryData(['registration', registration.identifier, true]);
+  updateQueryData(['registration', registration.identifier, false]);
 };
