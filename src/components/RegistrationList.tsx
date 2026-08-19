@@ -5,7 +5,6 @@ import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutlineOutlined';
 import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
@@ -15,7 +14,6 @@ import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
 import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { stringIncludesMathJax, typesetMathJax } from '../utils/mathJaxHelpers';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   doNotRedirectQueryParam,
@@ -38,16 +36,6 @@ export interface RegistrationListProps extends Pick<LinkProps, 'target'> {
 }
 
 export const RegistrationList = ({ registrations, ...rest }: RegistrationListProps) => {
-  useEffect(() => {
-    if (
-      registrations.some(
-        ({ mainTitle, abstract }) => stringIncludesMathJax(mainTitle) || stringIncludesMathJax(abstract)
-      )
-    ) {
-      typesetMathJax();
-    }
-  }, [registrations]);
-
   return (
     <List data-testid="search-results">
       {registrations.map((registration) => (
