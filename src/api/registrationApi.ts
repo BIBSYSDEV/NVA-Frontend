@@ -1,12 +1,43 @@
+import { AxiosResponse } from 'axios';
 import { ExpandedImportCandidate, ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { RegistrationLogResponse } from '../types/log.types';
 import { TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import { DoiPreview, Registration, UpdateRegistrationStatusRequest } from '../types/registration.types';
+import { isErrorStatus } from '../utils/constants';
 import { makeDoiUrl } from '../utils/general-helpers';
 import { doNotRedirectQueryParam } from '../utils/urlPaths';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 import { userIsAuthenticated } from './authApi';
+
+export const getEtagFromResponse = (response: AxiosResponse) => response.headers['etag'] as string | undefined;
+
+/**
+ * The ETag of a registration is only available as an HTTP header, so it must be merged onto the
+ * registration object in order to survive in the client state. Without this the next update would be
+ * sent without If-Match, and could silently overwrite changes made by other users.
+ */
+const withEtagFromResponse = async (response: AxiosResponse<Registration>) => {
+  if (isErrorStatus(response.status)) {
+    return response;
+  }
+
+  const etag = getEtagFromResponse(response);
+  if (etag) {
+    return { ...response, data: { ...response.data, etag } };
+  }
+
+  // The response did not include an ETag header, so fetch a fresh registration to avoid losing the
+  // concurrency token for subsequent updates.
+  try {
+    const refreshedRegistration = await fetchRegistration(response.data.identifier, true);
+    return refreshedRegistration.etag && refreshedRegistration.identifier === response.data.identifier
+      ? { ...response, data: refreshedRegistration }
+      : response;
+  } catch {
+    return response;
+  }
+};
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
   await authenticatedApiRequest<Registration>({
@@ -17,22 +48,24 @@ export const createRegistration = async (partialRegistration?: Partial<Registrat
 
 export const updateRegistration = async (registration: Registration) => {
   const { etag, ...data } = registration;
-  return await authenticatedApiRequest<Registration>({
+  const updateRegistrationResponse = await authenticatedApiRequest<Registration>({
     url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
     headers: etag ? { 'If-Match': etag } : undefined,
     data,
   });
+  return await withEtagFromResponse(updateRegistrationResponse);
 };
 
 export const partialUpdateRegistration = async (registration: Registration) => {
   const { etag, ...data } = registration;
-  return await authenticatedApiRequest<Registration>({
+  const partialUpdateRegistrationResponse = await authenticatedApiRequest<Registration>({
     url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
     headers: etag ? { 'If-Match': etag } : undefined,
     data: { ...data, type: 'PartialUpdatePublicationRequest' },
   });
+  return await withEtagFromResponse(partialUpdateRegistrationResponse);
 };
 
 export const updateRegistrationStatus = async (
@@ -119,7 +152,7 @@ export const fetchRegistration = async (registrationIdentifier: string, doNotRed
     ? await authenticatedApiRequest2<Registration>({ url })
     : await apiRequest2<Registration>({ url });
 
-  const etag = fetchRegistrationResponse.headers['etag'];
+  const etag = getEtagFromResponse(fetchRegistrationResponse);
   return etag ? { ...fetchRegistrationResponse.data, etag } : fetchRegistrationResponse.data;
 };
 
