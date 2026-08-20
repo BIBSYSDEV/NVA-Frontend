@@ -17,7 +17,10 @@ const defaultRowsPerPage = ROWS_PER_PAGE_OPTIONS[0];
 
 export type SearchParamType = FetchResultsParams & FetchProtectedResultsParams;
 
-export const getRegistrationsQueryParams = (searchParams: URLSearchParams): SearchParamType => {
+export const useRegistrationsQueryParams = (): SearchParamType => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
   const status = searchParams.get(ProtectedResultParam.Status);
   const categoryShould = searchParams.get(ResultParam.CategoryShould);
 
@@ -66,9 +69,4 @@ export const getRegistrationsQueryParams = (searchParams: URLSearchParams): Sear
   } satisfies SearchParamType;
 
   return getObjectEntriesWithValue(allParams);
-};
-
-export const useRegistrationsQueryParams = () => {
-  const location = useLocation();
-  return getRegistrationsQueryParams(new URLSearchParams(location.search));
 };
