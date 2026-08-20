@@ -9,9 +9,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
 import { updatePromotedPublications } from '../api/preferencesApi';
+import { FetchResultsParams } from '../api/searchApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
-import { PreviousPathLocationState } from '../types/locationState.types';
+import { SearchResultLocationState } from '../types/locationState.types';
 import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
@@ -33,15 +34,24 @@ export interface RegistrationListProps extends Pick<LinkProps, 'target'> {
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: RegistrationSearchItem) => void;
   promotedPublications?: string[];
+  // When set, list items include navigation state so the landing page can offer prev/next navigation between search results.
+  searchResultNavigationParams?: FetchResultsParams;
 }
 
-export const RegistrationList = ({ registrations, ...rest }: RegistrationListProps) => {
+export const RegistrationList = ({ registrations, searchResultNavigationParams, ...rest }: RegistrationListProps) => {
   return (
     <List data-testid="search-results">
-      {registrations.map((registration) => (
+      {registrations.map((registration, index) => (
         <ErrorBoundary key={registration.id}>
           <SearchListItem>
-            <RegistrationListItemContent registration={registration} {...rest} />
+            <RegistrationListItemContent
+              registration={registration}
+              searchResultOffset={
+                searchResultNavigationParams ? (searchResultNavigationParams.from ?? 0) + index : undefined
+              }
+              searchResultNavigationParams={searchResultNavigationParams}
+              {...rest}
+            />
           </SearchListItem>
         </ErrorBoundary>
       ))}
@@ -52,6 +62,7 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
   registration: RegistrationSearchItem;
   onRemoveRelated?: () => void;
+  searchResultOffset?: number;
 }
 
 // TODO: Rather than expanding on the complexity of this component, we are currently in a process of using the composition pattern
@@ -67,6 +78,8 @@ export const RegistrationListItemContent = ({
   promotedPublications = [],
   target,
   onRemoveRelated,
+  searchResultOffset,
+  searchResultNavigationParams,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { id, identifier } = registration;
@@ -112,6 +125,14 @@ export const RegistrationListItemContent = ({
     (registration.recordMetadata.status === RegistrationStatus.Unpublished ||
       registration.recordMetadata.status === RegistrationStatus.Deleted);
 
+  const linkState = {
+    previousPath: `${location.pathname}${location.search}`,
+    ...(typeof searchResultOffset === 'number' &&
+      searchResultNavigationParams && {
+        searchResultOffsetState: { currentOffset: searchResultOffset, searchParams: searchResultNavigationParams },
+      }),
+  } satisfies SearchResultLocationState;
+
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
@@ -133,7 +154,7 @@ export const RegistrationListItemContent = ({
           <MuiLink
             target={target}
             component={Link}
-            state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
+            state={linkState}
             to={{
               pathname: getRegistrationLandingPagePath(identifier),
               search: doNotRedirect ? `${doNotRedirectQueryParam}=true` : '',

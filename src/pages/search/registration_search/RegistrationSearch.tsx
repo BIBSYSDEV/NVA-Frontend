@@ -1,19 +1,20 @@
 import { Typography } from '@mui/material';
+import { UseQueryResult } from '@tanstack/react-query';
 import { ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
+import { RegistrationSearchResponse } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { NoSearchResults } from '../../../components/NoSearchResults';
 import { RegistrationList, RegistrationListProps } from '../../../components/RegistrationList';
+import { SearchResponse } from '../../../types/common.types';
+import { CristinProject, ProjectAggregations } from '../../../types/project.types';
+import { CristinPerson, PersonAggregations } from '../../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { SearchParam, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
-import { RegistrationSearchResponse } from '../../../api/searchApi';
-import { SearchResponse } from '../../../types/common.types';
-import { CristinPerson, PersonAggregations } from '../../../types/user.types';
-import { CristinProject, ProjectAggregations } from '../../../types/project.types';
-import { UseQueryResult } from '@tanstack/react-query';
 
 export interface SearchPropTypes {
   registrationQuery: UseQueryResult<RegistrationSearchResponse>;
@@ -21,7 +22,10 @@ export interface SearchPropTypes {
   projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
 }
 
-interface RegistrationSearchProps extends Omit<RegistrationListProps, 'registrations'> {
+interface RegistrationSearchProps extends Omit<
+  RegistrationListProps,
+  'registrations' | 'searchResultNavigationParams'
+> {
   registrationQuery: SearchPropTypes['registrationQuery'];
   sortingComponent?: ReactNode;
 }
@@ -31,6 +35,7 @@ export const RegistrationSearch = ({ registrationQuery, sortingComponent, ...res
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const searchResultNavigationParams = useRegistrationsQueryParams();
 
   const resultsParam = params.get(SearchParam.Results);
   const fromParam = params.get(SearchParam.From);
@@ -62,7 +67,11 @@ export const RegistrationSearch = ({ registrationQuery, sortingComponent, ...res
         {registrationQuery.isFetching ? (
           <ListSkeleton arrayLength={3} minWidth={40} height={100} />
         ) : registrationQuery.data?.hits && registrationQuery.data.hits.length > 0 ? (
-          <RegistrationList registrations={registrations} {...rest} />
+          <RegistrationList
+            registrations={registrations}
+            searchResultNavigationParams={searchResultNavigationParams}
+            {...rest}
+          />
         ) : (
           <NoSearchResults>
             <Trans
