@@ -27,11 +27,13 @@ export const SearchResultNavigation = () => {
   const hasOffset = typeof currentOffset === 'number';
   const isFirst = hasOffset && currentOffset === 0;
 
-  const navigationParams = {
-    ...searchParams,
-    from: hasOffset ? Math.max(currentOffset - 1, 0) : 0,
-    results: 3, // Only fetching previous, current and next result.
-  };
+  // Only set from/results when enabled, so the disabled query key stays `{}` instead of a plausible
+  // real query (e.g. `{ from: 0, results: 3 }`) that could collide with an unrelated cached search.
+  const navigationParams = { ...searchParams };
+  if (hasOffset && searchParams) {
+    navigationParams.from = Math.max(currentOffset - 1, 0);
+    navigationParams.results = 3; // Only fetching previous, current and next result.
+  }
 
   const navigationQuery = useRegistrationSearch({
     enabled: hasOffset && !!searchParams,
