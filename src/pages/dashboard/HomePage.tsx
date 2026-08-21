@@ -164,7 +164,7 @@ const HomePage = () => {
       </SideMenu>
 
       <ErrorBoundary>
-        <Outlet context={{ registrationQuery, personQuery, projectQuery }} />
+        <Outlet context={{ registrationQuery, registrationParams, personQuery, projectQuery }} />
       </ErrorBoundary>
     </StyledPageWithSideMenu>
   );

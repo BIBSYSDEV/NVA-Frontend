@@ -264,7 +264,7 @@ const AdvancedSearchPage = () => {
           </Grid>
         </Grid>
         <Grid size={12}>
-          <RegistrationSearch registrationQuery={resultSearchQuery} />
+          <RegistrationSearch registrationQuery={resultSearchQuery} searchResultNavigationParams={registrationParams} />
         </Grid>
       </Grid>
     </>

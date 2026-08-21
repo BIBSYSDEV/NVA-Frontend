@@ -36,7 +36,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
 const SearchPage = () => {
   const { t } = useTranslation();
-  const { registrationQuery, personQuery, projectQuery } = useOutletContext<SearchPropTypes>();
+  const { registrationQuery, registrationParams, personQuery, projectQuery } = useOutletContext<SearchPropTypes>();
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -59,7 +59,7 @@ const SearchPage = () => {
               <SelectedResultFacetsList aggregations={registrationQuery.data?.aggregations} />
             )}
           </StyledContainer>
-          <RegistrationSearch registrationQuery={registrationQuery} />
+          <RegistrationSearch registrationQuery={registrationQuery} searchResultNavigationParams={registrationParams} />
         </>
       )}
       {personIsSeleced && (
