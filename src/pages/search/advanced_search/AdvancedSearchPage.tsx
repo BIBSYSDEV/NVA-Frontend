@@ -55,8 +55,12 @@ const AdvancedSearchPage = () => {
   const params = new URLSearchParams(location.search);
 
   const registrationParams = useRegistrationsQueryParams();
+  const effectiveRegistrationParams = {
+    ...registrationParams,
+    unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
+  };
   const resultSearchQuery = useRegistrationSearch({
-    params: { ...registrationParams, unit: registrationParams.unit ?? registrationParams.topLevelOrganization },
+    params: effectiveRegistrationParams,
     keepDataWhileLoading: true,
   });
 
@@ -264,7 +268,10 @@ const AdvancedSearchPage = () => {
           </Grid>
         </Grid>
         <Grid size={12}>
-          <RegistrationSearch registrationQuery={resultSearchQuery} searchResultNavigationParams={registrationParams} />
+          <RegistrationSearch
+            registrationQuery={resultSearchQuery}
+            searchResultNavigationParams={effectiveRegistrationParams}
+          />
         </Grid>
       </Grid>
     </>
