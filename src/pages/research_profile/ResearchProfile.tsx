@@ -358,6 +358,7 @@ const ResearchProfile = () => {
             <RegistrationList
               registrations={registrationsQuery.data.hits}
               promotedPublications={promotedPublications}
+              searchResultNavigationParams={registrationsQueryConfig}
             />
           ) : (
             <Typography>{t('common.no_hits')}</Typography>
