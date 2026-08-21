@@ -3,7 +3,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { FetchResultsParams, RegistrationSearchResponse } from '../../../api/searchApi';
+import { RegistrationSearchResponse } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { NoSearchResults } from '../../../components/NoSearchResults';
@@ -17,7 +17,6 @@ import { RegistrationSortSelector } from './RegistrationSortSelector';
 
 export interface SearchPropTypes {
   registrationQuery: UseQueryResult<RegistrationSearchResponse>;
-  registrationParams: FetchResultsParams;
   personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
   projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
 }
