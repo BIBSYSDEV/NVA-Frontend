@@ -78,6 +78,7 @@ export const MyResults = () => {
             canEditRegistration
             registrations={registrationsQuery.data.hits}
             promotedPublications={promotedPublications}
+            searchResultNavigationParams={registrationsQueryConfig}
           />
         ) : (
           <Typography>{t('common.no_hits')}</Typography>
