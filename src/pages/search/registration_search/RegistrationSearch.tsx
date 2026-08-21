@@ -1,19 +1,19 @@
 import { Typography } from '@mui/material';
-import { UseQueryResult } from '@tanstack/react-query';
 import { ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { RegistrationSearchResponse } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { NoSearchResults } from '../../../components/NoSearchResults';
 import { RegistrationList, RegistrationListProps } from '../../../components/RegistrationList';
-import { SearchResponse } from '../../../types/common.types';
-import { CristinProject, ProjectAggregations } from '../../../types/project.types';
-import { CristinPerson, PersonAggregations } from '../../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
+import { RegistrationSearchResponse } from '../../../api/searchApi';
+import { SearchResponse } from '../../../types/common.types';
+import { CristinPerson, PersonAggregations } from '../../../types/user.types';
+import { CristinProject, ProjectAggregations } from '../../../types/project.types';
+import { UseQueryResult } from '@tanstack/react-query';
 
 export interface SearchPropTypes {
   registrationQuery: UseQueryResult<RegistrationSearchResponse>;
