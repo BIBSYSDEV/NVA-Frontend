@@ -8,6 +8,8 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 import { updateSearchResultOffset } from '../_utils/search-result-navigation-state';
 
+const MAX_RESULT_WINDOW = 10_000; // OpenSearch's default index.max_result_window: from + results must not exceed this.
+
 /**
  * Renders prev/next arrow buttons for browsing between search results from the registration landing page,
  * without returning to the result list. Reads {@link SearchResultLocationState.searchResultOffsetState} from
@@ -30,7 +32,9 @@ export const SearchResultNavigation = () => {
   const navigationParams = { ...searchParams };
   if (hasOffset && searchParams) {
     navigationParams.from = Math.max(currentOffset - 1, 0);
-    navigationParams.results = 3; // Only fetching previous, current and next result.
+    // Only fetching previous, current and next result, but clamped so from + results never exceeds
+    // OpenSearch's default index.max_result_window (10 000), which would otherwise cause a 400 near the end.
+    navigationParams.results = Math.min(3, MAX_RESULT_WINDOW - navigationParams.from);
   }
 
   const navigationQuery = useRegistrationSearch({
@@ -38,12 +42,10 @@ export const SearchResultNavigation = () => {
     params: navigationParams,
   });
 
-  const previousResultIdentifier =
-    navigationQuery.isSuccess && !isFirst ? navigationQuery.data.hits[0]?.identifier : null;
+  const hasNavigationData = hasOffset && !!searchParams && navigationQuery.isSuccess;
 
-  const nextResultIdentifier = navigationQuery.isSuccess
-    ? navigationQuery.data.hits[isFirst ? 1 : 2]?.identifier
-    : null;
+  const previousResultIdentifier = hasNavigationData && !isFirst ? navigationQuery.data.hits[0]?.identifier : null;
+  const nextResultIdentifier = hasNavigationData ? navigationQuery.data.hits[isFirst ? 1 : 2]?.identifier : null;
 
   return (
     <>
@@ -51,6 +53,7 @@ export const SearchResultNavigation = () => {
         <ListNavigationButtonBack
           to={getRegistrationLandingPagePath(previousResultIdentifier)}
           state={updateSearchResultOffset(locationState, currentOffset! - 1, searchParams!)}
+          replace
           title={t('search.previous_result')}
           dataTestId={dataTestId.startPage.previousResultButton}
         />
@@ -59,6 +62,7 @@ export const SearchResultNavigation = () => {
         <ListNavigationButtonNext
           to={getRegistrationLandingPagePath(nextResultIdentifier)}
           state={updateSearchResultOffset(locationState, currentOffset! + 1, searchParams!)}
+          replace
           title={t('search.next_result')}
           dataTestId={dataTestId.startPage.nextResultButton}
         />
