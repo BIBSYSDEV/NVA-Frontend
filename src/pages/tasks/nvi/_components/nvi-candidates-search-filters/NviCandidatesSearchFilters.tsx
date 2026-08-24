@@ -35,17 +35,7 @@ export const NviCandidatesSearchFilters = () => {
       <Grid size={{ xs: 16, sm: 6, lg: 4 }}>
         <NviCandidatesCuratorSelector />
       </Grid>
-      <Grid size={{ xs: 8, sm: 5, lg: 4 }}>
-        <AreaOfResponsibilitySelector
-          paramName={NviCandidatesSearchParam.Affiliations}
-          resetPagination={(params) => {
-            params.delete(NviCandidatesSearchParam.Offset);
-            if (!params.has(NviCandidatesSearchParam.Affiliations)) {
-              params.delete(NviCandidatesSearchParam.ExcludeSubUnits);
-            }
-          }}
-        />
-      </Grid>
+      <Grid size={{ xs: 8, sm: 5, lg: 4 }}></Grid>
       <Grid size={{ xs: 8, sm: 5, lg: 2 }}>
         <ExcludeSubunitsCheckbox
           paramName={NviCandidatesSearchParam.ExcludeSubUnits}
