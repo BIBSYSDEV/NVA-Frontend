@@ -286,6 +286,8 @@ export const dataTestId = {
     searchField: 'search-field',
     searchResultItem: 'result-list-item',
     searchTypeField: 'search-type-field',
+    previousResultButton: 'previous-result-button',
+    nextResultButton: 'next-result-button',
   },
   projectForm: {
     startDateField: 'project-start-date-field',

@@ -1946,11 +1946,13 @@
     },
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
+    "next_result": "Gå til neste treff",
     "participant": "Deltaker",
     "participating_institution": "Deltakende institusjon",
     "person_search": "Personsøk",
     "person_search_placeholder": "Søk etter navn",
     "persons": "Personer",
+    "previous_result": "Gå til forrige treff",
     "project_search": "Prosjektsøk",
     "remove_filter": "Fjern filter",
     "reports": {

@@ -1,4 +1,4 @@
-import { FetchNviCandidatesParams } from '../api/searchApi';
+import { FetchNviCandidatesParams, FetchResultsParams } from '../api/searchApi';
 import { TicketType } from './publication_types/ticket.types';
 
 export interface PreviousPathLocationState {
@@ -30,4 +30,11 @@ export interface NviCandidatePageLocationState extends PreviousSearchLocationSta
 export interface TaskNavigationLocationState extends PreviousSearchLocationState, SelectedTicketTypeLocationState {
   ticketTypeFilters?: string[];
   ticketOffset?: number;
+}
+
+export interface SearchResultLocationState extends PreviousPathLocationState {
+  searchResultOffsetState?: {
+    currentOffset: number;
+    searchParams: FetchResultsParams;
+  };
 }
