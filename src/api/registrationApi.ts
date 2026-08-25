@@ -13,11 +13,18 @@ import { userIsAuthenticated } from './authApi';
 export const getEtagFromResponse = (response: AxiosResponse) => response.headers['etag'] as string | undefined;
 
 /**
- * The ETag of a registration is only available as an HTTP header, so it must be merged onto the
- * registration object in order to survive in the client state. Without this the next update would be
- * sent without If-Match, and could silently overwrite changes made by other users.
+ * Ensures that the registration returned from an update (PUT) carries a current ETag, in two steps:
+ * the ETag of the response is merged onto the registration, and if the response has no ETag header
+ * a fresh registration is fetched to obtain one.
+ *
+ * The ETag is only available as an HTTP header, so it must be merged onto the registration object in
+ * order to survive in the client state. Without this the next update would be sent without If-Match,
+ * and could silently overwrite changes made by other users.
+ *
+ * Intended for PUT responses only. GET responses are handled by fetchRegistration, which merges the
+ * ETag itself and has no need for the refetch.
  */
-const withEtagFromResponse = async (response: AxiosResponse<Registration>) => {
+const withEtagAfterUpdate = async (response: AxiosResponse<Registration>) => {
   if (isErrorStatus(response.status)) {
     return response;
   }
@@ -54,7 +61,7 @@ export const updateRegistration = async (registration: Registration) => {
     headers: etag ? { 'If-Match': etag } : undefined,
     data,
   });
-  return await withEtagFromResponse(updateRegistrationResponse);
+  return await withEtagAfterUpdate(updateRegistrationResponse);
 };
 
 export const partialUpdateRegistration = async (registration: Registration) => {
@@ -65,7 +72,7 @@ export const partialUpdateRegistration = async (registration: Registration) => {
     headers: etag ? { 'If-Match': etag } : undefined,
     data: { ...data, type: 'PartialUpdatePublicationRequest' },
   });
-  return await withEtagFromResponse(partialUpdateRegistrationResponse);
+  return await withEtagAfterUpdate(partialUpdateRegistrationResponse);
 };
 
 export const updateRegistrationStatus = async (
