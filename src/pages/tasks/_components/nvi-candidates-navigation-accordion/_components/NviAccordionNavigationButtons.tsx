@@ -14,7 +14,7 @@ import { useLoggedInUser } from '../../../../../utils/hooks/useLoggedInUser';
 import { useNviCandidatesParams } from '../../../../../utils/hooks/useNviCandidatesParams';
 import { checkWhichTasksPage } from '../../../../../utils/location-helpers/check-which-tasks-page';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../../utils/urlPaths';
-import { NviApprovalStatusCounts } from '../_hooks/useNviInstitutionReportSummary';
+import { NviApprovalStatusCounts } from '../../../../../utils/hooks/useNviInstitutionReportSummary';
 
 interface NviAccordionNavigationButtonsProps {
   approvalStatusCounts: NviApprovalStatusCounts;

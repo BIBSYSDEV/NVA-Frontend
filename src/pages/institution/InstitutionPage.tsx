@@ -36,7 +36,7 @@ import { VocabularyOverview } from '../editor/VocabularyOverview';
 import { VocabularySettings } from '../editor/VocabularySettings';
 import { OrganizationCurators } from '../editor/curators/OrganizationCurators';
 import { NviInstitutionNavigationAccordion } from './_components/NviInstitutionNavigationAccordion';
-import { InstitutionNviPublicationPointsPage } from './nvi-status/InstitutionNviPublicationPointsPage';
+import { InstitutionNviPublicationPointsPage } from './nvi/publication-points/InstitutionNviPublicationPointsPage';
 
 const InstitutionPage = () => {
   const { t } = useTranslation();

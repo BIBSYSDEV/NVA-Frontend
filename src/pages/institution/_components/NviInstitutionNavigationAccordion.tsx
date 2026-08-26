@@ -3,14 +3,14 @@ import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
+import { NviReportNumbers } from '../../../components/nvi-report-numbers/NviReportNumbers';
 import { NviReportProgressBar } from '../../../components/NviReportProgressBar';
 import { SelectableButton } from '../../../components/buttons/SelectableButton';
 import { StyledNviStatusBox, StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
+import { useNviInstitutionReportSummary } from '../../../utils/hooks/useNviInstitutionReportSummary';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
-import { NviReportNumbers } from '../../tasks/_components/nvi-candidates-navigation-accordion/_components/nvi-report-numbers/NviReportNumbers';
-import { useNviInstitutionReportSummary } from '../../tasks/_components/nvi-candidates-navigation-accordion/_hooks/useNviInstitutionReportSummary';
 
 const nviPublicationPointsDefaultPath = `${UrlPathTemplate.InstitutionNviPublicationPoints}?year=${getDefaultNviYear()}`;
 
@@ -19,12 +19,16 @@ export const NviInstitutionNavigationAccordion = () => {
   const location = useLocation();
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  const { query, counts, candidatesTotal, candidatesCompleted, completedPercentage } = useNviInstitutionReportSummary();
+  const isOnNviPublicationPointsPage = currentPath.startsWith(UrlPathTemplate.InstitutionNviPublicationPoints);
+
+  const { query, counts, candidatesTotal, candidatesCompleted, completedPercentage } = useNviInstitutionReportSummary({
+    enabled: isOnNviPublicationPointsPage,
+  });
 
   return (
     <NavigationListAccordion
       title={t('common.nvi')}
-      startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
+      startIcon={<AdjustIcon />}
       accordionPath={UrlPathTemplate.InstitutionNviPublicationPoints}
       defaultPath={nviPublicationPointsDefaultPath}
       dataTestId={dataTestId.editor.nviAccordion}>

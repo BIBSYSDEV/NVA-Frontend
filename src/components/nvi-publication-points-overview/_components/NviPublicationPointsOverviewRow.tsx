@@ -11,8 +11,8 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
-import { NviRowWrapper } from '../../../pages/tasks/nvi/_components/NviRowWrapper';
-import { selfOrDescendantHasPointValues } from '../../../pages/tasks/nvi/_utils/nvi-curator-aggregations-helpers';
+import { NviRowWrapper } from '../../NviRowWrapper';
+import { selfOrDescendantHasPointValues } from '../../../utils/nvi-curator-aggregations-helpers';
 
 interface NviPublicationPointsOverviewRowProps {
   organization: Organization;
