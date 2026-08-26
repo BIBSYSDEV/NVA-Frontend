@@ -62,7 +62,6 @@ declare module '@mui/material/Button' {
     registration: true;
     person: true;
     project: true;
-    white: true;
     neutral87: true;
   }
 }
