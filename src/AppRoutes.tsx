@@ -35,7 +35,7 @@ const NviAdminPublicationPointsPage = lazy(
 );
 const PublisherClaimsSettings = lazy(() => import('./pages/editor/PublisherClaimsSettings'));
 const SerialPublicationClaimsSettings = lazy(() => import('./pages/editor/SerialPublicationClaimsSettings'));
-const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
+const EditorPage = lazy(() => import('./pages/institution/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const CopyrightActTerms = lazy(() => import('./pages/infopages/CopyrightActTerms'));
 const CreateProject = lazy(() => import('./pages/project/project_wizard/CreateProject'));

@@ -1,0 +1,52 @@
+import AdjustIcon from '@mui/icons-material/Adjust';
+import { Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
+import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
+import { NviReportProgressBar } from '../../../components/NviReportProgressBar';
+import { SelectableButton } from '../../../components/buttons/SelectableButton';
+import { StyledNviStatusBox, StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { NviReportNumbers } from '../../tasks/_components/nvi-candidates-navigation-accordion/_components/nvi-report-numbers/NviReportNumbers';
+import { useNviInstitutionReportSummary } from '../../tasks/_components/nvi-candidates-navigation-accordion/_hooks/useNviInstitutionReportSummary';
+
+const nviPublicationPointsDefaultPath = `${UrlPathTemplate.InstitutionNviPublicationPoints}?year=${getDefaultNviYear()}`;
+
+export const NviInstitutionNavigationAccordion = () => {
+  const { t } = useTranslation();
+  const location = useLocation();
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
+
+  const { query, counts, candidatesTotal, candidatesCompleted, completedPercentage } = useNviInstitutionReportSummary();
+
+  return (
+    <NavigationListAccordion
+      title={t('common.nvi')}
+      startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
+      accordionPath={UrlPathTemplate.InstitutionNviPublicationPoints}
+      defaultPath={nviPublicationPointsDefaultPath}
+      dataTestId={dataTestId.editor.nviAccordion}>
+      <StyledTicketSearchFormGroup>
+        <StyledNviStatusBox>
+          <NviReportProgressBar
+            completedPercentage={completedPercentage}
+            completedCount={candidatesCompleted}
+            totalCount={candidatesTotal}
+            isPending={query.isPending}
+          />
+          <NviReportNumbers isLoading={query.isPending} numbers={counts} />
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
+            <SelectableButton
+              data-testid={dataTestId.editor.nviPublicationPointsLinkButton}
+              isSelected={currentPath === UrlPathTemplate.InstitutionNviPublicationPoints}
+              to={nviPublicationPointsDefaultPath}>
+              {t('basic_data.nvi.show_publication_points_status')}
+            </SelectableButton>
+          </Box>
+        </StyledNviStatusBox>
+      </StyledTicketSearchFormGroup>
+    </NavigationListAccordion>
+  );
+};
