@@ -204,7 +204,7 @@ export const ContributorRow = ({
         open={openRemoveContributor}
         title={t('registration.contributors.remove_contributor')}
         onAccept={() => {
-          onRemoveContributor(contributor.sequence - 1);
+          onRemoveContributor(contributorIndex);
           setOpenRemoveContributor(false);
         }}
         onCancel={() => setOpenRemoveContributor(false)}

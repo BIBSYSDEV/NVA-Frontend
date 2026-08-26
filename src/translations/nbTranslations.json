@@ -1174,7 +1174,7 @@
       "affiliation_is_unidentified": "Tilknytning er uidentifisert",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
       "contributor": "Bidragsyter",
-      "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
+      "contributor_already_added_with_same_role": "Valgt bidragsyter er allerede lagt til med denne rollen",
       "contributor_is_unidentified": "Bidragsyter er uidentifisert",
       "corresponding": "Korresponderende",
       "department": "Enhet",

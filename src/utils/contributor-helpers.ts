@@ -61,6 +61,23 @@ export const renumberSequences = (contributors: Contributor[]): Contributor[] =>
   contributors.map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
 
 /**
+ * Adds a contributor to the list, and renumbers the sequences. A new role for a person who is already
+ * a contributor is inserted right after that person's other roles, so their roles stay next to each
+ * other and get adjacent sequence numbers.
+ */
+export const insertContributor = (contributors: Contributor[], newContributor: Contributor): Contributor[] => {
+  const key = getIdentityKey(newContributor.identity);
+  const existingGroup = key ? groupContributorsByIdentity(contributors).find((group) => group.key === key) : undefined;
+
+  if (!existingGroup) {
+    return renumberSequences([...contributors, newContributor]);
+  }
+
+  const insertIndex = existingGroup.entries[existingGroup.entries.length - 1].index + 1;
+  return renumberSequences([...contributors.slice(0, insertIndex), newContributor, ...contributors.slice(insertIndex)]);
+};
+
+/**
  * A person can have several roles, but not the same role twice. Used to reject duplicates when
  * adding a contributor or a role.
  */

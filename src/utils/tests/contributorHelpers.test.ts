@@ -4,6 +4,7 @@ import {
   getIdentityKey,
   groupContributorsByIdentity,
   hasIdentityWithRole,
+  insertContributor,
   renumberSequences,
 } from '../contributor-helpers';
 import { buildContributor, buildIdentity } from './testHelpers';
@@ -146,6 +147,96 @@ describe('renumberSequences', () => {
 
   it('handles an empty list', () => {
     expect(renumberSequences([])).toEqual([]);
+  });
+});
+
+describe('insertContributor', () => {
+  const nora = buildIdentity({ id: personId, name: 'Nora Lindqvist' });
+  const jonas = buildIdentity({ id: otherPersonId, name: 'Jonas Berg' });
+
+  it('appends a person who is not a contributor yet', () => {
+    const existing = buildContributor({ identity: nora, sequence: 1 });
+    const added = buildContributor({ identity: jonas, sequence: 0 });
+
+    const result = insertContributor([existing], added);
+
+    expect(result.map((contributor) => contributor.identity.name)).toEqual(['Nora Lindqvist', 'Jonas Berg']);
+    expect(result.map((contributor) => contributor.sequence)).toEqual([1, 2]);
+  });
+
+  it('inserts a new role right after the other roles of the same person', () => {
+    const contributors = [
+      buildContributor({ identity: nora, role: { type: ContributorRole.Creator }, sequence: 1 }),
+      buildContributor({ identity: jonas, role: { type: ContributorRole.Creator }, sequence: 2 }),
+    ];
+    const editorRole = buildContributor({ identity: nora, role: { type: ContributorRole.Editor } });
+
+    const result = insertContributor(contributors, editorRole);
+
+    expect(result.map((contributor) => [contributor.identity.name, contributor.role?.type])).toEqual([
+      ['Nora Lindqvist', ContributorRole.Creator],
+      ['Nora Lindqvist', ContributorRole.Editor],
+      ['Jonas Berg', ContributorRole.Creator],
+    ]);
+  });
+
+  it('gives a person adjacent sequence numbers', () => {
+    const contributors = [
+      buildContributor({ identity: nora, role: { type: ContributorRole.Creator }, sequence: 1 }),
+      buildContributor({ identity: jonas, sequence: 2 }),
+    ];
+
+    const result = insertContributor(contributors, buildContributor({ identity: nora }));
+
+    expect(result.map((contributor) => contributor.sequence)).toEqual([1, 2, 3]);
+    const noraSequences = result
+      .filter((contributor) => contributor.identity.id === personId)
+      .map((contributor) => contributor.sequence);
+    expect(noraSequences).toEqual([1, 2]);
+  });
+
+  it('inserts after the last role when the person already has several', () => {
+    const contributors = [
+      buildContributor({ identity: nora, role: { type: ContributorRole.Creator } }),
+      buildContributor({ identity: nora, role: { type: ContributorRole.Editor } }),
+      buildContributor({ identity: jonas }),
+    ];
+
+    const result = insertContributor(contributors, buildContributor({ identity: nora }));
+
+    expect(result.slice(0, 3).every((contributor) => contributor.identity.id === personId)).toBe(true);
+    expect(result[3].identity.id).toBe(otherPersonId);
+  });
+
+  it('groups an unverified contributor with the same name', () => {
+    const contributors = [
+      buildContributor({ identity: buildIdentity({ name: 'Nora Lindqvist' }) }),
+      buildContributor({ identity: jonas }),
+    ];
+
+    const result = insertContributor(
+      contributors,
+      buildContributor({ identity: buildIdentity({ name: 'nora  lindqvist' }) })
+    );
+
+    expect(result[1].identity.name).toBe('nora  lindqvist');
+  });
+
+  it('appends a contributor that has neither id nor name', () => {
+    const contributors = [buildContributor({ identity: nora })];
+
+    const result = insertContributor(contributors, buildContributor());
+
+    expect(result).toHaveLength(2);
+    expect(result[1].identity.name).toBe('');
+  });
+
+  it('does not mutate the given list', () => {
+    const contributors = [buildContributor({ identity: nora, sequence: 1 })];
+
+    insertContributor(contributors, buildContributor({ identity: jonas }));
+
+    expect(contributors).toHaveLength(1);
   });
 });
 

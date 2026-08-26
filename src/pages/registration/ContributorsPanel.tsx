@@ -37,9 +37,9 @@ export const ContributorsPanel = () => {
         </StyledInfoBanner>
       )}
       <FieldArray name={ContributorFieldNames.Contributors}>
-        {({ push, replace }: FieldArrayRenderProps) =>
+        {({ replace }: FieldArrayRenderProps) =>
           publicationInstanceType ? (
-            <Contributors push={push} replace={replace} contributorRoles={roles} />
+            <Contributors replace={replace} contributorRoles={roles} />
           ) : (
             <Box sx={{ display: 'flex', gap: '0.5rem', mt: '1rem' }}>
               <WarningIcon color="warning" />
