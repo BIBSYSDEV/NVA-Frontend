@@ -48,7 +48,7 @@ export const Footer = () => {
         }}>
         <div>
           <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between' }}>
-            <Typography color="white" variant="h3" component="h2">
+            <Typography variant="h3" component="h2" sx={{ color: 'white' }}>
               {t('footer.about_nva')}
             </Typography>
 
@@ -64,13 +64,13 @@ export const Footer = () => {
 
           <Divider sx={{ bgcolor: 'white', mb: '0.5rem' }} />
 
-          <Typography color="white">{t('footer.about_nva_text')}</Typography>
+          <Typography sx={{ color: 'white' }}>{t('footer.about_nva_text')}</Typography>
 
           <Typography
-            color="white"
             variant="h3"
             component="h2"
             sx={{
+              color: 'white',
               gap: '0.5rem',
               mt: '2rem',
             }}>
@@ -89,7 +89,7 @@ export const Footer = () => {
               justifyContent: 'space-between',
               gap: '0.5rem',
             }}>
-            <Typography color="white" variant="h3" component="h2">
+            <Typography variant="h3" component="h2" sx={{ color: 'white' }}>
               {t('footer.become_customer')}
             </Typography>
 
@@ -105,10 +105,10 @@ export const Footer = () => {
 
           <Divider sx={{ bgcolor: 'white', mb: '0.5rem' }} />
 
-          <Typography color="white">{t('footer.about_sikt_text')}</Typography>
+          <Typography sx={{ color: 'white' }}>{t('footer.about_sikt_text')}</Typography>
 
           <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', mt: '2rem' }}>
-            <Typography color="white" variant="h3" component="h2">
+            <Typography variant="h3" component="h2" sx={{ color: 'white' }}>
               {t('footer.about_sikt')}
             </Typography>
 
@@ -124,7 +124,7 @@ export const Footer = () => {
 
           <Divider sx={{ bgcolor: 'white', mb: '0.5rem' }} />
 
-          <Typography color="white">{t('about.footer_text')}</Typography>
+          <Typography sx={{ color: 'white' }}>{t('about.footer_text')}</Typography>
         </div>
 
         <div>
@@ -200,7 +200,7 @@ export const Footer = () => {
           <StyledArrowLinkContainer>
             <ArrowRightAltIcon />
 
-            <Typography color="white">
+            <Typography sx={{ color: 'white' }}>
               <Trans t={t} i18nKey="footer.technical_support_link">
                 <MuiLink
                   sx={{ color: 'white' }}
