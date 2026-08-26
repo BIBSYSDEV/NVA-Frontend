@@ -32,6 +32,7 @@ import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { CristinPerson } from '../../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { renumberSequences } from '../../../utils/contributor-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   filterActiveAffiliations,
@@ -67,9 +68,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const contributorsToShow = filteredContributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
 
   const handleOnRemove = (indexToRemove: number) => {
-    const nextContributors = contributors
-      .filter((_, index) => index !== indexToRemove)
-      .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
+    const nextContributors = renumberSequences(contributors.filter((_, index) => index !== indexToRemove));
     setFieldValue(ContributorFieldNames.Contributors, nextContributors);
     const maxValidPage = Math.ceil(nextContributors.length / rowsPerPage);
 
@@ -98,12 +97,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     const orderedContributors =
       newIndex >= 0 ? (move(contributors, oldIndex, newIndex) as Contributor[]) : contributors;
 
-    // Ensure incrementing sequence values
-    const newContributors = orderedContributors.map((contributor, index) => ({
-      ...contributor,
-      sequence: index + 1,
-    }));
-    setFieldValue(ContributorFieldNames.Contributors, newContributors);
+    setFieldValue(ContributorFieldNames.Contributors, renumberSequences(orderedContributors));
   };
 
   const goToLastPage = () => {
