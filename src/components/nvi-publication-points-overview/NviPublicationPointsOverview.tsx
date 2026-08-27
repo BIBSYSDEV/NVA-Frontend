@@ -1,14 +1,4 @@
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { Box, Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -19,6 +9,7 @@ import { HorizontalBox } from '../styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { useNviCandidatesParams } from '../../utils/hooks/useNviCandidatesParams';
 import { useNviInstitutionStatusNumbers } from '../../pages/tasks/nvi/_hooks/useNviInstitutionStatusNumbers';
+import { CenteredTableCell } from '../tables/table-styles';
 import { NviPublicationPointsOverviewRow } from './_components/NviPublicationPointsOverviewRow';
 import { NviPublicationPointsTexts } from './_components/NviPublicationPointsTexts';
 
@@ -73,23 +64,25 @@ export const NviPublicationPointsOverview = ({ linkable = false, testId }: NviPu
         <Table size="small">
           <TableHead>
             <TableRow sx={{ bgcolor: 'white' }}>
-              <TableCell sx={{ width: '40%' }}>{t('registration.contributors.department')}</TableCell>
-              <TableCell align="center">{t('candidates_our_institution_has_approved')}</TableCell>
-              <TableCell align="center">{t('tasks.nvi.candidates_pending_verification_by_others')}</TableCell>
-              <TableCell align="center">{t('candidates_everyone_has_approved')}</TableCell>
-              <TableCell align="center">
+              <CenteredTableCell sx={{ width: '40%' }}>{t('registration.contributors.department')}</CenteredTableCell>
+              <CenteredTableCell>{t('candidates_our_institution_has_approved')}</CenteredTableCell>
+              <CenteredTableCell align="center">
+                {t('tasks.nvi.candidates_pending_verification_by_others')}
+              </CenteredTableCell>
+              <CenteredTableCell align="center">{t('candidates_everyone_has_approved')}</CenteredTableCell>
+              <CenteredTableCell align="center">
                 <HorizontalBox sx={{ justifyContent: 'center' }}>
                   {t('points_for_reporting')}
                   <NviPointsHelperTextModal variant={NviPointsModalVariant.Curator} />
                 </HorizontalBox>
-              </TableCell>
-              <TableCell align="center">{t('percentage_approved_by_all')}</TableCell>
-              <TableCell>
+              </CenteredTableCell>
+              <CenteredTableCell align="center">{t('percentage_approved_by_all')}</CenteredTableCell>
+              <CenteredTableCell>
                 {/* This cell is hidden to make the number of cells in the table header the same as in the table row, where we display an accordion-like arrow to expand or close rows that have subunits */}
                 <Box component="span" sx={visuallyHidden}>
                   {t('tasks.nvi.show_subunits')}
                 </Box>
-              </TableCell>
+              </CenteredTableCell>
             </TableRow>
           </TableHead>
           <TableBody>

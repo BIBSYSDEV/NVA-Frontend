@@ -1,12 +1,11 @@
 import AdjustIcon from '@mui/icons-material/Adjust';
-import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NviReportNumbers } from '../../../components/nvi-report-numbers/NviReportNumbers';
 import { NviReportProgressBar } from '../../../components/NviReportProgressBar';
 import { SelectableButton } from '../../../components/buttons/SelectableButton';
-import { StyledNviStatusBox, StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers';
+import { StyledNviStatusBox, StyledTicketSearchFormGroup, VerticalBox } from '../../../components/styled/Wrappers';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
 import { useNviInstitutionReportSummary } from '../../../utils/hooks/useNviInstitutionReportSummary';
@@ -41,14 +40,14 @@ export const NviInstitutionNavigationAccordion = () => {
             isPending={query.isPending}
           />
           <NviReportNumbers isLoading={query.isPending} numbers={counts} />
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
+          <VerticalBox sx={{ gap: '0.5rem', mt: '1rem' }}>
             <SelectableButton
               data-testid={dataTestId.editor.nviPublicationPointsLinkButton}
               isSelected={currentPath === UrlPathTemplate.InstitutionNviPublicationPoints}
               to={nviPublicationPointsDefaultPath}>
               {t('basic_data.nvi.show_publication_points_status')}
             </SelectableButton>
-          </Box>
+          </VerticalBox>
         </StyledNviStatusBox>
       </StyledTicketSearchFormGroup>
     </NavigationListAccordion>
