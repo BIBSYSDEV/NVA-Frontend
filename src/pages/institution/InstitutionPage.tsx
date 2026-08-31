@@ -41,8 +41,10 @@ import { InstitutionNviPublicationPointsPage } from './nvi/publication-points/In
 const InstitutionPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const hasCustomer = !!user?.customerId;
   const isEditor = hasCustomer && user.isEditor;
+  const isNviInstitution = !!customer?.nviInstitution;
 
   const institutionId = user?.topOrgCristinId ?? '';
 
@@ -171,7 +173,7 @@ const InstitutionPage = () => {
               </NavigationList>
             </NavigationListAccordion>
             <ResultsPortfolioNavigationListAccodion />
-            <NviInstitutionNavigationAccordion />
+            {isNviInstitution && <NviInstitutionNavigationAccordion />}
           </>
         )}
       </SideMenu>
@@ -271,7 +273,12 @@ const InstitutionPage = () => {
 
           <Route
             path={getSubUrl(UrlPathTemplate.InstitutionNviPublicationPoints, UrlPathTemplate.Institution)}
-            element={<PrivateRoute element={<InstitutionNviPublicationPointsPage />} isAuthorized={isEditor} />}
+            element={
+              <PrivateRoute
+                element={<InstitutionNviPublicationPointsPage />}
+                isAuthorized={isEditor && isNviInstitution}
+              />
+            }
           />
 
           <Route
