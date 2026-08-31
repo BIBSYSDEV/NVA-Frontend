@@ -14,7 +14,7 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
-import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
+import { FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -33,10 +33,12 @@ import { Registration } from '../../../types/registration.types';
 import { CristinPerson } from '../../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import {
+  appendContributor,
   getContributorsInSequenceOrder,
   getIdentityKey,
   getRolesOnOtherContributors,
   hasIdentityWithRole,
+  moveContributorToSequence,
   renumberSequences,
 } from '../../../utils/contributor-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -90,21 +92,10 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
   };
 
   const handleMoveContributor = (newSequence: number, oldSequence: number) => {
-    const oldIndex = contributors.findIndex((c) => c.sequence === oldSequence);
-    const minNewIndex = 0;
-    const maxNewIndex = contributors.length - 1;
-
-    const newIndex =
-      newSequence - 1 > maxNewIndex
-        ? maxNewIndex
-        : newSequence < minNewIndex
-          ? minNewIndex
-          : contributors.findIndex((c) => c.sequence === newSequence);
-
-    const orderedContributors =
-      newIndex >= 0 ? (move(contributors, oldIndex, newIndex) as Contributor[]) : contributors;
-
-    setFieldValue(ContributorFieldNames.Contributors, renumberSequences(orderedContributors));
+    setFieldValue(
+      ContributorFieldNames.Contributors,
+      moveContributorToSequence(contributors, oldSequence, newSequence)
+    );
   };
 
   /**
@@ -129,7 +120,7 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
   };
 
   const addContributor = (newContributor: Contributor) => {
-    setFieldValue(ContributorFieldNames.Contributors, renumberSequences([...contributors, newContributor]));
+    setFieldValue(ContributorFieldNames.Contributors, appendContributor(contributors, newContributor));
     // The contributor is added last, so show the page it ended up on
     setCurrentPage(Math.floor(contributors.length / rowsPerPage) + 1);
   };
@@ -243,7 +234,10 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
               <TableBody>
                 {entriesToShow.map(({ contributor, index }) => (
                   <ContributorRow
-                    key={index}
+                    // The identity must be part of the key: on a plain index, removing a row makes React
+                    // reuse that row for the next contributor, keeping the previous one's sequence input
+                    // and the search term of its "identify contributor" dialog
+                    key={`${getIdentityKey(contributor.identity) || contributor.identity.name}-${index}`}
                     contributor={contributor}
                     onMoveContributor={handleMoveContributor}
                     onRemoveContributor={handleOnRemove}

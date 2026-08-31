@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { ContributorRole } from '../../types/contributor.types';
+import { Contributor, ContributorRole } from '../../types/contributor.types';
 import {
+  appendContributor,
   getContributorsInSequenceOrder,
   getIdentityKey,
   getRolesOnOtherContributors,
   hasIdentityWithRole,
+  moveContributorToSequence,
   renumberSequences,
 } from '../contributor-helpers';
 import { buildContributor, buildIdentity } from './testHelpers';
@@ -14,6 +16,7 @@ const otherPersonId = 'https://api.test.nva.aws.unit.no/cristin/person/5678';
 
 const nora = buildIdentity({ id: personId, name: 'Nora Lindqvist' });
 const jonas = buildIdentity({ id: otherPersonId, name: 'Jonas Berg' });
+const ada = buildIdentity({ id: 'https://api.test.nva.aws.unit.no/cristin/person/9012', name: 'Ada Voss' });
 
 describe('getIdentityKey', () => {
   it('uses the id when the contributor is verified', () => {
@@ -113,7 +116,32 @@ describe('renumberSequences', () => {
       buildContributor({ sequence: 4 }),
     ];
 
-    expect(renumberSequences(contributors).map((contributor) => contributor.sequence)).toEqual([1, 2, 3]);
+    expect(
+      renumberSequences(contributors)
+        .map((contributor) => contributor.sequence)
+        .toSorted()
+    ).toEqual([1, 2, 3]);
+  });
+
+  it('keeps the order the list is shown in, instead of the array order', () => {
+    const contributors = [
+      buildContributor({ identity: nora, sequence: 3 }),
+      buildContributor({ identity: jonas, sequence: 1 }),
+      buildContributor({ identity: ada, sequence: 2 }),
+    ];
+
+    // Jonas, Ada, Nora is what the user sees, and must still be what they see afterwards
+    expect(renumberSequences(contributors).map((contributor) => contributor.sequence)).toEqual([3, 1, 2]);
+  });
+
+  it('closes gaps and duplicates without rearranging the list', () => {
+    const contributors = [
+      buildContributor({ identity: nora, sequence: 1 }),
+      buildContributor({ identity: jonas, sequence: 9 }),
+      buildContributor({ identity: ada, sequence: 1 }),
+    ];
+
+    expect(renumberSequences(contributors).map((contributor) => contributor.sequence)).toEqual([1, 3, 2]);
   });
 
   it('keeps the order and the other fields of each contributor', () => {
@@ -183,6 +211,118 @@ describe('getContributorsInSequenceOrder', () => {
 
   it('handles an empty list', () => {
     expect(getContributorsInSequenceOrder([])).toEqual([]);
+  });
+});
+
+describe('appendContributor', () => {
+  it('puts the new contributor last in the shown order', () => {
+    const contributors = [
+      buildContributor({ identity: nora, sequence: 2 }),
+      buildContributor({ identity: jonas, sequence: 1 }),
+    ];
+    const added = buildContributor({ identity: ada, sequence: 0 });
+
+    const result = appendContributor(contributors, added);
+
+    expect(getContributorsInSequenceOrder(result).map((entry) => entry.contributor.identity.name)).toEqual([
+      'Jonas Berg',
+      'Nora Lindqvist',
+      'Ada Voss',
+    ]);
+  });
+
+  it('puts it last even when the existing sequences are higher than the list length', () => {
+    const contributors = [buildContributor({ identity: nora, sequence: 12 })];
+
+    const result = appendContributor(contributors, buildContributor({ identity: ada, sequence: 0 }));
+
+    expect(result.map((contributor) => contributor.sequence)).toEqual([1, 2]);
+  });
+
+  it('gives the first contributor sequence 1', () => {
+    expect(appendContributor([], buildContributor({ identity: nora, sequence: 0 }))[0].sequence).toBe(1);
+  });
+
+  it('does not mutate the given list', () => {
+    const contributors = [buildContributor({ sequence: 1 })];
+
+    appendContributor(contributors, buildContributor({ sequence: 0 }));
+
+    expect(contributors).toHaveLength(1);
+  });
+});
+
+describe('moveContributorToSequence', () => {
+  const shownOrder = (contributors: Contributor[]) =>
+    getContributorsInSequenceOrder(contributors).map((entry) => entry.contributor.identity.name);
+
+  // Array order deliberately differs from the sequence order: shown as Jonas, Ada, Nora
+  const contributors = [
+    buildContributor({ identity: nora, sequence: 3 }),
+    buildContributor({ identity: jonas, sequence: 1 }),
+    buildContributor({ identity: ada, sequence: 2 }),
+  ];
+
+  it('moves a contributor down', () => {
+    expect(shownOrder(moveContributorToSequence(contributors, 1, 2))).toEqual([
+      'Ada Voss',
+      'Jonas Berg',
+      'Nora Lindqvist',
+    ]);
+  });
+
+  it('moves a contributor up', () => {
+    expect(shownOrder(moveContributorToSequence(contributors, 3, 1))).toEqual([
+      'Nora Lindqvist',
+      'Jonas Berg',
+      'Ada Voss',
+    ]);
+  });
+
+  it('leaves incrementing sequences behind', () => {
+    expect(
+      moveContributorToSequence(contributors, 3, 1)
+        .map((contributor) => contributor.sequence)
+        .toSorted()
+    ).toEqual([1, 2, 3]);
+  });
+
+  it('clamps a sequence beyond the end of the list', () => {
+    expect(shownOrder(moveContributorToSequence(contributors, 1, 99))).toEqual([
+      'Ada Voss',
+      'Nora Lindqvist',
+      'Jonas Berg',
+    ]);
+  });
+
+  it('clamps a sequence before the start of the list', () => {
+    expect(shownOrder(moveContributorToSequence(contributors, 3, -5))).toEqual([
+      'Nora Lindqvist',
+      'Jonas Berg',
+      'Ada Voss',
+    ]);
+  });
+
+  it('keeps the array order, so Formik field names stay valid', () => {
+    expect(moveContributorToSequence(contributors, 1, 3).map((contributor) => contributor.identity.name)).toEqual([
+      'Nora Lindqvist',
+      'Jonas Berg',
+      'Ada Voss',
+    ]);
+  });
+
+  it('only renumbers when no contributor has the given sequence', () => {
+    expect(shownOrder(moveContributorToSequence(contributors, 42, 1))).toEqual([
+      'Jonas Berg',
+      'Ada Voss',
+      'Nora Lindqvist',
+    ]);
+  });
+
+  it('does not mutate the given list', () => {
+    moveContributorToSequence(contributors, 1, 3);
+
+    expect(contributors.map((contributor) => contributor.sequence)).toEqual([3, 1, 2]);
   });
 });
 
