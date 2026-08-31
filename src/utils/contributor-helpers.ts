@@ -1,91 +1,47 @@
 import { Contributor, ContributorRole, Identity } from '../types/contributor.types';
 
-export interface ContributorGroupEntry {
+export interface ContributorEntry {
   contributor: Contributor;
   /** Index of the contributor in the original contributors array, to be used in Formik field names. */
   index: number;
 }
 
-export interface ContributorGroup {
-  key: string;
-  identity: Identity;
-  entries: ContributorGroupEntry[];
-}
-
-const normalizeName = (name = '') => name.trim().replace(/\s+/g, ' ').toLocaleLowerCase();
-
 /**
  * Key used to decide which contributors describe the same person. A person with several roles is
  * stored as one contributor per role, all sharing the same identity.
  *
- * Verified contributors are grouped on their Cristin ID. Unverified contributors have no ID, so they
- * are grouped on their name instead. A contributor with neither cannot be grouped, and gets an empty
- * key: groupContributorsByIdentity keeps those as separate groups.
+ * Only verified contributors can be recognized as the same person, through their Cristin ID.
+ * Unverified contributors have no ID, and are never treated as the same person even if they have the
+ * same name: they get an empty key, and are kept apart.
  */
-export const getIdentityKey = ({ id, name }: Pick<Identity, 'id' | 'name'>): string => {
-  if (id) {
-    return id;
+export const getIdentityKey = ({ id }: Pick<Identity, 'id'>): string => id ?? '';
+
+/**
+ * The roles the same person already has on their other contributors. A contributor cannot change to
+ * one of these, since a person can only have each role once.
+ */
+export const getRolesOnOtherContributors = (contributors: Contributor[], index: number): ContributorRole[] => {
+  const identityKey = getIdentityKey(contributors[index]?.identity ?? {});
+
+  if (!identityKey) {
+    return [];
   }
-  const normalizedName = normalizeName(name);
-  return normalizedName ? `name:${normalizedName}` : '';
-};
 
-/**
- * Groups contributors that share an identity, so a person with several roles can be presented as one
- * person. Groups are ordered by each person's first contributor, and each entry keeps the index it
- * had in the original array.
- */
-export const groupContributorsByIdentity = (contributors: Contributor[] = []): ContributorGroup[] => {
-  const groups: ContributorGroup[] = [];
-  const groupIndexPerKey = new Map<string, number>();
-
-  contributors.forEach((contributor, index) => {
-    const key = getIdentityKey(contributor.identity);
-    const existingGroupIndex = key ? groupIndexPerKey.get(key) : undefined;
-
-    if (existingGroupIndex === undefined) {
-      if (key) {
-        groupIndexPerKey.set(key, groups.length);
-      }
-      groups.push({ key, identity: contributor.identity, entries: [{ contributor, index }] });
-    } else {
-      groups[existingGroupIndex].entries.push({ contributor, index });
-    }
-  });
-
-  return groups;
-};
-
-/**
- * The roles the person already has on their other contributors. A contributor cannot change to one of
- * these, since a person can only have each role once.
- */
-export const getRolesOnOtherEntries = (group: ContributorGroup, index: number): ContributorRole[] =>
-  group.entries
-    .filter((entry) => entry.index !== index)
-    .map((entry) => entry.contributor.role?.type)
+  return contributors
+    .filter((contributor, thisIndex) => thisIndex !== index && getIdentityKey(contributor.identity) === identityKey)
+    .map((contributor) => contributor.role?.type)
     .filter((role): role is ContributorRole => !!role);
+};
 
 /** Ensures incrementing sequence values, matching each contributor's position in the list. */
 export const renumberSequences = (contributors: Contributor[]): Contributor[] =>
   contributors.map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
 
-/**
- * Adds a contributor to the list, and renumbers the sequences. A new role for a person who is already
- * a contributor is inserted right after that person's other roles, so their roles stay next to each
- * other and get adjacent sequence numbers.
- */
-export const insertContributor = (contributors: Contributor[], newContributor: Contributor): Contributor[] => {
-  const key = getIdentityKey(newContributor.identity);
-  const existingGroup = key ? groupContributorsByIdentity(contributors).find((group) => group.key === key) : undefined;
-
-  if (!existingGroup) {
-    return renumberSequences([...contributors, newContributor]);
-  }
-
-  const insertIndex = existingGroup.entries[existingGroup.entries.length - 1].index + 1;
-  return renumberSequences([...contributors.slice(0, insertIndex), newContributor, ...contributors.slice(insertIndex)]);
-};
+/** Orders contributors by their sequence, keeping the index each one has in the original array. */
+export const getContributorsInSequenceOrder = (contributors: Contributor[]): ContributorEntry[] =>
+  contributors
+    .map((contributor, index) => ({ contributor, index }))
+    .sort((a, b) => a.contributor.sequence - b.contributor.sequence);
 
 /**
  * A person can have several roles, but not the same role twice. Used to reject duplicates when

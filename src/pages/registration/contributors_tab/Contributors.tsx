@@ -33,11 +33,10 @@ import { Registration } from '../../../types/registration.types';
 import { CristinPerson } from '../../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import {
+  getContributorsInSequenceOrder,
   getIdentityKey,
-  getRolesOnOtherEntries,
-  groupContributorsByIdentity,
+  getRolesOnOtherContributors,
   hasIdentityWithRole,
-  insertContributor,
   renumberSequences,
 } from '../../../utils/contributor-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -67,23 +66,18 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
 
   const contributors = values.entityDescription?.contributors ?? [];
 
-  // A person with several roles has one contributor per role, so paginate on people to keep a person's roles together
-  const contributorGroups = groupContributorsByIdentity(contributors);
-  const filteredGroups = !filterInput
-    ? contributorGroups
-    : contributorGroups.filter((group) =>
-        group.identity.name.toLocaleLowerCase().includes(filterInput.toLocaleLowerCase())
+  const orderedContributors = getContributorsInSequenceOrder(contributors);
+  const filteredEntries = !filterInput
+    ? orderedContributors
+    : orderedContributors.filter((entry) =>
+        entry.contributor.identity.name.toLocaleLowerCase().includes(filterInput.toLocaleLowerCase())
       );
-  const entriesToShow = filteredGroups
-    .slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage)
-    .flatMap((group) =>
-      group.entries.map((entry) => ({ ...entry, rolesOnOtherEntries: getRolesOnOtherEntries(group, entry.index) }))
-    );
+  const entriesToShow = filteredEntries.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
 
   const handleOnRemove = (indexToRemove: number) => {
     const nextContributors = renumberSequences(contributors.filter((_, index) => index !== indexToRemove));
     setFieldValue(ContributorFieldNames.Contributors, nextContributors);
-    const maxValidPage = Math.ceil(groupContributorsByIdentity(nextContributors).length / rowsPerPage);
+    const maxValidPage = Math.ceil(nextContributors.length / rowsPerPage);
 
     if (currentPage > maxValidPage) {
       setCurrentPage(maxValidPage);
@@ -135,14 +129,9 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
   };
 
   const addContributor = (newContributor: Contributor) => {
-    const identityKey = getIdentityKey(newContributor.identity);
-    const existingGroupIndex = contributorGroups.findIndex((group) => !!group.key && group.key === identityKey);
-
-    setFieldValue(ContributorFieldNames.Contributors, insertContributor(contributors, newContributor));
-
-    // Show the page where the contributor ended up: a new role is placed next to the person's other roles
-    const groupIndex = existingGroupIndex >= 0 ? existingGroupIndex : contributorGroups.length;
-    setCurrentPage(Math.floor(groupIndex / rowsPerPage) + 1);
+    setFieldValue(ContributorFieldNames.Contributors, renumberSequences([...contributors, newContributor]));
+    // The contributor is added last, so show the page it ended up on
+    setCurrentPage(Math.floor(contributors.length / rowsPerPage) + 1);
   };
 
   const onContributorSelected = (
@@ -228,7 +217,7 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
 
       {entriesToShow.length > 0 && (
         <ListPagination
-          count={filteredGroups.length}
+          count={filteredEntries.length}
           rowsPerPage={rowsPerPage}
           page={currentPage}
           onPageChange={(newPage) => setCurrentPage(newPage)}
@@ -252,7 +241,7 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
                 </TableRow>
               </TableHead>
               <TableBody>
-                {entriesToShow.map(({ contributor, index, rolesOnOtherEntries }) => (
+                {entriesToShow.map(({ contributor, index }) => (
                   <ContributorRow
                     key={index}
                     contributor={contributor}
@@ -262,7 +251,7 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
                     isLastElement={contributors.length === contributor.sequence}
                     contributorRoles={contributorRoles}
                     contributorIndex={index}
-                    rolesOnOtherEntries={rolesOnOtherEntries}
+                    rolesOnOtherContributors={getRolesOnOtherContributors(contributors, index)}
                   />
                 ))}
               </TableBody>
