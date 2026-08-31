@@ -139,7 +139,7 @@ export const AppRoutes = () => {
                 <Navigate
                   to={getNviCandidatesSearchPath({
                     username: user?.nvaUsername,
-                    status: NviCandidateStatusEnum.Pending,
+                    status: [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending],
                     globalStatus: NviCandidateGlobalStatusEnum.Pending,
                   })}
                   replace
