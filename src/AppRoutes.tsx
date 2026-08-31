@@ -2,10 +2,11 @@ import { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router';
-import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from './api/searchApi';
 import { Layout } from './Layout';
 import NotFound from './pages/errorpages/NotFound';
+import { nviSearchStatusParams } from './pages/messages/nviUtils';
 import { RootState } from './redux/store';
+import { NviSearchStatusEnum } from './types/nvi.types';
 import { PrivateRoute } from './utils/routes/Routes';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from './utils/urlPaths';
 import { checkUserRoles } from './utils/user-helpers';
@@ -139,8 +140,7 @@ export const AppRoutes = () => {
                 <Navigate
                   to={getNviCandidatesSearchPath({
                     username: user?.nvaUsername,
-                    status: [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending],
-                    globalStatus: NviCandidateGlobalStatusEnum.Pending,
+                    ...nviSearchStatusParams[NviSearchStatusEnum.CandidatesForControl],
                   })}
                   replace
                 />
