@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { ContributorRole } from '../../types/contributor.types';
 import {
   getIdentityKey,
+  getRolesOnOtherEntries,
   groupContributorsByIdentity,
   hasIdentityWithRole,
   insertContributor,
@@ -112,6 +113,57 @@ describe('groupContributorsByIdentity', () => {
   it('handles an empty list and a missing list', () => {
     expect(groupContributorsByIdentity([])).toEqual([]);
     expect(groupContributorsByIdentity()).toEqual([]);
+  });
+});
+
+describe('getRolesOnOtherEntries', () => {
+  const nora = buildIdentity({ id: personId, name: 'Nora Lindqvist' });
+
+  it('returns the roles the person has on their other contributors', () => {
+    const [group] = groupContributorsByIdentity([
+      buildContributor({ identity: nora, role: { type: ContributorRole.Creator } }),
+      buildContributor({ identity: nora, role: { type: ContributorRole.Editor } }),
+      buildContributor({ identity: nora, role: { type: ContributorRole.Photographer } }),
+    ]);
+
+    expect(getRolesOnOtherEntries(group, 0)).toEqual([ContributorRole.Editor, ContributorRole.Photographer]);
+    expect(getRolesOnOtherEntries(group, 1)).toEqual([ContributorRole.Creator, ContributorRole.Photographer]);
+  });
+
+  it('never includes the role of the contributor itself', () => {
+    const [group] = groupContributorsByIdentity([
+      buildContributor({ identity: nora, role: { type: ContributorRole.Creator } }),
+      buildContributor({ identity: nora, role: { type: ContributorRole.Editor } }),
+    ]);
+
+    expect(getRolesOnOtherEntries(group, 0)).not.toContain(ContributorRole.Creator);
+  });
+
+  it('returns nothing for a person with only one role', () => {
+    const [group] = groupContributorsByIdentity([buildContributor({ identity: nora })]);
+
+    expect(getRolesOnOtherEntries(group, 0)).toEqual([]);
+  });
+
+  it('ignores contributors without a role', () => {
+    const [group] = groupContributorsByIdentity([
+      buildContributor({ identity: nora, role: { type: ContributorRole.Creator } }),
+      buildContributor({ identity: nora, role: undefined }),
+    ]);
+
+    expect(getRolesOnOtherEntries(group, 0)).toEqual([]);
+  });
+
+  it('does not restrict a different person', () => {
+    const groups = groupContributorsByIdentity([
+      buildContributor({ identity: nora, role: { type: ContributorRole.Creator } }),
+      buildContributor({
+        identity: buildIdentity({ id: otherPersonId, name: 'Jonas Berg' }),
+        role: { type: ContributorRole.Editor },
+      }),
+    ]);
+
+    expect(getRolesOnOtherEntries(groups[1], 1)).toEqual([]);
   });
 });
 

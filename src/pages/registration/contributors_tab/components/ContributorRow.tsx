@@ -25,6 +25,8 @@ interface ContributorRowProps {
   isLastElement: boolean;
   contributorRoles: ContributorRole[];
   contributorIndex: number;
+  /** Roles the person already has on their other contributors, which this one cannot change to. */
+  rolesOnOtherEntries: ContributorRole[];
 }
 
 export const ContributorRow = ({
@@ -35,6 +37,7 @@ export const ContributorRow = ({
   isLastElement,
   contributorRoles,
   contributorIndex,
+  rolesOnOtherEntries,
 }: ContributorRowProps) => {
   const { t } = useTranslation();
   const [openRemoveContributor, setOpenRemoveContributor] = useState(false);
@@ -106,7 +109,7 @@ export const ContributorRow = ({
                 error={!!error && touched}
                 helperText={<ErrorMessage name={field.name} />}>
                 {contributorRoles.map((role) => (
-                  <MenuItem key={role} value={role}>
+                  <MenuItem key={role} value={role} disabled={rolesOnOtherEntries.includes(role)}>
                     {t(`registration.contributors.types.${role}`)}
                   </MenuItem>
                 ))}

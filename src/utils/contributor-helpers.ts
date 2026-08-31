@@ -56,6 +56,16 @@ export const groupContributorsByIdentity = (contributors: Contributor[] = []): C
   return groups;
 };
 
+/**
+ * The roles the person already has on their other contributors. A contributor cannot change to one of
+ * these, since a person can only have each role once.
+ */
+export const getRolesOnOtherEntries = (group: ContributorGroup, index: number): ContributorRole[] =>
+  group.entries
+    .filter((entry) => entry.index !== index)
+    .map((entry) => entry.contributor.role?.type)
+    .filter((role): role is ContributorRole => !!role);
+
 /** Ensures incrementing sequence values, matching each contributor's position in the list. */
 export const renumberSequences = (contributors: Contributor[]): Contributor[] =>
   contributors.map((contributor, index) => ({ ...contributor, sequence: index + 1 }));

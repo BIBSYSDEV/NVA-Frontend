@@ -34,6 +34,7 @@ import { CristinPerson } from '../../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import {
   getIdentityKey,
+  getRolesOnOtherEntries,
   groupContributorsByIdentity,
   hasIdentityWithRole,
   insertContributor,
@@ -75,7 +76,9 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
       );
   const entriesToShow = filteredGroups
     .slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage)
-    .flatMap((group) => group.entries);
+    .flatMap((group) =>
+      group.entries.map((entry) => ({ ...entry, rolesOnOtherEntries: getRolesOnOtherEntries(group, entry.index) }))
+    );
 
   const handleOnRemove = (indexToRemove: number) => {
     const nextContributors = renumberSequences(contributors.filter((_, index) => index !== indexToRemove));
@@ -249,7 +252,7 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
                 </TableRow>
               </TableHead>
               <TableBody>
-                {entriesToShow.map(({ contributor, index }) => (
+                {entriesToShow.map(({ contributor, index, rolesOnOtherEntries }) => (
                   <ContributorRow
                     key={index}
                     contributor={contributor}
@@ -259,6 +262,7 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
                     isLastElement={contributors.length === contributor.sequence}
                     contributorRoles={contributorRoles}
                     contributorIndex={index}
+                    rolesOnOtherEntries={rolesOnOtherEntries}
                   />
                 ))}
               </TableBody>
