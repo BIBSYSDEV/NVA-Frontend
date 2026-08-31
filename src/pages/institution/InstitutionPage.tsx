@@ -7,36 +7,37 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Outlet, Route, Routes, useLocation } from 'react-router';
 import { fetchResource } from '../../api/commonApi';
-import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { StyledPageWithSideMenu } from '../../components/side-menu-components/_utils/side-menu-styles';
-import { SideNavHeader } from '../../components/side-menu-components/SideNavHeader';
 import { NavigationList } from '../../components/_atoms/NavigationList';
 import { SelectableButton } from '../../components/buttons/SelectableButton';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import { StyledPageWithSideMenu } from '../../components/side-menu-components/_utils/side-menu-styles';
 import { SideMenu } from '../../components/side-menu-components/SideMenu';
+import { SideNavHeader } from '../../components/side-menu-components/SideNavHeader';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
-import NotFound from '../errorpages/NotFound';
 import { CategoriesWithFiles } from '../editor/CategoriesWithFiles';
 import { CategoriesWithFilesOverview } from '../editor/CategoriesWithFilesOverview';
+import { OrganizationCurators } from '../editor/curators/OrganizationCurators';
 import { EditorDoi } from '../editor/EditorDoi';
 import { EditorInstitution } from '../editor/EditorInstitution';
 import { InstitutionSupport } from '../editor/InstitutionSupport';
 import { OrganizationOverview } from '../editor/OrganizationOverview';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
-import { PublishStrategySettings } from '../editor/PublishStrategySettings';
 import { PublisherClaimsOverview } from '../editor/PublisherClaimsOverview';
 import { PublishingStrategyOverview } from '../editor/PublishingStrategyOverview';
+import { PublishStrategySettings } from '../editor/PublishStrategySettings';
 import { ResultsPortfolioNavigationListAccodion } from '../editor/ResultsPortfolioNavigationListAccodion';
 import { SerialPublicationClaimsOverview } from '../editor/SerialPublicationClaimsOverview';
 import { VocabularyOverview } from '../editor/VocabularyOverview';
 import { VocabularySettings } from '../editor/VocabularySettings';
-import { OrganizationCurators } from '../editor/curators/OrganizationCurators';
+import NotFound from '../errorpages/NotFound';
 import { NviInstitutionNavigationAccordion } from './_components/NviInstitutionNavigationAccordion';
 import { InstitutionNviPublicationPointsPage } from './nvi/publication-points/InstitutionNviPublicationPointsPage';
+import { InstitutionNviReportingStatusPage } from './nvi/reporting-status/InstitutionNviReportingStatusPage';
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
@@ -272,6 +273,11 @@ const InstitutionPage = () => {
           <Route
             path={getSubUrl(UrlPathTemplate.InstitutionNviPublicationPoints, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<InstitutionNviPublicationPointsPage />} isAuthorized={isEditor} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionNviReportingStatus, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<InstitutionNviReportingStatusPage />} isAuthorized={isEditor} />}
           />
 
           <Route

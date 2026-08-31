@@ -1,7 +1,7 @@
 import { Skeleton, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { formatLocaleNumber } from '../../../../../utils/general-helpers';
-import { VerticalBox } from '../../../../../components/styled/Wrappers';
+import { formatLocaleNumber } from '../../../utils/general-helpers';
+import { VerticalBox } from '../../styled/Wrappers';
 
 interface NviReportingStatusTextsProps {
   previousYear?: number;
@@ -9,6 +9,7 @@ interface NviReportingStatusTextsProps {
   percentage?: number;
   isPending?: boolean;
   isError?: boolean;
+  testId?: string;
 }
 
 export const NviReportingStatusTexts = ({
