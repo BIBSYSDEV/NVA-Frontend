@@ -11,8 +11,6 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
-import { ResultParam } from '../../../../api/searchApi';
 import { Organization } from '../../../../types/organization.types';
 import { getSortedSubUnits } from '../../../../utils/institutions-helpers';
 import { OrganizationAccordion } from '../../../OrganizationAccordion';
@@ -22,24 +20,30 @@ import { VerticalBox } from '../../../styled/Wrappers';
 interface OrganizationHierarchyFilterProps extends Pick<DialogProps, 'open'> {
   onClose: () => void;
   organization: Organization;
+  value: string | null;
+  onChange: (unitId: string) => void;
 }
 
-export const OrganizationHierarchyFilter = ({ organization, open, onClose }: OrganizationHierarchyFilterProps) => {
+/**
+ * Dialog for picking a sub-unit within `organization`'s hierarchy, either by searching or by expanding the
+ * accordion tree. Pure controlled component: the currently selected unit id comes in as `value`, and picking one
+ * calls `onChange` with the new id - it has no knowledge of the URL.
+ */
+export const OrganizationHierarchyFilter = ({
+  organization,
+  open,
+  onClose,
+  value,
+  onChange,
+}: OrganizationHierarchyFilterProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const unitFromParams = params.get(ResultParam.Unit) ?? '';
 
   const [searchId, setSearchId] = useState('');
-  const [selectedId, setSelectedId] = useState(unitFromParams);
+  const [selectedId, setSelectedId] = useState(value ?? '');
 
   useEffect(() => {
-    // Reset selection state when URL is updated elsewhere
-    if (!unitFromParams) {
-      setSelectedId('');
-    }
-  }, [unitFromParams]);
+    setSelectedId(value ?? '');
+  }, [value]);
 
   const closeDialog = () => {
     onClose();
@@ -53,7 +57,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
       open={open}
       onClose={() => {
         closeDialog();
-        setSelectedId(unitFromParams);
+        setSelectedId(value ?? '');
       }}
       maxWidth="lg"
       transitionDuration={0}>
@@ -91,7 +95,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
         <Button
           onClick={() => {
             closeDialog();
-            setSelectedId(unitFromParams);
+            setSelectedId(value ?? '');
           }}>
           {t('common.cancel')}
         </Button>
@@ -100,9 +104,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
           color="secondary"
           disabled={!selectedId}
           onClick={() => {
-            params.delete(ResultParam.From);
-            params.set(ResultParam.Unit, selectedId);
-            navigate({ search: params.toString() });
+            onChange(selectedId);
             closeDialog();
           }}>
           {t('common.select')}
