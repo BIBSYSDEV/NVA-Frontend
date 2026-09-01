@@ -35,13 +35,15 @@ const NviCorrectionList = () => {
   const registrationParams = useRegistrationsQueryParams();
   const exportParams = new URLSearchParams(sanitizeSearchParams({ ...listConfig?.queryParams, ...registrationParams }));
 
+  const resultSearchParams = {
+    ...listConfig?.queryParams,
+    ...registrationParams,
+    unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
+  };
+
   const registrationQuery = useRegistrationSearch({
     enabled: !!listConfig,
-    params: {
-      ...listConfig?.queryParams,
-      ...registrationParams,
-      unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
-    },
+    params: resultSearchParams,
   });
 
   return (
@@ -88,7 +90,7 @@ const NviCorrectionList = () => {
             </Box>
           </Box>
 
-          <RegistrationSearch registrationQuery={registrationQuery} />
+          <RegistrationSearch registrationQuery={registrationQuery} searchResultNavigationParams={resultSearchParams} />
         </>
       )}
     </section>
