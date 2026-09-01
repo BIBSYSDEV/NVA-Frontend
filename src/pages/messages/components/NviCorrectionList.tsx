@@ -109,7 +109,7 @@ const NviCorrectionList = () => {
             </Box>
           </Box>
 
-          <RegistrationSearch registrationQuery={registrationQuery} />
+          <RegistrationSearch registrationQuery={registrationQuery} searchResultNavigationParams={mergedParams} />
         </>
       )}
     </section>
