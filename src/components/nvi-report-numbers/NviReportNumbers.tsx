@@ -1,5 +1,5 @@
-import { VerticalBox } from '../../../../../../components/styled/Wrappers';
-import { NviApprovalStatusCounts } from '../../_hooks/useNviInstitutionReportSummary';
+import { VerticalBox } from '../styled/Wrappers';
+import { NviApprovalStatusCounts } from '../../utils/hooks/useNviInstitutionReportSummary';
 import { NviReportLineTypeEnum } from './_components/nvi-report-line/enums';
 import { NviReportLine } from './_components/nvi-report-line/NviReportLine';
 

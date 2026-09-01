@@ -1,9 +1,9 @@
 import { Skeleton, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { BaseExpandableTextView } from '../../../../../components/_molecules/BaseExpandableTextView';
-import { dataTestId } from '../../../../../utils/dataTestIds';
-import { formatLocaleNumber } from '../../../../../utils/general-helpers';
-import { ExportNviStatusLink } from '../../../../messages/components/ExportNviStatusLink';
+import { BaseExpandableTextView } from '../../_molecules/BaseExpandableTextView';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { formatLocaleNumber } from '../../../utils/general-helpers';
+import { ExportNviStatusLink } from '../../../pages/messages/components/ExportNviStatusLink';
 
 interface NviPublicationPointsTextsProps {
   previousYear: number;
@@ -13,6 +13,7 @@ interface NviPublicationPointsTextsProps {
   publicationPoints?: number;
   approvedPercentageComparedToPreviousYear?: number;
   exportAcronym?: string;
+  testId?: string;
 }
 
 export const NviPublicationPointsTexts = ({
@@ -23,6 +24,7 @@ export const NviPublicationPointsTexts = ({
   publicationPoints,
   approvedPercentageComparedToPreviousYear,
   exportAcronym,
+  testId = dataTestId.basicData.nvi.curatorPublicationPointsExpandDescriptionButton,
 }: NviPublicationPointsTextsProps) => {
   const { t } = useTranslation();
 
@@ -30,7 +32,7 @@ export const NviPublicationPointsTexts = ({
     <BaseExpandableTextView
       alwaysVisibleText={t('nvi_publication_points_page_description')}
       expandedText={t('nvi_publication_points_page_description_expanded')}
-      testId={dataTestId.basicData.nvi.curatorPublicationPointsExpandDescriptionButton}>
+      testId={testId}>
       {isPending ? (
         <Skeleton sx={{ width: '50%' }} />
       ) : isError || numApprovedByAll === undefined || publicationPoints === undefined ? null : (
