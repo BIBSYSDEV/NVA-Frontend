@@ -9,7 +9,6 @@ interface NviReportingStatusTextsProps {
   percentage?: number;
   isPending?: boolean;
   isError?: boolean;
-  testId?: string;
 }
 
 export const NviReportingStatusTexts = ({
