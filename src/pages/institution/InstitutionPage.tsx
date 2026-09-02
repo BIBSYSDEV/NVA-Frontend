@@ -20,27 +20,31 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import NotFound from '../errorpages/NotFound';
-import { CategoriesWithFiles } from './CategoriesWithFiles';
-import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
-import { EditorDoi } from './EditorDoi';
-import { EditorInstitution } from './EditorInstitution';
-import { InstitutionSupport } from './InstitutionSupport';
-import { OrganizationOverview } from './OrganizationOverview';
-import { PortfolioSearchPage } from './PortfolioSearchPage';
-import { PublishStrategySettings } from './PublishStrategySettings';
-import { PublisherClaimsOverview } from './PublisherClaimsOverview';
-import { PublishingStrategyOverview } from './PublishingStrategyOverview';
-import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
-import { SerialPublicationClaimsOverview } from './SerialPublicationClaimsOverview';
-import { VocabularyOverview } from './VocabularyOverview';
-import { VocabularySettings } from './VocabularySettings';
-import { OrganizationCurators } from './curators/OrganizationCurators';
+import { CategoriesWithFiles } from '../editor/CategoriesWithFiles';
+import { CategoriesWithFilesOverview } from '../editor/CategoriesWithFilesOverview';
+import { EditorDoi } from '../editor/EditorDoi';
+import { EditorInstitution } from '../editor/EditorInstitution';
+import { InstitutionSupport } from '../editor/InstitutionSupport';
+import { OrganizationOverview } from '../editor/OrganizationOverview';
+import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
+import { PublishStrategySettings } from '../editor/PublishStrategySettings';
+import { PublisherClaimsOverview } from '../editor/PublisherClaimsOverview';
+import { PublishingStrategyOverview } from '../editor/PublishingStrategyOverview';
+import { ResultsPortfolioNavigationListAccodion } from '../editor/ResultsPortfolioNavigationListAccodion';
+import { SerialPublicationClaimsOverview } from '../editor/SerialPublicationClaimsOverview';
+import { VocabularyOverview } from '../editor/VocabularyOverview';
+import { VocabularySettings } from '../editor/VocabularySettings';
+import { OrganizationCurators } from '../editor/curators/OrganizationCurators';
+import { NviInstitutionNavigationAccordion } from './_components/NviInstitutionNavigationAccordion';
+import { InstitutionNviPublicationPointsPage } from './nvi/publication-points/InstitutionNviPublicationPointsPage';
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const hasCustomer = !!user?.customerId;
   const isEditor = hasCustomer && user.isEditor;
+  const isNviInstitution = !!customer?.nviInstitution;
 
   const institutionId = user?.topOrgCristinId ?? '';
 
@@ -169,6 +173,7 @@ const InstitutionPage = () => {
               </NavigationList>
             </NavigationListAccordion>
             <ResultsPortfolioNavigationListAccodion />
+            {isNviInstitution && <NviInstitutionNavigationAccordion />}
           </>
         )}
       </SideMenu>
@@ -262,6 +267,16 @@ const InstitutionPage = () => {
               <PrivateRoute
                 element={<PortfolioSearchPage title={t('common.result_portfolio')} />}
                 isAuthorized={isEditor}
+              />
+            }
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionNviPublicationPoints, UrlPathTemplate.Institution)}
+            element={
+              <PrivateRoute
+                element={<InstitutionNviPublicationPointsPage />}
+                isAuthorized={isEditor && isNviInstitution}
               />
             }
           />

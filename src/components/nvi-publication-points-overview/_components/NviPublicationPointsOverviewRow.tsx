@@ -1,32 +1,35 @@
 import { Link } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
-import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../../../api/searchApi';
-import { PercentageWithIcon } from '../../../../../components/_molecules/PercentageWithIcon';
-import { HorizontalBox } from '../../../../../components/styled/Wrappers';
-import { CenteredTableCell, TableNumberSkeleton } from '../../../../../components/tables/table-styles';
-import { NviInstitutionStatusResponse } from '../../../../../types/nvi.types';
-import { Organization } from '../../../../../types/organization.types';
-import { dataTestId } from '../../../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../../../utils/general-helpers';
-import { useNviCandidatesParams } from '../../../../../utils/hooks/useNviCandidatesParams';
-import { getNviCandidatesSearchPath } from '../../../../../utils/urlPaths';
-import { NviRowWrapper } from '../../_components/NviRowWrapper';
-import { selfOrDescendantHasPointValues } from '../../_utils/nvi-curator-aggregations-helpers';
+import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from '../../../api/searchApi';
+import { PercentageWithIcon } from '../../_molecules/PercentageWithIcon';
+import { HorizontalBox } from '../../styled/Wrappers';
+import { CenteredTableCell, TableNumberSkeleton } from '../../tables/table-styles';
+import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
+import { Organization } from '../../../types/organization.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
+import { NviRowWrapper } from '../../NviRowWrapper';
+import { selfOrDescendantHasPointValues } from '../../../utils/nvi-curator-aggregations-helpers';
 
-interface NviPublicationPointsRowProps {
+interface NviPublicationPointsOverviewRowProps {
   organization: Organization;
   statusData?: NviInstitutionStatusResponse;
   level?: number;
   year?: number;
+  /** Whether the candidate counts link to the NVI candidate search (curator context) or render as plain text. */
+  linkable: boolean;
 }
 
-export const NviPublicationPointsRow = ({
+export const NviPublicationPointsOverviewRow = ({
   organization,
   statusData,
   level = 0,
   year,
-}: NviPublicationPointsRowProps) => {
+  linkable,
+}: NviPublicationPointsOverviewRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
   const [expanded, setExpanded] = useState(level === 0);
 
@@ -38,42 +41,48 @@ export const NviPublicationPointsRow = ({
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+
+  const approvedByUs = orgAggregations?.approvalStatus.Approved ?? 0;
+  const approvedByAll = orgAggregations?.globalApprovalStatus.Approved ?? 0;
+  const candidatesOthersMustApprove = approvedByUs - approvedByAll;
+
   const percentageApproved =
     orgAggregations && orgAggregations.approvalStatus.Approved
       ? orgAggregations.globalApprovalStatus.Approved / orgAggregations.approvalStatus.Approved
       : -1;
 
-  const candidatesOthersMustApprove =
-    (orgAggregations?.approvalStatus.Approved ?? 0) - (orgAggregations?.globalApprovalStatus.Approved ?? 0);
-
   return (
     <>
       <NviRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpanded}>
         <CenteredTableCell>
-          {statusData ? (
+          {!statusData ? (
+            <TableNumberSkeleton />
+          ) : linkable ? (
             <Link
               component={RouterLink}
               data-testid={dataTestId.nviStatusTableRow.approvedByUsLink}
               to={getNviCandidatesSearchPath({
-                year: year,
+                year,
                 orgNumber: getIdentifierFromId(organization.id),
                 status: [NviCandidateStatusEnum.Approved],
                 globalStatus: [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending],
                 excludeSubUnits: true,
               })}>
-              {orgAggregations?.approvalStatus.Approved ?? 0}
+              {approvedByUs}
             </Link>
           ) : (
-            <TableNumberSkeleton />
+            approvedByUs
           )}
         </CenteredTableCell>
         <CenteredTableCell>
-          {statusData ? (
+          {!statusData ? (
+            <TableNumberSkeleton />
+          ) : linkable ? (
             <Link
               component={RouterLink}
               data-testid={dataTestId.nviStatusTableRow.candidatesOthersMustApproveLink}
               to={getNviCandidatesSearchPath({
-                year: year,
+                year,
                 orgNumber: getIdentifierFromId(organization.id),
                 status: [NviCandidateStatusEnum.Approved],
                 globalStatus: [NviCandidateGlobalStatusEnum.Pending],
@@ -82,24 +91,26 @@ export const NviPublicationPointsRow = ({
               {candidatesOthersMustApprove}
             </Link>
           ) : (
-            <TableNumberSkeleton />
+            candidatesOthersMustApprove
           )}
         </CenteredTableCell>
         <CenteredTableCell>
-          {statusData ? (
+          {!statusData ? (
+            <TableNumberSkeleton />
+          ) : linkable ? (
             <Link
               component={RouterLink}
               data-testid={dataTestId.nviStatusTableRow.approvedByAllLink}
               to={getNviCandidatesSearchPath({
-                year: year,
+                year,
                 orgNumber: getIdentifierFromId(organization.id),
                 globalStatus: NviCandidateGlobalStatusEnum.Approved,
                 excludeSubUnits: true,
               })}>
-              {orgAggregations?.globalApprovalStatus.Approved ?? 0}
+              {approvedByAll}
             </Link>
           ) : (
-            <TableNumberSkeleton />
+            approvedByAll
           )}
         </CenteredTableCell>
         <CenteredTableCell>{statusData ? pointsWithTwoDecimals : <TableNumberSkeleton />}</CenteredTableCell>
@@ -119,12 +130,13 @@ export const NviPublicationPointsRow = ({
       </NviRowWrapper>
       {expanded &&
         organization.hasPart?.map((subUnit) => (
-          <NviPublicationPointsRow
+          <NviPublicationPointsOverviewRow
             key={subUnit.id}
             organization={subUnit}
             statusData={statusData}
             level={level + 1}
             year={year}
+            linkable={linkable}
           />
         ))}
     </>
