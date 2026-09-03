@@ -188,6 +188,7 @@ export const dataTestId = {
     nviAccordion: 'editor-nvi-accordion',
     nviPublicationPointsExpandDescriptionButton: 'editor-nvi-publication-points-expand-description-button',
     nviPublicationPointsLinkButton: 'editor-nvi-publication-points-link-button',
+    nviReportingStatusLinkButton: 'editor-nvi-reporting-status-link-button',
     organizationAccordion: (id: string) => `organization-accordion-${id}`,
     organizationOverviewLinkButton: 'organization-overview-link-button',
     organizationOverviewSearchField: 'organization-overview-search-field',
