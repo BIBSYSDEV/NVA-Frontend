@@ -1,4 +1,4 @@
-import { Contributor, ContributorRole, Identity } from '../types/contributor.types';
+import { Contributor, ContributorRole } from '../types/contributor.types';
 
 export interface ContributorEntry {
   contributor: Contributor;
@@ -14,21 +14,21 @@ export interface ContributorEntry {
  * Unverified contributors have no ID, and are never treated as the same person even if they have the
  * same name: they get an empty key, and are kept apart.
  */
-export const getIdentityKey = ({ id }: Pick<Identity, 'id'>): string => id ?? '';
+export const getIdentityKey = (id?: string): string => id ?? '';
 
 /**
  * The roles the same person already has on their other contributors. A contributor cannot change to
  * one of these, since a person can only have each role once.
  */
-export const getRolesOnOtherContributors = (contributors: Contributor[], index: number): ContributorRole[] => {
-  const identityKey = getIdentityKey(contributors[index]?.identity ?? {});
+export const getOtherRolesOfContributor = (contributors: Contributor[], index: number): ContributorRole[] => {
+  const identityKey = getIdentityKey(contributors[index]?.identity.id);
 
   if (!identityKey) {
     return [];
   }
 
   return contributors
-    .filter((contributor, thisIndex) => thisIndex !== index && getIdentityKey(contributor.identity) === identityKey)
+    .filter((contributor, thisIndex) => thisIndex !== index && getIdentityKey(contributor.identity.id) === identityKey)
     .map((contributor) => contributor.role?.type)
     .filter((role): role is ContributorRole => !!role);
 };
@@ -39,31 +39,46 @@ export const getContributorsInSequenceOrder = (contributors: Contributor[]): Con
     .map((contributor, index) => ({ contributor, index }))
     .sort((a, b) => a.contributor.sequence - b.contributor.sequence);
 
-/** Maps each contributor's index in the array to its position in the given sequence order. */
-const toSequenceByIndex = (entries: ContributorEntry[]) =>
-  new Map<number, number>(entries.map(({ index }, position) => [index, position + 1]));
+/**
+ * Gives the contributors sequence 1..n following the given order. Only the sequence values change:
+ * the array order is left untouched, so Formik field names keep pointing at the same contributors.
+ */
+const applySequenceOrder = (contributors: Contributor[], orderedEntries: ContributorEntry[]): Contributor[] => {
+  const renumbered = [...contributors];
+
+  orderedEntries.forEach(({ index }, position) => {
+    const sequence = position + 1;
+    renumbered[index] = { ...renumbered[index], sequence };
+  });
+
+  return renumbered;
+};
 
 /**
  * Ensures incrementing sequence values starting at 1, following the sequence order rather than the
  * array order. The list is ordered by sequence when it is shown, so renumbering by array position
- * would silently rearrange the list whenever the two disagree. The array order is left untouched,
- * so Formik field names keep pointing at the same contributors.
+ * would silently rearrange the list whenever the two disagree.
  */
-export const renumberSequences = (contributors: Contributor[]): Contributor[] => {
-  const sequenceByIndex = toSequenceByIndex(getContributorsInSequenceOrder(contributors));
+export const renumberSequences = (contributors: Contributor[]): Contributor[] =>
+  applySequenceOrder(contributors, getContributorsInSequenceOrder(contributors));
 
-  return contributors.map((contributor, index) => ({
-    ...contributor,
-    sequence: sequenceByIndex.get(index) ?? index + 1,
-  }));
-};
+/** The sequence of the contributor shown last, or 0 when there are none. */
+const getLastSequence = (contributors: Contributor[]) => Math.max(0, ...contributors.map(({ sequence }) => sequence));
 
 /** Adds a contributor after all the others in the sequence order. */
 export const appendContributor = (contributors: Contributor[], newContributor: Contributor): Contributor[] =>
-  renumberSequences([
-    ...contributors,
-    { ...newContributor, sequence: Math.max(0, ...contributors.map(({ sequence }) => sequence)) + 1 },
-  ]);
+  renumberSequences([...contributors, { ...newContributor, sequence: getLastSequence(contributors) + 1 }]);
+
+/**
+ * The position a sequence points at in the shown list. Sequences are 1-based while positions are
+ * 0-based, and a sequence typed by the user can point outside the list, so it is limited to it.
+ */
+const getPositionForSequence = (sequence: number, listLength: number) => {
+  const position = sequence - 1;
+  const lastPosition = listLength - 1;
+
+  return Math.min(Math.max(position, 0), lastPosition);
+};
 
 /**
  * Moves the contributor with sequence oldSequence to newSequence, renumbering the others to keep
@@ -78,19 +93,14 @@ export const moveContributorToSequence = (
   const oldPosition = entries.findIndex(({ contributor }) => contributor.sequence === oldSequence);
 
   if (oldPosition < 0) {
-    return renumberSequences(contributors);
+    return contributors;
   }
 
-  const newPosition = Math.min(Math.max(newSequence - 1, 0), entries.length - 1);
+  const newPosition = getPositionForSequence(newSequence, entries.length);
   const [movedEntry] = entries.splice(oldPosition, 1);
   entries.splice(newPosition, 0, movedEntry);
 
-  const sequenceByIndex = toSequenceByIndex(entries);
-
-  return contributors.map((contributor, index) => ({
-    ...contributor,
-    sequence: sequenceByIndex.get(index) ?? contributor.sequence,
-  }));
+  return applySequenceOrder(contributors, entries);
 };
 
 /**
@@ -100,5 +110,5 @@ export const moveContributorToSequence = (
 export const hasIdentityWithRole = (contributors: Contributor[], identityKey: string, role: ContributorRole) =>
   !!identityKey &&
   contributors.some(
-    (contributor) => getIdentityKey(contributor.identity) === identityKey && contributor.role?.type === role
+    (contributor) => getIdentityKey(contributor.identity.id) === identityKey && contributor.role?.type === role
   );

@@ -36,7 +36,7 @@ import {
   appendContributor,
   getContributorsInSequenceOrder,
   getIdentityKey,
-  getRolesOnOtherContributors,
+  getOtherRolesOfContributor,
   hasIdentityWithRole,
   moveContributorToSequence,
   renumberSequences,
@@ -106,7 +106,7 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
     const otherContributors =
       indexToIgnore === undefined ? contributors : contributors.filter((_, index) => index !== indexToIgnore);
 
-    if (!role || !hasIdentityWithRole(otherContributors, getIdentityKey(identity), role)) {
+    if (!role || !hasIdentityWithRole(otherContributors, getIdentityKey(identity.id), role)) {
       return false;
     }
 
@@ -237,7 +237,7 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
                     // The identity must be part of the key: on a plain index, removing a row makes React
                     // reuse that row for the next contributor, keeping the previous one's sequence input
                     // and the search term of its "identify contributor" dialog
-                    key={`${getIdentityKey(contributor.identity) || contributor.identity.name}-${index}`}
+                    key={`${getIdentityKey(contributor.identity.id) || contributor.identity.name}-${index}`}
                     contributor={contributor}
                     onMoveContributor={handleMoveContributor}
                     onRemoveContributor={handleOnRemove}
@@ -245,7 +245,7 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
                     isLastElement={contributors.length === contributor.sequence}
                     contributorRoles={contributorRoles}
                     contributorIndex={index}
-                    rolesOnOtherContributors={getRolesOnOtherContributors(contributors, index)}
+                    otherRolesOfContributor={getOtherRolesOfContributor(contributors, index)}
                   />
                 ))}
               </TableBody>

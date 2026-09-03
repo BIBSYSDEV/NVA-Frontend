@@ -4,7 +4,7 @@ import {
   appendContributor,
   getContributorsInSequenceOrder,
   getIdentityKey,
-  getRolesOnOtherContributors,
+  getOtherRolesOfContributor,
   hasIdentityWithRole,
   moveContributorToSequence,
   renumberSequences,
@@ -18,18 +18,22 @@ const nora = buildIdentity({ id: personId, name: 'Nora Lindqvist' });
 const jonas = buildIdentity({ id: otherPersonId, name: 'Jonas Berg' });
 const ada = buildIdentity({ id: 'https://api.test.nva.aws.unit.no/cristin/person/9012', name: 'Ada Voss' });
 
+/** The names in the order the contributors are shown in, which is their sequence order. */
+const shownNames = (contributors: Contributor[]) =>
+  getContributorsInSequenceOrder(contributors).map(({ contributor }) => contributor.identity.name);
+
 describe('getIdentityKey', () => {
   it('uses the id when the contributor is verified', () => {
-    expect(getIdentityKey({ id: personId })).toBe(personId);
+    expect(getIdentityKey(personId)).toBe(personId);
   });
 
   it('returns an empty key for an unverified contributor', () => {
-    expect(getIdentityKey({})).toBe('');
-    expect(getIdentityKey({ id: '' })).toBe('');
+    expect(getIdentityKey(undefined)).toBe('');
+    expect(getIdentityKey('')).toBe('');
   });
 });
 
-describe('getRolesOnOtherContributors', () => {
+describe('getOtherRolesOfContributor', () => {
   it('returns the roles the same person has on their other contributors', () => {
     const contributors = [
       buildContributor({ identity: nora, role: { type: ContributorRole.Creator } }),
@@ -37,11 +41,8 @@ describe('getRolesOnOtherContributors', () => {
       buildContributor({ identity: nora, role: { type: ContributorRole.Photographer } }),
     ];
 
-    expect(getRolesOnOtherContributors(contributors, 0)).toEqual([
-      ContributorRole.Editor,
-      ContributorRole.Photographer,
-    ]);
-    expect(getRolesOnOtherContributors(contributors, 1)).toEqual([
+    expect(getOtherRolesOfContributor(contributors, 0)).toEqual([ContributorRole.Editor, ContributorRole.Photographer]);
+    expect(getOtherRolesOfContributor(contributors, 1)).toEqual([
       ContributorRole.Creator,
       ContributorRole.Photographer,
     ]);
@@ -53,7 +54,7 @@ describe('getRolesOnOtherContributors', () => {
       buildContributor({ identity: nora, role: { type: ContributorRole.Editor } }),
     ];
 
-    expect(getRolesOnOtherContributors(contributors, 0)).not.toContain(ContributorRole.Creator);
+    expect(getOtherRolesOfContributor(contributors, 0)).not.toContain(ContributorRole.Creator);
   });
 
   it('finds the roles even when the contributors are not next to each other', () => {
@@ -63,11 +64,11 @@ describe('getRolesOnOtherContributors', () => {
       buildContributor({ identity: nora, role: { type: ContributorRole.Photographer } }),
     ];
 
-    expect(getRolesOnOtherContributors(contributors, 0)).toEqual([ContributorRole.Photographer]);
+    expect(getOtherRolesOfContributor(contributors, 0)).toEqual([ContributorRole.Photographer]);
   });
 
   it('returns nothing for a person with only one role', () => {
-    expect(getRolesOnOtherContributors([buildContributor({ identity: nora })], 0)).toEqual([]);
+    expect(getOtherRolesOfContributor([buildContributor({ identity: nora })], 0)).toEqual([]);
   });
 
   it('does not restrict another person', () => {
@@ -76,7 +77,7 @@ describe('getRolesOnOtherContributors', () => {
       buildContributor({ identity: jonas, role: { type: ContributorRole.Editor } }),
     ];
 
-    expect(getRolesOnOtherContributors(contributors, 1)).toEqual([]);
+    expect(getOtherRolesOfContributor(contributors, 1)).toEqual([]);
   });
 
   it('does not restrict unverified contributors, even with the same name', () => {
@@ -91,7 +92,7 @@ describe('getRolesOnOtherContributors', () => {
       }),
     ];
 
-    expect(getRolesOnOtherContributors(contributors, 0)).toEqual([]);
+    expect(getOtherRolesOfContributor(contributors, 0)).toEqual([]);
   });
 
   it('ignores contributors without a role', () => {
@@ -100,11 +101,11 @@ describe('getRolesOnOtherContributors', () => {
       buildContributor({ identity: nora, role: undefined }),
     ];
 
-    expect(getRolesOnOtherContributors(contributors, 0)).toEqual([]);
+    expect(getOtherRolesOfContributor(contributors, 0)).toEqual([]);
   });
 
   it('handles an index that is out of bounds', () => {
-    expect(getRolesOnOtherContributors([], 0)).toEqual([]);
+    expect(getOtherRolesOfContributor([], 0)).toEqual([]);
   });
 });
 
@@ -191,14 +192,23 @@ describe('getContributorsInSequenceOrder', () => {
     ]);
   });
 
-  it('does not separate the roles of a person that already has adjacent sequences', () => {
+  it("does not group a person's roles, but orders by sequence regardless of role", () => {
     const contributors = [
       buildContributor({ identity: nora, role: { type: ContributorRole.Creator }, sequence: 1 }),
-      buildContributor({ identity: jonas, sequence: 3 }),
-      buildContributor({ identity: nora, role: { type: ContributorRole.Editor }, sequence: 2 }),
+      buildContributor({ identity: nora, role: { type: ContributorRole.Editor }, sequence: 3 }),
+      buildContributor({ identity: jonas, sequence: 2 }),
     ];
 
-    expect(getContributorsInSequenceOrder(contributors).map((entry) => entry.index)).toEqual([0, 2, 1]);
+    expect(shownNames(contributors)).toEqual(['Nora Lindqvist', 'Jonas Berg', 'Nora Lindqvist']);
+  });
+
+  it('keeps the array order for contributors with the same sequence', () => {
+    const contributors = [
+      buildContributor({ identity: nora, sequence: 1 }),
+      buildContributor({ identity: jonas, sequence: 1 }),
+    ];
+
+    expect(shownNames(contributors)).toEqual(['Nora Lindqvist', 'Jonas Berg']);
   });
 
   it('does not mutate the given list', () => {
@@ -253,9 +263,6 @@ describe('appendContributor', () => {
 });
 
 describe('moveContributorToSequence', () => {
-  const shownOrder = (contributors: Contributor[]) =>
-    getContributorsInSequenceOrder(contributors).map((entry) => entry.contributor.identity.name);
-
   // Array order deliberately differs from the sequence order: shown as Jonas, Ada, Nora
   const contributors = [
     buildContributor({ identity: nora, sequence: 3 }),
@@ -264,7 +271,7 @@ describe('moveContributorToSequence', () => {
   ];
 
   it('moves a contributor down', () => {
-    expect(shownOrder(moveContributorToSequence(contributors, 1, 2))).toEqual([
+    expect(shownNames(moveContributorToSequence(contributors, 1, 2))).toEqual([
       'Ada Voss',
       'Jonas Berg',
       'Nora Lindqvist',
@@ -272,7 +279,7 @@ describe('moveContributorToSequence', () => {
   });
 
   it('moves a contributor up', () => {
-    expect(shownOrder(moveContributorToSequence(contributors, 3, 1))).toEqual([
+    expect(shownNames(moveContributorToSequence(contributors, 3, 1))).toEqual([
       'Nora Lindqvist',
       'Jonas Berg',
       'Ada Voss',
@@ -288,7 +295,7 @@ describe('moveContributorToSequence', () => {
   });
 
   it('clamps a sequence beyond the end of the list', () => {
-    expect(shownOrder(moveContributorToSequence(contributors, 1, 99))).toEqual([
+    expect(shownNames(moveContributorToSequence(contributors, 1, 99))).toEqual([
       'Ada Voss',
       'Nora Lindqvist',
       'Jonas Berg',
@@ -296,7 +303,7 @@ describe('moveContributorToSequence', () => {
   });
 
   it('clamps a sequence before the start of the list', () => {
-    expect(shownOrder(moveContributorToSequence(contributors, 3, -5))).toEqual([
+    expect(shownNames(moveContributorToSequence(contributors, 3, -5))).toEqual([
       'Nora Lindqvist',
       'Jonas Berg',
       'Ada Voss',
@@ -311,12 +318,14 @@ describe('moveContributorToSequence', () => {
     ]);
   });
 
-  it('only renumbers when no contributor has the given sequence', () => {
-    expect(shownOrder(moveContributorToSequence(contributors, 42, 1))).toEqual([
-      'Jonas Berg',
-      'Ada Voss',
-      'Nora Lindqvist',
-    ]);
+  it('returns the list unchanged when no contributor has the given sequence', () => {
+    // Sequences with a gap, so renumbering as a side effect would be visible
+    const withGaps = [
+      buildContributor({ identity: nora, sequence: 5 }),
+      buildContributor({ identity: jonas, sequence: 1 }),
+    ];
+
+    expect(moveContributorToSequence(withGaps, 42, 1)).toEqual(withGaps);
   });
 
   it('does not mutate the given list', () => {
@@ -332,21 +341,21 @@ describe('hasIdentityWithRole', () => {
     buildContributor({ identity: jonas, role: { type: ContributorRole.Editor } }),
   ];
 
-  it('finds a person that already has the given role', () => {
+  it('returns true when the same person already has the role', () => {
     expect(hasIdentityWithRole(contributors, personId, ContributorRole.Creator)).toBe(true);
   });
 
-  it('allows the same person to be added with another role', () => {
+  it('returns false when the person has another role', () => {
     expect(hasIdentityWithRole(contributors, personId, ContributorRole.Editor)).toBe(false);
   });
 
-  it('allows another person to be added with the same role', () => {
+  it('returns false when another person has the role', () => {
     expect(
       hasIdentityWithRole(contributors, 'https://api.test.nva.aws.unit.no/cristin/person/999', ContributorRole.Creator)
     ).toBe(false);
   });
 
-  it('never matches on an empty key, so unverified contributors are not blocked', () => {
+  it('returns false for an empty key, so unverified contributors are not blocked', () => {
     const unverified = [
       buildContributor({
         identity: buildIdentity({ name: 'Nora Lindqvist' }),

@@ -484,7 +484,8 @@ export const dataTestId = {
       verifyAffiliationButton: 'button-set-unverified-affiliation',
       verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
       removeAffiliationButton: 'button-remove-affiliation',
-      removeContributorButton: (name: string) => `button-remove-contributor-${name}`,
+      removeContributorButton: (name: string, role?: string) =>
+        `button-remove-contributor-${name}${role ? `-${role}` : ''}`,
       researchProfileLink: (id: string) => `research-profile-link-${id}`,
       searchField: 'search-field',
       selectAffiliationForContributor: 'select-affiliation-for-contributor',
