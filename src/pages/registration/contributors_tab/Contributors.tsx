@@ -14,7 +14,7 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
-import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
+import { FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -32,6 +32,15 @@ import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { CristinPerson } from '../../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import {
+  appendContributor,
+  getContributorsInSequenceOrder,
+  getIdentityKey,
+  getOtherRolesOfContributor,
+  hasIdentityWithRole,
+  moveContributorToSequence,
+  renumberSequences,
+} from '../../../utils/contributor-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   filterActiveAffiliations,
@@ -42,11 +51,11 @@ import {
 import { AddContributorModal } from './AddContributorModal';
 import { ContributorRow } from './components/ContributorRow';
 
-interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
+interface ContributorsProps extends Pick<FieldArrayRenderProps, 'replace'> {
   contributorRoles: ContributorRole[];
 }
 
-export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
+export const Contributors = ({ contributorRoles, replace }: ContributorsProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
@@ -59,17 +68,16 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
 
   const contributors = values.entityDescription?.contributors ?? [];
 
-  const filteredContributors = !filterInput
-    ? contributors
-    : contributors.filter((contributor) =>
-        contributor.identity.name.toLocaleLowerCase().includes(filterInput.toLocaleLowerCase())
+  const orderedContributors = getContributorsInSequenceOrder(contributors);
+  const filteredEntries = !filterInput
+    ? orderedContributors
+    : orderedContributors.filter((entry) =>
+        entry.contributor.identity.name.toLocaleLowerCase().includes(filterInput.toLocaleLowerCase())
       );
-  const contributorsToShow = filteredContributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
+  const entriesToShow = filteredEntries.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
 
   const handleOnRemove = (indexToRemove: number) => {
-    const nextContributors = contributors
-      .filter((_, index) => index !== indexToRemove)
-      .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
+    const nextContributors = renumberSequences(contributors.filter((_, index) => index !== indexToRemove));
     setFieldValue(ContributorFieldNames.Contributors, nextContributors);
     const maxValidPage = Math.ceil(nextContributors.length / rowsPerPage);
 
@@ -84,31 +92,37 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   };
 
   const handleMoveContributor = (newSequence: number, oldSequence: number) => {
-    const oldIndex = contributors.findIndex((c) => c.sequence === oldSequence);
-    const minNewIndex = 0;
-    const maxNewIndex = contributors.length - 1;
-
-    const newIndex =
-      newSequence - 1 > maxNewIndex
-        ? maxNewIndex
-        : newSequence < minNewIndex
-          ? minNewIndex
-          : contributors.findIndex((c) => c.sequence === newSequence);
-
-    const orderedContributors =
-      newIndex >= 0 ? (move(contributors, oldIndex, newIndex) as Contributor[]) : contributors;
-
-    // Ensure incrementing sequence values
-    const newContributors = orderedContributors.map((contributor, index) => ({
-      ...contributor,
-      sequence: index + 1,
-    }));
-    setFieldValue(ContributorFieldNames.Contributors, newContributors);
+    setFieldValue(
+      ContributorFieldNames.Contributors,
+      moveContributorToSequence(contributors, oldSequence, newSequence)
+    );
   };
 
-  const goToLastPage = () => {
-    const maxValidPage = Math.floor(contributors.length / rowsPerPage) + 1;
-    setCurrentPage(maxValidPage);
+  /**
+   * A person can have several roles, but not the same role twice. Pass indexToIgnore when replacing an
+   * existing contributor, so it is not compared against itself.
+   */
+  const notifyIfDuplicateRole = (identity: Identity, role?: ContributorRole, indexToIgnore?: number) => {
+    const otherContributors =
+      indexToIgnore === undefined ? contributors : contributors.filter((_, index) => index !== indexToIgnore);
+
+    if (!role || !hasIdentityWithRole(otherContributors, getIdentityKey(identity.id), role)) {
+      return false;
+    }
+
+    dispatch(
+      setNotification({
+        message: t('registration.contributors.contributor_already_added_with_same_role'),
+        variant: 'info',
+      })
+    );
+    return true;
+  };
+
+  const addContributor = (newContributor: Contributor) => {
+    setFieldValue(ContributorFieldNames.Contributors, appendContributor(contributors, newContributor));
+    // The contributor is added last, so show the page it ended up on
+    setCurrentPage(Math.floor(contributors.length / rowsPerPage) + 1);
   };
 
   const onContributorSelected = (
@@ -116,16 +130,6 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     role: ContributorRole,
     contributorIndex?: number
   ) => {
-    if (contributors.some((contributor) => contributor.identity.id === selectedContributor.id)) {
-      dispatch(
-        setNotification({
-          message: t('registration.contributors.contributor_already_added'),
-          variant: 'info',
-        })
-      );
-      return;
-    }
-
     const identity: Identity = {
       type: 'Identity',
       id: selectedContributor.id,
@@ -134,6 +138,14 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       verificationStatus: getVerificationStatus(selectedContributor.verified),
     };
 
+    // When verifying an existing contributor it keeps its own role, which must not collide with the
+    // roles the identified person already has
+    const roleToAdd = contributorIndex === undefined ? role : contributors[contributorIndex].role?.type;
+
+    if (notifyIfDuplicateRole(identity, roleToAdd, contributorIndex)) {
+      return;
+    }
+
     const activeAffiliations = filterActiveAffiliations(selectedContributor.affiliations);
     const existingAffiliations: Affiliation[] = activeAffiliations.map(({ organization }) => ({
       type: 'Organization',
@@ -141,17 +153,14 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     }));
 
     if (contributorIndex === undefined) {
-      const newContributor: Contributor = {
+      addContributor({
         ...emptyContributor,
         identity,
         affiliations: existingAffiliations,
         role: {
           type: role,
         },
-        sequence: contributors.length + 1,
-      };
-      push(newContributor);
-      goToLastPage();
+      });
     } else {
       const thisContributor = contributors[contributorIndex];
       const verifiedAffiliations = thisContributor.affiliations ? [...thisContributor.affiliations] : [];
@@ -197,9 +206,9 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         />
       )}
 
-      {contributorsToShow.length > 0 && (
+      {entriesToShow.length > 0 && (
         <ListPagination
-          count={filteredContributors.length}
+          count={filteredEntries.length}
           rowsPerPage={rowsPerPage}
           page={currentPage}
           onPageChange={(newPage) => setCurrentPage(newPage)}
@@ -223,26 +232,22 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
                 </TableRow>
               </TableHead>
               <TableBody>
-                {contributorsToShow.map((contributor, index) => {
-                  const contributorIndex = contributors.findIndex(
-                    (c) =>
-                      c.identity.id === contributor.identity.id &&
-                      c.identity.name === contributor.identity.name &&
-                      c.role === contributor.role
-                  );
-                  return (
-                    <ContributorRow
-                      key={`${contributor.identity.name}${index}`}
-                      contributor={contributor}
-                      onMoveContributor={handleMoveContributor}
-                      onRemoveContributor={handleOnRemove}
-                      onVerifyContributor={onContributorSelected}
-                      isLastElement={contributors.length === contributor.sequence}
-                      contributorRoles={contributorRoles}
-                      contributorIndex={contributorIndex}
-                    />
-                  );
-                })}
+                {entriesToShow.map(({ contributor, apiIndex }) => (
+                  <ContributorRow
+                    // The identity must be part of the key: on a plain index, removing a row makes React
+                    // reuse that row for the next contributor, keeping the previous one's sequence input
+                    // and the search term of its "identify contributor" dialog
+                    key={`${getIdentityKey(contributor.identity.id) || contributor.identity.name}-${apiIndex}`}
+                    contributor={contributor}
+                    onMoveContributor={handleMoveContributor}
+                    onRemoveContributor={handleOnRemove}
+                    onVerifyContributor={onContributorSelected}
+                    isLastElement={contributors.length === contributor.sequence}
+                    contributorRoles={contributorRoles}
+                    contributorIndex={apiIndex}
+                    otherRolesOfContributor={getOtherRolesOfContributor(contributors, apiIndex)}
+                  />
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -255,9 +260,9 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         toggleModal={() => setOpenAddContributor(false)}
         onContributorSelected={onContributorSelected}
         addUnverifiedContributor={(contributor) => {
-          contributor.sequence = contributors.length + 1;
-          push(contributor);
-          goToLastPage();
+          if (!notifyIfDuplicateRole(contributor.identity, contributor.role?.type)) {
+            addContributor(contributor);
+          }
         }}
       />
 

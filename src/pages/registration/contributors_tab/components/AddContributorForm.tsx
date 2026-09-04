@@ -14,6 +14,7 @@ import { ContributorRole } from '../../../../types/contributor.types';
 import { Registration } from '../../../../types/registration.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { hasIdentityWithRole } from '../../../../utils/contributor-helpers';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../../../utils/urlPaths';
 
@@ -30,6 +31,7 @@ export const AddContributorForm = ({
   addContributor,
   openAddUnverifiedContributor,
   initialSearchTerm,
+  roleToAdd,
   searchTerm,
   setSearchTerm,
 }: AddContributorFormProps) => {
@@ -43,7 +45,8 @@ export const AddContributorForm = ({
   const { values } = useFormikContext<Registration>();
   const contributors = values.entityDescription?.contributors ?? [];
 
-  const isSelfAdded = user?.cristinId && contributors.some((contributor) => contributor.identity.id === user.cristinId);
+  // Self can still be added with another role than the one already registered
+  const isSelfAdded = !!user?.cristinId && hasIdentityWithRole(contributors, user.cristinId, roleToAdd);
 
   const addSelfAsContributor = async () => {
     if (user?.cristinId) {

@@ -1,4 +1,21 @@
+import { Contributor, ContributorRole, Identity } from '../../types/contributor.types';
 import { CristinPerson, CristinPersonAffiliation, Employment } from '../../types/user.types';
+
+export const buildIdentity = (overrides: Partial<Identity> = {}): Identity => ({
+  type: 'Identity',
+  name: '',
+  ...overrides,
+});
+
+export const buildContributor = (overrides: Partial<Contributor> = {}): Contributor => ({
+  type: 'Contributor',
+  affiliations: [],
+  correspondingAuthor: false,
+  identity: buildIdentity(),
+  role: { type: ContributorRole.Creator },
+  sequence: 1,
+  ...overrides,
+});
 
 export const buildCristinPerson = (overrides: Partial<CristinPerson> = {}): CristinPerson => ({
   id: '',
