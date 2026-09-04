@@ -700,6 +700,7 @@ export const dataTestId = {
       publisherChip: 'publisher-chip',
       publisherField: 'publisher-search-field',
       publisherNameField: 'publisher-name-field',
+      publisherSelfOption: 'publisher-self-option',
       relatedRegistrationField: 'related-registration-field',
       relatedRegistrationLink: (value: string) => `related-registration-link-${value}`,
       removePublisherButton: 'remove-publisher-button',
