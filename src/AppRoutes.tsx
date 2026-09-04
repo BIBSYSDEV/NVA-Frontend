@@ -2,10 +2,11 @@ import { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router';
-import { NviCandidateGlobalStatusEnum, NviCandidateStatusEnum } from './api/searchApi';
 import { Layout } from './Layout';
 import NotFound from './pages/errorpages/NotFound';
+import { nviSearchStatusParams } from './pages/messages/nviUtils';
 import { RootState } from './redux/store';
+import { NviSearchStatusEnum } from './types/nvi.types';
 import { PrivateRoute } from './utils/routes/Routes';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from './utils/urlPaths';
 import { checkUserRoles } from './utils/user-helpers';
@@ -35,7 +36,7 @@ const NviAdminPublicationPointsPage = lazy(
 );
 const PublisherClaimsSettings = lazy(() => import('./pages/editor/PublisherClaimsSettings'));
 const SerialPublicationClaimsSettings = lazy(() => import('./pages/editor/SerialPublicationClaimsSettings'));
-const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
+const EditorPage = lazy(() => import('./pages/institution/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const CopyrightActTerms = lazy(() => import('./pages/infopages/CopyrightActTerms'));
 const CreateProject = lazy(() => import('./pages/project/project_wizard/CreateProject'));
@@ -139,8 +140,7 @@ export const AppRoutes = () => {
                 <Navigate
                   to={getNviCandidatesSearchPath({
                     username: user?.nvaUsername,
-                    status: NviCandidateStatusEnum.Pending,
-                    globalStatus: NviCandidateGlobalStatusEnum.Pending,
+                    ...nviSearchStatusParams[NviSearchStatusEnum.CandidatesForControl],
                   })}
                   replace
                 />

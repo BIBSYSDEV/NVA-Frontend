@@ -9,7 +9,12 @@ export const SimpleWarning = ({ text, sx }: SimpleWarningProps) => {
   return (
     <Box sx={{ display: 'flex', gap: '0.3rem', alignItems: 'center', ...sx }}>
       <ErrorIcon color="warning" />
-      <Typography fontWeight="bold">{text}</Typography>
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+        }}>
+        {text}
+      </Typography>
     </Box>
   );
 };

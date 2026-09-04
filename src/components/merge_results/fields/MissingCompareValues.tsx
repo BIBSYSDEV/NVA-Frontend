@@ -18,10 +18,20 @@ export const MissingCompareValues = () => {
   return (
     <>
       <StyledValueBox>
-        <Typography fontStyle="italic">{t('missing_value')}</Typography>
+        <Typography
+          sx={{
+            fontStyle: 'italic',
+          }}>
+          {t('missing_value')}
+        </Typography>
       </StyledValueBox>
       <StyledValueBox sx={{ display: { xs: 'none', md: 'flex' }, gridColumn: 3 }}>
-        <Typography fontStyle="italic">{t('missing_value')}</Typography>
+        <Typography
+          sx={{
+            fontStyle: 'italic',
+          }}>
+          {t('missing_value')}
+        </Typography>
       </StyledValueBox>
       <Divider sx={{ display: { xs: 'block', md: 'none' }, my: '0.5rem' }} />
     </>

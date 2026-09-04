@@ -246,7 +246,11 @@ export const DoiRequestAccordion = ({
         sx={{ borderLeftColor: getTicketColor(TicketTypeEnum.DoiRequest) }}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <TicketTypeTag type={TicketTypeEnum.DoiRequest} showText={false} />
-        <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+            flexGrow: '1',
+          }}>
           {t('common.doi')}
         </Typography>
         {doiRequestTicket ? (
@@ -339,7 +343,13 @@ export const DoiRequestAccordion = ({
                     i18nKey="registration.public_page.tasks_panel.reserve_doi_confirmation"
                     components={[
                       <Typography sx={{ mb: '1rem' }} key="1" />,
-                      <Typography sx={{ mb: '1rem' }} key="2" fontWeight={700} />,
+                      <Typography
+                        key="2"
+                        sx={{
+                          fontWeight: 700,
+                          mb: '1rem',
+                        }}
+                      />,
                     ]}
                   />
                 </ConfirmDialog>
@@ -435,7 +445,11 @@ export const DoiRequestAccordion = ({
         {(isPendingDoiRequest || isClosedDoiRequest) && (
           <>
             <Divider sx={{ my: '1rem' }} />
-            <Typography fontWeight="bold" gutterBottom>
+            <Typography
+              gutterBottom
+              sx={{
+                fontWeight: 'bold',
+              }}>
               {t('common.messages')}
             </Typography>
 

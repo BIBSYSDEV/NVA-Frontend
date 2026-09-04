@@ -1,7 +1,7 @@
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import SellIcon from '@mui/icons-material/Sell';
-import { Box, BoxProps, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
+import { Box, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -59,7 +59,9 @@ interface MessageItemProps {
   text: string | undefined;
   date: string;
   username: string | undefined;
-  backgroundColor: BoxProps['bgcolor'];
+
+  /** Theme palette path, applied as the `bgcolor` of the message. */
+  backgroundColor: string;
   menuElement?: ReactNode;
   showOrganization?: boolean;
   /** Organization to show instead of the one belonging to the sender. */
@@ -127,21 +129,17 @@ export const MessageItem = ({
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
       <Box
-        sx={{ color: 'textPrimary.main', my: '0.1rem' }}
+        sx={{ color: 'textPrimary.main', my: '0.1rem', overflowWrap: 'anywhere' }}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
         component={Typography}>
         {text ? text : messageType !== 'Approval' ? <i>{t('my_page.messages.message_deleted')}</i> : undefined}
       </Box>
       <HorizontalBox sx={{ gap: '1rem', color: 'textPrimary.main' }}>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, minWidth: 0 }}>
           <Tooltip title={senderName ? senderName : missingDataLabel}>
             <EllipsisTypography
               data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}
-              sx={{
-                fontWeight: 'bold',
-                maxWidth: { sm: '10rem', md: '12rem', lg: '18rem', xl: '30rem' },
-                color: 'textPrimary.main',
-              }}>
+              sx={{ fontWeight: 'bold', color: 'textPrimary.main' }}>
               {senderQuery.isLoading ? (
                 <Skeleton sx={{ width: '8rem' }} />
               ) : senderName ? (
@@ -153,7 +151,7 @@ export const MessageItem = ({
           </Tooltip>
         </Box>
         <Tooltip title={toDateStringWithTime(date)}>
-          <HorizontalBox sx={{ gap: '0.25rem', color: 'textPrimary.main' }}>
+          <HorizontalBox sx={{ gap: '0.25rem', flexShrink: 0, color: 'textPrimary.main' }}>
             <CalendarMonthIcon sx={{ color: 'textPrimary.main' }} />
             <Typography
               sx={{ pt: '0.1rem', color: 'textPrimary.main' }}

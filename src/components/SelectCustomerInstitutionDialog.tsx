@@ -109,7 +109,12 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
               <OrganizationRenderOption key={organization.id} props={props} option={organization} />
             ) : (
               <li {...props} key={option.id}>
-                <Typography fontWeight="bold">{option.displayName}</Typography>
+                <Typography
+                  sx={{
+                    fontWeight: 'bold',
+                  }}>
+                  {option.displayName}
+                </Typography>
               </li>
             );
           }}
@@ -117,7 +122,10 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
             <TextField
               {...params}
               placeholder={t('project.search_for_institution')}
-              slotProps={{ inputLabel: { 'aria-label': t('common.select_institution') } }}
+              slotProps={{
+                ...params.slotProps,
+                htmlInput: { ...params.slotProps.htmlInput, 'aria-label': t('common.select_institution') },
+              }}
             />
           )}
         />

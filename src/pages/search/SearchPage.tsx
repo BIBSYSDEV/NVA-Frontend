@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useOutletContext } from 'react-router';
 import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
 import { SearchForm } from '../../components/filters/SearchForm';
+import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { SearchParam } from '../../utils/searchHelpers';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
@@ -37,6 +38,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 const SearchPage = () => {
   const { t } = useTranslation();
   const { registrationQuery, personQuery, projectQuery } = useOutletContext<SearchPropTypes>();
+  const registrationParams = useRegistrationsQueryParams();
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -59,7 +61,7 @@ const SearchPage = () => {
               <SelectedResultFacetsList aggregations={registrationQuery.data?.aggregations} />
             )}
           </StyledContainer>
-          <RegistrationSearch registrationQuery={registrationQuery} />
+          <RegistrationSearch registrationQuery={registrationQuery} searchResultNavigationParams={registrationParams} />
         </>
       )}
       {personIsSeleced && (

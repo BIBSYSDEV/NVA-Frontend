@@ -34,7 +34,7 @@ export const NviPeriodDateTimeField = ({ name, label, dataTestId }: NviPeriodDat
           slotProps={{
             textField: {
               required: true,
-              inputProps: { 'data-testid': dataTestId },
+              'data-testid': dataTestId,
             },
           }}
           disabled={!publishingYear}

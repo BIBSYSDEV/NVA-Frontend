@@ -102,7 +102,13 @@ export const MyProfile = () => {
                     lg: '"personalia-details profile-picture"',
                   },
                 }}>
-                <Grid container rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
+                <Grid
+                  container
+                  columns={16}
+                  sx={{
+                    rowGap: 1,
+                    gridArea: 'personalia-details',
+                  }}>
                   <Grid size={16}>
                     <ProfileBox>
                       <Typography variant="h2" sx={{ mb: '0.5rem' }}>

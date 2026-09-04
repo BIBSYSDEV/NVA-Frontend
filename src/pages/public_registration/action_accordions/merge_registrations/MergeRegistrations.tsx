@@ -27,7 +27,16 @@ export const MergeRegistrations = ({ sourceRegistration }: MergeRegistrationsPro
       <Trans
         t={t}
         i18nKey="merge_results_description"
-        components={{ heading: <Typography fontWeight="bold" />, p: <Typography gutterBottom /> }}
+        components={{
+          heading: (
+            <Typography
+              sx={{
+                fontWeight: 'bold',
+              }}
+            />
+          ),
+          p: <Typography gutterBottom />,
+        }}
       />
       <Button
         data-testid={dataTestId.registrationLandingPage.tasksPanel.mergeRegistrationsButton}

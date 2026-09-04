@@ -14,6 +14,29 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { TFunction } from 'i18next';
 
 /*
+ * The single source of truth for which url attributes each status option in the UI (the status filter dropdown)
+ * corresponds to. Spread the relevant entry into getNviCandidatesSearchPath when linking to the candidate search,
+ * so that such links stay in sync with the status filter.
+ * */
+export const nviSearchStatusParams: Record<
+  NviSearchStatusEnum,
+  { status: NviCandidateStatus[]; globalStatus: NviCandidateGlobalStatus[] }
+> = {
+  [NviSearchStatusEnum.CandidatesForControl]: {
+    status: [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending],
+    globalStatus: [NviCandidateGlobalStatusEnum.Pending],
+  },
+  [NviSearchStatusEnum.Approved]: {
+    status: [NviCandidateStatusEnum.Approved],
+    globalStatus: [NviCandidateGlobalStatusEnum.Approved, NviCandidateGlobalStatusEnum.Pending],
+  },
+  [NviSearchStatusEnum.Rejected]: {
+    status: [NviCandidateStatusEnum.Rejected],
+    globalStatus: [NviCandidateGlobalStatusEnum.Rejected, NviCandidateGlobalStatusEnum.Pending],
+  },
+};
+
+/*
  * Takes in arrays of statuses extracted from two different url attributes and translates it into the state that
  * should be shown in the UI (the status filter dropdown)
  * */
@@ -55,19 +78,9 @@ export const computeParamsFromDropdownStatus = (dropdownStatus: NviSearchStatus[
   const newGlobalStatus = new Set<NviCandidateGlobalStatus>([]);
 
   dropdownStatus.forEach((value) => {
-    if (value === NviSearchStatusEnum.CandidatesForControl) {
-      newStatus.add(NviCandidateStatusEnum.New);
-      newStatus.add(NviCandidateStatusEnum.Pending);
-      newGlobalStatus.add(NviCandidateGlobalStatusEnum.Pending);
-    } else if (value === NviSearchStatusEnum.Approved) {
-      newStatus.add(NviCandidateStatusEnum.Approved);
-      newGlobalStatus.add(NviCandidateGlobalStatusEnum.Approved);
-      newGlobalStatus.add(NviCandidateGlobalStatusEnum.Pending);
-    } else if (value === NviSearchStatusEnum.Rejected) {
-      newStatus.add(NviCandidateStatusEnum.Rejected);
-      newGlobalStatus.add(NviCandidateGlobalStatusEnum.Rejected);
-      newGlobalStatus.add(NviCandidateGlobalStatusEnum.Pending);
-    }
+    const { status, globalStatus } = nviSearchStatusParams[value];
+    status.forEach((statusValue) => newStatus.add(statusValue));
+    globalStatus.forEach((globalStatusValue) => newGlobalStatus.add(globalStatusValue));
   });
 
   return { newStatuses: Array.from(newStatus), newGlobalStatuses: Array.from(newGlobalStatus) };

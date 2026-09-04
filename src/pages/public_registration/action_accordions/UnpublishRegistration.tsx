@@ -41,7 +41,12 @@ export const UnpublishRegistration = ({ registration, refetchData }: UnpublishRe
 
   return (
     <section>
-      <Typography fontWeight="bold">{t('unpublish_actions.unpublish_header')}</Typography>
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+        }}>
+        {t('unpublish_actions.unpublish_header')}
+      </Typography>
       {userCanUnpublish ? (
         <>
           <Typography gutterBottom>{t('unpublish_actions.unpublish_info')}</Typography>

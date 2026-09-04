@@ -13,7 +13,7 @@ export const PublicPageInfoEntry = ({ title, content, ...rest }: PublicPageInfoE
       {title}:
     </Typography>
     {typeof content === 'string' ? (
-      <Typography component="dd" gridColumn={2} {...rest}>
+      <Typography component="dd" {...rest} sx={{ gridColumn: 2 }}>
         {content}
       </Typography>
     ) : (

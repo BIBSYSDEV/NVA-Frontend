@@ -20,6 +20,7 @@ import { doNotRedirectQueryParam, IdentifierParams, UrlPathTemplate } from '../.
 import { hasTicketCuratorRole } from '../../utils/user-helpers';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageSpinner } from '../PageSpinner';
+import { SearchResultNavigation } from './_components/SearchResultNavigation';
 
 export const RegistrationLandingPage = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -66,7 +67,7 @@ export const RegistrationLandingPage = () => {
       component="section"
       sx={{
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', md: '4fr 1fr' },
+        gridTemplateColumns: { xs: '1fr', md: '4fr minmax(0, 1fr)' },
         gridTemplateAreas: { xs: '"tasks" "registration"', md: '"registration tasks"' },
         gap: '1rem',
       }}>
@@ -79,6 +80,7 @@ export const RegistrationLandingPage = () => {
               <Box sx={{ position: 'relative' }}>
                 <PublicRegistrationContent registration={registration} />
                 {isOnTasksDialogue && <TaskNavigation />}
+                <SearchResultNavigation />
               </Box>
               <ActionPanelContext.Provider value={{ refetchData: refetchRegistrationAndTickets }}>
                 <ActionPanel

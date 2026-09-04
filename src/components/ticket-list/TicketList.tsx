@@ -1,12 +1,10 @@
 import { Button, List, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
-import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { TicketSearchParam } from '../../api/searchApi';
 import { CustomerTicketSearchResponse, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ErrorBoundary } from '../ErrorBoundary';
@@ -33,13 +31,7 @@ export const TicketList = ({ ticketsQuery, title, selectedTicketTypes }: TicketL
   const ticketStatusOptions = isOnTasksPage
     ? ticketStatusValues.filter((status) => status !== 'New')
     : ticketStatusValues;
-  const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
-
-  useEffect(() => {
-    if (tickets.some(({ publication }) => stringIncludesMathJax(publication.mainTitle))) {
-      typesetMathJax();
-    }
-  }, [tickets]);
+  const tickets = ticketsQuery.data?.hits ?? [];
 
   const { viewedByNot, results, from, searchParams } = useTicketsParams();
 

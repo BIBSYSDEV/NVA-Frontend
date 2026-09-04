@@ -12,12 +12,14 @@ export const SideNavHeader = ({ icon: Icon, text }: SideNavHeaderProps) => {
     <PrimaryColoredBox sx={{ alignItems: 'center', gap: '0.5rem', padding: '0.5rem' }}>
       {Icon && <Icon sx={{ fontSize: '1.5rem' }} />}
       <Typography
-        textTransform={'uppercase'}
         component="h2"
-        fontWeight="bold"
-        fontSize="1rem"
         id={sideNavHeaderId}
-        sx={{ color: 'inherit' }}>
+        sx={{
+          textTransform: 'uppercase',
+          fontWeight: 'bold',
+          fontSize: '1rem',
+          color: 'inherit',
+        }}>
         {text}
       </Typography>
     </PrimaryColoredBox>

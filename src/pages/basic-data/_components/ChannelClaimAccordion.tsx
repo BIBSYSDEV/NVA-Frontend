@@ -1,4 +1,4 @@
-import LockOutlineIcon from '@mui/icons-material/LockOutline';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
@@ -20,7 +20,7 @@ export const ChannelClaimAccordion = () => {
   return (
     <NavigationListAccordion
       title={t('editor.institution.channel_claims.channel_claim')}
-      startIcon={<LockOutlineIcon sx={{ bgcolor: 'grey.500' }} />}
+      startIcon={<LockOutlinedIcon sx={{ bgcolor: 'grey.500' }} />}
       accordionPath={UrlPathTemplate.BasicDataChannelClaims}
       defaultPath={UrlPathTemplate.BasicDataPublisherClaims}
       dataTestId={dataTestId.basicData.channelClaimLink}>
