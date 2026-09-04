@@ -18,8 +18,8 @@ const nora = buildIdentity({ id: personId, name: 'Nora Lindqvist' });
 const jonas = buildIdentity({ id: otherPersonId, name: 'Jonas Berg' });
 const ada = buildIdentity({ id: 'https://api.test.nva.aws.unit.no/cristin/person/9012', name: 'Ada Voss' });
 
-/** The names in the order the contributors are shown in, which is their sequence order. */
-const shownNames = (contributors: Contributor[]) =>
+/** The names in sequence order, which is the order the contributors are shown in. */
+const namesInSequenceOrder = (contributors: Contributor[]) =>
   getContributorsInSequenceOrder(contributors).map(({ contributor }) => contributor.identity.name);
 
 describe('getIdentityKey', () => {
@@ -187,8 +187,8 @@ describe('getContributorsInSequenceOrder', () => {
     ];
 
     expect(getContributorsInSequenceOrder(contributors)).toEqual([
-      { contributor: contributors[1], index: 1 },
-      { contributor: contributors[0], index: 0 },
+      { contributor: contributors[1], apiIndex: 1 },
+      { contributor: contributors[0], apiIndex: 0 },
     ]);
   });
 
@@ -199,7 +199,7 @@ describe('getContributorsInSequenceOrder', () => {
       buildContributor({ identity: jonas, sequence: 2 }),
     ];
 
-    expect(shownNames(contributors)).toEqual(['Nora Lindqvist', 'Jonas Berg', 'Nora Lindqvist']);
+    expect(namesInSequenceOrder(contributors)).toEqual(['Nora Lindqvist', 'Jonas Berg', 'Nora Lindqvist']);
   });
 
   it('keeps the array order for contributors with the same sequence', () => {
@@ -208,7 +208,7 @@ describe('getContributorsInSequenceOrder', () => {
       buildContributor({ identity: jonas, sequence: 1 }),
     ];
 
-    expect(shownNames(contributors)).toEqual(['Nora Lindqvist', 'Jonas Berg']);
+    expect(namesInSequenceOrder(contributors)).toEqual(['Nora Lindqvist', 'Jonas Berg']);
   });
 
   it('does not mutate the given list', () => {
@@ -271,7 +271,7 @@ describe('moveContributorToSequence', () => {
   ];
 
   it('moves a contributor down', () => {
-    expect(shownNames(moveContributorToSequence(contributors, 1, 2))).toEqual([
+    expect(namesInSequenceOrder(moveContributorToSequence(contributors, 1, 2))).toEqual([
       'Ada Voss',
       'Jonas Berg',
       'Nora Lindqvist',
@@ -279,7 +279,7 @@ describe('moveContributorToSequence', () => {
   });
 
   it('moves a contributor up', () => {
-    expect(shownNames(moveContributorToSequence(contributors, 3, 1))).toEqual([
+    expect(namesInSequenceOrder(moveContributorToSequence(contributors, 3, 1))).toEqual([
       'Nora Lindqvist',
       'Jonas Berg',
       'Ada Voss',
@@ -295,7 +295,7 @@ describe('moveContributorToSequence', () => {
   });
 
   it('clamps a sequence beyond the end of the list', () => {
-    expect(shownNames(moveContributorToSequence(contributors, 1, 99))).toEqual([
+    expect(namesInSequenceOrder(moveContributorToSequence(contributors, 1, 99))).toEqual([
       'Ada Voss',
       'Nora Lindqvist',
       'Jonas Berg',
@@ -303,7 +303,7 @@ describe('moveContributorToSequence', () => {
   });
 
   it('clamps a sequence before the start of the list', () => {
-    expect(shownNames(moveContributorToSequence(contributors, 3, -5))).toEqual([
+    expect(namesInSequenceOrder(moveContributorToSequence(contributors, 3, -5))).toEqual([
       'Nora Lindqvist',
       'Jonas Berg',
       'Ada Voss',

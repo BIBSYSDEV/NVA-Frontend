@@ -232,20 +232,20 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
                 </TableRow>
               </TableHead>
               <TableBody>
-                {entriesToShow.map(({ contributor, index }) => (
+                {entriesToShow.map(({ contributor, apiIndex }) => (
                   <ContributorRow
                     // The identity must be part of the key: on a plain index, removing a row makes React
                     // reuse that row for the next contributor, keeping the previous one's sequence input
                     // and the search term of its "identify contributor" dialog
-                    key={`${getIdentityKey(contributor.identity.id) || contributor.identity.name}-${index}`}
+                    key={`${getIdentityKey(contributor.identity.id) || contributor.identity.name}-${apiIndex}`}
                     contributor={contributor}
                     onMoveContributor={handleMoveContributor}
                     onRemoveContributor={handleOnRemove}
                     onVerifyContributor={onContributorSelected}
                     isLastElement={contributors.length === contributor.sequence}
                     contributorRoles={contributorRoles}
-                    contributorIndex={index}
-                    otherRolesOfContributor={getOtherRolesOfContributor(contributors, index)}
+                    contributorIndex={apiIndex}
+                    otherRolesOfContributor={getOtherRolesOfContributor(contributors, apiIndex)}
                   />
                 ))}
               </TableBody>

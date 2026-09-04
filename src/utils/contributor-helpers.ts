@@ -2,8 +2,12 @@ import { Contributor, ContributorRole } from '../types/contributor.types';
 
 export interface ContributorEntry {
   contributor: Contributor;
-  /** Index of the contributor in the original contributors array, to be used in Formik field names. */
-  index: number;
+  /**
+   * Index of the contributor in the array as it comes from and goes back to the API. That order must
+   * be kept, both because Formik field names point at it and because the API preserves it, so this is
+   * the index to write changes back to - never the position in a sorted view of the list.
+   */
+  apiIndex: number;
 }
 
 /**
@@ -36,19 +40,27 @@ export const getOtherRolesOfContributor = (contributors: Contributor[], index: n
 /** Orders contributors by their sequence, keeping the index each one has in the original array. */
 export const getContributorsInSequenceOrder = (contributors: Contributor[]): ContributorEntry[] =>
   contributors
-    .map((contributor, index) => ({ contributor, index }))
+    .map((contributor, apiIndex) => ({ contributor, apiIndex }))
     .sort((a, b) => a.contributor.sequence - b.contributor.sequence);
 
 /**
- * Gives the contributors sequence 1..n following the given order. Only the sequence values change:
- * the array order is left untouched, so Formik field names keep pointing at the same contributors.
+ * Writes sequence 1..n onto the contributors, so that the order of contributorsBySequence becomes
+ * the sequence the list is shown in.
+ *
+ * Both arguments hold the same contributors in different orders: contributorsInApiOrder is the array
+ * that is written back to, while contributorsBySequence only says which contributor should be shown
+ * first, second and so on. Only the sequence values change, so the API order is left untouched and
+ * Formik field names keep pointing at the same contributors.
  */
-const applySequenceOrder = (contributors: Contributor[], orderedEntries: ContributorEntry[]): Contributor[] => {
-  const renumbered = [...contributors];
+const applySequenceOrder = (
+  contributorsInApiOrder: Contributor[],
+  contributorsBySequence: ContributorEntry[]
+): Contributor[] => {
+  const renumbered = [...contributorsInApiOrder];
 
-  orderedEntries.forEach(({ index }, position) => {
+  contributorsBySequence.forEach(({ apiIndex }, position) => {
     const sequence = position + 1;
-    renumbered[index] = { ...renumbered[index], sequence };
+    renumbered[apiIndex] = { ...renumbered[apiIndex], sequence };
   });
 
   return renumbered;
@@ -62,22 +74,26 @@ const applySequenceOrder = (contributors: Contributor[], orderedEntries: Contrib
 export const renumberSequences = (contributors: Contributor[]): Contributor[] =>
   applySequenceOrder(contributors, getContributorsInSequenceOrder(contributors));
 
-/** The sequence of the contributor shown last, or 0 when there are none. */
-const getLastSequence = (contributors: Contributor[]) => Math.max(0, ...contributors.map(({ sequence }) => sequence));
+/** The highest sequence in use, which is the one shown last, or 0 when there are no contributors. */
+const getHighestSequenceNumber = (contributors: Contributor[]) =>
+  Math.max(0, ...contributors.map(({ sequence }) => sequence));
 
 /** Adds a contributor after all the others in the sequence order. */
 export const appendContributor = (contributors: Contributor[], newContributor: Contributor): Contributor[] =>
-  renumberSequences([...contributors, { ...newContributor, sequence: getLastSequence(contributors) + 1 }]);
+  renumberSequences([...contributors, { ...newContributor, sequence: getHighestSequenceNumber(contributors) + 1 }]);
 
 /**
- * The position a sequence points at in the shown list. Sequences are 1-based while positions are
- * 0-based, and a sequence typed by the user can point outside the list, so it is limited to it.
+ * The position a sequence points at in a list ordered by sequence, which is the only order where a
+ * sequence has a position at all. Sequences are 1-based while positions are 0-based, and a sequence
+ * typed by the user can point outside the list, so it is limited to the first and last position.
  */
-const getPositionForSequence = (sequence: number, listLength: number) => {
-  const position = sequence - 1;
+const getPositionInSequenceOrder = (sequence: number, listLength: number) => {
+  const firstPosition = 0;
   const lastPosition = listLength - 1;
+  const wantedPosition = sequence - 1;
+  const notBeforeFirst = Math.max(wantedPosition, firstPosition);
 
-  return Math.min(Math.max(position, 0), lastPosition);
+  return Math.min(notBeforeFirst, lastPosition);
 };
 
 /**
@@ -89,18 +105,18 @@ export const moveContributorToSequence = (
   oldSequence: number,
   newSequence: number
 ): Contributor[] => {
-  const entries = getContributorsInSequenceOrder(contributors);
-  const oldPosition = entries.findIndex(({ contributor }) => contributor.sequence === oldSequence);
+  const contributorsBySequence = getContributorsInSequenceOrder(contributors);
+  const oldPosition = contributorsBySequence.findIndex(({ contributor }) => contributor.sequence === oldSequence);
 
   if (oldPosition < 0) {
     return contributors;
   }
 
-  const newPosition = getPositionForSequence(newSequence, entries.length);
-  const [movedEntry] = entries.splice(oldPosition, 1);
-  entries.splice(newPosition, 0, movedEntry);
+  const newPosition = getPositionInSequenceOrder(newSequence, contributorsBySequence.length);
+  const [movedEntry] = contributorsBySequence.splice(oldPosition, 1);
+  contributorsBySequence.splice(newPosition, 0, movedEntry);
 
-  return applySequenceOrder(contributors, entries);
+  return applySequenceOrder(contributors, contributorsBySequence);
 };
 
 /**
