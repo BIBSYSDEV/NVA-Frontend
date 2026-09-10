@@ -25,7 +25,7 @@ export const InfoBanner = ({
       sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', p: infoBannerPadding[size], bgcolor: bgColor, ...sx }}
       {...props}>
       {icon(size)}
-      <Typography color={textColor}>{text}</Typography>
+      <Typography sx={{ color: textColor }}>{text}</Typography>
     </Paper>
   );
 };

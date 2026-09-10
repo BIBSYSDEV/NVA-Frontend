@@ -1,29 +1,32 @@
 import { Box, Chip, Skeleton } from '@mui/material';
-import { UseQueryResult } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
-import { ResultParam } from '../../../api/searchApi';
 import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { OrganizationHierarchyFilter } from './components/OrganizationHierarchyFilter';
 
 interface OrganizationUnitSelectorProps {
-  unitId: string | null;
-  topLevelOrganizationQuery: UseQueryResult<Organization, unknown>;
+  parentOrganization: Organization | null;
+  value: string | null;
+  onChange: (unitId: string | null) => void;
 }
 
-export const OrganizationUnitSelector = ({ unitId, topLevelOrganizationQuery }: OrganizationUnitSelectorProps) => {
+/**
+ * A chip that shows the currently selected sub-unit of `parentOrganization` (or a placeholder), and opens a dialog
+ * ({@link OrganizationHierarchyFilter}) for picking a different one when clicked.
+ *
+ * Pure controlled component: the selected unit id comes in as `value`, and changes are reported via `onChange`
+ * (called with `null` when the selection is cleared via the chip's delete icon).
+ */
+export const OrganizationUnitSelector = ({ parentOrganization, value, onChange }: OrganizationUnitSelectorProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
   const [showUnitSelection, setShowUnitSelection] = useState(false);
-  const toggleShowUnitSelection = () => setShowUnitSelection(!showUnitSelection);
 
-  const subUnitQuery = useFetchOrganization(unitId);
+  const unitQuery = useFetchOrganization(value);
+
+  const toggleShowUnitSelection = () => setShowUnitSelection(!showUnitSelection);
 
   return (
     <>
@@ -33,11 +36,11 @@ export const OrganizationUnitSelector = ({ unitId, topLevelOrganizationQuery }: 
         variant="filled"
         onClick={toggleShowUnitSelection}
         label={
-          unitId ? (
-            subUnitQuery.isPending ? (
+          value ? (
+            unitQuery.isPending ? (
               <Skeleton sx={{ minWidth: '10rem' }} />
             ) : (
-              getLanguageString(subUnitQuery.data?.labels)
+              getLanguageString(unitQuery.data?.labels)
             )
           ) : (
             <Box component="span" sx={{ textWrap: 'nowrap' }}>
@@ -45,24 +48,18 @@ export const OrganizationUnitSelector = ({ unitId, topLevelOrganizationQuery }: 
             </Box>
           )
         }
-        onDelete={
-          unitId
-            ? () => {
-                params.delete(ResultParam.From);
-                params.delete(ResultParam.Unit);
-                navigate({ search: params.toString() });
-              }
-            : undefined
-        }
-        sx={{ minWidth: unitId ? '15rem' : undefined }}
-        disabled={!topLevelOrganizationQuery.data?.hasPart || topLevelOrganizationQuery.data?.hasPart?.length === 0}
+        onDelete={value ? () => onChange(null) : undefined}
+        sx={{ minWidth: value ? '15rem' : undefined }}
+        disabled={!parentOrganization?.hasPart || parentOrganization?.hasPart?.length === 0}
       />
 
-      {topLevelOrganizationQuery.data && (
+      {parentOrganization && (
         <OrganizationHierarchyFilter
-          organization={topLevelOrganizationQuery.data}
+          organization={parentOrganization}
           open={showUnitSelection}
           onClose={toggleShowUnitSelection}
+          value={value}
+          onChange={onChange}
         />
       )}
     </>

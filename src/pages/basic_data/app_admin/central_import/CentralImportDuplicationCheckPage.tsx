@@ -18,7 +18,6 @@ import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTyp
 import { BasicDataLocationState, PreviousPathLocationState } from '../../../../types/locationState.types';
 import { expandImportCandidate } from '../../../../utils/central-import-helpers';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { convertToRegistrationSearchItem } from '../../../../utils/registration-helpers';
 import {
   getImportCandidateMergePath,
@@ -81,12 +80,6 @@ export const CentralImportDuplicationCheckPage = () => {
   const importedRegistrationQuery = useFetchRegistration(importedRegistrationIdentifier, {
     enabled: importCandidate?.importStatus.candidateStatus === 'IMPORTED',
   });
-
-  useEffect(() => {
-    if (stringIncludesMathJax(importCandidateSearchResult?.mainTitle)) {
-      typesetMathJax();
-    }
-  }, [importCandidateSearchResult]);
 
   useEffect(() => {
     setDuplicateSearchFilters({
@@ -152,7 +145,11 @@ export const CentralImportDuplicationCheckPage = () => {
 
       <Paper elevation={0} sx={{ gridArea: 'actions' }}>
         <PrimaryColoredBox>
-          <Typography color="inherit" variant="h2">
+          <Typography
+            variant="h2"
+            sx={{
+              color: 'inherit',
+            }}>
             {t('common.dialogue')}
           </Typography>
         </PrimaryColoredBox>

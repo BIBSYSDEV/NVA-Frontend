@@ -1,13 +1,24 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { AutocompleteRenderInputParams, CircularProgress, TextField, TextFieldProps } from '@mui/material';
+import {
+  AutocompleteRenderInputParams,
+  CircularProgress,
+  InputLabelProps,
+  TextField,
+  TextFieldProps,
+} from '@mui/material';
+
+type AutocompleteSlotProps = AutocompleteRenderInputParams['slotProps'];
+
+// Autocomplete types the inputLabel slot as plain label attributes, so widen it to accept InputLabel props such as shrink
+type AutocompleteTextFieldSlotProps = Omit<AutocompleteSlotProps, 'inputLabel'> & {
+  inputLabel: AutocompleteSlotProps['inputLabel'] & Pick<InputLabelProps, 'shrink'>;
+};
 
 export interface AutocompleteTextFieldProps
   extends
-    AutocompleteRenderInputParams,
-    Pick<
-      TextFieldProps,
-      'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur' | 'multiline' | 'variant' | 'slotProps'
-    > {
+    Omit<AutocompleteRenderInputParams, 'slotProps'>,
+    Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur' | 'multiline' | 'variant'> {
+  slotProps: AutocompleteTextFieldSlotProps;
   'data-testid'?: string;
   isLoading?: boolean;
   showSearchIcon?: boolean;
@@ -30,26 +41,26 @@ export const AutocompleteTextField = ({
     slotProps={{
       ...params.slotProps,
       htmlInput: {
-        ...params.inputProps,
+        ...params.slotProps.htmlInput,
         'aria-label': params.label ? undefined : params.placeholder,
       },
       input: {
-        ...params.InputProps,
+        ...params.slotProps.input,
         startAdornment: showSearchIcon ? (
           <>
-            {params.InputProps.startAdornment}
+            {params.slotProps.input.startAdornment}
             {showSearchIcon && <SearchIcon color="disabled" />}
           </>
         ) : (
-          params.InputProps.startAdornment
+          params.slotProps.input.startAdornment
         ),
         endAdornment: isLoading ? (
           <>
-            {isLoading && <CircularProgress size={20} aria-labelledby={params.InputLabelProps.id} />}
-            {params.InputProps.endAdornment}
+            {isLoading && <CircularProgress size={20} aria-labelledby={params.slotProps.inputLabel.id} />}
+            {params.slotProps.input.endAdornment}
           </>
         ) : (
-          params.InputProps.endAdornment
+          params.slotProps.input.endAdornment
         ),
       },
     }}

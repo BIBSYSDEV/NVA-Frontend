@@ -1,4 +1,4 @@
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Autocomplete, Box, Button, TextField } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';

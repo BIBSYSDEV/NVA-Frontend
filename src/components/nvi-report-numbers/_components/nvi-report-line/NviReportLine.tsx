@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { SkeletonLine } from '../../../../../../../../components/skeletons/SkeletonLine';
-import { HorizontalBox } from '../../../../../../../../components/styled/Wrappers';
+import { SkeletonLine } from '../../../skeletons/SkeletonLine';
+import { HorizontalBox } from '../../../styled/Wrappers';
 import { NviReportLineTypeEnum } from './enums';
 import { nviReportLineConfig } from './nvi-report-line-config';
 

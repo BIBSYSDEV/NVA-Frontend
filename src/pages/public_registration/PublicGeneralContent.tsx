@@ -141,7 +141,12 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <PublicPageInfoEntry
               title={t('registration.description.alternative_title')}
               content={alternativeTitles.map((title) => (
-                <Typography component="dd" gridColumn={2} key={title}>
+                <Typography
+                  component="dd"
+                  key={title}
+                  sx={{
+                    gridColumn: 2,
+                  }}>
                   {title}
                 </Typography>
               ))}
@@ -234,7 +239,11 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <PublicPageInfoEntry
               title={t('registration.public_page.cristin_id')}
               content={
-                <Typography component="dd" gridColumn={2}>
+                <Typography
+                  component="dd"
+                  sx={{
+                    gridColumn: 2,
+                  }}>
                   <Link
                     href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
                     target="_blank"

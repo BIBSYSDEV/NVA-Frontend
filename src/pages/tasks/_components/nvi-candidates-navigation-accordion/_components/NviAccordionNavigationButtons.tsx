@@ -1,20 +1,18 @@
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import {
-  NviCandidateGlobalStatusEnum,
-  NviCandidatesSearchParam,
-  NviCandidateStatusEnum,
-} from '../../../../../api/searchApi';
+import { NviCandidatesSearchParam } from '../../../../../api/searchApi';
 import { SelectableButton } from '../../../../../components/buttons/SelectableButton';
 import { SkeletonLine } from '../../../../../components/skeletons/SkeletonLine';
 import { VerticalBox } from '../../../../../components/styled/Wrappers';
+import { NviSearchStatusEnum } from '../../../../../types/nvi.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useLoggedInUser } from '../../../../../utils/hooks/useLoggedInUser';
 import { useNviCandidatesParams } from '../../../../../utils/hooks/useNviCandidatesParams';
 import { checkWhichTasksPage } from '../../../../../utils/location-helpers/check-which-tasks-page';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../../utils/urlPaths';
-import { NviApprovalStatusCounts } from '../_hooks/useNviInstitutionReportSummary';
+import { NviApprovalStatusCounts } from '../../../../../utils/hooks/useNviInstitutionReportSummary';
+import { nviSearchStatusParams } from '../../../../messages/nviUtils';
 
 interface NviAccordionNavigationButtonsProps {
   approvalStatusCounts: NviApprovalStatusCounts;
@@ -42,8 +40,7 @@ export const NviAccordionNavigationButtons = ({
         to={getNviCandidatesSearchPath({
           username: user?.nvaUsername,
           year: nviParams.year,
-          status: [NviCandidateStatusEnum.New, NviCandidateStatusEnum.Pending],
-          globalStatus: NviCandidateGlobalStatusEnum.Pending,
+          ...nviSearchStatusParams[NviSearchStatusEnum.CandidatesForControl],
         })}>
         {t('tasks.nvi.show_candidate_search')}
       </SelectableButton>

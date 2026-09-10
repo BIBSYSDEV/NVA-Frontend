@@ -67,12 +67,20 @@ export const SearchForPersonFacetItem = ({ onSelectPerson, placeholder }: Search
         return (
           <li {...props} key={option.id}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Typography fontWeight="bold">{getFullCristinName(option.names)}</Typography>
+              <Typography
+                sx={{
+                  fontWeight: 'bold',
+                }}>
+                {getFullCristinName(option.names)}
+              </Typography>
               {activeAffiliations.length > 0 && (
                 <AffiliationHierarchy unitUri={activeAffiliations[0].organization} commaSeparated />
               )}
               {activeAffiliations.length > 1 && (
-                <Typography fontStyle="italic">
+                <Typography
+                  sx={{
+                    fontStyle: 'italic',
+                  }}>
                   {t('common.x_other_employments', { count: activeAffiliations.length - 1 })}
                 </Typography>
               )}

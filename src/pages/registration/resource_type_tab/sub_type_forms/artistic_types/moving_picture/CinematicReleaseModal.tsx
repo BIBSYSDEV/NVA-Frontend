@@ -91,9 +91,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                     }}
                     slotProps={{
                       textField: {
-                        inputProps: {
-                          'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
-                        },
+                        'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
                         sx: { maxWidth: '13rem' },
                         variant: 'filled',
                         required: true,

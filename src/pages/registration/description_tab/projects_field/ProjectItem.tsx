@@ -36,9 +36,19 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
         borderRadius: '8px',
       }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        <Typography fontWeight="bold">{t('project.project').toUpperCase()}</Typography>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+          }}>
+          {t('project.project').toUpperCase()}
+        </Typography>
         <div>
-          <Typography fontWeight="bold">{t('common.title')}:</Typography>
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}>
+            {t('common.title')}:
+          </Typography>
           {isFetching ? (
             <StyledListSkeleton />
           ) : project ? (
@@ -53,7 +63,12 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
           )}
         </div>
         <div>
-          <Typography fontWeight="bold">{t('project.coordinating_institution')}:</Typography>
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}>
+            {t('project.coordinating_institution')}:
+          </Typography>
           {isFetching ? (
             <StyledListSkeleton />
           ) : project?.coordinatingInstitution ? (
@@ -65,7 +80,12 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
       </Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        <Typography fontWeight="bold">{t('common.funding').toUpperCase()}</Typography>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+          }}>
+          {t('common.funding').toUpperCase()}
+        </Typography>
         {project?.funding?.length ? (
           project.funding.map((funding, index) => (
             <Box
@@ -73,11 +93,21 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
               sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               {index > 0 && <Divider sx={{ width: '50%' }} />}
               <div>
-                <Typography fontWeight="bold">{t('registration.description.funding.funder')}:</Typography>
+                <Typography
+                  sx={{
+                    fontWeight: 'bold',
+                  }}>
+                  {t('registration.description.funding.funder')}:
+                </Typography>
                 {isFetching ? <StyledListSkeleton /> : <Typography>{getLanguageString(funding.labels)}</Typography>}
               </div>
               <div>
-                <Typography fontWeight="bold">{t('project.grant_id')}:</Typography>
+                <Typography
+                  sx={{
+                    fontWeight: 'bold',
+                  }}>
+                  {t('project.grant_id')}:
+                </Typography>
                 {isFetching ? (
                   <StyledListSkeleton />
                 ) : funding.identifier ? (
@@ -101,7 +131,12 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
             </Box>
           ))
         ) : (
-          <Typography fontStyle="italic">{t('project.project_has_no_funding')}</Typography>
+          <Typography
+            sx={{
+              fontStyle: 'italic',
+            }}>
+            {t('project.project_has_no_funding')}
+          </Typography>
         )}
       </Box>
 

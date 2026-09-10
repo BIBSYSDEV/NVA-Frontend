@@ -32,7 +32,12 @@ export const RepublishRegistration = ({
 
   return (
     <section>
-      <Typography fontWeight="bold">{t('common.republish')}</Typography>
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+        }}>
+        {t('common.republish')}
+      </Typography>
 
       {!userCanRepublish ? (
         <Trans

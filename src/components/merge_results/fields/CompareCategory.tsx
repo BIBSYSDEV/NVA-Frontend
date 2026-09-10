@@ -37,7 +37,15 @@ export const CompareCategory = ({
             <Trans
               t={t}
               i18nKey="cannot_copy_category_from_another_context_type"
-              components={{ p: <Typography color="inherit" /> }}
+              components={{
+                p: (
+                  <Typography
+                    sx={{
+                      color: 'inherit',
+                    }}
+                  />
+                ),
+              }}
             />
           </div>
         </StyledInfoBanner>

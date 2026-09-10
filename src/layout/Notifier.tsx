@@ -31,12 +31,21 @@ export const Notifier = () => {
       open={true}
       autoHideDuration={autoHideNotificationDuration[notification.variant]}
       onClose={handleClose}
-      TransitionComponent={Fade}
+      slots={{ transition: Fade }}
       transitionDuration={100}>
       <Alert onClose={handleClose} variant="filled" severity={notification.variant}>
-        <Typography color="inherit">{notification.message}</Typography>
+        <Typography
+          sx={{
+            color: 'inherit',
+          }}>
+          {notification.message}
+        </Typography>
         {notification.detail && (
-          <Typography color="inherit" lang="en">
+          <Typography
+            lang="en"
+            sx={{
+              color: 'inherit',
+            }}>
             {notification.detail}
           </Typography>
         )}

@@ -52,7 +52,12 @@ export const DeleteDraftRegistration = ({ registration }: DeleteDraftRegistratio
 
   return (
     <section>
-      <Typography fontWeight="bold">{t('common.delete')}</Typography>
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+        }}>
+        {t('common.delete')}
+      </Typography>
       <Trans t={t} i18nKey="registration.public_page.tasks_panel.delete_draft_registration_description">
         <Typography gutterBottom />
       </Trans>

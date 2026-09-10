@@ -20,8 +20,7 @@ export const LanguageSelector = () => {
         gap: '0.25rem',
       }}>
       <Button
-        sx={{ borderBottom: appLanguage === 'nob' ? '4px solid' : 'none', borderRadius: '0' }}
-        color="white"
+        sx={{ color: 'white', borderBottom: appLanguage === 'nob' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('nob')}
         lang="nb">
@@ -29,8 +28,7 @@ export const LanguageSelector = () => {
       </Button>
       <Divider orientation="vertical" flexItem sx={{ bgcolor: 'white', height: '1rem', alignSelf: 'center' }} />
       <Button
-        sx={{ borderBottom: appLanguage === 'nno' ? '4px solid' : 'none', borderRadius: '0' }}
-        color="white"
+        sx={{ color: 'white', borderBottom: appLanguage === 'nno' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('nno')}
         lang="nn">
@@ -39,8 +37,7 @@ export const LanguageSelector = () => {
       <Divider orientation="vertical" flexItem sx={{ bgcolor: 'white', height: '1rem', alignSelf: 'center' }} />
 
       <Button
-        sx={{ borderBottom: appLanguage === 'eng' ? '4px solid' : 'none', borderRadius: '0' }}
-        color="white"
+        sx={{ color: 'white', borderBottom: appLanguage === 'eng' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('eng')}
         lang="en">

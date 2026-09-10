@@ -26,6 +26,7 @@ const NviCorrectionList = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
+  const isUnidentifiedContributorList = listId === CorrectionListNames.UnidentifiedContributorWithIdentifiedAffiliation;
   const correctionListConfig = useCorrectionListConfig();
   const listConfig = listId && correctionListConfig[listId];
   const shouldShowScientificValueFilter =
@@ -33,15 +34,21 @@ const NviCorrectionList = () => {
   const hideChannelFilters = !!listId && hideChannelFiltersListIds.includes(listId as CorrectionListNames);
 
   const registrationParams = useRegistrationsQueryParams();
-  const exportParams = new URLSearchParams(sanitizeSearchParams({ ...listConfig?.queryParams, ...registrationParams }));
+
+  const mergedParams = {
+    ...listConfig?.queryParams,
+    ...registrationParams,
+    unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
+    // unidentifiedContributorInstitution should always be the same as topLevelOrganization because its's chosen in the same dropdown
+    ...(isUnidentifiedContributorList && {
+      unidentifiedContributorInstitution: registrationParams.topLevelOrganization,
+    }),
+  };
+  const exportParams = new URLSearchParams(sanitizeSearchParams(mergedParams));
 
   const registrationQuery = useRegistrationSearch({
     enabled: !!listConfig,
-    params: {
-      ...listConfig?.queryParams,
-      ...registrationParams,
-      unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
-    },
+    params: mergedParams,
   });
 
   return (
@@ -62,7 +69,21 @@ const NviCorrectionList = () => {
             }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', px: { xs: '0.5rem', md: 0 }, gap: '0.5rem' }}>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-                <OrganizationFilters />
+                <OrganizationFilters
+                  // The "unidentified contributor with identified affiliation" correction list filters on unidentifiedContributorInstitution.
+                  // It should stay in sync with whichever institution is selected, for as long as this list is active
+                  onTopLevelOrganizationChange={
+                    isUnidentifiedContributorList
+                      ? (selectedOrganization, syncedParams) => {
+                          if (selectedOrganization) {
+                            syncedParams.set(ResultParam.UnidentifiedContributorInstitution, selectedOrganization.id);
+                          } else {
+                            syncedParams.delete(ResultParam.UnidentifiedContributorInstitution);
+                          }
+                        }
+                      : undefined
+                  }
+                />
                 <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
                 <CategorySearchFilter
                   searchParam={ResultParam.CategoryShould}
@@ -88,7 +109,7 @@ const NviCorrectionList = () => {
             </Box>
           </Box>
 
-          <RegistrationSearch registrationQuery={registrationQuery} />
+          <RegistrationSearch registrationQuery={registrationQuery} searchResultNavigationParams={mergedParams} />
         </>
       )}
     </section>

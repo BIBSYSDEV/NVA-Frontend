@@ -46,13 +46,13 @@ export const CompareFields = ({
         {isMatching ? (
           <StyledBox sx={{ bgcolor: 'success.main' }}>
             <CheckIcon fontSize="small" sx={{ color: 'white' }} />
-            <Typography color="white">{t('matches')}</Typography>
+            <Typography sx={{ color: 'white' }}>{t('matches')}</Typography>
           </StyledBox>
         ) : (
           <>
             <StyledBox sx={{ bgcolor: 'info.main' }}>
               <WarningAmberIcon fontSize="small" sx={{ color: 'white' }} />
-              <Typography color="white">{t('does_not_match')}</Typography>
+              <Typography sx={{ color: 'white' }}>{t('does_not_match')}</Typography>
             </StyledBox>
 
             {onCopyValue && (

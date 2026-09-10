@@ -139,7 +139,11 @@ export const PublishingAccordionLastTicketInfo = ({
       {showMessages && (
         <>
           <Divider sx={{ my: '1rem' }} />
-          <Typography fontWeight="bold" gutterBottom>
+          <Typography
+            gutterBottom
+            sx={{
+              fontWeight: 'bold',
+            }}>
             {t('common.messages')}
           </Typography>
           {isPendingTicket &&

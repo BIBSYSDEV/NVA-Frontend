@@ -1,4 +1,4 @@
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import CancelIcon from '@mui/icons-material/Cancel';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, IconButton, InputAdornment, SxProps, TextField, Typography } from '@mui/material';

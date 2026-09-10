@@ -1,6 +1,6 @@
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import LockOutlineIcon from '@mui/icons-material/LockOutline';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Box, Chip, IconButton, Skeleton, styled, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
@@ -106,7 +106,7 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: C
           }}
           label={t(`editor.institution.channel_claims.access_policies.${publishingPolicy}`)}
           icon={
-            publishingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlineIcon fontSize="small" />
+            publishingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlinedIcon fontSize="small" />
           }
         />
       </StyledTableCell>
@@ -118,7 +118,9 @@ export const ChannelClaimTableRow = ({ claimedChannel, channelType, canEdit }: C
             bgcolor: editingPolicy === 'Everyone' ? 'success.main' : 'background.neutral87',
           }}
           label={t(`editor.institution.channel_claims.access_policies.${editingPolicy}`)}
-          icon={editingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlineIcon fontSize="small" />}
+          icon={
+            editingPolicy === 'Everyone' ? <LockOpenIcon fontSize="small" /> : <LockOutlinedIcon fontSize="small" />
+          }
         />
       </StyledTableCell>
       <StyledTableCell>

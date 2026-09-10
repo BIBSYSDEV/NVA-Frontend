@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/notificationSlice';
 import { DeletedRegistrationProblem } from '../../types/error_responses';
 import { Registration } from '../../types/registration.types';
-import { fetchRegistration } from '../registrationApi';
+import { fetchRegistration, getEtagFromResponse } from '../registrationApi';
 
 interface FetchRegistrationConfig {
   enabled?: boolean;
@@ -38,9 +38,13 @@ export const useFetchRegistration = (
         if (error.response?.status === 410) {
           // Fetching an unpublished results will return a 410 Gone (client error) response.
           // The frontend should then use the supplied 'resource' property instead, and treat it as an successful GET.
-          const errorRegistration = query.state.error?.response?.data?.resource;
-          if (errorRegistration) {
-            query.setData(errorRegistration);
+          const errorResponse = query.state.error?.response;
+          const errorRegistration = errorResponse?.data?.resource;
+          if (errorResponse && errorRegistration) {
+            // The ETag must be merged onto the registration here as well, otherwise updates of this
+            // registration would be sent without If-Match.
+            const etag = getEtagFromResponse(errorResponse);
+            query.setData(etag ? { ...errorRegistration, etag } : errorRegistration);
           }
         } else {
           dispatch(

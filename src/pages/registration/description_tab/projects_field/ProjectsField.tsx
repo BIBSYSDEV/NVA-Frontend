@@ -1,4 +1,4 @@
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
@@ -137,7 +137,7 @@ export const ProjectsField = () => {
                       placeholder={t('search.search_project_placeholder')}
                     />
                   )}
-                  renderTags={() => null}
+                  renderValue={() => null}
                 />
 
                 <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', mt: '0.5rem' }}>

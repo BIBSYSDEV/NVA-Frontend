@@ -14,6 +14,17 @@ interface TaskTypePaletteOptions {
   generalSupportCase?: PaletteColorOptions;
 }
 
+/*
+ * Slot props reject arbitrary data-* keys by default, so the attributes we pass
+ * through slots must be declared here to be assignable.
+ */
+declare module '@mui/utils/types' {
+  interface DataAttributesOverrides {
+    'data-testid'?: string;
+    'data-searchfield'?: string;
+  }
+}
+
 declare module '@mui/material/styles' {
   interface Palette {
     tertiary: PaletteColor;
@@ -51,7 +62,6 @@ declare module '@mui/material/Button' {
     registration: true;
     person: true;
     project: true;
-    white: true;
     neutral87: true;
   }
 }

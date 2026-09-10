@@ -349,14 +349,20 @@ export const SelectRegistrationTypeField = () => {
           closeSelectType();
         }}
         dialogDataTestId={dataTestId.registrationWizard.resourceType.confirmDatasetTypeDialog}>
-        <Typography fontWeight={500}>
+        <Typography
+          sx={{
+            fontWeight: 500,
+          }}>
           {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data')}
         </Typography>
         <Typography sx={{ mb: '1rem' }}>
           {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data_description')}
         </Typography>
 
-        <Typography fontWeight={500}>
+        <Typography
+          sx={{
+            fontWeight: 500,
+          }}>
           {t('registration.resource_type.research_data.accept_dataset_terms.contains_sensitive_data')}
         </Typography>
         <Typography sx={{ mb: '1rem' }}>

@@ -12,6 +12,7 @@ import {
 } from '../types/nvi.types';
 import { ScientificIndexApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
+import { getIdentifierFromId } from '../utils/general-helpers';
 
 export type CreateNoteData = Pick<Note, 'text'>;
 
@@ -95,8 +96,9 @@ export interface ReportStatusResponse {
 }
 
 export const fetchNviReportStatusForRegistration = async (registrationId: string) => {
+  const publicationIdentifier = getIdentifierFromId(registrationId);
   const fetchNviReportStatusResponse = await apiRequest2<ReportStatusResponse>({
-    url: `${ScientificIndexApiPath.Publication}/${encodeURIComponent(registrationId)}/report-status`,
+    url: `${ScientificIndexApiPath.Publication}/${encodeURIComponent(publicationIdentifier)}/report-status`,
   });
   return fetchNviReportStatusResponse.data;
 };

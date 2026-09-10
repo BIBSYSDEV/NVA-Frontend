@@ -1,10 +1,10 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
-import { useFetchNviReportForInstitution } from '../../../../../api/hooks/useFetchNviReportForInstitution';
-import { RootState } from '../../../../../redux/store';
-import { InstitutionReport } from '../../../../../types/nvi.types';
-import { getIdentifierFromId } from '../../../../../utils/general-helpers';
-import { getDefaultNviYear } from '../../../../../utils/hooks/useNviCandidatesParams';
+import { useFetchNviReportForInstitution } from '../../api/hooks/useFetchNviReportForInstitution';
+import { RootState } from '../../redux/store';
+import { InstitutionReport } from '../../types/nvi.types';
+import { getIdentifierFromId } from '../general-helpers';
+import { getDefaultNviYear } from './useNviCandidatesParams';
 
 export interface NviApprovalStatusCounts {
   new: string | undefined;

@@ -1,5 +1,5 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import LockOutlineIcon from '@mui/icons-material/LockOutline';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import LoginIcon from '@mui/icons-material/Login';
 import { Box, Button, SxProps, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
@@ -20,7 +20,7 @@ export const Forbidden = () => {
   return (
     <Box data-testid={dataTestId.authorization.forbiddenContainer} sx={{ m: { xs: '4rem 1rem', sm: '4rem auto' } }}>
       <span style={{ display: 'flex', gap: '0.5rem' }}>
-        <LockOutlineIcon />
+        <LockOutlinedIcon />
         <Typography gutterBottom variant="h1">
           {t('authorization.forbidden')}
         </Typography>

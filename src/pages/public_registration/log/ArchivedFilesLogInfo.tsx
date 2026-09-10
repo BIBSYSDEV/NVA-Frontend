@@ -23,12 +23,20 @@ export const ArchivedFilesLogInfo = ({ registration }: ArchivedFilesLogInfoProps
     <Box sx={{ px: '0.5rem' }}>
       <Divider sx={{ mb: '0.5rem' }} />
       {internalFilesCount > 0 && (
-        <Typography color="grey.700" sx={{ textAlign: 'center' }}>
+        <Typography
+          sx={{
+            color: 'grey.700',
+            textAlign: 'center',
+          }}>
           {t('log.internal_files_on_registration', { count: internalFilesCount })}
         </Typography>
       )}
       {hiddenFilesCount > 0 && (
-        <Typography color="grey.700" sx={{ textAlign: 'center' }}>
+        <Typography
+          sx={{
+            color: 'grey.700',
+            textAlign: 'center',
+          }}>
           {t('log.hidden_files_on_registration', { count: hiddenFilesCount })}
         </Typography>
       )}

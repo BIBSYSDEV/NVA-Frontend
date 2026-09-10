@@ -50,7 +50,12 @@ export const UserRoleAndHelp = () => {
       )}
       <Typography variant="h2">{t('common.help')}</Typography>
       <div>
-        <Typography fontWeight="bold">{t('my_page.my_profile.user_role_and_help.application_help_text')}</Typography>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+          }}>
+          {t('my_page.my_profile.user_role_and_help.application_help_text')}
+        </Typography>
         <MuiLink
           sx={{
             fontWeight: 'bold',
@@ -66,7 +71,10 @@ export const UserRoleAndHelp = () => {
           {t('footer.help_page')}
           <OpenInNewIcon fontSize="small" />
         </MuiLink>
-        <Typography fontStyle="italic">
+        <Typography
+          sx={{
+            fontStyle: 'italic',
+          }}>
           {t('my_page.my_profile.user_role_and_help.application_help_helper_text')}
         </Typography>
       </div>

@@ -69,7 +69,13 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
             t={t}
             i18nKey="no_search_results_list_person"
             components={{
-              p: <Typography fontWeight="bold" />,
+              p: (
+                <Typography
+                  sx={{
+                    fontWeight: 'bold',
+                  }}
+                />
+              ),
               ul: <ul style={{ margin: 0, paddingLeft: '1.5rem' }} />,
               li: <li />,
             }}

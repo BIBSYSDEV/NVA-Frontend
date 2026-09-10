@@ -1,18 +1,14 @@
 import { Autocomplete } from '@mui/material';
-import { UseQueryResult } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router';
 import { defaultOrganizationSearchSize } from '../../api/cristinApi';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { useSearchForOrganizations } from '../../api/hooks/useSearchForOrganizations';
-import { ResultParam } from '../../api/searchApi';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
-import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import {
   AutocompleteListboxWithExpansion,
@@ -22,34 +18,38 @@ import { AutocompleteTextField } from '../AutocompleteTextField';
 import { OrganizationRenderOption } from '../OrganizationRenderOption';
 
 interface OrganizationAutocompleteProps {
-  topLevelOrganizationId: string | null;
-  unidentifiedContributorInstitutionParam: string | null;
-  topLevelOrganizationQuery: UseQueryResult<Organization, unknown>;
+  value: Organization | null;
+  valueIsLoading: boolean;
+  onChange: (organization: Organization | null) => void;
 }
 
-export const OrganizationAutocomplete = ({
-  topLevelOrganizationId,
-  unidentifiedContributorInstitutionParam,
-  topLevelOrganizationQuery,
-}: OrganizationAutocompleteProps) => {
+/**
+ * A single-select autocomplete dropdown for searching up and picking an organization (institution).
+ *
+ * NOTE: It looks like an empty dropdown with a small down-arrow, but clicking it shows a single option - the user's
+ * own top level organization - which makes it look like that's the only choice. To get other options, the user has to
+ * start typing in the input field, which will then show a list of results matching the input.
+ *
+ * It's a pure, controlled UI component: it owns only its internal search text/paging state, while the selected `value`
+ * and what happens on selection (`onChange`) are controlled by the parent. It has no knowledge of the URL - callers
+ * that keep the selection in sync with URL query params (like `OrganizationFilters`) must read the current organization
+ * from the URL and pass it in as `value`, and handle updating the URL themselves inside `onChange`.
+ */
+export const OrganizationAutocomplete = ({ value, valueIsLoading, onChange }: OrganizationAutocompleteProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [searchTerm, setSearchTerm] = useState('');
-  const debouncedQuery = useDebounce(searchTerm);
   const user = useSelector((store: RootState) => store.user);
-  const params = new URLSearchParams(location.search);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
+  const debouncedQuery = useDebounce(searchTerm);
 
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
-  const userOrganization = organizationQuery.data;
-
-  const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const organizationSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
 
+  const userOrganization = organizationQuery.data;
   const defaultOptions = userOrganization ? [userOrganization] : [];
   const options = organizationSearchQuery.data?.hits ?? defaultOptions;
-
-  const isLoading = topLevelOrganizationQuery.isFetching || organizationSearchQuery.isFetching;
+  const isLoading = valueIsLoading || organizationSearchQuery.isFetching;
 
   return (
     <Autocomplete
@@ -66,27 +66,15 @@ export const OrganizationAutocomplete = ({
           setSearchTerm(value);
         }
       }}
-      onChange={(_, selectedInstitution) => {
-        if (selectedInstitution !== topLevelOrganizationId) {
-          const syncedParams = syncParamsWithSearchFields(params);
-          if (selectedInstitution) {
-            syncedParams.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
-            if (unidentifiedContributorInstitutionParam) {
-              syncedParams.set(ResultParam.UnidentifiedContributorInstitution, selectedInstitution.id);
-            }
-          } else {
-            syncedParams.delete(ResultParam.TopLevelOrganization);
-            syncedParams.delete(ResultParam.ExcludeSubunits);
-          }
-          syncedParams.delete(ResultParam.From);
-          syncedParams.delete(ResultParam.Unit);
-          navigate({ search: syncedParams.toString() });
+      onChange={(_, selectedOrganization) => {
+        if (selectedOrganization?.id !== value?.id) {
+          onChange(selectedOrganization);
           setSearchTerm('');
         }
       }}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      disabled={topLevelOrganizationQuery.isFetching}
-      value={topLevelOrganizationQuery.data ?? null}
+      disabled={valueIsLoading}
+      value={value}
       loading={isLoading}
       renderOption={({ key, ...props }, option) => (
         <OrganizationRenderOption key={option.id} props={props} option={option} />

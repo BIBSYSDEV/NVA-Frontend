@@ -27,7 +27,7 @@ export const LanguageSelectorField = (props: LanguageSelectorFieldProps) => {
       slotProps={{
         select: {
           MenuProps: {
-            PaperProps: { sx: { maxHeight: '20rem' } },
+            slotProps: { paper: { sx: { maxHeight: '20rem' } } },
           },
           onClose: () => setShowAll(false),
           renderValue: (value) => {

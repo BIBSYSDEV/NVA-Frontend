@@ -1,5 +1,5 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
 import BlockIcon from '@mui/icons-material/Block';
 import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';

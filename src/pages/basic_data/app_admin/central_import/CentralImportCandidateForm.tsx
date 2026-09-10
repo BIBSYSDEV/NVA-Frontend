@@ -103,7 +103,11 @@ export const CentralImportCandidateForm = () => {
                 <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
                 <RequiredDescription />
                 <BackgroundDiv sx={{ bgcolor: 'background.paper' }}>
-                  <Box id="form" mb="2rem">
+                  <Box
+                    id="form"
+                    sx={{
+                      mb: '2rem',
+                    }}>
                     {tabNumber === RegistrationTab.Description && (
                       <ErrorBoundary>
                         <DescriptionPanel />

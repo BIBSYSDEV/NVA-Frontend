@@ -8,6 +8,17 @@ Cypress.Commands.add('mocklogin', () => {
   cy.get(`[data-testid=${dataTestId.header.logInButton}]`).click();
 });
 
+/**
+ * Types into a date field. Date fields render one contenteditable [role=spinbutton] per section
+ * (day/month/year) and a hidden input that only carries the value, so they cannot be typed into
+ * or cleared like a normal text field. Typing over a section replaces its content, which means
+ * no clearing is needed. Sections are addressed by index rather than by their aria-label, since
+ * the labels are localized. Use `[data-testid=<testId>] input` to assert on the value.
+ */
+Cypress.Commands.add('typeInDateField', (testId: string, value: string, sectionIndex = 0) =>
+  cy.get(`[data-testid=${testId}] [data-sectionindex=${sectionIndex}] [role=spinbutton]`).type(value)
+);
+
 Cypress.Commands.add('startRegistrationWithDoi', () => {
   cy.get('[data-testid=new-registration-link]').click({ force: true });
   cy.get('[data-testid=new-registration-link-field] input').type('https://doi.org/10.1098/rspb.2018.0085');

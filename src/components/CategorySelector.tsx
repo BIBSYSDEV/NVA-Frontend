@@ -1,4 +1,4 @@
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Chip, TextField, Tooltip, Typography } from '@mui/material';
@@ -177,7 +177,11 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
 
   return registrationTypes.length > 0 ? (
     <Box component="fieldset">
-      <Typography component="legend" fontWeight={700}>
+      <Typography
+        component="legend"
+        sx={{
+          fontWeight: 700,
+        }}>
         {t(`registration.publication_types.${mainType}`)}
       </Typography>
       <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>

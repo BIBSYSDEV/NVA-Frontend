@@ -1,5 +1,5 @@
 import { SelectableButton, SelectableButtonProps } from './SelectableButton';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Box, Typography } from '@mui/material';
 
 interface SelectableCreateButtonProps extends SelectableButtonProps {

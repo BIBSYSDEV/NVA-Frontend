@@ -167,9 +167,7 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                   maxDate={values.endDate ? new Date(values.endDate) : undefined}
                   slotProps={{
                     textField: {
-                      inputProps: {
-                        'data-testid': dataTestId.projectWizard.descriptionPanel.startDateField,
-                      },
+                      'data-testid': dataTestId.projectWizard.descriptionPanel.startDateField,
                       variant: 'filled',
                       onBlur: () => !touched && setFieldTouched(field.name),
                       required: true,
@@ -196,7 +194,7 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                   minDate={values.startDate ? new Date(values.startDate) : undefined}
                   slotProps={{
                     textField: {
-                      inputProps: { 'data-testid': dataTestId.projectWizard.descriptionPanel.endDateField },
+                      'data-testid': dataTestId.projectWizard.descriptionPanel.endDateField,
                       variant: 'filled',
                       required: true,
                       error: touched && !!error,

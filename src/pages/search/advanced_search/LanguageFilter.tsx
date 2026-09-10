@@ -65,7 +65,7 @@ export const LanguageFilter = () => {
         }}
         displayEmpty
         renderValue={() => t('search.advanced_search.choose_one_or_more')}
-        MenuProps={{ PaperProps: { sx: { maxHeight: '20rem' } } }}
+        MenuProps={{ slotProps: { paper: { sx: { maxHeight: '20rem' } } } }}
         variant="outlined">
         {primaryLanguages.map((language) => (
           <MenuItem

@@ -1,6 +1,5 @@
 import { List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ImportCandidatesSearchParam } from '../../../../api/searchApi';
@@ -11,7 +10,6 @@ import { HeadTitle } from '../../../../components/HeadTitle';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { useFetchImportCandidatesQuery } from '../../../../utils/hooks/useFetchImportCandidatesQuery';
-import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../../utils/searchHelpers';
 import { SelectedImportCandidateFacetsList } from '../../../search/selected_facets/SelectedImportCandidateFacetsList';
 import { CentralImportResultItem } from './CentralImportResultItem';
@@ -30,12 +28,6 @@ export const CentralImportPage = () => {
     syncedParams.set(ImportCandidatesSearchParam.Size, results);
     navigate({ search: syncedParams.toString() });
   };
-
-  useEffect(() => {
-    if (importCandidateQuery.data?.hits.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
-      typesetMathJax();
-    }
-  }, [importCandidateQuery.data?.hits]);
 
   const searchResults = importCandidateQuery.data?.hits ?? [];
 

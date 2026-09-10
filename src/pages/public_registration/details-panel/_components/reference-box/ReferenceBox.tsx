@@ -36,7 +36,12 @@ export const ReferenceBox = ({ registration }: ReferenceBoxProps) => {
   }
 
   return (
-    <Box component="section" display="flex" flexDirection="column">
+    <Box
+      component="section"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
       <Typography id={referenceHeadingId} variant="h3" gutterBottom>
         {t('reference')}
       </Typography>
@@ -49,7 +54,7 @@ export const ReferenceBox = ({ registration }: ReferenceBoxProps) => {
         tabIndex={0}
         aria-labelledby={getReferenceFormatTabId(format)}
         aria-busy={isLoading}
-        sx={{ p: '1rem', maxHeight: '12rem', overflow: 'auto', whiteSpace: 'pre-wrap' }}>
+        sx={{ p: '1rem', maxHeight: '12rem', overflow: 'auto', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
         <ReferenceContent reference={reference} isLoading={isLoading} isError={isError} />
       </Paper>
       <CopyReferenceButton reference={reference} disabled={isCopyDisabled} />

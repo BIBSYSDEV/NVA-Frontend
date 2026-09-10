@@ -9,7 +9,8 @@ describe('Snackbar', () => {
     cy.setNotificationInRedux({ message: notificationMessage, variant: 'error' });
     cy.get('[data-testid=snackbar-error]')
       .children()
-      .should('have.class', 'MuiAlert-filledError')
+      .should('have.class', 'MuiAlert-filled')
+      .and('have.class', 'MuiAlert-colorError')
       .contains(notificationMessage);
 
     // Test Success snackbar
@@ -17,7 +18,8 @@ describe('Snackbar', () => {
     cy.setNotificationInRedux({ message: notificationMessage, variant: 'success' });
     cy.get('[data-testid=snackbar-success]')
       .children()
-      .should('have.class', 'MuiAlert-filledSuccess')
+      .should('have.class', 'MuiAlert-filled')
+      .and('have.class', 'MuiAlert-colorSuccess')
       .contains(notificationMessage);
 
     // Test Info snackbar
@@ -25,7 +27,8 @@ describe('Snackbar', () => {
     cy.setNotificationInRedux({ message: notificationMessage, variant: 'info' });
     cy.get('[data-testid=snackbar-info]')
       .children()
-      .should('have.class', 'MuiAlert-filledInfo')
+      .should('have.class', 'MuiAlert-filled')
+      .and('have.class', 'MuiAlert-colorInfo')
       .contains(notificationMessage);
 
     // Test warning snackbar
@@ -33,7 +36,8 @@ describe('Snackbar', () => {
     cy.setNotificationInRedux({ message: notificationMessage, variant: 'warning' });
     cy.get('[data-testid=snackbar-warning]')
       .children()
-      .should('have.class', 'MuiAlert-filledWarning')
+      .should('have.class', 'MuiAlert-filled')
+      .and('have.class', 'MuiAlert-colorWarning')
       .contains(notificationMessage);
 
     // Test clearing snackbar

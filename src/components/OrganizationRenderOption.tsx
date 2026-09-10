@@ -22,7 +22,12 @@ export const OrganizationRenderOption = ({ props, option }: OrganizationRenderOp
   return (
     <li {...props}>
       <div>
-        <Typography fontWeight="bold">{getLanguageString(option.labels)}</Typography>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+          }}>
+          {getLanguageString(option.labels)}
+        </Typography>
         <Typography>
           {option.country && `${option.country} | `}
           {mainLanguageText !== secondaryLanguageText && secondaryLanguageText}

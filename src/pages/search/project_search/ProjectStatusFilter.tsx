@@ -24,7 +24,12 @@ export const ProjectStatusFilter = () => {
 
   return (
     <div>
-      <Typography fontWeight={600}>{t('common.project_status')}</Typography>
+      <Typography
+        sx={{
+          fontWeight: 600,
+        }}>
+        {t('common.project_status')}
+      </Typography>
       <Select
         sx={{
           border: '2px solid',

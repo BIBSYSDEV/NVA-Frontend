@@ -69,7 +69,12 @@ export const UpdateTicketOwnership = ({ ticket, refetchData }: UpdateTicketOwner
 
   return (
     <section>
-      <Typography fontWeight="bold">{t('registration.public_page.tasks_panel.move_task')}</Typography>
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+        }}>
+        {t('registration.public_page.tasks_panel.move_task')}
+      </Typography>
       <Trans
         t={t}
         i18nKey="registration.public_page.tasks_panel.move_task_description"

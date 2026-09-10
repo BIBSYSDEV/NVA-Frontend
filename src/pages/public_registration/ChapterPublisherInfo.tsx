@@ -25,7 +25,12 @@ export const ChapterPublisherInfo = ({ publicationContext }: ChapterPublisherInf
     <>
       {publisherPublicationContext.isbnList && publisherPublicationContext.isbnList.length > 0 && (
         <Box sx={{ display: 'flex', flexDirection: 'column', mb: '0.5rem' }}>
-          <Typography fontWeight="bold">{t('registration.resource_type.isbn')}</Typography>
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}>
+            {t('registration.resource_type.isbn')}
+          </Typography>
           <Typography>
             {publisherPublicationContext.isbnList
               .filter(Boolean)
