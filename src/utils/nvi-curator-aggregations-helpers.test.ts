@@ -1,7 +1,12 @@
 import { describe, expect, test } from 'vitest';
 import { NviInstitutionStatusResponse } from '../types/nvi.types';
 import { Organization } from '../types/organization.types';
-import { selfOrDescendantHasCandidates, selfOrDescendantHasPointValues } from './nvi-curator-aggregations-helpers';
+import {
+  hasSubUnitWithCandidates,
+  hasSubUnitWithPointValues,
+  selfOrDescendantHasCandidates,
+  selfOrDescendantHasPointValues,
+} from './nvi-curator-aggregations-helpers';
 
 interface OrgValues {
   candidateCount?: number;
@@ -136,5 +141,57 @@ describe('selfOrDescendantHasPointValues()', () => {
   test('Returns true for a leaf organization with approvals but no points', () => {
     const aggregations = makeAggregations({ [grandChildId]: { approved: 1 } });
     expect(selfOrDescendantHasPointValues(grandChild, aggregations)).toBe(true);
+  });
+});
+
+describe('hasSubUnitWithCandidates()', () => {
+  test('Returns true when a direct child has candidates', () => {
+    const aggregations = makeAggregations({ [orgId]: {}, [childId]: { candidateCount: 2 } });
+    expect(hasSubUnitWithCandidates(organization, aggregations)).toBe(true);
+  });
+
+  test('Returns true when only a grandchild has candidates', () => {
+    const aggregations = makeAggregations({ [orgId]: {}, [childId]: {}, [grandChildId]: { candidateCount: 1 } });
+    expect(hasSubUnitWithCandidates(organization, aggregations)).toBe(true);
+  });
+
+  test('Returns false when only the organization itself has candidates', () => {
+    const aggregations = makeAggregations({ [orgId]: { candidateCount: 3 }, [childId]: {}, [grandChildId]: {} });
+    expect(hasSubUnitWithCandidates(organization, aggregations)).toBe(false);
+  });
+
+  test('Returns false when aggregations are undefined', () => {
+    expect(hasSubUnitWithCandidates(organization, undefined)).toBe(false);
+  });
+
+  test('Returns false for a leaf organization with candidates', () => {
+    const aggregations = makeAggregations({ [grandChildId]: { candidateCount: 5 } });
+    expect(hasSubUnitWithCandidates(grandChild, aggregations)).toBe(false);
+  });
+});
+
+describe('hasSubUnitWithPointValues()', () => {
+  test('Returns true when a direct child has points', () => {
+    const aggregations = makeAggregations({ [orgId]: {}, [childId]: { points: 0.5 } });
+    expect(hasSubUnitWithPointValues(organization, aggregations)).toBe(true);
+  });
+
+  test('Returns true when only a grandchild has approved publications', () => {
+    const aggregations = makeAggregations({ [orgId]: {}, [childId]: {}, [grandChildId]: { approved: 1 } });
+    expect(hasSubUnitWithPointValues(organization, aggregations)).toBe(true);
+  });
+
+  test('Returns false when only the organization itself has point values', () => {
+    const aggregations = makeAggregations({ [orgId]: { points: 1.5 }, [childId]: {}, [grandChildId]: {} });
+    expect(hasSubUnitWithPointValues(organization, aggregations)).toBe(false);
+  });
+
+  test('Returns false when aggregations are undefined', () => {
+    expect(hasSubUnitWithPointValues(organization, undefined)).toBe(false);
+  });
+
+  test('Returns false for a leaf organization with points', () => {
+    const aggregations = makeAggregations({ [grandChildId]: { points: 3 } });
+    expect(hasSubUnitWithPointValues(grandChild, aggregations)).toBe(false);
   });
 });
