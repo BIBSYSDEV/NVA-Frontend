@@ -13,25 +13,48 @@ import {
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { useLoggedInUser } from '../../../../utils/hooks/useLoggedInUser';
+import { getFullName } from '../../../../utils/user-helpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 import { ClaimedChannelInfoBox } from './ClaimedChannelInfoBox';
 import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
 import { PublisherFormDialog } from './PublisherFormDialog';
+import { SelfPublisherOption } from './SelfPublisherOption';
+import {
+  getPublisherOptionKey,
+  getSelfPublisherOption,
+  isSelfPublisher,
+  PublisherFieldOption,
+} from './utils/publisher-field-helpers';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
-export const PublisherField = () => {
+interface PublisherFieldProps {
+  /**
+   * Adds an option suggesting the logged-in user as publisher, shown when the field is empty or as long as the
+   * search query matches the user's own name.
+   */
+  showSelfOption?: boolean;
+}
+
+/**
+ * Formik bound search field for selecting the publisher of a registration.
+ */
+export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
   const { reference, publicationDate } = values.entityDescription as BookEntityDescription;
   const publisher = reference?.publicationContext.publisher;
+
+  const user = useLoggedInUser();
 
   const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
@@ -51,7 +74,15 @@ export const PublisherField = () => {
     size: searchSize,
   });
 
-  const options = publisherOptionsQuery.data?.hits ?? [];
+  const selfOption = showSelfOption
+    ? getSelfPublisherOption(query, {
+        name: getFullName(user?.givenName, user?.familyName),
+        personId: getIdentifierFromId(user?.cristinId ?? ''),
+      })
+    : undefined;
+
+  const publisherOptions = publisherOptionsQuery.data?.hits ?? [];
+  const options: PublisherFieldOption[] = selfOption ? [selfOption, ...publisherOptions] : publisherOptions;
 
   useEffect(() => {
     if (
@@ -107,11 +138,16 @@ export const PublisherField = () => {
             blurOnSelect
             disableClearable={!query}
             value={publisher?.id && publisherQuery.data ? [publisherQuery.data] : []}
-            onChange={(_, inputValue, reason) => {
+            onChange={(_, selectedOptions, reason) => {
               if (reason === 'selectOption') {
+                const selectedOption = selectedOptions.pop();
+                if (!selectedOption || isSelfPublisher(selectedOption)) {
+                  // TODO: Set the logged-in user as publisher. Until then, selecting the option has no effect.
+                  return;
+                }
                 setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
                   type: PublicationChannelType.Publisher,
-                  id: inputValue.pop()?.id,
+                  id: selectedOption.id,
                 });
               } else if (reason === 'removeOption') {
                 setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
@@ -122,18 +158,26 @@ export const PublisherField = () => {
             }}
             loading={publisherOptionsQuery.isFetching || publisherQuery.isFetching}
             getOptionLabel={(option) => option.name}
-            renderOption={({ key, ...props }, option, state) => (
-              <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
-            )}
+            getOptionKey={getPublisherOptionKey}
+            renderOption={({ key, ...props }, option, state) =>
+              isSelfPublisher(option) ? (
+                <SelfPublisherOption key={key} props={props} option={option} />
+              ) : (
+                <PublicationChannelOption key={key} props={props} option={option} state={state} />
+              )
+            }
             renderValue={(value, getItemProps) =>
-              value.map((option, index) => (
-                <Chip
-                  {...getItemProps({ index })}
-                  key={option.identifier}
-                  data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
-                  label={<PublicationChannelChipLabel value={option} />}
-                />
-              ))
+              value.map((option, index) =>
+                // The logged-in user is not stored as the field value, so that option can never end up here
+                isSelfPublisher(option) ? null : (
+                  <Chip
+                    {...getItemProps({ index })}
+                    key={getPublisherOptionKey(option)}
+                    data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
+                    label={<PublicationChannelChipLabel value={option} />}
+                  />
+                )
+              )
             }
             renderInput={(params) => (
               <AutocompleteTextField
@@ -152,7 +196,7 @@ export const PublisherField = () => {
                   hasMoreHits:
                     !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
                   onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-                  isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
+                  isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > publisherOptions.length,
                 } satisfies AutocompleteListboxWithExpansionProps),
               },
             }}
