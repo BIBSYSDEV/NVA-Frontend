@@ -75,12 +75,9 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   }, [tabNumber]);
 
   const isLoadingChannelClaim =
-    canEditRegistration &&
-    !userHasAccessRight(registration, 'update') &&
-    !channelClaimData.channelClaimQuery.data &&
-    channelClaimData.channelClaimQuery.isPending;
+    canEditRegistration && !userHasAccessRight(registration, 'update') && channelClaimData.channelClaimQuery.isLoading;
   const isLoadingData =
-    registrationQuery.isPending || isLoadingChannelClaim || (canHaveNviCandidate && nviReportedStatus.isPending);
+    registrationQuery.isPending || isLoadingChannelClaim || (canHaveNviCandidate && nviReportedStatus.isLoading);
 
   if (isLoadingData) {
     return <PageSpinner aria-label={t('common.result')} />;

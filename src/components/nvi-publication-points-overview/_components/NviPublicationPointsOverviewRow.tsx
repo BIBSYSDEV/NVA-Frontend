@@ -12,7 +12,10 @@ import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
 import { NviRowWrapper } from '../../NviRowWrapper';
-import { selfOrDescendantHasPointValues } from '../../../utils/nvi-curator-aggregations-helpers';
+import {
+  hasSubUnitWithPointValues,
+  selfOrDescendantHasPointValues,
+} from '../../../utils/nvi-curator-aggregations-helpers';
 
 interface NviPublicationPointsOverviewRowProps {
   organization: Organization;
@@ -31,7 +34,10 @@ export const NviPublicationPointsOverviewRow = ({
   linkable,
 }: NviPublicationPointsOverviewRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
-  const [expanded, setExpanded] = useState(level === 0);
+  const [expandedByUser, setExpandedByUser] = useState<boolean>();
+
+  // NOTE: The default expanded state depends on the status data, which is not available on the first render, so it cannot be stored in state
+  const expanded = expandedByUser ?? (level === 0 || hasSubUnitWithPointValues(organization, statusData));
 
   if (excludeEmptyRows && !selfOrDescendantHasPointValues(organization, statusData)) return null;
 
@@ -53,7 +59,7 @@ export const NviPublicationPointsOverviewRow = ({
 
   return (
     <>
-      <NviRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpanded}>
+      <NviRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpandedByUser}>
         <CenteredTableCell>
           {!statusData ? (
             <TableNumberSkeleton />

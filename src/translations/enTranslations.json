@@ -1174,7 +1174,7 @@
       "affiliation_is_unidentified": "Affiliation is unidentified",
       "confirm_remove_author_text": "Are you sure you want to remove {{contributorName}}?",
       "contributor": "Contributor",
-      "contributor_already_added": "Chosen contributor is already added",
+      "contributor_already_added_with_same_role": "",
       "contributor_is_unidentified": "Contributor is unidentified",
       "corresponding": "Corresponding",
       "department": "Department",
