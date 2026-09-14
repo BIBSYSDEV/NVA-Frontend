@@ -54,7 +54,7 @@ import {
   ReportType,
   ResearchDataType,
 } from '../../../types/publicationFieldNames';
-import { ContextPublisher, PublicationChannelType, PublicationInstanceType } from '../../../types/registration.types';
+import { ContextPublisher, PublicationInstanceType } from '../../../types/registration.types';
 import { isBook, isPeriodicalMediaContribution, isReport } from '../../registration-helpers';
 import { YupShape } from '../validationHelpers';
 
@@ -222,10 +222,10 @@ export const periodField = Yup.object().shape({
     ),
 });
 
-const publisherField: Yup.ObjectSchema<ContextPublisher> = Yup.object({
-  type: Yup.string<PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher>().defined(
-    resourceErrorMessage.publisherRequired
-  ),
+// Covers both a publication channel and a person as publisher. Both are selected from the publisher field, and both
+// must end up with an id. A publisher that is only known by name has not been selected yet.
+const publisherField = Yup.object({
+  type: Yup.string<ContextPublisher['type']>().defined(resourceErrorMessage.publisherRequired),
   name: Yup.string().optional(),
   id: Yup.string().when('name', ([name], schema) =>
     name

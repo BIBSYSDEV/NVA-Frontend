@@ -4,7 +4,7 @@ import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '../types/associatedArtifact.types';
-import { Contributor, ContributorRole, PreviewContributor } from '../types/contributor.types';
+import { Contributor, ContributorRole, Identity, PreviewContributor } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
   AudioVisualPublication,
@@ -44,8 +44,11 @@ import {
   ResearchDataType,
 } from '../types/publicationFieldNames';
 import {
+  ContextPublicationChannelPublisher,
+  ContextPublisher,
   ContextSeries,
   NpiSubjectDomain,
+  PublicationChannelType,
   PublicationInstanceType,
   Publisher,
   Registration,
@@ -141,7 +144,34 @@ const getChannelMetadataString = (discontinued?: string, onlineIssn?: string | n
   return metadataString;
 };
 
-export const getPublicationChannelString = (channel: SerialPublication | SerialPublication | Publisher) => {
+/**
+ * A registration can be published by a person instead of a publication channel, both when the person is selected in
+ * NVA and when the registration is imported from an external source such as Brage.
+ *
+ * @param publisher - The publisher of a publication context.
+ * @returns true if the publisher is a person.
+ */
+export const isPersonPublisher = (publisher?: ContextPublisher): publisher is Identity =>
+  publisher?.type === 'Identity';
+
+/**
+ * @param publisher - The publisher of a publication context.
+ * @returns true if the publisher is a publication channel.
+ */
+export const isPublicationChannelPublisher = (
+  publisher?: ContextPublisher
+): publisher is ContextPublicationChannelPublisher =>
+  publisher?.type === PublicationChannelType.Publisher ||
+  publisher?.type === PublicationChannelType.UnconfirmedPublisher;
+
+/**
+ * @param publisher - The publisher of a publication context.
+ * @returns The id of the publisher when it is a publication channel, otherwise an empty string.
+ */
+export const getPublicationChannelPublisherId = (publisher?: ContextPublisher) =>
+  isPublicationChannelPublisher(publisher) ? (publisher.id ?? '') : '';
+
+export const getPublicationChannelString = (channel: SerialPublication | Publisher) => {
   const channelMetadata = getChannelMetadataString(channel.discontinued, channel.onlineIssn, channel.printIssn);
   return channelMetadata ? `${channel.name} (${channelMetadata})` : channel.name;
 };
@@ -917,7 +947,8 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     registration.entityDescription?.reference?.publicationContext &&
     'publisher' in registration.entityDescription.reference.publicationContext
       ? {
-          id: registration.entityDescription.reference.publicationContext.publisher?.id,
+          // A person publisher has no channel to look up, but its name is still shown in search results
+          id: getPublicationChannelPublisherId(registration.entityDescription.reference.publicationContext.publisher),
           name: registration.entityDescription.reference.publicationContext.publisher?.name,
         }
       : undefined;

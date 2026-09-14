@@ -1,6 +1,6 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
 import { AggregationValue, LanguageString } from './common.types';
-import { Contributor, PreviewContributor } from './contributor.types';
+import { Contributor, Identity, PreviewContributor } from './contributor.types';
 import { ResearchProject } from './project.types';
 import { ArtisticEntityDescription, ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
 import { BookEntityDescription, BookPublicationInstance } from './publication_types/bookRegistration.types';
@@ -361,11 +361,24 @@ export interface ContextSeries {
   issn?: string;
 }
 
-export interface ContextPublisher {
+export interface ContextPublicationChannelPublisher {
   type: PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher;
   name?: string;
   id?: string;
 }
+
+/**
+ * The publisher is usually a publication channel, but it can also be a person. A person is stored with the same
+ * Identity structure as a contributor, and has an id that belongs to the person registry, so it must never be
+ * looked up in the publication channel registry. A person can be selected as publisher of source code only for now, even
+ * though the API accepts one for any category, and can also arrive on other categories through import.
+ *
+ * NOTE: The API accepts any agent as publisher, and only the type is guaranteed to be present. In addition to the
+ * types covered here it can be 'NullPublisher' (returned whenever a registration has no publisher), 'Organization'
+ * (id only) and 'UnconfirmedOrganization' (name only). The API stores these as they are given, so their names must
+ * be fetched by the client. Reading those types is not supported yet.
+ */
+export type ContextPublisher = ContextPublicationChannelPublisher | Identity;
 
 export const emptyContextPublisher: ContextPublisher = {
   type: PublicationChannelType.Publisher,

@@ -3,11 +3,12 @@ import { Box, Typography } from '@mui/material';
 import { HTMLAttributes } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { SelfPublisher } from './utils/publisher-field-helpers';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
+import { PersonPublisherOption } from './utils/publisher-field-helpers';
 
 interface SelfPublisherOptionProps {
   props: HTMLAttributes<HTMLLIElement>;
-  option: SelfPublisher;
+  option: PersonPublisherOption;
 }
 
 /**
@@ -24,7 +25,7 @@ export const SelfPublisherOption = ({ props, option }: SelfPublisherOptionProps)
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography sx={{ fontWeight: 'bold' }}>{option.name}</Typography>
           <Typography variant="body2" color="textSecondary">
-            {t('common.person_id')}: {option.personId}
+            {t('common.person_id')}: {getIdentifierFromId(option.id)}
           </Typography>
         </Box>
       </Box>
