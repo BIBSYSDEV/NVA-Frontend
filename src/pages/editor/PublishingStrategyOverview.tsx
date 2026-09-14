@@ -101,12 +101,13 @@ export const PublishingStrategyOverview = () => {
                   components={[<Typography key="1" />]}
                 />
 
-                <Typography variant="h3">{t('editor.retention_strategy.rrs_info_page')}</Typography>
-
                 {customer.rightsRetentionStrategy.policyUri && (
-                  <Link href={customer.rightsRetentionStrategy.policyUri} target="_blank" rel="noopener noreferrer">
-                    {customer.rightsRetentionStrategy.policyUri}
-                  </Link>
+                  <>
+                    <Typography variant="h3">{t('editor.retention_strategy.rrs_info_page')}</Typography>
+                    <Link href={customer.rightsRetentionStrategy.policyUri} target="_blank" rel="noopener noreferrer">
+                      {customer.rightsRetentionStrategy.policyUri}
+                    </Link>
+                  </>
                 )}
 
                 <Typography variant="h3">{t('editor.retention_strategy.possible_not_to_follow_rrs')}</Typography>
