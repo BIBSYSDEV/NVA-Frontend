@@ -75,7 +75,7 @@ export const RrsAndFileImportSettings = () => {
                                 ? CustomerRrsType.NullRightsRetentionStrategy
                                 : CustomerRrsType.RightsRetentionStrategy
                             );
-                            setFieldValue('rightsRetentionStrategy.id', '');
+                            setFieldValue('rightsRetentionStrategy.policyUri', '');
                           }}
                         />
                       }
@@ -83,7 +83,7 @@ export const RrsAndFileImportSettings = () => {
                   )}
                 </Field>
 
-                <Field name="rightsRetentionStrategy.id">
+                <Field name="rightsRetentionStrategy.policyUri">
                   {({ field }: FieldProps<string>) => (
                     <FormLabel component="legend" sx={{ color: 'primary.main', fontWeight: 'bold', marginTop: '1rem' }}>
                       {t('editor.retention_strategy.rrs_info_page')}

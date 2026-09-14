@@ -103,9 +103,11 @@ export const PublishingStrategyOverview = () => {
 
                 <Typography variant="h3">{t('editor.retention_strategy.rrs_info_page')}</Typography>
 
-                <Link href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer">
-                  {customer.rightsRetentionStrategy.id}
-                </Link>
+                {customer.rightsRetentionStrategy.policyUri && (
+                  <Link href={customer.rightsRetentionStrategy.policyUri} target="_blank" rel="noopener noreferrer">
+                    {customer.rightsRetentionStrategy.policyUri}
+                  </Link>
+                )}
 
                 <Typography variant="h3">{t('editor.retention_strategy.possible_not_to_follow_rrs')}</Typography>
                 {isOverridableRrs ? (
