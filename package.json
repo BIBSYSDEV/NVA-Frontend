@@ -73,7 +73,7 @@
     "yup": "1.7.1"
   },
   "devDependencies": {
-    "@rolldown/plugin-babel": "0.2.3",
+    "@rolldown/plugin-babel": "0.2.4",
     "@tanstack/eslint-plugin-query": "5.102.8",
     "@tanstack/react-query-devtools": "5.102.8",
     "@types/jest": "30.0.0",
