@@ -13,32 +13,55 @@ import {
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { useLoggedInUser } from '../../../../utils/hooks/useLoggedInUser';
+import { getPublicationChannelPublisherId, isPersonPublisher } from '../../../../utils/registration-helpers';
+import { getFullName } from '../../../../utils/user-helpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 import { ClaimedChannelInfoBox } from './ClaimedChannelInfoBox';
 import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
 import { PublisherFormDialog } from './PublisherFormDialog';
+import { SelfPublisherOption } from './SelfPublisherOption';
+import {
+  createPersonPublisher,
+  getPublisherOptionKey,
+  getSelfPublisherOption,
+  isPersonPublisherOption,
+  PublisherFieldOption,
+  toPersonPublisherOption,
+} from './utils/publisher-field-helpers';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
-export const PublisherField = () => {
+interface PublisherFieldProps {
+  showSelfOption?: boolean;
+}
+
+export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
   const { reference, publicationDate } = values.entityDescription as BookEntityDescription;
   const publisher = reference?.publicationContext.publisher;
+  const personPublisher = isPersonPublisher(publisher) ? publisher : undefined;
+  const channelPublisherId = getPublicationChannelPublisherId(publisher);
+  const hasSelectedPublisher = !!personPublisher || !!channelPublisherId;
+
+  const user = useLoggedInUser();
 
   const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
   const [showPublisherForm, setShowPublisherForm] = useState(false);
   const togglePublisherForm = () => setShowPublisherForm(!showPublisherForm);
 
-  const [query, setQuery] = useState(!publisher?.id ? (publisher?.name ?? '') : '');
+  // A selected publisher is shown as a chip, so the search field is empty when something is selected. A publisher
+  // that is only known by name cannot be shown as a chip, so its name is put in the search field instead
+  const [query, setQuery] = useState(hasSelectedPublisher ? '' : (publisher?.name ?? ''));
   const debouncedQuery = useDebounce(query);
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 
@@ -51,27 +74,42 @@ export const PublisherField = () => {
     size: searchSize,
   });
 
-  const options = publisherOptionsQuery.data?.hits ?? [];
+  const selfOption = showSelfOption
+    ? getSelfPublisherOption(query, { name: getFullName(user?.givenName, user?.familyName), id: user?.cristinId ?? '' })
+    : undefined;
+
+  const publisherOptions = publisherOptionsQuery.data?.hits ?? [];
+  const options: PublisherFieldOption[] = selfOption ? [selfOption, ...publisherOptions] : publisherOptions;
+
+  // A publisher known only by name may be replaced by a confirmed publisher with the same name, but a person may not
+  const unconfirmedPublisherName = personPublisher ? '' : publisher?.name;
 
   useEffect(() => {
     if (
       publisherOptionsQuery.data?.hits.length === 1 &&
-      publisher?.name &&
-      publisherOptionsQuery.data.hits[0].name.toLowerCase() === publisher.name.toLowerCase()
+      unconfirmedPublisherName &&
+      publisherOptionsQuery.data.hits[0].name.toLowerCase() === unconfirmedPublisherName.toLowerCase()
     ) {
       setFieldValue(ResourceFieldNames.PublicationContextPublisherType, PublicationChannelType.Publisher, false);
       setFieldValue(ResourceFieldNames.PublicationContextPublisherId, publisherOptionsQuery.data.hits[0].id);
       setQuery('');
     }
-  }, [setFieldValue, publisher?.name, publisherOptionsQuery.data?.hits]);
+  }, [setFieldValue, unconfirmedPublisherName, publisherOptionsQuery.data?.hits]);
 
   const publisherQuery = useQuery({
-    queryKey: ['channel', publisher?.id],
-    enabled: !!publisher?.id,
-    queryFn: () => fetchResource<Publisher>(publisher?.id ?? ''),
+    queryKey: ['channel', channelPublisherId],
+    enabled: !!channelPublisherId,
+    queryFn: () => fetchResource<Publisher>(channelPublisherId),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
   });
+
+  // What to show as a selected chip. The field is `multiple` in MUI to get the chip, but only holds one publisher.
+  const selectedPublisher: PublisherFieldOption[] = personPublisher
+    ? [toPersonPublisherOption(personPublisher)]
+    : publisherQuery.data
+      ? [publisherQuery.data]
+      : [];
 
   return (
     <StyledChannelContainerBox>
@@ -97,7 +135,9 @@ export const PublisherField = () => {
               if (reason !== 'reset' && reason !== 'blur') {
                 setQuery(newInputValue);
               }
-              if (reason === 'input' && !newInputValue && publisher?.name) {
+              // Clearing the text removes an unconfirmed publisher. A selected publisher is shown as a chip instead,
+              // and is only removed by removing that chip.
+              if (reason === 'input' && !newInputValue && publisher?.name && !hasSelectedPublisher) {
                 setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
                   type: PublicationChannelType.UnconfirmedPublisher,
                 });
@@ -106,13 +146,19 @@ export const PublisherField = () => {
             onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect
             disableClearable={!query}
-            value={publisher?.id && publisherQuery.data ? [publisherQuery.data] : []}
-            onChange={(_, inputValue, reason) => {
+            value={selectedPublisher}
+            onChange={(_, newValue, reason) => {
               if (reason === 'selectOption') {
-                setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
-                  type: PublicationChannelType.Publisher,
-                  id: inputValue.pop()?.id,
-                });
+                const newOption = newValue.pop();
+                if (!newOption) {
+                  return;
+                }
+                setFieldValue(
+                  ResourceFieldNames.PublicationContextPublisher,
+                  isPersonPublisherOption(newOption)
+                    ? createPersonPublisher(newOption)
+                    : { type: PublicationChannelType.Publisher, id: newOption.id }
+                );
               } else if (reason === 'removeOption') {
                 setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
                   type: PublicationChannelType.UnconfirmedPublisher,
@@ -122,16 +168,22 @@ export const PublisherField = () => {
             }}
             loading={publisherOptionsQuery.isFetching || publisherQuery.isFetching}
             getOptionLabel={(option) => option.name}
-            renderOption={({ key, ...props }, option, state) => (
-              <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
-            )}
+            getOptionKey={getPublisherOptionKey}
+            isOptionEqualToValue={(option, value) => getPublisherOptionKey(option) === getPublisherOptionKey(value)}
+            renderOption={({ key, ...props }, option, state) =>
+              isPersonPublisherOption(option) ? (
+                <SelfPublisherOption key={key} props={props} option={option} />
+              ) : (
+                <PublicationChannelOption key={key} props={props} option={option} state={state} />
+              )
+            }
             renderValue={(value, getItemProps) =>
               value.map((option, index) => (
                 <Chip
                   {...getItemProps({ index })}
-                  key={option.identifier}
+                  key={getPublisherOptionKey(option)}
                   data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
-                  label={<PublicationChannelChipLabel value={option} />}
+                  label={isPersonPublisherOption(option) ? option.name : <PublicationChannelChipLabel value={option} />}
                 />
               ))
             }
@@ -141,7 +193,9 @@ export const PublisherField = () => {
                 required
                 label={t('common.publisher')}
                 isLoading={publisherOptionsQuery.isFetching || publisherQuery.isFetching}
-                placeholder={!publisher?.id ? t('registration.resource_type.search_for_publisher_placeholder') : ''}
+                placeholder={
+                  hasSelectedPublisher ? '' : t('registration.resource_type.search_for_publisher_placeholder')
+                }
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
             )}
@@ -152,7 +206,7 @@ export const PublisherField = () => {
                   hasMoreHits:
                     !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
                   onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-                  isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
+                  isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > publisherOptions.length,
                 } satisfies AutocompleteListboxWithExpansionProps),
               },
             }}
@@ -160,9 +214,11 @@ export const PublisherField = () => {
         )}
       </Field>
 
-      {publisher?.id && <ClaimedChannelInfoBox channelId={publisher.id} channelType={t('common.publisher')} />}
+      {channelPublisherId && (
+        <ClaimedChannelInfoBox channelId={channelPublisherId} channelType={t('common.publisher')} />
+      )}
 
-      {!publisher?.id && publisherOptionsQuery.isFetched && (
+      {!hasSelectedPublisher && publisherOptionsQuery.isFetched && (
         <>
           <StyledCreateChannelButton variant="outlined" onClick={togglePublisherForm}>
             {t('registration.resource_type.create_publisher')}

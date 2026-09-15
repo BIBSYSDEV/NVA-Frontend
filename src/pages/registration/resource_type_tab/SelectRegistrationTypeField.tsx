@@ -53,6 +53,7 @@ import {
   getDisabledCategories,
   getMainRegistrationType,
   isPeriodicalMediaContribution,
+  isPersonPublisher,
   nviApplicableTypes,
 } from '../../../utils/registration-helpers';
 import { LockedNviFieldDescription } from '../LockedNviFieldDescription';
@@ -230,8 +231,17 @@ export const SelectRegistrationTypeField = () => {
             }
           }
           break;
-        case PublicationType.ResearchData:
-          if (contextTypeIsChanged) {
+        case PublicationType.ResearchData: {
+          // Only source code can have a person as publisher, so a person must not be kept when moving to another
+          // research data type, even though the rest of the context is kept within the group
+          const publicationContext = values.entityDescription?.reference?.publicationContext;
+          const hasDisallowedPersonPublisher =
+            newInstanceType !== ResearchDataType.SoftwareSourceCode &&
+            !!publicationContext &&
+            'publisher' in publicationContext &&
+            isPersonPublisher(publicationContext.publisher);
+
+          if (contextTypeIsChanged || hasDisallowedPersonPublisher) {
             setFieldValue(contextTypeBaseFieldName, emptyResearchDataPublicationContext, false);
           }
           setFieldValue(
@@ -240,6 +250,7 @@ export const SelectRegistrationTypeField = () => {
             false
           );
           break;
+        }
         case PublicationType.ExhibitionContent:
           if (contextTypeIsChanged) {
             setFieldValue(contextTypeBaseFieldName, emptyExhibitionPublicationContext, false);

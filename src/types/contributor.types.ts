@@ -73,6 +73,7 @@ export interface Identity {
   type: 'Identity';
   id?: string;
   name: string;
+  nameType?: 'Personal';
   orcId?: string;
   additionalIdentifiers?: AdditionalIdentifier[];
   verificationStatus?: VerificationStatus;
