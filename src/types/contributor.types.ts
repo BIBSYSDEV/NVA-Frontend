@@ -73,7 +73,6 @@ export interface Identity {
   type: 'Identity';
   id?: string;
   name: string;
-  /** States that the identity is a person, which matters where an identity can also be something else, such as the publisher of a registration. */
   nameType?: 'Personal';
   orcId?: string;
   additionalIdentifiers?: AdditionalIdentifier[];

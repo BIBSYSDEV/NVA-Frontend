@@ -47,9 +47,6 @@ interface PublisherFieldProps {
   showSelfOption?: boolean;
 }
 
-/**
- * Formik bound search field for selecting the publisher of a registration.
- */
 export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();

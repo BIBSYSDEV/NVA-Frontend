@@ -40,7 +40,7 @@ describe('getSelfPublisherOption', () => {
     expect(getSelfPublisherOption('ban', loggedInUser)).toEqual(personPublisherOption);
   });
 
-  test('offers the user when the query matches the full name across the space', () => {
+  test('offers the user when the query includes letters accross names', () => {
     expect(getSelfPublisherOption('na ban', loggedInUser)).toEqual(personPublisherOption);
   });
 

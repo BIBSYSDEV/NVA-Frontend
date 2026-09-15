@@ -368,15 +368,9 @@ export interface ContextPublicationChannelPublisher {
 }
 
 /**
- * The publisher is usually a publication channel, but it can also be a person. A person is stored with the same
- * Identity structure as a contributor, and has an id that belongs to the person registry, so it must never be
- * looked up in the publication channel registry. A person can be selected as publisher of source code only for now, even
- * though the API accepts one for any category, and can also arrive on other categories through import.
- *
- * NOTE: The API accepts any agent as publisher, and only the type is guaranteed to be present. In addition to the
- * types covered here it can be 'NullPublisher' (returned whenever a registration has no publisher), 'Organization'
- * (id only) and 'UnconfirmedOrganization' (name only). The API stores these as they are given, so their names must
- * be fetched by the client. Reading those types is not supported yet.
+ * The publisher is usually a publication channel, but it can also be a person, which should not be looked up in the
+ * publication channel registry. A person can be selected as publisher of source code only for now, even
+ * though the API accepts one for any category.
  */
 export type ContextPublisher = ContextPublicationChannelPublisher | Identity;
 
