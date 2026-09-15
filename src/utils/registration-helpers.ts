@@ -146,7 +146,7 @@ const getChannelMetadataString = (discontinued?: string, onlineIssn?: string | n
 
 /**
  * A registration can be published by a person instead of a publication channel, both when the person is selected in
- * NVA and when the registration is imported from an external source such as Brage.
+ * NVA and when the registration is imported from an external source.
  *
  * @param publisher - The publisher of a publication context.
  * @returns true if the publisher is a person.

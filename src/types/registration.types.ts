@@ -369,8 +369,7 @@ export interface ContextPublicationChannelPublisher {
 
 /**
  * The publisher is usually a publication channel, but it can also be a person, which should not be looked up in the
- * publication channel registry. A person can be selected as publisher of source code only for now, even
- * though the API accepts one for any category.
+ * publication channel registry. In frontend, only source code allows for a person as publisher.
  */
 export type ContextPublisher = ContextPublicationChannelPublisher | Identity;
 

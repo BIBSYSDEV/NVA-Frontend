@@ -222,8 +222,6 @@ export const periodField = Yup.object().shape({
     ),
 });
 
-// Covers both a publication channel and a person as publisher. Both are selected from the publisher field, and both
-// must end up with an id. A publisher that is only known by name has not been selected yet.
 const publisherField = Yup.object({
   type: Yup.string<ContextPublisher['type']>().defined(resourceErrorMessage.publisherRequired),
   name: Yup.string().optional(),

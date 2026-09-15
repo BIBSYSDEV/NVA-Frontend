@@ -8,7 +8,6 @@ const personPublisherType = 'PersonPublisher';
  */
 export interface PersonPublisherOption {
   type: typeof personPublisherType;
-  /** Cristin id of the person. */
   id: string;
   name: string;
 }

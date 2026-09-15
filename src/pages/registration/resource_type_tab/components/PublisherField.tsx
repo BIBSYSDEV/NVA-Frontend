@@ -40,10 +40,6 @@ import {
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
 interface PublisherFieldProps {
-  /**
-   * Adds an option suggesting the logged-in user as publisher, shown when the field is empty or as long as the
-   * search query matches the user's own name.
-   */
   showSelfOption?: boolean;
 }
 
@@ -64,8 +60,7 @@ export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) 
   const togglePublisherForm = () => setShowPublisherForm(!showPublisherForm);
 
   // A selected publisher is shown as a chip, so the search field is empty when something is selected. A publisher
-  // that is only known by name has no chip to be shown in, and its name is put in the search field instead, both to
-  // show it and to search for a channel with the same name.
+  // that is only known by name cannot be shown as a chip, so its name is put in the search field instead
   const [query, setQuery] = useState(hasSelectedPublisher ? '' : (publisher?.name ?? ''));
   const debouncedQuery = useDebounce(query);
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
@@ -109,9 +104,7 @@ export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) 
     staleTime: Infinity,
   });
 
-  // What to show as a selected chip. The field is `multiple` to get the chip, so MUI wants a list, but it never
-  // holds more than one publisher. A person is already stored with its name, while a channel is stored as an id
-  // only, and has nothing to show until it has been fetched.
+  // What to show as a selected chip. The field is `multiple` in MUI to get the chip, but only holds one publisher.
   const selectedPublisher: PublisherFieldOption[] = personPublisher
     ? [toPersonPublisherOption(personPublisher)]
     : publisherQuery.data

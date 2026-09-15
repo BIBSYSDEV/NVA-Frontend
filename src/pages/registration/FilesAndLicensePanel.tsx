@@ -85,9 +85,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     });
   }, [t, uppy, filesRef]);
 
-  // The publisher can also be a person, who has no entry in the channel register. Keeping the id empty for a person
-  // hides the link to the register, and with it the whole 'info_from_channel_register' box for source code, since
-  // that category has no series to show there either.
+  // Keeping the id empty for a person hides the link to the channel register, and with it the
+  // 'info_from_channel_register' box for source code, since that category has no series to show there either.
   const publisherId =
     publicationContext && 'publisher' in publicationContext
       ? getPublicationChannelPublisherId(publicationContext.publisher)
