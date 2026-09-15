@@ -114,8 +114,8 @@ export const FilesTableRow = ({
   const fileHasCustomerRrs = file.rightsRetentionStrategy.type === 'CustomerRightsRetentionStrategy';
   const fileHasOverriddenRrs = file.rightsRetentionStrategy.type === 'OverriddenRightsRetentionStrategy';
 
-  const rrsPolicyLink = customer?.rightsRetentionStrategy.id ? (
-    <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
+  const rrsPolicyLink = customer?.rightsRetentionStrategy.policyUri ? (
+    <MuiLink href={customer.rightsRetentionStrategy.policyUri} target="_blank" rel="noopener noreferrer" />
   ) : null;
 
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);

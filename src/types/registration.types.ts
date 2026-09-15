@@ -1,6 +1,6 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
 import { AggregationValue, LanguageString } from './common.types';
-import { Contributor, PreviewContributor } from './contributor.types';
+import { Contributor, Identity, PreviewContributor } from './contributor.types';
 import { ResearchProject } from './project.types';
 import { ArtisticEntityDescription, ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
 import { BookEntityDescription, BookPublicationInstance } from './publication_types/bookRegistration.types';
@@ -361,11 +361,17 @@ export interface ContextSeries {
   issn?: string;
 }
 
-export interface ContextPublisher {
+export interface ContextPublicationChannelPublisher {
   type: PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher;
   name?: string;
   id?: string;
 }
+
+/**
+ * The publisher is usually a publication channel, but it can also be a person, which should not be looked up in the
+ * publication channel registry. In frontend, only source code allows for a person as publisher.
+ */
+export type ContextPublisher = ContextPublicationChannelPublisher | Identity;
 
 export const emptyContextPublisher: ContextPublisher = {
   type: PublicationChannelType.Publisher,
