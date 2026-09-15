@@ -44,7 +44,7 @@ export interface CustomerInstitution extends Pick<
   rboInstitution: boolean;
   rightsRetentionStrategy: {
     type: CustomerRrsType;
-    id: string;
+    policyUri?: string;
   };
   generalSupportEnabled: boolean;
   allowFileUploadForTypes: PublicationInstanceType[];
@@ -117,7 +117,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   sector: Sector.Uhi,
   nviInstitution: false,
   rboInstitution: false,
-  rightsRetentionStrategy: { type: CustomerRrsType.NullRightsRetentionStrategy, id: '' },
+  rightsRetentionStrategy: { type: CustomerRrsType.NullRightsRetentionStrategy, policyUri: '' },
   allowFileUploadForTypes: allPublicationInstanceTypes,
   generalSupportEnabled: true,
 };
