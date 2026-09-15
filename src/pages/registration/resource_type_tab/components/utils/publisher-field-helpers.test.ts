@@ -36,7 +36,7 @@ describe('getSelfPublisherOption', () => {
     expect(getSelfPublisherOption('an', loggedInUser)).toEqual(personPublisherOption);
   });
 
-  test('offers the user when the query matches the last name', () => {
+  test('offers the user when the query partially matches the last name', () => {
     expect(getSelfPublisherOption('ban', loggedInUser)).toEqual(personPublisherOption);
   });
 

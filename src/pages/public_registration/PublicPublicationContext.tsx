@@ -25,10 +25,10 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../api/commonApi';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
+import { ResearchProfileLink } from '../../components/_atoms/ResearchProfileLink';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
-import { ResearchProfileLink } from '../../components/_atoms/ResearchProfileLink';
 import { useAppLanguageInIso6391Format } from '../../translations/translation-helpers';
 import {
   AudioVisualPublication,
@@ -110,7 +110,6 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
     ? `${fetchedPublisher.name} (${t('common.discontinued')}: ${fetchedPublisher.discontinued})`
     : fetchedPublisher?.name;
 
-  // A person is not a publication channel, and is shown with a link to their research profile instead
   if (isPersonPublisher(publisher)) {
     return publisher.name ? (
       <>
