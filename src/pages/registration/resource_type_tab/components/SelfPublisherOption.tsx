@@ -11,10 +11,6 @@ interface SelfPublisherOptionProps {
   option: PersonPublisherOption;
 }
 
-/**
- * Option in the publisher field that suggests the logged-in user as publisher, shown with a person icon, their own
- * name and their person identifier.
- */
 export const SelfPublisherOption = ({ props, option }: SelfPublisherOptionProps) => {
   const { t } = useTranslation();
 
