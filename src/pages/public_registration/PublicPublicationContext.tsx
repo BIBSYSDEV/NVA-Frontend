@@ -28,6 +28,7 @@ import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
+import { ResearchProfileLink } from '../../components/_atoms/ResearchProfileLink';
 import { useAppLanguageInIso6391Format } from '../../translations/translation-helpers';
 import {
   AudioVisualPublication,
@@ -64,7 +65,13 @@ import { getCountries } from '../../utils/countryHelpers';
 import { toDateString } from '../../utils/date-helpers';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
-import { getIssnValuesString, getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
+import {
+  getIssnValuesString,
+  getOutputName,
+  getPublicationChannelPublisherId,
+  hyphenateIsrc,
+  isPersonPublisher,
+} from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { OutputItem } from '../registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import { RegistrationSummary } from './RegistrationSummary';
@@ -95,13 +102,25 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
   const { t } = useTranslation();
 
   const [fetchedPublisher, isLoadingPublisher] = useFetchResource<Publisher>(
-    publisher?.id ?? '',
+    getPublicationChannelPublisherId(publisher),
     t('feedback.error.get_publisher')
   );
 
   const publisherName = fetchedPublisher?.discontinued
     ? `${fetchedPublisher.name} (${t('common.discontinued')}: ${fetchedPublisher.discontinued})`
     : fetchedPublisher?.name;
+
+  // A person is not a publication channel, and is shown with a link to their research profile instead
+  if (isPersonPublisher(publisher)) {
+    return publisher.name ? (
+      <>
+        <Typography variant="h3">{t('common.publisher')}</Typography>
+        <Box sx={{ mb: '1rem' }}>
+          <ResearchProfileLink name={publisher.name} cristinId={publisher.id} />
+        </Box>
+      </>
+    ) : null;
+  }
 
   return publisher?.id || publisher?.name ? (
     <>
