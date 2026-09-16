@@ -2,8 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchProfilePicture } from '../../api/cristinApi';
 
 export const useProfilePicture = (id: string) => {
+  const isEnabled = !!id;
+
   const profilePictureQuery = useQuery({
-    enabled: !!id,
+    enabled: isEnabled,
     queryKey: ['picture', id],
     queryFn: () => fetchProfilePicture(id),
     meta: { errorMessage: false },
@@ -15,5 +17,5 @@ export const useProfilePicture = (id: string) => {
     ? `data:image/jpeg;base64,${profilePictureQuery.data.base64Data}`
     : '';
 
-  return { profilePictureQuery, profilePictureString };
+  return { profilePictureQuery, profilePictureString, isEnabled };
 };
