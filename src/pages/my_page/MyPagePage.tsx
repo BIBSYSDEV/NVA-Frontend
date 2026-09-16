@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
+import { useFetchPerson } from '../../api/hooks/useFetchPerson';
 import {
   fetchCustomerTickets,
   FetchTicketsParams,
@@ -61,6 +62,8 @@ const MyPagePage = () => {
   const isCreator = !!user?.customerId && (user.isCreator || hasCuratorRole(user));
   const personId = user?.cristinId ?? '';
   const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
+
+  const personQuery = useFetchPerson(personId, { staleTime: Infinity });
   const navigate = useNavigate();
 
   const [selectedTypes, setSelectedTypes] = useState<TicketTypeSelection>({
@@ -149,7 +152,7 @@ const MyPagePage = () => {
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
         <NavigationListAccordion
           title={t('my_page.research_profile')}
-          startIcon={<ProfilePicture personId={personId} fullName={fullName} />}
+          startIcon={<ProfilePicture personId={personId} fullName={fullName} hasPicture={!!personQuery.data?.image} />}
           accordionPath={UrlPathTemplate.MyPageProfile}
           defaultPath={UrlPathTemplate.MyPageResearchProfile}
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
