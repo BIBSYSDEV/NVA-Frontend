@@ -3,6 +3,7 @@ import { fetchProfilePicture } from '../../api/cristinApi';
 
 export const useProfilePicture = (id: string) => {
   const profilePictureQuery = useQuery({
+    enabled: !!id,
     queryKey: ['picture', id],
     queryFn: () => fetchProfilePicture(id),
     meta: { errorMessage: false },
