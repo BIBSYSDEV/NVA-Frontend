@@ -1,7 +1,7 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Box, IconButton, Skeleton, Typography } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -13,21 +13,24 @@ import { useProfilePicture } from '../../../utils/hooks/useProfilePicture';
 
 interface ProfilePictureUploaderProps {
   personId: string;
+  hasPicture?: boolean;
 }
 
-export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps) => {
+export const ProfilePictureUploader = ({ personId, hasPicture = true }: ProfilePictureUploaderProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
-  const { profilePictureQuery, profilePictureString } = useProfilePicture(personId);
+  const { profilePictureQuery, profilePictureString } = useProfilePicture(personId, hasPicture);
 
   const mutateProfilePicture = useMutation({
     mutationFn: (base64String: string) => uploadProfilePicture(personId, base64String),
     onSuccess: async () => {
       await profilePictureQuery.refetch();
+      await queryClient.invalidateQueries({ queryKey: ['person', personId] });
       dispatch(setNotification({ message: t('feedback.success.update_profile_photo'), variant: 'success' }));
     },
     onError: () => {
