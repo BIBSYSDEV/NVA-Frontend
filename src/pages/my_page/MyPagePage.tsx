@@ -5,7 +5,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Badge, Divider, Typography } from '@mui/material';
+import { Badge, Divider, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -65,6 +65,11 @@ const MyPagePage = () => {
 
   const personQuery = useFetchPerson(personId, { staleTime: Infinity });
   const navigate = useNavigate();
+
+  // Avoid a flash of the initials fallback while we're still waiting to learn if the user has a picture.
+  // Guarding on personId too ensures users without a cristinId (whose person query is permanently disabled
+  // and thus permanently isPending) still fall through to ProfilePicture and get the initials fallback.
+  const isPersonPictureLoading = !!personId && personQuery.isPending;
 
   const [selectedTypes, setSelectedTypes] = useState<TicketTypeSelection>({
     doiRequest: true,
@@ -152,7 +157,13 @@ const MyPagePage = () => {
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
         <NavigationListAccordion
           title={t('my_page.research_profile')}
-          startIcon={<ProfilePicture personId={personId} fullName={fullName} hasPicture={!!personQuery.data?.image} />}
+          startIcon={
+            isPersonPictureLoading ? (
+              <Skeleton variant="circular" sx={{ height: '2.5rem', aspectRatio: '1/1' }} />
+            ) : (
+              <ProfilePicture personId={personId} fullName={fullName} hasPicture={!!personQuery.data?.image} />
+            )
+          }
           accordionPath={UrlPathTemplate.MyPageProfile}
           defaultPath={UrlPathTemplate.MyPageResearchProfile}
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
