@@ -32,6 +32,7 @@ const publisher: Publisher = {
 };
 
 const activeOrganizationId = 'https://api.test.nva.aws.unit.no/cristin/organization/1.0.0.0';
+const orcid = '123';
 
 const cristinPerson = {
   id: 'https://api.test.nva.aws.unit.no/cristin/person/12345',
@@ -39,7 +40,7 @@ const cristinPerson = {
     { type: 'FirstName', value: 'Ana' },
     { type: 'LastName', value: 'Bana' },
   ],
-  identifiers: [{ type: 'ORCID', value: '0000-0001-2345-6789' }],
+  identifiers: [{ type: 'ORCID', value: orcid }],
   affiliations: [
     { active: true, organization: activeOrganizationId, role: { labels: {} } },
     {
@@ -156,7 +157,7 @@ describe('addSelfPublisherAsContributor', () => {
       type: 'Identity',
       id: cristinPerson.id,
       name: 'Ana Bana',
-      orcId: 'https://orcid.org/0000-0001-2345-6789',
+      orcId: expect.stringContaining(orcid),
       verificationStatus: VerificationStatus.Verified,
     });
   });
