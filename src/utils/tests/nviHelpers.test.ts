@@ -8,6 +8,7 @@ import { JournalType, PublicationType } from '../../types/publicationFieldNames'
 import { PublicationChannelType } from '../../types/registration.types';
 import { willResetNviStatuses } from '../nviHelpers';
 import { mockRegistration } from '../testfiles/mockRegistration';
+import { buildContributor, buildIdentity } from './testHelpers';
 
 const nviRegistration = structuredClone(mockRegistration);
 
@@ -37,6 +38,19 @@ const restHandlers = [
 ];
 
 const server = setupServer(...restHandlers);
+
+const personId = 'https://api.com/person/1';
+const otherPersonId = 'https://api.com/person/2';
+
+const affiliationA: Affiliation = { type: 'Organization', id: institutionA.id };
+const affiliationSubunitA: Affiliation = { type: 'Organization', id: subunitOnInstitutionA.id };
+const affiliationB: Affiliation = { type: 'Organization', id: institutionB.id };
+
+const buildNviRegistration = (contributors: Contributor[]) => {
+  const registration = structuredClone(nviRegistration);
+  registration.entityDescription.contributors = contributors;
+  return registration;
+};
 
 describe('willResetNviStatuses()', () => {
   beforeAll(() => {
@@ -249,7 +263,176 @@ describe('willResetNviStatuses()', () => {
     expect(result).toBe(true);
   });
 
-  test('Returns true when a new contributor is added without any affiliations', async () => {
+  test('Returns true when an affiliation is changed on one of several roles of the same person', async () => {
+    const creator = buildContributor({
+      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+      role: { type: ContributorRole.Creator },
+      affiliations: [affiliationA],
+      sequence: 1,
+    });
+    const editor = buildContributor({
+      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+      role: { type: ContributorRole.Editor },
+      affiliations: [affiliationA],
+      sequence: 2,
+    });
+
+    const persistedRegistration = buildNviRegistration([creator, editor]);
+    const updatedRegistration = buildNviRegistration([creator, { ...editor, affiliations: [affiliationB] }]);
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(true);
+  });
+
+  test('Returns false when one of several roles of the same person is moved to another unit on the same institution', async () => {
+    const creator = buildContributor({
+      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+      role: { type: ContributorRole.Creator },
+      affiliations: [affiliationA],
+      sequence: 1,
+    });
+    const editor = buildContributor({
+      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+      role: { type: ContributorRole.Editor },
+      affiliations: [affiliationA],
+      sequence: 2,
+    });
+
+    const persistedRegistration = buildNviRegistration([creator, editor]);
+    const updatedRegistration = buildNviRegistration([creator, { ...editor, affiliations: [affiliationSubunitA] }]);
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(false);
+  });
+
+  test('Returns false when a person has several roles and nothing is changed', async () => {
+    const creator = buildContributor({
+      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+      role: { type: ContributorRole.Creator },
+      affiliations: [affiliationA],
+      sequence: 1,
+    });
+    const editor = buildContributor({
+      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+      role: { type: ContributorRole.Editor },
+      affiliations: [affiliationA],
+      sequence: 2,
+    });
+
+    const persistedRegistration = buildNviRegistration([creator, editor]);
+    const updatedRegistration = buildNviRegistration([creator, editor]);
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(false);
+  });
+
+  test('Returns true when the role of a contributor is changed', async () => {
+    const creator = buildContributor({
+      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+      role: { type: ContributorRole.Creator },
+      affiliations: [affiliationA],
+    });
+
+    const persistedRegistration = buildNviRegistration([creator]);
+    const updatedRegistration = buildNviRegistration([{ ...creator, role: { type: ContributorRole.ContactPerson } }]);
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(true);
+  });
+
+  test('Returns true when a role is added to a person who is already a contributor', async () => {
+    const creator = buildContributor({
+      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+      role: { type: ContributorRole.Creator },
+      affiliations: [affiliationA],
+      sequence: 1,
+    });
+
+    const persistedRegistration = buildNviRegistration([creator]);
+    const updatedRegistration = buildNviRegistration([
+      creator,
+      { ...creator, role: { type: ContributorRole.ContactPerson }, sequence: 2 },
+    ]);
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(true);
+  });
+
+  test('Returns false when the contributors are reordered', async () => {
+    const firstContributor = buildContributor({
+      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+      affiliations: [affiliationA],
+      sequence: 1,
+    });
+    const secondContributor = buildContributor({
+      identity: buildIdentity({ id: otherPersonId, name: 'Other Person' }),
+      affiliations: [affiliationB],
+      sequence: 2,
+    });
+
+    const persistedRegistration = buildNviRegistration([firstContributor, secondContributor]);
+    const updatedRegistration = buildNviRegistration([
+      { ...secondContributor, sequence: 1 },
+      { ...firstContributor, sequence: 2 },
+    ]);
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(false);
+  });
+
+  test('Returns false when an identified contributor is renamed', async () => {
+    const contributor = buildContributor({
+      identity: buildIdentity({ id: personId, name: 'Old Name' }),
+      affiliations: [affiliationA],
+    });
+
+    const persistedRegistration = buildNviRegistration([contributor]);
+    const updatedRegistration = buildNviRegistration([
+      { ...contributor, identity: buildIdentity({ id: personId, name: 'New Name' }) },
+    ]);
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(false);
+  });
+
+  test('Returns true when an unidentified contributor is renamed', async () => {
+    const contributor = buildContributor({
+      identity: buildIdentity({ name: 'Old Name' }),
+      affiliations: [affiliationA],
+    });
+
+    const persistedRegistration = buildNviRegistration([contributor]);
+    const updatedRegistration = buildNviRegistration([
+      { ...contributor, identity: buildIdentity({ name: 'New Name' }) },
+    ]);
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(true);
+  });
+
+  test('Returns true when an affiliation is changed on one of several unidentified contributors', async () => {
+    const firstContributor = buildContributor({
+      identity: buildIdentity({ name: 'First Unidentified' }),
+      affiliations: [affiliationA],
+      sequence: 1,
+    });
+    const secondContributor = buildContributor({
+      identity: buildIdentity({ name: 'Second Unidentified' }),
+      affiliations: [affiliationA],
+      sequence: 2,
+    });
+
+    const persistedRegistration = buildNviRegistration([firstContributor, secondContributor]);
+    const updatedRegistration = buildNviRegistration([
+      firstContributor,
+      { ...secondContributor, affiliations: [affiliationB] },
+    ]);
+
+    const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
+    expect(result).toBe(true);
+  });
+
+  test('Returns true when a new contributor is added with the same name as an existing one', async () => {
     const persistedContributor: Contributor = {
       type: 'Contributor',
       affiliations: [{ type: 'Organization', id: institutionA.id }],

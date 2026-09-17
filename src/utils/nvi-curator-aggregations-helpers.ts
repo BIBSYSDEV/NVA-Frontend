@@ -44,3 +44,25 @@ export const selfOrDescendantHasPointValues = (
   if (orgHasPointValues(aggregations?.byOrganization[organization.id])) return true;
   return organization.hasPart?.some((subUnit) => selfOrDescendantHasPointValues(subUnit, aggregations)) ?? false;
 };
+
+/**
+ * Checks if any subunit of an organization, at any depth, has NVI candidates.
+ * @param organization - The organization to check, including its hasPart tree
+ * @param aggregations - The NVI status response containing candidate counts per organization
+ * @returns true if at least one subunit or deeper descendant has candidates, false otherwise
+ */
+export const hasSubUnitWithCandidates = (
+  organization: Omit<Organization, 'acronym'>,
+  aggregations: NviInstitutionStatusResponse | undefined
+): boolean => organization.hasPart?.some((subUnit) => selfOrDescendantHasCandidates(subUnit, aggregations)) ?? false;
+
+/**
+ * Checks if any subunit of an organization, at any depth, has NVI point values.
+ * @param organization - The organization to check, including its hasPart tree
+ * @param aggregations - The NVI status response containing point values per organization
+ * @returns true if at least one subunit or deeper descendant has points or globally approved publications, false otherwise
+ */
+export const hasSubUnitWithPointValues = (
+  organization: Omit<Organization, 'acronym'>,
+  aggregations: NviInstitutionStatusResponse | undefined
+): boolean => organization.hasPart?.some((subUnit) => selfOrDescendantHasPointValues(subUnit, aggregations)) ?? false;

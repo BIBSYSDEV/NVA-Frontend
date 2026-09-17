@@ -8,7 +8,10 @@ import { User } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { selfOrDescendantHasCandidates } from '../../../utils/nvi-curator-aggregations-helpers';
+import {
+  hasSubUnitWithCandidates,
+  selfOrDescendantHasCandidates,
+} from '../../../utils/nvi-curator-aggregations-helpers';
 import { getNviCandidatesSearchPath } from '../../../utils/urlPaths';
 import { PercentageWithIcon } from '../../_molecules/PercentageWithIcon';
 import { NviRowWrapper } from '../../NviRowWrapper';
@@ -34,7 +37,10 @@ export const NviReportingStatusOverviewRow = ({
   linkable = false,
 }: NviReportingStatusRowProps) => {
   const { excludeEmptyRows } = useNviCandidatesParams();
-  const [expanded, setExpanded] = useState(level === 0);
+  const [expandedByUser, setExpandedByUser] = useState<boolean>();
+
+  // NOTE: The default expanded state depends on the aggregations, which are not available on the first render, so it cannot be stored in state
+  const expanded = expandedByUser ?? (level === 0 || hasSubUnitWithCandidates(organization, aggregations));
 
   if (excludeEmptyRows && !selfOrDescendantHasCandidates(organization, aggregations)) return null;
 
@@ -54,7 +60,7 @@ export const NviReportingStatusOverviewRow = ({
 
   return (
     <>
-      <NviRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpanded}>
+      <NviRowWrapper level={level} organization={organization} expanded={expanded} setExpanded={setExpandedByUser}>
         <CenteredTableCell>
           {!aggregations ? (
             <TableNumberSkeleton />

@@ -1,8 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
-import { PublicationChannelType, Registration } from '../../types/registration.types';
 import { describe, expect, it } from 'vitest';
-import { getFormattedRegistration, updateRegistrationQueryData } from '../registration-helpers';
-import { mockRegistration } from '../testfiles/mockRegistration';
+import { ExhibitionProductionSubtype } from '../../types/publication_types/exhibitionContent.types';
+import { MediaMedium } from '../../types/publication_types/mediaContributionRegistration.types';
 import {
   ArtisticType,
   BookType,
@@ -17,8 +16,15 @@ import {
   ReportType,
   ResearchDataType,
 } from '../../types/publicationFieldNames';
-import { MediaMedium } from '../../types/publication_types/mediaContributionRegistration.types';
-import { ExhibitionProductionSubtype } from '../../types/publication_types/exhibitionContent.types';
+import { ContextPublisher, PublicationChannelType, Registration } from '../../types/registration.types';
+import {
+  getFormattedRegistration,
+  getPublicationChannelPublisherId,
+  isPersonPublisher,
+  isPublicationChannelPublisher,
+  updateRegistrationQueryData,
+} from '../registration-helpers';
+import { mockRegistration } from '../testfiles/mockRegistration';
 
 describe('getFormattedRegistration', () => {
   it('adds missing entityDescription.type and reference.type', () => {
@@ -386,6 +392,69 @@ describe('updateRegistrationQueryData', () => {
     expect(queryClient.getQueryData(registrationQueryKey)).toBeUndefined();
   });
 });
+
+describe('isPersonPublisher', () => {
+  it('recognizes a person as publisher', () => {
+    expect(isPersonPublisher({ type: 'Identity', id: personId, name: 'Ola Nordmann' })).toBe(true);
+  });
+
+  it('does not recognize a publication channel', () => {
+    expect(isPersonPublisher({ type: PublicationChannelType.Publisher, id: channelId })).toBe(false);
+  });
+
+  it('does not recognize a missing publisher', () => {
+    expect(isPersonPublisher(undefined)).toBe(false);
+  });
+});
+
+describe('isPublicationChannelPublisher', () => {
+  it('recognizes a confirmed publication channel', () => {
+    expect(isPublicationChannelPublisher({ type: PublicationChannelType.Publisher, id: channelId })).toBe(true);
+  });
+
+  it('recognizes an unconfirmed publisher', () => {
+    expect(isPublicationChannelPublisher({ type: PublicationChannelType.UnconfirmedPublisher, name: 'Forlaget' })).toBe(
+      true
+    );
+  });
+
+  it('does not recognize a person', () => {
+    expect(isPublicationChannelPublisher({ type: 'Identity', id: personId, name: 'Ola Nordmann' })).toBe(false);
+  });
+
+  it('does not recognize a missing publisher', () => {
+    expect(isPublicationChannelPublisher(undefined)).toBe(false);
+  });
+});
+
+describe('getPublicationChannelPublisherId', () => {
+  it('returns the id of a publication channel', () => {
+    expect(getPublicationChannelPublisherId({ type: PublicationChannelType.Publisher, id: channelId })).toBe(channelId);
+  });
+
+  it('returns no id for a person, so that the person is not looked up as a publication channel', () => {
+    expect(getPublicationChannelPublisherId({ type: 'Identity', id: personId, name: 'Ola Nordmann' })).toBe('');
+  });
+
+  it('returns no id for a publisher without an id', () => {
+    expect(getPublicationChannelPublisherId({ type: PublicationChannelType.UnconfirmedPublisher })).toBe('');
+  });
+
+  it('returns no id for a publisher type the client does not know, such as an organization', () => {
+    const organizationPublisher = {
+      type: 'Organization',
+      id: '9999.0.0.0',
+    } as unknown as ContextPublisher;
+    expect(getPublicationChannelPublisherId(organizationPublisher)).toBe('');
+  });
+
+  it('returns no id for a missing publisher', () => {
+    expect(getPublicationChannelPublisherId(undefined)).toBe('');
+  });
+});
+
+const personId = '1234';
+const channelId = '5678';
 
 // Type arrays
 const publicationTypes = Object.values(PublicationType);

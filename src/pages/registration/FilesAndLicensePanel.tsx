@@ -18,6 +18,7 @@ import {
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
   getAssociatedLinkRelationTitle,
+  getPublicationChannelPublisherId,
   isOpenFile,
   isPendingOpenFile,
   userHasAccessRight,
@@ -84,8 +85,12 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     });
   }, [t, uppy, filesRef]);
 
+  // Keeping the id empty for a person hides the link to the channel register, and with it the
+  // 'info_from_channel_register' box for source code, since that category has no series to show there either.
   const publisherId =
-    (publicationContext && 'publisher' in publicationContext && publicationContext.publisher?.id) || '';
+    publicationContext && 'publisher' in publicationContext
+      ? getPublicationChannelPublisherId(publicationContext.publisher)
+      : '';
   const publisherIdentifier = publisherId?.split('/').reverse()[1];
 
   const seriesId = (publicationContext && 'series' in publicationContext && publicationContext.series?.id) || '';

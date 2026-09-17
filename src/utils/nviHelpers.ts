@@ -28,6 +28,28 @@ const isEqualSets = (set1: Set<string>, set2: Set<string>) => {
   return true;
 };
 
+// A person with several roles is stored as one contributor per role, so the role is part of the
+// identity of a contributor here. Unverified contributors have no id, and can only be paired by name
+const getContributorComparisonKey = ({ identity, role }: Contributor) =>
+  `${identity.id ?? `name:${identity.name}`}|${role?.type ?? ''}`;
+
+const groupContributorsByComparisonKey = (contributors: Contributor[]) => {
+  const groups = new Map<string, Contributor[]>();
+
+  for (const contributor of contributors) {
+    const comparisonKey = getContributorComparisonKey(contributor);
+    const group = groups.get(comparisonKey);
+
+    if (group) {
+      group.push(contributor);
+    } else {
+      groups.set(comparisonKey, [contributor]);
+    }
+  }
+
+  return groups;
+};
+
 const hasChangedContributorsOrAffiliations = async (
   persistedContributors: Contributor[],
   updatedContributors: Contributor[]
@@ -43,41 +65,41 @@ const hasChangedContributorsOrAffiliations = async (
     return topLevelOrgCache[affiliationId];
   };
 
-  if (persistedContributors.length !== updatedContributors.length) {
+  const getTopLevelOrgIds = async (contributor: Contributor) => {
+    const topLevelOrgIds = new Set<string>();
+
+    for (const affiliation of contributor.affiliations ?? []) {
+      if (affiliation.type === 'Organization' && affiliation.id) {
+        topLevelOrgIds.add(await getTopLevelOrgId(affiliation.id));
+      }
+    }
+
+    return topLevelOrgIds;
+  };
+
+  const persistedGroups = groupContributorsByComparisonKey(persistedContributors);
+  const updatedGroups = groupContributorsByComparisonKey(updatedContributors);
+
+  const hasAddedOrRemovedContributorOrRole = persistedGroups.size !== updatedGroups.size;
+  if (hasAddedOrRemovedContributorOrRole) {
     return true;
   }
 
-  for (const persistedContributor of persistedContributors) {
-    const updatedContributor = updatedContributors.find(
-      (contributor) =>
-        (contributor.identity.id && contributor.identity.id === persistedContributor.identity.id) ||
-        contributor.identity.name === persistedContributor.identity.name
-    );
-    if (updatedContributor) {
-      const persistedAffiliations = persistedContributor.affiliations ?? [];
-      const updatedAffiliations = updatedContributor.affiliations ?? [];
-      const persistedTopLevelOrgs = new Set<string>();
-      const updatedTopLevelOrgs = new Set<string>();
+  for (const [comparisonKey, persistedGroup] of persistedGroups) {
+    const updatedGroup = updatedGroups.get(comparisonKey);
+    const hasSameNumberOfContributors = updatedGroup?.length === persistedGroup.length;
 
-      for (const affiliation of persistedAffiliations) {
-        if (affiliation.type === 'Organization' && affiliation.id) {
-          const topLevelOrgId = await getTopLevelOrgId(affiliation.id);
-          persistedTopLevelOrgs.add(topLevelOrgId);
-        }
-      }
+    if (!hasSameNumberOfContributors) {
+      return true;
+    }
 
-      for (const affiliation of updatedAffiliations) {
-        if (affiliation.type === 'Organization' && affiliation.id) {
-          const topLevelOrgId = await getTopLevelOrgId(affiliation.id);
-          updatedTopLevelOrgs.add(topLevelOrgId);
-        }
-      }
+    for (let index = 0; index < persistedGroup.length; index++) {
+      const persistedTopLevelOrgs = await getTopLevelOrgIds(persistedGroup[index]);
+      const updatedTopLevelOrgs = await getTopLevelOrgIds(updatedGroup[index]);
 
       if (!isEqualSets(persistedTopLevelOrgs, updatedTopLevelOrgs)) {
         return true;
       }
-    } else {
-      return true;
     }
   }
 
