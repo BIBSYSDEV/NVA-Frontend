@@ -24,7 +24,7 @@ export const ProfilePictureUploader = ({ personId, hasPicture }: ProfilePictureU
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
-  const { profilePictureQuery, profilePictureString } = useProfilePicture(personId, hasPicture);
+  const { profilePictureQuery, profilePictureString } = useProfilePicture(personId, { enabled: hasPicture });
 
   const mutateProfilePicture = useMutation({
     mutationFn: (base64String: string) => uploadProfilePicture(personId, base64String),

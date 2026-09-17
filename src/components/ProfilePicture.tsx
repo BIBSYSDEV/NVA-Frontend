@@ -14,7 +14,9 @@ interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
 
 export const ProfilePicture = ({ personId, fullName, isPublicPage = false, hasPicture, sx }: ProfilePictureProps) => {
   const { t } = useTranslation();
-  const { profilePictureQuery, profilePictureString, isEnabled } = useProfilePicture(personId, hasPicture);
+  const { profilePictureQuery, profilePictureString, isEnabled } = useProfilePicture(personId, {
+    enabled: hasPicture,
+  });
 
   return (
     <Box sx={{ height: '2.5rem ', aspectRatio: '1/1', borderRadius: '50%', ...sx }}>

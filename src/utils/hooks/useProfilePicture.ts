@@ -1,8 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchProfilePicture } from '../../api/cristinApi';
 
-export const useProfilePicture = (id: string, hasPicture: boolean) => {
-  const isEnabled = hasPicture && !!id;
+interface UseProfilePictureOptions {
+  enabled: boolean;
+}
+
+export const useProfilePicture = (id: string, { enabled }: UseProfilePictureOptions) => {
+  const isEnabled = enabled && !!id;
 
   const profilePictureQuery = useQuery({
     enabled: isEnabled,
