@@ -26,7 +26,7 @@ export const ProfilePicture = ({
     <Box sx={{ height: '2.5rem ', aspectRatio: '1/1', borderRadius: '50%', ...sx }}>
       {isEnabled && profilePictureQuery.isPending ? (
         <Skeleton variant="circular" sx={{ height: '100%' }} />
-      ) : profilePictureQuery.isSuccess ? (
+      ) : isEnabled && profilePictureQuery.isSuccess ? (
         <Box
           component="img"
           src={profilePictureString}
