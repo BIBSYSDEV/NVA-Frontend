@@ -13,10 +13,10 @@ import { useProfilePicture } from '../../../utils/hooks/useProfilePicture';
 
 interface ProfilePictureUploaderProps {
   personId: string;
-  hasPicture?: boolean;
+  hasPicture: boolean;
 }
 
-export const ProfilePictureUploader = ({ personId, hasPicture = true }: ProfilePictureUploaderProps) => {
+export const ProfilePictureUploader = ({ personId, hasPicture }: ProfilePictureUploaderProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();

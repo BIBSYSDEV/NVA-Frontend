@@ -9,16 +9,10 @@ interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
   personId: string;
   fullName: string;
   isPublicPage?: boolean;
-  hasPicture?: boolean;
+  hasPicture: boolean;
 }
 
-export const ProfilePicture = ({
-  personId,
-  fullName,
-  isPublicPage = false,
-  hasPicture = true,
-  sx,
-}: ProfilePictureProps) => {
+export const ProfilePicture = ({ personId, fullName, isPublicPage = false, hasPicture, sx }: ProfilePictureProps) => {
   const { t } = useTranslation();
   const { profilePictureQuery, profilePictureString, isEnabled } = useProfilePicture(personId, hasPicture);
 
