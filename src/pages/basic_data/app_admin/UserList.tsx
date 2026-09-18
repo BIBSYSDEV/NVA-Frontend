@@ -66,7 +66,13 @@ export const UserList = ({ userList, refetchUsers }: UserListProps) => {
                   </IconButton>
                 }>
                 <ListItemAvatar>
-                  <ProfilePicture fullName={`${user.givenName} ${user.familyName}`} personId={user.cristinId ?? ''} />
+                  {/* InstitutionUser has no image field, so we cannot know upfront whether a picture exists.
+                      Always fetch (hasPicture=true) to preserve current behavior until that data is available. */}
+                  <ProfilePicture
+                    fullName={`${user.givenName} ${user.familyName}`}
+                    personId={user.cristinId ?? ''}
+                    hasPicture
+                  />
                 </ListItemAvatar>
                 <ListItemText primary={`${user.givenName} ${user.familyName}`} />
               </ListItem>
