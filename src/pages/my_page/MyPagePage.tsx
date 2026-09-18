@@ -67,8 +67,6 @@ const MyPagePage = () => {
   const navigate = useNavigate();
 
   // Avoid a flash of the initials fallback while we're still waiting to learn if the user has a picture.
-  // Guarding on personId too ensures users without a cristinId (whose person query is permanently disabled
-  // and thus permanently isPending) still fall through to ProfilePicture and get the initials fallback.
   const isPersonPictureLoading = !!personId && personQuery.isPending;
 
   const [selectedTypes, setSelectedTypes] = useState<TicketTypeSelection>({
