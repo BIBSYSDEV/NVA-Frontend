@@ -180,6 +180,7 @@ const ResearchProfile = () => {
         <ProfilePicture
           personId={personId}
           fullName={fullName}
+          hasPicture={!!person.image}
           isPublicPage
           sx={{
             height: '5rem',

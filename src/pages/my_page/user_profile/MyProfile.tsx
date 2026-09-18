@@ -268,7 +268,7 @@ export const MyProfile = () => {
                       i18nKey="my_page.my_profile.upload_is_not_mandatory"
                       components={[<Typography key="1" gutterBottom sx={{ textAlign: 'center' }} />]}
                     />
-                    <ProfilePictureUploader personId={personId} />
+                    <ProfilePictureUploader personId={personId} hasPicture={!!person?.image} />
                     <Trans
                       t={t}
                       i18nKey="my_page.my_profile.upload_description"
