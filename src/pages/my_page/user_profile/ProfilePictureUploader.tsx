@@ -24,7 +24,9 @@ export const ProfilePictureUploader = ({ personId, hasPicture }: ProfilePictureU
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
-  const { profilePictureQuery, profilePictureString } = useProfilePicture(personId, { enabled: hasPicture });
+  const { profilePictureQuery, profilePictureString, isEnabled } = useProfilePicture(personId, {
+    enabled: hasPicture,
+  });
 
   const mutateProfilePicture = useMutation({
     mutationFn: (base64String: string) => uploadProfilePicture(personId, base64String),
@@ -55,7 +57,7 @@ export const ProfilePictureUploader = ({ personId, hasPicture }: ProfilePictureU
     <Box sx={{ display: 'flex', width: '12rem', height: '12rem', justifyContent: 'center', my: '1rem' }}>
       {profilePictureQuery.isFetching || mutateProfilePicture.isPending ? (
         <Skeleton variant="circular" sx={{ height: '100%', aspectRatio: '1/1' }} />
-      ) : profilePictureQuery.isSuccess ? (
+      ) : isEnabled && profilePictureQuery.isSuccess ? (
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <IconButton
             data-testid={dataTestId.myPage.myProfile.deleteProfilePictureButton}
