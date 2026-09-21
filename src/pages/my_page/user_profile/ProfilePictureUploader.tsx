@@ -11,6 +11,8 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useProfilePicture } from '../../../utils/hooks/useProfilePicture';
 
+const maxProfilePictureSize = 5_000_000; //5 MB
+
 interface ProfilePictureUploaderProps {
   personId: string;
   hasPicture: boolean;
@@ -42,15 +44,23 @@ export const ProfilePictureUploader = ({ personId, hasPicture }: ProfilePictureU
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+    event.target.value = ''; // Allows selecting the same file again, i.e. after an error
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = (reader.result as string).replace(/^data:image\/\w+;base64,/, '');
-        mutateProfilePicture.mutate(base64String);
-      };
-      reader.readAsDataURL(file);
+    if (!file) {
+      return;
     }
+
+    if (file.size > maxProfilePictureSize) {
+      dispatch(setNotification({ message: t('feedback.error.profile_picture_too_large'), variant: 'error' }));
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = (reader.result as string).replace(/^data:image\/\w+;base64,/, '');
+      mutateProfilePicture.mutate(base64String);
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
