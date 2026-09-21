@@ -21,6 +21,11 @@ export const makeDoiUrl = (doiInput: string) => {
   return doiUrl;
 };
 
+export const isValidResourceLink = (value: string) => {
+  const trimmedValue = value.trim();
+  return !!isValidUrl(trimmedValue) || doiRegExp.test(trimmedValue);
+};
+
 export const getDoiValue = (value: string) => {
   const trimmedValue = value.trim();
   const doi = isValidUrl(trimmedValue) ? new URL(trimmedValue).pathname.slice(1) : trimmedValue;
