@@ -56,9 +56,12 @@ export const ProfilePictureUploader = ({ personId, hasPicture }: ProfilePictureU
     }
 
     const reader = new FileReader();
-    reader.onloadend = () => {
+    reader.onload = () => {
       const base64String = (reader.result as string).replace(/^data:image\/\w+;base64,/, '');
       mutateProfilePicture.mutate(base64String);
+    };
+    reader.onerror = () => {
+      dispatch(setNotification({ message: t('feedback.error.update_profile_photo'), variant: 'error' }));
     };
     reader.readAsDataURL(file);
   };
