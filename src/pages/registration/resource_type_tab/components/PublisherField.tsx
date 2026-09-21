@@ -1,9 +1,10 @@
 import { Autocomplete, Chip } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { Field, FieldProps, setIn, useFormikContext } from 'formik';
 import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
+import { useFetchPerson } from '../../../../api/hooks/useFetchPerson';
 import { usePublisherSearch } from '../../../../api/hooks/usePublisherSearch';
 import { defaultChannelSearchSize } from '../../../../api/publicationChannelApi';
 import {
@@ -14,13 +15,13 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { RegistrationFormContext } from '../../../../context/RegistrationFormContext';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { ContributorFieldNames, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useLoggedInUser } from '../../../../utils/hooks/useLoggedInUser';
 import { getPublicationChannelPublisherId, isPersonPublisher } from '../../../../utils/registration-helpers';
-import { getFullName } from '../../../../utils/user-helpers';
+import { getFullCristinName, getFullName } from '../../../../utils/user-helpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 import { ClaimedChannelInfoBox } from './ClaimedChannelInfoBox';
 import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
@@ -29,6 +30,7 @@ import { PublicationChannelOption } from './PublicationChannelOption';
 import { PublisherFormDialog } from './PublisherFormDialog';
 import { SelfPublisherOption } from './SelfPublisherOption';
 import {
+  addSelfPublisherAsContributor,
   createPersonPublisher,
   getPublisherOptionKey,
   getSelfPublisherOption,
@@ -45,7 +47,7 @@ interface PublisherFieldProps {
 
 export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) => {
   const { t } = useTranslation();
-  const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
+  const { setFieldValue, setFieldTouched, setValues, values } = useFormikContext<Registration>();
   const { reference, publicationDate } = values.entityDescription as BookEntityDescription;
   const publisher = reference?.publicationContext.publisher;
   const personPublisher = isPersonPublisher(publisher) ? publisher : undefined;
@@ -53,6 +55,10 @@ export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) 
   const hasSelectedPublisher = !!personPublisher || !!channelPublisherId;
 
   const user = useLoggedInUser();
+
+  // Used if they select source code as category so we can present them in publisher dropdown with their preferred name
+  const selfPersonQuery = useFetchPerson(user?.cristinId ?? '', { enabled: showSelfOption, staleTime: Infinity });
+  const selfPerson = selfPersonQuery.data;
 
   const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
 
@@ -74,9 +80,16 @@ export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) 
     size: searchSize,
   });
 
-  const selfOption = showSelfOption
-    ? getSelfPublisherOption(query, { name: getFullName(user?.givenName, user?.familyName), id: user?.cristinId ?? '' })
-    : undefined;
+  // While the person is being fetched the normal user name is offered as a placeholder
+  const isLoadingSelfOption = selfPersonQuery.isFetching;
+  const selfName = selfPerson ? getFullCristinName(selfPerson.names) : getFullName(user?.givenName, user?.familyName);
+
+  // The person may be in the cache from elsewhere even when this field does not fetch them, so the option is gated
+  // on the prop rather than on the person being available
+  const selfOption =
+    showSelfOption && (selfPerson || isLoadingSelfOption)
+      ? getSelfPublisherOption(query, { name: selfName, id: selfPerson?.id ?? user?.cristinId ?? '' })
+      : undefined;
 
   const publisherOptions = publisherOptionsQuery.data?.hits ?? [];
   const options: PublisherFieldOption[] = selfOption ? [selfOption, ...publisherOptions] : publisherOptions;
@@ -153,12 +166,24 @@ export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) 
                 if (!newOption) {
                   return;
                 }
-                setFieldValue(
-                  ResourceFieldNames.PublicationContextPublisher,
-                  isPersonPublisherOption(newOption)
-                    ? createPersonPublisher(newOption)
-                    : { type: PublicationChannelType.Publisher, id: newOption.id }
-                );
+                if (isPersonPublisherOption(newOption)) {
+                  // Automatically sets person publisher as contributor as well. Both values are set in a single write
+                  // for formik / validation reasons.
+                  const withPublisher = setIn(
+                    values,
+                    ResourceFieldNames.PublicationContextPublisher,
+                    createPersonPublisher(newOption)
+                  );
+                  const contributors = selfPerson
+                    ? addSelfPublisherAsContributor(selfPerson, values.entityDescription?.contributors ?? [])
+                    : (values.entityDescription?.contributors ?? []);
+                  setValues(setIn(withPublisher, ContributorFieldNames.Contributors, contributors));
+                } else {
+                  setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
+                    type: PublicationChannelType.Publisher,
+                    id: newOption.id,
+                  });
+                }
               } else if (reason === 'removeOption') {
                 setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
                   type: PublicationChannelType.UnconfirmedPublisher,
@@ -169,10 +194,11 @@ export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) 
             loading={publisherOptionsQuery.isFetching || publisherQuery.isFetching}
             getOptionLabel={(option) => option.name}
             getOptionKey={getPublisherOptionKey}
+            getOptionDisabled={(option) => isPersonPublisherOption(option) && isLoadingSelfOption}
             isOptionEqualToValue={(option, value) => getPublisherOptionKey(option) === getPublisherOptionKey(value)}
             renderOption={({ key, ...props }, option, state) =>
               isPersonPublisherOption(option) ? (
-                <SelfPublisherOption key={key} props={props} option={option} />
+                <SelfPublisherOption key={key} props={props} option={option} isLoading={isLoadingSelfOption} />
               ) : (
                 <PublicationChannelOption key={key} props={props} option={option} state={state} />
               )

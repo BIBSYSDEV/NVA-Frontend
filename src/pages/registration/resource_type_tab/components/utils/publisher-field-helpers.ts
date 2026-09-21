@@ -1,7 +1,26 @@
-import { Identity } from '../../../../../types/contributor.types';
+import {
+  Affiliation,
+  Contributor,
+  ContributorRole,
+  emptyContributor,
+  Identity,
+} from '../../../../../types/contributor.types';
 import { Publisher } from '../../../../../types/registration.types';
+import { CristinPerson } from '../../../../../types/user.types';
+import { appendContributor, getIdentityKey, hasIdentityWithRole } from '../../../../../utils/contributor-helpers';
+import {
+  filterActiveAffiliations,
+  getFullCristinName,
+  getOrcidUri,
+  getVerificationStatus,
+} from '../../../../../utils/user-helpers';
 
 const personPublisherType = 'PersonPublisher';
+
+/**
+ * A person who publishes their own work is both the author and the rights holder of it.
+ */
+const selfPublisherRoles = [ContributorRole.Creator, ContributorRole.RightsHolder];
 
 /**
  * Option in the publisher field that represents a person, as opposed to a publication channel.
@@ -64,3 +83,43 @@ export const toPersonPublisherOption = (publisher: Identity): PersonPublisherOpt
   id: publisher.id ?? '',
   name: publisher.name,
 });
+
+/**
+ * Registers the person who is selected as publisher as a contributor as well, in the roles a publisher of their own
+ * work has. The person is registered the same way as when a contributor is selected in the contributors tab, with
+ * their ORCID, verification status and active affiliations. A role the person already has is not added again, since
+ * a person can have several roles but not the same role twice.
+ *
+ * @param person - The person selected as publisher.
+ * @param contributors - The contributors already on the registration.
+ * @returns The contributors, with the person added in the roles they did not already have.
+ */
+export const addSelfPublisherAsContributor = (person: CristinPerson, contributors: Contributor[]): Contributor[] => {
+  const identity: Identity = {
+    type: 'Identity',
+    id: person.id,
+    name: getFullCristinName(person.names),
+    orcId: getOrcidUri(person.identifiers),
+    verificationStatus: getVerificationStatus(person.verified),
+  };
+
+  const affiliations: Affiliation[] = filterActiveAffiliations(person.affiliations).map(({ organization }) => ({
+    type: 'Organization',
+    id: organization,
+  }));
+
+  let updatedContributors = contributors;
+
+  for (const role of selfPublisherRoles) {
+    if (!hasIdentityWithRole(updatedContributors, getIdentityKey(identity.id), role)) {
+      updatedContributors = appendContributor(updatedContributors, {
+        ...emptyContributor,
+        identity,
+        affiliations,
+        role: { type: role },
+      });
+    }
+  }
+
+  return updatedContributors;
+};
