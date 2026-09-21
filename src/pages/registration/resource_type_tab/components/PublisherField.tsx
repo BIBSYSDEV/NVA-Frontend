@@ -57,7 +57,7 @@ export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) 
   const user = useLoggedInUser();
 
   // Used if they select source code as category so we can present them in publisher dropdown with their preferred name
-  const selfPersonQuery = useFetchPerson(showSelfOption ? (user?.cristinId ?? '') : '', { staleTime: Infinity });
+  const selfPersonQuery = useFetchPerson(user?.cristinId ?? '', { enabled: showSelfOption, staleTime: Infinity });
   const selfPerson = selfPersonQuery.data;
 
   const { disableNviCriticalFields, disableChannelClaimsFields } = useContext(RegistrationFormContext);
@@ -84,8 +84,10 @@ export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) 
   const isLoadingSelfOption = selfPersonQuery.isFetching;
   const selfName = selfPerson ? getFullCristinName(selfPerson.names) : getFullName(user?.givenName, user?.familyName);
 
+  // The person may be in the cache from elsewhere even when this field does not fetch them, so the option is gated
+  // on the prop rather than on the person being available
   const selfOption =
-    selfPerson || isLoadingSelfOption
+    showSelfOption && (selfPerson || isLoadingSelfOption)
       ? getSelfPublisherOption(query, { name: selfName, id: selfPerson?.id ?? user?.cristinId ?? '' })
       : undefined;
 
@@ -165,8 +167,8 @@ export const PublisherField = ({ showSelfOption = false }: PublisherFieldProps) 
                   return;
                 }
                 if (isPersonPublisherOption(newOption)) {
-                  // Automatically sets person publisher as contributor as well. This is only for convenience, the roles
-                  // can be edited manually. Both values are set in a single write for formik / validation reasons.
+                  // Automatically sets person publisher as contributor as well. Both values are set in a single write
+                  // for formik / validation reasons.
                   const withPublisher = setIn(
                     values,
                     ResourceFieldNames.PublicationContextPublisher,
