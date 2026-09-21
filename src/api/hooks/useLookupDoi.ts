@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { fetchResults } from '../searchApi';
 import { useCreateDoiPreview } from './useCreateDoiPreview';
 
@@ -37,6 +37,11 @@ export const useLookupDoi = (doiQuery: string) => {
     lastMutatedDoi,
   ]);
 
+  const resetLookup = useCallback(() => {
+    doiPreviewMutation.reset();
+    setLastMutatedDoi(null);
+  }, [doiPreviewMutation]);
+
   const registrationsWithDoi = registrationSearch.data?.hits ?? [];
   const isLookingUpDoi = registrationSearch.isFetching || doiPreviewMutation.isPending;
 
@@ -49,6 +54,7 @@ export const useLookupDoi = (doiQuery: string) => {
     isLookingUpDoi,
     noHits,
     doiPreview,
+    resetLookup,
     doiPreviewMutationQuery: doiPreviewMutation,
     registrationSearchQuery: registrationSearch,
   };
