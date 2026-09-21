@@ -24,7 +24,8 @@ import { RegistrationList } from '../../../components/RegistrationList';
 import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { doiUrlBase } from '../../../utils/general-helpers';
+import i18n from '../../../translations/i18n';
+import { doiUrlBase, isValidResourceLink } from '../../../utils/general-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { RegistrationAccordion } from './RegistrationAccordion';
 
@@ -37,8 +38,24 @@ enum LinkRegistrationFormFieldName {
   Link = 'link',
 }
 
+const doiUrlPlaceholder = `${doiUrlBase}10.1000/xyz123`;
+
+const linkErrorMessage = {
+  required: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.registration.link_to_resource'),
+  }),
+  invalidFormat: i18n.t('feedback.validation.has_invalid_format_example', {
+    field: i18n.t('registration.registration.link_to_resource'),
+    example: doiUrlPlaceholder,
+    interpolation: { escapeValue: false }, // The example is a URL, and its slashes must not be HTML escaped
+  }),
+};
+
 const doiValidationSchema = Yup.object({
-  [LinkRegistrationFormFieldName.Link]: Yup.string().trim().required(),
+  [LinkRegistrationFormFieldName.Link]: Yup.string()
+    .trim()
+    .required(linkErrorMessage.required)
+    .test('is-valid-resource-link', linkErrorMessage.invalidFormat, (value) => !value || isValidResourceLink(value)),
 });
 
 interface DoiFormValues {
@@ -48,8 +65,6 @@ interface DoiFormValues {
 const emptyDoiFormValues: DoiFormValues = {
   [LinkRegistrationFormFieldName.Link]: '',
 };
-
-const doiUrlPlaceholder = `${doiUrlBase}10.1000/xyz123`;
 
 export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation();
@@ -62,8 +77,13 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     });
   };
 
-  const { registrationsWithDoi, isLookingUpDoi, noHits, doiPreview } = useLookupDoi(doiQuery);
+  const { registrationsWithDoi, isLookingUpDoi, noHits, doiPreview, resetLookup } = useLookupDoi(doiQuery);
   const createRegistrationFromDoi = useCreateRegistrationFromDoi(onCreateRegistrationSuccess);
+
+  const clearLookupResults = () => {
+    setDoiQuery('');
+    resetLookup();
+  };
 
   const persistRegistration = () => {
     if (!doiPreview) {
@@ -90,7 +110,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
 
       <AccordionDetails>
         <Formik
-          onSubmit={async (values) => setDoiQuery(values.link)}
+          onSubmit={async (values) => setDoiQuery(values.link.trim())}
           initialValues={emptyDoiFormValues}
           validationSchema={doiValidationSchema}>
           {({ isSubmitting }) => (
@@ -108,7 +128,12 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                       fullWidth
                       disabled={isSubmitting}
                       {...field}
-                      error={!!error && touched}
+                      onChange={(event) => {
+                        field.onChange(event);
+                        clearLookupResults();
+                      }}
+                      error={touched && !!error}
+                      helperText={touched && error ? error : ''}
                       placeholder={doiUrlPlaceholder}
                       slotProps={{ inputLabel: { shrink: true } }}
                     />
