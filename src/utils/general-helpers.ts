@@ -7,6 +7,7 @@ export const isValidUrl = (value: string) => value && Yup.string().url().isValid
 
 export const doiUrlBase = 'https://doi.org/';
 const doiRegExp = new RegExp('\\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+)\\b'); // https://stackoverflow.com/a/10324802
+const doiValidationRegExp = new RegExp('^10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+$');
 
 export const makeDoiUrl = (doiInput: string) => {
   let doiUrl = doiInput.trim();
@@ -21,9 +22,18 @@ export const makeDoiUrl = (doiInput: string) => {
   return doiUrl;
 };
 
+const isAbsoluteUrl = (value: string) => {
+  try {
+    new URL(value);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export const isValidResourceLink = (value: string) => {
   const trimmedValue = value.trim();
-  return !!isValidUrl(trimmedValue) || doiRegExp.test(trimmedValue);
+  return (!!isValidUrl(trimmedValue) && isAbsoluteUrl(trimmedValue)) || doiValidationRegExp.test(trimmedValue);
 };
 
 export const getDoiValue = (value: string) => {

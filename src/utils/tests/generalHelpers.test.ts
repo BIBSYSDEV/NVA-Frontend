@@ -57,6 +57,20 @@ describe('isValidResourceLink', () => {
     expect(isValidResourceLink('example.com')).toBe(false);
   });
 
+  it('rejects a DOI that is part of a longer text', () => {
+    expect(isValidResourceLink('hei 10.1234/abc123')).toBe(false);
+    expect(isValidResourceLink('Nature 2020, doi 10.1000/xyz123')).toBe(false);
+    expect(isValidResourceLink('10.1000/xyz123 extra words')).toBe(false);
+  });
+
+  it('rejects a DOI URL containing a space', () => {
+    expect(isValidResourceLink('https://doi.org/10.1000/xyz 123')).toBe(false);
+  });
+
+  it('rejects a link without a protocol', () => {
+    expect(isValidResourceLink('//example.com/article/1')).toBe(false);
+  });
+
   it('rejects an empty value', () => {
     expect(isValidResourceLink('')).toBe(false);
     expect(isValidResourceLink('   ')).toBe(false);
