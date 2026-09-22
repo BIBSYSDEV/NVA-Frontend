@@ -6,8 +6,9 @@ export const isOnPage = (url: string) => window.location.pathname.startsWith(url
 export const isValidUrl = (value: string) => value && Yup.string().url().isValidSync(value);
 
 export const doiUrlBase = 'https://doi.org/';
-const doiRegExp = new RegExp('\\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+)\\b'); // https://stackoverflow.com/a/10324802
-const doiValidationRegExp = new RegExp('^10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+$');
+const doiPattern = '10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+'; // https://stackoverflow.com/a/10324802
+const doiRegExp = new RegExp(`\\b(${doiPattern})\\b`);
+const doiValidationRegExp = new RegExp(`^${doiPattern}$`);
 
 export const makeDoiUrl = (doiInput: string) => {
   let doiUrl = doiInput.trim();
