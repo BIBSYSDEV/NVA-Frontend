@@ -1,17 +1,15 @@
 import { Box, Button, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { selectIso6392LanguageCode } from '../../translations/i18n';
-
-export type LanguageCode = 'nob' | 'eng' | 'nno';
+import { LanguageCode6393 } from '../../translations/language.types';
+import { useAppLanguageInIso6393Format } from '../../translations/translation-helpers';
 
 export const LanguageSelector = () => {
   const { i18n } = useTranslation();
+  const appLanguage = useAppLanguageInIso6393Format();
 
-  const setLanguage = (languageCode: LanguageCode) => {
+  const setLanguage = (languageCode: LanguageCode6393) => {
     i18n.changeLanguage(languageCode);
   };
-
-  const displayLanguage = selectIso6392LanguageCode(i18n.language);
 
   return (
     <Box
@@ -22,8 +20,7 @@ export const LanguageSelector = () => {
         gap: '0.25rem',
       }}>
       <Button
-        sx={{ borderBottom: displayLanguage === 'nob' ? '4px solid' : 'none', borderRadius: '0' }}
-        color="white"
+        sx={{ color: 'white', borderBottom: appLanguage === 'nob' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('nob')}
         lang="nb">
@@ -31,8 +28,7 @@ export const LanguageSelector = () => {
       </Button>
       <Divider orientation="vertical" flexItem sx={{ bgcolor: 'white', height: '1rem', alignSelf: 'center' }} />
       <Button
-        sx={{ borderBottom: displayLanguage === 'nno' ? '4px solid' : 'none', borderRadius: '0' }}
-        color="white"
+        sx={{ color: 'white', borderBottom: appLanguage === 'nno' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('nno')}
         lang="nn">
@@ -41,8 +37,7 @@ export const LanguageSelector = () => {
       <Divider orientation="vertical" flexItem sx={{ bgcolor: 'white', height: '1rem', alignSelf: 'center' }} />
 
       <Button
-        sx={{ borderBottom: displayLanguage === 'eng' ? '4px solid' : 'none', borderRadius: '0' }}
-        color="white"
+        sx={{ color: 'white', borderBottom: appLanguage === 'eng' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('eng')}
         lang="en">

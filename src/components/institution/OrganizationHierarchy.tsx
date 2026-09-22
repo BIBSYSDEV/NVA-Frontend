@@ -22,7 +22,12 @@ export const OrganizationHierarchy = ({ organization }: OrganizationHierarchyPro
       {units.map((unit, index) =>
         index === 0 ? (
           <Box sx={{ display: 'flex', gap: '0.15rem' }} key={unit.id}>
-            <Typography component="sup" fontWeight="bold" fontSize={'10px'}>
+            <Typography
+              component="sup"
+              sx={{
+                fontWeight: 'bold',
+                fontSize: '10px',
+              }}>
               {organization.country}
             </Typography>
             <Typography sx={{ fontWeight: 'bold' }}>

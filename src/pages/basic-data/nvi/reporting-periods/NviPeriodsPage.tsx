@@ -70,3 +70,5 @@ export const NviPeriodsPage = () => {
     </MainContentLayout>
   );
 };
+
+export default NviPeriodsPage;

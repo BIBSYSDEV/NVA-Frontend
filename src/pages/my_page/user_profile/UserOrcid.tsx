@@ -10,7 +10,7 @@ import { fetchPerson } from '../../../api/cristinApi';
 import { getOrcidInfo } from '../../../api/external/orcidApi';
 import { postOrcidCredentials } from '../../../api/orcidApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
-import { SelectableButton } from '../../../components/SelectableButton';
+import { SelectableButton } from '../../../components/buttons/SelectableButton';
 import { setNotification } from '../../../redux/notificationSlice';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { OrcidCredentials } from '../../../types/orcid.types';

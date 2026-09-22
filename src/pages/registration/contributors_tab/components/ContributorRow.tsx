@@ -25,6 +25,8 @@ interface ContributorRowProps {
   isLastElement: boolean;
   contributorRoles: ContributorRole[];
   contributorIndex: number;
+  /** Roles the person already has on their other contributors, which this one cannot change to. */
+  otherRolesOfContributor: ContributorRole[];
 }
 
 export const ContributorRow = ({
@@ -35,6 +37,7 @@ export const ContributorRow = ({
   isLastElement,
   contributorRoles,
   contributorIndex,
+  otherRolesOfContributor,
 }: ContributorRowProps) => {
   const { t } = useTranslation();
   const [openRemoveContributor, setOpenRemoveContributor] = useState(false);
@@ -106,7 +109,7 @@ export const ContributorRow = ({
                 error={!!error && touched}
                 helperText={<ErrorMessage name={field.name} />}>
                 {contributorRoles.map((role) => (
-                  <MenuItem key={role} value={role}>
+                  <MenuItem key={role} value={role} disabled={otherRolesOfContributor.includes(role)}>
                     {t(`registration.contributors.types.${role}`)}
                   </MenuItem>
                 ))}
@@ -171,7 +174,10 @@ export const ContributorRow = ({
             variant="contained"
             disabled={disableNviCriticalFields || disableChannelClaimsFields}
             size="small"
-            data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
+            data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(
+              contributor.identity.name,
+              contributor.role?.type
+            )}
             onClick={() => setOpenRemoveContributor(true)}
             startIcon={<RemoveIcon />}>
             {t('registration.contributors.remove_contributor')}
@@ -204,7 +210,7 @@ export const ContributorRow = ({
         open={openRemoveContributor}
         title={t('registration.contributors.remove_contributor')}
         onAccept={() => {
-          onRemoveContributor(contributor.sequence - 1);
+          onRemoveContributor(contributorIndex);
           setOpenRemoveContributor(false);
         }}
         onCancel={() => setOpenRemoveContributor(false)}

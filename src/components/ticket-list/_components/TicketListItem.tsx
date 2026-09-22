@@ -128,7 +128,10 @@ export const TicketListItem = ({ ticket, currentOffset, selectedTicketTypes }: T
             <TicketStatusChip ticket={ticket} />
           )}
 
-          <Typography lineHeight="2rem">
+          <Typography
+            sx={{
+              lineHeight: '2rem',
+            }}>
             <Tooltip title={t('common.created_at', { date: toDateStringWithTime(ticket.createdDate) })}>
               <span>{toDateString(ticket.createdDate)}</span>
             </Tooltip>

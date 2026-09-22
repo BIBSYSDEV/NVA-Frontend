@@ -68,9 +68,12 @@ export const CuratorSelector = ({ roleFilter, selectedUsername, onChange }: Cura
           label={t('my_page.roles.curator')}
           isLoading={curatorsQuery.isPending}
           placeholder={t('common.search')}
-          InputProps={{
-            ...params.InputProps,
-            startAdornment: CuratorAvatar(selectedCurator),
+          slotProps={{
+            ...params.slotProps,
+            input: {
+              ...params.slotProps.input,
+              startAdornment: CuratorAvatar(selectedCurator),
+            },
           }}
         />
       )}

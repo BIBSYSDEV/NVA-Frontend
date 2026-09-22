@@ -198,7 +198,11 @@ export const PublishingAccordion = ({
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <HorizontalBox sx={{ width: '100%', gap: '0.5rem' }}>
           <TicketTypeTag type={TicketTypeEnum.PublishingRequest} showText={false} />
-          <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+              flexGrow: '1',
+            }}>
             {isUnpublishedOrDeletedRegistration
               ? t(`registration.status.${registration.status}`)
               : t('registration.public_page.publication')}

@@ -5,12 +5,13 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Badge, Divider, Typography } from '@mui/material';
+import { Badge, Divider, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
+import { useFetchPerson } from '../../api/hooks/useFetchPerson';
 import {
   fetchCustomerTickets,
   FetchTicketsParams,
@@ -18,17 +19,16 @@ import {
   TicketOrderBy,
   TicketSearchParam,
 } from '../../api/searchApi';
+import { SelectableCreateButton } from '../../components/buttons/SelectableCreateButton';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import {
-  LinkCreateButton,
-  NavigationList,
-  SideNavHeader,
-  StyledPageWithSideMenu,
-} from '../../components/PageWithSideMenu';
+import { BackToMenuButton } from '../../components/side-menu-components/BackToMenuButton';
+import { StyledPageWithSideMenu } from '../../components/side-menu-components/_utils/side-menu-styles';
+import { SideNavHeader } from '../../components/side-menu-components/SideNavHeader';
+import { NavigationList } from '../../components/_atoms/NavigationList';
 import { ProfilePicture } from '../../components/ProfilePicture';
 import { RegistrationLandingPage } from '../../components/registration-landing-page/RegistrationLandingPage';
-import { SelectableButton } from '../../components/SelectableButton';
-import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
+import { SelectableButton } from '../../components/buttons/SelectableButton';
+import { SideMenu } from '../../components/side-menu-components/SideMenu';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketList } from '../../components/ticket-list/TicketList';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
@@ -62,7 +62,12 @@ const MyPagePage = () => {
   const isCreator = !!user?.customerId && (user.isCreator || hasCuratorRole(user));
   const personId = user?.cristinId ?? '';
   const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
+
+  const personQuery = useFetchPerson(personId, { staleTime: Infinity });
   const navigate = useNavigate();
+
+  // Avoid a flash of the initials fallback while we're still waiting to learn if the user has a picture.
+  const isPersonPictureLoading = !!personId && personQuery.isPending;
 
   const [selectedTypes, setSelectedTypes] = useState<TicketTypeSelection>({
     doiRequest: true,
@@ -132,26 +137,31 @@ const MyPagePage = () => {
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   // Hide menu when opening a ticket on Messages path
-  const expandMenu =
-    !location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
-    location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
+  const showMenu =
+    !currentPath.startsWith(UrlPathTemplate.MyPageMyMessages) || currentPath.endsWith(UrlPathTemplate.MyPageMyMessages);
 
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={expandMenu}
-        minimizedMenu={
-          <MinimizedMenuIconButton
+        isVisible={showMenu}
+        backToSideMenuButton={
+          <BackToMenuButton
             title={t('my_page.my_page')}
             to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: locationState?.previousSearch }}
             onClick={() => ticketsQuery.refetch()}>
             <FavoriteBorderIcon />
-          </MinimizedMenuIconButton>
+          </BackToMenuButton>
         }>
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
         <NavigationListAccordion
           title={t('my_page.research_profile')}
-          startIcon={<ProfilePicture personId={personId} fullName={fullName} />}
+          startIcon={
+            isPersonPictureLoading ? (
+              <Skeleton variant="circular" sx={{ height: '2.5rem', aspectRatio: '1/1' }} />
+            ) : (
+              <ProfilePicture personId={personId} fullName={fullName} hasPicture={!!personQuery.data?.image} />
+            )
+          }
           accordionPath={UrlPathTemplate.MyPageProfile}
           defaultPath={UrlPathTemplate.MyPageResearchProfile}
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
@@ -269,7 +279,7 @@ const MyPagePage = () => {
             <Typography sx={{ margin: '1rem' }}>
               {t('my_page.my_profile.list_contains_all_registration_you_have_created')}
             </Typography>
-            <LinkCreateButton
+            <SelectableCreateButton
               data-testid={dataTestId.myPage.newRegistrationLink}
               to={UrlPathTemplate.RegistrationNew}
               title={t('registration.new_registration')}
@@ -287,7 +297,7 @@ const MyPagePage = () => {
             <Typography sx={{ margin: '1rem' }}>
               {t('my_page.my_profile.list_contains_all_projects_you_have_created')}
             </Typography>
-            <LinkCreateButton
+            <SelectableCreateButton
               data-testid={dataTestId.myPage.createProjectButton}
               to={UrlPathTemplate.ProjectsNew}
               title={t('project.create_project')}

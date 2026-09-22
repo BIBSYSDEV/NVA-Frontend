@@ -141,3 +141,5 @@ export const PersonRegisterPage = () => {
     </BackgroundDiv>
   );
 };
+
+export default PersonRegisterPage;

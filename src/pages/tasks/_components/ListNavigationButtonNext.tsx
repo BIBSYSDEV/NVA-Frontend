@@ -2,7 +2,7 @@ import { LinkProps } from 'react-router';
 import { NavigationIconButton } from '../../../components/_atoms/buttons/NavigationIconButton';
 import { dataTestId as testIds } from '../../../utils/dataTestIds';
 
-interface ListNavigationButtonNextProps extends Pick<LinkProps, 'to' | 'state'> {
+interface ListNavigationButtonNextProps extends Pick<LinkProps, 'to' | 'state' | 'replace'> {
   title: string;
   dataTestId?: string;
 }
@@ -10,6 +10,7 @@ interface ListNavigationButtonNextProps extends Pick<LinkProps, 'to' | 'state'> 
 export const ListNavigationButtonNext = ({
   to,
   state,
+  replace,
   title,
   dataTestId = testIds.tasksPage.nextItemButton,
 }: ListNavigationButtonNextProps) => {
@@ -18,6 +19,7 @@ export const ListNavigationButtonNext = ({
       data-testid={dataTestId}
       to={to}
       state={state}
+      replace={replace}
       title={title}
       navigateTo={'next'}
       sx={{

@@ -41,8 +41,7 @@ export const useNviCandidatesParams = () => {
   const aggregation = searchParams.get(NviCandidatesSearchParam.Aggregation) as 'all' | NviCandidateSearchStatus | null;
   const status = searchParams.get(NviCandidatesSearchParam.Status)?.split(',') as NviCandidateStatus[] | null;
   const globalStatus = searchParams.get(NviCandidatesSearchParam.GlobalStatus)?.split(',') as
-    | NviCandidateGlobalStatus[]
-    | null;
+    NviCandidateGlobalStatus[] | null;
   const sortOrder = searchParams.get(NviCandidatesSearchParam.SortOrder) as 'asc' | 'desc' | null;
   const year = parseNumericParam(searchParams.get(NviCandidatesSearchParam.Year), getDefaultNviYear());
   const excludeUnassigned = searchParams.get(NviCandidatesSearchParam.ExcludeUnassigned) === 'true';

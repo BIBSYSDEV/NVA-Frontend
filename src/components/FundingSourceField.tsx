@@ -42,7 +42,10 @@ export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
               isLoading={fundingSourcesQuery.isPending}
               placeholder={t('select_funder')}
               multiline
-              slotProps={{ inputLabel: { shrink: true } }}
+              slotProps={{
+                ...params.slotProps,
+                inputLabel: { ...params.slotProps.inputLabel, shrink: true },
+              }}
               required
               errorMessage={touched && !!error ? error : undefined}
             />

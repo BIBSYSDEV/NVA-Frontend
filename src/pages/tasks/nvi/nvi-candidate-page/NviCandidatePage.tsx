@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { nviCandidateQueryKeyword } from '../../../../api/hooks/useFetchNviCandidate';
+import { NviCandidateActionPanel } from '../../../../components/action-panels/nvi-candidate-action-panel/NviCandidateActionPanel';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { PageWithRightSideMenu } from '../../../../components/page-layouts/PageWithRightSideMenu';
 import { PageSpinner } from '../../../../components/PageSpinner';
@@ -10,7 +11,6 @@ import { NviCandidateProblemsContext } from '../../../../context/NviCandidatePro
 import { IdentifierParams } from '../../../../utils/urlPaths';
 import { Forbidden } from '../../../errorpages/Forbidden';
 import NotFound from '../../../errorpages/NotFound';
-import { NviCandidateActionPanel } from '../../../messages/components/NviCandidateActionPanel';
 import { PublicRegistrationContent } from '../../../public_registration/PublicRegistrationContent';
 import { NviCandidateNavigation } from './_components/NviCandidateNavigation';
 import { useFetchNviCandidateData } from './_hooks/useFetchNviCandidateData';

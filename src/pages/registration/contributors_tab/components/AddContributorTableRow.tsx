@@ -11,9 +11,9 @@ import { SelectAffiliationRadioButton } from './SelectAffiliationRadioButton';
 import { SelectAffiliationsCheckbox } from './SelectAffiliationsCheckbox';
 
 export enum SelectAffiliations {
-  'MULTIPLE',
-  'SINGLE',
-  'NO_SELECT',
+  MULTIPLE,
+  SINGLE,
+  NO_SELECT,
 }
 
 interface CristinPersonTableRowProps {
@@ -112,7 +112,12 @@ export const CristinPersonTableRow = ({
             })}
           </Box>
         ) : (
-          <Typography fontStyle="italic">{t('registration.contributors.no_affiliations_found')}</Typography>
+          <Typography
+            sx={{
+              fontStyle: 'italic',
+            }}>
+            {t('registration.contributors.no_affiliations_found')}
+          </Typography>
         )}
       </TableCell>
       <TableCell>

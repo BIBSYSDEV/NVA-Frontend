@@ -5,6 +5,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       mocklogin(): void;
+      typeInDateField(testId: string, value: string, sectionIndex?: number): Chainable<JQuery<HTMLElement>>;
       setUserRolesInRedux(roles: RoleName[]): void;
       startRegistrationWithDoi(): void;
       selectNpiDiscipline(discipline: string): void;

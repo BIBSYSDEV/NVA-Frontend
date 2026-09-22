@@ -23,7 +23,12 @@ export const PublicHandles = ({ registration }: PublicRegistrationContentProps) 
       content={
         <>
           {handles.map((handle) => (
-            <Typography component="dd" key={handle} gridColumn={2}>
+            <Typography
+              component="dd"
+              key={handle}
+              sx={{
+                gridColumn: 2,
+              }}>
               <MuiLink
                 data-testid={dataTestId.registrationLandingPage.handleLink}
                 href={handle}

@@ -68,7 +68,12 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
     <>
       <Grid container spacing={3}>
         <Grid size={{ md: 6, sm: 12 }}>
-          <Typography variant="h3" marginBottom={2} gutterBottom>
+          <Typography
+            variant="h3"
+            gutterBottom
+            sx={{
+              marginBottom: 2,
+            }}>
             {t('registration.support.self_help.header')}
           </Typography>
           <StyledMuiLink
@@ -78,13 +83,23 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
             <Typography>{t('footer.help_page')}</Typography>
             <OpenInNewIcon />
           </StyledMuiLink>
-          <Typography fontStyle="italic" marginBottom={2} gutterBottom>
+          <Typography
+            gutterBottom
+            sx={{
+              fontStyle: 'italic',
+              marginBottom: 2,
+            }}>
             {t('registration.support.self_help.description')}
           </Typography>
         </Grid>
         {customerServiceCenterUri && (
           <Grid size={{ md: 6, sm: 12 }}>
-            <Typography variant="h3" marginBottom={2} gutterBottom>
+            <Typography
+              variant="h3"
+              gutterBottom
+              sx={{
+                marginBottom: 2,
+              }}>
               {t('editor.institution.institution_support')}
             </Typography>
             <StyledMuiLink target="_blank" rel="noopener noreferrer" href={customerServiceCenterUri}>
@@ -92,7 +107,11 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
               <OpenInNewIcon />
             </StyledMuiLink>
             <Trans t={t} i18nKey="registration.support.self_help.institution_help_description">
-              <Typography fontStyle="italic" />
+              <Typography
+                sx={{
+                  fontStyle: 'italic',
+                }}
+              />
             </Trans>
           </Grid>
         )}
@@ -106,7 +125,12 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
         <Typography>{t('registration.support.curator_help.already_in_progress')}</Typography>
       ) : (
         <>
-          <Typography variant={'h3'} marginBottom={2} gutterBottom>
+          <Typography
+            variant={'h3'}
+            gutterBottom
+            sx={{
+              marginBottom: 2,
+            }}>
             {t('registration.support.curator_help.header')}
           </Typography>
           <Trans

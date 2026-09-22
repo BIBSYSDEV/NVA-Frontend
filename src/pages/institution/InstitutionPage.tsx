@@ -1,0 +1,305 @@
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import ArchitectureIcon from '@mui/icons-material/Architecture';
+import GavelIcon from '@mui/icons-material/Gavel';
+import { Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Outlet, Route, Routes, useLocation } from 'react-router';
+import { fetchResource } from '../../api/commonApi';
+import { NavigationList } from '../../components/_atoms/NavigationList';
+import { SelectableButton } from '../../components/buttons/SelectableButton';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import { StyledPageWithSideMenu } from '../../components/side-menu-components/_utils/side-menu-styles';
+import { SideMenu } from '../../components/side-menu-components/SideMenu';
+import { SideNavHeader } from '../../components/side-menu-components/SideNavHeader';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RootState } from '../../redux/store';
+import { Organization } from '../../types/organization.types';
+import { dataTestId } from '../../utils/dataTestIds';
+import { PrivateRoute } from '../../utils/routes/Routes';
+import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
+import { CategoriesWithFiles } from '../editor/CategoriesWithFiles';
+import { CategoriesWithFilesOverview } from '../editor/CategoriesWithFilesOverview';
+import { OrganizationCurators } from '../editor/curators/OrganizationCurators';
+import { EditorDoi } from '../editor/EditorDoi';
+import { EditorInstitution } from '../editor/EditorInstitution';
+import { InstitutionSupport } from '../editor/InstitutionSupport';
+import { OrganizationOverview } from '../editor/OrganizationOverview';
+import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
+import { PublisherClaimsOverview } from '../editor/PublisherClaimsOverview';
+import { PublishingStrategyOverview } from '../editor/PublishingStrategyOverview';
+import { PublishStrategySettings } from '../editor/PublishStrategySettings';
+import { ResultsPortfolioNavigationListAccodion } from '../editor/ResultsPortfolioNavigationListAccodion';
+import { SerialPublicationClaimsOverview } from '../editor/SerialPublicationClaimsOverview';
+import { VocabularyOverview } from '../editor/VocabularyOverview';
+import { VocabularySettings } from '../editor/VocabularySettings';
+import NotFound from '../errorpages/NotFound';
+import { NviInstitutionNavigationAccordion } from './_components/NviInstitutionNavigationAccordion';
+import { InstitutionNviPublicationPointsPage } from './nvi/publication-points/InstitutionNviPublicationPointsPage';
+import { InstitutionNviReportingStatusPage } from './nvi/reporting-status/InstitutionNviReportingStatusPage';
+
+const InstitutionPage = () => {
+  const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
+  const hasCustomer = !!user?.customerId;
+  const isEditor = hasCustomer && user.isEditor;
+  const isNviInstitution = !!customer?.nviInstitution;
+
+  const institutionId = user?.topOrgCristinId ?? '';
+
+  const organizationQuery = useQuery({
+    enabled: !!institutionId,
+    queryKey: ['organization', institutionId],
+    queryFn: () => fetchResource<Organization>(institutionId),
+    staleTime: Infinity,
+    gcTime: 1_800_000, // 30 minutes
+    meta: { errorMessage: t('feedback.error.get_institution') },
+  });
+
+  const location = useLocation();
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
+
+  return (
+    <StyledPageWithSideMenu>
+      <SideMenu>
+        <SideNavHeader text={organizationQuery.data?.acronym} icon={AccountBalanceIcon} />
+        <NavigationListAccordion
+          dataTestId={dataTestId.editor.overviewAccordion}
+          title={t('editor.institution.organizing')}
+          startIcon={<ArchitectureIcon sx={{ bgcolor: 'white' }} />}
+          accordionPath={UrlPathTemplate.InstitutionOverview}
+          defaultPath={UrlPathTemplate.InstitutionOverviewPage}>
+          <NavigationList aria-label={t('editor.institution.organizing')}>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionOverviewPage}
+              data-testid={dataTestId.editor.institutionsNameLinkButton}
+              to={UrlPathTemplate.InstitutionOverviewPage}>
+              {t('editor.institution.institution_profile')}
+            </SelectableButton>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionOrganizationOverview}
+              data-testid={dataTestId.editor.organizationOverviewLinkButton}
+              to={UrlPathTemplate.InstitutionOrganizationOverview}>
+              {t('editor.organization_overview')}
+            </SelectableButton>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionCuratorsOverview}
+              data-testid={dataTestId.editor.curatorsOverviewLinkButton}
+              to={UrlPathTemplate.InstitutionCuratorsOverview}>
+              {t('editor.curators.curators')}
+            </SelectableButton>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionDoi}
+              data-testid={dataTestId.editor.doiLinkButton}
+              to={UrlPathTemplate.InstitutionDoi}>
+              {t('common.doi_long')}
+            </SelectableButton>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionPublishStrategyOverview}
+              data-testid={dataTestId.editor.publishStrategyOverviewLinkButton}
+              to={UrlPathTemplate.InstitutionPublishStrategyOverview}>
+              {t('editor.publish_strategy.publish_strategy')}
+            </SelectableButton>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionVocabularyOverview}
+              data-testid={dataTestId.editor.vocabularyOverviewLinkButton}
+              to={UrlPathTemplate.InstitutionVocabularyOverview}>
+              {t('editor.vocabulary')}
+            </SelectableButton>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionCategoriesOverview}
+              data-testid={dataTestId.editor.categoriesLinkButton}
+              to={UrlPathTemplate.InstitutionCategoriesOverview}>
+              {t('editor.categories_with_files')}
+            </SelectableButton>
+
+            <Typography sx={{ mt: '0.5rem' }}>
+              {t('editor.institution.channel_claims.channel_claims_overview_description')}
+            </Typography>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionPublisherClaimsOverview}
+              data-testid={dataTestId.editor.publisherClaimOverviewButton}
+              to={UrlPathTemplate.InstitutionPublisherClaimsOverview}>
+              {t('common.publishers')}
+            </SelectableButton>
+            <SelectableButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}
+              data-testid={dataTestId.editor.serialPublicationClaimOverviewButton}
+              to={UrlPathTemplate.InstitutionSerialPublicationClaimsOverview}>
+              {t('common.serial_publication')}
+            </SelectableButton>
+          </NavigationList>
+        </NavigationListAccordion>
+        {isEditor && (
+          <>
+            <NavigationListAccordion
+              dataTestId={dataTestId.editor.settingsAccordion}
+              title={t('common.settings')}
+              startIcon={<GavelIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
+              accordionPath={UrlPathTemplate.InstitutionSettings}
+              defaultPath={UrlPathTemplate.InstitutionCurators}>
+              <NavigationList aria-label={t('common.settings')}>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionCurators}
+                  data-testid={dataTestId.editor.curatorsSettingsLinkButton}
+                  to={UrlPathTemplate.InstitutionCurators}>
+                  {t('editor.curators.administer_curators')}
+                </SelectableButton>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionPublishStrategy}
+                  data-testid={dataTestId.editor.publishStrategyLinkButton}
+                  to={UrlPathTemplate.InstitutionPublishStrategy}>
+                  {t('editor.publish_strategy.publish_strategy')}
+                </SelectableButton>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionVocabulary}
+                  data-testid={dataTestId.editor.vocabularyLinkButton}
+                  to={UrlPathTemplate.InstitutionVocabulary}>
+                  {t('editor.vocabulary')}
+                </SelectableButton>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionCategories}
+                  data-testid={dataTestId.editor.categoriesLinkButton}
+                  to={UrlPathTemplate.InstitutionCategories}>
+                  {t('editor.categories_with_files')}
+                </SelectableButton>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionSupport}
+                  data-testid={dataTestId.editor.supportLinkButton}
+                  to={UrlPathTemplate.InstitutionSupport}>
+                  {t('editor.institution.change_institution_support')}
+                </SelectableButton>
+              </NavigationList>
+            </NavigationListAccordion>
+            <ResultsPortfolioNavigationListAccodion />
+            {isNviInstitution && <NviInstitutionNavigationAccordion />}
+          </>
+        )}
+      </SideMenu>
+      <BackgroundDiv>
+        <Outlet />
+
+        <Routes>
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionVocabulary, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<VocabularySettings />} isAuthorized={isEditor} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionVocabularyOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<VocabularyOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionPublishStrategy, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<PublishStrategySettings />} isAuthorized={isEditor} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionPublishStrategyOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<PublishingStrategyOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionOverviewPage, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<EditorInstitution />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionCuratorsOverview, UrlPathTemplate.Institution)}
+            element={
+              <PrivateRoute
+                isAuthorized={hasCustomer}
+                element={<OrganizationCurators heading={t('editor.curators.curators')} />}
+              />
+            }
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionCurators, UrlPathTemplate.Institution)}
+            element={
+              <PrivateRoute
+                isAuthorized={isEditor}
+                element={<OrganizationCurators heading={t('editor.curators.administer_curators')} canEditUsers />}
+              />
+            }
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionDoi, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<EditorDoi />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionCategories, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<CategoriesWithFiles />} isAuthorized={isEditor} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionCategoriesOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<CategoriesWithFilesOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionOrganizationOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<OrganizationOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionPublisherClaimsOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<PublisherClaimsOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionSerialPublicationClaimsOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<SerialPublicationClaimsOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionSupport, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<InstitutionSupport />} isAuthorized={isEditor} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionPortfolio, UrlPathTemplate.Institution)}
+            element={
+              <PrivateRoute
+                element={<PortfolioSearchPage title={t('common.result_portfolio')} />}
+                isAuthorized={isEditor}
+              />
+            }
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionNviPublicationPoints, UrlPathTemplate.Institution)}
+            element={
+              <PrivateRoute
+                element={<InstitutionNviPublicationPointsPage />}
+                isAuthorized={isEditor && isNviInstitution}
+              />
+            }
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionNviReportingStatus, UrlPathTemplate.Institution)}
+            element={
+              <PrivateRoute
+                element={<InstitutionNviReportingStatusPage />}
+                isAuthorized={isEditor && isNviInstitution}
+              />
+            }
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.Institution, UrlPathTemplate.Institution, true)}
+            element={<PrivateRoute element={<NotFound />} isAuthorized={isEditor} />}
+          />
+        </Routes>
+      </BackgroundDiv>
+    </StyledPageWithSideMenu>
+  );
+};
+
+export default InstitutionPage;

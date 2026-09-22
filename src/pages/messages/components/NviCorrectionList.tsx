@@ -4,6 +4,7 @@ import { useLocation } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
+import { OrganizationFilters } from '../../../components/filters/OrganizationFilters';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
 import { hideChannelFiltersListIds, scientificValueFilterListIds } from '../../../utils/correctionListHelpers';
@@ -11,7 +12,6 @@ import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListC
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
-import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { ScientificValueFilter } from '../../search/advanced_search/ScientificValueFilter';
 import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
@@ -26,6 +26,7 @@ const NviCorrectionList = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
+  const isUnidentifiedContributorList = listId === CorrectionListNames.UnidentifiedContributorWithIdentifiedAffiliation;
   const correctionListConfig = useCorrectionListConfig();
   const listConfig = listId && correctionListConfig[listId];
   const shouldShowScientificValueFilter =
@@ -33,15 +34,21 @@ const NviCorrectionList = () => {
   const hideChannelFilters = !!listId && hideChannelFiltersListIds.includes(listId as CorrectionListNames);
 
   const registrationParams = useRegistrationsQueryParams();
-  const exportParams = new URLSearchParams(sanitizeSearchParams({ ...listConfig?.queryParams, ...registrationParams }));
+
+  const mergedParams = {
+    ...listConfig?.queryParams,
+    ...registrationParams,
+    unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
+    // unidentifiedContributorInstitution should always be the same as topLevelOrganization because its's chosen in the same dropdown
+    ...(isUnidentifiedContributorList && {
+      unidentifiedContributorInstitution: registrationParams.topLevelOrganization,
+    }),
+  };
+  const exportParams = new URLSearchParams(sanitizeSearchParams(mergedParams));
 
   const registrationQuery = useRegistrationSearch({
     enabled: !!listConfig,
-    params: {
-      ...listConfig?.queryParams,
-      ...registrationParams,
-      unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
-    },
+    params: mergedParams,
   });
 
   return (
@@ -63,13 +70,25 @@ const NviCorrectionList = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column', px: { xs: '0.5rem', md: 0 }, gap: '0.5rem' }}>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
                 <OrganizationFilters
-                  topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
-                  unitId={registrationParams.unit ?? null}
+                  // The "unidentified contributor with identified affiliation" correction list filters on unidentifiedContributorInstitution.
+                  // It should stay in sync with whichever institution is selected, for as long as this list is active
+                  onTopLevelOrganizationChange={
+                    isUnidentifiedContributorList
+                      ? (selectedOrganization, syncedParams) => {
+                          if (selectedOrganization) {
+                            syncedParams.set(ResultParam.UnidentifiedContributorInstitution, selectedOrganization.id);
+                          } else {
+                            syncedParams.delete(ResultParam.UnidentifiedContributorInstitution);
+                          }
+                        }
+                      : undefined
+                  }
                 />
                 <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
                 <CategorySearchFilter
                   searchParam={ResultParam.CategoryShould}
                   disabled={listConfig.disabledFilters.includes(ResultParam.CategoryShould)}
+                  disabledCategories={listConfig.disabledCategories}
                 />
               </Box>
 
@@ -90,7 +109,7 @@ const NviCorrectionList = () => {
             </Box>
           </Box>
 
-          <RegistrationSearch registrationQuery={registrationQuery} />
+          <RegistrationSearch registrationQuery={registrationQuery} searchResultNavigationParams={mergedParams} />
         </>
       )}
     </section>

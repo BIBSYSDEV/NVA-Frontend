@@ -4,8 +4,7 @@ import { PersonSearchParams, searchForPerson } from '../cristinApi';
 
 type SearchResponseType = Awaited<ReturnType<typeof searchForPerson>>;
 type QueryFunctionType =
-  | Query<SearchResponseType, Error, SearchResponseType, (string | PersonSearchParams)[]>
-  | undefined;
+  Query<SearchResponseType, Error, SearchResponseType, (string | PersonSearchParams)[]> | undefined;
 
 interface PersonSearchOptions extends PersonSearchParams {
   enabled?: boolean;

@@ -69,7 +69,13 @@ export const RegistrationSearch = ({ registrationQuery, sortingComponent, ...res
               t={t}
               i18nKey="no_search_results_list_default"
               components={{
-                p: <Typography fontWeight="bold" />,
+                p: (
+                  <Typography
+                    sx={{
+                      fontWeight: 'bold',
+                    }}
+                  />
+                ),
                 ul: <ul style={{ margin: 0, paddingLeft: '1.5rem' }} />,
                 li: <li />,
               }}

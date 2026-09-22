@@ -11,7 +11,7 @@ export const TicketTypeFilterButton = ({ isSelected, children, ...rest }: Ticket
     {...rest}
     startIcon={isSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
     variant={'outlined'}
-    color={'white'}
+    color={'inherit'}
     sx={{
       justifyContent: 'start',
       '.MuiButton-endIcon': {

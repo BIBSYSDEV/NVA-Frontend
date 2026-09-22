@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ProtectedResultParam } from '../../api/searchApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { NavigationList } from '../../components/PageWithSideMenu';
+import { NavigationList } from '../../components/_atoms/NavigationList';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';

@@ -74,3 +74,5 @@ export const SerialPublicationClaimsSettings = () => {
     </BackgroundDiv>
   );
 };
+
+export default SerialPublicationClaimsSettings;

@@ -69,8 +69,7 @@ export interface MediaContributionPublicationContext {
 
 export interface MediaContributionPeriodicalPublicationContext extends Omit<JournalPublicationContext, 'type'> {
   type:
-    | PublicationChannelType.MediaContributionPeriodical
-    | PublicationChannelType.UnconfirmedMediaContributionPeriodical;
+    PublicationChannelType.MediaContributionPeriodical | PublicationChannelType.UnconfirmedMediaContributionPeriodical;
 }
 
 export interface MediaContributionPeriodicalPublicationInstance extends Omit<

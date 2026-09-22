@@ -1,6 +1,6 @@
 import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutlineOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -114,8 +114,8 @@ export const FilesTableRow = ({
   const fileHasCustomerRrs = file.rightsRetentionStrategy.type === 'CustomerRightsRetentionStrategy';
   const fileHasOverriddenRrs = file.rightsRetentionStrategy.type === 'OverriddenRightsRetentionStrategy';
 
-  const rrsPolicyLink = customer?.rightsRetentionStrategy.id ? (
-    <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
+  const rrsPolicyLink = customer?.rightsRetentionStrategy.policyUri ? (
+    <MuiLink href={customer.rightsRetentionStrategy.policyUri} target="_blank" rel="noopener noreferrer" />
   ) : null;
 
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
@@ -559,7 +559,7 @@ export const FilesTableRow = ({
                         sx={{ minWidth: '15rem' }}
                         slotProps={{
                           textField: {
-                            inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
+                            'data-testid': dataTestId.registrationWizard.files.embargoDateField,
                             variant: 'filled',
                             onBlur: () => !touched && setFieldTouched(field.name),
                             error: !!error && touched,

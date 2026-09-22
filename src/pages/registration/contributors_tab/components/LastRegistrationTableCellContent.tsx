@@ -33,12 +33,20 @@ export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationT
     <>
       <TruncatableTypography lines={2}>{getTitleString(registration.mainTitle)}</TruncatableTypography>
       {totalHits > 1 && (
-        <Typography fontStyle="italic">
+        <Typography
+          sx={{
+            fontStyle: 'italic',
+          }}>
           {t('registration.contributors.other_registrations', { count: totalHits - 1 })}
         </Typography>
       )}
     </>
   ) : (
-    <Typography fontStyle="italic">{t('registration.contributors.no_registrations_found')}</Typography>
+    <Typography
+      sx={{
+        fontStyle: 'italic',
+      }}>
+      {t('registration.contributors.no_registrations_found')}
+    </Typography>
   );
 };

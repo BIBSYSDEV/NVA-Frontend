@@ -1,6 +1,7 @@
 import { Autocomplete, Box, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useAppLanguageInIso6391Format } from '../../../../translations/translation-helpers';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PresentationRegistration } from '../../../../types/publication_types/presentationRegistration.types';
 import { getCountries } from '../../../../utils/countryHelpers';
@@ -8,10 +9,11 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { PeriodFields } from '../components/PeriodFields';
 
 export const PresentationForm = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const appLanguage = useAppLanguageInIso6391Format();
   const { setFieldValue } = useFormikContext<PresentationRegistration>();
 
-  const countryOptions = Object.entries(getCountries(i18n.language))
+  const countryOptions = Object.entries(getCountries(appLanguage))
     .map(([code, label]) => ({ code, label }))
     .sort((a, b) => a.label.localeCompare(b.label));
 

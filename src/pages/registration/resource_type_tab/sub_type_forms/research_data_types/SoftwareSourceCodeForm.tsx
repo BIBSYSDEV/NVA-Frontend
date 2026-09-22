@@ -10,7 +10,7 @@ export const SoftwareSourceCodeForm = () => {
 
   return (
     <>
-      <PublisherField />
+      <PublisherField showSelfOption />
 
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
         <Field name={ResourceFieldNames.PublicationInstanceCodeRepository}>

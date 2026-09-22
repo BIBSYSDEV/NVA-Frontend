@@ -1,4 +1,4 @@
-import AddIcon from '@mui/icons-material/AddCircleOutline';
+import AddIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Button, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';

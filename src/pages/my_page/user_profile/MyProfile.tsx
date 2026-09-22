@@ -102,7 +102,13 @@ export const MyProfile = () => {
                     lg: '"personalia-details profile-picture"',
                   },
                 }}>
-                <Grid container rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
+                <Grid
+                  container
+                  columns={16}
+                  sx={{
+                    rowGap: 1,
+                    gridArea: 'personalia-details',
+                  }}>
                   <Grid size={16}>
                     <ProfileBox>
                       <Typography variant="h2" sx={{ mb: '0.5rem' }}>
@@ -262,7 +268,7 @@ export const MyProfile = () => {
                       i18nKey="my_page.my_profile.upload_is_not_mandatory"
                       components={[<Typography key="1" gutterBottom sx={{ textAlign: 'center' }} />]}
                     />
-                    <ProfilePictureUploader personId={personId} />
+                    <ProfilePictureUploader personId={personId} hasPicture={!!person?.image} />
                     <Trans
                       t={t}
                       i18nKey="my_page.my_profile.upload_description"

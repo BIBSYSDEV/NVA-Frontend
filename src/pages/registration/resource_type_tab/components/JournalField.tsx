@@ -168,10 +168,10 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             renderOption={({ key, ...props }, option, state) => (
               <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
-            renderTags={(value, getTagProps) =>
+            renderValue={(value, getItemProps) =>
               value.map((option, index) => (
                 <Chip
-                  {...getTagProps({ index })}
+                  {...getItemProps({ index })}
                   key={option.identifier}
                   data-testid={dataTestId.registrationWizard.resourceType.journalChip}
                   label={<PublicationChannelChipLabel value={option} />}

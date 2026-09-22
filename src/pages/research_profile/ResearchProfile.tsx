@@ -1,5 +1,5 @@
 import LinkIcon from '@mui/icons-material/Link';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import MailOutlineIcon from '@mui/icons-material/MailOutlineOutlined';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -12,8 +12,8 @@ import { useFetchPersonByIdentifier } from '../../api/hooks/useFetchPerson';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam, ResultSearchOrder } from '../../api/searchApi';
-import { ExportResultsBibTexButton } from '../../components/buttons/export-buttons/ExportResultsBibTexButton';
 import { HeadTitle } from '../../components/HeadTitle';
+import { ExportResultsDropdown } from '../../components/buttons/export-buttons/ExportResultsDropdown';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -180,6 +180,7 @@ const ResearchProfile = () => {
         <ProfilePicture
           personId={personId}
           fullName={fullName}
+          hasPicture={!!person.image}
           isPublicPage
           sx={{
             height: '5rem',
@@ -321,12 +322,13 @@ const ResearchProfile = () => {
               </Trans>
             </Typography>
             <Box sx={{ mt: '1rem', width: 'fit-content' }}>
-              <ExportResultsBibTexButton
+              <ExportResultsDropdown
                 params={{
                   contributor: personIdentifier,
                   order: registrationSort.orderBy,
                   sort: registrationSort.sortOrder,
                 }}
+                fileNameBase={`nva-results-${personIdentifier}`}
               />
             </Box>
           </>
@@ -357,6 +359,7 @@ const ResearchProfile = () => {
             <RegistrationList
               registrations={registrationsQuery.data.hits}
               promotedPublications={promotedPublications}
+              searchResultNavigationParams={registrationsQueryConfig}
             />
           ) : (
             <Typography>{t('common.no_hits')}</Typography>

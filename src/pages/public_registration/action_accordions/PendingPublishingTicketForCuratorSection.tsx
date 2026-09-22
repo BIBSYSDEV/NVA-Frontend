@@ -117,7 +117,7 @@ export const PendingPublishingTicketForCuratorSection = ({
       </Button>
 
       <Dialog open={openRejectionDialog} onClose={() => setOpenRejectionDialog(false)}>
-        <DialogTitle fontWeight="bold">{t('registration.public_page.reject_publish_request')}</DialogTitle>
+        <DialogTitle sx={{ fontWeight: 'bold' }}>{t('registration.public_page.reject_publish_request')}</DialogTitle>
         <DialogContent>
           <Trans
             t={t}

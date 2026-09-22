@@ -11,19 +11,19 @@ interface UseFetchUserOptions {
 }
 
 export const useFetchUserQuery = (
-  username: string,
+  username: string | undefined,
   { enabled = true, showErrorMessage = true, ...options }: UseFetchUserOptions = {}
 ) => {
   const { t } = useTranslation();
 
-  const usernameIdentifiers = username.split('@');
+  const usernameIdentifiers = username?.split('@') ?? [];
   const isValidPersonIdentifier =
     usernameIdentifiers.length === 2 && Number.isInteger(Number.parseInt(usernameIdentifiers[0]));
 
   return useQuery({
     enabled: enabled && isValidPersonIdentifier,
     queryKey: ['user', username],
-    queryFn: () => fetchUser(username),
+    queryFn: () => fetchUser(username ?? ''),
     meta: { errorMessage: showErrorMessage && t('feedback.error.get_person') },
     ...options,
   });

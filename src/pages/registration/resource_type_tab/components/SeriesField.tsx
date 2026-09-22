@@ -125,10 +125,10 @@ export const SeriesField = () => {
             renderOption={({ key, ...props }, option, state) => (
               <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
-            renderTags={(value, getTagProps) =>
+            renderValue={(value, getItemProps) =>
               value.map((option, index) => (
                 <Chip
-                  {...getTagProps({ index })}
+                  {...getItemProps({ index })}
                   key={option.identifier}
                   data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
                   label={<PublicationChannelChipLabel value={option} />}

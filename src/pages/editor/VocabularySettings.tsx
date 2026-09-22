@@ -105,7 +105,11 @@ export const VocabularySettings = () => {
           </Box>
         )
       )}
-      <Typography gutterBottom mt="1rem">
+      <Typography
+        gutterBottom
+        sx={{
+          mt: '1rem',
+        }}>
         {t('editor.vocabulary_status.default_description')}
       </Typography>
       <Typography gutterBottom>{t('editor.vocabulary_status.allowed_description')}</Typography>

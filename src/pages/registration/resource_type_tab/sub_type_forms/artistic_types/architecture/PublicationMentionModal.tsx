@@ -119,9 +119,7 @@ export const PublicationMentionModal = ({
                       }}
                       slotProps={{
                         textField: {
-                          inputProps: {
-                            'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
-                          },
+                          'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
                           variant: 'filled',
                           required: true,
                           onBlur: () => !touched && setFieldTouched(field.name),

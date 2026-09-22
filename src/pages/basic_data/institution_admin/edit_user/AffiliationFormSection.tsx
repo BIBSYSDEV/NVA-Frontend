@@ -52,7 +52,10 @@ export const AffiliationFormSection = () => {
             {({ field }: FieldProps<string>) => <AffiliationHierarchy unitUri={field.value} commaSeparated />}
           </Field>
 
-          <Box display={{ display: 'flex', gap: '1rem' }}>
+          <Box
+            sx={{
+              display: { display: 'flex', gap: '1rem' },
+            }}>
             <PositionField
               fieldName={`${employmentBaseFieldName}.type`}
               disabled={isSubmitting || positionsQuery.isPending}
@@ -77,7 +80,10 @@ export const AffiliationFormSection = () => {
               )}
             </Field>
           </Box>
-          <Box display={{ display: 'flex', gap: '1rem' }}>
+          <Box
+            sx={{
+              display: { display: 'flex', gap: '1rem' },
+            }}>
             <StartDateField
               fieldName={`${employmentBaseFieldName}.startDate`}
               disabled={isSubmitting}
@@ -101,7 +107,7 @@ export const AffiliationFormSection = () => {
                   }
                   slotProps={{
                     textField: {
-                      inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
+                      'data-testid': dataTestId.basicData.personAdmin.endDate,
                       variant: 'outlined',
                       error: touched && !!error,
                       helperText: <ErrorMessage name={field.name} />,

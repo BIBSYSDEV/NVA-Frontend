@@ -3,6 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - node --version
         - npm ci
     build:
       commands:

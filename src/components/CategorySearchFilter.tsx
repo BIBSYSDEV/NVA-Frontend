@@ -6,16 +6,22 @@ import { ResultParam, TicketSearchParam } from '../api/searchApi';
 import { CategoryFilterDialog } from '../pages/search/advanced_search/CategoryFilterDialog';
 import { PublicationInstanceType } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { CategoryChip } from './CategorySelector';
+import { CategoryChip, DisabledCategory } from './CategorySelector';
 import { StyledFilterHeading } from './styled/Wrappers';
 
 interface CategorySearchFilterProps {
   searchParam: ResultParam.CategoryShould | TicketSearchParam.PublicationType;
   disabled?: boolean;
   hideHeading?: boolean;
+  disabledCategories?: DisabledCategory[];
 }
 
-export const CategorySearchFilter = ({ searchParam, disabled, hideHeading }: CategorySearchFilterProps) => {
+export const CategorySearchFilter = ({
+  searchParam,
+  disabled,
+  hideHeading,
+  disabledCategories,
+}: CategorySearchFilterProps) => {
   const { t } = useTranslation();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -64,6 +70,7 @@ export const CategorySearchFilter = ({ searchParam, disabled, hideHeading }: Cat
         currentCategories={selectedCategories}
         closeDialog={toggleCategoryFilter}
         searchParam={searchParam}
+        disabledCategories={disabledCategories}
       />
     </section>
   );

@@ -14,7 +14,8 @@ import {
   removeSearchParamValue,
   syncParamsWithSearchFields,
 } from '../../../utils/searchHelpers';
-import { ExportResultsDropdown } from '../ExportResultsDropdown';
+import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
+import { ExportResultsDropdown } from '../../../components/buttons/export-buttons/ExportResultsDropdown';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
 import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
@@ -52,6 +53,7 @@ export const RegistrationSearchBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
+  const registrationParams = useRegistrationsQueryParams();
 
   const selectedFacets: SelectedFacet[] = [];
   searchParams.forEach((value, param) => {
@@ -147,16 +149,25 @@ export const RegistrationSearchBar = () => {
               )}
             </Field>
 
-            <Box gridArea="buttonRowTop">
+            <Box
+              sx={{
+                gridArea: 'buttonRowTop',
+              }}>
               <FilterButton />
-              <ExportResultsDropdown />
+              <ExportResultsDropdown params={registrationParams} />
             </Box>
 
             {showExtraFilterRow && (
               <FieldArray name="properties">
                 {({ push, remove }: FieldArrayRenderProps) => (
                   <>
-                    <Box gridArea="filter" sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    <Box
+                      sx={{
+                        gridArea: 'filter',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.75rem',
+                      }}>
                       {values.properties.map((property, index) => (
                         <AdvancedSearchRow
                           key={index}
@@ -174,7 +185,13 @@ export const RegistrationSearchBar = () => {
                         />
                       ))}
                     </Box>
-                    <Box gridArea="buttonRowBottom" sx={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem' }}>
+                    <Box
+                      sx={{
+                        gridArea: 'buttonRowBottom',
+                        display: 'flex',
+                        alignItems: 'flex-end',
+                        gap: '0.5rem',
+                      }}>
                       <IconButton
                         sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
                         size="small"

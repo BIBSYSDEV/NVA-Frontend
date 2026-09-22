@@ -1,4 +1,4 @@
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import MailOutlineIcon from '@mui/icons-material/MailOutlineOutlined';
 import { Box, Link, Skeleton } from '@mui/material';
 import { useFetchPerson } from '../../../../../../api/hooks/useFetchPerson';
 import { ContributorName } from '../../../../../../components/ContributorName';

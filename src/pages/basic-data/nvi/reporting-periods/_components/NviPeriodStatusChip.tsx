@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { StatusChip, StatusValue } from '../../../../../components/_molecules/status-chip/StatusChip';
 import { NviPeriod, NviPeriodStatusEnum } from '../../../../../types/nvi.types';
-import { getNviPeriodStatus } from '../_utils/nvi-period-helpers';
 
 interface NviPeriodStatusChipProps {
   period: NviPeriod;
@@ -9,9 +8,8 @@ interface NviPeriodStatusChipProps {
 
 export const NviPeriodStatusChip = ({ period }: NviPeriodStatusChipProps) => {
   const { t } = useTranslation();
-  const status = getNviPeriodStatus(period);
 
-  switch (status) {
+  switch (period.status) {
     case NviPeriodStatusEnum.UnopenedPeriod:
       return <StatusChip status={StatusValue.Pending} text={t('nvi_period_status_not_opened')} />;
     case NviPeriodStatusEnum.OpenPeriod:

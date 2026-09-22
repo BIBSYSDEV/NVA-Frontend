@@ -1,4 +1,4 @@
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import {
   Box,
   Button,
@@ -127,7 +127,10 @@ export const ArtisticDesignForm = () => {
               )}
               {!!touched.entityDescription?.reference?.publicationInstance?.venues &&
                 typeof errors.entityDescription?.reference?.publicationInstance?.venues === 'string' && (
-                  <Box mt="1rem">
+                  <Box
+                    sx={{
+                      mt: '1rem',
+                    }}>
                     <FormHelperText error>
                       <ErrorMessage name={name} />
                     </FormHelperText>

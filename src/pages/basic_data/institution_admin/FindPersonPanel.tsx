@@ -119,7 +119,10 @@ export const FindPersonPanel = () => {
                     control={<Checkbox disabled={isSubmitting} checked={confirmedIdentity} />}
                     label={<Box sx={{ fontWeight: '700' }}>{t('basic_data.add_employee.without_nin')}</Box>}
                   />
-                  <Typography fontStyle="italic">
+                  <Typography
+                    sx={{
+                      fontStyle: 'italic',
+                    }}>
                     {t('basic_data.add_employee.only_confirmed_user_qualify_for_nvi')}
                   </Typography>
                 </div>

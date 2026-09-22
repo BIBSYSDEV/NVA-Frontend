@@ -1,4 +1,4 @@
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
 import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';

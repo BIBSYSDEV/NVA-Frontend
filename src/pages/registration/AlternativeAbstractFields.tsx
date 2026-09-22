@@ -1,4 +1,4 @@
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Button, TextField } from '@mui/material';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';

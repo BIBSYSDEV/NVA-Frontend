@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-import { stringIncludesMathJax, typesetMathJax } from '../utils/mathJaxHelpers';
-
 interface EmphasizeSubstringProps {
   text: string;
   emphasized: string;
@@ -13,12 +10,6 @@ export const EmphasizeSubstring = ({ text, emphasized }: EmphasizeSubstringProps
     indexOfMatch === -1
       ? [text]
       : [text.substring(0, indexOfMatch), text.substring(indexOfMatch, lastIndex), text.substring(lastIndex)];
-
-  useEffect(() => {
-    if (stringIncludesMathJax(text)) {
-      typesetMathJax();
-    }
-  }, [text]);
 
   return (
     <>

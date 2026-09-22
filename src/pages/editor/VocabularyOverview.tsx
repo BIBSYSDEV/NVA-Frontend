@@ -72,7 +72,12 @@ const VocabularyCard = ({ vocabulary }: VocabularyCardProps) => {
         mt: '1rem',
         p: '1.5rem',
       }}>
-      <Typography fontWeight="600">{getTranslatedVocabularyName(t, vocabulary.id)}</Typography>
+      <Typography
+        sx={{
+          fontWeight: '600',
+        }}>
+        {getTranslatedVocabularyName(t, vocabulary.id)}
+      </Typography>
     </Card>
   );
 };

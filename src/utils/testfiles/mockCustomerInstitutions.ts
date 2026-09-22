@@ -46,7 +46,7 @@ export const mockCustomerInstitution: CustomerInstitution = {
   sector: Sector.Uhi,
   nviInstitution: false,
   rboInstitution: false,
-  rightsRetentionStrategy: { type: CustomerRrsType.NullRightsRetentionStrategy, id: '' },
+  rightsRetentionStrategy: { type: CustomerRrsType.NullRightsRetentionStrategy, policyUri: '' },
   allowFileUploadForTypes: allPublicationInstanceTypes,
   generalSupportEnabled: true,
 };

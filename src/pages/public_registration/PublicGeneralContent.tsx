@@ -72,17 +72,15 @@ import {
   PublicSeries,
   RevisionInformation,
 } from './PublicPublicationContext';
-import {
-  PublicIsbnContent,
-  PublicPublicationInstanceArtistic,
-  PublicPublicationInstanceBook,
-  PublicPublicationInstanceChapter,
-  PublicPublicationInstanceDegree,
-  PublicPublicationInstanceExhibition,
-  PublicPublicationInstanceJournal,
-  PublicPublicationInstanceReport,
-  PublicPublicationInstanceSoftwareSourceCode,
-} from './PublicPublicationInstance';
+import { PublicIsbnContent } from './publication-instance/PublicIsbnContent';
+import { PublicPublicationInstanceArtistic } from './publication-instance/PublicPublicationInstanceArtistic';
+import { PublicPublicationInstanceBook } from './publication-instance/PublicPublicationInstanceBook';
+import { PublicPublicationInstanceChapter } from './publication-instance/PublicPublicationInstanceChapter';
+import { PublicPublicationInstanceDegree } from './publication-instance/PublicPublicationInstanceDegree';
+import { PublicPublicationInstanceExhibition } from './publication-instance/PublicPublicationInstanceExhibition';
+import { PublicPublicationInstanceJournal } from './publication-instance/PublicPublicationInstanceJournal';
+import { PublicPublicationInstanceReport } from './publication-instance/PublicPublicationInstanceReport';
+import { PublicPublicationInstanceSoftwareSourceCode } from './publication-instance/PublicPublicationInstanceSoftwareSourceCode';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
 
@@ -106,8 +104,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const publicationContext = entityDescription?.reference?.publicationContext;
   const publicationInstance = entityDescription?.reference?.publicationInstance;
   const journalPublicationInstance = entityDescription?.reference?.publicationInstance as
-    | JournalPublicationInstance
-    | undefined;
+    JournalPublicationInstance | undefined;
 
   const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
 
@@ -144,7 +141,12 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <PublicPageInfoEntry
               title={t('registration.description.alternative_title')}
               content={alternativeTitles.map((title) => (
-                <Typography component="dd" gridColumn={2} key={title}>
+                <Typography
+                  component="dd"
+                  key={title}
+                  sx={{
+                    gridColumn: 2,
+                  }}>
                   {title}
                 </Typography>
               ))}
@@ -237,7 +239,11 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <PublicPageInfoEntry
               title={t('registration.public_page.cristin_id')}
               content={
-                <Typography component="dd" gridColumn={2}>
+                <Typography
+                  component="dd"
+                  sx={{
+                    gridColumn: 2,
+                  }}>
                   <Link
                     href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
                     target="_blank"

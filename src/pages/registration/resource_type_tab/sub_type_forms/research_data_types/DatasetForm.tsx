@@ -73,7 +73,11 @@ export const DatasetForm = () => {
         <FieldArray name={ResourceFieldNames.PublicationInstanceReferencedBy}>
           {({ push, remove }: FieldArrayRenderProps) => (
             <div>
-              <Typography gutterBottom fontWeight="bold">
+              <Typography
+                gutterBottom
+                sx={{
+                  fontWeight: 'bold',
+                }}>
                 {t('registration.resource_type.research_data.publications_using_dataset')}
               </Typography>
               <Autocomplete
@@ -134,7 +138,11 @@ export const DatasetForm = () => {
         <FieldArray name={ResourceFieldNames.PublicationInstanceCompliesWith}>
           {({ push, remove }: FieldArrayRenderProps) => (
             <div>
-              <Typography gutterBottom fontWeight="bold">
+              <Typography
+                gutterBottom
+                sx={{
+                  fontWeight: 'bold',
+                }}>
                 {t('registration.publication_types.DataManagementPlan')}
               </Typography>
               <Autocomplete
@@ -193,7 +201,11 @@ export const DatasetForm = () => {
         <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
           {({ push, remove }: FieldArrayRenderProps) => (
             <div>
-              <Typography gutterBottom fontWeight="bold">
+              <Typography
+                gutterBottom
+                sx={{
+                  fontWeight: 'bold',
+                }}>
                 {t('registration.resource_type.research_data.external_links')}
               </Typography>
               <ExternalLinkField

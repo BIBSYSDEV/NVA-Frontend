@@ -14,7 +14,9 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ResultParam } from '../../../api/searchApi';
+import { ExportResultsDropdown } from '../../../components/buttons/export-buttons/ExportResultsDropdown';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
+import { OrganizationFilters } from '../../../components/filters/OrganizationFilters';
 import { SearchForm } from '../../../components/filters/SearchForm';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
@@ -22,7 +24,6 @@ import { ScientificIndexStatuses } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
-import { ExportResultsDropdown } from '../ExportResultsDropdown';
 import { PublicationYearIntervalFilter } from '../PublicationYearIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { FileStatusSelect } from './FileStatusSelect';
@@ -30,7 +31,6 @@ import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
 import { NviReportedYearFilter } from './NviReportedYearFilter';
-import { OrganizationFilters } from './OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
 import { ScientificValueFilter } from './ScientificValueFilter';
 import { SeriesFilter } from './SeriesFilter';
@@ -55,8 +55,12 @@ const AdvancedSearchPage = () => {
   const params = new URLSearchParams(location.search);
 
   const registrationParams = useRegistrationsQueryParams();
+  const effectiveRegistrationParams = {
+    ...registrationParams,
+    unit: registrationParams.unit ?? registrationParams.topLevelOrganization,
+  };
   const resultSearchQuery = useRegistrationSearch({
-    params: { ...registrationParams, unit: registrationParams.unit ?? registrationParams.topLevelOrganization },
+    params: effectiveRegistrationParams,
     keepDataWhileLoading: true,
   });
 
@@ -77,8 +81,17 @@ const AdvancedSearchPage = () => {
   return (
     <>
       <HeadTitle>{t('search.advanced_search.advanced_search')}</HeadTitle>
-      <Grid container rowGap={2}>
-        <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
+      <Grid
+        container
+        sx={{
+          rowGap: 2,
+        }}>
+        <Grid
+          container
+          sx={{
+            rowGap: 2,
+            px: { xs: '0.5rem', md: 0 },
+          }}>
           <Typography variant="h1">{t('search.advanced_search.advanced_search')}</Typography>
           <Grid size={12}>
             <StyledFilterHeading>{t('search.advanced_search.title_search')}</StyledFilterHeading>
@@ -89,12 +102,18 @@ const AdvancedSearchPage = () => {
                 placeholder={t('search.search_for_title')}
                 paginationOffsetParamName={ResultParam.From}
               />
-              <ExportResultsDropdown />
+              <ExportResultsDropdown params={registrationParams} />
             </Box>
             <StyledDivider sx={{ mt: '1rem' }} />
           </Grid>
 
-          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
+          <Grid
+            container
+            size={12}
+            sx={{
+              gap: 2,
+              flexDirection: isLargeScreen ? 'row' : 'column',
+            }}>
             <Grid component="fieldset" sx={{ width: 'fit-content' }}>
               <StyledFilterHeading component="legend">
                 {t('search.advanced_search.publishing_period')}
@@ -143,7 +162,13 @@ const AdvancedSearchPage = () => {
 
           {gridRowDivider}
 
-          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
+          <Grid
+            container
+            size={12}
+            sx={{
+              gap: 2,
+              flexDirection: isLargeScreen ? 'row' : 'column',
+            }}>
             <Grid>
               <StyledFilterHeading>{t('registration.contributors.contributor')}</StyledFilterHeading>
               <SearchForm
@@ -156,17 +181,25 @@ const AdvancedSearchPage = () => {
             {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
             <Grid>
-              <OrganizationFilters
-                topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
-                unitId={registrationParams.unit ?? null}
-              />
+              <OrganizationFilters />
             </Grid>
           </Grid>
 
           {gridRowDivider}
 
-          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
-            <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2}>
+          <Grid
+            container
+            size={12}
+            sx={{
+              gap: 2,
+              flexDirection: isLargeScreen ? 'row' : 'column',
+            }}>
+            <Grid
+              container
+              sx={{
+                gap: 2,
+                flexDirection: isLargeScreen ? 'row' : 'column',
+              }}>
               <Grid>
                 <PublisherFilter />
               </Grid>
@@ -187,7 +220,13 @@ const AdvancedSearchPage = () => {
 
           {gridRowDivider}
 
-          <Grid container direction={isLargeScreen ? 'row' : 'column'} gap={2} size={12}>
+          <Grid
+            container
+            size={12}
+            sx={{
+              gap: 2,
+              flexDirection: isLargeScreen ? 'row' : 'column',
+            }}>
             <Grid>
               <StyledFilterHeading>{t('common.financier')}</StyledFilterHeading>
               <FundingSourceFilter />
@@ -229,7 +268,10 @@ const AdvancedSearchPage = () => {
           </Grid>
         </Grid>
         <Grid size={12}>
-          <RegistrationSearch registrationQuery={resultSearchQuery} />
+          <RegistrationSearch
+            registrationQuery={resultSearchQuery}
+            searchResultNavigationParams={effectiveRegistrationParams}
+          />
         </Grid>
       </Grid>
     </>

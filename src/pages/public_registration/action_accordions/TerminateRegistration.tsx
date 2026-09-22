@@ -26,7 +26,12 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
 
   return (
     <section>
-      <Typography fontWeight="bold">{t('common.delete')}</Typography>
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+        }}>
+        {t('common.delete')}
+      </Typography>
       <Trans
         t={t}
         i18nKey="registration.public_page.tasks_panel.terminate_result_description"

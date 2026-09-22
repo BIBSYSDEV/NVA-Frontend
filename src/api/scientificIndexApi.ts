@@ -12,6 +12,7 @@ import {
 } from '../types/nvi.types';
 import { ScientificIndexApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
+import { getIdentifierFromId } from '../utils/general-helpers';
 
 export type CreateNoteData = Pick<Note, 'text'>;
 
@@ -59,7 +60,7 @@ export const deleteCandidateNote = async (candidateId: string, noteIdentifier: s
   return deleteNoteResponse.data;
 };
 
-export const createNviPeriod = async (data: NviPeriod) => {
+export const createNviPeriod = async (data: Omit<NviPeriod, 'id' | 'status'>) => {
   const createNviPeriodResponse = await authenticatedApiRequest2<NviPeriod>({
     url: ScientificIndexApiPath.Period,
     method: 'POST',
@@ -69,7 +70,7 @@ export const createNviPeriod = async (data: NviPeriod) => {
   return createNviPeriodResponse.data;
 };
 
-export const updateNviPeriod = async (data: NviPeriod) => {
+export const updateNviPeriod = async (data: Omit<NviPeriod, 'status'>) => {
   const updateNviPeriodResponse = await authenticatedApiRequest2<NviPeriod>({
     url: ScientificIndexApiPath.Period,
     method: 'PUT',
@@ -95,8 +96,9 @@ export interface ReportStatusResponse {
 }
 
 export const fetchNviReportStatusForRegistration = async (registrationId: string) => {
+  const publicationIdentifier = getIdentifierFromId(registrationId);
   const fetchNviReportStatusResponse = await apiRequest2<ReportStatusResponse>({
-    url: `${ScientificIndexApiPath.Publication}/${encodeURIComponent(registrationId)}/report-status`,
+    url: `${ScientificIndexApiPath.Publication}/${encodeURIComponent(publicationIdentifier)}/report-status`,
   });
   return fetchNviReportStatusResponse.data;
 };

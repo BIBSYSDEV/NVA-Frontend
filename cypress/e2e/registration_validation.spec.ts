@@ -34,15 +34,12 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] input`).click().type('TITLE INPUT');
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] p.Mui-error`).should('not.exist');
 
-    cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}]`).click().type('9');
+    cy.typeInDateField(dataTestId.registrationWizard.description.datePublishedField, '9');
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}]`)
       .parent()
       .get('p.Mui-error')
       .should('be.visible');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}]`)
-      .clear()
-      .click()
-      .type('01.01.2000');
+    cy.typeInDateField(dataTestId.registrationWizard.description.datePublishedField, '01.01.2000');
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}]`)
       .parent()
       .get('p.Mui-error')
@@ -217,10 +214,11 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventCountryField}]`).click();
     cy.get('[id$=-option-1]').click();
 
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateFromField}]`).type('02.01.2020');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}]`).type('01.01.2020');
+    cy.typeInDateField(dataTestId.registrationWizard.resourceType.dateFromField, '02.01.2020');
+    cy.typeInDateField(dataTestId.registrationWizard.resourceType.dateToField, '01.01.2020');
     cy.get('p.Mui-error').should('have.length', 1);
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}]`).clear().type('2021');
+    // Set only the year section, so the "to" date ends up after the "from" date
+    cy.typeInDateField(dataTestId.registrationWizard.resourceType.dateToField, '2021', 2);
     cy.get('p.Mui-error').should('have.length', 0);
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
@@ -257,8 +255,8 @@ describe('User opens registration form and can see validation errors', () => {
     // Add exhibition place
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.addVenueButton}]`).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.venueNameField}] input`).type('My Venue');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateFromField}]`).type('01.01.2020');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}]`).type('02.01.2020');
+    cy.typeInDateField(dataTestId.registrationWizard.resourceType.dateFromField, '01.01.2020');
+    cy.typeInDateField(dataTestId.registrationWizard.resourceType.dateToField, '02.01.2020');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.artisticOutputSaveButton}]`).click();
 
     cy.get('p.Mui-error').should('have.length', 0);
@@ -339,7 +337,8 @@ describe('User opens registration form and can see validation errors', () => {
 
     // Embargo field
     cy.get(`[data-testid=${dataTestId.registrationWizard.files.expandFileRowButton}]`).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.files.embargoDateField}]`).type('01013000').blur();
+    cy.typeInDateField(dataTestId.registrationWizard.files.embargoDateField, '01013000');
+    cy.focused().blur(); // Typing advances focus to the last section, so blur whatever ended up focused
     cy.get(`[data-testid=${dataTestId.registrationWizard.files.embargoDateField}]`)
       .get('p.Mui-error')
       .should('not.exist');

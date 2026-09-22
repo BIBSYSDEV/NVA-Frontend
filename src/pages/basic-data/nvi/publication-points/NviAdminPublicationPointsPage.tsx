@@ -67,3 +67,5 @@ export const NviAdminPublicationPointsPage = () => {
     </NviPageLayout>
   );
 };
+
+export default NviAdminPublicationPointsPage;

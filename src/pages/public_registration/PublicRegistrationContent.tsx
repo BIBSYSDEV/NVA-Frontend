@@ -1,5 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import { Box, CircularProgress, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,13 +9,17 @@ import { HeadTitle } from '../../components/HeadTitle';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { RegistrationIconHeader } from '../../components/RegistrationIconHeader';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { LandingPageContext } from '../../context/LandingPageContext';
+import { PrimaryColoredBox } from '../../styles/header-styles';
 import { PreviousPathLocationState } from '../../types/locationState.types';
+import {
+  ArtisticPublicationInstance,
+  emptyArtisticPublicationInstance,
+} from '../../types/publication_types/artisticRegistration.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
@@ -43,10 +47,6 @@ import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
-import {
-  ArtisticPublicationInstance,
-  emptyArtisticPublicationInstance,
-} from '../../types/publication_types/artisticRegistration.types';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -88,7 +88,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
       <Box sx={visuallyHidden}>
         <DeletedPublicationInformation registration={registration} />
       </Box>
-      <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'registration.main' }}>
+      <PrimaryColoredBox sx={{ borderLeft: '1.5rem solid', borderColor: 'registration.main' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <RegistrationIconHeader
             publicationInstanceType={entityDescription?.reference?.publicationInstance?.type}
@@ -102,20 +102,29 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </TruncatableTypography>
         </Box>
 
-        {userCanEditRegistration && (
-          <Tooltip title={t('registration.edit_registration')}>
-            <IconButton
-              disabled={isAwaitingStatusSync}
-              component={RouterLink}
-              state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
-              to={getWizardPathByRegistration(registration)}
-              data-testid={dataTestId.registrationLandingPage.editButton}
-              sx={{ ml: 'auto', color: 'inherit' }}>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-      </StyledPaperHeader>
+        {userCanEditRegistration &&
+          (isAwaitingStatusSync ? (
+            <Tooltip title={t('registration.edit_registration_awaiting_sync')}>
+              <CircularProgress
+                size="1.5rem"
+                color="inherit"
+                aria-label={t('registration.edit_registration_awaiting_sync')}
+                sx={{ ml: 'auto', mr: '1rem' }}
+              />
+            </Tooltip>
+          ) : (
+            <Tooltip title={t('registration.edit_registration')}>
+              <IconButton
+                component={RouterLink}
+                state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
+                to={getWizardPathByRegistration(registration)}
+                data-testid={dataTestId.registrationLandingPage.editButton}
+                sx={{ ml: 'auto', color: 'inherit' }}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          ))}
+      </PrimaryColoredBox>
       <BackgroundDiv sx={{ bgcolor: 'white' }}>
         {contributors.length > 0 && entityDescription?.reference?.publicationInstance?.type && (
           <PublicRegistrationContributors

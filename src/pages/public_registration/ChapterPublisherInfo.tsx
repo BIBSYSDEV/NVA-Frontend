@@ -19,14 +19,18 @@ export const ChapterPublisherInfo = ({ publicationContext }: ChapterPublisherInf
   const publisherQuery = useFetchRegistration(identifier);
 
   const publisherPublicationContext = publisherQuery.data?.entityDescription?.reference?.publicationContext as
-    | BookPublicationContext
-    | ReportPublicationContext;
+    BookPublicationContext | ReportPublicationContext;
 
   return publisherPublicationContext ? (
     <>
       {publisherPublicationContext.isbnList && publisherPublicationContext.isbnList.length > 0 && (
         <Box sx={{ display: 'flex', flexDirection: 'column', mb: '0.5rem' }}>
-          <Typography fontWeight="bold">{t('registration.resource_type.isbn')}</Typography>
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}>
+            {t('registration.resource_type.isbn')}
+          </Typography>
           <Typography>
             {publisherPublicationContext.isbnList
               .filter(Boolean)

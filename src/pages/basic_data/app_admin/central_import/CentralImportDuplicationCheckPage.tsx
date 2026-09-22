@@ -10,15 +10,14 @@ import { fetchImportCandidates, FetchImportCandidatesParams } from '../../../../
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
 import { HeadTitle } from '../../../../components/HeadTitle';
 import { PageSpinner } from '../../../../components/PageSpinner';
-import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
 import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
+import { PrimaryColoredBox } from '../../../../styles/header-styles';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 import { BasicDataLocationState, PreviousPathLocationState } from '../../../../types/locationState.types';
 import { expandImportCandidate } from '../../../../utils/central-import-helpers';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { convertToRegistrationSearchItem } from '../../../../utils/registration-helpers';
 import {
   getImportCandidateMergePath,
@@ -83,12 +82,6 @@ export const CentralImportDuplicationCheckPage = () => {
   });
 
   useEffect(() => {
-    if (stringIncludesMathJax(importCandidateSearchResult?.mainTitle)) {
-      typesetMathJax();
-    }
-  }, [importCandidateSearchResult]);
-
-  useEffect(() => {
     setDuplicateSearchFilters({
       ...emptyDuplicateSearchFilter,
       doi: importCandidateSearchResult?.doi ?? '',
@@ -151,11 +144,15 @@ export const CentralImportDuplicationCheckPage = () => {
       </BackgroundDiv>
 
       <Paper elevation={0} sx={{ gridArea: 'actions' }}>
-        <StyledPaperHeader>
-          <Typography color="inherit" variant="h2">
+        <PrimaryColoredBox>
+          <Typography
+            variant="h2"
+            sx={{
+              color: 'inherit',
+            }}>
             {t('common.dialogue')}
           </Typography>
-        </StyledPaperHeader>
+        </PrimaryColoredBox>
 
         <Box sx={{ m: '0.5rem' }}>
           {importCandidate?.importStatus.candidateStatus === 'IMPORTED' && (
@@ -250,3 +247,5 @@ export const CentralImportDuplicationCheckPage = () => {
     </Box>
   );
 };
+
+export default CentralImportDuplicationCheckPage;

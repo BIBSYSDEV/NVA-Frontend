@@ -1,7 +1,7 @@
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import SellIcon from '@mui/icons-material/Sell';
-import { Box, BoxProps, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
+import { Box, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -58,10 +58,16 @@ export const TicketMessageList = ({ ticket }: MessageListProps) => {
 interface MessageItemProps {
   text: string | undefined;
   date: string;
-  username: string;
-  backgroundColor: BoxProps['bgcolor'];
+  username: string | undefined;
+
+  /** Theme palette path, applied as the `bgcolor` of the message. */
+  backgroundColor: string;
   menuElement?: ReactNode;
   showOrganization?: boolean;
+  /** Organization to show instead of the one belonging to the sender. */
+  organizationId?: string;
+  /** Text to show when the sender or organization cannot be resolved. Defaults to "Unknown". */
+  missingDataText?: string;
   messageType?: 'Justification' | 'Message' | 'Comment' | 'Approval';
 }
 
@@ -71,6 +77,8 @@ export const MessageItem = ({
   username,
   menuElement,
   showOrganization = false,
+  organizationId,
+  missingDataText,
   messageType = 'Comment',
   backgroundColor = 'background.neutral87',
 }: MessageItemProps) => {
@@ -78,6 +86,8 @@ export const MessageItem = ({
 
   const senderQuery = useFetchUserQuery(username);
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
+
+  const missingDataLabel = missingDataText ?? t('common.unknown');
 
   return (
     <Box
@@ -108,7 +118,10 @@ export const MessageItem = ({
           </Typography>
         </HorizontalBox>
         {showOrganization ? (
-          <MessageItemOrganization organizationId={senderQuery.data?.institutionCristinId ?? ''} />
+          <MessageItemOrganization
+            organizationId={organizationId ?? senderQuery.data?.institutionCristinId ?? ''}
+            missingDataText={missingDataLabel}
+          />
         ) : undefined}
         {menuElement}
       </Box>
@@ -116,33 +129,29 @@ export const MessageItem = ({
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
       <Box
-        sx={{ color: 'textPrimary.main', my: '0.1rem' }}
+        sx={{ color: 'textPrimary.main', my: '0.1rem', overflowWrap: 'anywhere' }}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
         component={Typography}>
         {text ? text : messageType !== 'Approval' ? <i>{t('my_page.messages.message_deleted')}</i> : undefined}
       </Box>
       <HorizontalBox sx={{ gap: '1rem', color: 'textPrimary.main' }}>
-        <Box sx={{ flexGrow: 1 }}>
-          <Tooltip title={senderName ? senderName : t('common.unknown')}>
+        <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+          <Tooltip title={senderName ? senderName : missingDataLabel}>
             <EllipsisTypography
               data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}
-              sx={{
-                fontWeight: 'bold',
-                maxWidth: { sm: '10rem', md: '12rem', lg: '18rem', xl: '30rem' },
-                color: 'textPrimary.main',
-              }}>
-              {senderQuery.isPending ? (
+              sx={{ fontWeight: 'bold', color: 'textPrimary.main' }}>
+              {senderQuery.isLoading ? (
                 <Skeleton sx={{ width: '8rem' }} />
               ) : senderName ? (
                 senderName
               ) : (
-                <i>{t('common.unknown')}</i>
+                <i>{missingDataLabel}</i>
               )}
             </EllipsisTypography>
           </Tooltip>
         </Box>
         <Tooltip title={toDateStringWithTime(date)}>
-          <HorizontalBox sx={{ gap: '0.25rem', color: 'textPrimary.main' }}>
+          <HorizontalBox sx={{ gap: '0.25rem', flexShrink: 0, color: 'textPrimary.main' }}>
             <CalendarMonthIcon sx={{ color: 'textPrimary.main' }} />
             <Typography
               sx={{ pt: '0.1rem', color: 'textPrimary.main' }}

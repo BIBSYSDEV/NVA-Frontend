@@ -41,7 +41,12 @@ export const ShowRelatedDocuments = ({ related }: ShowRelatedDocumentsProps) => 
                   width: '100%',
                   p: '1rem',
                 }}>
-                <Typography fontWeight="bold">{document.text}</Typography>
+                <Typography
+                  sx={{
+                    fontWeight: 'bold',
+                  }}>
+                  {document.text}
+                </Typography>
               </Box>
             )}
           </ListItem>

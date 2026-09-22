@@ -1,4 +1,4 @@
-import AddIcon from '@mui/icons-material/AddCircleOutline';
+import AddIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button } from '@mui/material';
 import { useFormikContext } from 'formik';
