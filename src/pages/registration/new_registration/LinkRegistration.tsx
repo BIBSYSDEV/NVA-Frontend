@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import { Field, FieldProps, Form, Formik } from 'formik';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
@@ -24,7 +24,6 @@ import { RegistrationList } from '../../../components/RegistrationList';
 import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import i18n from '../../../translations/i18n';
 import { doiUrlBase, isValidResourceLink } from '../../../utils/general-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { RegistrationAccordion } from './RegistrationAccordion';
@@ -40,24 +39,6 @@ enum LinkRegistrationFormFieldName {
 
 const doiUrlPlaceholder = `${doiUrlBase}10.1000/xyz123`;
 
-const linkErrorMessage = {
-  required: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.registration.link_to_resource'),
-  }),
-  invalidFormat: i18n.t('feedback.validation.has_invalid_format_example', {
-    field: i18n.t('registration.registration.link_to_resource'),
-    example: doiUrlPlaceholder,
-    interpolation: { escapeValue: false }, // The example is a URL, and its slashes must not be HTML escaped
-  }),
-};
-
-const doiValidationSchema = Yup.object({
-  [LinkRegistrationFormFieldName.Link]: Yup.string()
-    .trim()
-    .required(linkErrorMessage.required)
-    .test('is-valid-resource-link', linkErrorMessage.invalidFormat, (value) => !value || isValidResourceLink(value)),
-});
-
 interface DoiFormValues {
   [LinkRegistrationFormFieldName.Link]: string;
 }
@@ -69,7 +50,25 @@ const emptyDoiFormValues: DoiFormValues = {
 export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [doiQuery, setDoiQuery] = useState('');
+
+  const doiValidationSchema = useMemo(
+    () =>
+      Yup.object({
+        [LinkRegistrationFormFieldName.Link]: Yup.string()
+          .trim()
+          .required(t('feedback.validation.is_required', { field: t('registration.registration.link_to_resource') }))
+          .test(
+            'is-valid-resource-link',
+            t('feedback.validation.has_invalid_format_example', {
+              field: t('registration.registration.link_to_resource'),
+              example: doiUrlPlaceholder,
+              interpolation: { escapeValue: false }, // The example is a URL, and its slashes must not be HTML escaped
+            }),
+            (value) => !value || isValidResourceLink(value)
+          ),
+      }),
+    [t]
+  );
 
   const onCreateRegistrationSuccess = (response: AxiosResponse<Registration, any>) => {
     navigate(getRegistrationWizardPath(response.data.identifier), {
@@ -77,13 +76,8 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     });
   };
 
-  const { registrationsWithDoi, isLookingUpDoi, noHits, doiPreview, resetLookup } = useLookupDoi(doiQuery);
+  const { doiQuery, registrationsWithDoi, isLookingUpDoi, noHits, doiPreview, lookupDoi, resetLookup } = useLookupDoi();
   const createRegistrationFromDoi = useCreateRegistrationFromDoi(onCreateRegistrationSuccess);
-
-  const clearLookupResults = () => {
-    setDoiQuery('');
-    resetLookup();
-  };
 
   const persistRegistration = () => {
     if (!doiPreview) {
@@ -110,7 +104,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
 
       <AccordionDetails>
         <Formik
-          onSubmit={async (values) => setDoiQuery(values.link.trim())}
+          onSubmit={async (values) => lookupDoi(values.link)}
           initialValues={emptyDoiFormValues}
           validationSchema={doiValidationSchema}>
           {({ isSubmitting }) => (
@@ -130,7 +124,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                       {...field}
                       onChange={(event) => {
                         field.onChange(event);
-                        clearLookupResults();
+                        resetLookup();
                       }}
                       error={touched && !!error}
                       helperText={touched && error ? error : ''}
