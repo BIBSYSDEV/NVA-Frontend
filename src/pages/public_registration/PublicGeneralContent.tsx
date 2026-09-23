@@ -1,4 +1,4 @@
-import { Link, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviReportedStatus } from '../../api/hooks/useFetchNviReportedStatus';
@@ -58,10 +58,8 @@ import {
   isReport,
   isResearchData,
 } from '../../utils/registration-helpers';
-import { getCristinIdentifier, getHandles, getScopusIdentifiers } from './_utils/identifier-helpers';
 import { ChapterPublisherInfo } from './ChapterPublisherInfo';
-import { PublicDoi } from './PublicDoi';
-import { PublicHandles } from './PublicHandles';
+import { PublicIdentifiers } from './PublicIdentifiers';
 import { PublicPageInfoEntry } from './PublicPageInfoEntry';
 import {
   PublicJournal,
@@ -96,10 +94,6 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     JournalPublicationInstance | undefined;
 
   const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
-
-  const cristinIdentifier = getCristinIdentifier(registration);
-  const scopusIdentifiers = getScopusIdentifiers(registration);
-  const handles = getHandles(registration);
 
   const publicationDateString = displayDate(entityDescription?.publicationDate);
   const nviReportedYearString =
@@ -212,35 +206,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               />
             ) : null)}
 
-          <PublicDoi registration={registration} />
-          <PublicHandles handles={handles} />
-
-          {cristinIdentifier && (
-            <PublicPageInfoEntry
-              title={t('registration.public_page.cristin_id')}
-              content={
-                <Typography
-                  component="dd"
-                  sx={{
-                    gridColumn: 2,
-                  }}>
-                  <Link
-                    href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    {cristinIdentifier}
-                  </Link>
-                </Typography>
-              }
-            />
-          )}
-          {scopusIdentifiers.length > 0 && (
-            <PublicPageInfoEntry
-              title={t('registration.public_page.scopus_id')}
-              content={scopusIdentifiers.join(', ')}
-            />
-          )}
-          <PublicPageInfoEntry title={t('registration.registration_id')} content={registration.identifier} />
+          <PublicIdentifiers registration={registration} />
         </dl>
       </div>
 
