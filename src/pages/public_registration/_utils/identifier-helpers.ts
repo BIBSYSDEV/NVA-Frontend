@@ -12,8 +12,12 @@ const prioritiseIdentifiersFromCristin = (a: AdditionalIdentifier, b: Additional
 
 const minNvaSyntheticCristinIdentifier = 10_000_000;
 
-/** Handles issued by the Norwegian institutional archives (Brage) share this prefix. */
-const institutionalArchiveHandlePrefix = '11250';
+/**
+ * Handles issued by the Norwegian institutional archives (Brage) share the prefix 11250, as in
+ * https://hdl.handle.net/11250/3001. Matching the whole path segment avoids also matching handles
+ * where 11250 merely happens to start the suffix, such as https://hdl.handle.net/10852/112507.
+ */
+const institutionalArchiveHandlePattern = /(^|\/)11250\//;
 
 /**
  * Collects every handle on a registration, deduplicated. A handle can live either on
@@ -37,7 +41,7 @@ export const splitHandles = (handles: string[]): { primaryHandles: string[]; oth
     return { primaryHandles: [], otherHandles: [] };
   }
 
-  const archiveHandleIndex = handles.findIndex((handle) => handle.includes(institutionalArchiveHandlePrefix));
+  const archiveHandleIndex = handles.findIndex((handle) => institutionalArchiveHandlePattern.test(handle));
   const primaryIndex = archiveHandleIndex === -1 ? 0 : archiveHandleIndex;
 
   return {

@@ -93,6 +93,21 @@ describe('splitHandles', () => {
       otherHandles: ['https://hdl.handle.net/11250/2'],
     });
   });
+
+  it('Ignores handles where the prefix only appears in the suffix', () => {
+    const handles = ['https://hdl.handle.net/10852/112507', 'https://hdl.handle.net/11250/3'];
+    expect(splitHandles(handles)).toEqual({
+      primaryHandles: ['https://hdl.handle.net/11250/3'],
+      otherHandles: ['https://hdl.handle.net/10852/112507'],
+    });
+  });
+
+  it('Matches an institutional archive handle stored without the resolver URL', () => {
+    expect(splitHandles(['https://hdl.handle.net/10037/2', '11250/3'])).toEqual({
+      primaryHandles: ['11250/3'],
+      otherHandles: ['https://hdl.handle.net/10037/2'],
+    });
+  });
 });
 
 describe('getCristinIdentifier', () => {
