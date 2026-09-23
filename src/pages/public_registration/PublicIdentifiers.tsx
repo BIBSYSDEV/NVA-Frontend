@@ -19,9 +19,6 @@ export const PublicIdentifiers = ({ registration }: PublicRegistrationContentPro
   const cristinIdentifier = getCristinIdentifier(registration);
   const scopusIdentifiers = getScopusIdentifiers(registration);
 
-  const hasHiddenIdentifiers =
-    otherHandles.length > 0 || !!cristinIdentifier || scopusIdentifiers.length > 0 || !!registration.identifier;
-
   return (
     <>
       <PublicDoi registration={registration} />
@@ -55,24 +52,23 @@ export const PublicIdentifiers = ({ registration }: PublicRegistrationContentPro
         <PublicPageInfoEntry title={t('registration.registration_id')} content={registration.identifier} />
       </Collapse>
 
-      {hasHiddenIdentifiers && (
-        // Note: The Box keeps the button from being an invalid direct child of the surrounding <dl>
-        <Box>
-          <Button
-            data-testid={dataTestId.registrationLandingPage.toggleIdentifiersButton}
-            variant="text"
-            size="small"
-            onClick={() => setShowAllIdentifiers(!showAllIdentifiers)}
-            aria-expanded={showAllIdentifiers}
-            aria-controls={hiddenIdentifiersId}
-            endIcon={showAllIdentifiers ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            sx={{ textDecoration: 'underline', justifyContent: 'flex-start', p: 0, mt: '0.5rem' }}>
-            {showAllIdentifiers
-              ? t('registration.public_page.show_fewer_ids')
-              : t('registration.public_page.show_more_ids')}
-          </Button>
-        </Box>
-      )}
+      {/* Note: The toggle is always shown, since every registration has an identifier to reveal.
+          The Box keeps the button from being an invalid direct child of the surrounding <dl> */}
+      <Box>
+        <Button
+          data-testid={dataTestId.registrationLandingPage.toggleIdentifiersButton}
+          variant="text"
+          size="small"
+          onClick={() => setShowAllIdentifiers(!showAllIdentifiers)}
+          aria-expanded={showAllIdentifiers}
+          aria-controls={hiddenIdentifiersId}
+          endIcon={showAllIdentifiers ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          sx={{ textDecoration: 'underline', justifyContent: 'flex-start', p: 0, mt: '0.5rem' }}>
+          {showAllIdentifiers
+            ? t('registration.public_page.show_fewer_ids')
+            : t('registration.public_page.show_more_ids')}
+        </Button>
+      </Box>
     </>
   );
 };
