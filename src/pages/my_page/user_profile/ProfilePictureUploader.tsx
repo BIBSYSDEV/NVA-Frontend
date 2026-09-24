@@ -11,7 +11,8 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useProfilePicture } from '../../../utils/hooks/useProfilePicture';
 
-const maxProfilePictureSize = 5_000_000; //5 MB
+// Lambda payload limit is 6 MB, and base64 encoding adds ~33%, so 4 MB raw ≈ 5.3 MB encoded
+const maxProfilePictureSize = 4_000_000; // 4 MB
 
 interface ProfilePictureUploaderProps {
   personId: string;
@@ -47,6 +48,11 @@ export const ProfilePictureUploader = ({ personId, hasPicture }: ProfilePictureU
     event.target.value = ''; // Allows selecting the same file again, i.e. after an error
 
     if (!file) {
+      return;
+    }
+
+    if (file.type !== 'image/jpeg') {
+      dispatch(setNotification({ message: t('feedback.error.profile_picture_invalid_type'), variant: 'error' }));
       return;
     }
 
