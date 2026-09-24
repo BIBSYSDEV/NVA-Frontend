@@ -18,8 +18,9 @@ import { Trans, useTranslation } from 'react-i18next';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { Registration } from '../../types/registration.types';
+import { ResearchDataType } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
-import { activeLicenses } from '../../utils/fileHelpers';
+import { getShortListLicenses } from '../../utils/fileHelpers';
 import {
   associatedArtifactIsFile,
   isCategoryWithFileVersion,
@@ -52,6 +53,8 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
   const showFileVersion = isCategoryWithFileVersion(publicationInstanceType);
   const isRrsApplicableCategory = isCategoryWithRrs(publicationInstanceType);
+  const isSourceCode = publicationInstanceType === ResearchDataType.SoftwareSourceCode;
+  const shortListLicenses = getShortListLicenses(publicationInstanceType);
   const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
 
   return (
@@ -102,10 +105,15 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                         buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
                         <Trans
                           t={t}
-                          i18nKey="registration.files_and_license.file_and_license_info"
+                          i18nKey={
+                            isSourceCode
+                              ? 'registration.files_and_license.source_code_license_info'
+                              : 'registration.files_and_license.file_and_license_info'
+                          }
                           components={{
                             p: <Typography gutterBottom />,
                             ccLink: <OpenInNewLink href="https://creativecommons.org/licenses/" />,
+                            spdxLink: <OpenInNewLink href="https://spdx.org/licenses/" />,
                           }}
                         />
                         <Divider sx={{ my: '1rem', borderColor: 'black', borderWidth: '1px' }} />
@@ -115,7 +123,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                             gridTemplateColumns: { md: '1fr', lg: 'repeat(3, 1fr)' },
                             gap: '1.5rem',
                           }}>
-                          {activeLicenses.map((license) => (
+                          {shortListLicenses.map((license) => (
                             <div key={license.id}>
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
                                 {license.logo && <img src={license.logo} alt="" style={{ width: '5rem' }} />}
@@ -202,6 +210,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                   showFileVersion={showFileVersion}
                   isRrsApplicableCategory={isRrsApplicableCategory}
                   showAllColumns={showAllColumns}
+                  publicationInstanceType={publicationInstanceType}
                 />
               );
             })}

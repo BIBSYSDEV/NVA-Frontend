@@ -78,6 +78,7 @@ export enum UrlPathTemplate {
   ReportsNvi = '/reports/nvi',
   Search = '/search',
   SignedOut = '/signed-out',
+  SoftwareLicense = '/license/software/:spdxId',
   Tasks = '/tasks',
   TasksDialogue = '/tasks/dialogue',
   TasksDialogueRegistration = '/tasks/dialogue/:identifier',
@@ -105,6 +106,7 @@ const publicPageTemplates = [
   UrlPathTemplate.ProjectsRoot,
   UrlPathTemplate.ProjectPage,
   UrlPathTemplate.RegistrationLandingPage,
+  UrlPathTemplate.SoftwareLicense,
 ];
 
 // Protected routes whose paths are also matched by a broader public template and must therefore
@@ -135,6 +137,14 @@ export const getRegistrationLandingPagePath = (identifier: string) =>
 
 export const getImportCandidatePath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportCandidate.replace(':identifier', encodeURIComponent(identifier));
+
+/**
+ * Path to the Norwegian deed page for a software license.
+ * @param spdxId Precise SPDX identifier, e.g. 'GPL-3.0-or-later'.
+ * @returns Path to the deed page describing what the license means.
+ */
+export const getSoftwareLicensePath = (spdxId: string) =>
+  UrlPathTemplate.SoftwareLicense.replace(':spdxId', encodeURIComponent(spdxId));
 
 interface RegistrationWizardPathOptions {
   tab?: number;

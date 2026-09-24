@@ -1,6 +1,6 @@
 import * as LicenseImages from '../resources/images/licenses';
 import i18n from '../translations/i18n';
-import { UrlPathTemplate } from '../utils/urlPaths';
+import { getSoftwareLicensePath, UrlPathTemplate } from '../utils/urlPaths';
 
 export enum LicenseUri {
   CC_BY_4 = 'https://creativecommons.org/licenses/by/4.0/',
@@ -35,7 +35,29 @@ export enum LicenseUri {
   CC_BY_ND_NC_1 = 'https://creativecommons.org/licenses/by-nd-nc/1.0/',
   CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/',
   CopyrightAct = `https://nva.sikt.no${UrlPathTemplate.CopyrightAct}`,
+  // Alle disse er verifisert mot dokumentet i issuen: "SPDX-lista: https://spdx.org/licenses/ "
+  MIT = 'https://spdx.org/licenses/MIT.html',
+  Apache_2_0 = 'https://spdx.org/licenses/Apache-2.0.html',
+  GPL_3_0_or_later = 'https://spdx.org/licenses/GPL-3.0-or-later.html',
+  BSD_3_Clause = 'https://spdx.org/licenses/BSD-3-Clause.html',
+  EUPL_1_2 = 'https://spdx.org/licenses/EUPL-1.2.html',
+  BSD_2_Clause = 'https://spdx.org/licenses/BSD-2-Clause.html',
+  GPL_2_0_or_later = 'https://spdx.org/licenses/GPL-2.0-or-later.html',
+  AGPL_3_0_or_later = 'https://spdx.org/licenses/AGPL-3.0-or-later.html',
+  LGPL_3_0_or_later = 'https://spdx.org/licenses/LGPL-3.0-or-later.html',
+  MPL_2_0 = 'https://spdx.org/licenses/MPL-2.0.html',
+  GPL_2_0_only = 'https://spdx.org/licenses/GPL-2.0-only.html',
+  GPL_3_0_only = 'https://spdx.org/licenses/GPL-3.0-only.html',
+  AGPL_3_0_only = 'https://spdx.org/licenses/AGPL-3.0-only.html',
+  LGPL_3_0_only = 'https://spdx.org/licenses/LGPL-3.0-only.html',
 }
+
+/**
+ * Which section of the license menu a license is offered in for the SoftwareSourceCode category.
+ * 'short' is the list shown by default, 'full' is only shown after expanding the menu.
+ * Licenses without this property are not selectable for source code files.
+ */
+type SourceCodeMenuSection = 'short' | 'full';
 
 interface LicenseInfo {
   id: LicenseUri;
@@ -45,6 +67,9 @@ interface LicenseInfo {
   link: string;
   version?: 1 | 2 | 2.5 | 3 | 4;
   additionalInformation?: string;
+  /** Precise SPDX identifier. Only set for the software licenses, which are identified by SPDX rather than by URI. */
+  spdxId?: string;
+  sourceCodeMenuSection?: SourceCodeMenuSection;
 }
 
 export const licenses: LicenseInfo[] = [
@@ -289,7 +314,122 @@ export const licenses: LicenseInfo[] = [
     version: 1,
   },
   {
+    id: LicenseUri.MIT,
+    spdxId: 'MIT',
+    sourceCodeMenuSection: 'short',
+    name: i18n.t('licenses.labels.mit'),
+    description: i18n.t('licenses.description.mit'),
+    link: getSoftwareLicensePath('MIT'),
+  },
+  {
+    id: LicenseUri.Apache_2_0,
+    spdxId: 'Apache-2.0',
+    sourceCodeMenuSection: 'short',
+    name: i18n.t('licenses.labels.apache_2_0'),
+    description: i18n.t('licenses.description.apache_2_0'),
+    link: getSoftwareLicensePath('Apache-2.0'),
+  },
+  {
+    id: LicenseUri.GPL_3_0_or_later,
+    spdxId: 'GPL-3.0-or-later',
+    sourceCodeMenuSection: 'short',
+    name: i18n.t('licenses.labels.gpl_3_0_or_later'),
+    description: i18n.t('licenses.description.gpl_3_0_or_later'),
+    link: getSoftwareLicensePath('GPL-3.0-or-later'),
+  },
+  {
+    id: LicenseUri.BSD_3_Clause,
+    spdxId: 'BSD-3-Clause',
+    sourceCodeMenuSection: 'short',
+    name: i18n.t('licenses.labels.bsd_3_clause'),
+    description: i18n.t('licenses.description.bsd_3_clause'),
+    link: getSoftwareLicensePath('BSD-3-Clause'),
+  },
+  {
+    id: LicenseUri.EUPL_1_2,
+    spdxId: 'EUPL-1.2',
+    sourceCodeMenuSection: 'short',
+    name: i18n.t('licenses.labels.eupl_1_2'),
+    description: i18n.t('licenses.description.eupl_1_2'),
+    link: getSoftwareLicensePath('EUPL-1.2'),
+  },
+  {
+    id: LicenseUri.BSD_2_Clause,
+    spdxId: 'BSD-2-Clause',
+    sourceCodeMenuSection: 'full',
+    name: i18n.t('licenses.labels.bsd_2_clause'),
+    description: i18n.t('licenses.description.bsd_2_clause'),
+    link: getSoftwareLicensePath('BSD-2-Clause'),
+  },
+  {
+    id: LicenseUri.GPL_2_0_or_later,
+    spdxId: 'GPL-2.0-or-later',
+    sourceCodeMenuSection: 'full',
+    name: i18n.t('licenses.labels.gpl_2_0_or_later'),
+    description: i18n.t('licenses.description.gpl_2_0_or_later'),
+    link: getSoftwareLicensePath('GPL-2.0-or-later'),
+  },
+  {
+    id: LicenseUri.AGPL_3_0_or_later,
+    spdxId: 'AGPL-3.0-or-later',
+    sourceCodeMenuSection: 'full',
+    name: i18n.t('licenses.labels.agpl_3_0_or_later'),
+    description: i18n.t('licenses.description.agpl_3_0_or_later'),
+    link: getSoftwareLicensePath('AGPL-3.0-or-later'),
+  },
+  {
+    id: LicenseUri.LGPL_3_0_or_later,
+    spdxId: 'LGPL-3.0-or-later',
+    sourceCodeMenuSection: 'full',
+    name: i18n.t('licenses.labels.lgpl_3_0_or_later'),
+    description: i18n.t('licenses.description.lgpl_3_0_or_later'),
+    link: getSoftwareLicensePath('LGPL-3.0-or-later'),
+  },
+  {
+    id: LicenseUri.MPL_2_0,
+    spdxId: 'MPL-2.0',
+    sourceCodeMenuSection: 'full',
+    name: i18n.t('licenses.labels.mpl_2_0'),
+    description: i18n.t('licenses.description.mpl_2_0'),
+    link: getSoftwareLicensePath('MPL-2.0'),
+  },
+  // NOTE: The -only variants are separate entries in the menu, but share their deed page with the
+  // -or-later variant of the same license. The deed page's version note explains the difference.
+  {
+    id: LicenseUri.GPL_2_0_only,
+    spdxId: 'GPL-2.0-only',
+    sourceCodeMenuSection: 'full',
+    name: i18n.t('licenses.labels.gpl_2_0_only'),
+    description: i18n.t('licenses.description.gpl_2_0_only'),
+    link: getSoftwareLicensePath('GPL-2.0-or-later'),
+  },
+  {
+    id: LicenseUri.GPL_3_0_only,
+    spdxId: 'GPL-3.0-only',
+    sourceCodeMenuSection: 'full',
+    name: i18n.t('licenses.labels.gpl_3_0_only'),
+    description: i18n.t('licenses.description.gpl_3_0_only'),
+    link: getSoftwareLicensePath('GPL-3.0-or-later'),
+  },
+  {
+    id: LicenseUri.AGPL_3_0_only,
+    spdxId: 'AGPL-3.0-only',
+    sourceCodeMenuSection: 'full',
+    name: i18n.t('licenses.labels.agpl_3_0_only'),
+    description: i18n.t('licenses.description.agpl_3_0_only'),
+    link: getSoftwareLicensePath('AGPL-3.0-or-later'),
+  },
+  {
+    id: LicenseUri.LGPL_3_0_only,
+    spdxId: 'LGPL-3.0-only',
+    sourceCodeMenuSection: 'full',
+    name: i18n.t('licenses.labels.lgpl_3_0_only'),
+    description: i18n.t('licenses.description.lgpl_3_0_only'),
+    link: getSoftwareLicensePath('LGPL-3.0-or-later'),
+  },
+  {
     id: LicenseUri.CC0,
+    sourceCodeMenuSection: 'short',
     name: i18n.t('licenses.labels.cc0', { version: '1.0' }),
     description: i18n.t('licenses.description.cc0'),
     link: i18n.t('licenses.links.cc0'),
@@ -298,6 +438,8 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CopyrightAct,
+    // INFO: Kept available for source code so closed code can still be registered without an open license.
+    sourceCodeMenuSection: 'short',
     name: i18n.t('licenses.labels.copyright_act'),
     description: i18n.t('licenses.description.copyright_act'),
     link: LicenseUri.CopyrightAct,
