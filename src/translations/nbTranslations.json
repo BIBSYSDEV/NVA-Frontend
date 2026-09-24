@@ -632,6 +632,8 @@
       "login_failed_try_bankid": "Innlogging feilet. Prøv å logg inn med BankID i stedet.",
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "person_search": "Søk etter person feilet",
+      "profile_picture_invalid_type": "Ugyldig filtype. Kun .jpg og .jpeg støttes.",
+      "profile_picture_too_large": "Profilbildet er for stort. Maksimum størrelse er 4 MB.",
       "project_search": "Søk på prosjekt feilet",
       "publish_registration": "Kunne ikke publisere registrering",
       "registration_update_precondition_failed": "Registreringen er endret etter at du lastet siden. Last siden på nytt for å prøve igjen. Ulagrede endringer vil gå tapt.",
@@ -922,7 +924,7 @@
       },
       "identity": {
         "upload_profile_photo": "Last opp profilfoto",
-        "upload_profile_photo_info": "Maksimum størrelse: 1 MB. Støttede filtyper: .jpg eller .jpeg"
+        "upload_profile_photo_info": "Maksimum størrelse: 4 MB. Støttede filtyper: .jpg eller .jpeg"
       },
       "link_to_projects_search": "Se <0>søkesiden</0> for å filtrere blant alle prosjekter.",
       "link_to_results_search": "Se <0>søkesiden</0> for å filtrere blant alle resultater.",
