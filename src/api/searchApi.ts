@@ -253,7 +253,7 @@ export enum NviCandidatesSearchParam {
   ExcludeEmptyRows = 'excludeEmptyRows',
 }
 
-export type NviCandidateOrderBy = 'createdDate';
+export type NviCandidateOrderBy = 'publicationDate' | 'title' | 'modifiedDate';
 
 export enum NviCandidateFilterEnum {
   RejectedByOthers = 'rejectedByOthers',
