@@ -14,18 +14,18 @@ import {
 } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import { Field, FieldProps, Form, Formik } from 'formik';
-import { ChangeEvent, useMemo } from 'react';
+import { ChangeEvent, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import * as Yup from 'yup';
 import { useCreateRegistrationFromDoi } from '../../../api/hooks/useCreateRegistrationFromDoi';
 import { useLookupDoi } from '../../../api/hooks/useLookupDoi';
 import { RegistrationList } from '../../../components/RegistrationList';
 import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { doiUrlBase, isValidResourceLink } from '../../../utils/general-helpers';
+import { doiUrlPlaceholder } from '../../../utils/general-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { getLinkRegistrationValidationSchema } from '../../../utils/validation/registration/linkRegistrationValidation';
 import { RegistrationAccordion } from './RegistrationAccordion';
 
 export interface StartRegistrationAccordionProps {
@@ -36,8 +36,6 @@ export interface StartRegistrationAccordionProps {
 enum LinkRegistrationFormFieldName {
   Link = 'link',
 }
-
-const doiUrlPlaceholder = `${doiUrlBase}10.1000/xyz123`;
 
 interface DoiFormValues {
   [LinkRegistrationFormFieldName.Link]: string;
@@ -51,24 +49,9 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const doiValidationSchema = useMemo(
-    () =>
-      Yup.object({
-        [LinkRegistrationFormFieldName.Link]: Yup.string()
-          .trim()
-          .required(t('feedback.validation.is_required', { field: t('registration.registration.link_to_resource') }))
-          .test(
-            'is-valid-resource-link',
-            t('feedback.validation.has_invalid_format_example', {
-              field: t('registration.registration.link_to_resource'),
-              example: doiUrlPlaceholder,
-              interpolation: { escapeValue: false }, // The example is a URL, and its slashes must not be HTML escaped
-            }),
-            (value) => !value || isValidResourceLink(value)
-          ),
-      }),
-    [t]
-  );
+  const linkInputRef = useRef<HTMLInputElement>(null);
+
+  const doiValidationSchema = useMemo(() => getLinkRegistrationValidationSchema(t), [t]);
 
   const onCreateRegistrationSuccess = (response: AxiosResponse<Registration, any>) => {
     navigate(getRegistrationWizardPath(response.data.identifier), {
@@ -107,8 +90,20 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
           onSubmit={async (values) => lookupDoi(values.link)}
           initialValues={emptyDoiFormValues}
           validationSchema={doiValidationSchema}>
-          {({ isSubmitting }) => (
-            <Form noValidate>
+          {({ isSubmitting, validateForm, setFieldTouched, submitForm }) => (
+            <Form
+              noValidate
+              onSubmit={async (event) => {
+                event.preventDefault();
+                const errors = await validateForm();
+                if (errors.link) {
+                  // Move focus to the field so screen readers announce the error message
+                  setFieldTouched(LinkRegistrationFormFieldName.Link, true, false);
+                  linkInputRef.current?.focus();
+                  return;
+                }
+                submitForm();
+              }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Field name={LinkRegistrationFormFieldName.Link}>
                   {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -122,6 +117,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                       fullWidth
                       disabled={isSubmitting}
                       {...field}
+                      inputRef={linkInputRef}
                       onChange={(event) => {
                         field.onChange(event);
                         resetLookup();

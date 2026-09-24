@@ -67,8 +67,17 @@ describe('isValidResourceLink', () => {
     expect(isValidResourceLink('https://doi.org/10.1000/xyz 123')).toBe(false);
   });
 
+  it('accepts an ftp link', () => {
+    expect(isValidResourceLink('ftp://example.com/article/1')).toBe(true);
+  });
+
   it('rejects a link without a protocol', () => {
     expect(isValidResourceLink('//example.com/article/1')).toBe(false);
+  });
+
+  it('rejects a link with a non-web protocol', () => {
+    expect(isValidResourceLink('javascript:alert(1)')).toBe(false);
+    expect(isValidResourceLink('hei:foo')).toBe(false);
   });
 
   it('rejects an empty value', () => {
