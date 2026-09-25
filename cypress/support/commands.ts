@@ -7,7 +7,6 @@ import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockFileUploadUrl } from '../../src/utils/testfiles/mockFiles';
 import { compareWithA11yBaseline } from './a11y-assertions';
 import { defaultA11yOptions } from './a11y-options';
-import { a11yLogErrors } from './logging';
 
 Cypress.Commands.add('checkA11yWithBaseline', (snapshot: string, axeOptions?: Options) => {
   // Every page load wipes window.axe, so inject lazily rather than relying on
@@ -25,7 +24,6 @@ Cypress.Commands.add('checkA11yWithBaseline', (snapshot: string, axeOptions?: Op
     { ...defaultA11yOptions, ...axeOptions },
     (found) => {
       violations = found;
-      a11yLogErrors(found);
     },
     true // skipFailures: the baseline comparison below decides pass/fail, not cypress-axe.
   );

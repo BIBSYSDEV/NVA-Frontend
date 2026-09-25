@@ -1,18 +1,9 @@
 import type { Result } from 'axe-core';
 import { a11yBaseline } from './a11y-baseline';
+import { logA11yViolations } from './logging';
 
-const maxReportedNodes = 3;
-
-const describeViolation = (violation: Result) => {
-  const targets = violation.nodes
-    .slice(0, maxReportedNodes)
-    .map((node) => node.target.join(' '))
-    .join(', ');
-  const remaining = violation.nodes.length - maxReportedNodes;
-  const more = remaining > 0 ? ` (+${remaining} more)` : '';
-
-  return `${violation.id} [${violation.impact}]: ${violation.help} -> ${targets}${more} | ${violation.helpUrl}`;
-};
+const describeViolation = (violation: Result) =>
+  `${violation.id} [${violation.impact}] on ${violation.nodes.length} element(s): ${violation.help} | ${violation.helpUrl}`;
 
 /**
  * Fails when a snapshot gains a violation it has no waiver for, and equally when
@@ -33,6 +24,12 @@ export const compareWithA11yBaseline = (snapshot: string, violations: Result[]) 
 
   const staleWaivers = waivedRules.filter((rule) => !violatedRules.includes(rule));
   const newViolations = violations.filter((violation) => !waivedRules.includes(violation.id));
+
+  // Only what is actionable. Logging waived violations on every passing run
+  // buries the failures that matter and trains people to skim past the output.
+  if (newViolations.length > 0) {
+    logA11yViolations(newViolations);
+  }
 
   expect(
     staleWaivers,
