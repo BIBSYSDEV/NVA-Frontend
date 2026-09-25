@@ -166,7 +166,7 @@ approval has its own status, its own assignee and its own points.
 ### Controlling a candidate
 
 Only users with the NVI curator role can control candidates. Candidates can be found in the curators
-[candidate search](http://localhost:3000/tasks/nvi), and clicking a candidate from the results leads to the candidate
+[candidate search](http://dev.nva.sikt.no/tasks/nvi), and clicking a candidate from the results leads to the candidate
 page, which shows the registration itself, with an NVI dialogue panel beside it. From that panel a curator can:
 
 - **approve** the candidate on behalf of their institution,
@@ -175,9 +175,9 @@ page, which shows the registration itself, with an NVI dialogue panel beside it.
 - **assign** the candidate to a curator, so it is clear who is handling it,
 - and **write notes**, which form a shared dialogue on the candidate.
 
-Which of these are available at any given time is decided by the backend and delivered with the candidate as
-`allowedOperations`, so the panel never offers an action the period or the current status does not allow. If the period
-is closed or missing, the panel says so and control is blocked.
+Which of the operations are available at any given time (except assigning curator) is decided by the backend and
+delivered with the candidate as `allowedOperations`, so the panel never offers an action the period or the current
+status does not allow. If the period is closed or missing, the panel says so and control is blocked.
 
 The panel also surfaces **problems** on the candidate. The most important one is an unverified contributor
 (`UnverifiedCreatorExists` and `UnverifiedCreatorFromOrganizationProblem`): a contributor who is not linked to an
@@ -207,31 +207,30 @@ institution agrees, so NVA also tracks an overall status for the publication acr
 | `UNDER_REVIEW`   | At least one institution has approved or rejected       |
 | `APPROVED`       | Approved by all involved institutions in an open period |
 | `REJECTED`       | Rejected by all involved institutions in an open period |
-| `NOT_REPORTED`   | Rejected by all involved institutions in an open period |
+| `NOT_REPORTED`   |                                                         |
 | `REPORTED`       | Reported in a closed period                             |
 
 [See type declaration](../../src/api/scientificIndexApi.ts)
 
 When institutions disagree — one approves and another rejects the same publication — the candidate goes into **dispute
 **.
-Disputes have [their own page](http://localhost:3000/tasks/nvi/disputes) for NVI curators, because they cannot be
+Disputes have [their own page](http://dev.nva.sikt.no/tasks/nvi/disputes) for NVI curators, because they cannot be
 solved by one institution alone: they have to be resolved between the institutions involved.
 
 ### Following the progress
 
-Three roles follow the reporting, each with their own view of the same two
-pages — [reporting status](http://localhost:3000/tasks/nvi/status)
-and [publication points](http://localhost:3000/tasks/nvi/publication-points).
+Three roles follow the reporting, each with their own view of the same two pages: reporting status and publication
+points.
 
 #### Table 6: Who sees what
 
-| Role               | Scope            | Capabilities                                                    |
-| ------------------ | ---------------- | --------------------------------------------------------------- |
-| NVI curator        | Own institution  | Controls candidates; tables contain links into candidate search |
-| Institution editor | Own institution  | Read-only overview of the institution's progress                |
-| App administrator  | All institutions | Creates periods; filters by sector and institution              |
+| Role               | Scope            | Capabilities                                                    | Publication points                  | Reporting status                  |
+| ------------------ | ---------------- | --------------------------------------------------------------- | ----------------------------------- | --------------------------------- |
+| NVI curator        | Own institution  | Controls candidates; tables contain links into candidate search | /tasks/nvi/publication-points       | /tasks/nvi/status                 |
+| Institution editor | Own institution  | Read-only overview of the institution's progress                | /institution/nvi/publication-points | /institution/nvi/reporting-status |
+| App administrator  | All institutions | Creates periods; filters by sector and institution              | /basic-data/nvi/publication-points  | /basic-data/nvi/status            |
 
-[The publication points page](http://localhost:3000/tasks/nvi/publication-points) breaks the institution down by unit,
+[The publication points page](http://dev.nva.sikt.no/tasks/nvi/publication-points) breaks the institution down by unit,
 showing how many candidates the institution has approved, how many are still waiting for other institutions, how many
 are approved by everyone, and the resulting points. Candidates in dispute are not shown in that table.
 
