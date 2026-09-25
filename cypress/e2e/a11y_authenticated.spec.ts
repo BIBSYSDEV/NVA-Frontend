@@ -13,6 +13,12 @@ describe('Accessibility: authenticated chrome', { retries: 0 }, () => {
     cy.mocklogin();
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('be.visible');
     cy.setUserRolesInRedux(allRoles);
+
+    // The scan covers the whole document, not just the header, so the page
+    // behind it has to have rendered too. Waiting only on header chrome makes
+    // the result depend on whether the scan beats the front page to the DOM,
+    // which passes locally and fails on slower CI.
+    cy.get(`[data-testid=${dataTestId.frontPage.searchButton}]`).should('be.visible');
   });
 
   it('The logged-in header should have no new accessibility violations', () => {

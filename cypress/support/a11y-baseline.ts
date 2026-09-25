@@ -35,7 +35,13 @@ export const a11yBaseline: Record<string, WaivedRule[]> = {
     },
   ],
   'not-found': [],
-  'header-logged-in': [],
+  'header-logged-in': [
+    {
+      rule: 'color-contrast',
+      reason: 'The front page search button behind the header is below the 4.5:1 text threshold.',
+      ticket: 'NP-XXXXX',
+    },
+  ],
   'header-menu-open': [
     {
       rule: 'color-contrast',

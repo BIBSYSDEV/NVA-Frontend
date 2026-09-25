@@ -31,6 +31,9 @@ describe('Accessibility: registration wizard', { retries: 0 }, () => {
   wizardTabs.forEach((tab) => {
     it(`The ${tab.snapshot} tab should have no new accessibility violations`, () => {
       cy.get(`[data-testid=${tab.stepButton}]`).click({ force: true });
+      // Confirms the step actually became active before scanning, rather than
+      // scanning whichever tab happened to still be rendered.
+      cy.get(`[data-testid=${tab.stepButton}] .Mui-active`).should('exist');
       cy.checkA11yWithBaseline(tab.snapshot);
     });
   });

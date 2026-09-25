@@ -27,6 +27,7 @@ describe('Accessibility: public pages', { retries: 0 }, () => {
 
   it('The not-found page should have no new accessibility violations', () => {
     cy.visit('/this-route-does-not-exist', { failOnStatusCode: false });
+    cy.get('[data-testid="404"]').should('be.visible');
     cy.checkA11yWithBaseline('not-found');
   });
 });
