@@ -18,7 +18,9 @@ Also ensure that the following criterias are met:
 
 - [ ] The changes are working as expected
 - [ ] The changes are tested OK for different screen sizes
-- [ ] The changes are tested OK for a11y
+- [ ] The changes are tested OK for a11y ([what the automated checks do and do not cover](../documentation/a11y-testing.md))
+- [ ] Any new interactive element can be operated with the keyboard alone
+- [ ] Any new dialog or route change leaves keyboard focus somewhere sensible
 - [ ] Interactive elements have data-testids
 - [ ] I have done a QA of my own changes
 

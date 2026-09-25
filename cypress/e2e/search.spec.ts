@@ -1,6 +1,5 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { UrlPathTemplate } from '../../src/utils/urlPaths';
-import { a11yLogErrors } from '../support/logging';
 
 describe('Search', () => {
   beforeEach(() => {
@@ -18,8 +17,10 @@ describe('Search', () => {
     cy.get(`[data-testid=${dataTestId.common.pagination}] button`).eq(0).should('be.enabled');
     cy.url().should('include', 'results=10');
     cy.url().should('include', 'from=10');
-    cy.injectAxe();
-    cy.checkA11y(null, undefined, a11yLogErrors);
+    // The URL updates before the new page of results renders, so without this
+    // the scan can catch the list mid-update.
+    cy.get(`[data-testid=${dataTestId.startPage.searchResultItem}]`).should('be.visible');
+    cy.checkA11yWithBaseline('search-filter-paginated');
   });
 
   it('The user should see formulas correctly formatted with MathJax', () => {
@@ -31,7 +32,7 @@ describe('Search', () => {
     const searchTerm = 'test';
     cy.get(`[data-testid=${dataTestId.startPage.searchField}] input`).type(`${searchTerm}{enter}`);
     cy.url().should('include', `query=${searchTerm}`);
-    cy.injectAxe();
-    cy.checkA11y(null, undefined, a11yLogErrors);
+    cy.get(`[data-testid=${dataTestId.startPage.searchResultItem}]`).should('be.visible');
+    cy.checkA11yWithBaseline('search-filter-query');
   });
 });
