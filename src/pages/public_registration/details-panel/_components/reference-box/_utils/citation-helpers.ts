@@ -92,7 +92,7 @@ export const getEditors = (registration: Registration): Contributor[] =>
 /**
  * Returns the most authoritative persistent identifier for a registration.
  * Prefers the reference DOI, then the registration-level DOI, then the handle.
- * Handles can live either on registration.handle or in additionalIdentifiers (matching PublicHandles.tsx).
+ * Handles can live either on registration.handle or in additionalIdentifiers (matching getHandles).
  */
 export const getPersistentIdentifier = (registration: Registration): string => {
   const additionalHandle = registration.additionalIdentifiers?.find(

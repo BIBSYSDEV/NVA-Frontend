@@ -426,6 +426,7 @@ export const dataTestId = {
     relatedRegistrationsAccordion: 'related-registrations-accordion',
     subtypeFields: 'public-registration-subtype-fields',
     subjectAndClassificationAccordion: 'subject-and-classification-accordion',
+    toggleIdentifiersButton: 'toggle-identifiers-button',
     tasksPanel: {
       assigneeIndicator: 'assignee-indicator',
       assigneeSearchField: 'assignee-search-field',
