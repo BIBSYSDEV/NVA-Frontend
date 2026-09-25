@@ -11,18 +11,22 @@
 The committed `.npmrc` locks down npm behavior in this repo, both locally and in CI.
 Each setting is explained by a comment in the file.
 
-The most important one is `ignore-scripts=true`, which blocks lifecycle scripts (`preinstall`, `postinstall`, `prepare`) so a compromised dependency cannot run arbitrary code on install.
+The most important one is `ignore-scripts=true`, which blocks lifecycle scripts (`preinstall`, `postinstall`, `prepare`)
+so a compromised dependency cannot run arbitrary code on install.
 It has two consequences:
 
 - Git hooks are not set up on install. Run `npm run prepare` once after cloning.
-- The Cypress binary is not downloaded on install. The `test` and `test:cypress:open` scripts handle this by running `cypress install` first.
+- The Cypress binary is not downloaded on install. The `test` and `test:cypress:open` scripts handle this by running
+  `cypress install` first.
 
-Consider setting `ignore-scripts=true` in your own `~/.npmrc` as well, since the project `.npmrc` only protects installs in this repo.
+Consider setting `ignore-scripts=true` in your own `~/.npmrc` as well, since the project `.npmrc` only protects installs
+in this repo.
 Avoid `pre`/`post` script names (like `prebuild`) in `package.json`; npm skips them when `ignore-scripts` is set.
 
 ## Environment variables
 
-To run this app, you need to add a set of environment variables to a `.env` file located at the root of the project folder (`/NVA-Frontend/.env`).
+To run this app, you need to add a set of environment variables to a `.env` file located at the root of the project
+folder (`/NVA-Frontend/.env`).
 
 A minimal working example for `.env` that uses a simplistic set of (incomplete) mock data looks as follows:
 
@@ -31,7 +35,8 @@ VITE_API_HOST=api.dev.nva.aws.unit.no
 VITE_USE_MOCK=true
 ```
 
-Info about all environment variables are listed in the table below. Note that you must be authorized to retrieve some of these values if you don't want to use mock data.
+Info about all environment variables are listed in the table below. Note that you must be authorized to retrieve some of
+these values if you don't want to use mock data.
 
 | Name                              | Example value                                | Description                                                                                                    |
 | --------------------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
@@ -79,6 +84,17 @@ Alternatively:
 2. `npm start`
 3. `npm test` or `npm run test:cypress:open`
 
+## Documentation
+
+Additional documentation lives in the [documentation](documentation) folder:
+
+- [NVI](documentation/NVA-domain-knowledge/NVI.md) — the Norwegian Scientific Index: publication points, author shares
+  and how NVI reporting works in NVA
+- [Authentication](documentation/authentication.md)
+- [Deployment](documentation/deployment/deployment.md)
+- [Translations](documentation/translations/translations.md)
+- [Application maintenance message](documentation/ApplicationMaintenanceMessage.md)
+
 ## External tools
 
 [![Cypress.io](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg)](https://www.cypress.io/)
@@ -87,7 +103,8 @@ Alternatively:
 
 <a title="Lokalise: accelerate localization from code to delivery" href="https://lokalise.com/"><img src="src/resources/images/lokalise_logo.svg?raw=true" alt="Lokalise logo" width="200px"></a><br>
 
-Lokalise allows translating content in a user-friendly web portal. For more information about our preferred workflow when working with translations, see description on [translations.md](documentation/translations/translations.md).
+Lokalise allows translating content in a user-friendly web portal. For more information about our preferred workflow
+when working with translations, see description on [translations.md](documentation/translations/translations.md).
 
 [Socket Security](https://socket.dev/) is used to ensure legitimacy of installed NPM packages for each PR.
 
