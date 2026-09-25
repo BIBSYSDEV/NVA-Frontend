@@ -8,6 +8,11 @@ import tseslint from 'typescript-eslint';
 
 export default defineConfig([
   {
+    // Build output is generated and not ours to lint; without this, `npm run lint`
+    // reports thousands of errors from bundled third-party code.
+    ignores: ['build/**'],
+  },
+  {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       parserOptions: {
@@ -25,9 +30,13 @@ export default defineConfig([
   react.configs.flat['jsx-runtime'],
   reactHooks.configs.flat['recommended-latest'],
   ...tanstackQuery.configs['flat/recommended'],
-  jsxA11y.flatConfigs.recommended,
+  jsxA11y.flatConfigs.strict,
   {
     rules: {
+      // Both are absent from the strict preset and clean today, so they cost
+      // nothing now and catch the next regression.
+      'jsx-a11y/no-aria-hidden-on-focusable': 'error',
+      'jsx-a11y/control-has-associated-label': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
       'no-console': 'warn',

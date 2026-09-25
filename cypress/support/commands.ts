@@ -1,8 +1,39 @@
+import type { Result } from 'axe-core';
+import type { Options } from 'cypress-axe';
 import { removeNotification, setNotification } from '../../src/redux/notificationSlice';
 import { setPartialUser } from '../../src/redux/userSlice';
 import { RoleName } from '../../src/types/user.types';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockFileUploadUrl } from '../../src/utils/testfiles/mockFiles';
+import { compareWithA11yBaseline } from './a11y-assertions';
+import { defaultA11yOptions } from './a11y-options';
+import { a11yLogErrors } from './logging';
+
+Cypress.Commands.add('checkA11yWithBaseline', (snapshot: string, axeOptions?: Options) => {
+  // Every page load wipes window.axe, so inject lazily rather than relying on
+  // callers to re-inject after each cy.visit.
+  cy.window({ log: false }).then((win) => {
+    if (!win.axe) {
+      cy.injectAxe();
+    }
+  });
+
+  let violations: Result[] = [];
+
+  cy.checkA11y(
+    undefined,
+    { ...defaultA11yOptions, ...axeOptions },
+    (found) => {
+      violations = found;
+      a11yLogErrors(found);
+    },
+    true // skipFailures: the baseline comparison below decides pass/fail, not cypress-axe.
+  );
+
+  // Runs unconditionally: the callback above never fires when there are zero
+  // violations, which is precisely when a stale waiver needs to be caught.
+  cy.then(() => compareWithA11yBaseline(snapshot, violations));
+});
 
 Cypress.Commands.add('mocklogin', () => {
   cy.get(`[data-testid=${dataTestId.header.logInButton}]`).click();
