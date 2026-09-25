@@ -115,7 +115,7 @@ one of the authors.
 > factor
 
 As we can se here, a point bundles three separate judgements: how substantial the publication form is and how
-prestigious the channel is (the weight), how much of it belongs to your intitution, where the square root ensures that
+prestigious the channel is (the weight), how much of it belongs to your institution, where the square root ensures that
 big institutions don't get a propotionally big part of the cake (the author share fraction), and whether the publication
 is a result of international collaboration (the collaboration factor).
 
