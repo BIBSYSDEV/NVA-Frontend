@@ -1,6 +1,9 @@
 import { ResultParam } from '../api/searchApi';
+import { DisabledCategory } from '../components/CategorySelector';
 import { nviCorrectionListQueryKey } from '../pages/messages/components/NviCorrectionList';
 import { CorrectionListId, CorrectionListNames, CorrectionListSearchConfig } from '../types/nvi.types';
+import { allPublicationInstanceTypes } from '../types/publicationFieldNames';
+import { PublicationInstanceType } from '../types/registration.types';
 import { UrlPathTemplate } from './urlPaths';
 
 export const getCorrectionListSearchParams = (
@@ -48,6 +51,13 @@ export const getAccordionDefaultPath = (correctionListConfig: CorrectionListSear
   ).toString()}`;
 };
 
+export const getDisabledCategoriesOutside = (
+  allowedTypes: PublicationInstanceType[],
+  text: string
+): DisabledCategory[] => {
+  return allPublicationInstanceTypes.filter((type) => !allowedTypes.includes(type)).map((type) => ({ type, text }));
+};
+
 export const isCorrectionListName = (value: string): value is CorrectionListNames => {
   return Object.values(CorrectionListNames).includes(value as CorrectionListNames);
 };
@@ -59,6 +69,6 @@ export const scientificValueFilterListIds: CorrectionListNames[] = [
   CorrectionListNames.NonApplicableCategoriesWithApplicableChannel,
   CorrectionListNames.ScientificChapterNotInAnthology,
   CorrectionListNames.YearBetweenChapterAndBookMismatch,
-  CorrectionListNames.ScientificMonographyOrAnthologyWithoutIsxns,
+  CorrectionListNames.BookOrReportWithoutIsxn,
   CorrectionListNames.BooksWithoutNpiField,
 ];
