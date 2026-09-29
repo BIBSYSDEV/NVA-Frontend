@@ -3,8 +3,8 @@ import { ResultParam } from '../../api/searchApi';
 import { ScientificValueLevels } from '../../pages/search/advanced_search/ScientificValueFilter';
 import {
   CommonCorrectionListConfig,
+  CorrectionListConfig,
   CorrectionListNames,
-  CorrectionListSearchConfig,
   nviCorrectionListQueryKey,
 } from '../../types/nvi.types';
 import { BookType, ChapterType } from '../../types/publicationFieldNames';
@@ -13,6 +13,7 @@ import {
   getCommonCorrectionListConfig,
   getCorrectionListSearchParams,
   isCorrectionListName,
+  setPublicationYearParams,
 } from '../correctionListHelpers';
 import { UrlPathTemplate } from '../urlPaths';
 
@@ -22,7 +23,7 @@ const commonConfig: CommonCorrectionListConfig = { publicationYear: '2026' };
  * Creates a config where every list has no filters, so that each test can give a single list only
  * the filters it needs to verify.
  */
-const buildConfig = (overrides: Partial<CorrectionListSearchConfig> = {}): CorrectionListSearchConfig => {
+const buildConfig = (overrides: Partial<CorrectionListConfig> = {}): CorrectionListConfig => {
   const emptyConfig = Object.values(CorrectionListNames).reduce((config, listId) => {
     config[listId] = {
       i18nKey: 'tasks.correction_list',
@@ -33,7 +34,7 @@ const buildConfig = (overrides: Partial<CorrectionListSearchConfig> = {}): Corre
       topLevelOrganization: undefined,
     };
     return config;
-  }, {} as CorrectionListSearchConfig);
+  }, {} as CorrectionListConfig);
 
   return { ...emptyConfig, ...overrides };
 };
@@ -41,7 +42,7 @@ const buildConfig = (overrides: Partial<CorrectionListSearchConfig> = {}): Corre
 /** Creates a config where a single list has the given filters, and every other list has none. */
 const buildConfigForList = (
   listId: CorrectionListNames,
-  queryParams: CorrectionListSearchConfig[CorrectionListNames]['queryParams'],
+  queryParams: CorrectionListConfig[CorrectionListNames]['queryParams'],
   topLevelOrganization?: string
 ) =>
   buildConfig({
@@ -72,6 +73,63 @@ describe('getCommonCorrectionListConfig', () => {
     vi.setSystemTime(new Date('2026-04-30T12:00:00'));
 
     expect(getCommonCorrectionListConfig()).toEqual({ publicationYear: '2025' });
+  });
+});
+
+describe('setPublicationYearParams', () => {
+  test('should keep the excluded parent year equal to the publication year for the chapter and book year mismatch list', () => {
+    const searchParams = new URLSearchParams();
+
+    setPublicationYearParams(searchParams, CorrectionListNames.YearBetweenChapterAndBookMismatch, '2025');
+
+    expect(searchParams.get(ResultParam.PublicationYear)).toBe('2025');
+    expect(searchParams.get(ResultParam.ExcludeParentPublicationYear)).toBe('2025');
+  });
+
+  test('should move both years together when the year is changed again', () => {
+    const searchParams = new URLSearchParams();
+
+    setPublicationYearParams(searchParams, CorrectionListNames.YearBetweenChapterAndBookMismatch, '2026');
+    setPublicationYearParams(searchParams, CorrectionListNames.YearBetweenChapterAndBookMismatch, '2025');
+
+    expect(searchParams.get(ResultParam.PublicationYear)).toBe('2025');
+    expect(searchParams.get(ResultParam.ExcludeParentPublicationYear)).toBe('2025');
+  });
+
+  test('should not exclude a parent year for any other list', () => {
+    const searchParams = new URLSearchParams();
+
+    setPublicationYearParams(searchParams, CorrectionListNames.AnthologyWithoutChapter, '2026');
+
+    expect(searchParams.get(ResultParam.PublicationYear)).toBe('2026');
+    expect(searchParams.has(ResultParam.ExcludeParentPublicationYear)).toBe(false);
+  });
+
+  test('should remove a stale excluded parent year when switching to a list that should not have one', () => {
+    const searchParams = new URLSearchParams({ [ResultParam.ExcludeParentPublicationYear]: '2026' });
+
+    setPublicationYearParams(searchParams, CorrectionListNames.AnthologyWithoutChapter, '2026');
+
+    expect(searchParams.has(ResultParam.ExcludeParentPublicationYear)).toBe(false);
+  });
+
+  test('should not exclude a parent year when no list is selected', () => {
+    const searchParams = new URLSearchParams();
+
+    setPublicationYearParams(searchParams, null, '2026');
+
+    expect(searchParams.get(ResultParam.PublicationYear)).toBe('2026');
+    expect(searchParams.has(ResultParam.ExcludeParentPublicationYear)).toBe(false);
+  });
+
+  test('should leave unrelated params untouched', () => {
+    const searchParams = new URLSearchParams({
+      [ResultParam.TopLevelOrganization]: 'https://api.com/organization/1.0',
+    });
+
+    setPublicationYearParams(searchParams, CorrectionListNames.AnthologyWithoutChapter, '2026');
+
+    expect(searchParams.get(ResultParam.TopLevelOrganization)).toBe('https://api.com/organization/1.0');
   });
 });
 
@@ -163,7 +221,6 @@ describe('getCorrectionListSearchParams', () => {
     expect(searchParams.get(ResultParam.UnidentifiedContributorInstitution)).toBe('/organization/1.0');
   });
 
-  // The two years being equal is what makes the search compare them, so they must never drift apart
   test('should exclude the same year as the publication year for the chapter and book year mismatch list', () => {
     const searchParams = getCorrectionListSearchParams(
       buildConfig(),
@@ -172,19 +229,6 @@ describe('getCorrectionListSearchParams', () => {
     );
 
     expect(searchParams.get(ResultParam.ExcludeParentPublicationYear)).toBe(commonConfig.publicationYear);
-    expect(searchParams.get(ResultParam.ExcludeParentPublicationYear)).toBe(
-      searchParams.get(ResultParam.PublicationYear)
-    );
-  });
-
-  test('should not exclude a parent publication year for any other list', () => {
-    const searchParams = getCorrectionListSearchParams(
-      buildConfig(),
-      CorrectionListNames.AnthologyWithoutChapter,
-      commonConfig
-    );
-
-    expect(searchParams.has(ResultParam.ExcludeParentPublicationYear)).toBe(false);
   });
 });
 

@@ -1,9 +1,9 @@
 import { ResultParam } from '../api/searchApi';
 import {
   CommonCorrectionListConfig,
+  CorrectionListConfig,
   CorrectionListId,
   CorrectionListNames,
-  CorrectionListSearchConfig,
   nviCorrectionListQueryKey,
 } from '../types/nvi.types';
 import { getDefaultNviYear } from './nviHelpers';
@@ -19,6 +19,30 @@ export const getCommonCorrectionListConfig = (): CommonCorrectionListConfig => (
 });
 
 /**
+ * Sets the publication year, and keeps {@link ResultParam.ExcludeParentPublicationYear} equal to it
+ * for {@link CorrectionListNames.YearBetweenChapterAndBookMismatch}. That parameter removes hits
+ * where the parent book has the given year, so the two being equal is what makes the search find
+ * chapters from the selected year whose parent book is from another year.
+ *
+ * @param searchParams - The params to set the year on, mutated in place.
+ * @param correctionListId - The list the year is being set for.
+ * @param publicationYear - The year to filter on.
+ */
+export const setPublicationYearParams = (
+  searchParams: URLSearchParams,
+  correctionListId: CorrectionListId | null,
+  publicationYear: string
+) => {
+  searchParams.set(ResultParam.PublicationYear, publicationYear);
+
+  if (correctionListId === CorrectionListNames.YearBetweenChapterAndBookMismatch) {
+    searchParams.set(ResultParam.ExcludeParentPublicationYear, publicationYear);
+  } else {
+    searchParams.delete(ResultParam.ExcludeParentPublicationYear);
+  }
+};
+
+/**
  * Builds the search params a correction list should start out with, from the filters configured for
  * it. {@link nviCorrectionListQueryKey} and {@link ResultParam.PublicationYear} are always set, the
  * remaining filters only when the list is configured with them.
@@ -29,7 +53,7 @@ export const getCommonCorrectionListConfig = (): CommonCorrectionListConfig => (
  * @returns The search params to navigate to, without any pagination.
  */
 export const getCorrectionListSearchParams = (
-  correctionListConfig: CorrectionListSearchConfig,
+  correctionListConfig: CorrectionListConfig,
   newCorrectionListId: CorrectionListId,
   commonConfig: CommonCorrectionListConfig
 ) => {
@@ -37,7 +61,7 @@ export const getCorrectionListSearchParams = (
   const newSearchParams = new URLSearchParams();
 
   newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
-  newSearchParams.set(ResultParam.PublicationYear, publicationYear);
+  setPublicationYearParams(newSearchParams, newCorrectionListId, publicationYear);
 
   const { queryParams, topLevelOrganization } = correctionListConfig[newCorrectionListId];
   const { scientificValue, categoryShould, unidentifiedContributorInstitution } = queryParams;
@@ -58,12 +82,6 @@ export const getCorrectionListSearchParams = (
     newSearchParams.set(ResultParam.UnidentifiedContributorInstitution, unidentifiedContributorInstitution);
   }
 
-  if (newCorrectionListId === CorrectionListNames.YearBetweenChapterAndBookMismatch) {
-    // NOTE: excludeParentPublicationYear removes hits where the parent book has the given year.
-    // We use it to find chapters from the selected year whose parent book is from another year
-    newSearchParams.set(ResultParam.ExcludeParentPublicationYear, publicationYear);
-  }
-
   return newSearchParams;
 };
 
@@ -77,7 +95,7 @@ export const getCorrectionListSearchParams = (
  * @returns A path including search params, ready to navigate to.
  */
 export const getAccordionDefaultPath = (
-  correctionListConfig: CorrectionListSearchConfig,
+  correctionListConfig: CorrectionListConfig,
   commonConfig: CommonCorrectionListConfig
 ): string => {
   return `${UrlPathTemplate.TasksNviCorrectionList}?${getCorrectionListSearchParams(

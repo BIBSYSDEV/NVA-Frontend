@@ -172,6 +172,8 @@ export interface NviPeriodResponse {
   periods: NviPeriod[];
 }
 
+export const nviCorrectionListQueryKey = 'list';
+
 export enum CorrectionListNames {
   ApplicableCategoriesWithNonApplicableChannel = 'ApplicableCategoriesWithNonApplicableChannel',
   NonApplicableCategoriesWithApplicableChannel = 'NonApplicableCategoriesWithApplicableChannel',
@@ -187,15 +189,24 @@ export enum CorrectionListNames {
 
 export type CorrectionListId = `${CorrectionListNames}`;
 
-export type CorrectionListSearchConfig = {
+export type CorrectionListConfig = {
   [key in CorrectionListId]: {
     i18nKey: ParseKeys;
     queryParams: FetchResultsParams;
     disabledFilters: ResultParam[];
     disabledCategories?: DisabledCategory[];
+    /** Whether the user can adjust the scientific value */
+    showScientificValueFilter: boolean;
+    /** Whether the user can filter on journal, publisher and series. */
+    showChannelFilters: boolean;
     topLevelOrganization: string | undefined;
   };
 };
+
+/** The filters that apply to every correction list, as opposed to the per list filters in {@link CorrectionListConfig}. */
+export interface CommonCorrectionListConfig {
+  publicationYear: string;
+}
 
 export enum NviSearchStatusEnum {
   CandidatesForControl = 'candidates_for_control',
