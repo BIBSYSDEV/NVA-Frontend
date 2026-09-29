@@ -12,6 +12,7 @@ const prioritiseIdentifiersFromCristin = (a: AdditionalIdentifier, b: Additional
 
 const minNvaSyntheticCristinIdentifier = 10_000_000;
 
+// 11250 is the handle prefix for Brage, the institutional archive. Its handles point to the archived full text.
 const institutionalArchiveHandlePattern = /(^|\/)11250\//;
 
 /**
@@ -29,18 +30,18 @@ export const getHandles = (registration: Registration): string[] => {
 
 /**
  * Splits handles into the one shown by default and the rest, which are hidden behind a toggle.
- * Prefers the first handle from an institutional archive, otherwise falls back to the first handle.
+ * Shows the first institutional archive (Brage) handle if there is one, otherwise the first handle in the list.
  */
-export const splitHandles = (handles: string[]): { primaryHandles: string[]; otherHandles: string[] } => {
+export const splitHandles = (handles: string[]): { primaryHandle?: string; otherHandles: string[] } => {
   if (handles.length === 0) {
-    return { primaryHandles: [], otherHandles: [] };
+    return { otherHandles: [] };
   }
 
   const archiveHandleIndex = handles.findIndex((handle) => institutionalArchiveHandlePattern.test(handle));
   const primaryIndex = archiveHandleIndex === -1 ? 0 : archiveHandleIndex;
 
   return {
-    primaryHandles: [handles[primaryIndex]],
+    primaryHandle: handles[primaryIndex],
     otherHandles: handles.filter((_, index) => index !== primaryIndex),
   };
 };

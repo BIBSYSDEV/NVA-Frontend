@@ -55,13 +55,13 @@ describe('getHandles', () => {
 });
 
 describe('splitHandles', () => {
-  it('Returns empty lists when there are no handles', () => {
-    expect(splitHandles([])).toEqual({ primaryHandles: [], otherHandles: [] });
+  it('Returns no primary handle when there are no handles', () => {
+    expect(splitHandles([])).toEqual({ otherHandles: [] });
   });
 
   it('Shows the only handle even when it is not from an institutional archive', () => {
     expect(splitHandles(['https://hdl.handle.net/10037/2'])).toEqual({
-      primaryHandles: ['https://hdl.handle.net/10037/2'],
+      primaryHandle: 'https://hdl.handle.net/10037/2',
       otherHandles: [],
     });
   });
@@ -73,7 +73,7 @@ describe('splitHandles', () => {
       'https://hdl.handle.net/11250/1',
     ];
     expect(splitHandles(handles)).toEqual({
-      primaryHandles: ['https://hdl.handle.net/11250/1'],
+      primaryHandle: 'https://hdl.handle.net/11250/1',
       otherHandles: ['https://hdl.handle.net/10037/2', 'https://hdl.handle.net/2447/3'],
     });
   });
@@ -81,7 +81,7 @@ describe('splitHandles', () => {
   it('Falls back to the first handle when none are from an institutional archive', () => {
     const handles = ['https://hdl.handle.net/10037/2', 'https://hdl.handle.net/2447/3'];
     expect(splitHandles(handles)).toEqual({
-      primaryHandles: ['https://hdl.handle.net/10037/2'],
+      primaryHandle: 'https://hdl.handle.net/10037/2',
       otherHandles: ['https://hdl.handle.net/2447/3'],
     });
   });
@@ -89,7 +89,7 @@ describe('splitHandles', () => {
   it('Shows the first institutional archive handle when there are several', () => {
     const handles = ['https://hdl.handle.net/11250/1', 'https://hdl.handle.net/11250/2'];
     expect(splitHandles(handles)).toEqual({
-      primaryHandles: ['https://hdl.handle.net/11250/1'],
+      primaryHandle: 'https://hdl.handle.net/11250/1',
       otherHandles: ['https://hdl.handle.net/11250/2'],
     });
   });
@@ -97,14 +97,14 @@ describe('splitHandles', () => {
   it('Ignores handles where the prefix only appears in the suffix', () => {
     const handles = ['https://hdl.handle.net/10852/112507', 'https://hdl.handle.net/11250/3'];
     expect(splitHandles(handles)).toEqual({
-      primaryHandles: ['https://hdl.handle.net/11250/3'],
+      primaryHandle: 'https://hdl.handle.net/11250/3',
       otherHandles: ['https://hdl.handle.net/10852/112507'],
     });
   });
 
   it('Matches an institutional archive handle stored without the resolver URL', () => {
     expect(splitHandles(['https://hdl.handle.net/10037/2', '11250/3'])).toEqual({
-      primaryHandles: ['11250/3'],
+      primaryHandle: '11250/3',
       otherHandles: ['https://hdl.handle.net/10037/2'],
     });
   });

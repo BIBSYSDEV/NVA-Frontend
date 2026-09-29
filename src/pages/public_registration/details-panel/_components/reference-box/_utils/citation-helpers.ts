@@ -1,6 +1,7 @@
 import { Contributor, ContributorRole } from '../../../../../../types/contributor.types';
 import { PagesRange } from '../../../../../../types/publication_types/pages.types';
 import { ContextPublisher, Registration } from '../../../../../../types/registration.types';
+import { getHandles } from '../../../../_utils/identifier-helpers';
 import { toSentenceCase } from './to-sentence-case';
 
 // Matches one or more commas (with adjacent whitespace) at the start or end of a string.
@@ -91,17 +92,10 @@ export const getEditors = (registration: Registration): Contributor[] =>
 
 /**
  * Returns the most authoritative persistent identifier for a registration.
- * Prefers the reference DOI, then the registration-level DOI, then the handle.
- * Handles can live either on registration.handle or in additionalIdentifiers (matching getHandles).
+ * Prefers the reference DOI, then the registration-level DOI, then the first handle.
  */
-export const getPersistentIdentifier = (registration: Registration): string => {
-  const additionalHandle = registration.additionalIdentifiers?.find(
-    (identifier) => identifier.type === 'HandleIdentifier' || identifier.sourceName === 'handle'
-  )?.value;
-  return (
-    registration.entityDescription?.reference?.doi || registration.doi || registration.handle || additionalHandle || ''
-  );
-};
+export const getPersistentIdentifier = (registration: Registration): string =>
+  registration.entityDescription?.reference?.doi || registration.doi || getHandles(registration)[0] || '';
 
 /**
  * Resolves the fields every APA formatter needs: formatted author list, year, main title, and the
