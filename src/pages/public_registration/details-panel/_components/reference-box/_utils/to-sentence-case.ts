@@ -7,12 +7,13 @@ const ALL_CAPS_THRESHOLD = 0.8;
 // Matches a single word: a letter or digit followed by any letters, digits, apostrophes, or hyphens.
 const wordPattern = /[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu;
 
-// Captures the start of an APA subtitle (the position just after a colon) together with the first
-// letter that follows, so it can be capitalised.
-const subtitleStartPattern = /(:\s*)(\p{L})/gu;
+// Captures the start of an APA subtitle or new sentence (the position just after a colon, or after
+// sentence-ending punctuation followed by whitespace) together with the first letter that follows, so
+// it can be capitalised. Whitespace is required after ".?!" so tokens like "Node.js" are left alone.
+const subtitleStartPattern = /(:\s*|[.?!]\s+)(\p{L})/gu;
 
 // As above, but also matches the very start of the title (^) so the title's first letter is capitalised too.
-const titleStartPattern = /(^|:\s*)(\p{L})/gu;
+const titleStartPattern = /(^|:\s*|[.?!]\s+)(\p{L})/gu;
 
 // Splits a title around parenthesised groups, keeping the groups (every odd element) so their casing
 // can be preserved verbatim.
@@ -48,8 +49,8 @@ const isAcronym = (word: string): boolean => lettersOnly(word).length >= 2 && is
 const lowercaseWord = (word: string, preserveAcronyms: boolean): string =>
   preserveAcronyms && isAcronym(word) ? word : word.toLowerCase();
 
-// Capitalises the first letter after each colon (the start of an APA subtitle) and, only for the
-// first segment of the title, the title's very first letter.
+// Capitalises the first letter after each colon or sentence-ending punctuation (the start of an APA
+// subtitle or a new sentence) and, only for the first segment of the title, the title's very first letter.
 const capitaliseSentenceStarts = (segment: string, atTitleStart: boolean): string =>
   segment.replace(
     atTitleStart ? titleStartPattern : subtitleStartPattern,
@@ -75,7 +76,7 @@ const convertOutsideParentheses = (title: string, preserveAcronyms: boolean): st
  * case (see {@link shouldConvert}). Titles that already read as sentence case are returned untouched.
  *
  * When converting, capitalisation is preserved for: the first letter of the title, the first word
- * after a colon (the start of an APA subtitle), and anything inside parentheses. Acronyms (DNA, NASA)
+ * after a colon or sentence-ending punctuation (the start of an APA subtitle or a new sentence), and anything inside parentheses. Acronyms (DNA, NASA)
  * are preserved for title-case input; an all-caps title is lowercased throughout as a best effort,
  * since its acronyms are indistinguishable from ordinary words.
  */

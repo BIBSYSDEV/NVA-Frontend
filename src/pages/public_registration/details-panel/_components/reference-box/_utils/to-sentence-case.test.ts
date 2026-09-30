@@ -18,6 +18,18 @@ describe('toSentenceCase', () => {
     expect(toSentenceCase('Machine Learning: A New Approach')).toBe('Machine learning: A new approach');
   });
 
+  it('Capitalises the first word after a period', () => {
+    expect(toSentenceCase('Water and People. Questions from Journeys around the World')).toBe(
+      'Water and people. Questions from journeys around the world'
+    );
+  });
+
+  it('Capitalises the first word after a question mark', () => {
+    expect(toSentenceCase('Why Do We Sleep? Answers from Modern Research')).toBe(
+      'Why do we sleep? Answers from modern research'
+    );
+  });
+
   it('Preserves an acronym while sentence-casing a title containing a proper noun', () => {
     expect(toSentenceCase('The Role of DNA in Cancer Research')).toBe('The role of DNA in cancer research');
   });
