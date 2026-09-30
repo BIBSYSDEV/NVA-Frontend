@@ -4,8 +4,16 @@ const SIGNIFICANT_WORD_MIN_LENGTH = 4;
 const CONVERT_THRESHOLD = 0.6;
 const ALL_CAPS_THRESHOLD = 0.8;
 
-// Matches a single word: a letter or digit followed by any letters, digits, apostrophes, or hyphens.
-const wordPattern = /[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu;
+// Matches a single word: either a dotted abbreviation ("U.S.", "e.g.") or a letter or digit followed by
+// any letters, digits, apostrophes, or hyphens.
+const wordPattern = /\p{L}(?:\.\p{L})+\.?|[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu;
+
+// Abbreviations that are followed by a period without ending the sentence. Single letters ("U.S.",
+// "e.g.") are handled separately, see followsAbbreviation.
+const abbreviations = new Set(['al', 'cf', 'dr', 'etc', 'mr', 'mrs', 'ms', 'prof', 'st', 'vol', 'vs']);
+
+// Captures the last word of a text, together with the character before it (or the start of the text).
+const lastWordPattern = /(?:^|[^\p{L}])(\p{L}+)$/u;
 
 // Captures the start of an APA subtitle or new sentence (the position just after a colon, or after
 // sentence-ending punctuation followed by whitespace) together with the first letter that follows, so
@@ -49,12 +57,20 @@ const isAcronym = (word: string): boolean => lettersOnly(word).length >= 2 && is
 const lowercaseWord = (word: string, preserveAcronyms: boolean): string =>
   preserveAcronyms && isAcronym(word) ? word : word.toLowerCase();
 
+// True when the text ends with an abbreviation, so a period right after it doesn't end the sentence.
+const followsAbbreviation = (textBeforePeriod: string): boolean => {
+  const lastWord = textBeforePeriod.match(lastWordPattern)?.[1];
+  return !!lastWord && (lastWord.length === 1 || abbreviations.has(lastWord.toLowerCase()));
+};
+
 // Capitalises the first letter after each colon or sentence-ending punctuation (the start of an APA
 // subtitle or a new sentence) and, only for the first segment of the title, the title's very first letter.
+// A period after an abbreviation ("U.S.", "etc.") is not treated as the end of a sentence.
 const capitaliseSentenceStarts = (segment: string, atTitleStart: boolean): string =>
   segment.replace(
     atTitleStart ? titleStartPattern : subtitleStartPattern,
-    (_match, prefix: string, letter: string) => prefix + letter.toUpperCase()
+    (match: string, prefix: string, letter: string, offset: number) =>
+      prefix.startsWith('.') && followsAbbreviation(segment.slice(0, offset)) ? match : prefix + letter.toUpperCase()
   );
 
 // Lowercases ordinary words and capitalises sentence starts, leaving parenthesised spans untouched
@@ -76,8 +92,8 @@ const convertOutsideParentheses = (title: string, preserveAcronyms: boolean): st
  * case (see {@link shouldConvert}). Titles that already read as sentence case are returned untouched.
  *
  * When converting, capitalisation is preserved for: the first letter of the title, the first word
- * after a colon or sentence-ending punctuation (the start of an APA subtitle or a new sentence), and anything inside parentheses. Acronyms (DNA, NASA)
- * are preserved for title-case input; an all-caps title is lowercased throughout as a best effort,
+ * after a colon or sentence-ending punctuation (the start of an APA subtitle or a new sentence), and
+ * anything inside parentheses. Acronyms (DNA, NASA, U.S.) are preserved for title-case input; an all-caps title is lowercased throughout as a best effort,
  * since its acronyms are indistinguishable from ordinary words.
  */
 export const toSentenceCase = (title: string): string => {

@@ -30,6 +30,24 @@ describe('toSentenceCase', () => {
     );
   });
 
+  it('Keeps a dotted abbreviation and the word after it as they are', () => {
+    expect(toSentenceCase('Trade Policy of the U.S. Government and Its Effects')).toBe(
+      'Trade policy of the U.S. government and its effects'
+    );
+  });
+
+  it('Does not capitalise the word after a lowercase dotted abbreviation', () => {
+    expect(toSentenceCase('Classic Growth Models, e.g. Neoclassical and Endogenous Approaches')).toBe(
+      'Classic growth models, e.g. neoclassical and endogenous approaches'
+    );
+  });
+
+  it('Does not capitalise the word after a known abbreviation', () => {
+    expect(toSentenceCase('Fish, Birds, Mammals etc. Across Northern Habitats')).toBe(
+      'Fish, birds, mammals etc. across northern habitats'
+    );
+  });
+
   it('Preserves an acronym while sentence-casing a title containing a proper noun', () => {
     expect(toSentenceCase('The Role of DNA in Cancer Research')).toBe('The role of DNA in cancer research');
   });
