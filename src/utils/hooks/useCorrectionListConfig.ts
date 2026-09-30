@@ -2,12 +2,12 @@ import { useTranslation } from 'react-i18next';
 import { ResultParam } from '../../api/searchApi';
 import { DisabledCategory } from '../../components/CategorySelector';
 import { ScientificValueLevels } from '../../pages/search/advanced_search/ScientificValueFilter';
-import { CorrectionListSearchConfig } from '../../types/nvi.types';
+import { CorrectionListConfig } from '../../types/nvi.types';
 import { allPublicationInstanceTypes, BookType, ChapterType } from '../../types/publicationFieldNames';
 import { nviApplicableTypes } from '../registration-helpers';
 import { useLoggedInUser } from './useLoggedInUser';
 
-export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
+export const useCorrectionListConfig = (): CorrectionListConfig => {
   const { t } = useTranslation();
   const user = useLoggedInUser();
   const userTopLevelOrg = user?.topOrgCristinId;
@@ -25,6 +25,9 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
         allScientificValues: [ScientificValueLevels.Unassigned, ScientificValueLevels.LevelZero].join(','),
       },
       disabledFilters: [],
+      showScientificValueFilter: true,
+      showChannelFilters: true,
+      showAllYearsOption: true,
       topLevelOrganization: userTopLevelOrg,
     },
     NonApplicableCategoriesWithApplicableChannel: {
@@ -34,6 +37,9 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
         scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
       },
       disabledFilters: [ResultParam.CategoryShould],
+      showScientificValueFilter: true,
+      showChannelFilters: true,
+      showAllYearsOption: true,
       topLevelOrganization: userTopLevelOrg,
     },
     AnthologyWithoutChapter: {
@@ -43,6 +49,9 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
         hasChildren: false,
       },
       disabledFilters: [],
+      showScientificValueFilter: false,
+      showChannelFilters: true,
+      showAllYearsOption: true,
       topLevelOrganization: userTopLevelOrg,
     },
     BooksWithLessThan50Pages: {
@@ -52,6 +61,9 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
         publicationPages: '0,50',
       },
       disabledFilters: [],
+      showScientificValueFilter: false,
+      showChannelFilters: true,
+      showAllYearsOption: true,
       topLevelOrganization: userTopLevelOrg,
     },
     YearBetweenChapterAndBookMismatch: {
@@ -59,9 +71,11 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       queryParams: {
         categoryShould: [ChapterType.AcademicChapter],
         hasParent: true,
-        excludeParentPublicationYear: (new Date().getFullYear() - 1).toString(),
       },
       disabledFilters: [],
+      showScientificValueFilter: true,
+      showChannelFilters: true,
+      showAllYearsOption: false,
       topLevelOrganization: userTopLevelOrg,
     },
     AnthologyWithApplicableChapter: {
@@ -72,6 +86,9 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
         scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
       },
       disabledFilters: [],
+      showScientificValueFilter: false,
+      showChannelFilters: true,
+      showAllYearsOption: true,
       topLevelOrganization: userTopLevelOrg,
     },
     UnidentifiedContributorWithIdentifiedAffiliation: {
@@ -82,6 +99,9 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
         categoryShould: nviApplicableTypes,
       },
       disabledFilters: [],
+      showScientificValueFilter: false,
+      showChannelFilters: true,
+      showAllYearsOption: true,
       topLevelOrganization: userTopLevelOrg,
     },
     ScientificChapterNotInAnthology: {
@@ -93,6 +113,9 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
         hasParent: true,
       },
       disabledFilters: [],
+      showScientificValueFilter: true,
+      showChannelFilters: false,
+      showAllYearsOption: true,
       topLevelOrganization: userTopLevelOrg,
     },
     ScientificMonographyOrAnthologyWithoutIsxns: {
@@ -111,6 +134,9 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
         hasIsbn: false,
       },
       disabledFilters: [],
+      showScientificValueFilter: true,
+      showChannelFilters: true,
+      showAllYearsOption: true,
       topLevelOrganization: userTopLevelOrg,
     },
     BooksWithoutNpiField: {
@@ -122,6 +148,9 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       },
       disabledFilters: [],
       disabledCategories: nonBookDisabledCategories,
+      showScientificValueFilter: true,
+      showChannelFilters: true,
+      showAllYearsOption: true,
       topLevelOrganization: userTopLevelOrg,
     },
   };

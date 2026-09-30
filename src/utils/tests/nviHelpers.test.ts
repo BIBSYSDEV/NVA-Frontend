@@ -1,12 +1,12 @@
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import { afterAll, beforeAll, describe, expect, test } from 'vitest';
+import { afterAll, afterEach, beforeAll, describe, expect, test, vi } from 'vitest';
 import { Affiliation, Contributor, ContributorRole } from '../../types/contributor.types';
 import { Organization } from '../../types/organization.types';
 import { BookRegistration } from '../../types/publication_types/bookRegistration.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { PublicationChannelType } from '../../types/registration.types';
-import { willResetNviStatuses } from '../nviHelpers';
+import { getDefaultNviYear, willResetNviStatuses } from '../nviHelpers';
 import { mockRegistration } from '../testfiles/mockRegistration';
 import { buildContributor, buildIdentity } from './testHelpers';
 
@@ -464,5 +464,38 @@ describe('willResetNviStatuses()', () => {
 
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
     expect(result).toBe(true);
+  });
+});
+
+describe('getDefaultNviYear', () => {
+  // A date-only string would be parsed as UTC, while getDefaultNviYear reads the local month.
+  // Adding a time makes the date local, so the tests hold in every timezone.
+  const setSystemDate = (date: string) => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(`${date}T12:00:00`));
+  };
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  test('should return the previous year in January, while the previous year is still being reported', () => {
+    setSystemDate('2026-01-01');
+    expect(getDefaultNviYear()).toBe(2025);
+  });
+
+  test('should return the previous year on the last day of April', () => {
+    setSystemDate('2026-04-30');
+    expect(getDefaultNviYear()).toBe(2025);
+  });
+
+  test('should return the current year on the first day of May, when the new NVI year starts', () => {
+    setSystemDate('2026-05-01');
+    expect(getDefaultNviYear()).toBe(2026);
+  });
+
+  test('should return the current year on the last day of December', () => {
+    setSystemDate('2026-12-31');
+    expect(getDefaultNviYear()).toBe(2026);
   });
 });

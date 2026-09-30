@@ -16,6 +16,21 @@ const minNviYear = 2011;
 export const getNviYearFilterValues = (maxYear: number) =>
   Array.from({ length: maxYear - minNviYear + 1 }, (_, i) => maxYear - i);
 
+const firstMonthOfNewNviYear = 4; // May, since Date.getMonth() is zero indexed
+
+/**
+ * The NVI year currently being worked on, which lags behind the calendar year until the reporting of
+ * the previous year is finished. From May the new year is the relevant one, before that the previous
+ * year is still being reported.
+ *
+ * @returns The year to use as default wherever an NVI year is not explicitly selected.
+ */
+export const getDefaultNviYear = () => {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  return currentDate.getMonth() < firstMonthOfNewNviYear ? currentYear - 1 : currentYear;
+};
+
 const isEqualSets = (set1: Set<string>, set2: Set<string>) => {
   if (set1.size !== set2.size) {
     return false;
