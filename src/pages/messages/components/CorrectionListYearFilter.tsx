@@ -3,28 +3,31 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
+import { CorrectionListId, nviCorrectionListQueryKey } from '../../../types/nvi.types';
+import { setPublicationYearParams } from '../../../utils/correctionListHelpers';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { getDefaultNviYear } from '../../../utils/nviHelpers';
+import { resetPagination } from '../../../utils/searchHelpers';
 
 const currentYear = new Date().getFullYear();
+const defaultNviYear = getDefaultNviYear();
 
-const LISTS_EXCLUDING_SHOW_ALL = ['YearBetweenChapterAndBookMismatch'];
+interface CorrectionListYearFilterProps {
+  showAllYearsOption: boolean;
+}
 
-export const CorrectionListYearFilter = () => {
+export const CorrectionListYearFilter = ({ showAllYearsOption }: CorrectionListYearFilterProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
-  const listParam = searchParams.get('list');
-  const shouldExcludeShowAll = !!listParam && LISTS_EXCLUDING_SHOW_ALL.includes(listParam);
+  const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
 
   const publicationYearParam = searchParams.get(ResultParam.PublicationYear);
   const yearSelectionFromQuery = publicationYearParam ?? 'showAll';
   const selectedYear =
-    shouldExcludeShowAll && yearSelectionFromQuery === 'showAll'
-      ? (currentYear - 1).toString()
-      : yearSelectionFromQuery;
+    !showAllYearsOption && yearSelectionFromQuery === 'showAll' ? defaultNviYear.toString() : yearSelectionFromQuery;
 
   const baseOptions = [
     { value: (currentYear + 1).toString(), label: `${currentYear + 1}` },
@@ -32,9 +35,9 @@ export const CorrectionListYearFilter = () => {
     { value: (currentYear - 1).toString(), label: `${currentYear - 1}` },
   ];
 
-  const options = shouldExcludeShowAll
-    ? baseOptions
-    : [...baseOptions, { value: 'showAll', label: t('common.show_all') }];
+  const options = showAllYearsOption
+    ? [...baseOptions, { value: 'showAll', label: t('common.show_all') }]
+    : baseOptions;
 
   return (
     <Box>
@@ -47,16 +50,10 @@ export const CorrectionListYearFilter = () => {
         value={selectedYear}
         onChange={(event) => {
           const selectedValue = event.target.value;
-          const syncedParams = syncParamsWithSearchFields(searchParams);
+          const syncedParams = resetPagination(searchParams);
 
           if (selectedValue !== 'showAll') {
-            syncedParams.set(ResultParam.PublicationYear, selectedValue);
-
-            if (shouldExcludeShowAll) {
-              syncedParams.set(ResultParam.ExcludeParentPublicationYear, selectedValue);
-            } else {
-              syncedParams.delete(ResultParam.ExcludeParentPublicationYear);
-            }
+            setPublicationYearParams(syncedParams, listId, selectedValue);
           } else {
             syncedParams.delete(ResultParam.PublicationYear);
             syncedParams.delete(ResultParam.ExcludeParentPublicationYear);

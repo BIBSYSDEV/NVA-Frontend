@@ -6,8 +6,7 @@ import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { OrganizationFilters } from '../../../components/filters/OrganizationFilters';
 import { HeadTitle } from '../../../components/HeadTitle';
-import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
-import { hideChannelFiltersListIds, scientificValueFilterListIds } from '../../../utils/correctionListHelpers';
+import { CorrectionListId, CorrectionListNames, nviCorrectionListQueryKey } from '../../../types/nvi.types';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
@@ -19,8 +18,6 @@ import { ExportResultsButton } from '../../search/ExportResultsButton';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
 import { CorrectionListYearFilter } from './CorrectionListYearFilter';
 
-export const nviCorrectionListQueryKey = 'list';
-
 const NviCorrectionList = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -29,9 +26,6 @@ const NviCorrectionList = () => {
   const isUnidentifiedContributorList = listId === CorrectionListNames.UnidentifiedContributorWithIdentifiedAffiliation;
   const correctionListConfig = useCorrectionListConfig();
   const listConfig = listId && correctionListConfig[listId];
-  const shouldShowScientificValueFilter =
-    !!listId && scientificValueFilterListIds.includes(listId as CorrectionListNames);
-  const hideChannelFilters = !!listId && hideChannelFiltersListIds.includes(listId as CorrectionListNames);
 
   const registrationParams = useRegistrationsQueryParams();
 
@@ -92,17 +86,19 @@ const NviCorrectionList = () => {
                 />
               </Box>
 
-              {shouldShowScientificValueFilter && <ScientificValueFilter />}
+              {listConfig.showScientificValueFilter && <ScientificValueFilter />}
 
-              {!hideChannelFilters && (
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
-                  <PublisherFilter />
-                  <JournalFilter />
-                  <SeriesFilter />
-                  <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
-                  <CorrectionListYearFilter />
-                </Box>
-              )}
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
+                {listConfig.showChannelFilters && (
+                  <>
+                    <PublisherFilter />
+                    <JournalFilter />
+                    <SeriesFilter />
+                    <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
+                  </>
+                )}
+                <CorrectionListYearFilter showAllYearsOption={listConfig.showAllYearsOption} />
+              </Box>
             </Box>
             <Box sx={{ m: '0.5rem', alignSelf: 'top' }}>
               <ExportResultsButton showText searchParams={exportParams} />

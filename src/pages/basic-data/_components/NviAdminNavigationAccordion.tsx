@@ -16,7 +16,7 @@ import { SelectableButton } from '../../../components/buttons/SelectableButton';
 import { StyledNviStatusBox } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
+import { getDefaultNviYear } from '../../../utils/nviHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getPercentageControlledReportingPeriod } from '../nvi/_utils/nvi-admin-aggregations-helpers';
 import { NviAdminOrderBy } from '../nvi/_utils/nvi-admin-sort-helpers';
