@@ -31,6 +31,7 @@ const buildConfig = (overrides: Partial<CorrectionListConfig> = {}): CorrectionL
       disabledFilters: [],
       showScientificValueFilter: false,
       showChannelFilters: false,
+      showAllYearsOption: true,
       topLevelOrganization: undefined,
     };
     return config;
@@ -52,6 +53,7 @@ const buildConfigForList = (
       disabledFilters: [],
       showScientificValueFilter: false,
       showChannelFilters: false,
+      showAllYearsOption: true,
       topLevelOrganization,
     },
   });
