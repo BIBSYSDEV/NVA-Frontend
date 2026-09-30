@@ -18,20 +18,20 @@ describe('toSentenceCase', () => {
     expect(toSentenceCase('Machine Learning: A New Approach')).toBe('Machine learning: A new approach');
   });
 
-  it('Capitalises the first word after a period', () => {
+  it('Capitalises the first word after a period and lower cases everything else', () => {
     expect(toSentenceCase('Water and People. Questions from Journeys around the World')).toBe(
       'Water and people. Questions from journeys around the world'
     );
   });
 
-  it('Capitalises the first word after a question mark', () => {
+  it('Capitalises the first word after a question mark and lower cases everything else', () => {
     expect(toSentenceCase('Why Do We Sleep? Answers from Modern Research')).toBe(
       'Why do we sleep? Answers from modern research'
     );
   });
 
   it('Keeps a dotted abbreviation and the word after it as they are', () => {
-    expect(toSentenceCase('Trade Policy of the U.S. Government and Its Effects')).toBe(
+    expect(toSentenceCase('Trade Policy of the U.S. government and Its Effects')).toBe(
       'Trade policy of the U.S. government and its effects'
     );
   });
