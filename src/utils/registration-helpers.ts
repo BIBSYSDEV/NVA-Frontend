@@ -188,6 +188,13 @@ export const getFormattedRegistration = (registration: Registration) => {
     formattedRegistration.entityDescription.reference.type = 'Reference';
   }
 
+  if (isBook(type) || isReport(type) || isDegree(type)) {
+    const publicationInstance = formattedRegistration.entityDescription?.reference?.publicationInstance;
+    if (publicationInstance?.pages) {
+      publicationInstance.pages.type = 'MonographPages';
+    }
+  }
+
   if (isJournal(type) || isChapter(type) || isPeriodicalMediaContribution(type)) {
     const journalRegistration = formattedRegistration as JournalRegistration;
     if (journalRegistration.entityDescription.reference) {

@@ -191,53 +191,66 @@ describe('getFormattedRegistration', () => {
     );
   });
 
-  it('does not update pages.type to "Range" in any Degree', () => {
-    publicationTypes.forEach((publicationChannel) => {
-      degreeTypes.forEach((degreeType) => {
-        const registration = createRegistration({
-          contextType: publicationChannel,
-          instanceType: degreeType,
-          pages: { type: 'MonographPages', pages: '10' },
-        });
+  describe.each([...bookTypes, ...reportTypes, ...degreeTypes])(
+    'publication instance with monograph pages is %s',
+    (instanceType) => {
+      it('returns registration unchanged if pages is missing', () => {
+        const registration = createRegistration({ contextType: PublicationType.Book, instanceType });
         const result = getFormattedRegistration(registration);
-        const pages = getPages(result);
-        expect(pages).toBeDefined();
-        expect((pages as any).type).toBe('MonographPages');
+        expect(getPages(result)).toBeFalsy();
       });
-    });
-  });
 
-  it('does not update pages.type to "Range" in any Book', () => {
-    publicationTypes.forEach((publicationType) => {
-      bookTypes.forEach((bookType) => {
+      it('returns registration unchanged if pages is null', () => {
         const registration = createRegistration({
-          contextType: publicationType,
-          instanceType: bookType,
-          pages: { type: 'MonographPages', pages: '10' },
+          contextType: PublicationType.Book,
+          instanceType,
+          extra: { publicationInstance: { type: instanceType, pages: null } },
         });
         const result = getFormattedRegistration(registration);
-        const pages = getPages(result);
-        expect(pages).toBeDefined();
-        expect((pages as any).type).toBe('MonographPages');
+        expect(getPages(result)).toBeNull();
       });
-    });
-  });
 
-  it('does not update pages.type to "Range" in any Report', () => {
-    publicationTypes.forEach((publicationType) => {
-      reportTypes.forEach((reportType) => {
+      it('returns registration unchanged if pages.type is "MonographPages"', () => {
         const registration = createRegistration({
-          contextType: publicationType,
-          instanceType: reportType,
+          contextType: PublicationType.Book,
+          instanceType,
           pages: { type: 'MonographPages', pages: '10' },
         });
         const result = getFormattedRegistration(registration);
-        const pages = getPages(result);
-        expect(pages).toBeDefined();
-        expect((pages as any).type).toBe('MonographPages');
+        expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '10' });
       });
-    });
-  });
+
+      it('updates pages.type to "MonographPages" if type is missing', () => {
+        const registration = createRegistration({
+          contextType: PublicationType.Book,
+          instanceType,
+          pages: { pages: '123' },
+        });
+        const result = getFormattedRegistration(registration);
+        expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '123' });
+      });
+
+      it('updates pages.type to "MonographPages" if type is not "MonographPages"', () => {
+        const registration = createRegistration({
+          contextType: PublicationType.Book,
+          instanceType,
+          pages: { type: 'Range', pages: '123' },
+        });
+        const result = getFormattedRegistration(registration);
+        expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '123' });
+      });
+
+      it('does not mutate the original registration', () => {
+        const registration = createRegistration({
+          contextType: PublicationType.Book,
+          instanceType,
+          pages: { pages: '123' },
+        });
+        getFormattedRegistration(registration);
+        expect(getPages(registration)).toEqual({ pages: '123' });
+      });
+    }
+  );
 
   it('does not update pages.type to "Range" in any Presentation', () => {
     presentationTypes.forEach((presentationType) => {
