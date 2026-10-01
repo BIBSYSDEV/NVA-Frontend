@@ -1,12 +1,14 @@
 import { Box, Divider, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { OrganizationFilters } from '../../../components/filters/OrganizationFilters';
 import { HeadTitle } from '../../../components/HeadTitle';
 import { CorrectionListId, CorrectionListNames, nviCorrectionListQueryKey } from '../../../types/nvi.types';
+import { getCommonCorrectionListConfig, setPublicationYearParams } from '../../../utils/correctionListHelpers';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
@@ -20,6 +22,7 @@ import { CorrectionListYearFilter } from './CorrectionListYearFilter';
 
 const NviCorrectionList = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
@@ -28,6 +31,22 @@ const NviCorrectionList = () => {
   const listConfig = listId && correctionListConfig[listId];
 
   const registrationParams = useRegistrationsQueryParams();
+
+  // A list without a "show all" option has no valid state without a year: its search would silently
+  // return every hit the other filters allow. Repair the url rather than only displaying a default,
+  // so the year the user sees is the year being searched for
+  const requiresPublicationYear = !!listConfig && !listConfig.showAllYearsOption;
+  const isMissingRequiredYear = requiresPublicationYear && !registrationParams.publicationYear;
+
+  useEffect(() => {
+    if (!isMissingRequiredYear) {
+      return;
+    }
+    const syncedParams = new URLSearchParams(location.search);
+    // Writing to the url re-runs this effect; this is not a loop because after one run the year is set
+    setPublicationYearParams(syncedParams, listId, getCommonCorrectionListConfig().publicationYear);
+    navigate({ search: syncedParams.toString() }, { replace: true });
+  }, [isMissingRequiredYear, listId, location.search, navigate]);
 
   const mergedParams = {
     ...listConfig?.queryParams,
@@ -41,7 +60,7 @@ const NviCorrectionList = () => {
   const exportParams = new URLSearchParams(sanitizeSearchParams(mergedParams));
 
   const registrationQuery = useRegistrationSearch({
-    enabled: !!listConfig,
+    enabled: !!listConfig && !isMissingRequiredYear,
     params: mergedParams,
   });
 
@@ -49,7 +68,7 @@ const NviCorrectionList = () => {
     <section>
       <HeadTitle>{t('tasks.correction_list')}</HeadTitle>
 
-      {listConfig && (
+      {listConfig && !isMissingRequiredYear && (
         <>
           <Typography variant="h1" gutterBottom sx={{ mx: { xs: '0.25rem', md: 0 } }}>
             {t(listConfig.i18nKey)}

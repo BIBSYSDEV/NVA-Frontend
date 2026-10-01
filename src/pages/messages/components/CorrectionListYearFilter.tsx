@@ -6,11 +6,10 @@ import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { CorrectionListId, nviCorrectionListQueryKey } from '../../../types/nvi.types';
 import { setPublicationYearParams } from '../../../utils/correctionListHelpers';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getDefaultNviYear } from '../../../utils/nviHelpers';
 import { resetPagination } from '../../../utils/searchHelpers';
 
 const currentYear = new Date().getFullYear();
-const defaultNviYear = getDefaultNviYear();
+const standardYears = [currentYear + 1, currentYear, currentYear - 1];
 
 interface CorrectionListYearFilterProps {
   showAllYearsOption: boolean;
@@ -24,20 +23,21 @@ export const CorrectionListYearFilter = ({ showAllYearsOption }: CorrectionListY
 
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
 
-  const publicationYearParam = searchParams.get(ResultParam.PublicationYear);
-  const yearSelectionFromQuery = publicationYearParam ?? 'showAll';
-  const selectedYear =
-    !showAllYearsOption && yearSelectionFromQuery === 'showAll' ? defaultNviYear.toString() : yearSelectionFromQuery;
+  const selectedYear = searchParams.get(ResultParam.PublicationYear) ?? 'showAll';
 
-  const baseOptions = [
-    { value: (currentYear + 1).toString(), label: `${currentYear + 1}` },
-    { value: currentYear.toString(), label: `${currentYear}` },
-    { value: (currentYear - 1).toString(), label: `${currentYear - 1}` },
-  ];
+  // A url can carry a year outside the standard window, if the user has changed the url manually. Include it so
+  // the field shows the year actually being filtered on instead of rendering blank
+  const yearFromUrl = Number(selectedYear);
+  const years =
+    Number.isInteger(yearFromUrl) && yearFromUrl > 0 && !standardYears.includes(yearFromUrl)
+      ? [...standardYears, yearFromUrl].sort((first, second) => second - first)
+      : standardYears;
+
+  const yearOptions = years.map((year) => ({ value: year.toString(), label: year.toString() }));
 
   const options = showAllYearsOption
-    ? [...baseOptions, { value: 'showAll', label: t('common.show_all') }]
-    : baseOptions;
+    ? [...yearOptions, { value: 'showAll', label: t('common.show_all') }]
+    : yearOptions;
 
   return (
     <Box>
