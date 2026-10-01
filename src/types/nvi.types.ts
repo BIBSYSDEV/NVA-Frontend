@@ -201,8 +201,9 @@ export type CorrectionListConfig = {
     showChannelFilters: boolean;
     /**
      * Whether "show all" is a valid year selection. The search API can only exclude an exact parent
-     * publication year, not compare two years directly, so a list built on such a comparison must
-     * be searched one year at a time and cannot offer "show all".
+     * publication year, so a list built on such a comparison must be searched one year at a time and cannot offer
+     * "show all". Any list that is given {@link ResultParam.ExcludeParentPublicationYear} by setPublicationYearParams
+     * must therefore set this to false.
      */
     showAllYearsOption: boolean;
     topLevelOrganization: string | undefined;
