@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { ResultParam } from '../../api/searchApi';
-import { DisabledCategory } from '../../components/CategorySelector';
 import { ScientificValueLevels } from '../../pages/search/advanced_search/ScientificValueFilter';
 import { CorrectionListSearchConfig } from '../../types/nvi.types';
-import { allPublicationInstanceTypes, BookType, ChapterType } from '../../types/publicationFieldNames';
+import { BookType, ChapterType, ReportType } from '../../types/publicationFieldNames';
+import { getDisabledCategoriesOutside } from '../correctionListHelpers';
 import { nviApplicableTypes } from '../registration-helpers';
 import { useLoggedInUser } from './useLoggedInUser';
 
@@ -12,10 +12,15 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
   const user = useLoggedInUser();
   const userTopLevelOrg = user?.topOrgCristinId;
 
-  const bookTypeValues = Object.values(BookType);
-  const nonBookDisabledCategories: DisabledCategory[] = allPublicationInstanceTypes
-    .filter((type) => !bookTypeValues.includes(type as BookType))
-    .map((type) => ({ type, text: t('tasks.nvi.only_book_categories_available') }));
+  const bookTypes = Object.values(BookType);
+  const nonBookDisabledCategories = getDisabledCategoriesOutside(
+    bookTypes,
+    t('tasks.nvi.only_book_categories_available')
+  );
+  const nonBookOrReportDisabledCategories = getDisabledCategoriesOutside(
+    [...bookTypes, ...Object.values(ReportType)],
+    t('only_book_and_report_categories_available')
+  );
 
   return {
     ApplicableCategoriesWithNonApplicableChannel: {
@@ -95,22 +100,14 @@ export const useCorrectionListConfig = (): CorrectionListSearchConfig => {
       disabledFilters: [],
       topLevelOrganization: userTopLevelOrg,
     },
-    ScientificMonographyOrAnthologyWithoutIsxns: {
-      i18nKey: 'tasks.nvi.correction_list_type.scientific_monography_or_anthology_without_isxns',
+    BookOrReportWithoutIsxn: {
+      i18nKey: 'book_or_report_without_isxn',
       queryParams: {
-        categoryShould: [
-          BookType.AcademicMonograph,
-          BookType.AcademicCommentary,
-          BookType.NonFictionMonograph,
-          BookType.PopularScienceMonograph,
-          BookType.Textbook,
-          BookType.Encyclopedia,
-          BookType.ExhibitionCatalog,
-          BookType.Anthology,
-        ],
+        categoryShould: [BookType.AcademicMonograph, BookType.AcademicCommentary, BookType.Anthology],
         hasIsbn: false,
       },
       disabledFilters: [],
+      disabledCategories: nonBookOrReportDisabledCategories,
       topLevelOrganization: userTopLevelOrg,
     },
     BooksWithoutNpiField: {

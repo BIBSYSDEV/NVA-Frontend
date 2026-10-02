@@ -156,6 +156,7 @@
       "show_full_nin": "Vis personnummer"
     }
   },
+  "book_or_report_without_isxn": "Bok eller rapport uten ISxN",
   "candidate": "Kandidat",
   "candidate_search": "Kandidatsøk",
   "candidates_approved_by_the_institution": "Kandidater institusjonen har godkjent",
@@ -1030,6 +1031,7 @@
   "nvi_publication_points_page_description_expanded": "Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.",
   "nvi_reporting_periods_text": "Oversikten viser status på NVI-periode og totalt antall kandidater i perioden. For perioder som er rapportert vises antall godkjente kandidater. For åpne perioder vises antall kandidater totalt.",
   "nvi_year": "NVI-år",
+  "only_book_and_report_categories_available": "Kun bok- og rapportkategorier er tilgjengelige for denne listen",
   "overview_over_administrators": "Oversikt over administratorer",
   "overwrite": "Overskriv",
   "owner_institution": "Eierinstitusjon",
@@ -2056,7 +2058,6 @@
         "chapter_and_book_year_mismatch": "Årstall mellom kapittel og bok avviker",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler",
         "scientific_chapter_not_in_anthology": "Vitenskapelig kapittel ikke i antologi",
-        "scientific_monography_or_anthology_without_isxns": "Vitenskapelig monografi eller antologi uten ISxN-er",
         "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsyter med identifisert institusjon"
       },
       "delete_note": "Slett kommentar",

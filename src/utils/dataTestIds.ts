@@ -804,7 +804,7 @@ export const dataTestId = {
       unidentifiedContributorWithIdentifiedAffiliationButton:
         'unidentified-contributor-with-identified-affiliation-button',
       scientificChapterNotInAnthology: 'scientific-chapter-not-in-anthology',
-      scientificMonographyOrAnthologyWithoutIsxns: 'scientific-monography-or-anthology-without-isxns',
+      bookOrReportWithoutIsxn: 'book-or-report-without-isxn',
       booksWithoutNpiField: 'books-without-npi-field',
     },
     curatorSelector: 'curator-selector',
