@@ -187,12 +187,23 @@ export enum CorrectionListNames {
 
 export type CorrectionListId = `${CorrectionListNames}`;
 
-export type CorrectionListSearchConfig = {
+export type CorrectionListConfig = {
   [key in CorrectionListId]: {
     i18nKey: ParseKeys;
     queryParams: FetchResultsParams;
     disabledFilters: ResultParam[];
     disabledCategories?: DisabledCategory[];
+    /** Whether the user can adjust the scientific value */
+    showScientificValueFilter: boolean;
+    /** Whether the user can filter on journal, publisher and series. */
+    showChannelFilters: boolean;
+    /**
+     * Whether "show all" is a valid year selection. The search API can only exclude an exact parent
+     * publication year, so a list built on such a comparison must be searched one year at a time and cannot offer
+     * "show all". Any list that is given {@link ResultParam.ExcludeParentPublicationYear} by setPublicationYearParams
+     * must therefore set this to false.
+     */
+    showAllYearsOption: boolean;
     topLevelOrganization: string | undefined;
   };
 };

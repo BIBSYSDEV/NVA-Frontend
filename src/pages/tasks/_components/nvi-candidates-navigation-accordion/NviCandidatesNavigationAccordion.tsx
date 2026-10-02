@@ -8,7 +8,7 @@ import { StyledNviStatusBox, StyledTicketSearchFormGroup } from '../../../../com
 import { NviSearchStatusEnum } from '../../../../types/nvi.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useLoggedInUser } from '../../../../utils/hooks/useLoggedInUser';
-import { getDefaultNviYear } from '../../../../utils/hooks/useNviCandidatesParams';
+import { getDefaultNviYear } from '../../../../utils/nviHelpers';
 import { useNviInstitutionReportSummary } from '../../../../utils/hooks/useNviInstitutionReportSummary';
 import { checkWhichTasksPage } from '../../../../utils/location-helpers/check-which-tasks-page';
 import { getNviCandidatesSearchPath, UrlPathTemplate } from '../../../../utils/urlPaths';
