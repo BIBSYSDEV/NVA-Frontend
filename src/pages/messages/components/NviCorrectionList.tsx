@@ -6,11 +6,16 @@ import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { OrganizationFilters } from '../../../components/filters/OrganizationFilters';
 import { HeadTitle } from '../../../components/HeadTitle';
-import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
-import { hideChannelFiltersListIds, scientificValueFilterListIds } from '../../../utils/correctionListHelpers';
+import { CorrectionListNames } from '../../../types/nvi.types';
+import {
+  hideChannelFiltersListIds,
+  isCorrectionListName,
+  scientificValueFilterListIds,
+} from '../../../utils/correctionListHelpers';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
+import NotFound from '../../errorpages/NotFound';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { ScientificValueFilter } from '../../search/advanced_search/ScientificValueFilter';
@@ -25,13 +30,13 @@ const NviCorrectionList = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
+  const rawListId = searchParams.get(nviCorrectionListQueryKey);
+  const listId = rawListId && isCorrectionListName(rawListId) ? rawListId : null;
   const isUnidentifiedContributorList = listId === CorrectionListNames.UnidentifiedContributorWithIdentifiedAffiliation;
   const correctionListConfig = useCorrectionListConfig();
   const listConfig = listId && correctionListConfig[listId];
-  const shouldShowScientificValueFilter =
-    !!listId && scientificValueFilterListIds.includes(listId as CorrectionListNames);
-  const hideChannelFilters = !!listId && hideChannelFiltersListIds.includes(listId as CorrectionListNames);
+  const shouldShowScientificValueFilter = !!listId && scientificValueFilterListIds.includes(listId);
+  const hideChannelFilters = !!listId && hideChannelFiltersListIds.includes(listId);
 
   const registrationParams = useRegistrationsQueryParams();
 
@@ -50,6 +55,10 @@ const NviCorrectionList = () => {
     enabled: !!listConfig,
     params: mergedParams,
   });
+
+  if (rawListId && !listId) {
+    return <NotFound />;
+  }
 
   return (
     <section>

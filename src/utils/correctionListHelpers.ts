@@ -51,6 +51,13 @@ export const getAccordionDefaultPath = (correctionListConfig: CorrectionListSear
   ).toString()}`;
 };
 
+/**
+ * Creates the list of categories to disable in the category filter for a correction list.
+ *
+ * @param allowedTypes The publication instance types that should remain selectable.
+ * @param text The tooltip text explaining why a category is disabled.
+ * @returns Every publication instance type not in `allowedTypes`, each paired with `text`.
+ */
 export const getDisabledCategoriesOutside = (
   allowedTypes: PublicationInstanceType[],
   text: string
