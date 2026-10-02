@@ -191,66 +191,63 @@ describe('getFormattedRegistration', () => {
     );
   });
 
-  describe.each([...bookTypes, ...reportTypes, ...degreeTypes])(
-    'publication instance with monograph pages is %s',
-    (instanceType) => {
-      it('returns registration unchanged if pages is missing', () => {
-        const registration = createRegistration({ contextType: PublicationType.Book, instanceType });
-        const result = getFormattedRegistration(registration);
-        expect(getPages(result)).toBeFalsy();
-      });
+  describe.each(monographTypes)('publication instance is %s', (instanceType, contextType) => {
+    it('returns registration unchanged if pages is missing', () => {
+      const registration = createRegistration({ contextType, instanceType });
+      const result = getFormattedRegistration(registration);
+      expect(getPages(result)).toBeFalsy();
+    });
 
-      it('returns registration unchanged if pages is null', () => {
-        const registration = createRegistration({
-          contextType: PublicationType.Book,
-          instanceType,
-          extra: { publicationInstance: { type: instanceType, pages: null } },
-        });
-        const result = getFormattedRegistration(registration);
-        expect(getPages(result)).toBeNull();
+    it('returns registration unchanged if pages is null', () => {
+      const registration = createRegistration({
+        contextType,
+        instanceType,
+        extra: { publicationInstance: { type: instanceType, pages: null } },
       });
+      const result = getFormattedRegistration(registration);
+      expect(getPages(result)).toBeNull();
+    });
 
-      it('returns registration unchanged if pages.type is "MonographPages"', () => {
-        const registration = createRegistration({
-          contextType: PublicationType.Book,
-          instanceType,
-          pages: { type: 'MonographPages', pages: '10' },
-        });
-        const result = getFormattedRegistration(registration);
-        expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '10' });
+    it('returns registration unchanged if pages.type is "MonographPages"', () => {
+      const registration = createRegistration({
+        contextType,
+        instanceType,
+        pages: { type: 'MonographPages', pages: '10' },
       });
+      const result = getFormattedRegistration(registration);
+      expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '10' });
+    });
 
-      it('updates pages.type to "MonographPages" if type is missing', () => {
-        const registration = createRegistration({
-          contextType: PublicationType.Book,
-          instanceType,
-          pages: { pages: '123' },
-        });
-        const result = getFormattedRegistration(registration);
-        expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '123' });
+    it('updates pages.type to "MonographPages" if type is missing', () => {
+      const registration = createRegistration({
+        contextType,
+        instanceType,
+        pages: { pages: '123' },
       });
+      const result = getFormattedRegistration(registration);
+      expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '123' });
+    });
 
-      it('updates pages.type to "MonographPages" if type is not "MonographPages"', () => {
-        const registration = createRegistration({
-          contextType: PublicationType.Book,
-          instanceType,
-          pages: { type: 'Range', pages: '123' },
-        });
-        const result = getFormattedRegistration(registration);
-        expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '123' });
+    it('updates pages.type to "MonographPages" if type is not "MonographPages"', () => {
+      const registration = createRegistration({
+        contextType,
+        instanceType,
+        pages: { type: 'Range', pages: '123' },
       });
+      const result = getFormattedRegistration(registration);
+      expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '123' });
+    });
+  });
 
-      it('does not mutate the original registration', () => {
-        const registration = createRegistration({
-          contextType: PublicationType.Book,
-          instanceType,
-          pages: { pages: '123' },
-        });
-        getFormattedRegistration(registration);
-        expect(getPages(registration)).toEqual({ pages: '123' });
-      });
-    }
-  );
+  it('does not mutate the original registration when updating pages.type', () => {
+    const registration = createRegistration({
+      contextType: PublicationType.Book,
+      instanceType: BookType.AcademicMonograph,
+      pages: { pages: '123' },
+    });
+    getFormattedRegistration(registration);
+    expect(getPages(registration)).toEqual({ pages: '123' });
+  });
 
   it('does not update pages.type to "Range" in any Presentation', () => {
     presentationTypes.forEach((presentationType) => {
@@ -483,6 +480,11 @@ const mediaFeatureTypes = [MediaType.MediaFeatureArticle, MediaType.MediaReaderO
 const degreeTypes = Object.values(DegreeType);
 const bookTypes = Object.values(BookType);
 const reportTypes = Object.values(ReportType);
+const monographTypes: [string, PublicationType][] = [
+  ...bookTypes.map((type): [string, PublicationType] => [type, PublicationType.Book]),
+  ...reportTypes.map((type): [string, PublicationType] => [type, PublicationType.Report]),
+  ...degreeTypes.map((type): [string, PublicationType] => [type, PublicationType.Degree]),
+];
 const presentationTypes = Object.values(PresentationType);
 const artisticTypes = Object.values(ArtisticType);
 const mediaMediums = Object.values(MediaMedium);

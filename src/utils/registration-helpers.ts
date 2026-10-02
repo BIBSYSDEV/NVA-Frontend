@@ -24,10 +24,13 @@ import {
   OtherRelease,
   Venue,
 } from '../types/publication_types/artisticRegistration.types';
+import { BookRegistration } from '../types/publication_types/bookRegistration.types';
 import { DegreeRegistration } from '../types/publication_types/degreeRegistration.types';
 import { ExhibitionBasic } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
+import { emptyPagesMonograph } from '../types/publication_types/pages.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
+import { ReportRegistration } from '../types/publication_types/reportRegistration.types';
 import {
   allPublicationInstanceTypes,
   ArtisticType,
@@ -176,6 +179,39 @@ export const getPublicationChannelString = (channel: SerialPublication | Publish
   return channelMetadata ? `${channel.name} (${channelMetadata})` : channel.name;
 };
 
+type MonographRegistration = BookRegistration | ReportRegistration | DegreeRegistration;
+
+/**
+ * The backend rejects pages without a type for Books, Reports and Degrees. The pages object can lack a type,
+ * e.g. when it was created from an empty form for a registration that had no pages.
+ *
+ * @param registration - The registration to format.
+ * @returns A copy of the registration with pages.type set to "MonographPages" if it has monograph pages.
+ */
+const withMonographPagesType = (registration: Registration) => {
+  const instanceType = registration.entityDescription?.reference?.publicationInstance?.type;
+  const hasMonographPages = isBook(instanceType) || isReport(instanceType) || isDegree(instanceType);
+  const reference = (registration as MonographRegistration).entityDescription?.reference;
+
+  if (!hasMonographPages || !reference?.publicationInstance.pages) {
+    return registration;
+  }
+
+  return {
+    ...registration,
+    entityDescription: {
+      ...registration.entityDescription,
+      reference: {
+        ...reference,
+        publicationInstance: {
+          ...reference.publicationInstance,
+          pages: { ...reference.publicationInstance.pages, type: emptyPagesMonograph.type },
+        },
+      },
+    },
+  };
+};
+
 // Ensure Registration has correct type values, etc
 export const getFormattedRegistration = (registration: Registration) => {
   const type = registration.entityDescription?.reference?.publicationInstance?.type ?? '';
@@ -188,12 +224,7 @@ export const getFormattedRegistration = (registration: Registration) => {
     formattedRegistration.entityDescription.reference.type = 'Reference';
   }
 
-  if (isBook(type) || isReport(type) || isDegree(type)) {
-    const publicationInstance = formattedRegistration.entityDescription?.reference?.publicationInstance;
-    if (publicationInstance?.pages) {
-      publicationInstance.pages.type = 'MonographPages';
-    }
-  }
+  formattedRegistration = withMonographPagesType(formattedRegistration);
 
   if (isJournal(type) || isChapter(type) || isPeriodicalMediaContribution(type)) {
     const journalRegistration = formattedRegistration as JournalRegistration;
