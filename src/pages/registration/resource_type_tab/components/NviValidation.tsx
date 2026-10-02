@@ -97,6 +97,8 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
       data-testid={dataTestId.registrationWizard.resourceType.nviFailed}
     />
   ) : (
+    // NOTE: A book inherits its series' level when the series has one.
+    // See documentation/NVA-domain-knowledge/NVI.md
     <NviStatus
       scientificValue={
         seriesScientificValue && seriesScientificValue !== 'Unassigned'

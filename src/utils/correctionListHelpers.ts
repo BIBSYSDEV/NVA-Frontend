@@ -1,4 +1,5 @@
 import { ResultParam } from '../api/searchApi';
+import { DisabledCategory } from '../components/CategorySelector';
 import {
   CommonCorrectionListConfig,
   CorrectionListConfig,
@@ -6,6 +7,8 @@ import {
   CorrectionListNames,
   nviCorrectionListQueryKey,
 } from '../types/nvi.types';
+import { allPublicationInstanceTypes } from '../types/publicationFieldNames';
+import { PublicationInstanceType } from '../types/registration.types';
 import { getDefaultNviYear } from './nviHelpers';
 import { UrlPathTemplate } from './urlPaths';
 
@@ -103,6 +106,20 @@ export const getAccordionDefaultPath = (
     CorrectionListNames.ApplicableCategoriesWithNonApplicableChannel,
     commonConfig
   ).toString()}`;
+};
+
+/**
+ * Creates the list of categories to disable in the category filter for a correction list.
+ *
+ * @param allowedTypes The publication instance types that should remain selectable.
+ * @param text The tooltip text explaining why a category is disabled.
+ * @returns Every publication instance type not in `allowedTypes`, each paired with `text`.
+ */
+export const getDisabledCategoriesOutside = (
+  allowedTypes: PublicationInstanceType[],
+  text: string
+): DisabledCategory[] => {
+  return allPublicationInstanceTypes.filter((type) => !allowedTypes.includes(type)).map((type) => ({ type, text }));
 };
 
 /**

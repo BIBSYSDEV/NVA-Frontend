@@ -96,10 +96,10 @@ export const NviCorrectionListNavigationAccordion = () => {
           {t('tasks.nvi.correction_list_type.scientific_chapter_not_in_anthology')}
         </SelectableButton>
         <SelectableButton
-          data-testid={dataTestId.tasksPage.correctionList.scientificMonographyOrAnthologyWithoutIsxns}
-          isSelected={selectedNviList === 'ScientificMonographyOrAnthologyWithoutIsxns'}
-          onClick={() => openNewCorrectionList('ScientificMonographyOrAnthologyWithoutIsxns')}>
-          {t('tasks.nvi.correction_list_type.scientific_monography_or_anthology_without_isxns')}
+          data-testid={dataTestId.tasksPage.correctionList.bookOrReportWithoutIsxn}
+          isSelected={selectedNviList === CorrectionListNames.BookOrReportWithoutIsxn}
+          onClick={() => openNewCorrectionList(CorrectionListNames.BookOrReportWithoutIsxn)}>
+          {t('book_or_report_without_isxn')}
         </SelectableButton>
         <SelectableButton
           data-testid={dataTestId.tasksPage.correctionList.booksWithoutNpiField}

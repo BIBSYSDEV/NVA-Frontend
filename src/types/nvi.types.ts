@@ -183,7 +183,7 @@ export enum CorrectionListNames {
   BooksWithLessThan50Pages = 'BooksWithLessThan50Pages',
   UnidentifiedContributorWithIdentifiedAffiliation = 'UnidentifiedContributorWithIdentifiedAffiliation',
   ScientificChapterNotInAnthology = 'ScientificChapterNotInAnthology',
-  ScientificMonographyOrAnthologyWithoutIsxns = 'ScientificMonographyOrAnthologyWithoutIsxns',
+  BookOrReportWithoutIsxn = 'BookOrReportWithoutIsxn',
   BooksWithoutNpiField = 'BooksWithoutNpiField',
 }
 

@@ -8,6 +8,7 @@ const BASE_URL = `${API_URL}scientific-index`;
 export type ReportFormat =
   'application/json' | 'text/csv; charset=utf-8' | 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
+// NOTE: See documentation/NVA-domain-knowledge/NVI.md for what these exports contain
 export enum ReportProfile {
   AuthorShares = 'https://api.nva.unit.no/report/author-shares',
   PublicationPoints = 'https://api.nva.unit.no/report/publication-points',
