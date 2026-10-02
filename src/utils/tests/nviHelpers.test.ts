@@ -6,7 +6,7 @@ import { Organization } from '../../types/organization.types';
 import { BookRegistration } from '../../types/publication_types/bookRegistration.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { PublicationChannelType } from '../../types/registration.types';
-import { getDefaultNviYear, willResetNviStatuses } from '../nviHelpers';
+import { getDefaultNviYear, getSelectableYears, willResetNviStatuses } from '../nviHelpers';
 import { mockRegistration } from '../testfiles/mockRegistration';
 import { buildContributor, buildIdentity } from './testHelpers';
 
@@ -497,5 +497,46 @@ describe('getDefaultNviYear', () => {
   test('should return the current year on the last day of December', () => {
     setSystemDate('2026-12-31');
     expect(getDefaultNviYear()).toBe(2026);
+  });
+});
+
+describe('getSelectableYears', () => {
+  const standardYears = [2027, 2026, 2025];
+
+  test('should offer only the standard years when the selected year is one of them', () => {
+    expect(getSelectableYears(standardYears, '2026')).toEqual(standardYears);
+  });
+
+  test('should include a selected year from before the window, sorted last', () => {
+    expect(getSelectableYears(standardYears, '2019')).toEqual([2027, 2026, 2025, 2019]);
+  });
+
+  test('should include a selected year from after the window, sorted first', () => {
+    expect(getSelectableYears(standardYears, '2030')).toEqual([2030, 2027, 2026, 2025]);
+  });
+
+  test('should ignore a non numeric selection, such as the "show all" sentinel', () => {
+    expect(getSelectableYears(standardYears, 'showAll')).toEqual(standardYears);
+  });
+
+  test('should ignore an empty selection, which converts to zero rather than to NaN', () => {
+    expect(getSelectableYears(standardYears, '')).toEqual(standardYears);
+  });
+
+  test('should ignore a selection that is not a whole positive year', () => {
+    expect(getSelectableYears(standardYears, '0')).toEqual(standardYears);
+    expect(getSelectableYears(standardYears, '-2026')).toEqual(standardYears);
+    expect(getSelectableYears(standardYears, '2026.5')).toEqual(standardYears);
+  });
+
+  // Both branches must hand back an owned list, so a caller sorting or reversing the result cannot
+  // corrupt the standard years, which are a module level constant where this is used
+  test('should return a new list in both branches, leaving the standard years untouched', () => {
+    const yearInWindow = getSelectableYears(standardYears, '2026');
+    const yearOutsideWindow = getSelectableYears(standardYears, '2030');
+
+    expect(yearInWindow).not.toBe(standardYears);
+    expect(yearOutsideWindow).not.toBe(standardYears);
+    expect(standardYears).toEqual([2027, 2026, 2025]);
   });
 });

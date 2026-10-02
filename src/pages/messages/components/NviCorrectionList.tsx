@@ -1,20 +1,20 @@
 import { Box, Divider, Typography } from '@mui/material';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { OrganizationFilters } from '../../../components/filters/OrganizationFilters';
 import { HeadTitle } from '../../../components/HeadTitle';
-import { CorrectionListNames, nviCorrectionListQueryKey } from '../../../types/nvi.types';
+import { CorrectionListNames } from '../../../types/nvi.types';
 import {
-  getCommonCorrectionListConfig,
   isCorrectionListName,
+  nviCorrectionListQueryKey,
   setPublicationYearParams,
 } from '../../../utils/correctionListHelpers';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
+import { getDefaultNviYear } from '../../../utils/nviHelpers';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
 import NotFound from '../../errorpages/NotFound';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
@@ -27,7 +27,6 @@ import { CorrectionListYearFilter } from './CorrectionListYearFilter';
 
 const NviCorrectionList = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const rawListId = searchParams.get(nviCorrectionListQueryKey);
@@ -43,16 +42,6 @@ const NviCorrectionList = () => {
   // so the year the user sees is the year being searched for
   const requiresPublicationYear = !!listConfig && !listConfig.showAllYearsOption;
   const isMissingRequiredYear = requiresPublicationYear && !registrationParams.publicationYear;
-
-  useEffect(() => {
-    if (!isMissingRequiredYear) {
-      return;
-    }
-    const syncedParams = new URLSearchParams(location.search);
-    // Writing to the url re-runs this effect; this is not a loop because after one run the year is set
-    setPublicationYearParams(syncedParams, listId, getCommonCorrectionListConfig().publicationYear);
-    navigate({ search: syncedParams.toString() }, { replace: true });
-  }, [isMissingRequiredYear, listId, location.search, navigate]);
 
   const mergedParams = {
     ...listConfig?.queryParams,
@@ -74,11 +63,17 @@ const NviCorrectionList = () => {
     return <NotFound />;
   }
 
+  if (isMissingRequiredYear) {
+    const syncedParams = new URLSearchParams(location.search);
+    setPublicationYearParams(syncedParams, listId, getDefaultNviYear().toString());
+    return <Navigate to={{ search: syncedParams.toString() }} replace />;
+  }
+
   return (
     <section>
       <HeadTitle>{t('tasks.correction_list')}</HeadTitle>
 
-      {listConfig && !isMissingRequiredYear && (
+      {listConfig && (
         <>
           <Typography variant="h1" gutterBottom sx={{ mx: { xs: '0.25rem', md: 0 } }}>
             {t(listConfig.i18nKey)}
@@ -126,7 +121,7 @@ const NviCorrectionList = () => {
                     <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
                   </>
                 )}
-                <CorrectionListYearFilter showAllYearsOption={listConfig.showAllYearsOption} />
+                <CorrectionListYearFilter listId={listId} showAllYearsOption={listConfig.showAllYearsOption} />
               </Box>
             </Box>
             <Box sx={{ m: '0.5rem', alignSelf: 'top' }}>

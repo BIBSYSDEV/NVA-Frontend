@@ -1,25 +1,11 @@
 import { ResultParam } from '../api/searchApi';
 import { DisabledCategory } from '../components/CategorySelector';
-import {
-  CommonCorrectionListConfig,
-  CorrectionListConfig,
-  CorrectionListId,
-  CorrectionListNames,
-  nviCorrectionListQueryKey,
-} from '../types/nvi.types';
+import { CorrectionListConfig, CorrectionListId, CorrectionListNames } from '../types/nvi.types';
 import { allPublicationInstanceTypes } from '../types/publicationFieldNames';
 import { PublicationInstanceType } from '../types/registration.types';
-import { getDefaultNviYear } from './nviHelpers';
 import { UrlPathTemplate } from './urlPaths';
 
-/**
- * The filters every correction list starts out with.
- *
- * @returns The common configuration, with the publication year defaulting to the current NVI year.
- */
-export const getCommonCorrectionListConfig = (): CommonCorrectionListConfig => ({
-  publicationYear: getDefaultNviYear().toString(),
-});
+export const nviCorrectionListQueryKey = 'list';
 
 /**
  * Sets the publication year, and keeps {@link ResultParam.ExcludeParentPublicationYear} equal to it
@@ -52,15 +38,14 @@ export const setPublicationYearParams = (
  *
  * @param correctionListConfig - The configuration for each correction list.
  * @param newCorrectionListId - The list to build search params for.
- * @param commonConfig - The filters shared by all correction lists.
+ * @param publicationYear - The year every correction list starts out filtering on.
  * @returns The search params to navigate to, without any pagination.
  */
 export const getCorrectionListSearchParams = (
   correctionListConfig: CorrectionListConfig,
   newCorrectionListId: CorrectionListId,
-  commonConfig: CommonCorrectionListConfig
+  publicationYear: string
 ) => {
-  const { publicationYear } = commonConfig;
   const newSearchParams = new URLSearchParams();
 
   newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
@@ -94,17 +79,17 @@ export const getCorrectionListSearchParams = (
  * already applied.
  *
  * @param correctionListConfig - The configuration for each correction list.
- * @param commonConfig - The filters shared by all correction lists.
+ * @param publicationYear - The year every correction list starts out filtering on.
  * @returns A path including search params, ready to navigate to.
  */
 export const getAccordionDefaultPath = (
   correctionListConfig: CorrectionListConfig,
-  commonConfig: CommonCorrectionListConfig
+  publicationYear: string
 ): string => {
   return `${UrlPathTemplate.TasksNviCorrectionList}?${getCorrectionListSearchParams(
     correctionListConfig,
     CorrectionListNames.ApplicableCategoriesWithNonApplicableChannel,
-    commonConfig
+    publicationYear
   ).toString()}`;
 };
 

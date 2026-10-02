@@ -3,40 +3,40 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
-import { CorrectionListId, nviCorrectionListQueryKey } from '../../../types/nvi.types';
+import { CorrectionListId } from '../../../types/nvi.types';
 import { setPublicationYearParams } from '../../../utils/correctionListHelpers';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getDefaultNviYear, getSelectableYears } from '../../../utils/nviHelpers';
 import { resetPagination } from '../../../utils/searchHelpers';
 
-const currentYear = new Date().getFullYear();
-const standardYears = [currentYear + 1, currentYear, currentYear - 1];
+// The correction lists are NVI work, so the years offered follow the NVI year rather than the
+// calendar year. The two differ before May, while the previous year is still being reported
+const defaultNviYear = getDefaultNviYear();
+const standardYears = [defaultNviYear + 1, defaultNviYear, defaultNviYear - 1];
+
+/** The value the select uses when no year is filtered on. */
+const showAllValue = 'showAll';
 
 interface CorrectionListYearFilterProps {
+  listId: CorrectionListId | null;
   showAllYearsOption: boolean;
 }
 
-export const CorrectionListYearFilter = ({ showAllYearsOption }: CorrectionListYearFilterProps) => {
+export const CorrectionListYearFilter = ({ listId, showAllYearsOption }: CorrectionListYearFilterProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
-  const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
+  const selectedYear = searchParams.get(ResultParam.PublicationYear) ?? showAllValue;
 
-  const selectedYear = searchParams.get(ResultParam.PublicationYear) ?? 'showAll';
-
-  // A url can carry a year outside the standard window, if the user has changed the url manually. Include it so
-  // the field shows the year actually being filtered on instead of rendering blank
-  const yearFromUrl = Number(selectedYear);
-  const years =
-    Number.isInteger(yearFromUrl) && yearFromUrl > 0 && !standardYears.includes(yearFromUrl)
-      ? [...standardYears, yearFromUrl].sort((first, second) => second - first)
-      : standardYears;
-
-  const yearOptions = years.map((year) => ({ value: year.toString(), label: year.toString() }));
+  const yearOptions = getSelectableYears(standardYears, selectedYear).map((year) => ({
+    value: year.toString(),
+    label: year.toString(),
+  }));
 
   const options = showAllYearsOption
-    ? [...yearOptions, { value: 'showAll', label: t('common.show_all') }]
+    ? [...yearOptions, { value: showAllValue, label: t('common.show_all') }]
     : yearOptions;
 
   return (
@@ -52,7 +52,7 @@ export const CorrectionListYearFilter = ({ showAllYearsOption }: CorrectionListY
           const selectedValue = event.target.value;
           const syncedParams = resetPagination(searchParams);
 
-          if (selectedValue !== 'showAll') {
+          if (selectedValue !== showAllValue) {
             setPublicationYearParams(syncedParams, listId, selectedValue);
           } else {
             syncedParams.delete(ResultParam.PublicationYear);

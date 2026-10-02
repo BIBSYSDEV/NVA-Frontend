@@ -2,17 +2,18 @@ import RuleIcon from '@mui/icons-material/Rule';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
-import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NavigationList } from '../../../components/_atoms/NavigationList';
 import { SelectableButton } from '../../../components/buttons/SelectableButton';
-import { CorrectionListId, CorrectionListNames, nviCorrectionListQueryKey } from '../../../types/nvi.types';
+import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
+import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
 import {
   getAccordionDefaultPath,
-  getCommonCorrectionListConfig,
   getCorrectionListSearchParams,
+  nviCorrectionListQueryKey,
 } from '../../../utils/correctionListHelpers';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
+import { getDefaultNviYear } from '../../../utils/nviHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 export const NviCorrectionListNavigationAccordion = () => {
@@ -20,15 +21,15 @@ export const NviCorrectionListNavigationAccordion = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedNviList = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
   const correctionListConfig = useCorrectionListConfig();
-  const commonCorrectionListConfig = getCommonCorrectionListConfig();
-  const accordionDefaultPath = getAccordionDefaultPath(correctionListConfig, commonCorrectionListConfig);
+  const defaultPublicationYear = getDefaultNviYear().toString();
+  const accordionDefaultPath = getAccordionDefaultPath(correctionListConfig, defaultPublicationYear);
 
   const openNewCorrectionList = (newCorrectionListId: CorrectionListId) => {
     if (selectedNviList !== newCorrectionListId) {
       const correctionListSearchParams = getCorrectionListSearchParams(
         correctionListConfig,
         newCorrectionListId,
-        commonCorrectionListConfig
+        defaultPublicationYear
       );
       const currentSearchSize = searchParams.get(ResultParam.Results);
       if (currentSearchSize) {

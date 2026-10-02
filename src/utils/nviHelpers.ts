@@ -31,6 +31,26 @@ export const getDefaultNviYear = () => {
   return currentDate.getMonth() < firstMonthOfNewNviYear ? currentYear - 1 : currentYear;
 };
 
+/**
+ * The years a year filter should offer. A url can carry a year outside the standard window, for
+ * instance from an old bookmark, so that year is included to keep the field from rendering blank
+ * for the year it is actually filtering on.
+ *
+ * @param standardYears - The years normally offered, newest first.
+ * @param selectedYear - The selected value, which may be a non numeric sentinel such as "showAll".
+ * @returns A new list of the years to offer, newest first.
+ */
+export const getSelectableYears = (standardYears: number[], selectedYear: string): number[] => {
+  const selectedYearNumber = Number(selectedYear);
+  const isYear = Number.isInteger(selectedYearNumber) && selectedYearNumber > 0;
+
+  if (!isYear || standardYears.includes(selectedYearNumber)) {
+    return [...standardYears];
+  }
+
+  return [...standardYears, selectedYearNumber].sort((first, second) => second - first);
+};
+
 const isEqualSets = (set1: Set<string>, set2: Set<string>) => {
   if (set1.size !== set2.size) {
     return false;

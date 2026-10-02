@@ -1,23 +1,21 @@
-import { afterEach, describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { ResultParam } from '../../api/searchApi';
 import { ScientificValueLevels } from '../../pages/search/advanced_search/ScientificValueFilter';
-import {
-  CommonCorrectionListConfig,
-  CorrectionListConfig,
-  CorrectionListNames,
-  nviCorrectionListQueryKey,
-} from '../../types/nvi.types';
-import { BookType, ChapterType } from '../../types/publicationFieldNames';
+import { CorrectionListConfig, CorrectionListNames } from '../../types/nvi.types';
+import { allPublicationInstanceTypes, BookType, ChapterType, JournalType } from '../../types/publicationFieldNames';
 import {
   getAccordionDefaultPath,
-  getCommonCorrectionListConfig,
   getCorrectionListSearchParams,
+  getDisabledCategoriesOutside,
   isCorrectionListName,
+  nviCorrectionListQueryKey,
   setPublicationYearParams,
 } from '../correctionListHelpers';
 import { UrlPathTemplate } from '../urlPaths';
 
-const commonConfig: CommonCorrectionListConfig = { publicationYear: '2026' };
+const publicationYear = '2026';
+
+const disabledText = 'Not available';
 
 /**
  * Creates a config where every list has no filters, so that each test can give a single list only
@@ -57,26 +55,6 @@ const buildConfigForList = (
       topLevelOrganization,
     },
   });
-
-describe('getCommonCorrectionListConfig', () => {
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
-  test('should default the publication year to the current NVI year', () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date('2026-09-01T12:00:00'));
-
-    expect(getCommonCorrectionListConfig()).toEqual({ publicationYear: '2026' });
-  });
-
-  test('should default the publication year to the previous year before May, while that year is still being reported', () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date('2026-04-30T12:00:00'));
-
-    expect(getCommonCorrectionListConfig()).toEqual({ publicationYear: '2025' });
-  });
-});
 
 describe('setPublicationYearParams', () => {
   test('should keep the excluded parent year equal to the publication year for the chapter and book year mismatch list', () => {
@@ -140,7 +118,7 @@ describe('getCorrectionListSearchParams', () => {
     const searchParams = getCorrectionListSearchParams(
       buildConfig(),
       CorrectionListNames.AnthologyWithoutChapter,
-      commonConfig
+      publicationYear
     );
 
     expect(searchParams.get(nviCorrectionListQueryKey)).toBe(CorrectionListNames.AnthologyWithoutChapter);
@@ -150,17 +128,17 @@ describe('getCorrectionListSearchParams', () => {
     const searchParams = getCorrectionListSearchParams(
       buildConfig(),
       CorrectionListNames.AnthologyWithoutChapter,
-      commonConfig
+      publicationYear
     );
 
-    expect(searchParams.get(ResultParam.PublicationYear)).toBe(commonConfig.publicationYear);
+    expect(searchParams.get(ResultParam.PublicationYear)).toBe(publicationYear);
   });
 
   test('should set only the list id and publication year when the list has no filters', () => {
     const searchParams = getCorrectionListSearchParams(
       buildConfig(),
       CorrectionListNames.AnthologyWithoutChapter,
-      commonConfig
+      publicationYear
     );
 
     expect([...searchParams.keys()]).toEqual([nviCorrectionListQueryKey, ResultParam.PublicationYear]);
@@ -174,7 +152,7 @@ describe('getCorrectionListSearchParams', () => {
     const searchParams = getCorrectionListSearchParams(
       config,
       CorrectionListNames.AnthologyWithoutChapter,
-      commonConfig
+      publicationYear
     );
 
     expect(searchParams.get(ResultParam.CategoryShould)).toBe(`${BookType.Anthology},${ChapterType.AcademicChapter}`);
@@ -186,7 +164,7 @@ describe('getCorrectionListSearchParams', () => {
     const searchParams = getCorrectionListSearchParams(
       config,
       CorrectionListNames.AnthologyWithoutChapter,
-      commonConfig
+      publicationYear
     );
 
     expect(searchParams.has(ResultParam.CategoryShould)).toBe(false);
@@ -202,7 +180,7 @@ describe('getCorrectionListSearchParams', () => {
     const searchParams = getCorrectionListSearchParams(
       config,
       CorrectionListNames.AnthologyWithoutChapter,
-      commonConfig
+      publicationYear
     );
 
     expect(searchParams.get(ResultParam.TopLevelOrganization)).toBe('organization/1.0');
@@ -217,7 +195,7 @@ describe('getCorrectionListSearchParams', () => {
     const searchParams = getCorrectionListSearchParams(
       config,
       CorrectionListNames.UnidentifiedContributorWithIdentifiedAffiliation,
-      commonConfig
+      publicationYear
     );
 
     expect(searchParams.get(ResultParam.UnidentifiedContributorInstitution)).toBe('/organization/1.0');
@@ -227,16 +205,16 @@ describe('getCorrectionListSearchParams', () => {
     const searchParams = getCorrectionListSearchParams(
       buildConfig(),
       CorrectionListNames.YearBetweenChapterAndBookMismatch,
-      commonConfig
+      publicationYear
     );
 
-    expect(searchParams.get(ResultParam.ExcludeParentPublicationYear)).toBe(commonConfig.publicationYear);
+    expect(searchParams.get(ResultParam.ExcludeParentPublicationYear)).toBe(publicationYear);
   });
 });
 
 describe('getAccordionDefaultPath', () => {
   test('should link to the correction list page with the first list opened and filtered', () => {
-    const path = getAccordionDefaultPath(buildConfig(), commonConfig);
+    const path = getAccordionDefaultPath(buildConfig(), publicationYear);
     const [pathname, search] = path.split('?');
     const searchParams = new URLSearchParams(search);
 
@@ -244,7 +222,7 @@ describe('getAccordionDefaultPath', () => {
     expect(searchParams.get(nviCorrectionListQueryKey)).toBe(
       CorrectionListNames.ApplicableCategoriesWithNonApplicableChannel
     );
-    expect(searchParams.get(ResultParam.PublicationYear)).toBe(commonConfig.publicationYear);
+    expect(searchParams.get(ResultParam.PublicationYear)).toBe(publicationYear);
   });
 });
 
@@ -263,5 +241,33 @@ describe('isCorrectionListName', () => {
 
   test('should reject a list name with different casing', () => {
     expect(isCorrectionListName(CorrectionListNames.AnthologyWithoutChapter.toLowerCase())).toBe(false);
+  });
+});
+
+describe('getDisabledCategoriesOutside', () => {
+  test('does not disable the allowed types', () => {
+    const disabledCategories = getDisabledCategoriesOutside(
+      [BookType.AcademicMonograph, BookType.Anthology],
+      disabledText
+    );
+    const disabledTypes = disabledCategories.map((category) => category.type);
+
+    expect(disabledTypes).not.toContain(BookType.AcademicMonograph);
+    expect(disabledTypes).not.toContain(BookType.Anthology);
+  });
+
+  test('disables every other type with the given text', () => {
+    const allowedTypes = Object.values(BookType);
+    const disabledCategories = getDisabledCategoriesOutside(allowedTypes, disabledText);
+
+    expect(disabledCategories).toHaveLength(allPublicationInstanceTypes.length - allowedTypes.length);
+    expect(disabledCategories).toContainEqual({ type: JournalType.AcademicArticle, text: disabledText });
+    expect(disabledCategories.every((category) => category.text === disabledText)).toBe(true);
+  });
+
+  test('disables all types when no types are allowed', () => {
+    const disabledCategories = getDisabledCategoriesOutside([], disabledText);
+
+    expect(disabledCategories.map((category) => category.type)).toEqual(allPublicationInstanceTypes);
   });
 });

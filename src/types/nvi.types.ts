@@ -172,8 +172,6 @@ export interface NviPeriodResponse {
   periods: NviPeriod[];
 }
 
-export const nviCorrectionListQueryKey = 'list';
-
 export enum CorrectionListNames {
   ApplicableCategoriesWithNonApplicableChannel = 'ApplicableCategoriesWithNonApplicableChannel',
   NonApplicableCategoriesWithApplicableChannel = 'NonApplicableCategoriesWithApplicableChannel',
@@ -209,11 +207,6 @@ export type CorrectionListConfig = {
     topLevelOrganization: string | undefined;
   };
 };
-
-/** The filters that apply to every correction list, as opposed to the per list filters in {@link CorrectionListConfig}. */
-export interface CommonCorrectionListConfig {
-  publicationYear: string;
-}
 
 export enum NviSearchStatusEnum {
   CandidatesForControl = 'candidates_for_control',
