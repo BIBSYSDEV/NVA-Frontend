@@ -30,10 +30,26 @@ describe('toSentenceCase', () => {
     );
   });
 
-  it('Keeps a dotted abbreviation and the word after it as they are', () => {
-    expect(toSentenceCase('Trade Policy of the U.S. government and Its Effects')).toBe(
+  it('Does not treat the period in a dotted abbreviation as a sentence end', () => {
+    expect(toSentenceCase('Trade Policy of the U.S. Government and Its Effects')).toBe(
       'Trade policy of the U.S. government and its effects'
     );
+  });
+
+  it('Does not treat a period inside a word as a sentence end', () => {
+    expect(toSentenceCase('Building Web Services with Node.js')).toBe('Building web services with node.js');
+  });
+
+  it('Preserves an honorific and the name after it', () => {
+    expect(toSentenceCase('An Interview with Dr. Smith about Climate Policy')).toBe(
+      'An interview with Dr. Smith about climate policy'
+    );
+    expect(toSentenceCase('The Life of St. Olav in Medieval Norway')).toBe('The life of St. Olav in medieval norway');
+  });
+
+  it('Preserves single capital letters', () => {
+    expect(toSentenceCase('Treatment Options for Hepatitis B')).toBe('Treatment options for hepatitis B');
+    expect(toSentenceCase('What I Learned from Clinical Trials')).toBe('What I learned from clinical trials');
   });
 
   it('Does not capitalise the word after a lowercase dotted abbreviation', () => {
