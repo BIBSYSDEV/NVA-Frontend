@@ -52,6 +52,27 @@ describe('toSentenceCase', () => {
     expect(toSentenceCase('What I Learned from Clinical Trials')).toBe('What I learned from clinical trials');
   });
 
+  it('Lowercases the preposition "i" in Norwegian titles', () => {
+    expect(toSentenceCase('Livet I Byen Etter Krigen', 'http://lexvo.org/id/iso639-3/nob')).toBe(
+      'Livet i byen etter krigen'
+    );
+    expect(toSentenceCase('Livet I Byen Etter Krigen', 'http://lexvo.org/id/iso639-3/nno')).toBe(
+      'Livet i byen etter krigen'
+    );
+  });
+
+  it('Keeps other single capital letters in Norwegian titles', () => {
+    expect(toSentenceCase('Behandling av Hepatitt B', 'http://lexvo.org/id/iso639-3/nob')).toBe(
+      'Behandling av hepatitt B'
+    );
+  });
+
+  it('Keeps the pronoun "I" in titles in other languages', () => {
+    expect(toSentenceCase('What I Learned from Clinical Trials', 'http://lexvo.org/id/iso639-3/eng')).toBe(
+      'What I learned from clinical trials'
+    );
+  });
+
   it('Does not capitalise the word after a lowercase dotted abbreviation', () => {
     expect(toSentenceCase('Classic Growth Models, e.g. Neoclassical and Endogenous Approaches')).toBe(
       'Classic growth models, e.g. neoclassical and endogenous approaches'

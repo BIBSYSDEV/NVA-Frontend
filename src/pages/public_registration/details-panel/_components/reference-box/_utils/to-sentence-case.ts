@@ -1,3 +1,5 @@
+import { getLanguageByUri } from 'nva-language';
+
 // Words shorter than this are ignored by the casing heuristic — short words ("of", "the", "in") are
 // lowercase even in title case, so counting them would mask whether the title is title-cased.
 const SIGNIFICANT_WORD_MIN_LENGTH = 4;
@@ -62,9 +64,15 @@ const isAllCaps = (title: string): boolean => fractionMatching(title, isUpperCas
 
 const isAcronym = (word: string): boolean => lettersOnly(word).length >= 2 && isUpperCase(word);
 
+const norwegianLanguageCodes = ['nob', 'nno'];
+
+const isNorwegian = (languageUri: string | undefined): boolean =>
+  !!languageUri && norwegianLanguageCodes.includes(getLanguageByUri(languageUri).iso6393Code);
+
 // A single capital letter ("Hepatitis B", "Phase I", the pronoun "I"). "A" is excluded since it is
-// usually the article.
-const isSingleCapital = (word: string): boolean => /^\p{Lu}$/u.test(word) && word !== 'A';
+// usually the article, and in Norwegian titles "I" is excluded since it is usually the preposition "i".
+const isSingleCapital = (word: string, norwegian: boolean): boolean =>
+  /^\p{Lu}$/u.test(word) && word !== 'A' && !(norwegian && word === 'I');
 
 const isHonorific = (word: string, textAfter: string): boolean =>
   honorifics.has(word.toLowerCase()) && textAfter.startsWith('.');
@@ -76,8 +84,8 @@ const followsHonorific = (textBefore: string): boolean => {
 
 // In title-case input, acronyms, single capital letters, honorifics and the name after an honorific
 // keep their casing.
-const shouldPreserveCase = (word: string, textBefore: string, textAfter: string): boolean =>
-  isAcronym(word) || isSingleCapital(word) || isHonorific(word, textAfter) || followsHonorific(textBefore);
+const shouldPreserveCase = (word: string, textBefore: string, textAfter: string, norwegian: boolean): boolean =>
+  isAcronym(word) || isSingleCapital(word, norwegian) || isHonorific(word, textAfter) || followsHonorific(textBefore);
 
 // True when the text ends with an abbreviation, so a period right after it doesn't end the sentence.
 const followsAbbreviation = (textBeforePeriod: string): boolean => {
@@ -97,7 +105,7 @@ const capitaliseSentenceStarts = (segment: string, atTitleStart: boolean): strin
 
 // Lowercases ordinary words and capitalises sentence starts, leaving parenthesised spans untouched
 // so their casing is preserved verbatim.
-const convertOutsideParentheses = (title: string, preserveCasing: boolean): string =>
+const convertOutsideParentheses = (title: string, preserveCasing: boolean, norwegian: boolean): string =>
   title
     .split(parentheticalPattern)
     .map((segment, index) => {
@@ -105,7 +113,8 @@ const convertOutsideParentheses = (title: string, preserveCasing: boolean): stri
         return segment; // a parenthesised group — preserve verbatim
       }
       const lowered = segment.replace(wordPattern, (word: string, offset: number) =>
-        preserveCasing && shouldPreserveCase(word, segment.slice(0, offset), segment.slice(offset + word.length))
+        preserveCasing &&
+        shouldPreserveCase(word, segment.slice(0, offset), segment.slice(offset + word.length), norwegian)
           ? word
           : word.toLowerCase()
       );
@@ -123,10 +132,13 @@ const convertOutsideParentheses = (title: string, preserveCasing: boolean): stri
  * ("Hepatitis B", "I") and honorifics with the name after them ("Dr. Smith") are preserved too; an
  * all-caps title is lowercased throughout as a best effort, since its acronyms are indistinguishable
  * from ordinary words. Other proper nouns are not detected and are lowercased.
+ *
+ * The title's language URI (from entityDescription.language) adjusts language-specific rules: in
+ * Norwegian titles a single "I" is the preposition "i" and is lowercased.
  */
-export const toSentenceCase = (title: string): string => {
+export const toSentenceCase = (title: string, languageUri?: string): string => {
   if (!title.trim() || !shouldConvert(title)) {
     return title;
   }
-  return convertOutsideParentheses(title, !isAllCaps(title));
+  return convertOutsideParentheses(title, !isAllCaps(title), isNorwegian(languageUri));
 };
