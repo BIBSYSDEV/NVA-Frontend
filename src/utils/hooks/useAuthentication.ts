@@ -36,7 +36,7 @@ export const useAuthentication = (): UseAuthentication => {
       dispatch(logoutSuccess());
       navigate(UrlPathTemplate.Logout);
     } else {
-      await signOut({ global: true });
+      await signOut();
     }
   };
 

@@ -156,6 +156,7 @@
       "show_full_nin": "Vis personnummer"
     }
   },
+  "book_or_report_without_isxn": "Bok eller rapport uten ISxN",
   "candidate": "Kandidat",
   "candidate_search": "Kandidatsøk",
   "candidates_approved_by_the_institution": "Kandidater institusjonen har godkjent",
@@ -632,6 +633,8 @@
       "login_failed_try_bankid": "Innlogging feilet. Prøv å logg inn med BankID i stedet.",
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "person_search": "Søk etter person feilet",
+      "profile_picture_invalid_type": "Ugyldig filtype. Kun .jpg og .jpeg støttes.",
+      "profile_picture_too_large": "Profilbildet er for stort. Maksimum størrelse er 4 MB.",
       "project_search": "Søk på prosjekt feilet",
       "publish_registration": "Kunne ikke publisere registrering",
       "registration_update_precondition_failed": "Registreringen er endret etter at du lastet siden. Last siden på nytt for å prøve igjen. Ulagrede endringer vil gå tapt.",
@@ -1000,7 +1003,7 @@
       },
       "identity": {
         "upload_profile_photo": "Last opp profilfoto",
-        "upload_profile_photo_info": "Maksimum størrelse: 1 MB. Støttede filtyper: .jpg eller .jpeg"
+        "upload_profile_photo_info": "Maksimum størrelse: 4 MB. Støttede filtyper: .jpg eller .jpeg"
       },
       "link_to_projects_search": "Se <0>søkesiden</0> for å filtrere blant alle prosjekter.",
       "link_to_results_search": "Se <0>søkesiden</0> for å filtrere blant alle resultater.",
@@ -1106,6 +1109,7 @@
   "nvi_publication_points_page_description_expanded": "Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.",
   "nvi_reporting_periods_text": "Oversikten viser status på NVI-periode og totalt antall kandidater i perioden. For perioder som er rapportert vises antall godkjente kandidater. For åpne perioder vises antall kandidater totalt.",
   "nvi_year": "NVI-år",
+  "only_book_and_report_categories_available": "Kun bok- og rapportkategorier er tilgjengelige for denne listen",
   "overview_over_administrators": "Oversikt over administratorer",
   "overwrite": "Overskriv",
   "owner_institution": "Eierinstitusjon",
@@ -1508,6 +1512,8 @@
       "reserve_doi": "Reserver DOI",
       "result_not_published": "Resultatet er ikke publisert",
       "scopus_id": "Scopus-ID",
+      "show_fewer_ids": "Vis færre ID-er",
+      "show_more_ids": "Vis flere ID-er",
       "subject_and_classification": "Emne og klassifisering",
       "tasks_panel": {
         "approve_publishing_request_description": "<0>Som kurator kan du godkjenne eller avvise de opplastede filene.</0><0>Trykker du på \"$t(registration.public_page.approve_publish_request)\" i denne menyen, vil alle opplastede filer bli godkjent med de innstillingene de har. Det vil si at åpne filer blir offentliggjort i NVA og interne filer blir arkivert og skjult.</0>",
@@ -2133,7 +2139,6 @@
         "chapter_and_book_year_mismatch": "Årstall mellom kapittel og bok avviker",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler",
         "scientific_chapter_not_in_anthology": "Vitenskapelig kapittel ikke i antologi",
-        "scientific_monography_or_anthology_without_isxns": "Vitenskapelig monografi eller antologi uten ISxN-er",
         "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsyter med identifisert institusjon"
       },
       "delete_note": "Slett kommentar",

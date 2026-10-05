@@ -426,6 +426,7 @@ export const dataTestId = {
     relatedRegistrationsAccordion: 'related-registrations-accordion',
     subtypeFields: 'public-registration-subtype-fields',
     subjectAndClassificationAccordion: 'subject-and-classification-accordion',
+    toggleIdentifiersButton: 'toggle-identifiers-button',
     tasksPanel: {
       assigneeIndicator: 'assignee-indicator',
       assigneeSearchField: 'assignee-search-field',
@@ -804,7 +805,7 @@ export const dataTestId = {
       unidentifiedContributorWithIdentifiedAffiliationButton:
         'unidentified-contributor-with-identified-affiliation-button',
       scientificChapterNotInAnthology: 'scientific-chapter-not-in-anthology',
-      scientificMonographyOrAnthologyWithoutIsxns: 'scientific-monography-or-anthology-without-isxns',
+      bookOrReportWithoutIsxn: 'book-or-report-without-isxn',
       booksWithoutNpiField: 'books-without-npi-field',
     },
     curatorSelector: 'curator-selector',
