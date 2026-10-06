@@ -183,6 +183,7 @@ export enum CorrectionListNames {
   ScientificChapterNotInAnthology = 'ScientificChapterNotInAnthology',
   BookOrReportWithoutIsxn = 'BookOrReportWithoutIsxn',
   BooksWithoutNpiField = 'BooksWithoutNpiField',
+  AcademicChapterInBookWithoutIsbn = 'AcademicChapterInBookWithoutIsbn',
 }
 
 export type CorrectionListId = `${CorrectionListNames}`;
