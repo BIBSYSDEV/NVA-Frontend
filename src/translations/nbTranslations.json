@@ -5,6 +5,7 @@
     "footer_text": "Tjenesten blir levert av Sikt – Kunnskapssektorens tjenesteleverandør. Sikt er leverandør av fellestjenester til norsk kunnskapssektor."
   },
   "add_file": "Legg til fil",
+  "add_isbn_by_going_to_book": "Oppgi ISBN med å velge “Gå til bok” og deretter redigere boken.",
   "add_project": "Legg til prosjekt",
   "approval": "Godkjenning",
   "approved": "Godkjent",
@@ -761,6 +762,7 @@
     "to_top": "Til toppen"
   },
   "go_to_advanced_search": "Gå til avansert resultatsøk",
+  "go_to_book": "Gå til bok",
   "imported_data_warning": "Viser importerte data. Tallene kan avvike fra det som ble rapportert på rapporteringstidspunkt.",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
@@ -862,6 +864,7 @@
   "merge_import_candidate": "Slå sammen importkandidat",
   "merge_results": "Slå sammen resultat",
   "merge_results_description": "<heading>$t(merge_results)</heading><p>Er resultatet en duplikat, men mangler metadata og filer?</p><p>Da kan du slå sammen metadata og samle filer til ett resultat.</p>",
+  "missing_isbn_on_linked_book": "Mangler ISBN på tilknyttet bok",
   "missing_value": "Mangler verdi",
   "my_page": {
     "messages": {
@@ -1924,6 +1927,7 @@
   "reporting_status_description": "<p>Tabellen viser antall kandidater for din institusjon og behandlingsstatus på disse.</p> <p>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</p>",
   "reporting_status_numbers": "<p><b>{{num_results}} resultat</b> er kandidater for rapportering. Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{previous_year}}.</p>",
   "reset": "Nullstill",
+  "result_not_nvi_candidate_linked_book_missing_isbn": "Dette resultatet vil ikke bli kandidater til rapportering til Norsk vitenskapsindeks (NVI) siden tilknyttet bok mangler ISBN.",
   "results": "Forskningsresultater",
   "science_categories_front_page": "<heading>Arbeid i ulike kategorier</heading><p>Forskning og formidling omfatter mye mer enn vitenskapelige publikasjoner.</p><p>Alt registreres i ulike kategorier, og du kan søke og gjøre oppslag i alle kategoriene nedenfor.</p>",
   "search": {
