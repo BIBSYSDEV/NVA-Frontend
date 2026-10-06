@@ -1,7 +1,7 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Box, Button, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
@@ -53,10 +53,10 @@ export const ParentBookMissingIsbnWarning = ({ registration }: ParentBookMissing
         <WarningIcon color="warning" fontSize="small" />
         <Typography sx={{ fontWeight: 'bold' }}>{t('missing_isbn_on_linked_book')}</Typography>
       </Box>
-      <Typography>{t('result_not_nvi_candidate_linked_book_missing_isbn')}</Typography>
-      <Typography>{t('add_isbn_by_going_to_book')}</Typography>
+      <Trans t={t} i18nKey="linked_book_missing_isbn_description" components={{ p: <Typography /> }} />
       <Button
         variant="contained"
+        color="secondary"
         size="small"
         endIcon={<ArrowForwardIcon />}
         component={RouterLink}
