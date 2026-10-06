@@ -222,7 +222,11 @@ export const useGetBookInformation = (containerId = '') => {
   const publisherScientificValue = publisherQuery.data?.scientificValue;
   const seriesScientificValue = seriesQuery.data?.scientificValue;
 
+  const isChannelLoading = publisherQuery.isLoading || seriesQuery.isLoading;
+  const isBookInformationReady = !!bookQuery.data && !isChannelLoading;
+
   return {
+    isBookInformationReady,
     bookHasIsbn,
     isMonographBook,
     isNonFictionBook,
