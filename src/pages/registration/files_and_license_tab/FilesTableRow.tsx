@@ -14,10 +14,10 @@ import {
   FormControlLabel,
   FormHelperText,
   IconButton,
+  Link as MuiLink,
   ListItemIcon,
   ListItemText,
   MenuItem,
-  Link as MuiLink,
   Paper,
   Popover,
   Radio,
@@ -45,11 +45,16 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { AssociatedFile, FileRrs, FileType, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
-import { licenses, LicenseUri } from '../../../types/license.types';
-import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
+import { LicenseUri } from '../../../types/license.types';
+import { ResearchDataType, SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { activeLicenses, getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
+import {
+  getFullListLicenses,
+  getLicenseData,
+  getShortListLicenses,
+  hasFileAccessRight,
+} from '../../../utils/fileHelpers';
 import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { isFileCuratorForRegistration } from '../../../utils/user-helpers';
@@ -74,6 +79,7 @@ interface FilesTableRowProps {
   showFileVersion: boolean;
   isRrsApplicableCategory: boolean;
   showAllColumns: boolean;
+  publicationInstanceType?: string;
 }
 
 export const FilesTableRow = ({
@@ -83,6 +89,7 @@ export const FilesTableRow = ({
   showFileVersion,
   isRrsApplicableCategory,
   showAllColumns,
+  publicationInstanceType,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
@@ -123,7 +130,9 @@ export const FilesTableRow = ({
   const [embargoPopperAnchorEl, setEmbargoPopperAnchorEl] = useState<null | HTMLElement>(null);
 
   const [inactiveLicensesOpen, setInactiveLicensesOpen] = useState(false);
-  const inactiveLicenses = licenses.filter((license) => license.version && license.version !== 4);
+  const isSourceCode = publicationInstanceType === ResearchDataType.SoftwareSourceCode;
+  const shortListLicenses = getShortListLicenses(publicationInstanceType);
+  const fullListLicenses = getFullListLicenses(publicationInstanceType);
 
   const isCompletedFile = isOpenFile(file) || file.type === FileType.InternalFile;
   const isOpenableFile = isOpenFile(file) || isPendingOpenFile(file);
@@ -367,7 +376,7 @@ export const FilesTableRow = ({
                         label={t('registration.files_and_license.conditions_for_using_file')}
                         required
                         onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
-                        {activeLicenses.map((license) => (
+                        {shortListLicenses.map((license) => (
                           <MenuItem
                             data-testid={dataTestId.registrationWizard.files.licenseItem}
                             key={license.id}
@@ -375,9 +384,11 @@ export const FilesTableRow = ({
                             divider
                             dense
                             sx={{ gap: '1rem' }}>
-                            <ListItemIcon>
-                              <img style={{ width: '5rem' }} src={license.logo} alt="" />
-                            </ListItemIcon>
+                            {license.logo && (
+                              <ListItemIcon>
+                                <img style={{ width: '5rem' }} src={license.logo} alt="" />
+                              </ListItemIcon>
+                            )}
                             <ListItemText>
                               <Typography>{license.name}</Typography>
                             </ListItemText>
@@ -392,11 +403,13 @@ export const FilesTableRow = ({
                               setInactiveLicensesOpen(!inactiveLicensesOpen);
                             }}>
                             <Typography sx={{ fontStyle: 'italic' }}>
-                              {t('registration.files_and_license.show_all_older_versions')}
+                              {isSourceCode
+                                ? t('registration.files_and_license.show_full_license_list')
+                                : t('registration.files_and_license.show_all_older_versions')}
                             </Typography>
                           </MenuItem>
                         )}
-                        {inactiveLicenses.map((license) => (
+                        {fullListLicenses.map((license) => (
                           <MenuItem
                             data-testid={dataTestId.registrationWizard.files.licenseItem}
                             key={license.id}
@@ -404,9 +417,11 @@ export const FilesTableRow = ({
                             divider
                             dense
                             sx={{ gap: '1rem', display: inactiveLicensesOpen ? 'flex' : 'none' }}>
-                            <ListItemIcon>
-                              <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
-                            </ListItemIcon>
+                            {license.logo && (
+                              <ListItemIcon>
+                                <img style={{ width: '5rem' }} src={license.logo} alt="" />
+                              </ListItemIcon>
+                            )}
                             <ListItemText>
                               <Typography>{license.name}</Typography>
                             </ListItemText>

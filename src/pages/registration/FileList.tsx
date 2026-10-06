@@ -17,9 +17,10 @@ import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
+import { ResearchDataType } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { activeLicenses } from '../../utils/fileHelpers';
+import { getHelpModalLicenses } from '../../utils/fileHelpers';
 import {
   associatedArtifactIsFile,
   isCategoryWithFileVersion,
@@ -27,6 +28,7 @@ import {
   isOpenFile,
   isPendingOpenFile,
 } from '../../utils/registration-helpers';
+import { LicenseDescription } from './files_and_license_tab/components/LicenseDescription';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { HelperTextModal } from './HelperTextModal';
 
@@ -52,6 +54,8 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
   const showFileVersion = isCategoryWithFileVersion(publicationInstanceType);
   const isRrsApplicableCategory = isCategoryWithRrs(publicationInstanceType);
+  const isSourceCode = publicationInstanceType === ResearchDataType.SoftwareSourceCode;
+  const helpModalLicenses = getHelpModalLicenses(publicationInstanceType);
   const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
 
   return (
@@ -102,7 +106,11 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                         buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
                         <Trans
                           t={t}
-                          i18nKey="registration.files_and_license.file_and_license_info"
+                          i18nKey={
+                            isSourceCode
+                              ? 'registration.files_and_license.source_code_license_info'
+                              : 'registration.files_and_license.file_and_license_info'
+                          }
                           components={{
                             p: <Typography gutterBottom />,
                             ccLink: <OpenInNewLink href="https://creativecommons.org/licenses/" />,
@@ -115,46 +123,17 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                             gridTemplateColumns: { md: '1fr', lg: 'repeat(3, 1fr)' },
                             gap: '1.5rem',
                           }}>
-                          {activeLicenses.map((license) => (
-                            <div key={license.id}>
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
-                                {license.logo && <img src={license.logo} alt="" style={{ width: '5rem' }} />}
-                                <Typography component="h2" variant="h3">
-                                  {license.name}
-                                </Typography>
-                              </Box>
-                              <Trans
-                                t={t}
-                                defaults={license.description}
-                                components={{
-                                  p: <Typography gutterBottom />,
-                                  ul: <Box component="ul" sx={{ mt: 0, mb: '0.5rem' }} />,
-                                  li: <li />,
-                                }}
-                              />
-                              {license.link && (
-                                <OpenInNewLink href={license.link}>
-                                  {t('licenses.read_more_about_license', { license: license.name })}
-                                </OpenInNewLink>
-                              )}
-                              {license.additionalInformation && (
-                                <Trans
-                                  t={t}
-                                  defaults={license.additionalInformation}
-                                  components={{
-                                    p: <Typography sx={{ mt: '1rem' }} />,
-                                    link1: <OpenInNewLink href="https://lovdata.no/lov/2018-06-15-40/" />,
-                                  }}
-                                />
-                              )}
-                            </div>
+                          {helpModalLicenses.map((license) => (
+                            <LicenseDescription key={license.id} license={license} />
                           ))}
-                          <div>
-                            <Typography variant="h3" gutterBottom>
-                              {t('licenses.labels.older_licenses')}
-                            </Typography>
-                            <Typography>{t('licenses.description.older_licenses')}</Typography>
-                          </div>
+                          {!isSourceCode && (
+                            <div>
+                              <Typography variant="h3" gutterBottom>
+                                {t('licenses.labels.older_licenses')}
+                              </Typography>
+                              <Typography>{t('licenses.description.older_licenses')}</Typography>
+                            </div>
+                          )}
                         </Box>
                       </HelperTextModal>
                     </Box>
@@ -202,6 +181,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                   showFileVersion={showFileVersion}
                   isRrsApplicableCategory={isRrsApplicableCategory}
                   showAllColumns={showAllColumns}
+                  publicationInstanceType={publicationInstanceType}
                 />
               );
             })}
