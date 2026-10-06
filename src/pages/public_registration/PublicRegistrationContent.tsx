@@ -41,7 +41,7 @@ import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
 import { ShowRelatedDocuments } from './public_links/ShowRelatedDocuments';
 import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
-import { ParentBookMissingIsbnWarning } from './ParentBookMissingIsbnWarning';
+import { ParentBookMissingIsbnWarning } from './_components/ParentBookMissingIsbnWarning';
 import { PublicFundingsContent } from './PublicFundingsContent';
 import { PublicGeneralContent } from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';

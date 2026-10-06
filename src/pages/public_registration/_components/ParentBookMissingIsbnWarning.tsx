@@ -3,14 +3,14 @@ import WarningIcon from '@mui/icons-material/Warning';
 import { Box, Button, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
-import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
-import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
-import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
-import { Registration } from '../../types/registration.types';
-import { dataTestId } from '../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../utils/general-helpers';
-import { isChapter, nviApplicableTypes, userHasAccessRight } from '../../utils/registration-helpers';
-import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
+import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
+import { BookPublicationContext } from '../../../types/publication_types/bookRegistration.types';
+import { ChapterPublicationContext } from '../../../types/publication_types/chapterRegistration.types';
+import { Registration } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { isChapter, nviApplicableTypes, userHasAccessRight } from '../../../utils/registration-helpers';
+import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 
 interface ParentBookMissingIsbnWarningProps {
   registration: Registration;
