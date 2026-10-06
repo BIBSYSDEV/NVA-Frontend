@@ -50,7 +50,7 @@ import { ResearchDataType, SpecificFileFieldNames } from '../../../types/publica
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
-  getFullListLicenses,
+  getAdditionalLicenses,
   getLicenseData,
   getShortListLicenses,
   hasFileAccessRight,
@@ -132,7 +132,7 @@ export const FilesTableRow = ({
   const [inactiveLicensesOpen, setInactiveLicensesOpen] = useState(false);
   const isSourceCode = publicationInstanceType === ResearchDataType.SoftwareSourceCode;
   const shortListLicenses = getShortListLicenses(publicationInstanceType);
-  const fullListLicenses = getFullListLicenses(publicationInstanceType);
+  const additionalLicenses = getAdditionalLicenses(publicationInstanceType);
 
   const isCompletedFile = isOpenFile(file) || file.type === FileType.InternalFile;
   const isOpenableFile = isOpenFile(file) || isPendingOpenFile(file);
@@ -409,7 +409,7 @@ export const FilesTableRow = ({
                             </Typography>
                           </MenuItem>
                         )}
-                        {fullListLicenses.map((license) => (
+                        {additionalLicenses.map((license) => (
                           <MenuItem
                             data-testid={dataTestId.registrationWizard.files.licenseItem}
                             key={license.id}

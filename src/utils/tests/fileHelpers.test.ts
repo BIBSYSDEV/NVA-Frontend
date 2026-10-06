@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { LicenseUri } from '../../types/license.types';
 import { JournalType, ResearchDataType } from '../../types/publicationFieldNames';
-import { getFullListLicenses, getHelpModalLicenses, getLicenseData, getShortListLicenses } from '../fileHelpers';
+import { getAdditionalLicenses, getHelpModalLicenses, getLicenseData, getShortListLicenses } from '../fileHelpers';
 
 describe('getLicenseData()', () => {
   test('Returns Creative Commons license with https', () => {
@@ -45,7 +45,6 @@ describe('getLicenseData()', () => {
   test('Returns software license by its SPDX uri', () => {
     const result = getLicenseData('https://spdx.org/licenses/GPL-3.0-or-later.html');
     expect(result?.id).toBe(LicenseUri.GPL_3_0_or_later);
-    expect(result?.spdxId).toBe('GPL-3.0-or-later');
   });
 
   test('Keeps -only and -or-later as distinct licenses', () => {
@@ -92,9 +91,9 @@ describe('getShortListLicenses()', () => {
   });
 });
 
-describe('getFullListLicenses()', () => {
-  test('Offers the nine remaining software licenses for source code, in menu order', () => {
-    const result = getFullListLicenses(ResearchDataType.SoftwareSourceCode).map((license) => license.id);
+describe('getAdditionalLicenses()', () => {
+  test('Offers the remaining software licenses for source code, in menu order', () => {
+    const result = getAdditionalLicenses(ResearchDataType.SoftwareSourceCode).map((license) => license.id);
 
     expect(result).toEqual([
       LicenseUri.BSD_2_Clause,
@@ -110,13 +109,22 @@ describe('getFullListLicenses()', () => {
   });
 
   test('Keeps older Creative Commons versions for other categories', () => {
-    const result = getFullListLicenses(JournalType.AcademicArticle).map((license) => license.id);
+    const result = getAdditionalLicenses(JournalType.AcademicArticle).map((license) => license.id);
 
     expect(result).toContain(LicenseUri.CC_BY_3);
     expect(result).not.toContain(LicenseUri.GPL_3_0_only);
   });
 
-  test('Explains the ten software licenses with CC0 last, leaving out the -only variants', () => {
+  test('Keeps older Creative Commons versions when category is unknown', () => {
+    const result = getAdditionalLicenses(undefined).map((license) => license.id);
+
+    expect(result).toContain(LicenseUri.CC_BY_3);
+    expect(result).not.toContain(LicenseUri.GPL_3_0_only);
+  });
+});
+
+describe('getHelpModalLicenses()', () => {
+  test('Explains the software licenses with CC0 last, leaving out the -only variants', () => {
     const result = getHelpModalLicenses(ResearchDataType.SoftwareSourceCode).map((license) => license.id);
 
     expect(result).toEqual([
@@ -141,11 +149,38 @@ describe('getFullListLicenses()', () => {
     expect(result).not.toContain(LicenseUri.MIT);
   });
 
-  test('Offers every source code license exactly once across the two lists', () => {
-    const shortList = getShortListLicenses(ResearchDataType.SoftwareSourceCode);
-    const fullList = getFullListLicenses(ResearchDataType.SoftwareSourceCode);
-    const allIds = [...shortList, ...fullList].map((license) => license.id);
+  test('Explains the Creative Commons licenses when category is unknown', () => {
+    const result = getHelpModalLicenses(undefined).map((license) => license.id);
 
-    expect(new Set(allIds).size).toBe(allIds.length);
+    expect(result).toContain(LicenseUri.CC_BY_4);
+    expect(result).not.toContain(LicenseUri.MIT);
+  });
+});
+
+describe('The source code license menu', () => {
+  const sourceCodeMenuIds = [
+    ...getShortListLicenses(ResearchDataType.SoftwareSourceCode),
+    ...getAdditionalLicenses(ResearchDataType.SoftwareSourceCode),
+  ].map((license) => license.id);
+
+  test('Offers every license exactly once', () => {
+    expect(new Set(sourceCodeMenuIds).size).toBe(sourceCodeMenuIds.length);
+  });
+
+  test('Does not offer Generelle bruksvilkår in either section', () => {
+    expect(sourceCodeMenuIds).not.toContain(LicenseUri.CopyrightAct);
+  });
+
+  test('Explains every license it offers, apart from the -only variants', () => {
+    const explainedIds = getHelpModalLicenses(ResearchDataType.SoftwareSourceCode).map((license) => license.id);
+    const onlyVariants = [
+      LicenseUri.GPL_2_0_only,
+      LicenseUri.GPL_3_0_only,
+      LicenseUri.AGPL_3_0_only,
+      LicenseUri.LGPL_3_0_only,
+    ];
+
+    const unexplained = sourceCodeMenuIds.filter((id) => !explainedIds.includes(id));
+    expect(unexplained).toEqual(onlyVariants);
   });
 });

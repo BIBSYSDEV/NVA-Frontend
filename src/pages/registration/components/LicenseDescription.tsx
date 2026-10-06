@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { OpenInNewLink } from '../../../../components/OpenInNewLink';
-import { LicenseInfo } from '../../../../types/license.types';
+import { OpenInNewLink } from '../../../components/OpenInNewLink';
+import { LicenseInfo } from '../../../types/license.types';
 
 interface LicenseDescriptionProps {
   license: LicenseInfo;

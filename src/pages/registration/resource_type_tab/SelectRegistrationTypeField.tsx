@@ -42,13 +42,16 @@ import {
 import {
   allPublicationInstanceTypes,
   contextTypeBaseFieldName,
+  FileFieldNames,
   instanceTypeBaseFieldName,
   PublicationType,
   ResearchDataType,
   ResourceFieldNames,
+  SpecificFileFieldNames,
 } from '../../../types/publicationFieldNames';
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { isSelectableLicense } from '../../../utils/fileHelpers';
 import {
   getDisabledCategories,
   getMainRegistrationType,
@@ -264,6 +267,17 @@ export const SelectRegistrationTypeField = () => {
           setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType }, false);
           break;
       }
+      // The license menu differs per category, so a license picked before the change may no longer be
+      // offered. Clearing it makes the user pick again instead of leaving a value the menu cannot show.
+      values.associatedArtifacts.forEach((associatedArtifact, index) => {
+        const hasUnselectableLicense =
+          'license' in associatedArtifact && !isSelectableLicense(associatedArtifact.license, newInstanceType);
+
+        if (hasUnselectableLicense) {
+          setFieldValue(`${FileFieldNames.AssociatedArtifacts}[${index}].${SpecificFileFieldNames.License}`, '', false);
+        }
+      });
+
       setTimeout(() => validateForm(), 0);
     }
   };

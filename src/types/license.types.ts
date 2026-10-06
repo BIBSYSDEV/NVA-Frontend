@@ -60,8 +60,6 @@ export interface LicenseInfo {
   link?: string;
   version?: 1 | 2 | 2.5 | 3 | 4;
   additionalInformation?: string;
-  /** Precise SPDX identifier. Only set for the software licenses, which are identified by SPDX rather than by URI. */
-  spdxId?: string;
   /**
    * Heading used in the license help modal, where the -only variants are not listed and the version
    * scope therefore needs no qualifier. Falls back to {@link LicenseInfo.name}, which has to stay
@@ -311,97 +309,6 @@ export const licenses: LicenseInfo[] = [
     logo: LicenseImages.ccByNcNdLogo,
     version: 1,
   },
-  // NOTE: The software licenses have no link until their deed pages exist. Until then the menu shows
-  // the name only, rather than pointing at a page that cannot yet explain what the license means.
-  {
-    id: LicenseUri.MIT,
-    spdxId: 'MIT',
-    name: i18n.t('licenses.labels.mit'),
-    description: i18n.t('licenses.description.mit'),
-  },
-  {
-    id: LicenseUri.Apache_2_0,
-    spdxId: 'Apache-2.0',
-    name: i18n.t('licenses.labels.apache_2_0'),
-    description: i18n.t('licenses.description.apache_2_0'),
-  },
-  {
-    id: LicenseUri.GPL_3_0_or_later,
-    spdxId: 'GPL-3.0-or-later',
-    name: i18n.t('licenses.labels.gpl_3_0_or_later'),
-    description: i18n.t('licenses.description.gpl_3_0'),
-  },
-  {
-    id: LicenseUri.BSD_3_Clause,
-    spdxId: 'BSD-3-Clause',
-    name: i18n.t('licenses.labels.bsd_3_clause'),
-    description: i18n.t('licenses.description.bsd_3_clause'),
-  },
-  {
-    id: LicenseUri.EUPL_1_2,
-    spdxId: 'EUPL-1.2',
-    name: i18n.t('licenses.labels.eupl_1_2'),
-    description: i18n.t('licenses.description.eupl_1_2'),
-  },
-  {
-    id: LicenseUri.BSD_2_Clause,
-    spdxId: 'BSD-2-Clause',
-    name: i18n.t('licenses.labels.bsd_2_clause'),
-    description: i18n.t('licenses.description.bsd_2_clause'),
-  },
-  {
-    id: LicenseUri.GPL_2_0_or_later,
-    spdxId: 'GPL-2.0-or-later',
-    name: i18n.t('licenses.labels.gpl_2_0_or_later'),
-    helpModalHeading: i18n.t('licenses.labels.gpl_2_0'),
-    description: i18n.t('licenses.description.gpl_2_0'),
-  },
-  {
-    id: LicenseUri.AGPL_3_0_or_later,
-    spdxId: 'AGPL-3.0-or-later',
-    name: i18n.t('licenses.labels.agpl_3_0_or_later'),
-    helpModalHeading: i18n.t('licenses.labels.agpl_3_0'),
-    description: i18n.t('licenses.description.agpl_3_0'),
-  },
-  {
-    id: LicenseUri.LGPL_3_0_or_later,
-    spdxId: 'LGPL-3.0-or-later',
-    name: i18n.t('licenses.labels.lgpl_3_0_or_later'),
-    helpModalHeading: i18n.t('licenses.labels.lgpl_3_0'),
-    description: i18n.t('licenses.description.lgpl_3_0'),
-  },
-  {
-    id: LicenseUri.MPL_2_0,
-    spdxId: 'MPL-2.0',
-    name: i18n.t('licenses.labels.mpl_2_0'),
-    description: i18n.t('licenses.description.mpl_2_0'),
-  },
-  // NOTE: The -only variants are separate menu entries because the distinction between them and the
-  // -or-later variants must survive in the stored value.
-  {
-    id: LicenseUri.GPL_2_0_only,
-    spdxId: 'GPL-2.0-only',
-    name: i18n.t('licenses.labels.gpl_2_0_only'),
-    description: i18n.t('licenses.description.gpl_2_0'),
-  },
-  {
-    id: LicenseUri.GPL_3_0_only,
-    spdxId: 'GPL-3.0-only',
-    name: i18n.t('licenses.labels.gpl_3_0_only'),
-    description: i18n.t('licenses.description.gpl_3_0'),
-  },
-  {
-    id: LicenseUri.AGPL_3_0_only,
-    spdxId: 'AGPL-3.0-only',
-    name: i18n.t('licenses.labels.agpl_3_0_only'),
-    description: i18n.t('licenses.description.agpl_3_0'),
-  },
-  {
-    id: LicenseUri.LGPL_3_0_only,
-    spdxId: 'LGPL-3.0-only',
-    name: i18n.t('licenses.labels.lgpl_3_0_only'),
-    description: i18n.t('licenses.description.lgpl_3_0'),
-  },
   {
     id: LicenseUri.CC0,
     name: i18n.t('licenses.labels.cc0', { version: '1.0' }),
@@ -415,5 +322,82 @@ export const licenses: LicenseInfo[] = [
     name: i18n.t('licenses.labels.copyright_act'),
     description: i18n.t('licenses.description.copyright_act'),
     link: LicenseUri.CopyrightAct,
+  },
+  // NOTE: The software licenses have no link until their deed pages exist. Until then the menu shows
+  // the name only, rather than pointing at a page that cannot yet explain what the license means.
+  {
+    id: LicenseUri.MIT,
+    name: i18n.t('licenses.labels.mit'),
+    description: i18n.t('licenses.description.mit'),
+  },
+  {
+    id: LicenseUri.Apache_2_0,
+    name: i18n.t('licenses.labels.apache_2_0'),
+    description: i18n.t('licenses.description.apache_2_0'),
+  },
+  {
+    id: LicenseUri.GPL_3_0_or_later,
+    name: i18n.t('licenses.labels.gpl_3_0_or_later'),
+    description: i18n.t('licenses.description.gpl_3_0'),
+  },
+  {
+    id: LicenseUri.BSD_3_Clause,
+    name: i18n.t('licenses.labels.bsd_3_clause'),
+    description: i18n.t('licenses.description.bsd_3_clause'),
+  },
+  {
+    id: LicenseUri.EUPL_1_2,
+    name: i18n.t('licenses.labels.eupl_1_2'),
+    description: i18n.t('licenses.description.eupl_1_2'),
+  },
+  {
+    id: LicenseUri.BSD_2_Clause,
+    name: i18n.t('licenses.labels.bsd_2_clause'),
+    description: i18n.t('licenses.description.bsd_2_clause'),
+  },
+  {
+    id: LicenseUri.GPL_2_0_or_later,
+    name: i18n.t('licenses.labels.gpl_2_0_or_later'),
+    helpModalHeading: i18n.t('licenses.labels.gpl_2_0'),
+    description: i18n.t('licenses.description.gpl_2_0'),
+  },
+  {
+    id: LicenseUri.AGPL_3_0_or_later,
+    name: i18n.t('licenses.labels.agpl_3_0_or_later'),
+    helpModalHeading: i18n.t('licenses.labels.agpl_3_0'),
+    description: i18n.t('licenses.description.agpl_3_0'),
+  },
+  {
+    id: LicenseUri.LGPL_3_0_or_later,
+    name: i18n.t('licenses.labels.lgpl_3_0_or_later'),
+    helpModalHeading: i18n.t('licenses.labels.lgpl_3_0'),
+    description: i18n.t('licenses.description.lgpl_3_0'),
+  },
+  {
+    id: LicenseUri.MPL_2_0,
+    name: i18n.t('licenses.labels.mpl_2_0'),
+    description: i18n.t('licenses.description.mpl_2_0'),
+  },
+  // NOTE: The -only variants are separate menu entries because the distinction between them and the
+  // -or-later variants must survive in the stored value.
+  {
+    id: LicenseUri.GPL_2_0_only,
+    name: i18n.t('licenses.labels.gpl_2_0_only'),
+    description: i18n.t('licenses.description.gpl_2_0'),
+  },
+  {
+    id: LicenseUri.GPL_3_0_only,
+    name: i18n.t('licenses.labels.gpl_3_0_only'),
+    description: i18n.t('licenses.description.gpl_3_0'),
+  },
+  {
+    id: LicenseUri.AGPL_3_0_only,
+    name: i18n.t('licenses.labels.agpl_3_0_only'),
+    description: i18n.t('licenses.description.agpl_3_0'),
+  },
+  {
+    id: LicenseUri.LGPL_3_0_only,
+    name: i18n.t('licenses.labels.lgpl_3_0_only'),
+    description: i18n.t('licenses.description.lgpl_3_0'),
   },
 ];
