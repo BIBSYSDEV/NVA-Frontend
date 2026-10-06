@@ -31,8 +31,13 @@ export const ParentBookMissingIsbnWarning = ({ registration }: ParentBookMissing
   const parentBookPublicationContext = parentBookQuery.data?.entityDescription?.reference?.publicationContext as
     BookPublicationContext | undefined;
   const parentBookHasIsbn = (parentBookPublicationContext?.isbnList ?? []).filter(Boolean).length > 0;
+  const parentBookIsMissingIsbn = !!parentBookQuery.data && !parentBookHasIsbn;
 
-  if (!userCanEditRegistration || !parentBookQuery.data || parentBookHasIsbn) {
+  // NOTE: The user check is needed even though the query is disabled without edit access, since
+  // ChapterPublisherInfo fetches and caches the same parent book for every visitor
+  const shouldShowWarning = userCanEditRegistration && parentBookIsMissingIsbn;
+
+  if (!shouldShowWarning) {
     return null;
   }
 
