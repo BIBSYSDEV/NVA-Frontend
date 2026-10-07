@@ -1,7 +1,13 @@
 import { describe, expect, test } from 'vitest';
 import { LicenseUri } from '../../types/license.types';
 import { JournalType, ResearchDataType } from '../../types/publicationFieldNames';
-import { getAdditionalLicenses, getHelpModalLicenses, getLicenseData, getShortListLicenses } from '../fileHelpers';
+import {
+  getAdditionalLicenses,
+  getHelpModalLicenses,
+  getLicenseData,
+  getShortListLicenses,
+  isSelectableLicense,
+} from '../fileHelpers';
 
 describe('getLicenseData()', () => {
   test('Returns Creative Commons license with https', () => {
@@ -154,6 +160,45 @@ describe('getHelpModalLicenses()', () => {
 
     expect(result).toContain(LicenseUri.CC_BY_4);
     expect(result).not.toContain(LicenseUri.MIT);
+  });
+});
+
+describe('isSelectableLicense()', () => {
+  test('Accepts a license from either menu section for source code', () => {
+    expect(isSelectableLicense(LicenseUri.MIT, ResearchDataType.SoftwareSourceCode)).toBe(true);
+    expect(isSelectableLicense(LicenseUri.GPL_3_0_only, ResearchDataType.SoftwareSourceCode)).toBe(true);
+  });
+
+  test('Rejects a Creative Commons license for source code', () => {
+    expect(isSelectableLicense(LicenseUri.CC_BY_4, ResearchDataType.SoftwareSourceCode)).toBe(false);
+  });
+
+  test('Rejects a software license for other categories', () => {
+    expect(isSelectableLicense(LicenseUri.MIT, JournalType.AcademicArticle)).toBe(false);
+  });
+
+  test('Accepts current and older Creative Commons licenses for other categories', () => {
+    expect(isSelectableLicense(LicenseUri.CC_BY_4, JournalType.AcademicArticle)).toBe(true);
+    expect(isSelectableLicense(LicenseUri.CC_BY_3, JournalType.AcademicArticle)).toBe(true);
+  });
+
+  test('Accepts Generelle bruksvilkår only outside source code', () => {
+    expect(isSelectableLicense(LicenseUri.CopyrightAct, JournalType.AcademicArticle)).toBe(true);
+    expect(isSelectableLicense(LicenseUri.CopyrightAct, ResearchDataType.SoftwareSourceCode)).toBe(false);
+  });
+
+  test('Accepts CC0 for both source code and other categories', () => {
+    expect(isSelectableLicense(LicenseUri.CC0, ResearchDataType.SoftwareSourceCode)).toBe(true);
+    expect(isSelectableLicense(LicenseUri.CC0, JournalType.AcademicArticle)).toBe(true);
+  });
+
+  test('Rejects a file without a license', () => {
+    expect(isSelectableLicense(null, ResearchDataType.SoftwareSourceCode)).toBe(false);
+    expect(isSelectableLicense('', ResearchDataType.SoftwareSourceCode)).toBe(false);
+  });
+
+  test('Rejects a license that is not in the vocabulary', () => {
+    expect(isSelectableLicense('123', ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
 });
 
