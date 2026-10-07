@@ -99,7 +99,7 @@ const sourceCodeHelpModalLicenses = toLicenses(sourceCodeMenu.helpModal);
  * @param publicationInstanceType Category of the registration the file belongs to.
  * @returns True for the source code category.
  */
-const isSourceCodeCategory = (publicationInstanceType?: string) =>
+export const isSourceCodeCategory = (publicationInstanceType?: string) =>
   publicationInstanceType === ResearchDataType.SoftwareSourceCode;
 
 /**
