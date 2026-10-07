@@ -761,6 +761,7 @@
     "to_top": "Til toppen"
   },
   "go_to_advanced_search": "Gå til avansert resultatsøk",
+  "go_to_book": "Gå til bok",
   "imported_data_warning": "Viser importerte data. Tallene kan avvike fra det som ble rapportert på rapporteringstidspunkt.",
   "institution_support": "Institusjonens brukerstøtte",
   "institutions_service_support": "Institusjonenes brukerstøtte",
@@ -808,6 +809,7 @@
     "read_more_about_license": "Les mer om {{license}}",
     "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Disse bruksvilkårene beskriver lovlig bruk av materiale som er gjort tilgjengelig i Nasjonalt vitenarkiv og som er merket med «generelle bruksvilkår».</p><ul><li>Du kan fritt lese og lenke til materialet.<ul><li>Du kan fritt lese materialet og dele lenke til det, for eksempel i e-post, eller på en nettside.</li></ul></li><li>Du kan sitere fra materialet i tråd med god skikk og så langt formålet tilsier det, jf. åndsverkloven § 29.<ul><li>Sitatet må settes inn i en relevant sammenheng og ikke endre verkets karakter.</li><li>Oppgi alltid kilde og opphaver, så langt det er praktisk mulig, jf. § 5.</li></ul></li><li>Du kan lage kopier til privat bruk, inkludert deling i nær personkrets og til personlig yrkesmessig bruk.  Med «privat bruk» menes at kopien kun skal brukes i en begrenset krets eller av deg selv, og altså ikke deles med allmennheten eller brukes kommersielt. Dette kan for eksempel være:<ul><li>Privat bruk: for eksempel laste ned en artikkel for å senere bruke eller dele den med en venn eller et familiemedlem.</li><li>Privat yrkesmessig bruk: for eksempel laste ned en artikkel for å forberede en forelesning, eller ta med et dokument hjem for selvstudium.</li></ul></li></ul><strong>Når må du ha tillatelse?</strong><p>Dersom du ønsker å bruke materialet på annen måte – for eksempel publisere det et annet sted, bruke det i nye publikasjoner, eller gjøre hele verket tilgjengelig utenfor NVA – må du innhente tillatelse fra rettighetshaver. Slike handlinger omfattes av opphavspersonens enerett etter åndsverkloven § 3.</p><strong>Er du i tvil?</strong><p>Hvis du er usikker på om du har rett til å bruke materialet slik du planlegger, anbefales det å kontakte rettighetshaver – eller din institusjon for veiledning.</p><hr/><p>Dersom du er rettighetshaver til et åndsverk som har fått denne lisensen og er uenig i at materialet kan brukes som beskrevet over, så må du ta kontakt med utgiveren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikke er mulig å kontakte utgiveren, kan du ta kontakt med tjenestelevandøren for NVA, Sikt: <link1>Henvendelse om opphavsrett</link1>.</p>"
   },
+  "linked_book_missing_isbn_description": "<p>Dette resultatet vil ikke bli kandidat for rapportering til Norsk vitenskapsindeks (NVI) siden den tilknyttede boken mangler ISBN.</p><p>Oppgi ISBN ved å velge «Gå til bok» og deretter redigere boken.</p>",
   "log": {
     "hidden_file_added": "Skjult fil lagt til",
     "hidden_files_on_registration_one": "Registreringen har {{count}} skjult fil",
@@ -862,6 +864,7 @@
   "merge_import_candidate": "Slå sammen importkandidat",
   "merge_results": "Slå sammen resultat",
   "merge_results_description": "<heading>$t(merge_results)</heading><p>Er resultatet en duplikat, men mangler metadata og filer?</p><p>Da kan du slå sammen metadata og samle filer til ett resultat.</p>",
+  "missing_isbn_on_linked_book": "Mangler ISBN på tilknyttet bok",
   "missing_value": "Mangler verdi",
   "my_page": {
     "messages": {
