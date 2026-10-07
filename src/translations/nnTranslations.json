@@ -4,6 +4,7 @@
     "copyright_inquiries": "Førespurnad om opphavsrett",
     "footer_text": "Tenesta blir levert av Sikt – Kunnskapssektorens tenesteleverandør. Sikt er leverandør av fellesstenester til norsk kunnskapssektor."
   },
+  "academic_chapter_in_book_without_isbn": "",
   "add_file": "Legg til fil",
   "add_project": "Legg til prosjekt",
   "approval": "Godkjenning",
@@ -156,6 +157,7 @@
       "show_full_nin": "Vis personnummer"
     }
   },
+  "book_or_report_without_isxn": "",
   "candidate": "Kandidat",
   "candidate_search": "Kandidatsøk",
   "candidates_approved_by_the_institution": "Kandidatar institusjonen har godkjend",
@@ -632,6 +634,8 @@
       "login_failed_try_bankid": "Innlogging feila. Prøv å logge inn med BankID i staden.",
       "orcid_login": "Kunne ikkje logge inn på ORCID",
       "person_search": "Søk etter person feila",
+      "profile_picture_invalid_type": "",
+      "profile_picture_too_large": "",
       "project_search": "Søk på prosjekt feila",
       "publish_registration": "Kunne ikkje publisere registrering",
       "registration_update_precondition_failed": "Registreringa er endra etter at du lasta sida. Last sida på nytt for å prøve igjen. Ulagra endringar vil gå tapt.",
@@ -758,6 +762,7 @@
     "to_top": "Til toppen"
   },
   "go_to_advanced_search": "Gå til avansert resultatsøk",
+  "go_to_book": "",
   "imported_data_warning": "Viser importerte data. Tala kan avvike frå det som vart rapportert på rapporteringstidspunkt.",
   "institution_support": "Intitusjonen si brukarstøtte",
   "institutions_service_support": "Institusjonane si brukarstøtte",
@@ -805,6 +810,7 @@
     "read_more_about_license": "Les meir om {{license}}",
     "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Desse bruksvilkåra beskriv lovleg bruk av materiale som er gjort tilgjengeleg i Nasjonalt vitenarkiv og som er merka med «generelle bruksvilkår».</p><ul><li>Du kan fritt lese og lenkje til materialet.<ul><li>Du kan fritt lese materialet og dele lenkje til det, til dømes i e-post, eller på ei nettside.</li></ul></li><li>Du kan sitere frå materialet i tråd med god skikk og så langt føremålet tilseier det, jf. åndsverklova § 29.<ul><li>Sitatet må setjast inn i ein relevant samanheng og ikkje endre verkets karakter.</li><li>Oppgi alltid kjelde og opphavar, så langt det er praktisk mogleg, jf. § 5.</li></ul></li><li>Du kan lage kopiar til privat bruk, inkludert deling i nær personkrins og til personleg yrkesmessig bruk. Med «privat bruk» meinast at kopien berre skal brukast i ein avgrensa krins eller av deg sjølv, og altså ikkje delast med allmenta eller brukast kommersielt. Dette kan til dømes vere:<ul><li>Privat bruk: til dømes laste ned ein artikkel for å seinare bruke eller dele han med ein ven eller eit familiemedlem.</li><li>Privat yrkesmessig bruk: til dømes laste ned ein artikkel for å førebu ei førelesing, eller ta med eit dokument heim for sjølvstudium.</li></ul></li></ul><strong>Når må du ha løyve?</strong><p>Dersom du ønskjer å bruke materialet på annan måte – til dømes publisere det ein annan stad, bruke det i nye publikasjonar, eller gjere heile verket tilgjengeleg utanfor NVA – må du innhente løyve frå rettshavar. Slike handlingar er omfatta av opphavspersonens einerett etter åndsverklova § 3.</p><strong>Er du i tvil?</strong><p>Dersom du er usikker på om du har rett til å bruke materialet slik du planlegg, blir det tilrådd å kontakte rettshavar – eller din institusjon for rettleiing.</p><hr/><p>Dersom du er rettshavar til eit åndsverk som har fått denne lisensen og er ueinig i at materialet kan brukast som skildra over, må du ta kontakt med utgjevaren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikkje er mogleg å kontakte utgjevaren, kan du ta kontakt med tenesteleverandøren for NVA, Sikt: <link1>Førespurnad om opphavsrett</link1>.</p>"
   },
+  "linked_book_missing_isbn_description": "",
   "log": {
     "hidden_file_added": "Skjult fil lagt til",
     "hidden_files_on_registration_one": "Registreringa har {{count}} skjult fil",
@@ -859,6 +865,7 @@
   "merge_import_candidate": "Slå saman importkandidat",
   "merge_results": "Slå saman resultat",
   "merge_results_description": "<heading>$t(merge_results)</heading><p>Er resultatet eit duplikat, men manglar metadata og filer?</p><p>Då kan du slå saman metadata og samle filer til eitt resultat.</p>",
+  "missing_isbn_on_linked_book": "",
   "missing_value": "Manglar verdi",
   "my_page": {
     "messages": {
@@ -1028,6 +1035,8 @@
   "nvi_publication_points_page_description_expanded": "",
   "nvi_reporting_periods_text": "",
   "nvi_year": "",
+  "only_academic_chapter_category_available": "",
+  "only_book_and_report_categories_available": "",
   "overview_over_administrators": "Oversyn over administratorar",
   "overwrite": "Overskriv",
   "owner_institution": "Eigarinstitusjon",
@@ -1427,6 +1436,8 @@
       "reserve_doi": "Reserver ein DOI",
       "result_not_published": "Resultatet er ikkje publisert",
       "scopus_id": "Scopus ID",
+      "show_fewer_ids": "",
+      "show_more_ids": "",
       "subject_and_classification": "Emne og klassifisering",
       "tasks_panel": {
         "approve_publishing_request_description": "<0>Som kurator kan du godkjenne eller avvise dei opplasta filene.</0><0>Trykker du på \"$t(registration.public_page.approve_publish_request)\" i denne menyen, vil alle opplasta filer bli godkjente med dei innstillingane dei har. Det vil seie at opne filer blir offentleggjort i NVA og interne filer blir arkivert og skjult.</0>",
@@ -2052,7 +2063,6 @@
         "chapter_and_book_year_mismatch": "",
         "non_applicable_category_in_applicable_channel": "Ikkje-teljande kategoriar i teljande kanalar",
         "scientific_chapter_not_in_anthology": "",
-        "scientific_monography_or_anthology_without_isxns": "",
         "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsytar med identifisert institusjon"
       },
       "delete_note": "Slett kommentar",
