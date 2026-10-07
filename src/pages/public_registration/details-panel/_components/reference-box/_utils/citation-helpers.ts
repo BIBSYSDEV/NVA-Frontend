@@ -106,7 +106,7 @@ export const normalizeBaseFields = (registration: Registration) => {
   return {
     authors: formatAuthorList(getCreators(registration)),
     year: entityDescription?.publicationDate?.year?.trim() ?? '',
-    title: toSentenceCase(entityDescription?.mainTitle?.trim() ?? ''),
+    title: toSentenceCase(entityDescription?.mainTitle?.trim() ?? '', entityDescription?.language),
     pid: getPersistentIdentifier(registration),
   };
 };
