@@ -782,7 +782,21 @@
       "cc_by_nd": "<p>Brukeren kan: kopiere og dele verket for alle typer bruk, også kommersielle.</p><p>Brukeren kan ikke: endre eller tilpasse verket.</p><p>Brukeren må: gi riktig kreditering.</p>",
       "cc_by_sa": "<p>Brukeren kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p><p>Brukeren må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
       "copyright_act": "<p>Dette materialet kan kun brukes innenfor de rammene som lov om opphavsrett til åndsverk (åndsverksloven) gir:</p><ul><li>Brukeren kan lese og lenke til materialet.</li><li>Brukeren kan sitere fra materialet i samsvar med god skikk, og så langt formålet tilsier det.</li><li>Brukeren kan kopiere materialet til privat bruk, inkludert deling i privat krets og til personlig yrkesmessig bruk.</li></ul><p>Dersom brukeren ønsker å benytte materialet på en annen måte, for eksempel til re-publisering, må brukeren innhente samtykke direkte fra rettighetshaver (den fysiske eller juridiske personen som har immateriell rettighet til materiale).</p>",
-      "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens"
+      "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens",
+      "mit": "MIT",
+      "apache_2_0": "Apache License 2.0",
+      "gpl_3_0_or_later": "GNU General Public License v3.0 or later",
+      "gpl_2_0_or_later": "GNU General Public License v2.0 or later",
+      "gpl_2_0_only": "GNU General Public License v2.0 only",
+      "gpl_3_0_only": "GNU General Public License v3.0 only",
+      "agpl_3_0_only": "GNU Affero General Public License v3.0 only",
+      "agpl_3_0_or_later": "GNU Affero General Public License v3.0 or later",
+      "lgpl_3_0_only": "GNU Lesser General Public License v3.0 only",
+      "lgpl_3_0_or_later": "GNU Lesser General Public License v3.0 or later",
+      "mpl_2_0": "Mozilla Public License 2.0",
+      "bsd_3_clause": "BSD 3-Clause \"New\" or \"Revised\" License",
+      "bsd_2_clause": "BSD 2-Clause \"Simplified\" License",
+      "eupl_1_2": "European Union Public License 1.2"
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -794,7 +808,21 @@
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
       "copyright_act": "Generelle bruksvilkår",
-      "older_licenses": "Eldre lisenser"
+      "older_licenses": "Eldre lisenser",
+      "mit": "MIT",
+      "apache_2_0": "Apache License 2.0",
+      "gpl_3_0_or_later": "GNU General Public License v3.0 or later",
+      "gpl_2_0_or_later": "GNU General Public License v2.0 or later",
+      "gpl_2_0_only": "GNU General Public License v2.0 only",
+      "gpl_3_0_only": "GNU General Public License v3.0 only",
+      "agpl_3_0_only": "GNU Affero General Public License v3.0 only",
+      "agpl_3_0_or_later": "GNU Affero General Public License v3.0 or later",
+      "lgpl_3_0_only": "GNU Lesser General Public License v3.0 only",
+      "lgpl_3_0_or_later": "GNU Lesser General Public License v3.0 or later",
+      "mpl_2_0": "Mozilla Public License 2.0",
+      "bsd_3_clause": "BSD 3-Clause \"New\" or \"Revised\" License",
+      "bsd_2_clause": "BSD 2-Clause \"Simplified\" License",
+      "eupl_1_2": "European Union Public License 1.2"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
@@ -807,6 +835,56 @@
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no"
     },
     "read_more_about_license": "Les mer om {{license}}",
+    "software": {
+      "attribution": "Veiledningspunktene er basert på <chooseALicenseLink>choosealicense.com</chooseALicenseLink> (GitHub), lisensiert <ccByLink>CC BY 3.0</ccByLink>, bearbeidet og oversatt for NVA.",
+      "conditions": "Vilkår",
+      "disclaimer": "Denne siden er en uoffisiell norsk veiledning. Den er ikke en oversettelse av lisensen og har ingen juridisk gyldighet. Kun den engelske originalteksten, lenket øverst på siden, er juridisk bindende. Siden finnes utelukkende for å hjelpe deg med å finne rett lisens.",
+      "in_short": "Kort forklart",
+      "limitations": "Begrensninger",
+      "official_text": "Offisiell lisenstekst (juridisk bindende, engelsk):",
+      "permissions": "Tillatelser",
+      "rules": {
+        "commercial_use": {
+          "description": "Koden kan brukes til kommersielle formål.",
+          "name": "Kommersiell bruk",
+          "original_term": "commercial use"
+        },
+        "distribution": {
+          "description": "Koden kan videredeles, i original eller endret form.",
+          "name": "Distribusjon",
+          "original_term": "distribution"
+        },
+        "liability": {
+          "description": "Forfatterne kan ikke holdes ansvarlige for skader eller tap.",
+          "name": "Ansvarsfraskrivelse",
+          "original_term": "liability"
+        },
+        "license_and_copyright_notice": {
+          "description": "En kopi av lisensen og opphavsrettsmerknaden må følge med koden.",
+          "name": "Lisens- og opphavsrettsmerknad",
+          "original_term": "license and copyright notice"
+        },
+        "modification": {
+          "description": "Koden kan endres og bearbeides.",
+          "name": "Endring",
+          "original_term": "modification"
+        },
+        "private_use": {
+          "description": "Koden kan brukes og endres privat, uten forpliktelser.",
+          "name": "Privat bruk",
+          "original_term": "private use"
+        },
+        "warranty": {
+          "description": "Koden leveres «som den er», uten noen form for garanti.",
+          "name": "Ingen garanti",
+          "original_term": "warranty"
+        }
+      },
+      "summary": {
+        "mit": "Kort og permissiv: alt er tillatt så lenge lisens- og opphavsrettsmerknaden følger med. Den mest brukte programvarelisensen — over halvparten av all lisensiert kode på GitHub."
+      },
+      "version_note": "Om versjoner"
+    },
     "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Disse bruksvilkårene beskriver lovlig bruk av materiale som er gjort tilgjengelig i Nasjonalt vitenarkiv og som er merket med «generelle bruksvilkår».</p><ul><li>Du kan fritt lese og lenke til materialet.<ul><li>Du kan fritt lese materialet og dele lenke til det, for eksempel i e-post, eller på en nettside.</li></ul></li><li>Du kan sitere fra materialet i tråd med god skikk og så langt formålet tilsier det, jf. åndsverkloven § 29.<ul><li>Sitatet må settes inn i en relevant sammenheng og ikke endre verkets karakter.</li><li>Oppgi alltid kilde og opphaver, så langt det er praktisk mulig, jf. § 5.</li></ul></li><li>Du kan lage kopier til privat bruk, inkludert deling i nær personkrets og til personlig yrkesmessig bruk.  Med «privat bruk» menes at kopien kun skal brukes i en begrenset krets eller av deg selv, og altså ikke deles med allmennheten eller brukes kommersielt. Dette kan for eksempel være:<ul><li>Privat bruk: for eksempel laste ned en artikkel for å senere bruke eller dele den med en venn eller et familiemedlem.</li><li>Privat yrkesmessig bruk: for eksempel laste ned en artikkel for å forberede en forelesning, eller ta med et dokument hjem for selvstudium.</li></ul></li></ul><strong>Når må du ha tillatelse?</strong><p>Dersom du ønsker å bruke materialet på annen måte – for eksempel publisere det et annet sted, bruke det i nye publikasjoner, eller gjøre hele verket tilgjengelig utenfor NVA – må du innhente tillatelse fra rettighetshaver. Slike handlinger omfattes av opphavspersonens enerett etter åndsverkloven § 3.</p><strong>Er du i tvil?</strong><p>Hvis du er usikker på om du har rett til å bruke materialet slik du planlegger, anbefales det å kontakte rettighetshaver – eller din institusjon for veiledning.</p><hr/><p>Dersom du er rettighetshaver til et åndsverk som har fått denne lisensen og er uenig i at materialet kan brukes som beskrevet over, så må du ta kontakt med utgiveren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikke er mulig å kontakte utgiveren, kan du ta kontakt med tjenestelevandøren for NVA, Sikt: <link1>Henvendelse om opphavsrett</link1>.</p>"
   },
   "linked_book_missing_isbn_description": "<p>Dette resultatet vil ikke bli kandidat for rapportering til Norsk vitenskapsindeks (NVI) siden den tilknyttede boken mangler ISBN.</p><p>Oppgi ISBN ved å velge «Gå til bok» og deretter redigere boken.</p>",
@@ -1350,6 +1428,7 @@
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
       "mark_if_funder_requires_rrs": "Om denne publikasjonen er finansiert av en aktør som pålegger deg å følge RRS (ref. Plan S), så markerer du det her.",
+      "mixed_license_version_scopes_warning": "Filene i dette resultatet har lisenser som blander «eller senere» og «kun denne versjonen». Sjekk at det stemmer med hva som står i kildekoden.",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
       "no_files_or_links_present_in_this_registration": "Det er ikke lagt til fil eller lenke for registreringen",
       "open_file": "Åpne fil",
@@ -1362,6 +1441,8 @@
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
       "show_all_older_versions": "Vis alle tidligere versjoner",
+      "show_full_license_list": "Vis full lisensliste",
+      "source_code_license_info": "<p>Velg lisensen kildekoden faktisk er publisert under. Lisensen lagres med presis <spdxLink>SPDX-identifikator</spdxLink>, slik at skillet mellom «eller senere» og «kun denne versjonen» bevares.</p><p>Står det ikke «or any later version» i koden, velg -only-varianten fra full lisensliste.</p>",
       "version_helper_text": "<p>Last opp akseptert versjon, dersom publisert versjon ikke er åpent publisert med en <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading> <p>Forfatters siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den presenteres i et tidsskrift. Denne versjonen vil inkludere redaksjonelle forbedringer, og forlagets grafiske profil. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Du må velge den samme Creative Commons-lisensen som artikkelen er publisert med.</p>"
     },
     "heading": {

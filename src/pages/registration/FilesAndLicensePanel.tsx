@@ -13,6 +13,7 @@ import { FileType, NullAssociatedArtifact } from '../../types/associatedArtifact
 import { FileFieldNames, ResourceFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { hasMixedLicenseVersionScopes } from '../../utils/fileHelpers';
 import {
   allowsFileUpload,
   associatedArtifactIsNullArtifact,
@@ -210,6 +211,14 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   pendingFiles.every((file) => file.type === FileType.PendingInternalFile) && (
                     <InfoBanner type={InfoBannerType.INFO_LIGHT} text={t('internal_file_info_description')} />
                   )}
+
+                {hasMixedLicenseVersionScopes(files) && (
+                  <InfoBanner
+                    data-testid={dataTestId.registrationWizard.files.mixedLicenseVersionScopeWarning}
+                    type={InfoBannerType.WARNING}
+                    text={t('registration.files_and_license.mixed_license_version_scopes_warning')}
+                  />
+                )}
 
                 {pendingFiles.length > 0 && (
                   <FileList

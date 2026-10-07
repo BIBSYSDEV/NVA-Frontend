@@ -573,6 +573,7 @@ export const dataTestId = {
       licenseHelpButton: 'license-help-button',
       licenseItem: 'license-item',
       licenseItemShowOlderVersion: 'license-item-show-older-versions',
+      mixedLicenseVersionScopeWarning: 'mixed-license-version-scope-warning',
       licenseModal: 'license-modal',
       linkField: 'link-field',
       linkToResourceField: 'link-to-resource-field',
