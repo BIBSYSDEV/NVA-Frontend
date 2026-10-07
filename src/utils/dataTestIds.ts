@@ -808,6 +808,7 @@ export const dataTestId = {
       scientificChapterNotInAnthology: 'scientific-chapter-not-in-anthology',
       bookOrReportWithoutIsxn: 'book-or-report-without-isxn',
       booksWithoutNpiField: 'books-without-npi-field',
+      academicChapterInBookWithoutIsbn: 'academic-chapter-in-book-without-isbn',
     },
     curatorSelector: 'curator-selector',
     dialoguesWithoutCuratorButton: 'dialogues-without-curator-button',

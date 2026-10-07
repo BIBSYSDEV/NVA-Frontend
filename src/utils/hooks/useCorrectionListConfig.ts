@@ -21,6 +21,10 @@ export const useCorrectionListConfig = (): CorrectionListConfig => {
     [...bookTypes, ...Object.values(ReportType)],
     t('only_book_and_report_categories_available')
   );
+  const nonAcademicChapterDisabledCategories = getDisabledCategoriesOutside(
+    [ChapterType.AcademicChapter],
+    t('only_academic_chapter_category_available')
+  );
 
   return {
     ApplicableCategoriesWithNonApplicableChannel: {
@@ -145,6 +149,20 @@ export const useCorrectionListConfig = (): CorrectionListConfig => {
       },
       disabledFilters: [],
       disabledCategories: nonBookDisabledCategories,
+      showScientificValueFilter: true,
+      showChannelFilters: true,
+      showAllYearsOption: true,
+      topLevelOrganization: userTopLevelOrg,
+    },
+    AcademicChapterInBookWithoutIsbn: {
+      i18nKey: 'academic_chapter_in_book_without_isbn',
+      queryParams: {
+        categoryShould: [ChapterType.AcademicChapter],
+        hasIsbn: false,
+        hasParent: true,
+      },
+      disabledFilters: [],
+      disabledCategories: nonAcademicChapterDisabledCategories,
       showScientificValueFilter: true,
       showChannelFilters: true,
       showAllYearsOption: true,

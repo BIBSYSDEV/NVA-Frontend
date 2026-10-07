@@ -108,6 +108,12 @@ export const NviCorrectionListNavigationAccordion = () => {
           onClick={() => openNewCorrectionList(CorrectionListNames.BooksWithoutNpiField)}>
           {t('tasks.nvi.correction_list_type.books_without_npi_field')}
         </SelectableButton>
+        <SelectableButton
+          data-testid={dataTestId.tasksPage.correctionList.academicChapterInBookWithoutIsbn}
+          isSelected={selectedNviList === CorrectionListNames.AcademicChapterInBookWithoutIsbn}
+          onClick={() => openNewCorrectionList(CorrectionListNames.AcademicChapterInBookWithoutIsbn)}>
+          {t('academic_chapter_in_book_without_isbn')}
+        </SelectableButton>
       </NavigationList>
     </NavigationListAccordion>
   );
