@@ -1,12 +1,12 @@
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import { afterAll, beforeAll, describe, expect, test } from 'vitest';
+import { afterAll, afterEach, beforeAll, describe, expect, test, vi } from 'vitest';
 import { Affiliation, Contributor, ContributorRole } from '../../types/contributor.types';
 import { Organization } from '../../types/organization.types';
 import { BookRegistration } from '../../types/publication_types/bookRegistration.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { PublicationChannelType } from '../../types/registration.types';
-import { willResetNviStatuses } from '../nviHelpers';
+import { getDefaultNviYear, getSelectableYears, willResetNviStatuses } from '../nviHelpers';
 import { mockRegistration } from '../testfiles/mockRegistration';
 import { buildContributor, buildIdentity } from './testHelpers';
 
@@ -464,5 +464,79 @@ describe('willResetNviStatuses()', () => {
 
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
     expect(result).toBe(true);
+  });
+});
+
+describe('getDefaultNviYear', () => {
+  // A date-only string would be parsed as UTC, while getDefaultNviYear reads the local month.
+  // Adding a time makes the date local, so the tests hold in every timezone.
+  const setSystemDate = (date: string) => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(`${date}T12:00:00`));
+  };
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  test('should return the previous year in January, while the previous year is still being reported', () => {
+    setSystemDate('2026-01-01');
+    expect(getDefaultNviYear()).toBe(2025);
+  });
+
+  test('should return the previous year on the last day of April', () => {
+    setSystemDate('2026-04-30');
+    expect(getDefaultNviYear()).toBe(2025);
+  });
+
+  test('should return the current year on the first day of May, when the new NVI year starts', () => {
+    setSystemDate('2026-05-01');
+    expect(getDefaultNviYear()).toBe(2026);
+  });
+
+  test('should return the current year on the last day of December', () => {
+    setSystemDate('2026-12-31');
+    expect(getDefaultNviYear()).toBe(2026);
+  });
+});
+
+describe('getSelectableYears', () => {
+  const standardYears = [2027, 2026, 2025];
+
+  test('should offer only the standard years when the selected year is one of them', () => {
+    expect(getSelectableYears(standardYears, '2026')).toEqual(standardYears);
+  });
+
+  test('should include a selected year from before the window, sorted last', () => {
+    expect(getSelectableYears(standardYears, '2019')).toEqual([2027, 2026, 2025, 2019]);
+  });
+
+  test('should include a selected year from after the window, sorted first', () => {
+    expect(getSelectableYears(standardYears, '2030')).toEqual([2030, 2027, 2026, 2025]);
+  });
+
+  test('should ignore a non numeric selection, such as the "show all" sentinel', () => {
+    expect(getSelectableYears(standardYears, 'showAll')).toEqual(standardYears);
+  });
+
+  test('should ignore an empty selection, which converts to zero rather than to NaN', () => {
+    expect(getSelectableYears(standardYears, '')).toEqual(standardYears);
+  });
+
+  test('should ignore a selection that is not a whole positive year', () => {
+    expect(getSelectableYears(standardYears, '0')).toEqual(standardYears);
+    expect(getSelectableYears(standardYears, '-2026')).toEqual(standardYears);
+    expect(getSelectableYears(standardYears, '2026.5')).toEqual(standardYears);
+  });
+
+  // Both branches must hand back an owned list, so a caller sorting or reversing the result cannot
+  // corrupt the standard years, which are a module level constant where this is used
+  test('should return a new list in both branches, leaving the standard years untouched', () => {
+    const yearInWindow = getSelectableYears(standardYears, '2026');
+    const yearOutsideWindow = getSelectableYears(standardYears, '2030');
+
+    expect(yearInWindow).not.toBe(standardYears);
+    expect(yearOutsideWindow).not.toBe(standardYears);
+    expect(standardYears).toEqual([2027, 2026, 2025]);
   });
 });
