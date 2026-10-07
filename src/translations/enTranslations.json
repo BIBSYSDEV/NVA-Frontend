@@ -4,6 +4,7 @@
     "copyright_inquiries": "Inquires about copyright",
     "footer_text": "The service is provided by Sikt — Norwegian Agency for Shared Services in Education and Research. Sikt provides shared services to the Norwegian knowledge sector."
   },
+  "academic_chapter_in_book_without_isbn": "",
   "add_file": "Add file",
   "add_project": "Add project",
   "approval": "Approval",
@@ -156,6 +157,7 @@
       "show_full_nin": "Show national identity number"
     }
   },
+  "book_or_report_without_isxn": "",
   "candidate": "Candidate",
   "candidate_search": "Candidate search",
   "candidates_approved_by_the_institution": "Candidates approved by the institution",
@@ -632,6 +634,8 @@
       "login_failed_try_bankid": "Log in failed. Try logging in with BankID instead.",
       "orcid_login": "ORCID login failed",
       "person_search": "Search for person failed",
+      "profile_picture_invalid_type": "",
+      "profile_picture_too_large": "",
       "project_search": "Project search failed",
       "publish_registration": "Could not publish registration",
       "registration_update_precondition_failed": "The registration was changed after you loaded the page. Reload the page to try again. Unsaved changes will be lost.",
@@ -758,6 +762,7 @@
     "to_top": "To the top"
   },
   "go_to_advanced_search": "Go to advanced result search",
+  "go_to_book": "",
   "imported_data_warning": "Showing imported data. The figures may differ from what was reported at the time of reporting.",
   "institution_support": "Institution's user support",
   "institutions_service_support": "Institutions' user support",
@@ -805,6 +810,7 @@
     "read_more_about_license": "Read more about {{license}}",
     "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>These terms of use describe the lawful use of material made available in the Norwegian Research Information Repository (NVA) and labelled with \"general terms of use\".</p><ul><li>You are free to read and link to the material.<ul><li>You are free to read the material and share links to it, for example in an email or on a website.</li></ul></li><li>You may quote from the material in accordance with fair practice and to the extent required by the purpose, cf. Copyright Act § 29.<ul><li>The quote must be placed in a relevant context and must not alter the character of the work.</li><li>Always provide the source and author, as far as it is practically possible, cf. § 5.</li></ul></li><li>You may make copies for private use, including sharing within a close circle of acquaintances and for personal professional use. By \"private use,\" it is meant that the copy should only be used in a limited circle or by yourself, and therefore not shared with the public or used commercially. This could, for example, include:<ul><li>Private use: for example, downloading an article to later use or share it with a friend or family member.</li><li>Private professional use: for example, downloading an article to prepare a lecture or taking a document home for self-study.</li></ul></li></ul><strong>When do you need permission?</strong><p>If you wish to use the material in another way — for example, publish it elsewhere, use it in new publications, or make the entire work available outside NVA — you must obtain permission from the rights holder. Such actions are covered by the author's exclusive rights under Copyright Act § 3.</p><strong>Are you in doubt?</strong><p>If you are unsure whether you have the right to use the material as you intend, it is recommended to contact the rights holder — or your institution for guidance.</p><hr/><p>If you are the rights holder of an intellectual property work that has been given this licence and you disagree that the material can be used as described above, you must contact the publisher (the institution or journal) that has published it.</p><p>If it is not possible to contact the publisher, you can contact the service provider for NVA, Sikt: <link1>Inquiries about copyright</link1>.</p>"
   },
+  "linked_book_missing_isbn_description": "",
   "log": {
     "hidden_file_added": "Hidden file added",
     "hidden_files_on_registration_one": "The registration has {{count}} hidden file",
@@ -859,6 +865,7 @@
   "merge_import_candidate": "Merge import candidate",
   "merge_results": "Merge result",
   "merge_results_description": "<heading>$t(merge_results)</heading><p>Is the result a duplicate, but is missing metadata and files?</p><p>You may merge the metadata and collect files to one result.</p>",
+  "missing_isbn_on_linked_book": "",
   "missing_value": "Missing value",
   "my_page": {
     "messages": {
@@ -1028,6 +1035,8 @@
   "nvi_publication_points_page_description_expanded": "",
   "nvi_reporting_periods_text": "",
   "nvi_year": "",
+  "only_academic_chapter_category_available": "",
+  "only_book_and_report_categories_available": "",
   "overview_over_administrators": "Overview of administrators",
   "overwrite": "Overwrite",
   "owner_institution": "Owner institution",
@@ -1427,6 +1436,8 @@
       "reserve_doi": "Reserve a DOI",
       "result_not_published": "The result is not published",
       "scopus_id": "Scopus ID",
+      "show_fewer_ids": "",
+      "show_more_ids": "",
       "subject_and_classification": "Subject and classification",
       "tasks_panel": {
         "approve_publishing_request_description": "<0>As a curator, you can approve or reject the uploaded files.</0><0>\nIf you click on \"$t(registration.public_page.approve_publish_request)\" in this menu, all uploaded files will be approved with their current settings. This means that open files will be published in NVA and internal files will be archived and hidden.</0>",
@@ -2052,7 +2063,6 @@
         "chapter_and_book_year_mismatch": "",
         "non_applicable_category_in_applicable_channel": "Non-counting categories in counting channels",
         "scientific_chapter_not_in_anthology": "",
-        "scientific_monography_or_anthology_without_isxns": "",
         "unidentified_contributor_with_identified_affiliation": "Unidentified contributor with identified institution"
       },
       "delete_note": "Delete comment",
