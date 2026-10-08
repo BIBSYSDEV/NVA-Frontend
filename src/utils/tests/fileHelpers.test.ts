@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+import { AssociatedArtifact, AssociatedFile, FileType } from '../../types/associatedArtifact.types';
 import { LicenseUri } from '../../types/license.types';
 import { JournalType, ResearchDataType } from '../../types/publicationFieldNames';
 import {
@@ -7,6 +8,7 @@ import {
   getLicenseData,
   getShortListLicenses,
   isSelectableLicense,
+  licenseNeedsReset,
 } from '../fileHelpers';
 
 describe('getLicenseData()', () => {
@@ -199,6 +201,45 @@ describe('isSelectableLicense()', () => {
 
   test('Rejects a license that is not in the vocabulary', () => {
     expect(isSelectableLicense('123', ResearchDataType.SoftwareSourceCode)).toBe(false);
+  });
+});
+
+describe('licenseNeedsReset()', () => {
+  const editableFile = (license: string | null) =>
+    ({ type: FileType.OpenFile, license, allowedOperations: ['write-metadata'] }) as AssociatedFile;
+
+  const readOnlyFile = (license: string | null) =>
+    ({ type: FileType.OpenFile, license, allowedOperations: ['download'] }) as AssociatedFile;
+
+  test('Clears a license the new category does not offer', () => {
+    expect(licenseNeedsReset(editableFile(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode)).toBe(true);
+    expect(licenseNeedsReset(editableFile(LicenseUri.MIT), JournalType.AcademicArticle)).toBe(true);
+  });
+
+  test('Keeps a license the new category still offers', () => {
+    expect(licenseNeedsReset(editableFile(LicenseUri.CC0), ResearchDataType.SoftwareSourceCode)).toBe(false);
+    expect(licenseNeedsReset(editableFile(LicenseUri.CC_BY_4), JournalType.AcademicArticle)).toBe(false);
+  });
+
+  test('Keeps a license on a file the user cannot edit', () => {
+    expect(licenseNeedsReset(readOnlyFile(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode)).toBe(false);
+  });
+
+  test('Keeps a license on a file with no access rights at all', () => {
+    const fileWithoutOperations = { type: FileType.OpenFile, license: LicenseUri.CC_BY_4 } as AssociatedFile;
+
+    expect(licenseNeedsReset(fileWithoutOperations, ResearchDataType.SoftwareSourceCode)).toBe(false);
+  });
+
+  test('Leaves a file without a license untouched, so null is not overwritten with an empty string', () => {
+    expect(licenseNeedsReset(editableFile(null), ResearchDataType.SoftwareSourceCode)).toBe(false);
+    expect(licenseNeedsReset(editableFile(''), ResearchDataType.SoftwareSourceCode)).toBe(false);
+  });
+
+  test('Leaves artifacts that are not files untouched', () => {
+    const link = { type: 'AssociatedLink', id: 'https://sikt.no' } as AssociatedArtifact;
+
+    expect(licenseNeedsReset(link, ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
 });
 

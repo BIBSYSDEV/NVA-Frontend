@@ -51,7 +51,7 @@ import {
 } from '../../../types/publicationFieldNames';
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { hasFileAccessRight, isSelectableLicense, isSourceCodeCategory } from '../../../utils/fileHelpers';
+import { isSourceCodeCategory, licenseNeedsReset } from '../../../utils/fileHelpers';
 import {
   getDisabledCategories,
   getMainRegistrationType,
@@ -275,17 +275,7 @@ export const SelectRegistrationTypeField = () => {
 
       if (licenseMenuChanged) {
         values.associatedArtifacts.forEach((associatedArtifact, index) => {
-          const needsNewLicense =
-            'license' in associatedArtifact &&
-            // A file without a license has nothing to clear, and writing an empty string over it would
-            // only make the form dirty and send '' where the backend had null.
-            !!associatedArtifact.license &&
-            // Clearing a license the user cannot edit would leave the registration invalid with no way
-            // to fix it, since the license field is disabled for them.
-            hasFileAccessRight(associatedArtifact, 'write-metadata') &&
-            !isSelectableLicense(associatedArtifact.license, newInstanceType);
-
-          if (needsNewLicense) {
+          if (licenseNeedsReset(associatedArtifact, newInstanceType)) {
             setFieldValue(
               `${FileFieldNames.AssociatedArtifacts}[${index}].${SpecificFileFieldNames.License}`,
               '',

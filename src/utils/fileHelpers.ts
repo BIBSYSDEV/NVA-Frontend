@@ -1,4 +1,4 @@
-import { AssociatedFile, FileAllowedOperation } from '../types/associatedArtifact.types';
+import { AssociatedArtifact, AssociatedFile, FileAllowedOperation } from '../types/associatedArtifact.types';
 import { licenses, LicenseUri } from '../types/license.types';
 import { ResearchDataType } from '../types/publicationFieldNames';
 
@@ -6,29 +6,41 @@ export const hasFileAccessRight = (file: AssociatedFile, operation: FileAllowedO
   return file.allowedOperations?.includes(operation) ?? false;
 };
 
-const isEqualLicenseUri = (uri1: string | null, uri2: string | null) => {
-  if (!uri1 || !uri2) {
+/**
+ * Whether a string value points to a given license.
+ * @param value Value to check, which might not be a URL at all.
+ * @param licenseUri Identifier of a license in our vocabulary, compared against.
+ * @returns True when the two denote the same license, ignoring scheme, casing and trailing slash.
+ */
+const isEqualToLicenseUri = (value: string | null, licenseUri: LicenseUri) => {
+  if (!value) {
     return false;
   }
-  if (uri1 === uri2) {
+  if (value === licenseUri) {
     return true;
   }
-  const urlObj1 = new URL(uri1);
-  const urlObj2 = new URL(uri2);
+  try {
+    const licenseUrl = new URL(licenseUri);
+    const valueUrl = new URL(value);
 
-  if (urlObj1.hostname === urlObj2.hostname) {
-    return removeTrailingSlash(urlObj1.pathname).toLowerCase() === removeTrailingSlash(urlObj2.pathname).toLowerCase();
+    if (licenseUrl.hostname === valueUrl.hostname) {
+      return (
+        removeTrailingSlash(licenseUrl.pathname).toLowerCase() === removeTrailingSlash(valueUrl.pathname).toLowerCase()
+      );
+    }
+  } catch {
+    // Returning false keeps getLicenseData returning null for it, rather than throwing while a file row renders.
   }
   return false;
 };
 
 const removeTrailingSlash = (value: string) => (value.endsWith('/') ? value.slice(0, -1) : value);
 
-export const getLicenseData = (licenseUri: string | null) => {
-  if (!licenseUri) {
+export const getLicenseData = (value: string | null) => {
+  if (!value) {
     return null;
   }
-  const license = licenses.find((l) => isEqualLicenseUri(l.id, licenseUri));
+  const license = licenses.find(({ id }) => isEqualToLicenseUri(value, id));
   return license ?? null;
 };
 
@@ -127,10 +139,31 @@ export const getHelpModalLicenses = (publicationInstanceType?: string) =>
   isSourceCodeCategory(publicationInstanceType) ? sourceCodeHelpModalLicenses : activeLicenses;
 
 /**
- * Whether a license can still be selected for a file after the registration changed category. The
- * license menus differ per category, so a license chosen before the change may no longer be offered.
- * @param licenseUri Value currently stored in the file's license field.
- * @param publicationInstanceType Category the registration is changing to.
+ * Whether a file's license must be cleared because the registration changed to a category whose license
+ * menu no longer offers it. A file is left alone when it has no license to clear, when the user lacks
+ * the right to edit it, or when the license is still offered.
+ * @param associatedArtifact Artifact on the registration. Links and empty artifacts are never affected.
+ * @param newPublicationInstanceType Category the registration is changing to.
+ * @returns True when the license should be cleared so the user picks a new one.
+ */
+export const licenseNeedsReset = (associatedArtifact: AssociatedArtifact, newPublicationInstanceType?: string) => {
+  // Only files carry a license, and writing an empty string over a missing license would only make the form dirty.
+  if (!('license' in associatedArtifact) || !associatedArtifact.license) {
+    return false;
+  }
+
+  if (!hasFileAccessRight(associatedArtifact, 'write-metadata')) {
+    // Clearing a license the user cannot edit would leave the registration invalid with no way to fix it
+    return false;
+  }
+
+  return !isSelectableLicense(associatedArtifact.license, newPublicationInstanceType);
+};
+
+/**
+ * Whether a license is offered in the license menu for a category.
+ * @param licenseUri Value stored in the file's license field.
+ * @param publicationInstanceType Category of the registration the file belongs to.
  * @returns True when the license appears in either menu section for that category.
  */
 export const isSelectableLicense = (licenseUri: string | null, publicationInstanceType?: string) => {
