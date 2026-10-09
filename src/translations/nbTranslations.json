@@ -1371,7 +1371,7 @@
       "institution_prefers_cc_by": "Din institusjon har en <0>rettighetspolitikk</0> som anbefaler CC-BY.",
       "institution_rights_policy_opt_out_instructions": "Om du ønsker å reservere deg fra institusjonens rettighetspolitikk, så må du sjekke om dette kan gjøres ved din institusjon. Kontakt kuratorstøtte.",
       "license": "Lisens",
-      "license_no_longer_valid": "Lisensen er ikke lenger gyldig for denne kategorien, velg en ny",
+      "license_no_longer_valid": "Lisensen er ikke lenger gyldig for denne kategorien.",
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
       "mark_if_funder_requires_rrs": "Om denne publikasjonen er finansiert av en aktør som pålegger deg å følge RRS (ref. Plan S), så markerer du det her.",
