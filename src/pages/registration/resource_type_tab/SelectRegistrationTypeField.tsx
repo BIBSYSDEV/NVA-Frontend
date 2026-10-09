@@ -275,8 +275,10 @@ export const SelectRegistrationTypeField = () => {
       const licenseMenuChanged = isSourceCodeCategory(currentInstanceType) !== isSourceCodeCategory(newInstanceType);
 
       if (licenseMenuChanged) {
+        const userMayEditImportCandidateFiles = userIsValidImporter(user, values);
+
         values.associatedArtifacts.forEach((associatedArtifact, index) => {
-          if (licenseNeedsReset(associatedArtifact, newInstanceType, userIsValidImporter(user, values))) {
+          if (licenseNeedsReset(associatedArtifact, newInstanceType, userMayEditImportCandidateFiles)) {
             setFieldValue(
               `${FileFieldNames.AssociatedArtifacts}[${index}].${SpecificFileFieldNames.License}`,
               '',

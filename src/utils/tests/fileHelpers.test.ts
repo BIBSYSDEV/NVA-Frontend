@@ -212,7 +212,7 @@ describe('licenseNeedsReset()', () => {
   const editableFile = (license: string | null) =>
     ({ type: FileType.OpenFile, license, allowedOperations: ['write-metadata'] }) as AssociatedFile;
 
-  const readOnlyFile = (license: string | null) =>
+  const fileWithoutWriteAccess = (license: string | null) =>
     ({ type: FileType.OpenFile, license, allowedOperations: ['download'] }) as AssociatedFile;
 
   test('Clears a license the new category does not offer', () => {
@@ -225,16 +225,20 @@ describe('licenseNeedsReset()', () => {
     expect(licenseNeedsReset(editableFile(LicenseUri.CC_BY_4), JournalType.AcademicArticle)).toBe(false);
   });
 
-  test('Keeps a license on a file the user cannot edit', () => {
-    expect(licenseNeedsReset(readOnlyFile(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode)).toBe(false);
+  test('Keeps a license the user has no write access to change', () => {
+    expect(licenseNeedsReset(fileWithoutWriteAccess(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode)).toBe(
+      false
+    );
   });
 
-  test('Clears a license on a file the user cannot edit when they may import it anyway', () => {
-    expect(licenseNeedsReset(readOnlyFile(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode, true)).toBe(true);
+  test('Clears a license on an import candidate file the importer may edit', () => {
+    expect(
+      licenseNeedsReset(fileWithoutWriteAccess(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode, true)
+    ).toBe(true);
   });
 
-  test('Still leaves a file without a license alone for an importer', () => {
-    expect(licenseNeedsReset(readOnlyFile(null), ResearchDataType.SoftwareSourceCode, true)).toBe(false);
+  test('Leaves a file without a license alone, importer or not', () => {
+    expect(licenseNeedsReset(fileWithoutWriteAccess(null), ResearchDataType.SoftwareSourceCode, true)).toBe(false);
   });
 
   test('Keeps a license on a file with no access rights at all', () => {

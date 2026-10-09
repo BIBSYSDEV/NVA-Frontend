@@ -381,9 +381,10 @@ export const FilesTableRow = ({
                           value={getLicenseData(field.value)?.id ?? ''}
                           error={!!error && touched}
                           helperText={
-                            // The stored license still passes validation since it is not empty, so without
-                            // this the field looks correct while holding a value the category disallows.
-                            storedLicenseIsNotInMenu && !(!!error && touched) ? (
+                            // A license outside the menu still passes validation, which only requires the
+                            // field to be non-empty, so without this the field looks correct while holding
+                            // a value the category disallows.
+                            storedLicenseIsNotInMenu ? (
                               t('registration.files_and_license.license_no_longer_valid')
                             ) : (
                               <ErrorMessage name={field.name} />
