@@ -12,6 +12,7 @@ import { Affiliation } from '../../../../types/contributor.types';
 import { Organization } from '../../../../types/organization.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
+import { replaceAffiliation } from '../../../../utils/contributor-helpers';
 import { findDescendantWithId, getTopLevelOrganization } from '../../../../utils/institutions-helpers';
 
 interface EditAffiliationModalProps {
@@ -69,14 +70,7 @@ export const EditAffiliationModal = ({
       id: newAffiliationId,
     };
 
-    // Replace old affiliation, and remove any duplicates of it
-    const updatedAffiliations = affiliations
-      .map((affiliation, index) => (index === affiliationToChangeIndex ? newAffiliation : affiliation))
-      .filter(
-        (affiliation, index) =>
-          index === affiliationToChangeIndex ||
-          !(affiliation.type === 'Organization' && affiliation.id === affiliationToEdit.id)
-      );
+    const updatedAffiliations = replaceAffiliation(affiliations, affiliationToChangeIndex, newAffiliation);
 
     setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`, updatedAffiliations);
     toggleAffiliationModal();

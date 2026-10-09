@@ -9,6 +9,7 @@ import { RegistrationFormContext } from '../../../../context/RegistrationFormCon
 import { Affiliation } from '../../../../types/contributor.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
+import { getAffiliationsToShow, removeAffiliation } from '../../../../utils/contributor-helpers';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { AddAffiliationModal } from './AddAffiliationModal';
 
@@ -34,30 +35,13 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
     toggleAffiliationModal();
   };
 
-  // Show each organization only once, even if the contributor has duplicate affiliations
-  const affiliationsToShow = affiliations
-    .map((affiliation, index) => ({ affiliation, index }))
-    .filter(
-      ({ affiliation, index }) =>
-        affiliation.type !== 'Organization' ||
-        affiliations.findIndex((a) => a.type === 'Organization' && a.id === affiliation.id) === index
-    );
+  const affiliationsToShow = getAffiliationsToShow(affiliations);
 
-  const removeAffiliation = (index: number) => {
-    const affiliationToRemove = affiliations[index];
+  const onRemoveAffiliation = (index: number) =>
     setFieldValue(
       `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
-      affiliations.filter(
-        (affiliation, thisIndex) =>
-          thisIndex !== index &&
-          !(
-            affiliationToRemove.type === 'Organization' &&
-            affiliation.type === 'Organization' &&
-            affiliation.id === affiliationToRemove.id
-          )
-      )
+      removeAffiliation(affiliations, index)
     );
-  };
 
   return (
     <Box
@@ -84,7 +68,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
               authorName={authorName}
               affiliations={affiliations}
               baseFieldName={baseFieldName}
-              removeAffiliation={disabled ? undefined : () => removeAffiliation(index)}
+              removeAffiliation={disabled ? undefined : () => onRemoveAffiliation(index)}
               sx={{ width: '100%' }}
               canEdit={!disabled}
             />
@@ -93,7 +77,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
             <UnconfirmedOrganizationBox
               name={affiliation.name}
               onIdentifyAffiliationClick={disabled ? undefined : onIdentifyAffiliationClick}
-              removeAffiliation={() => removeAffiliation(index)}
+              removeAffiliation={() => onRemoveAffiliation(index)}
               sx={{ width: '100%' }}
             />
           )}

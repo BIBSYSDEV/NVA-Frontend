@@ -1,4 +1,4 @@
-import { Contributor, ContributorRole } from '../types/contributor.types';
+import { Affiliation, Contributor, ContributorRole } from '../types/contributor.types';
 
 export interface ContributorEntry {
   contributor: Contributor;
@@ -128,3 +128,51 @@ export const hasIdentityWithRole = (contributors: Contributor[], identityKey: st
   contributors.some(
     (contributor) => getIdentityKey(contributor.identity.id) === identityKey && contributor.role?.type === role
   );
+
+const isSameOrganization = (affiliation: Affiliation, other: Affiliation) =>
+  affiliation.type === 'Organization' && other.type === 'Organization' && affiliation.id === other.id;
+
+/**
+ * The 1-based numbers of the contributor's affiliations in the list of distinct units, sorted and without
+ * duplicates. A contributor can have the same organization as affiliation several times, which should only
+ * give one number. Affiliations that are not in the list of units are left out.
+ */
+export const getAffiliationNumbers = (affiliations: Affiliation[], distinctUnits: string[]): number[] => {
+  const numbers = affiliations
+    .map((affiliation) => (affiliation.type === 'Organization' ? distinctUnits.indexOf(affiliation.id) + 1 : 0))
+    .filter((affiliationNumber) => affiliationNumber > 0);
+  return [...new Set(numbers)].sort((a, b) => a - b);
+};
+
+/**
+ * The affiliations to show for a contributor, where each organization is only included once even if the
+ * contributor has it several times. The index points at the affiliation in the original list.
+ */
+export const getAffiliationsToShow = (affiliations: Affiliation[]) =>
+  affiliations
+    .map((affiliation, index) => ({ affiliation, index }))
+    .filter(
+      ({ affiliation, index }) =>
+        affiliation.type !== 'Organization' ||
+        affiliations.findIndex((other) => isSameOrganization(affiliation, other)) === index
+    );
+
+/** Removes the affiliation at the given index, and any duplicates of the same organization. */
+export const removeAffiliation = (affiliations: Affiliation[], index: number): Affiliation[] => {
+  const affiliationToRemove = affiliations[index];
+  return affiliations.filter(
+    (affiliation, thisIndex) => thisIndex !== index && !isSameOrganization(affiliationToRemove, affiliation)
+  );
+};
+
+/** Replaces the affiliation at the given index, and removes any duplicates of the replaced organization. */
+export const replaceAffiliation = (
+  affiliations: Affiliation[],
+  index: number,
+  newAffiliation: Affiliation
+): Affiliation[] => {
+  const affiliationToReplace = affiliations[index];
+  return affiliations
+    .map((affiliation, thisIndex) => (thisIndex === index ? newAffiliation : affiliation))
+    .filter((affiliation, thisIndex) => thisIndex === index || !isSameOrganization(affiliationToReplace, affiliation));
+};

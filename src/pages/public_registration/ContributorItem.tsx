@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
 import { ContributorIndicators } from '../../components/ContributorIndicators';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
+import { getAffiliationNumbers } from '../../utils/contributor-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { NviStatusObject } from '../../utils/hooks/useCheckWhichOrgsAreNviInstitutions';
 import { getResearchProfilePath } from '../../utils/urlPaths';
@@ -28,15 +29,7 @@ export const ContributorItem = ({
     identity: { id, name },
   } = contributor;
 
-  const affiliationIndexes = contributor.affiliations
-    ? [
-        ...new Set(
-          contributor.affiliations
-            .map((affiliation) => (affiliation.type === 'Organization' ? distinctUnits.indexOf(affiliation.id) + 1 : 0))
-            .filter((affiliationIndex) => affiliationIndex > 0)
-        ),
-      ].sort((a, b) => a - b)
-    : undefined;
+  const affiliationNumbers = getAffiliationNumbers(contributor.affiliations ?? [], distinctUnits);
 
   const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
 
@@ -83,9 +76,7 @@ export const ContributorItem = ({
           name
         )}
         {roleContent}
-        {affiliationIndexes && affiliationIndexes.length > 0 && (
-          <sup style={{ marginLeft: '0.1rem' }}>{affiliationIndexes.join(',')}</sup>
-        )}
+        {affiliationNumbers.length > 0 && <sup style={{ marginLeft: '0.1rem' }}>{affiliationNumbers.join(',')}</sup>}
         {!id && hasNviAffiliation && <WarningIcon fontSize="small" color="warning" />}
       </Typography>
       <ContributorIndicators orcId={contributor.identity.orcId} correspondingAuthor={contributor.correspondingAuthor} />
