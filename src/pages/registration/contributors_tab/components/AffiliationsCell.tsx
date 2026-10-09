@@ -34,11 +34,30 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
     toggleAffiliationModal();
   };
 
-  const removeAffiliation = (index: number) =>
+  // Show each organization only once, even if the contributor has duplicate affiliations
+  const affiliationsToShow = affiliations
+    .map((affiliation, index) => ({ affiliation, index }))
+    .filter(
+      ({ affiliation, index }) =>
+        affiliation.type !== 'Organization' ||
+        affiliations.findIndex((a) => a.type === 'Organization' && a.id === affiliation.id) === index
+    );
+
+  const removeAffiliation = (index: number) => {
+    const affiliationToRemove = affiliations[index];
     setFieldValue(
       `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
-      affiliations.filter((_, thisIndex) => thisIndex !== index)
+      affiliations.filter(
+        (affiliation, thisIndex) =>
+          thisIndex !== index &&
+          !(
+            affiliationToRemove.type === 'Organization' &&
+            affiliation.type === 'Organization' &&
+            affiliation.id === affiliationToRemove.id
+          )
+      )
     );
+  };
 
   return (
     <Box
@@ -49,7 +68,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
         alignItems: 'start',
         gap: '0.75rem',
       }}>
-      {affiliations.map((affiliation, index) => (
+      {affiliationsToShow.map(({ affiliation, index }) => (
         <Box
           key={`org-${index}`}
           sx={{

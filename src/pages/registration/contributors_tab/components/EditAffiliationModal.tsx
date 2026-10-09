@@ -56,7 +56,8 @@ export const EditAffiliationModal = ({
         (affiliation, index) =>
           index !== affiliationToChangeIndex &&
           affiliation.type === 'Organization' &&
-          affiliation.id === newAffiliationId
+          affiliation.id === newAffiliationId &&
+          affiliation.id !== affiliationToEdit.id
       )
     ) {
       dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
@@ -68,10 +69,14 @@ export const EditAffiliationModal = ({
       id: newAffiliationId,
     };
 
-    const updatedAffiliations = [...affiliations];
-
-    // Replace old affiliation
-    updatedAffiliations[affiliationToChangeIndex] = newAffiliation;
+    // Replace old affiliation, and remove any duplicates of it
+    const updatedAffiliations = affiliations
+      .map((affiliation, index) => (index === affiliationToChangeIndex ? newAffiliation : affiliation))
+      .filter(
+        (affiliation, index) =>
+          index === affiliationToChangeIndex ||
+          !(affiliation.type === 'Organization' && affiliation.id === affiliationToEdit.id)
+      );
 
     setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`, updatedAffiliations);
     toggleAffiliationModal();
