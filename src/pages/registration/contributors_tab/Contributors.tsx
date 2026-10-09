@@ -33,6 +33,7 @@ import { Registration } from '../../../types/registration.types';
 import { CristinPerson } from '../../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import {
+  addAffiliations,
   appendContributor,
   getContributorsInSequenceOrder,
   getIdentityKey,
@@ -156,17 +157,15 @@ export const Contributors = ({ contributorRoles, replace }: ContributorsProps) =
       addContributor({
         ...emptyContributor,
         identity,
-        affiliations: existingAffiliations,
+        affiliations: addAffiliations([], existingAffiliations),
         role: {
           type: role,
         },
       });
     } else {
       const thisContributor = contributors[contributorIndex];
-      const verifiedAffiliations = thisContributor.affiliations ? [...thisContributor.affiliations] : [];
+      const verifiedAffiliations = addAffiliations(thisContributor.affiliations ?? [], existingAffiliations);
       const verifiedOrcid = thisContributor.identity.orcId;
-
-      verifiedAffiliations.push(...existingAffiliations);
 
       const verifiedContributor: Contributor = {
         ...thisContributor,

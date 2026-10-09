@@ -9,6 +9,7 @@ import { RegistrationFormContext } from '../../../../context/RegistrationFormCon
 import { Affiliation } from '../../../../types/contributor.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
+import { getAffiliationsToShow, removeAffiliation } from '../../../../utils/contributor-helpers';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { AddAffiliationModal } from './AddAffiliationModal';
 
@@ -34,10 +35,12 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
     toggleAffiliationModal();
   };
 
-  const removeAffiliation = (index: number) =>
+  const affiliationsToShow = getAffiliationsToShow(affiliations);
+
+  const onRemoveAffiliation = (index: number) =>
     setFieldValue(
       `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
-      affiliations.filter((_, thisIndex) => thisIndex !== index)
+      removeAffiliation(affiliations, index)
     );
 
   return (
@@ -49,7 +52,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
         alignItems: 'start',
         gap: '0.75rem',
       }}>
-      {affiliations.map((affiliation, index) => (
+      {affiliationsToShow.map(({ affiliation, index }) => (
         <Box
           key={`org-${index}`}
           sx={{
@@ -65,7 +68,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
               authorName={authorName}
               affiliations={affiliations}
               baseFieldName={baseFieldName}
-              removeAffiliation={disabled ? undefined : () => removeAffiliation(index)}
+              removeAffiliation={disabled ? undefined : () => onRemoveAffiliation(index)}
               sx={{ width: '100%' }}
               canEdit={!disabled}
             />
@@ -74,7 +77,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
             <UnconfirmedOrganizationBox
               name={affiliation.name}
               onIdentifyAffiliationClick={disabled ? undefined : onIdentifyAffiliationClick}
-              removeAffiliation={() => removeAffiliation(index)}
+              removeAffiliation={() => onRemoveAffiliation(index)}
               sx={{ width: '100%' }}
             />
           )}
