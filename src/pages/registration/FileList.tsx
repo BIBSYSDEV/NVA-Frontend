@@ -28,7 +28,7 @@ import {
   isOpenFile,
   isPendingOpenFile,
 } from '../../utils/registration-helpers';
-import { LicenseDescription } from './components/LicenseDescription';
+import { LicenseDescription } from './_components/LicenseDescription';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { HelperTextModal } from './HelperTextModal';
 
