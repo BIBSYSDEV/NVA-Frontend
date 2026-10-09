@@ -783,7 +783,17 @@
       "cc_by_nd": "<p>Brukeren kan: kopiere og dele verket for alle typer bruk, også kommersielle.</p><p>Brukeren kan ikke: endre eller tilpasse verket.</p><p>Brukeren må: gi riktig kreditering.</p>",
       "cc_by_sa": "<p>Brukeren kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p><p>Brukeren må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
       "copyright_act": "<p>Dette materialet kan kun brukes innenfor de rammene som lov om opphavsrett til åndsverk (åndsverksloven) gir:</p><ul><li>Brukeren kan lese og lenke til materialet.</li><li>Brukeren kan sitere fra materialet i samsvar med god skikk, og så langt formålet tilsier det.</li><li>Brukeren kan kopiere materialet til privat bruk, inkludert deling i privat krets og til personlig yrkesmessig bruk.</li></ul><p>Dersom brukeren ønsker å benytte materialet på en annen måte, for eksempel til re-publisering, må brukeren innhente samtykke direkte fra rettighetshaver (den fysiske eller juridiske personen som har immateriell rettighet til materiale).</p>",
-      "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens"
+      "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens",
+      "mit": "<p>Alt er tillatt så lenge lisens- og opphavsrettsmerknaden følger med. Den mest brukte programvarelisensen — over halvparten av all lisensiert kode på GitHub.</p>",
+      "apache_2_0": "<p>Permissiv som MIT, men med uttrykkelig patentlisens fra bidragsyterne – derfor foretrukket i større prosjekter og industrisamarbeid.</p>",
+      "bsd_3_clause": "<p>Permissiv, med én tilleggsklausul: bidragsyternes navn kan ikke brukes i markedsføring av avledede produkter. Standardlisensen i det vitenskapelige Python-økosystemet (NumPy, SciPy, pandas).</p>",
+      "bsd_2_clause": "<p>Som BSD 3-Clause, men uten markedsføringsklausulen – funksjonelt svært lik MIT. Kjent som «FreeBSD-lisensen».</p>",
+      "eupl_1_2": "<p>EU-kommisjonens lisens for offentlig sektor: copyleft med en kompatibilitetsliste som tillater videredistribusjon under bl.a. GPL. Offisiell i 23 likestilte EU-språkversjoner — norsk er ikke blant dem; for norske brukere er den engelske versjonen naturlig referanse.</p>",
+      "mpl_2_0": "<p>Copyleft på filnivå – en mellomting mellom permissive lisenser og GPL: endrede MPL-filer forblir åpne, men kan inngå i større verk med annen lisens.</p>",
+      "gpl_2_0": "<p>Eldre versjon av GPL, fortsatt svært utbredt. Uten den uttrykkelige patentlisensen fra v3. R-pakkenes vanlige erklæring «GPL (>= 2)» tilsvarer or-later-varianten; Linux-kjernen er det kjente eksemplet på only.</p>",
+      "gpl_3_0": "<p>Sterk copyleft: all avledet kode må også være GPL, og kildekoden må deles ved distribusjon. Inkluderer patentlisens. GNU-prosjektets hovedlisens, utbredt i akademisk programvare.</p>",
+      "agpl_3_0": "<p>GPL v3 med én tilleggsklausul: også brukere som samhandler med koden over nettverk (f.eks. en webtjeneste), har rett til kildekoden. Vanlig for forskningsverktøy som kjøres som tjeneste.</p>",
+      "lgpl_3_0": "<p>Svak copyleft, laget for biblioteker: endringer i selve biblioteket må deles under samme lisens, men programmer som bare bruker biblioteket, kan ha hvilken som helst lisens.</p>"
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -795,7 +805,24 @@
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
       "copyright_act": "Generelle bruksvilkår",
-      "older_licenses": "Eldre lisenser"
+      "older_licenses": "Eldre lisenser",
+      "mit": "MIT",
+      "apache_2_0": "Apache License 2.0",
+      "gpl_3_0_or_later": "GNU GPL v3",
+      "gpl_2_0": "GNU GPL v2",
+      "gpl_2_0_or_later": "GNU GPL v2 eller senere",
+      "gpl_2_0_only": "GNU GPL v2 (kun denne versjonen)",
+      "gpl_3_0_only": "GNU GPL v3 (kun denne versjonen)",
+      "agpl_3_0_only": "GNU AGPL v3 (kun denne versjonen)",
+      "agpl_3_0": "GNU AGPL v3",
+      "agpl_3_0_or_later": "GNU AGPL v3 eller senere",
+      "lgpl_3_0_only": "GNU LGPL v3 (kun denne versjonen)",
+      "lgpl_3_0": "GNU LGPL v3",
+      "lgpl_3_0_or_later": "GNU LGPL v3 eller senere",
+      "mpl_2_0": "Mozilla Public License 2.0",
+      "bsd_3_clause": "BSD 3-Clause",
+      "bsd_2_clause": "BSD 2-Clause",
+      "eupl_1_2": "EUPL 1.2"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
@@ -1349,6 +1376,7 @@
       "institution_prefers_cc_by": "Din institusjon har en <0>rettighetspolitikk</0> som anbefaler CC-BY.",
       "institution_rights_policy_opt_out_instructions": "Om du ønsker å reservere deg fra institusjonens rettighetspolitikk, så må du sjekke om dette kan gjøres ved din institusjon. Kontakt kuratorstøtte.",
       "license": "Lisens",
+      "license_no_longer_valid": "Lisensen er ikke lenger gyldig for denne kategorien.",
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
       "mark_if_funder_requires_rrs": "Om denne publikasjonen er finansiert av en aktør som pålegger deg å følge RRS (ref. Plan S), så markerer du det her.",
@@ -1364,6 +1392,8 @@
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
       "show_all_older_versions": "Vis alle tidligere versjoner",
+      "show_full_license_list": "Vis full lisensliste",
+      "source_code_license_info": "<p>Lisensen informerer brukere om hvordan de kan gjenbruke det tilgjengeliggjorte materialet.</p>",
       "version_helper_text": "<p>Last opp akseptert versjon, dersom publisert versjon ikke er åpent publisert med en <ccLink>Creative Commons-lisens</ccLink>.</p><heading>Akseptert versjon (authors accepted manuscript, AAM)</heading> <p>Forfatters siste versjon etter fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har.</p><heading>Publisert versjon (version of records, VOR)</heading> <p>Artikkelen slik den presenteres i et tidsskrift. Denne versjonen vil inkludere redaksjonelle forbedringer, og forlagets grafiske profil. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Du må velge den samme Creative Commons-lisensen som artikkelen er publisert med.</p>"
     },
     "heading": {

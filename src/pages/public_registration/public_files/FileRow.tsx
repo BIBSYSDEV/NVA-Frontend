@@ -138,24 +138,26 @@ export const FileRow = ({
       )}
 
       {isOpenableFile && licenseData && (
-        <Link
-          href={licenseData.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{ gridArea: 'license', maxHeight: '3rem' }}>
-          {licenseData.logo ? (
-            <Box
-              component="img"
-              alt={licenseTitle}
-              title={licenseTitle}
-              src={licenseData.logo}
-              data-testid={dataTestId.registrationLandingPage.license}
-              sx={{ maxWidth: '8rem' }}
-            />
+        <Box sx={{ gridArea: 'license', maxHeight: '3rem' }}>
+          {licenseData.link ? (
+            <Link href={licenseData.link} target="_blank" rel="noopener noreferrer">
+              {licenseData.logo ? (
+                <Box
+                  component="img"
+                  alt={licenseTitle}
+                  title={licenseTitle}
+                  src={licenseData.logo}
+                  data-testid={dataTestId.registrationLandingPage.license}
+                  sx={{ maxWidth: '8rem' }}
+                />
+              ) : (
+                <span data-testid={dataTestId.registrationLandingPage.license}>{licenseTitle}</span>
+              )}
+            </Link>
           ) : (
-            licenseTitle
+            <Typography data-testid={dataTestId.registrationLandingPage.license}>{licenseTitle}</Typography>
           )}
-        </Link>
+        </Box>
       )}
 
       <Box sx={{ gridArea: 'download' }}>
