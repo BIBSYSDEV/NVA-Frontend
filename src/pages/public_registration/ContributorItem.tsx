@@ -29,9 +29,14 @@ export const ContributorItem = ({
   } = contributor;
 
   const affiliationIndexes = contributor.affiliations
-    ?.map((affiliation) => affiliation.type === 'Organization' && distinctUnits.indexOf(affiliation.id) + 1)
-    .filter((affiliationIndex) => affiliationIndex)
-    .sort();
+    ? [
+        ...new Set(
+          contributor.affiliations
+            .map((affiliation) => (affiliation.type === 'Organization' ? distinctUnits.indexOf(affiliation.id) + 1 : 0))
+            .filter((affiliationIndex) => affiliationIndex > 0)
+        ),
+      ].sort((a, b) => a - b)
+    : undefined;
 
   const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
 
