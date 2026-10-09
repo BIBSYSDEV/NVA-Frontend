@@ -157,6 +157,16 @@ export const getAffiliationsToShow = (affiliations: Affiliation[]) =>
         affiliations.findIndex((other) => isSameOrganization(affiliation, other)) === index
     );
 
+/** Adds the new affiliations at the end, leaving out organizations that are already in the list. */
+export const addAffiliations = (affiliations: Affiliation[], newAffiliations: Affiliation[]): Affiliation[] =>
+  newAffiliations.reduce(
+    (result, newAffiliation) =>
+      result.some((affiliation) => isSameOrganization(affiliation, newAffiliation))
+        ? result
+        : [...result, newAffiliation],
+    affiliations
+  );
+
 /** Removes the affiliation at the given index, and any duplicates of the same organization. */
 export const removeAffiliation = (affiliations: Affiliation[], index: number): Affiliation[] => {
   const affiliationToRemove = affiliations[index];

@@ -51,14 +51,15 @@ export const EditAffiliationModal = ({
       return;
     }
 
-    // If user tries to change it into already existing affiliation
+    // If user tries to change it into another already existing affiliation. Choosing the same organization
+    // again is allowed, and removes any duplicates of it.
     if (
+      newAffiliationId !== affiliationToEdit.id &&
       affiliations.some(
         (affiliation, index) =>
           index !== affiliationToChangeIndex &&
           affiliation.type === 'Organization' &&
-          affiliation.id === newAffiliationId &&
-          affiliation.id !== affiliationToEdit.id
+          affiliation.id === newAffiliationId
       )
     ) {
       dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
