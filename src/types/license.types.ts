@@ -61,11 +61,10 @@ export interface LicenseInfo {
   version?: 1 | 2 | 2.5 | 3 | 4;
   additionalInformation?: string;
   /**
-   * Heading used in the license help modal, where the -only variants are not listed and the version
-   * scope therefore needs no qualifier. Falls back to {@link LicenseInfo.name}, which has to stay
-   * precise since it labels the menu entry and the license on the landing page.
+   * The license without its version scope, for contexts that do not list the -only variants and so need
+   * no qualifier to tell them apart. Only set where {@link LicenseInfo.name} carries such a qualifier.
    */
-  helpModalHeading?: string;
+  shortName?: string;
 }
 
 export const licenses: LicenseInfo[] = [
@@ -358,19 +357,19 @@ export const licenses: LicenseInfo[] = [
   {
     id: LicenseUri.GPL_2_0_or_later,
     name: i18n.t('licenses.labels.gpl_2_0_or_later'),
-    helpModalHeading: i18n.t('licenses.labels.gpl_2_0'),
+    shortName: i18n.t('licenses.labels.gpl_2_0'),
     description: i18n.t('licenses.description.gpl_2_0'),
   },
   {
     id: LicenseUri.AGPL_3_0_or_later,
     name: i18n.t('licenses.labels.agpl_3_0_or_later'),
-    helpModalHeading: i18n.t('licenses.labels.agpl_3_0'),
+    shortName: i18n.t('licenses.labels.agpl_3_0'),
     description: i18n.t('licenses.description.agpl_3_0'),
   },
   {
     id: LicenseUri.LGPL_3_0_or_later,
     name: i18n.t('licenses.labels.lgpl_3_0_or_later'),
-    helpModalHeading: i18n.t('licenses.labels.lgpl_3_0'),
+    shortName: i18n.t('licenses.labels.lgpl_3_0'),
     description: i18n.t('licenses.description.lgpl_3_0'),
   },
   {

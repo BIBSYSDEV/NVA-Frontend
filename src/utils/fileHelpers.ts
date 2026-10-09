@@ -10,7 +10,8 @@ export const hasFileAccessRight = (file: AssociatedFile, operation: FileAllowedO
  * Whether a string value points to a given license.
  * @param value Value to check, which might not be a URL at all.
  * @param licenseUri Identifier of a license in our vocabulary, compared against.
- * @returns True when the two denote the same license, ignoring scheme, casing and trailing slash.
+ * @returns True when the two denote the same license, ignoring scheme, casing, trailing slash and the
+ * .html suffix on the SPDX pages.
  */
 const isEqualToLicenseUri = (value: string | null, licenseUri: LicenseUri) => {
   if (!value) {
@@ -24,9 +25,7 @@ const isEqualToLicenseUri = (value: string | null, licenseUri: LicenseUri) => {
     const valueUrl = new URL(value);
 
     if (licenseUrl.hostname === valueUrl.hostname) {
-      return (
-        removeTrailingSlash(licenseUrl.pathname).toLowerCase() === removeTrailingSlash(valueUrl.pathname).toLowerCase()
-      );
+      return comparablePathname(licenseUrl.pathname) === comparablePathname(valueUrl.pathname);
     }
   } catch {
     // Returning false keeps getLicenseData returning null for it, rather than throwing while a file row renders.
@@ -34,7 +33,18 @@ const isEqualToLicenseUri = (value: string | null, licenseUri: LicenseUri) => {
   return false;
 };
 
-const removeTrailingSlash = (value: string) => (value.endsWith('/') ? value.slice(0, -1) : value);
+/**
+ * Normalises a license URI path so values that denote the same license still match. SPDX serves each
+ * license at both /licenses/MIT and /licenses/MIT.html, and imported values may use either.
+ * @param pathname Path part of a license URI.
+ * @returns The path without a trailing slash or .html suffix, in lower case.
+ */
+const comparablePathname = (pathname: string) => {
+  const withoutTrailingSlash = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+  const withoutHtmlSuffix = withoutTrailingSlash.replace(/\.html$/i, '');
+
+  return withoutHtmlSuffix.toLowerCase();
+};
 
 export const getLicenseData = (value: string | null) => {
   if (!value) {
@@ -144,16 +154,24 @@ export const getHelpModalLicenses = (publicationInstanceType?: string) =>
  * the right to edit it, or when the license is still offered.
  * @param associatedArtifact Artifact on the registration. Links and empty artifacts are never affected.
  * @param newPublicationInstanceType Category the registration is changing to.
+ * @param userMayEditImportCandidateFiles Whether the user holds the internal importer role and the
+ * document is an import candidate. Both are required: that is the one case where FilesTableRow leaves
+ * the license field editable no matter what the file's own access rights say. Must keep matching how
+ * that component decides to disable the field, or a license is cleared in a field the user cannot reach.
  * @returns True when the license should be cleared so the user picks a new one.
  */
-export const licenseNeedsReset = (associatedArtifact: AssociatedArtifact, newPublicationInstanceType?: string) => {
+export const licenseNeedsReset = (
+  associatedArtifact: AssociatedArtifact,
+  newPublicationInstanceType?: string,
+  userMayEditImportCandidateFiles = false
+) => {
   // Only files carry a license, and writing an empty string over a missing license would only make the form dirty.
   if (!('license' in associatedArtifact) || !associatedArtifact.license) {
     return false;
   }
 
-  if (!hasFileAccessRight(associatedArtifact, 'write-metadata')) {
-    // Clearing a license the user cannot edit would leave the registration invalid with no way to fix it
+  if (!userMayEditImportCandidateFiles && !hasFileAccessRight(associatedArtifact, 'write-metadata')) {
+    // Clearing a license in a field the user cannot reach would leave the registration invalid with no way to fix it
     return false;
   }
 

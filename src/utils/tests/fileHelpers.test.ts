@@ -202,6 +202,10 @@ describe('isSelectableLicense()', () => {
   test('Rejects a license that is not in the vocabulary', () => {
     expect(isSelectableLicense('123', ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
+
+  test('Matches an SPDX uri stored without the .html suffix', () => {
+    expect(isSelectableLicense('https://spdx.org/licenses/MIT', ResearchDataType.SoftwareSourceCode)).toBe(true);
+  });
 });
 
 describe('licenseNeedsReset()', () => {
@@ -223,6 +227,14 @@ describe('licenseNeedsReset()', () => {
 
   test('Keeps a license on a file the user cannot edit', () => {
     expect(licenseNeedsReset(readOnlyFile(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode)).toBe(false);
+  });
+
+  test('Clears a license on a file the user cannot edit when they may import it anyway', () => {
+    expect(licenseNeedsReset(readOnlyFile(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode, true)).toBe(true);
+  });
+
+  test('Still leaves a file without a license alone for an importer', () => {
+    expect(licenseNeedsReset(readOnlyFile(null), ResearchDataType.SoftwareSourceCode, true)).toBe(false);
   });
 
   test('Keeps a license on a file with no access rights at all', () => {

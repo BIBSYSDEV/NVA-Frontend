@@ -11,7 +11,7 @@ interface LicenseDescriptionProps {
  * One license card in the license help modal: logo, heading, what the license permits and requires,
  * and a link to the page explaining it.
  *
- * The heading uses {@link LicenseInfo.helpModalHeading} when the license has one, since the modal
+ * The heading uses {@link LicenseInfo.shortName} when the license has one, since the modal
  * does not list the -only variants and therefore needs no version qualifier. The "read more" link
  * keeps {@link LicenseInfo.name}, which names the exact variant.
  */
@@ -23,7 +23,7 @@ export const LicenseDescription = ({ license }: LicenseDescriptionProps) => {
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
         {license.logo && <img src={license.logo} alt="" style={{ width: '5rem' }} />}
         <Typography component="h2" variant="h3">
-          {license.helpModalHeading ?? license.name}
+          {license.shortName ?? license.name}
         </Typography>
       </Box>
       <Trans

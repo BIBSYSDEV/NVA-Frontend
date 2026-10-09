@@ -17,10 +17,9 @@ import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
-import { ResearchDataType } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getHelpModalLicenses } from '../../utils/fileHelpers';
+import { getHelpModalLicenses, isSourceCodeCategory } from '../../utils/fileHelpers';
 import {
   associatedArtifactIsFile,
   isCategoryWithFileVersion,
@@ -54,7 +53,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
   const showFileVersion = isCategoryWithFileVersion(publicationInstanceType);
   const isRrsApplicableCategory = isCategoryWithRrs(publicationInstanceType);
-  const isSourceCode = publicationInstanceType === ResearchDataType.SoftwareSourceCode;
+  const isSourceCode = isSourceCodeCategory(publicationInstanceType);
   const helpModalLicenses = getHelpModalLicenses(publicationInstanceType);
   const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
 
@@ -181,7 +180,6 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                   showFileVersion={showFileVersion}
                   isRrsApplicableCategory={isRrsApplicableCategory}
                   showAllColumns={showAllColumns}
-                  publicationInstanceType={publicationInstanceType}
                 />
               );
             })}

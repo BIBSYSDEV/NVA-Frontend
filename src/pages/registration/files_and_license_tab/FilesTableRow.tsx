@@ -46,7 +46,7 @@ import { RootState } from '../../../redux/store';
 import { AssociatedFile, FileRrs, FileType, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
 import { LicenseUri } from '../../../types/license.types';
-import { ResearchDataType, SpecificFileFieldNames } from '../../../types/publicationFieldNames';
+import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
@@ -55,6 +55,7 @@ import {
   getShortListLicenses,
   hasFileAccessRight,
   isSelectableLicense,
+  isSourceCodeCategory,
 } from '../../../utils/fileHelpers';
 import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
@@ -80,7 +81,6 @@ interface FilesTableRowProps {
   showFileVersion: boolean;
   isRrsApplicableCategory: boolean;
   showAllColumns: boolean;
-  publicationInstanceType?: string;
 }
 
 export const FilesTableRow = ({
@@ -90,7 +90,6 @@ export const FilesTableRow = ({
   showFileVersion,
   isRrsApplicableCategory,
   showAllColumns,
-  publicationInstanceType,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
@@ -131,7 +130,8 @@ export const FilesTableRow = ({
   const [embargoPopperAnchorEl, setEmbargoPopperAnchorEl] = useState<null | HTMLElement>(null);
 
   const [inactiveLicensesOpen, setInactiveLicensesOpen] = useState(false);
-  const isSourceCode = publicationInstanceType === ResearchDataType.SoftwareSourceCode;
+  const publicationInstanceType = values.entityDescription?.reference?.publicationInstance?.type;
+  const isSourceCode = isSourceCodeCategory(publicationInstanceType);
   const shortListLicenses = getShortListLicenses(publicationInstanceType);
   const additionalLicenses = getAdditionalLicenses(publicationInstanceType);
 
@@ -344,7 +344,7 @@ export const FilesTableRow = ({
                       const storedLicense = getLicenseData(field.value);
                       // A file registered before this category got its own license menu, or one the user
                       // cannot edit, can hold a license the menu no longer offers.
-                      const storedLicenseIsUnavailable =
+                      const storedLicenseIsNotInMenu =
                         !!storedLicense && !isSelectableLicense(field.value, publicationInstanceType);
 
                       return (
@@ -380,13 +380,21 @@ export const FilesTableRow = ({
                           variant="filled"
                           value={getLicenseData(field.value)?.id ?? ''}
                           error={!!error && touched}
-                          helperText={<ErrorMessage name={field.name} />}
+                          helperText={
+                            // The stored license still passes validation since it is not empty, so without
+                            // this the field looks correct while holding a value the category disallows.
+                            storedLicenseIsNotInMenu && !(!!error && touched) ? (
+                              t('registration.files_and_license.license_no_longer_valid')
+                            ) : (
+                              <ErrorMessage name={field.name} />
+                            )
+                          }
                           label={t('registration.files_and_license.conditions_for_using_file')}
                           required
                           onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
                           {/* Showing it as a disabled option keeps the stored value visible and the Select in
                             range, without letting anyone pick it again. */}
-                          {storedLicenseIsUnavailable && (
+                          {storedLicenseIsNotInMenu && (
                             <MenuItem
                               data-testid={dataTestId.registrationWizard.files.unavailableLicenseItem}
                               value={storedLicense.id}

@@ -151,7 +151,7 @@ export const FileRow = ({
                   sx={{ maxWidth: '8rem' }}
                 />
               ) : (
-                licenseTitle
+                <span data-testid={dataTestId.registrationLandingPage.license}>{licenseTitle}</span>
               )}
             </Link>
           ) : (

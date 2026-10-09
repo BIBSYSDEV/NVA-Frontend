@@ -58,6 +58,7 @@ import {
   isPeriodicalMediaContribution,
   isPersonPublisher,
   nviApplicableTypes,
+  userIsValidImporter,
 } from '../../../utils/registration-helpers';
 import { LockedNviFieldDescription } from '../LockedNviFieldDescription';
 
@@ -275,7 +276,7 @@ export const SelectRegistrationTypeField = () => {
 
       if (licenseMenuChanged) {
         values.associatedArtifacts.forEach((associatedArtifact, index) => {
-          if (licenseNeedsReset(associatedArtifact, newInstanceType)) {
+          if (licenseNeedsReset(associatedArtifact, newInstanceType, userIsValidImporter(user, values))) {
             setFieldValue(
               `${FileFieldNames.AssociatedArtifacts}[${index}].${SpecificFileFieldNames.License}`,
               '',
