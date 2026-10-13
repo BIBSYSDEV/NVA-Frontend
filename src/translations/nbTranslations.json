@@ -834,6 +834,85 @@
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no"
     },
+    "deed": {
+      "attribution": "<p>Oppsummeringen av tillatelser, vilkår og begrensninger bygger på <chooseALicenseLink>choosealicense.com</chooseALicenseLink>, gjenbrukt under <ccLink>CC BY 3.0</ccLink>.</p>",
+      "conditions": "Vilkår",
+      "disclaimer": "Dette er en forenklet oppsummering av lisensen, ikke juridisk rådgivning. Det er den offisielle lisensteksten som gjelder.",
+      "limitations": "Begrensninger",
+      "official_license_text": "Offisiell lisenstekst",
+      "permissions": "Tillatelser",
+      "version_note": {
+        "only": "«Kun denne versjonen» betyr at bare denne versjonen av lisensen gjelder. Mottakeren kan ikke velge å følge en senere versjon.",
+        "or_later": "«Eller senere» betyr at mottakeren kan velge å følge denne versjonen av lisensen eller en hvilken som helst senere versjon utgitt av Free Software Foundation."
+      },
+      "version_scope": "Versjon"
+    },
+    "rules": {
+      "commercial_use": {
+        "description": "Materialet kan brukes i kommersiell sammenheng.",
+        "label": "Kommersiell bruk"
+      },
+      "disclose_source": {
+        "description": "Kildekoden må gjøres tilgjengelig når materialet distribueres.",
+        "label": "Kildekoden må deles"
+      },
+      "distribution": {
+        "description": "Materialet kan deles videre.",
+        "label": "Distribusjon"
+      },
+      "document_changes": {
+        "description": "Det må gå fram hvilke endringer som er gjort i materialet.",
+        "label": "Endringer må dokumenteres"
+      },
+      "include_copyright": {
+        "description": "Lisenstekst og opphavsrettsmerknad må følge med materialet.",
+        "label": "Lisens og opphavsrett må følge med"
+      },
+      "include_copyright_in_source": {
+        "description": "Lisenstekst og opphavsrettsmerknad må følge med kildekoden, men ikke nødvendigvis med binærfiler.",
+        "label": "Lisens og opphavsrett må følge med kildekoden"
+      },
+      "liability": {
+        "description": "Lisensgiveren er ikke ansvarlig for skader som følger av bruk av materialet.",
+        "label": "Uten ansvar"
+      },
+      "modifications": {
+        "description": "Materialet kan endres og bygges videre på.",
+        "label": "Endring"
+      },
+      "network_use_disclose": {
+        "description": "Også brukere som samhandler med materialet over et nettverk, har rett til kildekoden.",
+        "label": "Nettverksbruk regnes som distribusjon"
+      },
+      "patent_use": {
+        "description": "Lisensen gir en uttrykkelig patentlisens fra bidragsyterne.",
+        "label": "Patentbruk"
+      },
+      "private_use": {
+        "description": "Materialet kan brukes og endres privat.",
+        "label": "Privat bruk"
+      },
+      "same_license": {
+        "description": "Endringer og avledede verk må utgis under samme lisens.",
+        "label": "Samme lisens"
+      },
+      "same_license_for_file": {
+        "description": "Endrede filer må utgis under samme lisens, men kan inngå i et større verk med en annen lisens.",
+        "label": "Samme lisens per fil"
+      },
+      "same_license_for_library": {
+        "description": "Endringer i selve biblioteket må utgis under samme lisens, men programmer som bare bruker biblioteket, kan ha en annen lisens.",
+        "label": "Samme lisens for biblioteket"
+      },
+      "trademark_use": {
+        "description": "Lisensen gir ingen rett til å bruke bidragsyternes navn, logoer eller varemerker.",
+        "label": "Ikke varemerkebruk"
+      },
+      "warranty": {
+        "description": "Materialet leveres uten garantier.",
+        "label": "Ingen garanti"
+      }
+    },
     "read_more_about_license": "Les mer om {{license}}",
     "terms_of_use_under_the_copyright_act": "<h1>$t(licenses.labels.copyright_act)</h1><p>Disse bruksvilkårene beskriver lovlig bruk av materiale som er gjort tilgjengelig i Nasjonalt vitenarkiv og som er merket med «generelle bruksvilkår».</p><ul><li>Du kan fritt lese og lenke til materialet.<ul><li>Du kan fritt lese materialet og dele lenke til det, for eksempel i e-post, eller på en nettside.</li></ul></li><li>Du kan sitere fra materialet i tråd med god skikk og så langt formålet tilsier det, jf. åndsverkloven § 29.<ul><li>Sitatet må settes inn i en relevant sammenheng og ikke endre verkets karakter.</li><li>Oppgi alltid kilde og opphaver, så langt det er praktisk mulig, jf. § 5.</li></ul></li><li>Du kan lage kopier til privat bruk, inkludert deling i nær personkrets og til personlig yrkesmessig bruk.  Med «privat bruk» menes at kopien kun skal brukes i en begrenset krets eller av deg selv, og altså ikke deles med allmennheten eller brukes kommersielt. Dette kan for eksempel være:<ul><li>Privat bruk: for eksempel laste ned en artikkel for å senere bruke eller dele den med en venn eller et familiemedlem.</li><li>Privat yrkesmessig bruk: for eksempel laste ned en artikkel for å forberede en forelesning, eller ta med et dokument hjem for selvstudium.</li></ul></li></ul><strong>Når må du ha tillatelse?</strong><p>Dersom du ønsker å bruke materialet på annen måte – for eksempel publisere det et annet sted, bruke det i nye publikasjoner, eller gjøre hele verket tilgjengelig utenfor NVA – må du innhente tillatelse fra rettighetshaver. Slike handlinger omfattes av opphavspersonens enerett etter åndsverkloven § 3.</p><strong>Er du i tvil?</strong><p>Hvis du er usikker på om du har rett til å bruke materialet slik du planlegger, anbefales det å kontakte rettighetshaver – eller din institusjon for veiledning.</p><hr/><p>Dersom du er rettighetshaver til et åndsverk som har fått denne lisensen og er uenig i at materialet kan brukes som beskrevet over, så må du ta kontakt med utgiveren (institusjonen eller tidsskriftet) som har publisert det.</p><p>Dersom det ikke er mulig å kontakte utgiveren, kan du ta kontakt med tjenestelevandøren for NVA, Sikt: <link1>Henvendelse om opphavsrett</link1>.</p>"
   },
