@@ -99,6 +99,7 @@ export const PublishingAccordion = ({
   const formErrors = validateRegistrationForm(registration);
   const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
+  const showValidationErrors = !registrationIsValid && userHasAccessRight(registration, 'partial-update');
 
   const canPublishMetadata =
     isDraftRegistration &&
@@ -213,7 +214,7 @@ export const PublishingAccordion = ({
           <TicketStatusChip ticket={lastPublishingRequest} />
         )}
 
-        {(!registrationIsValid || showRegistrationWithSameNameWarning) && !isUnpublishedOrDeletedRegistration && (
+        {(showValidationErrors || showRegistrationWithSameNameWarning) && !isUnpublishedOrDeletedRegistration && (
           <Tooltip
             title={
               showRegistrationWithSameNameWarning
@@ -227,7 +228,7 @@ export const PublishingAccordion = ({
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} />}
 
-        {tabErrors && !isDeletedRegistration && (
+        {tabErrors && showValidationErrors && !isDeletedRegistration && (
           <RegistrationErrorActions tabErrors={tabErrors} registration={registration} sx={{ mb: '0.5rem' }} />
         )}
 
