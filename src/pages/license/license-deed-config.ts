@@ -32,9 +32,6 @@ export enum LicenseRuleGroup {
   Limitations = 'limitations',
 }
 
-/**
- * Identifies the note explaining the two menu entries a GPL-family deed covers.
- */
 export enum LicenseVersionNote {
   GPL_3_0 = 'gpl_3_0',
   GPL_2_0 = 'gpl_2_0',
@@ -52,7 +49,6 @@ export interface LicenseDeed extends LicenseTerms {
   slug: LicenseDeedSlug;
   licenseId: LicenseUri;
   officialUrl: string;
-  /** Set for the GPL-family deeds, which must explain both menu entries they cover. */
   versionNote?: LicenseVersionNote;
 }
 

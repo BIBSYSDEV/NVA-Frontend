@@ -52,13 +52,8 @@ export enum LicenseUri {
 }
 
 /**
- * The deed page NVA serves for a license, identified by the SPDX id in lower case. Used both as the
- * {@link UrlPathTemplate.LicenseDeed} path segment and as the key of the deed's content.
- *
- * Ten deeds cover the fourteen software licenses: a GPL-family deed serves both the -only and the
- * -or-later variant of its version, which differ in version scope but not in terms, and says so.
- *
- * CC0 is deliberately absent: it links to the Norwegian Creative Commons deed instead of one of ours.
+ * The deed page NVA serves for a license, identified by the SPDX id in lower case. Ten deeds cover the fourteen
+ * software licenses: a GPL-family deed serves both the -only and the -or-later variant of its version.
  */
 export enum LicenseDeedSlug {
   MIT = 'mit',
@@ -79,9 +74,7 @@ export interface LicenseInfo {
   description: string;
   logo?: string;
   /**
-   * Page explaining what the license means. Relative for the deeds NVA serves itself, so that each
-   * environment links to its own, and absolute for the deeds Creative Commons hosts. Required, so a
-   * license added without one fails to compile rather than rendering as unlinked text.
+   * Page explaining what the license means. A license added without one fails to compile.
    */
   link: string;
   version?: 1 | 2 | 2.5 | 3 | 4;
@@ -412,8 +405,7 @@ export const licenses: LicenseInfo[] = [
     link: getLicenseDeedPath(LicenseDeedSlug.MPL_2_0),
   },
   // NOTE: The -only variants are separate menu entries because the distinction between them and the
-  // -or-later variants must survive in the stored value. They get their own deed pages too, which
-  // differ from the -or-later ones only by the version note.
+  // -or-later variants must survive in the stored value.
   {
     id: LicenseUri.GPL_2_0_only,
     name: i18n.t('licenses.labels.gpl_2_0_only'),
