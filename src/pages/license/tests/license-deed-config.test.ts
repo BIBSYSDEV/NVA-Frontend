@@ -5,6 +5,7 @@ import { ResearchDataType } from '../../../types/publicationFieldNames';
 import { getAdditionalLicenses, getShortListLicenses } from '../../../utils/fileHelpers';
 import {
   getLicenseDeed,
+  getLicenseGuidanceUrl,
   LicenseRule,
   LicenseRuleGroup,
   licenseDeeds,
@@ -46,6 +47,28 @@ describe('licenseDeeds', () => {
     licenseDeeds.forEach((deed) => {
       expect(deed.officialUrl).toMatch(/^https:\/\//);
     });
+  });
+});
+
+describe('getLicenseGuidanceUrl()', () => {
+  // Pinned rather than derived, so renaming a slug cannot quietly move the attribution link.
+  test.each([
+    [LicenseDeedSlug.MIT, 'https://choosealicense.com/licenses/mit/'],
+    [LicenseDeedSlug.Apache_2_0, 'https://choosealicense.com/licenses/apache-2.0/'],
+    [LicenseDeedSlug.GPL_3_0, 'https://choosealicense.com/licenses/gpl-3.0/'],
+    [LicenseDeedSlug.GPL_2_0, 'https://choosealicense.com/licenses/gpl-2.0/'],
+    [LicenseDeedSlug.AGPL_3_0, 'https://choosealicense.com/licenses/agpl-3.0/'],
+    [LicenseDeedSlug.LGPL_3_0, 'https://choosealicense.com/licenses/lgpl-3.0/'],
+    [LicenseDeedSlug.BSD_3_Clause, 'https://choosealicense.com/licenses/bsd-3-clause/'],
+    [LicenseDeedSlug.BSD_2_Clause, 'https://choosealicense.com/licenses/bsd-2-clause/'],
+    [LicenseDeedSlug.MPL_2_0, 'https://choosealicense.com/licenses/mpl-2.0/'],
+    [LicenseDeedSlug.EUPL_1_2, 'https://choosealicense.com/licenses/eupl-1.2/'],
+  ])('Credits the page %s is derived from', (slug, expectedUrl) => {
+    expect(getLicenseGuidanceUrl(slug)).toBe(expectedUrl);
+  });
+
+  test('Credits a page for every deed', () => {
+    expect(licenseDeeds).toHaveLength(10);
   });
 });
 
@@ -97,13 +120,19 @@ describe('The deed translations', () => {
     });
   });
 
+  test('Gives every rule the English term the license text uses', () => {
+    Object.values(LicenseRule).forEach((rule) => {
+      expect(nbTranslations.licenses.rules[rule].term).toBeTruthy();
+    });
+  });
+
   test('Has a heading for every rule group', () => {
     Object.values(LicenseRuleGroup).forEach((group) => {
       expect(nbTranslations.licenses.deed[group]).toBeTruthy();
     });
   });
 
-  test('Has a note for every version scope', () => {
+  test('Has a note for every deed that covers two menu entries', () => {
     Object.values(LicenseVersionNote).forEach((versionNote) => {
       expect(nbTranslations.licenses.deed.version_note[versionNote]).toBeTruthy();
     });
@@ -113,6 +142,14 @@ describe('The deed translations', () => {
     const translatedRules = Object.keys(nbTranslations.licenses.rules);
 
     expect(translatedRules.sort()).toEqual(Object.values(LicenseRule).sort());
+  });
+
+  test('Keeps no rule in the vocabulary that no deed lists', () => {
+    const usedRules = new Set(
+      licenseDeeds.flatMap((deed) => Object.values(LicenseRuleGroup).flatMap((group) => deed[group]))
+    );
+
+    expect([...usedRules].sort()).toEqual(Object.values(LicenseRule).sort());
   });
 });
 
@@ -126,7 +163,15 @@ describe('getLicenseDeed()', () => {
     const only = licenses.find(({ id }) => id === LicenseUri.GPL_3_0_only);
 
     expect(only?.link).toBe(orLater?.link);
-    expect(getLicenseDeed(LicenseDeedSlug.GPL_3_0)?.hasVersionVariants).toBe(true);
+    expect(getLicenseDeed(LicenseDeedSlug.GPL_3_0)?.versionNote).toBe(LicenseVersionNote.GPL_3_0);
+  });
+
+  test('Notes a version scope on every deed the menu offers twice, and only those', () => {
+    const deedsWithNote = licenseDeeds.filter((deed) => deed.versionNote).map((deed) => deed.slug);
+
+    expect(deedsWithNote.sort()).toEqual(
+      [LicenseDeedSlug.GPL_3_0, LicenseDeedSlug.GPL_2_0, LicenseDeedSlug.AGPL_3_0, LicenseDeedSlug.LGPL_3_0].sort()
+    );
   });
 
   test('Titles a shared deed without the version scope that tells the variants apart', () => {
@@ -138,7 +183,7 @@ describe('getLicenseDeed()', () => {
   });
 
   test('Leaves single-version licenses without a version note', () => {
-    expect(getLicenseDeed(LicenseDeedSlug.MIT)?.hasVersionVariants).toBeUndefined();
+    expect(getLicenseDeed(LicenseDeedSlug.MIT)?.versionNote).toBeUndefined();
   });
 
   test('Returns null for a slug we serve no deed for', () => {

@@ -784,12 +784,12 @@
       "cc_by_sa": "<p>Brukeren kan: kopiere, dele og endre verket for alle typer bruk, også kommersielle.</p><p>Brukeren må: gi riktig kreditering, si fra om endringer, og bruke samme lisens for det nye verket.</p>",
       "copyright_act": "<p>Dette materialet kan kun brukes innenfor de rammene som lov om opphavsrett til åndsverk (åndsverksloven) gir:</p><ul><li>Brukeren kan lese og lenke til materialet.</li><li>Brukeren kan sitere fra materialet i samsvar med god skikk, og så langt formålet tilsier det.</li><li>Brukeren kan kopiere materialet til privat bruk, inkludert deling i privat krets og til personlig yrkesmessig bruk.</li></ul><p>Dersom brukeren ønsker å benytte materialet på en annen måte, for eksempel til re-publisering, må brukeren innhente samtykke direkte fra rettighetshaver (den fysiske eller juridiske personen som har immateriell rettighet til materiale).</p>",
       "older_licenses": "Skal du registrere et eldre forskningsresultat som ble publisert med en tidligere lisensversjon, trykk på \"Vis alle tidligere versjoner\" i nedtrekksmenyen for å finne riktig lisens",
-      "mit": "<p>Alt er tillatt så lenge lisens- og opphavsrettsmerknaden følger med. Den mest brukte programvarelisensen — over halvparten av all lisensiert kode på GitHub.</p>",
-      "apache_2_0": "<p>Permissiv som MIT, men med uttrykkelig patentlisens fra bidragsyterne – derfor foretrukket i større prosjekter og industrisamarbeid.</p>",
+      "mit": "<p>Kort og permissiv: alt er tillatt så lenge lisens- og opphavsrettsmerknaden følger med. Den mest brukte programvarelisensen — over halvparten av all lisensiert kode på GitHub.</p>",
+      "apache_2_0": "<p>Permissiv som MIT, men med uttrykkelig patentlisens fra bidragsyterne — derfor foretrukket i større prosjekter og industrisamarbeid.</p>",
       "bsd_3_clause": "<p>Permissiv, med én tilleggsklausul: bidragsyternes navn kan ikke brukes i markedsføring av avledede produkter. Standardlisensen i det vitenskapelige Python-økosystemet (NumPy, SciPy, pandas).</p>",
-      "bsd_2_clause": "<p>Som BSD 3-Clause, men uten markedsføringsklausulen – funksjonelt svært lik MIT. Kjent som «FreeBSD-lisensen».</p>",
+      "bsd_2_clause": "<p>Som BSD 3-Clause, men uten markedsføringsklausulen — funksjonelt svært lik MIT. Kjent som «FreeBSD-lisensen».</p>",
       "eupl_1_2": "<p>EU-kommisjonens lisens for offentlig sektor: copyleft med en kompatibilitetsliste som tillater videredistribusjon under bl.a. GPL. Offisiell i 23 likestilte EU-språkversjoner — norsk er ikke blant dem; for norske brukere er den engelske versjonen naturlig referanse.</p>",
-      "mpl_2_0": "<p>Copyleft på filnivå – en mellomting mellom permissive lisenser og GPL: endrede MPL-filer forblir åpne, men kan inngå i større verk med annen lisens.</p>",
+      "mpl_2_0": "<p>Copyleft på filnivå — en mellomting mellom permissive lisenser og GPL: endrede MPL-filer forblir åpne, men kan inngå i større verk med annen lisens.</p>",
       "gpl_2_0": "<p>Eldre versjon av GPL, fortsatt svært utbredt. Uten den uttrykkelige patentlisensen fra v3. R-pakkenes vanlige erklæring «GPL (>= 2)» tilsvarer or-later-varianten; Linux-kjernen er det kjente eksemplet på only.</p>",
       "gpl_3_0": "<p>Sterk copyleft: all avledet kode må også være GPL, og kildekoden må deles ved distribusjon. Inkluderer patentlisens. GNU-prosjektets hovedlisens, utbredt i akademisk programvare.</p>",
       "agpl_3_0": "<p>GPL v3 med én tilleggsklausul: også brukere som samhandler med koden over nettverk (f.eks. en webtjeneste), har rett til kildekoden. Vanlig for forskningsverktøy som kjøres som tjeneste.</p>",
@@ -835,82 +835,116 @@
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no"
     },
     "deed": {
-      "attribution": "<p>Oppsummeringen av tillatelser, vilkår og begrensninger bygger på <chooseALicenseLink>choosealicense.com</chooseALicenseLink>, gjenbrukt under <ccLink>CC BY 3.0</ccLink>.</p>",
+      "attribution": "<p>Veiledningspunktene er basert på <chooseALicenseLink>choosealicense.com</chooseALicenseLink> (GitHub), lisensiert <ccLink>CC BY 3.0</ccLink> — bearbeidet og oversatt for NVA.</p>",
       "conditions": "Vilkår",
-      "disclaimer": "Dette er en forenklet oppsummering av lisensen, ikke juridisk rådgivning. Det er den offisielle lisensteksten som gjelder.",
+      "disclaimer": "Denne siden er en uoffisiell norsk veiledning. Den er ikke en oversettelse av lisensen og har ingen juridisk gyldighet. Kun den engelske originalteksten, lenket øverst på siden, er juridisk bindende. Siden finnes utelukkende for å hjelpe deg med å finne rett lisens.",
       "limitations": "Begrensninger",
       "official_license_text": "Offisiell lisenstekst",
       "permissions": "Tillatelser",
+      "summary": "Kort forklart",
       "version_note": {
-        "only": "«Kun denne versjonen» betyr at bare denne versjonen av lisensen gjelder. Mottakeren kan ikke velge å følge en senere versjon.",
-        "or_later": "«Eller senere» betyr at mottakeren kan velge å følge denne versjonen av lisensen eller en hvilken som helst senere versjon utgitt av Free Software Foundation."
+        "agpl_3_0": "To varianter i full liste: AGPL-3.0-or-later («versjon 3 eller enhver senere versjon») og AGPL-3.0-only. Velg den varianten koden faktisk erklærer.",
+        "gpl_2_0": "To varianter i full liste: GPL-2.0-or-later («versjon 2 eller enhver senere versjon» — CRAN-konvensjonen «GPL (>= 2)») og GPL-2.0-only (kun versjon 2, f.eks. Linux-kjernen). Velg den varianten koden faktisk erklærer.",
+        "gpl_3_0": "I NVAs meny: Valget «GNU GPL v3» i kortlista tilsvarer «versjon 3 eller enhver senere versjon» (SPDX: GPL-3.0-or-later). Står det ikke «or any later version» i koden? Velg GPL-3.0-only fra full liste.",
+        "lgpl_3_0": "To varianter i full liste: LGPL-3.0-or-later («versjon 3 eller enhver senere versjon») og LGPL-3.0-only. Velg den varianten koden faktisk erklærer."
       },
       "version_scope": "Versjon"
     },
     "rules": {
       "commercial_use": {
-        "description": "Materialet kan brukes i kommersiell sammenheng.",
-        "label": "Kommersiell bruk"
+        "description": "Koden kan brukes til kommersielle formål.",
+        "label": "Kommersiell bruk",
+        "term": "commercial use"
       },
       "disclose_source": {
-        "description": "Kildekoden må gjøres tilgjengelig når materialet distribueres.",
-        "label": "Kildekoden må deles"
+        "description": "Kildekoden må gjøres tilgjengelig når koden distribueres.",
+        "label": "Del kildekoden",
+        "term": "disclose source"
+      },
+      "disclose_source_for_file": {
+        "description": "Kildekode for filene som er under lisensen, må gjøres tilgjengelig ved distribusjon.",
+        "label": "Del kildekoden (filnivå)",
+        "term": "disclose source"
+      },
+      "disclose_source_for_library": {
+        "description": "Kildekoden til selve biblioteket må gjøres tilgjengelig ved distribusjon.",
+        "label": "Del kildekoden (biblioteket)",
+        "term": "disclose source"
       },
       "distribution": {
-        "description": "Materialet kan deles videre.",
-        "label": "Distribusjon"
+        "description": "Koden kan videredeles, i original eller endret form.",
+        "label": "Distribusjon",
+        "term": "distribution"
       },
       "document_changes": {
-        "description": "Det må gå fram hvilke endringer som er gjort i materialet.",
-        "label": "Endringer må dokumenteres"
+        "description": "Vesentlige endringer i koden må dokumenteres.",
+        "label": "Oppgi endringer",
+        "term": "state changes"
       },
       "include_copyright": {
-        "description": "Lisenstekst og opphavsrettsmerknad må følge med materialet.",
-        "label": "Lisens og opphavsrett må følge med"
-      },
-      "include_copyright_in_source": {
-        "description": "Lisenstekst og opphavsrettsmerknad må følge med kildekoden, men ikke nødvendigvis med binærfiler.",
-        "label": "Lisens og opphavsrett må følge med kildekoden"
+        "description": "En kopi av lisensen og opphavsrettsmerknaden må følge med koden.",
+        "label": "Lisens- og opphavsrettsmerknad",
+        "term": "license and copyright notice"
       },
       "liability": {
-        "description": "Lisensgiveren er ikke ansvarlig for skader som følger av bruk av materialet.",
-        "label": "Uten ansvar"
+        "description": "Forfatterne kan ikke holdes ansvarlige for skader eller tap.",
+        "label": "Ansvarsfraskrivelse",
+        "term": "liability"
       },
       "modifications": {
-        "description": "Materialet kan endres og bygges videre på.",
-        "label": "Endring"
+        "description": "Koden kan endres og bearbeides.",
+        "label": "Endring",
+        "term": "modification"
       },
       "network_use_disclose": {
-        "description": "Også brukere som samhandler med materialet over et nettverk, har rett til kildekoden.",
-        "label": "Nettverksbruk regnes som distribusjon"
+        "description": "Brukere som samhandler med koden over nettverk, har rett til å få kildekoden.",
+        "label": "Nettverksbruk er distribusjon",
+        "term": "network use is distribution"
+      },
+      "non_endorsement": {
+        "description": "Bidragsyternes navn kan ikke brukes til å promotere avledede produkter uten samtykke.",
+        "label": "Ingen bruk av navn i markedsføring",
+        "term": "non-endorsement"
       },
       "patent_use": {
-        "description": "Lisensen gir en uttrykkelig patentlisens fra bidragsyterne.",
-        "label": "Patentbruk"
+        "description": "Bidragsyterne gir uttrykkelig lisens til sine patenter som dekkes av bidraget.",
+        "label": "Patentbruk",
+        "term": "patent use"
       },
       "private_use": {
-        "description": "Materialet kan brukes og endres privat.",
-        "label": "Privat bruk"
+        "description": "Koden kan brukes og endres privat, uten forpliktelser.",
+        "label": "Privat bruk",
+        "term": "private use"
       },
       "same_license": {
-        "description": "Endringer og avledede verk må utgis under samme lisens.",
-        "label": "Samme lisens"
+        "description": "Bearbeidelser må distribueres under samme lisens.",
+        "label": "Samme lisens",
+        "term": "same license"
+      },
+      "same_license_with_compatibility": {
+        "description": "Bearbeidelser distribueres under EUPL eller en lisens fra kompatibilitetslisten i lisensens vedlegg.",
+        "label": "Samme eller kompatibel lisens",
+        "term": "same license, with compatibility list"
       },
       "same_license_for_file": {
-        "description": "Endrede filer må utgis under samme lisens, men kan inngå i et større verk med en annen lisens.",
-        "label": "Samme lisens per fil"
+        "description": "Endrede filer forblir under lisensen; de kan kombineres med filer under andre lisenser.",
+        "label": "Samme lisens (filnivå)",
+        "term": "same license, file-based"
       },
       "same_license_for_library": {
-        "description": "Endringer i selve biblioteket må utgis under samme lisens, men programmer som bare bruker biblioteket, kan ha en annen lisens.",
-        "label": "Samme lisens for biblioteket"
+        "description": "Endringer i selve biblioteket må dele lisens; programmer som bare bruker biblioteket, kan ha en annen.",
+        "label": "Samme lisens (biblioteket)",
+        "term": "same license, library-based"
       },
       "trademark_use": {
-        "description": "Lisensen gir ingen rett til å bruke bidragsyternes navn, logoer eller varemerker.",
-        "label": "Ikke varemerkebruk"
+        "description": "Lisensen gir ingen rett til å bruke navn, logo eller varemerker.",
+        "label": "Ingen varemerkerettigheter",
+        "term": "trademark use"
       },
       "warranty": {
-        "description": "Materialet leveres uten garantier.",
-        "label": "Ingen garanti"
+        "description": "Koden leveres «som den er», uten noen form for garanti.",
+        "label": "Ingen garanti",
+        "term": "warranty"
       }
     },
     "read_more_about_license": "Les mer om {{license}}",

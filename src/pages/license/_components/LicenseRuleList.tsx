@@ -1,7 +1,7 @@
+import { SvgIconComponent } from '@mui/icons-material';
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { SvgIconComponent } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LicenseRule, LicenseRuleGroup } from '../license-deed-config';
@@ -26,9 +26,6 @@ interface LicenseRuleListProps {
 /**
  * One section of a license deed: the heading for a {@link LicenseRuleGroup} and the terms in it,
  * each with a short explanation.
- *
- * The icons repeat what the heading already says and are therefore hidden from assistive technology;
- * the group is never conveyed by the icon or its colour alone.
  */
 export const LicenseRuleList = ({ group, rules }: LicenseRuleListProps) => {
   const { t } = useTranslation();
@@ -44,7 +41,13 @@ export const LicenseRuleList = ({ group, rules }: LicenseRuleListProps) => {
           <Box component="li" key={rule} sx={{ display: 'flex', gap: '0.5rem' }}>
             <Icon aria-hidden sx={{ color: groupColor[group], flexShrink: 0 }} />
             <div>
-              <Typography sx={{ fontWeight: 'bold' }}>{t(`licenses.rules.${rule}.label`)}</Typography>
+              <Typography sx={{ fontWeight: 'bold' }}>
+                {t(`licenses.rules.${rule}.label`)}{' '}
+                {/* The English term the license itself uses, so the summary can be held up against the official text. */}
+                <Box component="i" sx={{ fontWeight: 'normal' }}>
+                  ({t(`licenses.rules.${rule}.term`)})
+                </Box>
+              </Typography>
               <Typography>{t(`licenses.rules.${rule}.description`)}</Typography>
             </div>
           </Box>

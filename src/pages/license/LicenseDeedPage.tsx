@@ -7,7 +7,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { licenses } from '../../types/license.types';
 import NotFound from '../errorpages/NotFound';
 import { LicenseRuleList } from './_components/LicenseRuleList';
-import { getLicenseDeed, LicenseRuleGroup, LicenseVersionNote } from './license-deed-config';
+import { getLicenseDeed, getLicenseGuidanceUrl, LicenseRuleGroup } from './license-deed-config';
 
 interface LicenseDeedParams extends Record<string, string> {
   slug: string;
@@ -16,9 +16,6 @@ interface LicenseDeedParams extends Record<string, string> {
 /**
  * Public, plain-language summary of one software license, linked from the license on a registration
  * landing page and from the license help modal in the registration wizard.
- *
- * The page is a summary only — the official license text it links to is what governs — and the terms
- * it lists are derived from choosealicense.com, which the attribution at the bottom credits.
  */
 const LicenseDeedPage = () => {
   const { t } = useTranslation();
@@ -42,8 +39,6 @@ const LicenseDeedPage = () => {
         {title}
       </Typography>
 
-      <Trans t={t} defaults={license.description} components={{ p: <Typography gutterBottom /> }} />
-
       <OpenInNewLink href={deed.officialUrl}>{t('licenses.deed.official_license_text')}</OpenInNewLink>
 
       <Typography sx={{ mt: '1rem', fontStyle: 'italic' }}>{t('licenses.deed.disclaimer')}</Typography>
@@ -56,16 +51,17 @@ const LicenseDeedPage = () => {
         )}
       </Box>
 
-      {deed.hasVersionVariants && (
+      <Typography component="h2" variant="h3" sx={{ mt: '1.5rem' }} gutterBottom>
+        {t('licenses.deed.summary')}
+      </Typography>
+      <Trans t={t} defaults={license.description} components={{ p: <Typography gutterBottom /> }} />
+
+      {deed.versionNote && (
         <>
           <Typography component="h2" variant="h3" sx={{ mt: '1.5rem' }} gutterBottom>
             {t('licenses.deed.version_scope')}
           </Typography>
-          {Object.values(LicenseVersionNote).map((versionNote) => (
-            <Typography key={versionNote} gutterBottom>
-              {t(`licenses.deed.version_note.${versionNote}`)}
-            </Typography>
-          ))}
+          <Typography gutterBottom>{t(`licenses.deed.version_note.${deed.versionNote}`)}</Typography>
         </>
       )}
 
@@ -76,7 +72,7 @@ const LicenseDeedPage = () => {
         i18nKey="licenses.deed.attribution"
         components={{
           p: <Typography variant="body2" />,
-          chooseALicenseLink: <OpenInNewLink href="https://choosealicense.com/appendix/" />,
+          chooseALicenseLink: <OpenInNewLink href={getLicenseGuidanceUrl(deed.slug)} />,
           ccLink: <OpenInNewLink href="https://creativecommons.org/licenses/by/3.0/deed.no" />,
         }}
       />

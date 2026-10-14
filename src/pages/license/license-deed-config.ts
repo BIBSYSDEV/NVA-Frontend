@@ -2,10 +2,7 @@ import { LicenseDeedSlug, LicenseUri } from '../../types/license.types';
 
 /**
  * A term a license grants, requires or withholds. The deeds reuse one shared vocabulary rather than
- * prose per license, so the same term reads identically across all of them and only has to be
- * translated once. Doubles as the suffix of the translation keys under `licenses.rules`.
- *
- * Mirrors the rule vocabulary on choosealicense.com, which these summaries are derived from.
+ * prose per license. Mirrors the rule vocabulary on choosealicense.com, which these summaries are derived from.
  */
 export enum LicenseRule {
   CommercialUse = 'commercial_use',
@@ -14,22 +11,21 @@ export enum LicenseRule {
   PatentUse = 'patent_use',
   PrivateUse = 'private_use',
   DiscloseSource = 'disclose_source',
+  DiscloseSourceForFile = 'disclose_source_for_file',
+  DiscloseSourceForLibrary = 'disclose_source_for_library',
   DocumentChanges = 'document_changes',
   IncludeCopyright = 'include_copyright',
-  IncludeCopyrightInSource = 'include_copyright_in_source',
   NetworkUseDisclose = 'network_use_disclose',
   SameLicense = 'same_license',
   SameLicenseForFile = 'same_license_for_file',
   SameLicenseForLibrary = 'same_license_for_library',
+  SameLicenseWithCompatibility = 'same_license_with_compatibility',
   Liability = 'liability',
+  NonEndorsement = 'non_endorsement',
   TrademarkUse = 'trademark_use',
   Warranty = 'warranty',
 }
 
-/**
- * Which section of the deed a set of rules belongs to. Decides the heading and the icon, and doubles
- * as the suffix of the translation keys under `licenses.deed`.
- */
 export enum LicenseRuleGroup {
   Permissions = 'permissions',
   Conditions = 'conditions',
@@ -37,12 +33,13 @@ export enum LicenseRuleGroup {
 }
 
 /**
- * The two ways a GPL-family license can treat later versions of itself. Both are explained on the
- * family's deed, since the menu offers them as separate choices that share this one page.
+ * Identifies the note explaining the two menu entries a GPL-family deed covers.
  */
 export enum LicenseVersionNote {
-  OrLater = 'or_later',
-  Only = 'only',
+  GPL_3_0 = 'gpl_3_0',
+  GPL_2_0 = 'gpl_2_0',
+  AGPL_3_0 = 'agpl_3_0',
+  LGPL_3_0 = 'lgpl_3_0',
 }
 
 interface LicenseTerms {
@@ -53,23 +50,14 @@ interface LicenseTerms {
 
 export interface LicenseDeed extends LicenseTerms {
   slug: LicenseDeedSlug;
-  /**
-   * The license this deed summarises, so the page can reuse its name and short description. For a
-   * GPL-family deed this is the -or-later variant, whose {@link LicenseInfo.shortName} names the
-   * license without a version scope — the page covers both variants.
-   */
   licenseId: LicenseUri;
-  /** The authoritative license text. The deed is only a summary; this is what actually governs. */
   officialUrl: string;
-  /** Set for the GPL-family deeds, which must explain both version scopes the menu offers. */
-  hasVersionVariants?: boolean;
+  /** Set for the GPL-family deeds, which must explain both menu entries they cover. */
+  versionNote?: LicenseVersionNote;
 }
 
-// NOTE: Each set is named after the license text rather than a menu entry, since the -only and
-// -or-later variants of a GPL-family license grant and require exactly the same things.
-
 const mitTerms: LicenseTerms = {
-  permissions: [LicenseRule.CommercialUse, LicenseRule.Distribution, LicenseRule.Modifications, LicenseRule.PrivateUse],
+  permissions: [LicenseRule.CommercialUse, LicenseRule.Modifications, LicenseRule.Distribution, LicenseRule.PrivateUse],
   conditions: [LicenseRule.IncludeCopyright],
   limitations: [LicenseRule.Liability, LicenseRule.Warranty],
 };
@@ -77,8 +65,8 @@ const mitTerms: LicenseTerms = {
 const apache2Terms: LicenseTerms = {
   permissions: [
     LicenseRule.CommercialUse,
-    LicenseRule.Distribution,
     LicenseRule.Modifications,
+    LicenseRule.Distribution,
     LicenseRule.PatentUse,
     LicenseRule.PrivateUse,
   ],
@@ -86,14 +74,20 @@ const apache2Terms: LicenseTerms = {
   limitations: [LicenseRule.TrademarkUse, LicenseRule.Liability, LicenseRule.Warranty],
 };
 
-const bsdTerms: LicenseTerms = {
-  permissions: [LicenseRule.CommercialUse, LicenseRule.Distribution, LicenseRule.Modifications, LicenseRule.PrivateUse],
+const bsd3Terms: LicenseTerms = {
+  permissions: [LicenseRule.CommercialUse, LicenseRule.Modifications, LicenseRule.Distribution, LicenseRule.PrivateUse],
   conditions: [LicenseRule.IncludeCopyright],
+  limitations: [LicenseRule.NonEndorsement, LicenseRule.Liability, LicenseRule.Warranty],
+};
+
+const bsd2Terms: LicenseTerms = {
+  permissions: bsd3Terms.permissions,
+  conditions: bsd3Terms.conditions,
   limitations: [LicenseRule.Liability, LicenseRule.Warranty],
 };
 
 const gpl2Terms: LicenseTerms = {
-  permissions: [LicenseRule.CommercialUse, LicenseRule.Distribution, LicenseRule.Modifications, LicenseRule.PrivateUse],
+  permissions: [LicenseRule.CommercialUse, LicenseRule.Modifications, LicenseRule.Distribution, LicenseRule.PrivateUse],
   conditions: [
     LicenseRule.DiscloseSource,
     LicenseRule.IncludeCopyright,
@@ -106,8 +100,8 @@ const gpl2Terms: LicenseTerms = {
 const gpl3Terms: LicenseTerms = {
   permissions: [
     LicenseRule.CommercialUse,
-    LicenseRule.Distribution,
     LicenseRule.Modifications,
+    LicenseRule.Distribution,
     LicenseRule.PatentUse,
     LicenseRule.PrivateUse,
   ],
@@ -135,7 +129,7 @@ const agpl3Terms: LicenseTerms = {
 const lgpl3Terms: LicenseTerms = {
   permissions: gpl3Terms.permissions,
   conditions: [
-    LicenseRule.DiscloseSource,
+    LicenseRule.DiscloseSourceForLibrary,
     LicenseRule.IncludeCopyright,
     LicenseRule.SameLicenseForLibrary,
     LicenseRule.DocumentChanges,
@@ -146,20 +140,20 @@ const lgpl3Terms: LicenseTerms = {
 const mpl2Terms: LicenseTerms = {
   permissions: [
     LicenseRule.CommercialUse,
-    LicenseRule.Distribution,
     LicenseRule.Modifications,
+    LicenseRule.Distribution,
     LicenseRule.PatentUse,
     LicenseRule.PrivateUse,
   ],
-  conditions: [LicenseRule.DiscloseSource, LicenseRule.IncludeCopyrightInSource, LicenseRule.SameLicenseForFile],
-  limitations: [LicenseRule.Liability, LicenseRule.TrademarkUse, LicenseRule.Warranty],
+  conditions: [LicenseRule.DiscloseSourceForFile, LicenseRule.IncludeCopyright, LicenseRule.SameLicenseForFile],
+  limitations: [LicenseRule.TrademarkUse, LicenseRule.Liability, LicenseRule.Warranty],
 };
 
 const eupl12Terms: LicenseTerms = {
   permissions: [
     LicenseRule.CommercialUse,
-    LicenseRule.Distribution,
     LicenseRule.Modifications,
+    LicenseRule.Distribution,
     LicenseRule.PatentUse,
     LicenseRule.PrivateUse,
   ],
@@ -167,7 +161,8 @@ const eupl12Terms: LicenseTerms = {
     LicenseRule.DiscloseSource,
     LicenseRule.IncludeCopyright,
     LicenseRule.NetworkUseDisclose,
-    LicenseRule.SameLicense,
+    LicenseRule.SameLicenseWithCompatibility,
+    LicenseRule.DocumentChanges,
   ],
   limitations: [LicenseRule.Liability, LicenseRule.TrademarkUse, LicenseRule.Warranty],
 };
@@ -189,24 +184,24 @@ export const licenseDeeds: LicenseDeed[] = [
     slug: LicenseDeedSlug.BSD_3_Clause,
     licenseId: LicenseUri.BSD_3_Clause,
     officialUrl: 'https://opensource.org/license/bsd-3-clause',
-    ...bsdTerms,
+    ...bsd3Terms,
   },
   {
     slug: LicenseDeedSlug.BSD_2_Clause,
     licenseId: LicenseUri.BSD_2_Clause,
     officialUrl: 'https://opensource.org/license/bsd-2-clause',
-    ...bsdTerms,
+    ...bsd2Terms,
   },
   {
     slug: LicenseDeedSlug.MPL_2_0,
     licenseId: LicenseUri.MPL_2_0,
-    officialUrl: 'https://www.mozilla.org/MPL/2.0/',
+    officialUrl: 'https://www.mozilla.org/en-US/MPL/2.0/',
     ...mpl2Terms,
   },
   {
     slug: LicenseDeedSlug.EUPL_1_2,
     licenseId: LicenseUri.EUPL_1_2,
-    officialUrl: 'https://eupl.eu/1.2/en/',
+    officialUrl: 'https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12',
     ...eupl12Terms,
   },
   {
@@ -214,30 +209,37 @@ export const licenseDeeds: LicenseDeed[] = [
     licenseId: LicenseUri.GPL_3_0_or_later,
     officialUrl: 'https://www.gnu.org/licenses/gpl-3.0.html',
     ...gpl3Terms,
-    hasVersionVariants: true,
+    versionNote: LicenseVersionNote.GPL_3_0,
   },
   {
     slug: LicenseDeedSlug.GPL_2_0,
     licenseId: LicenseUri.GPL_2_0_or_later,
     officialUrl: 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html',
     ...gpl2Terms,
-    hasVersionVariants: true,
+    versionNote: LicenseVersionNote.GPL_2_0,
   },
   {
     slug: LicenseDeedSlug.AGPL_3_0,
     licenseId: LicenseUri.AGPL_3_0_or_later,
     officialUrl: 'https://www.gnu.org/licenses/agpl-3.0.html',
     ...agpl3Terms,
-    hasVersionVariants: true,
+    versionNote: LicenseVersionNote.AGPL_3_0,
   },
   {
     slug: LicenseDeedSlug.LGPL_3_0,
     licenseId: LicenseUri.LGPL_3_0_or_later,
     officialUrl: 'https://www.gnu.org/licenses/lgpl-3.0.html',
     ...lgpl3Terms,
-    hasVersionVariants: true,
+    versionNote: LicenseVersionNote.LGPL_3_0,
   },
 ];
+
+/**
+ * The choosealicense.com page a deed's guidance points are derived from, which its attribution links to.
+ * @param slug Identifies the deed.
+ * @returns Url of the license page on choosealicense.com.
+ */
+export const getLicenseGuidanceUrl = (slug: LicenseDeedSlug) => `https://choosealicense.com/licenses/${slug}/`;
 
 /**
  * Looks up the deed to show for a license deed path.
