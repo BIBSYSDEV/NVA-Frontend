@@ -12,6 +12,7 @@ describe('isPublicPage', () => {
     { label: 'projects root', path: '/projects' },
     { label: 'a project page', path: '/projects/123' },
     { label: 'a registration landing page', path: '/registration/123' },
+    { label: 'a license deed', path: '/license/mit' },
   ])('treats $label as public', ({ path }) => {
     expect(isPublicPage(path)).toBe(true);
   });

@@ -35,11 +35,9 @@ export const LicenseDescription = ({ license }: LicenseDescriptionProps) => {
           li: <li />,
         }}
       />
-      {license.link && (
-        <OpenInNewLink href={license.link}>
-          {t('licenses.read_more_about_license', { license: license.name })}
-        </OpenInNewLink>
-      )}
+      <OpenInNewLink href={license.link}>
+        {t('licenses.read_more_about_license', { license: license.name })}
+      </OpenInNewLink>
       {license.additionalInformation && (
         <Trans
           t={t}

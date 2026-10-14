@@ -164,6 +164,11 @@ export const dataTestId = {
     acceptButton: 'accept-button',
     cancelButton: 'cancel-button',
   },
+  licenseDeedPage: {
+    creativeCommonsAttributionLink: 'creative-commons-attribution-link',
+    guidanceAttributionLink: 'guidance-attribution-link',
+    officialLicenseLink: 'official-license-link',
+  },
   organization: {
     searchField: 'organization-search-field',
     subSearchField: 'sub-organization-search-field',
