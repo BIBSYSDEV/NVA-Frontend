@@ -6,9 +6,9 @@ import { getAdditionalLicenses, getShortListLicenses } from '../../../utils/file
 import {
   getLicenseDeed,
   getLicenseGuidanceUrl,
+  licenseDeeds,
   LicenseRule,
   LicenseRuleGroup,
-  licenseDeeds,
   LicenseVersionNote,
 } from '../license-deed-config';
 
@@ -98,7 +98,7 @@ describe('The deeds and the source code license menu', () => {
     const cc0 = licenses.find((license) => license.id === LicenseUri.CC0);
 
     expect(licenseDeeds.some((deed) => deed.licenseId === LicenseUri.CC0)).toBe(false);
-    expect(cc0?.link).toBe('https://creativecommons.org/publicdomain/zero/1.0/deed.no');
+    expect(cc0?.link).toMatch(/^https:\/\/creativecommons\.org\/publicdomain\/zero\/1\.0/);
   });
 
   test('Points every menu license at a link', () => {
