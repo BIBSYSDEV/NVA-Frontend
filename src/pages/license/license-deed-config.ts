@@ -2,7 +2,7 @@ import { LicenseDeedSlug, LicenseUri } from '../../types/license.types';
 
 /**
  * A term a license grants, requires or withholds. The deeds reuse one shared vocabulary rather than
- * prose per license. Mirrors the rule vocabulary on choosealicense.com, which these summaries are derived from.
+ * prose per license. Derived from the rule vocabulary on choosealicense.com.
  */
 export enum LicenseRule {
   CommercialUse = 'commercial_use',

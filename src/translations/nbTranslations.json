@@ -921,11 +921,6 @@
         "label": "Samme lisens",
         "term": "same license"
       },
-      "same_license_with_compatibility": {
-        "description": "Bearbeidelser distribueres under EUPL eller en lisens fra kompatibilitetslisten i lisensens vedlegg.",
-        "label": "Samme eller kompatibel lisens",
-        "term": "same license, with compatibility list"
-      },
       "same_license_for_file": {
         "description": "Endrede filer forblir under lisensen; de kan kombineres med filer under andre lisenser.",
         "label": "Samme lisens (filnivå)",
@@ -935,6 +930,11 @@
         "description": "Endringer i selve biblioteket må dele lisens; programmer som bare bruker biblioteket, kan ha en annen.",
         "label": "Samme lisens (biblioteket)",
         "term": "same license, library-based"
+      },
+      "same_license_with_compatibility": {
+        "description": "Bearbeidelser distribueres under EUPL eller en lisens fra kompatibilitetslisten i lisensens vedlegg.",
+        "label": "Samme eller kompatibel lisens",
+        "term": "same license, with compatibility list"
       },
       "trademark_use": {
         "description": "Lisensen gir ingen rett til å bruke navn, logo eller varemerker.",

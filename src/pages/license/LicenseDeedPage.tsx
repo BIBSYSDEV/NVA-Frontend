@@ -5,6 +5,7 @@ import { HeadTitle } from '../../components/HeadTitle';
 import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { licenses } from '../../types/license.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import NotFound from '../errorpages/NotFound';
 import { LicenseRuleList } from './_components/LicenseRuleList';
 import { getLicenseDeed, getLicenseGuidanceUrl, LicenseRuleGroup } from './license-deed-config';
@@ -39,7 +40,9 @@ const LicenseDeedPage = () => {
         {title}
       </Typography>
 
-      <OpenInNewLink href={deed.officialUrl}>{t('licenses.deed.official_license_text')}</OpenInNewLink>
+      <OpenInNewLink href={deed.officialUrl} data-testid={dataTestId.licenseDeedPage.officialLicenseLink}>
+        {t('licenses.deed.official_license_text')}
+      </OpenInNewLink>
 
       <Typography sx={{ mt: '1rem', fontStyle: 'italic' }}>{t('licenses.deed.disclaimer')}</Typography>
 
@@ -72,8 +75,18 @@ const LicenseDeedPage = () => {
         i18nKey="licenses.deed.attribution"
         components={{
           p: <Typography variant="body2" />,
-          chooseALicenseLink: <OpenInNewLink href={getLicenseGuidanceUrl(deed.slug)} />,
-          ccLink: <OpenInNewLink href="https://creativecommons.org/licenses/by/3.0/deed.no" />,
+          chooseALicenseLink: (
+            <OpenInNewLink
+              href={getLicenseGuidanceUrl(deed.slug)}
+              data-testid={dataTestId.licenseDeedPage.guidanceAttributionLink}
+            />
+          ),
+          ccLink: (
+            <OpenInNewLink
+              href="https://creativecommons.org/licenses/by/3.0/deed.no"
+              data-testid={dataTestId.licenseDeedPage.creativeCommonsAttributionLink}
+            />
+          ),
         }}
       />
     </BackgroundDiv>

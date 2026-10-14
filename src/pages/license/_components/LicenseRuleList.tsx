@@ -36,15 +36,16 @@ export const LicenseRuleList = ({ group, rules }: LicenseRuleListProps) => {
       <Typography component="h2" variant="h3" gutterBottom>
         {t(`licenses.deed.${group}`)}
       </Typography>
-      <Box component="ul" sx={{ listStyle: 'none', m: 0, p: 0, display: 'grid', gap: '0.75rem' }}>
+      {/* NOTE: Safari drops the list semantics when the markers are removed, so the role is restated. */}
+      <Box component="ul" role="list" sx={{ listStyle: 'none', m: 0, p: 0, display: 'grid', gap: '0.75rem' }}>
         {rules.map((rule) => (
           <Box component="li" key={rule} sx={{ display: 'flex', gap: '0.5rem' }}>
             <Icon aria-hidden sx={{ color: groupColor[group], flexShrink: 0 }} />
             <div>
               <Typography sx={{ fontWeight: 'bold' }}>
                 {t(`licenses.rules.${rule}.label`)}{' '}
-                {/* The English term the license itself uses, so the summary can be held up against the official text. */}
-                <Box component="i" sx={{ fontWeight: 'normal' }}>
+                {/* The rule's English term, which the deeds inherit from choosealicense. */}
+                <Box component="i" lang="en" sx={{ fontWeight: 'normal' }}>
                   ({t(`licenses.rules.${rule}.term`)})
                 </Box>
               </Typography>

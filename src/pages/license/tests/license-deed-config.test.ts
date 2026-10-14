@@ -50,25 +50,29 @@ describe('licenseDeeds', () => {
   });
 });
 
+// Pinned rather than derived, so renaming a slug cannot quietly move the attribution link.
+const guidanceUrls: [LicenseDeedSlug, string][] = [
+  [LicenseDeedSlug.MIT, 'https://choosealicense.com/licenses/mit/'],
+  [LicenseDeedSlug.Apache_2_0, 'https://choosealicense.com/licenses/apache-2.0/'],
+  [LicenseDeedSlug.GPL_3_0, 'https://choosealicense.com/licenses/gpl-3.0/'],
+  [LicenseDeedSlug.GPL_2_0, 'https://choosealicense.com/licenses/gpl-2.0/'],
+  [LicenseDeedSlug.AGPL_3_0, 'https://choosealicense.com/licenses/agpl-3.0/'],
+  [LicenseDeedSlug.LGPL_3_0, 'https://choosealicense.com/licenses/lgpl-3.0/'],
+  [LicenseDeedSlug.BSD_3_Clause, 'https://choosealicense.com/licenses/bsd-3-clause/'],
+  [LicenseDeedSlug.BSD_2_Clause, 'https://choosealicense.com/licenses/bsd-2-clause/'],
+  [LicenseDeedSlug.MPL_2_0, 'https://choosealicense.com/licenses/mpl-2.0/'],
+  [LicenseDeedSlug.EUPL_1_2, 'https://choosealicense.com/licenses/eupl-1.2/'],
+];
+
 describe('getLicenseGuidanceUrl()', () => {
-  // Pinned rather than derived, so renaming a slug cannot quietly move the attribution link.
-  test.each([
-    [LicenseDeedSlug.MIT, 'https://choosealicense.com/licenses/mit/'],
-    [LicenseDeedSlug.Apache_2_0, 'https://choosealicense.com/licenses/apache-2.0/'],
-    [LicenseDeedSlug.GPL_3_0, 'https://choosealicense.com/licenses/gpl-3.0/'],
-    [LicenseDeedSlug.GPL_2_0, 'https://choosealicense.com/licenses/gpl-2.0/'],
-    [LicenseDeedSlug.AGPL_3_0, 'https://choosealicense.com/licenses/agpl-3.0/'],
-    [LicenseDeedSlug.LGPL_3_0, 'https://choosealicense.com/licenses/lgpl-3.0/'],
-    [LicenseDeedSlug.BSD_3_Clause, 'https://choosealicense.com/licenses/bsd-3-clause/'],
-    [LicenseDeedSlug.BSD_2_Clause, 'https://choosealicense.com/licenses/bsd-2-clause/'],
-    [LicenseDeedSlug.MPL_2_0, 'https://choosealicense.com/licenses/mpl-2.0/'],
-    [LicenseDeedSlug.EUPL_1_2, 'https://choosealicense.com/licenses/eupl-1.2/'],
-  ])('Credits the page %s is derived from', (slug, expectedUrl) => {
+  test.each(guidanceUrls)('Credits the page %s is derived from', (slug, expectedUrl) => {
     expect(getLicenseGuidanceUrl(slug)).toBe(expectedUrl);
   });
 
-  test('Credits a page for every deed', () => {
-    expect(licenseDeeds).toHaveLength(10);
+  test('Credits a page for every deed, and none we serve no deed for', () => {
+    const pinnedSlugs = guidanceUrls.map(([slug]) => slug);
+
+    expect(pinnedSlugs.sort()).toEqual(licenseDeeds.map((deed) => deed.slug).sort());
   });
 });
 
