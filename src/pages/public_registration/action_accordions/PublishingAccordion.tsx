@@ -161,6 +161,9 @@ export const PublishingAccordion = ({
     mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2 || isWaitingForFileDeletion;
 
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
+  const warningText = showRegistrationWithSameNameWarning
+    ? t('registration.public_page.potential_duplicate')
+    : t('registration.public_page.validation_errors');
 
   const defaultExpanded = locationState?.selectedTicketType
     ? locationState.selectedTicketType === 'PublishingRequest' ||
@@ -215,13 +218,8 @@ export const PublishingAccordion = ({
         )}
 
         {(showValidationErrors || showRegistrationWithSameNameWarning) && !isUnpublishedOrDeletedRegistration && (
-          <Tooltip
-            title={
-              showRegistrationWithSameNameWarning
-                ? t('registration.public_page.potential_duplicate')
-                : t('registration.public_page.validation_errors')
-            }>
-            <ErrorIcon color="warning" sx={{ ml: '0.2rem' }} />
+          <Tooltip title={warningText}>
+            <ErrorIcon color="warning" titleAccess={warningText} sx={{ ml: '0.2rem' }} />
           </Tooltip>
         )}
       </TaskAccordionSummary>
