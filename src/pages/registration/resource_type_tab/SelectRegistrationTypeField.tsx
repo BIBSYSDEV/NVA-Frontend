@@ -42,19 +42,23 @@ import {
 import {
   allPublicationInstanceTypes,
   contextTypeBaseFieldName,
+  FileFieldNames,
   instanceTypeBaseFieldName,
   PublicationType,
   ResearchDataType,
   ResourceFieldNames,
+  SpecificFileFieldNames,
 } from '../../../types/publicationFieldNames';
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { isSourceCodeCategory, licenseNeedsReset } from '../../../utils/fileHelpers';
 import {
   getDisabledCategories,
   getMainRegistrationType,
   isPeriodicalMediaContribution,
   isPersonPublisher,
   nviApplicableTypes,
+  userIsValidImporter,
 } from '../../../utils/registration-helpers';
 import { LockedNviFieldDescription } from '../LockedNviFieldDescription';
 
@@ -264,6 +268,26 @@ export const SelectRegistrationTypeField = () => {
           setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType }, false);
           break;
       }
+      // Source code is offered software licenses and every other category Creative Commons ones, so the
+      // menu only changes when we cross that boundary. A license picked before the change is then no
+      // longer offered, and clearing it makes the user pick again instead of leaving a value the menu
+      // cannot show.
+      const licenseMenuChanged = isSourceCodeCategory(currentInstanceType) !== isSourceCodeCategory(newInstanceType);
+
+      if (licenseMenuChanged) {
+        const userMayEditImportCandidateFiles = userIsValidImporter(user, values);
+
+        values.associatedArtifacts.forEach((associatedArtifact, index) => {
+          if (licenseNeedsReset(associatedArtifact, newInstanceType, userMayEditImportCandidateFiles)) {
+            setFieldValue(
+              `${FileFieldNames.AssociatedArtifacts}[${index}].${SpecificFileFieldNames.License}`,
+              '',
+              false
+            );
+          }
+        });
+      }
+
       setTimeout(() => validateForm(), 0);
     }
   };
