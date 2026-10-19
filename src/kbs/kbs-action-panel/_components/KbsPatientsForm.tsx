@@ -1,10 +1,10 @@
 import CheckIcon from '@mui/icons-material/Check';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@mui/material';
+import { Box, Button, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { KbsInstitution, KbsPatientCounts } from '../kbs.types';
 import { getPatientsTotal, hasPatientCountForAllInstitutions } from '../_utils/kbs-helpers';
+import { KbsTable } from './KbsTable';
 
 const wholeNumberPattern = /^\d+$/;
 
@@ -31,14 +31,9 @@ export const KbsPatientsForm = ({ year, institutions, onDeliver }: KbsPatientsFo
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        <CheckBoxIcon color="primary" aria-hidden="true" />
-        <Typography>{t('kbs_requirement_confirmed')}</Typography>
-      </Box>
-
       <Typography variant="subtitle1">{t('new_patients_for_year', { year })}</Typography>
 
-      <Table size="small" sx={{ 'th, td': { px: '0.5rem' } }}>
+      <KbsTable size="small">
         <TableHead>
           <TableRow>
             <TableCell>{t('common.institution')}</TableCell>
@@ -75,7 +70,7 @@ export const KbsPatientsForm = ({ year, institutions, onDeliver }: KbsPatientsFo
             <TableCell align="right">{total ?? '-'}</TableCell>
           </TableRow>
         </TableBody>
-      </Table>
+      </KbsTable>
 
       <Button
         variant="contained"
