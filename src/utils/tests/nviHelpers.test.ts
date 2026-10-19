@@ -54,7 +54,7 @@ const buildNviRegistration = (contributors: Contributor[]) => {
 
 describe('willResetNviStatuses()', () => {
   beforeAll(() => {
-    server.listen({ onUnhandledRequest: 'error' });
+    server.listen({ onUnhandledFrame: 'error' });
   });
 
   afterAll(() => {
