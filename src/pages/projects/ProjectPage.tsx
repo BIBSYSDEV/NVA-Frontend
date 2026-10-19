@@ -19,7 +19,7 @@ const ProjectPage = () => {
     </StyledPageContent>
   ) : (
     projectQuery.data && (
-      <KbsProjectContent>
+      <KbsProjectContent projectId={projectQuery.data.id}>
         <ProjectLandingPage project={projectQuery.data} refetchProject={projectQuery.refetch} />
       </KbsProjectContent>
     )

@@ -10,11 +10,12 @@ import { KbsProjectLayout } from './KbsProjectLayout';
 const role: KbsRole = KbsRole.ProjectLeader;
 
 interface KbsProjectContentProps {
+  projectId: string;
   children: ReactNode;
 }
 
-export const KbsProjectContent = ({ children }: KbsProjectContentProps) => {
-  const kbsReport = useKbsReport();
+export const KbsProjectContent = ({ projectId, children }: KbsProjectContentProps) => {
+  const kbsReport = useKbsReport(projectId);
 
   return canSeeKbsPanel(role, kbsReport.status) ? (
     <KbsProjectLayout main={children} sidebar={<KbsActionPanel role={role} kbsReport={kbsReport} />} />

@@ -20,12 +20,13 @@ const kbsReportingGuideUrl = '#';
 const answerLabelId = 'kbs-assessment-answer-label';
 
 interface KbsAssessmentFormProps {
+  savedAnswer?: KbsAssessmentAnswer;
   onSave: (answer: KbsAssessmentAnswer) => void;
 }
 
-export const KbsAssessmentForm = ({ onSave }: KbsAssessmentFormProps) => {
+export const KbsAssessmentForm = ({ savedAnswer, onSave }: KbsAssessmentFormProps) => {
   const { t } = useTranslation();
-  const [answer, setAnswer] = useState<KbsAssessmentAnswer | null>(null);
+  const [answer, setAnswer] = useState<KbsAssessmentAnswer | null>(savedAnswer ?? null);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

@@ -25,3 +25,10 @@ export enum KbsRole {
   ProjectMember = 'ProjectMember',
   Anonymous = 'Anonymous',
 }
+
+export interface KbsReport {
+  status: KbsStatus;
+  year: number;
+  assessmentAnswer?: KbsAssessmentAnswer;
+  patientCounts: Partial<KbsPatientCounts>;
+}

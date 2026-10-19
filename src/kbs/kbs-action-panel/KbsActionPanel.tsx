@@ -3,7 +3,7 @@ import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
 import { Accordion, AccordionDetails, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { TaskAccordionSummary } from '../../pages/public_registration/action_accordions/styles';
-import { KbsReport } from '../_hooks/useKbsReport';
+import { KbsReportState } from '../_hooks/useKbsReport';
 import { canEditKbs } from '../_utils/kbs-role-helpers';
 import { KbsAssessmentForm } from './_components/KbsAssessmentForm';
 import { KbsPatientsForm } from './_components/KbsPatientsForm';
@@ -15,12 +15,12 @@ import { KbsRole, KbsStatus } from './kbs.types';
 
 interface KbsActionPanelProps {
   role: KbsRole;
-  kbsReport: KbsReport;
+  kbsReport: KbsReportState;
 }
 
 export const KbsActionPanel = ({ role, kbsReport }: KbsActionPanelProps) => {
   const { t } = useTranslation();
-  const { status, year, patientCounts, saveAssessment, deliverPatientCounts } = kbsReport;
+  const { status, year, assessmentAnswer, patientCounts, saveAssessment, deliverPatientCounts } = kbsReport;
 
   const canEdit = canEditKbs(role);
   const showPatientsForm = canEdit && status === KbsStatus.Candidate;
@@ -44,7 +44,9 @@ export const KbsActionPanel = ({ role, kbsReport }: KbsActionPanelProps) => {
         </Box>
       </TaskAccordionSummary>
       <AccordionDetails>
-        {status === KbsStatus.NotAssessed && canEdit && <KbsAssessmentForm onSave={saveAssessment} />}
+        {status === KbsStatus.NotAssessed && canEdit && (
+          <KbsAssessmentForm savedAnswer={assessmentAnswer} onSave={saveAssessment} />
+        )}
         {status !== KbsStatus.NotAssessed && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {canEdit && <KbsRequirementConfirmation />}
