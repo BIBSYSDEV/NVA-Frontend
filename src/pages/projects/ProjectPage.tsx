@@ -3,8 +3,7 @@ import { useParams } from 'react-router';
 import { useFetchProject } from '../../api/hooks/useFetchProject';
 import { PageSpinner } from '../../components/PageSpinner';
 import { StyledPageContent } from '../../components/styled/Wrappers';
-import { KbsActionPanel } from '../../kbs/kbs-action-panel/KbsActionPanel';
-import { KbsProjectLayout } from '../../kbs/KbsProjectLayout';
+import { KbsProjectContent } from '../../kbs/KbsProjectContent';
 import { IdentifierParams } from '../../utils/urlPaths';
 import { ProjectLandingPage } from './ProjectLandingPage';
 
@@ -20,10 +19,9 @@ const ProjectPage = () => {
     </StyledPageContent>
   ) : (
     projectQuery.data && (
-      <KbsProjectLayout
-        main={<ProjectLandingPage project={projectQuery.data} refetchProject={projectQuery.refetch} />}
-        sidebar={<KbsActionPanel />}
-      />
+      <KbsProjectContent>
+        <ProjectLandingPage project={projectQuery.data} refetchProject={projectQuery.refetch} />
+      </KbsProjectContent>
     )
   );
 };

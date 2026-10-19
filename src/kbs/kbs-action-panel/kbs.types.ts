@@ -17,3 +17,11 @@ export interface KbsInstitution {
 }
 
 export type KbsPatientCounts = Record<KbsInstitution['id'], number>;
+
+export enum KbsRole {
+  ProjectLeader = 'ProjectLeader',
+  KbsAdmin = 'KbsAdmin',
+  LocalResponsible = 'LocalResponsible',
+  ProjectMember = 'ProjectMember',
+  Anonymous = 'Anonymous',
+}
