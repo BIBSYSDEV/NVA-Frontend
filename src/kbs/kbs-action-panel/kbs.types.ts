@@ -31,4 +31,5 @@ export interface KbsReport {
   year: number;
   assessmentAnswer?: KbsAssessmentAnswer;
   patientCounts: Partial<KbsPatientCounts>;
+  isProjectActive: boolean;
 }

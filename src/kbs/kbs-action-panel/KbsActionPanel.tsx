@@ -45,13 +45,18 @@ export const KbsActionPanel = ({ role, kbsReport }: KbsActionPanelProps) => {
       </TaskAccordionSummary>
       <AccordionDetails>
         {status === KbsStatus.NotAssessed && canEdit && (
-          <KbsAssessmentForm savedAnswer={assessmentAnswer} onSave={saveAssessment} />
+          <KbsAssessmentForm key={assessmentAnswer} savedAnswer={assessmentAnswer} onSave={saveAssessment} />
         )}
         {status !== KbsStatus.NotAssessed && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {canEdit && <KbsRequirementConfirmation />}
             {showPatientsForm && (
-              <KbsPatientsForm year={year} institutions={kbsMockInstitutions} onDeliver={deliverPatientCounts} />
+              <KbsPatientsForm
+                key={year}
+                year={year}
+                institutions={kbsMockInstitutions}
+                onDeliver={deliverPatientCounts}
+              />
             )}
             {!showPatientsForm && (
               <KbsPatientsTable year={year} institutions={kbsMockInstitutions} patientCounts={patientCounts} />

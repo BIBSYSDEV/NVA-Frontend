@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { KbsAssessmentAnswer, KbsPatientCounts, KbsReport, KbsStatus } from '../kbs-action-panel/kbs.types';
-import { readKbsReport, writeKbsReport } from '../_utils/kbs-mock-storage';
+import { createDefaultKbsReport, readKbsReport, writeKbsReport } from '../_utils/kbs-mock-storage';
+import { getKbsReportAfterPeriodClose } from '../_utils/kbs-period-helpers';
 
 export const useKbsReport = (projectId: string) => {
   const queryClient = useQueryClient();
@@ -33,7 +34,20 @@ export const useKbsReport = (projectId: string) => {
   const deliverPatientCounts = (patientCounts: KbsPatientCounts) =>
     updateKbsReport({ patientCounts, status: KbsStatus.Delivered });
 
-  return { ...kbsReport, saveAssessment, deliverPatientCounts };
+  const setIsProjectActive = (isProjectActive: boolean) => updateKbsReport({ isProjectActive });
+
+  const closeKbsPeriod = () => kbsReportMutation.mutate(getKbsReportAfterPeriodClose(kbsReport));
+
+  const resetKbsReport = () => kbsReportMutation.mutate(createDefaultKbsReport());
+
+  return {
+    ...kbsReport,
+    saveAssessment,
+    deliverPatientCounts,
+    setIsProjectActive,
+    closeKbsPeriod,
+    resetKbsReport,
+  };
 };
 
 export type KbsReportState = ReturnType<typeof useKbsReport>;
