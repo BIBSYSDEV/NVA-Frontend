@@ -5,13 +5,16 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TaskAccordionSummary } from '../../pages/public_registration/action_accordions/styles';
 import { KbsAssessmentForm } from './_components/KbsAssessmentForm';
+import { KbsPatientsForm } from './_components/KbsPatientsForm';
 import { KbsStatusChip } from './_components/KbsStatusChip';
+import { kbsMockInstitutions } from './_utils/kbs-mock-institutions';
 import { KbsAssessmentAnswer, KbsStatus } from './kbs.types';
 
 export const KbsActionPanel = () => {
   const { t } = useTranslation();
-  // TODO: Read the status from the mocked KBS data
+  // TODO: Read the status and year from the mocked KBS data
   const [status, setStatus] = useState(KbsStatus.NotAssessed);
+  const [year] = useState(new Date().getFullYear());
 
   const saveAssessment = (answer: KbsAssessmentAnswer) => {
     // TODO: The other answers are waiting for design
@@ -40,6 +43,14 @@ export const KbsActionPanel = () => {
       </TaskAccordionSummary>
       <AccordionDetails>
         {status === KbsStatus.NotAssessed && <KbsAssessmentForm onSave={saveAssessment} />}
+        {status === KbsStatus.Candidate && (
+          <KbsPatientsForm
+            year={year}
+            institutions={kbsMockInstitutions}
+            // TODO: Keep the patient counts for the read-only table
+            onDeliver={() => setStatus(KbsStatus.Delivered)}
+          />
+        )}
         {/* TODO: Show the content for the other statuses */}
       </AccordionDetails>
     </Accordion>

@@ -339,6 +339,7 @@
   "copy_reference": "Kopier referanse",
   "corresponding_contributor": "Korresponderende bidragsyter",
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
+  "deliver": "Lever",
   "delivered": "Levert",
   "details": "Detaljer",
   "disciplines": {
@@ -551,6 +552,7 @@
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
     }
   },
+  "enter_number": "Oppgi antall",
   "export_dataset_for_nvi_report": "Eksporter datagrunnlag for NVI-rapport",
   "export_dataset_for_nvi_report_description": "<p>Filen inneholder NVI-kandidater som er godkjent eller fortsatt under kontroll. </p><p>Kandidater som er avvist av en eller flere institusjoner er ikke med i oversikten.</p>",
   "export_limit_reached": "Bare de første {{limit}} resultatene ble eksportert. Avgrens søket for å eksportere de resterende resultatene.",
@@ -771,6 +773,7 @@
   "internal_file_info_description": "Velg “Åpen fil” for forskningsresultater som skal gjøres åpent tilgjengelige. Husk å velge korrekt lisens. Kurator kan bistå deg med dette. Velg “Intern fil” for dokumenter som kun skal deles med kurator, for eksempel forfatteravtaler og lignende.",
   "kbs": "KBS",
   "kbs_reporting_guide": "Se veiledning på KBS-rapportering",
+  "kbs_requirement_confirmed": "Prosjektet oppfyller kravet til KBS-rapportering.",
   "kbs_requirement_question": "Prosjektet oppfyller kravet til KBS-rapportering?",
   "kbs_yes_but_inclusions_not_this_year": "Ja, men inklusjoner hos institusjoner starter ikke i år",
   "keep_all_contributors": "Behold bidragsytere fra både {{sourceType}} og publisert resultat",
@@ -1020,6 +1023,7 @@
       "thesis_embargo_curator_description": "Kan se og endre embargofiler på studentoppgaver."
     }
   },
+  "new_patients_for_year": "Nye pasienter for {{year}}",
   "no_contact_information_for_institution": "Ingen kontaktinformasjon å vise for denne institusjonen.",
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fant dessverre ikke noe som passer med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li></ul>",
@@ -1047,6 +1051,8 @@
   "overview_over_administrators": "Oversikt over administratorer",
   "overwrite": "Overskriv",
   "owner_institution": "Eierinstitusjon",
+  "patients": "Pasienter",
+  "patients_at_institution": "Pasienter ved {{institution}}",
   "percent_of_published_reports_in_year": "<p>Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{year}}.</p>",
   "percentage_approved": "Andel godkjente",
   "percentage_approved_by_all": "Andel godkjent av alle",
@@ -2128,6 +2134,7 @@
     "hours_minutes": "TT:MM",
     "minutes": "MM:SS"
   },
+  "total": "Totalt",
   "unpublish_actions": {
     "confirm_unpublish": "Jeg bekrefter at informasjonen stemmer, og at resultatet skal avpubliseres.",
     "duplicate": "Duplikat",

@@ -10,3 +10,10 @@ export enum KbsAssessmentAnswer {
   YesButInclusionsNotThisYear = 'YesButInclusionsNotThisYear',
   Yes = 'Yes',
 }
+
+export interface KbsInstitution {
+  id: string;
+  name: string;
+}
+
+export type KbsPatientCounts = Record<KbsInstitution['id'], number>;
