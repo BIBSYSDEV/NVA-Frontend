@@ -165,6 +165,7 @@
   "candidates_others_must_approve": "Kandidater andre må godkjenne",
   "candidates_our_institution_has_approved": "Kandidater vår institusjon har godkjent",
   "cannot_copy_category_from_another_context_type": "<p>Du kan ikke kopiere metadata fra kategorifanen hvis resultatet tilhører en annen hovedkategori.</p><p>Denne informasjonen må registreres manuelt etter at resten av metadata er kopiert.</p>",
+  "choose_between": "Velg mellom",
   "common": {
     "actions": "Handlinger",
     "add": "Legg til",
@@ -769,6 +770,9 @@
   "institutions_service_support": "Institusjonenes brukerstøtte",
   "internal_file_info_description": "Velg “Åpen fil” for forskningsresultater som skal gjøres åpent tilgjengelige. Husk å velge korrekt lisens. Kurator kan bistå deg med dette. Velg “Intern fil” for dokumenter som kun skal deles med kurator, for eksempel forfatteravtaler og lignende.",
   "kbs": "KBS",
+  "kbs_reporting_guide": "Se veiledning på KBS-rapportering",
+  "kbs_requirement_question": "Prosjektet oppfyller kravet til KBS-rapportering?",
+  "kbs_yes_but_inclusions_not_this_year": "Ja, men inklusjoner hos institusjoner starter ikke i år",
   "keep_all_contributors": "Behold bidragsytere fra både {{sourceType}} og publisert resultat",
   "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
   "keep_contributors_from_source_result": "Behold kun bidragsytere fra {{sourceType}}",

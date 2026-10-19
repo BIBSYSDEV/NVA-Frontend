@@ -4,3 +4,9 @@ export enum KbsStatus {
   Delivered = 'Delivered',
   Reported = 'Reported',
 }
+
+export enum KbsAssessmentAnswer {
+  No = 'No',
+  YesButInclusionsNotThisYear = 'YesButInclusionsNotThisYear',
+  Yes = 'Yes',
+}
