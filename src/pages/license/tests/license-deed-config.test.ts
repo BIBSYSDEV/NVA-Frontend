@@ -3,6 +3,7 @@ import nbTranslations from '../../../translations/nbTranslations.json';
 import { LicenseDeedSlug, licenses, LicenseUri } from '../../../types/license.types';
 import { ResearchDataType } from '../../../types/publicationFieldNames';
 import { getAdditionalLicenses, getShortListLicenses } from '../../../utils/fileHelpers';
+import { getLicenseDeedPath } from '../../../utils/urlPaths';
 import {
   getLicenseDeed,
   getLicenseGuidanceUrl,
@@ -78,7 +79,7 @@ describe('getLicenseGuidanceUrl()', () => {
 
 describe('The deeds and the source code license menu', () => {
   test('Gives every license the menu offers a deed to link to, apart from CC0', () => {
-    const deedPaths = licenseDeeds.map((deed) => `/license/${deed.slug}`);
+    const deedPaths = licenseDeeds.map((deed) => getLicenseDeedPath(deed.slug));
 
     sourceCodeMenuLicenses
       .filter(({ id }) => id !== LicenseUri.CC0)
@@ -111,7 +112,7 @@ describe('The deeds and the source code license menu', () => {
     licenseDeeds.forEach((deed) => {
       const license = licenses.find(({ id }) => id === deed.licenseId);
 
-      expect(license?.link).toBe(`/license/${deed.slug}`);
+      expect(license?.link).toBe(getLicenseDeedPath(deed.slug));
     });
   });
 });

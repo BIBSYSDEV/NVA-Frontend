@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { isPublicPage, UrlPathTemplate } from '../urlPaths';
+import { LicenseDeedSlug } from '../../types/license.types';
+import { getLicenseDeedPath, isPublicPage, UrlPathTemplate } from '../urlPaths';
 
 describe('isPublicPage', () => {
   it.each([
@@ -46,5 +47,15 @@ describe('isPublicPage', () => {
 
   it('does not treat unknown paths as public', () => {
     expect(isPublicPage('/some/unknown/path')).toBe(false);
+  });
+});
+
+describe('getLicenseDeedPath', () => {
+  it.each(Object.values(LicenseDeedSlug))('builds the path to the %s deed', (slug) => {
+    expect(getLicenseDeedPath(slug)).toBe(`/license/${slug}`);
+  });
+
+  it('escapes the slug, so it cannot break out of its path segment', () => {
+    expect(getLicenseDeedPath('mit/../admin' as LicenseDeedSlug)).toBe('/license/mit%2F..%2Fadmin');
   });
 });
