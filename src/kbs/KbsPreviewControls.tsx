@@ -37,7 +37,15 @@ interface KbsPreviewControlsProps {
 
 export const KbsPreviewControls = ({ role, onRoleChange, kbsReport }: KbsPreviewControlsProps) => {
   const { t } = useTranslation();
-  const { status, isProjectActive, setIsProjectActive, closeKbsPeriod, resetKbsReport } = kbsReport;
+  const {
+    status,
+    hasKbsApproval,
+    isProjectActive,
+    setHasKbsApproval,
+    setIsProjectActive,
+    closeKbsPeriod,
+    resetKbsReport,
+  } = kbsReport;
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleLabel = isOpen ? t('hide_preview_tools') : t('show_preview_tools');
@@ -84,6 +92,17 @@ export const KbsPreviewControls = ({ role, onRoleChange, kbsReport }: KbsPreview
               </MenuItem>
             ))}
           </TextField>
+
+          <FormControlLabel
+            control={
+              <Switch
+                color="secondary"
+                checked={hasKbsApproval}
+                onChange={(event) => setHasKbsApproval(event.target.checked)}
+              />
+            }
+            label={t('has_rek_or_ctis_approval')}
+          />
 
           <FormControlLabel
             control={

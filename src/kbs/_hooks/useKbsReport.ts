@@ -36,6 +36,8 @@ export const useKbsReport = (projectId: string) => {
 
   const setIsProjectActive = (isProjectActive: boolean) => updateKbsReport({ isProjectActive });
 
+  const setHasKbsApproval = (hasKbsApproval: boolean) => updateKbsReport({ hasKbsApproval });
+
   const closeKbsPeriod = () => kbsReportMutation.mutate(getKbsReportAfterPeriodClose(kbsReport));
 
   const resetKbsReport = () => kbsReportMutation.mutate(createDefaultKbsReport());
@@ -45,6 +47,7 @@ export const useKbsReport = (projectId: string) => {
     saveAssessment,
     deliverPatientCounts,
     setIsProjectActive,
+    setHasKbsApproval,
     closeKbsPeriod,
     resetKbsReport,
   };

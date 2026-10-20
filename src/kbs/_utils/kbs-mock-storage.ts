@@ -9,6 +9,7 @@ export const createDefaultKbsReport = (): KbsReport => ({
   year: new Date().getFullYear(),
   patientCounts: {},
   isProjectActive: true,
+  hasKbsApproval: true,
 });
 
 const readAllKbsReports = (): KbsReportsByProjectId => {

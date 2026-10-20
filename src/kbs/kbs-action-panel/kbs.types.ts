@@ -32,4 +32,5 @@ export interface KbsReport {
   assessmentAnswer?: KbsAssessmentAnswer;
   patientCounts: Partial<KbsPatientCounts>;
   isProjectActive: boolean;
+  hasKbsApproval: boolean;
 }

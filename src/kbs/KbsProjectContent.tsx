@@ -18,7 +18,7 @@ export const KbsProjectContent = ({ projectId, children }: KbsProjectContentProp
 
   return (
     <>
-      {canSeeKbsPanel(role, kbsReport.status) ? (
+      {canSeeKbsPanel(role, kbsReport.status, kbsReport.hasKbsApproval) ? (
         <KbsProjectLayout main={children} sidebar={<KbsActionPanel role={role} kbsReport={kbsReport} />} />
       ) : (
         <StyledPageContent>{children}</StyledPageContent>
