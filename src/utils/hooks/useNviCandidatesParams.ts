@@ -10,14 +10,8 @@ import {
 } from '../../api/searchApi';
 import { NviCandidateSearchStatus } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';
+import { getDefaultNviYear } from '../nviHelpers';
 import { parseNumericParam } from '../url-param-helpers';
-
-export const getDefaultNviYear = () => {
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth();
-  return currentMonth < 4 ? currentYear - 1 : currentYear;
-};
 
 const getCommonNviCandidatesParams = (searchParams: URLSearchParams) => {
   const affiliations = searchParams.get(NviCandidatesSearchParam.Affiliations)?.split(',');

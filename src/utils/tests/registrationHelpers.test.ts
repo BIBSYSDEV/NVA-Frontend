@@ -191,52 +191,62 @@ describe('getFormattedRegistration', () => {
     );
   });
 
-  it('does not update pages.type to "Range" in any Degree', () => {
-    publicationTypes.forEach((publicationChannel) => {
-      degreeTypes.forEach((degreeType) => {
-        const registration = createRegistration({
-          contextType: publicationChannel,
-          instanceType: degreeType,
-          pages: { type: 'MonographPages', pages: '10' },
-        });
-        const result = getFormattedRegistration(registration);
-        const pages = getPages(result);
-        expect(pages).toBeDefined();
-        expect((pages as any).type).toBe('MonographPages');
+  describe.each(monographTypes)('publication instance is %s', (instanceType, contextType) => {
+    it('returns registration unchanged if pages is missing', () => {
+      const registration = createRegistration({ contextType, instanceType });
+      const result = getFormattedRegistration(registration);
+      expect(getPages(result)).toBeFalsy();
+    });
+
+    it('returns registration unchanged if pages is null', () => {
+      const registration = createRegistration({
+        contextType,
+        instanceType,
+        extra: { publicationInstance: { type: instanceType, pages: null } },
       });
+      const result = getFormattedRegistration(registration);
+      expect(getPages(result)).toBeNull();
+    });
+
+    it('returns registration unchanged if pages.type is "MonographPages"', () => {
+      const registration = createRegistration({
+        contextType,
+        instanceType,
+        pages: { type: 'MonographPages', pages: '10' },
+      });
+      const result = getFormattedRegistration(registration);
+      expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '10' });
+    });
+
+    it('updates pages.type to "MonographPages" if type is missing', () => {
+      const registration = createRegistration({
+        contextType,
+        instanceType,
+        pages: { pages: '123' },
+      });
+      const result = getFormattedRegistration(registration);
+      expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '123' });
+    });
+
+    it('updates pages.type to "MonographPages" if type is not "MonographPages"', () => {
+      const registration = createRegistration({
+        contextType,
+        instanceType,
+        pages: { type: 'Range', pages: '123' },
+      });
+      const result = getFormattedRegistration(registration);
+      expect(getPages(result)).toEqual({ type: 'MonographPages', pages: '123' });
     });
   });
 
-  it('does not update pages.type to "Range" in any Book', () => {
-    publicationTypes.forEach((publicationType) => {
-      bookTypes.forEach((bookType) => {
-        const registration = createRegistration({
-          contextType: publicationType,
-          instanceType: bookType,
-          pages: { type: 'MonographPages', pages: '10' },
-        });
-        const result = getFormattedRegistration(registration);
-        const pages = getPages(result);
-        expect(pages).toBeDefined();
-        expect((pages as any).type).toBe('MonographPages');
-      });
+  it('does not mutate the original registration when updating pages.type', () => {
+    const registration = createRegistration({
+      contextType: PublicationType.Book,
+      instanceType: BookType.AcademicMonograph,
+      pages: { pages: '123' },
     });
-  });
-
-  it('does not update pages.type to "Range" in any Report', () => {
-    publicationTypes.forEach((publicationType) => {
-      reportTypes.forEach((reportType) => {
-        const registration = createRegistration({
-          contextType: publicationType,
-          instanceType: reportType,
-          pages: { type: 'MonographPages', pages: '10' },
-        });
-        const result = getFormattedRegistration(registration);
-        const pages = getPages(result);
-        expect(pages).toBeDefined();
-        expect((pages as any).type).toBe('MonographPages');
-      });
-    });
+    getFormattedRegistration(registration);
+    expect(getPages(registration)).toEqual({ pages: '123' });
   });
 
   it('does not update pages.type to "Range" in any Presentation', () => {
@@ -470,6 +480,11 @@ const mediaFeatureTypes = [MediaType.MediaFeatureArticle, MediaType.MediaReaderO
 const degreeTypes = Object.values(DegreeType);
 const bookTypes = Object.values(BookType);
 const reportTypes = Object.values(ReportType);
+const monographTypes: [string, PublicationType][] = [
+  ...bookTypes.map((type): [string, PublicationType] => [type, PublicationType.Book]),
+  ...reportTypes.map((type): [string, PublicationType] => [type, PublicationType.Report]),
+  ...degreeTypes.map((type): [string, PublicationType] => [type, PublicationType.Degree]),
+];
 const presentationTypes = Object.values(PresentationType);
 const artisticTypes = Object.values(ArtisticType);
 const mediaMediums = Object.values(MediaMedium);

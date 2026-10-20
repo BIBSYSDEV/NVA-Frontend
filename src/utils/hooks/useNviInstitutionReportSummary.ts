@@ -4,7 +4,7 @@ import { useFetchNviReportForInstitution } from '../../api/hooks/useFetchNviRepo
 import { RootState } from '../../redux/store';
 import { InstitutionReport } from '../../types/nvi.types';
 import { getIdentifierFromId } from '../general-helpers';
-import { getDefaultNviYear } from './useNviCandidatesParams';
+import { getDefaultNviYear } from '../nviHelpers';
 
 export interface NviApprovalStatusCounts {
   new: string | undefined;

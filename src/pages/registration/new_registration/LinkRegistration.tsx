@@ -14,18 +14,18 @@ import {
 } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import { Field, FieldProps, Form, Formik } from 'formik';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import * as Yup from 'yup';
 import { useCreateRegistrationFromDoi } from '../../../api/hooks/useCreateRegistrationFromDoi';
 import { useLookupDoi } from '../../../api/hooks/useLookupDoi';
 import { RegistrationList } from '../../../components/RegistrationList';
 import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { doiUrlBase } from '../../../utils/general-helpers';
+import { doiUrlPlaceholder } from '../../../utils/general-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { getLinkRegistrationValidationSchema } from '../../../utils/validation/registration/linkRegistrationValidation';
 import { RegistrationAccordion } from './RegistrationAccordion';
 
 export interface StartRegistrationAccordionProps {
@@ -37,10 +37,6 @@ enum LinkRegistrationFormFieldName {
   Link = 'link',
 }
 
-const doiValidationSchema = Yup.object({
-  [LinkRegistrationFormFieldName.Link]: Yup.string().trim().required(),
-});
-
 interface DoiFormValues {
   [LinkRegistrationFormFieldName.Link]: string;
 }
@@ -49,12 +45,13 @@ const emptyDoiFormValues: DoiFormValues = {
   [LinkRegistrationFormFieldName.Link]: '',
 };
 
-const doiUrlPlaceholder = `${doiUrlBase}10.1000/xyz123`;
-
 export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [doiQuery, setDoiQuery] = useState('');
+
+  const linkInputRef = useRef<HTMLInputElement>(null);
+
+  const doiValidationSchema = useMemo(() => getLinkRegistrationValidationSchema(t), [t]);
 
   const onCreateRegistrationSuccess = (response: AxiosResponse<Registration, any>) => {
     navigate(getRegistrationWizardPath(response.data.identifier), {
@@ -62,7 +59,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     });
   };
 
-  const { registrationsWithDoi, isLookingUpDoi, noHits, doiPreview } = useLookupDoi(doiQuery);
+  const { doiQuery, registrationsWithDoi, isLookingUpDoi, noHits, doiPreview, lookupDoi, resetLookup } = useLookupDoi();
   const createRegistrationFromDoi = useCreateRegistrationFromDoi(onCreateRegistrationSuccess);
 
   const persistRegistration = () => {
@@ -90,11 +87,23 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
 
       <AccordionDetails>
         <Formik
-          onSubmit={async (values) => setDoiQuery(values.link)}
+          onSubmit={async (values) => lookupDoi(values.link)}
           initialValues={emptyDoiFormValues}
           validationSchema={doiValidationSchema}>
-          {({ isSubmitting }) => (
-            <Form noValidate>
+          {({ isSubmitting, validateForm, setFieldTouched, submitForm }) => (
+            <Form
+              noValidate
+              onSubmit={async (event) => {
+                event.preventDefault();
+                const errors = await validateForm();
+                if (errors.link) {
+                  // Move focus to the field so screen readers announce the error message
+                  setFieldTouched(LinkRegistrationFormFieldName.Link, true, false);
+                  linkInputRef.current?.focus();
+                  return;
+                }
+                submitForm();
+              }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Field name={LinkRegistrationFormFieldName.Link}>
                   {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -108,7 +117,13 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                       fullWidth
                       disabled={isSubmitting}
                       {...field}
-                      error={!!error && touched}
+                      inputRef={linkInputRef}
+                      onChange={(event) => {
+                        field.onChange(event);
+                        resetLookup();
+                      }}
+                      error={touched && !!error}
+                      helperText={touched && error ? error : ''}
                       placeholder={doiUrlPlaceholder}
                       slotProps={{ inputLabel: { shrink: true } }}
                     />

@@ -3,10 +3,14 @@ import { toDateString } from './date-helpers';
 
 export const isOnPage = (url: string) => window.location.pathname.startsWith(url);
 
+/** Web URL check. Also accepts protocol-relative URLs like `//example.com`. */
 export const isValidUrl = (value: string) => value && Yup.string().url().isValidSync(value);
 
 export const doiUrlBase = 'https://doi.org/';
-const doiRegExp = new RegExp('\\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+)\\b'); // https://stackoverflow.com/a/10324802
+export const doiUrlPlaceholder = `${doiUrlBase}10.1000/xyz123`;
+const doiPattern = '10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+'; // https://stackoverflow.com/a/10324802
+const doiRegExp = new RegExp(`\\b(${doiPattern})\\b`); // Finds a DOI anywhere in a text
+const wholeDoiRegExp = new RegExp(`^${doiPattern}$`); // Matches only if the whole text is a DOI
 
 export const makeDoiUrl = (doiInput: string) => {
   let doiUrl = doiInput.trim();
@@ -19,6 +23,15 @@ export const makeDoiUrl = (doiInput: string) => {
   }
 
   return doiUrl;
+};
+
+/** Web URL check that also requires a protocol (rejects `//example.com`). */
+const isAbsoluteWebUrl = (value: string) => !!isValidUrl(value) && URL.canParse(value);
+
+/** True if the value is an absolute web URL or a bare DOI, ignoring surrounding whitespace. */
+export const isValidResourceLink = (value: string) => {
+  const trimmedValue = value.trim();
+  return isAbsoluteWebUrl(trimmedValue) || wholeDoiRegExp.test(trimmedValue);
 };
 
 export const getDoiValue = (value: string) => {

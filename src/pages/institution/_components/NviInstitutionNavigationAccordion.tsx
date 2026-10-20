@@ -7,7 +7,7 @@ import { NviReportNumbers } from '../../../components/nvi-report-numbers/NviRepo
 import { NviReportProgressBar } from '../../../components/NviReportProgressBar';
 import { StyledNviStatusBox, StyledTicketSearchFormGroup, VerticalBox } from '../../../components/styled/Wrappers';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getDefaultNviYear } from '../../../utils/hooks/useNviCandidatesParams';
+import { getDefaultNviYear } from '../../../utils/nviHelpers';
 import { useNviInstitutionReportSummary } from '../../../utils/hooks/useNviInstitutionReportSummary';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 

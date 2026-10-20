@@ -1,16 +1,22 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { OrganizationFilters } from '../../../components/filters/OrganizationFilters';
 import { HeadTitle } from '../../../components/HeadTitle';
-import { CorrectionListId, CorrectionListNames } from '../../../types/nvi.types';
-import { hideChannelFiltersListIds, scientificValueFilterListIds } from '../../../utils/correctionListHelpers';
+import { CorrectionListNames } from '../../../types/nvi.types';
+import {
+  isCorrectionListName,
+  nviCorrectionListQueryKey,
+  setPublicationYearParams,
+} from '../../../utils/correctionListHelpers';
 import { useCorrectionListConfig } from '../../../utils/hooks/useCorrectionListConfig';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
+import { getDefaultNviYear } from '../../../utils/nviHelpers';
 import { sanitizeSearchParams } from '../../../utils/searchHelpers';
+import NotFound from '../../errorpages/NotFound';
 import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { ScientificValueFilter } from '../../search/advanced_search/ScientificValueFilter';
@@ -19,21 +25,23 @@ import { ExportResultsButton } from '../../search/ExportResultsButton';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
 import { CorrectionListYearFilter } from './CorrectionListYearFilter';
 
-export const nviCorrectionListQueryKey = 'list';
-
 const NviCorrectionList = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
+  const rawListId = searchParams.get(nviCorrectionListQueryKey);
+  const listId = rawListId && isCorrectionListName(rawListId) ? rawListId : null;
   const isUnidentifiedContributorList = listId === CorrectionListNames.UnidentifiedContributorWithIdentifiedAffiliation;
   const correctionListConfig = useCorrectionListConfig();
   const listConfig = listId && correctionListConfig[listId];
-  const shouldShowScientificValueFilter =
-    !!listId && scientificValueFilterListIds.includes(listId as CorrectionListNames);
-  const hideChannelFilters = !!listId && hideChannelFiltersListIds.includes(listId as CorrectionListNames);
 
   const registrationParams = useRegistrationsQueryParams();
+
+  // A list without a "show all" option has no valid state without a year: its search would silently
+  // return every hit the other filters allow. Repair the url rather than only displaying a default,
+  // so the year the user sees is the year being searched for
+  const requiresPublicationYear = !!listConfig && !listConfig.showAllYearsOption;
+  const isMissingRequiredYear = requiresPublicationYear && !registrationParams.publicationYear;
 
   const mergedParams = {
     ...listConfig?.queryParams,
@@ -47,9 +55,19 @@ const NviCorrectionList = () => {
   const exportParams = new URLSearchParams(sanitizeSearchParams(mergedParams));
 
   const registrationQuery = useRegistrationSearch({
-    enabled: !!listConfig,
+    enabled: !!listConfig && !isMissingRequiredYear,
     params: mergedParams,
   });
+
+  if (rawListId && !listId) {
+    return <NotFound />;
+  }
+
+  if (isMissingRequiredYear) {
+    const syncedParams = new URLSearchParams(location.search);
+    setPublicationYearParams(syncedParams, listId, getDefaultNviYear().toString());
+    return <Navigate to={{ search: syncedParams.toString() }} replace />;
+  }
 
   return (
     <section>
@@ -92,17 +110,19 @@ const NviCorrectionList = () => {
                 />
               </Box>
 
-              {shouldShowScientificValueFilter && <ScientificValueFilter />}
+              {listConfig.showScientificValueFilter && <ScientificValueFilter />}
 
-              {!hideChannelFilters && (
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
-                  <PublisherFilter />
-                  <JournalFilter />
-                  <SeriesFilter />
-                  <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
-                  <CorrectionListYearFilter />
-                </Box>
-              )}
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
+                {listConfig.showChannelFilters && (
+                  <>
+                    <PublisherFilter />
+                    <JournalFilter />
+                    <SeriesFilter />
+                    <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
+                  </>
+                )}
+                <CorrectionListYearFilter listId={listId} showAllYearsOption={listConfig.showAllYearsOption} />
+              </Box>
             </Box>
             <Box sx={{ m: '0.5rem', alignSelf: 'top' }}>
               <ExportResultsButton showText searchParams={exportParams} />
