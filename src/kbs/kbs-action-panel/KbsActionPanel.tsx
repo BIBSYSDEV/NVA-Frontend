@@ -1,5 +1,5 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
+import HealthAndSafetyOutlinedIcon from '@mui/icons-material/HealthAndSafetyOutlined';
 import { Accordion, AccordionDetails, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { TaskAccordionSummary } from '../../pages/public_registration/action_accordions/styles';
@@ -37,7 +37,7 @@ export const KbsActionPanel = ({ role, kbsReport }: KbsActionPanelProps) => {
         },
       }}>
       <TaskAccordionSummary sx={{ borderLeftColor: 'project.main' }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <ShieldOutlinedIcon aria-hidden="true" />
+        <HealthAndSafetyOutlinedIcon aria-hidden="true" />
         {t('kbs')}
         <Box sx={{ ml: 'auto' }}>
           <KbsStatusChip status={status} />

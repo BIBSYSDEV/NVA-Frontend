@@ -7,7 +7,7 @@ export const KbsRequirementConfirmation = () => {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-      <CheckBoxIcon color="primary" aria-hidden="true" />
+      <CheckBoxIcon color="secondary" aria-hidden="true" />
       <Typography>{t('kbs_requirement_confirmed')}</Typography>
     </Box>
   );
