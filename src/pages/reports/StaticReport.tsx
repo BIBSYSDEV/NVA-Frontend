@@ -32,7 +32,6 @@ const StaticReport = () => {
       <StyledReportIframe
         title={title}
         src={`${STATIC_REPORTS_URL}/${staticReportFileNames[reportName]}.html?lang=${language}`}
-        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
       />
     </>
   );
