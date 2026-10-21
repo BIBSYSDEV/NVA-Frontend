@@ -1969,8 +1969,12 @@
     "reports": {
       "clinical_treatment_studies": "Kliniske behandlingsstudier",
       "external_reports": "Rapport generert fra ekstern løsning",
+      "gender_and_age": "Kjønn og alder i NVI-publisering",
       "international_cooperation": "Internasjonalt samarbeid",
-      "reports": "Rapporter"
+      "nvi_categories_over_time": "NVI-kategorier over tid",
+      "nvi_reporting": "NVI-rapportering",
+      "reports": "Rapporter",
+      "ten_year_series": "Tiårsserien 2016-2025"
     },
     "reset_selection": "Nullstill valg",
     "responsible_institution": "Forskningsansvarlig institusjon",
