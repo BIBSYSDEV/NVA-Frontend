@@ -21,7 +21,13 @@ const StaticReport = () => {
     return <NotFound />;
   }
 
-  const title = `${t('search.reports.reports')} - ${reportName}`;
+  const titles: Record<StaticReportName, string> = {
+    'nvi-categories': t('search.reports.nvi_categories_over_time'),
+    'nvi-reporting': t('search.reports.nvi_reporting'),
+    'gender-and-age': t('search.reports.gender_and_age'),
+    'ten-year-series': t('search.reports.ten_year_series'),
+  };
+  const title = titles[reportName];
 
   return (
     <>
