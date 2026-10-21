@@ -97,6 +97,7 @@ export const staticReportFileNames = {
   'nvi-categories': 'nvi-kategoriar',
   'nvi-reporting': 'nvi-rapportering',
   'ten-year-series': 'tiaarsserien',
+  'gender-and-age': 'kjonnsbalanse',
 };
 
 export type StaticReportName = keyof typeof staticReportFileNames;

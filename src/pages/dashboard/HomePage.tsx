@@ -167,6 +167,12 @@ const HomePage = () => {
               {t('search.reports.nvi_reporting')}
             </SelectableButton>
             <SelectableButton
+              data-testid={dataTestId.startPage.reportsStaticNviGenderAndAgeButton}
+              isSelected={staticReportName === 'gender-and-age'}
+              to={getStaticReportPath('gender-and-age')}>
+              {t('search.reports.gender_and_age')}
+            </SelectableButton>
+            <SelectableButton
               data-testid={dataTestId.startPage.reportsStaticTenYearSeriesButton}
               isSelected={staticReportName === 'ten-year-series'}
               to={getStaticReportPath('ten-year-series')}>
