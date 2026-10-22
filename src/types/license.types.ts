@@ -1,6 +1,6 @@
 import * as LicenseImages from '../resources/images/licenses';
 import i18n from '../translations/i18n';
-import { UrlPathTemplate } from '../utils/urlPaths';
+import { getLicenseDeedPath, UrlPathTemplate } from '../utils/urlPaths';
 
 export enum LicenseUri {
   CC_BY_4 = 'https://creativecommons.org/licenses/by/4.0/',
@@ -51,13 +51,32 @@ export enum LicenseUri {
   LGPL_3_0_only = 'https://spdx.org/licenses/LGPL-3.0-only.html',
 }
 
+/**
+ * The deed page NVA serves for a license, identified by the SPDX id in lower case. Ten deeds cover the fourteen
+ * software licenses: a GPL-family deed serves both the -only and the -or-later variant of its version.
+ */
+export enum LicenseDeedSlug {
+  MIT = 'mit',
+  Apache_2_0 = 'apache-2.0',
+  GPL_3_0 = 'gpl-3.0',
+  GPL_2_0 = 'gpl-2.0',
+  AGPL_3_0 = 'agpl-3.0',
+  LGPL_3_0 = 'lgpl-3.0',
+  BSD_3_Clause = 'bsd-3-clause',
+  BSD_2_Clause = 'bsd-2-clause',
+  MPL_2_0 = 'mpl-2.0',
+  EUPL_1_2 = 'eupl-1.2',
+}
+
 export interface LicenseInfo {
   id: LicenseUri;
   name: string;
   description: string;
   logo?: string;
-  /** Page explaining what the license means. Absent for the software licenses until their deed pages exist. */
-  link?: string;
+  /**
+   * Page explaining what the license means. A license added without one fails to compile.
+   */
+  link: string;
   version?: 1 | 2 | 2.5 | 3 | 4;
   additionalInformation?: string;
   /**
@@ -322,60 +341,68 @@ export const licenses: LicenseInfo[] = [
     description: i18n.t('licenses.description.copyright_act'),
     link: LicenseUri.CopyrightAct,
   },
-  // NOTE: The software licenses have no link until their deed pages exist. Until then the menu shows
-  // the name only, rather than pointing at a page that cannot yet explain what the license means.
   {
     id: LicenseUri.MIT,
     name: i18n.t('licenses.labels.mit'),
     description: i18n.t('licenses.description.mit'),
+    link: getLicenseDeedPath(LicenseDeedSlug.MIT),
   },
   {
     id: LicenseUri.Apache_2_0,
     name: i18n.t('licenses.labels.apache_2_0'),
     description: i18n.t('licenses.description.apache_2_0'),
+    link: getLicenseDeedPath(LicenseDeedSlug.Apache_2_0),
   },
   {
     id: LicenseUri.GPL_3_0_or_later,
     name: i18n.t('licenses.labels.gpl_3_0_or_later'),
     description: i18n.t('licenses.description.gpl_3_0'),
+    link: getLicenseDeedPath(LicenseDeedSlug.GPL_3_0),
   },
   {
     id: LicenseUri.BSD_3_Clause,
     name: i18n.t('licenses.labels.bsd_3_clause'),
     description: i18n.t('licenses.description.bsd_3_clause'),
+    link: getLicenseDeedPath(LicenseDeedSlug.BSD_3_Clause),
   },
   {
     id: LicenseUri.EUPL_1_2,
     name: i18n.t('licenses.labels.eupl_1_2'),
     description: i18n.t('licenses.description.eupl_1_2'),
+    link: getLicenseDeedPath(LicenseDeedSlug.EUPL_1_2),
   },
   {
     id: LicenseUri.BSD_2_Clause,
     name: i18n.t('licenses.labels.bsd_2_clause'),
     description: i18n.t('licenses.description.bsd_2_clause'),
+    link: getLicenseDeedPath(LicenseDeedSlug.BSD_2_Clause),
   },
   {
     id: LicenseUri.GPL_2_0_or_later,
     name: i18n.t('licenses.labels.gpl_2_0_or_later'),
     shortName: i18n.t('licenses.labels.gpl_2_0'),
     description: i18n.t('licenses.description.gpl_2_0'),
+    link: getLicenseDeedPath(LicenseDeedSlug.GPL_2_0),
   },
   {
     id: LicenseUri.AGPL_3_0_or_later,
     name: i18n.t('licenses.labels.agpl_3_0_or_later'),
     shortName: i18n.t('licenses.labels.agpl_3_0'),
     description: i18n.t('licenses.description.agpl_3_0'),
+    link: getLicenseDeedPath(LicenseDeedSlug.AGPL_3_0),
   },
   {
     id: LicenseUri.LGPL_3_0_or_later,
     name: i18n.t('licenses.labels.lgpl_3_0_or_later'),
     shortName: i18n.t('licenses.labels.lgpl_3_0'),
     description: i18n.t('licenses.description.lgpl_3_0'),
+    link: getLicenseDeedPath(LicenseDeedSlug.LGPL_3_0),
   },
   {
     id: LicenseUri.MPL_2_0,
     name: i18n.t('licenses.labels.mpl_2_0'),
     description: i18n.t('licenses.description.mpl_2_0'),
+    link: getLicenseDeedPath(LicenseDeedSlug.MPL_2_0),
   },
   // NOTE: The -only variants are separate menu entries because the distinction between them and the
   // -or-later variants must survive in the stored value.
@@ -383,20 +410,24 @@ export const licenses: LicenseInfo[] = [
     id: LicenseUri.GPL_2_0_only,
     name: i18n.t('licenses.labels.gpl_2_0_only'),
     description: i18n.t('licenses.description.gpl_2_0'),
+    link: getLicenseDeedPath(LicenseDeedSlug.GPL_2_0),
   },
   {
     id: LicenseUri.GPL_3_0_only,
     name: i18n.t('licenses.labels.gpl_3_0_only'),
     description: i18n.t('licenses.description.gpl_3_0'),
+    link: getLicenseDeedPath(LicenseDeedSlug.GPL_3_0),
   },
   {
     id: LicenseUri.AGPL_3_0_only,
     name: i18n.t('licenses.labels.agpl_3_0_only'),
     description: i18n.t('licenses.description.agpl_3_0'),
+    link: getLicenseDeedPath(LicenseDeedSlug.AGPL_3_0),
   },
   {
     id: LicenseUri.LGPL_3_0_only,
     name: i18n.t('licenses.labels.lgpl_3_0_only'),
     description: i18n.t('licenses.description.lgpl_3_0'),
+    link: getLicenseDeedPath(LicenseDeedSlug.LGPL_3_0),
   },
 ];
