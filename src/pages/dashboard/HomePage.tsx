@@ -143,10 +143,16 @@ const HomePage = () => {
               {t('common.overview')}
             </SelectableButton>
             <SelectableButton
+              data-testid={dataTestId.startPage.reportsClinicalTreatmentStudiesButton}
+              isSelected={currentPath === UrlPathTemplate.ReportsClinicalTreatmentStudies}
+              to={UrlPathTemplate.ReportsClinicalTreatmentStudies}>
+              {t('search.reports.clinical_treatment_studies')}
+            </SelectableButton>
+            <SelectableButton
               data-testid={dataTestId.startPage.reportsNviButton}
               isSelected={currentPath === UrlPathTemplate.ReportsNvi}
               to={UrlPathTemplate.ReportsNvi}>
-              {t('common.nvi')}
+              {t('search.reports.nvi_duct')}
             </SelectableButton>
             {/*     <SelectableButton
               data-testid={dataTestId.startPage.reportsInternationalWorkButton}
@@ -155,12 +161,6 @@ const HomePage = () => {
               {t('search.reports.international_cooperation')}
             </SelectableButton>*/}
             <SelectableButton
-              data-testid={dataTestId.startPage.reportsClinicalTreatmentStudiesButton}
-              isSelected={currentPath === UrlPathTemplate.ReportsClinicalTreatmentStudies}
-              to={UrlPathTemplate.ReportsClinicalTreatmentStudies}>
-              {t('search.reports.clinical_treatment_studies')}
-            </SelectableButton>
-            <SelectableButton
               data-testid={dataTestId.startPage.reportsStaticNviReportingButton}
               isSelected={staticReportName === 'nvi-reporting'}
               to={getStaticReportPath('nvi-reporting')}>
@@ -168,18 +168,21 @@ const HomePage = () => {
             </SelectableButton>
             <SelectableButton
               data-testid={dataTestId.startPage.reportsStaticNviGenderAndAgeButton}
+              sx={{ ml: '1rem' }}
               isSelected={staticReportName === 'gender-and-age'}
               to={getStaticReportPath('gender-and-age')}>
               {t('search.reports.gender_and_age')}
             </SelectableButton>
             <SelectableButton
               data-testid={dataTestId.startPage.reportsStaticTenYearSeriesButton}
+              sx={{ ml: '1rem' }}
               isSelected={staticReportName === 'ten-year-series'}
               to={getStaticReportPath('ten-year-series')}>
               {t('search.reports.ten_year_series')}
             </SelectableButton>
             <SelectableButton
               data-testid={dataTestId.startPage.reportsStaticNviCategoriesButton}
+              sx={{ ml: '1rem' }}
               isSelected={staticReportName === 'nvi-categories'}
               to={getStaticReportPath('nvi-categories')}>
               {t('search.reports.nvi_categories_over_time')}
