@@ -1,5 +1,7 @@
 import { matchPath, To } from 'react-router';
 import { NviCandidateGlobalStatus, NviCandidateStatus } from '../api/searchApi';
+// NOTE: Must stay `import type` to avoid circular dependency since types are omitted at compile time.
+import type { LicenseDeedSlug } from '../types/license.types';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { getIdentifierFromId } from './general-helpers';
 
@@ -46,6 +48,7 @@ export enum UrlPathTemplate {
   InstitutionCategoriesOverview = '/institution/overview/categories',
   InstitutionPublisherClaimsOverview = '/institution/overview/publisher-claims',
   InstitutionSerialPublicationClaimsOverview = '/institution/overview/serial-publication-claims',
+  LicenseDeed = '/license/:slug',
   Login = '/login',
   Logout = '/logout',
   MyPage = '/my-page',
@@ -119,6 +122,7 @@ const publicPageTemplates = [
   UrlPathTemplate.ProjectsRoot,
   UrlPathTemplate.ProjectPage,
   UrlPathTemplate.RegistrationLandingPage,
+  UrlPathTemplate.LicenseDeed,
 ];
 
 // Protected routes whose paths are also matched by a broader public template and must therefore
@@ -143,6 +147,15 @@ export const isPublicPage = (path: string) => {
   }
   return publicPageTemplates.some((template) => matchPath(template, pathname));
 };
+
+/**
+ * Path to the deed NVA serves for a software license.
+ * @param slug Identifies the deed. Typed so a license URI cannot be passed by mistake, since both are
+ * license identifiers but only one belongs in this path.
+ * @returns Path to the deed page.
+ */
+export const getLicenseDeedPath = (slug: LicenseDeedSlug) =>
+  UrlPathTemplate.LicenseDeed.replace(':slug', encodeURIComponent(slug));
 
 export const getRegistrationLandingPagePath = (identifier: string) =>
   UrlPathTemplate.RegistrationLandingPage.replace(':identifier', encodeURIComponent(identifier));
