@@ -342,6 +342,8 @@
   "corresponding_contributor": "Korresponderende bidragsyter",
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "deliver": "Lever",
+  "deliver_patient_counts_description": "Når du leverer pasienttallene, kan de ikke endres senere. Er du sikker på at du vil levere?",
+  "deliver_patient_counts_title": "Lever pasienttall for {{year}}?",
   "delivered": "Levert",
   "details": "Detaljer",
   "disciplines": {

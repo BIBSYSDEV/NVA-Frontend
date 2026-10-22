@@ -31,6 +31,8 @@ export const useKbsReport = (projectId: string) => {
     updateKbsReport({ assessmentAnswer: answer, status });
   };
 
+  const savePatientCounts = (patientCounts: Partial<KbsPatientCounts>) => updateKbsReport({ patientCounts });
+
   const deliverPatientCounts = (patientCounts: KbsPatientCounts) =>
     updateKbsReport({ patientCounts, status: KbsStatus.Delivered });
 
@@ -45,6 +47,7 @@ export const useKbsReport = (projectId: string) => {
   return {
     ...kbsReport,
     saveAssessment,
+    savePatientCounts,
     deliverPatientCounts,
     setIsProjectActive,
     setHasKbsApproval,

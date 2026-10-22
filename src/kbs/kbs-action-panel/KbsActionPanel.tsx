@@ -20,7 +20,8 @@ interface KbsActionPanelProps {
 
 export const KbsActionPanel = ({ role, kbsReport }: KbsActionPanelProps) => {
   const { t } = useTranslation();
-  const { status, year, assessmentAnswer, patientCounts, saveAssessment, deliverPatientCounts } = kbsReport;
+  const { status, year, assessmentAnswer, patientCounts, saveAssessment, savePatientCounts, deliverPatientCounts } =
+    kbsReport;
 
   const canEdit = canEditKbs(role);
   const showPatientsForm = canEdit && status === KbsStatus.Candidate;
@@ -55,6 +56,8 @@ export const KbsActionPanel = ({ role, kbsReport }: KbsActionPanelProps) => {
                 key={year}
                 year={year}
                 institutions={kbsMockInstitutions}
+                savedPatientCounts={patientCounts}
+                onSave={savePatientCounts}
                 onDeliver={deliverPatientCounts}
               />
             )}

@@ -11,3 +11,9 @@ export const hasPatientCountForAllInstitutions = (
   patientCounts: Partial<KbsPatientCounts>
 ): patientCounts is KbsPatientCounts =>
   institutions.every((institution) => patientCounts[institution.id] !== undefined);
+
+export const havePatientCountsChanged = (
+  institutions: KbsInstitution[],
+  patientCounts: Partial<KbsPatientCounts>,
+  savedPatientCounts: Partial<KbsPatientCounts>
+) => institutions.some((institution) => patientCounts[institution.id] !== savedPatientCounts[institution.id]);
