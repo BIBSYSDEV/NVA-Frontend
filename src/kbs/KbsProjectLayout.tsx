@@ -1,30 +1,24 @@
 import { Box } from '@mui/material';
 import { ReactNode } from 'react';
+import { PageWithRightSideMenu } from '../components/page-layouts/PageWithRightSideMenu';
 
 interface KbsProjectLayoutProps {
   main: ReactNode;
   sidebar: ReactNode;
 }
 
-/* Keeps main where it would be inside StyledPageContent (centered, max width lg), and lets the sidebar fill all space to the right of it */
+/* Same proportions as the registration page (PublicRegistration): an empty left column, then main and sidebar */
 export const KbsProjectLayout = ({ main, sidebar }: KbsProjectLayoutProps) => (
   <Box
-    sx={(theme) => {
-      const pageWidth = `min(100%, ${theme.breakpoints.values.lg}px)`;
-      return {
-        width: '100%',
-        display: 'grid',
-        gap: '1rem',
-        py: '1rem',
-        px: { xs: '1rem', sm: 0 },
-        gridTemplateColumns: {
-          xs: '1fr',
-          sm: `calc((100% - ${pageWidth}) / 2) calc((${pageWidth} - 3rem) * 0.8) 1fr`,
-        },
-        gridTemplateAreas: { xs: '"sidebar" "main"', sm: '". main sidebar"' },
-      };
+    sx={{
+      p: { xs: '0.5rem', md: '1rem' },
+      width: '100%',
+      display: 'grid',
+      gridTemplateColumns: { xs: '1fr', md: '1fr 5fr' },
+      gap: '0.5rem',
     }}>
-    <Box sx={{ gridArea: 'main', minWidth: 0 }}>{main}</Box>
-    <Box sx={{ gridArea: 'sidebar', mr: { sm: '1rem' } }}>{sidebar}</Box>
+    <Box sx={{ gridColumn: { md: '2' }, minWidth: 0 }}>
+      <PageWithRightSideMenu main={main} sidebar={sidebar} />
+    </Box>
   </Box>
 );
