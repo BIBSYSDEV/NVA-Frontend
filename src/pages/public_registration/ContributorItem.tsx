@@ -29,7 +29,7 @@ export const ContributorItem = ({
     identity: { id, name },
   } = contributor;
 
-  const affiliationNumbers = getAffiliationNumbers(contributor.affiliations ?? [], distinctUnits);
+  const affiliationNumbers = getAffiliationNumbers(contributor.affiliations, distinctUnits);
 
   const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
 

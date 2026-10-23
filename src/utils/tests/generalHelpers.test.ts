@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getInitials, isValidResourceLink } from '../general-helpers';
+import { getInitials, isValidResourceLink, uniqueBy } from '../general-helpers';
 
 describe('getInitials', () => {
   it('returns initials for a normal name', () => {
@@ -83,5 +83,23 @@ describe('isValidResourceLink', () => {
   it('rejects an empty value', () => {
     expect(isValidResourceLink('')).toBe(false);
     expect(isValidResourceLink('   ')).toBe(false);
+  });
+});
+
+describe('uniqueBy', () => {
+  const getName = (item: { name?: string }) => item.name;
+
+  it('returns an empty list for an empty list', () => {
+    expect(uniqueBy([], getName)).toEqual([]);
+  });
+
+  it('keeps the first item for each key, in the original order', () => {
+    const items = [{ name: 'b', order: 1 }, { name: 'a' }, { name: 'b', order: 2 }];
+    expect(uniqueBy(items, getName)).toEqual([{ name: 'b', order: 1 }, { name: 'a' }]);
+  });
+
+  it('keeps all items without a key', () => {
+    const items = [{}, { name: 'a' }, {}];
+    expect(uniqueBy(items, getName)).toEqual([{}, { name: 'a' }, {}]);
   });
 });

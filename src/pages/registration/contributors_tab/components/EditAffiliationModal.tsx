@@ -51,8 +51,7 @@ export const EditAffiliationModal = ({
       return;
     }
 
-    // If user tries to change it into another already existing affiliation. Choosing the same organization
-    // again is allowed, and removes any duplicates of it.
+    // Choosing the same organization again is allowed, and removes its duplicates
     if (
       newAffiliationId !== affiliationToEdit.id &&
       affiliations.some(

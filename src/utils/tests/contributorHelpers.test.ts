@@ -400,6 +400,10 @@ describe('getAffiliationNumbers', () => {
   it('leaves out unconfirmed affiliations and affiliations not in the distinct units', () => {
     expect(getAffiliationNumbers([unconfirmed('Some place'), organization(unitC)], [unitA])).toEqual([]);
   });
+
+  it('returns no numbers when the contributor has no affiliations', () => {
+    expect(getAffiliationNumbers(undefined, [unitA])).toEqual([]);
+  });
 });
 
 describe('getAffiliationsToShow', () => {
@@ -439,6 +443,13 @@ describe('addAffiliations', () => {
     ).toEqual([organization(unitA), organization(unitB)]);
   });
 
+  it('removes duplicates that are already in the list', () => {
+    expect(addAffiliations([organization(unitA), organization(unitA)], [organization(unitB)])).toEqual([
+      organization(unitA),
+      organization(unitB),
+    ]);
+  });
+
   it('keeps unconfirmed affiliations', () => {
     expect(addAffiliations([unconfirmed('Some place')], [organization(unitA)])).toEqual([
       unconfirmed('Some place'),
@@ -471,6 +482,16 @@ describe('removeAffiliation', () => {
     const affiliations = [organization(unitA), unconfirmed('Some place'), organization(unitA)];
     expect(removeAffiliation(affiliations, 1)).toEqual([organization(unitA), organization(unitA)]);
   });
+
+  it('does not treat organizations without an ID as duplicates', () => {
+    const affiliations = [organization(''), organization('')];
+    expect(removeAffiliation(affiliations, 0)).toEqual([organization('')]);
+  });
+
+  it('returns the list unchanged when the index is out of range', () => {
+    const affiliations = [organization(unitA)];
+    expect(removeAffiliation(affiliations, 1)).toEqual(affiliations);
+  });
 });
 
 describe('replaceAffiliation', () => {
@@ -500,5 +521,26 @@ describe('replaceAffiliation', () => {
       organization(unitC),
       unconfirmed('Some place'),
     ]);
+  });
+
+  it('keeps an existing organization that is the same as the new one, since the caller must prevent this', () => {
+    const affiliations = [organization(unitA), organization(unitB)];
+    expect(replaceAffiliation(affiliations, 0, organization(unitB))).toEqual([
+      organization(unitB),
+      organization(unitB),
+    ]);
+  });
+
+  it('only replaces the given unconfirmed affiliation, even if another has the same name', () => {
+    const affiliations = [unconfirmed('Some place'), unconfirmed('Some place')];
+    expect(replaceAffiliation(affiliations, 0, organization(unitA))).toEqual([
+      organization(unitA),
+      unconfirmed('Some place'),
+    ]);
+  });
+
+  it('returns the list unchanged when the index is out of range', () => {
+    const affiliations = [organization(unitA)];
+    expect(replaceAffiliation(affiliations, 1, organization(unitB))).toEqual(affiliations);
   });
 });
