@@ -29,7 +29,7 @@ export const ContributorItem = ({
     identity: { id, name },
   } = contributor;
 
-  const affiliationNumbers = getAffiliationNumbers(contributor.affiliations, distinctUnits);
+  const affiliationReferenceNumbers = getAffiliationNumbers(contributor.affiliations, distinctUnits);
 
   const hasValidRole = !!contributor.role?.type && relevantRoles.includes(contributor.role.type);
 
@@ -76,7 +76,9 @@ export const ContributorItem = ({
           name
         )}
         {roleContent}
-        {affiliationNumbers.length > 0 && <sup style={{ marginLeft: '0.1rem' }}>{affiliationNumbers.join(',')}</sup>}
+        {affiliationReferenceNumbers.length > 0 && (
+          <sup style={{ marginLeft: '0.1rem' }}>{affiliationReferenceNumbers.join(',')}</sup>
+        )}
         {!id && hasNviAffiliation && <WarningIcon fontSize="small" color="warning" />}
       </Typography>
       <ContributorIndicators orcId={contributor.identity.orcId} correspondingAuthor={contributor.correspondingAuthor} />

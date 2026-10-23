@@ -1,5 +1,5 @@
 import { Affiliation, Contributor, ContributorRole } from '../types/contributor.types';
-import { uniqueBy } from './general-helpers';
+import { removeDuplicatesByKey } from './general-helpers';
 
 export interface ContributorEntry {
   contributor: Contributor;
@@ -143,9 +143,9 @@ const isSameOrganization = (affiliation: Affiliation, other: Affiliation) => {
 };
 
 /**
- * The 1-based numbers of the contributor's affiliations in the list of distinct units, sorted and without
- * duplicates. A contributor can have the same organization as affiliation several times, which should only
- * give one number. Affiliations that are not in the list of units are left out.
+ * The numbers shown next to a contributor's name, pointing at their affiliations in the numbered list of
+ * units. The first unit in the list is number 1. Each number is only included once, even if the contributor
+ * has the same organization several times, and affiliations that are not in the list are left out.
  *
  * @param affiliations The contributor's affiliations.
  * @param distinctUnits The IDs of all units on the registration, in the order they are numbered in.
@@ -169,7 +169,7 @@ export const getAffiliationNumbers = (affiliations: Affiliation[] = [], distinct
  */
 export const getAffiliationsToShow = (affiliations: Affiliation[]) => {
   const affiliationsWithIndex = affiliations.map((affiliation, index) => ({ affiliation, index }));
-  return uniqueBy(affiliationsWithIndex, ({ affiliation }) => getOrganizationId(affiliation));
+  return removeDuplicatesByKey(affiliationsWithIndex, ({ affiliation }) => getOrganizationId(affiliation));
 };
 
 /**
@@ -180,7 +180,7 @@ export const getAffiliationsToShow = (affiliations: Affiliation[]) => {
  * @returns The combined affiliations, where each organization is only included once.
  */
 export const addAffiliations = (affiliations: Affiliation[], newAffiliations: Affiliation[]): Affiliation[] =>
-  uniqueBy([...affiliations, ...newAffiliations], getOrganizationId);
+  removeDuplicatesByKey([...affiliations, ...newAffiliations], getOrganizationId);
 
 /**
  * Removes the affiliation at the given index, and any duplicates of the same organization.

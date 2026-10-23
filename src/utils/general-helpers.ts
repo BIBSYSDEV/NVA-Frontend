@@ -108,7 +108,7 @@ export const formatLocaleNumber = (n: number) => nbNoNumberFormat.format(n);
  * @param getKey Gets the key that decides which items are the same, or undefined if the item has no key.
  * @returns The items without duplicates, in their original order.
  */
-export const uniqueBy = <T>(items: T[], getKey: (item: T) => string | undefined): T[] => {
+export const removeDuplicatesByKey = <T>(items: T[], getKey: (item: T) => string | undefined): T[] => {
   const seenKeys = new Set<string>();
 
   return items.filter((item) => {
