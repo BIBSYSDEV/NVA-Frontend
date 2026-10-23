@@ -99,6 +99,7 @@ export const PublishingAccordion = ({
   const formErrors = validateRegistrationForm(registration);
   const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
+  const showValidationErrors = !registrationIsValid && userHasAccessRight(registration, 'partial-update');
 
   const canPublishMetadata =
     isDraftRegistration &&
@@ -160,6 +161,9 @@ export const PublishingAccordion = ({
     mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2 || isWaitingForFileDeletion;
 
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
+  const warningText = showRegistrationWithSameNameWarning
+    ? t('registration.public_page.potential_duplicate')
+    : t('registration.public_page.validation_errors');
 
   const defaultExpanded = locationState?.selectedTicketType
     ? locationState.selectedTicketType === 'PublishingRequest' ||
@@ -213,21 +217,16 @@ export const PublishingAccordion = ({
           <TicketStatusChip ticket={lastPublishingRequest} />
         )}
 
-        {(!registrationIsValid || showRegistrationWithSameNameWarning) && !isUnpublishedOrDeletedRegistration && (
-          <Tooltip
-            title={
-              showRegistrationWithSameNameWarning
-                ? t('registration.public_page.potential_duplicate')
-                : t('registration.public_page.validation_errors')
-            }>
-            <ErrorIcon color="warning" sx={{ ml: '0.2rem' }} />
+        {(showValidationErrors || showRegistrationWithSameNameWarning) && !isUnpublishedOrDeletedRegistration && (
+          <Tooltip title={warningText}>
+            <ErrorIcon color="warning" titleAccess={warningText} sx={{ ml: '0.2rem' }} />
           </Tooltip>
         )}
       </TaskAccordionSummary>
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} />}
 
-        {tabErrors && !isDeletedRegistration && (
+        {tabErrors && showValidationErrors && !isDeletedRegistration && (
           <RegistrationErrorActions tabErrors={tabErrors} registration={registration} sx={{ mb: '0.5rem' }} />
         )}
 
