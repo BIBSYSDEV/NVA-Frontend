@@ -98,6 +98,22 @@ When a browser test fails, a screenshot is saved to `.vitest/attachments/`.
 Every run logs the warning `Plugin "vitest:mocks:interceptor" defines Vite-specific hooks…`. It comes from Vitest itself
 and can be ignored.
 
+#### Accessibility and keyboard tests
+
+Browser tests of components should check accessibility with the helpers in `src/utils/testfiles/`:
+
+- `expectNoA11yViolations(container?, options?)` runs [axe-core](https://github.com/dequelabs/axe-core) with the WCAG
+  2.1 A and AA rules, including color contrast, and fails with a list of the violations. It checks the whole document
+  unless you pass a container. To turn off a rule for one check, pass `{ rules: { '<rule-id>': { enabled: false } } }`
+  and add a comment explaining why.
+- `expectTabOrder(elements)` checks that Tab moves focus through the elements in the given order.
+- `expectFocusWithin(container)` checks that focus moves into a dialog or popover when it opens.
+- `expectFocusTrapped(container)` checks that Tab and Shift+Tab never move focus out of a modal dialog.
+
+To test Escape, press it with `userEvent.keyboard('{Escape}')` from `vitest/browser`, then check that the dialog or
+menu is gone and that the trigger has focus again. `src/utils/testfiles/keyboardFocus.browser.test.tsx` shows the full
+pattern for an MUI `Dialog` and `Menu`.
+
 #### Cypress
 
 The Cypress tests are being replaced by Vitest browser tests.
