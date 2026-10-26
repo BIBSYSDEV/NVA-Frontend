@@ -16,8 +16,10 @@ so a compromised dependency cannot run arbitrary code on install.
 It has two consequences:
 
 - Git hooks are not set up on install. Run `npm run prepare` once after cloning.
-- The Cypress binary is not downloaded on install. The `test` and `test:cypress:open` scripts handle this by running
-  `cypress install` first.
+- The Cypress binary is not downloaded on install. The `test:cypress:run` and `test:cypress:open` scripts handle this by
+  running `cypress install` first.
+- The Chromium browser used by the browser tests is not downloaded on install. Run `npx playwright install chromium`
+  once.
 
 Consider setting `ignore-scripts=true` in your own `~/.npmrc` as well, since the project `.npmrc` only protects installs
 in this repo.
@@ -74,15 +76,35 @@ The build is minified and the filenames include the hashes.
 
 ### Testing
 
-#### `npm run test:cypress`
+Tests run with [Vitest](https://vitest.dev/), split into two projects by file name:
 
-Runs cypress tests.
+- `*.test.ts` runs in Node (`unit` project), for helpers and API functions.
+- `*.browser.test.tsx` runs in a real Chromium browser through Vitest Browser Mode (`browser` project), for components
+  and pages.
 
-Alternatively:
+Run `npx playwright install chromium` once before running the browser tests. With Node 25, `npm install` fails because
+of the `engines` field in `package.json`, so use Node 24.
 
-1. Set environment variable in `.env`: `VITE_USE_MOCK=true`
-2. `npm start`
-3. `npm test` or `npm run test:cypress:open`
+| Script                  | Description                                                |
+| ----------------------- | ---------------------------------------------------------- |
+| `npm test`              | Runs all tests once                                        |
+| `npm run test:watch`    | Runs tests in watch mode                                   |
+| `npm run test:unit`     | Runs only the `unit` project                               |
+| `npm run test:browser`  | Runs only the `browser` project                            |
+| `npm run test:coverage` | Runs all tests and writes a coverage report to `coverage/` |
+
+When a browser test fails, a screenshot is saved to `.vitest/attachments/`.
+
+Every run logs the warning `Plugin "vitest:mocks:interceptor" defines Vite-specific hooks…`. It comes from Vitest itself
+and can be ignored.
+
+#### Cypress
+
+The Cypress tests are being replaced by Vitest browser tests.
+
+- `npm run test:cypress` starts the app in mock mode and runs the Cypress tests.
+- Alternatively, set `VITE_USE_MOCK=true` in `.env`, run `npm start`, and then run `npm run test:cypress:run` or
+  `npm run test:cypress:open`.
 
 ## Documentation
 
