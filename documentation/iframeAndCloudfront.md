@@ -23,7 +23,9 @@ The route `/reports/:reportName` sits next to the fixed report routes (`/reports
 
 The app's current language is sent to the report as the `lang` URL parameter, as a two-letter ISO 639-1 code (`nb`, `nn` or `en`). It is read with `useAppLanguageInIso6391Format()`.
 
-When the user switches language in the header, the iframe URL changes and the report is reloaded in the new language. Any state inside the report (filters, scroll position) is reset.
+Links between pages inside a report (e.g. from `nvi-rapportering.html` to `institusjon.html`) do not carry the `lang` parameter. Instead, every page posts a `{ type: 'nva-side-klar' }` message to NVA when it has loaded, and `StaticReport.tsx` answers with `{ lang }`. NVA only answers messages from the origin of `VITE_STATIC_REPORTS_URL` that come from the report iframe. The page falls back to Nynorsk until the answer arrives, so the reader may briefly see Nynorsk after following a link.
+
+When the user switches language in the header, the iframe URL changes and the report is reloaded in the new language. Any state inside the report (filters, scroll position, which sub-page is shown) is reset.
 
 ## Hosting
 
@@ -87,7 +89,13 @@ The CloudFront distribution must also allow being framed by NVA. If it sends an 
 To test the iframe locally, the HTML files can be served from a local server instead of CloudFront:
 
 1. Download the HTML files from a release folder in the S3 bucket (see [Hosting](#hosting)) to a folder on your computer.
-2. Serve the folder on a local port. Any static file server will do, for example the [serve](https://www.npmjs.com/package/serve) package:
+2. Serve the folder on a local port. Any static file server that keeps the query string will do, for example the [serve](https://www.npmjs.com/package/serve) package. By default, `serve` redirects `institusjon.html?inst=…` to `/institusjon` and drops the query string, so the reports lose both `lang` and their own parameters (e.g. every institution link opens the same institution). Turn this off by adding a `serve.json` file to the folder with the HTML files:
+
+   ```json
+   { "cleanUrls": false }
+   ```
+
+   Then start the server:
 
    ```sh
    npx serve <folder with the HTML files> -p 4000
@@ -102,5 +110,3 @@ To test the iframe locally, the HTML files can be served from a local server ins
 4. Restart `npm start`, since Vite only reads `.env` at startup.
 
 The CSP in `customHttp.yml` is only applied by Amplify, so it does not affect local development.
-
-Language selection does not currently work locally, but it works in the deployed environments.
