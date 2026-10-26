@@ -21,10 +21,15 @@ const largeLibraries = [
   'formik',
 ];
 
+const sourceFilesGlob = 'src/**/*.{ts,tsx}';
+const testFilesGlob = 'src/**/*.test.{ts,tsx}';
+const browserTestFilesGlob = 'src/**/*.browser.test.{ts,tsx}';
+
 export default defineConfig({
   plugins: [
     babel({ presets: [reactCompilerPreset()] }),
     react(),
+    // NOTE: Skip type and lint checks in Vitest, since the checker's error overlay would interfere with browser tests
     !process.env.VITEST &&
       checker({
         typescript: true,
@@ -57,15 +62,8 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text-summary', 'html', 'lcov', 'json-summary'],
-      include: ['src/**/*.{ts,tsx}'],
-      exclude: [
-        'src/**/*.test.{ts,tsx}',
-        'src/**/*.d.ts',
-        'src/types/**',
-        'src/utils/testfiles/**',
-        'src/test-utils/**',
-        'src/index.tsx',
-      ],
+      include: [sourceFilesGlob],
+      exclude: [testFilesGlob, 'src/**/*.d.ts', 'src/types/**', 'src/utils/testfiles/**', 'src/index.tsx'],
     },
     projects: [
       {
@@ -74,7 +72,7 @@ export default defineConfig({
           name: 'unit',
           environment: 'node',
           include: ['src/**/*.test.ts'],
-          exclude: [...configDefaults.exclude, 'cypress/**', 'src/**/*.browser.test.{ts,tsx}'],
+          exclude: [...configDefaults.exclude, 'cypress/**', browserTestFilesGlob],
         },
       },
       {
@@ -82,14 +80,14 @@ export default defineConfig({
         optimizeDeps: {
           // NOTE: Pre-bundle every dependency up front. Otherwise Vite discovers new dependencies in lazy routes
           // mid-run and reloads the test page, which fails the test. This happens on every cold cache, like in CI.
-          entries: ['src/**/*.{ts,tsx}', '!src/**/*.test.{ts,tsx}'],
-          // Only imported by test files, which the entries above leave out
+          entries: [sourceFilesGlob, `!${testFilesGlob}`],
+          // NOTE: Only imported by test files, which the entries above leave out
           include: ['vitest-browser-react'],
         },
         test: {
           name: 'browser',
-          include: ['src/**/*.browser.test.{ts,tsx}'],
-          setupFiles: ['src/test-utils/browserSetup.ts'],
+          include: [browserTestFilesGlob],
+          setupFiles: ['src/utils/testfiles/browserSetup.ts'],
           browser: {
             enabled: true,
             headless: true,

@@ -6,13 +6,15 @@ import { EmphasizeSubstring } from './EmphasizeSubstring';
 const boldFontWeight = '700';
 const normalFontWeight = '400';
 
-const getFontWeight = (text: string) => getComputedStyle(page.getByText(text, { exact: true }).element()).fontWeight;
+const getByExactText = (text: string) => page.getByText(text, { exact: true });
+
+const getFontWeight = (text: string) => getComputedStyle(getByExactText(text).element()).fontWeight;
 
 describe('EmphasizeSubstring', () => {
   test('renders the matching part in bold', async () => {
     await render(<EmphasizeSubstring text="Nasjonalt vitenarkiv" emphasized="vitenarkiv" />);
 
-    await expect.element(page.getByText('vitenarkiv', { exact: true })).toBeVisible();
+    await expect.element(getByExactText('vitenarkiv')).toBeVisible();
     expect(getFontWeight('vitenarkiv')).toBe(boldFontWeight);
     expect(getFontWeight('Nasjonalt')).toBe(normalFontWeight);
   });
@@ -20,14 +22,14 @@ describe('EmphasizeSubstring', () => {
   test('ignores case when matching', async () => {
     await render(<EmphasizeSubstring text="Nasjonalt Vitenarkiv" emphasized="vitenarkiv" />);
 
-    await expect.element(page.getByText('Vitenarkiv', { exact: true })).toBeVisible();
+    await expect.element(getByExactText('Vitenarkiv')).toBeVisible();
     expect(getFontWeight('Vitenarkiv')).toBe(boldFontWeight);
   });
 
   test('renders the whole text in normal weight when nothing matches', async () => {
     await render(<EmphasizeSubstring text="Nasjonalt vitenarkiv" emphasized="forskning" />);
 
-    await expect.element(page.getByText('Nasjonalt vitenarkiv', { exact: true })).toBeVisible();
+    await expect.element(getByExactText('Nasjonalt vitenarkiv')).toBeVisible();
     expect(getFontWeight('Nasjonalt vitenarkiv')).toBe(normalFontWeight);
   });
 });

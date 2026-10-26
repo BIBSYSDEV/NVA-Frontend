@@ -79,7 +79,7 @@ The build is minified and the filenames include the hashes.
 Tests run with [Vitest](https://vitest.dev/), split into two projects by file name:
 
 - `*.test.ts` runs in Node (`unit` project), for helpers and API functions.
-- `*.browser.test.tsx` runs in a real Chromium browser through Vitest Browser Mode (`browser` project), for components
+- `*.browser.test.{ts,tsx}` runs in a real Chromium browser through Vitest Browser Mode (`browser` project), for components
   and pages.
 
 Run `npx playwright install chromium` once before running the browser tests. With Node 25, `npm install` fails because

@@ -19,7 +19,7 @@ phases:
       # Playwright's --with-deps only supports Debian and Ubuntu, so the packages are installed here instead.
       - dnf install -y xorg-x11-server-Xvfb gtk3-devel nss alsa-lib mesa-libgbm libxkbcommon
       - npm ci
-      # npm ci skips the Playwright browser download because of ignore-scripts in .npmrc
+      # NOTE: npm ci skips the Playwright browser download because of ignore-scripts in .npmrc
       - npx playwright install chromium
   build:
     commands:
