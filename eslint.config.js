@@ -3,10 +3,11 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import prettier from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
+  globalIgnores(['build', 'coverage', '.vitest']),
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
