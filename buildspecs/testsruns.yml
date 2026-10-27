@@ -15,8 +15,12 @@ phases:
     commands:
       - node -v
       # https://docs.cypress.io/guides/getting-started/installing-cypress#Amazon-Linux-2023
-      - dnf install -y xorg-x11-server-Xvfb gtk3-devel nss alsa-lib
+      # NOTE: These also cover Chromium for the Vitest browser tests, except mesa-libgbm and libxkbcommon.
+      # Playwright's --with-deps only supports Debian and Ubuntu, so the packages are installed here instead.
+      - dnf install -y xorg-x11-server-Xvfb gtk3-devel nss alsa-lib mesa-libgbm libxkbcommon
       - npm ci
+      # NOTE: npm ci skips the Playwright browser download because of ignore-scripts in .npmrc
+      - npx playwright install chromium
   build:
     commands:
       - npm run build
