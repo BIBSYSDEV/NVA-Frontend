@@ -4,6 +4,8 @@ import type { Locator } from 'vitest/browser';
 // NOTE: Best-practice rules like "region" are left out, since they assume a whole page and not a single component
 const wcag21AaTags = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 
+export const colorContrastRuleId = 'color-contrast';
+
 interface A11yCheckOptions {
   /**
    * Turns rules on or off for this check only, like `{ 'color-contrast': { enabled: false } }`.
@@ -12,6 +14,9 @@ interface A11yCheckOptions {
   rules?: RunOptions['rules'];
 }
 
+/**
+ * Formats a violation as its rule ID, impact and help text, followed by the help URL and the selector of each failing element.
+ */
 const formatViolation = (violation: Result) => {
   const heading = `${violation.id} (${violation.impact}): ${violation.help}`;
   const selectors = violation.nodes.map((node) => `  ${node.target.join(' ')}`);
@@ -30,7 +35,7 @@ export const expectNoA11yViolations = async (
   const element = container instanceof Element ? container : container.element();
   const { violations } = await axe.run(element, {
     runOnly: { type: 'tag', values: wcag21AaTags },
-    rules: { 'color-contrast': { enabled: true }, ...options.rules },
+    rules: { [colorContrastRuleId]: { enabled: true }, ...options.rules },
   });
 
   if (violations.length > 0) {

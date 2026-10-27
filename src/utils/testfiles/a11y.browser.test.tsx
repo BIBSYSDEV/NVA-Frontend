@@ -1,13 +1,15 @@
 import { describe, expect, test } from 'vitest';
 import { page } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
-import { expectNoA11yViolations } from './a11y';
+import { colorContrastRuleId, expectNoA11yViolations } from './a11y';
 
 const transparentImage = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-const sectionName = 'Innhold';
-const saveText = 'Lagre';
+const sectionName = 'Content';
+const saveText = 'Save';
 const lowContrastStyle = { color: '#999999', backgroundColor: '#ffffff' };
-const lowContrastText = 'Lav kontrast';
+const lowContrastText = 'Low contrast';
+const imageAltRuleId = 'image-alt';
+const imageAltHelpUrlPattern = new RegExp(`https://dequeuniversity\\.com/rules/axe/[\\d.]+/${imageAltRuleId}`);
 
 const getFailureMessage = async (check: Promise<void>) => {
   try {
@@ -32,8 +34,8 @@ describe('expectNoA11yViolations', () => {
     const message = await getFailureMessage(expectNoA11yViolations());
 
     expect(message).toContain('Found 1 accessibility violation(s)');
-    expect(message).toContain('image-alt (critical)');
-    expect(message).toContain('https://dequeuniversity.com/rules/axe/4.14/image-alt');
+    expect(message).toContain(`${imageAltRuleId} (critical)`);
+    expect(message).toMatch(imageAltHelpUrlPattern);
     expect(message).toContain('#logo');
   });
 
@@ -42,14 +44,14 @@ describe('expectNoA11yViolations', () => {
 
     const message = await getFailureMessage(expectNoA11yViolations());
 
-    expect(message).toContain('color-contrast (serious)');
+    expect(message).toContain(`${colorContrastRuleId} (serious)`);
   });
 
   test('skips rules that are turned off for the check', async () => {
     await render(<p style={lowContrastStyle}>{lowContrastText}</p>);
 
     // NOTE: Turned off to test the override itself
-    await expectNoA11yViolations(document.body, { rules: { 'color-contrast': { enabled: false } } });
+    await expectNoA11yViolations(document.body, { rules: { [colorContrastRuleId]: { enabled: false } } });
   });
 
   test('only checks inside the given container', async () => {
@@ -64,5 +66,18 @@ describe('expectNoA11yViolations', () => {
     );
 
     await expectNoA11yViolations(page.getByRole('region', { name: sectionName }));
+  });
+
+  test('finds violations inside the given container', async () => {
+    await render(
+      <section aria-label={sectionName}>
+        {/* eslint-disable-next-line jsx-a11y/alt-text -- the missing alt text is the violation under test */}
+        <img src={transparentImage} />
+      </section>
+    );
+
+    const message = await getFailureMessage(expectNoA11yViolations(page.getByRole('region', { name: sectionName })));
+
+    expect(message).toContain(imageAltRuleId);
   });
 });

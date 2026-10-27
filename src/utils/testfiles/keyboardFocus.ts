@@ -8,7 +8,12 @@ const focusableSelector = [
   'select:not([disabled])',
   'textarea:not([disabled])',
   '[tabindex]:not([tabindex="-1"])',
+  '[contenteditable="true"]',
+  'summary',
 ].join(', ');
+
+export const focusOutsideContainerMessage = 'Expected focus inside the container';
+export const noFocusableElementsMessage = 'Expected focusable elements inside the container';
 
 /**
  * Presses Tab once per element and checks that focus lands on each of them in the given order.
@@ -29,9 +34,20 @@ export const expectFocusWithin = async (container: Locator) => {
   await expect.element(container).toBeVisible();
   await expect
     .poll(() => container.element().contains(document.activeElement), {
-      message: 'Expected focus inside the container',
+      message: focusOutsideContainerMessage,
     })
     .toBe(true);
+};
+
+/**
+ * Presses Tab the given number of times, and checks after each press that focus is still inside the container.
+ */
+const tabThroughContainer = async (container: Locator, tabCount: number, { backwards = false } = {}) => {
+  for (let step = 0; step < tabCount; step++) {
+    await userEvent.tab({ shift: backwards });
+    const focusedElement = document.activeElement as HTMLElement | null;
+    expect(container.element()).toContainElement(focusedElement);
+  }
 };
 
 /**
@@ -39,14 +55,14 @@ export const expectFocusWithin = async (container: Locator) => {
  * Use it to check the focus trap of a modal dialog.
  */
 export const expectFocusTrapped = async (container: Locator) => {
+  await expect.element(container).toBeVisible();
   const focusableCount = container.element().querySelectorAll(focusableSelector).length;
+  expect(focusableCount, noFocusableElementsMessage).toBeGreaterThan(0);
 
-  for (const shift of [false, true]) {
-    for (let step = 0; step <= focusableCount; step++) {
-      await userEvent.tab({ shift });
-      expect(container.element()).toContainElement(document.activeElement as HTMLElement | null);
-    }
-  }
+  // NOTE: One extra tab past the last focusable element checks that focus wraps around instead of leaving
+  const tabCount = focusableCount + 1;
+  await tabThroughContainer(container, tabCount);
+  await tabThroughContainer(container, tabCount, { backwards: true });
 };
 
 /**

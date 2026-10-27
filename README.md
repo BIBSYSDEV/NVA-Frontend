@@ -95,12 +95,18 @@ of the `engines` field in `package.json`, so use Node 24.
 
 When a browser test fails, a screenshot is saved to `.vitest/attachments/`.
 
+Without a `timeout` option, a failing `expect.element` keeps retrying until the test itself times out (15 seconds). Tests
+that are expected to fail, such as tests of test helpers, should set a short test timeout.
+
 Every run logs the warning `Plugin "vitest:mocks:interceptor" defines Vite-specific hooks…`. It comes from Vitest itself
 and can be ignored.
 
 #### Accessibility and keyboard tests
 
-Browser tests of components should check accessibility with the helpers in `src/utils/testfiles/`:
+Browser tests of components should check accessibility with the helpers in `src/utils/testfiles/a11y.ts` and
+`src/utils/testfiles/keyboardFocus.ts`. All helpers are async and must be awaited after the component is rendered.
+`expectFocusWithin`, `expectFocusTrapped` and `expectEscapeToCloseAndRestoreFocus` wait for the UI to settle, while
+`expectTabOrder` and `expectNoA11yViolations` check the current state immediately.
 
 - `expectNoA11yViolations(container?, options?)` runs [axe-core](https://github.com/dequelabs/axe-core) with the WCAG
   2.1 A and AA rules, including color contrast, and fails with a list of the violations. It checks the whole document
@@ -112,7 +118,8 @@ Browser tests of components should check accessibility with the helpers in `src/
 - `expectEscapeToCloseAndRestoreFocus(popup, trigger)` presses Escape and checks that the dialog, menu or popover
   closes and that focus returns to the trigger.
 
-`src/utils/testfiles/keyboardFocus.browser.test.tsx` shows the full pattern for an MUI `Dialog` and `Menu`.
+`src/utils/testfiles/a11y.browser.test.tsx` shows how to use `expectNoA11yViolations`, and
+`src/utils/testfiles/keyboardFocus.browser.test.tsx` shows the full keyboard pattern for an MUI `Dialog` and `Menu`.
 
 #### Cypress
 

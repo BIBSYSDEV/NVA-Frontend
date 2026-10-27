@@ -8,16 +8,25 @@ import {
   expectFocusTrapped,
   expectFocusWithin,
   expectTabOrder,
+  focusOutsideContainerMessage,
+  noFocusableElementsMessage,
 } from './keyboardFocus';
 
-const openDialogText = 'Åpne dialog';
-const openMenuText = 'Åpne meny';
-const cancelText = 'Avbryt';
-const saveText = 'Lagre';
-const firstText = 'Første';
-const secondText = 'Andre';
-const insideText = 'Innhold';
-const outsideText = 'Utenfor';
+const openDialogText = 'Open dialog';
+const openMenuText = 'Open menu';
+const cancelText = 'Cancel';
+const saveText = 'Save';
+const firstText = 'First';
+const secondText = 'Second';
+const insideText = 'Content';
+const outsideText = 'Outside';
+const insideButtonText = 'Inside';
+const dialogTitleText = 'Dialog';
+const focusAssertionPattern = /toHaveFocus/;
+const containAssertionPattern = /toContainElement/;
+const removedAssertionPattern = /toBeInTheDocument/;
+// NOTE: Without an explicit timeout, a failing expect.element keeps retrying until the test times out, so failing cases get a short test timeout
+const failingCaseTestOptions = { timeout: 2000 };
 
 const DialogWithTrigger = () => {
   const [open, setOpen] = useState(false);
@@ -27,7 +36,7 @@ const DialogWithTrigger = () => {
     <>
       <Button onClick={() => setOpen(true)}>{openDialogText}</Button>
       <Dialog open={open} onClose={close}>
-        <DialogTitle>Dialog</DialogTitle>
+        <DialogTitle>{dialogTitleText}</DialogTitle>
         <DialogContent>{insideText}</DialogContent>
         <DialogActions>
           <Button onClick={close}>{cancelText}</Button>
@@ -49,6 +58,19 @@ const MenuWithTrigger = () => {
         <MenuItem onClick={close}>{firstText}</MenuItem>
         <MenuItem onClick={close}>{secondText}</MenuItem>
       </Menu>
+    </>
+  );
+};
+
+const DialogWithoutFocusRestore = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>{openDialogText}</Button>
+      <Dialog open={open} onClose={() => setOpen(false)} disableRestoreFocus>
+        <DialogTitle>{dialogTitleText}</DialogTitle>
+      </Dialog>
     </>
   );
 };
@@ -76,11 +98,23 @@ describe('expectTabOrder', () => {
       </>
     );
 
-    await expect(expectTabOrder([getButton(firstText), getButton(secondText)])).rejects.toThrow();
+    await expect(expectTabOrder([getButton(firstText), getButton(secondText)])).rejects.toThrow(focusAssertionPattern);
   });
 });
 
 describe('expectFocusWithin', () => {
+  test('passes when focus is inside the container', async () => {
+    await render(
+      <section aria-label={insideText}>
+        <button>{insideButtonText}</button>
+      </section>
+    );
+
+    await getButton(insideButtonText).click();
+
+    await expectFocusWithin(page.getByRole('region'));
+  });
+
   test('fails when focus is outside the container', async () => {
     await render(
       <>
@@ -89,22 +123,79 @@ describe('expectFocusWithin', () => {
       </>
     );
 
-    await expect(expectFocusWithin(page.getByRole('region'))).rejects.toThrow('Expected focus inside the container');
+    await expect(expectFocusWithin(page.getByRole('region'))).rejects.toThrow(focusOutsideContainerMessage);
   });
 });
 
 describe('expectFocusTrapped', () => {
+  test('passes when focus stays inside the container', async () => {
+    await render(<DialogWithTrigger />);
+    const dialog = page.getByRole('dialog');
+
+    await getButton(openDialogText).click();
+    await expectFocusWithin(dialog);
+
+    await expectFocusTrapped(dialog);
+  });
+
   test('fails when focus can leave the container', async () => {
     await render(
       <>
         <section aria-label={insideText}>
-          <button>Inni</button>
+          <button>{insideButtonText}</button>
         </section>
         <button>{outsideText}</button>
       </>
     );
 
-    await expect(expectFocusTrapped(page.getByRole('region'))).rejects.toThrow();
+    await expect(expectFocusTrapped(page.getByRole('region'))).rejects.toThrow(containAssertionPattern);
+  });
+
+  test('fails when the container has no focusable elements', async () => {
+    await render(<section aria-label={insideText}>{insideText}</section>);
+
+    await expect(expectFocusTrapped(page.getByRole('region'))).rejects.toThrow(noFocusableElementsMessage);
+  });
+});
+
+describe('expectEscapeToCloseAndRestoreFocus', () => {
+  test('passes when Escape closes the popup and focus returns to the trigger', async () => {
+    await render(<DialogWithTrigger />);
+    const trigger = getButton(openDialogText);
+    const dialog = page.getByRole('dialog');
+
+    await trigger.click();
+    await expectFocusWithin(dialog);
+
+    await expectEscapeToCloseAndRestoreFocus(dialog, trigger);
+  });
+
+  test('fails when Escape does not close the popup', failingCaseTestOptions, async () => {
+    await render(
+      <>
+        <button>{openDialogText}</button>
+        <div role="dialog" aria-label={dialogTitleText}>
+          <button>{insideButtonText}</button>
+        </div>
+      </>
+    );
+
+    await getButton(insideButtonText).click();
+
+    await expect(
+      expectEscapeToCloseAndRestoreFocus(page.getByRole('dialog'), getButton(openDialogText))
+    ).rejects.toThrow(removedAssertionPattern);
+  });
+
+  test('fails when focus does not return to the trigger', failingCaseTestOptions, async () => {
+    await render(<DialogWithoutFocusRestore />);
+    const trigger = getButton(openDialogText);
+    const dialog = page.getByRole('dialog');
+
+    await trigger.click();
+    await expectFocusWithin(dialog);
+
+    await expect(expectEscapeToCloseAndRestoreFocus(dialog, trigger)).rejects.toThrow(focusAssertionPattern);
   });
 });
 
