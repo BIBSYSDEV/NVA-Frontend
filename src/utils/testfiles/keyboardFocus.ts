@@ -48,3 +48,12 @@ export const expectFocusTrapped = async (container: Locator) => {
     }
   }
 };
+
+/**
+ * Presses Escape and checks that the dialog, menu or popover closes, and that focus returns to the element that opened it.
+ */
+export const expectEscapeToCloseAndRestoreFocus = async (popup: Locator, trigger: Locator) => {
+  await userEvent.keyboard('{Escape}');
+  await expect.element(popup).not.toBeInTheDocument();
+  await expect.element(trigger).toHaveFocus();
+};

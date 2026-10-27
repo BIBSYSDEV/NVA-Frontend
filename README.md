@@ -109,10 +109,10 @@ Browser tests of components should check accessibility with the helpers in `src/
 - `expectTabOrder(elements)` checks that Tab moves focus through the elements in the given order.
 - `expectFocusWithin(container)` checks that focus moves into a dialog or popover when it opens.
 - `expectFocusTrapped(container)` checks that Tab and Shift+Tab never move focus out of a modal dialog.
+- `expectEscapeToCloseAndRestoreFocus(popup, trigger)` presses Escape and checks that the dialog, menu or popover
+  closes and that focus returns to the trigger.
 
-To test Escape, press it with `userEvent.keyboard('{Escape}')` from `vitest/browser`, then check that the dialog or
-menu is gone and that the trigger has focus again. `src/utils/testfiles/keyboardFocus.browser.test.tsx` shows the full
-pattern for an MUI `Dialog` and `Menu`.
+`src/utils/testfiles/keyboardFocus.browser.test.tsx` shows the full pattern for an MUI `Dialog` and `Menu`.
 
 #### Cypress
 

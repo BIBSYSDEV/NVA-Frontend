@@ -1,9 +1,14 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { describe, expect, test } from 'vitest';
-import { page, userEvent } from 'vitest/browser';
+import { page } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
-import { expectFocusTrapped, expectFocusWithin, expectTabOrder } from './keyboardFocus';
+import {
+  expectEscapeToCloseAndRestoreFocus,
+  expectFocusTrapped,
+  expectFocusWithin,
+  expectTabOrder,
+} from './keyboardFocus';
 
 const openDialogText = 'Åpne dialog';
 const openMenuText = 'Åpne meny';
@@ -106,26 +111,22 @@ describe('expectFocusTrapped', () => {
 describe('keyboard patterns for MUI components', () => {
   test('dialog takes focus, traps it, closes on Escape and returns focus to the trigger', async () => {
     await render(<DialogWithTrigger />);
-
-    await getButton(openDialogText).click();
+    const trigger = getButton(openDialogText);
     const dialog = page.getByRole('dialog');
+
+    await trigger.click();
     await expectFocusWithin(dialog);
     await expectFocusTrapped(dialog);
-
-    await userEvent.keyboard('{Escape}');
-    await expect.element(dialog).not.toBeInTheDocument();
-    await expect.element(getButton(openDialogText)).toHaveFocus();
+    await expectEscapeToCloseAndRestoreFocus(dialog, trigger);
   });
 
   test('menu takes focus, closes on Escape and returns focus to the trigger', async () => {
     await render(<MenuWithTrigger />);
-
-    await getButton(openMenuText).click();
+    const trigger = getButton(openMenuText);
     const menu = page.getByRole('menu');
-    await expectFocusWithin(menu);
 
-    await userEvent.keyboard('{Escape}');
-    await expect.element(menu).not.toBeInTheDocument();
-    await expect.element(getButton(openMenuText)).toHaveFocus();
+    await trigger.click();
+    await expectFocusWithin(menu);
+    await expectEscapeToCloseAndRestoreFocus(menu, trigger);
   });
 });
