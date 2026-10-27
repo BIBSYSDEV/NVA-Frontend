@@ -24,6 +24,12 @@ const largeLibraries = [
 const sourceFilesGlob = 'src/**/*.{ts,tsx}';
 const testFilesGlob = 'src/**/*.test.{ts,tsx}';
 const browserTestFilesGlob = 'src/**/*.browser.test.{ts,tsx}';
+const unitTestFilesGlob = 'src/**/*.test.ts';
+const typeDeclarationFilesGlob = 'src/**/*.d.ts';
+const typesFolderGlob = 'src/types/**';
+const cypressFilesGlob = 'cypress/**';
+const testFilesFolder = 'src/utils/testfiles';
+const entryFile = 'src/index.tsx';
 
 export default defineConfig({
   plugins: [
@@ -63,7 +69,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text-summary', 'html', 'lcov', 'json-summary'],
       include: [sourceFilesGlob],
-      exclude: [testFilesGlob, 'src/**/*.d.ts', 'src/types/**', 'src/utils/testfiles/**', 'src/index.tsx'],
+      exclude: [testFilesGlob, typeDeclarationFilesGlob, typesFolderGlob, `${testFilesFolder}/**`, entryFile],
     },
     projects: [
       {
@@ -71,8 +77,8 @@ export default defineConfig({
         test: {
           name: 'unit',
           environment: 'node',
-          include: ['src/**/*.test.ts'],
-          exclude: [...configDefaults.exclude, 'cypress/**', browserTestFilesGlob],
+          include: [unitTestFilesGlob],
+          exclude: [...configDefaults.exclude, cypressFilesGlob, browserTestFilesGlob],
         },
       },
       {
@@ -87,7 +93,7 @@ export default defineConfig({
         test: {
           name: 'browser',
           include: [browserTestFilesGlob],
-          setupFiles: ['src/utils/testfiles/browserSetup.ts'],
+          setupFiles: [`${testFilesFolder}/browserSetup.ts`],
           browser: {
             enabled: true,
             headless: true,
