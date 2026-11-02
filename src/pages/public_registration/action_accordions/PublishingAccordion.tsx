@@ -26,8 +26,12 @@ import {
   isPublishableForWorkflow2,
   validateRegistrationForm,
 } from '../../../utils/formik-helpers/formik-helpers';
-import { isOpenFile, isPendingOpenFile } from '../../../utils/fileHelpers';
-import { getAssociatedFiles, userHasAccessRight } from '../../../utils/registration-helpers';
+import {
+  getAssociatedFiles,
+  isOpenFile,
+  isPendingOpenFile,
+  userHasAccessRight,
+} from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 import { TicketTypeTag } from '../../messages/components/TicketTypeTag';
 import { getTicketColor } from '../../messages/utils';

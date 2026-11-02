@@ -1,11 +1,12 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import { FileType, FileVersion } from '../../../types/associatedArtifact.types';
-import { isOpenFile, isPendingOpenFile } from '../../fileHelpers';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
   isCategoryWithFileVersion,
+  isOpenFile,
+  isPendingOpenFile,
 } from '../../registration-helpers';
 
 const associatedArtifactErrorMessage = {

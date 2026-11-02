@@ -17,26 +17,12 @@ export const userMayEditFileMetadata = (file: AssociatedFile, userMayEditImportC
   userMayEditImportCandidateFiles || hasFileAccessRight(file, 'write-metadata');
 
 /**
- * Whether a file is uploaded to be published, but still waiting for a curator to approve it.
- * @param artifact Artifact on the registration.
- * @returns True for a file that becomes an open file once approved.
- */
-export const isPendingOpenFile = (artifact: AssociatedArtifact) => artifact.type === FileType.PendingOpenFile;
-
-/**
- * Whether a file is approved for publication
- * @param artifact Artifact on the registration.
- * @returns True for a file published on the landing page.
- */
-export const isOpenFile = (artifact: AssociatedArtifact) => artifact.type === FileType.OpenFile;
-
-/**
  * Whether an artifact is a file of a type that carries a license.
  * @param associatedArtifact Artifact on the registration, which may be a link or an empty artifact.
  * @returns True when the artifact is a file whose license the user is shown and can act on.
  */
 const hasLicenseField = (associatedArtifact: AssociatedArtifact): associatedArtifact is AssociatedFile =>
-  isOpenFile(associatedArtifact) || isPendingOpenFile(associatedArtifact);
+  associatedArtifact.type === FileType.OpenFile || associatedArtifact.type === FileType.PendingOpenFile;
 
 /**
  * Whether a string value points to a given license.

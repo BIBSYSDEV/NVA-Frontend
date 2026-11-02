@@ -54,13 +54,11 @@ import {
   getLicenseData,
   getShortListLicenses,
   hasFileAccessRight,
-  isOpenFile,
-  isPendingOpenFile,
   isSelectableLicense,
   isSourceCodeCategory,
   userMayEditFileMetadata,
 } from '../../../utils/fileHelpers';
-import { userIsValidImporter } from '../../../utils/registration-helpers';
+import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { isFileCuratorForRegistration } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';

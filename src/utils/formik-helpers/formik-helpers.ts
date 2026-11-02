@@ -26,8 +26,13 @@ import {
   SpecificLinkFieldNames,
 } from '../../types/publicationFieldNames';
 import { Funding, PublicationInstance, Registration, RegistrationTab } from '../../types/registration.types';
-import { isOpenFile, isPendingOpenFile } from '../fileHelpers';
-import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from '../registration-helpers';
+import {
+  associatedArtifactIsFile,
+  associatedArtifactIsLink,
+  getMainRegistrationType,
+  isOpenFile,
+  isPendingOpenFile,
+} from '../registration-helpers';
 import {
   registrationPublishableValidationSchema,
   registrationValidationSchema,

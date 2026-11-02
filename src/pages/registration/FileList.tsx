@@ -19,11 +19,13 @@ import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getHelpModalLicenses, isOpenFile, isPendingOpenFile, isSourceCodeCategory } from '../../utils/fileHelpers';
+import { getHelpModalLicenses, isSourceCodeCategory } from '../../utils/fileHelpers';
 import {
   associatedArtifactIsFile,
   isCategoryWithFileVersion,
   isCategoryWithRrs,
+  isOpenFile,
+  isPendingOpenFile,
 } from '../../utils/registration-helpers';
 import { LicenseDescription } from './_components/LicenseDescription';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';

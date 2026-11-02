@@ -5,8 +5,7 @@ import { TFunction } from 'i18next';
 import { AssociatedFile, FileType } from '../../types/associatedArtifact.types';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
-import { isOpenFile, isPendingOpenFile } from '../fileHelpers';
-import { getAssociatedFiles } from '../registration-helpers';
+import { getAssociatedFiles, isOpenFile, isPendingOpenFile } from '../registration-helpers';
 
 interface SimpleLogItemEntry {
   text: string;
