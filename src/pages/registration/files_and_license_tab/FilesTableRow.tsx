@@ -54,10 +54,13 @@ import {
   getLicenseData,
   getShortListLicenses,
   hasFileAccessRight,
+  isOpenFile,
+  isPendingOpenFile,
   isSelectableLicense,
   isSourceCodeCategory,
+  userMayEditFileMetadata,
 } from '../../../utils/fileHelpers';
-import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
+import { userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { isFileCuratorForRegistration } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
@@ -156,7 +159,7 @@ export const FilesTableRow = ({
 
   const canEditImportCandidateFile = userIsValidImporter(user, values);
   const canEditFile = hasFileAccessRight(file, 'write-metadata');
-  const disabledFile = !canEditFile && !canEditImportCandidateFile;
+  const disabledFile = !userMayEditFileMetadata(file, canEditImportCandidateFile);
 
   const canDeleteFile = hasFileAccessRight(file, 'delete') || canEditImportCandidateFile;
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;

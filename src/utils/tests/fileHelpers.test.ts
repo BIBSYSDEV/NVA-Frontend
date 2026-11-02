@@ -1,15 +1,19 @@
 import { describe, expect, test } from 'vitest';
-import { AssociatedArtifact, AssociatedFile, FileType } from '../../types/associatedArtifact.types';
+import { AssociatedArtifact, FileAllowedOperation, FileType } from '../../types/associatedArtifact.types';
 import { LicenseUri } from '../../types/license.types';
 import { JournalType, ResearchDataType } from '../../types/publicationFieldNames';
 import {
+  categoryChangeIsLockedByFile,
   getAdditionalLicenses,
   getHelpModalLicenses,
   getLicenseData,
   getShortListLicenses,
+  hasSameLicenseMenu,
   isSelectableLicense,
   licenseNeedsReset,
+  userMayEditFileMetadata,
 } from '../fileHelpers';
+import { buildFile, buildLockedFile } from './testHelpers';
 
 describe('getLicenseData()', () => {
   test('Returns Creative Commons license with https', () => {
@@ -208,12 +212,27 @@ describe('isSelectableLicense()', () => {
   });
 });
 
-describe('licenseNeedsReset()', () => {
-  const editableFile = (license: string | null) =>
-    ({ type: FileType.OpenFile, license, allowedOperations: ['write-metadata'] }) as AssociatedFile;
+describe('userMayEditFileMetadata()', () => {
+  const fileWith = (...allowedOperations: FileAllowedOperation[]) => buildFile({ allowedOperations });
 
-  const fileWithoutWriteAccess = (license: string | null) =>
-    ({ type: FileType.OpenFile, license, allowedOperations: ['download'] }) as AssociatedFile;
+  test('Lets a user with write access edit the file', () => {
+    expect(userMayEditFileMetadata(fileWith('write-metadata'))).toBe(true);
+  });
+
+  test('Keeps a user without write access out', () => {
+    expect(userMayEditFileMetadata(fileWith('download'))).toBe(false);
+    expect(userMayEditFileMetadata(buildFile({ allowedOperations: undefined }))).toBe(false);
+  });
+
+  test('Lets an importer edit an import candidate file whatever its access rights say', () => {
+    expect(userMayEditFileMetadata(fileWith('download'), true)).toBe(true);
+  });
+});
+
+describe('licenseNeedsReset()', () => {
+  const editableFile = (license: string | null) => buildFile({ license });
+
+  const fileWithoutWriteAccess = (license: string | null) => buildLockedFile({ license });
 
   test('Clears a license the new category does not offer', () => {
     expect(licenseNeedsReset(editableFile(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode)).toBe(true);
@@ -242,10 +261,19 @@ describe('licenseNeedsReset()', () => {
   });
 
   test('Keeps a license on a file with no access rights at all', () => {
-    const fileWithoutOperations = { type: FileType.OpenFile, license: LicenseUri.CC_BY_4 } as AssociatedFile;
+    const fileWithoutOperations = buildFile({ license: LicenseUri.CC_BY_4, allowedOperations: undefined });
 
     expect(licenseNeedsReset(fileWithoutOperations, ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
+
+  test.each([FileType.RejectedFile, FileType.InternalFile, FileType.HiddenFile])(
+    'Keeps a license on a %s, which the form shows no license field for',
+    (type) => {
+      const file = buildFile({ type, license: LicenseUri.CC_BY_4 });
+
+      expect(licenseNeedsReset(file, ResearchDataType.SoftwareSourceCode)).toBe(false);
+    }
+  );
 
   test('Leaves a file without a license untouched, so null is not overwritten with an empty string', () => {
     expect(licenseNeedsReset(editableFile(null), ResearchDataType.SoftwareSourceCode)).toBe(false);
@@ -256,6 +284,83 @@ describe('licenseNeedsReset()', () => {
     const link = { type: 'AssociatedLink', id: 'https://sikt.no' } as AssociatedArtifact;
 
     expect(licenseNeedsReset(link, ResearchDataType.SoftwareSourceCode)).toBe(false);
+  });
+});
+
+describe('categoryChangeIsLockedByFile()', () => {
+  const lockedFile = (license: string | null) => buildLockedFile({ license });
+
+  const editableFile = (license: string | null) => buildFile({ license });
+
+  test('Category change is prohibited when license is source code only and category is source code', () => {
+    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.MIT), ResearchDataType.SoftwareSourceCode)).toBe(true);
+  });
+
+  test('Category change is prohibited when license is non-source code and category is non-source code', () => {
+    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.CC_BY_4), JournalType.AcademicArticle)).toBe(true);
+  });
+
+  test('Category change is not prohibited when license is offered in both menus', () => {
+    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.CC0), ResearchDataType.SoftwareSourceCode)).toBe(false);
+    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.CC0), JournalType.AcademicArticle)).toBe(false);
+  });
+
+  test('Category change is not prohibited when file is editable', () => {
+    expect(categoryChangeIsLockedByFile(editableFile(LicenseUri.MIT), ResearchDataType.SoftwareSourceCode)).toBe(false);
+  });
+
+  test('Category change is not prohibited for an import candidate file that the importer may edit', () => {
+    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.MIT), ResearchDataType.SoftwareSourceCode, true)).toBe(
+      false
+    );
+  });
+
+  test('Category change is not prohibited when only the other menu offers the license', () => {
+    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.CC_BY_2), ResearchDataType.SoftwareSourceCode)).toBe(
+      false
+    );
+  });
+
+  test('Category change is not prohibited for files without a license', () => {
+    expect(categoryChangeIsLockedByFile(lockedFile(null), JournalType.AcademicArticle)).toBe(false);
+    expect(categoryChangeIsLockedByFile(lockedFile(''), JournalType.AcademicArticle)).toBe(false);
+  });
+
+  test('Category change is not prohibited for artifacts that are not files', () => {
+    const link = { type: 'AssociatedLink', id: 'https://sikt.no' } as AssociatedArtifact;
+
+    expect(categoryChangeIsLockedByFile(link, JournalType.AcademicArticle)).toBe(false);
+  });
+
+  test('Category change is prohibited for a file waiting for approval, which has a license field too', () => {
+    const pendingFile = buildLockedFile({ type: FileType.PendingOpenFile, license: LicenseUri.MIT });
+
+    expect(categoryChangeIsLockedByFile(pendingFile, ResearchDataType.SoftwareSourceCode)).toBe(true);
+  });
+
+  test.each([FileType.RejectedFile, FileType.InternalFile, FileType.HiddenFile])(
+    'Category change is not prohibited for a %s, which is shown no license field to act on',
+    (type) => {
+      const file = buildLockedFile({ type, license: LicenseUri.MIT });
+
+      expect(categoryChangeIsLockedByFile(file, ResearchDataType.SoftwareSourceCode)).toBe(false);
+    }
+  );
+});
+
+describe('hasSameLicenseMenu()', () => {
+  test('Keeps every category outside source code on one menu', () => {
+    expect(hasSameLicenseMenu(JournalType.AcademicArticle, ResearchDataType.Dataset)).toBe(true);
+    expect(hasSameLicenseMenu(undefined, JournalType.AcademicArticle)).toBe(true);
+  });
+
+  test('Puts source code on a menu of its own', () => {
+    expect(hasSameLicenseMenu(ResearchDataType.SoftwareSourceCode, ResearchDataType.Dataset)).toBe(false);
+    expect(hasSameLicenseMenu(JournalType.AcademicArticle, ResearchDataType.SoftwareSourceCode)).toBe(false);
+  });
+
+  test('Leaves a category on its own menu', () => {
+    expect(hasSameLicenseMenu(ResearchDataType.SoftwareSourceCode, ResearchDataType.SoftwareSourceCode)).toBe(true);
   });
 });
 
