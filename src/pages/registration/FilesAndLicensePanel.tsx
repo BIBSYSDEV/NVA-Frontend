@@ -13,14 +13,13 @@ import { FileType, NullAssociatedArtifact } from '../../types/associatedArtifact
 import { FileFieldNames, ResourceFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { isOpenFile, isPendingOpenFile } from '../../utils/fileHelpers';
 import {
   allowsFileUpload,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
   getAssociatedLinkRelationTitle,
   getPublicationChannelPublisherId,
-  isOpenFile,
-  isPendingOpenFile,
   userHasAccessRight,
   userIsValidImporter,
 } from '../../utils/registration-helpers';

@@ -10,12 +10,11 @@ import { RootState } from '../../../redux/store';
 import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { isOpenFile, isPendingOpenFile } from '../../../utils/fileHelpers';
 import {
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
   isCategoryWithFileVersion,
-  isOpenFile,
-  isPendingOpenFile,
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
 import { getWizardPathByRegistration } from '../../../utils/urlPaths';
