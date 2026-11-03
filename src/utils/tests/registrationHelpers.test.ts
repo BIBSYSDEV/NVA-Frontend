@@ -34,6 +34,7 @@ import {
   isPublicationChannelPublisher,
   updateRegistrationQueryData,
 } from '../registration-helpers';
+import { User } from '../../types/user.types';
 import { mockRegistration } from '../testfiles/mockRegistration';
 import { buildFile, buildLockedFile } from './testHelpers';
 
@@ -532,7 +533,7 @@ const getPages = (result: Registration) => {
 };
 
 describe('getDisabledCategories', () => {
-  //  NOTE! Not everything in this function is tested yet, only the newest parts
+  // NOTE! Not everything in this function is tested yet, only the newest parts
   const translate = ((key: string) => key) as TFunction;
   const lockedLicenseText = 'registration.resource_type.cannot_select_category_when_file_license_is_locked';
 
@@ -546,8 +547,8 @@ describe('getDisabledCategories', () => {
       associatedArtifacts: files,
     }) as Registration;
 
-  const categoriesLockedByLicense = (registration: Registration) =>
-    getDisabledCategories(null, null, registration, translate)
+  const categoriesLockedByLicense = (registration: Registration, user: User | null = null) =>
+    getDisabledCategories(user, null, registration, translate)
       .filter((category) => category.text === lockedLicenseText)
       .map((category) => category.type);
 
@@ -570,7 +571,7 @@ describe('getDisabledCategories', () => {
       expect(result).toEqual([ResearchDataType.SoftwareSourceCode]);
     });
 
-    it("locks categories that doesn't match the selected license when categories aren't selected yet as well", () => {
+    it("locks categories that doesn't match the selected license", () => {
       const result = categoriesLockedByLicense(registrationWith(undefined, lockedFile(LicenseUri.CC_BY_4)));
 
       expect(result).toEqual([ResearchDataType.SoftwareSourceCode]);
@@ -582,6 +583,16 @@ describe('getDisabledCategories', () => {
       );
 
       expect(result).toEqual([]);
+    });
+
+    it('disables nothing for an internal importer on an import candidate, who may change the license anyway', () => {
+      const importCandidate = {
+        ...registrationWith(ResearchDataType.SoftwareSourceCode, lockedFile(LicenseUri.MIT)),
+        type: 'ImportCandidate',
+      } as Registration;
+
+      expect(categoriesLockedByLicense(importCandidate)).not.toEqual([]);
+      expect(categoriesLockedByLicense(importCandidate, { isInternalImporter: true } as User)).toEqual([]);
     });
 
     it('disables nothing when the user may change the license themselves', () => {

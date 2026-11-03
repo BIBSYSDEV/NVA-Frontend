@@ -234,13 +234,13 @@ const isUniversalLicense = (licenseUri: string) =>
  * A license only one of the two menus offers cannot survive that change.
  *
  * @param associatedArtifact Artifact on the registration. Only a file with a license field can lock the menu.
- * @param publicationInstanceType Current category of the registration.
+ * @param currentPublicationInstanceType Category the registration has now.
  * @param userMayEditImportCandidateFiles Passed on to {@link userMayEditFileMetadata}.
  * @returns True when the category cannot be changed to one with the other license menu.
  */
 export const isLockedOnCorrectLicense = (
   associatedArtifact: AssociatedArtifact,
-  publicationInstanceType?: string,
+  currentPublicationInstanceType?: string,
   userMayEditImportCandidateFiles = false
 ) => {
   if (!hasLicenseField(associatedArtifact) || !associatedArtifact.license) {
@@ -252,7 +252,7 @@ export const isLockedOnCorrectLicense = (
   }
 
   return (
-    isCorrectLicenseForCategory(associatedArtifact.license, publicationInstanceType) &&
+    isCorrectLicenseForCategory(associatedArtifact.license, currentPublicationInstanceType) &&
     !isUniversalLicense(associatedArtifact.license)
   );
 };

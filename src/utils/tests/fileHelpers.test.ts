@@ -231,11 +231,11 @@ describe('userMayEditFileMetadata()', () => {
   });
 });
 
+const editableFile = (license: string | null) => buildFile({ license });
+
+const lockedFile = (license: string | null) => buildLockedFile({ license });
+
 describe('licenseNeedsReset()', () => {
-  const editableFile = (license: string | null) => buildFile({ license });
-
-  const fileWithoutWriteAccess = (license: string | null) => buildLockedFile({ license });
-
   test('Clears a license the new category does not offer', () => {
     expect(licenseNeedsReset(editableFile(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode)).toBe(true);
     expect(licenseNeedsReset(editableFile(LicenseUri.MIT), JournalType.AcademicArticle)).toBe(true);
@@ -247,19 +247,15 @@ describe('licenseNeedsReset()', () => {
   });
 
   test('Keeps a license the user has no write access to change', () => {
-    expect(licenseNeedsReset(fileWithoutWriteAccess(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode)).toBe(
-      false
-    );
+    expect(licenseNeedsReset(lockedFile(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
 
   test('Clears a license on an import candidate file the importer may edit', () => {
-    expect(
-      licenseNeedsReset(fileWithoutWriteAccess(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode, true)
-    ).toBe(true);
+    expect(licenseNeedsReset(lockedFile(LicenseUri.CC_BY_4), ResearchDataType.SoftwareSourceCode, true)).toBe(true);
   });
 
   test('Leaves a file without a license alone, importer or not', () => {
-    expect(licenseNeedsReset(fileWithoutWriteAccess(null), ResearchDataType.SoftwareSourceCode, true)).toBe(false);
+    expect(licenseNeedsReset(lockedFile(null), ResearchDataType.SoftwareSourceCode, true)).toBe(false);
   });
 
   test('Keeps a license on a file with no access rights at all', () => {
@@ -290,10 +286,6 @@ describe('licenseNeedsReset()', () => {
 });
 
 describe('isLockedOnCorrectLicense()', () => {
-  const lockedFile = (license: string | null) => buildLockedFile({ license });
-
-  const editableFile = (license: string | null) => buildFile({ license });
-
   test('Category change is prohibited when license is source code only and category is source code', () => {
     expect(isLockedOnCorrectLicense(lockedFile(LicenseUri.MIT), ResearchDataType.SoftwareSourceCode)).toBe(true);
   });

@@ -899,6 +899,9 @@ export const getDisabledCategories = (
   registration: Registration,
   t: TFunction
 ) => {
+  // A category barred by more than one rule below is listed once per rule. CategorySelector looks the type up
+  // with find(), so the first rule here is the one whose explanation the user reads, and the rules are ordered
+  // from the hardest constraint to the softest.
   const disabledCategories: DisabledCategory[] = [];
   const currentType = registration.entityDescription?.reference?.publicationInstance?.type;
 
@@ -922,7 +925,7 @@ export const getDisabledCategories = (
     }
   }
 
-  // Locked files with correct license cannot change category to a category that doesn't provide the license
+  // Registrations with locked files with correct license cannot change category to a category that doesn't offer the license
   const userMayEditImportCandidateFiles = userIsValidImporter(user, registration);
   const categoryChangeIsProhibited = registration.associatedArtifacts.some((associatedArtifact) =>
     isLockedOnCorrectLicense(associatedArtifact, currentType, userMayEditImportCandidateFiles)
