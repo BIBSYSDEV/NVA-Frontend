@@ -3,13 +3,13 @@ import { AssociatedArtifact, FileAllowedOperation, FileType } from '../../types/
 import { LicenseUri } from '../../types/license.types';
 import { JournalType, ResearchDataType } from '../../types/publicationFieldNames';
 import {
-  categoryChangeIsLockedByFile,
   getAdditionalLicenses,
   getHelpModalLicenses,
   getLicenseData,
   getShortListLicenses,
   hasSameLicenseMenu,
-  isSelectableLicense,
+  isCorrectLicenseForCategory,
+  isLockedOnCorrectLicense,
   licenseNeedsReset,
   userMayEditFileMetadata,
 } from '../fileHelpers';
@@ -169,46 +169,48 @@ describe('getHelpModalLicenses()', () => {
   });
 });
 
-describe('isSelectableLicense()', () => {
+describe('isCorrectLicenseForCategory()', () => {
   test('Accepts a license from either menu section for source code', () => {
-    expect(isSelectableLicense(LicenseUri.MIT, ResearchDataType.SoftwareSourceCode)).toBe(true);
-    expect(isSelectableLicense(LicenseUri.GPL_3_0_only, ResearchDataType.SoftwareSourceCode)).toBe(true);
+    expect(isCorrectLicenseForCategory(LicenseUri.MIT, ResearchDataType.SoftwareSourceCode)).toBe(true);
+    expect(isCorrectLicenseForCategory(LicenseUri.GPL_3_0_only, ResearchDataType.SoftwareSourceCode)).toBe(true);
   });
 
   test('Rejects a Creative Commons license for source code', () => {
-    expect(isSelectableLicense(LicenseUri.CC_BY_4, ResearchDataType.SoftwareSourceCode)).toBe(false);
+    expect(isCorrectLicenseForCategory(LicenseUri.CC_BY_4, ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
 
   test('Rejects a software license for other categories', () => {
-    expect(isSelectableLicense(LicenseUri.MIT, JournalType.AcademicArticle)).toBe(false);
+    expect(isCorrectLicenseForCategory(LicenseUri.MIT, JournalType.AcademicArticle)).toBe(false);
   });
 
   test('Accepts current and older Creative Commons licenses for other categories', () => {
-    expect(isSelectableLicense(LicenseUri.CC_BY_4, JournalType.AcademicArticle)).toBe(true);
-    expect(isSelectableLicense(LicenseUri.CC_BY_3, JournalType.AcademicArticle)).toBe(true);
+    expect(isCorrectLicenseForCategory(LicenseUri.CC_BY_4, JournalType.AcademicArticle)).toBe(true);
+    expect(isCorrectLicenseForCategory(LicenseUri.CC_BY_3, JournalType.AcademicArticle)).toBe(true);
   });
 
   test('Accepts Generelle bruksvilkår only outside source code', () => {
-    expect(isSelectableLicense(LicenseUri.CopyrightAct, JournalType.AcademicArticle)).toBe(true);
-    expect(isSelectableLicense(LicenseUri.CopyrightAct, ResearchDataType.SoftwareSourceCode)).toBe(false);
+    expect(isCorrectLicenseForCategory(LicenseUri.CopyrightAct, JournalType.AcademicArticle)).toBe(true);
+    expect(isCorrectLicenseForCategory(LicenseUri.CopyrightAct, ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
 
   test('Accepts CC0 for both source code and other categories', () => {
-    expect(isSelectableLicense(LicenseUri.CC0, ResearchDataType.SoftwareSourceCode)).toBe(true);
-    expect(isSelectableLicense(LicenseUri.CC0, JournalType.AcademicArticle)).toBe(true);
+    expect(isCorrectLicenseForCategory(LicenseUri.CC0, ResearchDataType.SoftwareSourceCode)).toBe(true);
+    expect(isCorrectLicenseForCategory(LicenseUri.CC0, JournalType.AcademicArticle)).toBe(true);
   });
 
   test('Rejects a file without a license', () => {
-    expect(isSelectableLicense(null, ResearchDataType.SoftwareSourceCode)).toBe(false);
-    expect(isSelectableLicense('', ResearchDataType.SoftwareSourceCode)).toBe(false);
+    expect(isCorrectLicenseForCategory(null, ResearchDataType.SoftwareSourceCode)).toBe(false);
+    expect(isCorrectLicenseForCategory('', ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
 
   test('Rejects a license that is not in the vocabulary', () => {
-    expect(isSelectableLicense('123', ResearchDataType.SoftwareSourceCode)).toBe(false);
+    expect(isCorrectLicenseForCategory('123', ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
 
   test('Matches an SPDX uri stored without the .html suffix', () => {
-    expect(isSelectableLicense('https://spdx.org/licenses/MIT', ResearchDataType.SoftwareSourceCode)).toBe(true);
+    expect(isCorrectLicenseForCategory('https://spdx.org/licenses/MIT', ResearchDataType.SoftwareSourceCode)).toBe(
+      true
+    );
   });
 });
 
@@ -287,55 +289,51 @@ describe('licenseNeedsReset()', () => {
   });
 });
 
-describe('categoryChangeIsLockedByFile()', () => {
+describe('isLockedOnCorrectLicense()', () => {
   const lockedFile = (license: string | null) => buildLockedFile({ license });
 
   const editableFile = (license: string | null) => buildFile({ license });
 
   test('Category change is prohibited when license is source code only and category is source code', () => {
-    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.MIT), ResearchDataType.SoftwareSourceCode)).toBe(true);
+    expect(isLockedOnCorrectLicense(lockedFile(LicenseUri.MIT), ResearchDataType.SoftwareSourceCode)).toBe(true);
   });
 
   test('Category change is prohibited when license is non-source code and category is non-source code', () => {
-    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.CC_BY_4), JournalType.AcademicArticle)).toBe(true);
+    expect(isLockedOnCorrectLicense(lockedFile(LicenseUri.CC_BY_4), JournalType.AcademicArticle)).toBe(true);
   });
 
   test('Category change is not prohibited when license is offered in both menus', () => {
-    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.CC0), ResearchDataType.SoftwareSourceCode)).toBe(false);
-    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.CC0), JournalType.AcademicArticle)).toBe(false);
+    expect(isLockedOnCorrectLicense(lockedFile(LicenseUri.CC0), ResearchDataType.SoftwareSourceCode)).toBe(false);
+    expect(isLockedOnCorrectLicense(lockedFile(LicenseUri.CC0), JournalType.AcademicArticle)).toBe(false);
   });
 
   test('Category change is not prohibited when file is editable', () => {
-    expect(categoryChangeIsLockedByFile(editableFile(LicenseUri.MIT), ResearchDataType.SoftwareSourceCode)).toBe(false);
+    expect(isLockedOnCorrectLicense(editableFile(LicenseUri.MIT), ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
 
   test('Category change is not prohibited for an import candidate file that the importer may edit', () => {
-    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.MIT), ResearchDataType.SoftwareSourceCode, true)).toBe(
-      false
-    );
+    expect(isLockedOnCorrectLicense(lockedFile(LicenseUri.MIT), ResearchDataType.SoftwareSourceCode, true)).toBe(false);
   });
 
   test('Category change is not prohibited when only the other menu offers the license', () => {
-    expect(categoryChangeIsLockedByFile(lockedFile(LicenseUri.CC_BY_2), ResearchDataType.SoftwareSourceCode)).toBe(
-      false
-    );
+    expect(isLockedOnCorrectLicense(lockedFile(LicenseUri.CC_BY_2), ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
 
   test('Category change is not prohibited for files without a license', () => {
-    expect(categoryChangeIsLockedByFile(lockedFile(null), JournalType.AcademicArticle)).toBe(false);
-    expect(categoryChangeIsLockedByFile(lockedFile(''), JournalType.AcademicArticle)).toBe(false);
+    expect(isLockedOnCorrectLicense(lockedFile(null), JournalType.AcademicArticle)).toBe(false);
+    expect(isLockedOnCorrectLicense(lockedFile(''), JournalType.AcademicArticle)).toBe(false);
   });
 
   test('Category change is not prohibited for artifacts that are not files', () => {
     const link = { type: 'AssociatedLink', id: 'https://sikt.no' } as AssociatedArtifact;
 
-    expect(categoryChangeIsLockedByFile(link, JournalType.AcademicArticle)).toBe(false);
+    expect(isLockedOnCorrectLicense(link, JournalType.AcademicArticle)).toBe(false);
   });
 
   test('Category change is prohibited for a file waiting for approval, which has a license field too', () => {
     const pendingFile = buildLockedFile({ type: FileType.PendingOpenFile, license: LicenseUri.MIT });
 
-    expect(categoryChangeIsLockedByFile(pendingFile, ResearchDataType.SoftwareSourceCode)).toBe(true);
+    expect(isLockedOnCorrectLicense(pendingFile, ResearchDataType.SoftwareSourceCode)).toBe(true);
   });
 
   test.each([FileType.RejectedFile, FileType.InternalFile, FileType.HiddenFile])(
@@ -343,7 +341,7 @@ describe('categoryChangeIsLockedByFile()', () => {
     (type) => {
       const file = buildLockedFile({ type, license: LicenseUri.MIT });
 
-      expect(categoryChangeIsLockedByFile(file, ResearchDataType.SoftwareSourceCode)).toBe(false);
+      expect(isLockedOnCorrectLicense(file, ResearchDataType.SoftwareSourceCode)).toBe(false);
     }
   );
 });

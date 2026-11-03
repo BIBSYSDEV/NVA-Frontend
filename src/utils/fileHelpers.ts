@@ -217,7 +217,7 @@ export const licenseNeedsReset = (
     return false;
   }
 
-  return !isSelectableLicense(associatedArtifact.license, newPublicationInstanceType);
+  return !isCorrectLicenseForCategory(associatedArtifact.license, newPublicationInstanceType);
 };
 
 /**
@@ -226,7 +226,7 @@ export const licenseNeedsReset = (
  * @param licenseUri Value stored in the file's license field.
  * @returns True when the license is offered both for source code and for every other category.
  */
-const isOfferedInBothLicenseMenus = (licenseUri: string) =>
+const isUniversalLicense = (licenseUri: string) =>
   isInLicenseMenu(licenseUri, creativeCommonsLicenseMenu) && isInLicenseMenu(licenseUri, sourceCodeLicenseMenu);
 
 /**
@@ -238,7 +238,7 @@ const isOfferedInBothLicenseMenus = (licenseUri: string) =>
  * @param userMayEditImportCandidateFiles Passed on to {@link userMayEditFileMetadata}.
  * @returns True when the category cannot be changed to one with the other license menu.
  */
-export const categoryChangeIsLockedByFile = (
+export const isLockedOnCorrectLicense = (
   associatedArtifact: AssociatedArtifact,
   publicationInstanceType?: string,
   userMayEditImportCandidateFiles = false
@@ -252,8 +252,8 @@ export const categoryChangeIsLockedByFile = (
   }
 
   return (
-    isSelectableLicense(associatedArtifact.license, publicationInstanceType) &&
-    !isOfferedInBothLicenseMenus(associatedArtifact.license)
+    isCorrectLicenseForCategory(associatedArtifact.license, publicationInstanceType) &&
+    !isUniversalLicense(associatedArtifact.license)
   );
 };
 
@@ -263,7 +263,7 @@ export const categoryChangeIsLockedByFile = (
  * @param publicationInstanceType Category of the registration the file belongs to.
  * @returns True when that category's license menu offers the license.
  */
-export const isSelectableLicense = (licenseUri: string | null, publicationInstanceType?: string) =>
+export const isCorrectLicenseForCategory = (licenseUri: string | null, publicationInstanceType?: string) =>
   isInLicenseMenu(
     licenseUri,
     isSourceCodeCategory(publicationInstanceType) ? sourceCodeLicenseMenu : creativeCommonsLicenseMenu

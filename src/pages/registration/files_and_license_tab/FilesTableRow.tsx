@@ -54,7 +54,7 @@ import {
   getLicenseData,
   getShortListLicenses,
   hasFileAccessRight,
-  isSelectableLicense,
+  isCorrectLicenseForCategory,
   isSourceCodeCategory,
   userMayEditFileMetadata,
 } from '../../../utils/fileHelpers';
@@ -346,7 +346,7 @@ export const FilesTableRow = ({
                       // A file registered before this category got its own license menu, or one the user
                       // cannot edit, can hold a license the menu no longer offers.
                       const storedLicenseIsNotInMenu =
-                        !!storedLicense && !isSelectableLicense(field.value, publicationInstanceType);
+                        !!storedLicense && !isCorrectLicenseForCategory(field.value, publicationInstanceType);
 
                       return (
                         <TextField
