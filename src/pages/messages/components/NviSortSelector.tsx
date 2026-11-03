@@ -15,14 +15,29 @@ export const NviSortSelector = () => {
       variant="standard"
       options={[
         {
-          orderBy: 'createdDate' satisfies NviCandidateOrderBy,
+          orderBy: 'publicationDate' satisfies NviCandidateOrderBy,
           sortOrder: 'desc' satisfies SortOrder,
-          i18nKey: 'common.sort_newest_first',
+          i18nKey: 'search.sort_by_published_date_desc',
         },
         {
-          orderBy: 'createdDate' satisfies NviCandidateOrderBy,
+          orderBy: 'publicationDate' satisfies NviCandidateOrderBy,
           sortOrder: 'asc' satisfies SortOrder,
-          i18nKey: 'common.sort_oldest_first',
+          i18nKey: 'search.sort_by_published_date_asc',
+        },
+        {
+          orderBy: 'title' satisfies NviCandidateOrderBy,
+          sortOrder: 'asc' satisfies SortOrder,
+          i18nKey: 'search.sort_alphabetically_asc',
+        },
+        {
+          orderBy: 'title' satisfies NviCandidateOrderBy,
+          sortOrder: 'desc' satisfies SortOrder,
+          i18nKey: 'search.sort_alphabetically_desc',
+        },
+        {
+          orderBy: 'modifiedDate' satisfies NviCandidateOrderBy,
+          sortOrder: 'desc' satisfies SortOrder,
+          i18nKey: 'search.sort_by_modified_date',
         },
       ]}
     />
