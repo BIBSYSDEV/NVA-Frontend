@@ -54,8 +54,9 @@ import {
   getLicenseData,
   getShortListLicenses,
   hasFileAccessRight,
-  isSelectableLicense,
+  isCorrectLicenseForCategory,
   isSourceCodeCategory,
+  userAllowedToEditFileMetadata,
 } from '../../../utils/fileHelpers';
 import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
@@ -156,7 +157,7 @@ export const FilesTableRow = ({
 
   const canEditImportCandidateFile = userIsValidImporter(user, values);
   const canEditFile = hasFileAccessRight(file, 'write-metadata');
-  const disabledFile = !canEditFile && !canEditImportCandidateFile;
+  const disabledFile = !userAllowedToEditFileMetadata(file, canEditImportCandidateFile);
 
   const canDeleteFile = hasFileAccessRight(file, 'delete') || canEditImportCandidateFile;
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;
@@ -345,7 +346,7 @@ export const FilesTableRow = ({
                       // A file registered before this category got its own license menu, or one the user
                       // cannot edit, can hold a license the menu no longer offers.
                       const storedLicenseIsNotInMenu =
-                        !!storedLicense && !isSelectableLicense(field.value, publicationInstanceType);
+                        !!storedLicense && !isCorrectLicenseForCategory(field.value, publicationInstanceType);
 
                       return (
                         <TextField

@@ -1895,6 +1895,7 @@
         },
         "web_link": "Lenke"
       },
+      "cannot_select_category_when_file_license_is_locked": "Du kan ikke velge denne kategorien fordi resultatet har en fil du ikke kan endre, med en lisens som ikke kan brukes for den. Ta kontakt med kurator om kategorien er feil.",
       "cannot_select_degree_when_non_degree_has_open_file": "Du kan ikke velge studentoppgave når det er en åpen fil på resultatet fra før. Slett filen før du endrer kategori om kategorien er feil.",
       "cannot_select_non_degree_when_degree_has_open_file": "Du kan ikke velge annet enn studentoppgave når det er en åpen fil på gjeldende studentoppgave. Slett filen før du endrer kategori om kategorien er feil.",
       "change_registration_type": "Bytte registreringstype?",

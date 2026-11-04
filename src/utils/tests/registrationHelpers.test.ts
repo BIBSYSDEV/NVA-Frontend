@@ -1,8 +1,12 @@
 import { QueryClient } from '@tanstack/react-query';
+import { TFunction } from 'i18next';
 import { describe, expect, it } from 'vitest';
+import { AssociatedFile } from '../../types/associatedArtifact.types';
+import { LicenseUri } from '../../types/license.types';
 import { ExhibitionProductionSubtype } from '../../types/publication_types/exhibitionContent.types';
 import { MediaMedium } from '../../types/publication_types/mediaContributionRegistration.types';
 import {
+  allPublicationInstanceTypes,
   ArtisticType,
   BookType,
   ChapterType,
@@ -16,15 +20,23 @@ import {
   ReportType,
   ResearchDataType,
 } from '../../types/publicationFieldNames';
-import { ContextPublisher, PublicationChannelType, Registration } from '../../types/registration.types';
 import {
+  ContextPublisher,
+  PublicationChannelType,
+  PublicationInstanceType,
+  Registration,
+} from '../../types/registration.types';
+import {
+  getDisabledCategories,
   getFormattedRegistration,
   getPublicationChannelPublisherId,
   isPersonPublisher,
   isPublicationChannelPublisher,
   updateRegistrationQueryData,
 } from '../registration-helpers';
+import { User } from '../../types/user.types';
 import { mockRegistration } from '../testfiles/mockRegistration';
+import { buildFile, buildLockedFile } from './testHelpers';
 
 describe('getFormattedRegistration', () => {
   it('adds missing entityDescription.type and reference.type', () => {
@@ -519,3 +531,102 @@ const getPages = (result: Registration) => {
   const instance = result.entityDescription?.reference?.publicationInstance as { pages?: unknown } | undefined;
   return instance?.pages;
 };
+
+describe('getDisabledCategories', () => {
+  // NOTE! Not everything in this function is tested yet, only the newest parts
+  const translate = ((key: string) => key) as TFunction;
+  const lockedLicenseText = 'registration.resource_type.cannot_select_category_when_file_license_is_locked';
+
+  const lockedFile = (license: LicenseUri) => buildLockedFile({ license });
+
+  const editableFile = (license: LicenseUri) => buildFile({ license });
+
+  const registrationWith = (instanceType: PublicationInstanceType | undefined, ...files: AssociatedFile[]) =>
+    ({
+      entityDescription: { reference: { publicationInstance: instanceType ? { type: instanceType } : undefined } },
+      associatedArtifacts: files,
+    }) as Registration;
+
+  const categoriesLockedByLicense = (registration: Registration, user: User | null = null) =>
+    getDisabledCategories(user, null, registration, translate)
+      .filter((category) => category.text === lockedLicenseText)
+      .map((category) => category.type);
+
+  describe('the license menu rule', () => {
+    it('keeps source code holding a software license from becoming anything else', () => {
+      const result = categoriesLockedByLicense(
+        registrationWith(ResearchDataType.SoftwareSourceCode, lockedFile(LicenseUri.MIT))
+      );
+
+      expect(result).toEqual(
+        allPublicationInstanceTypes.filter((type) => type !== ResearchDataType.SoftwareSourceCode)
+      );
+    });
+
+    it('keeps a Creative Commons license from becoming source code, and leaves the rest open', () => {
+      const result = categoriesLockedByLicense(
+        registrationWith(JournalType.AcademicArticle, lockedFile(LicenseUri.CC_BY_4))
+      );
+
+      expect(result).toEqual([ResearchDataType.SoftwareSourceCode]);
+    });
+
+    it("locks categories that doesn't match the selected license", () => {
+      const result = categoriesLockedByLicense(registrationWith(undefined, lockedFile(LicenseUri.CC_BY_4)));
+
+      expect(result).toEqual([ResearchDataType.SoftwareSourceCode]);
+    });
+
+    it('disables nothing when both license menus offer the license', () => {
+      const result = categoriesLockedByLicense(
+        registrationWith(ResearchDataType.SoftwareSourceCode, lockedFile(LicenseUri.CC0))
+      );
+
+      expect(result).toEqual([]);
+    });
+
+    it('disables nothing for an internal importer on an import candidate, who may change the license anyway', () => {
+      const importCandidate = {
+        ...registrationWith(ResearchDataType.SoftwareSourceCode, lockedFile(LicenseUri.MIT)),
+        type: 'ImportCandidate',
+      } as Registration;
+
+      expect(categoriesLockedByLicense(importCandidate)).not.toEqual([]);
+      expect(categoriesLockedByLicense(importCandidate, { isInternalImporter: true } as User)).toEqual([]);
+    });
+
+    it('disables nothing when the user may change the license themselves', () => {
+      const result = categoriesLockedByLicense(
+        registrationWith(ResearchDataType.SoftwareSourceCode, editableFile(LicenseUri.MIT))
+      );
+
+      expect(result).toEqual([]);
+    });
+
+    it('disables the categories as soon as one file locks them, however many are free', () => {
+      const result = categoriesLockedByLicense(
+        registrationWith(
+          ResearchDataType.SoftwareSourceCode,
+          editableFile(LicenseUri.MIT),
+          lockedFile(LicenseUri.CC0),
+          lockedFile(LicenseUri.Apache_2_0)
+        )
+      );
+
+      expect(result).toEqual(
+        allPublicationInstanceTypes.filter((type) => type !== ResearchDataType.SoftwareSourceCode)
+      );
+    });
+
+    it('lets the degree rule explain disabled categories when both degree rule and license rule are present, since it is the harder constraint', () => {
+      const registration = registrationWith(DegreeType.Bachelor, lockedFile(LicenseUri.CC_BY_4));
+
+      const sourceCode = getDisabledCategories(null, null, registration, translate).find(
+        (category) => category.type === ResearchDataType.SoftwareSourceCode
+      );
+
+      expect(sourceCode?.text).toBe('registration.resource_type.cannot_select_non_degree_when_degree_has_open_file');
+      expect(categoriesLockedByLicense(registration)).toEqual([ResearchDataType.SoftwareSourceCode]);
+    });
+  });
+});

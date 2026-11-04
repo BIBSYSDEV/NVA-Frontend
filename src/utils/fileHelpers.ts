@@ -1,10 +1,40 @@
-import { AssociatedArtifact, AssociatedFile, FileAllowedOperation } from '../types/associatedArtifact.types';
-import { licenses, LicenseUri } from '../types/license.types';
+import { AssociatedArtifact, AssociatedFile, FileAllowedOperation, FileType } from '../types/associatedArtifact.types';
+import { LicenseInfo, licenses, LicenseUri } from '../types/license.types';
 import { ResearchDataType } from '../types/publicationFieldNames';
 
 export const hasFileAccessRight = (file: AssociatedFile, operation: FileAllowedOperation) => {
   return file.allowedOperations?.includes(operation) ?? false;
 };
+
+/**
+ * Whether the user may edit a file's metadata, which is what decides whether the form disables its fields.
+ * @param file File on the registration.
+ * @param userMayEditImportCandidateFiles Whether the user holds the internal importer role and the document is an
+ * import candidate. That is the one case where the form leaves the fields editable regardless.
+ * @returns True when the form lets the user change the file's metadata.
+ */
+export const userAllowedToEditFileMetadata = (file: AssociatedFile, userMayEditImportCandidateFiles = false) =>
+  userMayEditImportCandidateFiles || hasFileAccessRight(file, 'write-metadata');
+
+const allFileTypes: string[] = Object.values(FileType);
+
+/**
+ * Whether an artifact is a file, and so carries a license. Changing a file's availability only writes the file type,
+ * so a file that had a license while it was open still holds it as an internal file, and shows it again the moment it is made open.
+ * @param associatedArtifact Artifact on the registration, which may be a link or an empty artifact.
+ * @returns True when the artifact is a file.
+ */
+const hasLicenseField = (associatedArtifact: AssociatedArtifact): associatedArtifact is AssociatedFile =>
+  allFileTypes.includes(associatedArtifact.type);
+
+/**
+ * Whether an artifact is a file whose license the user is shown and can act on. Only the open file types show
+ * the license field; the others carry the value without rendering it.
+ * @param associatedArtifact Artifact on the registration, which may be a link or an empty artifact.
+ * @returns True when the form renders a license field for the artifact.
+ */
+const showsLicenseField = (associatedArtifact: AssociatedArtifact): associatedArtifact is AssociatedFile =>
+  associatedArtifact.type === FileType.OpenFile || associatedArtifact.type === FileType.PendingOpenFile;
 
 /**
  * Whether a string value points to a given license.
@@ -115,6 +145,24 @@ const sourceCodeAdditionalLicenses = toLicenses(sourceCodeMenu.additional);
 
 const sourceCodeHelpModalLicenses = toLicenses(sourceCodeMenu.helpModal);
 
+/** Every license the license menu offers for source code, regardless of whether the user must expand the menu to see it. */
+const sourceCodeLicenseMenu = [...sourceCodeShortListLicenses, ...sourceCodeAdditionalLicenses];
+
+/** Every license the license menu offers for all other categories, regardless of whether the user must expand the menu. */
+const creativeCommonsLicenseMenu = [...activeLicenses, ...inactiveLicenses];
+
+/**
+ * Whether a license menu offers a license.
+ * @param licenseUri Value stored in the file's license field.
+ * @param licenseMenu Licenses that menu offers.
+ * @returns True when the menu offers the license.
+ */
+const isInLicenseMenu = (licenseUri: string | null, licenseMenu: LicenseInfo[]) => {
+  const license = getLicenseData(licenseUri);
+
+  return !!license && licenseMenu.some((selectable) => selectable.id === license.id);
+};
+
 /**
  * Whether files on a registration of this category are offered the software licenses rather than the
  * Creative Commons ones.
@@ -123,6 +171,16 @@ const sourceCodeHelpModalLicenses = toLicenses(sourceCodeMenu.helpModal);
  */
 export const isSourceCodeCategory = (publicationInstanceType?: string) =>
   publicationInstanceType === ResearchDataType.SoftwareSourceCode;
+
+/**
+ * Whether two categories are offered the same license menu. Source code is offered software licenses and every
+ * other category Creative Commons ones, so only a change that crosses that boundary changes the menu.
+ * @param publicationInstanceType Category of a registration.
+ * @param otherPublicationInstanceType Category to compare it against.
+ * @returns True when both categories are offered the same license menu.
+ */
+export const hasSameLicenseMenu = (publicationInstanceType?: string, otherPublicationInstanceType?: string) =>
+  isSourceCodeCategory(publicationInstanceType) === isSourceCodeCategory(otherPublicationInstanceType);
 
 /**
  * Licenses shown by default in the license menu for a file.
@@ -151,46 +209,73 @@ export const getHelpModalLicenses = (publicationInstanceType?: string) =>
 /**
  * Whether a file's license must be cleared because the registration changed to a category whose license
  * menu no longer offers it. A file is left alone when it has no license to clear, when the user lacks
- * the right to edit it, or when the license is still offered.
- * @param associatedArtifact Artifact on the registration. Links and empty artifacts are never affected.
+ * the right to edit it, or when the license is still offered. Every file type is covered, not only the ones showing the license field.
+ * @param associatedArtifact Artifact on the registration. Only files are affected.
  * @param newPublicationInstanceType Category the registration is changing to.
- * @param userMayEditImportCandidateFiles Whether the user holds the internal importer role and the
- * document is an import candidate. Both are required: that is the one case where FilesTableRow leaves
- * the license field editable no matter what the file's own access rights say. Must keep matching how
- * that component decides to disable the field, or a license is cleared in a field the user cannot reach.
- * @returns True when the license should be cleared so the user picks a new one.
+ * @param userMayEditImportCandidateFiles Passed on to {@link userAllowedToEditFileMetadata}, so a license is never
+ * cleared in a field the user can't reach.
+ * @returns True when the license should be cleared.
  */
 export const licenseNeedsReset = (
   associatedArtifact: AssociatedArtifact,
   newPublicationInstanceType?: string,
   userMayEditImportCandidateFiles = false
 ) => {
-  // Only files carry a license, and writing an empty string over a missing license would only make the form dirty.
-  if (!('license' in associatedArtifact) || !associatedArtifact.license) {
+  if (!hasLicenseField(associatedArtifact) || !associatedArtifact.license) {
     return false;
   }
 
-  if (!userMayEditImportCandidateFiles && !hasFileAccessRight(associatedArtifact, 'write-metadata')) {
-    // Clearing a license in a field the user cannot reach would leave the registration invalid with no way to fix it
+  if (!userAllowedToEditFileMetadata(associatedArtifact, userMayEditImportCandidateFiles)) {
     return false;
   }
 
-  return !isSelectableLicense(associatedArtifact.license, newPublicationInstanceType);
+  return !isCorrectLicenseForCategory(associatedArtifact.license, newPublicationInstanceType);
+};
+
+/**
+ * Whether both license menus offer a license, so that a file carrying it survives a category change across the
+ * source code boundary.
+ * @param licenseUri Value stored in the file's license field.
+ * @returns True when the license is offered both for source code and for every other category.
+ */
+const isUniversalLicense = (licenseUri: string) =>
+  isInLicenseMenu(licenseUri, creativeCommonsLicenseMenu) && isInLicenseMenu(licenseUri, sourceCodeLicenseMenu);
+
+/**
+ * Whether a file's license stops the registration from changing to a category with the other license menu.
+ * A license only one of the two menus offers cannot survive that change. Only files showing the license field can lock the category.
+ * @param associatedArtifact Artifact on the registration. Only a file showing a license can lock the menu.
+ * @param currentPublicationInstanceType Category the registration has now.
+ * @param userMayEditImportCandidateFiles Passed on to {@link userAllowedToEditFileMetadata}.
+ * @returns True when the category cannot be changed to one with the other license menu.
+ */
+export const isLockedOnCorrectLicense = (
+  associatedArtifact: AssociatedArtifact,
+  currentPublicationInstanceType?: string,
+  userMayEditImportCandidateFiles = false
+) => {
+  if (!showsLicenseField(associatedArtifact) || !associatedArtifact.license) {
+    return false;
+  }
+
+  if (userAllowedToEditFileMetadata(associatedArtifact, userMayEditImportCandidateFiles)) {
+    return false;
+  }
+
+  return (
+    isCorrectLicenseForCategory(associatedArtifact.license, currentPublicationInstanceType) &&
+    !isUniversalLicense(associatedArtifact.license)
+  );
 };
 
 /**
  * Whether a license is offered in the license menu for a category.
  * @param licenseUri Value stored in the file's license field.
  * @param publicationInstanceType Category of the registration the file belongs to.
- * @returns True when the license appears in either menu section for that category.
+ * @returns True when that category's license menu offers the license.
  */
-export const isSelectableLicense = (licenseUri: string | null, publicationInstanceType?: string) => {
-  const license = getLicenseData(licenseUri);
-
-  return (
-    !!license &&
-    [...getShortListLicenses(publicationInstanceType), ...getAdditionalLicenses(publicationInstanceType)].some(
-      (selectable) => selectable.id === license.id
-    )
+export const isCorrectLicenseForCategory = (licenseUri: string | null, publicationInstanceType?: string) =>
+  isInLicenseMenu(
+    licenseUri,
+    isSourceCodeCategory(publicationInstanceType) ? sourceCodeLicenseMenu : creativeCommonsLicenseMenu
   );
-};
