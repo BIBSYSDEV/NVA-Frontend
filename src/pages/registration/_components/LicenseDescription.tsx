@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { OpenInNewLink } from '../../../components/OpenInNewLink';
-import { LicenseInfo } from '../../../types/license.types';
+import { getLicenseLink, LicenseInfo } from '../../../types/license.types';
 
 interface LicenseDescriptionProps {
   license: LicenseInfo;
@@ -9,7 +9,8 @@ interface LicenseDescriptionProps {
 
 /**
  * One license card in the license help modal: logo, heading, what the license permits and requires,
- * and a link to the page explaining it.
+ * and, for the licenses that have one, a link to the page explaining it. The NVA deed pages are temporarily
+ * unrouted, so the licenses they cover are shown without a link.
  *
  * The heading uses {@link LicenseInfo.shortName} when the license has one, since the modal
  * does not list the -only variants and therefore needs no version qualifier. The "read more" link
@@ -17,6 +18,7 @@ interface LicenseDescriptionProps {
  */
 export const LicenseDescription = ({ license }: LicenseDescriptionProps) => {
   const { t } = useTranslation();
+  const licenseLink = getLicenseLink(license);
 
   return (
     <div>
@@ -35,9 +37,11 @@ export const LicenseDescription = ({ license }: LicenseDescriptionProps) => {
           li: <li />,
         }}
       />
-      <OpenInNewLink href={license.link}>
-        {t('licenses.read_more_about_license', { license: license.name })}
-      </OpenInNewLink>
+      {licenseLink && (
+        <OpenInNewLink href={licenseLink}>
+          {t('licenses.read_more_about_license', { license: license.name })}
+        </OpenInNewLink>
+      )}
       {license.additionalInformation && (
         <Trans
           t={t}

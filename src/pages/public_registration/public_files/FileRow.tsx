@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { downloadRegistrationFile } from '../../../api/fileApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
+import { getLicenseLink } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { getLicenseData, hasFileAccessRight } from '../../../utils/fileHelpers';
@@ -137,13 +138,10 @@ export const FileRow = ({
         </Typography>
       )}
 
-      {isOpenableFile && licenseData && (
-        <Link
-          href={licenseData.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{ gridArea: 'license', maxHeight: '3rem' }}>
-          {licenseData.logo ? (
+      {isOpenableFile &&
+        licenseData &&
+        (() => {
+          const licenseMark = licenseData.logo ? (
             <Box
               component="img"
               alt={licenseTitle}
@@ -154,9 +152,23 @@ export const FileRow = ({
             />
           ) : (
             <span data-testid={dataTestId.registrationLandingPage.license}>{licenseTitle}</span>
-          )}
-        </Link>
-      )}
+          );
+
+          // Prevents linking temporarily unrouted NVA deeds
+          const licenseLink = getLicenseLink(licenseData);
+
+          return licenseLink ? (
+            <Link
+              href={licenseLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ gridArea: 'license', maxHeight: '3rem' }}>
+              {licenseMark}
+            </Link>
+          ) : (
+            <Box sx={{ gridArea: 'license', maxHeight: '3rem' }}>{licenseMark}</Box>
+          );
+        })()}
 
       <Box sx={{ gridArea: 'download' }}>
         {file.embargoDate && fileIsEmbargoed ? (

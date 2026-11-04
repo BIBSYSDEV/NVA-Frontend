@@ -108,7 +108,7 @@ const publicPageTemplates = [
   UrlPathTemplate.ProjectsRoot,
   UrlPathTemplate.ProjectPage,
   UrlPathTemplate.RegistrationLandingPage,
-  UrlPathTemplate.LicenseDeed,
+  // UrlPathTemplate.LicenseDeed belongs here, but is left out while the deed pages are unrouted.
 ];
 
 // Protected routes whose paths are also matched by a broader public template and must therefore

@@ -39,7 +39,6 @@ const SerialPublicationClaimsSettings = lazy(() => import('./pages/editor/Serial
 const EditorPage = lazy(() => import('./pages/institution/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const CopyrightActTerms = lazy(() => import('./pages/infopages/CopyrightActTerms'));
-const LicenseDeedPage = lazy(() => import('./pages/license/LicenseDeedPage'));
 const CreateProject = lazy(() => import('./pages/project/project_wizard/CreateProject'));
 const EditProject = lazy(() => import('./pages/project/project_wizard/EditProject'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
@@ -96,8 +95,9 @@ export const AppRoutes = () => {
           <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<ClinicalTreatmentStudiesReports />} />
         </Route>
 
+        {/* The license deed pages are temporarily unrouted. LicenseDeedPage and its configuration stay in
+            the repo; restoring the pages means routing UrlPathTemplate.LicenseDeed here again. */}
         <Route path={UrlPathTemplate.CopyrightAct} element={<CopyrightActTerms />} />
-        <Route path={UrlPathTemplate.LicenseDeed} element={<LicenseDeedPage />} />
         <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
         <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
         <Route path={UrlPathTemplate.ProjectPage} element={<ProjectPage />} />
