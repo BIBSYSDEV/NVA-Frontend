@@ -13,15 +13,27 @@ export const hasFileAccessRight = (file: AssociatedFile, operation: FileAllowedO
  * import candidate. That is the one case where the form leaves the fields editable regardless.
  * @returns True when the form lets the user change the file's metadata.
  */
-export const userMayEditFileMetadata = (file: AssociatedFile, userMayEditImportCandidateFiles = false) =>
+export const userAllowedToEditFileMetadata = (file: AssociatedFile, userMayEditImportCandidateFiles = false) =>
   userMayEditImportCandidateFiles || hasFileAccessRight(file, 'write-metadata');
 
+const allFileTypes: string[] = Object.values(FileType);
+
 /**
- * Whether an artifact is a file of a type that carries a license.
+ * Whether an artifact is a file, and so carries a license. Changing a file's availability only writes the file type,
+ * so a file that had a license while it was open still holds it as an internal file, and shows it again the moment it is made open.
  * @param associatedArtifact Artifact on the registration, which may be a link or an empty artifact.
- * @returns True when the artifact is a file whose license the user is shown and can act on.
+ * @returns True when the artifact is a file.
  */
 const hasLicenseField = (associatedArtifact: AssociatedArtifact): associatedArtifact is AssociatedFile =>
+  allFileTypes.includes(associatedArtifact.type);
+
+/**
+ * Whether an artifact is a file whose license the user is shown and can act on. Only the open file types show
+ * the license field; the others carry the value without rendering it.
+ * @param associatedArtifact Artifact on the registration, which may be a link or an empty artifact.
+ * @returns True when the form renders a license field for the artifact.
+ */
+const showsLicenseField = (associatedArtifact: AssociatedArtifact): associatedArtifact is AssociatedFile =>
   associatedArtifact.type === FileType.OpenFile || associatedArtifact.type === FileType.PendingOpenFile;
 
 /**
@@ -197,10 +209,10 @@ export const getHelpModalLicenses = (publicationInstanceType?: string) =>
 /**
  * Whether a file's license must be cleared because the registration changed to a category whose license
  * menu no longer offers it. A file is left alone when it has no license to clear, when the user lacks
- * the right to edit it, or when the license is still offered.
- * @param associatedArtifact Artifact on the registration. Only a file with a license field is affected.
+ * the right to edit it, or when the license is still offered. Every file type is covered, not only the ones showing the license field.
+ * @param associatedArtifact Artifact on the registration. Only files are affected.
  * @param newPublicationInstanceType Category the registration is changing to.
- * @param userMayEditImportCandidateFiles Passed on to {@link userMayEditFileMetadata}, so a license is never
+ * @param userMayEditImportCandidateFiles Passed on to {@link userAllowedToEditFileMetadata}, so a license is never
  * cleared in a field the user can't reach.
  * @returns True when the license should be cleared.
  */
@@ -213,7 +225,7 @@ export const licenseNeedsReset = (
     return false;
   }
 
-  if (!userMayEditFileMetadata(associatedArtifact, userMayEditImportCandidateFiles)) {
+  if (!userAllowedToEditFileMetadata(associatedArtifact, userMayEditImportCandidateFiles)) {
     return false;
   }
 
@@ -231,11 +243,10 @@ const isUniversalLicense = (licenseUri: string) =>
 
 /**
  * Whether a file's license stops the registration from changing to a category with the other license menu.
- * A license only one of the two menus offers cannot survive that change.
- *
- * @param associatedArtifact Artifact on the registration. Only a file with a license field can lock the menu.
+ * A license only one of the two menus offers cannot survive that change. Only files showing the license field can lock the category.
+ * @param associatedArtifact Artifact on the registration. Only a file showing a license can lock the menu.
  * @param currentPublicationInstanceType Category the registration has now.
- * @param userMayEditImportCandidateFiles Passed on to {@link userMayEditFileMetadata}.
+ * @param userMayEditImportCandidateFiles Passed on to {@link userAllowedToEditFileMetadata}.
  * @returns True when the category cannot be changed to one with the other license menu.
  */
 export const isLockedOnCorrectLicense = (
@@ -243,11 +254,11 @@ export const isLockedOnCorrectLicense = (
   currentPublicationInstanceType?: string,
   userMayEditImportCandidateFiles = false
 ) => {
-  if (!hasLicenseField(associatedArtifact) || !associatedArtifact.license) {
+  if (!showsLicenseField(associatedArtifact) || !associatedArtifact.license) {
     return false;
   }
 
-  if (userMayEditFileMetadata(associatedArtifact, userMayEditImportCandidateFiles)) {
+  if (userAllowedToEditFileMetadata(associatedArtifact, userMayEditImportCandidateFiles)) {
     return false;
   }
 

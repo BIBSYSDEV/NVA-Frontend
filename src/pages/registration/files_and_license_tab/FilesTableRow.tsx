@@ -56,7 +56,7 @@ import {
   hasFileAccessRight,
   isCorrectLicenseForCategory,
   isSourceCodeCategory,
-  userMayEditFileMetadata,
+  userAllowedToEditFileMetadata,
 } from '../../../utils/fileHelpers';
 import { isOpenFile, isPendingOpenFile, userIsValidImporter } from '../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
@@ -157,7 +157,7 @@ export const FilesTableRow = ({
 
   const canEditImportCandidateFile = userIsValidImporter(user, values);
   const canEditFile = hasFileAccessRight(file, 'write-metadata');
-  const disabledFile = !userMayEditFileMetadata(file, canEditImportCandidateFile);
+  const disabledFile = !userAllowedToEditFileMetadata(file, canEditImportCandidateFile);
 
   const canDeleteFile = hasFileAccessRight(file, 'delete') || canEditImportCandidateFile;
   const canDownloadFile = hasFileAccessRight(file, 'download') || canEditImportCandidateFile;

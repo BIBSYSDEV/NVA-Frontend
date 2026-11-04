@@ -11,7 +11,7 @@ import {
   isCorrectLicenseForCategory,
   isLockedOnCorrectLicense,
   licenseNeedsReset,
-  userMayEditFileMetadata,
+  userAllowedToEditFileMetadata,
 } from '../fileHelpers';
 import { buildFile, buildLockedFile } from './testHelpers';
 
@@ -218,16 +218,16 @@ describe('userMayEditFileMetadata()', () => {
   const fileWith = (...allowedOperations: FileAllowedOperation[]) => buildFile({ allowedOperations });
 
   test('Lets a user with write access edit the file', () => {
-    expect(userMayEditFileMetadata(fileWith('write-metadata'))).toBe(true);
+    expect(userAllowedToEditFileMetadata(fileWith('write-metadata'))).toBe(true);
   });
 
   test('Keeps a user without write access out', () => {
-    expect(userMayEditFileMetadata(fileWith('download'))).toBe(false);
-    expect(userMayEditFileMetadata(buildFile({ allowedOperations: undefined }))).toBe(false);
+    expect(userAllowedToEditFileMetadata(fileWith('download'))).toBe(false);
+    expect(userAllowedToEditFileMetadata(buildFile({ allowedOperations: undefined }))).toBe(false);
   });
 
   test('Lets an importer edit an import candidate file whatever its access rights say', () => {
-    expect(userMayEditFileMetadata(fileWith('download'), true)).toBe(true);
+    expect(userAllowedToEditFileMetadata(fileWith('download'), true)).toBe(true);
   });
 });
 
@@ -264,14 +264,17 @@ describe('licenseNeedsReset()', () => {
     expect(licenseNeedsReset(fileWithoutOperations, ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
 
-  test.each([FileType.RejectedFile, FileType.InternalFile, FileType.HiddenFile])(
-    'Keeps a license on a %s, which the form shows no license field for',
-    (type) => {
-      const file = buildFile({ type, license: LicenseUri.CC_BY_4 });
+  test.each([
+    FileType.RejectedFile,
+    FileType.InternalFile,
+    FileType.PendingInternalFile,
+    FileType.HiddenFile,
+    FileType.UpdloadedFile,
+  ])('Clears a license on a %s, even though the form shows no license field for it', (type) => {
+    const file = buildFile({ type, license: LicenseUri.CC_BY_4 });
 
-      expect(licenseNeedsReset(file, ResearchDataType.SoftwareSourceCode)).toBe(false);
-    }
-  );
+    expect(licenseNeedsReset(file, ResearchDataType.SoftwareSourceCode)).toBe(true);
+  });
 
   test('Leaves a file without a license untouched, so null is not overwritten with an empty string', () => {
     expect(licenseNeedsReset(editableFile(null), ResearchDataType.SoftwareSourceCode)).toBe(false);
@@ -314,6 +317,18 @@ describe('isLockedOnCorrectLicense()', () => {
   test('Category change is not prohibited for files without a license', () => {
     expect(isLockedOnCorrectLicense(lockedFile(null), JournalType.AcademicArticle)).toBe(false);
     expect(isLockedOnCorrectLicense(lockedFile(''), JournalType.AcademicArticle)).toBe(false);
+  });
+
+  test.each([
+    FileType.RejectedFile,
+    FileType.InternalFile,
+    FileType.PendingInternalFile,
+    FileType.HiddenFile,
+    FileType.UpdloadedFile,
+  ])('Category change is not prohibited by a %s, which shows no license field to be locked on', (type) => {
+    const file = buildLockedFile({ type, license: LicenseUri.MIT });
+
+    expect(isLockedOnCorrectLicense(file, ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
 
   test('Category change is not prohibited for artifacts that are not files', () => {
