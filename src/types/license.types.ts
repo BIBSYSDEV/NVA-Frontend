@@ -86,6 +86,20 @@ export interface LicenseInfo {
   shortName?: string;
 }
 
+const licenseDeedPaths: string[] = Object.values(LicenseDeedSlug).map(getLicenseDeedPath);
+
+/**
+ * The page to link to for a license, or undefined when that page is an NVA deed.
+ *
+ * Temporary: the deed pages stay in the repo with their configuration, but
+ * {@link UrlPathTemplate.LicenseDeed} is no longer routed, so linking to one would lead nowhere. Restoring the pages
+ * means routing them again and dropping this function.
+ * @param license License being shown.
+ * @returns The link, or undefined for a license whose page is a deed.
+ */
+export const getLicenseLink = (license: LicenseInfo) =>
+  licenseDeedPaths.includes(license.link) ? undefined : license.link;
+
 export const licenses: LicenseInfo[] = [
   {
     id: LicenseUri.CC_BY_4,
