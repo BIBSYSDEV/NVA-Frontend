@@ -51,7 +51,7 @@ import {
 } from '../../../types/publicationFieldNames';
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { isSourceCodeCategory, licenseNeedsReset } from '../../../utils/fileHelpers';
+import { hasSameLicenseMenu, licenseNeedsReset } from '../../../utils/fileHelpers';
 import {
   getDisabledCategories,
   getMainRegistrationType,
@@ -268,13 +268,8 @@ export const SelectRegistrationTypeField = () => {
           setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType }, false);
           break;
       }
-      // Source code is offered software licenses and every other category Creative Commons ones, so the
-      // menu only changes when we cross that boundary. A license picked before the change is then no
-      // longer offered, and clearing it makes the user pick again instead of leaving a value the menu
-      // cannot show.
-      const licenseMenuChanged = isSourceCodeCategory(currentInstanceType) !== isSourceCodeCategory(newInstanceType);
-
-      if (licenseMenuChanged) {
+      // A license picked before the change may no longer be offered, and clearing it makes the user pick again
+      if (!hasSameLicenseMenu(currentInstanceType, newInstanceType)) {
         const userMayEditImportCandidateFiles = userIsValidImporter(user, values);
 
         values.associatedArtifacts.forEach((associatedArtifact, index) => {
