@@ -47,7 +47,7 @@
     "@mui/lab": "9.0.0-beta.10",
     "@mui/material": "9.5.0",
     "@mui/utils": "9.5.0",
-    "@mui/x-date-pickers": "9.15.0",
+    "@mui/x-date-pickers": "9.16.0",
     "@reduxjs/toolkit": "2.13.0",
     "@tanstack/react-query": "5.104.4",
     "@uppy/aws-s3": "5.1.0",
