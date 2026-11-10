@@ -2,7 +2,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import { describe, expect, test } from 'vitest';
 import { page } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
-import { colorContrastRuleId, expectNoA11yViolations } from './a11y';
+import { expectNoA11yViolations, getViolationSummary } from './a11y';
 
 const transparentImage = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 const sectionName = 'Content';
@@ -13,7 +13,10 @@ const smallTargetStyle = { width: 10, height: 10, padding: 0, margin: 0, border:
 const firstSmallButtonLabel = 'Previous';
 const secondSmallButtonLabel = 'Next';
 const imageAltRuleId = 'image-alt';
+const colorContrastRuleId = 'color-contrast';
 const imageAltHelpUrlPattern = new RegExp(`https://dequeuniversity\\.com/rules/axe/[\\d.]+/${imageAltRuleId}`);
+
+const getSection = () => page.getByRole('region', { name: sectionName });
 
 const getFailureMessage = async (check: Promise<void>) => {
   try {
@@ -37,7 +40,7 @@ describe('expectNoA11yViolations', () => {
 
     const message = await getFailureMessage(expectNoA11yViolations());
 
-    expect(message).toContain('Found 1 accessibility violation(s)');
+    expect(message).toContain(getViolationSummary(1));
     expect(message).toContain(`${imageAltRuleId} (critical)`);
     expect(message).toMatch(imageAltHelpUrlPattern);
     expect(message).toContain('#logo');
@@ -82,7 +85,7 @@ describe('expectNoA11yViolations', () => {
       </>
     );
 
-    await expectNoA11yViolations(page.getByRole('region', { name: sectionName }));
+    await expectNoA11yViolations(getSection());
   });
 
   test('finds violations inside the given container', async () => {
@@ -93,7 +96,7 @@ describe('expectNoA11yViolations', () => {
       </section>
     );
 
-    const message = await getFailureMessage(expectNoA11yViolations(page.getByRole('region', { name: sectionName })));
+    const message = await getFailureMessage(expectNoA11yViolations(getSection()));
 
     expect(message).toContain(imageAltRuleId);
   });
