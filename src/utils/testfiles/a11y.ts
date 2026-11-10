@@ -9,11 +9,15 @@ export const getViolationSummary = (count: number) => `Found ${count} accessibil
 
 interface A11yCheckOptions {
   /**
-   * Turns rules on or off for this check only, like `{ 'color-contrast': { enabled: false } }`.
-   * Every override needs a comment explaining why the exception is acceptable.
+   * axe rules to skip in this call only, like `['color-contrast']`.
+   * The rule IDs are shown in the failure message and listed at https://dequeuniversity.com/rules/axe/.
+   * Only skip a rule for a known exception, and add a comment explaining why.
    */
-  rules?: RunOptions['rules'];
+  skippedRules?: string[];
 }
+
+const toDisabledRules = (ruleIds: string[]): RunOptions['rules'] =>
+  Object.fromEntries(ruleIds.map((ruleId) => [ruleId, { enabled: false }]));
 
 /**
  * Formats a violation as its rule ID, impact and help text,
@@ -55,7 +59,7 @@ export const expectNoA11yViolations = async (
   const element = container instanceof Element ? container : container.element();
   const { violations } = await axe.run(element, {
     runOnly: { type: 'tag', values: wcagTags },
-    rules: options.rules,
+    rules: toDisabledRules(options.skippedRules ?? []),
   });
 
   if (violations.length > 0) {

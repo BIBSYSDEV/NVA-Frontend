@@ -67,11 +67,11 @@ describe('expectNoA11yViolations', () => {
     expect(message).toContain('target-size');
   });
 
-  test('skips rules that are turned off for the check', async () => {
+  test('skips the given rules for the check', async () => {
     await render(<p style={lowContrastStyle}>{lowContrastText}</p>);
 
-    // NOTE: Turned off to test the override itself
-    await expectNoA11yViolations(document.body, { rules: { [colorContrastRuleId]: { enabled: false } } });
+    // NOTE: Skipped to test the option itself
+    await expectNoA11yViolations(document.body, { skippedRules: [colorContrastRuleId] });
   });
 
   test('only checks inside the given container', async () => {

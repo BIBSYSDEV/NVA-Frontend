@@ -111,8 +111,7 @@ transitions to finish, but not for content to render.
 - `expectNoA11yViolations(container?, options?)` runs [axe-core](https://github.com/dequelabs/axe-core) with the WCAG
   2.2 A and AA rules, including color contrast, and fails with a list of the violations. Checks that axe can't decide,
   like contrast on background images, are not reported. It checks the whole document unless you pass a container. To
-  turn off a rule for one check, pass `{ rules: { '<rule-id>': { enabled: false } } }` and add a comment explaining
-  why. WCAG 2.2 includes `target-size`, which requires click targets of at least 24×24 px or enough space around them.
+  skip a rule for one check, pass `{ skippedRules: ['<rule-id>'] }` and add a comment explaining why. WCAG 2.2 includes `target-size`, which requires click targets of at least 24×24 px or enough space around them.
   Small icon buttons placed close together often fail it, so fix the component rather than turning the rule off.
 - `expectTabOrder(elements)` checks that Tab moves focus through the elements in the given order.
 - `expectFocusWithin(container)` checks that focus moves into a dialog or popover when it opens.
