@@ -2,7 +2,7 @@ import { afterAll, afterEach, beforeAll } from 'vitest';
 import { server } from './server';
 
 beforeAll(() => {
-  server.listen({ onUnhandledRequest: 'error' });
+  server.listen({ onUnhandledFrame: 'error' });
 });
 
 // NOTE: A test may add a handler of its own with server.use(). Without this reset that handler would still be in place
