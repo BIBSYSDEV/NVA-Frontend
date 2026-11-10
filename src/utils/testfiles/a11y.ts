@@ -23,6 +23,18 @@ const formatViolation = (violation: Result) => {
   return [heading, `  ${violation.helpUrl}`, ...selectors].join('\n');
 };
 
+const hasEnd = (animation: Animation) => animation.effect?.getComputedTiming().endTime !== Infinity;
+
+/**
+ * Waits for running CSS transitions and animations to finish. Infinite ones, like spinners, are skipped.
+ */
+const waitForAnimationsToFinish = async () => {
+  // NOTE: Wait one frame first, so transitions triggered by the last state change have started
+  await new Promise(requestAnimationFrame);
+  const finiteAnimations = document.getAnimations().filter(hasEnd);
+  await Promise.allSettled(finiteAnimations.map((animation) => animation.finished));
+};
+
 /**
  * Runs axe-core on the container, or on the whole document by default, and fails on any WCAG 2.1 A or AA violation.
  * Color contrast is included, since the tests run in a real browser.
@@ -32,6 +44,8 @@ export const expectNoA11yViolations = async (
   container: Locator | Element = document.body,
   options: A11yCheckOptions = {}
 ) => {
+  // NOTE: axe skips elements with opacity 0, so content that is still fading in, like an opening MUI dialog, would pass
+  await waitForAnimationsToFinish();
   const element = container instanceof Element ? container : container.element();
   const { violations } = await axe.run(element, {
     runOnly: { type: 'tag', values: wcag21AaTags },

@@ -1,3 +1,4 @@
+import { Dialog, DialogContent } from '@mui/material';
 import { describe, expect, test } from 'vitest';
 import { page } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
@@ -79,5 +80,19 @@ describe('expectNoA11yViolations', () => {
     const message = await getFailureMessage(expectNoA11yViolations(page.getByRole('region', { name: sectionName })));
 
     expect(message).toContain(imageAltRuleId);
+  });
+
+  test('waits for a dialog to fade in before checking it', async () => {
+    await render(
+      <Dialog open>
+        <DialogContent>
+          <p style={lowContrastStyle}>{lowContrastText}</p>
+        </DialogContent>
+      </Dialog>
+    );
+
+    const message = await getFailureMessage(expectNoA11yViolations(page.getByRole('dialog')));
+
+    expect(message).toContain(colorContrastRuleId);
   });
 });
