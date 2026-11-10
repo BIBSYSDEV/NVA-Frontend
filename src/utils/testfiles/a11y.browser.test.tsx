@@ -9,6 +9,9 @@ const sectionName = 'Content';
 const saveText = 'Save';
 const lowContrastStyle = { color: '#999999', backgroundColor: '#ffffff' };
 const lowContrastText = 'Low contrast';
+const smallTargetStyle = { width: 10, height: 10, padding: 0, margin: 0, border: 0 };
+const firstSmallButtonLabel = 'Previous';
+const secondSmallButtonLabel = 'Next';
 const imageAltRuleId = 'image-alt';
 const imageAltHelpUrlPattern = new RegExp(`https://dequeuniversity\\.com/rules/axe/[\\d.]+/${imageAltRuleId}`);
 
@@ -46,6 +49,19 @@ describe('expectNoA11yViolations', () => {
     const message = await getFailureMessage(expectNoA11yViolations());
 
     expect(message).toContain(`${colorContrastRuleId} (serious)`);
+  });
+
+  test('fails on targets smaller than 24 by 24 pixels that are close together (WCAG 2.2)', async () => {
+    await render(
+      <>
+        <button aria-label={firstSmallButtonLabel} style={smallTargetStyle} />
+        <button aria-label={secondSmallButtonLabel} style={smallTargetStyle} />
+      </>
+    );
+
+    const message = await getFailureMessage(expectNoA11yViolations());
+
+    expect(message).toContain('target-size');
   });
 
   test('skips rules that are turned off for the check', async () => {

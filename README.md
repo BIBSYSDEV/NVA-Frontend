@@ -109,7 +109,7 @@ Browser tests of components should check accessibility with the helpers in `src/
 `expectTabOrder` and `expectNoA11yViolations` check the current state immediately.
 
 - `expectNoA11yViolations(container?, options?)` runs [axe-core](https://github.com/dequelabs/axe-core) with the WCAG
-  2.1 A and AA rules, including color contrast, and fails with a list of the violations. It checks the whole document
+  2.2 A and AA rules, including color contrast, and fails with a list of the violations. It checks the whole document
   unless you pass a container. To turn off a rule for one check, pass `{ rules: { '<rule-id>': { enabled: false } } }`
   and add a comment explaining why.
 - `expectTabOrder(elements)` checks that Tab moves focus through the elements in the given order.
