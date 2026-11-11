@@ -76,6 +76,7 @@ export enum UrlPathTemplate {
   ReportsClinicalTreatmentStudies = '/reports/clinical-treatment-studies',
   ReportsInternationalCooperation = '/reports/international-cooperation',
   ReportsNvi = '/reports/nvi',
+  ReportsStatic = '/reports/:reportName',
   Search = '/search',
   SignedOut = '/signed-out',
   Tasks = '/tasks',
@@ -90,6 +91,19 @@ export enum UrlPathTemplate {
   TasksResultRegistrations = '/tasks/result-registrations',
   Wildcard = '*',
 }
+
+// Maps report names used in the URL to the file names served by CloudFront
+export const staticReportFileNames = {
+  'nvi-categories': 'nvi-kategoriar',
+  'nvi-reporting': 'nvi-rapportering',
+  'ten-year-series': 'tiaarsserien',
+  'gender-and-age': 'kjonnsbalanse',
+};
+
+export type StaticReportName = keyof typeof staticReportFileNames;
+
+export const getStaticReportPath = (reportName: StaticReportName) =>
+  UrlPathTemplate.ReportsStatic.replace(':reportName', reportName);
 
 export const getSubUrl = (path: UrlPathTemplate, basePath: UrlPathTemplate, splashRoute = false) => {
   return `${path.replace(basePath, '')}${splashRoute ? '/*' : ''}`;

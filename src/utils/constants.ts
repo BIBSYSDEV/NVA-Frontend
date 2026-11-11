@@ -14,6 +14,8 @@ const apiHostUrlObject = apiHostEnv
   : '';
 export const API_URL = apiHostUrlObject.toString();
 
+export const STATIC_REPORTS_URL = import.meta.env.VITE_STATIC_REPORTS_URL;
+
 export const hrcsActivityBaseId = 'https://nva.unit.no/hrcs/activity';
 export const hrcsCategoryBaseId = 'https://nva.unit.no/hrcs/category';
 
