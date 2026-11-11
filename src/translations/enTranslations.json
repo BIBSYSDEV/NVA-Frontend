@@ -632,6 +632,7 @@
       "get_vocabularies": "Failed to retrieve controlled vocabularies",
       "login_failed": "Log in failed",
       "login_failed_try_bankid": "Log in failed. Try logging in with BankID instead.",
+      "login_not_completed": "Log in could not be completed. Please try again later.",
       "orcid_login": "ORCID login failed",
       "person_search": "Search for person failed",
       "profile_picture_invalid_type": "",
