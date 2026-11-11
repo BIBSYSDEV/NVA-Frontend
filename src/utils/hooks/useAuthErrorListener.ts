@@ -7,7 +7,6 @@ import { redirectToSignedOut } from '../../api/authApi';
 import { setNotification } from '../../redux/notificationSlice';
 import { logoutSuccess } from '../../redux/userSlice';
 import { getLoginErrorMessageKey, refreshErrorEndsSession } from '../auth-error-helpers';
-import { LocalStorageKey } from '../constants';
 
 const cancelledLoginMessage = 'User cancelled OAuth flow';
 
@@ -34,8 +33,6 @@ export const useAuthErrorListener = () => {
 
     return Hub.listen('auth', ({ payload }) => {
       if (payload.event === 'signInWithRedirect_failure') {
-        // The page that asked for the login cannot be shown without it
-        localStorage.removeItem(LocalStorageKey.RedirectPath);
         setLoginFailed(true);
         const errorMessage = payload.data.error?.message;
         if (!errorMessage?.includes(cancelledLoginMessage)) {
