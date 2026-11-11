@@ -28,6 +28,7 @@ const unitTestFilesGlob = 'src/**/*.test.ts';
 const typeDeclarationFilesGlob = 'src/**/*.d.ts';
 const typesFolderGlob = 'src/types/**';
 const cypressFilesGlob = 'cypress/**';
+const testUtilsFolderGlob = 'src/test-utils/**';
 const testFilesFolder = 'src/utils/testfiles';
 const entryFile = 'src/index.tsx';
 
@@ -69,7 +70,14 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text-summary', 'html', 'lcov', 'json-summary'],
       include: [sourceFilesGlob],
-      exclude: [testFilesGlob, typeDeclarationFilesGlob, typesFolderGlob, `${testFilesFolder}/**`, entryFile],
+      exclude: [
+        testFilesGlob,
+        typeDeclarationFilesGlob,
+        typesFolderGlob,
+        testUtilsFolderGlob,
+        `${testFilesFolder}/**`,
+        entryFile,
+      ],
     },
     projects: [
       {
