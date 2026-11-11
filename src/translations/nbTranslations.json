@@ -632,6 +632,7 @@
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
       "login_failed": "Innlogging feilet",
       "login_failed_try_bankid": "Innlogging feilet. Prøv å logg inn med BankID i stedet.",
+      "login_not_completed": "Innloggingen kunne ikke fullføres. Prøv igjen senere.",
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "person_search": "Søk etter person feilet",
       "profile_picture_invalid_type": "Ugyldig filtype. Kun .jpg og .jpeg støttes.",
