@@ -7,7 +7,7 @@ import {
   RoleName,
   User,
   UserRole,
-} from '../../types/user.types';
+} from '../../../types/user.types';
 
 /**
  * Builds a user whose `is*` role flags are consistent with its `roles` and `customerId`, the way the app derives them

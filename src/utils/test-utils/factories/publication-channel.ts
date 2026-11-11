@@ -1,4 +1,4 @@
-import { Publisher, SerialPublication } from '../../types/registration.types';
+import { Publisher, SerialPublication } from '../../../types/registration.types';
 
 const makeSerialPublication = (
   type: SerialPublication['type'],

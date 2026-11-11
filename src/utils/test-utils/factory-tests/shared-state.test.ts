@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { emptyJournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
+import { emptyJournalPublicationInstance } from '../../../types/publication_types/journalRegistration.types';
 import { makeContributor } from '../factories/contributor';
 import { makeCustomerInstitution } from '../factories/customer-institution';
 import { makeImportCandidateSummary } from '../factories/import-candidate';

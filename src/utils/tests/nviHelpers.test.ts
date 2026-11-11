@@ -7,8 +7,8 @@ import { BookRegistration } from '../../types/publication_types/bookRegistration
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { PublicationChannelType } from '../../types/registration.types';
 import { getDefaultNviYear, getSelectableYears, willResetNviStatuses } from '../nviHelpers';
+import { makeContributor, makeIdentity } from '../test-utils/factories/contributor';
 import { mockRegistration } from '../testfiles/mockRegistration';
-import { makeContributor, makeIdentity } from '../../test-utils/factories/contributor';
 
 const nviRegistration = structuredClone(mockRegistration);
 

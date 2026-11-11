@@ -1,5 +1,5 @@
-import { AggregationValue, SearchResponse, SearchResponse2 } from '../../types/common.types';
-import { RegistrationSearchItem, RegistrationStatus } from '../../types/registration.types';
+import { AggregationValue, SearchResponse, SearchResponse2 } from '../../../types/common.types';
+import { RegistrationSearchItem, RegistrationStatus } from '../../../types/registration.types';
 
 /**
  * Builds a search response. `size` defaults to the number of hits, which is what a test wants unless it is about

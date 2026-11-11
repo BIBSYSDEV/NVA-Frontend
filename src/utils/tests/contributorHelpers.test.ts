@@ -9,7 +9,7 @@ import {
   moveContributorToSequence,
   renumberSequences,
 } from '../contributor-helpers';
-import { makeContributor, makeIdentity } from '../../test-utils/factories/contributor';
+import { makeContributor, makeIdentity } from '../test-utils/factories/contributor';
 
 const personId = 'https://api.test.nva.aws.unit.no/cristin/person/1234';
 const otherPersonId = 'https://api.test.nva.aws.unit.no/cristin/person/5678';

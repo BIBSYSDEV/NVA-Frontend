@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
+import { RoleName, UserRole } from '../../types/user.types';
+import { makeCristinPerson, makeCristinPersonAffiliation, makeEmployment } from '../test-utils/factories/user';
 import {
   checkIfPersonHasNationalIdentificationNumber,
   findFirstEmploymentThatMatchesAnActiveAffiliation,
   getEmployments,
   sanitizeRolesForEmbargoConstraint,
 } from '../user-helpers';
-import { RoleName, UserRole } from '../../types/user.types';
-import { makeCristinPerson, makeCristinPersonAffiliation, makeEmployment } from '../../test-utils/factories/user';
 
 describe('getEmployments', () => {
   const topOrgCristinId = '123.0.0.0';

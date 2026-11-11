@@ -1,4 +1,4 @@
-import { emptyRegistration, Registration } from '../../types/registration.types';
+import { emptyRegistration, Registration } from '../../../types/registration.types';
 
 /**
  * Builds a valid registration empty registration base values.
