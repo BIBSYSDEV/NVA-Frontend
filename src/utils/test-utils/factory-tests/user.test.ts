@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { RoleName } from '../../types/user.types';
+import { RoleName } from '../../../types/user.types';
 import { makeUser } from '../factories/user';
 
 describe('makeUser', () => {

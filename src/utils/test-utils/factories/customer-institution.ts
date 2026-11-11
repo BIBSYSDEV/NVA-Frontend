@@ -1,4 +1,4 @@
-import { CustomerInstitution, DoiAgent, emptyCustomerInstitution } from '../../types/customerInstitution.types';
+import { CustomerInstitution, DoiAgent, emptyCustomerInstitution } from '../../../types/customerInstitution.types';
 
 export const makeDoiAgent = (overrides: Partial<DoiAgent> = {}): DoiAgent => ({
   id: '',

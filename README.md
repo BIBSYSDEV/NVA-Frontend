@@ -95,8 +95,32 @@ of the `engines` field in `package.json`, so use Node 24.
 
 When a browser test fails, a screenshot is saved to `.vitest/attachments/`.
 
+Without a `timeout` option, a failing `expect.element` keeps retrying until the test itself times out (15 seconds). Tests
+that are expected to fail, such as tests of test helpers, should set a short test timeout.
+
 Every run logs the warning `Plugin "vitest:mocks:interceptor" defines Vite-specific hooks…`. It comes from Vitest itself
 and can be ignored.
+
+#### Accessibility and keyboard tests
+
+Browser tests of components should check accessibility with the helpers in `src/utils/testfiles/a11y.ts` and
+`src/utils/testfiles/keyboardFocus.ts`. All helpers are async and must be awaited after the component is rendered.
+The keyboard and focus helpers wait for the UI to settle. `expectNoA11yViolations` waits for running CSS animations and
+transitions to finish, but not for content to render.
+
+- `expectNoA11yViolations(container?, options?)` runs [axe-core](https://github.com/dequelabs/axe-core) with the WCAG
+  2.2 A and AA rules, including color contrast, and fails with a list of the violations. Checks that axe can't decide,
+  like contrast on background images, are not reported. It checks the whole document unless you pass a container. To
+  skip a rule for one check, pass `{ skippedRules: ['<rule-id>'] }` and add a comment explaining why. WCAG 2.2 includes `target-size`, which requires click targets of at least 24×24 px or enough space around them.
+  Small icon buttons placed close together often fail it, so fix the component rather than turning the rule off.
+- `expectTabOrder(elements)` checks that Tab moves focus through the elements in the given order.
+- `expectFocusWithin(container)` checks that focus moves into a dialog or popover when it opens.
+- `expectFocusTrapped(container)` checks that Tab and Shift+Tab never move focus out of a modal dialog.
+- `expectEscapeToCloseAndRestoreFocus(popup, trigger)` presses Escape and checks that the dialog, menu or popover
+  closes and that focus returns to the trigger.
+
+`src/utils/testfiles/a11y.browser.test.tsx` shows how to use `expectNoA11yViolations`, and
+`src/utils/testfiles/keyboardFocus.browser.test.tsx` shows the full keyboard pattern for an MUI `Dialog` and `Menu`.
 
 #### Cypress
 

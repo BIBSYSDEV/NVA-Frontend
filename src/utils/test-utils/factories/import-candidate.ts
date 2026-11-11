@@ -1,5 +1,5 @@
-import { ImportCandidateSummary, ImportStatus } from '../../types/importCandidate.types';
-import { emptyJournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
+import { ImportCandidateSummary, ImportStatus } from '../../../types/importCandidate.types';
+import { emptyJournalPublicationInstance } from '../../../types/publication_types/journalRegistration.types';
 
 export const makeImportStatus = (overrides: Partial<ImportStatus> = {}): ImportStatus => ({
   candidateStatus: 'NOT_IMPORTED',

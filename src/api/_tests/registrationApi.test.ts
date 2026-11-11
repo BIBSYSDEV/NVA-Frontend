@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
-import { makeRegistration } from '../../test-utils/factories/registration';
 import { Registration } from '../../types/registration.types';
+import { makeRegistration } from '../../utils/test-utils/factories/registration';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from '../apiRequest';
 import { fetchRegistration, partialUpdateRegistration, updateRegistration } from '../registrationApi';
 
