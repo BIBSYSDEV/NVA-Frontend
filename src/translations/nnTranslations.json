@@ -632,6 +632,7 @@
       "get_vocabularies": "Kunne ikkje hente kontrollerte vokabular",
       "login_failed": "Innlogging feila",
       "login_failed_try_bankid": "Innlogging feila. Prøv å logge inn med BankID i staden.",
+      "login_not_completed": "Innlogginga kunne ikkje fullførast. Prøv igjen seinare.",
       "orcid_login": "Kunne ikkje logge inn på ORCID",
       "person_search": "Søk etter person feila",
       "profile_picture_invalid_type": "",

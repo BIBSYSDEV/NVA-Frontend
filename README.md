@@ -18,6 +18,8 @@ It has two consequences:
 - Git hooks are not set up on install. Run `npm run prepare` once after cloning.
 - The Cypress binary is not downloaded on install. The `test` and `test:cypress:open` scripts handle this by running
   `cypress install` first.
+- The Chromium browser used by the browser tests is not downloaded on install. Run `npx playwright install chromium`
+  once.
 
 Consider setting `ignore-scripts=true` in your own `~/.npmrc` as well, since the project `.npmrc` only protects installs
 in this repo.
@@ -74,15 +76,59 @@ The build is minified and the filenames include the hashes.
 
 ### Testing
 
-#### `npm run test:cypress`
+Tests run with [Vitest](https://vitest.dev/), split into two projects by file name:
 
-Runs cypress tests.
+- `*.test.ts` runs in Node (`unit` project), for helpers and API functions.
+- `*.browser.test.{ts,tsx}` runs in a real Chromium browser through Vitest Browser Mode (`browser` project), for components
+  and pages.
 
-Alternatively:
+Run `npx playwright install chromium` once before running the browser tests. With Node 25, `npm install` fails because
+of the `engines` field in `package.json`, so use Node 24.
 
-1. Set environment variable in `.env`: `VITE_USE_MOCK=true`
-2. `npm start`
-3. `npm test` or `npm run test:cypress:open`
+| Script                         | Description                                                |
+| ------------------------------ | ---------------------------------------------------------- |
+| `npm run test:vitest`          | Runs all tests in watch mode (once in CI)                  |
+| `npm run test:vitest:verbose`  | Runs all tests once, listing each test                     |
+| `npm run test:vitest:unit`     | Runs only the `unit` project                               |
+| `npm run test:vitest:browser`  | Runs only the `browser` project                            |
+| `npm run test:vitest:coverage` | Runs all tests and writes a coverage report to `coverage/` |
+
+When a browser test fails, a screenshot is saved to `.vitest/attachments/`.
+
+Without a `timeout` option, a failing `expect.element` keeps retrying until the test itself times out (15 seconds). Tests
+that are expected to fail, such as tests of test helpers, should set a short test timeout.
+
+Every run logs the warning `Plugin "vitest:mocks:interceptor" defines Vite-specific hooks…`. It comes from Vitest itself
+and can be ignored.
+
+#### Accessibility and keyboard tests
+
+Browser tests of components should check accessibility with the helpers in `src/utils/testfiles/a11y.ts` and
+`src/utils/testfiles/keyboardFocus.ts`. All helpers are async and must be awaited after the component is rendered.
+The keyboard and focus helpers wait for the UI to settle. `expectNoA11yViolations` waits for running CSS animations and
+transitions to finish, but not for content to render.
+
+- `expectNoA11yViolations(container?, options?)` runs [axe-core](https://github.com/dequelabs/axe-core) with the WCAG
+  2.2 A and AA rules, including color contrast, and fails with a list of the violations. Checks that axe can't decide,
+  like contrast on background images, are not reported. It checks the whole document unless you pass a container. To
+  skip a rule for one check, pass `{ skippedRules: ['<rule-id>'] }` and add a comment explaining why. WCAG 2.2 includes `target-size`, which requires click targets of at least 24×24 px or enough space around them.
+  Small icon buttons placed close together often fail it, so fix the component rather than turning the rule off.
+- `expectTabOrder(elements)` checks that Tab moves focus through the elements in the given order.
+- `expectFocusWithin(container)` checks that focus moves into a dialog or popover when it opens.
+- `expectFocusTrapped(container)` checks that Tab and Shift+Tab never move focus out of a modal dialog.
+- `expectEscapeToCloseAndRestoreFocus(popup, trigger)` presses Escape and checks that the dialog, menu or popover
+  closes and that focus returns to the trigger.
+
+`src/utils/testfiles/a11y.browser.test.tsx` shows how to use `expectNoA11yViolations`, and
+`src/utils/testfiles/keyboardFocus.browser.test.tsx` shows the full keyboard pattern for an MUI `Dialog` and `Menu`.
+
+#### Cypress
+
+The Cypress tests are being replaced by Vitest browser tests.
+
+- `npm run test:cypress` starts the app in mock mode and runs the Cypress tests.
+- Alternatively, set `VITE_USE_MOCK=true` in `.env`, run `npm start`, and then run `npm test` or
+  `npm run test:cypress:open`.
 
 ## Documentation
 
