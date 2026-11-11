@@ -6,6 +6,7 @@ import { Link as RouterLink } from 'react-router';
 import { HeadTitle } from '../../components/HeadTitle';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { ProjectApprovalAccordion } from '../../kbs/approval/ProjectApprovalAccordion';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RootState } from '../../redux/store';
 import { PrimaryColoredBox } from '../../styles/header-styles';
@@ -77,6 +78,8 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
           heading={`${t('project.form.related_projects')} (${project.relatedProjects.length})`}>
           <RelatedProjects projectIds={project.relatedProjects} />
         </LandingPageAccordion>
+
+        <ProjectApprovalAccordion projectId={project.id} />
       </BackgroundDiv>
     </Paper>
   );

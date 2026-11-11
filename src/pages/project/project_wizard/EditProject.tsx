@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { useFetchProject } from '../../../api/hooks/useFetchProject';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPageContent } from '../../../components/styled/Wrappers';
+import { ApprovalDraftProvider } from '../../../kbs/approval/ApprovalDraftContext';
 import { RootState } from '../../../redux/store';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { Forbidden } from '../../errorpages/Forbidden';
@@ -24,7 +25,9 @@ const EditProject = () => {
     <Forbidden />
   ) : project ? (
     <StyledPageContent>
-      <ProjectForm project={project} />
+      <ApprovalDraftProvider projectId={project.id}>
+        <ProjectForm project={project} />
+      </ApprovalDraftProvider>
     </StyledPageContent>
   ) : null;
 };

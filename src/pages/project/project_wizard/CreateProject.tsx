@@ -10,6 +10,8 @@ import {
   StyledRightAlignedFooter,
   WizardStartPageWrapper,
 } from '../../../components/styled/Wrappers';
+import { ApprovalDraftProvider } from '../../../kbs/approval/ApprovalDraftContext';
+import { CreateProjectFromApproval } from '../../../kbs/approval/CreateProjectFromApproval';
 import { RootState } from '../../../redux/store';
 import { CristinProject, emptyProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -34,40 +36,48 @@ const CreateProject = ({ toggleModal, onProjectCreated }: CreateProjectProps) =>
   const [suggestedProjectManager, setSuggestedProjectManager] = useState('');
 
   return (
-    <StyledPageContent>
-      {showProjectForm ? (
-        <ProjectForm
-          project={newProject}
-          suggestedProjectManager={suggestedProjectManager}
-          toggleModal={toggleModal}
-          onProjectCreated={onProjectCreated}
-        />
-      ) : (
-        <>
-          {!toggleModal && <PageHeader>{t('project.create_project')}</PageHeader>}
-          <WizardStartPageWrapper>
-            <CreateNfrProject
-              newProject={newProject}
-              setNewProject={setNewProject}
-              setShowProjectForm={setShowProjectForm}
-              setSuggestedProjectManager={setSuggestedProjectManager}
-              coordinatingInstitution={currentInstitutionQuery.data ?? emptyProject.coordinatingInstitution}
-            />
-            <EmptyProjectForm
-              newProject={newProject}
-              setNewProject={setNewProject}
-              setShowProjectForm={setShowProjectForm}
-            />
-          </WizardStartPageWrapper>
-          <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
-            <CancelButton
-              testId={dataTestId.projectForm.cancelNewProjectButton}
-              onClick={() => (toggleModal ? toggleModal() : navigate(UrlPathTemplate.MyPageMyProjectRegistrations))}
-            />
-          </StyledRightAlignedFooter>
-        </>
-      )}
-    </StyledPageContent>
+    <ApprovalDraftProvider>
+      <StyledPageContent>
+        {showProjectForm ? (
+          <ProjectForm
+            project={newProject}
+            suggestedProjectManager={suggestedProjectManager}
+            toggleModal={toggleModal}
+            onProjectCreated={onProjectCreated}
+          />
+        ) : (
+          <>
+            {!toggleModal && <PageHeader>{t('project.create_project')}</PageHeader>}
+            <WizardStartPageWrapper>
+              <CreateProjectFromApproval
+                newProject={newProject}
+                setNewProject={setNewProject}
+                setShowProjectForm={setShowProjectForm}
+                coordinatingInstitution={currentInstitutionQuery.data ?? emptyProject.coordinatingInstitution}
+              />
+              <CreateNfrProject
+                newProject={newProject}
+                setNewProject={setNewProject}
+                setShowProjectForm={setShowProjectForm}
+                setSuggestedProjectManager={setSuggestedProjectManager}
+                coordinatingInstitution={currentInstitutionQuery.data ?? emptyProject.coordinatingInstitution}
+              />
+              <EmptyProjectForm
+                newProject={newProject}
+                setNewProject={setNewProject}
+                setShowProjectForm={setShowProjectForm}
+              />
+            </WizardStartPageWrapper>
+            <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
+              <CancelButton
+                testId={dataTestId.projectForm.cancelNewProjectButton}
+                onClick={() => (toggleModal ? toggleModal() : navigate(UrlPathTemplate.MyPageMyProjectRegistrations))}
+              />
+            </StyledRightAlignedFooter>
+          </>
+        )}
+      </StyledPageContent>
+    </ApprovalDraftProvider>
   );
 };
 

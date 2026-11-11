@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { RelatedApprovalField } from '../../../kbs/approval/RelatedApprovalField';
 import { RelatedProjectsField } from './RelatedProjectsField';
 import { RelatedRegistrationsField } from './RelatedRegistrationsField';
 import { FormBox } from './styles';
@@ -13,6 +14,9 @@ export const ProjectConnectionsForm = () => {
         </FormBox>
         <FormBox>
           <RelatedRegistrationsField />
+        </FormBox>
+        <FormBox>
+          <RelatedApprovalField />
         </FormBox>
       </Box>
     </ErrorBoundary>

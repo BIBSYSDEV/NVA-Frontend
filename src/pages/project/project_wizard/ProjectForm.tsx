@@ -10,6 +10,7 @@ import { PageHeader } from '../../../components/page_layout_components/PageHeade
 import { RequiredDescription } from '../../../components/RequiredDescription';
 import { SkipLink } from '../../../components/SkipLink';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
+import { useApprovalDraft } from '../../../kbs/approval/ApprovalDraftContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { CristinProject, ProjectTabs, SaveCristinProject } from '../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
@@ -41,6 +42,7 @@ export const ProjectForm = ({ project, suggestedProjectManager, toggleModal, onP
   const [maxVisitedTab, setMaxVisitedTab] = useState(projectWithId ? ProjectTabs.Connections : ProjectTabs.Description);
 
   const thisIsRekProject = !!projectWithId && isRekProject(projectWithId);
+  const { saveApprovalForProject } = useApprovalDraft();
 
   const goToLandingPage = (id: string) => {
     navigate(getProjectPath(id));
@@ -65,6 +67,9 @@ export const ProjectForm = ({ project, suggestedProjectManager, toggleModal, onP
         );
 
         const id = projectWithId ? projectWithId.id : updateProjectResponse.data.id;
+        if (id) {
+          saveApprovalForProject(id);
+        }
 
         if (toggleModal) {
           if (onProjectCreated) {

@@ -340,6 +340,7 @@
   "controlling": "Kontrolleres",
   "copy_reference": "Kopier referanse",
   "corresponding_contributor": "Korresponderende bidragsyter",
+  "could_not_search_approvals": "Kunne ikke søke etter godkjenninger",
   "default_point_of_contact": "<p><link1>Ta kontakt med Sikt</link1> hvis ingen er kontaktpunkt for resultatet.</p>",
   "deliver": "Lever",
   "deliver_patient_counts_description": "Når du leverer pasienttallene, kan de ikke endres senere. Er du sikker på at du vil levere?",
@@ -1949,6 +1950,8 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "Avvist",
+  "related_approval": "Relatert godkjenning",
+  "related_approval_description": "Godkjenningen prosjektet er basert på.",
   "reported": "Rapportert",
   "reporting_period_text": "<p>Start- og sluttdato styrer når perioden åpnes og lukkes.</p><p>Når sluttdato er passert, lukkes perioden, og NVI-kuratorer kan ikke lenger kontrollere kandidater.</p><p>Endre sluttdato for å gjenåpne perioden. Når sluttdato er passert, kan perioden rapporteres.</p>",
   "reporting_status": "Rapporteringsstatus",
@@ -2029,6 +2032,7 @@
     "year_from": "Fra år",
     "year_to": "Til år"
   },
+  "search_for_approval_title_or_id": "Søk på tittel eller ID",
   "search_in_national_research_publication": "Søk i over 2 millioner publikasjoner fra forskere fra universiteter, høyskoler og forskningsinstitusjoner over hele landet.",
   "sector": "Sektor",
   "select_curator": "Velg kurator",
@@ -2060,6 +2064,8 @@
   "sort_by_total_number_asc": "Totalt antall (stigende)",
   "sort_by_total_number_desc": "Totalt antall (synkende)",
   "start_merging": "Start sammenslåing",
+  "start_with_approval": "Start med godkjenning",
+  "start_with_approval_description": "Hvis prosjektet har godkjenning fra REK eller CTIS, så kan du starte med den og få noen felt ferdig utfylt",
   "status_for_period": "Status for periode",
   "status_on_nvi_period": "Status på NVI-periode",
   "tasks": {
