@@ -103,7 +103,7 @@ export default defineConfig({
         test: {
           name: 'browser',
           include: [browserTestFilesGlob],
-          setupFiles: [`${testFilesFolder}/browserSetup.ts`],
+          setupFiles: [`${testFilesFolder}/browserSetup.ts`, `${testUtilsFolder}/msw/browser-setup.ts`],
           browser: {
             enabled: true,
             headless: true,
