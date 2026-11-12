@@ -1,49 +1,20 @@
-import { http, HttpResponse } from 'msw';
-import { setupServer } from 'msw/node';
-import { afterAll, afterEach, beforeAll, describe, expect, test, vi } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 import { Affiliation, Contributor, ContributorRole } from '../../types/contributor.types';
-import { Organization } from '../../types/organization.types';
 import { BookRegistration } from '../../types/publication_types/bookRegistration.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { PublicationChannelType } from '../../types/registration.types';
 import { getDefaultNviYear, getSelectableYears, willResetNviStatuses } from '../nviHelpers';
 import { makeContributor, makeIdentity } from '../test-utils/factories/contributor';
+import { institutionA, institutionAUnit, institutionB } from '../test-utils/msw/handlers';
 import { mockRegistration } from '../testfiles/mockRegistration';
 
 const nviRegistration = structuredClone(mockRegistration);
 
-const institutionA: Organization = {
-  type: 'Organization',
-  id: 'https://api.com/organization/1.0',
-  labels: { en: 'Institution A' },
-};
-
-const subunitOnInstitutionA: Organization = {
-  type: 'Organization',
-  id: 'https://api.com/organization/1.1',
-  labels: { en: 'Subunit on institution A' },
-  partOf: [institutionA],
-};
-
-const institutionB: Organization = {
-  type: 'Organization',
-  id: 'https://api.com/organization/2.0',
-  labels: { en: 'Institution B' },
-};
-
-const restHandlers = [
-  http.get(institutionA.id, () => HttpResponse.json(institutionA)),
-  http.get(subunitOnInstitutionA.id, () => HttpResponse.json(subunitOnInstitutionA)),
-  http.get(institutionB.id, () => HttpResponse.json(institutionB)),
-];
-
-const server = setupServer(...restHandlers);
-
-const personId = 'https://api.com/person/1';
-const otherPersonId = 'https://api.com/person/2';
+const personId = 'https://sikt.no/person/1';
+const otherPersonId = 'https://sikt.no/person/2';
 
 const affiliationA: Affiliation = { type: 'Organization', id: institutionA.id };
-const affiliationSubunitA: Affiliation = { type: 'Organization', id: subunitOnInstitutionA.id };
+const affiliationSubunitA: Affiliation = { type: 'Organization', id: institutionAUnit.id };
 const affiliationB: Affiliation = { type: 'Organization', id: institutionB.id };
 
 const buildNviRegistration = (contributors: Contributor[]) => {
@@ -53,14 +24,6 @@ const buildNviRegistration = (contributors: Contributor[]) => {
 };
 
 describe('willResetNviStatuses()', () => {
-  beforeAll(() => {
-    server.listen({ onUnhandledFrame: 'error' });
-  });
-
-  afterAll(() => {
-    server.close();
-  });
-
   test('Returns false when existing result could not be an NVI candidate', async () => {
     const nonNviRegistration = structuredClone(nviRegistration);
     nonNviRegistration.entityDescription.reference!.publicationInstance.type = JournalType.Review;
@@ -104,8 +67,8 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when journal or publisher is changed', async () => {
-    const channelId1 = 'https://api.com/channel/1';
-    const channelId2 = 'https://api.com/channel/2';
+    const channelId1 = 'https://sikt.no/channel/1';
+    const channelId2 = 'https://sikt.no/channel/2';
 
     const persistedRegistration = structuredClone(nviRegistration);
     persistedRegistration.entityDescription.reference!.publicationContext.id = channelId1;
@@ -118,8 +81,8 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when series is changed', async () => {
-    const seriesId1 = 'https://api.com/channel/1';
-    const seriesId2 = 'https://api.com/channel/2';
+    const seriesId1 = 'https://sikt.no/channel/1';
+    const seriesId2 = 'https://sikt.no/channel/2';
 
     const persistedRegistration = structuredClone(nviRegistration) as BookRegistration;
     persistedRegistration.entityDescription.reference!.publicationContext = {
@@ -185,7 +148,7 @@ describe('willResetNviStatuses()', () => {
     const updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.contributors[0].affiliations = [
       ...persistedAffiliations,
-      { type: 'Organization', id: subunitOnInstitutionA.id },
+      { type: 'Organization', id: institutionAUnit.id },
     ];
 
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
@@ -233,7 +196,7 @@ describe('willResetNviStatuses()', () => {
 
     const updatedRegistration = structuredClone(persistedRegistration);
     updatedRegistration.entityDescription.contributors[0].affiliations = [
-      { type: 'Organization', id: subunitOnInstitutionA.id },
+      { type: 'Organization', id: institutionAUnit.id },
     ];
 
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);

@@ -28,7 +28,8 @@ const unitTestFilesGlob = 'src/**/*.test.ts';
 const typeDeclarationFilesGlob = 'src/**/*.d.ts';
 const typesFolderGlob = 'src/types/**';
 const cypressFilesGlob = 'cypress/**';
-const testUtilsFolderGlob = 'src/test-utils/**';
+const testUtilsFolder = 'src/utils/test-utils';
+const testUtilsFolderGlob = `${testUtilsFolder}/**`;
 const testFilesFolder = 'src/utils/testfiles';
 const entryFile = 'src/index.tsx';
 
@@ -87,6 +88,7 @@ export default defineConfig({
           environment: 'node',
           include: [unitTestFilesGlob],
           exclude: [...configDefaults.exclude, cypressFilesGlob, browserTestFilesGlob],
+          setupFiles: [`${testUtilsFolder}/msw/unit-setup.ts`],
         },
       },
       {
@@ -101,7 +103,7 @@ export default defineConfig({
         test: {
           name: 'browser',
           include: [browserTestFilesGlob],
-          setupFiles: [`${testFilesFolder}/browserSetup.ts`],
+          setupFiles: [`${testFilesFolder}/browserSetup.ts`, `${testUtilsFolder}/msw/browser-setup.ts`],
           browser: {
             enabled: true,
             headless: true,

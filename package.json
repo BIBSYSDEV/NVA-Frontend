@@ -39,6 +39,11 @@
       "last 1 safari version"
     ]
   },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  },
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
