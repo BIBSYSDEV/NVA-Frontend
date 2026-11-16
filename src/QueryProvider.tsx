@@ -15,34 +15,35 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
 
   // Set queryClient in state to avoid reinitialization for each render
   const [queryClient] = useState(
-    new QueryClient({
-      defaultOptions: {
-        queries: {
-          refetchOnWindowFocus: false,
-          retry: 1,
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            retry: 1,
+          },
         },
-      },
-      queryCache: new QueryCache({
-        onError: (error, query) => {
-          const queryErrorMessage = query.meta?.errorMessage;
-          const handleError = query.meta?.handleError;
-          if (handleError && typeof handleError === 'function') {
-            handleError(error, query);
-            return;
-          }
+        queryCache: new QueryCache({
+          onError: (error, query) => {
+            const queryErrorMessage = query.meta?.errorMessage;
+            const handleError = query.meta?.handleError;
+            if (handleError && typeof handleError === 'function') {
+              handleError(error, query);
+              return;
+            }
 
-          if (queryErrorMessage === false) {
-            return;
-          }
+            if (queryErrorMessage === false) {
+              return;
+            }
 
-          let errorMessage = typeof queryErrorMessage === 'string' ? queryErrorMessage : '';
-          if (!errorMessage) {
-            errorMessage = t('feedback.error.an_error_occurred');
-          }
-          dispatch(setNotification({ message: errorMessage, variant: 'error' }));
-        },
-      }),
-    })
+            let errorMessage = typeof queryErrorMessage === 'string' ? queryErrorMessage : '';
+            if (!errorMessage) {
+              errorMessage = t('feedback.error.an_error_occurred');
+            }
+            dispatch(setNotification({ message: errorMessage, variant: 'error' }));
+          },
+        }),
+      })
   );
 
   return (
