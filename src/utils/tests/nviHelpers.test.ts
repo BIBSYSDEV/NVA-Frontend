@@ -7,8 +7,8 @@ import { BookRegistration } from '../../types/publication_types/bookRegistration
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { PublicationChannelType } from '../../types/registration.types';
 import { getDefaultNviYear, getSelectableYears, willResetNviStatuses } from '../nviHelpers';
+import { makeContributor, makeIdentity } from '../test-utils/factories/contributor';
 import { mockRegistration } from '../testfiles/mockRegistration';
-import { buildContributor, buildIdentity } from './testHelpers';
 
 const nviRegistration = structuredClone(mockRegistration);
 
@@ -264,14 +264,14 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when an affiliation is changed on one of several roles of the same person', async () => {
-    const creator = buildContributor({
-      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+    const creator = makeContributor({
+      identity: makeIdentity({ id: personId, name: 'Name Nameson' }),
       role: { type: ContributorRole.Creator },
       affiliations: [affiliationA],
       sequence: 1,
     });
-    const editor = buildContributor({
-      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+    const editor = makeContributor({
+      identity: makeIdentity({ id: personId, name: 'Name Nameson' }),
       role: { type: ContributorRole.Editor },
       affiliations: [affiliationA],
       sequence: 2,
@@ -285,14 +285,14 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns false when one of several roles of the same person is moved to another unit on the same institution', async () => {
-    const creator = buildContributor({
-      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+    const creator = makeContributor({
+      identity: makeIdentity({ id: personId, name: 'Name Nameson' }),
       role: { type: ContributorRole.Creator },
       affiliations: [affiliationA],
       sequence: 1,
     });
-    const editor = buildContributor({
-      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+    const editor = makeContributor({
+      identity: makeIdentity({ id: personId, name: 'Name Nameson' }),
       role: { type: ContributorRole.Editor },
       affiliations: [affiliationA],
       sequence: 2,
@@ -306,14 +306,14 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns false when a person has several roles and nothing is changed', async () => {
-    const creator = buildContributor({
-      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+    const creator = makeContributor({
+      identity: makeIdentity({ id: personId, name: 'Name Nameson' }),
       role: { type: ContributorRole.Creator },
       affiliations: [affiliationA],
       sequence: 1,
     });
-    const editor = buildContributor({
-      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+    const editor = makeContributor({
+      identity: makeIdentity({ id: personId, name: 'Name Nameson' }),
       role: { type: ContributorRole.Editor },
       affiliations: [affiliationA],
       sequence: 2,
@@ -327,8 +327,8 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when the role of a contributor is changed', async () => {
-    const creator = buildContributor({
-      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+    const creator = makeContributor({
+      identity: makeIdentity({ id: personId, name: 'Name Nameson' }),
       role: { type: ContributorRole.Creator },
       affiliations: [affiliationA],
     });
@@ -341,8 +341,8 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when a role is added to a person who is already a contributor', async () => {
-    const creator = buildContributor({
-      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+    const creator = makeContributor({
+      identity: makeIdentity({ id: personId, name: 'Name Nameson' }),
       role: { type: ContributorRole.Creator },
       affiliations: [affiliationA],
       sequence: 1,
@@ -359,13 +359,13 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns false when the contributors are reordered', async () => {
-    const firstContributor = buildContributor({
-      identity: buildIdentity({ id: personId, name: 'Name Nameson' }),
+    const firstContributor = makeContributor({
+      identity: makeIdentity({ id: personId, name: 'Name Nameson' }),
       affiliations: [affiliationA],
       sequence: 1,
     });
-    const secondContributor = buildContributor({
-      identity: buildIdentity({ id: otherPersonId, name: 'Other Person' }),
+    const secondContributor = makeContributor({
+      identity: makeIdentity({ id: otherPersonId, name: 'Other Person' }),
       affiliations: [affiliationB],
       sequence: 2,
     });
@@ -381,14 +381,14 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns false when an identified contributor is renamed', async () => {
-    const contributor = buildContributor({
-      identity: buildIdentity({ id: personId, name: 'Old Name' }),
+    const contributor = makeContributor({
+      identity: makeIdentity({ id: personId, name: 'Old Name' }),
       affiliations: [affiliationA],
     });
 
     const persistedRegistration = buildNviRegistration([contributor]);
     const updatedRegistration = buildNviRegistration([
-      { ...contributor, identity: buildIdentity({ id: personId, name: 'New Name' }) },
+      { ...contributor, identity: makeIdentity({ id: personId, name: 'New Name' }) },
     ]);
 
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
@@ -396,14 +396,14 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when an unidentified contributor is renamed', async () => {
-    const contributor = buildContributor({
-      identity: buildIdentity({ name: 'Old Name' }),
+    const contributor = makeContributor({
+      identity: makeIdentity({ name: 'Old Name' }),
       affiliations: [affiliationA],
     });
 
     const persistedRegistration = buildNviRegistration([contributor]);
     const updatedRegistration = buildNviRegistration([
-      { ...contributor, identity: buildIdentity({ name: 'New Name' }) },
+      { ...contributor, identity: makeIdentity({ name: 'New Name' }) },
     ]);
 
     const result = await willResetNviStatuses(persistedRegistration, updatedRegistration);
@@ -411,13 +411,13 @@ describe('willResetNviStatuses()', () => {
   });
 
   test('Returns true when an affiliation is changed on one of several unidentified contributors', async () => {
-    const firstContributor = buildContributor({
-      identity: buildIdentity({ name: 'First Unidentified' }),
+    const firstContributor = makeContributor({
+      identity: makeIdentity({ name: 'First Unidentified' }),
       affiliations: [affiliationA],
       sequence: 1,
     });
-    const secondContributor = buildContributor({
-      identity: buildIdentity({ name: 'Second Unidentified' }),
+    const secondContributor = makeContributor({
+      identity: makeIdentity({ name: 'Second Unidentified' }),
       affiliations: [affiliationA],
       sequence: 2,
     });
