@@ -7,14 +7,14 @@ import { searchHandlers } from './search';
 import { userHandlers } from './user';
 
 /**
- * The endpoints the app calls, each answering the way the real API does on the happy path. Read together they are meant
- * to describe the shape of the backend, not to satisfy any one test. When a test needs a
- * particular response, it declares one with its own `server.use(...)`, which puts its handler in front of these.
+ * The endpoints the app calls, answering the way the real API does on the happy path. A test that needs a particular
+ * response declares it with `server.use(...)`, which goes in front of these.
  *
- * NOTE: MSW answers with the first handler that matches, so a specific path belongs before the general one that would
- * otherwise swallow it. Anchoring every pattern to `apiBaseUrl` keeps a path from matching across domains, but a
- * literal segment can still be taken for a parameter within one: `/customer/channel-claims` matches the handler for
- * `/customer/:identifier`, and would have to come before it.
+ * A handler makes an answer that fits the request. Objects that have to be constructed a certain way because they refer
+ * to each other live in `fixtures/` instead, where an identifier the list does not hold gives 404.
+ *
+ * NOTE: MSW answers with the first match, and a literal segment can be taken for a parameter, so
+ * `/customer/channel-claims` would be swallowed by `/customer/:identifier` unless it came first.
  */
 export const handlers: RequestHandler[] = [
   ...organizationHandlers,

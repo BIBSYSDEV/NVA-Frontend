@@ -1,5 +1,11 @@
 import { API_URL } from '../../constants';
 
+// NOTE: Without this the handler patterns would be anchored to an empty string, which turns them into relative paths
+// that quietly match the wrong things rather than failing. Stopping here names the one thing that is actually missing.
+if (!API_URL) {
+  throw new Error('VITE_API_HOST is not set, so the msw handlers have no host to answer for');
+}
+
 /**
  * The host the handlers answer for, which is the one the app calls: `VITE_API_HOST` in `.env.test` feeds `API_URL`
  *

@@ -7,8 +7,10 @@ import { apiBaseUrl } from '../urls';
 
 /**
  * NOTE: A single channel is fetched with a year as the last path segment, see
- * {@link import('../../../../api/publicationChannelApi').fetchSerialPublication | fetchSerialPublication}. That is why
- * the one with a year comes before the search, which would otherwise answer for it.
+ * {@link import('../../../../api/publicationChannelApi').fetchSerialPublication | fetchSerialPublication}, which is why
+ * each kind of channel has both a handler with a year and one without. The one without answers the search over
+ * channels, and since it carries no parameter it matches that path and nothing longer, so the two cannot take each
+ * other's requests whichever order they are in.
  */
 export const publicationChannelHandlers = [
   http.get<{ identifier: string; year: string }>(

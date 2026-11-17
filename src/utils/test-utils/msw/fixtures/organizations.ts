@@ -2,7 +2,11 @@ import { CristinApiPath } from '../../../../api/apiPaths';
 import { makeOrganization } from '../../factories/organization';
 import { apiBaseUrl } from '../urls';
 
-const organizationBaseUrl = `${apiBaseUrl}${CristinApiPath.Organization}`;
+/**
+ * What an organization id is built from, exported so the handler can rebuild the id it was asked for instead of taking
+ * the fixture ids apart again.
+ */
+export const organizationBaseUrl = `${apiBaseUrl}${CristinApiPath.Organization}`;
 
 /**
  * The organizations the shared handlers serve.
