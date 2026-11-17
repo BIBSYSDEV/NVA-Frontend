@@ -1,26 +1,26 @@
 import { describe, expect, it } from 'vitest';
+import { RoleName, UserRole } from '../../types/user.types';
+import { makeCristinPerson, makeCristinPersonAffiliation, makeEmployment } from '../test-utils/factories/user';
 import {
   checkIfPersonHasNationalIdentificationNumber,
   findFirstEmploymentThatMatchesAnActiveAffiliation,
   getEmployments,
   sanitizeRolesForEmbargoConstraint,
 } from '../user-helpers';
-import { RoleName, UserRole } from '../../types/user.types';
-import { buildAffiliation, buildCristinPerson, buildEmployment } from './testHelpers';
 
 describe('getEmployments', () => {
   const topOrgCristinId = '123.0.0.0';
 
-  const internalEmployment = buildEmployment({
+  const internalEmployment = makeEmployment({
     organization: `org/${topOrgCristinId}`,
   });
 
-  const externalEmployment = buildEmployment({
+  const externalEmployment = makeEmployment({
     organization: 'org/456.0.0.0',
   });
 
   it('returns internal employments', () => {
-    const person = buildCristinPerson({
+    const person = makeCristinPerson({
       employments: [internalEmployment],
     });
 
@@ -30,7 +30,7 @@ describe('getEmployments', () => {
   });
 
   it('returns external employments', () => {
-    const person = buildCristinPerson({
+    const person = makeCristinPerson({
       employments: [externalEmployment],
     });
     const result = getEmployments(person, topOrgCristinId);
@@ -39,7 +39,7 @@ describe('getEmployments', () => {
   });
 
   it('returns both internal and external employments', () => {
-    const person = buildCristinPerson({
+    const person = makeCristinPerson({
       employments: [internalEmployment, externalEmployment],
     });
     const result = getEmployments(person, topOrgCristinId);
@@ -48,7 +48,7 @@ describe('getEmployments', () => {
   });
 
   it('returns empty arrays if no employments', () => {
-    const person = buildCristinPerson();
+    const person = makeCristinPerson();
     const result = getEmployments(person, topOrgCristinId);
     expect(result.internalEmployments).toEqual([]);
     expect(result.externalEmployments).toEqual([]);
@@ -61,7 +61,7 @@ describe('getEmployments', () => {
   });
 
   it('handles undefined topOrgCristinId', () => {
-    const person = buildCristinPerson({
+    const person = makeCristinPerson({
       employments: [internalEmployment, externalEmployment],
     });
     const result = getEmployments(person, undefined);
@@ -72,7 +72,7 @@ describe('getEmployments', () => {
 
 describe('checkIfPersonHasNationalIdentificationNumber', () => {
   it('returns true if person has a national identification number', () => {
-    const person = buildCristinPerson({
+    const person = makeCristinPerson({
       identifiers: [
         { type: 'NationalIdentificationNumber', value: '12345678901' },
         { type: 'CristinIdentifier', value: 'abc' },
@@ -83,33 +83,33 @@ describe('checkIfPersonHasNationalIdentificationNumber', () => {
   });
 
   it('returns false if person does not have a national identification number', () => {
-    const person = buildCristinPerson({ identifiers: [{ type: 'CristinIdentifier', value: 'abc' }] });
+    const person = makeCristinPerson({ identifiers: [{ type: 'CristinIdentifier', value: 'abc' }] });
     expect(checkIfPersonHasNationalIdentificationNumber(person)).toBe(false);
   });
 
   it('returns false if national identification number value is empty', () => {
-    const person = buildCristinPerson({ identifiers: [{ type: 'NationalIdentificationNumber', value: '' }] });
+    const person = makeCristinPerson({ identifiers: [{ type: 'NationalIdentificationNumber', value: '' }] });
     expect(checkIfPersonHasNationalIdentificationNumber(person)).toBe(false);
   });
 
   it('returns false if identifiers array is empty', () => {
-    const person = buildCristinPerson();
+    const person = makeCristinPerson();
     expect(checkIfPersonHasNationalIdentificationNumber(person)).toBe(false);
   });
 });
 
 describe('findFirstEmploymentThatMatchesAnActiveAffiliation', () => {
-  const employment1 = buildEmployment({
+  const employment1 = makeEmployment({
     organization: 'org/123',
   });
 
-  const employment2 = buildEmployment({
+  const employment2 = makeEmployment({
     organization: 'org/456',
   });
 
-  const activeAffiliationWithOrg1 = buildAffiliation({ organization: 'org/123', active: true });
-  const activeAffiliationWithOrg3 = buildAffiliation({ organization: 'org/789', active: true });
-  const inactiveAffiliationWithOrg2 = buildAffiliation({ organization: 'org/456', active: false });
+  const activeAffiliationWithOrg1 = makeCristinPersonAffiliation({ organization: 'org/123', active: true });
+  const activeAffiliationWithOrg3 = makeCristinPersonAffiliation({ organization: 'org/789', active: true });
+  const inactiveAffiliationWithOrg2 = makeCristinPersonAffiliation({ organization: 'org/456', active: false });
 
   it('returns the first employment that matches an active affiliation', () => {
     const result = findFirstEmploymentThatMatchesAnActiveAffiliation(

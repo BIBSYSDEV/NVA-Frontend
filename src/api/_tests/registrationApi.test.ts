@@ -1,6 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { Registration } from '../../types/registration.types';
+import { makeRegistration } from '../../utils/test-utils/factories/registration';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from '../apiRequest';
 import { fetchRegistration, partialUpdateRegistration, updateRegistration } from '../registrationApi';
 
@@ -13,12 +14,6 @@ vi.mock('../apiRequest', () => ({
 vi.mock('../authApi', () => ({
   userIsAuthenticated: () => Promise.resolve(true),
 }));
-
-const makeRegistration = (overrides: Partial<Registration> = {}) =>
-  ({
-    identifier: 'registration-1',
-    ...overrides,
-  }) as Registration;
 
 const makeResponse = (data: Partial<Registration>, { status = 200, etag }: { status?: number; etag?: string } = {}) =>
   ({
@@ -72,24 +67,28 @@ describe('updateRegistration()', () => {
   });
 
   test('Fetches a fresh ETag when the update response has no ETag header', async () => {
-    vi.mocked(authenticatedApiRequest).mockResolvedValue(makeResponse(makeRegistration()));
-    vi.mocked(authenticatedApiRequest2).mockResolvedValue(makeResponse(makeRegistration(), { etag: '"v2"' }));
+    const identifier = 'registration-1';
+    vi.mocked(authenticatedApiRequest).mockResolvedValue(makeResponse(makeRegistration({ identifier })));
+    vi.mocked(authenticatedApiRequest2).mockResolvedValue(
+      makeResponse(makeRegistration({ identifier }), { etag: '"v2"' })
+    );
 
-    const updateRegistrationResponse = await updateRegistration(makeRegistration({ etag: '"v1"' }));
+    const updateRegistrationResponse = await updateRegistration(makeRegistration({ identifier, etag: '"v1"' }));
 
     expect(updateRegistrationResponse.data.etag).toBe('"v2"');
   });
 
   test('Ignores a refreshed registration with another identifier, to avoid resetting the form to a redirected registration', async () => {
-    vi.mocked(authenticatedApiRequest).mockResolvedValue(makeResponse(makeRegistration()));
+    const identifier = 'registration-1';
+    vi.mocked(authenticatedApiRequest).mockResolvedValue(makeResponse(makeRegistration({ identifier })));
     vi.mocked(authenticatedApiRequest2).mockResolvedValue(
       makeResponse(makeRegistration({ identifier: 'registration-2' }), { etag: '"v2"' })
     );
 
-    const updateRegistrationResponse = await updateRegistration(makeRegistration({ etag: '"v1"' }));
+    const updateRegistrationResponse = await updateRegistration(makeRegistration({ identifier, etag: '"v1"' }));
 
     expect(updateRegistrationResponse.data).not.toHaveProperty('etag');
-    expect(updateRegistrationResponse.data.identifier).toBe('registration-1');
+    expect(updateRegistrationResponse.data.identifier).toBe(identifier);
   });
 
   test('Returns a successful response even if the ETag cannot be refreshed', async () => {

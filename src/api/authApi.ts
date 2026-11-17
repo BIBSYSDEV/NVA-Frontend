@@ -12,6 +12,17 @@ import { isPublicPage, UrlPathTemplate } from '../utils/urlPaths';
 const simulateExpiredToken = () =>
   import.meta.env.DEV && localStorage.getItem(LocalStorageKey.SimulateExpiredToken) === 'true';
 
+export const redirectToSignedOut = () => {
+  const currentPath = getCurrentPath();
+  // Don't redirect to SignedOut when viewing public content (e.g. a registration landing page);
+  // the request simply proceeds unauthenticated instead of kicking the user off a public page.
+  if (!isPublicPage(currentPath) && window.location.pathname !== UrlPathTemplate.SignedOut) {
+    const searchParams = new URLSearchParams();
+    searchParams.set(LocalStorageKey.RedirectPath, currentPath);
+    window.location.href = `${UrlPathTemplate.SignedOut}?${searchParams.toString()}`;
+  }
+};
+
 export const getAccessToken = async () => {
   if (USE_MOCK_DATA) {
     return '';
@@ -21,14 +32,7 @@ export const getAccessToken = async () => {
     if (currentSession.tokens && !simulateExpiredToken()) {
       return currentSession.tokens.accessToken.toString();
     } else {
-      const currentPath = getCurrentPath();
-      // Don't redirect to SignedOut when viewing public content (e.g. a registration landing page);
-      // the request simply proceeds unauthenticated instead of kicking the user off a public page.
-      if (!isPublicPage(currentPath)) {
-        const searchParams = new URLSearchParams();
-        searchParams.set(LocalStorageKey.RedirectPath, currentPath);
-        window.location.href = `${UrlPathTemplate.SignedOut}?${searchParams.toString()}`;
-      }
+      redirectToSignedOut();
       return null;
     }
   } catch {
