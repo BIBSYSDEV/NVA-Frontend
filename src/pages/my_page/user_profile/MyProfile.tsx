@@ -11,7 +11,6 @@ import { PageSpinner } from '../../../components/PageSpinner';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FlatCristinPerson } from '../../../types/user.types';
-import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { personaliaValidationSchema } from '../../../utils/validation/personaliaValidation';
@@ -66,13 +65,13 @@ export const MyProfile = () => {
           webPage: values.contactDetails?.webPage?.trim() || null,
         },
       };
-      const updatePersonResponse = await updateCristinPerson(user.cristinId, payload);
-      if (isErrorStatus(updatePersonResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
-      } else if (isSuccessStatus(updatePersonResponse.status)) {
+      try {
+        await updateCristinPerson(user.cristinId, payload);
         dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' }));
         setEditPreferredNames(false);
         personQuery.refetch();
+      } catch {
+        dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
       }
     }
   };
