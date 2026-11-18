@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { describe, expect, test } from 'vitest';
+import { unhandledUrl } from '../msw/urls';
 
 /**
  * The shared setup in msw/unit-setup.ts starts the server with `onUnhandledFrame: 'error'`, so that a request no
@@ -11,6 +12,6 @@ import { describe, expect, test } from 'vitest';
  */
 describe('the shared msw setup', () => {
   test('refuses a request that no handler covers', async () => {
-    await expect(axios.get('https://sikt.no/not-handled')).rejects.toThrow(/onUnhandledFrame/);
+    await expect(axios.get(unhandledUrl)).rejects.toThrow(/onUnhandledFrame/);
   });
 });
