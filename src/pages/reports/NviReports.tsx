@@ -15,7 +15,7 @@ const NviReports = () => {
 
   return (
     <>
-      <HeadTitle>{t('common.nvi')}</HeadTitle>
+      <HeadTitle>{t('search.reports.nvi_duct')}</HeadTitle>
       <Typography variant="h1" sx={visuallyHidden}>
         {t('common.nvi')}
       </Typography>

@@ -99,3 +99,27 @@ export const setDelay = (ms: number) => new Promise((resolve) => setTimeout(reso
 const nbNoNumberFormat = new Intl.NumberFormat('nb-NO');
 
 export const formatLocaleNumber = (n: number) => nbNoNumberFormat.format(n);
+
+/**
+ * Removes duplicates from a list, keeping the first item for each key. Items without a key are never
+ * treated as duplicates.
+ *
+ * @param items The list to remove duplicates from.
+ * @param getKey Gets the key that decides which items are the same, or undefined if the item has no key.
+ * @returns The items without duplicates, in their original order.
+ */
+export const removeDuplicatesByKey = <T>(items: T[], getKey: (item: T) => string | undefined): T[] => {
+  const seenKeys = new Set<string>();
+
+  return items.filter((item) => {
+    const key = getKey(item);
+    if (key === undefined) {
+      return true;
+    }
+    if (seenKeys.has(key)) {
+      return false;
+    }
+    seenKeys.add(key);
+    return true;
+  });
+};

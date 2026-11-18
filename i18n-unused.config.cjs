@@ -44,6 +44,10 @@ module.exports = {
     // Key picked by a ternary then passed to `t()`:
     'tasks.nvi.reporting_period_closed',
     'tasks.nvi.reporting_period_missing',
+    // Picked by `getLoginErrorMessageKey` then passed to `t()`:
+    'feedback.error.login_failed',
+    'feedback.error.login_failed_try_bankid',
+    'feedback.error.login_not_completed',
   ],
   translationContextSeparator: '__',
 };

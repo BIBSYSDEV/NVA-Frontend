@@ -56,6 +56,7 @@ const ReportsPage = lazy(() => import('./pages/reports/ReportsPage'));
 const NviReports = lazy(() => import('./pages/reports/NviReports'));
 const InternationalCooperationReports = lazy(() => import('./pages/reports/InternationalCooperationReports'));
 const ClinicalTreatmentStudiesReports = lazy(() => import('./pages/reports/ClinicalTreatmentStudiesReports'));
+const StaticReport = lazy(() => import('./pages/reports/StaticReport'));
 const TasksDialoguePage = lazy(() => import('./pages/tasks/dialogue/TasksDialoguePage'));
 const RegistrationLandingPage = lazy(() => import('./components/registration-landing-page/RegistrationLandingPage'));
 const NviCandidatesListPage = lazy(() => import('./pages/tasks/nvi/NviCandidatesListPage'));
@@ -94,6 +95,7 @@ export const AppRoutes = () => {
           <Route path={UrlPathTemplate.ReportsNvi} element={<NviReports />} />
           <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<InternationalCooperationReports />} />
           <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<ClinicalTreatmentStudiesReports />} />
+          <Route path={UrlPathTemplate.ReportsStatic} element={<StaticReport />} />
         </Route>
 
         <Route path={UrlPathTemplate.CopyrightAct} element={<CopyrightActTerms />} />

@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Outlet, useLocation } from 'react-router';
+import { Outlet, useLocation, useMatch } from 'react-router';
 import {
   PersonSearchParameter,
   PersonSearchParams,
@@ -26,7 +26,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { SearchParam } from '../../utils/searchHelpers';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getStaticReportPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
 import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
@@ -44,6 +44,7 @@ const HomePage = () => {
   const paramsSearchType = params.get(SearchParam.Type);
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const staticReportName = useMatch(UrlPathTemplate.ReportsStatic)?.params.reportName;
 
   const isOnFilterPage = location.pathname === UrlPathTemplate.Filter;
   const resultIsSelected = isOnFilterPage && (!paramsSearchType || paramsSearchType === SearchTypeValue.Result);
@@ -142,10 +143,16 @@ const HomePage = () => {
               {t('common.overview')}
             </SelectableButton>
             <SelectableButton
+              data-testid={dataTestId.startPage.reportsClinicalTreatmentStudiesButton}
+              isSelected={currentPath === UrlPathTemplate.ReportsClinicalTreatmentStudies}
+              to={UrlPathTemplate.ReportsClinicalTreatmentStudies}>
+              {t('search.reports.clinical_treatment_studies')}
+            </SelectableButton>
+            <SelectableButton
               data-testid={dataTestId.startPage.reportsNviButton}
               isSelected={currentPath === UrlPathTemplate.ReportsNvi}
               to={UrlPathTemplate.ReportsNvi}>
-              {t('common.nvi')}
+              {t('search.reports.nvi_duct')}
             </SelectableButton>
             {/*     <SelectableButton
               data-testid={dataTestId.startPage.reportsInternationalWorkButton}
@@ -154,10 +161,31 @@ const HomePage = () => {
               {t('search.reports.international_cooperation')}
             </SelectableButton>*/}
             <SelectableButton
-              data-testid={dataTestId.startPage.reportsClinicalTreatmentStudiesButton}
-              isSelected={currentPath === UrlPathTemplate.ReportsClinicalTreatmentStudies}
-              to={UrlPathTemplate.ReportsClinicalTreatmentStudies}>
-              {t('search.reports.clinical_treatment_studies')}
+              data-testid={dataTestId.startPage.reportsStaticNviReportingButton}
+              isSelected={staticReportName === 'nvi-reporting'}
+              to={getStaticReportPath('nvi-reporting')}>
+              {t('search.reports.nvi_reporting')}
+            </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.startPage.reportsStaticNviGenderAndAgeButton}
+              sx={{ ml: '1rem' }}
+              isSelected={staticReportName === 'gender-and-age'}
+              to={getStaticReportPath('gender-and-age')}>
+              {t('search.reports.gender_and_age')}
+            </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.startPage.reportsStaticTenYearSeriesButton}
+              sx={{ ml: '1rem' }}
+              isSelected={staticReportName === 'ten-year-series'}
+              to={getStaticReportPath('ten-year-series')}>
+              {t('search.reports.ten_year_series')}
+            </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.startPage.reportsStaticNviCategoriesButton}
+              sx={{ ml: '1rem' }}
+              isSelected={staticReportName === 'nvi-categories'}
+              to={getStaticReportPath('nvi-categories')}>
+              {t('search.reports.nvi_categories_over_time')}
             </SelectableButton>
           </NavigationList>
         </NavigationListAccordion>

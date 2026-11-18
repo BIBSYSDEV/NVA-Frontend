@@ -61,7 +61,10 @@ export const ActionPanel = ({ registration, tickets, isLoadingData }: ActionPane
 
   const shouldSeePublishingAccordion =
     !!user &&
-    (canCreatePublishingTicket || canHandlePublishingTicket || hasOtherPublishingRights || !!publishingRequestTickets);
+    (canCreatePublishingTicket ||
+      canHandlePublishingTicket ||
+      hasOtherPublishingRights ||
+      publishingRequestTickets.length > 0);
 
   const shouldSeeDoiAccordion =
     !!user &&
