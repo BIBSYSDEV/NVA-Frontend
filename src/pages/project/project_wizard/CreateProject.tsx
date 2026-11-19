@@ -14,6 +14,7 @@ import { RootState } from '../../../redux/store';
 import { CristinProject, emptyProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { CreateApprovalProject } from './create-approval-project/CreateApprovalProject';
 import { CreateNfrProject } from './CreateNfrProject';
 import { EmptyProjectForm } from './EmptyProjectForm';
 import { ProjectForm } from './ProjectForm';
@@ -46,6 +47,12 @@ const CreateProject = ({ toggleModal, onProjectCreated }: CreateProjectProps) =>
         <>
           {!toggleModal && <PageHeader>{t('project.create_project')}</PageHeader>}
           <WizardStartPageWrapper>
+            <CreateApprovalProject
+              newProject={newProject}
+              setNewProject={setNewProject}
+              setShowProjectForm={setShowProjectForm}
+              coordinatingInstitution={currentInstitutionQuery.data ?? emptyProject.coordinatingInstitution}
+            />
             <CreateNfrProject
               newProject={newProject}
               setNewProject={setNewProject}

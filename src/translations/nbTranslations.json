@@ -2009,6 +2009,7 @@
     "year_from": "Fra år",
     "year_to": "Til år"
   },
+  "search_for_approval_title_or_id": "Søk på tittel eller ID",
   "search_in_national_research_publication": "Søk i over 2 millioner publikasjoner fra forskere fra universiteter, høyskoler og forskningsinstitusjoner over hele landet.",
   "sector": "Sektor",
   "select_curator": "Velg kurator",
@@ -2039,6 +2040,8 @@
   "sort_by_total_number_asc": "Totalt antall (stigende)",
   "sort_by_total_number_desc": "Totalt antall (synkende)",
   "start_merging": "Start sammenslåing",
+  "start_with_approval": "Start med godkjenning",
+  "start_with_approval_description": "Hvis prosjektet har en godkjenning, så kan du starte med den og få noen felt ferdig utfylt",
   "status_for_period": "Status for periode",
   "status_on_nvi_period": "Status på NVI-periode",
   "tasks": {
