@@ -1,5 +1,4 @@
 import { Box, Chip, Link as MuiLink, Typography } from '@mui/material';
-import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
@@ -25,7 +24,6 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
   const projectPeriodString = getProjectPeriod(project);
   const projectStatusString = t(`project.status.${project.status}`);
   const projectManager = getProjectManagers(project.contributors)?.[0];
-  const approvedApprovals = project.approvals?.filter((approval) => approval.status === 'Approved') ?? [];
 
   return (
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
@@ -88,22 +86,6 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
           })
         ) : (
           <Typography component="dd">-</Typography>
-        )}
-
-        {approvedApprovals.length > 0 && (
-          <>
-            <Typography variant="overline" component="dt">
-              {t('approval')}
-            </Typography>
-            {approvedApprovals.map((approval, index) => (
-              <Fragment key={index}>
-                <Typography component="dd" title={getLanguageString(approval.authorityName)}>
-                  {getLanguageString(approval.authorityName)}
-                </Typography>
-                <Typography>{approval.identifier}</Typography>
-              </Fragment>
-            ))}
-          </>
         )}
 
         <Typography variant="overline" component="dt">

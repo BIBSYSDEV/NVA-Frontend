@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
 import { HeadTitle } from '../../components/HeadTitle';
+import { ProjectApprovalItem } from '../../components/project-approval-item/ProjectApprovalItem';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
@@ -29,6 +30,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const userCanEditProject = canEditProject(user, project);
+  const approvedApprovals = project.approvals?.filter((approval) => approval.status === 'Approved') ?? [];
 
   return (
     <Paper elevation={0}>
@@ -77,6 +79,18 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
           heading={`${t('project.form.related_projects')} (${project.relatedProjects.length})`}>
           <RelatedProjects projectIds={project.relatedProjects} />
         </LandingPageAccordion>
+
+        {approvedApprovals.length > 0 && (
+          <LandingPageAccordion
+            dataTestId={dataTestId.projectLandingPage.approvalsAccordion}
+            heading={`${t('approval')} (${approvedApprovals.length})`}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {approvedApprovals.map((approval) => (
+                <ProjectApprovalItem key={`${approval.authority}-${approval.identifier}`} approval={approval} />
+              ))}
+            </Box>
+          </LandingPageAccordion>
+        )}
       </BackgroundDiv>
     </Paper>
   );

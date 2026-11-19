@@ -332,6 +332,7 @@ export const dataTestId = {
     startNfrProjectButton: 'start-nfr-project-button',
   },
   projectLandingPage: {
+    approvalsAccordion: 'approvals-accordion',
     editProjectButton: 'edit-project-button',
     generalInfoBox: 'general-info',
     participantsAccordion: 'participants-accordion',
