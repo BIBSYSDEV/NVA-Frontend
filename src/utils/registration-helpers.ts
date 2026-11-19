@@ -61,6 +61,7 @@ import {
   SerialPublication,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
+import { hasSameLicenseMenu, isLockedOnCorrectLicense } from './fileHelpers';
 import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
@@ -898,11 +899,15 @@ export const getDisabledCategories = (
   registration: Registration,
   t: TFunction
 ) => {
+  // A category barred by more than one rule below is listed once per rule. CategorySelector looks the type up
+  // with find(), so the first rule here is the one whose explanation the user reads, and the rules are ordered
+  // from the hardest constraint to the softest.
   const disabledCategories: DisabledCategory[] = [];
+  const currentType = registration.entityDescription?.reference?.publicationInstance?.type;
 
   // Do not allow changing from degree to non-degree (and vice-versa) if result has open (approved) files
   if (registration.associatedArtifacts.some(isOpenFile)) {
-    if (isDegree(registration.entityDescription?.reference?.publicationInstance?.type)) {
+    if (isDegree(currentType)) {
       const nonDegreeTypes = allPublicationInstanceTypes.filter((type) => !isDegree(type));
       nonDegreeTypes.forEach((type) => {
         disabledCategories.push({
@@ -918,6 +923,23 @@ export const getDisabledCategories = (
         });
       });
     }
+  }
+
+  // Registrations with locked files with correct license cannot change category to a category that doesn't offer the license
+  const userMayEditImportCandidateFiles = userIsValidImporter(user, registration);
+  const categoryChangeIsProhibited = registration.associatedArtifacts.some((associatedArtifact) =>
+    isLockedOnCorrectLicense(associatedArtifact, currentType, userMayEditImportCandidateFiles)
+  );
+
+  if (categoryChangeIsProhibited) {
+    const prohibitedCategories = allPublicationInstanceTypes.filter((type) => !hasSameLicenseMenu(type, currentType));
+
+    prohibitedCategories.forEach((type) => {
+      disabledCategories.push({
+        type,
+        text: t('registration.resource_type.cannot_select_category_when_file_license_is_locked'),
+      });
+    });
   }
 
   // Do not allow non-curator to select a category that don't support file upload if result has a file

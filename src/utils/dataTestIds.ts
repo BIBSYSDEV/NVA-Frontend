@@ -164,6 +164,11 @@ export const dataTestId = {
     acceptButton: 'accept-button',
     cancelButton: 'cancel-button',
   },
+  licenseDeedPage: {
+    creativeCommonsAttributionLink: 'creative-commons-attribution-link',
+    guidanceAttributionLink: 'guidance-attribution-link',
+    officialLicenseLink: 'official-license-link',
+  },
   organization: {
     searchField: 'organization-search-field',
     subSearchField: 'sub-organization-search-field',
@@ -577,6 +582,7 @@ export const dataTestId = {
       licenseHelpButton: 'license-help-button',
       licenseItem: 'license-item',
       licenseItemShowOlderVersion: 'license-item-show-older-versions',
+      unavailableLicenseItem: 'unavailable-license-item',
       licenseModal: 'license-modal',
       linkField: 'link-field',
       linkToResourceField: 'link-to-resource-field',
