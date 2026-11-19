@@ -36,7 +36,7 @@ import {
 } from '../registration-helpers';
 import { User } from '../../types/user.types';
 import { mockRegistration } from '../testfiles/mockRegistration';
-import { buildFile, buildLockedFile } from './testHelpers';
+import { makeFile, makeLockedFile } from '../test-utils/factories/file';
 
 describe('getFormattedRegistration', () => {
   it('adds missing entityDescription.type and reference.type', () => {
@@ -537,9 +537,9 @@ describe('getDisabledCategories', () => {
   const translate = ((key: string) => key) as TFunction;
   const lockedLicenseText = 'registration.resource_type.cannot_select_category_when_file_license_is_locked';
 
-  const lockedFile = (license: LicenseUri) => buildLockedFile({ license });
+  const lockedFile = (license: LicenseUri) => makeLockedFile({ license });
 
-  const editableFile = (license: LicenseUri) => buildFile({ license });
+  const editableFile = (license: LicenseUri) => makeFile({ license });
 
   const registrationWith = (instanceType: PublicationInstanceType | undefined, ...files: AssociatedFile[]) =>
     ({

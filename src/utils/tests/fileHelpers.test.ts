@@ -13,7 +13,7 @@ import {
   licenseNeedsReset,
   userAllowedToEditFileMetadata,
 } from '../fileHelpers';
-import { buildFile, buildLockedFile } from './testHelpers';
+import { makeFile, makeLockedFile } from '../test-utils/factories/file';
 
 describe('getLicenseData()', () => {
   test('Returns Creative Commons license with https', () => {
@@ -215,7 +215,7 @@ describe('isCorrectLicenseForCategory()', () => {
 });
 
 describe('userMayEditFileMetadata()', () => {
-  const fileWith = (...allowedOperations: FileAllowedOperation[]) => buildFile({ allowedOperations });
+  const fileWith = (...allowedOperations: FileAllowedOperation[]) => makeFile({ allowedOperations });
 
   test('Lets a user with write access edit the file', () => {
     expect(userAllowedToEditFileMetadata(fileWith('write-metadata'))).toBe(true);
@@ -223,7 +223,7 @@ describe('userMayEditFileMetadata()', () => {
 
   test('Keeps a user without write access out', () => {
     expect(userAllowedToEditFileMetadata(fileWith('download'))).toBe(false);
-    expect(userAllowedToEditFileMetadata(buildFile({ allowedOperations: undefined }))).toBe(false);
+    expect(userAllowedToEditFileMetadata(makeFile({ allowedOperations: undefined }))).toBe(false);
   });
 
   test('Lets an importer edit an import candidate file whatever its access rights say', () => {
@@ -231,9 +231,9 @@ describe('userMayEditFileMetadata()', () => {
   });
 });
 
-const editableFile = (license: string | null) => buildFile({ license });
+const editableFile = (license: string | null) => makeFile({ license });
 
-const lockedFile = (license: string | null) => buildLockedFile({ license });
+const lockedFile = (license: string | null) => makeLockedFile({ license });
 
 describe('licenseNeedsReset()', () => {
   test('Clears a license the new category does not offer', () => {
@@ -259,7 +259,7 @@ describe('licenseNeedsReset()', () => {
   });
 
   test('Keeps a license on a file with no access rights at all', () => {
-    const fileWithoutOperations = buildFile({ license: LicenseUri.CC_BY_4, allowedOperations: undefined });
+    const fileWithoutOperations = makeFile({ license: LicenseUri.CC_BY_4, allowedOperations: undefined });
 
     expect(licenseNeedsReset(fileWithoutOperations, ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
@@ -271,7 +271,7 @@ describe('licenseNeedsReset()', () => {
     FileType.HiddenFile,
     FileType.UpdloadedFile,
   ])('Clears a license on a %s, even though the form shows no license field for it', (type) => {
-    const file = buildFile({ type, license: LicenseUri.CC_BY_4 });
+    const file = makeFile({ type, license: LicenseUri.CC_BY_4 });
 
     expect(licenseNeedsReset(file, ResearchDataType.SoftwareSourceCode)).toBe(true);
   });
@@ -326,7 +326,7 @@ describe('isLockedOnCorrectLicense()', () => {
     FileType.HiddenFile,
     FileType.UpdloadedFile,
   ])('Category change is not prohibited by a %s, which shows no license field to be locked on', (type) => {
-    const file = buildLockedFile({ type, license: LicenseUri.MIT });
+    const file = makeLockedFile({ type, license: LicenseUri.MIT });
 
     expect(isLockedOnCorrectLicense(file, ResearchDataType.SoftwareSourceCode)).toBe(false);
   });
@@ -338,7 +338,7 @@ describe('isLockedOnCorrectLicense()', () => {
   });
 
   test('Category change is prohibited for a file waiting for approval, which has a license field too', () => {
-    const pendingFile = buildLockedFile({ type: FileType.PendingOpenFile, license: LicenseUri.MIT });
+    const pendingFile = makeLockedFile({ type: FileType.PendingOpenFile, license: LicenseUri.MIT });
 
     expect(isLockedOnCorrectLicense(pendingFile, ResearchDataType.SoftwareSourceCode)).toBe(true);
   });
@@ -346,7 +346,7 @@ describe('isLockedOnCorrectLicense()', () => {
   test.each([FileType.RejectedFile, FileType.InternalFile, FileType.HiddenFile])(
     'Category change is not prohibited for a %s, which is shown no license field to act on',
     (type) => {
-      const file = buildLockedFile({ type, license: LicenseUri.MIT });
+      const file = makeLockedFile({ type, license: LicenseUri.MIT });
 
       expect(isLockedOnCorrectLicense(file, ResearchDataType.SoftwareSourceCode)).toBe(false);
     }
