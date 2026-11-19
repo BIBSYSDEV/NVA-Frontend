@@ -298,6 +298,7 @@ export const dataTestId = {
     nextResultButton: 'next-result-button',
   },
   projectForm: {
+    relatedApprovalSearchField: 'related-approval-search-field',
     startDateField: 'project-start-date-field',
     endDateField: 'project-end-date-field',
     keywordsField: 'keywords-field',

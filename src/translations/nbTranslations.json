@@ -8,6 +8,7 @@
   "add_file": "Legg til fil",
   "add_project": "Legg til prosjekt",
   "approval": "Godkjenning",
+  "approvals_cannot_be_changed": "Godkjenninger kan ikke endres etter at prosjektet er opprettet.",
   "approved": "Godkjent",
   "authorization": {
     "about_terms": "Brukervilkår og personvernerklæring for Nasjonalt vitenarkiv",
@@ -1925,6 +1926,8 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "Avvist",
+  "related_approval": "Relatert godkjenning",
+  "related_approval_description": "Godkjenningen prosjektet er basert på.",
   "reporting_period_text": "<p>Start- og sluttdato styrer når perioden åpnes og lukkes.</p><p>Når sluttdato er passert, lukkes perioden, og NVI-kuratorer kan ikke lenger kontrollere kandidater.</p><p>Endre sluttdato for å gjenåpne perioden. Når sluttdato er passert, kan perioden rapporteres.</p>",
   "reporting_status": "Rapporteringsstatus",
   "reporting_status_description": "<p>Tabellen viser antall kandidater for din institusjon og behandlingsstatus på disse.</p> <p>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</p>",
