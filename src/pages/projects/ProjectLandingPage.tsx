@@ -3,6 +3,7 @@ import { Box, IconButton, Paper, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { HeadTitle } from '../../components/HeadTitle';
 import { ProjectApprovalItem } from '../../components/project-approval-item/ProjectApprovalItem';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
@@ -81,15 +82,17 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
         </LandingPageAccordion>
 
         {approvedApprovals.length > 0 && (
-          <LandingPageAccordion
-            dataTestId={dataTestId.projectLandingPage.approvalsAccordion}
-            heading={`${t('approval')} (${approvedApprovals.length})`}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {approvedApprovals.map((approval) => (
-                <ProjectApprovalItem key={`${approval.authority}-${approval.identifier}`} approval={approval} />
-              ))}
-            </Box>
-          </LandingPageAccordion>
+          <BetaFunctionality>
+            <LandingPageAccordion
+              dataTestId={dataTestId.projectLandingPage.approvalsAccordion}
+              heading={`${t('approval')} (${approvedApprovals.length})`}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {approvedApprovals.map((approval) => (
+                  <ProjectApprovalItem key={`${approval.authority}-${approval.identifier}`} approval={approval} />
+                ))}
+              </Box>
+            </LandingPageAccordion>
+          </BetaFunctionality>
         )}
       </BackgroundDiv>
     </Paper>

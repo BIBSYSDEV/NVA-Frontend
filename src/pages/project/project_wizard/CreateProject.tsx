@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { CancelButton } from '../../../components/buttons/CancelButton';
 import { PageHeader } from '../../../components/PageHeader';
 import {
@@ -47,12 +48,14 @@ const CreateProject = ({ toggleModal, onProjectCreated }: CreateProjectProps) =>
         <>
           {!toggleModal && <PageHeader>{t('project.create_project')}</PageHeader>}
           <WizardStartPageWrapper>
-            <CreateApprovalProject
-              newProject={newProject}
-              setNewProject={setNewProject}
-              setShowProjectForm={setShowProjectForm}
-              coordinatingInstitution={currentInstitutionQuery.data ?? emptyProject.coordinatingInstitution}
-            />
+            <BetaFunctionality>
+              <CreateApprovalProject
+                newProject={newProject}
+                setNewProject={setNewProject}
+                setShowProjectForm={setShowProjectForm}
+                coordinatingInstitution={currentInstitutionQuery.data ?? emptyProject.coordinatingInstitution}
+              />
+            </BetaFunctionality>
             <CreateNfrProject
               newProject={newProject}
               setNewProject={setNewProject}
