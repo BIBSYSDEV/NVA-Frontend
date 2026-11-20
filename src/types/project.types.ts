@@ -76,10 +76,33 @@ export interface HealthProjectData {
 
 export type ProjectApprovalStatus = 'Approved' | 'Rejected';
 
-export interface ProjectApproval {
-  authorityName: LanguageString;
+type ProjectApprovalAuthority =
+  | 'RegionalEthicalCommittees'
+  | 'NorwegianAnimalResearchAuthority'
+  | 'NorwegianDataProtectionAuthority'
+  | 'NorwegianMedicinesAgency'
+  | 'NorwegianDirectorateOfHealth';
+
+type ProjectApplicationCode =
+  | 'EthicalApproval'
+  | 'BioBank'
+  | 'DrugTrial'
+  | 'BioTechnology'
+  | 'MedicalEquipment'
+  | 'AnimalTesting'
+  | 'SensitiveInformation';
+
+export interface NewProjectApproval {
+  type: 'Approval';
+  date: string;
+  authority: ProjectApprovalAuthority;
+  applicationCode?: ProjectApplicationCode;
   status: ProjectApprovalStatus;
   identifier: string;
+}
+
+export interface ProjectApproval extends NewProjectApproval {
+  authorityName: LanguageString;
 }
 
 export const emptyProjectFunding: ProjectFunding = {
@@ -103,6 +126,7 @@ export interface SaveCristinProject {
   keywords: TypedLabel[];
   relatedProjects: string[];
   funding: ProjectFunding[];
+  approvals?: NewProjectApproval[];
 }
 
 export interface CristinProject extends SaveCristinProject {

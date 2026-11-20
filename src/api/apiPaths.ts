@@ -1,3 +1,7 @@
+export enum ApprovalApiPath {
+  Approval = '/approval',
+}
+
 export enum CustomerInstitutionApiPath {
   ChannelClaims = '/customer/channel-claims',
   ChannelClaim = '/customer/channel-claim',

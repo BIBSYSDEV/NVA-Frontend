@@ -8,6 +8,7 @@
   "add_file": "Legg til fil",
   "add_project": "Legg til prosjekt",
   "approval": "Godkjenning",
+  "approvals_cannot_be_changed": "Godkjenninger kan ikke endres etter at prosjektet er opprettet.",
   "approved": "Godkjent",
   "authorization": {
     "about_terms": "Brukervilkår og personvernerklæring for Nasjonalt vitenarkiv",
@@ -1925,6 +1926,8 @@
     "year_published": "Publiseringsår"
   },
   "rejected": "Avvist",
+  "related_approval": "Relatert godkjenning",
+  "related_approval_description": "Godkjenningen prosjektet er basert på.",
   "reporting_period_text": "<p>Start- og sluttdato styrer når perioden åpnes og lukkes.</p><p>Når sluttdato er passert, lukkes perioden, og NVI-kuratorer kan ikke lenger kontrollere kandidater.</p><p>Endre sluttdato for å gjenåpne perioden. Når sluttdato er passert, kan perioden rapporteres.</p>",
   "reporting_status": "Rapporteringsstatus",
   "reporting_status_description": "<p>Tabellen viser antall kandidater for din institusjon og behandlingsstatus på disse.</p> <p>Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.</p>",
@@ -2009,6 +2012,7 @@
     "year_from": "Fra år",
     "year_to": "Til år"
   },
+  "search_for_approval_title_or_id": "Søk på tittel eller ID",
   "search_in_national_research_publication": "Søk i over 2 millioner publikasjoner fra forskere fra universiteter, høyskoler og forskningsinstitusjoner over hele landet.",
   "sector": "Sektor",
   "select_curator": "Velg kurator",
@@ -2039,6 +2043,8 @@
   "sort_by_total_number_asc": "Totalt antall (stigende)",
   "sort_by_total_number_desc": "Totalt antall (synkende)",
   "start_merging": "Start sammenslåing",
+  "start_with_approval": "Start med godkjenning",
+  "start_with_approval_description": "Hvis prosjektet har en godkjenning, så kan du starte med den og få noen felt ferdig utfylt",
   "status_for_period": "Status for periode",
   "status_on_nvi_period": "Status på NVI-periode",
   "tasks": {
