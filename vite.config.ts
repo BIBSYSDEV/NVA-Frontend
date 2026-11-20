@@ -3,6 +3,7 @@
 import babel from '@rolldown/plugin-babel';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
+import { msw } from 'msw/vite';
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
 import { configDefaults } from 'vitest/config';
@@ -93,6 +94,10 @@ export default defineConfig({
       },
       {
         extends: true,
+        // NOTE: Serves the worker script from the installed msw package, so no copy of it lives in public/ and none can
+        // reach a production build. It belongs to this project alone: in worker-only mode the plugin emits the worker
+        // into every client bundle it is part of, so at the top level it would be back in the build.
+        plugins: [msw({ mode: 'worker-only' })],
         optimizeDeps: {
           // NOTE: Pre-bundle every dependency up front. Otherwise Vite discovers new dependencies in lazy routes
           // mid-run and reloads the test page, which fails the test. This happens on every cold cache, like in CI.
