@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { ApprovalSearchResponse } from '../../types/approval.types';
 import { ApprovalApiPath } from '../apiPaths';
 import { apiRequest2 } from '../apiRequest';
-import { searchApprovals } from '../approvalApi';
+import { searchApprovalsByIdentifier, searchApprovalsByQuery } from '../approvalApi';
 
 vi.mock('../apiRequest', () => ({
   apiRequest2: vi.fn(),
@@ -18,15 +18,24 @@ beforeEach(() => {
   vi.mocked(apiRequest2).mockResolvedValue({ data: searchResponse } as AxiosResponse<ApprovalSearchResponse>);
 });
 
-describe('searchApprovals()', () => {
+describe('searchApprovalsByQuery()', () => {
   test('Sends the search term as the query parameter', async () => {
-    await searchApprovals('brain');
+    await searchApprovalsByQuery('brain');
 
     expect(requestConfig().url).toBe(ApprovalApiPath.Approval);
     expect(requestConfig().params).toEqual({ query: 'brain' });
   });
 
   test('Returns the search response', async () => {
-    expect(await searchApprovals('brain')).toEqual(searchResponse);
+    expect(await searchApprovalsByQuery('brain')).toEqual(searchResponse);
+  });
+});
+
+describe('searchApprovalsByIdentifier()', () => {
+  test('Sends the identifier name and value separated by a colon as the identifier parameter', async () => {
+    await searchApprovalsByIdentifier({ name: 'REK', value: '123456' });
+
+    expect(requestConfig().url).toBe(ApprovalApiPath.Approval);
+    expect(requestConfig().params).toEqual({ identifier: 'REK:123456' });
   });
 });

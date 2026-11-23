@@ -1,4 +1,12 @@
-interface ApprovalIdentifier {
+import { SearchResponse2 } from './common.types';
+
+/** Identifier names of the approvals that can be connected to a project */
+export enum ApprovalIdentifierName {
+  Rek = 'REK',
+  Dmp = 'DMP',
+}
+
+export interface ApprovalIdentifier {
   type: 'Identifier';
   name: string;
   value: string;
@@ -12,7 +20,4 @@ export interface Approval {
   identifiers: ApprovalIdentifier[];
 }
 
-export interface ApprovalSearchResponse {
-  totalHits: number;
-  hits: Approval[];
-}
+export type ApprovalSearchResponse = SearchResponse2<Approval>;

@@ -5,13 +5,14 @@ import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { HeadTitle } from '../../components/HeadTitle';
-import { ProjectApprovalItem } from '../../components/project-approval-item/ProjectApprovalItem';
+import { ProjectApprovalList } from '../../components/project-approval-list/ProjectApprovalList';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RootState } from '../../redux/store';
 import { PrimaryColoredBox } from '../../styles/header-styles';
 import { CristinProject } from '../../types/project.types';
+import { getApprovedApprovals } from '../../utils/approval-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getEditProjectPath } from '../../utils/urlPaths';
 import { ProjectIconHeader } from '../project/components/ProjectIconHeader';
@@ -31,7 +32,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const userCanEditProject = canEditProject(user, project);
-  const approvedApprovals = project.approvals?.filter((approval) => approval.status === 'Approved') ?? [];
+  const approvedApprovals = getApprovedApprovals(project.approvals);
 
   return (
     <Paper elevation={0}>
@@ -86,11 +87,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
             <LandingPageAccordion
               dataTestId={dataTestId.projectLandingPage.approvalsAccordion}
               heading={`${t('approval')} (${approvedApprovals.length})`}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {approvedApprovals.map((approval) => (
-                  <ProjectApprovalItem key={`${approval.authority}-${approval.identifier}`} approval={approval} />
-                ))}
-              </Box>
+              <ProjectApprovalList approvals={approvedApprovals} />
             </LandingPageAccordion>
           </BetaFunctionality>
         )}

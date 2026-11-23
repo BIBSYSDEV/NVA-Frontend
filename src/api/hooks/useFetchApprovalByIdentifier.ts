@@ -1,18 +1,25 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { findApprovalWithIdentifier } from '../../utils/approval-helpers';
-import { searchApprovals } from '../approvalApi';
+import { NewProjectApproval } from '../../types/project.types';
+import { findApprovalWithIdentifier, getApprovalIdentifier } from '../../utils/approval-helpers';
+import { searchApprovalsByIdentifier } from '../approvalApi';
 
-/** Finds the approval with the given identifier value, such as a DMP number */
-export const useFetchApprovalByIdentifier = (identifier = '') => {
+/** Finds the approval in the approval API that a project approval was created from */
+export const useFetchApprovalByIdentifier = (
+  projectApproval?: Pick<NewProjectApproval, 'authority' | 'identifier'>
+) => {
   const { t } = useTranslation();
+  const approvalIdentifier = projectApproval ? getApprovalIdentifier(projectApproval) : null;
 
   return useQuery({
-    enabled: identifier.length > 0,
-    queryKey: ['approvalByIdentifier', identifier],
+    enabled: !!approvalIdentifier,
+    queryKey: ['approvalByIdentifier', approvalIdentifier],
     queryFn: async ({ signal }) => {
-      const searchResponse = await searchApprovals(identifier, signal);
-      return findApprovalWithIdentifier(searchResponse.hits, identifier);
+      if (!approvalIdentifier) {
+        return null;
+      }
+      const searchResponse = await searchApprovalsByIdentifier(approvalIdentifier, signal);
+      return findApprovalWithIdentifier(searchResponse.hits, approvalIdentifier);
     },
     meta: { errorMessage: t('feedback.error.search') },
   });

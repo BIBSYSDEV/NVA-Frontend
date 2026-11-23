@@ -76,14 +76,14 @@ export interface HealthProjectData {
 
 export type ProjectApprovalStatus = 'Approved' | 'Rejected';
 
-type ProjectApprovalAuthority =
+export type ProjectApprovalAuthority =
   | 'RegionalEthicalCommittees'
   | 'NorwegianAnimalResearchAuthority'
   | 'NorwegianDataProtectionAuthority'
   | 'NorwegianMedicinesAgency'
   | 'NorwegianDirectorateOfHealth';
 
-type ProjectApplicationCode =
+export type ProjectApplicationCode =
   | 'EthicalApproval'
   | 'BioBank'
   | 'DrugTrial'

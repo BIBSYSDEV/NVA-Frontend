@@ -8,6 +8,7 @@
   "add_file": "Legg til fil",
   "add_project": "Legg til prosjekt",
   "approval": "Godkjenning",
+  "approval_source_not_supported": "Denne typen godkjenning kan ikke knyttes til prosjekter ennå.",
   "approvals_cannot_be_changed": "Godkjenninger kan ikke endres etter at prosjektet er opprettet.",
   "approved": "Godkjent",
   "authorization": {
@@ -2044,7 +2045,7 @@
   "sort_by_total_number_desc": "Totalt antall (synkende)",
   "start_merging": "Start sammenslåing",
   "start_with_approval": "Start med godkjenning",
-  "start_with_approval_description": "Hvis prosjektet har en godkjenning, så kan du starte med den og få noen felt ferdig utfylt",
+  "start_with_approval_description": "Hvis prosjektet har en godkjenning, så kan du starte med den og få noen felt ferdig utfylt.",
   "status_for_period": "Status for periode",
   "status_on_nvi_period": "Status på NVI-periode",
   "tasks": {

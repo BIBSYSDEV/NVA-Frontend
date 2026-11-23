@@ -36,7 +36,7 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
       headline={t('project.form.start_with_empty_form_headline')}
       description={t('project.form.start_with_empty_form')}
       testId={dataTestId.newProjectPage.createEmptyProjectAccordion}
-      icon={<InsertDriveFileOutlinedIcon sx={{ height: '3rem', width: '3rem', mr: '0.75rem' }} />}>
+      icon={<InsertDriveFileOutlinedIcon />}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <TextField
           value={title}

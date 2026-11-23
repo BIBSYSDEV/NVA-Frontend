@@ -1,4 +1,4 @@
-import { CristinProject, ProjectContributor } from '../../../../types/project.types';
+import { CristinProject, ProjectContributor, SaveCristinProject } from '../../../../types/project.types';
 import { User } from '../../../../types/user.types';
 import { toDateString } from '../../../../utils/date-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
@@ -54,3 +54,7 @@ export const canEditProject = (user: User | null, project?: CristinProject) => {
 export const isRekProject = (project?: CristinProject) => project?.created.sourceShortName === 'REK';
 
 export const fundingSourceIsNfr = (sourceId = '') => sourceId.split('/').pop()?.toUpperCase() === 'NFR';
+
+/** Returns true when the project is saved in Cristin, since only saved projects have an id */
+export const isSavedProject = (project: SaveCristinProject | CristinProject): project is CristinProject =>
+  'id' in project;

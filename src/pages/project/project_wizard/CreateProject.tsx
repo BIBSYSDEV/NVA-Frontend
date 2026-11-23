@@ -54,6 +54,7 @@ const CreateProject = ({ toggleModal, onProjectCreated }: CreateProjectProps) =>
                 setNewProject={setNewProject}
                 setShowProjectForm={setShowProjectForm}
                 coordinatingInstitution={currentInstitutionQuery.data ?? emptyProject.coordinatingInstitution}
+                isLoadingCoordinatingInstitution={currentInstitutionQuery.isLoading}
               />
             </BetaFunctionality>
             <CreateNfrProject

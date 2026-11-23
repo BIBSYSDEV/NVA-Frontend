@@ -1,7 +1,13 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary, SvgIconProps, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, styled, SvgIconProps, Typography } from '@mui/material';
 import { ReactElement, ReactNode } from 'react';
 import { HorizontalBox } from '../../../components/styled/Wrappers';
+
+const IconWrapper = styled(Box)({
+  display: 'flex',
+  marginRight: '0.75rem',
+  '& svg': { height: '3rem', width: '3rem' },
+});
 
 interface CreateProjectAccordionProps {
   headline: string;
@@ -24,7 +30,7 @@ export const CreateProjectAccordion = ({
         sx={{ px: '1.25rem', py: '0.75rem' }}
         expandIcon={<ExpandMoreIcon sx={{ color: 'primary.dark', height: '2.5rem', width: '2.5rem' }} />}>
         <HorizontalBox>
-          {icon}
+          <IconWrapper>{icon}</IconWrapper>
           <div>
             <Typography sx={{ fontWeight: 'bold', pb: '0.25rem' }}>{headline}</Typography>
             {description && <Typography>{description}</Typography>}

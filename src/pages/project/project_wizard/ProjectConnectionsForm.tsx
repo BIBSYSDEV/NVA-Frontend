@@ -17,9 +17,7 @@ export const ProjectConnectionsForm = () => {
           <RelatedRegistrationsField />
         </FormBox>
         <BetaFunctionality>
-          <FormBox>
-            <RelatedApprovalField />
-          </FormBox>
+          <RelatedApprovalField />
         </BetaFunctionality>
       </Box>
     </ErrorBoundary>

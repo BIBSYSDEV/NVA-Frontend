@@ -153,6 +153,7 @@ export const dataTestId = {
     exportButton: 'export-button',
     exportLink: 'export-link',
     pagination: 'pagination',
+    projectApprovalLink: 'project-approval-link',
     save: 'save',
     showMoreButton: 'show-more-button',
     skeleton: 'skeleton',

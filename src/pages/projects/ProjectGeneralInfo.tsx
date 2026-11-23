@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
+import { getApprovedApprovals } from '../../utils/approval-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useBetaFlag } from '../../utils/hooks/useBetaFlag';
 import { getLanguageString } from '../../utils/translation-helpers';
@@ -28,9 +29,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
   const projectManager = getProjectManagers(project.contributors)?.[0];
   const betaEnabled = useBetaFlag();
   // TODO: Remove when the approvals accordion on the landing page is out of beta
-  const approvedApprovals = betaEnabled
-    ? []
-    : (project.approvals?.filter((approval) => approval.status === 'Approved') ?? []);
+  const approvedApprovals = betaEnabled ? [] : getApprovedApprovals(project.approvals);
 
   return (
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
