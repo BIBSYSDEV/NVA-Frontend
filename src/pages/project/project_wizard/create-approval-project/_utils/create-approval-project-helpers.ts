@@ -24,7 +24,7 @@ export const createProjectManagerFromUser = (
 
 /**
  * Creates the new project for an approval: the title comes from the approval, the approval is attached when its source
- * is supported, and the user becomes project manager at the coordinating institution.
+ * is supported, and the user becomes project manager at the coordinating institution when the user has a Cristin id.
  */
 export const createProjectFromApproval = (
   newProject: SaveCristinProject,
@@ -38,7 +38,9 @@ export const createProjectFromApproval = (
     ...newProject,
     title: approval.title,
     coordinatingInstitution,
-    contributors: user ? [createProjectManagerFromUser(user, coordinatingInstitution)] : newProject.contributors,
+    contributors: user?.cristinId
+      ? [createProjectManagerFromUser(user, coordinatingInstitution)]
+      : newProject.contributors,
     approvals: projectApproval ? [projectApproval] : [],
   };
 };

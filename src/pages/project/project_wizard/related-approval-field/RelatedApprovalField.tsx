@@ -11,6 +11,7 @@ import { getApprovedApprovals, toNewProjectApproval } from '../../../../utils/ap
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { isSavedProject } from '../../../registration/description_tab/projects_field/projectHelpers';
 import { FormBox } from '../styles';
+import { createFallbackApproval } from './_utils/related-approval-field-helpers';
 
 const approvalsFieldName = 'approvals';
 
@@ -45,8 +46,12 @@ export const RelatedApprovalField = () => {
 
 const NewProjectApprovalSearch = () => {
   const { values, setFieldValue } = useFormikContext<SaveCristinProject>();
-  const approvalQuery = useFetchApprovalByIdentifier(values.approvals?.[0]);
+  const storedApproval = values.approvals?.[0];
+  const approvalQuery = useFetchApprovalByIdentifier(storedApproval);
   const [selectedApproval, setSelectedApproval] = useState<Approval | null>(null);
+
+  const lookupFoundNothing = !approvalQuery.isFetching && !approvalQuery.data;
+  const fallbackApproval = storedApproval && lookupFoundNothing ? createFallbackApproval(storedApproval) : null;
 
   const changeApproval = (approval: Approval | null) => {
     setSelectedApproval(approval);
@@ -56,7 +61,7 @@ const NewProjectApprovalSearch = () => {
 
   return (
     <ApprovalSearch
-      selectedApproval={selectedApproval ?? approvalQuery.data ?? null}
+      selectedApproval={selectedApproval ?? approvalQuery.data ?? fallbackApproval}
       onChange={changeApproval}
       dataTestId={dataTestId.projectForm.relatedApprovalSearchField}
     />

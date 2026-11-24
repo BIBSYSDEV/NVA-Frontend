@@ -6,11 +6,6 @@ interface ProjectApprovalSource {
   applicationCode: ProjectApplicationCode;
 }
 
-/**
- * How Cristin registers the approvals from each supported source.
- * NOTE: REK (Regionale komiteer for medisinsk og helsefaglig forskningsetikk) gives ethical approvals.
- * DMP (Direktoratet for medisinske produkter, formerly Statens legemiddelverk) approves clinical drug trials.
- */
 const projectApprovalSourceByIdentifierName: Record<ApprovalIdentifierName, ProjectApprovalSource> = {
   [ApprovalIdentifierName.Rek]: { authority: 'RegionalEthicalCommittees', applicationCode: 'EthicalApproval' },
   [ApprovalIdentifierName.Dmp]: { authority: 'NorwegianMedicinesAgency', applicationCode: 'DrugTrial' },

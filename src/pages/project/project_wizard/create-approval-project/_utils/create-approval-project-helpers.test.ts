@@ -64,4 +64,11 @@ describe('createProjectFromApproval()', () => {
 
     expect(project.contributors).toEqual(emptyProject.contributors);
   });
+
+  test('Keeps the existing contributors when the user has no Cristin id', () => {
+    const userWithoutCristinId = { ...user, cristinId: undefined };
+    const project = createProjectFromApproval(emptyProject, makeApproval('REK'), userWithoutCristinId, institution);
+
+    expect(project.contributors).toEqual(emptyProject.contributors);
+  });
 });
