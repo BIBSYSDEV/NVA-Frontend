@@ -61,7 +61,7 @@ import {
   SerialPublication,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
-import { hasSameLicenseMenu, isLockedOnCorrectLicense } from './fileHelpers';
+import { hasSameLicenseMenu, isLockedOnCorrectLicense } from './license-menu-helpers';
 import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>

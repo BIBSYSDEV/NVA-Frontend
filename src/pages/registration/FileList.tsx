@@ -19,7 +19,7 @@ import { OpenInNewLink } from '../../components/OpenInNewLink';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getHelpModalLicenses, isSourceCodeCategory } from '../../utils/fileHelpers';
+import { getHelpModalLicenses, isSourceCodeCategory } from '../../utils/license-menu-helpers';
 import {
   associatedArtifactIsFile,
   isCategoryWithFileVersion,

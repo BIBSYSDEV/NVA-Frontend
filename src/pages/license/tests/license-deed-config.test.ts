@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import nbTranslations from '../../../translations/nbTranslations.json';
 import { LicenseDeedSlug, licenses, LicenseUri } from '../../../types/license.types';
 import { ResearchDataType } from '../../../types/publicationFieldNames';
-import { getAdditionalLicenses, getShortListLicenses } from '../../../utils/fileHelpers';
+import { getAdditionalLicenses, getShortListLicenses } from '../../../utils/license-menu-helpers';
 import { getLicenseDeedPath } from '../../../utils/urlPaths';
 import {
   getLicenseDeed,

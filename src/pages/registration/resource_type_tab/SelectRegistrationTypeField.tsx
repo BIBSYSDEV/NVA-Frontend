@@ -42,16 +42,14 @@ import {
 import {
   allPublicationInstanceTypes,
   contextTypeBaseFieldName,
-  FileFieldNames,
   instanceTypeBaseFieldName,
   PublicationType,
   ResearchDataType,
   ResourceFieldNames,
-  SpecificFileFieldNames,
 } from '../../../types/publicationFieldNames';
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { hasSameLicenseMenu, licenseNeedsReset } from '../../../utils/fileHelpers';
+import { getLicenseFieldsToReset } from '../../../utils/license-menu-helpers';
 import {
   getDisabledCategories,
   getMainRegistrationType,
@@ -269,19 +267,12 @@ export const SelectRegistrationTypeField = () => {
           break;
       }
       // A license picked before the change may no longer be offered, and clearing it makes the user pick again
-      if (!hasSameLicenseMenu(currentInstanceType, newInstanceType)) {
-        const userMayEditImportCandidateFiles = userIsValidImporter(user, values);
-
-        values.associatedArtifacts.forEach((associatedArtifact, index) => {
-          if (licenseNeedsReset(associatedArtifact, newInstanceType, userMayEditImportCandidateFiles)) {
-            setFieldValue(
-              `${FileFieldNames.AssociatedArtifacts}[${index}].${SpecificFileFieldNames.License}`,
-              '',
-              false
-            );
-          }
-        });
-      }
+      getLicenseFieldsToReset(
+        values.associatedArtifacts,
+        currentInstanceType,
+        newInstanceType,
+        userIsValidImporter(user, values)
+      ).forEach((fieldName) => setFieldValue(fieldName, '', false));
 
       setTimeout(() => validateForm(), 0);
     }
