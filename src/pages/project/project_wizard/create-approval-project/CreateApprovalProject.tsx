@@ -45,7 +45,7 @@ export const CreateApprovalProject = ({
       headline={t('start_with_approval')}
       description={t('start_with_approval_description')}
       testId={dataTestId.newProjectPage.createApprovalProjectAccordion}
-      icon={<CheckCircleOutlineOutlinedIcon />}>
+      icon={<CheckCircleOutlineOutlinedIcon sx={{ height: '3rem', width: '3rem', mr: '0.75rem' }} />}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <ApprovalSearch
           selectedApproval={selectedApproval}

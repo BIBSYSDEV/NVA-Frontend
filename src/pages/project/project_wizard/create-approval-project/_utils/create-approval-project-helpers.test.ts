@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { Approval } from '../../../../../types/approval.types';
 import { emptyProject, ProjectOrganization } from '../../../../../types/project.types';
-import { createProjectFromApproval, createProjectManagerFromUser } from './create-approval-project-helpers';
+import { createProjectFromApproval } from './create-approval-project-helpers';
 
 const institution: ProjectOrganization = {
   type: 'Organization',
@@ -14,28 +14,6 @@ const user = {
   givenName: 'Ola',
   familyName: 'Nordmann',
 };
-
-describe('createProjectManagerFromUser()', () => {
-  test('Adds the user as project manager affiliated with the institution', () => {
-    expect(createProjectManagerFromUser(user, institution)).toEqual({
-      identity: { type: 'Person', id: user.cristinId, firstName: 'Ola', lastName: 'Nordmann' },
-      roles: [
-        {
-          type: 'ProjectManager',
-          affiliation: { type: 'Organization', id: institution.id, labels: institution.labels },
-        },
-      ],
-    });
-  });
-
-  test('Leaves the affiliation empty when the institution has no id', () => {
-    const institutionWithoutId: ProjectOrganization = { type: 'Organization', id: '', labels: {} };
-
-    expect(createProjectManagerFromUser(user, institutionWithoutId).roles).toEqual([
-      { type: 'ProjectManager', affiliation: undefined },
-    ]);
-  });
-});
 
 const makeApproval = (identifierName: string): Approval => ({
   type: 'Approval',
@@ -51,23 +29,36 @@ describe('createProjectFromApproval()', () => {
 
     expect(project.title).toBe('A study of diabetes');
     expect(project.coordinatingInstitution).toEqual(institution);
-    expect(project.contributors).toEqual([createProjectManagerFromUser(user, institution)]);
+    expect(project.contributors).toEqual([
+      {
+        identity: { type: 'Person', id: user.cristinId, firstName: 'Ola', lastName: 'Nordmann' },
+        roles: [
+          {
+            type: 'ProjectManager',
+            affiliation: { type: 'Organization', id: institution.id, labels: institution.labels },
+          },
+        ],
+      },
+    ]);
     expect(project.approvals).toMatchObject([{ authority: 'RegionalEthicalCommittees', identifier: '123456' }]);
   });
 
-  test('Attaches no approval when the approval source is not supported', () => {
+  test('Leaves the affiliation of the project manager empty when the institution has no id', () => {
+    const institutionWithoutId: ProjectOrganization = { type: 'Organization', id: '', labels: {} };
+    const project = createProjectFromApproval(emptyProject, makeApproval('REK'), user, institutionWithoutId);
+
+    expect(project.contributors[0].roles).toEqual([{ type: 'ProjectManager', affiliation: undefined }]);
+  });
+
+  test('Attaches no approval when the approval has no REK or DMP identifier', () => {
     expect(createProjectFromApproval(emptyProject, makeApproval('Unknown'), user, institution).approvals).toEqual([]);
   });
 
-  test('Keeps the existing contributors when there is no user', () => {
-    const project = createProjectFromApproval(emptyProject, makeApproval('REK'), null, institution);
-
-    expect(project.contributors).toEqual(emptyProject.contributors);
-  });
-
-  test('Keeps the existing contributors when the user has no Cristin id', () => {
-    const userWithoutCristinId = { ...user, cristinId: undefined };
-    const project = createProjectFromApproval(emptyProject, makeApproval('REK'), userWithoutCristinId, institution);
+  test.each([
+    ['there is no user', null],
+    ['the user has no Cristin id', { ...user, cristinId: undefined }],
+  ])('Keeps the existing contributors when %s', (_, projectUser) => {
+    const project = createProjectFromApproval(emptyProject, makeApproval('REK'), projectUser, institution);
 
     expect(project.contributors).toEqual(emptyProject.contributors);
   });

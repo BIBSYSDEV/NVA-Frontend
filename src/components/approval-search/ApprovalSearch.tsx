@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchApprovals } from '../../api/hooks/useSearchApprovals';
 import { Approval } from '../../types/approval.types';
-import { isSupportedApproval } from '../../utils/approval-helpers';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { AutocompleteTextField } from '../AutocompleteTextField';
 
@@ -28,7 +27,6 @@ export const ApprovalSearch = ({ selectedApproval, onChange, dataTestId }: Appro
       filterOptions={(options) => options}
       getOptionLabel={(option) => option.title}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      getOptionDisabled={(option) => !isSupportedApproval(option)}
       onInputChange={(_, newInputValue, reason) => {
         if (reason === 'input') {
           setSearchTerm(newInputValue);
@@ -60,18 +58,13 @@ interface ApprovalOptionProps {
   approval: Approval;
 }
 
-const ApprovalOption = ({ approval }: ApprovalOptionProps) => {
-  const { t } = useTranslation();
-
-  return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Typography variant="subtitle1">{approval.title}</Typography>
-      {approval.identifiers.map((identifier) => (
-        <Typography key={`${identifier.name}-${identifier.value}`}>
-          {identifier.name}: {identifier.value}
-        </Typography>
-      ))}
-      {!isSupportedApproval(approval) && <Typography>{t('approval_source_not_supported')}</Typography>}
-    </Box>
-  );
-};
+const ApprovalOption = ({ approval }: ApprovalOptionProps) => (
+  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Typography variant="subtitle1">{approval.title}</Typography>
+    {approval.identifiers.map((identifier) => (
+      <Typography key={`${identifier.name}-${identifier.value}`}>
+        {identifier.name}: {identifier.value}
+      </Typography>
+    ))}
+  </Box>
+);

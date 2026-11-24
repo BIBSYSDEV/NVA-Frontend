@@ -76,27 +76,11 @@ export interface HealthProjectData {
 
 export type ProjectApprovalStatus = 'Approved' | 'Rejected';
 
-export type ProjectApprovalAuthority =
-  | 'RegionalEthicalCommittees'
-  | 'NorwegianAnimalResearchAuthority'
-  | 'NorwegianDataProtectionAuthority'
-  | 'NorwegianMedicinesAgency'
-  | 'NorwegianDirectorateOfHealth';
-
-export type ProjectApplicationCode =
-  | 'EthicalApproval'
-  | 'BioBank'
-  | 'DrugTrial'
-  | 'BioTechnology'
-  | 'MedicalEquipment'
-  | 'AnimalTesting'
-  | 'SensitiveInformation';
-
 export interface NewProjectApproval {
   type: 'Approval';
   date: string;
-  authority: ProjectApprovalAuthority;
-  applicationCode?: ProjectApplicationCode;
+  authority: string;
+  applicationCode: string;
   status: ProjectApprovalStatus;
   identifier: string;
 }

@@ -9,9 +9,7 @@ import { Approval } from '../../../../types/approval.types';
 import { CristinProject, SaveCristinProject } from '../../../../types/project.types';
 import { getApprovedApprovals, toNewProjectApproval } from '../../../../utils/approval-helpers';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { isSavedProject } from '../../../registration/description_tab/projects_field/projectHelpers';
 import { FormBox } from '../styles';
-import { createFallbackApproval } from './_utils/related-approval-field-helpers';
 
 const approvalsFieldName = 'approvals';
 
@@ -19,7 +17,7 @@ const approvalsFieldName = 'approvals';
 export const RelatedApprovalField = () => {
   const { t } = useTranslation();
   const { values } = useFormikContext<SaveCristinProject | CristinProject>();
-  const isNewProject = !isSavedProject(values);
+  const isNewProject = !('id' in values);
   const approvedApprovals = getApprovedApprovals(values.approvals);
 
   if (!isNewProject && approvedApprovals.length === 0) {
@@ -30,10 +28,7 @@ export const RelatedApprovalField = () => {
     <FormBox>
       <Typography variant="h2">{t('related_approval')}</Typography>
       {isNewProject ? (
-        <>
-          <Typography>{t('related_approval_description')}</Typography>
-          <NewProjectApprovalSearch />
-        </>
+        <NewProjectApprovalSearch />
       ) : (
         <>
           <Typography>{t('approvals_cannot_be_changed')}</Typography>
@@ -50,8 +45,18 @@ const NewProjectApprovalSearch = () => {
   const approvalQuery = useFetchApprovalByIdentifier(storedApproval);
   const [selectedApproval, setSelectedApproval] = useState<Approval | null>(null);
 
+  // NOTE: Shows the stored identifier when the approval cannot be found, so a saved approval is never hidden
   const lookupFoundNothing = !approvalQuery.isFetching && !approvalQuery.data;
-  const fallbackApproval = storedApproval && lookupFoundNothing ? createFallbackApproval(storedApproval) : null;
+  const fallbackApproval: Approval | null =
+    storedApproval && lookupFoundNothing
+      ? {
+          type: 'Approval',
+          id: storedApproval.identifier,
+          handle: '',
+          title: storedApproval.identifier,
+          identifiers: [],
+        }
+      : null;
 
   const changeApproval = (approval: Approval | null) => {
     setSelectedApproval(approval);

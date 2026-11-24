@@ -7,7 +7,7 @@ import { toNewProjectApproval } from '../../../../../utils/approval-helpers';
  * Creates a project manager contributor for the user, affiliated with the given institution.
  * The affiliation is left empty when the institution has no id, so the user can choose it in the project form.
  */
-export const createProjectManagerFromUser = (
+const createProjectManagerFromUser = (
   user: Pick<User, 'cristinId' | 'givenName' | 'familyName'>,
   institution: ProjectOrganization
 ): ProjectContributor => ({

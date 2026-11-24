@@ -79,7 +79,7 @@ export const CreateNfrProject = ({
       headline={t('project.form.start_with_nfr_financing')}
       description={t('project.form.start_with_nfr_financing_details')}
       testId={dataTestId.newProjectPage.createNFRProjectAccordion}
-      icon={<PaidOutlinedIcon />}>
+      icon={<PaidOutlinedIcon sx={{ height: '3rem', width: '3rem', mr: '0.75rem' }} />}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <NfrProjectSearch selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
         <Button

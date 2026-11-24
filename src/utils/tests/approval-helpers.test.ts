@@ -1,12 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { Approval, ApprovalIdentifier } from '../../types/approval.types';
-import {
-  findApprovalWithIdentifier,
-  getApprovalIdentifier,
-  getApprovedApprovals,
-  isSupportedApproval,
-  toNewProjectApproval,
-} from '../approval-helpers';
+import { getApprovalIdentifier, getApprovedApprovals, toNewProjectApproval } from '../approval-helpers';
 
 const makeApproval = (id: string, identifiers: Pick<ApprovalIdentifier, 'name' | 'value'>[]): Approval => ({
   type: 'Approval',
@@ -19,21 +13,6 @@ const makeApproval = (id: string, identifiers: Pick<ApprovalIdentifier, 'name' |
 const rekIdentifier = { name: 'REK', value: '123456' };
 const dmpIdentifier = { name: 'DMP', value: '2024-512733-32-00' };
 const unsupportedIdentifier = { name: 'Unknown', value: '987' };
-
-describe('isSupportedApproval()', () => {
-  test('Returns true when the approval has a REK or DMP identifier', () => {
-    expect(isSupportedApproval(makeApproval('a', [rekIdentifier]))).toBe(true);
-    expect(isSupportedApproval(makeApproval('b', [dmpIdentifier]))).toBe(true);
-  });
-
-  test('Returns true when one of several identifiers is supported', () => {
-    expect(isSupportedApproval(makeApproval('a', [unsupportedIdentifier, rekIdentifier]))).toBe(true);
-  });
-
-  test('Returns false when the approval has no supported identifier', () => {
-    expect(isSupportedApproval(makeApproval('a', [unsupportedIdentifier]))).toBe(false);
-  });
-});
 
 describe('toNewProjectApproval()', () => {
   const today = new Date('2026-11-19T12:00:00.000Z');
@@ -60,7 +39,7 @@ describe('toNewProjectApproval()', () => {
     });
   });
 
-  test('Uses the first supported identifier when the approval has several', () => {
+  test('Uses the first REK or DMP identifier in the order the approval API returns them', () => {
     const approval = makeApproval('a', [unsupportedIdentifier, dmpIdentifier, rekIdentifier]);
 
     expect(toNewProjectApproval(approval, today)).toMatchObject({
@@ -69,7 +48,7 @@ describe('toNewProjectApproval()', () => {
     });
   });
 
-  test('Returns null when the approval has no supported identifier', () => {
+  test('Returns null when the approval has no REK or DMP identifier', () => {
     expect(toNewProjectApproval(makeApproval('a', [unsupportedIdentifier]), today)).toBeNull();
   });
 });
@@ -86,7 +65,7 @@ describe('getApprovalIdentifier()', () => {
     });
   });
 
-  test('Returns null when the authority is not a supported source', () => {
+  test('Returns null when the authority is not REK or DMP', () => {
     expect(getApprovalIdentifier({ authority: 'NorwegianDataProtectionAuthority', identifier: '123' })).toBeNull();
   });
 
@@ -105,25 +84,5 @@ describe('getApprovedApprovals()', () => {
 
   test('Returns an empty list when there are no approvals', () => {
     expect(getApprovedApprovals(undefined)).toEqual([]);
-  });
-});
-
-describe('findApprovalWithIdentifier()', () => {
-  test('Returns the approval with an identifier matching both name and value', () => {
-    const approvals = [makeApproval('a', [dmpIdentifier]), makeApproval('b', [rekIdentifier])];
-
-    expect(findApprovalWithIdentifier(approvals, rekIdentifier)?.id).toBe('b');
-  });
-
-  test('Ignores identifiers with the same value but another name', () => {
-    const approvals = [makeApproval('a', [{ name: 'DMP', value: '123456' }]), makeApproval('b', [rekIdentifier])];
-
-    expect(findApprovalWithIdentifier(approvals, rekIdentifier)?.id).toBe('b');
-  });
-
-  test('Returns null when no identifier matches exactly', () => {
-    const approvals = [makeApproval('a', [{ name: 'REK', value: '1234567' }])];
-
-    expect(findApprovalWithIdentifier(approvals, rekIdentifier)).toBeNull();
   });
 });

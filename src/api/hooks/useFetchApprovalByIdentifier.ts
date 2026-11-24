@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { NewProjectApproval } from '../../types/project.types';
-import { findApprovalWithIdentifier, getApprovalIdentifier } from '../../utils/approval-helpers';
+import { getApprovalIdentifier } from '../../utils/approval-helpers';
 import { searchApprovalsByIdentifier } from '../approvalApi';
 
 /** Finds the approval in the approval API that a project approval was created from */
@@ -19,7 +19,8 @@ export const useFetchApprovalByIdentifier = (
         return null;
       }
       const searchResponse = await searchApprovalsByIdentifier(approvalIdentifier, signal);
-      return findApprovalWithIdentifier(searchResponse.hits, approvalIdentifier);
+      // NOTE: The identifier search only returns exact matches
+      return searchResponse.hits[0] ?? null;
     },
     meta: { errorMessage: t('feedback.error.search') },
   });

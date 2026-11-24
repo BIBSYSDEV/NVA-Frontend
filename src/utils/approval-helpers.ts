@@ -1,67 +1,44 @@
-import { Approval, ApprovalIdentifier, ApprovalIdentifierName } from '../types/approval.types';
-import { NewProjectApproval, ProjectApplicationCode, ProjectApprovalAuthority } from '../types/project.types';
+import { Approval, ApprovalIdentifier } from '../types/approval.types';
+import { NewProjectApproval } from '../types/project.types';
 
-interface ProjectApprovalSource {
-  authority: ProjectApprovalAuthority;
-  applicationCode: ProjectApplicationCode;
-}
+type ProjectApprovalSource = Pick<NewProjectApproval, 'authority' | 'applicationCode'>;
 
-const projectApprovalSourceByIdentifierName: Record<ApprovalIdentifierName, ProjectApprovalSource> = {
-  [ApprovalIdentifierName.Rek]: { authority: 'RegionalEthicalCommittees', applicationCode: 'EthicalApproval' },
-  [ApprovalIdentifierName.Dmp]: { authority: 'NorwegianMedicinesAgency', applicationCode: 'DrugTrial' },
-};
-
-const supportedIdentifierNames = Object.values(ApprovalIdentifierName);
-
-const isSupportedIdentifierName = (identifierName: string): identifierName is ApprovalIdentifierName =>
-  supportedIdentifierNames.some((supportedIdentifierName) => supportedIdentifierName === identifierName);
-
-interface SupportedApprovalIdentifier {
-  name: ApprovalIdentifierName;
-  value: string;
-}
-
-const findSupportedIdentifier = (approval: Approval): SupportedApprovalIdentifier | null => {
-  const supportedIdentifier = approval.identifiers.find((identifier) => isSupportedIdentifierName(identifier.name));
-  return supportedIdentifier && isSupportedIdentifierName(supportedIdentifier.name)
-    ? { name: supportedIdentifier.name, value: supportedIdentifier.value }
-    : null;
-};
-
-/** Returns true when the approval has an identifier from a source that can be connected to a project */
-export const isSupportedApproval = (approval: Approval) => !!findSupportedIdentifier(approval);
+const projectApprovalSourceByIdentifierName = new Map<string, ProjectApprovalSource>([
+  ['REK', { authority: 'RegionalEthicalCommittees', applicationCode: 'EthicalApproval' }],
+  ['DMP', { authority: 'NorwegianMedicinesAgency', applicationCode: 'DrugTrial' }],
+]);
 
 /**
- * Creates the project approval for an approval from the approval API, based on its first supported identifier.
- * Returns null when the approval has no supported identifier.
+ * Creates the project approval for an approval from the approval API, based on its first REK or DMP identifier.
+ * Returns null when the approval has neither.
  */
 export const toNewProjectApproval = (approval: Approval, today = new Date()): NewProjectApproval | null => {
-  const supportedIdentifier = findSupportedIdentifier(approval);
-  if (!supportedIdentifier) {
-    return null;
+  for (const identifier of approval.identifiers) {
+    const source = projectApprovalSourceByIdentifierName.get(identifier.name);
+    if (source) {
+      return {
+        type: 'Approval',
+        // TODO: Use the date of the approval when the approval API provides it
+        date: today.toISOString(),
+        ...source,
+        status: 'Approved',
+        identifier: identifier.value,
+      };
+    }
   }
-
-  return {
-    type: 'Approval',
-    // TODO: Use the date of the approval when the approval API provides it
-    date: today.toISOString(),
-    ...projectApprovalSourceByIdentifierName[supportedIdentifier.name],
-    status: 'Approved',
-    identifier: supportedIdentifier.value,
-  };
+  return null;
 };
 
 /**
  * Returns the identifier the project approval can be found with in the approval API,
- * or null when the authority of the project approval is not a supported source.
+ * or null when the authority of the project approval is not REK or DMP.
  */
 export const getApprovalIdentifier = (
   projectApproval: Pick<NewProjectApproval, 'authority' | 'identifier'>
 ): Pick<ApprovalIdentifier, 'name' | 'value'> | null => {
-  const identifierName = supportedIdentifierNames.find(
-    (supportedIdentifierName) =>
-      projectApprovalSourceByIdentifierName[supportedIdentifierName].authority === projectApproval.authority
-  );
+  const sourceEntries = [...projectApprovalSourceByIdentifierName.entries()];
+  const matchingEntry = sourceEntries.find(([, source]) => source.authority === projectApproval.authority);
+  const identifierName = matchingEntry?.[0];
 
   return identifierName && projectApproval.identifier
     ? { name: identifierName, value: projectApproval.identifier }
@@ -72,14 +49,3 @@ export const getApprovalIdentifier = (
 export const getApprovedApprovals = <ApprovalType extends Pick<NewProjectApproval, 'status'>>(
   projectApprovals: ApprovalType[] = []
 ) => projectApprovals.filter((projectApproval) => projectApproval.status === 'Approved');
-
-/** Returns the approval with an identifier matching both name and value, or null when none match */
-export const findApprovalWithIdentifier = (
-  approvals: Approval[],
-  approvalIdentifier: Pick<ApprovalIdentifier, 'name' | 'value'>
-) =>
-  approvals.find((approval) =>
-    approval.identifiers.some(
-      (identifier) => identifier.name === approvalIdentifier.name && identifier.value === approvalIdentifier.value
-    )
-  ) ?? null;

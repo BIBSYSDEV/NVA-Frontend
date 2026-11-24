@@ -25,10 +25,6 @@ describe('searchApprovalsByQuery()', () => {
     expect(requestConfig().url).toBe(ApprovalApiPath.Approval);
     expect(requestConfig().params).toEqual({ query: 'brain' });
   });
-
-  test('Returns the search response', async () => {
-    expect(await searchApprovalsByQuery('brain')).toEqual(searchResponse);
-  });
 });
 
 describe('searchApprovalsByIdentifier()', () => {
