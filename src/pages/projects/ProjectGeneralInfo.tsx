@@ -7,6 +7,7 @@ import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
 import { getApprovedApprovals } from '../../utils/approval-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useBetaFlag } from '../../utils/hooks/useBetaFlag';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { getResearchProfilePath } from '../../utils/urlPaths';
 import { getFullName, getValueByKey } from '../../utils/user-helpers';
@@ -26,7 +27,9 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
   const projectPeriodString = getProjectPeriod(project);
   const projectStatusString = t(`project.status.${project.status}`);
   const projectManager = getProjectManagers(project.contributors)?.[0];
-  const approvedApprovals = getApprovedApprovals(project.approvals);
+  const betaEnabled = useBetaFlag();
+  // TODO: Remove when the approvals accordion on the landing page is out of beta
+  const approvedApprovals = betaEnabled ? [] : getApprovedApprovals(project.approvals);
 
   return (
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
