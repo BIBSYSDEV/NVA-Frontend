@@ -32,7 +32,7 @@ if (
 }
 
 const Root = () => {
-  useAuthErrorListener();
+  const loginFailed = useAuthErrorListener();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -60,7 +60,8 @@ const Root = () => {
     } else {
       getUser();
     }
-  }, [dispatch]);
+    // Runs again when the login fails, since the first call may then wait for minutes
+  }, [dispatch, loginFailed]);
 
   const mustAcceptTerms = user && user.currentTerms !== user.acceptedTerms;
   const mustCreatePerson = user && !user.cristinId && !mustAcceptTerms;
