@@ -1,16 +1,5 @@
-interface MathJax {
-  typesetPromise: () => Promise<unknown>;
-  startup?: {
-    promise?: Promise<unknown>;
-  };
-}
-
-interface MathJaxWindow extends Window {
-  MathJax?: MathJax;
-}
-
-const mathJaxScriptId = 'mathjax-script';
-const mathJaxScriptSrc = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
+/** Marks an element whose text may contain formulas, such as a title or an abstract. Other text is not typeset. */
+export const mathJaxContentClassName = 'mathjax-content';
 
 /**
  * The formula markers MathJax 3 recognizes by default. A lone '$' is not one of them, so text with
@@ -20,61 +9,31 @@ const mathJaxRegex = /\\\(|\\\[|\$\$|\\begin\{/;
 
 export const stringIncludesMathJax = (input = '') => mathJaxRegex.test(input);
 
-let mathJaxLoader: Promise<void> | null = null;
+/** Finds the elements marked for MathJax that contain a formula. */
+export const getElementsWithMathJax = (root: ParentNode) =>
+  Array.from(root.querySelectorAll<HTMLElement>(`.${mathJaxContentClassName}`)).filter((element) =>
+    stringIncludesMathJax(element.textContent ?? '')
+  );
 
-const loadMathJax = () => {
-  if (!mathJaxLoader) {
-    mathJaxLoader = new Promise<void>((resolve, reject) => {
-      const script = document.createElement('script');
-      script.id = mathJaxScriptId;
-      script.src = mathJaxScriptSrc;
-      script.async = true;
-      script.onload = () => resolve();
-      script.onerror = () => {
-        // Discard the failed attempt, so a later call can retry instead of awaiting this rejection
-        script.remove();
-        mathJaxLoader = null;
-        reject(new Error('Failed to load MathJax'));
-      };
+let mathJaxDocumentLoader: Promise<typeof import('./mathJaxDocument')> | null = null;
 
-      document.head.appendChild(script);
+// MathJax is large, so it is loaded the first time a formula is shown
+const loadMathJaxDocument = () => {
+  if (!mathJaxDocumentLoader) {
+    mathJaxDocumentLoader = import('./mathJaxDocument').catch((error) => {
+      // Discard the failed attempt, so a later call can retry instead of awaiting this rejection
+      mathJaxDocumentLoader = null;
+      throw error;
     });
   }
-  return mathJaxLoader;
+  return mathJaxDocumentLoader;
 };
 
-const runTypeset = async () => {
-  const mathJaxWindow = window as MathJaxWindow;
-  if (!mathJaxWindow.MathJax?.typesetPromise) {
-    // Awaiting the shared loader means callers arriving while the script is in flight are served
-    // once it is ready, instead of being dropped
-    await loadMathJax();
+export const typesetMathJax = async (elements: HTMLElement[]) => {
+  try {
+    const { typesetElements } = await loadMathJaxDocument();
+    typesetElements(elements);
+  } catch {
+    // Ignore failures (invalid TeX, chunk unavailable, etc.) so one bad run cannot block later ones
   }
-  // Typesetting cannot start before MathJax has finished initializing itself
-  await mathJaxWindow.MathJax?.startup?.promise;
-  await mathJaxWindow.MathJax?.typesetPromise?.();
-};
-
-// MathJax must not be asked to typeset while a previous run is in progress, so runs are chained.
-// At most one run is kept waiting: any further callers are covered by that run, since it has not
-// looked at the document yet.
-let typesetQueue: Promise<void> = Promise.resolve();
-let queuedRuns = 0;
-
-export const typesetMathJax = () => {
-  if (queuedRuns > 1) {
-    return typesetQueue;
-  }
-
-  queuedRuns++;
-  typesetQueue = typesetQueue
-    .then(runTypeset)
-    .catch(() => {
-      // Ignore failures (invalid TeX, CDN unavailable, etc.) so one bad run cannot block later ones
-    })
-    .finally(() => {
-      queuedRuns--;
-    });
-
-  return typesetQueue;
 };

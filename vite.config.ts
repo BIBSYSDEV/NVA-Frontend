@@ -6,6 +6,7 @@ import { playwright } from '@vitest/browser-playwright';
 import { msw } from 'msw/vite';
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
+import mathJaxPackage from 'mathjax-full/package.json';
 import { configDefaults } from 'vitest/config';
 
 const largeLibraries = [
@@ -35,6 +36,10 @@ const testFilesFolder = 'src/utils/testfiles';
 const entryFile = 'src/index.tsx';
 
 export default defineConfig({
+  define: {
+    // NOTE: MathJax expects its bundler to set its version. Without it, MathJax reads package.json with eval('require').
+    PACKAGE_VERSION: JSON.stringify(mathJaxPackage.version),
+  },
   plugins: [
     babel({ presets: [reactCompilerPreset()] }),
     react(),
