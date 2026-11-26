@@ -1,6 +1,11 @@
 import { describe, expect, test } from 'vitest';
 import { Approval, ApprovalIdentifier } from '../../types/approval.types';
-import { getApprovalIdentifier, getApprovedApprovals, toNewProjectApproval } from '../approval-helpers';
+import {
+  getApprovalIdentifier,
+  getApprovalViewUrl,
+  getApprovedApprovals,
+  toNewProjectApproval,
+} from '../approval-helpers';
 
 const makeApproval = (id: string, identifiers: Pick<ApprovalIdentifier, 'name' | 'value'>[]): Approval => ({
   type: 'Approval',
@@ -84,5 +89,22 @@ describe('getApprovedApprovals()', () => {
 
   test('Returns an empty list when there are no approvals', () => {
     expect(getApprovedApprovals(undefined)).toEqual([]);
+  });
+});
+
+describe('getApprovalViewUrl()', () => {
+  test('Returns the view URL on the API host for the identifier of the approval', () => {
+    expect(
+      getApprovalViewUrl(
+        'https://api.dev.nva.aws.unit.no/approval/b62513c0-42b5-4e6f-a856-c4f234e6afb3',
+        'https://api.dev.nva.aws.unit.no/'
+      )
+    ).toBe('https://api.dev.nva.aws.unit.no/approval/b62513c0-42b5-4e6f-a856-c4f234e6afb3/view');
+  });
+
+  test('Uses the given API host, not the host of the approval id', () => {
+    expect(getApprovalViewUrl('https://api.nva.unit.no/approval/abc', 'https://api.test.nva.aws.unit.no/')).toBe(
+      'https://api.test.nva.aws.unit.no/approval/abc/view'
+    );
   });
 });

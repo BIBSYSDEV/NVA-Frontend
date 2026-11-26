@@ -1,5 +1,8 @@
+import { ApprovalApiPath } from '../api/apiPaths';
 import { Approval, ApprovalIdentifier } from '../types/approval.types';
 import { NewProjectApproval } from '../types/project.types';
+import { API_URL } from './constants';
+import { getIdentifierFromId } from './general-helpers';
 
 type ProjectApprovalSource = Pick<NewProjectApproval, 'authority' | 'applicationCode'>;
 
@@ -49,3 +52,7 @@ export const getApprovalIdentifier = (
 export const getApprovedApprovals = <ApprovalType extends Pick<NewProjectApproval, 'status'>>(
   projectApprovals: ApprovalType[] = []
 ) => projectApprovals.filter((projectApproval) => projectApproval.status === 'Approved');
+
+/** Returns the URL of the public view of an approval, which shows the data from the source of the approval */
+export const getApprovalViewUrl = (approvalId: string, apiUrl = API_URL) =>
+  new URL(`${ApprovalApiPath.Approval}/${getIdentifierFromId(approvalId)}/view`, apiUrl).toString();

@@ -1,6 +1,7 @@
 import { Box, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { useFetchApprovalByIdentifier } from '../../api/hooks/useFetchApprovalByIdentifier';
 import { ProjectApproval } from '../../types/project.types';
+import { getApprovalViewUrl } from '../../utils/approval-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';
 
@@ -34,7 +35,7 @@ const ProjectApprovalItem = ({ approval }: ProjectApprovalItemProps) => {
         <Skeleton width="60%" />
       ) : foundApproval ? (
         <MuiLink
-          href={foundApproval.handle}
+          href={getApprovalViewUrl(foundApproval.id)}
           target="_blank"
           rel="noopener noreferrer"
           data-testid={dataTestId.common.projectApprovalLink}>
