@@ -4,7 +4,7 @@ version: 0.2
 
 env:
   variables:
-    VITE_API_HOST: 'https://my-nva-api.no'
+    VITE_API_HOST: 'https://my.nva.api.test'
     VITE_USE_MOCK: 'true'
 
 phases:

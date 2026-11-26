@@ -24,6 +24,7 @@ import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames'
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { mathJaxContentClassName } from '../../utils/mathJaxHelpers';
 import {
   getAssociatedLinks,
   getTitleString,
@@ -98,7 +99,10 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             textColor="primary.contrastText"
             publicationInstance={artisticPublicationInstance}
           />
-          <TruncatableTypography variant="h1" sx={{ color: 'primary.contrastText' }}>
+          <TruncatableTypography
+            variant="h1"
+            className={mathJaxContentClassName}
+            sx={{ color: 'primary.contrastText' }}>
             {mainTitle}
           </TruncatableTypography>
         </Box>

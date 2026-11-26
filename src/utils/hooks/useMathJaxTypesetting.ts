@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
-import { stringIncludesMathJax, typesetMathJax } from '../mathJaxHelpers';
+import { getElementsWithMathJax, typesetMathJax } from '../mathJaxHelpers';
 
 const typesetDebounce = 150;
 
 const observerOptions: MutationObserverInit = { childList: true, characterData: true, subtree: true };
 
 /**
- * Loads and runs MathJax whenever a formula appears in the rendered page. Used once, from Layout.
+ * Typesets formulas whenever an element marked with mathJaxContentClassName appears in the rendered page.
+ * Used once, from Layout.
  */
 export const useMathJaxTypesetting = () => {
   useEffect(() => {
@@ -17,14 +18,14 @@ export const useMathJaxTypesetting = () => {
     let timeout: ReturnType<typeof setTimeout>;
 
     const typesetIfNeeded = async () => {
-      // textContent avoids the reflow innerText would force
-      if (!stringIncludesMathJax(root.textContent ?? '')) {
+      const elements = getElementsWithMathJax(root);
+      if (elements.length === 0) {
         return;
       }
 
       // MathJax rewrites the DOM, so stop watching while it runs
       observer.disconnect();
-      await typesetMathJax();
+      await typesetMathJax(elements);
       if (!isCancelled) {
         observer.observe(root, observerOptions);
       }

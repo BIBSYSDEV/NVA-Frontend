@@ -15,6 +15,7 @@ import { RootState } from '../redux/store';
 import { SearchResultLocationState } from '../types/locationState.types';
 import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
+import { mathJaxContentClassName } from '../utils/mathJaxHelpers';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   doNotRedirectQueryParam,
@@ -150,7 +151,10 @@ export const RegistrationListItemContent = ({
             publicationChannelName={publicationChannelName}
           />
         </Box>
-        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
+        <Typography
+          gutterBottom
+          className={mathJaxContentClassName}
+          sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
           <MuiLink
             target={target}
             component={Link}
@@ -195,7 +199,9 @@ export const RegistrationListItemContent = ({
         </Box>
 
         {(registration.abstract || registration.description) && (
-          <TruncatableTypography sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
+          <TruncatableTypography
+            className={registration.abstract ? mathJaxContentClassName : undefined}
+            sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
             {registration.abstract || registration.description}
           </TruncatableTypography>
         )}
