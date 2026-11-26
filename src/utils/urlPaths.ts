@@ -8,6 +8,7 @@ export interface IdentifierParams extends Record<string, string> {
 }
 
 export enum UrlPathTemplate {
+  ApprovalPage = '/approval/:identifier',
   BasicData = '/basic-data',
   BasicDataAddEmployee = '/basic-data/person-register/new',
   BasicDataCentralImport = '/basic-data/central-import',
@@ -119,6 +120,7 @@ const publicPageTemplates = [
   UrlPathTemplate.ProjectsRoot,
   UrlPathTemplate.ProjectPage,
   UrlPathTemplate.RegistrationLandingPage,
+  UrlPathTemplate.ApprovalPage,
 ];
 
 // Protected routes whose paths are also matched by a broader public template and must therefore
@@ -201,6 +203,9 @@ export const getAdminInstitutionPath = (id: string) =>
 
 export const getProjectPath = (id: string) =>
   `${UrlPathTemplate.ProjectPage.replace(':identifier', encodeURIComponent(getIdentifierFromId(id)))}`;
+
+export const getApprovalPath = (id: string) =>
+  UrlPathTemplate.ApprovalPage.replace(':identifier', encodeURIComponent(getIdentifierFromId(id)));
 
 export const getEditProjectPath = (id: string) =>
   UrlPathTemplate.ProjectsEdit.replace(':identifier', encodeURIComponent(getIdentifierFromId(id)));

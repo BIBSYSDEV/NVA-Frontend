@@ -550,6 +550,7 @@
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
     }
   },
+  "eea": "EØS",
   "export_dataset_for_nvi_report": "Eksporter datagrunnlag for NVI-rapport",
   "export_dataset_for_nvi_report_description": "<p>Filen inneholder NVI-kandidater som er godkjent eller fortsatt under kontroll. </p><p>Kandidater som er avvist av en eller flere institusjoner er ikke med i oversikten.</p>",
   "export_limit_reached": "Bare de første {{limit}} resultatene ble eksportert. Avgrens søket for å eksportere de resterende resultatene.",
@@ -590,6 +591,7 @@
       "generate_nvi_report_status": "Feil ved nedlasting av rapport (HTTP {{status}}: {{message}}",
       "generate_nvi_report_timeout": "Tidsavbrudd: rapporten ble ikke ferdig generert innen {{seconds}} sekunder. Prøv igjen senere.",
       "get_affiliation_name": "Kunne ikke hente navn på tilknytning for {{unitUri}}",
+      "get_approval": "Kunne ikke hente godkjenning",
       "get_channel_claim": "Kunne ikke hente kanaleierskap",
       "get_curators_for_institution": "Kunne ikke hente kuratorer",
       "get_customer": "Kunne ikke hente kundeinstitusjon",
@@ -772,6 +774,7 @@
   "keep_all_contributors": "Behold bidragsytere fra både {{sourceType}} og publisert resultat",
   "keep_contributors_from_published_result": "Behold kun bidragsytere fra publisert resultat",
   "keep_contributors_from_source_result": "Behold kun bidragsytere fra {{sourceType}}",
+  "last_updated": "Sist oppdatert",
   "licenses": {
     "additional_info": {
       "cc0": "<p>Se <link1>åndsverksloven</link1> §3, §8, §11 og §14</p>"
@@ -1020,6 +1023,7 @@
   "no_search_results_found_with_search": "<span><icon /><heading>Ingen treff</heading></span><p>Vi fant dessverre ikke noe som passer med søket ditt.</p>",
   "no_search_results_list_default": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at søkeordet er skrevet korrekt</li><li>Prøv en annen skriveform av søkeordet</li><li>Prøv med et synonym</li><li>Oversett søkeordet til bokmål, nynorsk eller engelsk</li></ul>",
   "no_search_results_list_person": "<p>Tips til søk:</p><ul><li>Fjern en eller flere avgrensninger i søket</li><li>Sjekk at navnet er skrevet korrekt</li><li>Prøv en annen skrivemåte</li><li>Prøv med eller uten mellomnavn</li></ul>",
+  "norway": "Norge",
   "number_of_candidates": "Antall kandidater",
   "nvi_admin_publication_points_numbers": "<p><b>{{approvals}} resultat</b> er godkjent av alle, og de gir <b>{{publication_points}} publiseringspoeng.</b><link></p>",
   "nvi_admin_reporting_status_numbers": "<p><b>{{num_results}} resultat</b> er kandidater for rapportering. Det er <b>{{percentage}}%</b> av antall resultat rapportert i {{previous_year}}.</p>",
@@ -1166,6 +1170,7 @@
   "publication_points_description": "Tabellen viser kandidater ved hver institusjon som er godkjent per nå og hvilke som mangler godkjenning av samarbeidende institusjoner.",
   "publication_points_description_more": "Kandidatene er lagt på den eller de enhetene hvor de er registrert. En kandidat kan være registrert på flere enheter. Kandidater i eventuell tvist vises ikke.",
   "published_result": "Publisert resultat",
+  "recruitment_period": "Rekrutteringsperiode",
   "reference": "Referanse",
   "reference_format": "Referanseformat",
   "reference_format_bibtex": "BibTeX",
@@ -2041,11 +2046,13 @@
   "sort_by_sector_desc": "Sektor (Å-A)",
   "sort_by_total_number_asc": "Totalt antall (stigende)",
   "sort_by_total_number_desc": "Totalt antall (synkende)",
+  "sponsor": "Sponsor",
   "start_merging": "Start sammenslåing",
   "start_with_approval": "Start med godkjenning",
   "start_with_approval_description": "Hvis prosjektet har en godkjenning, så kan du starte med den og få noen felt ferdig utfylt.",
   "status_for_period": "Status for periode",
   "status_on_nvi_period": "Status på NVI-periode",
+  "study_period": "Studieperiode",
   "tasks": {
     "correction_list": "Retteliste",
     "dialogue": {

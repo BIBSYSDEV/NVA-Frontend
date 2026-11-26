@@ -1,9 +1,10 @@
 import { Box, Link as MuiLink, Skeleton, Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router';
 import { useFetchApprovalByIdentifier } from '../../api/hooks/useFetchApprovalByIdentifier';
 import { ProjectApproval } from '../../types/project.types';
-import { getApprovalViewUrl } from '../../utils/approval-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { getApprovalPath } from '../../utils/urlPaths';
 
 type ListedApproval = Pick<ProjectApproval, 'authority' | 'identifier'> &
   Partial<Pick<ProjectApproval, 'authorityName'>>;
@@ -35,9 +36,8 @@ const ProjectApprovalItem = ({ approval }: ProjectApprovalItemProps) => {
         <Skeleton width="60%" />
       ) : foundApproval ? (
         <MuiLink
-          href={getApprovalViewUrl(foundApproval.id)}
-          target="_blank"
-          rel="noopener noreferrer"
+          component={RouterLink}
+          to={getApprovalPath(foundApproval.id)}
           data-testid={dataTestId.common.projectApprovalLink}>
           {foundApproval.title}
         </MuiLink>

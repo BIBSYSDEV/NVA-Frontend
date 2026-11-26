@@ -31,6 +31,7 @@ declare module '@mui/material/styles' {
     registration: PaletteColor;
     person: PaletteColor;
     project: PaletteColor;
+    approval: PaletteColor;
     centralImport: PaletteColor;
     textPrimary: PaletteColor;
     neutral87: PaletteColor;
@@ -42,6 +43,7 @@ declare module '@mui/material/styles' {
     registration?: PaletteColorOptions;
     person?: PaletteColorOptions;
     project?: PaletteColorOptions;
+    approval?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
     textPrimary?: PaletteColorOptions;
     neutral87?: PaletteColorOptions;
