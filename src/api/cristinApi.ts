@@ -23,7 +23,7 @@ export const createCristinPerson = async (cristinPerson: CreateCristinPerson) =>
   });
 
 export const updateCristinPerson = async (id: string, cristinPerson: Partial<FlatCristinPerson>) =>
-  await authenticatedApiRequest({
+  await authenticatedApiRequest2({
     url: id,
     method: 'PATCH',
     data: cristinPerson,

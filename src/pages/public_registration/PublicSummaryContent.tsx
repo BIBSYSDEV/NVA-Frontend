@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Fragment } from 'react/jsx-runtime';
+import { mathJaxContentClassName } from '../../utils/mathJaxHelpers';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 export const PublicSummaryContent = ({ registration }: PublicRegistrationContentProps) => {
@@ -11,7 +12,10 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
   return !entityDescription ? null : (
     <>
       {entityDescription.abstract && (
-        <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} sx={{ mb: '1rem' }}>
+        <Typography
+          className={mathJaxContentClassName}
+          style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }}
+          sx={{ mb: '1rem' }}>
           {entityDescription.abstract}
         </Typography>
       )}
@@ -22,7 +26,10 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
             <Typography variant="h3" color="primary" gutterBottom>
               {t('registration.description.alternative_abstract')}
             </Typography>
-            <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} sx={{ mb: '1rem' }}>
+            <Typography
+              className={mathJaxContentClassName}
+              style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }}
+              sx={{ mb: '1rem' }}>
               {abstract}
             </Typography>
           </Fragment>

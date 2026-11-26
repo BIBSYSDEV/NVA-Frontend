@@ -3,8 +3,10 @@
 import babel from '@rolldown/plugin-babel';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
+import { msw } from 'msw/vite';
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
+import mathJaxPackage from 'mathjax-full/package.json';
 import { configDefaults } from 'vitest/config';
 
 const largeLibraries = [
@@ -28,11 +30,16 @@ const unitTestFilesGlob = 'src/**/*.test.ts';
 const typeDeclarationFilesGlob = 'src/**/*.d.ts';
 const typesFolderGlob = 'src/types/**';
 const cypressFilesGlob = 'cypress/**';
-const testUtilsFolderGlob = 'src/test-utils/**';
+const testUtilsFolder = 'src/utils/test-utils';
+const testUtilsFolderGlob = `${testUtilsFolder}/**`;
 const testFilesFolder = 'src/utils/testfiles';
 const entryFile = 'src/index.tsx';
 
 export default defineConfig({
+  define: {
+    // NOTE: MathJax expects its bundler to set its version. Without it, MathJax reads package.json with eval('require').
+    PACKAGE_VERSION: JSON.stringify(mathJaxPackage.version),
+  },
   plugins: [
     babel({ presets: [reactCompilerPreset()] }),
     react(),
@@ -87,10 +94,15 @@ export default defineConfig({
           environment: 'node',
           include: [unitTestFilesGlob],
           exclude: [...configDefaults.exclude, cypressFilesGlob, browserTestFilesGlob],
+          setupFiles: [`${testUtilsFolder}/msw/unit-setup.ts`],
         },
       },
       {
         extends: true,
+        // NOTE: Serves the worker script from the installed msw package, so no copy of it lives in public/ and none can
+        // reach a production build. It belongs to this project alone: in worker-only mode the plugin emits the worker
+        // into every client bundle it is part of, so at the top level it would be back in the build.
+        plugins: [msw({ mode: 'worker-only' })],
         optimizeDeps: {
           // NOTE: Pre-bundle every dependency up front. Otherwise Vite discovers new dependencies in lazy routes
           // mid-run and reloads the test page, which fails the test. This happens on every cold cache, like in CI.
@@ -101,7 +113,7 @@ export default defineConfig({
         test: {
           name: 'browser',
           include: [browserTestFilesGlob],
-          setupFiles: [`${testFilesFolder}/browserSetup.ts`],
+          setupFiles: [`${testFilesFolder}/browserSetup.ts`, `${testUtilsFolder}/msw/browser-setup.ts`],
           browser: {
             enabled: true,
             headless: true,
