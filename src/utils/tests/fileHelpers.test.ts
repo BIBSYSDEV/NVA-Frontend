@@ -1,6 +1,8 @@
 import { describe, expect, test } from 'vitest';
+import { FileAllowedOperation } from '../../types/associatedArtifact.types';
 import { LicenseUri } from '../../types/license.types';
-import { getLicenseData } from '../fileHelpers';
+import { getLicenseData, userAllowedToEditFileMetadata } from '../fileHelpers';
+import { makeFile } from '../test-utils/factories/file';
 
 describe('getLicenseData()', () => {
   test('Returns Creative Commons license with https', () => {
@@ -39,5 +41,35 @@ describe('getLicenseData()', () => {
 
     const resultEmptyUri = getLicenseData('');
     expect(resultEmptyUri).toBe(null);
+  });
+
+  test('Returns software license by its SPDX uri', () => {
+    const result = getLicenseData('https://spdx.org/licenses/GPL-3.0-or-later.html');
+    expect(result?.id).toBe(LicenseUri.GPL_3_0_or_later);
+  });
+
+  test('Keeps -only and -or-later as distinct licenses', () => {
+    const onlyLicense = getLicenseData('https://spdx.org/licenses/GPL-3.0-only.html');
+    const orLaterLicense = getLicenseData('https://spdx.org/licenses/GPL-3.0-or-later.html');
+
+    expect(onlyLicense?.id).toBe(LicenseUri.GPL_3_0_only);
+    expect(orLaterLicense?.id).toBe(LicenseUri.GPL_3_0_or_later);
+  });
+});
+
+describe('userMayEditFileMetadata()', () => {
+  const fileWith = (...allowedOperations: FileAllowedOperation[]) => makeFile({ allowedOperations });
+
+  test('Lets a user with write access edit the file', () => {
+    expect(userAllowedToEditFileMetadata(fileWith('write-metadata'))).toBe(true);
+  });
+
+  test('Keeps a user without write access out', () => {
+    expect(userAllowedToEditFileMetadata(fileWith('download'))).toBe(false);
+    expect(userAllowedToEditFileMetadata(makeFile({ allowedOperations: undefined }))).toBe(false);
+  });
+
+  test('Lets an importer edit an import candidate file whatever its access rights say', () => {
+    expect(userAllowedToEditFileMetadata(fileWith('download'), true)).toBe(true);
   });
 });

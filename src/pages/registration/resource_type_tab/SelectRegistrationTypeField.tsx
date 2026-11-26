@@ -49,12 +49,14 @@ import {
 } from '../../../types/publicationFieldNames';
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getLicenseFieldsToReset } from '../../../utils/license-menu-helpers';
 import {
   getDisabledCategories,
   getMainRegistrationType,
   isPeriodicalMediaContribution,
   isPersonPublisher,
   nviApplicableTypes,
+  userIsValidImporter,
 } from '../../../utils/registration-helpers';
 import { LockedNviFieldDescription } from '../LockedNviFieldDescription';
 
@@ -264,6 +266,14 @@ export const SelectRegistrationTypeField = () => {
           setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType }, false);
           break;
       }
+      // A license picked before the change may no longer be offered, and clearing it makes the user pick again
+      getLicenseFieldsToReset(
+        values.associatedArtifacts,
+        currentInstanceType,
+        newInstanceType,
+        userIsValidImporter(user, values)
+      ).forEach((fieldName) => setFieldValue(fieldName, '', false));
+
       setTimeout(() => validateForm(), 0);
     }
   };
