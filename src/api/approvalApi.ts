@@ -1,4 +1,4 @@
-import { ApprovalIdentifier, ApprovalSearchResponse } from '../types/approval.types';
+import { ApprovalDetails, ApprovalIdentifier, ApprovalSearchResponse, ApprovalView } from '../types/approval.types';
 import { ApprovalApiPath } from './apiPaths';
 import { apiRequest2 } from './apiRequest';
 
@@ -20,3 +20,19 @@ export const searchApprovalsByIdentifier = (
   identifier: Pick<ApprovalIdentifier, 'name' | 'value'>,
   signal?: AbortSignal
 ) => searchApprovals({ identifier: `${identifier.name}:${identifier.value}` }, signal);
+
+export const fetchApproval = async (identifier: string) => {
+  const fetchApprovalResponse = await apiRequest2<ApprovalDetails>({
+    url: `${ApprovalApiPath.Approval}/${identifier}`,
+    headers: { Accept: 'application/json' },
+  });
+  return fetchApprovalResponse.data;
+};
+
+export const fetchApprovalView = async (identifier: string) => {
+  const fetchApprovalViewResponse = await apiRequest2<ApprovalView>({
+    url: `${ApprovalApiPath.Approval}/${identifier}/view`,
+    headers: { Accept: 'application/json' },
+  });
+  return fetchApprovalViewResponse.data;
+};
