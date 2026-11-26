@@ -153,6 +153,7 @@ export const dataTestId = {
     exportButton: 'export-button',
     exportLink: 'export-link',
     pagination: 'pagination',
+    projectApprovalLink: 'project-approval-link',
     save: 'save',
     showMoreButton: 'show-more-button',
     skeleton: 'skeleton',
@@ -298,6 +299,7 @@ export const dataTestId = {
     nextResultButton: 'next-result-button',
   },
   projectForm: {
+    relatedApprovalSearchField: 'related-approval-search-field',
     startDateField: 'project-start-date-field',
     endDateField: 'project-end-date-field',
     keywordsField: 'keywords-field',
@@ -320,6 +322,9 @@ export const dataTestId = {
     cancelAddParticipantButton: 'cancel-add-participant-button',
   },
   newProjectPage: {
+    approvalSearchInput: 'approval-search-input',
+    createApprovalProjectAccordion: 'create-approval-project-accordion',
+    startApprovalProjectButton: 'start-approval-project-button',
     titleInput: 'project-title-input',
     startEmptyProjectButton: 'start-empty-project-button',
     createEmptyProjectAccordion: 'create-empty-project-accordion',
@@ -328,6 +333,7 @@ export const dataTestId = {
     startNfrProjectButton: 'start-nfr-project-button',
   },
   projectLandingPage: {
+    approvalsAccordion: 'approvals-accordion',
     editProjectButton: 'edit-project-button',
     generalInfoBox: 'general-info',
     participantsAccordion: 'participants-accordion',

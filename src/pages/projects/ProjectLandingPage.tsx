@@ -3,13 +3,16 @@ import { Box, IconButton, Paper, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { HeadTitle } from '../../components/HeadTitle';
+import { ProjectApprovalList } from '../../components/project-approval-list/ProjectApprovalList';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RootState } from '../../redux/store';
 import { PrimaryColoredBox } from '../../styles/header-styles';
 import { CristinProject } from '../../types/project.types';
+import { getApprovedApprovals } from '../../utils/approval-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getEditProjectPath } from '../../utils/urlPaths';
 import { ProjectIconHeader } from '../project/components/ProjectIconHeader';
@@ -29,6 +32,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const userCanEditProject = canEditProject(user, project);
+  const approvedApprovals = getApprovedApprovals(project.approvals);
 
   return (
     <Paper elevation={0}>
@@ -77,6 +81,16 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
           heading={`${t('project.form.related_projects')} (${project.relatedProjects.length})`}>
           <RelatedProjects projectIds={project.relatedProjects} />
         </LandingPageAccordion>
+
+        {approvedApprovals.length > 0 && (
+          <BetaFunctionality>
+            <LandingPageAccordion
+              dataTestId={dataTestId.projectLandingPage.approvalsAccordion}
+              heading={`${t('approval')} (${approvedApprovals.length})`}>
+              <ProjectApprovalList approvals={approvedApprovals} />
+            </LandingPageAccordion>
+          </BetaFunctionality>
+        )}
       </BackgroundDiv>
     </Paper>
   );

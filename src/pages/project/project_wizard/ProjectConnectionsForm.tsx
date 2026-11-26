@@ -1,5 +1,7 @@
 import { Box } from '@mui/material';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { RelatedApprovalField } from './related-approval-field/RelatedApprovalField';
 import { RelatedProjectsField } from './RelatedProjectsField';
 import { RelatedRegistrationsField } from './RelatedRegistrationsField';
 import { FormBox } from './styles';
@@ -14,6 +16,9 @@ export const ProjectConnectionsForm = () => {
         <FormBox>
           <RelatedRegistrationsField />
         </FormBox>
+        <BetaFunctionality>
+          <RelatedApprovalField />
+        </BetaFunctionality>
       </Box>
     </ErrorBoundary>
   );
