@@ -17,6 +17,7 @@ import { ExpandedImportCandidate } from '../../../../types/importCandidate.types
 import { RegistrationTab } from '../../../../types/registration.types';
 import { expandImportCandidate } from '../../../../utils/central-import-helpers';
 import { getTouchedTabFields } from '../../../../utils/formik-helpers/formik-helpers';
+import { mathJaxContentClassName } from '../../../../utils/mathJaxHelpers';
 import { getFormattedRegistration, getTitleString } from '../../../../utils/registration-helpers';
 import { getImportCandidatePath, IdentifierParams } from '../../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../../utils/validation/registration/registrationValidation';
@@ -99,7 +100,12 @@ export const CentralImportCandidateForm = () => {
             onSubmit={(values) => importCandidateMutation.mutate(values)}>
             {({ values }: FormikProps<ExpandedImportCandidate>) => (
               <Form noValidate>
-                <PageHeader variant="h1">{getTitleString(values.entityDescription?.mainTitle)}</PageHeader>
+                <PageHeader
+                  key={getTitleString(values.entityDescription?.mainTitle)}
+                  variant="h1"
+                  className={mathJaxContentClassName}>
+                  {getTitleString(values.entityDescription?.mainTitle)}
+                </PageHeader>
                 <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
                 <RequiredDescription />
                 <BackgroundDiv sx={{ bgcolor: 'background.paper' }}>

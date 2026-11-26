@@ -10,6 +10,7 @@ import { NviCandidatePageLocationState } from '../../../types/locationState.type
 import { NviCandidateSearchHit } from '../../../types/nvi.types';
 import { displayDate } from '../../../utils/date-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { mathJaxContentClassName } from '../../../utils/mathJaxHelpers';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath, UrlPathTemplate } from '../../../utils/urlPaths';
@@ -64,7 +65,9 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviParams }:
             {heading}
           </Typography>
         )}
-        <Typography sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
+        <Typography
+          className={mathJaxContentClassName}
+          sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
           <MuiLink component={Link} state={candidateLinkState} to={getNviCandidatePath(nviCandidate.identifier)}>
             {getTitleString(nviCandidate.publicationDetails.title)}
           </MuiLink>

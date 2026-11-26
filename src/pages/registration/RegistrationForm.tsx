@@ -21,6 +21,7 @@ import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
 import { useFetchChannelClaimsData } from '../../utils/hooks/useFetchChannelClaimsData';
+import { mathJaxContentClassName } from '../../utils/mathJaxHelpers';
 import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { doNotRedirectQueryParam, UrlPathTemplate } from '../../utils/urlPaths';
@@ -122,7 +123,12 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
                 publicationDate={values.entityDescription?.publicationDate}
                 showYearOnly
               />
-              <PageHeader variant="h1">{getTitleString(values.entityDescription?.mainTitle)}</PageHeader>
+              <PageHeader
+                key={getTitleString(values.entityDescription?.mainTitle)}
+                variant="h1"
+                className={mathJaxContentClassName}>
+                {getTitleString(values.entityDescription?.mainTitle)}
+              </PageHeader>
             </Box>
             <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RequiredDescription />

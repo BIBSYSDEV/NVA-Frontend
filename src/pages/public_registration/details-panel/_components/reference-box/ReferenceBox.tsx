@@ -55,7 +55,7 @@ export const ReferenceBox = ({ registration }: ReferenceBoxProps) => {
         aria-labelledby={getReferenceFormatTabId(format)}
         aria-busy={isLoading}
         sx={{ p: '1rem', maxHeight: '12rem', overflow: 'auto', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
-        <ReferenceContent reference={reference} isLoading={isLoading} isError={isError} />
+        <ReferenceContent reference={reference} isLoading={isLoading} isError={isError} showFormulas={!isBibtex} />
       </Paper>
       <CopyReferenceButton reference={reference} disabled={isCopyDisabled} />
     </Box>
