@@ -47,6 +47,7 @@ const PublicResearchProfile = lazy(() => import('./pages/research_profile/Public
 const TasksPage = lazy(() => import('./pages/tasks/TasksPage'));
 const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
 const ProjectPage = lazy(() => import('./pages/projects/ProjectPage'));
+const ApprovalPage = lazy(() => import('./pages/approval/ApprovalPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
 const SearchPage = lazy(() => import('./pages/search/SearchPage'));
@@ -101,6 +102,7 @@ export const AppRoutes = () => {
         <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
         <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
         <Route path={UrlPathTemplate.ProjectPage} element={<ProjectPage />} />
+        <Route path={UrlPathTemplate.ApprovalPage} element={<ApprovalPage />} />
         <Route path={UrlPathTemplate.Login} element={<LoginPage />} />
         <Route path={UrlPathTemplate.Logout} element={<Logout />} />
         <Route path={UrlPathTemplate.SignedOut} element={<SignedOutPage />} />

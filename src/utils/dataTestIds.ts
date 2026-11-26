@@ -332,6 +332,10 @@ export const dataTestId = {
     nrfProjectSearchInput: 'nrf-project-search-input',
     startNfrProjectButton: 'start-nfr-project-button',
   },
+  approvalLandingPage: {
+    generalInfoBox: 'approval-general-info',
+    membersList: 'approval-members-list',
+  },
   projectLandingPage: {
     approvalsAccordion: 'approvals-accordion',
     editProjectButton: 'edit-project-button',

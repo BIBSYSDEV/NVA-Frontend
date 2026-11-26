@@ -10,6 +10,7 @@ export enum Color {
   Registration = '#EED2AE',
   Person = '#BAD2F7',
   Project = '#E8B8D0',
+  Approval = '#D6DCB6',
   Neutral97 = '#F7F7F7',
   Neutral95 = '#F1F1F1',
   Neutral87 = '#DEDEDE',

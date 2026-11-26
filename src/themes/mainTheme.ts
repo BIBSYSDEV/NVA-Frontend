@@ -78,6 +78,9 @@ export const mainTheme = createTheme(
       project: {
         main: Color.Project,
       },
+      approval: {
+        main: Color.Approval,
+      },
       centralImport: {
         main: Color.CentralImportMain,
       },
