@@ -112,6 +112,7 @@ export default defineConfig({
             `${testFilesFolder}/browserSetup.ts`,
             `${testUtilsFolder}/msw/browser-setup.ts`,
             `${testUtilsFolder}/harness/language-setup.ts`,
+            `${testUtilsFolder}/harness/auth-setup.ts`,
           ],
           browser: {
             enabled: true,

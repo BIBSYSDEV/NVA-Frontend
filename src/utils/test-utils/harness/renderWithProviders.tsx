@@ -1,14 +1,9 @@
-import { DefaultOptions } from '@tanstack/react-query';
 import { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router';
 import { render } from 'vitest-browser-react';
 import { AppProviders } from '../../../AppProviders';
 import { createStore, RootState } from '../../../redux/store';
-
-/**
- * Query behaviour every test wants: a failing request should fail once and be done with it
- */
-export const testQueryOptions: DefaultOptions = { queries: { retry: false } };
+import { testQueryOptions } from './query-options';
 
 interface RenderWithProvidersOptions {
   /** The state the store starts from. Any slice left out starts from its own initial state. */
