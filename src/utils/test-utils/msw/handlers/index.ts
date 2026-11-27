@@ -1,5 +1,6 @@
 import { RequestHandler } from 'msw';
 import { customerInstitutionHandlers } from './customer-institution';
+import { fundingSourceHandlers } from './funding-source';
 import { organizationHandlers } from './organization';
 import { publicationChannelHandlers } from './publication-channel';
 import { registrationHandlers } from './registration';
@@ -23,4 +24,5 @@ export const handlers: RequestHandler[] = [
   ...userHandlers,
   ...customerInstitutionHandlers,
   ...publicationChannelHandlers,
+  ...fundingSourceHandlers,
 ];
