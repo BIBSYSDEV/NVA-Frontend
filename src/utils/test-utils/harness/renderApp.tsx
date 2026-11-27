@@ -2,6 +2,8 @@ import { render } from 'vitest-browser-react';
 import { App } from '../../../App';
 import { AppProviders } from '../../../AppProviders';
 import { createStore, RootState } from '../../../redux/store';
+import { CustomUserAttributes } from '../../../types/user.types';
+import { signIn, signOut } from './auth';
 import { testQueryOptions } from './query-options';
 
 interface RenderAppOptions {
@@ -9,23 +11,34 @@ interface RenderAppOptions {
   preloadedState?: Partial<RootState>;
   /** The url the app starts at. */
   route?: string;
+  /**
+   * Who the app renders for. Left out it is the default user, and `null` renders it for somebody who is not signed in.
+   * `userWithRoles` builds the claims for a test about what a particular role may do.
+   */
+  user?: CustomUserAttributes | null;
 }
 
 /**
  * Renders the whole app the way [src/index.tsx](../../../index.tsx) does, at a url the test decides.
  *
- * The user is the one {@link import('./auth-setup') | auth-setup} signed in. A test that needs somebody else overrides
- * `fetchAuthSession` before calling this.
+ * The user is the one {@link import('./auth-setup') | auth-setup} signed in, unless the test names another with
+ * `user`.
  *
  * NOTE: The url is set on the browser's own history rather than handed to a router. `App` builds its own
  * `createBrowserRouter`, which reads `window.location`, so a router wrapped around the app would be ignored.
  *
- * @param options Where to render the app, and the state to render it in.
  * @returns What `render` returns, plus the store, so a test can dispatch to it or read it back.
  */
-export const renderApp = async (options: RenderAppOptions = {}) => {
-  const { preloadedState, route = '/' } = options;
+export const renderApp = async ({ preloadedState, route = '/', user }: RenderAppOptions = {}) => {
   const store = createStore(preloadedState);
+
+  // NOTE: Left out, the user stays the one the setup file signed in. Only an explicit `user` changes that, which is why
+  // `null` is told apart from `undefined` here: `null` is the test saying it wants nobody signed in.
+  if (user === null) {
+    signOut();
+  } else if (user) {
+    signIn(user);
+  }
 
   window.history.pushState(null, '', route);
 

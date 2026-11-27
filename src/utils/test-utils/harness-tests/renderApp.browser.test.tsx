@@ -1,9 +1,8 @@
-import { fetchAuthSession } from 'aws-amplify/auth';
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { page } from 'vitest/browser';
+import { RoleName } from '../../../types/user.types';
 import { UrlPathTemplate } from '../../urlPaths';
-import { makeUserAttributes } from '../factories/user';
-import { defaultUserAttributes, makeAuthSession } from '../harness/auth';
+import { defaultUserAttributes, userWithRoles } from '../harness/auth';
 import { renderApp } from '../harness/renderApp';
 
 describe('renderApp', () => {
@@ -20,14 +19,26 @@ describe('renderApp', () => {
     expect(store.getState().user?.isCreator).toBe(true);
   });
 
-  test('lets a test be somebody else by answering with another token', async () => {
-    vi.mocked(fetchAuthSession).mockResolvedValue(
-      makeAuthSession(makeUserAttributes({ ...defaultUserAttributes, 'custom:firstName': 'Kari' }))
-    );
-
-    const { store } = await renderApp();
+  test('signs in the user the test names instead of the default one', async () => {
+    const { store } = await renderApp({
+      user: { ...defaultUserAttributes, 'custom:firstName': 'Kari' },
+    });
 
     await expect.poll(() => store.getState().user?.givenName).toBe('Kari');
+  });
+
+  test('gives the user the roles the test asks for', async () => {
+    const { store } = await renderApp({ user: userWithRoles(RoleName.NviCurator) });
+
+    await expect.poll(() => store.getState().user?.isNviCurator).toBe(true);
+    expect(store.getState().user?.isCreator).toBe(false);
+  });
+
+  test('renders for a visitor who is not signed in', async () => {
+    const { store } = await renderApp({ user: null });
+
+    await expect.element(page.getByRole('banner')).toBeVisible();
+    expect(store.getState().user).toBeNull();
   });
 
   // NOTE: Both of these wait for the app to come up before reading the url. `pushState` has already set it by the time
