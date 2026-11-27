@@ -7,8 +7,14 @@ import { signIn, signOut } from './auth';
 import { testQueryOptions } from './query-options';
 
 interface RenderAppOptions {
-  /** The state the store starts from. Any slice left out starts from its own initial state. */
-  preloadedState?: Partial<RootState>;
+  /**
+   * The state the store starts from. Any slice left out starts from its own initial state.
+   *
+   * NOTE: The user is left out of the type here because user data is fetched from the auth token and not from the
+   * state. Setting it here would be overwritten when somebody is signed in, and left in place when nobody is — neither
+   * of which is what a test asking for it wants. Use the `user` option instead of putting user in preloaded state.
+   */
+  preloadedState?: Partial<Omit<RootState, 'user'>>;
   /** The url the app starts at. */
   route?: string;
   /**
