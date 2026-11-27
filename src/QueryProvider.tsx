@@ -1,4 +1,4 @@
-import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { DefaultOptions, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,9 +7,14 @@ import { setNotification } from './redux/notificationSlice';
 
 interface QueryProviderProps {
   children: ReactNode;
+  /**
+   * Overrides merged into the default query options. A test turns retries off through this rather than by supplying a
+   * query client of its own, so that it keeps the app behavior.
+   */
+  defaultOptions?: DefaultOptions;
 }
 
-export const QueryProvider = ({ children }: QueryProviderProps) => {
+export const QueryProvider = ({ children, defaultOptions }: QueryProviderProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -18,9 +23,11 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
     () =>
       new QueryClient({
         defaultOptions: {
+          ...defaultOptions,
           queries: {
             refetchOnWindowFocus: false,
             retry: 1,
+            ...defaultOptions?.queries,
           },
         },
         queryCache: new QueryCache({
